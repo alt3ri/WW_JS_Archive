@@ -17,29 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configChildUiCameraMappingByViewName.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configChildUiCameraMappingByViewName.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configChildUiCameraMappingByViewName.GetConfig(";
 exports.configChildUiCameraMappingByViewName = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (i, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${i})`),
+      getConfigStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${i})`),
       e =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (n) {
@@ -47,8 +47,8 @@ exports.configChildUiCameraMappingByViewName = {
         const C = ConfigCommon_1.ConfigCommon.GetConfig(a);
         if (C)
           return (
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -81,8 +81,8 @@ exports.configChildUiCameraMappingByViewName = {
               ((e = KEY_PREFIX + `#${i})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -90,8 +90,8 @@ exports.configChildUiCameraMappingByViewName = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigStat.Stop(),
+    o?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -176,7 +176,7 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
               !0),
             (this.DHt = ActorSystem_1.ActorSystem.Get(
               UE.LevelSequenceActor.StaticClass(),
-              MathUtils_1.MathUtils.DefaultTransform,
+              MathUtils_1.MathUtils.DefaultTransformDouble,
               void 0,
               !1,
             )),
@@ -198,7 +198,7 @@ class DrawMainView extends GachaSceneView_1.GachaSceneView {
   }
   OnBeforeDestroy() {
     TimerSystem_1.TimerSystem.Next(() => {
-      ActorSystem_1.ActorSystem.Put(this.DHt);
+      ActorSystem_1.ActorSystem.Put("DrawMainView.OnBeforeDestroy", this.DHt);
     }),
       (this.DHt = void 0),
       this.SPe.Clear();

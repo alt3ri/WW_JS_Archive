@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   Time_1 = require("../../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   ConditionGroupById_1 = require("../../../../Core/Define/ConfigQuery/ConditionGroupById"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   TextById_1 = require("../../../../Core/Define/ConfigQuery/TextById"),
@@ -19,6 +20,7 @@ const UE = require("ue"),
   CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   HelpController_1 = require("../../Help/HelpController"),
+  UiNavigationNewController_1 = require("../../UiNavigation/New/UiNavigationNewController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
@@ -43,37 +45,39 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
       (this.L6e = 0),
       (this.$6e = void 0),
       (this.SPe = void 0),
+      (this.Anl = !1),
+      (this.xnl = 0),
       (this.YVe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
       (this.Y6e = () => {
         this.J6e();
       }),
-      (this.RefreshByDetectingId = (e, t) => {
-        this.H6e && this.H6e !== t && this.H6e.SetToggleState(0),
+      (this.RefreshByDetectingId = (e, i) => {
+        this.H6e && this.H6e !== i && this.H6e.SetToggleState(0),
           this.SPe?.StopCurrentSequence(!1, !0),
           this.SPe?.PlayLevelSequenceByName("Switch"),
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId =
             e),
-          (this.H6e = t),
+          (this.H6e = i),
           (this.F6e = e);
-        var t =
+        var i =
             ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterDetectData(
               e,
             ),
-          i =
+          t =
             ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
-              t.Conf.MonsterInfoId,
+              i.Conf.MonsterInfoId,
             ).Name,
           r = {
-            Data: [{ IncId: 0, ItemId: t.Conf.MonsterInfoId }, 1],
+            Data: [{ IncId: 0, ItemId: i.Conf.MonsterInfoId }, 1],
             Type: 3,
             BottomText: "",
-            IsNotFoundVisible: t.IsLock,
+            IsNotFoundVisible: i.IsLock,
             IsSelectedFlag: !1,
-            MonsterId: t.Conf.MonsterInfoId,
+            MonsterId: i.Conf.MonsterInfoId,
             IsQualityHidden: !0,
-            IconHidden: t.IsLock,
+            IconHidden: i.IsLock,
           },
           r =
             (this.$6e?.Apply(r),
@@ -85,42 +89,55 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
             )),
           r =
             (this.j6e.SetText(r),
-            t.IsLock
+            i.IsLock
               ? (LguiUtil_1.LguiUtil.SetLocalText(
                   this.GetText(4),
                   AdventureGuideController_1.UNKNOWNTEXT,
                 ),
                 LguiUtil_1.LguiUtil.SetLocalTextNew(
                   this.GetText(5),
-                  t.Conf.AttributesDescriptionLock,
+                  i.Conf.AttributesDescriptionLock,
                 ))
-              : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i),
+              : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), t),
                 LguiUtil_1.LguiUtil.SetLocalTextNew(
                   this.GetText(5),
-                  t.Conf.AttributesDescriptionUnlock,
+                  i.Conf.AttributesDescriptionUnlock,
                 ),
                 this.J6e()),
             ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
-              t.Conf.DangerType,
-            ));
-        LguiUtil_1.LguiUtil.SetLocalTextNew(
-          this.GetText(11),
-          ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataTextById(
-            t.Conf.DangerType,
+              i.Conf.DangerType,
+            )),
+          t =
+            (LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(11),
+              ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataTextById(
+                i.Conf.DangerType,
+              ),
+            ),
+            this.SetSpriteByPath(r.Icon, this.GetSprite(6), !1),
+            i.Conf.ShowReward
+              ? (this.GetItem(9).SetUIActive(!0),
+                this.z6e(i.Conf.ShowReward, !1))
+              : this.GetItem(9).SetUIActive(!1),
+            ControllerHolder_1.ControllerHolder.AdventureGuideController.NormalMonsterManualInfoRequest(
+              e,
+            ),
+            CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+              "CanUpAbsorbDangerTypeList",
+            )),
+          r = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+            "CanUpAbsorbTypeDescription2List",
           ),
-        ),
-          this.SetSpriteByPath(r.Icon, this.GetSprite(6), !1),
-          t.Conf.ShowReward
-            ? (this.GetItem(9).SetUIActive(!0), this.z6e(t.Conf.ShowReward, !1))
-            : this.GetItem(9).SetUIActive(!1),
-          ControllerHolder_1.ControllerHolder.AdventureGuideController.NormalMonsterManualInfoRequest(
-            e,
-          );
+          e =
+            t.includes(i.Conf.DangerType) &&
+            r.includes(i.Conf.TypeDescription2);
+        this.GetText(15)?.SetUIActive(e),
+          this.GetButton(16)?.RootUIComp.SetUIActive(e);
       }),
       (this.Z6e = (e) => {
-        var t = new Array();
-        for (const i of e) t.push(i);
-        this.e8e(t);
+        var i = new Array();
+        for (const t of e) i.push(t);
+        this.e8e(i);
       }),
       (this.t8e = () => {
         var e;
@@ -147,6 +164,9 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.i8e = () => {
         HelpController_1.HelpController.OpenHelpById(LEFT_TIME_HELP);
+      }),
+      (this.Pnl = () => {
+        this.wnl(), this.O6e?.SetAnimFinishDelegate(void 0);
       });
   }
   GetCurrentId() {
@@ -189,6 +209,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
         return e.BindCallback(this.RefreshByDetectingId), e;
       },
     )),
+      this.O6e.SetAnimFinishDelegate(this.Pnl),
       (this.$6e = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
       this.$6e.Initialize(this.GetItem(14).GetOwner()),
       (this.k6e = new Array()),
@@ -212,19 +233,39 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
       this.GetText(15),
       "UpAbsorptionTimeWithTagText",
       e,
-    );
+    ),
+      this.Bnl();
+  }
+  Bnl() {
+    var e = this.ExtraParams,
+      e =
+        "MonsterDetectView" === e.OpenTabViewName
+          ? Number(e.OpenParam)
+          : void 0;
+    void 0 !== e && 0 < e && (this.Anl = !0);
+  }
+  wnl() {
+    var e;
+    this.Anl &&
+      ((this.Anl = !1), (e = this.O6e.UnsafeGetGridProxy(this.xnl))) &&
+      UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForView(
+        e.GetToggleItem(),
+      );
   }
   OnBeforeShow() {
     var e = this.ExtraParams,
-      e = "MonsterDetectView" === e[0] ? e[1] : void 0;
-    let t = void 0;
-    void 0 !== e && (0 < e ? (t = Number(e)) : (this.K6e = -Number(e))),
-      (this.W6e = t),
-      (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId = t),
+      e =
+        "MonsterDetectView" === e.OpenTabViewName
+          ? Number(e.OpenParam)
+          : void 0;
+    let i = void 0;
+    void 0 !== e && (0 < e ? (i = Number(e)) : (this.K6e = -Number(e))),
+      (this.W6e = i),
+      (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId = i),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("AdventureGuide", 28, "当前拾音辑录默认选择怪物", [
+        Log_1.Log.Debug("AdventureGuide", 27, "当前拾音辑录默认选择怪物", [
           "id",
-          t,
+          i,
         ]),
       this.V6e.UpdateData(
         16,
@@ -248,9 +289,9 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
   }
   e8e(e) {
     this.k6e.length = 0;
-    for (const t of e)
-      this.k6e.push(t),
-        -1 !== this.W6e && this.W6e === t.Conf.Id && (this.W6e = -1);
+    for (const i of e)
+      this.k6e.push(i),
+        -1 !== this.W6e && this.W6e === i.Conf.Id && (this.W6e = -1);
     ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId ||
       ((e = this.o8e()),
       (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId = e));
@@ -266,65 +307,67 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   o8e() {
-    var e = this.K6e,
-      t = ((this.K6e = void 0), this.k6e[0].Conf.Id);
+    var e = this.K6e;
+    if (((this.K6e = void 0), this.k6e.length <= 0)) return -1;
+    var i = this.k6e[0].Conf.Id;
     if (void 0 !== e)
-      for (const i of this.k6e)
-        if (!i.IsLock && i.Conf.DangerType === e) return i.Conf.Id;
-    return t;
+      for (const t of this.k6e)
+        if (!t.IsLock && t.Conf.DangerType === e) return t.Conf.Id;
+    return i;
   }
   J6e() {
     var e,
-      t,
-      i = this.GetCurrentId();
-    i &&
-      (i =
+      i,
+      t = this.GetCurrentId();
+    t &&
+      (t =
         ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterDetectData(
-          i,
+          t,
         )) &&
-      (this.GetItem(13).SetUIActive(i.IsLock),
+      (this.GetItem(13).SetUIActive(t.IsLock),
       (e = this.GetText(12)),
-      i.IsLock
-        ? (t = i.Conf.LockCon) &&
-          ((t = ConditionGroupById_1.configConditionGroupById.GetConfig(t)),
-          LguiUtil_1.LguiUtil.SetLocalTextNew(e, t.HintText))
+      t.IsLock
+        ? (i = t.Conf.LockCon) &&
+          ((i = ConditionGroupById_1.configConditionGroupById.GetConfig(i)),
+          LguiUtil_1.LguiUtil.SetLocalTextNew(e, i.HintText))
         : (this.Q6e.RootUIComp.SetUIActive(!0),
-          i.IsLock ||
+          t.IsLock ||
             this.X6e ||
             (this.Q6e.SetSelfInteractive(!0), (this.X6e = !0))));
   }
   Tick(e) {
     this.J6e();
   }
-  z6e(e, t) {
-    var i =
+  z6e(e, i) {
+    var t =
         ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(e),
       r = new Array();
-    for (const s of i.keys()) {
-      var o = [{ IncId: 0, ItemId: s }, i.get(s)];
+    for (const s of t.keys()) {
+      var o = [{ IncId: 0, ItemId: s }, t.get(s)];
       r.push(o);
     }
     this.H3e.RefreshByData(r);
   }
   JumpToTarget(e) {
-    let t = 0,
-      i = !1;
+    let i = 0,
+      t = !1;
     for (const r of this.k6e) {
       if (e === r.Conf.Id) {
         this.O6e.DeselectCurrentGridProxy(),
-          this.O6e.ScrollToGridIndex(t, !0),
-          this.O6e.SelectGridProxy(t),
-          (i = !0);
+          this.O6e.ScrollToGridIndex(i, !0),
+          this.O6e.SelectGridProxy(i),
+          (t = !0);
         break;
       }
-      t++;
+      i++;
     }
-    i ||
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("AdventureGuide", 28, "找不到拾音辑录跳转Target", [
-          "target",
-          e,
-        ]));
+    (this.xnl = i),
+      t ||
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("AdventureGuide", 27, "找不到拾音辑录跳转Target", [
+            "target",
+            e,
+          ]));
   }
 }
 exports.MonsterDetectView = MonsterDetectView;

@@ -15,16 +15,16 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
 class ActivityBlackCoastController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.x9a = (t) => {
-        for (const e of ActivityBlackCoastController.P9a())
+      (this.Pja = (t) => {
+        for (const e of ActivityBlackCoastController.wja())
           e.StageUpdate(t.gMs);
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(25198, this.x9a);
+    Net_1.Net.Register(15203, this.Pja);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(25198);
+    Net_1.Net.UnRegister(15203);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -59,42 +59,42 @@ class ActivityBlackCoastController extends ActivityControllerBase_1.ActivityCont
   OnActivityFirstUnlock(t) {
     UiManager_1.UiManager.OpenView("ActivityUnlockTipBlackCoastView");
   }
-  static P9a() {
+  static wja() {
     return ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
       Protocol_1.Aki.Protocol.uks.Proto_BlackCoastTheme,
     );
   }
   static RequestDataProgressReward(t, e) {
-    var r = new Protocol_1.Aki.Protocol.ath();
+    var r = new Protocol_1.Aki.Protocol.hf_();
     (r.w6n = t),
-      (r.w9a = e),
-      Net_1.Net.Call(21211, r, (t) => {
+      (r.Bja = e),
+      Net_1.Net.Call(24681, r, (t) => {
         if (t)
           if (t.fMs !== Protocol_1.Aki.Protocol.Q4n.KRs)
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t.fMs,
-              23378,
+              23167,
             );
-          else for (const e of this.P9a()) e.SetProgressRewardDataGot(t.Mih);
+          else for (const e of this.wja()) e.SetProgressRewardDataGot(t.rM_);
       });
   }
   static RequestTaskReward(r, o) {
-    var t = new Protocol_1.Aki.Protocol.nth();
+    var t = new Protocol_1.Aki.Protocol.sf_();
     (t.gps = o),
-      Net_1.Net.Call(28429, t, (t) => {
+      Net_1.Net.Call(28981, t, (t) => {
         if (t)
           if (t.fMs !== Protocol_1.Aki.Protocol.Q4n.KRs)
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t.fMs,
-              18382,
+              18817,
             );
-          else for (const e of this.P9a()) e.SetTaskRewardGot(r, o);
+          else for (const e of this.wja()) e.SetTaskRewardGot(r, o);
       });
   }
 }
 (exports.ActivityBlackCoastController = ActivityBlackCoastController),
   ((_a = ActivityBlackCoastController).qdi = (t, e) => {
-    var r = _a.P9a();
+    var r = _a.wja();
     if (0 !== r.length)
       for (const o of r)
         o.GetProgressItemId === t &&

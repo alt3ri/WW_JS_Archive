@@ -9,25 +9,25 @@ const puerts_1 = require("puerts"),
   HotPatchInputManager_1 = require("./HotPatchInputManager"),
   GAMEPAD_ID = 999;
 class HotPatchEventSystem {
-  static Fba() {
+  static rqa() {
     this.Ryr = this.Lyr.GetComponentByClass(
       UE.LGUI_StandaloneInputModule.StaticClass(),
     );
-    var t = (0, puerts_1.toManualReleaseDelegate)(HotPatchEventSystem.Vba);
+    var t = (0, puerts_1.toManualReleaseDelegate)(HotPatchEventSystem.oqa);
     this.lBo = this.Ryr.RegisterInputChangeEvent(t);
   }
-  static Hba() {
+  static nqa() {
     this.Ryr.UnregisterInputChangeEvent(this.lBo),
-      (0, puerts_1.releaseManualReleaseDelegate)(HotPatchEventSystem.Vba),
+      (0, puerts_1.releaseManualReleaseDelegate)(HotPatchEventSystem.oqa),
       (this.lBo = void 0);
   }
-  static jba() {
+  static sqa() {
     InputDevice_1.InputDevice.IsInTouch()
       ? (this.Dyr = this.Uyr)
-      : ((this.Dyr = this.Ryr), this.Wba()),
+      : ((this.Dyr = this.Ryr), this.aqa()),
       this.Dyr.Activate(!1);
   }
-  static Wba() {
+  static aqa() {
     var t = new UE.Vector2D(0, 0),
       e = this.RSr;
     let i = void 0,
@@ -44,22 +44,22 @@ class HotPatchEventSystem {
       UE.WidgetBlueprintLibrary.SetHardwareCursor(e, 16, s, t),
       UE.WidgetBlueprintLibrary.SetHardwareCursor(e, 15, o, t);
   }
-  static hUa() {
+  static cUa() {
     HotPatchInputManager_1.HotPatchInputManager.RegisterInputAction(
       "UI左键点击",
-      this.tUa,
+      this.nUa,
     ),
       HotPatchInputManager_1.HotPatchInputManager.RegisterOnTouchAction(
-        this.rUa,
+        this.aUa,
       ),
       HotPatchInputManager_1.HotPatchInputManager.RegisterOnTouchMovedAction(
-        this.oUa,
+        this.hUa,
       );
   }
-  static lUa() {
+  static mUa() {
     HotPatchInputManager_1.HotPatchInputManager.UnRegisterInputAction(
       "UI左键点击",
-      this.tUa,
+      this.nUa,
     ),
       HotPatchInputManager_1.HotPatchInputManager.UnRegisterOnTouchAction(),
       HotPatchInputManager_1.HotPatchInputManager.UnRegisterOnTouchMovedAction();
@@ -91,15 +91,15 @@ class HotPatchEventSystem {
         },
       );
     }),
-      this.Fba(),
+      this.rqa(),
       (this.Uyr = this.Lyr.GetComponentByClass(
         UE.LGUI_TouchInputModule.StaticClass(),
       )),
-      (this.Qba = this.Lyr.EventSystem.defaultInputType),
-      this.jba(),
-      this.hUa(),
+      (this.hqa = this.Lyr.EventSystem.defaultInputType),
+      this.sqa(),
+      this.cUa(),
       InputDevice_1.InputDevice.RegisterInputChangeDelegate(
-        HotPatchEventSystem.Kba,
+        HotPatchEventSystem.lqa,
       );
   }
   static SimulationPointerDownUp(t, e) {
@@ -110,15 +110,15 @@ class HotPatchEventSystem {
   }
   static SwitchToNavigationInputType() {
     this.Dyr &&
-      1 !== this.Qba &&
-      ((this.Qba = 1), this.Dyr.SwitchToNavigationInputType());
+      1 !== this.hqa &&
+      ((this.hqa = 1), this.Dyr.SwitchToNavigationInputType());
   }
   static Destroy() {
     InputDevice_1.InputDevice.UnRegisterInputChangeDelegate(
-      HotPatchEventSystem.Kba,
+      HotPatchEventSystem.lqa,
     ),
-      this.Hba(),
-      this.lUa(),
+      this.nqa(),
+      this.mUa(),
       this.Lyr &&
         (this.Lyr.PreDestroy(),
         UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.Lyr, !0),
@@ -136,24 +136,25 @@ class HotPatchEventSystem {
   (HotPatchEventSystem.Ryr = void 0),
   (HotPatchEventSystem.Uyr = void 0),
   (HotPatchEventSystem.lBo = void 0),
-  (HotPatchEventSystem.Qba = 2),
-  (HotPatchEventSystem.tUa = (t) => {
+  (HotPatchEventSystem.hqa = 2),
+  (HotPatchEventSystem.nUa = (t) => {
     _a.Ryr.InputTrigger(t, 0);
   }),
-  (HotPatchEventSystem.rUa = (t, e, i) => {
+  (HotPatchEventSystem.aUa = (t, e, i) => {
     _a.Uyr.InputTouchTrigger(t, e, i);
   }),
-  (HotPatchEventSystem.oUa = (t, e) => {
+  (HotPatchEventSystem.hUa = (t, e) => {
     _a.Uyr.InputTouchMoved(t, e);
   }),
-  (HotPatchEventSystem.Kba = () => {
+  (HotPatchEventSystem.lqa = () => {
     InputDevice_1.InputDevice.IsInTouch()
       ? (_a.Dyr = _a.Uyr)
-      : (_a.Dyr = _a.Ryr);
+      : (_a.Dyr = _a.Ryr),
+      _a.Dyr.Activate();
   }),
-  (HotPatchEventSystem.Vba = (t) => {
+  (HotPatchEventSystem.oqa = (t) => {
     0 === t &&
-      ((_a.Qba = 0),
+      ((_a.hqa = 0),
       InputDevice_1.InputDevice.SwitchInputControllerTypeByMouseMove());
   });
 //# sourceMappingURL=HotPatchEventSystem.js.map

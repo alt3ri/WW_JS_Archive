@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LanguageDefine = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class LanguageDefine {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -37,8 +38,14 @@ class LanguageDefine {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   languagecode(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   isshow() {
     var t = this.J7.__offset(this.z7, 8);
@@ -49,8 +56,14 @@ class LanguageDefine {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   audiocode(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   sortid() {
     var t = this.J7.__offset(this.z7, 14);

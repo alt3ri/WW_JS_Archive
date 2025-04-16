@@ -13,7 +13,8 @@ const UE = require("ue"),
   GuideTutorialPageById_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialPageById"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  GuideDungeonSetDefineByStrId_1 = require("../../../Core/Define/ConfigQuery/GuideDungeonSetDefineByStrId");
 exports.inputControllerType2IndexInConfig = new Map([
   [1, 0],
   [2, 1],
@@ -21,7 +22,7 @@ exports.inputControllerType2IndexInConfig = new Map([
 ]);
 class GuideConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.fJt = new UE.Vector(0, 0, 0));
+    super(...arguments), (this.fJt = new UE.VectorDouble(0, 0, 0));
   }
   OnInit() {
     return !0;
@@ -57,6 +58,11 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
   }
   GetGuideText(e) {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? "";
+  }
+  GetGuideDungeonSet(e) {
+    return GuideDungeonSetDefineByStrId_1.configGuideDungeonSetDefineByStrId.GetConfig(
+      e,
+    );
   }
   GetGuideTopMiddleOffset() {
     return CommonParamById_1.configCommonParamById.GetIntArrayConfig(

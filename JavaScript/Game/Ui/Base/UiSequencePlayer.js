@@ -21,7 +21,8 @@ class UiSequencePlayer {
             e(t);
           });
       }),
-      (this.Hja = void 0),
+      (this.a$a = void 0),
+      (this.hFl = void 0),
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(e)),
       this.SPe.BindSequenceCloseEvent(this.K3t),
       this.SPe.BindSequenceStartEvent(this.nur);
@@ -72,11 +73,11 @@ class UiSequencePlayer {
     var s = this.SPe.GetCurrentSequence();
     s === e && (this.SPe.StopCurrentSequence(t, i), this.sur(s));
   }
-  PlaySequence(e, t = !1) {
-    this.hur(), this.aur(e), this.SPe.PlayLevelSequenceByName(e, t);
+  PlaySequence(e, t = !1, i = void 0) {
+    this.hur(), this.aur(e), this.SPe.PlayLevelSequenceByName(e, t, i);
   }
-  async PlaySequenceAsync(e, t, i = !1, s = !1) {
-    this.hur(), this.aur(e), await this.SPe.PlaySequenceAsync(e, t, i, s);
+  async PlaySequenceAsync(e, t, i = !1, s = !1, h = void 0) {
+    this.hur(), this.aur(e), await this.SPe.PlaySequenceAsync(e, t, i, s, h);
   }
   ReplaySequence(e) {
     this.SPe.ReplaySequenceByKey(e);
@@ -112,18 +113,34 @@ class UiSequencePlayer {
   async LitePlayAsync(e, t = !1, i = !1) {
     var s;
     return (
-      !this.Hja &&
+      !this.a$a &&
       ((s = new CustomPromise_1.CustomPromise()), !!this.SPe) &&
-      ((this.Hja = e),
+      ((this.a$a = e),
+      (this.hFl = s),
       this.SPe.PlaySequencePurely(e, t, i, s),
       (e = await s.Promise),
-      (this.Hja = void 0),
+      (this.a$a = void 0),
+      (this.hFl = void 0),
       e)
     );
   }
+  async LiteReplayAsync(e, t = !1, i = !1) {
+    var s;
+    return void 0 !== this.a$a && void 0 !== this.hFl
+      ? (this.SPe?.SequenceJumpToStartWhenPlaying(this.a$a),
+        (s = await this.hFl.Promise),
+        (this.a$a = void 0),
+        (this.hFl = void 0),
+        s)
+      : this.LitePlayAsync(e, t, i);
+  }
   LiteStop() {
-    this.SPe && this.Hja && this.SPe.StopSequenceByKey(this.Hja, !1, !1),
-      (this.Hja = void 0);
+    this.SPe &&
+      this.a$a &&
+      this.hFl &&
+      this.SPe.StopSequenceByKey(this.a$a, !1, !1),
+      (this.a$a = void 0),
+      (this.hFl = void 0);
   }
   LiteExit() {
     this.LiteStop(), this.Clear();
@@ -133,6 +150,13 @@ class UiSequencePlayer {
       (this.LitePlayAsync(e, !0, !1),
       this.SPe.EndSequenceLastFrame(e),
       this.LiteStop());
+  }
+  async LiteWaitFor(e) {
+    return (
+      void 0 !== this.SPe &&
+      void 0 !== (e = this.SPe.GetCurrentStopPromise(e)) &&
+      e.Promise
+    );
   }
 }
 exports.UiSequencePlayer = UiSequencePlayer;

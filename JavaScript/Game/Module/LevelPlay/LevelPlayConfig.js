@@ -14,7 +14,7 @@ class LevelPlayConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SceneGameplay",
-            19,
+            18,
             "找不到兑换奖励表配置",
             ["配置表路径", "Source/Config/Raw/Tables/d.兑换奖励配置"],
             ["Id", e],
@@ -27,7 +27,7 @@ class LevelPlayConfig extends ConfigBase_1.ConfigBase {
     return (
       a ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("SceneGameplay", 19, "找不到任务配置", [
+          Log_1.Log.Error("SceneGameplay", 18, "找不到任务配置", [
             "玩法Id",
             e,
           ])),
@@ -44,7 +44,7 @@ class LevelPlayConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Quest",
-            19,
+            18,
             "找不到玩法节点配置",
             ["玩法Id", e],
             ["节点Id", a],

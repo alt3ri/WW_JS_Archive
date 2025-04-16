@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configInstanceDungeonEntranceById.Init"),
-  getConfigStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configInstanceDungeonEntranceById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configInstanceDungeonEntranceById.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configInstanceDungeonEntranceById.GetConfig(";
 exports.configInstanceDungeonEntranceById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (n, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      getConfigStat?.Start();
+    var e = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${n})`),
       t =
-        (e.Start(),
+        (e?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (o) {
@@ -45,8 +47,8 @@ exports.configInstanceDungeonEntranceById = {
         const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (a)
           return (
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -79,8 +81,8 @@ exports.configInstanceDungeonEntranceById = {
               ((t = KEY_PREFIX + `#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -88,8 +90,8 @@ exports.configInstanceDungeonEntranceById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    e.Stop(),
-      getConfigStat.Stop(),
+    e?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

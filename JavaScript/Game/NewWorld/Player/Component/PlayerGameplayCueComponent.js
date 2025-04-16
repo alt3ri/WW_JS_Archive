@@ -13,8 +13,8 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, n, r);
     else
-      for (var p = e.length - 1; 0 <= p; p--)
-        (a = e[p]) && (s = (o < 3 ? a(s) : 3 < o ? a(t, n, s) : a(t, n)) || s);
+      for (var l = e.length - 1; 0 <= l; l--)
+        (a = e[l]) && (s = (o < 3 ? a(s) : 3 < o ? a(t, n, s) : a(t, n)) || s);
     return 3 < o && s && Object.defineProperty(t, n, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -60,6 +60,12 @@ let PlayerGameplayCueComponent = class PlayerGameplayCueComponent extends BaseGa
   DestroyPlayerGameplayCue(e, t) {
     this.RemoveFromOtherCueMap(e, t);
   }
+  DestroyPlayerGameplayCueByBuff(e) {
+    const t = e.Handle;
+    e.Config.GameplayCueIds?.forEach((e) => {
+      this.DestroyPlayerGameplayCue(t, e);
+    });
+  }
   GetEntityHandle() {
     var e = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
       e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerData(e)
@@ -72,7 +78,7 @@ let PlayerGameplayCueComponent = class PlayerGameplayCueComponent extends BaseGa
   }
 };
 (PlayerGameplayCueComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(208)],
+  [(0, RegisterComponent_1.RegisterComponent)(223)],
   PlayerGameplayCueComponent,
 )),
   (exports.PlayerGameplayCueComponent = PlayerGameplayCueComponent);

@@ -7,12 +7,16 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   ItemGridBase_1 = require("../ItemGridBase/ItemGridBase"),
+  SmallItemGridBirthdayEffectComponent_1 = require("./SmallItemGridComponent/SmallItemGridBirthdayEffectComponent"),
+  SmallItemGridBlackComponent_1 = require("./SmallItemGridComponent/SmallItemGridBlackComponent"),
   SmallItemGridCookUpComponent_1 = require("./SmallItemGridComponent/SmallItemGridCookUpComponent"),
   SmallItemGridCoolDownComponent_1 = require("./SmallItemGridComponent/SmallItemGridCoolDownComponent"),
   SmallItemGridCurrentEquipmentComponent_1 = require("./SmallItemGridComponent/SmallItemGridCurrentEquipmentComponent"),
+  SmallItemGridDangoPluginIconComponent_1 = require("./SmallItemGridComponent/SmallItemGridDangoPluginIconComponent"),
   SmallItemGridDisableComponent_1 = require("./SmallItemGridComponent/SmallItemGridDisableComponent"),
   SmallItemGridElementComponent_1 = require("./SmallItemGridComponent/SmallItemGridElementComponent"),
   SmallItemGridEmptySlotComponent_1 = require("./SmallItemGridComponent/SmallItemGridEmptySlotComponent"),
+  SmallItemGridExchangeRewardComponent_1 = require("./SmallItemGridComponent/SmallItemGridExchangeRewardComponent"),
   SmallItemGridFirstRewardComponent_1 = require("./SmallItemGridComponent/SmallItemGridFirstRewardComponent"),
   SmallItemGridLockBlackComponent_1 = require("./SmallItemGridComponent/SmallItemGridLockBlackComponent"),
   SmallItemGridLockComponent_1 = require("./SmallItemGridComponent/SmallItemGridLockComponent"),
@@ -20,8 +24,14 @@ const UE = require("ue"),
   SmallItemGridNotFoundComponent_1 = require("./SmallItemGridComponent/SmallItemGridNotFoundComponent"),
   SmallItemGridReceivableComponent_1 = require("./SmallItemGridComponent/SmallItemGridReceivableComponent"),
   SmallItemGridReceivedComponent_1 = require("./SmallItemGridComponent/SmallItemGridReceivedComponent"),
+  SmallItemGridRedDotComponent_1 = require("./SmallItemGridComponent/SmallItemGridRedDotComponent"),
+  SmallItemGridRoleHeadComponent_1 = require("./SmallItemGridComponent/SmallItemGridRoleHeadComponent"),
+  SmallItemGridSelectComponent_1 = require("./SmallItemGridComponent/SmallItemGridSelectComponent"),
   SmallItemGridSelectedFlagComponent_1 = require("./SmallItemGridComponent/SmallItemGridSelectedFlagComponent"),
+  SmallItemGridSkinComponent_1 = require("./SmallItemGridComponent/SmallItemGridSkinComponent"),
+  SmallItemGridVisionFetterComponent_1 = require("./SmallItemGridComponent/SmallItemGridVisionFetterComponent"),
   SmallItemGridVisionRoleHeadComponent_1 = require("./SmallItemGridComponent/SmallItemGridVisionRoleHeadComponent"),
+  SmallItemTopRightTagComponent_1 = require("./SmallItemGridComponent/SmallItemTopRightTagComponent"),
   TRIAL_ROLE_ID = 1e4;
 class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
   constructor() {
@@ -46,7 +56,15 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       [5, UE.UIItem],
       [6, UE.UIItem],
       [7, UE.UIExtendToggle],
+      [8, UE.UISprite],
+      [9, UE.UIItem],
     ];
+  }
+  OnStart() {
+    this.GetSprite(8)?.SetUIActive(!1);
+  }
+  OnSetUnderTextAdditionItem() {
+    return this.GetItem(9);
   }
   OnSetBottomAdditionItem() {
     return this.GetItem(5);
@@ -70,89 +88,102 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
   ApplyEmptySmallItemGrid(t) {
     this.SetEmptySlotVisible(!0),
       this.UTt(void 0),
-      this.SetQuality(void 0),
+      this.Hpl(void 0),
       this.SetBottomTextVisible(!1),
+      this.SetQuality(void 0),
       this.SetExtendToggleEnable(!1),
       this.SetElement(void 0);
+  }
+  ApplyEmptyWithoutAddSmallItemGrid(t) {
+    this.ClearVisibleComponent(),
+      this.ClearComponentList(),
+      this.UTt(void 0),
+      this.Hpl(void 0),
+      this.SetBottomTextVisible(!1),
+      this.SetQuality(void 0),
+      this.SetExtendToggleEnable(!1),
+      this.SetElement(void 0),
+      this.RefreshComponentVisible(),
+      this.RefreshComponentHierarchyIndex();
   }
   ApplyPropSmallItemGrid(t) {
     var e = t.IsLockVisible,
       i = t.IsReceivableVisible,
       o = t.IsReceivedVisible,
-      l = t.IsNewVisible,
-      m = t.IsNotFoundVisible,
-      r = t.CoolDownTime,
-      n = t.IsDisable;
-    this.SetIsDisable(n),
+      m = t.IsNewVisible,
+      l = t.IsNotFoundVisible,
+      n = t.CoolDownTime,
+      r = t.IsDisable,
+      a = t.IsBirthdayEffectVisible;
+    this.SetIsDisable(r),
       this.SetLockVisible(e),
       this.SetReceivableVisible(i),
       this.SetReceivedVisible(o),
-      this.SetNewFlagVisible(l),
-      this.SetNotFoundVisible(m),
-      this.SetCoolDown(r),
+      this.SetNewFlagVisible(m),
+      this.SetNotFoundVisible(l),
+      this.SetCoolDown(n),
+      this.SetRedDotVisible(t.IsRedDotVisible),
+      this.SetBirthdayEffect(a),
       this.vbt(t);
   }
   ApplyPhantomSmallItemGrid(t) {
     var e = t.IsLockVisible,
       i = t.IsLockVisibleBlack,
       o = t.IsReceivableVisible,
-      l = t.IsReceivedVisible,
-      m = t.IsNewVisible,
-      r = t.IsNotFoundVisible,
-      n = t.IsSelectedFlag,
-      s = t.VisionRoleHeadInfo;
+      m = t.IsReceivedVisible,
+      l = t.IsNewVisible,
+      n = t.IsNotFoundVisible,
+      r = t.IsSelectedFlag,
+      a = t.VisionRoleHeadInfo,
+      s = t.FetterGroupId;
     this.SetLockVisible(e),
       this.SetLockBlackVisible(i),
       this.SetReceivableVisible(o),
-      this.SetReceivedVisible(l),
-      this.SetNewFlagVisible(m),
-      this.SetNotFoundVisible(r),
-      this.SetSelectedFlagVisible(n),
-      this.SetVisionRoleHead(s),
+      this.SetReceivedVisible(m),
+      this.SetNewFlagVisible(l),
+      this.SetNotFoundVisible(n),
+      this.SetSelectedFlagVisible(r),
+      this.SetVisionRoleHead(a),
+      this.SetVisionFetterGroup(s),
+      this.SetRedDotVisible(t.IsRedDotVisible),
       this.Mbt(t);
   }
   ApplyCharacterSmallItemGrid(t) {
     var e = t.IsLockVisible,
       i = t.IsReceivableVisible,
       o = t.IsReceivedVisible,
-      l = t.IsSelectedFlag,
-      m = t.IsCookUp ?? !1;
-    this.SetLockVisible(e),
+      m = t.IsSelectedFlag,
+      l = t.IsCookUp ?? !1,
+      n = t.IsBlack;
+    this.SetIsBlack(n),
+      this.SetLockVisible(e),
       this.SetReceivableVisible(i),
       this.SetReceivedVisible(o),
-      this.SetSelectedFlagVisible(l),
-      this.Ebt(m),
+      this.SetSelectedFlagVisible(m),
+      this.Ebt(l),
       this.SetElement(t.ElementId),
+      this.SetRedDotVisible(t.IsRedDotVisible),
       this.Sbt(t);
   }
   vbt(t) {
-    var e,
-      i = t.ItemConfigId,
-      o = t.BottomTextId,
-      l = t.BottomText,
-      m = t.BottomTextParameter,
-      r = t.IsQualityHidden,
-      n = ((this.Data = t.Data), this.GetSprite(0)),
-      r =
-        (t.IconPath
-          ? ((e = this.GetTexture(1)), this.SetTextureByPath(t.IconPath, e))
-          : this.UTt(i),
-        r
-          ? n.SetUIActive(!1)
-          : (0 < t.QualityId
-              ? this.SetQualityIconById(n, t.QualityId, void 0, t.QualityType)
-              : 0 === t.QualityId
-                ? ((e =
-                    ModelManager_1.ModelManager.SmallItemGridModel
-                      .DefaultQualitySpritePath),
-                  this.SetSpriteByPath(e, n, !1))
-                : this.SetQuality(i),
-            n.SetUIActive(!0)),
-        !StringUtils_1.StringUtils.IsEmpty(o) ||
-          !StringUtils_1.StringUtils.IsEmpty(l));
-    this.SetBottomTextVisible(r),
-      r && (this.SetBottomTextId(o, m), this.SetBottomText(l)),
-      this.SetExtendToggleEnable(!0);
+    var e = t.ItemConfigId,
+      i = ((this.Data = t.Data), this.GetTexture(1)),
+      o =
+        ConfigManager_1.ConfigManager.InventoryConfig?.GetItemDataTypeByConfigId(
+          t.ItemConfigId,
+        );
+    t.IsIconHide
+      ? i?.SetUIActive(!1)
+      : t.IconPath
+        ? this.SetTextureByPath(t.IconPath, i)
+        : 13 === o
+          ? this.sL1(e)
+          : this.UTt(e),
+      this.SetItemQuality(t),
+      this.dal(t),
+      this.RefreshTopRightText(t),
+      this.SetExtendToggleEnable(!0),
+      this.RefreshSkin(t, e);
   }
   SetElement(t) {
     this.RefreshComponent(
@@ -163,66 +194,63 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
   }
   Mbt(t) {
     var e = t.ItemConfigId,
-      i = t.BottomTextId,
-      o = t.BottomText,
-      l = t.BottomTextParameter,
-      m = t.MonsterId,
-      r = t.PhantomId,
-      n = t.QualityIconResourceId,
-      s = t.IsQualityHidden,
-      a = t.IconHidden,
-      t =
+      i = t.MonsterId,
+      o = t.PhantomId,
+      m = t.QualityIconResourceId,
+      l = t.IsQualityHidden,
+      n = t.IconHidden,
+      n =
         ((this.Data = t.Data),
-        a
+        n
           ? this.GetTexture(1)?.SetUIActive(!1)
-          : m
-            ? this.pwt(m)
-            : r
-              ? this.Gzs(r)
+          : i
+            ? this.pwt(i)
+            : o
+              ? this.Gzs(o)
               : this.UTt(e),
-        this.GetSprite(0)),
-      a =
-        (s
-          ? t.SetUIActive(!1)
-          : void 0 !== n
-            ? this.vwt(n)
-            : this.SetQuality(e),
-        !StringUtils_1.StringUtils.IsEmpty(i) ||
-          !StringUtils_1.StringUtils.IsEmpty(o));
-    this.SetBottomTextVisible(a),
-      a && (this.SetBottomTextId(i, l), this.SetBottomText(o)),
+        this.GetSprite(0));
+    l ? n.SetUIActive(!1) : void 0 !== m ? this.vwt(m) : this.SetQuality(e),
+      this.dal(t),
+      this.RefreshTopRightText(t),
       this.SetExtendToggleEnable(!0);
   }
   Sbt(t) {
     let e = t.ItemConfigId;
-    var i = t.BottomTextId,
-      o = t.BottomText,
-      l = t.BottomTextParameter,
-      m = t.IsQualityHidden,
-      r = ((this.Data = t.Data), this.GetTexture(1)),
-      n =
+    var i,
+      o = t.IsQualityHidden,
+      m = ((this.Data = t.Data), this.GetTexture(1)),
+      l =
         (e > TRIAL_ROLE_ID &&
-          ((n = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(e)),
-          (e = n.ParentId)),
-        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
-      n = n.RoleHeadIconBig,
-      n = (this.SetRoleIcon(n, r, e), r.SetUIActive(!0), this.GetSprite(0)),
-      m =
-        (m
-          ? n.SetUIActive(!1)
-          : (0 < t.QualityId
-              ? this.SetQualityIconById(n, t.QualityId, void 0, t.QualityType)
-              : 0 === t.QualityId
-                ? ((r =
-                    ModelManager_1.ModelManager.SmallItemGridModel
-                      .DefaultQualitySpritePath),
-                  this.SetSpriteByPath(r, n, !1))
-                : this.SetQuality(e),
-            n.SetUIActive(!0)),
-        !StringUtils_1.StringUtils.IsEmpty(i) ||
-          !StringUtils_1.StringUtils.IsEmpty(o));
-    this.SetBottomTextVisible(m),
-      m && (this.SetBottomTextId(i, l), this.SetBottomText(o)),
+          ((l = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(e)),
+          (e = l.ParentId)),
+        t.SkinId),
+      l =
+        (l
+          ? ((i =
+              ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(
+                l,
+              ).RoleHeadIconLarge),
+            this.SetRoleSkinIcon(i, m, l))
+          : ((i =
+              ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+                e,
+              ).RoleHeadIconBig),
+            this.SetRoleIcon(i, m, e)),
+        m.SetUIActive(!0),
+        this.GetSprite(0));
+    o
+      ? l.SetUIActive(!1)
+      : (0 < t.QualityId
+          ? this.SetQualityIconById(l, t.QualityId, void 0, t.QualityType)
+          : 0 === t.QualityId
+            ? ((i =
+                ModelManager_1.ModelManager.SmallItemGridModel
+                  .DefaultQualitySpritePath),
+              this.SetSpriteByPath(i, l, !1))
+            : this.SetQuality(e),
+        l.SetUIActive(!0)),
+      this.dal(t),
+      this.RefreshTopRightText(t),
       this.SetExtendToggleEnable(!0);
   }
   SetLockVisible(t) {
@@ -254,7 +282,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
     );
   }
   SetReceivedVisible(t) {
-    return this.RefreshComponent(
+    this.RefreshComponent(
       SmallItemGridReceivedComponent_1.SmallItemGridReceivedComponent,
       t,
       t,
@@ -263,6 +291,13 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
   SetSelectedFlagVisible(t) {
     this.RefreshComponent(
       SmallItemGridSelectedFlagComponent_1.SmallItemGridSelectedFlagComponent,
+      t,
+      t,
+    );
+  }
+  SetSelectVisible(t) {
+    this.RefreshComponent(
+      SmallItemGridSelectComponent_1.SmallItemGridSelectComponent,
       t,
       t,
     );
@@ -281,11 +316,26 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
+  SetExchangeRewardVisible(t) {
+    this.RefreshComponent(
+      SmallItemGridExchangeRewardComponent_1.SmallItemGridExchangeRewardComponent,
+      t,
+      t,
+    );
+  }
+  SetTextureByIconPath(t) {
+    var e = this.GetTexture(1);
+    this.SetTextureByPath(t, e);
+  }
   UTt(t) {
     var e = this.GetTexture(1);
     void 0 === t
       ? e.SetUIActive(!1)
       : (this.SetItemIcon(e, t), e.SetUIActive(!0));
+  }
+  sL1(t) {
+    this.SetDangoPluginIcon({ PluginItemId: t }),
+      this.GetTexture(1)?.SetUIActive(!1);
   }
   pwt(t) {
     var e = this.GetTexture(1);
@@ -314,12 +364,92 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
+  SetRoleHead(t) {
+    this.RefreshComponent(
+      SmallItemGridRoleHeadComponent_1.SmallItemGridRoleHeadComponent,
+      void 0 !== t,
+      t,
+    );
+  }
+  SetItemQuality(t) {
+    var e =
+      ConfigManager_1.ConfigManager.InventoryConfig?.GetItemDataTypeByConfigId(
+        t.ItemConfigId,
+      );
+    10 === e || 11 === e || 14 === e
+      ? (this.SetQuality(void 0), this.Hpl(t))
+      : 13 === e
+        ? this.ET1(t)
+        : (this.SetSkinQuality(void 0), this.jpl(t));
+  }
   SetQuality(t) {
     var e = this.GetSprite(0);
     void 0 === t
       ? e.SetUIActive(!1)
       : (this.nwt !== t &&
           ((this.nwt = t), this.SetItemQualityIcon(e, t, void 0)),
+        e.SetUIActive(!0));
+  }
+  SetSkinQuality(t) {
+    var e = this.GetSprite(8);
+    void 0 === t
+      ? e.SetUIActive(!1)
+      : (this.nwt !== t &&
+          ((this.nwt = t),
+          (t =
+            ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)),
+          (t = ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityById(
+            t.QualityId,
+          )),
+          this.SetSpriteByPath(t.SkinQuality, e, !1)),
+        e.SetUIActive(!0));
+  }
+  jpl(t) {
+    var e,
+      i = this.GetSprite(0);
+    !t || t.IsQualityHidden
+      ? i.SetUIActive(!1)
+      : 0 < t.QualityId
+        ? (this.SetQualityIconById(i, t.QualityId, void 0, t.QualityType),
+          i.SetUIActive(!0))
+        : 0 === t.QualityId
+          ? ((e =
+              ModelManager_1.ModelManager.SmallItemGridModel
+                .DefaultQualitySpritePath),
+            this.SetSpriteByPath(e, i, !1),
+            i.SetUIActive(!0))
+          : this.SetQuality(t.ItemConfigId);
+  }
+  Hpl(t) {
+    var e,
+      i = this.GetSprite(8);
+    !t || t.IsQualityHidden
+      ? i.SetUIActive(!1)
+      : 0 < t.QualityId
+        ? ((e = ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityById(
+            t.QualityId,
+          )),
+          this.SetSpriteByPath(e.SkinQuality, i, !1),
+          i.SetUIActive(!0))
+        : 0 === t.QualityId
+          ? ((e =
+              ModelManager_1.ModelManager.SmallItemGridModel
+                .DefaultQualitySpritePath),
+            this.SetSpriteByPath(e, i, !1),
+            i.SetUIActive(!0))
+          : this.SetSkinQuality(t.ItemConfigId);
+  }
+  ET1(t) {
+    var e = this.GetSprite(0);
+    !t || !t.ItemConfigId || t.IsQualityHidden
+      ? e.SetUIActive(!1)
+      : ((t =
+          ConfigManager_1.ConfigManager.DangoAbyssConfig.GetAbyssQualityByPluginItemId(
+            t.ItemConfigId,
+          )[t.QualityType ?? "BackgroundSprite"] ??
+          ModelManager_1.ModelManager.SmallItemGridModel
+            .DefaultQualitySpritePath),
+        this.SetSpriteByPath(t, e, !1),
         e.SetUIActive(!0));
   }
   SetCoolDown(t, e) {
@@ -329,6 +459,29 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       void 0 !== t && 0 < t,
       e,
     );
+  }
+  SetVisionFetterGroup(t) {
+    this.RefreshComponent(
+      SmallItemGridVisionFetterComponent_1.SmallItemGridVisionFetterComponent,
+      void 0 !== t && 0 < t,
+      t,
+    );
+  }
+  RefreshSkin(t, e) {
+    t = { SkinId: e, BottomText: t.BottomText };
+    let i = !1;
+    e &&
+      ((e =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          e,
+        )),
+      (i = 10 === e || 11 === e || 14 === e)),
+      i && this.SetBottomTextVisible(!1),
+      this.RefreshComponent(
+        SmallItemGridSkinComponent_1.SmallItemGridSkinComponent,
+        i,
+        t,
+      );
   }
   SetEmptySlotVisible(t) {
     var e = this.RefreshComponent(
@@ -341,10 +494,34 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
         ? e.BindEmptySlotButtonCallback(this.OnClickedEmptySlotButton)
         : e.UnBindEmptySlotButtonCallback());
   }
+  BindEmptySlotButtonCallback(t) {
+    this.awt = t;
+  }
   SetNewFlagVisible(t) {
     this.RefreshComponent(
       SmallItemGridNewFlagComponent_1.SmallItemGridNewFlagComponent,
       t,
+      t,
+    );
+  }
+  SetRedDotVisible(t) {
+    this.RefreshComponent(
+      SmallItemGridRedDotComponent_1.SmallItemGridRedDotComponent,
+      t,
+      t,
+    );
+  }
+  SetDangoPluginIcon(t) {
+    this.RefreshComponent(
+      SmallItemGridDangoPluginIconComponent_1.SmallItemGridDangoPluginIconComponent,
+      !0,
+      t,
+    );
+  }
+  SetBirthdayEffect(t) {
+    this.RefreshComponent(
+      SmallItemGridBirthdayEffectComponent_1.SmallItemGridBirthdayEffectComponent,
+      !0,
       t,
     );
   }
@@ -376,6 +553,13 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
+  SetIsBlack(t) {
+    this.RefreshComponent(
+      SmallItemGridBlackComponent_1.SmallItemGridBlackComponent,
+      t,
+      t,
+    );
+  }
   SetDisableComponentColor(e, t = !0) {
     t = this.RefreshComponent(
       SmallItemGridDisableComponent_1.SmallItemGridDisableComponent,
@@ -400,6 +584,33 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
   }
   SetBottomTextColor(t) {
     this.GetText(3).SetColor(UE.Color.FromHex(t));
+  }
+  dal(t) {
+    var e = t.BottomTextId,
+      i = t.BottomText,
+      t = t.BottomTextParameter,
+      o =
+        !StringUtils_1.StringUtils.IsEmpty(e) ||
+        !StringUtils_1.StringUtils.IsEmpty(i);
+    this.SetBottomTextVisible(o),
+      o && (this.SetBottomTextId(e, t), this.SetBottomText(i));
+  }
+  RefreshTopRightText(t) {
+    var e = {
+        TopRightTextBgColor: t.TopRightTextBgColor,
+        TopRightTextColor: t.TopRightTextColor,
+        TopRightTextId: t.TopRightTextId,
+        TopRightText: t.TopRightText,
+        TopRightTextParameter: t.TopRightTextParameter,
+      },
+      t =
+        !StringUtils_1.StringUtils.IsEmpty(t.TopRightTextId) ||
+        !StringUtils_1.StringUtils.IsEmpty(t.TopRightText);
+    this.RefreshComponent(
+      SmallItemTopRightTagComponent_1.SmallItemTopRightTagComponent,
+      t,
+      e,
+    );
   }
   SetSelected(t, e = !1) {
     var i = this.GetExtendToggle(7);

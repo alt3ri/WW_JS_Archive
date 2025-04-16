@@ -47,7 +47,7 @@ class FoliageClusteredEffectManager {
           t
             ? ((this.Config = t), this.CacheFromConfig(), (this.Ready = !0))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("RenderEffect", 26, "植被特效找不到配置", [
+              Log_1.Log.Error("RenderEffect", 25, "植被特效找不到配置", [
                 "配置路径",
                 this.ConfigPath,
               ]);
@@ -83,11 +83,11 @@ class FoliageClusteredEffectManager {
         RenderDataManager_1.RenderDataManager.Get()
           .GetCurrentCharacterPosition()
           .Subtraction(this.BoxExtend, this.TempVector),
-        (this.DetectBox.Min = this.TempVector.ToUeVector()),
+        (this.DetectBox.Min = this.TempVector.ToUeVectorOld()),
         RenderDataManager_1.RenderDataManager.Get()
           .GetCurrentCharacterPosition()
           .Addition(this.BoxExtend, this.TempVector),
-        (this.DetectBox.Max = this.TempVector.ToUeVector()),
+        (this.DetectBox.Max = this.TempVector.ToUeVectorOld()),
         (e =
           UE.KuroRenderingRuntimeBPPluginBPLibrary.GetOverlappingBoxCountForAllFoliageActors(
             GlobalData_1.GlobalData.World,
@@ -115,5 +115,6 @@ class FoliageClusteredEffectManager {
     DebugDrawManager_1.DebugDrawManager.RemoveDebugDraw(this.DebugDrawHandle);
   }
 }
-exports.FoliageClusteredEffectManager = FoliageClusteredEffectManager;
+(exports.FoliageClusteredEffectManager = FoliageClusteredEffectManager).zlr =
+  void 0;
 //# sourceMappingURL=FoliageClusteredEffectManager.js.map

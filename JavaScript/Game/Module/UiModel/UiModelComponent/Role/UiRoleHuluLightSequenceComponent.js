@@ -67,7 +67,7 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
           (t.bPauseAtEnd = !0),
           (this.b2t = ActorSystem_1.ActorSystem.Get(
             UE.LevelSequenceActor.StaticClass(),
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
             void 0,
             !1,
           )),
@@ -84,10 +84,11 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
     this.SPe
       ? ((this.b2t.bOverrideInstanceData = !0),
         (e = this.b2t.DefaultInstanceData),
-        (t = this.n$t.MainMeshComponent.GetSocketTransform(
+        (t = this.n$t.MainMeshComponent.D_GetSocketTransform(
           CharacterNameDefines_1.CharacterNameDefines.GLIDEING_SOCKETNAME,
         )),
-        (t = new UE.Transform(t.GetLocation())),
+        (t = new UE.TransformDouble(t.GetLocation())),
+        (t = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(t)),
         (e.TransformOrigin = t),
         this.SPe.Play())
       : this.hJ === ResourceSystem_1.ResourceSystem.InvalidId && this.fBr();
@@ -108,14 +109,17 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
       this.StopLightSequence();
     const e = this.b2t;
     TimerSystem_1.TimerSystem.Next(() => {
-      ActorSystem_1.ActorSystem.Put(e);
+      ActorSystem_1.ActorSystem.Put(
+        "UiRoleHuluLightSequenceComponent.OnEnd",
+        e,
+      );
     }),
       (this.SPe = void 0),
       (this.b2t = void 0);
   }
 };
 (UiRoleHuluLightSequenceComponent = __decorate(
-  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(17)],
+  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(18)],
   UiRoleHuluLightSequenceComponent,
 )),
   (exports.UiRoleHuluLightSequenceComponent = UiRoleHuluLightSequenceComponent);

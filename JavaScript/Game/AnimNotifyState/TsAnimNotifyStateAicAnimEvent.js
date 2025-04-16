@@ -9,6 +9,7 @@ class TsAnimNotifyStateAicAnimEvent extends UE.KuroAnimNotifyState {
       (this.bCallEnd = !1),
       (this.Name = void 0);
   }
+  Constructor() {}
   K2_NotifyBegin(t, e, s) {
     var t = t.GetOwner();
     return (

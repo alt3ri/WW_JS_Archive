@@ -25,7 +25,7 @@ class UiViewStorage {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[RegisterUiTsInfo]流程执行异常 1",
               e,
               ["error", e.message],
@@ -34,7 +34,7 @@ class UiViewStorage {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[RegisterUiTsInfo]流程执行异常 2",
               ["ViewName", o],
               ["error", e],

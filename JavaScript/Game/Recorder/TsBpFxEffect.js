@@ -10,6 +10,9 @@ class TsBpFxEffect extends UE.Actor {
       (this.RecorderShadow = void 0),
       (this.Recorder = void 0);
   }
+  Constructor() {
+    this.Recorder = void 0;
+  }
   ReceiveBeginPlay() {
     this.OnPlay();
   }

@@ -158,7 +158,7 @@ let SceneItemFanComponent =
         (this.Ome = void 0),
         (this.BCn = void 0),
         (this.bCn = void 0),
-        (this.gTa = void 0),
+        (this.pTa = void 0),
         (this.cz = void 0),
         (this.mWi = void 0),
         (this._9r = void 0),
@@ -184,7 +184,7 @@ let SceneItemFanComponent =
               this.jCn(),
               s?.ReferenceActors?.Get(OFFSET_ACTOR_KEY));
           s
-            ? ((this.UCn = Vector_1.Vector.Create(s.K2_GetActorLocation())),
+            ? ((this.UCn = Vector_1.Vector.Create(s.D_K2_GetActorLocation())),
               this.UCn.SubtractionEqual(this.n$t.ActorLocationProxy),
               (t = Quat_1.Quat.Create()),
               this.n$t.ActorRotationProxy.Quaternion().Inverse(t),
@@ -207,7 +207,7 @@ let SceneItemFanComponent =
         (this.zCn = void 0),
         (this.ZCn = !1),
         (this.egn = (i, s, t) => {
-          const h = i.GetComponent(138);
+          const h = i.GetComponent(149);
           if (s && !this.tgn && h) h.ign();
           else {
             if (h)
@@ -222,7 +222,7 @@ let SceneItemFanComponent =
               } else this.NCn.set(i.Id, s);
             var e;
             t
-              ? (t = i.GetComponent(181)) &&
+              ? (t = i.GetComponent(194)) &&
                 (s
                   ? (t.RemoveServerTagByIdLocal(-1152559349, ""),
                     t.HasTag(-3775711) || t.AddServerTagByIdLocal(-3775711, ""))
@@ -237,7 +237,7 @@ let SceneItemFanComponent =
                       ? Log_1.Log.CheckWarn() &&
                         Log_1.Log.Warn(
                           "Level",
-                          37,
+                          36,
                           "SendBaoziStateRequest Failed",
                           ["ErrorCode", t?.G9n],
                         )
@@ -261,17 +261,17 @@ let SceneItemFanComponent =
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Level",
-                    37,
+                    36,
                     "[SceneItemFanComponent] Root Active",
                     ["EntityId", this.Entity.Id],
                   )),
               this.PCn)
             )
-              for (const s of this.PCn) s?.GetComponent(138)?.lgn(!1, !1);
+              for (const s of this.PCn) s?.GetComponent(149)?.lgn(!1, !1);
             this.lgn(!0);
           } else -1152559349 === t && i && this.lgn(!1, !1);
           if (this.QCn && (-1152559349 === t || 1298716444 === t) && i) {
-            if (this.PCn) for (const h of this.PCn) h?.GetComponent(138)?.agn();
+            if (this.PCn) for (const h of this.PCn) h?.GetComponent(149)?.agn();
             1298716444 === t && this.sAn();
           }
           if (i)
@@ -308,11 +308,11 @@ let SceneItemFanComponent =
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "SceneItem",
-                37,
+                36,
                 "[FanComponent] OnEnterLogicRange RootComponent Is Undefined",
                 ["EntityId", this.Entity.Id],
               ),
-            this.gva());
+            this._va());
         }),
         (this.KHr = (i) => {
           var t, s;
@@ -343,7 +343,7 @@ let SceneItemFanComponent =
               this.ngn -= i;
               let t = !0;
               for (const r of this.PCn) {
-                var h = r.GetComponent(138);
+                var h = r.GetComponent(149);
                 if (h && !this.tgn && !h.dce()) {
                   t = !1;
                   break;
@@ -354,7 +354,7 @@ let SceneItemFanComponent =
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Level",
-                      37,
+                      36,
                       "[SceneItemFanComponent] All Child Active",
                       ["EntityId", this.Entity.Id],
                     ),
@@ -363,7 +363,7 @@ let SceneItemFanComponent =
                   (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Level",
-                      37,
+                      36,
                       "[SceneItemFanComponent] Wait Child Active Timeout",
                       ["EntityId", this.Entity.Id],
                     ),
@@ -379,7 +379,7 @@ let SceneItemFanComponent =
                     );
                 n?.Valid &&
                   n.Entity &&
-                  ((e = n.Entity.GetComponent(138))
+                  ((e = n.Entity.GetComponent(149))
                     ? e.Valid &&
                       e.SceneInteractionLoadCompleted &&
                       (e.SetRoot(this),
@@ -388,7 +388,7 @@ let SceneItemFanComponent =
                       Log_1.Log.CheckInfo()) &&
                       Log_1.Log.Info(
                         "Level",
-                        37,
+                        36,
                         "[Fan.WaitChild]Remove WaitChildId",
                         ["ChildId", o],
                       )
@@ -399,7 +399,7 @@ let SceneItemFanComponent =
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Level",
-                    37,
+                    36,
                     "[Fan.WaitChild]Clear WaitChildIds",
                     ["EntityId", this.Entity.Id],
                   ),
@@ -479,7 +479,7 @@ let SceneItemFanComponent =
     }
     OnStart() {
       if (
-        (this.Entity.GetComponent(141).RegisterComponent(this),
+        (this.Entity.GetComponent(152).RegisterComponent(this),
         this.FCn ||
           EventSystem_1.EventSystem.AddWithTarget(
             this,
@@ -491,20 +491,20 @@ let SceneItemFanComponent =
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.Rnn,
         ),
-        this.Entity.GetComponent(109)?.SetLogicRange(FAN_LOGIC_RANGE),
+        this.Entity.GetComponent(119)?.SetLogicRange(FAN_LOGIC_RANGE),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.EnterLogicRange,
           this.Jsn,
         ),
-        (this.n$t = this.Entity.GetComponent(187)),
+        (this.n$t = this.Entity.GetComponent(200)),
         !this.n$t)
       )
         return !1;
       if (
-        ((this.Xte = this.Entity.GetComponent(181)),
-        (this.kCn = this.Entity.GetComponent(148)),
-        (this.jnn = this.Entity.GetComponent(77)),
+        ((this.Xte = this.Entity.GetComponent(194)),
+        (this.kCn = this.Entity.GetComponent(159)),
+        (this.jnn = this.Entity.GetComponent(84)),
         0 < this.TCn.size)
       ) {
         for (const i of this.TCn)
@@ -584,12 +584,12 @@ let SceneItemFanComponent =
     Zgn(t = -1) {
       var i;
       this.YCn ||
-        (this.YCn = new UE.Vector(
+        (this.YCn = new UE.VectorDouble(
           0.1,
           FAN_SPHERE_TRACE_RADIUS,
           FAN_SPHERE_TRACE_RADIUS,
         )),
-        this.JCn || (this.JCn = new UE.Vector(0, 0, 0)),
+        this.JCn || (this.JCn = new UE.VectorDouble(0, 0, 0)),
         t < 0
           ? ((i = this.LCn
               ? this.LCn.DefaultEffectLength
@@ -621,7 +621,7 @@ let SceneItemFanComponent =
           }
         if (i) {
           t || (this.mWi.Radius = 0.7 * FAN_SPHERE_TRACE_RADIUS);
-          var n = h.e0n(this.mWi, this.OCn, i, this.gTa);
+          var n = h.e0n(this.mWi, this.OCn, i, this.pTa);
           if (-1 < n) {
             if (
               (this.o0n &&
@@ -647,11 +647,11 @@ let SceneItemFanComponent =
             }
             var a = this._9r[s],
               a =
-                (a.HitLocation?.DeepCopy(this.gTa),
-                a.Location?.DeepCopy(this.gTa),
+                (a.HitLocation?.DeepCopy(this.pTa),
+                a.Location?.DeepCopy(this.pTa),
                 h.r0n().Quaternion().RotateVector(h.UCn, this.BCn),
                 this.BCn.AdditionEqual(h.n$t.ActorLocationProxy),
-                this.s0n(s, this.BCn.ToUeVector(), this.gTa.ToUeVector()),
+                this.s0n(s, this.BCn.ToUeVector(), this.pTa.ToUeVector()),
                 Math.min(
                   this._9r.length - 1,
                   Math.min(this.Cgn.length - 1, this.xgn),
@@ -659,8 +659,8 @@ let SceneItemFanComponent =
             -1 < a &&
               (h = EffectSystem_1.EffectSystem.GetEffectActor(this.Cgn[a])) &&
               (this.fTn(a, !1, 1),
-              h.K2_SetActorLocationAndRotation(
-                this.gTa.ToUeVector(),
+              h.D_K2_SetActorLocationAndRotation(
+                this.pTa.ToUeVector(),
                 this._9r[a].HitRotator.ToUeRotator(),
                 !1,
                 void 0,
@@ -696,7 +696,7 @@ let SceneItemFanComponent =
                 a,
               );
             if (a?.Id !== this.Entity.Id) {
-              var f = a?.Entity?.GetComponent(138);
+              var f = a?.Entity?.GetComponent(149);
               if (f) {
                 if (s) {
                   i = !0;
@@ -735,7 +735,7 @@ let SceneItemFanComponent =
               this._se,
             );
           if (t) {
-            t = t.Entity.GetComponent(187);
+            t = t.Entity.GetComponent(200);
             if (t)
               return (
                 t.ActorLocationProxy.Subtraction(
@@ -759,7 +759,7 @@ let SceneItemFanComponent =
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Level",
-              37,
+              36,
               "[FanComponent]InitRotation",
               ["PbDataId", this.Entity.GetComponent(0)?.GetPbDataId()],
               ["StartRotator", this.fle],
@@ -806,11 +806,15 @@ let SceneItemFanComponent =
         (this.cz = void 0),
         (this.YJo = void 0),
         this.Hnr &&
-          (ActorSystem_1.ActorSystem.Put(this.Hnr), (this.Hnr = void 0)),
-        this.ACn && this.ACn.fva(this.Entity),
+          (ActorSystem_1.ActorSystem.Put(
+            "SceneItemFanComponent.OnEnd1",
+            this.Hnr,
+          ),
+          (this.Hnr = void 0)),
+        this.ACn && this.ACn.uva(this.Entity),
         (this.ACn = void 0),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Level", 37, "[Fan.WaitChild]Clear Root", [
+          Log_1.Log.Info("Level", 36, "[Fan.WaitChild]Clear Root", [
             "id",
             this.Entity.Id,
           ]),
@@ -821,7 +825,7 @@ let SceneItemFanComponent =
             !0,
           ),
         (this.rvi = 0),
-        (this.gTa = void 0),
+        (this.pTa = void 0),
         (this._9r = void 0),
         (this.qCn = void 0),
         (this.Hgn = void 0),
@@ -837,7 +841,8 @@ let SceneItemFanComponent =
         (this.HCn = void 0),
         this.cgn)
       )
-        for (const t of this.cgn) ActorSystem_1.ActorSystem.Put(t);
+        for (const t of this.cgn)
+          ActorSystem_1.ActorSystem.Put("SceneItemFanComponent.OnEnd2", t);
       if (((this.cgn = void 0), (this.mgn = void 0), this.dgn)) {
         for (const i of this.dgn)
           EffectSystem_1.EffectSystem.StopEffectById(
@@ -869,7 +874,7 @@ let SceneItemFanComponent =
     SetRoot(t) {
       (this.ACn = t),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Level", 37, "[Fan.WaitChild]SetRoot", [
+          Log_1.Log.Info("Level", 36, "[Fan.WaitChild]SetRoot", [
             "id",
             this.Entity.Id,
           ]),
@@ -886,7 +891,7 @@ let SceneItemFanComponent =
           for (const i of t)
             this.zCn.push(i),
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Level", 37, "[Fan.WaitChild]Add WaitChildId", [
+                Log_1.Log.Info("Level", 36, "[Fan.WaitChild]Add WaitChildId", [
                   "ChildId",
                   i,
                 ]);
@@ -913,7 +918,7 @@ let SceneItemFanComponent =
           e = n.Y,
           o = n.Z;
         for (const a of this.PCn) {
-          var r = a.GetComponent(187);
+          var r = a.GetComponent(200);
           r &&
             ((n = r.ActorLocationProxy),
             (t = Math.min(t, n.X)),
@@ -940,7 +945,7 @@ let SceneItemFanComponent =
           (this.$gn = Vector_1.Vector.Create()),
           (this.Ygn = Vector_1.Vector.Create()),
           (this.Jgn = Vector_1.Vector.Create()),
-          (this.gTa = Vector_1.Vector.Create()),
+          (this.pTa = Vector_1.Vector.Create()),
           (this.GCn = new SporeStruct()),
           this.GCn.Init(this.egn),
           (this.NCn = new Map()),
@@ -950,17 +955,17 @@ let SceneItemFanComponent =
           (this.XYs = new Array()),
           (this.YYs = new Array()),
           (this.Cgn = new Array()),
-          (this.ggn = UE.NewArray(UE.Vector)),
+          (this.ggn = UE.NewArray(UE.VectorDouble)),
           (this.hgn = this.Xte.HasTag(-3775711)),
           this.hgn && this.PCn)
         )
-          for (const f of this.PCn) f?.GetComponent(138)?.zYs();
+          for (const f of this.PCn) f?.GetComponent(149)?.zYs();
         TimerSystem_1.TimerSystem.Next(() => {
           this.hgn && this.Tgn(void 0, !0), this.Zgn();
         }),
           this._gn();
         for (const v of this.PCn) {
-          var _ = v.GetComponent(138);
+          var _ = v.GetComponent(149);
           _ && _._gn();
         }
       }
@@ -1006,7 +1011,7 @@ let SceneItemFanComponent =
         (this.Egn = !1),
           0 !== t?.G9n
             ? Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Level", 37, "SetFanStateResponse Failed", [
+              Log_1.Log.Warn("Level", 36, "SetFanStateResponse Failed", [
                 "ErrorCode",
                 t?.G9n,
               ])
@@ -1043,12 +1048,16 @@ let SceneItemFanComponent =
         this.Cgn.length = 0;
       }
       if (this.cgn) {
-        for (const h of this.cgn) ActorSystem_1.ActorSystem.Put(h);
+        for (const h of this.cgn)
+          ActorSystem_1.ActorSystem.Put(
+            "SceneItemFanComponent.OnRootComplete",
+            h,
+          );
         this.cgn.length = 0;
       }
       this.mgn && (this.mgn.length = 0);
       for (const e of this.PCn) {
-        var t = e.GetComponent(138);
+        var t = e.GetComponent(149);
         t && t.Zgn(0);
       }
     }
@@ -1077,13 +1086,13 @@ let SceneItemFanComponent =
       this.Xte?.RemoveTag(1174613996),
         this.Xte?.RemoveTag(942900915),
         this.Xte?.RemoveTag(-216276934);
-      var t = this.kCn?.EntityInSocket?.Entity?.GetComponent(181);
+      var t = this.kCn?.EntityInSocket?.Entity?.GetComponent(194);
       t &&
         (t.RemoveTag(1174613996),
         t.RemoveTag(942900915),
         t.RemoveTag(-216276934)),
         0 !== this.ugn &&
-          ((t = EntitySystem_1.EntitySystem.GetComponent(this.ugn, 181)) &&
+          ((t = EntitySystem_1.EntitySystem.GetComponent(this.ugn, 194)) &&
             (t.RemoveTag(1174613996),
             t.RemoveTag(942900915),
             t.RemoveTag(-216276934)),
@@ -1107,7 +1116,7 @@ let SceneItemFanComponent =
               : (this.Xte.HasTag(1174613996) || this.Xte.AddTag(1174613996),
                 this.Xte.RemoveTag(942900915),
                 this.Xte.RemoveTag(-216276934))),
-          (s = this.kCn?.EntityInSocket?.Entity?.GetComponent(181))) &&
+          (s = this.kCn?.EntityInSocket?.Entity?.GetComponent(194))) &&
           ((this.ugn = this.kCn.EntityInSocket.Entity.Id),
           t
             ? (s.RemoveTag(1174613996),
@@ -1128,7 +1137,7 @@ let SceneItemFanComponent =
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Level",
-            37,
+            36,
             "[SceneItemFanComponent] RefreshTraceState",
             ["EntityId", this.Entity.Id],
           ),
@@ -1140,7 +1149,7 @@ let SceneItemFanComponent =
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Level",
-                  37,
+                  36,
                   "[SceneItemFanComponent] RefreshTraceState Failed, Has Completed",
                   ["EntityId", this.Entity.Id],
                 );
@@ -1174,7 +1183,7 @@ let SceneItemFanComponent =
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Level",
-                    37,
+                    36,
                     "[SceneItemFanComponent] TraceToFan",
                     ["PointCount", this._9r?.length],
                     ["EntityId", this.Entity.Id],
@@ -1208,7 +1217,7 @@ let SceneItemFanComponent =
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Level",
-                37,
+                36,
                 "[SceneItemFanComponent] RefreshTraceState Failed, !this.IsAllChildInitFinish",
                 ["EntityId", this.Entity.Id],
               );
@@ -1216,7 +1225,7 @@ let SceneItemFanComponent =
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Level",
-              37,
+              36,
               "[SceneItemFanComponent] RefreshTraceState Failed, !this.IsRootFire",
               ["EntityId", this.Entity.Id],
             );
@@ -1224,7 +1233,7 @@ let SceneItemFanComponent =
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Level",
-            37,
+            36,
             "[SceneItemFanComponent] RefreshTraceState Failed, !this.IsRoot",
             ["EntityId", this.Entity.Id],
           );
@@ -1294,10 +1303,10 @@ let SceneItemFanComponent =
             if (C?.Id !== this.Entity.Id)
               if (C && o.has(C?.Id)) {
                 if (C) {
-                  var I = C.Entity.GetComponent(138);
+                  var I = C.Entity.GetComponent(149);
                   if (!I || !I.a0n()) {
                     if ((s && (h = !0), I)) {
-                      var p = I.Entity.GetComponent(187)?.ActorLocationProxy;
+                      var p = I.Entity.GetComponent(200)?.ActorLocationProxy;
                       p &&
                         (this.pgn = Vector_1.Vector.Dist(
                           p,
@@ -1329,7 +1338,7 @@ let SceneItemFanComponent =
         }
         if (
           (e &&
-            (n = e.Entity.GetComponent(187)?.ActorLocationProxy) &&
+            (n = e.Entity.GetComponent(200)?.ActorLocationProxy) &&
             (this.fgn = Vector_1.Vector.Dist(n, this.n$t.ActorLocationProxy)),
           (r.IsBlockInMiddle = h),
           i)
@@ -1347,7 +1356,7 @@ let SceneItemFanComponent =
           for (const L of d)
             L &&
               o.has(L.Id) &&
-              (f = L.Entity.GetComponent(187)) &&
+              (f = L.Entity.GetComponent(200)) &&
               (f = Vector_1.Vector.Dist(
                 this.n$t.ActorLocationProxy,
                 f.ActorLocationProxy,
@@ -1361,7 +1370,7 @@ let SceneItemFanComponent =
           for (const F of d)
             F &&
               o.has(F.Id) &&
-              (o.delete(F.Id), (c = F.Entity.GetComponent(187))) &&
+              (o.delete(F.Id), (c = F.Entity.GetComponent(200))) &&
               ((c = Vector_1.Vector.Dist(
                 c.ActorLocationProxy,
                 this.n$t.ActorLocationProxy,
@@ -1381,15 +1390,15 @@ let SceneItemFanComponent =
       if (!this.QCn) return !!this.ACn && this.ACn.IsAnyRotating;
       if (this.PCn)
         for (const i of this.PCn) {
-          var t = i.GetComponent(138);
+          var t = i.GetComponent(149);
           if (t && 0 < t.Mgn) return !0;
         }
       return !1;
     }
-    fva(t) {
+    uva(t) {
       this.PCn && -1 < (t = this.PCn.indexOf(t)) && this.PCn.splice(t, 1);
     }
-    gva() {
+    _va() {
       var t,
         i,
         s = this.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
@@ -1397,17 +1406,17 @@ let SceneItemFanComponent =
         (t = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(s)) &&
         (t =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t)) &&
-        (i = t.Entity?.GetComponent(138)) &&
+        (i = t.Entity?.GetComponent(149)) &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            37,
+            36,
             "[FanComponent] TryToResetRoot Successs",
             ["EntityId", this.Entity.Id],
           ),
-        (this.ACn = i).vva(this, s));
+        (this.ACn = i).cva(this, s));
     }
-    vva(t, i) {
+    cva(t, i) {
       var s;
       this.PCn &&
         (s = this.Entity.GetComponent(0))?.Valid &&
@@ -1417,7 +1426,7 @@ let SceneItemFanComponent =
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            37,
+            36,
             "[FanComponent] TryToResetChild Successs",
             ["EntityId", this.Entity.Id],
           ),
@@ -1426,7 +1435,7 @@ let SceneItemFanComponent =
     }
     ExecuteInteract() {
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("SceneItem", 37, "[FanComponent] ExecuteInteract", [
+        Log_1.Log.Info("SceneItem", 36, "[FanComponent] ExecuteInteract", [
           "EntityId",
           this.Entity.Id,
         ]),
@@ -1434,7 +1443,7 @@ let SceneItemFanComponent =
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "SceneItem",
-              37,
+              36,
               "[FanComponent.ExecuteInteract] Self Is Rotating",
             )
           : this.QCn
@@ -1442,7 +1451,7 @@ let SceneItemFanComponent =
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "SceneItem",
-                  37,
+                  36,
                   "[FanComponent.ExecuteInteract] Self Is Root",
                 ))
             : this.ACn
@@ -1450,7 +1459,7 @@ let SceneItemFanComponent =
                 ? Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "SceneItem",
-                    37,
+                    36,
                     "[FanComponent.ExecuteInteract] Root Is Rotating",
                   )
                 : ((this.ICn = this.ICn % this.MCn),
@@ -1463,7 +1472,7 @@ let SceneItemFanComponent =
                     (Log_1.Log.CheckDebug() &&
                       Log_1.Log.Debug(
                         "Level",
-                        37,
+                        36,
                         "[FanComponent]StartRotate",
                         [
                           "PbDataId",
@@ -1484,7 +1493,7 @@ let SceneItemFanComponent =
                         Log_1.Log.CheckWarn() &&
                         Log_1.Log.Warn(
                           "Level",
-                          37,
+                          36,
                           "SendFanNumberOfTurnsRequest Failed",
                           ["ErrorCode", t?.G9n],
                         );
@@ -1493,10 +1502,10 @@ let SceneItemFanComponent =
               : (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "SceneItem",
-                    37,
+                    36,
                     "[FanComponent.ExecuteInteract] RootComponent Is Undefined",
                   ),
-                this.gva());
+                this._va());
     }
     hAn(s) {
       if (this._9r) {
@@ -1512,7 +1521,7 @@ let SceneItemFanComponent =
           for (let t = i + 1; t < this._9r.length; t++) {
             var e = EntitySystem_1.EntitySystem.GetComponent(
               this._9r[t].EntityId,
-              138,
+              149,
             );
             e && e.Zgn(0),
               this.fTn(t, !0, 2),
@@ -1550,7 +1559,7 @@ let SceneItemFanComponent =
                 : Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Level",
-                    37,
+                    36,
                     "[SceneItemFanComponent] MultiSplineComponents is undefined",
                   )
               : (this.YJo.DeepCopy(this._9r[this.xgn].Location),
@@ -1616,7 +1625,7 @@ let SceneItemFanComponent =
         ? ((t = this._9r[t - 1]),
           (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
             t.EntityId,
-          )?.Entity?.GetComponent(138)) && t.Zgn())
+          )?.Entity?.GetComponent(149)) && t.Zgn())
         : this.Zgn();
     }
     r0n() {
@@ -1649,14 +1658,14 @@ let SceneItemFanComponent =
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Level",
-          37,
+          36,
           "[SceneItemFanComponent]CreateInteractOption",
           ["EntityId", this.Entity.Id],
         );
       var t,
         i,
         s,
-        h = this.Entity.GetComponent(182);
+        h = this.Entity.GetComponent(195);
       h
         ? (h = h.GetInteractController())
           ? ((t = new CodeDefineLevelConditionInfo_1.LevelConditionGroup()),
@@ -1691,14 +1700,14 @@ let SceneItemFanComponent =
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Level",
-              37,
+              36,
               "[SceneItemFanComponent]CreateInteractOption Failed_1",
               ["EntityId", this.Entity.Id],
             )
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            37,
+            36,
             "[SceneItemFanComponent]CreateInteractOption Failed_0",
             ["EntityId", this.Entity.Id],
           );
@@ -1706,7 +1715,7 @@ let SceneItemFanComponent =
     l0n() {
       var t;
       this.Itn &&
-        (t = this.Entity.GetComponent(182)) &&
+        (t = this.Entity.GetComponent(195)) &&
         (t = t.GetInteractController()) &&
         (t.RemoveClientInteractOption(this.Itn), (this.Itn = void 0));
     }
@@ -1715,7 +1724,7 @@ let SceneItemFanComponent =
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Level",
-            37,
+            36,
             "[SceneItemFanComponent] Set IsSplineMoving",
             ["Value", t],
           ),
@@ -1747,7 +1756,7 @@ let SceneItemFanComponent =
         (this.ggn.Empty(),
         this.ggn.Add(i),
         this.ggn.Add(s),
-        t.SetSplinePoints(this.ggn, 1));
+        t.D_SetSplinePoints(this.ggn, 1));
     }
     i0n(h = !1, e = !0) {
       let o = void 0,
@@ -1769,7 +1778,7 @@ let SceneItemFanComponent =
           0 === this.xgn
             ? this.lgn(!0, !0)
             : ((e = this._9r[this.xgn - 1].EntityId),
-              (e = EntitySystem_1.EntitySystem.GetComponent(e, 138)) &&
+              (e = EntitySystem_1.EntitySystem.GetComponent(e, 149)) &&
                 this.xgn < this._9r.length &&
                 (this.xgn === this._9r.length - 1
                   ? e.lgn(!0, this._9r[this.xgn].IsBlockInMiddle)
@@ -1833,7 +1842,7 @@ let SceneItemFanComponent =
                 this.Cgn[this.xgn - 1],
               )) &&
               (this.fTn(this.xgn - 1, !1, 3),
-              _.K2_SetActorLocationAndRotation(
+              _.D_K2_SetActorLocationAndRotation(
                 this._9r[this.xgn - 1].HitLocation.ToUeVector(),
                 this._9r[this.xgn - 1].HitRotator.ToUeRotator(),
                 !1,
@@ -1860,7 +1869,7 @@ let SceneItemFanComponent =
             (this.fTn(r, !1, 4),
             EffectSystem_1.EffectSystem.GetEffectActor(
               this.Cgn[r],
-            )?.K2_SetActorLocationAndRotation(
+            )?.D_K2_SetActorLocationAndRotation(
               o.ToUeVector(),
               n.ToUeRotator(),
               !1,
@@ -1889,7 +1898,7 @@ let SceneItemFanComponent =
               (this.ggn.Empty(),
               this.ggn.Add(this.cz.ToUeVector()),
               this.ggn.Add(this.Jgn.ToUeVector()),
-              i.SetSplinePoints(this.ggn, 1)),
+              i.D_SetSplinePoints(this.ggn, 1)),
             this.kgn > this.Ogn &&
               (this.T0n(this.xgn), (this.o0n = !1), (this.bgn = !1)))
           : ((this.kgn += t),
@@ -1905,7 +1914,7 @@ let SceneItemFanComponent =
               (this.ggn.Empty(),
               this.ggn.Add(this.qgn.ToUeVector()),
               this.ggn.Add(this.YJo.ToUeVector()),
-              s.SetSplinePoints(this.ggn, 1)),
+              s.D_SetSplinePoints(this.ggn, 1)),
             this.kgn > this.Ogn &&
               (this.Ggn.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
               this.xgn++,
@@ -1916,10 +1925,10 @@ let SceneItemFanComponent =
       var s,
         h = ActorSystem_1.ActorSystem.Get(
           UE.BP_BasePathLine_C.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
         ),
         e =
-          (h.K2_SetActorLocationAndRotation(
+          (h.D_K2_SetActorLocationAndRotation(
             this.n$t?.ActorLocation,
             this.r0n().ToUeRotator(),
             !1,
@@ -1930,7 +1939,7 @@ let SceneItemFanComponent =
       t
         ? ((t = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
             t,
             "[SceneItemFanComponent.DefaultFanEffect]",
             new EffectContext_1.EffectContext(this.Entity.Id),
@@ -1939,7 +1948,12 @@ let SceneItemFanComponent =
             ((s =
               EffectSystem_1.EffectSystem.GetEffectActor(
                 t,
-              ))?.K2_SetActorLocation(h.K2_GetActorLocation(), !1, void 0, !0),
+              ))?.D_K2_SetActorLocation(
+              h.D_K2_GetActorLocation(),
+              !1,
+              void 0,
+              !0,
+            ),
             s?.K2_AttachToActor(h, void 0, 1, 1, 1, !1),
             this.cgn?.push(h),
             this.mgn?.push(e),
@@ -1947,7 +1961,7 @@ let SceneItemFanComponent =
             i
               ? (s = EffectSystem_1.EffectSystem.SpawnEffect(
                   GlobalData_1.GlobalData.World,
-                  MathUtils_1.MathUtils.DefaultTransform,
+                  MathUtils_1.MathUtils.DefaultTransformDouble,
                   i,
                   "[SceneItemFanComponent.DefaultFanEffect]",
                   new EffectContext_1.EffectContext(this.Entity.Id),
@@ -1955,8 +1969,8 @@ let SceneItemFanComponent =
                 ((t =
                   EffectSystem_1.EffectSystem.GetEffectActor(
                     s,
-                  ))?.K2_SetActorLocation(
-                  h.K2_GetActorLocation(),
+                  ))?.D_K2_SetActorLocation(
+                  h.D_K2_GetActorLocation(),
                   !1,
                   void 0,
                   !0,
@@ -1973,7 +1987,7 @@ let SceneItemFanComponent =
     L0n(t) {
       0 < t &&
         t < this.cgn.length &&
-        this.cgn[t].K2_SetActorLocation(
+        this.cgn[t].D_K2_SetActorLocation(
           this._9r[t - 1].Location.ToUeVector(),
           !1,
           void 0,
@@ -1986,7 +2000,7 @@ let SceneItemFanComponent =
         if (e < this.cgn.length)
           for (let t = e; t < this.cgn.length; t++)
             this.ggn.Empty(),
-              this.mgn[t].SetSplinePoints(this.ggn, 1),
+              this.mgn[t].D_SetSplinePoints(this.ggn, 1),
               EffectSystem_1.EffectSystem.SetEffectHidden(this.dgn[t], !0);
         else {
           e <= this.cgn.length &&
@@ -2020,13 +2034,13 @@ let SceneItemFanComponent =
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            37,
+            36,
             "[SceneItemFanComponent] HideOrShowHitEffect invalid",
           )
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Level",
-              37,
+              36,
               "[SceneItemFanComponent] HideOrShowHitEffect",
               ["index", t],
               ["hide", i],
@@ -2042,7 +2056,7 @@ let SceneItemFanComponent =
         let t = !1;
         0 !== n &&
           ((e = EffectSystem_1.EffectSystem.GetEffectActor(n)) &&
-            ((t = !0), this.cz.DeepCopy(e.K2_GetActorLocation())),
+            ((t = !0), this.cz.DeepCopy(e.D_K2_GetActorLocation())),
           EffectSystem_1.EffectSystem.StopEffectById(
             n,
             "[SceneItemFanComponent.ReplaceEffect]",
@@ -2051,7 +2065,7 @@ let SceneItemFanComponent =
           i
             ? ((e = EffectSystem_1.EffectSystem.SpawnEffect(
                 GlobalData_1.GlobalData.World,
-                MathUtils_1.MathUtils.DefaultTransform,
+                MathUtils_1.MathUtils.DefaultTransformDouble,
                 i,
                 "[SceneItemFanComponent.DefaultFanEffect]",
                 new EffectContext_1.EffectContext(this.Entity.Id),
@@ -2060,8 +2074,8 @@ let SceneItemFanComponent =
                 ((n =
                   EffectSystem_1.EffectSystem.GetEffectActor(
                     e,
-                  ))?.K2_SetActorLocation(
-                  t ? this.cz.ToUeVector() : o.K2_GetActorLocation(),
+                  ))?.D_K2_SetActorLocation(
+                  t ? this.cz.ToUeVector() : o.D_K2_GetActorLocation(),
                   !1,
                   void 0,
                   !0,
@@ -2075,26 +2089,26 @@ let SceneItemFanComponent =
       var h = Protocol_1.Aki.Protocol.Tts.create();
       (h.F4n = MathUtils_1.MathUtils.NumberToLong(t)),
         (h.aKn = i),
-        Net_1.Net.Call(27902, h, s);
+        Net_1.Net.Call(23886, h, s);
     }
     rgn(t, i, s, h) {
       var e = Protocol_1.Aki.Protocol.Rts.create();
       (e.hKn = MathUtils_1.MathUtils.NumberToLong(t)),
         (e.lKn = MathUtils_1.MathUtils.NumberToLong(i)),
         (e.WHn = s ? 1 : 0),
-        Net_1.Net.Call(24428, e, h);
+        Net_1.Net.Call(18701, e, h);
     }
     f0n(t, i, s) {
       var h = Protocol_1.Aki.Protocol.Ats.create();
       (h.hKn = MathUtils_1.MathUtils.NumberToLong(t)),
         (h.WHn = i ? 1 : 0),
-        Net_1.Net.Call(24298, h, s);
+        Net_1.Net.Call(18582, h, s);
     }
   });
 (SceneItemFanComponent.C0n = new Array()),
   (SceneItemFanComponent = SceneItemFanComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(138)],
+      [(0, RegisterComponent_1.RegisterComponent)(149)],
       SceneItemFanComponent,
     )),
   (exports.SceneItemFanComponent = SceneItemFanComponent);

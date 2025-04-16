@@ -35,7 +35,7 @@ class UiBehaviorGuideFocus {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
-          17,
+          16,
           "[UiBehaviorGuideFocus] OnShow",
           ["引导组id", this.RZt.OwnerGroup.Id],
           ["聚焦引导Id", this.RZt.Id],
@@ -49,7 +49,7 @@ class UiBehaviorGuideFocus {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
-          17,
+          16,
           "[UiBehaviorGuideFocus] OnHide",
           ["引导组id", this.RZt.OwnerGroup.Id],
           ["聚焦引导Id", this.RZt.Id],
@@ -65,7 +65,7 @@ class UiBehaviorGuideFocus {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
-          17,
+          16,
           "[UiBehaviorGuideFocus] OnDestroy",
           ["引导组id", this.RZt.OwnerGroup.Id],
           ["步骤Id", this.RZt.Id],
@@ -85,7 +85,7 @@ class UiBehaviorGuideFocus {
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "聚焦引导配置依附的界面与实际打开的界面不一致",
               ["当前打开的界面名称", this.AZt],
               ["引导应该依附的界面", this.UZt],
@@ -101,7 +101,7 @@ class UiBehaviorGuideFocus {
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "聚焦引导步骤  附着界面不可见而挂起",
                 ["this.GuideStepInfo!.Id", this.RZt.Id],
               ),
@@ -109,7 +109,7 @@ class UiBehaviorGuideFocus {
           : (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "聚焦引导步骤  因找不到挂点ui而挂起",
                 ["this.GuideStepInfo!.Id", this.RZt.Id],
               ),
@@ -122,7 +122,7 @@ class UiBehaviorGuideFocus {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             `聚焦引导 ${this.RZt.Id} AttachedUiComponentAction为空`,
           ),
         !1
@@ -132,7 +132,7 @@ class UiBehaviorGuideFocus {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             `聚焦引导 ${this.RZt.Id} 依附界面还没打开, 打开后再来`,
           ),
         !1
@@ -144,13 +144,13 @@ class UiBehaviorGuideFocus {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             "聚焦引导步骤配置了额外参数, 走扩展逻辑",
             ["步骤Id", i.Id],
           ),
         2 !== (t = this.OQt.GetGuideUiItemAndUiItemForShowEx(t))?.length
           ? (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Guide", 17, "聚焦引导  额外参数解析失败", [
+              Log_1.Log.Warn("Guide", 16, "聚焦引导  额外参数解析失败", [
                 "stepInfo!.Id",
                 i.Id,
               ]),
@@ -167,7 +167,7 @@ class UiBehaviorGuideFocus {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "挂接组件(GuideHookRegistry)不存在该挂接点名称，请检查聚焦引导配置或挂接组件",
             ["当前打开的界面名称", this.AZt],
             ["引导应该依附的界面", this.UZt],
@@ -190,7 +190,7 @@ class UiBehaviorGuideFocus {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "挂接组件(GuideHookRegistry)不存在该挂接点（展示用）名称，请检查聚焦引导配置或挂接组件",
             ["当前打开的界面名称", this.AZt],
             ["引导应该依附的界面", this.UZt],

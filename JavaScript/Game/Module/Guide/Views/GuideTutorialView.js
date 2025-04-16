@@ -114,6 +114,9 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
         [8, this.aPe],
       ]);
   }
+  OnBeforeHide() {
+    this.TutorialInfo?.OwnerStep?.OwnerGroup?.FinishPromise?.SetResult();
+  }
   OnBeforeDestroy() {
     this.tPe?.ClearChildren(),
       (this.tPe = void 0),

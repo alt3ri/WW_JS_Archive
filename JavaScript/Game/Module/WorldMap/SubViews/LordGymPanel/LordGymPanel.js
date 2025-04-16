@@ -5,28 +5,30 @@ const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   DropPackageById_1 = require("../../../../../Core/Define/ConfigQuery/DropPackageById"),
   ExchangeRewardById_1 = require("../../../../../Core/Define/ConfigQuery/ExchangeRewardById"),
-  MapMarkByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkByMarkId"),
+  LordGymEntranceGroupByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/LordGymEntranceGroupByMarkId"),
+  LordGymEntranceSetByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/LordGymEntranceSetByMarkId"),
+  MonsterInfoById_1 = require("../../../../../Core/Define/ConfigQuery/MonsterInfoById"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   UiManager_1 = require("../../../../Ui/UiManager"),
-  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
   LevelPlay_1 = require("../../../LevelPlay/LevelPlay"),
-  MapController_1 = require("../../../Map/Controller/MapController"),
   MarkUiUtils_1 = require("../../../Map/Mark/Misc/MarkUiUtils"),
-  TeleportController_1 = require("../../../Teleport/TeleportController"),
+  GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
   GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
-  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
-  WorldMapDefine_1 = require("../../WorldMapDefine"),
-  MapTipsActivateTipPanel_1 = require("../Common/MapTipsActivateTipPanel"),
-  SceneGameplayTipGrid_1 = require("../SceneGameplayPanel/SceneGameplayTipGrid");
-class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
+  WorldMapController_1 = require("../../WorldMapController"),
+  SceneGameplayTipGrid_1 = require("../SceneGameplayPanel/SceneGameplayTipGrid"),
+  WorldMapSecondaryUiLayoutA_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutA"),
+  WorldMapSecondaryUiLayoutHelper_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutHelper"),
+  LordGymDifficultyStateItem_1 = require("./LordGymDifficultyStateItem");
+class LordGymPanel extends WorldMapSecondaryUiLayoutA_1.WorldMapSecondaryUiLayoutA {
   constructor() {
     super(...arguments),
+      (this.lql = !1),
       (this.Ymt = void 0),
       (this.u2o = void 0),
       (this.O2o = void 0),
@@ -35,22 +37,9 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.V2o = void 0),
       (this.IRe = void 0),
       (this.H2o = void 0),
-      (this.ZAt = void 0),
       (this.j2o = !1),
-      (this.k4a = void 0),
-      (this.N4a = void 0),
-      (this.oza = void 0),
       (this.OnCreateDifficultyItem = () => new DifficultyItem()),
-      (this.m2o = () => {
-        var e = this.u2o.IsTracked;
-        MapController_1.MapController.RequestTrackMapMark(
-          this.u2o.MarkType,
-          this.u2o.MarkId,
-          !e,
-        ),
-          this.Close();
-      }),
-      (this.UOe = () => {
+      (this.OnDetailBtnClick = () => {
         var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
           this.Ymt.Id,
         );
@@ -60,165 +49,182 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
               e.QuestId,
             )),
           UiManager_1.UiManager.OpenView("QuestView", e.TreeConfigId));
-      }),
-      (this.F4a = () => {
-        var e = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
-          this.Map,
-          this.u2o,
-        );
-        e &&
-          MarkUiUtils_1.MarkUiUtils.QuickGotoTeleport(this.u2o, e, () => {
-            this.Close();
-          });
-      }),
-      (this.P8e = () => {
-        var e = this.u2o;
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Map",
-            64,
-            "[地图系统]SceneGameplayPanel->追踪标记",
-            ["markId", e.MarkId],
-            ["IsTracked", e.IsTracked],
-          ),
-          MapController_1.MapController.RequestTrackMapMark(
-            e.MarkType,
-            e.MarkId,
-            !e.IsTracked,
-          ),
-          this.Close();
       });
   }
   GetResourceId() {
     return "UiView_InstanceEntranceTip_Prefab_2";
   }
-  OnRegisterComponent() {
-    (this.ComponentRegisterInfos =
-      WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA),
-      (this.BtnBindInfo = [[15, this.UOe]]);
-  }
-  async OnBeforeStartAsync() {
-    return (
-      (this.oza = new MapTipsActivateTipPanel_1.MapTipsActivateTipPanel()),
-      await this.oza.CreateByActorAsync(this.GetItem(31).GetOwner()),
-      super.OnBeforeStartAsync()
-    );
-  }
   OnStart() {
-    this.RootItem.SetRaycastTarget(!1),
-      (this.H2o = new GenericLayout_1.GenericLayout(
-        this.GetVerticalLayout(16),
-        this.OnCreateDifficultyItem,
-      )),
+    (this.H2o = new GenericLayout_1.GenericLayout(
+      this.GetVerticalLayout(16),
+      this.OnCreateDifficultyItem,
+    )),
       this.H2o.SetActive(!0),
-      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.ZAt.SetActive(!0),
-      this.GetItem(32).SetUIActive(!1),
-      this.ZAt.SetFunction(this.m2o),
-      (this.k4a = new ButtonItem_1.ButtonItem(this.GetButton(28).RootUIComp)),
-      this.k4a.SetFunction(this.P8e),
-      (this.N4a = new ButtonItem_1.ButtonItem(this.GetButton(29).RootUIComp)),
-      this.N4a.SetFunction(this.F4a);
+      super.OnStart();
   }
   OnBeforeDestroy() {
     this.H2o.ClearChildren(),
-      this.AddChild(this.ZAt),
-      this.k4a.Destroy(),
-      this.N4a.Destroy(),
-      this.oza.Destroy(),
       this.O2o && (this.AddChild(this.O2o), (this.O2o = void 0)),
       this.k2o && (this.AddChild(this.k2o), (this.k2o = void 0)),
       (this.F2o = void 0),
-      (this.V2o = void 0);
+      (this.V2o = void 0),
+      super.OnBeforeDestroy();
+  }
+  SetupWorldMapSecondaryUiLayout() {
+    super.SetupWorldMapSecondaryUiLayout(),
+      this.GetVerticalLayout(5).RootUIComp.SetUIActive(!1),
+      this.GetVerticalLayout(16).RootUIComp.SetUIActive(!0),
+      this.GetItem(32).SetUIActive(!1);
   }
   OnShowWorldMapSecondaryUi(e) {
-    e
-      ? ((this.u2o = e),
-        this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
-        (this.Ymt = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
-          e.MarkConfig.RelativeId,
-        )),
-        this.Ymt ||
-          ((this.Ymt = new LevelPlay_1.LevelPlayInfo(e.MarkConfig.RelativeId)),
-          this.Ymt.InitConfig()),
-        (this.IRe = void 0),
-        this.SHe(),
-        this.l_i())
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "SceneGameplay",
-          18,
-          "玩法弹窗打开错误，地图标记不存在",
-        );
+    (this.lql = e.IsNewLordGym()),
+      (this.u2o = e),
+      (this.LayoutContext.MarkItem = e),
+      (this.Ymt = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
+        e.MarkConfig.RelativeId,
+      )),
+      this.Ymt ||
+        ((this.Ymt = new LevelPlay_1.LevelPlayInfo(e.MarkConfig.RelativeId)),
+        this.Ymt.InitConfig()),
+      (this.IRe = void 0),
+      this.SHe(),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateConfirmButtonTextWithFastMoveStyle(
+        this.LayoutContext,
+      ),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateTrackButtonTextWithTrackStyle(
+        this.LayoutContext,
+      );
   }
   OnCloseWorldMapSecondaryUi() {
     this.IRe &&
       (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0));
   }
   SHe() {
-    var e,
-      i,
-      t = this.u2o.MarkConfigId,
-      r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
-    r
-      ? (this.GetText(1).ShowTextNew(r.MarkTitle),
-        this.GetText(4).ShowTextNew(r.MarkDesc),
-        (r = this.u2o.GetAreaText()) && this.GetText(3).SetText(r),
-        (r =
-          ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymEntranceConfigByMarkId(
+    var e = this.u2o.MarkConfigId;
+    if (ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(e)) {
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateTrackButtonTextWithTrackStyle(
+        this.LayoutContext,
+      ),
+        WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateIconAndTitle(
+          this.LayoutContext,
+        ),
+        WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateDesc(
+          this.LayoutContext,
+        ),
+        WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateAreaTxtByConfigMarkItem(
+          this.LayoutContext,
+        );
+      var r =
+          LordGymEntranceGroupByMarkId_1.configLordGymEntranceGroupByMarkId.GetConfigList(
             this.u2o.MarkId,
-          )),
-        (e =
-          ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymEntranceLordList(
-            r.Id,
-          )),
-        (i = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
+          ),
+        i = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
           this.Ymt.Id,
-        )?.LevelPlayRewardConfig),
-        (r =
-          ModelManager_1.ModelManager.LordGymModel.GetMaxDifficultyLordGymEntranceCanFight(
-            r.Id,
-          ) ?? 1),
-        (this.F2o = ExchangeRewardById_1.configExchangeRewardById.GetConfig(
-          i.RewardConfig[r - 1].RewardId,
+        )?.LevelPlayRewardConfig;
+      if (this.lql) {
+        var t =
+            LordGymEntranceSetByMarkId_1.configLordGymEntranceSetByMarkId.GetConfig(
+              this.u2o.MarkId,
+            ),
+          a = r.length,
+          o = new Array(a);
+        for (let e = 0; e < a; e++) {
+          var s = r[e].LordGymList,
+            n = s.length,
+            d = new Array(n);
+          let i = "";
+          for (let r = 0; r < n; r++) {
+            var l = s[r],
+              h =
+                (0 === r &&
+                  ((h =
+                    ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(
+                      l,
+                    ).MonsterList),
+                  (h = MonsterInfoById_1.configMonsterInfoById.GetConfig(h[0])),
+                  (i = h.Name)),
+                ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(l)),
+              y =
+                ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(l),
+              l = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(l);
+            let e = 0;
+            y ? (e = 2) : l && h && (e = 1), (d[r] = e);
+          }
+          var _ = { NameTextId: i, StateList: d };
+          o[e] = _;
+        }
+        this.H2o.RefreshByData(o),
+          (this.F2o = ExchangeRewardById_1.configExchangeRewardById.GetConfig(
+            t.PreviewRewardId,
+          ));
+      } else {
+        var t = r[0],
+          M =
+            ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymEntranceLordList(
+              t.Id,
+            ),
+          t =
+            ModelManager_1.ModelManager.LordGymModel.GetMaxDifficultyLordGymEntranceCanFight(
+              t.Id,
+            ) ?? 1,
+          i =
+            ((this.F2o =
+              ExchangeRewardById_1.configExchangeRewardById.GetConfig(
+                i.RewardConfig[t - 1].RewardId,
+              )),
+            (this.V2o = this.Ymt.FirstRewardId
+              ? ExchangeRewardById_1.configExchangeRewardById.GetConfig(
+                  this.Ymt.FirstRewardId,
+                )
+              : void 0),
+            M[t - 1]),
+          u =
+            ((this.j2o =
+              ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(i)),
+            M.length),
+          g = new Array(u);
+        for (let r = 0; r < u; r++) {
+          var c = M[r],
+            p = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(c),
+            L = ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(c),
+            f = ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(c),
+            c = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(c);
+          let e = 0;
+          f ? (e = 2) : c && L && (e = 1);
+          f = {
+            NameTextId: "LordGymDifficulty",
+            NameTextArg: [p.Difficulty],
+            StateList: [e],
+          };
+          g[r] = f;
+        }
+        this.H2o.RefreshByData(g);
+      }
+      this.xHl(), this.InitRewards(), this.W2o();
+    } else
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error("SceneGameplay", 17, "缺少标记配置", ["MarkId", e]);
+  }
+  xHl() {
+    let e = !1,
+      r = !1,
+      i = !1;
+    var t;
+    this.lql
+      ? ((t =
+          ModelManager_1.ModelManager.MapModel.GetMarkExtraShowState(
+            this.u2o.MarkId,
+          ).ShowFlag !== Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable),
+        (i = t),
+        (e = MarkUiUtils_1.MarkUiUtils.IsShowGoto(this.u2o)),
+        (r = !e))
+      : ((t = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+          this.Ymt.Id,
         )),
-        (this.V2o = this.Ymt.FirstRewardId
-          ? ExchangeRewardById_1.configExchangeRewardById.GetConfig(
-              this.Ymt.FirstRewardId,
-            )
-          : void 0),
-        (i = e[r - 1]),
-        (this.j2o =
-          ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(i)),
-        this.H2o.RefreshByData(e),
-        this.GetItem(9).SetUIActive(!1),
-        this.GetItem(12).SetUIActive(!1),
-        this.GetItem(8).SetUIActive(!1),
-        this.GetItem(14).SetUIActive(!0),
-        this.GetItem(26).SetUIActive(!1),
-        this.GetVerticalLayout(5).RootUIComp.SetUIActive(!1),
-        this.GetVerticalLayout(16).RootUIComp.SetUIActive(!0),
-        this.GetItem(25).SetUIActive(!1),
-        (i =
-          !(r = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
-            this.Ymt.Id,
-          )).IsOccupied && MarkUiUtils_1.MarkUiUtils.IsShowGoto(this.u2o)),
-        r.IsOccupied ? this.ZAt.SetActive(!1) : this.ZAt.SetActive(!i),
-        this.GetItem(32).SetUIActive(i),
-        this.oza.SetUiActive(!1),
-        i &&
-          ((e = this.GetButton(29)),
-          (r = TeleportController_1.TeleportController.CheckCanTeleport()),
-          (i = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
-            this.Map,
-            this.u2o,
-          )),
-          this.oza.SetUiActive(!r || void 0 === i),
-          e.SetSelfInteractive(r && void 0 !== i)),
-        this.InitRewards(),
-        this.W2o())
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("SceneGameplay", 18, "缺少标记配置", ["MarkId", t]);
+        (e = !t.IsOccupied)),
+      this.ConfirmButton.SetActive(r),
+      this.ConfirmButton.SetEnableClick(i),
+      this.UpdateQuickGotoActive(e);
   }
   W2o() {
     var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
@@ -242,110 +248,120 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   InitRewards() {
     this.O2o ||
-      ((i = this.GetItem(8).GetOwner()),
+      ((r = this.GetItem(8).GetOwner()),
       (e = this.GetVerticalLayout(7).RootUIComp),
       (this.k2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-      this.k2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)),
+      this.k2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(r, e)),
       (this.O2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-      this.O2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)));
+      this.O2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(r, e)));
     var e,
-      i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-    this.Ymt.IsFirstPass
-      ? this.K2o(this.k2o, void 0, 0, "", this.j2o)
-      : this.K2o(this.k2o, this.V2o, i, "FirstPassReward"),
-      this.K2o(this.O2o, this.F2o, i, "FirstPassReward", this.j2o);
+      r = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+    this.lql
+      ? this.K2o(this.O2o, this.F2o, r, "NewLordGymPassReward", !1)
+      : (this.Ymt.IsFirstPass
+          ? this.K2o(this.k2o, void 0, 0, "", this.j2o)
+          : this.K2o(this.k2o, this.V2o, r, "FirstPassReward"),
+        this.K2o(this.O2o, this.F2o, r, "FirstPassReward", this.j2o));
   }
-  K2o(e, r, s, i, a = !1) {
-    if (r) {
-      var h = r.PreviewReward;
-      let t = void 0;
-      if (h.has(s)) t = h.get(s).MapIntInt;
+  K2o(e, t, a, r, o = !1) {
+    if (t) {
+      var s = t.PreviewReward;
+      let i = void 0;
+      if (s.has(a)) i = s.get(a).MapIntInt;
       else
-        for (let e = s - 1; 0 <= e; e--)
-          if (h.has(e)) {
-            t = h.get(e).MapIntInt;
+        for (let e = a - 1; 0 <= e; e--)
+          if (s.has(e)) {
+            i = s.get(e).MapIntInt;
             break;
           }
-      if (!t) {
+      if (!i) {
         var n,
-          o = r.RewardId;
-        let i = 0;
-        if (o.has(s)) i = o.get(s);
+          d = t.RewardId;
+        let r = 0;
+        if (d.has(a)) r = d.get(a);
         else
-          for (let e = s - 1; 0 <= e; e--)
-            if (o.has(e)) {
-              i = o.get(e);
+          for (let e = a - 1; 0 <= e; e--)
+            if (d.has(e)) {
+              r = d.get(e);
               break;
             }
-        i &&
-          0 < i &&
-          ((n = DropPackageById_1.configDropPackageById.GetConfig(i))
-            ? (t = n.DropPreview)
+        r &&
+          0 < r &&
+          ((n = DropPackageById_1.configDropPackageById.GetConfig(r))
+            ? (i = n.DropPreview)
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneGameplay",
-                18,
+                17,
                 "兑换奖励表配置的掉落ID读取不到掉落奖励",
-                ["兑换奖励ID", r.Id],
+                ["兑换奖励ID", t.Id],
               ));
       }
-      t
-        ? (e.Refresh(t, i, !0, a), e.SetActive(!0))
+      i
+        ? (e.Refresh(i, r, !0, o), e.SetActive(!0))
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "SceneGameplay",
-              18,
+              17,
               "读取不到奖励配置",
-              ["兑换奖励ID", r.Id],
-              ["WorldLevel", s],
+              ["兑换奖励ID", t.Id],
+              ["WorldLevel", a],
             ),
           e.SetActive(!1));
     } else e.SetActive(!1);
   }
-  l_i() {
-    let e = "";
-    (e = this.u2o.IsTracked
-      ? "InstanceDungeonEntranceCancelTrack"
-      : "InstanceDungeonEntranceTrack"),
-      this.ZAt.SetLocalText(e),
-      this.k4a.SetLocalText(e);
+  HandleTeleportAndTrack() {
+    var e = this.LayoutContext.MarkItem;
+    !e.IsLocked && this.lql
+      ? (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Map",
+            43,
+            "[地图系统]CommonGamePlayPanel->传送",
+            ["markId", e.MarkId],
+            ["IsTracked", e.IsTracked],
+          ),
+        WorldMapController_1.WorldMapController.TryTeleport(e.MarkConfigId))
+      : this.HandleTrack();
   }
 }
 exports.LordGymPanel = LordGymPanel;
-class DifficultyItem extends UiPanelBase_1.UiPanelBase {
+class DifficultyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.ScrollViewDelegate = void 0),
-      (this.GridIndex = 0),
-      (this.DisplayIndex = 0);
+      (this.hql = void 0),
+      (this._ql = () =>
+        new LordGymDifficultyStateItem_1.LordGymDifficultyStateItem());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UIText],
-      [1, UE.UISprite],
-      [2, UE.UISprite],
-      [3, UE.UISprite],
+      [1, UE.UITexture],
+      [2, UE.UIItem],
+      [3, UE.UIText],
+      [4, UE.UIHorizontalLayout],
+      [5, UE.UIItem],
     ];
   }
-  Refresh(e, i, t) {
-    var r = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(e),
-      r =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(
-          this.GetText(0),
-          "LordGymDifficulty",
-          r.Difficulty,
-        ),
-        ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(e)),
-      s = ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(e),
-      e = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(e);
-    this.GetSprite(3)?.SetUIActive(s),
-      this.GetSprite(2)?.SetUIActive(e && r && !s),
-      this.GetSprite(1)?.SetUIActive(!e || !r);
+  OnStart() {
+    this.GetItem(2)?.SetUIActive(!1),
+      (this.hql = new GenericLayout_1.GenericLayout(
+        this.GetHorizontalLayout(4),
+        this._ql,
+        this.GetItem(5).GetOwner(),
+      ));
   }
-  Clear() {}
-  OnSelected(e) {}
-  OnDeselected(e) {}
-  GetKey(e, i) {
+  Refresh(e, r, i) {
+    e.NameTextArg
+      ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(0),
+          e.NameTextId,
+          ...e.NameTextArg,
+        )
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.NameTextId),
+      this.hql?.RefreshByData(e.StateList);
+  }
+  GetKey(e, r) {
     return this.GridIndex;
   }
 }

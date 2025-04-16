@@ -7,6 +7,7 @@ const UE = require("ue"),
   LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
@@ -16,20 +17,24 @@ const UE = require("ue"),
   OneTextTitleItem_1 = require("../DropDown/Item/OneText/OneTextTitleItem"),
   ConsumeMediumItemGrid_1 = require("./ConsumeMediumItemGrid");
 class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
-  constructor(t, e, i = void 0) {
+  constructor(t, e, i = void 0, s = !1) {
     super(),
       (this.ConsumeFunction = e),
       (this.BelongView = i),
+      (this.NeedSettingComponent = s),
       (this.StrengthItem = void 0),
       (this.ScrollView = void 0),
       (this.ConsumeList = []),
       (this.rLt = 3),
       (this.MaxCount = 0),
       (this.EnoughMoney = !0),
+      (this.SelectTextId = "AutoSelect"),
+      (this.SettingRedDotName = void 0),
       (this.h8e = void 0),
       (this.d8e = void 0),
       (this.nLt = void 0),
       (this.wqe = void 0),
+      (this.l1l = void 0),
       (this.m8e = (t) => new OneTextDropDownItem_1.OneTextDropDownItem(t)),
       (this.c8e = (t) => new OneTextTitleItem_1.OneTextTitleItem(t)),
       (this.g8e = (t) => {
@@ -40,6 +45,9 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
           ? this.ConsumeFunction.DeleteSelectFunction?.()
           : this.ConsumeFunction.AutoFunction &&
             this.ConsumeFunction.AutoFunction(this.rLt);
+      }),
+      (this.h1l = () => {
+        this.l1l?.();
       }),
       (this.C8e = (t) => {
         this.rLt = t;
@@ -80,7 +88,11 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
       [12, UE.UIItem],
       [15, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.tLt]]);
+      (this.BtnBindInfo = [[3, this.tLt]]),
+      this.NeedSettingComponent &&
+        (this.ComponentRegisterInfos.push([18, UE.UIButtonComponent]),
+        this.ComponentRegisterInfos.push([19, UE.UIItem]),
+        this.BtnBindInfo.push([18, this.h1l]));
   }
   async OnBeforeStartAsync() {
     (this.h8e = new CommonDropDown_1.CommonDropDown(
@@ -118,8 +130,14 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
   }
   aLt() {
     this.HasSelect()
-      ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(15), "DeleteSelect")
-      : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(15), "AutoSelect");
+      ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(15), "DeleteSelect")
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(15),
+          this.SelectTextId,
+        );
+  }
+  UpdateAutoSelectTextByTextId(t) {
+    (this.SelectTextId = t), this.aLt();
   }
   OnStart() {
     (this.StrengthItem = new ButtonItem_1.ButtonItem(this.GetItem(11))),
@@ -131,7 +149,8 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
     )),
       this.GetItem(2).SetUIActive(!1),
       (this.MaxCount =
-        ConfigManager_1.ConfigManager.WeaponConfig.GetMaterialItemMaxCount());
+        ConfigManager_1.ConfigManager.WeaponConfig.GetMaterialItemMaxCount()),
+      this.SetSettingButtonVisible(!1);
   }
   GetCurrentDropDownSelectIndex() {
     return this.rLt;
@@ -153,7 +172,12 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     this.StrengthItem &&
       (this.StrengthItem.Destroy(), (this.StrengthItem = void 0)),
-      this.h8e?.Destroy();
+      this.h8e?.Destroy(),
+      this.SettingRedDotName &&
+        RedDotController_1.RedDotController.UnBindGivenUi(
+          this.SettingRedDotName,
+          this.GetItem(19),
+        );
   }
   UpdateComponent(t, e, i) {
     (this.ConsumeList = i), this.ScrollView.RefreshByData(this.ConsumeList);
@@ -201,6 +225,17 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
   }
   SetConsumeTexture(t) {
     this.SetItemIcon(this.GetTexture(7), t);
+  }
+  SetSettingButtonVisible(t) {
+    this.NeedSettingComponent && this.GetButton(18)?.RootUIComp.SetUIActive(t);
+  }
+  SetSettingButtonClickCallBack(t) {
+    this.l1l = t;
+  }
+  BindSettingButtonRedDot(t) {
+    this.NeedSettingComponent &&
+      ((this.SettingRedDotName = t),
+      RedDotController_1.RedDotController.BindRedDot(t, this.GetItem(19)));
   }
 }
 exports.ItemGridConsumeComponent = ItemGridConsumeComponent;

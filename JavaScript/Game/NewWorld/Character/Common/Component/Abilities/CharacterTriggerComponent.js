@@ -31,13 +31,13 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   builtinFunc = {
     GetTags: (e) => {
       var r = [];
-      for (const t of e.CheckGetComponent(190).TagContainer.GetAllExactTags() ??
+      for (const t of e.CheckGetComponent(203).TagContainer.GetAllExactTags() ??
         [])
         r.push(GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t));
       return r;
     },
     GetAttributeByID(e, r) {
-      return e.CheckGetComponent(159).GetCurrentValue(r);
+      return e.CheckGetComponent(171).GetCurrentValue(r);
     },
     HasInt: (e, r) => !(!r || 0 === r.length) && r.includes(e),
     MatchAnyInt: (e, r) =>
@@ -48,17 +48,17 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
       e.every((e) => r.includes(e)),
     MatchAnyTag: (e, r) =>
       e
-        .CheckGetComponent(190)
+        .CheckGetComponent(203)
         .HasAnyTag(
           r.map((e) => GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e)),
         ),
     MatchAllTags: (e, r) =>
       e
-        .CheckGetComponent(190)
+        .CheckGetComponent(203)
         .HasAllTag(
           r.map((e) => GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e)),
         ),
-    GetShieldValue: (e) => e.CheckGetComponent(67)?.ShieldTotal ?? 0,
+    GetShieldValue: (e) => e.CheckGetComponent(74)?.ShieldTotal ?? 0,
     Distance: (e, r) => {
       var t = ModelManager_1.ModelManager.CreatureModel,
         i = e?.GetComponent(0),
@@ -83,11 +83,32 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
           : r?.CheckGetComponent(3)?.ActorLocationProxy;
       return i && e ? Vector_1.Vector.Dist2D(i, e) : 1 / 0;
     },
+    GetBattleScore: () =>
+      ModelManager_1.ModelManager.BattleScoreModel.GetCurScore(),
+    GetBuffStack: (e, r) => {
+      var t = e.CheckGetComponent(188),
+        r = Number(r);
+      return t
+        ? (t.GetFormationBuffComp()?.GetFormationBuffTotalStackById(r) ?? 0) +
+            (t.GetBuffTotalStackById(r) ?? 0)
+        : (e.CheckGetComponent(207)?.GetBuffTotalStackById(r) ?? 0);
+    },
+    MatchAnyBattleFlags: (e, r) =>
+      !(!e || !r || 0 === e.length || 0 === r.length) &&
+      e.some((e) => r.includes(e)),
+    GetTagStackCount: (e, r) =>
+      e
+        .GetComponent(203)
+        ?.GetTagCount(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(r)) ??
+      0,
   };
 let triggerHandleCounter = 0,
   CharacterTriggerComponent = class CharacterTriggerComponent extends EntityComponent_1.EntityComponent {
     constructor() {
       super(...arguments), (this.wkr = new Map()), (this.Bkr = new Map());
+    }
+    get TriggerFormulaFunc() {
+      return this.Bkr;
     }
     OnInit() {
       return !0;
@@ -127,7 +148,7 @@ let triggerHandleCounter = 0,
       if (!r)
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 20, "添加Trigger失败，找不到对应配置", [
+            Log_1.Log.Error("Battle", 19, "添加Trigger失败，找不到对应配置", [
               "owner",
               this.Entity.Id,
             ]),
@@ -140,7 +161,7 @@ let triggerHandleCounter = 0,
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              20,
+              19,
               "添加Trigger失败, 找不到对应的Trigger类型或客户端未作实现",
               ["owner", this.Entity.Id],
               ["triggerType", r.Type],
@@ -157,7 +178,7 @@ let triggerHandleCounter = 0,
             ? Log_1.Log.CheckError() &&
               Log_1.Log.ErrorWithStack(
                 "Battle",
-                20,
+                19,
                 "创建Trigger实例失败",
                 e,
                 ["owner", this.Entity.Id],
@@ -168,7 +189,7 @@ let triggerHandleCounter = 0,
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Battle",
-                20,
+                19,
                 "创建Trigger实例失败",
                 ["owner", this.Entity.Id],
                 ["triggerType", r.Type],
@@ -192,7 +213,7 @@ let triggerHandleCounter = 0,
     }
   };
 (CharacterTriggerComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(25)],
+  [(0, RegisterComponent_1.RegisterComponent)(28)],
   CharacterTriggerComponent,
 )),
   (exports.CharacterTriggerComponent = CharacterTriggerComponent);

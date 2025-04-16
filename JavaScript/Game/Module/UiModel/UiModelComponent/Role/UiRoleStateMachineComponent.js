@@ -75,7 +75,7 @@ let UiRoleStateMachineComponent = class UiRoleStateMachineComponent extends UiMo
   }
 };
 (UiRoleStateMachineComponent = __decorate(
-  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(13)],
+  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(14)],
   UiRoleStateMachineComponent,
 )),
   (exports.UiRoleStateMachineComponent = UiRoleStateMachineComponent);

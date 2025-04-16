@@ -7,19 +7,19 @@ const ConfigManager_1 = require("../../Manager/ConfigManager"),
   FOLLOWER_ID = 658700001;
 class SkillButtonFormationData {
   constructor() {
-    (this.mEa = new Map()), (this.VRn = !1), (this.QRn = void 0);
+    (this.CEa = new Map()), (this.VRn = !1), (this.QRn = void 0);
   }
   Init() {}
   Clear() {
-    for (const t of this.mEa.values()) t.Clear();
+    for (const t of this.CEa.values()) t.Clear();
   }
   GetSkillButtonTypeFormationData(t) {
-    let a = this.mEa.get(t);
+    let a = this.CEa.get(t);
     return (
       a ||
         ((a =
           new SkillButtonTypeFormationData_1.SkillButtonTypeFormationData()),
-        this.mEa.set(t, a)),
+        this.CEa.set(t, a)),
       a
     );
   }
@@ -29,13 +29,13 @@ class SkillButtonFormationData {
       ModelManager_1.ModelManager.BattleUiModel?.FormationData?.GetFollowerEntityHandle()
         ?.PbDataId === FOLLOWER_ID
         ? (this.QRn || (this.QRn = this.XRn("SP_IconT35")),
-          this.dEa(7, this.QRn, 210020))
-        : this.dEa(7, void 0, 0),
+          this.gEa(7, this.QRn, 210020))
+        : this.gEa(7, void 0, 0),
       ModelManager_1.ModelManager.SkillButtonUiModel?.GetCurSkillButtonFollowerEntityData()?.SetEnable(
         t,
       ));
   }
-  dEa(t, a, e = 0) {
+  gEa(t, a, e = 0) {
     var o = this.GetSkillButtonTypeFormationData(t);
     (o.SkillIconPath !== a || o.EnableSkillId !== e) &&
       ((o.SkillIconPath = a),

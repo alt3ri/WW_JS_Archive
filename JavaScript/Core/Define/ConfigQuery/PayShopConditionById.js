@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configPayShopConditionById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configPayShopConditionById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configPayShopConditionById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configPayShopConditionById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configPayShopConditionById.GetConfig(";
 exports.configPayShopConditionById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var i = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       t =
-        (i.Start(),
+        (i?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (n) {
@@ -43,8 +47,8 @@ exports.configPayShopConditionById = {
         const e = ConfigCommon_1.ConfigCommon.GetConfig(C);
         if (e)
           return (
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -77,8 +81,8 @@ exports.configPayShopConditionById = {
               ((t = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -86,8 +90,8 @@ exports.configPayShopConditionById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    i.Stop(),
-      getConfigStat.Stop(),
+    i?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterBodyTypeConfig = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class MonsterBodyTypeConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -34,8 +35,14 @@ class MonsterBodyTypeConfig {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   handbookcameraid(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 6),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   moveforwarddistance() {
     var t = this.J7.__offset(this.z7, 8);
@@ -46,8 +53,14 @@ class MonsterBodyTypeConfig {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   moveforwardcurvepath(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 12),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
 }
 exports.MonsterBodyTypeConfig = MonsterBodyTypeConfig;

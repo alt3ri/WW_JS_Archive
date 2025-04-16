@@ -235,7 +235,7 @@ class ExchangePopView extends UiViewBase_1.UiViewBase {
   }
   Og() {
     var e = this.GetItem(2);
-    this.i4i.GetRootItem().SetUIParent(e),
+    this.i4i.GetOriginalItem().SetUIParent(e),
       this.i4i.HideExchangePopViewElement(),
       this.i4i.Refresh(this.Goods, !1, 0),
       this.SetEndTime(),

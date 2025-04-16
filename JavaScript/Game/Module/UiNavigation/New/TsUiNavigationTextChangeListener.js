@@ -7,6 +7,9 @@ class TsUiNavigationTextChangeListener extends UE.UINavigationTextChangeListener
   constructor() {
     super(...arguments), (this.Listener = void 0), (this.Text = void 0);
   }
+  Constructor() {
+    (this.Listener = void 0), (this.Text = void 0);
+  }
   AwakeBP() {
     GlobalData_1.GlobalData.GameInstance &&
       (this.Listener = this.GetOwner().GetComponentByClass(

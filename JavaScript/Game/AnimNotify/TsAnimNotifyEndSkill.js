@@ -5,15 +5,22 @@ const UE = require("ue"),
   CharacterBuffIds_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
   CombatLog_1 = require("../Utils/CombatLog");
 class TsAnimNotifyEndSkill extends UE.KuroAnimNotify {
+  Constructor() {}
   K2_Notify(e, r) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
       e = e.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      var t = e.GetComponent(190),
-        a = e.GetComponent(34),
-        i = e.GetComponent(160);
-      if (!t?.Valid || !a?.Valid || !i?.Valid) return !1;
+      var t = e.GetComponent(203),
+        a = e.GetComponent(39),
+        i = e.GetComponent(172);
+      if (
+        !t?.Valid ||
+        !a?.Valid ||
+        !i?.Valid ||
+        a.IsSkillMontageInvalid(r.GetName())
+      )
+        return !1;
       r = UE.KismetSystemLibrary.GetPathName(r);
       if (
         t.HasTag(-1221493771) &&

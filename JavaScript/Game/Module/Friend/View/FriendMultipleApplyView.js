@@ -20,7 +20,7 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
           UiManager_1.UiManager.CloseView("FriendMultipleApplyView"),
           this.bNi.RefreshByData(this.Xra);
       }),
-      (this.zma = () => {
+      (this.eCa = () => {
         this.CloseMe();
       });
   }
@@ -40,7 +40,7 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.zma,
+        this.eCa,
       );
   }
   OnRemoveEventListener() {
@@ -50,7 +50,7 @@ class FriendMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.zma,
+        this.eCa,
       );
   }
   OnTick(e) {

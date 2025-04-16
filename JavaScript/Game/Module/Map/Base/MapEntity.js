@@ -10,7 +10,7 @@ class MapEntity {
       (this.PropertyMap = new PropertyMap_1.PropertyMap());
   }
   Init() {
-    this.OnInit();
+    this.OnInit(), this.MapComponentContainer.Init();
   }
   Tick(t) {
     this.MapComponentContainer.Tick(t), this.OnTick();
@@ -31,8 +31,18 @@ class MapEntity {
   GetComponent(t) {
     return this.MapComponentContainer.GetComponent(t);
   }
+  GetOrAddComponent(t) {
+    var e = this.GetComponent(t);
+    return e || this.AddComponent(t);
+  }
+  EnsureComponent(t) {
+    this.GetOrAddComponent(t);
+  }
   RemoveComponent(t) {
     this.MapComponentContainer.RemoveComponent(t);
+  }
+  ReloadComponent(t) {
+    this.RemoveComponent(t), this.AddComponent(t);
   }
 }
 exports.MapEntity = MapEntity;

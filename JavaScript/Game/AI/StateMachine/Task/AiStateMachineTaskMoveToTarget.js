@@ -18,7 +18,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
       (this.Due = Vector_1.Vector.Create()),
       (this.Xne = !1),
       (this._se = 0),
-      (this.dRa = 0);
+      (this.pRa = 0);
   }
   OnInit(t) {
     return (
@@ -37,20 +37,20 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
       this.TargetType)
     ) {
       case 0:
-        this.CRa();
+        this.vRa();
         break;
       case 1:
-        this.gRa();
+        this.MRa();
     }
-    this.fRa();
+    this.SRa();
   }
   OnTick() {
     this.Xne &&
       1 === this.TargetType &&
-      this.Node.ElapseTime >= this.dRa + TRIGGER_PERIOD &&
-      (this.gRa(), this.fRa());
+      this.Node.ElapseTime >= this.pRa + TRIGGER_PERIOD &&
+      (this.MRa(), this.SRa());
   }
-  CRa() {
+  vRa() {
     var t;
     (this._se = this.Node.Owner.GetBlackboard(2) ?? 0),
       this._se &&
@@ -61,14 +61,14 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
         (this.Due.Y = t.Transform.Pos.Y),
         (this.Due.Z = t.Transform.Pos.Z));
   }
-  gRa() {
+  MRa() {
     var t = this.Node.AiController.AiHateList.GetCurrentTarget(),
       t = (t?.Valid || this.$ne(!1), t.Entity.GetComponent(1));
     (this.Due.X = t.ActorLocation.X),
       (this.Due.Y = t.ActorLocation.Y),
       (this.Due.Z = t.ActorLocation.Z);
   }
-  fRa() {
+  SRa() {
     if (
       this.Node.MoveComponent.MoveController.NavigateMoveToLocation(
         {
@@ -86,7 +86,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
         !1,
       )
     ) {
-      var t = this.Node.Entity.GetComponent(161);
+      var t = this.Node.Entity.GetComponent(173);
       if (t.Valid)
         switch (this.MoveState) {
           case 1:
@@ -95,7 +95,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
           case 2:
             t.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run);
         }
-      this.dRa = this.Node.ElapseTime;
+      this.pRa = this.Node.ElapseTime;
     } else this.$ne(!1);
   }
   $ne(t = 0) {

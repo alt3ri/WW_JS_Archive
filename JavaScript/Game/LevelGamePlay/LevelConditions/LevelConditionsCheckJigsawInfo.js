@@ -24,14 +24,14 @@ class LevelConditionCheckJigsawInfo extends LevelGeneralBase_1.LevelConditionBas
       a =
         ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
           a,
-        )?.Entity?.GetComponent(124);
+        )?.Entity?.GetComponent(135);
     return (
       !!a &&
       ((r = e.ItemEntityId),
       !!(r =
         ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
           r,
-        )?.Entity?.GetComponent(125))) &&
+        )?.Entity?.GetComponent(136))) &&
       !!a.GetAllItemOnBase().includes(r) &&
       ((a = a.GetPutItemIndex(r)),
       (r = e.PlaceIndex),
@@ -43,8 +43,8 @@ class LevelConditionCheckJigsawInfo extends LevelGeneralBase_1.LevelConditionBas
     var e = e.ItemEntityId,
       e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
     return (
-      !!e?.Entity?.GetComponent(142) &&
-      !!(e = e?.Entity?.GetComponent(116)) &&
+      !!e?.Entity?.GetComponent(153) &&
+      !!(e = e?.Entity?.GetComponent(126)) &&
       e.IsMoving
     );
   }

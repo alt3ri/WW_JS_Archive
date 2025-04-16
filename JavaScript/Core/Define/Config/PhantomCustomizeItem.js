@@ -11,11 +11,14 @@ class PhantomCustomizeItem {
   get PhantomId() {
     return this.phantomid();
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  get SkinItemId() {
+    return this.skinitemid();
   }
-  static getRootAsPhantomCustomizeItem(t, s) {
-    return (s || new PhantomCustomizeItem()).__init(
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
+  }
+  static getRootAsPhantomCustomizeItem(t, i) {
+    return (i || new PhantomCustomizeItem()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -26,6 +29,10 @@ class PhantomCustomizeItem {
   }
   phantomid() {
     var t = this.J7.__offset(this.z7, 6);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  skinitemid() {
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

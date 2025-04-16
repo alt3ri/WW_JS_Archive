@@ -8,7 +8,8 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
 var EAttributeId = Protocol_1.Aki.Protocol.Vks;
-const ControllerHolder_1 = require("../../Manager/ControllerHolder");
+const ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class BattleUiRoleData {
   constructor() {
     (this.IsCurEntity = !1),
@@ -20,20 +21,30 @@ class BattleUiRoleData {
       (this.ShieldComponent = void 0),
       (this.RoleQteComponent = void 0),
       (this.CreatureDataComponent = void 0),
+      (this.BaseDeathComponent = void 0),
       (this.ElementType = void 0),
       (this.ElementConfig = void 0),
       (this.ElementColor = void 0),
       (this.ElementLinearColor = void 0),
       (this.UltimateSkillColor = void 0),
+      (this.CreatureDataId = 0),
       (this.CreatureRoleId = void 0),
+      (this.CreatureSkinId = void 0),
       (this.RoleConfig = void 0),
       (this.RoleBattleViewInfo = void 0),
+      (this.HeadIconEnergyBarConfig = void 0),
       (this.QteCdTagId = 0),
       (this.boa = void 0),
       (this.i$e = []),
       (this.o$e = (t, i, e) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.BattleUiElementEnergyChanged,
+          this.EntityHandle.Id,
+        );
+      }),
+      (this.Trc = (t, i, e) => {
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.BattleUiEnergyChanged,
           this.EntityHandle.Id,
         );
       }),
@@ -85,9 +96,13 @@ class BattleUiRoleData {
           i,
         );
       }),
-      (this.B2a = (t, i) => {
+      (this.wGa = (t, i) => {
         i &&
           ControllerHolder_1.ControllerHolder.HudUnitController.TryCreateHud(0);
+      }),
+      (this.NQ_ = (t, i) => {
+        i &&
+          ControllerHolder_1.ControllerHolder.HudUnitController.TryCreateHud(5);
       }),
       (this._$e = (t, i) => {
         this.IsCurEntity &&
@@ -121,14 +136,17 @@ class BattleUiRoleData {
   Init(t, i) {
     (this.EntityHandle = t),
       (this.IsCurEntity = i),
-      (this.AttributeComponent = t.Entity.GetComponent(159)),
-      (this.GameplayTagComponent = t.Entity.GetComponent(190)),
-      (this.RoleElementComponent = t.Entity.GetComponent(82)),
-      (this.BuffComponent = t.Entity.GetComponent(160)),
-      (this.ShieldComponent = t.Entity.GetComponent(67)),
-      (this.RoleQteComponent = t.Entity.GetComponent(89)),
+      (this.AttributeComponent = t.Entity.GetComponent(171)),
+      (this.GameplayTagComponent = t.Entity.GetComponent(203)),
+      (this.RoleElementComponent = t.Entity.GetComponent(89)),
+      (this.BuffComponent = t.Entity.GetComponent(172)),
+      (this.ShieldComponent = t.Entity.GetComponent(74)),
+      (this.RoleQteComponent = t.Entity.GetComponent(96)),
       (this.CreatureDataComponent = t.Entity.GetComponent(0)),
-      (this.ElementType = this.RoleElementComponent.RoleElementType),
+      (this.BaseDeathComponent = t.Entity.GetComponent(15)),
+      (this.ElementType = this.AttributeComponent.GetCurrentValue(
+        EAttributeId.Proto_ElementPropertyType,
+      )),
       (this.ElementConfig =
         ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(
           this.ElementType,
@@ -139,13 +157,20 @@ class BattleUiRoleData {
         this.ElementConfig.UltimateSkillColor,
       )),
       (this.CreatureRoleId = this.CreatureDataComponent?.GetRoleId()),
+      (this.CreatureDataId =
+        this.CreatureDataComponent?.GetCreatureDataId() ?? 0),
+      (this.CreatureSkinId = this.CreatureDataComponent?.GetSkinId()),
       (this.RoleConfig = this.CreatureDataComponent?.GetRoleConfig()),
       this.RoleConfig &&
-        2 === this.RoleConfig.RoleType &&
-        (this.RoleBattleViewInfo =
-          RoleBattleViewInfoById_1.configRoleBattleViewInfoById.GetConfig(
+        (2 === this.RoleConfig.RoleType &&
+          (this.RoleBattleViewInfo =
+            RoleBattleViewInfoById_1.configRoleBattleViewInfoById.GetConfig(
+              this.RoleConfig.Id,
+            )),
+        (this.HeadIconEnergyBarConfig =
+          ModelManager_1.ModelManager.BattleUiModel?.GetHeadIconEnergyBarConfig(
             this.RoleConfig.Id,
-          )),
+          ))),
       this.c$e();
   }
   OnChangeRole(t) {
@@ -160,14 +185,17 @@ class BattleUiRoleData {
       (this.ShieldComponent = void 0),
       (this.RoleQteComponent = void 0),
       (this.CreatureDataComponent = void 0),
+      (this.BaseDeathComponent = void 0),
       (this.ElementType = void 0),
       (this.ElementConfig = void 0),
       (this.ElementColor = void 0),
       (this.ElementLinearColor = void 0),
       (this.UltimateSkillColor = void 0),
+      (this.CreatureDataId = 0),
       (this.CreatureRoleId = void 0),
       (this.RoleConfig = void 0),
       (this.RoleBattleViewInfo = void 0),
+      (this.HeadIconEnergyBarConfig = void 0),
       (this.QteCdTagId = 0);
   }
   c$e() {
@@ -176,7 +204,8 @@ class BattleUiRoleData {
       this.d$e(166024319, this.s$e),
       this.d$e(1674960297, this.h$e),
       this.d$e(-426018619, this.l$e),
-      this.d$e(-640833006, this.B2a, !0),
+      this.d$e(-640833006, this.wGa, !0),
+      this.d$e(913890514, this.NQ_, !0),
       EventSystem_1.EventSystem.AddWithTarget(
         this.EntityHandle.Entity,
         EventDefine_1.EEventName.CharOnDirectionStateChanged,
@@ -198,7 +227,9 @@ class BattleUiRoleData {
       t.AddListener(EAttributeId.l5n, this.hXe),
       t.AddListener(EAttributeId.Proto_Lv, this.m2),
       t.AddListener(EAttributeId.Proto_ElementEnergy, this.o$e),
-      t.AddListener(EAttributeId.Proto_ElementEnergyMax, this.o$e);
+      t.AddListener(EAttributeId.Proto_ElementEnergyMax, this.o$e),
+      t.AddListener(EAttributeId.Proto_Energy, this.Trc),
+      t.AddListener(EAttributeId.Proto_EnergyMax, this.Trc);
   }
   m$e() {
     for (const i of this.i$e) i?.EndTask();

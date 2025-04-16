@@ -13,7 +13,7 @@ class RedDotBattleViewQuestBtn extends RedDotBase_1.RedDotBase {
     var e,
       t = ModelManager_1.ModelManager.QuestNewModel.GetAllRedDotData();
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Quest", 19, "开始检测主界面任务红点", [
+      Log_1.Log.Info("Quest", 18, "开始检测主界面任务红点", [
         "红点数据量",
         t?.size,
       ]);
@@ -22,7 +22,7 @@ class RedDotBattleViewQuestBtn extends RedDotBase_1.RedDotBase {
       if (r && r.CanShowInUiPanel())
         return (
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Quest", 19, "主界面任务红点", ["红点任务", r.Id]),
+            Log_1.Log.Info("Quest", 18, "主界面任务红点", ["红点任务", r.Id]),
           !0
         );
     }

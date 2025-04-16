@@ -1,0 +1,65 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.racingBetsDiceIndexList =
+    exports.racingBetsDangoOddsOffsetList =
+    exports.RACING_BETS_AUDIO_STATE_GROUP =
+    exports.MPC_DICE_DATE_PATH =
+    exports.DANGO_GLOBAL_CONFIG_PATH =
+    exports.DANGO_PREVIEW_POINT_CASE_ONE_PLAYER =
+    exports.CAMERA_DANGO_PREVIEW_START =
+    exports.CAMERA_DANGO_PREVIEW_ONE_PLAYER =
+    exports.CAMERA_DANGO_PREVIEW_FOUR_PLAYER =
+    exports.CAMERA_DANGO_PREVIEW_SIX_PLAYER =
+    exports.RACING_BETS_SIX_DANGO =
+    exports.RACING_BETS_FOUR_DANGO =
+    exports.RACING_BETS_BULLET_SCREEN_MAX_ALPHA =
+    exports.RACING_BETS_BULLET_SCREEN_MIN_ALPHA =
+    exports.RACING_BETS_DANGO_RANK_ITEM_LERP_INTERVAL =
+    exports.RACING_BETS_DANGO_RANK_ITEM_OFFSET_INTERVAL =
+    exports.RACING_BETS_DICE_CAMERA_TO_FREE_CAMERA_TIME =
+    exports.RACING_BETS_FREE_CAMERA_TO_DICE_CAMERA_TIME =
+    exports.RACING_BETS_DANGO_ORDER_INTERVAL =
+    exports.RACING_BETS_DANGO_BROADCAST_INTERVAL =
+    exports.RACING_BETS_DANGO_BROADCAST_MOVE_SPEED =
+    exports.RACING_BETS_DICE_ANIM_COUNT =
+    exports.RACING_BETS_MAP_POINT_COUNT =
+      void 0),
+  (exports.RACING_BETS_MAP_POINT_COUNT = 24),
+  (exports.RACING_BETS_DICE_ANIM_COUNT = 10),
+  (exports.RACING_BETS_DANGO_BROADCAST_MOVE_SPEED = 0.2),
+  (exports.RACING_BETS_DANGO_BROADCAST_INTERVAL = 5e3),
+  (exports.RACING_BETS_DANGO_ORDER_INTERVAL = 1e3),
+  (exports.RACING_BETS_FREE_CAMERA_TO_DICE_CAMERA_TIME = 1),
+  (exports.RACING_BETS_DICE_CAMERA_TO_FREE_CAMERA_TIME = 1),
+  (exports.RACING_BETS_DANGO_RANK_ITEM_OFFSET_INTERVAL = 20),
+  (exports.RACING_BETS_DANGO_RANK_ITEM_LERP_INTERVAL = 1e3),
+  (exports.RACING_BETS_BULLET_SCREEN_MIN_ALPHA = 10),
+  (exports.RACING_BETS_BULLET_SCREEN_MAX_ALPHA = 100),
+  (exports.RACING_BETS_FOUR_DANGO = 4),
+  (exports.RACING_BETS_SIX_DANGO = 6),
+  (exports.CAMERA_DANGO_PREVIEW_SIX_PLAYER = "Camera_DangoPreview_6Player"),
+  (exports.CAMERA_DANGO_PREVIEW_FOUR_PLAYER = "Camera_DangoPreview_4Player"),
+  (exports.CAMERA_DANGO_PREVIEW_ONE_PLAYER = "Camera_DangoFocus_RaceEnd"),
+  (exports.CAMERA_DANGO_PREVIEW_START = "Camera_DangoPreview_Start"),
+  (exports.DANGO_PREVIEW_POINT_CASE_ONE_PLAYER = "DangoChampionCase"),
+  (exports.DANGO_GLOBAL_CONFIG_PATH =
+    "/Game/Aki/Character/NPC/Tuanzi/CommonConfig/DangoGlobalConfig.DangoGlobalConfig"),
+  (exports.MPC_DICE_DATE_PATH =
+    "/Game/Aki/Render/Data/MPC_DiceDate.MPC_DiceDate"),
+  (exports.RACING_BETS_AUDIO_STATE_GROUP = "dungeon_2_3_race_music");
+const RACING_BETS_OFFSET_ZERO = 108,
+  RACING_BETS_OFFSET_ONE = 111.5,
+  RACING_BETS_OFFSET_TWO = 113.8,
+  RACING_BETS_OFFSET_THREE = 119.8,
+  RACING_BETS_OFFSET_FOUR = 120.1,
+  RACING_BETS_OFFSET_FIVE = 117.9;
+(exports.racingBetsDangoOddsOffsetList = [
+  RACING_BETS_OFFSET_ZERO,
+  RACING_BETS_OFFSET_ONE,
+  RACING_BETS_OFFSET_TWO,
+  RACING_BETS_OFFSET_THREE,
+  RACING_BETS_OFFSET_FOUR,
+  RACING_BETS_OFFSET_FIVE,
+]),
+  (exports.racingBetsDiceIndexList = [1, 2, 4, 5, 6, 7]);
+//# sourceMappingURL=RacingBetsDefine.js.map

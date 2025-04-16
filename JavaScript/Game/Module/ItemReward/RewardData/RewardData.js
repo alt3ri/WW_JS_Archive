@@ -12,15 +12,15 @@ class RewardData {
   }
   SetItemList(t) {
     if (t)
-      for (const s of (this.N0i.ItemList = t)) {
-        var e = s.UniqueId;
-        if (void 0 !== e && 0 < e) this.k0i.set(e, s);
+      for (const i of (this.N0i.ItemList = t)) {
+        var e = i.UniqueId;
+        if (void 0 !== e && 0 < e) this.k0i.set(e, i);
         else {
-          e = s.ConfigId;
+          e = i.ConfigId;
           if (void 0 !== e && 0 < e) {
-            var i = this.O0i.get(e);
-            if (!i) return void this.O0i.set(e, s);
-            i.Count += s.Count;
+            var s = this.O0i.get(e);
+            if (!s) return void this.O0i.set(e, i);
+            s.Count += i.Count;
           }
         }
       }
@@ -28,15 +28,15 @@ class RewardData {
   AddItem(t) {
     let e = this.GetItemList();
     e = e || [];
-    var i,
-      s = t.UniqueId;
-    void 0 !== s && 0 < s
-      ? (e.push(t), this.k0i.set(s, t))
-      : void 0 !== (s = t.ConfigId) &&
-        0 < s &&
-        ((i = this.O0i.get(s))
-          ? (i.Count += t.Count)
-          : (e.push(t), this.O0i.set(s, t)));
+    var s,
+      i = t.UniqueId;
+    void 0 !== i && 0 < i
+      ? (e.push(t), this.k0i.set(i, t))
+      : void 0 !== (i = t.ConfigId) &&
+        0 < i &&
+        ((s = this.O0i.get(i))
+          ? (s.Count += t.Count)
+          : (e.push(t), this.O0i.set(i, t)));
   }
   AddItemList(t) {
     if (t) for (const e of t) this.AddItem(e);
@@ -59,8 +59,20 @@ class RewardData {
   SetTargetReached(t) {
     this.N0i.TargetReached = t;
   }
+  SetHalfAreaData(t) {
+    this.N0i.ScoreHalfArea = t;
+  }
   SetStateToggle(t) {
     this.N0i.StateToggle = t;
+  }
+  SetAccumulatedScoreData(t) {
+    this.N0i.AccumulatedScoreData = t;
+  }
+  SetBabelTowerSuccessData(t) {
+    this.N0i.BabelTowerSuccessData = t;
+  }
+  SetDangoAbyssSuccessData(t) {
+    this.N0i.DangoAbyssSuccessData = t;
   }
   SetScoreReached(t) {
     this.N0i.ScoreReached = t;

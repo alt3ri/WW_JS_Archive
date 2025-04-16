@@ -100,7 +100,11 @@ class AutoAttachExhibitionView {
     return this.DataLength;
   }
   Destroy() {
-    this.Actor && ActorSystem_1.ActorSystem.Put(this.Actor),
+    this.Actor &&
+      ActorSystem_1.ActorSystem.Put(
+        "AutoAttachExhibitionView.Destroy",
+        this.Actor,
+      ),
       (this.Actor = void 0);
   }
   CreateItems(t, i, s, h, e) {
@@ -294,7 +298,7 @@ class AutoAttachExhibitionView {
       s.MoveItem(i),
         this.DebugMode &&
           Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("UiCommon", 28, "Test"),
+          Log_1.Log.Debug("UiCommon", 27, "Test"),
         this.CurrentSelectState ||
           0 !== this.byt ||
           s.ShowItemIndex !== this.CurrentShowItemIndex ||

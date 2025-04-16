@@ -6,17 +6,17 @@ const UiNavigationGlobalData_1 = require("../UiNavigationGlobalData"),
 class VisionChooseMainPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase {
   constructor() {
     super(...arguments),
-      (this.Z4a = void 0),
+      (this.O8a = void 0),
       (this.IsFindChangeListenerList = !1);
   }
   get ChangeListenerList() {
     var i;
     return (
-      this.Z4a ||
-        ((this.Z4a = [...this.DefaultNavigationListener]),
-        2 <= this.Z4a.length &&
-          ((i = this.Z4a[0]), (this.Z4a[0] = this.Z4a[1]), (this.Z4a[1] = i))),
-      this.Z4a
+      this.O8a ||
+        ((this.O8a = [...this.DefaultNavigationListener]),
+        2 <= this.O8a.length &&
+          ((i = this.O8a[0]), (this.O8a[0] = this.O8a[1]), (this.O8a[1] = i))),
+      this.O8a
     );
   }
   OnGetSuitableNavigationListenerList(i) {
@@ -25,7 +25,7 @@ class VisionChooseMainPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelH
       : i
         ? UiNavigationGlobalData_1.UiNavigationGlobalData
             .VisionReplaceViewFindDefault
-          ? (i = this.q4a(this.DefaultNavigationListener[0]))
+          ? (i = this.C8a(this.DefaultNavigationListener[0]))
             ? [i]
             : this.DefaultNavigationListener
           : this.ChangeListenerList
@@ -37,7 +37,7 @@ class VisionChooseMainPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelH
         !0),
       (this.IsFindChangeListenerList = !1));
   }
-  q4a(e) {
+  C8a(e) {
     let a = void 0;
     var s = this.GetNavigationGroup(e.GroupName);
     for (let i = 0, t = s.ListenerList.length; i < t; ++i) {

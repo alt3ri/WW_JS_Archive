@@ -119,7 +119,7 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
   RefreshRotationScreenRate() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
-    e.Entity.GetComponent(161).DirectionState ===
+    e.Entity.GetComponent(173).DirectionState ===
       CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
       ? (this.Uqt = this.Rqt)
       : (this.Uqt = this.Dqt);

@@ -6,6 +6,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
   CommonTabComponentData_1 = require("../../../Common/TabComponent/CommonTabComponentData"),
@@ -21,7 +22,11 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
       (this.TabComponent = void 0),
       (this.b9i = 0),
       (this.hyn = (e) => {
-        this.TabComponent?.SelectToggleByIndex(this.lyn(e));
+        this.TabComponent?.SelectToggleByIndex(this.lyn(e)),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.BossRushSubViewChanged,
+            e,
+          );
       }),
       (this.fqe = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
@@ -35,12 +40,24 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
       }),
       (this.yqe = (e) => new CommonTabData_1.CommonTabData("", void 0)),
       (this.W7t = () => {
-        var e;
-        0 !== this.b9i
-          ? ((e = this.yvt[this.b9i - 1].ChildViewName),
-            (ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation = !0),
-            this.hyn(e))
-          : this.CloseMe();
+        if (0 !== this.b9i) {
+          if (this.b9i === this.lyn("BossRushRewardView"))
+            return (
+              (ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation =
+                !0),
+              ModelManager_1.ModelManager.BossRushModel.OnlyOpenRewardView
+                ? ((ModelManager_1.ModelManager.BossRushModel.OnlyOpenRewardView =
+                    !1),
+                  void this.CloseMe())
+                : void this.hyn("BossRushSelectView")
+            );
+          var e = this.yvt[this.b9i - 1].ChildViewName;
+          (ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation = !0),
+            this.hyn(e);
+        } else
+          ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+            ? ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.LeaveInstanceDungeon()
+            : this.CloseMe();
       });
   }
   OnRegisterComponent() {
@@ -61,6 +78,10 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
         this.GetItem(1),
       ));
   }
+  OnBeforeDestroy() {
+    this.TabViewComponent?.DestroyTabViewComponent(),
+      (this.TabViewComponent = void 0);
+  }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RequestChangeBossRushView,
@@ -74,7 +95,14 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
     );
   }
   OnStart() {
-    this.TabComponent?.SelectToggleByIndex(this.lyn("BossRushSelectView"), !0);
+    this.TabComponent?.SelectToggleByIndex(
+      this.lyn(
+        ModelManager_1.ModelManager.BossRushModel.OnlyOpenRewardView
+          ? "BossRushRewardView"
+          : "BossRushSelectView",
+      ),
+      !0,
+    );
   }
   async _yn() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(

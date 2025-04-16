@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RiskHarvestScoreReward = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class RiskHarvestScoreReward {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -20,11 +21,11 @@ class RiskHarvestScoreReward {
   get Desc() {
     return this.desc();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, s) {
+    return (this.z7 = t), (this.J7 = s), this;
   }
-  static getRootAsRiskHarvestScoreReward(t, r) {
-    return (r || new RiskHarvestScoreReward()).__init(
+  static getRootAsRiskHarvestScoreReward(t, s) {
+    return (s || new RiskHarvestScoreReward()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -46,8 +47,14 @@ class RiskHarvestScoreReward {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   desc(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.RiskHarvestScoreReward = RiskHarvestScoreReward;

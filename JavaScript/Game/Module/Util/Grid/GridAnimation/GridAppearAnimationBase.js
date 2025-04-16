@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GridAppearAnimationBase = void 0);
 const Log_1 = require("../../../../../Core/Common/Log"),
-  PerformanceController_1 = require("../../../../../Core/Performance/PerformanceController"),
   TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -20,17 +19,13 @@ class GridAppearAnimationBase {
         this.GridPreserver.NotifyAnimationEnd();
       }),
       (this.Tick = (t) => {
-        var e = PerformanceController_1.PerformanceController.StartMonitor(
-          "GridAppearAnimationBase.Tick",
-        );
-        this.OnUpdate(t),
-          PerformanceController_1.PerformanceController.EndMonitor(e);
+        this.OnUpdate(t);
       }),
       t ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ScrollViewGrid",
-            25,
+            24,
             "设置错误，gridPreserver为空!",
           )),
       (this.GridPreserver = t);
@@ -38,9 +33,9 @@ class GridAppearAnimationBase {
   IsGridControlValid() {
     return !this.IsInGridAppearAnimation;
   }
-  PlayGridAnim(t, e = !1) {
+  PlayGridAnim(t, i = !1) {
     this.zqo
-      ? (this.GridPreserver.NotifyAnimationStart(), this.zqo.Play("", t, e))
+      ? (this.GridPreserver.NotifyAnimationStart(), this.zqo.Play("", t, i))
       : this.GridPreserver.GetGridAnimationInterval() <= 0 &&
           this.GridPreserver.GetGridAnimationStartTime() <= 0
         ? this.GridPreserver.NotifyAnimationEnd()
@@ -70,11 +65,11 @@ class GridAppearAnimationBase {
   }
   OnStart() {}
   OnUpdate(t) {}
-  GridsForEach(e) {
-    var i = this.GridPreserver.GetPreservedGridNum() - 1;
-    for (let t = 0; t <= i; t++) {
-      var r = this.GridPreserver.GetGridByDisplayIndex(t);
-      e(t, r);
+  GridsForEach(i) {
+    var e = this.GridPreserver.GetPreservedGridNum() - 1;
+    for (let t = 0; t <= e; t++) {
+      var s = this.GridPreserver.GetGridByDisplayIndex(t);
+      i(t, s);
     }
   }
   End() {
@@ -85,17 +80,17 @@ class GridAppearAnimationBase {
     for (const t of this.Zqo.values()) t.StopSequenceByKey("Start"), t.Clear();
     this.Zqo.clear();
   }
-  ShowGrid(t, e) {
+  ShowGrid(t, i) {
     t.SetUIActive(!0);
-    let i = this.Zqo.get(t);
-    i ||
-      ((i = new LevelSequencePlayer_1.LevelSequencePlayer(t)),
-      this.Zqo.set(t, i)),
-      i.StopSequenceByKey("Start"),
-      i.PlayLevelSequenceByName("Start"),
+    let e = this.Zqo.get(t);
+    e ||
+      ((e = new LevelSequencePlayer_1.LevelSequencePlayer(t)),
+      this.Zqo.set(t, e)),
+      e.StopSequenceByKey("Start"),
+      e.PlayLevelSequenceByName("Start"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnShowGridAnimation,
-        e,
+        i,
         t,
       );
   }

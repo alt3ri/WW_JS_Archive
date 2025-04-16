@@ -46,7 +46,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
-              8,
+              58,
               "[CollectionItemDisplay]当点击交付按钮时，在播放等级提升动画，不做任何响应",
               ["PoolConfigId", this.PoolConfigId],
             )
@@ -56,7 +56,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "NPC",
-                8,
+                58,
                 "[CollectionItemDisplay]当点击交付按钮时",
                 ["CurrentShowLevel", this.CurrentShowLevel],
                 ["dragonPoolLevel", t],
@@ -71,14 +71,14 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
                     (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "NPC",
-                        8,
+                        58,
                         "[CollectionItemDisplay]提交声匣之后，等级提升会播放等级提升Sequence，IsInLevelUpDisplay设置为true",
                       ),
                     (this.Kbi = !0)),
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "NPC",
-                      8,
+                      58,
                       "[CollectionItemDisplay]提交声匣之后，隐藏界面并发送给服务端",
                       ["PoolConfigId", this.PoolConfigId],
                     ),
@@ -88,7 +88,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
                 : (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "NPC",
-                      8,
+                      58,
                       "[CollectionItemDisplay]当点击交付按钮时,当前经验无法升级，不会播放提交道具表现",
                     ),
                   EventSystem_1.EventSystem.Emit(
@@ -173,7 +173,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "NPC",
-        8,
+        58,
         "[CollectionItemDisplay]当交付等级提升Sequence播放失败时，重新显示提交道具界面",
       ),
       (this.Kbi = !1),
@@ -190,7 +190,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "NPC",
-        8,
+        58,
         "[CollectionItemDisplay]当关闭了交付奖励结算界面时，重新显示提交道具界面",
       ),
       (this.Kbi = !1),

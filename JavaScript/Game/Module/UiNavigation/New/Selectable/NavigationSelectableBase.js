@@ -81,6 +81,9 @@ class NavigationSelectableBase {
   IsIgnoreScrollOrLayoutCheckInSwitchGroup() {
     return this.OnIsIgnoreScrollOrLayoutCheck();
   }
+  FindLoopScrollViewNavigationComponent(t, i) {
+    return this.OnFindLoopScrollViewNavigationComponent(t, i);
+  }
   IsAllowNavigationByGroup() {
     var t;
     return (
@@ -117,6 +120,16 @@ class NavigationSelectableBase {
   }
   OnIsIgnoreScrollOrLayoutCheck() {
     return !1;
+  }
+  OnFindLoopScrollViewNavigationComponent(t, i) {
+    let e = void 0;
+    return (e = this.Listener.HasLoopScrollView()
+      ? this.Listener.ScrollView.FindNavigationComponent(
+          this.Listener.GetSelectableComponent(),
+          t,
+          i,
+        )
+      : e);
   }
   cBo() {
     var t, i;

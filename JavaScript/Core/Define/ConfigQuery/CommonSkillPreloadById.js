@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configCommonSkillPreloadById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configCommonSkillPreloadById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configCommonSkillPreloadById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configCommonSkillPreloadById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configCommonSkillPreloadById.GetConfig(";
 exports.configCommonSkillPreloadById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var i = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       e =
-        (i.Start(),
+        (i?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (n) {
@@ -43,8 +47,8 @@ exports.configCommonSkillPreloadById = {
         const m = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (m)
           return (
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             m
           );
@@ -77,8 +81,8 @@ exports.configCommonSkillPreloadById = {
               ((e = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, m)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             m
           );
@@ -86,8 +90,8 @@ exports.configCommonSkillPreloadById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    i.Stop(),
-      getConfigStat.Stop(),
+    i?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

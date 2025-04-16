@@ -4,21 +4,21 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
-  LguiUtil_1 = require("../../Util/LguiUtil"),
-  ExploreProgressDefine_1 = require("../ExploreProgressDefine");
+  MapUtil_1 = require("../../Map/MapUtil"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class ExploreAreaItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
       (this.q6e = void 0),
       (this.LPt = void 0),
-      (this.OnExtendToggleStateChanged = (e) => {
-        this.q6e && this.q6e(this, this.Pe, 1 === e);
+      (this.OnExtendToggleStateChanged = (i) => {
+        this.q6e && this.q6e(this, this.Pe, 1 === i);
       }),
       (this.gke = () => !this.LPt || this.LPt());
   }
-  Initialize(e) {
-    this.CreateByActorAsync(e.GetOwner());
+  Initialize(i) {
+    this.CreateByActorAsync(i.GetOwner());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -38,29 +38,26 @@ class ExploreAreaItem extends UiPanelBase_1.UiPanelBase {
       (this.LPt = void 0),
       this.GetExtendToggle(4).CanExecuteChange.Unbind();
   }
-  Refresh(e) {
-    var i = (this.Pe = e).AreaId,
-      t =
-        ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(
-          ExploreProgressDefine_1.AREA_LEVEL,
-        ) === i,
+  Refresh(i) {
+    var e = (this.Pe = i).AreaId,
+      t = MapUtil_1.MapUtil.GetWorldMapLevelOneAreaId() === e,
       s = ModelManager_1.ModelManager.ExploreProgressModel.SelectedAreaId;
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.NameId),
-      this.GetText(2).SetText(Math.floor(e.Progress).toString() + "%"),
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), i.NameId),
+      this.GetText(2).SetText(Math.floor(i.Progress).toString() + "%"),
       this.GetItem(3).SetUIActive(!1),
       this.GetSprite(0).SetUIActive(t),
-      this.SetSelected(s === i, !0);
+      this.SetSelected(s === e, !0);
   }
-  BindCanExecuteChange(e) {
-    this.LPt = e;
+  BindCanExecuteChange(i) {
+    this.LPt = i;
   }
-  SetSelected(e, i) {
-    e
-      ? this.GetExtendToggle(4).SetToggleState(1, i)
-      : this.GetExtendToggle(4).SetToggleState(0, i);
+  SetSelected(i, e) {
+    i
+      ? this.GetExtendToggle(4).SetToggleState(1, e)
+      : this.GetExtendToggle(4).SetToggleState(0, e);
   }
-  BindOnSelected(e) {
-    this.q6e = e;
+  BindOnSelected(i) {
+    this.q6e = i;
   }
 }
 exports.ExploreAreaItem = ExploreAreaItem;

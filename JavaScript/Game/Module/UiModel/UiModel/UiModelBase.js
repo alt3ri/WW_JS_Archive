@@ -3,8 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelBase = void 0);
 const Log_1 = require("../../../../Core/Common/Log");
 class UiModelBase {
-  constructor() {
-    (this.Id = 0), (this.xxo = new Array());
+  constructor(o) {
+    (this.Id = 0),
+      (this.xxo = new Array()),
+      (this.UseWay = void 0),
+      (this.UseWay = o);
   }
   GetComponent(o) {
     return this.xxo[o];
@@ -16,7 +19,7 @@ class UiModelBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            44,
+            43,
             "获取组件失败",
             ["Id", this.Id],
             ["uiModelName", this.constructor.name],
@@ -31,7 +34,7 @@ class UiModelBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiComponent",
-          44,
+          43,
           "组件未注册, 请检查是否使用装饰器RegisterUiModelComponent注册",
           ["uiModelName", this.constructor.name],
           ["componentName", o.name],
@@ -43,7 +46,7 @@ class UiModelBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiComponent",
-            44,
+            43,
             "添加组件失败：组件已存在，请勿重复添加！",
             ["uiModelName", this.constructor.name],
             ["componentName", o.name],

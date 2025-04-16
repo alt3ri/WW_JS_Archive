@@ -4,6 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  VideoResUpdate_1 = require("../../../Launcher/DiffPatch/Update/VideoResUpdate"),
+  VideoUpdateManager_1 = require("../../../Launcher/Update/VideoUpdateManager"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
@@ -41,7 +44,7 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
   static SendRoleSexChangeRequest(e) {
     var r = Protocol_1.Aki.Protocol.Lus.create();
     (r.v7n = e),
-      Net_1.Net.Call(15983, r, (e) => {
+      Net_1.Net.Call(25077, r, (e) => {
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? ((ModelManager_1.ModelManager.WorldLevelModel.Sex = e.v7n),
@@ -51,19 +54,19 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                17264,
+                19160,
               ));
       });
   }
   static SendRoleElementChangeRequest(e) {
     var r = Protocol_1.Aki.Protocol.Dus.create();
     (r.wHn = e),
-      Net_1.Net.Call(24357, r, (e) => {
+      Net_1.Net.Call(24170, r, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                24482,
+                17391,
               )
             : (EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnRoleChangeEnd,
@@ -76,7 +79,7 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
       EditBattleTeamController_1.EditBattleTeamController.RefreshMainRoleInfo();
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(15327, (e) => {
+    Net_1.Net.Register(26616, (e) => {
       var r = e.Mxs,
         e = e.J6n;
       ModelManager_1.ModelManager.PhantomBattleModel.DeleteBattleData(r),
@@ -84,27 +87,30 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Role",
-            44,
+            43,
             "角色转换成功: ",
             ["sourceRoleId", r],
             ["roleInfo!.Proto_RoleId", e.Q6n],
           );
     }),
-      Net_1.Net.Register(24633, (e) => {
+      Net_1.Net.Register(25012, (e) => {
         e &&
-          ModelManager_1.ModelManager.RoleModel.UpdateCanChangeRoleIdList(
+          (ModelManager_1.ModelManager.RoleModel.UpdateCanChangeRoleIdList(
             e.Sxs,
-          );
+          ),
+          ModelManager_1.ModelManager.MainRoleModel.UpdateCanChangeSexTime(
+            Number(MathUtils_1.MathUtils.LongToBigInt(e.Db_)),
+          ));
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(15327), Net_1.Net.UnRegister(24633);
+    Net_1.Net.UnRegister(26616), Net_1.Net.UnRegister(25012);
   }
 }
 (exports.MainRoleController = MainRoleController).iVe = (e) => {
   var r =
       Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-        190,
+        203,
       )?.HasTag(1996802261),
     o = ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
   return r
@@ -114,12 +120,33 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
         ),
       ),
       !1)
-    : !o ||
-        (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
+    : o
+      ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "CanNotTransferInInstance",
           ),
         ),
-        !1);
+        !1)
+      : ((r =
+          VideoUpdateManager_1.VideoUpdateManager.GetVideoUpdater(
+            3,
+          ).GetDownLoadProgress()[3]),
+        (o =
+          VideoUpdateManager_1.VideoUpdateManager.GetVideoUpdater(
+            4,
+          ).GetDownLoadProgress()[3]),
+        0 < r || 0 < o
+          ? (ControllerHolder_1.ControllerHolder.ScrollingTipsController.ShowTipsByTextId(
+              "DownLoadTips_WaitDownDone",
+            ),
+            !1)
+          : ((r =
+              1 ===
+              ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender()
+                ? 3
+                : 4),
+            VideoResUpdate_1.VideoResUpdate.GetVideoResSize(r) ===
+              VideoResUpdate_1.VideoResUpdate.GetVideoResSavedSize(r) ||
+              (UiManager_1.UiManager.OpenView("ResDownLoadView"), !1)));
 };
 //# sourceMappingURL=MainRoleController.js.map

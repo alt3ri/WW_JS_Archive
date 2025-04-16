@@ -13,7 +13,7 @@ class GuideDescribeNew {
   constructor(t) {
     (this.Uzt = void 0),
       (this.Azt = 1.6),
-      (this.dwa = new InputKeyDisplayData_1.InputKeyDisplayData()),
+      (this.Uwa = new InputKeyDisplayData_1.InputKeyDisplayData()),
       (this.Uzt = t),
       this.Uzt.SetRichText(!0);
   }
@@ -26,15 +26,16 @@ class GuideDescribeNew {
         void LguiUtil_1.LguiUtil.SetLocalTextNew(i, t);
     } else {
       var n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t),
-        s = n.split("{");
-      if (s.length - 1 !== e.length)
+        s = n.match(/\{[0-9]+\}/g),
+        s = s ? s.length : 0;
+      if (s !== e.length)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "按钮的数量与通配符的数量不一致！",
             ["出错的文本", n],
-            ["通配符数量", s.length - 1],
+            ["通配符数量", s],
             ["按钮数量", e.length],
           ),
           LguiUtil_1.LguiUtil.SetLocalTextNew(i, t);
@@ -53,22 +54,22 @@ class GuideDescribeNew {
             n = void 0;
           if (
             ((InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
-              this.dwa,
+              this.Uwa,
               t,
             ) ||
               InputSettingsManager_1.InputSettingsManager.GetAxisKeyDisplayData(
-                this.dwa,
+                this.Uwa,
                 t,
               )) &&
-              ((r = this.dwa.GetDisplayKeyNameList(e)),
-              (n = this.dwa.GetDisplayKeyIconPathList(e))),
+              ((r = this.Uwa.GetDisplayKeyNameList(e)),
+              (n = this.Uwa.GetDisplayKeyIconPathList(e))),
             void 0 === r || void 0 === n)
           )
             return;
           1 === r.length
-            ? (i = this.Cwa(r[0], n[0]))
+            ? (i = this.xwa(r[0], n[0]))
             : 2 === r.length &&
-              (i = "" + this.Cwa(r[0], n[0]) + LINKER + this.Cwa(r[1], n[1])),
+              (i = "" + this.xwa(r[0], n[0]) + LINKER + this.xwa(r[1], n[1])),
             a.push(i);
         }
         const g = r.split("\n").length - 1;
@@ -78,7 +79,7 @@ class GuideDescribeNew {
       }
     }
   }
-  Cwa(t, e) {
+  xwa(t, e) {
     return StringUtils_1.StringUtils.IsEmpty(e) ? `(${t})` : `<texture=${e}/>`;
   }
 }

@@ -15,15 +15,15 @@ class LevelEventToggleAirWall extends LevelGeneralBase_1.LevelEventBase {
                 Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelEvent",
-                  40,
+                  39,
                   "状态控制entity不存在",
                   ["EntityId", t.EntityId],
                   ["ActorRef", e.ActorRefs[0]?.PathName],
                 )
               )
             : void 0;
-        l.GetComponent(187)?.Owner
-          ? (t = l.GetComponent(150)) && t.HandleAirWall(e)
+        l.GetComponent(200)?.Owner
+          ? (t = l.GetComponent(161)) && t.HandleAirWall(e)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("LevelEvent", 7, "状态控制actor不存在");
       } else

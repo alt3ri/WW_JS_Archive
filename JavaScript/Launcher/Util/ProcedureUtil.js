@@ -5,47 +5,47 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.whetherRepeatDoOnFailedAsync =
       void 0);
 const LauncherLog_1 = require("./LauncherLog");
-async function whetherRepeatDoOnFailedAsync(e, r) {
-  let t = await e().catch((e) => {
+async function whetherRepeatDoOnFailedAsync(e, r, t = !1) {
+  let a = await e().catch((e) => {
       LauncherLog_1.LauncherLog.ErrorWithStack(
         e instanceof Error ? e.message : e,
         e,
       );
     }),
-    a = !t || !t.Success;
-  for (; a; )
+    o = !a || !a.Success;
+  for (; o; )
     try {
-      t = await r(t ? t.Others : void 0, e);
+      a = await r(a ? a.Others : void 0, e);
     } catch (e) {
       LauncherLog_1.LauncherLog.ErrorWithStack(
         e instanceof Error ? e.message : e,
         e,
       );
     } finally {
-      a = !t || !t.Success;
+      o = !(t || (a && a.Success));
     }
 }
-async function whetherRepeatDoOnFailed(r, t) {
-  let a = void 0;
+async function whetherRepeatDoOnFailed(r, t, a = !1) {
+  let o = void 0;
   try {
-    a = r();
+    o = r();
   } catch (e) {
     LauncherLog_1.LauncherLog.ErrorWithStack(
       e instanceof Error ? e.message : e,
       e,
     );
   } finally {
-    let e = !a || !a.Success;
+    let e = !o || !o.Success;
     for (; e; )
       try {
-        a = await t(a ? a.Others : void 0, r);
+        o = await t(o ? o.Others : void 0, r);
       } catch (e) {
         LauncherLog_1.LauncherLog.ErrorWithStack(
           e instanceof Error ? e.message : e,
           e,
         );
       } finally {
-        e = !a || !a.Success;
+        e = !(a || (o && o.Success));
       }
   }
 }

@@ -77,6 +77,9 @@ class RogueScoreMachine {
         : this.IIn <= this.rvo && ((this.IIn = this.rvo), (this.Ist = 0)),
       this.SIn?.(this.IIn, this.TIn));
   }
+  ResetScore() {
+    (this.IIn = 0), (this.rvo = 0), (this.TIn = void 0), (this.LIn = void 0);
+  }
 }
 exports.RogueScoreMachine = RogueScoreMachine;
 //# sourceMappingURL=RogueScoreMachine.js.map

@@ -16,13 +16,14 @@ class UnopenedAreaCheck {
     (this.IsSplineInit = !1),
       (this.Xwe = 0),
       (this.$we = new Map()),
-      (this.Ywe = new Map());
+      (this.Ywe = new Map()),
+      (this.Vj = new Map());
   }
   AreaInit(t) {
     for (const e of t) this.Jwe(e.p6n, e.Y4n ?? !1);
     0 === t.length &&
       Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Map", 43, "初始化区域数量为零"),
+      Log_1.Log.Info("Map", 42, "初始化区域数量为零"),
       (this.Xwe = 0),
       (this.IsSplineInit = !0);
   }
@@ -31,60 +32,68 @@ class UnopenedAreaCheck {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Map",
-          43,
+          42,
           "AreaStatesChange更新区域边界状态",
           ["AreaState.Proto_AreaId", t.GRs.p6n],
           ["AreaState.Proto_State", t.GRs.Y4n ?? !1],
         );
   }
-  Jwe(t, e) {
-    if (AreaByAreaId_1.configAreaByAreaId.GetConfigList(t)[0].EdgeWallName) {
-      const r =
-        AreaByAreaId_1.configAreaByAreaId.GetConfigList(t)[0].EdgeWallName +
-        "_C";
-      if (
-        (e ||
-          (this.Ywe.get(r).has(t) &&
-            (this.Ywe.get(r).delete(t), Log_1.Log.CheckInfo()) &&
-            Log_1.Log.Info(
-              "Map",
-              43,
-              "AreaPathMap区域删除",
-              ["AreaId", t],
-              ["Path", r],
-            ),
-          0 === this.Ywe.get(r).size &&
-            this.$we.has(r) &&
-            (this.$we.delete(r), Log_1.Log.CheckInfo()) &&
-            Log_1.Log.Info("Map", 43, "BinMap移除边界", ["Path", r])),
-        e &&
-          (this.Ywe.has(r) || this.Ywe.set(r, new Set()),
-          this.Ywe.get(r).has(t) ||
-            (this.Ywe.get(r).add(t),
+  Jwe(e, t) {
+    var i = AreaByAreaId_1.configAreaByAreaId.GetConfigList(e);
+    if (i && 0 !== i.length && i[0].EdgeWallName) {
+      const s = i[0].EdgeWallName + "_C";
+      var r = i[0].MapConfigId,
+        i = i[0].DungeonId;
+      if (t) {
+        if (
+          (this.Ywe.has(s) || this.Ywe.set(s, new Set()),
+          this.Ywe.get(s).has(e) ||
+            (this.Ywe.get(s).add(e),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Map",
-                43,
+                42,
                 "AreaPathMap区域添加",
-                ["AreaId", t],
-                ["Path", r],
+                ["AreaId", e],
+                ["Path", s],
               )),
-          !this.$we.has(r)))
-      ) {
-        const i = new BinItem();
-        (i.InitCallback = () => {
-          i && i.BinSet && i.TestPoints
-            ? (this.$we.set(r, i),
-              Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Map", 43, "BinMap添加边界", ["Path", r]))
-            : Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Map", 43, "BinMap添加边界出错", ["Path", r]);
-        }),
-          i.Init(r);
+          !this.$we.has(s))
+        ) {
+          const o = new BinItem();
+          (o.MapId = r),
+            (o.DungeonId = i),
+            (o.InitCallback = () => {
+              o && o.BinSet && o.TestPoints
+                ? (this.$we.set(s, o),
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info("Map", 42, "BinMap添加边界", ["Path", s]))
+                : Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info("Map", 42, "BinMap添加边界出错", ["Path", s]);
+            }),
+            o.Init(s);
+        }
+        let t = this.Vj.get(i);
+        t || ((t = new Set()), this.Vj.set(i, t)), t.add(s);
+      } else {
+        this.Ywe.get(s).has(e) &&
+          (this.Ywe.get(s).delete(e), Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info(
+            "Map",
+            42,
+            "AreaPathMap区域删除",
+            ["AreaId", e],
+            ["Path", s],
+          ),
+          0 === this.Ywe.get(s).size &&
+            this.$we.has(s) &&
+            (this.$we.delete(s), Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info("Map", 42, "BinMap移除边界", ["Path", s]);
+        t = this.Vj.get(i);
+        t && t.delete(s) && 0 === t.size && this.Vj.delete(i);
       }
     }
   }
-  BinTest(t) {
+  BinTest(t, e, i) {
     if (!this.IsSplineInit || 0 === this.$we.size)
       return (
         this.Xwe <= FAILURE_COUNT &&
@@ -92,7 +101,7 @@ class UnopenedAreaCheck {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Map",
-              43,
+              42,
               "检测是否进入未开放区域，检测失败",
               ["IsSplineInit", this.IsSplineInit],
               ["BinMap.size", this.$we.size],
@@ -101,16 +110,25 @@ class UnopenedAreaCheck {
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Map",
-            43,
+            42,
             "检测是否进入未开放区域一直失败，不报Log了",
           ),
         !0
       );
     0 !== this.Xwe &&
       ((this.Xwe = 0), Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Map", 43, "检测是否进入未开放区域，恢复正常检测");
-    for (const e of this.$we) if (e[1].BinTest(t)) return !0;
-    return !1;
+      Log_1.Log.Info("Map", 42, "检测是否进入未开放区域，恢复正常检测");
+    let r = !1;
+    i = this.Vj.get(i);
+    if (i && 0 < i.size)
+      for (const o of i) {
+        var s = this.$we.get(o);
+        if (s && ((r = !0), s.BinTest(t))) return !0;
+      }
+    if (r) return !1;
+    for (const a of this.$we)
+      if (e === a[1].MapId && ((r = !0), a[1].BinTest(t))) return !0;
+    return !r;
   }
   Clear() {
     (this.IsSplineInit = !1), this.$we.clear();
@@ -119,7 +137,9 @@ class UnopenedAreaCheck {
 exports.UnopenedAreaCheck = UnopenedAreaCheck;
 class BinItem {
   constructor() {
-    (this.BinSet = new BinSet()),
+    (this.MapId = -1),
+      (this.DungeonId = -1),
+      (this.BinSet = new BinSet()),
       (this.TestPoints = new Array()),
       (this.InitCallback = void 0);
   }
@@ -131,7 +151,7 @@ class BinItem {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Map",
-            43,
+            42,
             "样条Asset资源加载错误，或选中的目标样条非BP_BasePathLine_Edgewall类",
             ["Path", e],
           );
@@ -140,32 +160,33 @@ class BinItem {
   zwe(t) {
     t = ActorSystem_1.ActorSystem.Get(
       t,
-      MathUtils_1.MathUtils.DefaultTransform,
+      MathUtils_1.MathUtils.DefaultTransformDouble,
     );
     let e = void 0;
     if (!t.IsA(UE.BP_BasePathLine_Edgewall_C.StaticClass())) return !1;
-    var r = (e = t).OriginalLocation,
-      i =
-        (t.K2_SetActorLocationAndRotation(
-          r,
+    var i = (e = t).OriginalLocation,
+      i = UE.KismetMathLibrary.Conv_VectorToVectorDouble(i),
+      r =
+        (t.D_K2_SetActorLocationAndRotation(
+          i,
           Rotator_1.Rotator.ZeroRotator,
           !1,
           void 0,
           !1,
         ),
         e.Spline),
-      r = i.GetNumberOfSplinePoints();
-    this.TestPoints.slice(0, r);
-    for (let t = 0, e = r; t < e; t++) {
-      var s = i.GetWorldLocationAtSplinePoint(t);
+      i = r.GetNumberOfSplinePoints();
+    this.TestPoints.slice(0, i);
+    for (let t = 0, e = i; t < e; t++) {
+      var s = r.D_GetLocationAtSplinePoint(t, 1);
       this.TestPoints.push(new Vector2D_1.Vector2D(s.X, s.Y));
     }
     return t.K2_DestroyActor(), !0;
   }
-  eBe(t, e, r, i, s) {
-    let o = r,
-      a = i;
-    i < r && ((o = i), (a = r)),
+  eBe(t, e, i, r, s) {
+    let o = i,
+      a = r;
+    r < i && ((o = r), (a = i)),
       s.Bins[t].MinX > o && (s.Bins[t].MinX = o),
       s.Bins[t].MaxX < a && (s.Bins[t].MaxX = a),
       (s.Bins[t].EdgeSet[e].MinX = o),
@@ -174,11 +195,11 @@ class BinItem {
   BinTest(t) {
     var e = new Vector2D_1.Vector2D(t.X, t.Y),
       t = this.BinSet,
-      r = this.TestPoints;
+      i = this.TestPoints;
     if (e.Y < t.MinY || e.Y >= t.MaxY || e.X < t.MinX || e.X >= t.MaxX)
       return !1;
-    var i = Math.floor((e.Y - t.MinY) * t.ReciprocalDeltaY),
-      t = t.Bins[i];
+    var r = Math.floor((e.Y - t.MinY) * t.ReciprocalDeltaY),
+      t = t.Bins[r];
     if (e.X < t.MinX || e.X > t.MaxX) return !1;
     var s,
       o,
@@ -191,15 +212,15 @@ class BinItem {
       if (e.X < h[_].MinX) {
         do {
           (!h[_].FullCross &&
-            ((s = h[_].Id), e.Y <= r[s].Y == e.Y <= r[(s + 1) % r.length].Y)) ||
+            ((s = h[_].Id), e.Y <= i[s].Y == e.Y <= i[(s + 1) % i.length].Y)) ||
             (l = !l),
             (_ += 1);
         } while (++t < n);
         return l;
       }
       e.X < h[_].MaxX &&
-        ((o = r[(a = h[_].Id)]),
-        (a = r[(a + 1) % r.length]),
+        ((o = i[(a = h[_].Id)]),
+        (a = i[(a + 1) % i.length]),
         h[_].FullCross || e.Y <= o.Y != e.Y <= a.Y) &&
         o.X - ((o.Y - e.Y) * (a.X - o.X)) / (a.Y - o.Y) >= e.X &&
         (l = !l);
@@ -207,15 +228,15 @@ class BinItem {
     return l;
   }
   Zwe(e, t, o) {
-    var r = new Array(t);
+    var i = new Array(t);
     (o.BinNum = t),
       (o.Bins = new Array(t)),
       (o.MinX = o.MaxX = e[0].X),
       (o.MinY = o.MaxY = e[0].Y);
     for (let t = 1; t < e.length; t++) {
-      var i = e[t];
-      o.MinX > i.X ? (o.MinX = i.X) : o.MaxX < i.X && (o.MaxX = i.X),
-        o.MinY > i.Y ? (o.MinY = i.Y) : o.MaxY < i.Y && (o.MaxY = i.Y);
+      var r = e[t];
+      o.MinX > r.X ? (o.MinX = r.X) : o.MaxX < r.X && (o.MaxX = r.X),
+        o.MinY > r.Y ? (o.MinY = r.Y) : o.MaxY < r.Y && (o.MaxY = r.Y);
     }
     (o.MinY -= MathUtils_1.MathUtils.SmallNumber * (o.MaxY - o.MinY)),
       (o.MaxY += MathUtils_1.MathUtils.SmallNumber * (o.MaxY - o.MinY)),
@@ -232,49 +253,49 @@ class BinItem {
           l = (n.Y - o.MinY) * o.ReciprocalDeltaY;
         let e = Math.floor(l);
         l - e == 0 && (e -= 1);
-        for (let t = s; t <= e; t++) r[t] = (r[t] ?? 0) + 1;
+        for (let t = s; t <= e; t++) i[t] = (i[t] ?? 0) + 1;
       }
       a = h;
     }
     for (let e = 0; e < t; e++) {
       o.Bins[e] = new Bin();
-      var A = new Array(r[e]);
-      for (let t = 0; t < r[e]; t++) A[t] = new Edge();
-      (o.Bins[e].EdgeSet = A),
+      var c = new Array(i[e]);
+      for (let t = 0; t < i[e]; t++) c[t] = new Edge();
+      (o.Bins[e].EdgeSet = c),
         (o.Bins[e].MinX = o.MaxX),
         (o.Bins[e].MaxX = o.MinX),
         (o.Bins[e].Count = 0);
     }
     a = e[e.length - 1];
-    let c = e.length - 1;
+    let A = e.length - 1;
     for (let t = 0; t < e.length; t++) {
       if (((h = e[t]), a.Y !== h.Y)) {
-        var p =
+        var u =
             ((_ = a.Y < h.Y ? ((n = h), a) : ((n = a), h)).Y - o.MinY) *
             o.ReciprocalDeltaY,
-          u = Math.floor(p),
-          M = (n.Y - o.MinY) * o.ReciprocalDeltaY;
-        let e = Math.floor(M),
-          r = (M - e == 0 && (e -= 1), _.X);
-        var g = (o.DeltaY * (n.X - _.X)) / (n.Y - _.Y);
-        let i = r,
+          p = Math.floor(u),
+          f = (n.Y - o.MinY) * o.ReciprocalDeltaY;
+        let e = Math.floor(f),
+          i = (f - e == 0 && (e -= 1), _.X);
+        var M = (o.DeltaY * (n.X - _.X)) / (n.Y - _.Y);
+        let r = i,
           s = !1;
-        for (let t = u; t < e; t++, r = i) {
-          i = _.X + (t + 1 - p) * g;
-          var L = o.Bins[t].Count;
+        for (let t = p; t < e; t++, i = r) {
+          r = _.X + (t + 1 - u) * M;
+          var g = o.Bins[t].Count;
           o.Bins[t].Count++,
-            (o.Bins[t].EdgeSet[L].Id = c),
-            (o.Bins[t].EdgeSet[L].FullCross = s),
-            this.eBe(t, L, r, i, o),
+            (o.Bins[t].EdgeSet[g].Id = A),
+            (o.Bins[t].EdgeSet[g].FullCross = s),
+            this.eBe(t, g, i, r, o),
             (s = !0);
         }
-        (r = i), (i = n.X);
-        M = o.Bins[e].Count++;
-        (o.Bins[e].EdgeSet[M].Id = c),
-          (o.Bins[e].EdgeSet[M].FullCross = !1),
-          this.eBe(e, M, r, i, o);
+        (i = r), (r = n.X);
+        f = o.Bins[e].Count++;
+        (o.Bins[e].EdgeSet[f].Id = A),
+          (o.Bins[e].EdgeSet[f].FullCross = !1),
+          this.eBe(e, f, i, r, o);
       }
-      (a = h), (c = t);
+      (a = h), (A = t);
     }
     for (let t = 0; t < o.BinNum; t++)
       o.Bins[t].EdgeSet.sort((t, e) =>

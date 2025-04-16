@@ -60,7 +60,7 @@ class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "NPC",
-            51,
+            50,
             "[FaceExpressionConfig] 不存在FaceExpressionConfig.json文件。",
             ["Path", e],
           );

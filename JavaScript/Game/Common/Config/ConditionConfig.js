@@ -10,7 +10,7 @@ class ConditionConfig extends ConfigBase_1.ConfigBase {
     var n = ConditionGroupById_1.configConditionGroupById.GetConfig(o);
     if (n) return n;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("InstanceDungeon", 17, "获取条件组配置错误", [
+      Log_1.Log.Error("InstanceDungeon", 16, "获取条件组配置错误", [
         "conditionGroupId",
         o,
       ]);
@@ -19,7 +19,7 @@ class ConditionConfig extends ConfigBase_1.ConfigBase {
     var n = ConditionById_1.configConditionById.GetConfig(o);
     if (n) return n;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("InstanceDungeon", 17, "获取条件配置错误", [
+      Log_1.Log.Error("InstanceDungeon", 16, "获取条件配置错误", [
         "conditionId",
         o,
       ]);

@@ -6,14 +6,22 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   TsAiController_1 = require("../../Controller/TsAiController");
 class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
   constructor() {
     super(...arguments),
       (this.SenseRadius = void 0),
       (this.IsInitTsVariables = !1),
+      (this.VectorCache = void 0),
+      (this.MinRangeSquared = -0),
+      (this.MaxRangeSquared = -0),
+      (this.IsEnter = !1),
+      (this.IsSetNearerPlayerId = !1);
+  }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
       (this.VectorCache = void 0),
       (this.MinRangeSquared = -0),
       (this.MaxRangeSquared = -0),
@@ -53,7 +61,7 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
         return void (
           this.IsSetNearerPlayerId &&
           ((this.IsSetNearerPlayerId = !1),
-          BlackboardController_1.BlackboardController.RemoveValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
             t.Id,
             "NearerPlayerId",
           ))
@@ -76,13 +84,13 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
         0 === e
           ? this.IsSetNearerPlayerId &&
             ((this.IsSetNearerPlayerId = !1),
-            BlackboardController_1.BlackboardController.RemoveValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
               t.Id,
               "NearerPlayerId",
             ))
           : PerformanceController_1.PerformanceController
               .IsEntityPerformanceTest ||
-            (BlackboardController_1.BlackboardController.SetEntityIdByEntity(
+            (ControllerHolder_1.ControllerHolder.BlackboardController.SetEntityIdByEntity(
               t.Id,
               "NearerPlayerId",
               e,
@@ -91,7 +99,7 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
     } else
       this.IsSetNearerPlayerId &&
         ((this.IsSetNearerPlayerId = !1),
-        BlackboardController_1.BlackboardController.RemoveValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
           t.Id,
           "NearerPlayerId",
         ));
@@ -101,16 +109,16 @@ class TsServiceAnimalPerception extends UE.BTService_BlueprintBase {
       t = ModelManager_1.ModelManager.SceneTeamModel;
     let i = void 0,
       o = MathUtils_1.MathUtils.MaxFloat;
-    for (const s of r) {
+    for (const a of r) {
       var l,
-        a = t.GetTeamItem(s[0], { ParamType: 2, IsControl: !0 })?.EntityHandle;
-      a &&
-        (a.Entity.GetComponent(3).ActorLocationProxy.Subtraction(
+        s = t.GetTeamItem(a[0], { ParamType: 2, IsControl: !0 })?.EntityHandle;
+      s &&
+        (s.Entity.GetComponent(3).ActorLocationProxy.Subtraction(
           e,
           this.VectorCache,
         ),
         (l = this.VectorCache.SizeSquared()) < o) &&
-        ((o = l), (i = a));
+        ((o = l), (i = s));
     }
     return { PlayerEntity: i, MinDistSquared: o };
   }

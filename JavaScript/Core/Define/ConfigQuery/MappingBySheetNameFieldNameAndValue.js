@@ -18,29 +18,31 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configMappingBySheetNameFieldNameAndValue.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configMappingBySheetNameFieldNameAndValue.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configMappingBySheetNameFieldNameAndValue.GetConfig(";
 exports.configMappingBySheetNameFieldNameAndValue = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (e, n, o, i = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e}#${n}#${o})`),
+      getConfigStat?.Start();
+    var a = Stats_1.Stat.CreateNoFlameGraph(
+        CONFIG_STAT_PREFIX + `#${e}#${n}#${o})`,
+      ),
       t =
-        (a.Start(),
+        (a?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (i) {
@@ -48,8 +50,8 @@ exports.configMappingBySheetNameFieldNameAndValue = {
         const m = ConfigCommon_1.ConfigCommon.GetConfig(g);
         if (m)
           return (
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             m
           );
@@ -89,8 +91,8 @@ exports.configMappingBySheetNameFieldNameAndValue = {
               ((t = KEY_PREFIX + `#${e}#${n}#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, m)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             m
           );
@@ -98,8 +100,8 @@ exports.configMappingBySheetNameFieldNameAndValue = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    a.Stop(),
-      getConfigStat.Stop(),
+    a?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

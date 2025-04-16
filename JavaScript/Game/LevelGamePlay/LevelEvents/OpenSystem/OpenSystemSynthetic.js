@@ -6,11 +6,12 @@ const UiManager_1 = require("../../../Ui/UiManager"),
 class OpenSystemSynthetic extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, t) {
     return (
-      void 0 !== (await UiManager_1.UiManager.OpenViewAsync("ComposeRootView"))
+      void 0 !==
+      (await UiManager_1.UiManager.OpenViewAsync("ComposeCarryOnView"))
     );
   }
   GetViewName(e) {
-    return "ComposeRootView";
+    return "ComposeCarryOnView";
   }
 }
 exports.OpenSystemSynthetic = OpenSystemSynthetic;

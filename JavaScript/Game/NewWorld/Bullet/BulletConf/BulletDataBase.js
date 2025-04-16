@@ -11,6 +11,8 @@ class BulletDataBase {
     (this.$Vo = void 0),
       (this.YVo = void 0),
       (this.JVo = void 0),
+      (this.lGl = !1),
+      (this.hGl = void 0),
       (this.zVo = void 0),
       (this.ZVo = void 0),
       (this.e6o = void 0),
@@ -38,14 +40,18 @@ class BulletDataBase {
       (this.p6o = !1),
       (this.v6o = void 0),
       (this.M6o = !1),
+      (this._Gl = void 0),
+      (this.uGl = !1),
       (this.E6o = void 0),
       (this.S6o = void 0),
       (this.y6o = void 0),
       (this.I6o = void 0),
       (this.T6o = !1),
       (this.L6o = void 0),
+      (this.PSc = void 0),
       (this.D6o = void 0),
       (this.R6o = void 0),
+      (this.Ptc = void 0),
       (this.U6o = void 0),
       (this.A6o = void 0),
       (this.P6o = void 0),
@@ -53,11 +59,13 @@ class BulletDataBase {
       (this.w6o = void 0),
       (this.B6o = void 0),
       (this.b6o = !1),
+      (this.cGl = void 0),
+      (this.mGl = !1),
       (this.q6o = void 0),
       (this.G6o = 0),
       (this.N6o = !1),
       (this.O6o = void 0),
-      (this.cSa = void 0),
+      (this.iSa = void 0),
       (this.HitActorTypeInternal = void 0),
       (this.Pe = t);
   }
@@ -71,7 +79,20 @@ class BulletDataBase {
     );
   }
   get DamageId() {
-    return void 0 === this.JVo && (this.JVo = this.Pe.伤害ID), this.JVo;
+    return void 0 === this.JVo && (this.JVo = Number(this.Pe.伤害ID)), this.JVo;
+  }
+  get MultiDamageId() {
+    if (!this.lGl) {
+      this.lGl = !0;
+      var i = this.Pe.多伤害ID,
+        s = i.Num();
+      0 < s && (this.hGl = new Array());
+      for (let t = 0; t < s; t++) {
+        var h = i.Get(t);
+        this.hGl.push(Number(h));
+      }
+    }
+    return this.hGl;
   }
   get EnablePartHitAudio() {
     return (
@@ -209,6 +230,21 @@ class BulletDataBase {
       this.M6o || ((this.M6o = !0), (this.v6o = this.Pe.弱点被击效果)), this.v6o
     );
   }
+  get MultiHitEffectWeakness() {
+    if (!this.uGl) {
+      this.uGl = !0;
+      var i = this.Pe.多弱点被击效果,
+        s = i.Num();
+      if (0 < s) {
+        this._Gl = new Array();
+        for (let t = 0; t < s; t++) {
+          var h = i.Get(t);
+          this._Gl.push(h);
+        }
+      }
+    }
+    return this._Gl;
+  }
   get HitCountMax() {
     return void 0 === this.E6o && (this.E6o = this.Pe.总作用次数限制), this.E6o;
   }
@@ -231,6 +267,12 @@ class BulletDataBase {
   }
   get StickGround() {
     return void 0 === this.R6o && (this.R6o = this.Pe.是否贴地子弹), this.R6o;
+  }
+  get StickWater() {
+    return void 0 === this.Ptc && (this.Ptc = this.Pe.是否贴水面), this.Ptc;
+  }
+  get NotFollowMovePlatform() {
+    return void 0 === this.PSc && (this.PSc = this.Pe.不跟随移动平台), this.PSc;
   }
   get StickTraceLen() {
     return void 0 === this.D6o && (this.D6o = this.Pe.贴地探测距离), this.D6o;
@@ -265,6 +307,21 @@ class BulletDataBase {
       this.b6o || ((this.b6o = !0), (this.B6o = this.Pe.被击效果)), this.B6o
     );
   }
+  get MultiBeHitEffect() {
+    if (!this.mGl) {
+      this.mGl = !0;
+      var i = this.Pe.多被击效果,
+        s = i.Num();
+      if (0 < s) {
+        this.cGl = new Array();
+        for (let t = 0; t < s; t++) {
+          var h = i.Get(t);
+          this.cGl.push(h);
+        }
+      }
+    }
+    return this.cGl;
+  }
   get BornDistLimit() {
     return (
       this.q6o || (this.q6o = Vector_1.Vector.Create(this.Pe.限制生成距离)),
@@ -289,8 +346,8 @@ class BulletDataBase {
   }
   get BigRangeHitSceneItem() {
     return (
-      void 0 === this.cSa && (this.cSa = this.Pe.大范围子弹对场景物件生效),
-      this.cSa
+      void 0 === this.iSa && (this.iSa = this.Pe.大范围子弹对场景物件生效),
+      this.iSa
     );
   }
   get HitActorType() {

@@ -24,15 +24,15 @@ class LevelEventMoveJigsawItem extends LevelGeneralBase_1.LevelEventBase {
       t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         this.Lo.FoundationEntityId,
       ),
-      s = e.Entity.GetComponent(187);
+      s = e.Entity.GetComponent(200);
     if (s)
       if (e && t) {
-        var n = e.Entity.GetComponent(125),
-          i = t.Entity.GetComponent(124);
+        var n = e.Entity.GetComponent(136),
+          i = t.Entity.GetComponent(135);
         if (n && i) {
           var o = n.PutDownBase;
           if (o) {
-            const a = o.Entity.GetComponent(148),
+            const a = o.Entity.GetComponent(159),
               r =
                 a?.Config.Config.Type ??
                 IComponent_1.EItemFoundation.BuildingBlock;
@@ -42,7 +42,7 @@ class LevelEventMoveJigsawItem extends LevelGeneralBase_1.LevelEventBase {
             this.Lo.Destination.RowIndex,
             this.Lo.Destination.ColumnIndex,
           );
-          const a = t.Entity.GetComponent(148),
+          const a = t.Entity.GetComponent(159),
             r =
               a?.Config.Config.Type ??
               IComponent_1.EItemFoundation.BuildingBlock;
@@ -50,7 +50,7 @@ class LevelEventMoveJigsawItem extends LevelGeneralBase_1.LevelEventBase {
           (t = i.GetBlockLocationByIndex(o)),
             (s =
               (s.SetActorLocation(t.ToUeVector(), "LevelEventMoveJigsawItem"),
-              e.Entity.GetComponent(145)));
+              e.Entity.GetComponent(156)));
           s && s.CollectSampleAndSend(!0),
             i.RequestMoveItem(n, o),
             i.CheckFinish(),

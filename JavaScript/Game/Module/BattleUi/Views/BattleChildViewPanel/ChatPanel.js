@@ -10,13 +10,14 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   RedDotController_1 = require("../../../../RedDot/RedDotController"),
+  InputManager_1 = require("../../../../Ui/Input/InputManager"),
   InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   ChatDefine_1 = require("../../../Chat/ChatDefine"),
   LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
-  RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleSkillLeftRouletteItem_1 = require("../BattleSkillLeftRouletteItem"),
   ChatRowItem_1 = require("../ChatRowItem"),
   CommonKeyItem_1 = require("../KeyItem/CommonKeyItem"),
   BattleChildViewPanel_1 = require("./BattleChildViewPanel");
@@ -30,6 +31,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.sze = void 0),
       (this.aze = !1),
       (this.hze = void 0),
+      (this.Mah = void 0),
       (this.SPe = void 0),
       (this.FGn = (e) => {
         2 === this.GetOperationType() &&
@@ -51,13 +53,19 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.Eze = () => {
         Info_1.Info.IsInTouch() || (this.Sze(), this.yze());
       }),
+      (this.RZe = (e) => {
+        this.Sah();
+      }),
       (this.Ize = () => {
         UiManager_1.UiManager.IsViewShow("ChatView") ||
           UiManager_1.UiManager.OpenView("ChatView");
       }),
       (this.bMe = (e, t) => {
         if (e === InputMappingsDefine_1.actionMappings.环境特性) {
-          if (0 === t)
+          if (
+            InputManager_1.InputManager.IsAllowOpenViewByShortcutKey() &&
+            0 === t
+          )
             switch (
               ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurEnvironmentalKey() ??
               0
@@ -75,7 +83,10 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                 this.Dze();
                 break;
               case 5:
-                this.dXa();
+                this.bZa();
+                break;
+              case 6:
+                this.TG_();
             }
         } else
           e === InputMappingsDefine_1.actionMappings.组合主键 && this.Rze(t);
@@ -116,6 +127,11 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         "Close" === e && this.Pze(!1);
       });
   }
+  OnBeforeShow() {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnRefreshChatRedDot,
+    );
+  }
   Reset() {
     super.Reset(),
       this.xze(),
@@ -136,6 +152,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           [7, UE.UIItem],
           [8, UE.UIItem],
           [9, UE.UIText],
+          [10, UE.UIItem],
         ]),
         (this.BtnBindInfo = [[0, this.Ize]]))
       : 1 === e &&
@@ -152,7 +169,15 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       Info_1.Info.IsInTouch() ||
         ((e = this.GetItem(8)),
         (this.hze = new CommonKeyItem_1.CommonKeyItem()),
-        await this.hze.CreateThenShowByActorAsync(e.GetOwner()));
+        await this.hze.CreateThenShowByActorAsync(e.GetOwner()),
+        await this.yah());
+  }
+  async yah() {
+    var e = this.GetItem(10)?.GetOwner();
+    e &&
+      ((this.Mah =
+        new BattleSkillLeftRouletteItem_1.BattleSkillLeftRouletteItem()),
+      await this.Mah.CreateThenShowByActorAsync(e));
   }
   OnShowBattleChildViewPanel() {
     var e = Info_1.Info.OperationType;
@@ -161,12 +186,12 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         i = [];
       for (const a of this.oze.values()) {
         var s,
-          r,
-          n = a.GetChatRowData();
-        n &&
-          ((s = n.UniqueId),
-          (r = n.TargetPlayerId) && t.HasBlockedPlayer(r) && i.push(s),
-          n.IsVisible || i.push(s));
+          n,
+          r = a.GetChatRowData();
+        r &&
+          ((s = r.UniqueId),
+          (n = r.TargetPlayerId) && t.HasBlockedPlayer(n) && i.push(s),
+          r.IsVisible || i.push(s));
       }
       for (const h of i) this.mze(h);
       this.oze.size <= 0
@@ -184,7 +209,7 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   dze() {
     var e = Info_1.Info.IsInGamepad();
-    this.GetItem(5)?.SetUIActive(e), this.Sze();
+    this.GetItem(5)?.SetUIActive(e), this.Sze(), this.Sah();
   }
   Sze() {
     var e = Info_1.Info.IsInGamepad(),
@@ -197,6 +222,9 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     var e =
       ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurKeyText();
     e && LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), e);
+  }
+  Sah() {
+    this.Mah?.RefreshVisible();
   }
   AddEvents() {
     2 === this.GetOperationType() &&
@@ -211,6 +239,10 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiEnvironmentKeyChanged,
         this.Eze,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.BattleUiPressCombineButtonChanged,
+        this.RZe,
       ),
       InputDistributeController_1.InputDistributeController.BindActions(
         [
@@ -246,6 +278,14 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           EventDefine_1.EEventName.BattleUiEnvironmentKeyChanged,
           this.Eze,
         ),
+      EventSystem_1.EventSystem.Has(
+        EventDefine_1.EEventName.BattleUiPressCombineButtonChanged,
+        this.RZe,
+      ) &&
+        EventSystem_1.EventSystem.Remove(
+          EventDefine_1.EEventName.BattleUiPressCombineButtonChanged,
+          this.RZe,
+        ),
       InputDistributeController_1.InputDistributeController.UnBindActions(
         [
           InputMappingsDefine_1.actionMappings.环境特性,
@@ -269,21 +309,32 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     ControllerHolder_1.ControllerHolder.InstanceDungeonGuideController.StartReplayGuide();
   }
   Dze() {
-    !this.bze() ||
-      UiManager_1.UiManager.IsViewShow("RogueInfoView") ||
-      RoguelikeController_1.RoguelikeController.OpenRogueInfoView();
+    var e;
+    this.bze() &&
+      ((e = ModelManager_1.ModelManager.WeeklyRogueModel.CheckIsInWeeklyRogue()
+        ? "WeeklyRogueInfo"
+        : "RogueInfoView"),
+      UiManager_1.UiManager.IsViewShow(e) || UiManager_1.UiManager.OpenView(e));
   }
   bze() {
-    return ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
+    return (
+      ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike() ||
+      ModelManager_1.ModelManager.WeeklyRogueModel.CheckIsInWeeklyRogue()
+    );
   }
   Tze() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.BattleUiToggleSilentAreaInfoView,
     );
   }
-  dXa() {
+  bZa() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.BattleUiToggleTowerDefenseInfoView,
+    );
+  }
+  TG_() {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.BattleUiToggleShipTowerBuffInfo,
     );
   }
   async gze() {
@@ -300,9 +351,9 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       var i = e.TargetPlayerId;
       if (!i) return;
       var s = ModelManager_1.ModelManager.FriendModel,
-        r = s.GetFriendById(i);
-      if (!r) return;
-      if (s.HasBlockedPlayer(i) || r.GetBlockBySdk()) return;
+        n = s.GetFriendById(i);
+      if (!n) return;
+      if (s.HasBlockedPlayer(i) || n.GetBlockBySdk()) return;
     }
     (s = this.GetItem(2)),
       (i = await this.NewDynamicChildViewByResourceId(

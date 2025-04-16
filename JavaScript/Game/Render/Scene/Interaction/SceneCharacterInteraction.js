@@ -4,6 +4,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
   GlobalData_1 = require("../../../GlobalData"),
@@ -54,14 +55,14 @@ class SceneCharacterInteraction {
       e
         ? ((this.Config = e), this.Init(), this.Enable())
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Render", 26, ": 创建了没有配置的交互控制", [
+          Log_1.Log.Error("Render", 25, ": 创建了没有配置的交互控制", [
             "this.OwnerCharacter.GetName()",
             this.OwnerCharacter.GetName(),
           ]);
   }
   Update(e) {
     if (this.IsEnable && UE.KismetSystemLibrary.IsValid(this.OwnerCharacter)) {
-      (this.ActorLocation = this.OwnerCharacter.K2_GetActorLocation()),
+      (this.ActorLocation = this.OwnerCharacter.D_K2_GetActorLocation()),
         this.TsPreviousActorLocation.DeepCopy(this.TsActorLocation),
         this.TsActorLocation.FromUeVector(this.ActorLocation),
         this.TsActorLocation.Subtraction(
@@ -117,7 +118,7 @@ class SceneCharacterInteraction {
       (this.TempVector = Vector_1.Vector.Create()),
       (this.ActorSpeed = Vector_1.Vector.Create()),
       this.OwnerCharacter &&
-        ((this.ActorLocation = this.OwnerCharacter.K2_GetActorLocation()),
+        ((this.ActorLocation = this.OwnerCharacter.D_K2_GetActorLocation()),
         (this.TsActorLocation = Vector_1.Vector.Create(this.ActorLocation)),
         (this.TsPreviousActorLocation = Vector_1.Vector.Create(
           this.ActorLocation,
@@ -127,19 +128,19 @@ class SceneCharacterInteraction {
   }
   Enable() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderEffect", 26, "交互配置启用", [
+      Log_1.Log.Info("RenderEffect", 25, "交互配置启用", [
         "Actor",
         this.OwnerCharacter?.GetName(),
       ]),
       SceneCharacterInteraction.koe(),
       (this.IsEnable = !0),
       (this.SwimComponent =
-        this.OwnerCharacter.CharacterActorComponent?.Entity?.GetComponent(69)),
+        this.OwnerCharacter.CharacterActorComponent?.Entity?.GetComponent(76)),
       this.OwnerCharacter.CapsuleComponent && this.CheckInWater(0);
   }
   Disable() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderEffect", 26, "交互配置禁用", [
+      Log_1.Log.Info("RenderEffect", 25, "交互配置禁用", [
         "Actor",
         this.OwnerCharacter?.GetName(),
       ]),
@@ -187,45 +188,59 @@ class SceneCharacterInteraction {
   CheckInWater(t) {
     if (this.Config?.启用水面交互) {
       SceneCharacterInteraction.bsr || SceneCharacterInteraction.koe();
-      var e = this.OwnerCharacter.CapsuleComponent,
-        i = e.K2_GetComponentLocation(),
-        s = i.op_Addition(new UE.Vector(0, 0, e.CapsuleHalfHeight)),
-        i = i.op_Addition(
-          new UE.Vector(0, 0, -e.CapsuleHalfHeight - this.Config.射线向下延长),
-        ),
-        e = SceneCharacterInteraction.bsr,
-        s =
-          (TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, s),
-          TraceElementCommon_1.TraceElementCommon.SetEndLocation(e, i),
-          TraceElementCommon_1.TraceElementCommon.SphereTrace(e, PROFILE_KEY)),
-        i = e.HitResult;
-      if (s && i.bBlockingHit) {
-        var h = e.HitResult,
-          r = h.GetHitCount(),
-          a =
+      var i = this.OwnerCharacter.CapsuleComponent,
+        s = i.D_K2_GetComponentLocation(),
+        h =
+          this.OwnerCharacter.CharacterActorComponent?.Entity?.GetComponent(
+            176,
+          );
+      let t = new UE.VectorDouble(0, 0, i.CapsuleHalfHeight),
+        e = new UE.VectorDouble(
+          0,
+          0,
+          -i.CapsuleHalfHeight - this.Config.射线向下延长,
+        );
+      h &&
+        ((h = h.GravityDirect.ToUeVector().GetSafeNormal(
+          MathCommon_1.MathCommon.SmallNumber,
+        )),
+        (t = h.op_Multiply(-i.CapsuleHalfHeight)),
+        (e = h.op_Multiply(i.CapsuleHalfHeight + this.Config.射线向下延长)));
+      (h = s.op_Addition(t)),
+        (i = s.op_Addition(e)),
+        (s = SceneCharacterInteraction.bsr),
+        (h =
+          (TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, h),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(s, i),
+          TraceElementCommon_1.TraceElementCommon.SphereTrace(s, PROFILE_KEY))),
+        (i = s.HitResult);
+      if (h && i.bBlockingHit) {
+        var r = s.HitResult,
+          a = r.GetHitCount(),
+          o =
             RenderDataManager_1.RenderDataManager.Get().GetGlobalFootstepMaterial();
-        for (let e = 0; e < r; ++e) {
+        for (let e = 0; e < a; ++e) {
           if (
             2 ===
-            h.Components.Get(e).BodyInstance.CollisionResponses
+            r.Components.Get(e).BodyInstance.CollisionResponses
               .ResponseToChannels.GameTraceChannel2
           )
             return (
-              (this.WaterHeight = h.LocationZ_Array.Get(e)),
+              (this.WaterHeight = r.LocationZ_Array.Get(e)),
               (this.WaterNormal = Vector_1.Vector.Create(
-                h.ImpactNormalX_Array.Get(e),
-                h.ImpactNormalY_Array.Get(e),
-                h.ImpactNormalZ_Array.Get(e),
+                r.ImpactNormalX_Array.Get(e),
+                r.ImpactNormalY_Array.Get(e),
+                r.ImpactNormalZ_Array.Get(e),
               )),
               void this.SetInWater()
             );
-          var n = h.Components.Get(e);
+          var n = r.Components.Get(e);
           let t = void 0;
           if (
             (n instanceof UE.LandscapeHeightfieldCollisionComponent
-              ? ((t = h.PhysMaterials.Get(e)) &&
+              ? ((t = r.PhysMaterials.Get(e)) &&
                   this.WaterEffect.IsMaterialInUse(t)) ||
-                (t = a)
+                (t = o)
               : 2 !==
                   n.BodyInstance.CollisionResponses.ResponseToChannels
                     .WorldStatic ||
@@ -234,27 +249,33 @@ class SceneCharacterInteraction {
                     n,
                   )) &&
                   this.WaterEffect.IsMaterialInUse(t)) ||
-                (t = a),
+                (t = o),
             t && this.WaterEffect.IsMaterialInUse(t))
           )
             return (
-              (this.WaterHeight = h.LocationZ_Array.Get(e)),
+              (this.WaterHeight = r.LocationZ_Array.Get(e)),
               (this.WaterNormal = Vector_1.Vector.Create(
-                h.ImpactNormalX_Array.Get(e),
-                h.ImpactNormalY_Array.Get(e),
-                h.ImpactNormalZ_Array.Get(e),
+                r.ImpactNormalX_Array.Get(e),
+                r.ImpactNormalY_Array.Get(e),
+                r.ImpactNormalZ_Array.Get(e),
               )),
               void this.SetOnMaterial(t)
             );
+          if (
+            2 ===
+            r.Components.Get(e).BodyInstance.CollisionResponses
+              .ResponseToChannels.WorldStatic
+          )
+            break;
         }
       }
       this.ClearInWaterOrOnMaterialState();
     } else
       this.Config?.启用简易水面交互 &&
         this.SwimComponent &&
-        ((s = this.SwimComponent.GetAboveFootWaterSurfaceInfo())
-          ? ((this.WaterHeight = s.WaterHeight + s.Location.Z),
-            (this.WaterNormal = s.SurfaceNormal),
+        ((h = this.SwimComponent.GetAboveFootWaterSurfaceInfo())
+          ? ((this.WaterHeight = h.WaterHeight + h.Location.Z),
+            (this.WaterNormal = h.SurfaceNormal),
             this.SetInWater())
           : this.ClearInWaterOrOnMaterialState());
   }

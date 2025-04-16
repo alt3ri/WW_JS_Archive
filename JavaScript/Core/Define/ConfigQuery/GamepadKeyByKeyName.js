@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configGamepadKeyByKeyName.Init"),
-  getConfigStat = Stats_1.Stat.Create("configGamepadKeyByKeyName.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGamepadKeyByKeyName.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGamepadKeyByKeyName.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configGamepadKeyByKeyName.GetConfig(";
 exports.configGamepadKeyByKeyName = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (e, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      getConfigStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${e})`),
       a =
-        (n.Start(),
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (a) {
       if (o) {
@@ -43,8 +47,8 @@ exports.configGamepadKeyByKeyName = {
         const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (t)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -76,8 +80,8 @@ exports.configGamepadKeyByKeyName = {
               ((a = KEY_PREFIX + `#${e})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(a, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -85,8 +89,8 @@ exports.configGamepadKeyByKeyName = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    n?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -20,7 +20,7 @@ class MultiEffectBuffBall extends MultiEffectBase_1.default {
       (this.BaseNum = t.get("BaseNum")),
       (this.SpinSpeed = t.get("SpinSpeed")),
       (this.Radius = t.get("Radius")),
-      (this.TempUeVector = new UE.Vector()),
+      (this.TempUeVector = new UE.VectorDouble()),
       (this.Zlr = 0.01),
       (this.BaseAngle = 0);
   }
@@ -46,7 +46,7 @@ class MultiEffectBuffBall extends MultiEffectBase_1.default {
       EffectSystem_1.EffectSystem.IsValid(a) &&
         EffectSystem_1.EffectSystem.GetEffectActor(
           a,
-        ).K2_SetActorRelativeLocation(this.TempUeVector, !1, void 0, !0);
+        ).D_K2_SetActorRelativeLocation(this.TempUeVector, !1, void 0, !0);
     }
     f < i &&
       ((s = h * f + this.BaseAngle),
@@ -54,12 +54,9 @@ class MultiEffectBuffBall extends MultiEffectBase_1.default {
       this.TempUeVector.Set(Math.cos(s) * i, Math.sin(s) * i, 0),
       (t = e[f]),
       EffectSystem_1.EffectSystem.IsValid(t)) &&
-      EffectSystem_1.EffectSystem.GetEffectActor(t).K2_SetActorRelativeLocation(
-        this.TempUeVector,
-        !1,
-        void 0,
-        !0,
-      );
+      EffectSystem_1.EffectSystem.GetEffectActor(
+        t,
+      ).D_K2_SetActorRelativeLocation(this.TempUeVector, !1, void 0, !0);
   }
 }
 exports.MultiEffectBuffBall = MultiEffectBuffBall;

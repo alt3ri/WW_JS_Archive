@@ -5,6 +5,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   QuestChapterById_1 = require("../../../../Core/Define/ConfigQuery/QuestChapterById"),
+  UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation"),
   GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
 class ChapterDivideFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloatTipsBase {
   constructor() {
@@ -34,7 +35,7 @@ class ChapterDivideFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
     (this.aJt = QuestChapterById_1.configQuestChapterById.GetConfig(t)),
       this.aJt ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 11, "策划的章节Id配错了！！", [
+          Log_1.Log.Error("Quest", 10, "策划的章节Id配错了！！", [
             "错误的章节Id",
             t,
           ]));
@@ -49,12 +50,23 @@ class ChapterDivideFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptF
       1 < t.length && ((e = t[1]), this.GetText(2)?.SetText(e));
   }
   OnBeforeShow() {
-    var t;
+    var t, e;
     this.GetButton(4)?.RootUIComp.SetRaycastTarget(!1),
-      ("ChapterEndFloatTips" !== this.Info.Name &&
-        "FlowChapterEndTips" !== this.Info.Name) ||
-        (((t = this.OpenParam).StartSequenceName = "Accomplish"),
-        this.UiViewSequence?.SetSequenceName(t));
+      "ChapterEndFloatTips" === this.Info.Name ||
+      "FlowChapterEndTips" === this.Info.Name
+        ? (((t = this.OpenParam).StartSequenceName = "Accomplish"),
+          this.UiViewSequence?.SetSequenceName(t))
+        : "ChapterA" === this.Info.Name &&
+          (1 === (t = this.OpenParam).ChapterState &&
+            (((e = this.OpenParam).StartSequenceName = "Accomplish"),
+            this.UiViewSequence?.SetSequenceName(e)),
+          t.ResumeTimeDilation) &&
+          UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
+            ViewId: this.GetViewId(),
+            TimeDilation: 1,
+            DebugName: "ChapterA",
+            Reason: "Plot",
+          });
   }
   CombineChapterExtraText(t) {
     return (

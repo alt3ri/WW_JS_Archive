@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   GlobalData_1 = require("../GlobalData");
 class GlobalBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static GetBpEventManager() {
     return GlobalData_1.GlobalData.BpEventManager;
   }

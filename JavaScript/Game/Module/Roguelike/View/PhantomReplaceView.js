@@ -23,7 +23,7 @@ class PhantomReplaceView extends PhantomSelectView_1.PhantomSelectView {
               1,
             ))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Roguelike", 9, "当前没有选中的声骸");
+            Log_1.Log.Error("Roguelike", 8, "当前没有选中的声骸");
       }),
       (this.GiveUpBtn = () => {
         RoguelikeController_1.RoguelikeController.RoguelikeGiveUpGainRequest(

@@ -21,11 +21,10 @@ class VisionRecoverySelectableComponent extends SelectableComponent_1.Selectable
       });
   }
   CanAddMaterial(e, o = !1) {
-    var r;
-    return 0 <
-      ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-        e.IncId,
-      ).GetPhantomLevel()
+    var r = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+      e.IncId,
+    );
+    return 0 < r.GetPhantomLevel() || 0 < r.GetExp()
       ? (o &&
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "Text_EchoFull_Text",

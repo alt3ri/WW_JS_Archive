@@ -37,7 +37,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "GeneralLogicTree",
-                  19,
+                  18,
                   "行为树检测的GameplayTag不存在",
                   ["tag", e.State],
                 ),
@@ -45,7 +45,7 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
-              19,
+              18,
               "行为树检测实体的GameplayTag时，实体不存在",
             ),
           1))
@@ -57,8 +57,8 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         this.AXt,
       );
       if (t?.IsInit) {
-        let e = t.Entity.GetComponent(190);
-        (e = e || t.Entity.GetComponent(181)) &&
+        let e = t.Entity.GetComponent(203);
+        (e = e || t.Entity.GetComponent(194)) &&
           (e.HasTag(this.UXt)
             ? this.Foa && this.SubmitNode()
             : this.Foa || this.SubmitNode());

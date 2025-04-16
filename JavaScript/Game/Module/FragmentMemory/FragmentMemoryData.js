@@ -39,6 +39,9 @@ class FragmentMemoryCollectData {
   GetTraceMarkId() {
     return this.GetConfig().TraceMarkId;
   }
+  GetTrackMapId() {
+    return this.GetConfig().TrackMapId;
+  }
   GetQuestList() {
     return this.GetConfig().QuestIdList;
   }
@@ -131,7 +134,7 @@ class FragmentMemoryTopicData {
     return this.xe;
   }
   Phrase(t) {
-    (this.xe = t.s5n), (this.nwn = []);
+    (this.xe = t.s5n), (this.swn = t.K6n), (this.nwn = []);
     for (const i of t.NBs) {
       var e = new FragmentMemoryCollectData(),
         r =
@@ -161,15 +164,12 @@ class FragmentMemoryTopicData {
     );
   }
   GetRedDotState() {
-    if (!this.GetAllCollectState()) {
-      if (this.GetFirstOpen()) return !0;
-      for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
-    }
+    if (this.GetFirstOpen()) return !0;
+    for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
     return !1;
   }
   GetCollectRedDotState() {
-    if (!this.GetAllCollectState())
-      for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
+    for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
     return !1;
   }
   GetClueEntrance() {

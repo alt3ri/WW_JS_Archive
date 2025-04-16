@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDecodeTabColor = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class SignalDecodeTabColor {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -20,11 +21,11 @@ class SignalDecodeTabColor {
   get HighlightColor() {
     return this.highlightcolor();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsSignalDecodeTabColor(t, r) {
-    return (r || new SignalDecodeTabColor()).__init(
+  static getRootAsSignalDecodeTabColor(t, i) {
+    return (i || new SignalDecodeTabColor()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -34,20 +35,44 @@ class SignalDecodeTabColor {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   activecolor(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   defaultcolor(t) {
-    var r = this.J7.__offset(this.z7, 8);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   vacancycolor(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   highlightcolor(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.SignalDecodeTabColor = SignalDecodeTabColor;

@@ -19,16 +19,16 @@ class LevelEventRemoveBuffFromCreature extends LevelGeneralBase_1.LevelEventBase
         for (const o of e.EntityIds) this.fLe.push(o);
       this.CreateWaitEntityTask(this.fLe);
     } else
-      Log_1.Log.CheckError() && Log_1.Log.Error("Event", 34, "参数类型错误"),
+      Log_1.Log.CheckError() && Log_1.Log.Error("Event", 33, "参数类型错误"),
         this.FinishExecute(!1);
   }
   ExecuteWhenEntitiesReady() {
     for (const o of this.fLe) {
       var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
       if (e?.IsInit) {
-        var t = e.Entity.GetComponent(160);
+        var t = e.Entity.GetComponent(172);
         for (const s of this.gLe.BuffIds)
-          t.RemoveBuff(BigInt(s), -1, "LevelEventRemoveBuffFromCreature");
+          t.RemoveBuff(s, -1, "LevelEventRemoveBuffFromCreature");
       }
     }
     this.FinishExecute(!0);
@@ -45,7 +45,7 @@ class LevelEventRemoveBuffFromCreature extends LevelGeneralBase_1.LevelEventBase
       this.ExecuteWhenEntitiesReady();
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Event", 34, "执行行为时:参数类型错误", [
+        Log_1.Log.Error("Event", 33, "执行行为时:参数类型错误", [
           "EventType",
           this.Type,
         ]),

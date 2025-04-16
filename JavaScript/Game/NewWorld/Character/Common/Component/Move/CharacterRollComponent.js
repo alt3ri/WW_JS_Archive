@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, n, i) {
-    var s,
-      o = arguments.length,
+  function (e, t, n, o) {
+    var i,
+      s = arguments.length,
       r =
-        o < 3
+        s < 3
           ? t
-          : null === i
-            ? (i = Object.getOwnPropertyDescriptor(t, n))
-            : i;
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, n))
+            : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(e, t, n, i);
+      r = Reflect.decorate(e, t, n, o);
     else
       for (var h = e.length - 1; 0 <= h; h--)
-        (s = e[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(t, n, r) : s(t, n)) || r);
-    return 3 < o && r && Object.defineProperty(t, n, r), r;
+        (i = e[h]) && (r = (s < 3 ? i(r) : 3 < s ? i(t, n, r) : i(t, n)) || r);
+    return 3 < s && r && Object.defineProperty(t, n, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterRollComponent = void 0);
@@ -30,40 +30,40 @@ let CharacterRollComponent = class CharacterRollComponent extends EntityComponen
   constructor() {
     super(...arguments),
       (this.Gce = void 0),
-      (this.Mxa = (0, puerts_1.$ref)(void 0)),
-      (this.Sxa = 1200),
-      (this.Exa = 0.1),
-      (this.yxa = 1e3),
-      (this.Ixa = 1960),
-      (this.Txa = 100),
+      (this.Ixa = (0, puerts_1.$ref)(void 0)),
+      (this.Txa = 1200),
+      (this.Lxa = 0.1),
+      (this.Dxa = 1e3),
+      (this.Axa = 1960),
+      (this.Rxa = 100),
       (this.nun = 4e3),
-      (this.Lxa = (e) => {
+      (this.Uxa = (e) => {
         UE.KuroMovementBPLibrary.KuroRoll(
           e,
           this.Gce.CharacterMovement,
-          this.Sxa,
-          this.Exa,
-          this.yxa,
-          this.Mxa,
-          this.Ixa,
           this.Txa,
+          this.Lxa,
+          this.Dxa,
+          this.Ixa,
+          this.Axa,
+          this.Rxa,
           this.nun,
         );
       });
   }
   static get Dependencies() {
-    return [164];
+    return [176];
   }
   OnInit(e) {
     return !0;
   }
   OnStart() {
     return (
-      (this.Gce = this.Entity.GetComponent(164)),
+      (this.Gce = this.Entity.GetComponent(176)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CustomMoveRoll,
-        this.Lxa,
+        this.Uxa,
       ),
       !0
     );
@@ -73,29 +73,33 @@ let CharacterRollComponent = class CharacterRollComponent extends EntityComponen
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CustomMoveRoll,
-        this.Lxa,
+        this.Uxa,
       ),
       !0
     );
   }
-  EnterRoll(e, t, n, i, s, o) {
-    (this.Sxa = e),
-      (this.Exa = t),
-      (this.yxa = n),
-      (this.Ixa = i),
-      (this.Txa = s),
-      (this.nun = o),
-      this.Gce?.CharacterMovement?.SetMovementMode(
-        6,
-        CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_ROLL,
-      );
+  EnterRoll(e, t, n, o, i, s) {
+    (this.Txa = e),
+      (this.Lxa = t),
+      (this.Dxa = n),
+      (this.Axa = o),
+      (this.Rxa = i),
+      (this.nun = s),
+      this.Gce?.ActorComp?.Actor.KuroSetMovementMode({
+        Mode: 6,
+        CustomMode: CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_ROLL,
+        Context: "[CharacterRollComponent.EnterRoll]",
+      });
   }
   LeaveRoll() {
-    this.Gce?.CharacterMovement?.SetMovementMode(3);
+    this.Gce?.ActorComp?.Actor.KuroSetMovementMode({
+      Mode: 3,
+      Context: "[CharacterRollComponent.LeaveRoll]",
+    });
   }
 };
 (CharacterRollComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(33)],
+  [(0, RegisterComponent_1.RegisterComponent)(36)],
   CharacterRollComponent,
 )),
   (exports.CharacterRollComponent = CharacterRollComponent);

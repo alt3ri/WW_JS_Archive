@@ -18,29 +18,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configLevelEntityConfigByMapIdAndEntityId.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configLevelEntityConfigByMapIdAndEntityId.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configLevelEntityConfigByMapIdAndEntityId.GetConfig(";
 exports.configLevelEntityConfigByMapIdAndEntityId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (n, t, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n}#${t})`),
+      getConfigStat?.Start();
+    var i = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${n}#${t})`),
       e =
-        (i.Start(),
+        (i?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (o) {
@@ -48,8 +48,8 @@ exports.configLevelEntityConfigByMapIdAndEntityId = {
         const f = ConfigCommon_1.ConfigCommon.GetConfig(C);
         if (f)
           return (
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -87,8 +87,8 @@ exports.configLevelEntityConfigByMapIdAndEntityId = {
               ((e = KEY_PREFIX + `#${n}#${t})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -96,8 +96,8 @@ exports.configLevelEntityConfigByMapIdAndEntityId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    i.Stop(),
-      getConfigStat.Stop(),
+    i?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

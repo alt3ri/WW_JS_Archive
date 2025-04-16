@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.AdventureGuideView = void 0);
+  (exports.AdventureGuideView = exports.AdventureGuideViewOpenData = void 0);
 const UE = require("ue"),
   Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
@@ -22,6 +22,14 @@ const UE = require("ue"),
   ItemDefines_1 = require("../../Item/Data/ItemDefines"),
   PowerController_1 = require("../../Power/PowerController"),
   LguiUtil_1 = require("../../Util/LguiUtil");
+class AdventureGuideViewOpenData {
+  constructor() {
+    (this.OpenTabViewName = void 0),
+      (this.OpenParam = void 0),
+      (this.NewSoundDetectTracingIdList = []);
+  }
+}
+exports.AdventureGuideViewOpenData = AdventureGuideViewOpenData;
 class AdventureGuideView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -68,8 +76,18 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
           Time_1.Time.Now - this.L6e >= e
         );
       }),
+      (this.mo_ = (e) => {
+        (this.T6e = e),
+          (this.I6e = this.x6e(e.OpenTabViewName)),
+          this.TabComponent.SelectToggleByIndex(this.I6e, !0),
+          (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
+            e.OpenTabViewName);
+      }),
       (this.P6e = (e, t) => {
-        (this.T6e = [e, t]),
+        var i = new AdventureGuideViewOpenData();
+        (i.OpenTabViewName = e),
+          (i.OpenParam = t),
+          (this.T6e = i),
           (this.I6e = this.x6e(e)),
           this.TabComponent.SelectToggleByIndex(this.I6e, !0),
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
@@ -116,6 +134,10 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeChildView,
         this.P6e,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SwitchAdventureGuideViewTab,
+        this.mo_,
       );
   }
   OnRemoveEventListener() {
@@ -130,6 +152,10 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangeChildView,
         this.P6e,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SwitchAdventureGuideViewTab,
+        this.mo_,
       );
   }
   async OnBeforeStartAsync() {
@@ -140,7 +166,7 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
     var e,
       t,
       i,
-      n = this.T6e[0];
+      n = this.T6e.OpenTabViewName;
     n
       ? (this.I6e = this.x6e(n))
       : ((n =
@@ -166,11 +192,11 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
       ? [ItemDefines_1.EItemId.OverPower, ItemDefines_1.EItemId.Power]
       : [ItemDefines_1.EItemId.Power]),
       await this.TabComponent.SetCurrencyItemList(o);
-    for (const r of this.TabComponent.GetCurrencyItemList())
-      r.SetButtonFunction(() => {
+    for (const a of this.TabComponent.GetCurrencyItemList())
+      a.SetButtonFunction(() => {
         PowerController_1.PowerController.OpenPowerView();
       }),
-        r.SetUiActive(!1);
+        a.SetUiActive(!1);
     ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
       this.TabDataList[this.I6e].ChildViewName;
   }
@@ -211,13 +237,20 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
       var n = this.TabDataList[e].ChildViewName;
       "AdventureTargetView" === n
         ? (i[e].RedDotName = "AdventureManual")
-        : "DailyActivityTabView" === n &&
-          (i[e].RedDotName = "AdventureDailyActivityTab");
+        : "DailyActivityTabView" === n
+          ? (i[e].RedDotName = "AdventureDailyActivityTab")
+          : "NewSoundAreaView" === n
+            ? (i[e].RedDotName = "AdventureNewSoundAreaTab")
+            : "DisposableChallengeView" === n &&
+              (i[e].RedDotName = "AdventureChallengeTab");
     }
     await this.TabComponent.RefreshTabItemAsync(i);
   }
   U6e(e) {
     e && this.w6e("", ""), this.GetItem(4).SetUIActive(e), (this.D6e = e);
+  }
+  SetTabViewOpenData(e) {
+    this.T6e = e;
   }
   OnBeforeDestroy() {
     (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
@@ -236,7 +269,7 @@ class AdventureGuideView extends UiViewBase_1.UiViewBase {
     ).GetRootItem();
     if (i) return [i, i];
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         e,
       ]);

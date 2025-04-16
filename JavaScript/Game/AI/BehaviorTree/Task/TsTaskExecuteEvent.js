@@ -7,6 +7,9 @@ class TsTaskExecuteEvent extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments), (this.EventGroupId = 0), (this.IsInitTsVariables = !1);
   }
+  Constructor() {
+    super.Constructor(), (this.IsInitTsVariables = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       (this.IsInitTsVariables = !0);

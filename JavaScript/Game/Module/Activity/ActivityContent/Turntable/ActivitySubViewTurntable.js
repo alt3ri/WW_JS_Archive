@@ -9,7 +9,9 @@ const UE = require("ue"),
   PublicUtil_1 = require("../../../../Common/PublicUtil"),
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
   ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
   GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
   ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
@@ -30,14 +32,30 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       (this.LNe = void 0),
       (this.vUn = void 0),
       (this.ZTn = void 0),
+      (this.YTl = void 0),
       (this.eLn = void 0),
       (this.Qqn = void 0),
       (this.tLn = void 0),
       (this.iLn = -1),
       (this.PNe = !1),
       (this.xNe = 0),
+      (this.zTl = !1),
       (this.wNe = (t) => {
-        t === this.ActivityTurntableData.Id && this.e2n();
+        t === this.ActivityTurntableData.Id &&
+          1 === this.ActivityTurntableData.TurntableType &&
+          this.e2n();
+      }),
+      (this.Dwa = () => {
+        var t;
+        this.PKt(),
+          this.ActivityTurntableData.CheckIfInShowTime() &&
+            2 === this.ActivityTurntableData.TurntableType &&
+            !this.zTl &&
+            this.ActivityTurntableData.IsActivityUnFinished() &&
+            ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(234)),
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+              t,
+            ));
       }),
       (this.oLn = () => {
         var t = new ActivityTurntableItem_1.ActivityTurntableToggleGroupItem();
@@ -63,12 +81,13 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       (this.sLn = (t) => {
         const i = this.ActivityTurntableData.GetCurrentRoundId(),
           e = this.iLn;
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.SetActivityViewState,
-          !1,
-          1,
-          !0,
-        ),
+        (this.zTl = !0),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.SetActivityViewState,
+            !1,
+            1,
+            !0,
+          ),
           this.eLn.RunTurntableByRewardId(t, () => {
             ActivityTurntableController_1.ActivityTurntableController.ShowTurntableItemObtain(
               this.ActivityTurntableData.GetRunResult(),
@@ -79,12 +98,14 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
                   1,
                   !0,
                 ),
+                  (this.zTl = !1),
                   i !== e &&
                     ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
                       "TurntableActivity_Tips01",
                     );
               },
             ),
+              this.PKt(),
               this.aLn();
           });
       });
@@ -105,48 +126,57 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       [11, UE.UISprite],
       [12, UE.UISprite],
       [13, UE.UISprite],
+      [14, UE.UIItem],
     ];
   }
   OnSetData() {
     this.ActivityTurntableData = this.ActivityBaseData;
   }
   async OnBeforeStartAsync() {
-    var t = this.GetItem(1),
-      t =
+    var t = [],
+      i = this.GetItem(1),
+      i =
         ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
-        await this.LNe.CreateThenShowByActorAsync(t.GetOwner()),
+        t.push(this.LNe.CreateThenShowByActorAsync(i.GetOwner())),
         this.GetItem(3)),
-      t =
+      i =
         ((this.ZTn = new ActivityTurntableItem_1.ActivityTurntableQuestItem()),
-        await this.ZTn.CreateThenShowByActorAsync(t.GetOwner()),
+        t.push(this.ZTn.CreateByActorAsync(i.GetOwner())),
+        this.GetItem(2).SetUIActive(!1),
+        this.GetItem(14)),
+      i =
+        ((this.YTl = new ActivityTurntableItem_1.ActivityTurntableDailyPanel(
+          this.ActivityTurntableData,
+        )),
+        t.push(this.YTl.CreateByActorAsync(i.GetOwner())),
         this.GetItem(5)),
-      t =
+      i =
         ((this.eLn =
           new ActivityTurntableComponent_1.ActivityTurntableComponent()),
-        await this.eLn.CreateThenShowByActorAsync(t.GetOwner()),
+        t.push(this.eLn.CreateThenShowByActorAsync(i.GetOwner())),
         this.GetItem(8)),
-      t =
+      i =
         ((this.Qqn =
           new ActivityTurntableComponent_1.ActivityTurntableComponent()),
-        await this.Qqn.CreateThenShowByActorAsync(t.GetOwner()),
+        t.push(this.Qqn.CreateThenShowByActorAsync(i.GetOwner())),
         this.GetItem(7));
     (this.vUn = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
       this.ActivityBaseData,
     )),
-      await this.vUn.CreateThenShowByActorAsync(t.GetOwner()),
+      t.push(this.vUn.CreateThenShowByActorAsync(i.GetOwner())),
       (this.tLn = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(4),
         this.oLn,
-      ));
+      )),
+      await Promise.all(t);
   }
   OnStart() {
-    this.ActivityBaseData.LocalConfig &&
-      (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
+    this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
       this.vUn.FunctionButton.SetFunction(this.nLn),
       this.vUn.SetFunctionRedDotVisible(!0),
       this.Qqn.SetActive(!1),
       (this.Qqn.Activate = !1),
-      this.Yqn());
+      this.Yqn();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -156,6 +186,10 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.wNe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.ActivityCrossDayRefresh,
+        this.Dwa,
       );
   }
   OnRemoveEventListener() {
@@ -166,15 +200,23 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.wNe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.ActivityCrossDayRefresh,
+        this.Dwa,
       );
   }
   OnRefreshView() {
-    this.hLn(),
+    this.PKt(),
       this.aLn(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.SetActivityViewCurrency,
         [this.ActivityTurntableData.TurntableCostConfigId],
-      );
+      ),
+      this.ActivityTurntableData.IsUnLock() &&
+        this.ActivityTurntableData.SaveUnlockRedDot(),
+      2 === this.ActivityTurntableData.TurntableType &&
+        this.ActivityTurntableData.SaveDailyRedDot();
   }
   OnBeforeDestroy() {
     (this.Xqn.length = 0), (this.$qn.length = 0);
@@ -182,15 +224,22 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
   OnTimer(t) {
     this.FNe();
   }
+  PKt() {
+    1 === this.ActivityTurntableData.TurntableType
+      ? this.hLn()
+      : 2 === this.ActivityTurntableData.TurntableType && this.JTl();
+  }
   e2n() {
     var t = this.ActivityTurntableData.IsHasNewQuestRedDot();
-    this.ZTn.SetRedDot(t);
+    this.ZTn?.SetRedDot(t);
   }
   hLn() {
     this.PNe = !1;
     var i = this.ActivityTurntableData.GetCurrentQuestProgress(),
       e = this.ActivityTurntableData.QuestList.length;
-    if ((this.GetItem(2).SetUIActive(i < e), i !== e)) {
+    if (
+      (this.GetItem(2).SetUIActive(i < e), this.ZTn.SetActive(i < e), i !== e)
+    ) {
       this.ZTn.SetTitle(
         "TurntableActivity_Progress",
         i.toString(),
@@ -199,26 +248,26 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
       var s = this.ActivityTurntableData.GetCurrentQuestIndex(),
         i = this.ActivityTurntableData.QuestList[s],
         e = this.ActivityTurntableData.QuestStateMap.get(i),
-        n = ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(i),
-        r = n?.RewardId;
-      if (0 !== r) {
-        r = this.ActivityTurntableData.GetPreviewReward(r);
-        if (!(r.length < 1)) {
+        r = ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(i),
+        h = r?.RewardId;
+      if (0 !== h) {
+        h = this.ActivityTurntableData.GetPreviewReward(h);
+        if (!(h.length < 1)) {
           let t = !1;
           switch (e.QuestState) {
             case 1:
             case 2:
-              var h = n?.TidName,
-                h = h ? PublicUtil_1.PublicUtil.GetConfigTextByKey(h) : "";
-              this.ZTn.SetTxt(h);
+              var n = r?.TidName,
+                n = n ? PublicUtil_1.PublicUtil.GetConfigTextByKey(n) : "";
+              this.ZTn.SetTxt(n);
               break;
             case 3:
               (t = !0), (this.PNe = !0);
-              (h = this.ActivityTurntableData.QuestList[s + 1]),
-                (h = this.ActivityTurntableData.QuestStateMap.get(h));
-              (this.xNe = h.QuestUnlockStamp), this.FNe();
+              (n = this.ActivityTurntableData.QuestList[s + 1]),
+                (n = this.ActivityTurntableData.QuestStateMap.get(n));
+              (this.xNe = n.QuestUnlockStamp), this.FNe();
           }
-          this.ZTn.Refresh(t, r[0], i, this.ActivityTurntableData.Id),
+          this.ZTn.Refresh(t, h[0], i, this.ActivityTurntableData.Id),
             this.e2n();
         }
       }
@@ -248,6 +297,10 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
         : t > CommonDefine_1.SECOND_PER_MINUTE
           ? [1, 0]
           : [0, 0];
+  }
+  JTl() {
+    var t = this.ActivityTurntableData.IsActivityUnFinished();
+    this.YTl.SetActive(t), t && this.YTl.Refresh();
   }
   MUn() {
     var t = this.ActivityTurntableData.GetCurrentRoundId() === this.iLn,
@@ -283,9 +336,9 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
         e = this.tLn.GetLayoutItemList();
       for (let t = 0; t < this.ActivityTurntableData.RoundIdList.length; t++) {
         var s = this.ActivityTurntableData.RoundIdList[t],
-          n = this.ActivityTurntableData.IsRoundUnFinished(s),
-          n = (e[t].SetToggleDisable(!n), s === i);
-        e[t].SetToggleState(n, !1);
+          r = this.ActivityTurntableData.IsRoundUnFinished(s),
+          r = (e[t].SetToggleDisable(!r), s === i);
+        e[t].SetToggleState(r, !1);
       }
       this.rLn(i, this.iLn, !1), this.MUn();
     });
@@ -293,34 +346,34 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
   Yqn() {
     for (const s of titleIdNameList) {
       var t = [];
-      for (const n of s) {
-        var i = "SP_TurntableTitleRound" + n,
+      for (const r of s) {
+        var i = "SP_TurntableTitleRound" + r,
           i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
         t.push(i);
       }
       this.$qn.push(t);
     }
-    for (const r of [
+    for (const h of [
       [9, 0, !0],
       [10, 0, !1],
       [11, 1, !0],
       [12, 2, !0],
       [13, 0, !0],
     ]) {
-      var e = { Sprite: this.GetSprite(r[0]), Index: r[1], IsCurrent: r[2] };
+      var e = { Sprite: this.GetSprite(h[0]), Index: h[1], IsCurrent: h[2] };
       this.Xqn.push(e);
     }
   }
   async mGe(t, i) {
     let e = 0;
     const s = new CustomPromise_1.CustomPromise();
-    var n = () => {
+    var r = () => {
       ++e === this.Xqn.length && s.SetResult();
     };
-    for (const h of this.Xqn) {
-      var r = h.IsCurrent ? t : i,
-        r = this.$qn[r][h.Index];
-      this.SetSpriteByPath(r, h.Sprite, !1, void 0, n);
+    for (const n of this.Xqn) {
+      var h = n.IsCurrent ? t : i,
+        h = this.$qn[h][n.Index];
+      this.SetSpriteByPath(h, n.Sprite, !1, void 0, r);
     }
     await s.Promise;
   }
@@ -343,8 +396,8 @@ class ActivitySubViewTurntable extends ActivitySubViewBase_1.ActivitySubViewBase
   }
   async Jqn(t, i) {
     var e = [];
-    for (const n of this.ActivityTurntableData.RoundRewardIdMap.get(t)) {
-      var s = this.ActivityTurntableData.AllRewardInfo.get(n);
+    for (const r of this.ActivityTurntableData.RoundRewardIdMap.get(t)) {
+      var s = this.ActivityTurntableData.AllRewardInfo.get(r);
       e.push(s);
     }
     await i.Refresh(e);

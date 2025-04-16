@@ -51,6 +51,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       (this.Hte = void 0),
       (this.Lie = void 0),
       (this.nXr = void 0),
+      (this.oEc = void 0),
       (this.gU = !1),
       (this.hvn = !1),
       (this.Ixe = void 0),
@@ -100,8 +101,8 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
   }
   OnStart() {
     return (
-      (this.Hte = this.Entity.GetComponent(187)),
-      (this.Lie = this.Entity.GetComponent(190)),
+      (this.Hte = this.Entity.GetComponent(200)),
+      (this.Lie = this.Entity.GetComponent(203)),
       !0
     );
   }
@@ -110,6 +111,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       var t = this.gvn.Pop();
       t.Func(t.Index, t.TagIds);
     }
+    this.oEc && this.oEc();
     var e = UE.NewArray(UE.Transform),
       i = this.Ixe?.MainActor;
     if (i?.CollisionActors?.Num()) {
@@ -118,8 +120,9 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         if (i.StaticMeshComponent?.StaticMesh) {
           for (var [, r] of this.dvn) {
             var s = this.Hte?.ActorTransform,
-              r = r.GetTransform().GetRelativeTransform(s);
-            e.Add(r);
+              r = r.D_GetTransform().GetRelativeTransform(s),
+              s = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(r);
+            e.Add(s);
           }
           var o = this.Hte?.Owner;
           o &&
@@ -169,7 +172,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         !1,
       );
       t = t.K2_GetActorRotation();
-      r.K2_SetActorLocationAndRotation(e.ToUeVector(), t, !1, void 0, !0),
+      r.D_K2_SetActorLocationAndRotation(e.ToUeVector(), t, !1, void 0, !0),
         this.cvn.clear(),
         this.Mvn(r),
         this.Evn(r),
@@ -251,21 +254,21 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     }
     for (let t = 0; t < e.TagsAndCorrespondingEffects.Num(); t++) {
       var c = e.TagsAndCorrespondingEffects.GetKey(t),
-        f = e.TagsAndCorrespondingEffects.Get(c);
-      for (let t = 0; t < f.Actors.Num(); t++) {
-        const e = f.Actors.Get(t);
-        this.cvn.has(e) && f.Actors.Set(t, this.cvn.get(e));
+        v = e.TagsAndCorrespondingEffects.Get(c);
+      for (let t = 0; t < v.Actors.Num(); t++) {
+        const e = v.Actors.Get(t);
+        this.cvn.has(e) && v.Actors.Set(t, this.cvn.get(e));
       }
-      for (let t = 0; t < f.Effects.Num(); t++) {
-        var _ = f.Effects.Get(t);
-        this.cvn.has(_) && ((_ = this.cvn.get(_)), f.Effects.Set(t, _));
+      for (let t = 0; t < v.Effects.Num(); t++) {
+        var f = v.Effects.Get(t);
+        this.cvn.has(f) && ((f = this.cvn.get(f)), v.Effects.Set(t, f));
       }
-      for (let t = 0; t < f.HideActors.Num(); t++) {
-        var v = f.HideActors.Get(t);
-        this.cvn.has(v) && f.HideActors.Set(t, this.cvn.get(v));
+      for (let t = 0; t < v.HideActors.Num(); t++) {
+        var _ = v.HideActors.Get(t);
+        this.cvn.has(_) && v.HideActors.Set(t, this.cvn.get(_));
       }
-      for (let t = 0; t < f.MaterialControllers.Num(); t++) {
-        var p = f.MaterialControllers.Get(t);
+      for (let t = 0; t < v.MaterialControllers.Num(); t++) {
+        var p = v.MaterialControllers.Get(t);
         for (let t = 0; t < p.Actors.Num(); t++) {
           var u = p.Actors.Get(t);
           this.cvn.has(u) && p.Actors.Set(t, this.cvn.get(u));
@@ -280,8 +283,9 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     for (let t = 0; t < r.Num(); t++) this.Svn(r.Get(t), e);
     t.Owner = e;
   }
-  InitGenerateInfo(t, e, i, r) {
+  InitGenerateInfo(t, e, i, r, s = void 0) {
     (this.nXr = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(0, t)),
+      (this.oEc = s),
       (this.lvn = e),
       (this.uvn = i),
       void 0 !== r && (this.Cvn = r),
@@ -293,7 +297,13 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     let r = this.nXr.场景交互物.AssetPathName?.toString();
     r.includes(".") && (r = r.split(".")[0]);
     var s = (0, puerts_1.$ref)(!1),
-      i = UE.LevelStreamingDynamic.LoadLevelInstance(i, r, t, e, s),
+      i = UE.LevelStreamingDynamic.LoadLevelInstance(
+        i,
+        r,
+        t.op_ToVector(),
+        e,
+        s,
+      ),
       s = (0, puerts_1.$unref)(s),
       o = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(defaultTagId),
       o = this.nXr.场景交互物状态列表.Get(o);
@@ -472,7 +482,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
   }
 };
 (SceneItemMultiInteractionActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(146)],
+  [(0, RegisterComponent_1.RegisterComponent)(157)],
   SceneItemMultiInteractionActorComponent,
 )),
   (exports.SceneItemMultiInteractionActorComponent =

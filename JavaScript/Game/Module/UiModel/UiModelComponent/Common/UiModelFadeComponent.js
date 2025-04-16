@@ -30,7 +30,8 @@ let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBa
       (this.gle = 0),
       (this.r1t = 0),
       (this.kJo = void 0),
-      (this.APn = !1);
+      (this.APn = !1),
+      (this.FadeFinishCallBack = void 0);
   }
   OnCreate() {
     this.APn = !1;
@@ -43,7 +44,7 @@ let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBa
       (this.APn = !0),
       this.av();
   }
-  Fade(t, e, i, s) {
+  Fade(t, e, i, s, o) {
     this.APn ||
       ((this.FHt = t),
       (this.zwr = e),
@@ -51,6 +52,7 @@ let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBa
       (this.kJo = s),
       (this.gle = 0),
       (this.NeedTick = !0),
+      (this.FadeFinishCallBack = o),
       this.ywr?.SetDitherEffect(t));
   }
   Tick(t) {
@@ -59,7 +61,8 @@ let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBa
       this.kJo.GetFloatValue(this.gle / this.r1t) * (this.zwr - this.FHt) +
       this.FHt;
     this.ywr?.SetDitherEffect(t),
-      this.gle >= this.r1t && ((this.NeedTick = !1), this.av());
+      this.gle >= this.r1t &&
+        ((this.NeedTick = !1), this.av(), this.FadeFinishCallBack?.());
   }
   av() {
     (this.FHt = 0),

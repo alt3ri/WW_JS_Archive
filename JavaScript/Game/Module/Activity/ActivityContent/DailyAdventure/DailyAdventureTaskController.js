@@ -13,7 +13,7 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
         break;
       case 2:
         var a = [];
-        for (const o of r) a.push(Number(o));
+        for (const l of r) a.push(Number(l));
         DailyAdventureTaskController.dOe(a);
         break;
       case 3: {
@@ -22,8 +22,8 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
         break;
       }
       case 4:
-        var l = Number(r[0]);
-        DailyAdventureTaskController.gha(l);
+        var o = Number(r[0]);
+        DailyAdventureTaskController.gha(o);
     }
   }
   static dOe(e) {
@@ -31,7 +31,7 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
     1 < e.length &&
       ((a = ModelManager_1.ModelManager.MapModel.IsConfigMarkIdUnlock(e[0])),
       (r = a ? e[0] : e[1]));
-    var a = { MarkId: r, MarkType: 0, OpenAreaId: 0 };
+    var a = { MarkId: r, MarkType: 0, OpenFogId: 0 };
     WorldMapController_1.WorldMapController.OpenView(2, !1, a);
   }
   static COe(e) {

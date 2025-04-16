@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UpRoleGachaPoolItem = void 0);
 const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   GachaPoolItem_1 = require("./GachaPoolItem"),
   RoleDescribeComponent_1 = require("./RoleDescribeComponent");
 class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
@@ -14,6 +15,8 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
       [2, UE.UITexture],
       [1, UE.UIItem],
       [3, UE.UITexture],
+      [4, UE.UIItem],
+      [5, UE.UINiagara],
     ];
   }
   async OnBeforeStartAsync() {
@@ -22,16 +25,16 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   }
   Refresh() {
     if (this.GachaViewInfo) {
-      var e = this.GachaViewInfo.ShowIdList[0];
-      this.mWt.Update(e, 6 !== this.GachaType);
-      const t = this.GetTexture(0),
+      var t = this.GachaViewInfo.ShowIdList[0];
+      this.mWt.Update(t, 6 !== this.GachaType);
+      const i = this.GetTexture(0),
         s =
           (this.SetTextureByPath(
             this.GachaViewInfo.ContentTexturePath,
-            t,
+            i,
             void 0,
             () => {
-              t.SetSizeFromTexture();
+              i.SetSizeFromTexture();
             },
           ),
           this.SetTextureByPath(
@@ -47,10 +50,25 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
           s.SetSizeFromTexture();
         },
       );
+      t = !StringUtils_1.StringUtils.IsBlank(this.GachaViewInfo.EffectPath);
+      this.GetItem(4).SetUIActive(t),
+        t &&
+          (this.SetNiagaraSystemByPath(
+            this.GachaViewInfo.EffectPath,
+            this.GetUiNiagara(5),
+            void 0,
+          ),
+          this.GachaViewInfo.EffectLocation) &&
+          (this.GetItem(4).SetAnchorOffsetX(
+            this.GachaViewInfo.EffectLocation.X,
+          ),
+          this.GetItem(4).SetAnchorOffsetY(
+            this.GachaViewInfo.EffectLocation.Y,
+          ));
     }
   }
-  SetDescUiActive(e) {
-    this.mWt.SetUiActive(e);
+  SetDescUiActive(t) {
+    this.mWt.SetUiActive(t);
   }
 }
 exports.UpRoleGachaPoolItem = UpRoleGachaPoolItem;

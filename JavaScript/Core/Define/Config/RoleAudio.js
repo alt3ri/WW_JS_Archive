@@ -13,6 +13,12 @@ class RoleAudio {
   get Name() {
     return this.name();
   }
+  get FootstepEvent() {
+    return this.footstepevent();
+  }
+  get FoleyEvent() {
+    return this.foleyevent();
+  }
   get FastClimbEvent() {
     return this.fastclimbevent();
   }
@@ -45,12 +51,18 @@ class RoleAudio {
   losthealtheventmapValue(t) {
     return this.losthealtheventmap(t)?.value();
   }
+  get DeathEvent() {
+    return this.deathevent();
+  }
   get LowStrengthEventList() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.lowstrengtheventlistLength(),
       this.lowstrengtheventlist,
       this,
     );
+  }
+  get LowStrengthEvent() {
+    return this.lowstrengthevent();
   }
   get BreakUpEventList() {
     return GameUtils_1.GameUtils.ConvertToArray(
@@ -97,38 +109,100 @@ class RoleAudio {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
+  }
+  footstepevent(t) {
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
+  }
+  foleyevent(t) {
+    var e = this.J7.__offset(this.z7, 10),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   fastclimbevent(t) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   visionmorphevent(t) {
-    var e = this.J7.__offset(this.z7, 10);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 14),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   visionsummonevent(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 16),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   opentreasureboxevent(t) {
-    var e = this.J7.__offset(this.z7, 14);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 18),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   scantreasureboxevent(t) {
-    var e = this.J7.__offset(this.z7, 16);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 20),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   jointeamevent(t) {
-    var e = this.J7.__offset(this.z7, 18);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 22),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   GetLosthealtheventmapAt(t, e) {
     return this.losthealtheventmap(t);
   }
   losthealtheventmap(t, e) {
-    var s = this.J7.__offset(this.z7, 20);
+    var s = this.J7.__offset(this.z7, 24);
     return s
       ? (e || new DicIntString_1.DicIntString()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -137,66 +211,142 @@ class RoleAudio {
       : null;
   }
   losthealtheventmapLength() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  deathevent(t) {
+    var e = this.J7.__offset(this.z7, 26),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   GetLowstrengtheventlistAt(t) {
     return this.lowstrengtheventlist(t);
   }
   lowstrengtheventlist(t, e) {
-    var s = this.J7.__offset(this.z7, 22);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
-      : null;
+    var s = this.J7.__offset(this.z7, 28),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   lowstrengtheventlistLength() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  lowstrengthevent(t) {
+    var e = this.J7.__offset(this.z7, 30),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   GetBreakupeventlistAt(t) {
     return this.breakupeventlist(t);
   }
   breakupeventlist(t, e) {
-    var s = this.J7.__offset(this.z7, 24);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
-      : null;
+    var s = this.J7.__offset(this.z7, 32),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   breakupeventlistLength() {
-    var t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   extremedodgeevent(t) {
-    var e = this.J7.__offset(this.z7, 26);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 34),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   parryevent(t) {
-    var e = this.J7.__offset(this.z7, 28);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 36),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   enterbattleevent(t) {
-    var e = this.J7.__offset(this.z7, 30);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 38),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   underattackevent(t) {
-    var e = this.J7.__offset(this.z7, 32);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 40),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   knockupevent(t) {
-    var e = this.J7.__offset(this.z7, 34);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 42),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   enterglideevent(t) {
-    var e = this.J7.__offset(this.z7, 36);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 44),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   useexplorehookevent(t) {
-    var e = this.J7.__offset(this.z7, 38);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 46),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   climbleapevent(t) {
-    var e = this.J7.__offset(this.z7, 40);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 48),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
 }
 exports.RoleAudio = RoleAudio;

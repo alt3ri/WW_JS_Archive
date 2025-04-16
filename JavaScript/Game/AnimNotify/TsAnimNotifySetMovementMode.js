@@ -6,11 +6,15 @@ class TsAnimNotifySetMovementMode extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.MovementMode = 0);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-        e.CharacterMovement.SetMovementMode(this.MovementMode),
+        e.KuroSetMovementMode({
+          Mode: this.MovementMode,
+          Context: "[TsAnimNotifySetMovementMode.K2_Notify]",
+        }),
       !0
     );
   }

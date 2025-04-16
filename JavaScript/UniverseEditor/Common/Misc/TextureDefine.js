@@ -28,7 +28,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.Copy = "Copy"),
       (e.MagnifierTab = "MagnifierTab"),
       (e.MagnifierButton = "MagnifierButton"),
-      (e.Clean = "Clean");
+      (e.Clean = "Clean"),
+      (e.Line = "Line"),
+      (e.SyncBlockTab = "SyncBlockTab"),
+      (e.SyncBlockCreateBtn = "SyncBlockCreateBtn"),
+      (e.SyncBlockRemoveBtn = "SyncBlockRemoveBtn");
   })((ETexture = exports.ETexture || (exports.ETexture = {})));
 const texturePathMap = {
   [ETexture.FileTree]:
@@ -75,6 +79,13 @@ const texturePathMap = {
   [ETexture.MagnifierButton]:
     "/Game/Aki/UniverseEditor/Res/Icons/T_Magnifier2.T_Magnifier2",
   [ETexture.Clean]: "/Game/Aki/UniverseEditor/Res/Icons/icon_clean.icon_clean",
+  [ETexture.Line]: "/Game/Aki/UniverseEditor/Res/Icons/T_Line.T_Line",
+  [ETexture.SyncBlockTab]:
+    "/Game/Aki/UniverseEditor/Res/Icons/T_SyncBlock.T_SyncBlock",
+  [ETexture.SyncBlockCreateBtn]:
+    "/Game/Aki/UniverseEditor/Res/Icons/T_SyncBlockCreateBtn.T_SyncBlockCreateBtn",
+  [ETexture.SyncBlockRemoveBtn]:
+    "/Game/Aki/UniverseEditor/Res/Icons/T_SyncBlockRemoveBtn.T_SyncBlockRemoveBtn",
 };
 function getTexturePath(e) {
   return texturePathMap[e];

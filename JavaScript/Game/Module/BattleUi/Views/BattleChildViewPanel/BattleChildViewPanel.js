@@ -61,7 +61,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Battle",
-          18,
+          17,
           "战斗子界面不要直接调用SetActive, 请调用SetVisible",
         )
       : super.SetActive(i);
@@ -115,7 +115,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.ErrorWithStack(
             "UiCommon",
-            18,
+            17,
             "战斗界面子界面创建失败",
             i,
             ["资源名", t],
@@ -124,7 +124,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCommon",
-            18,
+            17,
             "战斗界面子界面创建失败",
             ["资源名", t],
             ["错误", i],
@@ -146,7 +146,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.ErrorWithStack(
             "UiCommon",
-            18,
+            17,
             "战斗界面子界面创建失败",
             i,
             ["资源名", t],
@@ -155,7 +155,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCommon",
-            18,
+            17,
             "战斗界面子界面创建失败",
             ["资源名", t],
             ["错误", i],
@@ -171,7 +171,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
     return Info_1.Info.OperationType;
   }
   ListenForTagSignificantChanged(i, t, e) {
-    var i = i.Entity.GetComponent(190);
+    var i = i.Entity.GetComponent(203);
     i && ((i = i.ListenForTagAddOrRemove(t, e)), this.i$e.push(i));
   }
   ClearAllTagSignificantChangedCallback() {
@@ -181,7 +181,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
     }
   }
   ContainsTag(i, t) {
-    i = i.Entity.GetComponent(190);
+    i = i.Entity.GetComponent(203);
     return !!i && i.HasTag(t);
   }
   GetItem(i) {
@@ -189,6 +189,12 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
   }
   GetUiActorForGuide() {}
   OnSeamlessTravelFinish() {}
+  RefreshPureMode(i) {
+    this.RootItem?.SetAlpha(i ? 0 : 1);
+  }
+  IsChildType(i) {
+    return this.ChildType === i;
+  }
 }
 exports.BattleChildViewPanel = BattleChildViewPanel;
 //# sourceMappingURL=BattleChildViewPanel.js.map

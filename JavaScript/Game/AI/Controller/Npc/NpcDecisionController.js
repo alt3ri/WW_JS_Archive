@@ -16,7 +16,7 @@ class NpcDecisionController {
       (this.Gre = (t, e) => {
         !this.bre ||
           (e !== Protocol_1.Aki.Protocol.hTs.nvs &&
-            e !== Protocol_1.Aki.Protocol.hTs.Proto_Finish) ||
+            e !== Protocol_1.Aki.Protocol.hTs.a3_) ||
           (this.qre &&
             this.qre.has(t) &&
             (e = this.bre.TsAiController) &&

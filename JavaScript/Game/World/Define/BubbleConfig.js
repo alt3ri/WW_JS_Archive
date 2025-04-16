@@ -63,7 +63,7 @@ class BubbleConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Entity",
-          51,
+          50,
           "[CharacterFlowDynamic] 不存在BubbleConfig.json文件。",
           ["Path", e],
         );

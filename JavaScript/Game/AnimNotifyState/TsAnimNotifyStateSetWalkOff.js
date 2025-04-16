@@ -4,11 +4,12 @@ const UE = require("ue"),
   Log_1 = require("../../Core/Common/Log"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateSetWalkOff extends UE.KuroAnimNotifyState {
+  Constructor() {}
   K2_NotifyBegin(e, t, r) {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      !!(e = e.CharacterActorComponent?.Entity.GetComponent(164))?.Valid &&
+      !!(e = e.CharacterActorComponent?.Entity.GetComponent(176))?.Valid &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Movement",
@@ -25,7 +26,7 @@ class TsAnimNotifyStateSetWalkOff extends UE.KuroAnimNotifyState {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      !!(e = e.CharacterActorComponent?.Entity.GetComponent(164))?.Valid &&
+      !!(e = e.CharacterActorComponent?.Entity.GetComponent(176))?.Valid &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Movement",

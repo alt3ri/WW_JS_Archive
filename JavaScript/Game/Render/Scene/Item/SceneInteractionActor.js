@@ -4,13 +4,18 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
   AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
+  TickSystem_1 = require("../../../../Core/Tick/TickSystem"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
   AttachToActorController_1 = require("../../../World/Controller/AttachToActorController"),
-  ItemMaterialManager_1 = require("./MaterialController/ItemMaterialManager");
+  ItemMaterialManager_1 = require("./MaterialController/ItemMaterialManager"),
+  MAX_PHYSICS_SIMULATION_TIME = 5e3;
 class SequenceDirectorConfig {
   constructor(t, i = t.IsLoop, e = t.PlayRate, s = t.Reverse) {
     (this.UeConfig = t),
@@ -31,11 +36,23 @@ class SequenceDirectorConfig {
     return this.UeConfig.Sequence;
   }
 }
+class SkeletalMontageConfig {
+  constructor(t, i = 0, e = !1, s = 3) {
+    (this.UeConfig = t),
+      (this.PendingFrameCount = i),
+      (this.PendingCompHiddenInGame = e),
+      (this.PendingCompVisibilityBasedAnimTickOption = s);
+  }
+  IsPendingApplyProps() {
+    return 0 < this.PendingFrameCount;
+  }
+}
 class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   constructor() {
     super(...arguments),
       (this.LevelName = ""),
       (this.HandleId = 0),
+      (this.OnInitCallback = void 0),
       (this.States = void 0),
       (this.Effects = void 0),
       (this.EndEffects = void 0),
@@ -48,7 +65,9 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (this.ActorsForProjection = void 0),
       (this.MaterialForProjection = void 0),
       (this.ReceivingDecalsActors = void 0),
+      (this.StaticMeshList = void 0),
       (this.Active = !0),
+      (this.IsClear = !1),
       (this.ActiveStateSequence = void 0),
       (this.ActiveSequenceDirectorMap = void 0),
       (this.DirectorConfigMap = void 0),
@@ -58,6 +77,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (this.NextState = void 0),
       (this.NextStateKey = void 0),
       (this.InTransition = !1),
+      (this.TransitionElapsedTime = 0),
+      (this.CurTransitionTime = 0),
       (this.IsPlayBack = !1),
       (this.KuroSceneInteractionActorSystem = void 0),
       (this.ProjectionRootActor = void 0),
@@ -67,6 +88,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (this.HitLocation = void 0),
       (this.HitDirection = new UE.Vector(0, 0, 1)),
       (this.SkeletalMeshActors = void 0),
+      (this.AllSkeletalMeshActors = void 0),
       (this.CharRenderingComponents = void 0),
       (this.CrossStateEffectActors = void 0),
       (this.InteractionMaterialController = void 0),
@@ -75,7 +97,77 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (this.RevertMaterialComponentsMaps = void 0),
       (this.CurrentStateAkEventHandle = void 0),
       (this.PlayingTagAkEventHandle = void 0),
+      (this.GlobalGi = void 0),
+      (this.SkeletalMontageConfigMap = void 0),
+      (this.SkeletalMeshDestructibleActorsInternal = void 0),
+      (this.SkeletalMeshDestructibleActorsList = void 0),
+      (this.SkeletalMeshDestructibleCellListMap = void 0),
+      (this.SkeletalMeshDestructibleTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.SkeletalDestructibleTickIdList = void 0),
+      (this.DebugTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.PendingStateEffects = []),
+      (this.PendingStateEffectTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.PendingTagEffects = new Map()),
+      (this.PendingTagEffectTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.PendingCrossStateEffects = new Map()),
+      (this.PendingCrossStateEffectTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.IsAnimtionMotagePlayed = !1),
+      (this.OverrideEffectActor = void 0),
+      (this.OverrideEffectParmaFunc = void 0),
+      (this.OnEffectFinishCallback = void 0),
+      (this.需要过渡状态 = !1),
+      (this.跳过表现过程 = !1),
+      (this.模拟状态 = 0),
+      (this.模拟Tag = void 0);
+  }
+  Constructor() {
+    (this.OnInitCallback = void 0),
+      (this.Active = !0),
+      (this.IsClear = !1),
+      (this.ActiveStateSequence = void 0),
+      (this.ActiveSequenceDirectorMap = void 0),
+      (this.DirectorConfigMap = void 0),
+      (this.PlayingEffectIdSet = void 0),
+      (this.PlayingState = void 0),
+      (this.CurrentState = void 0),
+      (this.NextState = void 0),
+      (this.NextStateKey = void 0),
+      (this.InTransition = !1),
+      (this.TransitionElapsedTime = 0),
+      (this.CurTransitionTime = 0),
+      (this.IsPlayBack = !1),
+      (this.KuroSceneInteractionActorSystem = void 0),
+      (this.ProjectionRootActor = void 0),
+      (this.IsProjecting = !1),
+      (this.CharRenderingComponent = void 0),
+      (this.CharRenderingKey = 0),
+      (this.HitLocation = void 0),
+      (this.HitDirection = new UE.Vector(0, 0, 1)),
+      (this.CharRenderingComponents = void 0),
+      (this.CrossStateEffectActors = void 0),
+      (this.ActorsOriginalRelTransform = void 0),
+      (this.GlobalGi = void 0),
+      (this.SkeletalMontageConfigMap = void 0),
+      (this.SkeletalMeshDestructibleActorsInternal = void 0),
+      (this.SkeletalMeshDestructibleActorsList = void 0),
+      (this.SkeletalMeshDestructibleCellListMap = void 0),
+      (this.SkeletalMeshDestructibleTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.SkeletalDestructibleTickIdList = void 0),
+      (this.DebugTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.PendingStateEffects = []),
+      (this.PendingStateEffectTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.PendingTagEffects = new Map()),
+      (this.PendingTagEffectTickId = TickSystem_1.TickSystem.InvalidId),
+      (this.PendingCrossStateEffects = new Map()),
+      (this.PendingCrossStateEffectTickId = TickSystem_1.TickSystem.InvalidId),
       (this.OnEffectFinishCallback = void 0);
+  }
+  get SkeletalMeshDestructibleActors() {
+    return (
+      this.SkeletalMeshDestructibleActorsInternal ||
+        (this.SkeletalMeshDestructibleActorsInternal = new Set()),
+      this.SkeletalMeshDestructibleActorsInternal
+    );
   }
   get BasePlatform() {
     if (!this.BasePlatformInternal) {
@@ -83,7 +175,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       if (!i) return;
       (this.BasePlatformInternal = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePlatform_C.StaticClass(),
-        this.GetTransform(),
+        this.D_GetTransform(),
         i,
       )),
         AttachToActorController_1.AttachToActorController.AttachToActor(
@@ -105,7 +197,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
             ? this.CollisionActors?.Get(0)
             : t) || i;
       (i = (0, puerts_1.$ref)(void 0)),
-        (i = (t.GetActorBounds(!0, void 0, i, !0), (0, puerts_1.$unref)(i))),
+        (i = (t.D_GetActorBounds(!0, void 0, i, !0), (0, puerts_1.$unref)(i))),
         (i = Math.max(i.X, i.Y, i.Z));
       (this.BasePlatformInternal.LeaveSphereRadius = i += 50),
         (this.BasePlatformInternal.LeaveSphereCenter = new UE.Vector(0, 0, 0));
@@ -113,12 +205,41 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     return this.BasePlatformInternal;
   }
   ReceiveBeginPlay() {
-    this.PlayingTagAkEventHandle = new Map();
+    var t;
+    (this.PlayingTagAkEventHandle = new Map()),
+      Info_1.Info.IsPlayInEditor &&
+        ((t = this.GetLevel()?.OwningWorld),
+        UE.KismetSystemLibrary.GetPathName(t?.CurrentLevel).includes(
+          "/Game/Aki/Scene/InteractionLevel/Prefab",
+        )) &&
+        ((this.GlobalGi = ActorSystem_1.ActorSystem.Get(
+          UE.BP_GlobalGI_C.StaticClass(),
+          this.D_GetTransform(),
+        )),
+        this.GlobalGi.夜晚(),
+        Info_1.Info.SetInCg(!0),
+        this.Init(-1, this.GetName(), void 0),
+        (this.DebugTickId = TickSystem_1.TickSystem.Add(
+          (t) => {
+            this.Update(t / 1e3);
+          },
+          "Game",
+          0,
+          !0,
+        ).Id));
   }
   ReceiveEndPlay() {
     if (
       (this.BasePlatformInternal &&
-        ActorSystem_1.ActorSystem.Put(this.BasePlatformInternal),
+        ActorSystem_1.ActorSystem.Put(
+          "SceneInteractionActor.ReceiveEndPlay1",
+          this.BasePlatformInternal,
+        ),
+      this.GlobalGi &&
+        ActorSystem_1.ActorSystem.Put(
+          "SceneInteractionActor.ReceiveEndPlay2",
+          this.GlobalGi,
+        ),
       this.CurrentStateAkEventHandle &&
         AudioSystem_1.AudioSystem.ExecuteAction(
           this.CurrentStateAkEventHandle,
@@ -131,6 +252,12 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         AudioSystem_1.AudioSystem.ExecuteAction(t, 0);
       this.PlayingTagAkEventHandle.clear();
     }
+    this.RemoveDebugTicker();
+  }
+  RemoveDebugTicker() {
+    this.DebugTickId !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.DebugTickId),
+      (this.DebugTickId = TickSystem_1.TickSystem.InvalidId));
   }
   AddNewState() {
     this.States.Add(this.States.Num(), void 0);
@@ -153,6 +280,11 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
           -this.CurrentState.AnimMontage.SkeletalMesh.SkeletalMeshComponent.GetPlayRate(),
         ),
       (this.IsPlayBack = !this.IsPlayBack));
+  }
+  PlayState_BP_MaterialRuntimeParUpdate(t) {
+    void 0 !== t.BP_MaterialRuntimeParUpdate &&
+      ((t.BP_MaterialRuntimeParUpdate.IsPlay = !0),
+      t.BP_MaterialRuntimeParUpdate.Set_Initialize());
   }
   PlayIndependentEffect(t) {
     var i = this.Effects.Get(t);
@@ -195,21 +327,28 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     t = this.EndEffects.Get(t);
     t && this.PlayEffect(t, "[SceneInteractionActor.PlayIndependentEndEffect]");
   }
-  Update() {
-    !this.InTransition ||
-      this.CheckPlaying(this.CurrentState) ||
-      (this.NextState &&
-        (this.StopState(this.CurrentState, this.NextState),
-        (this.PlayingState = this.NextStateKey),
-        this.PlayState(
-          this.NextState,
-          this.CurrentState,
-          !1,
-          this.PlayingState,
-        ),
-        (this.InTransition = !1),
-        (this.NextState = void 0),
-        (this.NextStateKey = void 0)));
+  Update(t) {
+    if (0 < t && this.SkeletalMontageConfigMap)
+      for (var [i, e] of this.SkeletalMontageConfigMap)
+        e.IsPendingApplyProps() &&
+          (--e.PendingFrameCount,
+          0 < e.PendingFrameCount ||
+            (i.SkeletalMeshComponent &&
+              (i.SkeletalMeshComponent.SetHiddenInGame(
+                e.PendingCompHiddenInGame,
+              ),
+              (i.SkeletalMeshComponent.VisibilityBasedAnimTickOption =
+                e.PendingCompVisibilityBasedAnimTickOption))));
+    this.InTransition &&
+      !this.CheckPlaying(t, this.CurrentState) &&
+      this.NextState &&
+      (this.StopState(this.CurrentState, this.NextState),
+      (this.PlayingState = this.NextStateKey),
+      this.PlayState(this.NextState, this.CurrentState, !1, this.PlayingState),
+      (this.InTransition = !1),
+      (this.NextState = void 0),
+      (this.NextStateKey = void 0),
+      (this.TransitionElapsedTime = 0));
   }
   SetTimeDilation(t) {
     this.CustomTimeDilation !== t &&
@@ -232,22 +371,24 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         }
     }
   }
-  Init(t, i) {
+  Init(t, i, e) {
     if (
       ((this.HandleId = t),
       (this.LevelName = i),
+      (this.OnInitCallback = e),
       (this.PlayingState = 21),
       (this.NextState = void 0),
       (this.CurrentState = void 0),
       (this.InTransition = !1),
       (this.IsPlayBack = !1),
       (this.Active = !0),
+      (this.IsClear = !1),
       this.CharacterForOrgan?.IsValid() &&
         ((this.CharRenderingComponent =
-          this.CharacterForOrgan.AddComponentByClass(
+          this.CharacterForOrgan.D_AddComponentByClass(
             UE.CharRenderingComponent_C.StaticClass(),
             !1,
-            this.GetTransform(),
+            this.D_GetTransform(),
             !1,
           )),
         this.CharRenderingComponent.Init(this.CharacterForOrgan.RenderType),
@@ -256,17 +397,17 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       this.SkeletalMeshActors)
     )
       for (let t = 0; t < this.SkeletalMeshActors.Num(); t++) {
-        var e = this.SkeletalMeshActors.Get(t),
-          s = e.AddComponentByClass(
+        var s = this.SkeletalMeshActors.Get(t),
+          h = s.AddComponentByClass(
             UE.CharRenderingComponent_C.StaticClass(),
             !1,
             MathUtils_1.MathUtils.DefaultTransform,
             !1,
           );
-        this.CharRenderingComponents.set(s, t),
-          s.Init(2),
-          e.SkeletalMeshComponent &&
-            s.AddComponentByCase(0, e.SkeletalMeshComponent);
+        this.CharRenderingComponents.set(h, t),
+          h.Init(2),
+          s.SkeletalMeshComponent &&
+            h.AddComponentByCase(0, s.SkeletalMeshComponent);
       }
     if (
       ((this.OnEffectFinishCallback = (t) => {
@@ -277,10 +418,10 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       for (let t = 0; t < this.States.Num(); t++)
         if (this.States.IsValidIndex(t)) {
           var r = this.States.GetKey(t),
-            h = this.States.Get(r);
-          if (h && h.CrossStateEffects)
-            for (let t = 0; t < h.CrossStateEffects.Num(); t++) {
-              var a = h.CrossStateEffects.Get(t);
+            o = this.States.Get(r);
+          if (o && o.CrossStateEffects)
+            for (let t = 0; t < o.CrossStateEffects.Num(); t++) {
+              var a = o.CrossStateEffects.Get(t);
               a &&
                 a.Effect &&
                 (this.CrossStateEffectActors ||
@@ -291,18 +432,154 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     if (this.ReferenceActors?.Num()) {
       this.ActorsOriginalRelTransform = new Map();
       for (let t = 0; t < this.ReferenceActors.Num(); ++t) {
-        var o,
-          n = this.ReferenceActors.GetKey(t),
-          n = this.ReferenceActors.Get(n);
-        n &&
-          ((o = n.GetTransform().GetRelativeTransform(this.GetTransform())),
-          this.ActorsOriginalRelTransform.set(n, o));
+        var n,
+          c = this.ReferenceActors.GetKey(t),
+          c = this.ReferenceActors.Get(c);
+        c &&
+          ((n = c.D_GetTransform().GetRelativeTransform(this.D_GetTransform())),
+          this.ActorsOriginalRelTransform.set(c, n));
       }
     }
-    this.RevertMaterialComponentsMaps = new Map();
+    if (((this.RevertMaterialComponentsMaps = new Map()), this.States))
+      for (let t = 0, i = this.States.Num(); t < i; ++t) {
+        var f = this.States.GetKey(t),
+          f = this.States.Get(f),
+          l = new Array();
+        l.push(f.SkeletalMeshDestructible.PlayDestructionAllImmediately),
+          l.push(f.SkeletalMeshDestructible.CanPlayDestructionWhenHit);
+        for (const u of l)
+          for (let t = 0, i = u.Num(); t < i; ++t) {
+            var v = u.Get(t);
+            v && this.SkeletalMeshDestructibleActors.add(v);
+          }
+      }
+    if (this.TagsAndCorrespondingEffects)
+      for (let t = 0, i = this.TagsAndCorrespondingEffects.Num(); t < i; ++t) {
+        var S = this.TagsAndCorrespondingEffects.GetKey(t),
+          d = this.TagsAndCorrespondingEffects.Get(S);
+        for (
+          let t = 0, i = d.SkeletalMeshDestructibleActors.Num();
+          t < i;
+          ++t
+        ) {
+          var _ = d.SkeletalMeshDestructibleActors.Get(t);
+          _ && this.SkeletalMeshDestructibleActors.add(_);
+        }
+      }
+    if (
+      this.SkeletalMeshDestructibleActors &&
+      0 < this.SkeletalMeshDestructibleActors.size
+    ) {
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Interaction",
+          57,
+          "开始异步显示SceneInteractionActor",
+          ["LevelName", this.LevelName],
+        );
+      for (const y of this.SkeletalMeshDestructibleActors) {
+        for (let t = 0, i = y.StaticMeshChunkList.Num(); t < i; ++t) {
+          var g = y.StaticMeshChunkList.Get(t);
+          g?.IsValid() && g.K2_DestroyComponent(g);
+        }
+        y.StaticMeshChunkList.Empty();
+      }
+      (this.SkeletalMeshDestructibleActorsList = []),
+        (this.SkeletalMeshDestructibleCellListMap = new Map()),
+        this.RemoveStaticMeshDestructibleTicker(),
+        (this.SkeletalMeshDestructibleTickId = TickSystem_1.TickSystem.Add(
+          (t) => {
+            this.SkeletalMeshDestructibleTick(t);
+          },
+          "SkeletalMeshDestructibleTick",
+          0,
+          !0,
+        ).Id);
+    } else
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Interaction", 57, "正常显示SceneInteractionActor", [
+          "LevelName",
+          this.LevelName,
+        ]),
+        this.OnInitCallback?.();
+    this.ApplyAnimOptimizationParams();
+  }
+  SkeletalMeshDestructibleTick(t) {
+    SceneInteractionActor.DestructibleInitStat.Start();
+    for (const s of this.SkeletalMeshDestructibleActors.values()) {
+      var i = s.KuroDestructibleAsset?.PieceInfos;
+      if (i) {
+        let t = 0;
+        if (
+          !(
+            (t = this.SkeletalMeshDestructibleCellListMap.has(s)
+              ? this.SkeletalMeshDestructibleCellListMap.get(s)
+              : t) >= i.Num()
+          )
+        ) {
+          var i = i.Get(t),
+            e =
+              (SceneInteractionActor.TempTransform.SetIdentity(),
+              SceneInteractionActor.TempTransform.SetTranslation(
+                i.InitialTransform.GetTranslation(),
+              ),
+              s.AddComponentByClass(
+                UE.StaticMeshComponent.StaticClass(),
+                !1,
+                SceneInteractionActor.TempTransform,
+                !1,
+              ));
+          e.SetVisibility(!1),
+            e.SetCollisionProfileName(s.CollisionProfileName.Name),
+            e.SetCollisionEnabled(2),
+            e.SetStaticMesh(i.StaticMesh),
+            s.StaticMeshChunkList.Add(e),
+            (s.PoseableMeshComponent = s.PoseableMesh),
+            this.SkeletalMeshDestructibleCellListMap.set(s, ++t);
+          break;
+        }
+        this.SkeletalMeshDestructibleActorsList.includes(s) ||
+          (s.OnDestructibleInit(),
+          this.SkeletalMeshDestructibleActorsList.push(s));
+      } else
+        s.OnDestructibleInit(), this.SkeletalMeshDestructibleActorsList.push(s);
+    }
+    this.SkeletalMeshDestructibleActorsList.length >=
+      this.SkeletalMeshDestructibleActors.size &&
+      (this.RemoveStaticMeshDestructibleTicker(),
+      TimerSystem_1.TimerSystem.Next(() => {
+        this.IsValid() && this.Active && !this.IsClear
+          ? (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Interaction",
+                57,
+                "正常结束异步显示SceneInteractionActor",
+                ["LevelName", this.LevelName],
+              ),
+            this.OnInitCallback?.())
+          : Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Interaction",
+              57,
+              "中断结束异步显示SceneInteractionActor",
+              ["LevelName", this.LevelName],
+              ["this.IsValid()", this.IsValid()],
+              ["this.Active", this.Active],
+              ["this.IsClear", this.IsClear],
+            );
+      })),
+      SceneInteractionActor.DestructibleInitStat.Stop();
   }
   Clear() {
-    if (void 0 !== this.ActiveSequenceDirectorMap)
+    if (
+      ((this.IsClear = !0),
+      (this.SkeletalMeshDestructibleActorsInternal = void 0),
+      (this.SkeletalMeshDestructibleActorsList = void 0),
+      (this.SkeletalMeshDestructibleCellListMap = void 0),
+      this.RemoveStaticMeshDestructibleTicker(),
+      this.RemoveSkeletalDestructibleTicker(),
+      void 0 !== this.ActiveSequenceDirectorMap)
+    )
       for (var [t] of this.ActiveSequenceDirectorMap) this.StopSequence(t);
   }
   GetActorByKey(t) {
@@ -327,15 +604,18 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (t.Play(i),
       (i = (0, puerts_1.$ref)(void 0)),
       t.GetHandle(i),
-      (t = (0, puerts_1.$unref)(i)),
-      EffectSystem_1.EffectSystem.IsValid(t)) &&
+      (i = (0, puerts_1.$unref)(i)),
+      EffectSystem_1.EffectSystem.IsValid(i)) &&
       (void 0 === this.PlayingEffectIdSet &&
         (this.PlayingEffectIdSet = new Set()),
-      this.PlayingEffectIdSet.add(t),
+      this.PlayingEffectIdSet.add(i),
       EffectSystem_1.EffectSystem.AddFinishCallback(
-        t,
+        i,
         this.OnEffectFinishCallback,
-      ));
+      ),
+      this.OverrideEffectParmaFunc) &&
+      t === this.OverrideEffectActor &&
+      this.OverrideEffectParmaFunc();
   }
   StopEffect(t, i, e) {
     t?.IsValid() && t.Stop(i, e);
@@ -345,20 +625,20 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       void 0 === this.DirectorConfigMap && (this.DirectorConfigMap = new Map()),
         this.DirectorConfigMap.set(i, new SequenceDirectorConfig(t)),
         i.SetActorTickEnabled(!0);
-      var r = i?.GetComponentByClass(UE.AkComponent.StaticClass());
-      r?.IsValid() && r.SetComponentTickEnabled(!0),
+      var h = i?.GetComponentByClass(UE.AkComponent.StaticClass());
+      h?.IsValid() && h.SetComponentTickEnabled(!0),
         this.GetKuroSceneInteractionActorSystem().SetSequenceWithTargetLevelActor(
           i,
           t.Sequence,
           this,
         );
       for (let t = 0; t < e.Num(); t++) {
-        var h = e.Get(t);
-        h &&
+        var r = e.Get(t);
+        r &&
           this.GetKuroSceneInteractionActorSystem().BindActorToLevelSequenceActor(
-            h,
+            r,
             i,
-            UE.KismetSystemLibrary.GetDisplayName(h),
+            UE.KismetSystemLibrary.GetDisplayName(r),
           );
       }
       i.SequencePlayer &&
@@ -371,12 +651,12 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
             ? i.SequencePlayer.PlayReverse()
             : i.SequencePlayer.Play(),
         s &&
-          ((r = (
+          ((h = (
             t.Reverse
               ? i.SequencePlayer.GetStartTime()
               : i.SequencePlayer.GetEndTime()
           ).Time),
-          (s = new UE.MovieSceneSequencePlaybackParams(r, 0, "", 0, 0)),
+          (s = new UE.MovieSceneSequencePlaybackParams(h, 0, "", 0, 0)),
           i.SequencePlayer.SetPlaybackPosition(s)),
         i.SequencePlayer.SetPlayRate(t.PlayRate * this.CustomTimeDilation));
     }
@@ -399,11 +679,78 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
               7,
               "[SceneInteractionActor]PlayDestruction",
               ["DestructActor:", t.GetName()],
-              ["Location:", t.K2_GetActorLocation()],
+              ["Location:", t.D_K2_GetActorLocation()],
             ),
           this.HitLocation
-            ? t.ApplyDamage(this.HitLocation, this.HitDirection)
-            : t.ApplyDamage(t.K2_GetActorLocation(), this.HitDirection)));
+            ? ((i = UE.KismetMathLibrary.Conv_VectorDoubleToVector(
+                this.HitLocation,
+              )),
+              t.ApplyDamage(i, this.HitDirection))
+            : ((i = UE.KismetMathLibrary.Conv_VectorDoubleToVector(
+                t.D_K2_GetActorLocation(),
+              )),
+              t.ApplyDamage(i, this.HitDirection))));
+  }
+  PlayKuroSkeletalMeshDestruction(t, i) {
+    this.CurrentState?.SkeletalMeshDestructible.CanPlayDestructionWhenHit &&
+      t instanceof UE.BP_KuroSkeletalMeshDestructibleActor_C &&
+      -1 !==
+        this.CurrentState.SkeletalMeshDestructible.CanPlayDestructionWhenHit.FindIndex(
+          t,
+        ) &&
+      this.PlaySkeletalMeshDestruction(t, i);
+  }
+  PlaySkeletalMeshDestruction(i, t) {
+    if (i instanceof UE.BP_KuroSkeletalMeshDestructibleActor_C)
+      if (t) i.SetActorHiddenInGame(!0), i.SetActorEnableCollision(!1);
+      else {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "SceneGameplay",
+            57,
+            "[SceneInteractionActor]PlaySkeletalMeshDestruction",
+            ["DestructActor:", i.GetName()],
+            ["Location:", i.K2_GetActorLocation()],
+          );
+        var e = i.StaticMeshChunkList.Num();
+        for (let t = 0; t < e; ++t) {
+          var s = i.StaticMeshChunkList.Get(t);
+          s?.IsValid() && s.K2_DetachFromComponent(1, 1, 1, !0);
+        }
+        i.PoseableMeshComponent?.IsValid() &&
+          i.PoseableMeshComponent.Activate(),
+          this.HitLocation
+            ? ((t = UE.KismetMathLibrary.Conv_VectorDoubleToVector(
+                this.HitLocation,
+              )),
+              i.ApplyDamage(t, this.HitDirection))
+            : ((t = UE.KismetMathLibrary.Conv_VectorDoubleToVector(
+                i.D_K2_GetActorLocation(),
+              )),
+              i.ApplyDamage(t, this.HitDirection)),
+          this.SkeletalDestructibleTickIdList ||
+            (this.SkeletalDestructibleTickIdList = []);
+        const h = TickSystem_1.TickSystem.Add(
+          (t) => {
+            SceneInteractionActor.DestructiblePostPhysicsStat.Start(),
+              i.ApplyTransformToSkeletalMeshComponent(0),
+              SceneInteractionActor.DestructiblePostPhysicsStat.Stop();
+          },
+          "SkeletalDestructibleTickId",
+          4,
+          !0,
+        ).Id;
+        this.SkeletalDestructibleTickIdList.push(h),
+          TimerSystem_1.TimerSystem.Delay(() => {
+            var t;
+            this.SkeletalDestructibleTickIdList &&
+              ((t = this.SkeletalDestructibleTickIdList.indexOf(h)),
+              this.SkeletalDestructibleTickIdList.splice(t, 1),
+              TickSystem_1.TickSystem.Remove(h),
+              i.PoseableMeshComponent?.IsValid()) &&
+              i.PoseableMeshComponent.Deactivate();
+          }, MAX_PHYSICS_SIMULATION_TIME);
+      }
   }
   GetActiveSequencePlaybackProgress(i) {
     var i = this.GetDirectorBySequence(i),
@@ -414,17 +761,17 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         var s = e.GetDuration().Time,
           s = s.FrameNumber.Value + s.SubFrame;
         if (!(s < 1)) {
-          var r = e.GetStartTime().Time,
-            h = e.GetEndTime().Time,
-            r = r.FrameNumber.Value + r.SubFrame,
-            h = h.FrameNumber.Value + h.SubFrame;
-          if (!(h < r)) {
+          var h = e.GetStartTime().Time,
+            r = e.GetEndTime().Time,
+            h = h.FrameNumber.Value + h.SubFrame,
+            r = r.FrameNumber.Value + r.SubFrame;
+          if (!(r < h)) {
             (e = e.GetCurrentTime().Time),
               (e = e.FrameNumber.Value + e.SubFrame);
             let t = 0;
             return (
-              (t = i.Reverse ? h - e : e - r),
-              (t = MathUtils_1.MathUtils.Clamp(t, r, h)),
+              (t = i.Reverse ? r - e : e - h),
+              (t = MathUtils_1.MathUtils.Clamp(t, h, r)),
               MathUtils_1.MathUtils.Clamp(t / s, 0, 1)
             );
           }
@@ -438,27 +785,27 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     if (i && s?.IsValid()) {
       i = this.DirectorConfigMap?.get(i);
       if (i) {
-        var r = s.GetDuration().Time,
-          r = r.FrameNumber.Value + r.SubFrame,
-          e = r * MathUtils_1.MathUtils.Clamp(e, 0, 1);
-        if (!(r < 1 || r < e)) {
-          var r = s.GetStartTime().Time,
-            h = s.GetEndTime().Time,
-            r = r.FrameNumber.Value + r.SubFrame,
-            h = h.FrameNumber.Value + h.SubFrame;
-          if (!(h < r)) {
+        var h = s.GetDuration().Time,
+          h = h.FrameNumber.Value + h.SubFrame,
+          e = h * MathUtils_1.MathUtils.Clamp(e, 0, 1);
+        if (!(h < 1 || h < e)) {
+          var h = s.GetStartTime().Time,
+            r = s.GetEndTime().Time,
+            h = h.FrameNumber.Value + h.SubFrame,
+            r = r.FrameNumber.Value + r.SubFrame;
+          if (!(r < h)) {
             let t = 0;
-            (t = i.Reverse ? h - e : r + e),
-              (t = MathUtils_1.MathUtils.Clamp(t, r, h));
+            (t = i.Reverse ? r - e : h + e),
+              (t = MathUtils_1.MathUtils.Clamp(t, h, r));
             (i = Math.floor(t)),
               (e = t - i),
-              (r = new UE.FrameTime(new UE.FrameNumber(i), e)),
-              (h = s.GetCurrentTime().Time),
-              (i = h.FrameNumber.Value + h.SubFrame);
+              (h = new UE.FrameTime(new UE.FrameNumber(i), e)),
+              (r = s.GetCurrentTime().Time),
+              (i = r.FrameNumber.Value + r.SubFrame);
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "SceneItem",
-                40,
+                39,
                 "SetActiveSequencePlaybackProgress",
                 ["current", i],
                 ["new", t],
@@ -468,7 +815,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
                 t,
                 MathUtils_1.MathUtils.KindaSmallNumber,
               ) ||
-                ((e = new UE.MovieSceneSequencePlaybackParams(r, 0, "", 0, 0)),
+                ((e = new UE.MovieSceneSequencePlaybackParams(h, 0, "", 0, 0)),
                 s.SetPlaybackPosition(e));
           }
         }
@@ -499,18 +846,18 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     var e,
       s,
       t = this.GetDirectorBySequence(t),
-      r = t?.SequencePlayer;
+      h = t?.SequencePlayer;
     t &&
-      r?.IsValid() &&
+      h?.IsValid() &&
       (!(t = this.DirectorConfigMap?.get(t)) ||
-        (s = (e = r.GetDuration()).Time.FrameNumber.Value + e.Time.SubFrame) <
+        (s = (e = h.GetDuration()).Time.FrameNumber.Value + e.Time.SubFrame) <
           1 ||
         ((s = (s * (e.Rate.Denominator / e.Rate.Numerator)) / i) &&
           isFinite(s) &&
           !isNaN(s) &&
           !MathUtils_1.MathUtils.IsNearlyZero(s) &&
           ((t.PlayRateOverride = s),
-          r.SetPlayRate(s * this.CustomTimeDilation))));
+          h.SetPlayRate(s * this.CustomTimeDilation))));
   }
   SetActiveTagSequenceDurationTime(t, i) {
     t = this.TagsAndCorrespondingEffects?.Get(t)?.Sequence?.Sequence;
@@ -532,7 +879,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       e?.IsValid() &&
       (t = this.DirectorConfigMap?.get(t)) &&
       (e.IsPlaying() && e.Pause(),
-      (t.Reverse && !i) || (!t.Reverse && i)
+      (t.ReverseOverride = i ? !t.UeConfig.Reverse : t.UeConfig.Reverse),
+      t.Reverse
         ? t.IsLoop
           ? e.PlayReverseLooping()
           : e.PlayReverse()
@@ -543,6 +891,66 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   ResumeActiveTagSequence(t, i = !1) {
     t = this.TagsAndCorrespondingEffects?.Get(t)?.Sequence?.Sequence;
     t && this.ResumeActiveSequence(t, i);
+  }
+  GetIsActiveSequencePlayReverseFromConfig(t) {
+    var t = this.GetDirectorBySequence(t),
+      i = t?.SequencePlayer;
+    if (t && i?.IsValid()) {
+      i = this.DirectorConfigMap?.get(t);
+      if (i) return i.Reverse !== i.UeConfig.Reverse;
+    }
+  }
+  GetIsActiveTagSequencePlayReverseFromConfig(t) {
+    t = this.TagsAndCorrespondingEffects?.Get(t)?.Sequence?.Sequence;
+    if (t) return this.GetIsActiveSequencePlayReverseFromConfig(t);
+  }
+  PlayActiveSequenceTo(i, e, s = !1) {
+    var i = this.GetDirectorBySequence(i),
+      h = i?.SequencePlayer;
+    if (i && h?.IsValid()) {
+      i = this.DirectorConfigMap?.get(i);
+      if (i) {
+        var r = h.GetDuration().Time,
+          r = r.FrameNumber.Value + r.SubFrame,
+          e = r * MathUtils_1.MathUtils.Clamp(e, 0, 1);
+        if (!(r < 1 || r < e)) {
+          var r = h.GetStartTime().Time,
+            o = h.GetEndTime().Time,
+            r = r.FrameNumber.Value + r.SubFrame,
+            o = o.FrameNumber.Value + o.SubFrame;
+          if (!(o < r)) {
+            let t = 0;
+            (i.ReverseOverride = s ? !i.UeConfig.Reverse : i.UeConfig.Reverse),
+              (t = i.Reverse ? o - e : r + e),
+              (t = MathUtils_1.MathUtils.Clamp(t, r, o));
+            (s = Math.floor(t)),
+              (e = t - s),
+              (r = new UE.FrameTime(new UE.FrameNumber(s), e)),
+              (o = h.GetCurrentTime().Time),
+              (s = o.FrameNumber.Value + o.SubFrame);
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "SceneItem",
+                39,
+                "PlayActiveSequenceTo",
+                ["current", s],
+                ["target", t],
+              ),
+              MathUtils_1.MathUtils.IsNearlyEqual(
+                s,
+                t,
+                MathUtils_1.MathUtils.KindaSmallNumber,
+              ) ||
+                ((e = new UE.MovieSceneSequencePlaybackParams(r, 0, "", 0, 0)),
+                h.PlayTo_Circle(e, !1, !i.Reverse));
+          }
+        }
+      }
+    }
+  }
+  PlayActiveTagSequenceTo(t, i, e = !1) {
+    t = this.TagsAndCorrespondingEffects?.Get(t)?.Sequence?.Sequence;
+    t && this.PlayActiveSequenceTo(t, i, e);
   }
   PlayState(t, i, e, s) {
     t &&
@@ -558,10 +966,12 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       this.SetStateActorHide(t),
       this.PlayStateBasedEffect(t, s),
       this.PlayStateDestruction(t, e),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      this.PlayStateSkeletalMeshDestruction(t, e),
+      this.PlayState_BP_MaterialRuntimeParUpdate(t),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "RenderScene",
-          14,
+          13,
           "场景交互物切换状态",
           ["Actor", this.LevelName],
           ["HandleID", this.HandleId],
@@ -579,62 +989,146 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       ((this.ActiveStateSequence = t.Sequence.Sequence),
       this.PlaySequence(e, t.Sequence, t.Actors, i));
   }
-  PlayStateMontage(t, i) {
-    t.AnimMontage.SkeletalMesh &&
-      t.AnimMontage.Montage &&
-      ((i?.AnimMontage.Montage &&
-        i.AnimMontage.Montage === t.AnimMontage.Montage) ||
-        (t.AnimMontage.SkeletalMesh.SkeletalMeshComponent.PlayAnimation(
-          t.AnimMontage.Montage,
-          t.AnimMontage.Loop,
-        ),
-        t.AnimMontage.SkeletalMesh.SkeletalMeshComponent.SetPlayRate(
-          t.AnimMontage.PlayRate * this.CustomTimeDilation,
-        )));
+  PlayStateMontage(i, e) {
+    if (
+      i.AnimMontage.SkeletalMesh &&
+      i.AnimMontage.Montage &&
+      (!e?.AnimMontage.Montage ||
+        e.AnimMontage.Montage !== i.AnimMontage.Montage)
+    ) {
+      void 0 === this.SkeletalMontageConfigMap &&
+        (this.SkeletalMontageConfigMap = new Map());
+      let t = this.SkeletalMontageConfigMap.get(i.AnimMontage.SkeletalMesh);
+      t ||
+        ((t = new SkeletalMontageConfig(i.AnimMontage)),
+        this.SkeletalMontageConfigMap.set(i.AnimMontage.SkeletalMesh, t));
+      var s = i.AnimMontage.SkeletalMesh.SkeletalMeshComponent;
+      (void 0 === e || i.AnimMontage.SkeletalMesh.bHidden || s.bHiddenInGame) &&
+        (t.IsPendingApplyProps() ||
+          ((t.PendingCompHiddenInGame = s.bHiddenInGame),
+          (t.PendingCompVisibilityBasedAnimTickOption =
+            s.VisibilityBasedAnimTickOption)),
+        (t.PendingFrameCount = 2),
+        (s.VisibilityBasedAnimTickOption = 0),
+        s.SetHiddenInGame(!0)),
+        !this.IsAnimtionMotagePlayed || i.AnimMontage.Loop
+          ? (s.PlayAnimation(i.AnimMontage.Montage, i.AnimMontage.Loop),
+            s.SetPlayRate(i.AnimMontage.PlayRate * this.CustomTimeDilation),
+            (this.IsAnimtionMotagePlayed = !0))
+          : s
+              .GetAnimInstance()
+              ?.Montage_Play(
+                i.AnimMontage.Montage,
+                i.AnimMontage.PlayRate * this.CustomTimeDilation,
+              );
+    }
+  }
+  ApplyAnimOptimizationParams(i = !0) {
+    if (this.AllSkeletalMeshActors) {
+      var e = Info_1.Info.IsMobilePlatform(),
+        s = new UE.AnimUpdateRateParameters();
+      for (let t = 0; t < this.AllSkeletalMeshActors.Num(); t++) {
+        var h = this.AllSkeletalMeshActors.Get(t);
+        if (h) {
+          h = h.SkeletalMeshComponent;
+          if (h) {
+            var r = h.LODInfo.Num();
+            if (i)
+              (s.bShouldUseDistanceMap = !0),
+                s.BaseVisibleDistanceThresholds.Empty(),
+                s.BaseVisibleDistanceThresholds.Add(e ? 500 : 800),
+                s.BaseVisibleDistanceThresholds.Add(e ? 1e3 : 1500),
+                s.BaseVisibleDistanceThresholds.Add(e ? 1500 : 4e3),
+                s.BaseVisibleDistanceThresholds.Add(e ? 2e3 : 5e3),
+                s.BaseVisibleDistanceThresholds.Add(e ? 3e3 : 8e3);
+            else {
+              (s.bShouldUseLodMap = !0), s.LODToFrameSkipMap.Empty();
+              for (let t = 0; t < r; t++) {
+                var o = t < 2 ? 0 : t - 1;
+                s.LODToFrameSkipMap.Add(t, o);
+              }
+            }
+            (s.BaseNonRenderedUpdateRate = e ? 15 : 8),
+              (s.MaxEvalRateForInterpolation = 8);
+            var a = (0, puerts_1.$ref)(s);
+            h.SetAnimUpdateRateParameters(a),
+              (0, puerts_1.$unref)(a),
+              (h.bEnableUpdateRateOptimizations = !0),
+              (h.VisibilityBasedAnimTickOption = 3),
+              (h.bUpdateOverlapsOnAnimationFinalize = !1);
+          }
+        } else
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Interaction",
+              31,
+              "AllSkeletalMeshActors中有空的值，请找对应策划进行修改",
+              ["LevelName", this.LevelName],
+            );
+      }
+    }
   }
   PlayStateEffect(i) {
-    if (i.Effects)
+    if (i.Effects) {
       for (let t = 0; t < i.Effects.Num(); t++)
-        this.PlayEffect(
-          i.Effects.Get(t),
-          "[SceneInteractionActor.PlayStateEffect]",
-        );
+        this.PendingStateEffects.push(i.Effects.Get(t));
+      this.PendingStateEffectTickId = TickSystem_1.TickSystem.Add(
+        (t) => {
+          this.PendingPlayStateEffect();
+        },
+        "SceneInteractionActor.PendingStateEffectTick",
+        0,
+        !0,
+      ).Id;
+    }
+  }
+  PendingPlayStateEffect() {
+    var t;
+    0 === this.PendingStateEffects.length
+      ? this.RemovePendingStateEffectTick()
+      : (t = this.PendingStateEffects?.shift()) &&
+        this.PlayEffect(t, "[SceneInteractionActor.PendingPlayStateEffect]");
+  }
+  RemovePendingStateEffectTick() {
+    this.PendingStateEffectTickId !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.PendingStateEffectTickId),
+      (this.PendingStateEffectTickId = TickSystem_1.TickSystem.InvalidId));
   }
   PlayStateMaterialController(t, e) {
     var s,
-      r = t.MaterialControllers;
-    if (r)
-      for (let i = 0; i < r.Num(); i++) {
-        if (r.Get(i).Materials) {
-          var h = r.Get(i).Materials,
-            a = r.Get(i).Actors;
-          for (let t = 0; t < a.Num(); t++) {
-            var o = a
+      h = t.MaterialControllers;
+    if (h)
+      for (let i = 0; i < h.Num(); i++) {
+        if (h.Get(i).Materials) {
+          var r = h.Get(i).Materials,
+            o = h.Get(i).Actors;
+          for (let t = 0; t < o.Num(); t++) {
+            var a = o
               .Get(t)
               .K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
-            for (let t = 0; t < o.Num(); t++) {
-              var n = o.Get(t),
-                f =
-                  (r.Get(i).IsRevertMaterial ||
+            for (let t = 0; t < a.Num(); t++) {
+              var n = a.Get(t),
+                c =
+                  (h.Get(i).IsRevertMaterial ||
                     this.RevertMaterialComponentsMaps?.set(n, new Map()),
                   n.GetNumMaterials()),
-                c = n.GetMaterials();
-              for (let t = 0; t < f; t++)
-                r.Get(i).IsRevertMaterial ||
-                  this.RevertMaterialComponentsMaps?.get(n)?.set(t, c.Get(t)),
-                  n.SetMaterial(t, h);
+                f = n.GetMaterials();
+              for (let t = 0; t < c; t++)
+                h.Get(i).IsRevertMaterial ||
+                  this.RevertMaterialComponentsMaps?.get(n)?.set(t, f.Get(t)),
+                  n.SetMaterial(t, r);
             }
           }
         }
-        for (let t = 0; t < r.Get(i).Actors.Num(); t++)
-          r.Get(i).Actors.Get(t) &&
-            r.Get(i).Data &&
+        for (let t = 0; t < h.Get(i).Actors.Num(); t++)
+          h.Get(i).Actors.Get(t) &&
+            h.Get(i).Data &&
             ((s =
               ItemMaterialManager_1.ItemMaterialManager.AllActorControllerInfoMap.get(
-                (r.Get(i).TailIndex =
+                (h.Get(i).TailIndex =
                   ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(
-                    r.Get(i).Actors.Get(t),
-                    r.Get(i).Data,
+                    h.Get(i).Actors.Get(t),
+                    h.Get(i).Data,
                   )),
               )?.GetLifeTimeController()),
             e) &&
@@ -658,55 +1152,91 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         e = Array.from(t),
         s = e.length;
       for (let t = 0; t < s; t++) {
-        var r = e[t].AddMaterialControllerDataGroup(
+        var h = e[t].AddMaterialControllerDataGroup(
           i.CharacterDataGroupForOrgan,
         );
-        this.CharRenderingComponents.set(e[t], r);
+        this.CharRenderingComponents.set(e[t], h);
       }
     }
   }
   PlayStateCrossStateEffects(i) {
     if (i.CrossStateEffects) {
-      const a = new Set();
+      const o = new Set();
       for (let t = 0; t < i.CrossStateEffects.Num(); t++) {
         var e,
           s,
-          r,
-          h = i.CrossStateEffects.Get(t);
-        h &&
-          h.Effect?.IsValid() &&
-          ((r = h.Effect),
-          a.add(r),
-          (e = (0, puerts_1.$ref)(void 0)),
-          r.GetHandle(e),
-          (s = (0, puerts_1.$unref)(e)),
-          EffectSystem_1.EffectSystem.IsValid(s) ||
-            this.PlayEffect(
-              r,
-              "[SceneInteractionActor.PlayStateCrossStateEffects]",
-            ),
-          (e = (0, puerts_1.$ref)(void 0)),
-          r.GetHandle(e),
-          (s = (0, puerts_1.$unref)(e)),
-          EffectSystem_1.EffectSystem.IsValid(s)) &&
-          ((r = h.EffectExtraState),
-          EffectSystem_1.EffectSystem.SetEffectExtraState(s, r));
+          h,
+          r = i.CrossStateEffects.Get(t);
+        r &&
+          r.Effect?.IsValid() &&
+          ((e = r.Effect),
+          o.add(e),
+          (s = (0, puerts_1.$ref)(void 0)),
+          e.GetHandle(s),
+          (s = (0, puerts_1.$unref)(s)),
+          EffectSystem_1.EffectSystem.IsValid(s)
+            ? ((h = r.EffectExtraState),
+              EffectSystem_1.EffectSystem.SetEffectExtraState(s, h))
+            : this.PendingCrossStateEffects.set(e, r.EffectExtraState));
       }
       this.CrossStateEffectActors?.forEach((t) => {
-        a.has(t) ||
+        o.has(t) ||
+          (this.PendingCrossStateEffects.has(t) &&
+            this.PendingCrossStateEffects.delete(t),
           this.StopEffect(
             t,
             "[SceneInteractionActor.PlayStateCrossStateEffects]",
             !1,
-          );
-      });
+          ));
+      }),
+        0 < this.PendingCrossStateEffects.size &&
+          this.PendingCrossStateEffectTickId ===
+            TickSystem_1.TickSystem.InvalidId &&
+          (this.PendingCrossStateEffectTickId = TickSystem_1.TickSystem.Add(
+            (t) => {
+              this.PendingPlayCrossStateEffect();
+            },
+            "SceneInteractionActor.PendingCrossStateEffectTick",
+            0,
+            !0,
+          ).Id);
     }
+  }
+  PendingPlayCrossStateEffect() {
+    var t, i, e;
+    0 === this.PendingCrossStateEffects.size
+      ? this.RemovePendingCrossStateEffectTick()
+      : (t = this.PendingCrossStateEffects?.entries().next().value) &&
+        ((e = t[0]),
+        (t = t[1]),
+        this.PendingCrossStateEffects.delete(e),
+        this.PlayEffect(
+          e,
+          "[SceneInteractionActor.PendingPlayCrossStateEffect]",
+        ),
+        (i = (0, puerts_1.$ref)(void 0)),
+        e.GetHandle(i),
+        (e = (0, puerts_1.$unref)(i)),
+        EffectSystem_1.EffectSystem.SetEffectExtraState(e, t));
+  }
+  RemovePendingCrossStateEffectTick() {
+    this.PendingCrossStateEffectTickId !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.PendingCrossStateEffectTickId),
+      (this.PendingCrossStateEffectTickId = TickSystem_1.TickSystem.InvalidId));
   }
   PlayStateDestruction(e, s) {
     if (e.DestructibleActors)
       for (let t = 0, i = e.DestructibleActors.Num(); t < i; t++) {
-        var r = e.DestructibleActors.Get(t);
-        this.PlayDestruction(r, s);
+        var h = e.DestructibleActors.Get(t);
+        this.PlayDestruction(h, s);
+      }
+  }
+  PlayStateSkeletalMeshDestruction(i, e) {
+    var s = i.SkeletalMeshDestructible.PlayDestructionAllImmediately.Num();
+    if (!(s <= 0))
+      for (let t = 0; t < s; t++) {
+        var h = i.SkeletalMeshDestructible.PlayDestructionAllImmediately.Get(t);
+        this.PlaySkeletalMeshDestruction(h, e);
       }
   }
   PlayTagDestruction(t, e) {
@@ -714,8 +1244,19 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       var s = this.TagsAndCorrespondingEffects.Get(t)?.DestructibleActors;
       if (s)
         for (let t = 0, i = s.Num(); t < i; t++) {
-          var r = s.Get(t);
-          this.PlayDestruction(r, e);
+          var h = s.Get(t);
+          this.PlayDestruction(h, e);
+        }
+    }
+  }
+  PlayTagSkeletalMeshDestruction(t, e) {
+    if (this.TagsAndCorrespondingEffects) {
+      var s =
+        this.TagsAndCorrespondingEffects.Get(t)?.SkeletalMeshDestructibleActors;
+      if (s)
+        for (let t = 0, i = s.Num(); t < i; t++) {
+          var h = s.Get(t);
+          this.PlaySkeletalMeshDestruction(h, e);
         }
     }
   }
@@ -736,13 +1277,51 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   PlayTagEffect(t) {
     if (this.TagsAndCorrespondingEffects) {
       var i = this.TagsAndCorrespondingEffects.Get(t)?.Effects;
-      if (i)
-        for (let t = 0; t < i.Num(); t++)
-          this.PlayEffect(i.Get(t), "[SceneInteractionActor.PlayTagEffect]");
+      if (i) {
+        var e = [];
+        for (let t = 0; t < i.Num(); t++) e.push(i.Get(t));
+        this.PendingTagEffects.set(t, e),
+          (this.PendingTagEffectTickId = TickSystem_1.TickSystem.Add(
+            () => {
+              this.PendingPlayTagEffect();
+            },
+            "SceneInteractionActor.PendingTagEffectTick",
+            0,
+            !0,
+          ).Id);
+      }
     }
+  }
+  PendingPlayTagEffect() {
+    if (0 === this.PendingTagEffects.size) this.RemovePendingTagEffectTick();
+    else {
+      var i,
+        e,
+        s,
+        h = [];
+      let t = void 0;
+      for ([i, e] of this.PendingTagEffects) {
+        if (0 !== e.length) {
+          t = e;
+          break;
+        }
+        h.push(i);
+      }
+      for (const r of h) this.PendingTagEffects.delete(r);
+      void 0 === t || 0 === t.length
+        ? this.RemovePendingTagEffectTick()
+        : (s = t.shift()) &&
+          this.PlayEffect(s, "[SceneInteractionActor.PendingPlayTagEffect]");
+    }
+  }
+  RemovePendingTagEffectTick() {
+    this.PendingTagEffectTickId !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.PendingTagEffectTickId),
+      (this.PendingTagEffectTickId = TickSystem_1.TickSystem.InvalidId));
   }
   StopTagEffect(t) {
     if (this.TagsAndCorrespondingEffects) {
+      this.PendingTagEffects.delete(t);
       var i = this.TagsAndCorrespondingEffects.Get(t)?.Effects;
       if (i)
         for (let t = 0; t < i.Num(); t++)
@@ -767,45 +1346,45 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         for (let i = 0; i < e.Num(); i++) {
           if (e.Get(i).Materials) {
             var s = e.Get(i).Materials,
-              r = e.Get(i).Actors;
-            for (let t = 0; t < r.Num(); t++) {
-              var h = (0, puerts_1.$ref)(void 0),
-                a = (r.Get(t).GetAttachedActors(h), (0, puerts_1.$unref)(h));
-              for (let t = 0; t < a.Num(); t++) {
-                var o = a
+              h = e.Get(i).Actors;
+            for (let t = 0; t < h.Num(); t++) {
+              var r = (0, puerts_1.$ref)(void 0),
+                o = (h.Get(t).GetAttachedActors(r), (0, puerts_1.$unref)(r));
+              for (let t = 0; t < o.Num(); t++) {
+                var a = o
                   .Get(t)
                   .K2_GetComponentsByClass(
                     UE.StaticMeshComponent.StaticClass(),
                   );
-                for (let t = 0; t < o.Num(); t++) {
-                  var n = o.Get(t),
-                    f =
+                for (let t = 0; t < a.Num(); t++) {
+                  var n = a.Get(t),
+                    c =
                       (e.Get(i).IsRevertMaterial ||
                         this.RevertMaterialComponentsMaps?.set(n, new Map()),
                       n.GetNumMaterials()),
-                    c = n.GetMaterials();
-                  for (let t = 0; t < f; t++)
+                    f = n.GetMaterials();
+                  for (let t = 0; t < c; t++)
                     e.Get(i).IsRevertMaterial ||
                       this.RevertMaterialComponentsMaps?.get(n)?.set(
                         t,
-                        c.Get(t),
+                        f.Get(t),
                       ),
                       n.SetMaterial(t, s);
                 }
               }
-              var l = r
+              var l = h
                 .Get(t)
                 .K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
               for (let t = 0; t < l.Num(); t++) {
                 var v = l.Get(t),
-                  d =
+                  S =
                     (e.Get(i).IsRevertMaterial ||
                       this.RevertMaterialComponentsMaps?.set(v, new Map()),
                     v.GetNumMaterials()),
-                  S = v.GetMaterials();
-                for (let t = 0; t < d; t++)
+                  d = v.GetMaterials();
+                for (let t = 0; t < S; t++)
                   e.Get(i).IsRevertMaterial ||
-                    this.RevertMaterialComponentsMaps?.get(v)?.set(t, S.Get(t)),
+                    this.RevertMaterialComponentsMaps?.get(v)?.set(t, d.Get(t)),
                     v.SetMaterial(t, s);
               }
             }
@@ -831,16 +1410,16 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
             if (i.Get(t).Materials) {
               var s = i.Get(t).Actors;
               for (let t = 0; t < s.Num(); t++) {
-                var r = s
+                var h = s
                   .Get(t)
                   .K2_GetComponentsByClass(
                     UE.StaticMeshComponent.StaticClass(),
                   );
-                for (let t = 0; t < r.Num(); t++) {
-                  var h = r.Get(t),
-                    a = this.RevertMaterialComponentsMaps?.get(h),
-                    o = h.GetNumMaterials();
-                  for (let t = 0; t < o; t++) h.SetMaterial(t, a?.get(t));
+                for (let t = 0; t < h.Num(); t++) {
+                  var r = h.Get(t),
+                    o = this.RevertMaterialComponentsMaps?.get(r),
+                    a = r.GetNumMaterials();
+                  for (let t = 0; t < a; t++) r.SetMaterial(t, o?.get(t));
                 }
               }
             }
@@ -871,7 +1450,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
             ? AudioSystem_1.AudioSystem.PostEvent(e.AkEvent.GetName(), this)
             : AudioSystem_1.AudioSystem.PostEvent(
                 e.AkEvent.GetName(),
-                this.GetTransform(),
+                this.D_GetTransform(),
               )) && this.PlayingTagAkEventHandle.set(i, t);
       }
     }
@@ -911,7 +1490,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
           ))
         : (this.CurrentStateAkEventHandle = AudioSystem_1.AudioSystem.PostEvent(
             t.AkEvent.GetName(),
-            this.GetTransform(),
+            this.D_GetTransform(),
           )));
   }
   SetStateActorHide(t) {
@@ -919,7 +1498,20 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
     if (e)
       for (let t = 0, i = e.Num(); t < i; t++) {
         var s = e.Get(t);
-        s && (s.SetActorHiddenInGame(!0), s.SetActorEnableCollision(!1));
+        if (
+          (s && (s.SetActorHiddenInGame(!0), s.SetActorEnableCollision(!1)),
+          s instanceof UE.BP_EffectActor_C)
+        ) {
+          this.PendingStateEffects.includes(s) &&
+            this.PendingStateEffects.splice(
+              this.PendingStateEffects.indexOf(s),
+              1,
+            );
+          for (const h of this.PendingTagEffects.values())
+            h.includes(s) && h.splice(h.indexOf(s), 1);
+          this.PendingCrossStateEffects.has(s) &&
+            this.PendingCrossStateEffects.delete(s);
+        }
       }
   }
   SetStateActorShow(t) {
@@ -935,17 +1527,17 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderEffect",
-          32,
+          31,
           "当前已经在投影中，重复调用投影接口",
         );
     else {
       var e = this.ActorsForProjection;
       if (
         (this.ProjectionRootActor?.IsValid() ||
-          ((this.ProjectionRootActor = UE.KuroActorManager.SpawnActor(
+          ((this.ProjectionRootActor = UE.KuroActorManager.D_SpawnActor(
             this.GetWorld(),
             UE.StaticMeshActor.StaticClass(),
-            this.GetTransform(),
+            this.D_GetTransform(),
           )),
           this.ProjectionRootActor.RootComponent.SetMobility(2)),
         e && e?.Num() && t)
@@ -965,44 +1557,44 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
               ),
               this.MaterialForProjection)
             ) {
-              var r = (0, puerts_1.$ref)(void 0),
-                h = (s.GetAttachedActors(r), (0, puerts_1.$unref)(r));
-              for (let t = 0; t < h.Num(); t++) {
-                var a = h
+              var h = (0, puerts_1.$ref)(void 0),
+                r = (s.GetAttachedActors(h), (0, puerts_1.$unref)(h));
+              for (let t = 0; t < r.Num(); t++) {
+                var o = r
                   .Get(t)
                   .K2_GetComponentsByClass(
                     UE.StaticMeshComponent.StaticClass(),
                   );
-                for (let t = 0; t < a.Num(); t++) {
-                  var o = a.Get(t),
-                    n = o.GetNumMaterials();
+                for (let t = 0; t < o.Num(); t++) {
+                  var a = o.Get(t),
+                    n = a.GetNumMaterials();
                   for (let t = 0; t < n; t++)
-                    o.SetMaterial(t, this.MaterialForProjection);
+                    a.SetMaterial(t, this.MaterialForProjection);
                 }
               }
-              var f = s.K2_GetComponentsByClass(
+              var c = s.K2_GetComponentsByClass(
                 UE.StaticMeshComponent.StaticClass(),
               );
-              for (let t = 0; t < f.Num(); t++) {
-                var c = f.Get(t),
-                  l = c.GetNumMaterials();
+              for (let t = 0; t < c.Num(); t++) {
+                var f = c.Get(t),
+                  l = f.GetNumMaterials();
                 for (let t = 0; t < l; t++)
-                  c.SetMaterial(t, this.MaterialForProjection);
+                  f.SetMaterial(t, this.MaterialForProjection);
               }
             }
             i && this.AddMatrialDataForChildrenActor(s, i);
           }
         }
-        this.ProjectionRootActor.K2_SetActorTransform(t, !1, void 0, !1);
+        this.ProjectionRootActor.D_K2_SetActorTransform(t, !1, void 0, !1);
       }
     }
   }
   UpdateProjectionActorTransform(t) {
     this.IsProjecting
       ? this.ProjectionRootActor?.IsValid()
-        ? this.ProjectionRootActor.K2_SetActorTransform(t, !1, void 0, !1)
+        ? this.ProjectionRootActor.D_K2_SetActorTransform(t, !1, void 0, !1)
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderEffect", 32, "找不到投影的Root Actor")
+          Log_1.Log.Error("RenderEffect", 31, "找不到投影的Root Actor")
       : this.MakeActorProjection(t);
   }
   AddMatrialDataForChildrenActor(t, i) {
@@ -1010,12 +1602,26 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       var e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
         s = (t.GetAttachedActors(e), (0, puerts_1.$unref)(e));
       for (let t = 0; t < s.Num(); t++) {
-        var r = s.Get(t);
-        r.IsValid() &&
-          ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(r, i);
+        var h = s.Get(t);
+        h.IsValid() &&
+          ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(h, i);
       }
       ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(t, i);
     }
+  }
+  RemoveStaticMeshDestructibleTicker() {
+    this.SkeletalMeshDestructibleTickId !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.SkeletalMeshDestructibleTickId),
+      (this.SkeletalMeshDestructibleTickId =
+        TickSystem_1.TickSystem.InvalidId));
+  }
+  RemoveSkeletalDestructibleTicker() {
+    !this.SkeletalDestructibleTickIdList ||
+      this.SkeletalDestructibleTickIdList.length <= 0 ||
+      (this.SkeletalDestructibleTickIdList.forEach((t) => {
+        TickSystem_1.TickSystem.Remove(t);
+      }),
+      (this.SkeletalDestructibleTickIdList.length = 0));
   }
   RemoveActorProjection() {
     this.IsProjecting
@@ -1023,9 +1629,9 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         ? ((this.IsProjecting = !1),
           this.DestroyActor(this.ProjectionRootActor))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderEffect", 32, "找不到投影的Root Actor")
+          Log_1.Log.Error("RenderEffect", 31, "找不到投影的Root Actor")
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("RenderEffect", 32, "当前不在投影中，无法移除投影");
+        Log_1.Log.Debug("RenderEffect", 31, "当前不在投影中，无法移除投影");
   }
   DestroyActor(t) {
     var i = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
@@ -1035,7 +1641,12 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       t.K2_DestroyActor();
   }
   DestroySelf() {
-    this.DestroyActor(this);
+    (this.SkeletalMeshDestructibleActorsInternal = void 0),
+      (this.SkeletalMeshDestructibleActorsList = void 0),
+      (this.SkeletalMeshDestructibleCellListMap = void 0),
+      this.RemoveStaticMeshDestructibleTicker(),
+      this.RemoveSkeletalDestructibleTicker(),
+      this.DestroyActor(this);
   }
   SetTagActorHide(t) {
     if (this.TagsAndCorrespondingEffects) {
@@ -1043,7 +1654,20 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       if (e)
         for (let t = 0, i = e.Num(); t < i; t++) {
           var s = e.Get(t);
-          s && (s.SetActorHiddenInGame(!0), s.SetActorEnableCollision(!1));
+          if (
+            (s && (s.SetActorHiddenInGame(!0), s.SetActorEnableCollision(!1)),
+            s instanceof UE.BP_EffectActor_C)
+          ) {
+            this.PendingStateEffects.includes(s) &&
+              this.PendingStateEffects.splice(
+                this.PendingStateEffects.indexOf(s),
+                1,
+              );
+            for (const h of this.PendingTagEffects.values())
+              h.includes(s) && h.splice(h.indexOf(s), 1);
+            this.PendingCrossStateEffects.has(s) &&
+              this.PendingCrossStateEffects.delete(s);
+          }
         }
     }
   }
@@ -1082,7 +1706,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderScene",
-          40,
+          39,
           "状态为Undefined",
           ["Actor", this.LevelName],
           ["HandleID", this.HandleId],
@@ -1093,7 +1717,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "RenderScene",
-            14,
+            13,
             "正在过渡状态, 不可设置其他状态",
             ["Actor", this.LevelName],
             ["HandleID", this.HandleId],
@@ -1102,7 +1726,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "RenderScene",
-            14,
+            13,
             "正在过渡状态, 不可设置其他状态",
             ["Actor", this.LevelName],
             ["HandleID", this.HandleId],
@@ -1111,22 +1735,25 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "RenderScene",
-            14,
+            13,
             "不可转换到目标状态,因为目标状态即为当前状态",
             ["Actor", this.LevelName],
             ["HandleID", this.HandleId],
           );
       else {
+        e = e && !s.NeedExpressionAnyway;
         if (i && this.CurrentState) {
           i = this.CurrentState.TransitionMap.Get(t);
           if (void 0 !== i) {
-            var r = this.States.Get(i);
-            if (r)
+            var h = this.States.Get(i);
+            if (h)
               return (
                 (this.InTransition = !0),
-                this.StopState(this.CurrentState, r),
+                (this.TransitionElapsedTime = 0),
+                (this.CurTransitionTime = h.TransitionTime),
+                this.StopState(this.CurrentState, h),
                 (this.PlayingState = i),
-                this.PlayState(r, this.CurrentState, e, this.PlayingState),
+                this.PlayState(h, this.CurrentState, e, this.PlayingState),
                 (this.NextState = s),
                 void (this.NextStateKey = t)
               );
@@ -1144,7 +1771,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "RenderScene",
-          14,
+          13,
           "状态未配置",
           ["未配置状态", t + 1],
           ["Actor", this.LevelName],
@@ -1153,10 +1780,12 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   }
   StopState(e, t) {
     if (e) {
-      this.ActiveStateSequence &&
-        this.ActiveStateSequence === e.Sequence.Sequence &&
-        e.Sequence.Sequence !== t?.Sequence.Sequence &&
-        this.StopSequence(this.ActiveStateSequence);
+      this.RemovePendingStateEffectTick(),
+        (this.PendingStateEffects = []),
+        this.ActiveStateSequence &&
+          this.ActiveStateSequence === e.Sequence.Sequence &&
+          e.Sequence.Sequence !== t?.Sequence.Sequence &&
+          this.StopSequence(this.ActiveStateSequence);
       for (let t = 0; t < e.HideActors.Num(); t++) {
         var i = e.HideActors.Get(t);
         i && (i.SetActorHiddenInGame(!1), i.SetActorEnableCollision(!0));
@@ -1170,38 +1799,38 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       ) {
         for (let t = 0; t < s.Num(); t++)
           if (s.Get(t).IsRevertMaterial && s.Get(t).Materials) {
-            var r = s.Get(t).Actors;
-            for (let t = 0; t < r.Num(); t++) {
-              var h = r
+            var h = s.Get(t).Actors;
+            for (let t = 0; t < h.Num(); t++) {
+              var r = h
                 .Get(t)
                 .K2_GetComponentsByClass(UE.StaticMeshComponent.StaticClass());
-              for (let t = 0; t < h.Num(); t++) {
-                var a = h.Get(t),
-                  o = this.RevertMaterialComponentsMaps?.get(a),
-                  n = a.GetNumMaterials();
-                for (let t = 0; t < n; t++) a.SetMaterial(t, o?.get(t));
+              for (let t = 0; t < r.Num(); t++) {
+                var o = r.Get(t),
+                  a = this.RevertMaterialComponentsMaps?.get(o),
+                  n = o.GetNumMaterials();
+                for (let t = 0; t < n; t++) o.SetMaterial(t, a?.get(t));
               }
             }
           }
         if (ItemMaterialManager_1.ItemMaterialManager.AllActorControllerInfoMap)
           for (let i = 0; i < s.Num(); i++)
             for (let t = 0; t < s.Get(i).Actors.Num(); t++) {
-              var f = e.MaterialControllers.Get(i).TailIndex - t;
+              var c = e.MaterialControllers.Get(i).TailIndex - t;
               ItemMaterialManager_1.ItemMaterialManager.AllActorControllerInfoMap.has(
-                f,
+                c,
               ) &&
-                ItemMaterialManager_1.ItemMaterialManager.DisableActorData(f);
+                ItemMaterialManager_1.ItemMaterialManager.DisableActorData(c);
             }
       }
       if (this.CharRenderingComponents) {
-        var c,
+        var f,
           t = this.CharRenderingComponents.keys(),
           l = Array.from(t),
           v = l.length;
         for (let t = 0; t < v; t++)
           this.CharRenderingComponents.get(l[t]) &&
-            (c = this.CharRenderingComponents.get(l[t])) &&
-            l[t].RemoveMaterialControllerDataGroupWithEnding(c);
+            (f = this.CharRenderingComponents.get(l[t])) &&
+            l[t].RemoveMaterialControllerDataGroupWithEnding(f);
       }
       void 0 !== this.CurrentStateAkEventHandle &&
         AudioSystem_1.AudioSystem.ExecuteAction(
@@ -1210,19 +1839,24 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
         );
     }
   }
-  CheckPlaying(t) {
-    let i = !1;
-    var e;
+  CheckPlaying(t, i) {
+    let e = !1,
+      s = !0;
+    var h;
     this.ActiveStateSequence &&
-      (e = this.GetDirectorBySequence(
+      ((h = this.GetDirectorBySequence(
         this.ActiveStateSequence,
-      )?.SequencePlayer) &&
-      (i = e.IsPlaying());
-    let s = !1;
+      )?.SequencePlayer) && (e = h.IsPlaying()),
+      (s = !1));
+    let r = !1;
     return (
-      t.AnimMontage.SkeletalMesh &&
-        (s = t.AnimMontage.SkeletalMesh.SkeletalMeshComponent.IsPlaying()),
-      i || s
+      i.AnimMontage.SkeletalMesh &&
+        ((r = i.AnimMontage.SkeletalMesh.SkeletalMeshComponent.IsPlaying()),
+        (s = !1)),
+      !(!e && !r) ||
+        (!(!s || 0 === this.CurTransitionTime) &&
+          ((this.TransitionElapsedTime += t),
+          this.TransitionElapsedTime <= this.CurTransitionTime))
     );
   }
   GetKuroSceneInteractionActorSystem() {
@@ -1245,7 +1879,7 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       this.GetDirectorBySequence(e) && this.StopSequence(e);
     const s = ActorSystem_1.ActorSystem.Get(
       UE.LevelSequenceActor.StaticClass(),
-      this.GetTransform(),
+      this.D_GetTransform(),
       void 0,
       !1,
     );
@@ -1254,12 +1888,12 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       (s.bOverrideInstanceData = !0),
         (s.DefaultInstanceData.TransformOriginActor =
           this).ActiveSequenceDirectorMap.set(e, s);
-      const r = () => {
+      const h = () => {
         const t = s;
         var i;
         t &&
           ((i = t.SequencePlayer) &&
-            (i.OnStop.Remove(r), i.OnFinished.Remove(r)),
+            (i.OnStop.Remove(h), i.OnFinished.Remove(h)),
           this.ActiveSequenceDirectorMap &&
             this.ActiveSequenceDirectorMap.get(e) === t &&
             this.ActiveSequenceDirectorMap.delete(e),
@@ -1267,15 +1901,18 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
           this.ActiveStateSequence === e && (this.ActiveStateSequence = void 0),
           t.IsValid()) &&
           TimerSystem_1.TimerSystem.Next(() => {
-            ActorSystem_1.ActorSystem.Put(t);
+            ActorSystem_1.ActorSystem.Put(
+              "SceneInteractionActor.CreateDirectorBySequence",
+              t,
+            );
           });
       };
-      return t.OnStop.Add(r), t.OnFinished.Add(r), s;
+      return t.OnStop.Add(h), t.OnFinished.Add(h), s;
     }
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "RenderScene",
-        40,
+        39,
         "LevelSequenceActor.SequencePlayer invalid",
         ["Actor", this.LevelName],
         ["HandleID", this.HandleId],
@@ -1288,7 +1925,8 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
       this.SetTagActorShow(t),
       this.SetTagActorHide(t),
       this.PlayTagSequence(t, i),
-      this.PlayTagDestruction(t, i);
+      this.PlayTagDestruction(t, i),
+      this.PlayTagSkeletalMeshDestruction(t, i);
   }
   StopExtraEffectOnTagsChange(t) {
     this.StopTagEffect(t),
@@ -1304,6 +1942,101 @@ class SceneInteractionActor extends UE.KuroSceneInteractionActor {
   TryStopCurrentState() {
     this.CurrentState && this.StopState(this.CurrentState, void 0);
   }
+  使用字段值切换状态() {
+    this.ChangeStateInternal(this.模拟状态);
+  }
+  ChangeState1() {
+    this.ChangeStateInternal(0);
+  }
+  ChangeState2() {
+    this.ChangeStateInternal(1);
+  }
+  ChangeState3() {
+    this.ChangeStateInternal(2);
+  }
+  ChangeState4() {
+    this.ChangeStateInternal(3);
+  }
+  ChangeState5() {
+    this.ChangeStateInternal(4);
+  }
+  ChangeState6() {
+    this.ChangeStateInternal(5);
+  }
+  ChangeState7() {
+    this.ChangeStateInternal(6);
+  }
+  ChangeState8() {
+    this.ChangeStateInternal(7);
+  }
+  模拟Tag添加() {
+    this.模拟Tag
+      ? this.PlayExtraEffectOnTagsChange(this.模拟Tag, this.跳过表现过程)
+      : Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "SceneGameplay",
+          18,
+          "SimulationTagChange:没有设置SimulationTag",
+        );
+  }
+  模拟Tag移除() {
+    var t, i, e;
+    this.模拟Tag
+      ? (this.StopExtraEffectOnTagsChange(this.模拟Tag),
+        this.TagsAndCorrespondingEffects &&
+          (i = (t = this.TagsAndCorrespondingEffects.Get(this.模拟Tag))
+            ?.Sequence) &&
+          (e = (i = new UE.SSceneInteractionSequence(
+            i.Sequence,
+            i.IsLoop,
+            !i.Reverse,
+            i.PlayRate,
+          )).Sequence) &&
+          (e = this.CreateDirectorBySequence(e)) &&
+          this.PlaySequence(e, i, t.Actors, !0))
+      : Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "SceneGameplay",
+          18,
+          "SimulationTagChange:没有设置SimulationTag",
+        );
+  }
+  PreviewFullDestructible() {
+    var t = (0, puerts_1.$ref)(void 0),
+      i = (this.GetAttachedActorDescendants(t, !0), (0, puerts_1.$unref)(t));
+    for (let t = i.Num() - 1; 0 <= t; --t) {
+      var e = i.Get(t);
+      e instanceof UE.BP_KuroSkeletalMeshDestructibleActor_C &&
+        e.PreviewFullDestructible();
+    }
+  }
+  ChangeStateInternal(t) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("SceneGameplay", 18, "change state", ["stateId", t]),
+      (this.Active = !0),
+      this.SetState(t, this.需要过渡状态, this.跳过表现过程);
+  }
+  重置() {
+    var i = UE.KismetSystemLibrary.GetPathName(this.GetLevel()).split("/");
+    let e = "";
+    for (let t = 1; t < i.length - 1; t++) {
+      var s = i[t];
+      e = e + "/" + s;
+    }
+    var t = i[i.length - 1].split(":")[0].split("."),
+      t = t[t.length - 1];
+    (e = e + "/" + t),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("SceneGameplay", 18, "ResetState", ["levelName", e]),
+      Global_1.Global.CharacterController?.ClientTravel(e, 0, !0, void 0);
+  }
 }
-exports.default = SceneInteractionActor;
+(SceneInteractionActor.DestructibleInitStat = Stats_1.Stat.Create(
+  "DestructibleInitStat",
+)),
+  (SceneInteractionActor.DestructiblePostPhysicsStat = Stats_1.Stat.Create(
+    "DestructiblePostPhysicsStat",
+  )),
+  (SceneInteractionActor.TempTransform = new UE.Transform()),
+  (exports.default = SceneInteractionActor);
 //# sourceMappingURL=SceneInteractionActor.js.map

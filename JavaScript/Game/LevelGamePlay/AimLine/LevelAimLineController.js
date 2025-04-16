@@ -28,12 +28,12 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
     return (
       (this.OC = ActorSystem_1.ActorSystem.Get(
         UE.BP_Miaozhunxian_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
         void 0,
       )),
       (this.iye = ActorSystem_1.ActorSystem.Get(
         UE.BP_Miaozhunxian_Bullet_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
         void 0,
       )),
       this.iye.OnActorBeginOverlap.Add(this.oye),
@@ -60,8 +60,16 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
   }
   static OnClear() {
     return (
-      this.OC?.IsValid() && ActorSystem_1.ActorSystem.Put(this.OC),
-      this.iye?.IsValid() && ActorSystem_1.ActorSystem.Put(this.iye),
+      this.OC?.IsValid() &&
+        ActorSystem_1.ActorSystem.Put(
+          "LevelAimLineController.OnClear1",
+          this.OC,
+        ),
+      this.iye?.IsValid() &&
+        ActorSystem_1.ActorSystem.Put(
+          "LevelAimLineController.OnClear2",
+          this.iye,
+        ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -79,7 +87,7 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
       if (
         ((this.aye = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           e,
           "[LevelAimLineController.PlayEffect]",
           new EffectContext_1.EffectContext(void 0, this.OC),
@@ -119,22 +127,22 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
     var i = t[0],
       r = Vector_1.Vector.Create(),
       o =
-        (this.OC.K2_SetActorLocation(i.ToUeVector(), !1, void 0, !0),
+        (this.OC.D_K2_SetActorLocation(i.ToUeVector(), !1, void 0, !0),
         UE.NewArray(UE.SplinePoint));
-    let s = 5;
-    s = 0 === e ? 0 : 1;
+    let a = 5;
+    a = 0 === e ? 0 : 1;
     for (let e = 0; e < t.length; e++) {
       t[e].Subtraction(i, r);
-      var a = new UE.SplinePoint(
+      var s = new UE.SplinePoint(
         e,
-        r.ToUeVector(),
-        t[0 === e ? e : e - 1].ToUeVector(),
-        t[e === t.length - 1 ? e : e + 1].ToUeVector(),
+        r.ToUeVectorOld(),
+        t[0 === e ? e : e - 1].ToUeVectorOld(),
+        t[e === t.length - 1 ? e : e + 1].ToUeVectorOld(),
         Rotator_1.Rotator.ZeroRotator,
         Vector_1.Vector.OneVector,
-        s,
+        a,
       );
-      o.Add(a);
+      o.Add(s);
     }
     return (
       this.zie.ClearSplinePoints(),
@@ -147,11 +155,16 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
     );
   }
   static uye() {
-    this.iye.K2_SetActorLocation(this.OC.K2_GetActorLocation(), !0, void 0, !1);
+    this.iye.D_K2_SetActorLocation(
+      this.OC.D_K2_GetActorLocation(),
+      !0,
+      void 0,
+      !1,
+    );
     var t = this.zie.GetSplineLength() / (this.OC.SamplingNum - 1);
     for (let e = 0; e < this.OC.SamplingNum; e++) {
-      var i = this.zie.GetLocationAtDistanceAlongSpline((e + 1) * t, 1);
-      this.iye.K2_SetActorLocation(i, !0, void 0, !1);
+      var i = this.zie.D_GetLocationAtDistanceAlongSpline((e + 1) * t, 1);
+      this.iye.D_K2_SetActorLocation(i, !0, void 0, !1);
     }
     this.cye
       .filter((e) => !this.mye.includes(e))
@@ -173,19 +186,19 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
       (this.cye = this.mye),
       (this.mye = []),
       this.Cye.filter((e) => !this.gye.includes(e)).forEach((e) => {
-        e?.Valid && e.Entity.GetComponent(118).SetIsBeingTargeted(!1);
+        e?.Valid && e.Entity.GetComponent(128).SetIsBeingTargeted(!1);
       }),
       this.gye
         .filter((e) => !this.Cye.includes(e))
         .forEach((e) => {
-          e?.Valid && e.Entity.GetComponent(118).SetIsBeingTargeted(!0);
+          e?.Valid && e.Entity.GetComponent(128).SetIsBeingTargeted(!0);
         }),
       (this.Cye = this.gye),
       (this.gye = []);
   }
   static lye() {
     this.Cye.forEach((e) => {
-      e?.Valid && e.Entity.GetComponent(118).SetIsBeingTargeted(!1);
+      e?.Valid && e.Entity.GetComponent(128).SetIsBeingTargeted(!1);
     }),
       this.cye.forEach((e) => {
         ItemMaterialManager_1.ItemMaterialManager.DisableActorData(
@@ -207,14 +220,14 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
   (LevelAimLineController.gye = []),
   (LevelAimLineController.oye = (e, t) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Temp", 32, "111", ["otherActor", t.ActorLabel]),
+      Log_1.Log.Debug("Temp", 31, "111", ["otherActor", t.ActorLabel]),
       t.Tags.Contains(sightingTag)
         ? _a.mye.includes(t) || _a.mye.push(t)
         : (t =
             ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
               t,
             )) &&
-          t.Entity.GetComponent(141)?.Valid &&
+          t.Entity.GetComponent(152)?.Valid &&
           !_a.gye.includes(t) &&
           _a.gye.push(t);
   }),
@@ -222,7 +235,7 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
     _a.OC?.IsValid() ||
       ((_a.OC = ActorSystem_1.ActorSystem.Get(
         UE.BP_Miaozhunxian_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
         void 0,
       )),
       (_a.zie = _a.OC.GetComponentByClass(UE.SplineComponent.StaticClass())),
@@ -230,7 +243,7 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
       _a.iye?.IsValid() ||
         ((_a.iye = ActorSystem_1.ActorSystem.Get(
           UE.BP_Miaozhunxian_Bullet_C.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           void 0,
         )),
         _a.iye.OnActorBeginOverlap.Add(_a.oye)),

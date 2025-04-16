@@ -24,7 +24,7 @@ class SpecialItemConfig extends ConfigBase_1.ConfigBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Item",
-            40,
+            39,
             "特殊道具Tag不存在,请检查配置",
             ["configId", e],
             ["tagName", t],
@@ -42,7 +42,7 @@ class SpecialItemConfig extends ConfigBase_1.ConfigBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Item",
-            40,
+            39,
             "特殊道具Tag不存在,请检查配置",
             ["configId", e],
             ["tagName", t],

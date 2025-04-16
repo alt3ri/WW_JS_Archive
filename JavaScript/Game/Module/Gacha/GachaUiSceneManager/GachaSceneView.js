@@ -18,7 +18,7 @@ class GachaSceneView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.BKt = (e) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Gacha", 28, "GachaScene被关闭"),
+          Log_1.Log.Debug("Gacha", 27, "GachaScene被关闭"),
           e &&
             (this.OnAfterCloseUiScene(),
             (ModelManager_1.ModelManager.GachaModel.CanCloseView = !0),

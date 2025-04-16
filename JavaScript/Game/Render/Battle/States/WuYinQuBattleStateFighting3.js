@@ -10,7 +10,7 @@ class WuYinQuBattleStateFighting3 extends WuYinQuBattleStateFighting1_1.default 
     super.OnEnter(t),
       (this.Owner.当前状态 = "战斗阶段3"),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderBattle", 12, "进入战斗阶段3");
+        Log_1.Log.Info("RenderBattle", 11, "进入战斗阶段3");
   }
   OnUpdate(t) {
     super.OnUpdate(t);
@@ -18,7 +18,7 @@ class WuYinQuBattleStateFighting3 extends WuYinQuBattleStateFighting1_1.default 
   OnExit(t) {
     super.OnExit(t),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderBattle", 12, "退出战斗阶段3");
+        Log_1.Log.Info("RenderBattle", 11, "退出战斗阶段3");
   }
 }
 exports.default = WuYinQuBattleStateFighting3;

@@ -36,11 +36,21 @@ class GuideGroup {
       this,
     );
   }
+  get DungeonSets() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.dungeonsetsLength(),
+      this.dungeonsets,
+      this,
+    );
+  }
   get ResetInDungeon() {
     return this.resetindungeon();
   }
   get OnlineMode() {
     return this.onlinemode();
+  }
+  get Priority() {
+    return this.priority();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -126,13 +136,34 @@ class GuideGroup {
         )
       : null;
   }
-  resetindungeon() {
+  GetDungeonsetsAt(t) {
+    return this.dungeonsets(t);
+  }
+  dungeonsets(t, i) {
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
+  }
+  dungeonsetsLength() {
     var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  resetindungeon() {
+    var t = this.J7.__offset(this.z7, 18);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   onlinemode() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
+  }
+  priority() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.GuideGroup = GuideGroup;

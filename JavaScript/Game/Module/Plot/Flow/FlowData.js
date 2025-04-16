@@ -27,14 +27,16 @@ class FlowContext {
       (this.FlowIncId = 0),
       (this.HasAdjustCamera = !1),
       (this.CanSkip = !1),
+      (this.TalkHistory = new Array()),
       (this.OptionsHistory = new Map()),
       (this.OptionsCollection = []),
       (this.UiParam = void 0),
       (this.FormatIdInner = void 0),
       (this.Pos = void 0),
-      (this.RollbackRecord = []);
+      (this.RollbackRecord = []),
+      (this.KeepMainRolePose = !1);
   }
-  Init(t, i, s, h, o, e, r, n, l = !1, d = void 0, C) {
+  Init(t, i, s, h, o, e, r, n, l = !1, d = void 0, C, v = !1) {
     this.ht(),
       (this.IsServerNotify = t),
       (this.FlowIncId = s),
@@ -46,7 +48,8 @@ class FlowContext {
       (this.IsAsync = l),
       (this.UiParam = d),
       (this.FlowStateId = o),
-      (this.Pos = C);
+      (this.Pos = C),
+      (this.KeepMainRolePose = v);
   }
   ht() {
     (this.FlowIncId = -1),
@@ -61,6 +64,7 @@ class FlowContext {
       (this.IsBreakdown = !1),
       (this.IsServerEnd = !1),
       (this.HasAdjustCamera = !1),
+      (this.TalkHistory.length = 0),
       this.OptionsHistory.clear(),
       (this.OptionsCollection.length = 0),
       (this.UiParam = void 0),
@@ -72,7 +76,8 @@ class FlowContext {
       (this.CurShowTalkActionId = 0),
       (this.IsFadeSkip = !1),
       (this.Pos = void 0),
-      (this.RollbackRecord.length = 0);
+      (this.RollbackRecord.length = 0),
+      (this.KeepMainRolePose = !1);
   }
   static Create() {
     let t = FlowContext.Pool.Get();
@@ -97,7 +102,7 @@ class FlowContext {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Plot",
-        27,
+        26,
         StringUtils_1.StringUtils.Format("[Flow] {0}", t),
         ...i,
         ["IncId", this.FlowIncId],

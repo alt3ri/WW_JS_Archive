@@ -10,6 +10,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.NONE_COLOR =
     exports.LOW_COLOR =
     exports.HIGH_COLOR =
+    exports.OVERLOCK_RISK_DIFFICULTY =
     exports.VARIATION_RISK_DIFFICULTY =
     exports.HIGH_RISK_DIFFICULTY =
     exports.LOW_RISK_DIFFICULTY =
@@ -19,6 +20,7 @@ const UE = require("ue"),
 (exports.LOW_RISK_DIFFICULTY = 1),
   (exports.HIGH_RISK_DIFFICULTY = 2),
   (exports.VARIATION_RISK_DIFFICULTY = 3),
+  (exports.OVERLOCK_RISK_DIFFICULTY = 4),
   (exports.HIGH_COLOR = "FFE361"),
   (exports.LOW_COLOR = "FFBD77"),
   (exports.NONE_COLOR = "B11515"),

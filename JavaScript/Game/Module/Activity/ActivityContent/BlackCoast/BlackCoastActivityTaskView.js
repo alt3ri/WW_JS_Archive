@@ -24,25 +24,25 @@ class BlackCoastActivityTaskView extends UiViewBase_1.UiViewBase {
       (this.lqe = void 0),
       (this.tPe = void 0),
       (this.OOe = void 0),
-      (this.$9a = []),
-      (this.X9a = 0),
+      (this.Xja = []),
+      (this.Yja = 0),
       (this.wNo = void 0),
       (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId),
       (this.HOe = () => new PageDot_1.PageDot()),
       (this.VOe = () => new BlackCoastTaskItem_1.BlackCoastTaskItem()),
-      (this.Y9a = (i) => {
+      (this.zja = (i) => {
         this.ActivityBaseData &&
           this.ActivityBaseData.Id === i &&
-          ((i = this.ActivityBaseData.GetStageById(this.$9a[this.X9a])),
-          this.NWa(),
-          this.kWa(i.GetTaskList(), !1));
+          ((i = this.ActivityBaseData.GetStageById(this.Xja[this.Yja])),
+          this.uXa(),
+          this._Xa(i.GetTaskList(), !1));
       }),
       (this.KOe = () => {
-        this.Og(this.X9a - 1);
+        this.Og(this.Yja - 1);
       }),
       (this.QOe = () => {
-        var i = this.X9a + 1,
-          t = this.ActivityBaseData.GetStageById(this.$9a[i]);
+        var i = this.Yja + 1,
+          t = this.ActivityBaseData.GetStageById(this.Xja[i]);
         t.IsUnlock
           ? this.Og(i)
           : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
@@ -84,19 +84,19 @@ class BlackCoastActivityTaskView extends UiViewBase_1.UiViewBase {
         this.GetVerticalLayout(4),
         this.VOe,
       )),
-      2 === Info_1.Info.PlatformType && (await this.DZa()),
+      2 === Info_1.Info.PlatformType && (await this.pah()),
       (this.wNo = new MediaPlayer_1.MediaPlayer(this.GetTexture(9)));
     var [i, t] = this.OpenParam;
     i &&
       t &&
       ((this.ActivityBaseData = i),
       this.lqe.SetTitle(this.ActivityBaseData.GetTitle()),
-      (this.$9a = this.ActivityBaseData.GetAllStagesId()),
-      (this.X9a = this.$9a.includes(t) ? this.$9a.indexOf(t) : 0),
-      await this.tPe.RefreshByDataAsync(this.$9a),
-      await this.SHe(this.X9a));
+      (this.Xja = this.ActivityBaseData.GetAllStagesId()),
+      (this.Yja = this.Xja.includes(t) ? this.Xja.indexOf(t) : 0),
+      await this.tPe.RefreshByDataAsync(this.Xja),
+      await this.SHe(this.Yja));
   }
-  async DZa() {
+  async pah() {
     const t = new CustomPromise_1.CustomPromise();
     this.X3i();
     var i =
@@ -122,13 +122,13 @@ class BlackCoastActivityTaskView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-      this.Y9a,
+      this.zja,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-      this.Y9a,
+      this.zja,
     );
   }
   OnBeforeDestroy() {
@@ -140,47 +140,47 @@ class BlackCoastActivityTaskView extends UiViewBase_1.UiViewBase {
       (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId));
   }
   async SHe(i) {
-    (this.X9a = i), this.tPe.GetLayoutItemByIndex(this.X9a).UpdateShow(!0);
-    var i = this.$9a[this.X9a],
+    (this.Yja = i), this.tPe.GetLayoutItemByIndex(this.Yja).UpdateShow(!0);
+    var i = this.Xja[this.Yja],
       t = this.ActivityBaseData.GetStageById(i),
       e = ConfigManager_1.ConfigManager.ActivityBlackCoastConfig.GetStageConfig(
         t.StageId,
       ),
       s = this.GetTexture(11);
-    this.GetButton(6).RootUIComp.SetUIActive(0 < this.X9a),
-      this.GetButton(7).RootUIComp.SetUIActive(this.X9a < this.$9a.length - 1),
+    this.GetButton(6).RootUIComp.SetUIActive(0 < this.Yja),
+      this.GetButton(7).RootUIComp.SetUIActive(this.Yja < this.Xja.length - 1),
       this.ActivityBaseData.SaveNewStageFlag(i),
-      this.kWa(t.GetTaskList(), !0),
+      this._Xa(t.GetTaskList(), !0),
       await this.wNo.LoadVideoAndPlay(
         t.StageId.toString(),
         t.GetVideoSource(),
         !0,
       ),
       this.SetTextureShowUntilLoaded(e.TextureSmall, s),
-      this.NWa();
+      this.uXa();
   }
   async Og(i) {
-    this.tPe.GetLayoutItemByIndex(this.X9a).UpdateShow(!1),
-      (this.X9a = i),
-      this.tPe.GetLayoutItemByIndex(this.X9a).UpdateShow(!0);
-    var i = this.$9a[this.X9a],
+    this.tPe.GetLayoutItemByIndex(this.Yja).UpdateShow(!1),
+      (this.Yja = i),
+      this.tPe.GetLayoutItemByIndex(this.Yja).UpdateShow(!0);
+    var i = this.Xja[this.Yja],
       t = this.ActivityBaseData.GetStageById(i),
       e = ConfigManager_1.ConfigManager.ActivityBlackCoastConfig.GetStageConfig(
         t.StageId,
       ),
       s = this.GetTexture(11);
-    this.GetButton(6).RootUIComp.SetUIActive(0 < this.X9a),
-      this.GetButton(7).RootUIComp.SetUIActive(this.X9a < this.$9a.length - 1),
+    this.GetButton(6).RootUIComp.SetUIActive(0 < this.Yja),
+      this.GetButton(7).RootUIComp.SetUIActive(this.Yja < this.Xja.length - 1),
       this.ActivityBaseData.SaveNewStageFlag(i),
-      this.kWa(t.GetTaskList(), !0),
+      this._Xa(t.GetTaskList(), !0),
       this.WNe(),
       await this.PlaySequenceAsync("SwitchOut", !0),
       this.SetTextureShowUntilLoaded(e.TextureSmall, s),
-      this.NWa(),
+      this.uXa(),
       await this.PlaySequenceAsync("SwitchIn", !0);
   }
-  NWa() {
-    var i = this.ActivityBaseData.GetStageById(this.$9a[this.X9a]),
+  uXa() {
+    var i = this.ActivityBaseData.GetStageById(this.Xja[this.Yja]),
       t = ConfigManager_1.ConfigManager.ActivityBlackCoastConfig.GetStageConfig(
         i.StageId,
       );
@@ -191,11 +191,11 @@ class BlackCoastActivityTaskView extends UiViewBase_1.UiViewBase {
     ),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(10), t.TitleDetail);
   }
-  kWa(i, t) {
+  _Xa(i, t) {
     this.OOe.RefreshByData(i, void 0, t);
   }
   WNe() {
-    var i = this.ActivityBaseData.GetStageById(this.$9a[this.X9a]);
+    var i = this.ActivityBaseData.GetStageById(this.Xja[this.Yja]);
     this.wNo.PlayVideo(i.StageId.toString(), i.GetVideoSource(), !0);
   }
 }

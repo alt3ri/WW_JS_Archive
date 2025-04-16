@@ -1,112 +1,31 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TeleportMarkItem = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
-  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
+const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  WorldMapDefine_1 = require("../../../WorldMap/WorldMapDefine"),
   TeleportMarkItemView_1 = require("../MarkItemView/TeleportMarkItemView"),
   ConfigMarkItem_1 = require("./ConfigMarkItem");
 class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
-  constructor(e, t, i, s, n, r = 1) {
-    super(e, t, i, s, n, r),
-      (this.IsSelectThisFloor = !1),
-      (this.InnerView = void 0),
-      (this.IsDirty = !1),
-      (this.kfa = void 0),
-      (this.Zbn = (e) => {
-        var t;
-        2 === this.MapType &&
-          ((t = this.GetMultiMapId() === e), this.IsSelectThisFloor !== t) &&
-          ((this.IsSelectThisFloor = this.GetMultiMapId() === e),
-          this.InnerView?.OnIconPathChanged(this.IconPath));
-      }),
-      (this.WRi = (e) => {
-        this.InnerView?.IsShowOrShowing &&
-          this.InnerView?.OnMarkItemStateChange(e);
-      }),
-      (this.uRi = (e) => {
-        this.MarkConfig.MarkId === e &&
-          (this.cRi(), this.View?.OnIconPathChanged(this.IconPath));
-      });
+  constructor(e, r, t, i, n, a = 1) {
+    super(e, r, t, i, n, a), (this.InnerView = void 0), (this.IsDirty = !1);
   }
   get IsFogUnlock() {
     return (
       (6 === this.MarkConfig.ObjectType && !this.IsLocked) || super.IsFogUnlock
     );
   }
-  get IsLocked() {
-    return !ModelManager_1.ModelManager.MapModel.CheckTeleportUnlocked(
-      this.MarkConfig.MarkId,
-    );
+  GetMarkItemViewType() {
+    return 24;
   }
-  Initialize() {
-    super.Initialize(), this.cRi(), this.AddEventListener();
+  CreateView() {
+    return new TeleportMarkItemView_1.TeleportMarkItemView(this);
   }
-  OnCreateView() {
-    this.InnerView = new TeleportMarkItemView_1.TeleportMarkItemView(this);
-  }
-  OnDestroy() {
-    super.OnDestroy(), (this.kfa = void 0), this.RemoveEventListener();
-  }
-  AddEventListener() {
-    EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.UnlockTeleport,
-      this.uRi,
-    ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnMarkItemShowStateChange,
-        this.WRi,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.Zbn,
-      );
-  }
-  RemoveEventListener() {
-    EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.UnlockTeleport,
-      this.uRi,
-    ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnMarkItemShowStateChange,
-        this.WRi,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.Zbn,
-      );
-  }
-  ViewUpdate(e, t = !1, i = !1) {
-    super.ViewUpdate(e, t, i);
-  }
-  UpdateMultiMapFloorSelectState(e = !1) {
-    var t, i;
-    (2 === this.MapType && !e) ||
-      ((e = this.IsSelectThisFloor),
-      this.IsMultiMap() &&
-      ((t = ModelManager_1.ModelManager.AreaModel?.GetCurrentAreaId()),
-      (i = ConfigManager_1.ConfigManager.MapConfig?.GetSubMapConfigById(
-        this.GetMultiMapId(),
-      ))) &&
-      i.Area.includes(t)
-        ? (this.IsSelectThisFloor = !0)
-        : (this.IsSelectThisFloor = !1),
-      e === this.IsSelectThisFloor) ||
-      (this.IsDirty = !0);
-  }
-  CheckIfUpdateIcon() {
-    1 === this.MapType &&
-      this.kfa !== this.IsLocked &&
-      ((this.kfa = this.IsLocked),
-      this.cRi(),
-      this.View?.OnIconPathChanged(this.IconPath));
-  }
-  cRi() {
-    this.IconPath = this.IsLocked
+  get IconPath() {
+    return this.IsLocked
       ? this.MarkConfig.LockMarkPic
       : this.MarkConfig.UnlockMarkPic;
   }
+  set IconPath(e) {}
   get IsActivity() {
     return 13 === this.MarkConfig.ObjectType;
   }
@@ -128,11 +47,45 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
       this.MarkConfigId,
     );
   }
+  get IsWeeklyRogue() {
+    var e = ConfigManager_1.ConfigManager.WorldMapConfig.GetDungeonConfig(
+      this.MarkConfigId,
+    );
+    return !!e && 29 === e.InstSubType;
+  }
+  get IsRogueRes() {
+    return ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.CheckMarkIdIsRogueRes(
+      this.MarkConfigId,
+    );
+  }
+  get IsShipTowerEntrance() {
+    return ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.CheckMarkIdIsShipTowerEntrance(
+      this.MarkConfigId,
+    );
+  }
   IsMultiMap() {
     return 0 !== this.MarkConfig.MultiMapFloorId;
   }
   GetMultiMapId() {
     return this.MarkConfig.MultiMapFloorId;
+  }
+  GetSecondaryUiType() {
+    return this.IsActivity
+      ? super.GetSecondaryUiType()
+      : this.IsDungeonEntrance
+        ? this.IsTowerEntrance
+          ? WorldMapDefine_1.ESecondaryPanel.TowerEntrancePanel
+          : this.IsRoguelike
+            ? WorldMapDefine_1.ESecondaryPanel.RoguelikePanel
+            : this.IsWeeklyRogue
+              ? WorldMapDefine_1.ESecondaryPanel.WeeklyRoguePanel
+              : this.IsRogueRes
+                ? WorldMapDefine_1.ESecondaryPanel.RogueResPanel
+                : this.IsShipTowerEntrance
+                  ? WorldMapDefine_1.ESecondaryPanel.ShipTowerEntrancePanel
+                  : WorldMapDefine_1.ESecondaryPanel
+                      .InstanceDungeonEntrancePanel
+        : WorldMapDefine_1.ESecondaryPanel.TeleportPanel;
   }
 }
 exports.TeleportMarkItem = TeleportMarkItem;

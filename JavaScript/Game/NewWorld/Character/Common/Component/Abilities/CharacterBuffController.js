@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const Info_1 = require("../../../../../../Core/Common/Info"),
+const UE = require("ue"),
+  Info_1 = require("../../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../../Core/Common/Stats"),
   BuffById_1 = require("../../../../../../Core/Define/ConfigQuery/BuffById"),
@@ -15,12 +16,10 @@ const Info_1 = require("../../../../../../Core/Common/Info"),
   CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
   ExtraEffectBaseTypes_1 = require("./ExtraEffect/ExtraEffectBaseTypes"),
   ExtraEffectDefine_1 = require("./ExtraEffect/ExtraEffectDefine"),
-  ExtraEffectLibrary_1 = require("./ExtraEffect/ExtraEffectLibrary"),
-  ExtraEffectManager_1 = require("./ExtraEffect/ExtraEffectManager"),
-  UE = require("ue");
+  ExtraEffectLibrary_1 = require("./ExtraEffect/ExtraEffectLibrary");
 class BuffController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    if (BuffController.eJa && !UE.KuroStaticLibrary.IsLowMemoryDevice()) {
+    if (BuffController.uoh && !UE.KuroStaticLibrary.IsLowMemoryDevice()) {
       var e = BuffGetAll_1.configBuffGetAll.GetConfigList(!1);
       if (e) for (const f of e) BuffController.AddBuffRef(f);
     }
@@ -33,7 +32,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
-              20,
+              19,
               "Invalid Buff Handle prefix.",
               ["prefix", e],
               ["handleStart", f],
@@ -42,7 +41,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            20,
+            19,
             "Set GameplayEffect Handle prefix.",
             ["prefix", e],
             ["handleStart", f],
@@ -73,7 +72,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
     );
   }
   static ParseExtraEffect(e) {
-    var f, t, a;
+    var f, t, r;
     if (e && e.ExtraEffectID)
       return (
         ((f =
@@ -94,15 +93,15 @@ class BuffController extends ControllerBase_1.ControllerBase {
             f,
             1,
           )),
-        (a = (0, ExtraEffectDefine_1.getBuffExecutionClass)(e.ExtraEffectID)) &&
-          ((a = a.Create(e.Id, t, f)), (f.ExecutionEffect = a)),
+        (r = (0, ExtraEffectDefine_1.getBuffExecutionClass)(e.ExtraEffectID)) &&
+          ((r = r.Create(e.Id, t, f)), (f.ExecutionEffect = r)),
         f
       );
   }
   static vQo(e) {
     var f = [e];
-    for (const a of e.RelatedExtraEffectBuffId) {
-      var t = BuffById_1.configBuffById.GetConfig(a);
+    for (const r of e.RelatedExtraEffectBuffId) {
+      var t = BuffById_1.configBuffById.GetConfig(r);
       t && f.push(t);
     }
     return f;
@@ -193,39 +192,49 @@ class BuffController extends ControllerBase_1.ControllerBase {
             (e) => GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
           ).filter((e) => void 0 !== e)),
         this.vQo(e));
-    for (const o of t)
-      if (o && this.EQo(o))
-        if (43 === o.ExtraEffectID) {
-          f.RemoveTagExistAny = f.RemoveTagExistAny ?? [];
-          for (const u of o.ExtraEffectParameters[0]
-            .split("#")
-            .map((e) =>
-              GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e?.trim()),
-            )
-            .filter((e) => void 0 !== e))
-            f.RemoveTagExistAny.push(u);
-        } else {
-          var a = this.ParseExtraEffect(o);
-          a && f.EffectInfos.push(a);
+    for (const i of t)
+      if (i && this.EQo(i)) {
+        switch (i.ExtraEffectID) {
+          case 43:
+            f.RemoveTagExistAny = f.RemoveTagExistAny ?? [];
+            for (const s of i.ExtraEffectParameters[0]
+              .split("#")
+              .map((e) =>
+                GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e?.trim()),
+              )
+              .filter((e) => void 0 !== e))
+              f.RemoveTagExistAny.push(s);
+            continue;
+          case 57:
+            f.BuffsAddedByStackCountOnRemoved =
+              f.BuffsAddedByStackCountOnRemoved ?? [];
+            for (const u of i.ExtraEffectParameters[0]
+              .split("#")
+              .map((e) => Number(e)) ?? [])
+              f.BuffsAddedByStackCountOnRemoved.push(u);
+            continue;
         }
+        var r = this.ParseExtraEffect(i);
+        r && f.EffectInfos.push(r);
+      }
     if (e.BuffAction) {
       f.BuffAction = [];
-      for (const s of e.BuffAction ?? []) {
-        var r = s.split("#").map((e) => e.trim());
-        const c = [
+      for (const c of e.BuffAction ?? []) {
+        var a = c.split("#").map((e) => e.trim());
+        const n = [
           ["BuffId", e.Id],
-          ["Action", s],
+          ["Action", c],
         ];
-        if (r.length < 2)
+        if (a.length < 2)
           CombatLog_1.CombatLog.Error(
             "Buff",
             void 0,
             "BuffAction参数过少",
-            ...c,
+            ...n,
           );
         else {
-          var i = Number(r[0]);
-          switch (i) {
+          var o = Number(a[0]);
+          switch (o) {
             case 9:
             case 10:
             case 11:
@@ -236,15 +245,16 @@ class BuffController extends ControllerBase_1.ControllerBase {
             case 16:
               try {
                 f.BuffAction.push({
-                  Type: i,
-                  Buffs: r.slice(1).map((e) => BigInt(e)),
+                  Type: o,
+                  Buffs: a.slice(1).map((e) => Number(e)),
                 });
               } catch (e) {
-                CombatLog_1.CombatLog.Error(
+                CombatLog_1.CombatLog.ErrorWithStack(
                   "Buff",
                   void 0,
                   "BuffAction参数解析失败",
-                  ...c,
+                  e,
+                  ...n,
                 );
               }
               continue;
@@ -257,8 +267,8 @@ class BuffController extends ControllerBase_1.ControllerBase {
             case 7:
             case 8:
               f.BuffAction.push({
-                Type: i,
-                Tags: r
+                Type: o,
+                Tags: a
                   .slice(1)
                   .map((e) => {
                     e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e);
@@ -268,7 +278,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
                           "Buff",
                           void 0,
                           "BuffAction找不到对应的Tag",
-                          ...c,
+                          ...n,
                         ),
                       e
                     );
@@ -281,7 +291,7 @@ class BuffController extends ControllerBase_1.ControllerBase {
                 "Buff",
                 void 0,
                 "BuffAction参数不合法",
-                ...c,
+                ...n,
               );
               continue;
           }
@@ -348,29 +358,18 @@ class BuffController extends ControllerBase_1.ControllerBase {
   }
   static HasBuffEffects(e) {
     for (const f of e)
-      if (
-        !ExtraEffectManager_1.ExtraEffectManager.IsInitExecution(
-          f.ExtraEffectId,
-        ) &&
-        !ExtraEffectManager_1.ExtraEffectManager.IsPeriodExecution(
-          f.ExtraEffectId,
-        )
-      )
+      if ((0, ExtraEffectDefine_1.getBuffEffectClass)(f.ExtraEffectId))
         return !0;
     return !1;
   }
   static HasBuffPeriodExecutions(e) {
     for (const f of e)
-      if (
-        ExtraEffectManager_1.ExtraEffectManager.IsPeriodExecution(
-          f.ExtraEffectId,
-        )
-      )
+      if (ExtraEffectBaseTypes_1.periodExecutionIds.has(f.ExtraEffectId))
         return !0;
     return !1;
   }
 }
-(BuffController.eJa = !0),
+(BuffController.uoh = !0),
   (BuffController.MQo = Stats_1.Stat.Create("BuffController.AddBuffRef")),
   (exports.default = BuffController);
 //# sourceMappingURL=CharacterBuffController.js.map

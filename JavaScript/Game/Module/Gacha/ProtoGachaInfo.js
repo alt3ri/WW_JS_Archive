@@ -22,12 +22,12 @@ class ProtoGachaPoolInfo {
       (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.cps)),
       (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.dps)),
       (this.Title = t.tbs),
-      (this.Description = t.grh),
-      (this.UiType = t.frh),
-      (this.ThemeColor = t.prh),
-      (this.ShowIdList = t.vrh),
-      (this.UpList = t.Mrh),
-      (this.PreviewIdList = t.Srh);
+      (this.Description = t.fb_),
+      (this.UiType = t.Cb_),
+      (this.ThemeColor = t.gb_),
+      (this.ShowIdList = t.pb_),
+      (this.UpList = t.vb_),
+      (this.PreviewIdList = t.yb_);
     t = ConfigManager_1.ConfigManager.GachaConfig.GetGachaPoolConfig(this.Id);
     t && (this.Sort = t.Sort);
   }
@@ -79,7 +79,7 @@ class ProtoGachaInfo {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Gacha",
-        35,
+        34,
         "ProtoGachaInfo.GetCurrentPoolInfo UsePoolId is 0!",
       );
   }

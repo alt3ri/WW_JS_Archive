@@ -3,180 +3,98 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PunishReportPanel = void 0);
 const Log_1 = require("../../../../../Core/Common/Log"),
   MapMarkByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/MapMarkByMarkId"),
-  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
-  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
-  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
-  MapController_1 = require("../../../Map/Controller/MapController"),
-  MarkUiUtils_1 = require("../../../Map/Mark/Misc/MarkUiUtils"),
-  TeleportController_1 = require("../../../Teleport/TeleportController"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
-  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
-  WorldMapDefine_1 = require("../../WorldMapDefine"),
-  MapTipsActivateTipPanel_1 = require("../Common/MapTipsActivateTipPanel"),
+  WorldMapSecondaryUiLayoutA_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutA"),
+  WorldMapSecondaryUiLayoutHelper_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutHelper"),
   PunishReportTargetListPanel_1 = require("./PunishReportTargetListPanel");
-class PunishReportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
+class PunishReportPanel extends WorldMapSecondaryUiLayoutA_1.WorldMapSecondaryUiLayoutA {
   constructor() {
     super(...arguments),
       (this.u2o = void 0),
-      (this.ZAt = void 0),
-      (this.k4a = void 0),
-      (this.N4a = void 0),
-      (this.uVa = void 0),
-      (this.oza = void 0),
-      (this.T2o = () => {
-        this.u2o &&
-          (MapController_1.MapController.RequestTrackEnrichmentArea(),
-          this.L2o(),
-          this.Close());
-      }),
-      (this.F4a = () => {
-        var t = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
-          this.Map,
-          this.u2o,
-        );
-        t &&
-          MarkUiUtils_1.MarkUiUtils.QuickGotoTeleport(this.u2o, t, () => {
-            this.Close();
-          });
-      }),
-      (this.P8e = () => {
-        var t = this.u2o;
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Map",
-            64,
-            "[地图系统]PunishReportPanel->追踪标记",
-            ["markId", t.MarkId],
-            ["IsTracked", t.IsTracked],
-          ),
-          MapController_1.MapController.RequestTrackMapMark(
-            t.MarkType,
-            t.MarkId,
-            !t.IsTracked,
-          ),
-          this.Close();
+      (this.z7a = void 0),
+      (this.OnConfirmBtnClick = () => {
+        this.HandleTeleport();
       });
   }
   GetResourceId() {
     return "UiItem_GeneralPanel_Prefab";
   }
-  OnRegisterComponent() {
-    (this.ComponentRegisterInfos =
-      WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA),
-      (this.BtnBindInfo = []);
-  }
-  async OnBeforeStartAsync() {
-    return (
-      (this.oza = new MapTipsActivateTipPanel_1.MapTipsActivateTipPanel()),
-      await this.oza.CreateByActorAsync(this.GetItem(31).GetOwner()),
-      super.OnBeforeStartAsync()
-    );
-  }
   OnStart() {
-    this.RootItem.SetRaycastTarget(!1),
-      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.ZAt.SetFunction(this.T2o),
-      (this.k4a = new ButtonItem_1.ButtonItem(this.GetButton(28).RootUIComp)),
-      this.k4a.SetFunction(this.P8e),
-      (this.N4a = new ButtonItem_1.ButtonItem(this.GetButton(29).RootUIComp)),
-      this.N4a.SetFunction(this.F4a),
-      (this.uVa =
-        new PunishReportTargetListPanel_1.PunishReportTargetListPanel()),
-      this.uVa.Initialize(this.GetVerticalLayout(16));
+    (this.z7a =
+      new PunishReportTargetListPanel_1.PunishReportTargetListPanel()),
+      this.z7a.Initialize(this.GetVerticalLayout(16)),
+      super.OnStart();
   }
-  OnShowWorldMapSecondaryUi(t) {
-    this.u2o = t;
-    var i,
-      e = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
-        this.u2o.MarkId,
+  async OnBeforeShowWorldMapSecondaryUiAsync(r) {
+    var e;
+    28 === r.MarkType &&
+      (this.SetActive(!1),
+      (e = r.MarkConfig.RelativeDungeonId),
+      (r = r.MarkConfig.RelativeId),
+      await ControllerHolder_1.ControllerHolder.LevelPlayReportController.CheckAndRequestLevelPlayVarAsync(
+        e,
+        r,
+      ));
+  }
+  SetupWorldMapSecondaryUiLayout() {
+    super.SetupWorldMapSecondaryUiLayout(),
+      this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1),
+      this.GetItem(6).SetUIActive(!1),
+      this.GetVerticalLayout(5).RootUIComp.SetUIActive(!1);
+  }
+  OnShowWorldMapSecondaryUi(r) {
+    (this.u2o = r),
+      (this.LayoutContext.MarkItem = r),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateConfirmButtonEnableClickByTeleportState(
+        this.LayoutContext,
       ),
-      r =
-        (e.ShowFlag === Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable
-          ? this.ZAt.SetEnableClick(!1)
-          : this.ZAt.SetEnableClick(!0),
-        this.L2o(),
-        this.u2o.MarkConfigId),
-      s = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(r);
-    s
-      ? (this.GetText(1).ShowTextNew(s.MarkTitle),
-        (i = this.u2o.GetAreaText()) && this.GetText(3).SetText(i),
-        (i = s.MarkDesc.split("|")[this.u2o.IsPunishReportFinish() ? 1 : 0]),
-        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i),
-        this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
-        (s = t.IsMultiMap()),
-        this.GetSprite(23).SetUIActive(s),
-        s &&
-          ((i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-            WorldMapDefine_1.MULTI_MAP_SELECT_ICON_PATH,
-          )),
-          this.SetSpriteByPath(i, this.GetSprite(23), !1)),
-        (s = e.ShowFlag === Protocol_1.Aki.Protocol.U5s.Proto_ShowDisable),
-        this.GetSprite(24).SetUIActive(s),
-        s &&
-          ((i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-            WorldMapDefine_1.BLOCK_MARK_ICON_PATH,
-          )),
-          this.SetSpriteByPath(i, this.GetSprite(24), !1)),
-        this.GetItem(12).SetUIActive(!1),
-        this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1),
-        this.GetItem(6).SetUIActive(!1),
-        this.GetVerticalLayout(5).RootUIComp.SetUIActive(!1),
-        this.GetItem(9).SetUIActive(!1),
-        this.GetItem(8).SetUIActive(!1),
-        (e = MarkUiUtils_1.MarkUiUtils.IsShowGoto(t)),
-        this.ZAt.SetActive(!e),
-        this.GetItem(32).SetUIActive(e),
-        this.oza.SetUiActive(!1),
-        e &&
-          ((s = this.GetButton(29)),
-          (i = TeleportController_1.TeleportController.CheckCanTeleport()),
-          (e = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(this.Map, t)),
-          this.oza.SetUiActive(!i || void 0 === e),
-          s.SetSelfInteractive(i && void 0 !== e)),
-        this.GetItem(14).SetUIActive(!0),
-        this.GetItem(26).SetUIActive(!1),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateConfirmButtonTextWithFastMoveStyle(
+        this.LayoutContext,
+      ),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateTrackButtonTextWithTrackStyle(
+        this.LayoutContext,
+      );
+    var r = this.u2o.MarkConfigId,
+      e = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(r);
+    e
+      ? ((e = e.MarkDesc.split("|")[this.u2o.IsPunishReportFinish() ? 1 : 0]),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), e),
+        WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateIconAndTitle(
+          this.LayoutContext,
+        ),
+        WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateAreaTxtByConfigMarkItem(
+          this.LayoutContext,
+        ),
+        this.UpdateMultiMap(),
+        this.UpdateTopRightIconActive(),
+        this.UpdateHidePlayMapTipPanel(),
+        (e = this.UpdateQuickGoto()),
+        this.ConfirmButton.SetActive(!e),
         this.GetVerticalLayout(16).RootUIComp.SetUIActive(!0),
-        (t = this.u2o.CanGetReward()),
-        this.GetItem(25).SetUIActive(t),
-        t &&
+        (e = this.u2o.CanGetReward()),
+        this.GetItem(25).SetUIActive(e),
+        e &&
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(30),
             "DarkShoreBossRewardNotGet",
           ),
-        this.v4e(),
-        this.RootItem.SetUIActive(!0))
+        this.v4e())
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Map", 64, "缺少标记配置", ["MarkId", r]);
-  }
-  L2o() {
-    this.u2o &&
-      (this.ZAt.SetLocalTextNew("Text_TeleportStop_Text"),
-      this.k4a.SetLocalText(
-        this.u2o.IsTracked
-          ? "InstanceDungeonEntranceCancelTrack"
-          : "InstanceDungeonEntranceTrack",
-      ));
+        Log_1.Log.Error("Map", 63, "缺少标记配置", ["MarkId", r]);
   }
   v4e() {
-    var i = this.u2o.GetPunishReportTarget();
-    for (let t = 0; t < i.States.length; ++t) {
-      var e = i.States[t],
-        r = i.ConditionTxtIds[t],
-        s = this.uVa.AddItemByKey("Target_" + t);
-      s.SetDescLocalNewTxt(r),
-        s.SetNumTxt("x1"),
-        s.SetLockActive(!1),
-        s.SetToggleEmptyActive(!0),
-        s.SetToggleSelectedActive(1 === e);
+    var e = this.u2o.GetPunishReportTarget();
+    for (let r = 0; r < e.States.length; ++r) {
+      var t = e.States[r],
+        o = e.ConditionTxtIds[r],
+        a = this.z7a.AddItemByKey("Target_" + r),
+        o = (a.SetDescLocalNewTxt(o), a.SetNumTxt("x1"), 1 === t ? 2 : 0);
+      a.SetState(o);
     }
   }
   OnBeforeDestroy() {
-    this.uVa.Clear(),
-      this.ZAt.Destroy(),
-      this.oza.Destroy(),
-      this.k4a.Destroy(),
-      this.N4a.Destroy();
+    this.z7a.Clear(), super.OnBeforeDestroy();
   }
 }
 exports.PunishReportPanel = PunishReportPanel;

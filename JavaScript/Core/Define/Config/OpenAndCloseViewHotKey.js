@@ -63,20 +63,38 @@ class OpenAndCloseViewHotKey {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   actionname(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   inputcontrollertype() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   viewname(t) {
-    var e = this.J7.__offset(this.z7, 10);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 10),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   handletype(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   ispresstrigger() {
     var t = this.J7.__offset(this.z7, 14);
@@ -110,10 +128,14 @@ class OpenAndCloseViewHotKey {
     return this.viewparam(t);
   }
   viewparam(t, e) {
-    var s = this.J7.__offset(this.z7, 28);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
-      : null;
+    var s = this.J7.__offset(this.z7, 28),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   viewparamLength() {
     var t = this.J7.__offset(this.z7, 28);

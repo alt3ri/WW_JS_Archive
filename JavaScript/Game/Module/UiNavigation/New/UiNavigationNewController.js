@@ -12,6 +12,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
+  InputDistributeDefine_1 = require("../../../Ui/InputDistribute/InputDistributeDefine"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
@@ -30,29 +31,39 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiNavigation",
-        11,
+        10,
         "[GetCurrentNavigationScrollbarData]查找不到当前的导航句柄",
       );
   }
   static GetCurrentNavigationActiveListenerByTag(i, t = !1) {
     var e =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
-    if (e) {
-      var a = e.GetActiveListenerByTag(i);
-      if (a || t) return a;
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "UiNavigation",
-          11,
-          "[GetCurrentNavigationActiveListenerByTag]查找不到对应的按钮",
-          ["Tag", i],
-          ["ViewName", e.ViewName],
-        );
-    } else
+    if (e)
+      if (e.GetIsActive()) {
+        var a = e.GetActiveListenerByTag(i);
+        if (a || t) return a;
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "UiNavigation",
+            10,
+            "[GetCurrentNavigationActiveListenerByTag]查找不到对应的按钮",
+            ["Tag", i],
+            ["ViewName", e.ViewName],
+          );
+      } else
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "UiNavigation",
+            10,
+            "[GetCurrentNavigationActiveListenerByTag]当前的导航句柄不在显示中",
+            ["Tag", i],
+            ["ViewName", e.ViewName],
+          );
+    else
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiNavigation",
-          11,
+          10,
           "[GetCurrentNavigationActiveListenerByTag]查找不到当前的导航句柄",
         );
   }
@@ -66,7 +77,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiNavigation",
-          11,
+          10,
           "[GetCurrentNavigationFocusListener]查找不到当前的导航句柄",
         );
   }
@@ -79,7 +90,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           "[GetCurrentNavigationListenerGroup]查找不到当前导航的导航组,逻辑上有问题",
         );
     }
@@ -92,6 +103,10 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DestroyLguiEventSystemActor,
         this.Yfe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.InputControllerMainTypeChange,
+        this.cEa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.InputControllerChange,
@@ -123,6 +138,10 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DestroyLguiEventSystemActor,
         this.Yfe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.InputControllerMainTypeChange,
+        this.cEa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.InputControllerChange,
@@ -159,16 +178,10 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
           i.GetNavigationComponent(),
           "InteractClickPrevGroup",
         )
-      : i
-        ? this.Dje(i)
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("UiNavigation", 11, "查找不到对应的热键按钮", [
-            "Tag",
-            HotKeyViewDefine_1.EXIT_TAG,
-          ]);
+      : i && this.Dje(i);
   }
   static ClickButton(i) {
-    i = this.GetCurrentNavigationActiveListenerByTag(i);
+    i = this.GetCurrentNavigationActiveListenerByTag(i, !0);
     i && this.Dje(i);
   }
   static SimulateClickItem(i, t) {
@@ -203,7 +216,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[ClickButtonInside]查找不到对应的热键按钮",
             ["Tag", t],
           );
@@ -223,7 +236,12 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     this.InteractClickByListener(i);
   }
   static InteractClickByListener(i) {
-    i && this.Dje(i);
+    i &&
+      ((UiNavigationGlobalData_1.UiNavigationGlobalData.IsAllowLoopScrollInteractHighlight =
+        !0),
+      this.Dje(i),
+      (UiNavigationGlobalData_1.UiNavigationGlobalData.IsAllowLoopScrollInteractHighlight =
+        !1));
   }
   static FindScrollbar(i) {
     var t = this.KBo();
@@ -292,30 +310,34 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[BookMarkNavigation]查找不到对应的导航组",
             ["Tag", i],
           );
     }
   }
   static MarkViewHandleRefreshNavigationDirty() {
-    UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle().MarkRefreshNavigationDirty();
+    UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle()?.MarkRefreshNavigationDirty();
   }
   static JumpNavigationGroupByTag(i) {
-    var t,
-      e,
-      a = this.QBo();
+    var t = this.QBo();
     return (
-      !!a &&
+      !!t &&
       (StringUtils_1.StringUtils.IsBlank(i)
         ? this.JumpNavigationGroup(5)
-        : ((e =
-            UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle()),
-          (i = a.GroupNameMap.Get(i)),
-          (t = this.tbo(e, i)) &&
-            (e = e.GetActiveNavigationGroupByNameCheckAll(i)) &&
-            (e.PrevGroupName = a.GroupName),
-          t))
+        : ((i = t.GroupNameMap.Get(i)),
+          this.JumpNavigationGroupByName(t.GroupName, i)))
+    );
+  }
+  static JumpNavigationGroupByName(i, t) {
+    var e =
+        UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle(),
+      a = this.tbo(e, t);
+    return (
+      a &&
+        (e = e.GetActiveNavigationGroupByNameCheckAll(t)) &&
+        (e.PrevGroupName = i),
+      a
     );
   }
   static JumpNavigationGroup(i) {
@@ -332,7 +354,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       default:
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("UiNavigation", 11, "导航组跳转方向错误", [
+            Log_1.Log.Error("UiNavigation", 10, "导航组跳转方向错误", [
               "direction",
               i,
             ]),
@@ -349,7 +371,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiNavigation",
-              11,
+              10,
               "[ChangeFocusListenerByGroupName]找不到可跳转的导航对象",
               ["GroupName", t],
             ),
@@ -373,7 +395,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiNavigation",
-        11,
+        10,
         "[GetActiveListenerInGroup]找不到导航组",
       );
   }
@@ -434,21 +456,23 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     }
     return a;
   }
-  static UWs(e, i) {
-    let a = void 0;
-    var n = i.GetScrollOrLayoutActor();
-    for (let i = 0, t = e.ListenerList.length; i < t; ++i) {
-      var r = e.ListenerList[i];
+  static UWs(i, t) {
+    let e = void 0;
+    var a = t.GetScrollOrLayoutActor(),
+      n = i.LoopScrollSortListenerList;
+    for (let i = 0, t = n.length; i < t; ++i) {
+      var r = n[i];
       if (
         r.IsScrollOrLayoutActor() &&
+        r.IsInNormalScrollDisplayByGridActor() &&
         r.IsInLoopScrollDisplayByGridActor() &&
-        (!a && r.IsCanFocus() && (a = r),
-        !n || r.GetScrollOrLayoutActor() === n) &&
+        (!e && r.IsCanFocus() && (e = r),
+        !a || r.GetScrollOrLayoutActor() === a) &&
         r.IsInScrollOrLayoutCanFocus()
       )
         return r;
     }
-    return a;
+    return e;
   }
   static FindSuitableListenerWithoutLayout(e) {
     let a = void 0;
@@ -501,7 +525,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[JumpInsideNavigationGroup]查找不到内部有可导航对象",
             ["InsideGroupName", t.InsideGroupName],
           ));
@@ -523,7 +547,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[SimulationPointUpInside]查找不到对应的热键按钮",
             ["Tag", i],
           ));
@@ -553,7 +577,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[SimulationPointDownInside]查找不到对应的热键按钮",
             ["Tag", i],
           ));
@@ -580,12 +604,12 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   static SliderInsideComponentSetValue(i, t) {
     var e = this.GetCurrentNavigationFocusListener();
     e &&
-      ((e = e.GetChildListenerByTag(i))
+      ((e = this.GetFocusListenerInsideListenerByTag(e, i))
         ? this.sbo(e.GetSelectableComponent(), t)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[SliderInsideComponentSetValue]查找不到对应的热键按钮",
             ["Tag", i],
           ));
@@ -598,7 +622,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[ScrollbarInsideComponentSetValue]查找不到对应的热键按钮",
             ["Tag", i],
           ));
@@ -628,7 +652,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[ScrollbarInsideComponentSetValue]查找不到对应的热键按钮",
             ["Tag", i],
           ));
@@ -671,14 +695,13 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static SwitchNavigationFocusWithDirtyCheck(i) {
-    var t =
-      UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
+    var t = i?.PanelConfig?.ViewHandle;
     t
       ? t?.MarkSwitchNavigationFocusDirty(i)
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiNavigation",
-          11,
+          10,
           "[SwitchNavigationFocusWithDirtyCheck]查找不到当前的导航句柄",
         );
   }
@@ -695,7 +718,7 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         (a = e.GetNavigationGroup()) &&
         2 !== a.GroupType &&
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiNavigation", 11, "业务设置了导航对象", [
+          Log_1.Log.Info("UiNavigation", 10, "业务设置了导航对象", [
             "名字",
             i.displayName,
           ]),
@@ -718,19 +741,19 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
         ((e = this.GetCurrentNavigationFocusListener()) &&
           e.GroupName !== t.GroupName) ||
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiNavigation", 11, "业务设置了导航对象", [
+          Log_1.Log.Info("UiNavigation", 10, "业务设置了导航对象", [
             "名字",
             i.displayName,
           ]),
         this.SwitchNavigationFocus(t)));
   }
-  static qBa(i) {
+  static JBa(i) {
     var t =
       UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
     t &&
       t.HasGamepadControlMouse() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiNavigation", 11, "引导设置了光标位置", [
+        Log_1.Log.Info("UiNavigation", 10, "引导设置了光标位置", [
           "名字",
           i.displayName,
         ]),
@@ -750,20 +773,20 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
             2 !== e.GroupType &&
             (0 === e.GroupType
               ? (Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("UiNavigation", 11, "引导设置了导航对象", [
+                  Log_1.Log.Info("UiNavigation", 10, "引导设置了导航对象", [
                     "名字",
                     i.displayName,
                   ]),
                 this.SwitchNavigationFocus(t))
               : (Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("UiNavigation", 11, "引导设置了非导航对象", [
+                  Log_1.Log.Info("UiNavigation", 10, "引导设置了非导航对象", [
                     "名字",
                     i.displayName,
                   ]),
                 ModelManager_1.ModelManager.UiNavigationModel.SetGuideFocusListener(
                   t,
                 ))))
-        : this.qBa(i));
+        : this.JBa(i));
   }
   static ResetNavigationFocusForGuide() {
     Info_1.Info.IsInGamepad() &&
@@ -802,6 +825,26 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
     t &&
       (t = this.GetFocusListenerInsideListenerByTag(t, i)) &&
       t.GetBehaviorComponent().ActivateInputText();
+  }
+  static HandleCommonConsumeNavigation(i) {
+    var t, e, a;
+    StringUtils_1.StringUtils.IsBlank(i) ||
+      ((e = this.QBo()) &&
+        ((i = i ? e.GroupNameMap.Get(i) : e.NextGroupName),
+        StringUtils_1.StringUtils.IsEmpty(i) ||
+          ((t = (a =
+            UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle()).GetActiveNavigationGroupByNameCheckAll(
+            i,
+          )) &&
+            (1 < t.ActiveListenerList.length
+              ? this.tbo(a, i) && (t.PrevGroupName = e.GroupName)
+              : 1 === t.ActiveListenerList.length &&
+                ((e = (i = a.GetFocusListener()).IsInScrollOrLayoutCanFocus()),
+                (a = t.ActiveListenerList[0]),
+                this.Dje(a),
+                e) &&
+                !i.IsInScrollOrLayoutCanFocus() &&
+                this.MarkViewHandleRefreshNavigationDirty()))));
   }
   static SimulationPointerTrigger(i) {
     var t =
@@ -842,19 +885,49 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
       ),
       UE.UISelectableComponent.SetShieldPCPress(
         ConfigManager_1.ConfigManager.UiNavigationConfig.GetPcPress(),
+      ),
+      ModelManager_1.ModelManager.InputDistributeModel?.AddInputDistributeTagChangedListener(
+        InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
+          .NavigationTag,
+        UiNavigationNewController.jk_,
       ));
   }),
   (UiNavigationNewController.Yfe = () => (
     UiNavigationLogic_1.UiNavigationLogic.ClearNavigationDelegate(
       LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem,
     ),
+    ModelManager_1.ModelManager.InputDistributeModel?.RemoveInputDistributeTagChangedListener(
+      InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
+        .NavigationTag,
+      UiNavigationNewController.jk_,
+    ),
     !0
   )),
+  (UiNavigationNewController.jk_ = (i, t) => {
+    t ||
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiNavigation",
+          10,
+          "导航的输入分发被删除,需要抬起持续输入的按钮",
+        ),
+      UiNavigationJoystickInput_1.UiNavigationJoystickInput.ResetJoystickActionInput());
+  }),
+  (UiNavigationNewController.cEa = (i, t) => {
+    (2 !== i && 1 !== i) ||
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiNavigation",
+          10,
+          "输入总类型发生变更,需要抬起持续输入的按钮",
+        ),
+      UiNavigationJoystickInput_1.UiNavigationJoystickInput.ResetJoystickActionInput());
+  }),
   (UiNavigationNewController.XBo = (i, t) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiNavigation",
-        11,
+        10,
         "[InputChange]输入类型改变!",
         ["last", i],
         ["now", t],
@@ -866,14 +939,17 @@ class UiNavigationNewController extends UiControllerBase_1.UiControllerBase {
   (UiNavigationNewController.$Bo = (i) => {
     Info_1.Info.IsInGamepad() ||
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiNavigation", 11, "[InputChange]输入类型改变!", [
+        Log_1.Log.Info("UiNavigation", 10, "[InputChange]输入类型改变!", [
           "InputType",
           i,
         ]),
       UiNavigationLogic_1.UiNavigationLogic.HandleInputControllerTypeChange());
   }),
   (UiNavigationNewController.YBo = (i, t) => {
-    UiNavigationLogic_1.UiNavigationLogic.ExecuteInputNavigation(i, t);
+    UiNavigationJoystickInput_1.UiNavigationJoystickInput.TriggerActionInputTick(
+      i,
+      t,
+    );
   }),
   (UiNavigationNewController.JBo = () => {
     var i = ModelManager_1.ModelManager.UiNavigationModel;

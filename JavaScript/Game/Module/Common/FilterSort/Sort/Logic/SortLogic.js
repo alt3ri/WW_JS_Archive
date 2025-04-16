@@ -5,10 +5,13 @@ const ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   AdventureGuideSort_1 = require("./Rule/AdventureGuideSort"),
   AssemblyGridSort_1 = require("./Rule/AssemblyGridSort"),
   CalabashCollectSort_1 = require("./Rule/CalabashCollectSort"),
+  ComposeExchangeSort_1 = require("./Rule/ComposeExchangeSort"),
   ComposePurificationSort_1 = require("./Rule/ComposePurificationSort"),
   ComposeSort_1 = require("./Rule/ComposeSort"),
   ComposeStructureSort_1 = require("./Rule/ComposeStructureSort"),
   CookSort_1 = require("./Rule/CookSort"),
+  DangoAbyssPluginItemSort_1 = require("./Rule/DangoAbyssPluginItemSort"),
+  FishingItemSort_1 = require("./Rule/FishingItemSort"),
   ForgingSort_1 = require("./Rule/ForgingSort"),
   ItemSort_1 = require("./Rule/ItemSort"),
   PhantomSort_1 = require("./Rule/PhantomSort"),
@@ -31,22 +34,26 @@ class SortLogic {
       11: new AssemblyGridSort_1.AssemblyGridSort(),
       12: new VisionFetterSort_1.VisionFetterSort(),
       13: new AdventureGuideSort_1.AdventureGuideSort(),
+      14: new ComposeExchangeSort_1.ComposeExchangeSort(),
+      15: new PhantomSort_1.PhantomSort(),
+      16: new FishingItemSort_1.FishingItem(),
+      17: new DangoAbyssPluginItemSort_1.DangoAbyssPluginItemSort(),
     };
   }
-  SortDataList(e, r, o, ...t) {
-    var r = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(r),
-      i = o.GetAllSelectRuleSet(),
-      o = o.GetIsAscending(),
-      r = r.DataId;
-    this.SortDataByData(e, r, i, o, ...t);
+  SortDataList(e, o, r, ...t) {
+    var o = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(o),
+      i = r.GetAllSelectRuleSet(),
+      r = r.GetIsAscending(),
+      o = o.DataId;
+    this.SortDataByData(e, o, i, r, ...t);
   }
-  SortDataByData(e, r, i, u, ...S) {
-    const n = this.VLt[r];
-    n.InitSortMap(),
-      e.sort((e, r) => {
+  SortDataByData(e, o, i, n, ...u) {
+    const S = this.VLt[o];
+    S.InitSortMap(),
+      e.sort((e, o) => {
         for (const t of i.values()) {
-          var o = n.GetSortFunctionByRuleId(t)(e, r, u, ...S);
-          if (o) return o;
+          var r = S.GetSortFunctionByRuleId(t)(e, o, n, ...u);
+          if (r) return r;
         }
         return 0;
       });

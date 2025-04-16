@@ -6,14 +6,15 @@ class TsAnimNotifyBattleState extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.取消无敌 = !1);
   }
-  K2_Notify(e, t) {
-    var e = e.GetOwner();
+  Constructor() {}
+  K2_Notify(t, e) {
+    var t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-        ((e = (e?.CharacterActorComponent?.Entity).GetComponent(190)),
+      t instanceof TsBaseCharacter_1.default &&
+        ((t = (t?.CharacterActorComponent?.Entity).GetComponent(203)),
         this.取消无敌) &&
-        e &&
-        e.RemoveTag(501201e3),
+        t &&
+        t.RemoveTag(501201e3),
       !0
     );
   }

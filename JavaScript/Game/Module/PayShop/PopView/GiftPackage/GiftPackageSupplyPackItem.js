@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
+  ShopSkinData_1 = require("../../../Skin/Data/ShopSkinData"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView"),
   GiftPackageItem_1 = require("./GiftPackageItem"),
@@ -74,19 +75,34 @@ class GiftPackageSupplyPackItem extends UiPanelBase_1.UiPanelBase {
     )),
       this.Refresh();
   }
-  Update(i) {
-    (this.g4i = i), this.Refresh();
-  }
   Refresh() {
     if (!this.InAsyncLoading()) {
-      var i, t;
+      var t, e, s, h;
+      let i = 0;
       for ([
-        i,
         t,
+        e,
       ] of ConfigManager_1.ConfigManager.GiftPackageConfig.GetGiftPackageConfig(
         this.g4i,
-      ).Content)
-        this.ZOi.push([i, t]);
+      ).Content) {
+        if (
+          11 ===
+          ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+            t,
+          )
+        ) {
+          i = t;
+          break;
+        }
+        this.ZOi.push([t, e]);
+      }
+      if (0 < i) {
+        this.ZOi = [];
+        for ([s, h] of ShopSkinData_1.ShopSkinData.Create(
+          this.C4i,
+        ).GetAllReward())
+          this.ZOi.push([s.ItemId, h]);
+      }
       this.xqe.RefreshByData(this.ZOi),
         this.SetEndTime(),
         this.mGe(),

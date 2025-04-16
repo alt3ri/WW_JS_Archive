@@ -8,7 +8,7 @@ const UE = require("ue"),
   EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
   EffectSystem_1 = require("../../Effect/EffectSystem"),
   Global_1 = require("../../Global"),
-  RoleTriggerController_1 = require("../../NewWorld/Character/Role/RoleTriggerController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ParkourController_1 = require("./ParkourController"),
   PARKOUR_CHECK_POINT_PRESET = new UE.FName("ParkourCheckPoint");
 class TsParkourCheckPoint extends UE.Actor {
@@ -22,6 +22,9 @@ class TsParkourCheckPoint extends UE.Actor {
       (this.DestroyEffectModelBasePath = ""),
       (this.EffectViewHandler = 0),
       (this.EventRegistered = !1);
+  }
+  Constructor() {
+    this.EffectViewHandler = 0;
   }
   ReceiveBeginPlay() {
     this.FindComponents(),
@@ -43,7 +46,7 @@ class TsParkourCheckPoint extends UE.Actor {
       StringUtils_1.StringUtils.IsEmpty(this.DestroyEffectModelBasePath) ||
         EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
           this,
-          this.GetTransform(),
+          this.D_GetTransform(),
           this.DestroyEffectModelBasePath,
           "[TsParkourCheckPoint.ReceiveEndPlay]",
         );
@@ -55,7 +58,7 @@ class TsParkourCheckPoint extends UE.Actor {
     t = UE.KismetSystemLibrary.GetPathName(t);
     (this.EffectViewHandler = EffectSystem_1.EffectSystem.SpawnEffect(
       this,
-      this.GetTransform(),
+      this.D_GetTransform(),
       t,
       "[TsParkourCheckPoint.GenerateFx]",
       new EffectContext_1.EffectContext(void 0, this),
@@ -66,7 +69,7 @@ class TsParkourCheckPoint extends UE.Actor {
   GenerateFxByPath(t) {
     (this.EffectViewHandler = EffectSystem_1.EffectSystem.SpawnEffect(
       this,
-      this.GetTransform(),
+      this.D_GetTransform(),
       t,
       "[TsParkourCheckPoint.GenerateFxByPath]",
       new EffectContext_1.EffectContext(void 0, this),
@@ -101,7 +104,8 @@ class TsParkourCheckPoint extends UE.Actor {
       ParkourController_1.ParkourController.MatchParkourRoleConfig(
         this.ParkourId,
       ) &&
-      t === RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger()
+      t ===
+        ControllerHolder_1.ControllerHolder.RoleTriggerController.GetMyRoleTrigger()
     ) {
       if (
         (Log_1.Log.CheckInfo() &&
@@ -116,7 +120,7 @@ class TsParkourCheckPoint extends UE.Actor {
       ) {
         t = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
         if (t) {
-          t = t.GetComponent(190);
+          t = t.GetComponent(203);
           if (
             t &&
             !t.HasTag(

@@ -35,7 +35,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
         var s;
         i !== e &&
           this.z0t &&
-          ((s = this.z0t.Entity.GetComponent(159).GetCurrentValue(
+          ((s = this.z0t.Entity.GetComponent(171).GetCurrentValue(
             EAttributeId.l5n,
           )),
           this.z0t.SetCurrentAttribute(i),
@@ -93,6 +93,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
       i = {
         Type: 2,
         ItemConfigId: i,
+        SkinId: e.SkinId,
         BottomTextId: "Text_LevelShow_Text",
         BottomTextParameter: [s],
         ElementId: e.ElementId,
@@ -112,7 +113,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   }
   c$e() {
     this.z0t &&
-      this.z0t.Entity.GetComponent(159).AddListener(
+      this.z0t.Entity.GetComponent(171).AddListener(
         EAttributeId.Proto_Life,
         this.uft,
         "Life.BuffTargetRoleItem",
@@ -120,7 +121,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   }
   m$e() {
     this.z0t &&
-      this.z0t.Entity.GetComponent(159).RemoveListener(
+      this.z0t.Entity.GetComponent(171).RemoveListener(
         EAttributeId.Proto_Life,
         this.uft,
       );
@@ -220,7 +221,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Test",
-          8,
+          37,
           `播放属性进度条动画，currentAttribute：${t},targetAttribute:${i},maxAttribute:` +
             e,
         ),

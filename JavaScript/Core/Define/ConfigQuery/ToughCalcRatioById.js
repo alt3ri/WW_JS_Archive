@@ -17,25 +17,30 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configToughCalcRatioById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configToughCalcRatioById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configToughCalcRatioById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configToughCalcRatioById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configToughCalcRatioById.GetConfig(";
 exports.configToughCalcRatioById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, i = !0) => {
-    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+    "bigint" == typeof o && (o = (0, ConfigCommon_1.toNumberTemp)(o)),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       t =
-        (n.Start(),
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (i) {
@@ -43,15 +48,15 @@ exports.configToughCalcRatioById = {
         const a = ConfigCommon_1.ConfigCommon.GetConfig(C);
         if (a)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
       }
       if (
         (t =
-          ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 1, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindFloat64(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
@@ -76,8 +81,8 @@ exports.configToughCalcRatioById = {
               ((t = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -85,8 +90,8 @@ exports.configToughCalcRatioById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    n?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

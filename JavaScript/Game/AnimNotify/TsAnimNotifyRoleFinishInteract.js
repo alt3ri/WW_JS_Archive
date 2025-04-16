@@ -6,17 +6,18 @@ class TsAnimNotifyRoleFinishInteract extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.Type = 3);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      var s = e.CharacterActorComponent.Entity.GetComponent(26);
-      if (s)
+      var r = e.CharacterActorComponent.Entity.GetComponent(29);
+      if (r)
         switch (this.Type) {
           case 2:
-            s.EndCatapult();
+            r.EndCatapult();
             break;
           case 1:
-            s.EndBounce();
+            r.EndBounce();
         }
     }
     return !0;

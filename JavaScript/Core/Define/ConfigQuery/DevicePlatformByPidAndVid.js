@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configDevicePlatformByPidAndVid.Init"),
-  getConfigStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configDevicePlatformByPidAndVid.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configDevicePlatformByPidAndVid.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configDevicePlatformByPidAndVid.GetConfig(";
 exports.configDevicePlatformByPidAndVid = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, i = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       e =
-        (n.Start(),
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (i) {
@@ -45,8 +47,8 @@ exports.configDevicePlatformByPidAndVid = {
         const f = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (f)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -78,8 +80,8 @@ exports.configDevicePlatformByPidAndVid = {
               ((e = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -87,8 +89,8 @@ exports.configDevicePlatformByPidAndVid = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    n?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

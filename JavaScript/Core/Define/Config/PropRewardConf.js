@@ -32,6 +32,9 @@ class PropRewardConf {
   tipsValue(t) {
     return this.tips(t)?.value();
   }
+  get IsFormation() {
+    return this.isformation();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -76,6 +79,10 @@ class PropRewardConf {
   tipsLength() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  isformation() {
+    var t = this.J7.__offset(this.z7, 10);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.PropRewardConf = PropRewardConf;

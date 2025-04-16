@@ -1,15 +1,22 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DropDownLogicCreator = void 0);
-const LanguageLogic_1 = require("./LanguageLogic"),
+const GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
+  LanguageLogic_1 = require("./LanguageLogic"),
   SkillLockEnemyLogic_1 = require("./SkillLockEnemyLogic");
 class DropDownLogicCreator {
-  static GetDropDownLogic(o) {
-    return this.lPi.get(o);
+  static GetDropDownLogic(e) {
+    return this.lPi.get(e);
   }
 }
 (exports.DropDownLogicCreator = DropDownLogicCreator).lPi = new Map([
-  [51, new LanguageLogic_1.LanguageLogic()],
-  [133, new SkillLockEnemyLogic_1.SkillLockEnemyLogic()],
+  [
+    GameSettingsDefine_1.EFunction.TEXTLANGUAGE,
+    new LanguageLogic_1.LanguageLogic(),
+  ],
+  [
+    GameSettingsDefine_1.EFunction.SkillLockEnemyMode,
+    new SkillLockEnemyLogic_1.SkillLockEnemyLogic(),
+  ],
 ]);
 //# sourceMappingURL=DropDownLogicCreator.js.map

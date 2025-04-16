@@ -75,8 +75,14 @@ class Filter {
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   gridtype(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.Filter = Filter;

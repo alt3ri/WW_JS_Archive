@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   AiInteractionItemQueryManager_1 = require("../../../NewWorld/SceneItem/AiInteraction/AiInteractionItemQueryManager"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -24,6 +24,16 @@ class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsSearchFilterIsMarkByAi = !1),
       (this.TsFilter = void 0),
       (this.TsUseNavigation = !1);
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsRange = 0),
+      (this.TsItemBlackboardKey = ""),
+      (this.TsItemDistanceBlackboardKey = ""),
+      (this.TsItemLocationBlackboardKey = ""),
+      (this.TsSearchFilterIsMarkByAi = !1),
+      (this.TsFilter = void 0);
   }
   InitTsVariables() {
     if (!this.IsInitTsVariables || GlobalData_1.GlobalData.IsPlayInEditor) {
@@ -46,43 +56,43 @@ class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
       this.TsUseNavigation = this.UseNavigation;
     }
   }
-  ReceiveExecuteAI(t, e) {
-    var i,
+  ReceiveExecuteAI(t, i) {
+    var e,
       s = t.AiController;
     s
       ? (this.InitTsVariables(),
         (s = s.CharActorComp),
-        (e = e.K2_GetActorLocation()),
+        (i = i.D_K2_GetActorLocation()),
         (this.TsFilter.IsSearchedMarkByAi = this.TsSearchFilterIsMarkByAi),
         (this.TsFilter.Entity = s.Entity),
-        !(e =
+        !(i =
           AiInteractionItemQueryManager_1.AiInteractionItemQueryManager.Get().GetCloseActor(
-            e,
+            i,
             this.TsUseNavigation ? 1 : 0,
             this.TsFilter,
             t,
-          )) || e.Length > this.TsRange
+          )) || i.Length > this.TsRange
           ? this.FinishExecute(!1)
-          : (BlackboardController_1.BlackboardController.SetIntValueByEntity(
+          : (ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
               s.Entity.Id,
               this.TsItemBlackboardKey,
-              e.Entity.Id,
+              i.Entity.Id,
             ),
-            BlackboardController_1.BlackboardController.SetFloatValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetFloatValueByEntity(
               s.Entity.Id,
               this.TsItemDistanceBlackboardKey,
-              e.Length,
+              i.Length,
             ),
-            (i = e.Entity.GetComponent(0)) &&
-              (i.GetEntityType() ===
+            (e = i.Entity.GetComponent(0)) &&
+              (e.GetEntityType() ===
                 Protocol_1.Aki.Protocol.kks.Proto_SceneItem &&
-                ((i = e.Entity.GetComponent(187).ActorLocation),
-                BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+                ((e = i.Entity.GetComponent(200).ActorLocation),
+                ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
                   s.Entity.Id,
                   this.TsItemLocationBlackboardKey,
-                  i.X,
-                  i.Y,
-                  i.Z,
+                  e.X,
+                  e.Y,
+                  e.Z,
                 )),
               this.FinishExecute(!0))))
       : Log_1.Log.CheckError() &&

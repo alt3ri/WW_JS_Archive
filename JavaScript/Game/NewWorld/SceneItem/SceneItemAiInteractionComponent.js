@@ -38,7 +38,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
       (this.OnEntityDeadEvent = void 0);
   }
   static get Dependencies() {
-    return [187];
+    return [200];
   }
   OnStart() {
     (this.LastUsedTime = -AI_USED_COLD_DOWN),
@@ -54,7 +54,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
         : this.Entity.Disable(
             "[SceneItemAiInteractionComponent.OnStart] visible为false",
           )),
-      (this.MoveComp = this.Entity.GetComponent(111)),
+      (this.MoveComp = this.Entity.GetComponent(121)),
       AiInteractionItemQueryManager_1.AiInteractionItemQueryManager.Get().RegisterItem(
         this.Entity,
       ),
@@ -122,7 +122,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
   }
 };
 (SceneItemAiInteractionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(131)],
+  [(0, RegisterComponent_1.RegisterComponent)(142)],
   SceneItemAiInteractionComponent,
 )),
   (exports.SceneItemAiInteractionComponent = SceneItemAiInteractionComponent);

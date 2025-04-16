@@ -1,7 +1,10 @@
 "use strict";
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.SdkReportLevel =
+  (exports.SdkReportFirstUpFiveStarHero =
+    exports.SdkReportFirstNormalFiveStarHero =
+    exports.SdkReportGetRougeLevel60 =
+    exports.SdkReportLevel =
     exports.SdkReportChapter =
     exports.SdkReportDirectBuy =
     exports.SdkReportPay =
@@ -22,6 +25,9 @@ const Protocol_1 = require("../../Core/Define/Net/Protocol"),
   SdkReportData_1 = require("../../Launcher/HotPatchKuroSdk/SdkReportData"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../Manager/ConfigManager"),
   ModelManager_1 = require("../Manager/ModelManager"),
   PayShopDefine_1 = require("../Module/PayShop/PayShopDefine"),
   KILLPHANTOMMISSION = 139000025,
@@ -60,7 +66,10 @@ const Protocol_1 = require("../../Core/Define/Net/Protocol"),
   CREATEROLEEVENTID = "101104",
   BATTLEEVENTID = "101803",
   QUESTEVENTID = "101805",
-  FLOWEVENTID = "123000";
+  FLOWEVENTID = "123000",
+  NORMALGACHAPOOLREPORTSTATEKEY = "NORMALGACHAPOOLREPORTSTATEKEY",
+  HIGHGACHAPOOLREPORTSTATEKEY = "HIGHGACHAPOOLREPORTSTATEKEY",
+  ROUGEFINISHSTATEKEY = "ROUGEFINISHSTATEKEY";
 class KuroSdkReport {
   static Init() {
     this.mSe();
@@ -103,6 +112,71 @@ class KuroSdkReport {
       (((t = new SdkReportDirectBuy(void 0)).PayItemId = e), this.Report(t));
   }
   static OnChapterStart(e, t) {}
+  static OnGachaResult(t, r) {
+    if (0 !== t) {
+      var e = ModelManager_1.ModelManager.GachaModel.GetValidGachaList().find(
+        (e) => e.GachaInfo.Id === t,
+      );
+      if (e) {
+        var E = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
+          e.PoolInfo.Id,
+        ).Type;
+        if (2 === E || 4 === E) {
+          let e = LocalStorage_1.LocalStorage.GetPlayer(
+            LocalStorageDefine_1.ELocalStoragePlayerKey.SdkReportStateMap,
+          );
+          if (e) {
+            if (2 === E && 1 === e.get(HIGHGACHAPOOLREPORTSTATEKEY)) return;
+            if (4 === E && 1 === e.get(NORMALGACHAPOOLREPORTSTATEKEY)) return;
+          }
+          e = e || new Map();
+          for (const R of r) {
+            var o = R.e9n?.L8n,
+              o = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(o);
+            if (o && 5 <= o.QualityId) {
+              if (2 === E)
+                return (
+                  (o = new SdkReportFirstUpFiveStarHero(void 0)),
+                  this.Report(o),
+                  e.set(HIGHGACHAPOOLREPORTSTATEKEY, 1),
+                  void LocalStorage_1.LocalStorage.SetPlayer(
+                    LocalStorageDefine_1.ELocalStoragePlayerKey
+                      .SdkReportStateMap,
+                    e,
+                  )
+                );
+              if (4 === E)
+                return (
+                  (o = new SdkReportFirstNormalFiveStarHero(void 0)),
+                  this.Report(o),
+                  e.set(NORMALGACHAPOOLREPORTSTATEKEY, 1),
+                  void LocalStorage_1.LocalStorage.SetPlayer(
+                    LocalStorageDefine_1.ELocalStoragePlayerKey
+                      .SdkReportStateMap,
+                    e,
+                  )
+                );
+            }
+          }
+        }
+      }
+    }
+  }
+  static OnRougeFinish() {
+    let e = LocalStorage_1.LocalStorage.GetPlayer(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.SdkReportStateMap,
+    );
+    var t;
+    (e && 1 === e.get(ROUGEFINISHSTATEKEY)) ||
+      ((e = e || new Map()),
+      (t = new SdkReportGetRougeLevel60(void 0)),
+      this.Report(t),
+      e.set(ROUGEFINISHSTATEKEY, 1),
+      LocalStorage_1.LocalStorage.SetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.SdkReportStateMap,
+        e,
+      ));
+  }
 }
 (exports.KuroSdkReport = KuroSdkReport),
   ((_a = KuroSdkReport).USe = (e) => {
@@ -116,7 +190,7 @@ class KuroSdkReport {
     SdkReportQuestFinish.IfNeedReport(e) &&
       (((r = new SdkReportQuestFinish(void 0)).QuestId = e), _a.Report(r)),
       SdkReportChapter.IfNeedReport(e, 0) &&
-        t === Protocol_1.Aki.Protocol.hTs.Proto_Finish &&
+        t === Protocol_1.Aki.Protocol.hTs.a3_ &&
         (((r = new SdkReportChapter(void 0)).TreeConfigId = e), _a.Report(r));
   }),
   (KuroSdkReport.RSe = (e, t, r) => {
@@ -401,4 +475,22 @@ class SdkReportLevel extends SdkReportData_1.SdkReportData {
     [REPORTLEVEL40, "event_28"],
     [REPORTLEVEL45, "event_29"],
   ]));
+class SdkReportGetRougeLevel60 extends SdkReportData_1.SdkReportData {
+  GetEventName() {
+    return this.IfGlobalSdk ? "rogue_level60" : "";
+  }
+}
+exports.SdkReportGetRougeLevel60 = SdkReportGetRougeLevel60;
+class SdkReportFirstNormalFiveStarHero extends SdkReportData_1.SdkReportData {
+  GetEventName() {
+    return this.IfGlobalSdk ? "first_normal_5star_hero" : "";
+  }
+}
+exports.SdkReportFirstNormalFiveStarHero = SdkReportFirstNormalFiveStarHero;
+class SdkReportFirstUpFiveStarHero extends SdkReportData_1.SdkReportData {
+  GetEventName() {
+    return this.IfGlobalSdk ? "first_up_5star_hero" : "";
+  }
+}
+exports.SdkReportFirstUpFiveStarHero = SdkReportFirstUpFiveStarHero;
 //# sourceMappingURL=KuroSdkReport.js.map

@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionOpenView = void 0);
 const UE = require("ue"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  UiViewBase_1 = require("../../Ui/Base/UiViewBase");
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender");
 class FunctionOpenView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -36,10 +37,20 @@ class FunctionOpenView extends UiViewBase_1.UiViewBase {
     this.UiViewSequence.PlaySequence("Show", !0), this.nOe(e);
   }
   nOe(e) {
-    var t = this.GetTexture(0);
-    this.SetTextureByPath(e.Icon, t),
+    var i = this.GetTexture(0);
+    this.SetTextureByPath(e.Icon, i),
       this.GetText(1).ShowTextNew(e.Title),
       this.GetText(2).ShowTextNew(e.Desc);
+  }
+  OnBeforeShow() {
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.TemporaryDisableDLSSG(
+      "FunctionOpenView",
+    );
+  }
+  OnAfterHide() {
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelTemporaryDisableDLSSG(
+      "FunctionOpenView",
+    );
   }
 }
 exports.FunctionOpenView = FunctionOpenView;

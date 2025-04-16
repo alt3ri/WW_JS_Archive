@@ -20,7 +20,7 @@ class EntityPhysicsAssetConfig extends ConfigBase_1.ConfigBase {
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Character",
-            58,
+            57,
             "该角色未在角色物理资产配置表中配置 /Config/j.角色物理资产",
             ["默认值Id", DEFAULT_DB_ID],
           ),
@@ -29,7 +29,7 @@ class EntityPhysicsAssetConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Character",
-        58,
+        57,
         "该角色未在角色物理资产配置表中默认值配置 /Config/j.角色物理资产",
         ["默认值Id", DEFAULT_DB_ID],
       );

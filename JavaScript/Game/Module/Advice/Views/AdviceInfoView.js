@@ -174,13 +174,13 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
     var e,
       t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t.Valid &&
-      ((e = t.Entity.GetComponent(190)),
+      ((e = t.Entity.GetComponent(203)),
       (this.p7e = e.HasTag(1996802261)),
       this.N7e(),
       this.p7e ? this.CloseMe() : this.O7e(t));
   }
   O7e(e) {
-    e = e.Entity.GetComponent(190);
+    e = e.Entity.GetComponent(203);
     this.f7e = e.ListenForTagAddOrRemove(1996802261, this.v7e);
   }
   N7e() {
@@ -286,9 +286,9 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       t &&
         i &&
         e &&
-        ((i = e.K2_GetActorLocation()),
-        (e = t.K2_GetActorLocation()),
-        (t = UE.KismetMathLibrary.Vector_Distance(i, e)),
+        ((i = e.D_K2_GetActorLocation()),
+        (e = t.D_K2_GetActorLocation()),
+        (t = UE.KismetMathLibrary.D_Vector_Distance(i, e)),
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceViewCloseDistance() <
           t))) &&
       this.CloseMe();

@@ -21,12 +21,12 @@ class NounHandBookView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.VZt = void 0),
-      (this.W4a = void 0),
-      (this.K4a = -1),
+      (this.R8a = void 0),
+      (this.U8a = -1),
       (this._Xn = -1),
       (this.HandBookCommonItemDataList = []),
       (this.QZt = void 0),
-      (this.Q4a = []),
+      (this.x8a = []),
       (this.lqe = void 0),
       (this.zji = void 0),
       (this.Refresh = () => {
@@ -34,29 +34,31 @@ class NounHandBookView extends UiViewBase_1.UiViewBase {
       }),
       (this.OnHandBookRead = (i, t) => {
         if (11 === i) {
-          var e = this.Q4a.length;
-          for (let i = 0; i < e; i++) this.Q4a[i].RefreshNewState();
+          var e = this.x8a.length;
+          for (let i = 0; i < e; i++) this.x8a[i].RefreshNewState();
         }
       }),
-      (this.$4a = (i, t, e) => {
+      (this.P8a = (i, t, e) => {
         var n = new NounHandBookItem_1.NounHandBookItem();
         return (
-          n.BindToggleCallback(this.X4a),
-          n.BindChildToggleCallback(this.Y4a),
-          this.Q4a.push(n),
+          n.BindToggleCallback(this.w8a),
+          n.BindChildToggleCallback(this.B8a),
+          this.x8a.push(n),
           n
         );
       }),
-      (this.X4a = (i) => {
-        this.K4a = i;
+      (this.w8a = (i) => {
+        this.U8a = i;
         i = this.uXn();
         this.VZt?.RefreshByData(i, !0),
           this.VZt?.BindLateUpdate(() => {
             this.VZt?.ScrollToItemIndex(this._Xn), this.VZt?.UnBindLateUpdate();
           });
       }),
-      (this.Y4a = (i, t) => {
-        (this.QZt = i), this.zji?.SetToggleStateForce(0, !1), (this.zji = t);
+      (this.B8a = (i, t) => {
+        (this.QZt = i),
+          this.zji !== t &&
+            (this.zji?.SetToggleStateForce(0, !1), (this.zji = t));
         var e,
           n,
           t = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
@@ -198,12 +200,12 @@ class NounHandBookView extends UiViewBase_1.UiViewBase {
       );
   }
   async OnBeforeStartAsync() {
-    (this.W4a = new HandBootNounDynamicItem_1.HandBootNounDynamicItem()),
+    (this.R8a = new HandBootNounDynamicItem_1.HandBootNounDynamicItem()),
       (this.VZt = new DynScrollView_1.DynamicScrollView(
         this.GetUIDynScrollViewComponent(2),
         this.GetItem(3),
-        this.W4a,
-        this.$4a,
+        this.R8a,
+        this.P8a,
       )),
       await this.VZt.Init();
   }
@@ -253,16 +255,16 @@ class NounHandBookView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     this.VZt && (this.VZt.ClearChildren(), (this.VZt = void 0)),
-      (this.Q4a = []),
+      (this.x8a = []),
       (this.HandBookCommonItemDataList = []),
       (this.QZt = void 0);
   }
   uXn() {
-    -1 === this.K4a &&
-      (this.K4a = this.HandBookCommonItemDataList[0].Config.Id);
+    -1 === this.U8a &&
+      (this.U8a = this.HandBookCommonItemDataList[0].Config.Id);
     var t = [];
     for (const s of this.HandBookCommonItemDataList) {
-      var i = this.K4a === s.Config.Id,
+      var i = this.U8a === s.Config.Id,
         e = new HandBookDefine_1.HandBookNounDynamicData();
       if (
         ((e.HandBookCommonItemData = s), (e.IsShowContent = i), t.push(e), i)

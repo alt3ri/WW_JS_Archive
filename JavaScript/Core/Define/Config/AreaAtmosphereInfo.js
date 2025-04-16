@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AreaAtmosphereInfo = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class AreaAtmosphereInfo {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -20,11 +21,11 @@ class AreaAtmosphereInfo {
   get FadeTime() {
     return this.fadetime();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, s) {
+    return (this.z7 = t), (this.J7 = s), this;
   }
-  static getRootAsAreaAtmosphereInfo(t, r) {
-    return (r || new AreaAtmosphereInfo()).__init(
+  static getRootAsAreaAtmosphereInfo(t, s) {
+    return (s || new AreaAtmosphereInfo()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -34,8 +35,14 @@ class AreaAtmosphereInfo {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   dapath(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   istod() {
     var t = this.J7.__offset(this.z7, 8);

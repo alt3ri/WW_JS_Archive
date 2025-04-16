@@ -27,10 +27,13 @@ class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
   CloseView() {
     this.ClickFunction && this.ClickFunction();
   }
-  SetText(i) {
+  SetTextById(i) {
     this.GetText(1).SetText(
       ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetButtonText(i),
     );
+  }
+  SetText(i) {
+    this.GetText(1).SetText(i);
   }
   SetBtnCanClick(i) {
     var e = this.RootActor.GetComponentByClass(

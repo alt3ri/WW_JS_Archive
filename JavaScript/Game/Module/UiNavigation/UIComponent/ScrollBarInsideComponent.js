@@ -28,7 +28,7 @@ class ScrollBarInsideComponent extends HotKeyComponent_1.HotKeyComponent {
     var o = this.GetBindButtonTag();
     StringUtils_1.StringUtils.IsEmpty(o)
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiNavigationHotKey", 11, "ScrollBar需要配置tag")
+        Log_1.Log.Error("UiNavigationHotKey", 10, "ScrollBar需要配置tag")
       : (t = t.GetFocusListener())
         ? ((t =
             UiNavigationNewController_1.UiNavigationNewController.GetFocusListenerInsideListenerByTag(

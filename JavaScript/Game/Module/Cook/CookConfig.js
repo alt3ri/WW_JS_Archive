@@ -27,7 +27,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Cook",
-            50,
+            49,
             "烹饪配方获取失败，请检查烹饪配方配置表是否正确",
             ["FormulaItemId=", o],
           )),
@@ -44,7 +44,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Cook",
-            50,
+            49,
             "烹饪配方获取失败，请检查烹饪配方配置表是否正确",
             ["Id=", o],
           )),
@@ -58,7 +58,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Cook",
-            50,
+            49,
             "食材加工获取失败，请检查食材加工配置表是否正确",
             ["Id=", o],
           )),
@@ -72,7 +72,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Cook",
-            50,
+            49,
             "食材加工列表获取失败，请检查食材加工配置表是否正确",
           )),
       o
@@ -85,7 +85,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Cook",
-            50,
+            49,
             "食材加工获取失败，请检查食材加工配置表是否正确",
             ["Id=", o],
           )),
@@ -97,7 +97,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Cook", 50, "获取厨师证书相关配置失败")),
+          Log_1.Log.Error("Cook", 49, "获取厨师证书相关配置失败")),
       o
     );
   }
@@ -106,7 +106,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
     return (
       e ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Cook", 50, "获取目标等级厨师证书相关配置失败", [
+          Log_1.Log.Error("Cook", 49, "获取目标等级厨师证书相关配置失败", [
             "Id=",
             o,
           ])),
@@ -120,7 +120,7 @@ class CookConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Cook",
-            50,
+            49,
             "食材修理工具获取失败，请检查食材修理工具配置表是否正确",
             ["Id=", o],
           )),

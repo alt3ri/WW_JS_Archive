@@ -26,7 +26,7 @@ class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
           );
           if (t) {
             let e = "";
-            t && (e = t.Entity.GetComponent(105)?.PawnName ?? ""),
+            t && (e = t.Entity.GetComponent(115)?.PawnName ?? ""),
               this.HXt
                 ? ItemDeliverController_1.ItemDeliverController.OpenItemDeliverViewByHandInItem(
                     this.HXt,
@@ -45,7 +45,7 @@ class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
                   );
           } else
             Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Quest", 8, "交付道具的NPC不存在", [
+              Log_1.Log.Error("Quest", 58, "交付道具的NPC不存在", [
                 "实体Id",
                 this.FXt,
               ]);
@@ -64,7 +64,7 @@ class DeliverBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Quest",
-              19,
+              18,
               "交付道具任务配置的交互类型错误，应配置行为序列类型的交互",
             ),
           !1)

@@ -63,6 +63,24 @@ class DeserializeConfig {
       s
     );
   }
+  static ParseFloat64(e, i = 0, ...o) {
+    DeserializeConfig.dtl.Start();
+    var s = { Success: !0, Value: 0, Position: i };
+    return (
+      e.byteLength >= i + 8
+        ? ((e = e.getFloat64(i, !0)), (s.Position = i + 8), (s.Value = e))
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Config",
+              62,
+              "配置表序列化 float64 类型出错，请检查配置表定义与配置表数据是否一致！",
+              ...o,
+            ),
+          (s.Success = !1)),
+      DeserializeConfig.dtl.Stop(),
+      s
+    );
+  }
   static ParseBoolean(e, i = 0, ...o) {
     DeserializeConfig.z9.Start();
     var s = { Success: !0, Value: !1, Position: i };
@@ -192,6 +210,9 @@ class DeserializeConfig {
 )),
   (DeserializeConfig.Y9 = Stats_1.Stat.Create("DeserializeConfig.ParseBigInt")),
   (DeserializeConfig.J9 = Stats_1.Stat.Create("DeserializeConfig.ParseFloat")),
+  (DeserializeConfig.dtl = Stats_1.Stat.Create(
+    "DeserializeConfig.ParseFloat64",
+  )),
   (DeserializeConfig.z9 = Stats_1.Stat.Create(
     "DeserializeConfig.ParseBoolean",
   )),

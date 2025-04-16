@@ -34,7 +34,7 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
           ] of ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest()) {
             var r = e.GetCurrentActiveChildQuestNode();
             r &&
-              ModelManager_1.ModelManager.GeneralLogicTreeModel.ForceShowDailyQuestInfo(
+              ModelManager_1.ModelManager.GeneralLogicTreeModel.SaveUpdateInfo(
                 e.TreeId,
                 r.NodeId,
               );
@@ -65,7 +65,7 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
       }),
       (this.DSe = (e, t) => {
         switch (t) {
-          case Protocol_1.Aki.Protocol.hTs.Proto_Finish:
+          case Protocol_1.Aki.Protocol.hTs.a3_:
           case Protocol_1.Aki.Protocol.hTs.Proto_Delete:
             ModelManager_1.ModelManager.DailyTaskModel.RemoveDailyQuest(e);
         }
@@ -144,7 +144,7 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
     e &&
       4 === e.Type &&
       !e.TriggerQuestTips &&
-      ModelManager_1.ModelManager.GeneralLogicTreeModel.ForceShowDailyQuestInfo(
+      ModelManager_1.ModelManager.GeneralLogicTreeModel.SaveUpdateInfo(
         e.TreeId,
         e.GetCurrentActiveChildQuestNode().NodeId,
       );

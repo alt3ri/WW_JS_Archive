@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelSkeletalMeshSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   TickProcessSystem_1 = require("../../../Core/Tick/TickProcessSystem"),
@@ -24,38 +25,42 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       (this.CachedRotationCurve = void 0),
       (this.CachedScaleCurve = void 0),
       (this.HideCounter = 0),
-      (this.gWa = 0),
+      (this.B$a = 0),
       (this.DHr = 1),
-      (this.hWa = (t) => {
-        (this.gWa = 0),
+      (this.A$a = (t) => {
+        (this.B$a = 0),
           this.SkeletalMeshComponent?.IsValid() &&
             this.SkeletalMeshComponent.SetPlayRate(this.DHr);
       });
   }
-  OnBodyEffectChanged(t) {
-    var i;
+  OnBodyEffectChanged(t, i) {
+    var s;
     this.SkeletalMeshComponent &&
-      (this.CharRenderingComponent ||
-        ((i = this.Handle.GetSureEffectActor()),
-        (this.CharRenderingComponent = i.GetComponentByClass(
-          UE.CharRenderingComponent_C.StaticClass(),
-        )),
-        this.CharRenderingComponent ||
-          ((this.CharRenderingComponent = i.AddComponentByClass(
-            UE.CharRenderingComponent_C.StaticClass(),
-            !1,
-            new UE.Transform(),
-            !1,
-          )),
-          GlobalData_1.GlobalData.IsUiSceneOpen
-            ? this.CharRenderingComponent.Init(5)
-            : this.CharRenderingComponent.Init(7)),
-        this.CharRenderingComponent.SetLogicOwner(i),
-        this.CharRenderingComponent.AddComponentByCase(
-          0,
-          this.SkeletalMeshComponent,
-        )),
-      this.CharRenderingComponent.SetDitherEffect(t, 1));
+      (t < 1
+        ? (this.CharRenderingComponent ||
+            ((s = this.Handle.GetSureEffectActor()),
+            (this.CharRenderingComponent = s.GetComponentByClass(
+              UE.CharRenderingComponent_C.StaticClass(),
+            )),
+            this.CharRenderingComponent ||
+              ((this.CharRenderingComponent = s.AddComponentByClass(
+                UE.CharRenderingComponent_C.StaticClass(),
+                !1,
+                new UE.Transform(),
+                !1,
+              )),
+              GlobalData_1.GlobalData.IsUiSceneOpen
+                ? this.CharRenderingComponent.Init(5)
+                : this.CharRenderingComponent.Init(7)),
+            this.CharRenderingComponent.SetLogicOwner(s),
+            this.CharRenderingComponent.AddComponentByCase(
+              0,
+              this.SkeletalMeshComponent,
+            )),
+          this.CharRenderingComponent.SetDitherEffect(t, 1))
+        : this.CharRenderingComponent &&
+          this.CharRenderingComponent.SetDitherEffect(1, 1),
+      this.SkeletalMeshComponent.SetCastShadow(i));
   }
   OnInit() {
     !this.tfe &&
@@ -68,62 +73,73 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       i,
       s = this.tfe,
       e = this.ife;
-    return !(
-      !s ||
-      !e ||
-      ((e = this.Handle.GetSureEffectActor()),
-      (t = (t = this.Handle.Parent)
-        ? t.GetEffectSpec()?.GetSceneComponent()
-        : e.K2_GetRootComponent()),
-      (i = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-        e,
-        UE.SkeletalMeshComponent.StaticClass(),
-        t,
-        void 0,
-        !0,
-        this.EffectModel,
-      )),
-      (this.SceneComponent = i),
-      1 === this.GetEffectType() && i.SetTickableWhenPaused(!0),
-      i.SetIsUIScenePrimitive(1 === this.GetEffectType()),
-      i.SetSkeletalMesh(s, !0),
-      i.SetUpdateAnimationInEditor(!0),
-      this.EffectModel.EnableCollision
-        ? i.SetCollisionProfileName(RenderConfig_1.RenderConfig.PhysicsActor)
-        : i.SetCollisionEnabled(0),
-      e.FinishAddComponent(
-        i,
-        void 0 !== t,
-        MathUtils_1.MathUtils.DefaultTransform,
-      ),
-      i.SetVisibility(!1),
-      (this.SkeletalMeshComponent = i),
-      this.Handle?.IsFreeze && this.OnEnterFreeze(),
-      (this.t0e = this.SkeletalMeshComponent.IsComponentTickEnabled()),
-      this.SkeletalMeshComponent.SetComponentTickEnabled(!1),
-      this.SkeletalMeshComponent.SetExcludeFromLightAttachmentGroup(!0),
-      this.SkeletalMeshComponent.SetCastShadow(this.EffectModel.CastShadow),
-      (this.CachedLocationCurve = this.EffectModel.Location),
-      (this.CachedRotationCurve = this.EffectModel.Rotation),
-      (this.CachedScaleCurve = this.EffectModel.Scale),
-      (this.o0e =
-        this.CachedLocationCurve.bUseCurve ||
-        this.CachedRotationCurve.bUseCurve ||
-        this.CachedScaleCurve.bUseCurve),
-      0)
-    );
+    return s && e
+      ? ((e = this.Handle.GetSureEffectActor()),
+        (t = (t = this.Handle.Parent)
+          ? t.GetEffectSpec()?.GetSceneComponent()
+          : e.K2_GetRootComponent()),
+        (i = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
+          e,
+          UE.SkeletalMeshComponent.StaticClass(),
+          t,
+          void 0,
+          !0,
+          this.EffectModel,
+        )),
+        (this.SceneComponent = i),
+        1 === this.GetEffectType() && i.SetTickableWhenPaused(!0),
+        i.SetIsUIScenePrimitive(1 === this.GetEffectType()),
+        i.SetSkeletalMesh(s, !0),
+        i.SetUpdateAnimationInEditor(!0),
+        this.EffectModel.EnableCollision
+          ? i.SetCollisionProfileName(RenderConfig_1.RenderConfig.PhysicsActor)
+          : i.SetCollisionEnabled(0),
+        this.EffectModel.ForbidCastToonShadow && (i.bForbidCastToonShadow = !0),
+        e.FinishAddComponent(
+          i,
+          void 0 !== t,
+          MathUtils_1.MathUtils.DefaultTransform,
+        ),
+        i.SetVisibility(!1),
+        (this.SkeletalMeshComponent = i),
+        this.Handle?.IsFreeze && this.OnEnterFreeze(),
+        (this.t0e = this.SkeletalMeshComponent.IsComponentTickEnabled()),
+        this.SkeletalMeshComponent.SetComponentTickEnabled(!1),
+        this.SkeletalMeshComponent.SetExcludeFromLightAttachmentGroup(!0),
+        this.SkeletalMeshComponent.SetCastShadow(this.EffectModel.CastShadow),
+        (this.CachedLocationCurve = this.EffectModel.Location),
+        (this.CachedRotationCurve = this.EffectModel.Rotation),
+        (this.CachedScaleCurve = this.EffectModel.Scale),
+        (this.o0e =
+          this.CachedLocationCurve.bUseCurve ||
+          this.CachedRotationCurve.bUseCurve ||
+          this.CachedScaleCurve.bUseCurve),
+        !0)
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "RenderEffect",
+            36,
+            "特效框架: SkeletalMeshSpec Init失败",
+            ["Id", this.Handle?.Id],
+            ["Path", this.Handle?.Path],
+          ),
+        !1);
+  }
+  SetStoppingTime(t) {
+    this.StoppingTimeInternal !== t &&
+      (super.SetStoppingTime(t),
+      this.GetIgnoreTimeScale() ||
+        ((this.DHr = t ? 0 : 1),
+        0 === this.B$a &&
+          (this.B$a =
+            TickProcessSystem_1.TickProcessSystem.RegisterOnceTickProcess(
+              5,
+              !1,
+              this.A$a,
+            ))));
   }
   OnTick(t) {
-    var i;
-    this.SkeletalMeshComponent?.IsValid() &&
-      ((i = this.GetTimeScale() * this.GetGlobalTimeScale()) !== this.DHr &&
-        ((this.DHr = i), 0 === this.gWa) &&
-        (this.gWa =
-          TickProcessSystem_1.TickProcessSystem.RegisterOnceTickProcess(
-            5,
-            this.hWa,
-          )),
-      this.r0e(this.GetPlayInEditor()));
+    this.SkeletalMeshComponent?.IsValid() && this.r0e(this.GetPlayInEditor());
   }
   OnEffectTypeChange() {
     this.SkeletalMeshComponent?.IsValid() &&
@@ -145,11 +161,17 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       );
   }
   OnStop() {
-    0 !== this.gWa &&
-      (TickProcessSystem_1.TickProcessSystem.UnregisterTickProcess(this.gWa),
-      (this.gWa = 0)),
+    var t;
+    0 !== this.B$a &&
+      (TickProcessSystem_1.TickProcessSystem.UnregisterTickProcess(this.B$a),
+      (this.B$a = 0)),
       this.SkeletalMeshComponent?.IsValid() &&
-        (this.CharRenderingComponent?.ResetAllRenderingState(),
+        (this.CharRenderingComponent ||
+          ((t = this.Handle.GetSureEffectActor()),
+          (this.CharRenderingComponent = t.GetComponentByClass(
+            UE.CharRenderingComponent_C.StaticClass(),
+          ))),
+        this.CharRenderingComponent?.ResetAllRenderingState(),
         this.CharRenderingComponent?.K2_DestroyComponent(
           this.CharRenderingComponent,
         ),
@@ -161,8 +183,8 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
           this.SkeletalMeshComponent.AnimScriptInstance,
         ));
   }
-  Replay() {
-    (this.gWa = 0), (this.DHr = 1);
+  OnReplay() {
+    (this.B$a = 0), (this.DHr = 1);
   }
   OnPlay() {
     this.SkeletalMeshComponent?.IsValid() &&
@@ -200,7 +222,7 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",
-          37,
+          36,
           "[EffectModelSkeletalMeshSpec]OnEnterFreeze",
           ["handleId", this.Handle?.Id],
         ),
@@ -211,7 +233,7 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",
-          37,
+          36,
           "[EffectModelSkeletalMeshSpec]OnExitFreeze",
           ["handleId", this.Handle?.Id],
         ),
@@ -222,6 +244,24 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
     this.SkeletalMeshComponent &&
       this.Handle?.IsFreeze &&
       this.SkeletalMeshComponent.KuroTickComponentOutside(t);
+  }
+  IsOverrideTick() {
+    return !0;
+  }
+  RegisterToKuroEffectSystem() {
+    var t;
+    this.Handle &&
+      this.SkeletalMeshComponent &&
+      this.EffectModel &&
+      (t = this.Handle.GetSureEffectActor()) &&
+      ((this.HasInitTickOptimize = !0),
+      cpp_1.FKuroEffectSystemInterface.RegisterEffectCommonHandle(
+        this.Handle.Id,
+        this.Handle.Parent?.Id ?? 0,
+        this.EffectModel,
+        t,
+        this.SkeletalMeshComponent,
+      ));
   }
 }
 exports.EffectModelSkeletalMeshSpec = EffectModelSkeletalMeshSpec;

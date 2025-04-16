@@ -14,6 +14,8 @@ class UiModel {
           : void 0;
       case UiLayerType_1.ELayerType.HUD:
         return Array.from(UiModel.HudMap.values())[UiModel.HudMap.size - 1];
+      case UiLayerType_1.ELayerType.Plot:
+        return UiModel.PlotNormalStack.Peek();
       default:
         return;
     }
@@ -32,6 +34,7 @@ class UiModel {
 }
 ((exports.UiModel = UiModel).HudMap = new Map()),
   (UiModel.NormalStack = new Stack_1.Stack()),
+  (UiModel.PlotNormalStack = new Stack_1.Stack()),
   (UiModel.PopList = []),
   (UiModel.FloatQueueMap = new Map()),
   (UiModel.ShowViewMap = new Map()),
@@ -44,5 +47,9 @@ class UiModel {
   (UiModel.ResetToViewWhiteSet = new Set(["ReviveView"])),
   (UiModel.IsInMainView = !1),
   (UiModel.InNormalQueue = !1),
-  (UiModel.SeamlessStackWhileList = new Set(["BattleView"]));
+  (UiModel.SeamlessStackWhileList = new Set(["BattleView"])),
+  (UiModel.CanShowPlotViewWhiteList = new Set([
+    "BattleView",
+    "DangoAbyssWorldView",
+  ]));
 //# sourceMappingURL=UiModel.js.map

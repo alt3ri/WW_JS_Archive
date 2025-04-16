@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AchievementGroup = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class AchievementGroup {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -32,11 +33,11 @@ class AchievementGroup {
   get Enable() {
     return this.enable();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsAchievementGroup(t, r) {
-    return (r || new AchievementGroup()).__init(
+  static getRootAsAchievementGroup(t, i) {
+    return (i || new AchievementGroup()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -54,20 +55,44 @@ class AchievementGroup {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   smallicon(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   icon(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   backgroundicon(t) {
-    var r = this.J7.__offset(this.z7, 16);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   dropid() {
     var t = this.J7.__offset(this.z7, 18);

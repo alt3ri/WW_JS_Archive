@@ -12,7 +12,7 @@ class GuideInputDistributeSetup extends InputDistributeSetup_1.InputDistributeSe
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]引导遮罩中，则设置输入分发tag为 BlockAllInputTag",
         ),
       this.SetInputDistributeTag(

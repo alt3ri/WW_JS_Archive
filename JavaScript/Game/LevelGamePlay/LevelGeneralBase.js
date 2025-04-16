@@ -32,7 +32,7 @@ class LevelEventBase {
       ControllerHolder_1.ControllerHolder.LevelGeneralController
         .LevelEventLogOpen &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("LevelEvent", 19, "LevelEvent:开始执行行为", [
+        Log_1.Log.Info("LevelEvent", 18, "LevelEvent:开始执行行为", [
           "行为类型",
           this.Type,
         ]),
@@ -44,7 +44,7 @@ class LevelEventBase {
   ExecuteInGm(e, t, i) {
     this.ExecuteNew(e, t, i);
   }
-  CreateWaitEntityTask(e) {
+  CreateWaitEntityTask(t) {
     ControllerHolder_1.ControllerHolder.LevelGeneralController
       .LevelEventLogOpen &&
       Log_1.Log.CheckInfo() &&
@@ -53,23 +53,27 @@ class LevelEventBase {
         7,
         "等待实体创建",
         ["行为类型", this.Type],
-        ["EntityIds", e.toString()],
+        ["EntityIds", t.toString()],
       );
-    let t = 1;
-    Array.isArray(e) && (t = e.length),
+    let i = 1;
+    Array.isArray(t) && (i = t.length),
       WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
-        e,
+        "LevelEventBase.CreateWaitEntityTask",
+        t,
         (e) => {
           e
             ? this.ExecuteWhenEntitiesReady()
             : (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Event", 7, "Entity加载超时或已被移除", [
-                  "EntityCount",
-                  t,
-                ]),
+                Log_1.Log.Error(
+                  "Event",
+                  7,
+                  "Entity加载超时或已被移除",
+                  ["EntityCount", i],
+                  ["EntityIds", t?.toString()],
+                ),
               this.FinishExecute(!1));
         },
-        EACH_WAIT_ENTITY_OVER_TIME * t,
+        EACH_WAIT_ENTITY_OVER_TIME * i,
       );
   }
   CreateWaitEntityTaskBigInt(e) {
@@ -86,6 +90,7 @@ class LevelEventBase {
     let t = 1;
     Array.isArray(e) && (t = e.length),
       WaitEntityTask_1.WaitEntityTask.Create(
+        "LevelEventBase.CreateWaitEntityTaskBigInt",
         e,
         (e) => {
           e
@@ -126,7 +131,7 @@ class LevelEventBase {
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "LevelEvent",
-          19,
+          18,
           "LevelEvent:行为执行完毕_NodeFinished",
           ["行为类型", this.Type],
         ),
@@ -150,7 +155,7 @@ class LevelEventBase {
       this.OnFailure(),
       this.Release(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("LevelEvent", 19, "LevelEvent:行为执行失败", [
+        Log_1.Log.Info("LevelEvent", 18, "LevelEvent:行为执行失败", [
           "行为类型",
           this.Type,
         ]),

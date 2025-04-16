@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorTreeDefines = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
   PATROL_STATE_PREFIX = "IN_PATROL",
   PATROL_ACTIONS_STATE_PREFIX = "PATROL_ACTIONS",
   ACTIONS_STATE_PREFIX = "IN_ACTIONS";
@@ -13,6 +14,30 @@ class BehaviorTreeDefines {
   static set UseLevelAiBehaviorTree(e) {
     this.hIe || ((this.hIe = !0), (this.lIe = this._Ie())),
       this.lIe !== e && (this.lIe = e);
+  }
+  static CanUseLevelAiBehaviorTree(e) {
+    e = e.GetComponent(0)?.GetPbEntityInitData();
+    return (
+      !!e?.ComponentsData &&
+      !!(0, IComponent_1.getComponent)(e.ComponentsData, "LevelAiComponent")
+        ?.BtTreeAsset
+    );
+  }
+  static GetLevelAiBehaviorTreeAssetPath(t) {
+    t = t.GetComponent(0)?.GetPbEntityInitData();
+    if (t) {
+      t = (0, IComponent_1.getComponent)(
+        t.ComponentsData,
+        "LevelAiComponent",
+      )?.BtTreeAsset;
+      if (t && "" !== t) {
+        let e = t.lastIndexOf(".");
+        -1 === e && (e = t.length);
+        var r = t.lastIndexOf("/", e - 1),
+          i = t.substring(r + 1, e);
+        return t.substring(0, r + 1) + (i + ".") + i;
+      }
+    }
   }
   static _Ie() {
     var e = "" + UE.BlueprintPathsLibrary.ProjectDir() + this.uIe,

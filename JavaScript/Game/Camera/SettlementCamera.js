@@ -6,6 +6,7 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
   Macro_1 = require("../../Core/Preprocessor/Macro"),
+  DataTableUtil_1 = require("../../Core/Utils/DataTableUtil"),
   MathCommon_1 = require("../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
@@ -14,8 +15,9 @@ const puerts_1 = require("puerts"),
   StringUtils_1 = require("../../Core/Utils/StringUtils"),
   TraceElementCommon_1 = require("../../Core/Utils/TraceElementCommon"),
   GlobalData_1 = require("../GlobalData"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ColorUtils_1 = require("../Utils/ColorUtils"),
-  CameraController_1 = require("./CameraController"),
+  CameraUtility_1 = require("./CameraUtility"),
   MIN_CAMERA_DISTANCE = 100,
   TARGET_PITCH_MIN = -5,
   TARGET_PITCH_MAX = -8,
@@ -62,7 +64,7 @@ class SettlementCamera {
       (this.xea = Vector_1.Vector.Create()),
       (this.Gme = 0),
       (this.Nme = void 0),
-      (this.Ome = new Rotator_1.Rotator()),
+      (this.Ome = Rotator_1.Rotator.Create()),
       (this.kme = new Map()),
       (this.Fme = new Map()),
       (this.Vme = new Map()),
@@ -72,6 +74,7 @@ class SettlementCamera {
       (this.Kme = []),
       (this.Lz = Vector_1.Vector.Create()),
       (this.Tz = Vector_1.Vector.Create()),
+      (this.Gue = Rotator_1.Rotator.Create()),
       (this.Qme = []),
       (this.EnableDebugDraw = !1);
   }
@@ -82,7 +85,8 @@ class SettlementCamera {
       (this.Fse.bTraceComplex = !1),
       (this.Fse.bIgnoreSelf = !0);
   }
-  SetSettlementCamera(t) {
+  E5l(t) {
+    t = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(22, t);
     t && t.CameraModifier
       ? ((this.Tme = t),
         (this.Lme = t.CameraModifier),
@@ -91,7 +95,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】臂长配置过小:${this.Dme},将自动修正为:` +
                 MIN_CAMERA_DISTANCE,
             ),
@@ -101,7 +105,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】最小Pitch配置不正确:${this.Rme},合理区间为(${PITCH_MIN},${PTICH_MAX}),将自动修正为:` +
                 TARGET_PITCH_MIN,
             ),
@@ -111,7 +115,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】最大Pitch配置不正确:${this.Ume},合理区间为(${PITCH_MIN},${PTICH_MAX}),将自动修正为:` +
                 TARGET_PITCH_MAX,
             ),
@@ -121,7 +125,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】探测合法值上限叠加值过小:${this.Ame},将自动修正为:` +
                 TRACE_TOP_ADDITION_Z,
             ),
@@ -131,7 +135,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】探测合法值下限叠加值过小:${this.Pme},将自动修正为:` +
                 TRACE_BOTTOM_ADDITION_Z,
             ),
@@ -142,7 +146,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】左侧Yaw区间合法值最小值过小:${this.xme},将自动修正为:` +
                 LEFT_YAW_RANGE_MIN,
             ),
@@ -151,7 +155,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】左侧Yaw区间合法值最大值过大:${this.wme},将自动修正为:` +
                 LEFT_YAW_RANGE_MAX,
             ),
@@ -160,7 +164,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】左侧Yaw区间合法值最小值大于最大值,最小值:${this.xme},最大值:${this.wme},将自动修正为,最小值:${LEFT_YAW_RANGE_MIN},最大值:` +
                 LEFT_YAW_RANGE_MAX,
             ),
@@ -172,7 +176,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】右侧Yaw区间合法值最小值过小:${this.Bme},将自动修正为:` +
                 RIGHT_YAW_RANGE_MIN,
             ),
@@ -181,7 +185,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】右侧Yaw区间合法值最大值过大:${this.bme},将自动修正为:` +
                 RIGHT_YAW_RANGE_MAX,
             ),
@@ -190,7 +194,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】右侧Yaw区间合法值最小值大于最大值,最小值:${this.Bme},最大值:${this.bme},将自动修正为,最小值:${RIGHT_YAW_RANGE_MIN},最大值:` +
                 RIGHT_YAW_RANGE_MAX,
             ),
@@ -201,7 +205,7 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               `【结算镜头】最小合法区间过小:${this.qme},将自动修正为:` +
                 MIN_VALID_YAW_RANGE,
             ),
@@ -212,20 +216,21 @@ class SettlementCamera {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
-              58,
+              57,
               "【结算镜头】没有配置CameraModifier名称，将自动修正为 SettlementCamera",
             ),
           (this.Lme.Settings.ModifySettingsAdditional.Name =
             "SettlementCamera")),
         this.xea.DeepCopy(this.Tme.CharacterOffset))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Camera", 58, "无结算镜头配置数据");
+        Log_1.Log.Error("Camera", 57, "无结算镜头配置数据");
   }
-  PlaySettlementCamera() {
-    CameraController_1.CameraController.IsSequenceCameraInCinematic() ||
-      (this.Tme &&
+  PlaySettlementCamera(t) {
+    ControllerHolder_1.ControllerHolder.CameraController.IsSequenceCameraInCinematic() ||
+      (this.E5l(t),
+      this.Tme &&
         this.Tme.CameraModifier &&
-        ((this.Gme = this.Hh.PlayerRotator.Yaw),
+        ((this.Gme = this.Hh.PlayerRotatorInGravity.Yaw),
         (this.Nme = this.Hh.PlayerLocation),
         (this.Ime = Math.max(this.Hh.FinalCameraDistance, this.Dme)),
         (this.Fse.bTraceComplex = !1),
@@ -275,22 +280,25 @@ class SettlementCamera {
         )),
         (this.Ome.Yaw = MathCommon_1.MathCommon.WrapAngle(t + FLAT_ANGLE)),
         (this.Ome.Roll = 0))
-      : this.Hh.CameraForward.ToOrientationRotator(this.Ome);
+      : this.Hh.IsInNormalGravityMode()
+        ? this.Hh.CameraForward.ToOrientationRotator(this.Ome)
+        : (CameraUtility_1.CameraUtility.GetVectorInGravity(
+            this.Hh.CameraForward,
+            this.Lz,
+          ),
+          this.Lz.Rotation(this.Ome));
   }
   PlaySettlementCameraInternal() {
-    CameraController_1.CameraController.StopAllCameraShakes(),
-      this.Ome.SubtractionEqual(
-        this.Hh.Character.CharacterActorComponent.ActorRotationProxy,
-      ),
+    ControllerHolder_1.ControllerHolder.CameraController.StopAllCameraShakes(),
+      this.Ome.SubtractionEqual(this.Hh.PlayerRotatorInGravity),
       (this.Lme.Settings.ArmRotation = new UE.Rotator(
         this.Ome.Pitch,
         this.Ome.Yaw,
         this.Ome.Roll,
       )),
-      (this.Lme.Settings.ModifySettingsAdditional.ArmOffset =
-        this.Hh.Character.CharacterActorComponent.ActorTransform.TransformVectorNoScale(
-          this.xea.ToUeVector(),
-        )),
+      (this.Lme.Settings.ModifySettingsAdditional.ArmOffset.X = this.xea.X),
+      (this.Lme.Settings.ModifySettingsAdditional.ArmOffset.Y = this.xea.Y),
+      (this.Lme.Settings.ModifySettingsAdditional.ArmOffset.Z = this.xea.Z),
       this.Hh.CameraModifyController.ApplyCameraModify(
         void 0,
         this.Lme.Duration,
@@ -309,6 +317,7 @@ class SettlementCamera {
   IsPlayingSettlementCamera() {
     return (
       !!this.Hh.CameraModifyController.IsModified &&
+      !!this.Lme &&
       this.Hh.CameraModifyController.ModifySettings.Name ===
         this.Lme.Settings.ModifySettingsAdditional.Name
     );
@@ -316,8 +325,8 @@ class SettlementCamera {
   Jme(i) {
     if ((this.kme.clear(), this.Fme.clear(), this.Vme.clear(), i)) {
       var s = i.GetHitCount(),
-        h = this.Hh.PlayerLocation.Z + this.Ame,
-        _ = this.Hh.PlayerLocation.Z - this.Pme;
+        h = this.Hh.PlayerLocationInGravity.Z + this.Ame,
+        _ = this.Hh.PlayerLocationInGravity.Z - this.Pme;
       for (let t = 0; t < s; ++t) {
         var e,
           a,
@@ -329,8 +338,8 @@ class SettlementCamera {
             t,
             this.Lz,
           ),
-          this.Lz.Z < _ ||
-            this.Lz.Z > h ||
+          (a = CameraUtility_1.CameraUtility.GetZnInGravity(this.Lz)) < _ ||
+            h < a ||
             (e instanceof UE.StaticMeshComponent
               ? (!this.kme.has(r) ||
                   ((a = this.kme.get(r)),
@@ -369,7 +378,7 @@ class SettlementCamera {
       var s = _.Components?.Get(i);
       s &&
         (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(_, i, this.Lz),
-        this.jme.push(this.ide(t.GetTransform(), s, this.Lz)));
+        this.jme.push(this.ide(t.D_GetTransform(), s, this.Lz)));
     }
     for (var [, h] of this.Fme) {
       h.sort((t, i) => {
@@ -385,7 +394,7 @@ class SettlementCamera {
   }
   rde(t, i) {
     let s = 0;
-    this.Lz.DeepCopy(t.K2_GetComponentLocation());
+    this.Lz.DeepCopy(t.D_K2_GetComponentLocation());
     var h = this.Ime,
       t = this.ode(t, i),
       i = Vector_1.Vector.Dist2D(this.Hh.PlayerLocation, this.Lz),
@@ -412,11 +421,11 @@ class SettlementCamera {
       M = Vector_1.Vector.Create(),
       i =
         (h.Y >= -e && h.Y <= e
-          ? ((I = e + h.Y),
+          ? ((C = e + h.Y),
             (A = e - h.Y),
             (o = s.X - h.X),
             (a =
-              _ * _ < I * I + o * o ? h.Y - Math.sqrt(_ * _ - o * o) : h.Y - I),
+              _ * _ < C * C + o * o ? h.Y - Math.sqrt(_ * _ - o * o) : h.Y - C),
             (r =
               _ * _ < A * A + o * o ? h.Y + Math.sqrt(_ * _ - o * o) : h.Y + A),
             (T.X = s.X),
@@ -426,13 +435,13 @@ class SettlementCamera {
             (M.Y = 0 < h.X ? a : r),
             (M.Z = s.Z))
           : h.X >= -i && h.X <= i
-            ? ((I = i - h.X),
+            ? ((C = i - h.X),
               (o = i + h.X),
               (A = s.Y - h.Y),
               (a =
-                _ * _ < I * I + A * A
+                _ * _ < C * C + A * A
                   ? h.X + Math.sqrt(_ * _ - A * A)
-                  : h.X + I),
+                  : h.X + C),
               (r =
                 _ * _ < o * o + A * A
                   ? h.X - Math.sqrt(_ * _ - A * A)
@@ -444,14 +453,14 @@ class SettlementCamera {
               (M.Y = s.Y),
               (M.Z = s.Z))
             : h.Y < -e && h.X < -i
-              ? ((I = i - h.X),
+              ? ((C = i - h.X),
                 (A = e - h.Y),
                 (o = s.X - h.X),
                 (E = s.Y - h.Y),
                 (a =
-                  _ * _ < I * I + E * E
+                  _ * _ < C * C + E * E
                     ? h.X + Math.sqrt(_ * _ - E * E)
-                    : h.X + I),
+                    : h.X + C),
                 (r =
                   _ * _ < A * A + o * o
                     ? h.Y + Math.sqrt(_ * _ - o * o)
@@ -464,7 +473,7 @@ class SettlementCamera {
                 (M.Z = s.Z))
               : h.Y > e && h.X < -i
                 ? ((E = i - h.X),
-                  (I = e + h.Y),
+                  (C = e + h.Y),
                   (o = s.X - h.X),
                   (A = s.Y - h.Y),
                   (a =
@@ -472,9 +481,9 @@ class SettlementCamera {
                       ? h.X + Math.sqrt(_ * _ - A * A)
                       : h.X + E),
                   (r =
-                    _ * _ < I * I + o * o
+                    _ * _ < C * C + o * o
                       ? h.Y - Math.sqrt(_ * _ - o * o)
-                      : h.Y - I),
+                      : h.Y - C),
                   (M.X = a),
                   (M.Y = s.Y),
                   (M.Z = s.Z),
@@ -485,10 +494,10 @@ class SettlementCamera {
                   ? ((A = i + h.X),
                     (E = e - h.Y),
                     (o = s.X - h.X),
-                    (I = s.Y - h.Y),
+                    (C = s.Y - h.Y),
                     (a =
-                      _ * _ < A * A + I * I
-                        ? h.X - Math.sqrt(_ * _ - I * I)
+                      _ * _ < A * A + C * C
+                        ? h.X - Math.sqrt(_ * _ - C * C)
                         : h.X - A),
                     (r =
                       _ * _ < E * E + o * o
@@ -502,14 +511,14 @@ class SettlementCamera {
                     (M.Z = s.Z))
                   : h.Y > e &&
                     h.X > i &&
-                    ((I = i + h.X),
+                    ((C = i + h.X),
                     (A = e + h.Y),
                     (o = s.X - h.X),
                     (E = s.Y - h.Y),
                     (a =
-                      _ * _ < I * I + E * E
+                      _ * _ < C * C + E * E
                         ? h.X - Math.sqrt(_ * _ - E * E)
-                        : h.X - I),
+                        : h.X - C),
                     (r =
                       _ * _ < A * A + o * o
                         ? h.Y - Math.sqrt(_ * _ - o * o)
@@ -523,8 +532,15 @@ class SettlementCamera {
         t.TransformPositionNoScale(T.ToUeVector())),
       e = t.TransformPositionNoScale(M.ToUeVector()),
       E = this.sde(i),
-      I = this.sde(e);
-    return new YawRange(E, I);
+      C = this.sde(e);
+    return this.Hh.IsInNormalGravityMode()
+      ? new YawRange(E, C)
+      : ((_ = Math.abs(E - C)),
+        (o = MathUtils_1.MathUtils.WrapAngle(0.5 * (E + C))),
+        new YawRange(
+          MathUtils_1.MathUtils.WrapAngle(o - _ / 2),
+          MathUtils_1.MathUtils.WrapAngle(o + _ / 2),
+        ));
   }
   Zme() {
     (this.Wme.length = 0),
@@ -579,39 +595,39 @@ class SettlementCamera {
       for (let i = this.Wme.length - 1; 0 <= i; --i) {
         let t = !0;
         var E,
-          I,
-          C = this.Wme[i];
+          C,
+          I = this.Wme[i];
         2 <= T &&
-          (C.Min > e ||
-            C.Max < _ ||
-            ((E = Math.max(C.Min, _)),
-            (I = Math.min(C.Max, e)),
-            this.Wme.push(new YawRange(E, I)))),
+          (I.Min > e ||
+            I.Max < _ ||
+            ((E = Math.max(I.Min, _)),
+            (C = Math.min(I.Max, e)),
+            this.Wme.push(new YawRange(E, C)))),
           1 <= T &&
-            (C.Min > h ||
-              C.Max < s ||
+            (I.Min > h ||
+              I.Max < s ||
               ((t = !1),
-              (C.Min = Math.max(C.Min, s)),
-              (C.Max = Math.min(C.Max, h)))),
+              (I.Min = Math.max(I.Min, s)),
+              (I.Max = Math.min(I.Max, h)))),
           t && this.Wme.splice(i, 1);
       }
       for (let i = this.Kme.length - 1; 0 <= i; --i) {
         let t = !0;
         var n,
-          N,
-          R = this.Kme[i];
+          R,
+          N = this.Kme[i];
         2 <= M &&
-          (R.Min > o ||
-            R.Max < A ||
-            ((n = Math.max(R.Min, A)),
-            (N = Math.min(R.Max, o)),
-            this.Kme.push(new YawRange(n, N)))),
+          (N.Min > o ||
+            N.Max < A ||
+            ((n = Math.max(N.Min, A)),
+            (R = Math.min(N.Max, o)),
+            this.Kme.push(new YawRange(n, R)))),
           1 <= M &&
-            (R.Min > r ||
-              R.Max < a ||
+            (N.Min > r ||
+              N.Max < a ||
               ((t = !1),
-              (R.Min = Math.max(R.Min, a)),
-              (R.Max = Math.min(R.Max, r)))),
+              (N.Min = Math.max(N.Min, a)),
+              (N.Max = Math.min(N.Max, r)))),
           t && this.Kme.splice(i, 1);
       }
     }
@@ -636,7 +652,11 @@ class SettlementCamera {
   nde(t) {
     return (
       t.Subtraction(this.Nme, this.Lz),
-      this.Lz.HeadingAngle() * MathUtils_1.MathUtils.RadToDeg
+      this.Hh.IsInNormalGravityMode()
+        ? this.Lz.HeadingAngle() * MathUtils_1.MathUtils.RadToDeg
+        : (CameraUtility_1.CameraUtility.GetVectorInGravity(this.Lz, this.Lz),
+          this.Lz.Rotation(this.Gue),
+          MathUtils_1.MathUtils.WrapAngle(this.Gue.Yaw))
     );
   }
   Pea() {
@@ -644,7 +664,7 @@ class SettlementCamera {
       this.Hh.Character.CharacterActorComponent.ActorTransform.TransformPositionNoScale(
         this.xea.ToUeVector(),
       );
-    UE.KismetSystemLibrary.DrawDebugSphere(
+    UE.KismetSystemLibrary.D_DrawDebugSphere(
       GlobalData_1.GlobalData.World,
       t,
       DEBUG_DRAW_RADIUS,

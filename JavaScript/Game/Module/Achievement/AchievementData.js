@@ -13,14 +13,15 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
   ModelManager_1 = require("../../Manager/ModelManager");
 class AchievementData {
   constructor(t) {
-    (this._be = void 0),
+    (this.xe = t),
+      (this._be = void 0),
+      (this.gbe = 0),
       (this.ube = -1),
       (this.cbe = new Array()),
       (this.mbe = !1),
       (this.dbe = void 0),
       (this.Cbe = void 0),
-      (this.HBa = -1),
-      (this.xe = t),
+      (this.nba = -1),
       (this.gbe =
         ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementNextLink(
           this.xe,
@@ -34,13 +35,13 @@ class AchievementData {
       (this.mbe = t.ovs),
       (this.dbe = t.nvs.tvs),
       (this.Cbe = t.nvs.ivs),
-      (this.HBa =
+      (this.nba =
         ConfigManager_1.ConfigManager.AchievementConfig.GetThirdPartyTrophyId(
           this.xe,
         )),
-      this.jBa();
+      this.sba();
   }
-  jBa() {
+  sba() {
     var t = this.GetThirdPartyTrophyId();
     0 !== this.GetFinishState() &&
       -1 !== t &&
@@ -52,10 +53,10 @@ class AchievementData {
     return this.xe;
   }
   GetThirdPartyTrophyId() {
-    return this.HBa;
+    return this.nba;
   }
   RedPoint() {
-    return !(!this.GetShowState() || 1 !== this.GetFinishState());
+    return 1 === this.GetFinishState() && !!this.GetShowState();
   }
   GetIconPath() {
     return ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementIcon(
@@ -66,11 +67,8 @@ class AchievementData {
     return -1 === this.gbe;
   }
   GetShowState() {
-    if (
-      (this.GetHiddenState() && 0 === this.GetFinishState()) ||
-      void 0 === this.Cbe
-    )
-      return !1;
+    if (void 0 === this.Cbe) return !1;
+    if (this.GetHiddenState() && 0 === this.GetFinishState()) return !1;
     if (
       -1 !== this.ube &&
       2 !==
@@ -79,7 +77,7 @@ class AchievementData {
         ).GetFinishState()
     )
       return !1;
-    return 2 !== this.GetFinishState() || !(0 < this.gbe);
+    return !(2 === this.GetFinishState() && 0 < this.gbe);
   }
   GetHiddenState() {
     return ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementHiddenState(
@@ -303,12 +301,12 @@ class AchievementCategoryData {
 exports.AchievementCategoryData = AchievementCategoryData;
 class AchievementGroupData {
   constructor(t) {
-    (this.mbe = !1),
+    (this.xe = t),
+      (this.mbe = !1),
       (this._be = 0),
       (this.cbe = new Array()),
       (this.pbe = !1),
-      (this.vbe = !1),
-      (this.xe = t);
+      (this.vbe = !1);
   }
   Phrase(t) {
     (this.mbe = t.ovs), (this._be = t.rvs), (this.vbe = !0);
@@ -350,14 +348,15 @@ class AchievementGroupData {
     return this._be;
   }
   GetShowState() {
-    return !(
-      !ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementGroupEnable(
+    return (
+      !!this.vbe &&
+      !!ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementGroupEnable(
         this.xe,
-      ) || !this.vbe
+      )
     );
   }
   GetRewards() {
-    if (0 === this.cbe.length && !this.pbe) {
+    if (!this.pbe) {
       this.cbe = new Array();
       var t =
         ConfigManager_1.ConfigManager.AchievementConfig.GetAchievementGroupReward(
@@ -373,20 +372,17 @@ class AchievementGroupData {
     return this.cbe;
   }
   SmallItemRedPoint() {
-    if (this.GetShowState()) {
-      if (this.RedPoint()) return !0;
-      var e = ModelManager_1.ModelManager.AchievementModel.GetGroupAchievements(
-        this.GetId(),
-      );
-      for (let t = 0; t < e.length; t++) if (e[t].RedPoint()) return !0;
-    }
-    return !1;
+    return (
+      !!this.RedPoint() ||
+      ModelManager_1.ModelManager.AchievementModel.GetGroupAchievementsIsRedDot(
+        this.xe,
+      )
+    );
   }
   RedPoint() {
     return (
-      !!this.GetShowState() &&
-      0 < this.GetRewards().length &&
-      1 === this.GetFinishState()
+      1 === this.GetFinishState() &&
+      !(!this.GetShowState() || this.GetRewards().length <= 0)
     );
   }
   GetCurrentProgress() {

@@ -2,105 +2,152 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MowingRiskProtocolContext = void 0);
 const ActivityData_1 = require("../../../ActivityData"),
-  Log_1 = require("../../../../../../Core/Common/Log");
+  Log_1 = require("../../../../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+  TimeUtil_1 = require("../../../../../Common/TimeUtil"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  MowingRiskInBattleRecordData_1 = require("./MowingRiskInBattleRecordData");
 class MowingRiskProtocolContext extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
-      (this.l6a = new Map()),
-      (this.h6a = void 0),
-      (this._6a = new Map()),
-      (this.u6a = new Set()),
-      (this.m6a = new Set()),
-      (this.d6a = 0);
+      (this.QVa = new Map()),
+      (this.KVa = void 0),
+      (this.$Va = new Map()),
+      (this.I6_ =
+        new MowingRiskInBattleRecordData_1.MowingRiskInBattleRecordData()),
+      (this.XVa = new Set()),
+      (this.zVa = new Set()),
+      (this.JVa = 0);
   }
   Dispose() {}
   PhraseEx(t) {
-    t = t.mih;
-    t && this.C6a(t);
+    t = t.NS_;
+    t && this.ZVa(t);
+  }
+  GetExDataRedPointShowState() {
+    var t = ModelManager_1.ModelManager.MowingRiskModel;
+    return t.HasAnyReward || t.IsNewInstanceOpen;
   }
   ParseRiskHarvestEndNotify(t) {}
   ParseRiskHarvestInstUpdateNotify(t) {
-    this.g6a(t.Lih);
+    this.L1h(t.iE_);
   }
   ParseRiskHarvestArtifactNotify(t) {
-    this.f6a(t.xih);
+    this.t9a(t.hE_);
   }
   ParseRiskHarvestBuffUpdateNotify(t) {
-    this.f6a(t.xih);
+    this.t9a(t.hE_);
   }
   ParseRiskHarvestBuffUnlockNotify(t) {
-    this.p6a(t.qih);
+    this.i9a(t.cE_);
   }
   ParseRiskHarvestActivityUpdateNotify(t) {
     t = t.Izs;
-    void 0 !== t && this.C6a(t);
+    void 0 !== t && this.ZVa(t);
   }
-  g6a(t) {
-    this.d6a = 0;
-    for (const s of t) this.l6a.set(s.s5n, s), (this.d6a += s.SMs);
+  L1h(t) {
+    for (const e of t)
+      (this.JVa -= this.QVa.get(e.s5n)?.SMs ?? 0),
+        this.QVa.set(e.s5n, e),
+        (this.JVa += e.SMs);
   }
-  M6a(t) {
-    this.u6a.clear();
-    for (const s of t) this.u6a.add(s);
+  D1h(t) {
+    this.JVa = 0;
+    for (const e of t) this.QVa.set(e.s5n, e), (this.JVa += e.SMs);
   }
-  p6a(t) {
-    for (const s of t) this.m6a.add(s);
+  o9a(t) {
+    this.XVa.clear();
+    for (const e of t) this.XVa.add(e);
   }
-  f6a(t) {
+  i9a(t) {
+    for (const e of t) this.zVa.add(e);
+  }
+  t9a(t) {
     if (void 0 !== t) {
-      (this.h6a = t), this._6a.clear();
-      for (const s of t.Tih) this._6a.set(s.s5n, s.m9n);
+      (this.KVa = t), this.$Va.clear();
+      for (const e of t.tE_) this.$Va.set(e.s5n, e.m9n);
     }
   }
-  C6a(t) {
-    this.g6a(t.Lih), this.M6a(t.Rih), this.p6a(t.Dih);
+  ZVa(t) {
+    this.D1h(t.iE_), this.o9a(t.rE_), this.i9a(t.nE_);
   }
   get InstanceInfo() {
-    return this.l6a;
+    return this.QVa;
   }
   get ArtifactInfo() {
     return (
-      void 0 === this.h6a &&
+      void 0 === this.KVa &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("MowingRisk", 65, "尚未获得割草局内buff数据"),
-      this.h6a
+        Log_1.Log.Error("MowingRisk", 64, "尚未获得割草局内buff数据"),
+      this.KVa
     );
   }
   get ArtifactId() {
-    return this.h6a?.s5n ?? 0;
+    return this.KVa?.s5n ?? 0;
   }
   get ArtifactBasicBuffTotalCount() {
-    return this.h6a?.nvs ?? 0;
+    return this.KVa?.nvs ?? 0;
   }
   get BasicBuffInfoInBattle() {
-    return this._6a;
+    return this.$Va;
   }
   get TotalScore() {
-    return this.d6a;
+    return this.JVa;
   }
   get UnlockBuffTotalCount() {
-    return this.m6a.size;
+    return this.zVa.size;
   }
   get UnlockBuff() {
-    return this.m6a;
+    return this.zVa;
   }
   IsBuffUnlocked(t) {
-    return this.m6a.has(t);
+    return this.zVa.has(t);
   }
   GetBuffCountInBattleById(t) {
     return this.BasicBuffInfoInBattle.get(t);
   }
   GetScoreById(t) {
-    return this.l6a.get(t)?.SMs ?? 0;
+    return this.QVa.get(t)?.SMs ?? 0;
+  }
+  IsInstanceUnlockedById(t) {
+    return this.QVa.get(t)?.K6n ?? !1;
+  }
+  IsInstancePlayedById(t) {
+    return this.QVa.get(t)?.eE_ ?? !1;
+  }
+  GetInstanceUnlockTimestampById(t) {
+    t = this.QVa.get(t)?.yzs;
+    return void 0 === t
+      ? Number.MAX_VALUE
+      : MathUtils_1.MathUtils.LongToNumber(t);
+  }
+  IsInstancePassUnlockTimeById(t) {
+    return (
+      TimeUtil_1.TimeUtil.GetServerTimeStamp() >=
+      this.GetInstanceUnlockTimestampById(t)
+    );
   }
   ResetCacheInBattle() {
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("MowingRisk", 65, "ResetCacheInBattle"),
-      (this.h6a = void 0),
-      this._6a.clear();
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("MowingRisk", 64, "ResetCacheInBattle"),
+      (this.KVa = void 0),
+      this.$Va.clear(),
+      this.I6_.Clear();
   }
   HasScoreRewarded(t) {
-    return this.u6a.has(t);
+    return this.XVa.has(t);
+  }
+  RecordBuffId(t) {
+    this.I6_.BasicBuffRecord.add(t);
+  }
+  GetRecordBuffIdSet() {
+    return this.I6_.BasicBuffRecord;
+  }
+  RecordProgressPanelBasicBuffCount(t) {
+    this.I6_.ProgressPanelBasicBuffCountRecord = t;
+  }
+  GetProgressPanelBasicBuffCountRecord() {
+    return this.I6_.ProgressPanelBasicBuffCountRecord;
   }
 }
 exports.MowingRiskProtocolContext = MowingRiskProtocolContext;

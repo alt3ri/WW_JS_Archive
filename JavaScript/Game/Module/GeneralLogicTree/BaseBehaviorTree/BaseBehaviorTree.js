@@ -20,7 +20,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   BlackBoard_1 = require("./BlackBoard"),
   BehaviorTreeExpressionComponent_1 = require("./Express/BehaviorTreeExpressionComponent");
 class BaseBehaviorTree {
-  constructor(e, t, i, r, s, o) {
+  constructor(e, t, i, r, s, o, n, h, a) {
     (this.InnerId = BigInt(0)),
       (this.InnerTreeConfigId = 0),
       (this.BtType = Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid),
@@ -43,7 +43,7 @@ class BaseBehaviorTree {
           this.ZKt(Protocol_1.Aki.Protocol.NEs.Proto_CharacterDieFail));
       }),
       (this.ZKt = (e) => {
-        this.BlackBoard.ContainTag(6) &&
+        this.BlackBoard.ContainTag(7) &&
           GeneralLogicTreeController_1.GeneralLogicTreeController.RequestRollback(
             this.InnerId,
             e,
@@ -54,8 +54,17 @@ class BaseBehaviorTree {
       (this.BtType = i),
       (this.YKt = []),
       (this.JKt = new Queue_1.Queue()),
-      (this.BlackBoard = new BlackBoard_1.Blackboard(this.BtType, e, t, r, s)),
-      o && this.BlackBoard.AddTag(8);
+      (this.BlackBoard = new BlackBoard_1.Blackboard(
+        this.BtType,
+        e,
+        t,
+        r,
+        s,
+        o,
+        n,
+        a ?? !1,
+      )),
+      h && this.BlackBoard.AddTag(9);
   }
   get TreeIncId() {
     return this.InnerId;
@@ -124,7 +133,10 @@ class BaseBehaviorTree {
       (this.rQt(e.aEs),
       this.nQt(e.lEs),
       this.sQt(e.hEs),
-      this.aQt(e._Es, e.uEs));
+      this.aQt(e._Es, e.uEs),
+      ControllerHolder_1.ControllerHolder.PerformController.RecoverTreeInfo(
+        e.hK_,
+      ));
   }
   rQt(e) {
     if (e)
@@ -133,7 +145,7 @@ class BaseBehaviorTree {
           i = ((t.NodeId = Number(r)), this.GetNode(t.NodeId));
         i
           ? Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("GeneralLogicTree", 19, "创建节点时：节点已存在", [
+            Log_1.Log.Warn("GeneralLogicTree", 18, "创建节点时：节点已存在", [
               "节点Id",
               t.NodeId,
             ])
@@ -210,6 +222,7 @@ class BaseBehaviorTree {
               e.SessionId,
               e.StartIndex,
               e.EndIndex,
+              e.NeedFinishReq,
             );
             break;
           case 6:
@@ -300,8 +313,14 @@ class BaseBehaviorTree {
   GetCurrentActiveChildQuestNode() {
     return this.BlackBoard.GetCurrentActiveChildQuestNode();
   }
+  GetFirstNoHideTrackActiveChildQuestNode() {
+    return this.BlackBoard.GetFirstNoHideTrackActiveChildQuestNode();
+  }
   GetActiveChildQuestNodesId() {
     return this.BlackBoard.GetActiveChildQuestNodesId();
+  }
+  GetCurrentActiveChildQuestNodes() {
+    return this.BlackBoard.GetActiveChildQuestNodes();
   }
   GetCurrentCorrelativeEntities() {
     var e = this.GetNodesByGroupId(1);
@@ -314,6 +333,12 @@ class BaseBehaviorTree {
         }
       return this.YKt;
     }
+  }
+  ContainTag(e) {
+    return this.BlackBoard.ContainTag(e);
+  }
+  GetBlackBoard() {
+    return this.BlackBoard;
   }
   AddDynamicFlowNpc(e) {
     this.FlowInfo.AddDynamicFlowNpc(e);
@@ -334,6 +359,10 @@ class BaseBehaviorTree {
         )
       : this.ZKt(e);
   }
+  StopCurrentActions() {
+    for (const e of this.BlackBoard.GetCurrentExecuteActions())
+      LevelGeneralController_1.LevelGeneralController.StopActionsExecute(e);
+  }
   ExecuteTreeGuaranteeActions() {
     var e = this.BlackBoard.GetGuaranteeActions();
     0 !== e.length &&
@@ -345,16 +374,16 @@ class BaseBehaviorTree {
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "LevelEvent",
-        40,
+        39,
         "树保底行为已全部完成",
         ["treeIncId", this.BlackBoard.TreeConfigId],
         ["保底行为列表", e],
       );
   }
   SetRollbackWaiting(e) {
-    e && !this.BlackBoard.ContainTag(6)
-      ? this.BlackBoard.AddTag(6)
-      : !e && this.BlackBoard.ContainTag(6) && this.BlackBoard.RemoveTag(6);
+    e && !this.BlackBoard.ContainTag(7)
+      ? this.BlackBoard.AddTag(7)
+      : !e && this.BlackBoard.ContainTag(7) && this.BlackBoard.RemoveTag(7);
   }
   IsTracking() {
     return this.BlackBoard.IsTracking;
@@ -375,6 +404,9 @@ class BaseBehaviorTree {
   SetMapMarkResident(e) {
     this.BlackBoard.SetMapMarkResident(e);
   }
+  GetMapMarkResident() {
+    return this.BlackBoard.GetMapMarkResident();
+  }
   SetUseInnerTrackIconId(e) {
     this.BlackBoard.SetUseInnerTrackIconId(e);
   }
@@ -384,32 +416,29 @@ class BaseBehaviorTree {
   EndTextExpress(e = 0) {
     this.Expression.EndTextExpress(e);
   }
-  CreateShowBridge() {
-    return this.BlackBoard.CreateShowBridge();
-  }
   GetSilentAreaShowInfo() {
     return this.BlackBoard.GetSilentAreaShowInfo();
   }
   GetTrackIconId() {
     return this.BlackBoard.TaskMarkTableId;
   }
-  IsChallengeUi() {
-    return this.BlackBoard.IsChallengeUi();
-  }
-  IsCustomUi() {
-    return this.BlackBoard.IsCustomUi();
-  }
   CheckCanShow() {
     return this.Expression.CheckCanShow();
+  }
+  CanShowTrackExpression() {
+    return this.Expression.CheckCanShowTrackExpression();
   }
   GetNodeTrackPosition(e) {
     return this.Expression.GetNodeTrackPosition(e);
   }
+  GetTrackAreaInfo(e) {
+    return this.Expression.GetTrackAreaInfo(e);
+  }
   HasValidTrackTarget(e) {
     return void 0 !== this.Expression.GetNodeTrackPosition(e);
   }
-  GetNodeDungeonId(e) {
-    return this.Expression.GetDungeonId(e);
+  GetNodeDungeonId() {
+    return this.BlackBoard.DungeonId;
   }
   GetTrackDistance(e) {
     return this.Expression.GetTrackDistance(e);
@@ -418,7 +447,7 @@ class BaseBehaviorTree {
     return this.Expression.GetDefaultMark(e);
   }
   IsInTrackRange() {
-    return this.BlackBoard.ContainTag(12);
+    return this.BlackBoard.ContainTag(13);
   }
   IsRangeTrack(e) {
     let t = e;
@@ -439,9 +468,9 @@ class BaseBehaviorTree {
     return this.IsInTrackRange() ? this.GetRangeMarkSize(e) : 0;
   }
   GetCurrentNodeShortcutShow() {
-    return this.BlackBoard.ContainTag(7)
+    return this.BlackBoard.ContainTag(8)
       ? 2
-      : this.BlackBoard.ContainTag(14)
+      : this.BlackBoard.ContainTag(15)
         ? 3
         : this.CheckCanGiveUp()
           ? 1
@@ -456,7 +485,7 @@ class BaseBehaviorTree {
   CreateMapMarks() {
     this.Expression.CreateMapMarks();
   }
-  DoAction(t, i, r, s, o, n) {
+  DoAction(t, i, r, s, o, n, h) {
     if (this.BlackBoard.IsSleeping)
       this.oQt({
         ProcessType: 5,
@@ -466,33 +495,34 @@ class BaseBehaviorTree {
         SessionId: s,
         StartIndex: o,
         EndIndex: n,
+        NeedFinishReq: h,
       });
     else {
-      var h = this.BlackBoard.GetNodeConfig(i);
-      if (h) {
+      var a = this.BlackBoard.GetNodeConfig(i);
+      if (a) {
         let e = void 0;
         switch (t) {
           case Protocol_1.Aki.Protocol.TOs.qvs:
-            "QuestSucceed" === h.Type && (e = h.FinishActions);
+            "QuestSucceed" === a.Type && (e = a.FinishActions);
             break;
           case Protocol_1.Aki.Protocol.TOs.$vs:
-            "Action" === h.Type && (e = h.Actions);
+            "Action" === a.Type && (e = a.Actions);
             break;
           case Protocol_1.Aki.Protocol.TOs.Ovs:
-            ("ConditionSelector" !== h.Type &&
-              "ParallelSelect" !== h.Type &&
-              "Select" !== h.Type &&
-              "Sequence" !== h.Type) ||
-              (e = h.SaveConfig?.EnterActions);
+            ("ConditionSelector" !== a.Type &&
+              "ParallelSelect" !== a.Type &&
+              "Select" !== a.Type &&
+              "Sequence" !== a.Type) ||
+              (e = a.SaveConfig?.EnterActions);
             break;
           case Protocol_1.Aki.Protocol.TOs.Gvs:
-            "QuestFailed" === h.Type && (e = h.FinishActions);
+            "QuestFailed" === a.Type && (e = a.FinishActions);
             break;
           case Protocol_1.Aki.Protocol.TOs.bvs:
-            "ChildQuest" === h.Type && (e = h.EnterActions);
+            "ChildQuest" === a.Type && (e = a.EnterActions);
             break;
           case Protocol_1.Aki.Protocol.TOs.Bvs:
-            "ChildQuest" === h.Type && (e = h.FinishActions);
+            "ChildQuest" === a.Type && (e = a.FinishActions);
         }
         e && 0 !== e.length
           ? (this.BlackBoard.AddCurrentExecuteActions(s),
@@ -509,6 +539,7 @@ class BaseBehaviorTree {
               s,
               o,
               n,
+              h,
               () => {
                 this.BlackBoard.RemoveCurrentExecuteActions(s);
               },
@@ -516,7 +547,7 @@ class BaseBehaviorTree {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
-              19,
+              18,
               "服务器推送执行行为时，没有找到行为配置",
               ["contextType", t],
               ["treeConfigId", this.TreeConfigId],
@@ -526,7 +557,7 @@ class BaseBehaviorTree {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "GeneralLogicTree",
-            19,
+            18,
             "服务器推送执行行为时，没有找到节点配置",
             ["contextType", t],
             ["treeConfigId", this.TreeConfigId],
@@ -574,6 +605,9 @@ class BaseBehaviorTree {
   GetRefOccupiedEntityText() {
     return this.BlackBoard.GetRefOccupiedEntityText();
   }
+  GetNodeConfig(e) {
+    return this.BlackBoard.GetNodeConfig(e);
+  }
   AddGuaranteeActionInfo(e, t, i, r) {
     this.BlackBoard.AddGuaranteeActionInfo(e, t, i, r);
   }
@@ -601,7 +635,7 @@ class DynamicFlowInfo {
   ClearDynamicFlowNpcList() {
     for (const t of this.hQt) {
       var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t);
-      e && (e = e.Entity.GetComponent(170)) && e.PlayDynamicFlowEnd();
+      e && (e = e.Entity.GetComponent(183)) && e.PlayDynamicFlowEnd();
     }
     this.hQt.splice(0, this.hQt.length);
   }

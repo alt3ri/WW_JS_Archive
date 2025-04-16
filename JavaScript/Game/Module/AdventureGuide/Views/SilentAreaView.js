@@ -168,7 +168,7 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
             "BoPianExchangeMarkId",
           ),
           MarkType: 8,
-          OpenAreaId: 0,
+          OpenFogId: 0,
         };
         WorldMapController_1.WorldMapController.OpenView(2, !1, e);
       }),
@@ -259,7 +259,10 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
       ),
       this.X8e.SetButtonActive(!1);
     var e = this.ExtraParams;
-    let i = "DisposableChallengeView" === e[0] ? e[1] : void 0,
+    let i =
+        "DisposableChallengeView" === e.OpenTabViewName
+          ? Number(e.OpenParam)
+          : void 0,
       r =
         (ModelManager_1.ModelManager.AdventureGuideModel.GetSilentAreaConfVaild(
           i,

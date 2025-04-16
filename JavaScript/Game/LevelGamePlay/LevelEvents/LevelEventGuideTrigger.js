@@ -7,7 +7,6 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
-  GuideController_1 = require("../../Module/Guide/GuideController"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventGuideTrigger extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
@@ -30,12 +29,13 @@ class LevelEventGuideTrigger extends LevelGeneralBase_1.LevelEventBase {
               this.IsAsync,
               this.FinishExecute(!0))
             : (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Guide", 17, "行为节点调用引导", [
+                Log_1.Log.Info("Guide", 16, "行为节点调用引导", [
                   "组Id",
                   this.mDe,
                 ]),
-              !GuideController_1.GuideController.TryStartGuide(this.mDe) ||
-              this.IsAsync
+              !ControllerHolder_1.ControllerHolder.GuideController.TryStartGuide(
+                this.mDe,
+              ) || this.IsAsync
                 ? this.FinishExecute(!0)
                 : (EventSystem_1.EventSystem.Add(
                     EventDefine_1.EEventName.GuideGroupFinished,
@@ -77,7 +77,7 @@ class LevelEventGuideTrigger extends LevelGeneralBase_1.LevelEventBase {
             this.dDe,
           ),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Guide", 17, "行为触发的引导组执行完毕", [
+            Log_1.Log.Info("Guide", 16, "行为触发的引导组执行完毕", [
               "组Id",
               e,
             ]),

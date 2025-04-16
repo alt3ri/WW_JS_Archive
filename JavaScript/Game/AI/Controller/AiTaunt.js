@@ -18,7 +18,7 @@ class AiTaunt {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "AI",
-                58,
+                57,
                 "[AiTaunt]设置新的嘲讽对象：",
                 ["被嘲讽者", this.Bte.CharAiDesignComp.Entity.Id],
                 ["嘲讽者", i],
@@ -30,7 +30,7 @@ class AiTaunt {
             (this.Are(), Log_1.Log.CheckInfo()) &&
             Log_1.Log.Info(
               "AI",
-              58,
+              57,
               "[AiTaunt]嘲讽时效结束：",
               ["被嘲讽者", this.Bte.CharAiDesignComp.Entity.Id],
               ["嘲讽者", i],
@@ -42,7 +42,7 @@ class AiTaunt {
           (this.ClearCurrentTauntAndGe(), Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "AI",
-            58,
+            57,
             "[AiTaunt]更高机制使之仇恨目标更改，嘲讽结束：",
             ["被嘲讽者", this.Bte.CharAiDesignComp.Entity.Id],
           );
@@ -58,15 +58,15 @@ class AiTaunt {
         s = EntitySystem_1.EntitySystem.Get(this.Dre);
       (t =
         s?.Active &&
-        ((i = s.GetComponent(161))?.Valid && !i.IsInGame && (t = !1),
-        (i = s.GetComponent(190))?.Valid || (t = !1),
+        ((i = s.GetComponent(173))?.Valid && !i.IsInGame && (t = !1),
+        (i = s.GetComponent(203))?.Valid || (t = !1),
         !i.HasTag(1008164187))
           ? t
           : !1) ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "AI",
-            58,
+            57,
             "[AiTaunt]嘲讽施加者目前失效或者死亡，导致嘲讽结束：",
             ["被嘲讽者", this.Bte.CharAiDesignComp.Entity.Id],
             ["嘲讽者", this.Dre],
@@ -90,7 +90,7 @@ class AiTaunt {
     this.Clear(), this.Init(t);
   }
   ClearCurrentTauntAndGe() {
-    this.Bte.CharAiDesignComp.Entity.GetComponent(160)?.RemoveBuffByHandle(
+    this.Bte.CharAiDesignComp.Entity.GetComponent(172)?.RemoveBuffByHandle(
       this.Rre,
     ),
       this.Are();

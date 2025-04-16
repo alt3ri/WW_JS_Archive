@@ -18,14 +18,15 @@ class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
       (this.MKi = void 0),
       (this.EKi = void 0),
       (this.SKi = new Map()),
+      (this.La1 = new Map()),
       (this.yKi = new Map()),
-      (this.qxt = (t, e, i) => {
+      (this.qxt = (t, i, e) => {
         var s = new EntityInfoItem();
         return (
-          s.SetRootActor(e.GetOwner(), !0),
+          s.SetRootActor(i.GetOwner(), !0),
           s.InitSpr(),
           s.Refresh(t),
-          { Key: i, Value: s }
+          { Key: e, Value: s }
         );
       });
   }
@@ -49,48 +50,68 @@ class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     this.MKi && (this.MKi.ClearChildren(), (this.MKi = void 0)),
+      this.La1.clear(),
       this.SKi.clear(),
       this.yKi.clear(),
       (this.EKi = void 0);
   }
-  Refresh(e) {
+  Refresh(i) {
     this.SKi.clear();
-    for (let t = 0; t < e.length; t++) this.SKi.set(e[t].Text, t);
-    this.MKi.RebuildLayoutByDataNew(e);
+    for (let t = 0; t < i.length; t++) this.SKi.set(i[t].Text, t);
+    this.MKi.RebuildLayoutByDataNew(i);
   }
   SetInfoPanelVisible(t) {
     this.GetVerticalLayout(1).RootUIComp.SetUIActive(t);
   }
-  UpdateIcons(t) {
+  UpdateIcons(t, i) {
     t.length <= 0 &&
       this.yKi.forEach((t) => {
-        this.Move(t, new UE.Vector2D(0, 0), !0);
+        this.Move(t, new UE.Vector2D(0, 0), !0, !1, !1, i);
       });
-    for (const i of t) {
-      var e;
-      this.yKi.has(i.Id)
-        ? this.Move(this.yKi.get(i.Id), i.Vector, i.NotShow)
+    for (const h of t) {
+      var e, s;
+      this.yKi.has(h.Id)
+        ? ((e = this.yKi.get(h.Id)),
+          this.Move(
+            e,
+            h.Vector,
+            h.NotShow,
+            h.IsOptional,
+            h.IsOptionalFinished,
+            i,
+          ))
         : ((e = new EntityIconItem(
             LguiUtil_1.LguiUtil.CopyItem(this.EKi, this.GetItem(0)),
           )).CreateByActorAsync(e.GetItsItem().GetOwner()),
           e
             ? (e.SetUiActive(!0),
               e.InitSpr(),
-              this.yKi.set(i.Id, e),
-              this.Move(e, i.Vector, !0))
+              this.yKi.set(h.Id, e),
+              this.La1.has(i)
+                ? (s = this.La1.get(i)) &&
+                  !s.includes(e) &&
+                  (s.push(e), this.La1.set(i, s))
+                : ((s = new Array()).push(e), this.La1.set(i, s)),
+              this.Move(e, h.Vector, !0, h.IsOptional, h.IsOptionalFinished, i))
             : Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Photo", 46, "tempUiItem为空", ["名称：", i.Id]));
+              Log_1.Log.Info("Photo", 45, "tempUiItem为空", ["名称：", h.Id]));
     }
   }
-  Move(t, e, i) {
-    var s = t.GetItsItem();
-    s.SetUIActive(!0),
-      s.SetAnchorOffset(new UE.Vector2D(e.X, e.Y)),
-      i
+  Move(t, i, e, s, h, o) {
+    var r = t.GetItsItem();
+    r.SetUIActive(!0),
+      r.SetAnchorOffset(new UE.Vector2D(i.X, i.Y)),
+      h || e
         ? t.UpdateNowIcon(0)
-        : t.UpdateNowIcon(
-            PhotographController_1.PhotographController.IsLastChecked ? 2 : 1,
-          );
+        : s
+          ? t.UpdateNowIcon(2)
+          : t.UpdateNowIcon(
+              PhotographController_1.PhotographController.PhotoMissionFinishMap.get(
+                o.TakePlace.RangeEntity,
+              )
+                ? 2
+                : 1,
+            );
   }
   GetInfoItemByDesc(t) {
     t = this.SKi.get(t);
@@ -119,8 +140,12 @@ class EntityInfoItem extends UiPanelBase_1.UiPanelBase {
       (this.EDr = !1);
   }
   Refresh(t) {
-    var e = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.Text);
-    e && this.GetText(2).SetText(e), this.RefreshFinishState(t.IsFinish);
+    var i = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.Text);
+    i
+      ? t.IsOptionFinished
+        ? this.SetTextLine(t.Text)
+        : this.GetText(2).SetText(i)
+      : this.RefreshFinishState(t.IsFinish);
   }
   RefreshFinishState(t) {
     t && !this.EDr
@@ -132,6 +157,15 @@ class EntityInfoItem extends UiPanelBase_1.UiPanelBase {
         (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
         this.UiSequencePlayer.PlayLevelSequenceByName("Fail"),
         (this.EDr = !1));
+  }
+  SetTextLine(t) {
+    t = PublicUtil_1.PublicUtil.GetConfigTextByKey(t);
+    t &&
+      (this.GetText(2).SetText("<s>" + t + "</s>"),
+      this.UiSequencePlayer.StopCurrentSequence(!1, !0),
+      this.UiSequencePlayer.PlayLevelSequenceByName("Complete"),
+      this.UiSequencePlayer.StopCurrentSequence(!1, !0),
+      (this.EDr = !0));
   }
 }
 exports.EntityInfoItem = EntityInfoItem;

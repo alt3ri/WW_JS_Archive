@@ -58,7 +58,7 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
       (this.Qra = () => {
         this.Kra(), this.Og();
       }),
-      (this.zma = (e) => {
+      (this.eCa = (e) => {
         this.Wra &&
           (-1 !== (e = this.Wra?.indexOf(e)) && this.Wra.splice(e, 1),
           this.Og());
@@ -113,7 +113,7 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.zma,
+        this.eCa,
       );
   }
   OnRemoveEventListener() {
@@ -123,7 +123,7 @@ class FriendApplyView extends UiTickViewBase_1.UiTickViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendOnMultiItemAction,
-        this.zma,
+        this.eCa,
       );
   }
   Kra() {

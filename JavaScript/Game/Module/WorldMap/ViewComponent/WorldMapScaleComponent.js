@@ -8,8 +8,8 @@ const UE = require("ue"),
 class WorldMapScaleComponent extends MapComponent_1.MapComponent {
   constructor() {
     super(...arguments),
-      (this.yKa = void 0),
-      (this.EKa = void 0),
+      (this.VYa = void 0),
+      (this.HYa = void 0),
       (this.OnScaleSliderValueChanged = (e) => {
         this.SetMapScale(e, 3, !0, !1);
       }),
@@ -30,24 +30,24 @@ class WorldMapScaleComponent extends MapComponent_1.MapComponent {
     return this.PropertyMap.isDirty(0);
   }
   FlushScaleDirty() {
-    this.PropertyMap.flushDirty(0);
+    this.PropertyMap.cleanDirty(0);
   }
-  get MKa() {
+  get NYa() {
     var e = this.Parent;
     if (void 0 !== e) return e;
-    this.LogError(64, "[地图系统]->二级界面组件没有附加到容器下！");
+    this.LogError(63, "[地图系统]->二级界面组件没有附加到容器下！");
   }
   get ScaleChangeEvent() {
-    return this.yKa;
+    return this.VYa;
   }
   set ScaleChangeEvent(e) {
-    this.yKa = e;
+    this.VYa = e;
   }
   get ScaleSlider() {
-    return this.EKa;
+    return this.HYa;
   }
   set ScaleSlider(e) {
-    this.EKa = e;
+    this.HYa = e;
   }
   Initialize() {
     this.ScaleSlider.OnValueChangeCb.Unbind(),
@@ -75,9 +75,11 @@ class WorldMapScaleComponent extends MapComponent_1.MapComponent {
       r =
         ((this.MapScale = e),
         (ModelManager_1.ModelManager.WorldMapModel.MapScale = e),
-        this.MKa.Map);
+        this.NYa.Map);
     r.SetMapScale(e),
-      r.SelfPlayerNode.SetRelativeScale3D(new UE.Vector(1 / e, 1 / e, 1 / e)),
+      r.SelfPlayerNode.D_SetRelativeScale3D(
+        new UE.VectorDouble(1 / e, 1 / e, 1 / e),
+      ),
       i && this.ScaleSlider.SetValue(e, !1),
       a && this.ScaleChangeEvent?.(s, e, t);
   }

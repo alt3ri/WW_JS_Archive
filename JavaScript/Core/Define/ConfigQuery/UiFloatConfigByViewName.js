@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configUiFloatConfigByViewName.Init"),
-  getConfigStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configUiFloatConfigByViewName.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configUiFloatConfigByViewName.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configUiFloatConfigByViewName.GetConfig(";
 exports.configUiFloatConfigByViewName = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, i = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       t =
-        (n.Start(),
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (i) {
@@ -45,8 +47,8 @@ exports.configUiFloatConfigByViewName = {
         const C = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (C)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -78,8 +80,8 @@ exports.configUiFloatConfigByViewName = {
               ((t = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -87,8 +89,8 @@ exports.configUiFloatConfigByViewName = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    n?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

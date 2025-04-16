@@ -314,11 +314,17 @@ class Buff {
   }
   id() {
     var t = this.J7.__offset(this.z7, 4);
-    return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
+    return t ? this.J7.readFloat64(this.z7 + t) : 0;
   }
   gedesc(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   durationpolicy() {
     var t = this.J7.__offset(this.z7, 8);
@@ -527,22 +533,34 @@ class Buff {
   }
   gameplaycueids(t) {
     var i = this.J7.__offset(this.z7, 58);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   gameplaycueidsLength() {
     var t = this.J7.__offset(this.z7, 58);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  gameplaycueidsArray() {
+    var t = this.J7.__offset(this.z7, 58);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   GetGrantedtagsAt(t) {
     return this.grantedtags(t);
   }
   grantedtags(t, i) {
-    var r = this.J7.__offset(this.z7, 60);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 60),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   grantedtagsLength() {
     var t = this.J7.__offset(this.z7, 60);
@@ -552,10 +570,14 @@ class Buff {
     return this.applicationsourcetagrequirements(t);
   }
   applicationsourcetagrequirements(t, i) {
-    var r = this.J7.__offset(this.z7, 62);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 62),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   applicationsourcetagrequirementsLength() {
     var t = this.J7.__offset(this.z7, 62);
@@ -565,10 +587,14 @@ class Buff {
     return this.applicationsourcetagignores(t);
   }
   applicationsourcetagignores(t, i) {
-    var r = this.J7.__offset(this.z7, 64);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 64),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   applicationsourcetagignoresLength() {
     var t = this.J7.__offset(this.z7, 64);
@@ -578,10 +604,14 @@ class Buff {
     return this.applicationtagrequirements(t);
   }
   applicationtagrequirements(t, i) {
-    var r = this.J7.__offset(this.z7, 66);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 66),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   applicationtagrequirementsLength() {
     var t = this.J7.__offset(this.z7, 66);
@@ -591,10 +621,14 @@ class Buff {
     return this.applicationtagignores(t);
   }
   applicationtagignores(t, i) {
-    var r = this.J7.__offset(this.z7, 68);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 68),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   applicationtagignoresLength() {
     var t = this.J7.__offset(this.z7, 68);
@@ -604,10 +638,14 @@ class Buff {
     return this.ongoingtagrequirements(t);
   }
   ongoingtagrequirements(t, i) {
-    var r = this.J7.__offset(this.z7, 70);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 70),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   ongoingtagrequirementsLength() {
     var t = this.J7.__offset(this.z7, 70);
@@ -617,10 +655,14 @@ class Buff {
     return this.ongoingtagignores(t);
   }
   ongoingtagignores(t, i) {
-    var r = this.J7.__offset(this.z7, 72);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 72),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   ongoingtagignoresLength() {
     var t = this.J7.__offset(this.z7, 72);
@@ -630,10 +672,14 @@ class Buff {
     return this.removaltagrequirements(t);
   }
   removaltagrequirements(t, i) {
-    var r = this.J7.__offset(this.z7, 74);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 74),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   removaltagrequirementsLength() {
     var t = this.J7.__offset(this.z7, 74);
@@ -643,10 +689,14 @@ class Buff {
     return this.removaltagignores(t);
   }
   removaltagignores(t, i) {
-    var r = this.J7.__offset(this.z7, 76);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 76),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   removaltagignoresLength() {
     var t = this.J7.__offset(this.z7, 76);
@@ -656,10 +706,14 @@ class Buff {
     return this.removebuffwithtags(t);
   }
   removebuffwithtags(t, i) {
-    var r = this.J7.__offset(this.z7, 78);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 78),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   removebuffwithtagsLength() {
     var t = this.J7.__offset(this.z7, 78);
@@ -669,10 +723,14 @@ class Buff {
     return this.grantedapplicationimmunitytags(t);
   }
   grantedapplicationimmunitytags(t, i) {
-    var r = this.J7.__offset(this.z7, 80);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 80),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   grantedapplicationimmunitytagsLength() {
     var t = this.J7.__offset(this.z7, 80);
@@ -682,10 +740,14 @@ class Buff {
     return this.grantedapplicationimmunitytagignores(t);
   }
   grantedapplicationimmunitytagignores(t, i) {
-    var r = this.J7.__offset(this.z7, 82);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 82),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   grantedapplicationimmunitytagignoresLength() {
     var t = this.J7.__offset(this.z7, 82);
@@ -696,52 +758,84 @@ class Buff {
   }
   prematureexpirationeffects(t) {
     var i = this.J7.__offset(this.z7, 84);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   prematureexpirationeffectsLength() {
     var t = this.J7.__offset(this.z7, 84);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  prematureexpirationeffectsArray() {
+    var t = this.J7.__offset(this.z7, 84);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   GetRoutineexpirationeffectsAt(t) {
     return this.routineexpirationeffects(t);
   }
   routineexpirationeffects(t) {
     var i = this.J7.__offset(this.z7, 86);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   routineexpirationeffectsLength() {
     var t = this.J7.__offset(this.z7, 86);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  routineexpirationeffectsArray() {
+    var t = this.J7.__offset(this.z7, 86);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   GetOverfloweffectsAt(t) {
     return this.overfloweffects(t);
   }
   overfloweffects(t) {
     var i = this.J7.__offset(this.z7, 88);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   overfloweffectsLength() {
     var t = this.J7.__offset(this.z7, 88);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  overfloweffectsArray() {
+    var t = this.J7.__offset(this.z7, 88);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   GetRelatedextraeffectbuffidAt(t) {
     return this.relatedextraeffectbuffid(t);
   }
   relatedextraeffectbuffid(t) {
     var i = this.J7.__offset(this.z7, 90);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   relatedextraeffectbuffidLength() {
     var t = this.J7.__offset(this.z7, 90);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  relatedextraeffectbuffidArray() {
+    var t = this.J7.__offset(this.z7, 90);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   extraeffectid() {
     var t = this.J7.__offset(this.z7, 92);
@@ -751,10 +845,14 @@ class Buff {
     return this.extraeffectparameters(t);
   }
   extraeffectparameters(t, i) {
-    var r = this.J7.__offset(this.z7, 94);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 94),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   extraeffectparametersLength() {
     var t = this.J7.__offset(this.z7, 94);
@@ -827,10 +925,14 @@ class Buff {
     return this.extraeffectreqpara(t);
   }
   extraeffectreqpara(t, i) {
-    var r = this.J7.__offset(this.z7, 102);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 102),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   extraeffectreqparaLength() {
     var t = this.J7.__offset(this.z7, 102);
@@ -890,10 +992,14 @@ class Buff {
     return this.buffaction(t);
   }
   buffaction(t, i) {
-    var r = this.J7.__offset(this.z7, 112);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 112),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   buffactionLength() {
     var t = this.J7.__offset(this.z7, 112);
@@ -903,10 +1009,10 @@ class Buff {
     return this.taglogic(t);
   }
   taglogic(t, i) {
-    var r = this.J7.__offset(this.z7, 114);
-    return r
+    var s = this.J7.__offset(this.z7, 114);
+    return s
       ? (i || new IntArray_1.IntArray()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;

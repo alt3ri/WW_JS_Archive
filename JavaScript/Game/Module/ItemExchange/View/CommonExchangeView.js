@@ -102,8 +102,8 @@ class CommonExchangeView extends UiTickViewBase_1.UiTickViewBase {
     var e;
     this.xgi().ShowPayGold &&
       (this.fqt
-        ?.GetRootItem()
-        .SetUIParent(this.ChildPopView?.PopItem?.GetCostParent()),
+        ?.GetOriginalItem()
+        ?.SetUIParent(this.ChildPopView?.PopItem?.GetCostParent()),
       (e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(
         ItemDefines_1.EItemId.PayGold,
       )),

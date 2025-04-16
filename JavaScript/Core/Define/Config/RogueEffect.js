@@ -125,22 +125,34 @@ class RogueEffect {
   }
   buffarray1(t) {
     var r = this.J7.__offset(this.z7, 16);
-    return r
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
-      : BigInt(0);
+    return r ? this.J7.readFloat64(this.J7.__vector(this.z7 + r) + 8 * t) : 0;
   }
   buffarray1Length() {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  buffarray1Array() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   GetExtraeffecttypearray1At(t) {
     return this.extraeffecttypearray1(t);
   }
   extraeffecttypearray1(t, r) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
-      : null;
+    var s = this.J7.__offset(this.z7, 18),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   extraeffecttypearray1Length() {
     var t = this.J7.__offset(this.z7, 18);
@@ -150,10 +162,14 @@ class RogueEffect {
     return this.extraeffecttypeargsarray1(t);
   }
   extraeffecttypeargsarray1(t, r) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
-      : null;
+    var s = this.J7.__offset(this.z7, 20),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   extraeffecttypeargsarray1Length() {
     var t = this.J7.__offset(this.z7, 20);
@@ -164,22 +180,34 @@ class RogueEffect {
   }
   buffarray2(t) {
     var r = this.J7.__offset(this.z7, 22);
-    return r
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
-      : BigInt(0);
+    return r ? this.J7.readFloat64(this.J7.__vector(this.z7 + r) + 8 * t) : 0;
   }
   buffarray2Length() {
     var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  buffarray2Array() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   GetExtraeffecttypearray2At(t) {
     return this.extraeffecttypearray2(t);
   }
   extraeffecttypearray2(t, r) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
-      : null;
+    var s = this.J7.__offset(this.z7, 24),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   extraeffecttypearray2Length() {
     var t = this.J7.__offset(this.z7, 24);
@@ -189,10 +217,14 @@ class RogueEffect {
     return this.extraeffecttypeargsarray2(t);
   }
   extraeffecttypeargsarray2(t, r) {
-    var i = this.J7.__offset(this.z7, 26);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
-      : null;
+    var s = this.J7.__offset(this.z7, 26),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   extraeffecttypeargsarray2Length() {
     var t = this.J7.__offset(this.z7, 26);

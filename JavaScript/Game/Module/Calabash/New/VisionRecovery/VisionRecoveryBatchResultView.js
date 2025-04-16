@@ -12,9 +12,9 @@ const UE = require("ue"),
 class VisionRecoveryBatchResultView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.lNa = void 0),
+      (this.c3a = void 0),
       (this.qWt = void 0),
-      (this._Na = () => {
+      (this.m3a = () => {
         return new VisionRecoverySlotGridItem_1.VisionRecoverySlotGridItem(
           this.zvt,
           !1,
@@ -48,24 +48,24 @@ class VisionRecoveryBatchResultView extends UiViewBase_1.UiViewBase {
       ? Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Calabash",
-          59,
+          58,
           "VisionRecoveryBatchResultView responseData为空",
         )
-      : ((this.lNa = new GenericLayout_1.GenericLayout(
+      : ((this.c3a = new GenericLayout_1.GenericLayout(
           this.GetGridLayout(2),
-          this._Na,
+          this.m3a,
           this.GetItem(0).GetOwner(),
         )),
         (this.qWt = new GenericLayout_1.GenericLayout(
           this.GetGridLayout(4),
-          this._Na,
+          this.m3a,
           this.GetItem(0).GetOwner(),
         )),
         (e =
           ModelManager_1.ModelManager.PhantomBattleModel.GetVisionRecoverySortPhantomItemList(
             i.bMs,
           )),
-        await this.lNa.RefreshByDataAsync(e),
+        await this.c3a.RefreshByDataAsync(e),
         (i =
           ModelManager_1.ModelManager.PhantomBattleModel.GetVisionRecoverySortPhantomItemList(
             i.GBs,

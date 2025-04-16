@@ -11,13 +11,16 @@ class SceneInteractionDebugTool extends UE.Actor {
       (this.TargetActor = void 0),
       (this.Interaction = void 0);
   }
+  Constructor() {
+    this.Interaction = void 0;
+  }
   AttachInteraction() {
     this.TargetActor ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Render", 26, "SceneInteractionDebugTool缺少目标对象")),
+        Log_1.Log.Error("Render", 25, "SceneInteractionDebugTool缺少目标对象")),
       this.Interaction &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Render", 26, "SceneInteractionDebugTool勿重复添加"),
+        Log_1.Log.Error("Render", 25, "SceneInteractionDebugTool勿重复添加"),
       (this.Interaction =
         new SceneObjectWaterEffect_1.SceneObjectWaterEffect()),
       this.Interaction.Start(

@@ -5,9 +5,9 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  BattleChildView_1 = require("../BattleChildView/BattleChildView"),
+  BattleVisibleChildView_1 = require("../BattleChildView/BattleVisibleChildView"),
   RoleSpecialEnergyBar_1 = require("./RoleSpecialEnergyBar");
-class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
+class SpecialEnergyBarContainer extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
       (this.Mdt = void 0),
@@ -20,6 +20,7 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
   }
   Initialize(e) {
     super.Initialize(e),
+      this.InitChildType(25),
       (this.Mdt = e),
       (this.E0 =
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Id ?? 0),
@@ -35,28 +36,28 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
     this.kre(), super.Reset();
   }
   Tick(e) {
-    for (const t of this.Sdt.values()) t.Tick(e);
+    for (const i of this.Sdt.values()) i.Tick(e);
   }
   OnChangeRole(e) {
-    var t;
+    var i;
     (this.E0 = e?.EntityHandle?.Id ?? 0),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "开始切换特殊能量条", [
+        Log_1.Log.Debug("Battle", 17, "开始切换特殊能量条", [
           "entityId",
           this.E0,
         ]),
       this.E0 &&
         (ModelManager_1.ModelManager.BattleUiModel.SpecialEnergyBarData
           .IsSpecialEnergyBarEditorModeOpen &&
-          (t = this.Sdt.get(this.E0)) &&
-          (t.Destroy(), this.Sdt.delete(this.E0)),
+          (i = this.Sdt.get(this.E0)) &&
+          (i.Destroy(), this.Sdt.delete(this.E0)),
         this.Tdt(e)),
       this.Idt();
   }
   OnRemoveEntity(e) {
-    var t = this.Sdt.get(e);
-    t &&
-      (t.Destroy(), this.Sdt.delete(e), this.Edt === t) &&
+    var i = this.Sdt.get(e);
+    i &&
+      (i.Destroy(), this.Sdt.delete(e), this.Edt === i) &&
       (this.Edt = void 0);
   }
   Ore() {
@@ -72,27 +73,27 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
     );
   }
   ydt() {
-    for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(
+    for (const i of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(
       !0,
     )) {
-      var e = t.EntityHandle?.Id;
+      var e = i.EntityHandle?.Id;
       e &&
         (e = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e)) &&
         this.Tdt(e);
     }
   }
-  async Tdt(t) {
-    var i = t.EntityHandle?.Id;
-    if (i && !this.Sdt.has(i)) {
+  async Tdt(i) {
+    var t = i.EntityHandle?.Id;
+    if (t && !this.Sdt.has(t)) {
       var s = new RoleSpecialEnergyBar_1.RoleSpecialEnergyBar();
-      this.Sdt.set(i, s);
+      this.Sdt.set(t, s);
       let e = this.RootItem;
-      t.IsPhantom() && (e = this.Mdt), await s.InitAsync(e, t);
+      i.IsPhantom() && (e = this.Mdt), await s.InitAsync(e, i);
     }
   }
   Idt() {
-    for (var [e, t] of this.Sdt)
-      e === this.E0 ? (t.SetVisible(!0), (this.Edt = t)) : t.SetVisible(!1);
+    for (var [e, i] of this.Sdt)
+      e === this.E0 ? (i.SetVisible(!0), (this.Edt = i)) : i.SetVisible(!1);
   }
 }
 exports.SpecialEnergyBarContainer = SpecialEnergyBarContainer;

@@ -43,7 +43,7 @@ class TodDayTime {
     return TodDayTime.dBi
       ? (e * TodDayTime.dBi) / TimeOfDayDefine_1.TOD_RATE_RATIO
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("TimeOfDay", 17, "获取时间流速比错误"),
+          Log_1.Log.Error("TimeOfDay", 16, "获取时间流速比错误"),
         0);
   }
   static ConvertToDayState(e) {
@@ -55,12 +55,12 @@ class TodDayTime {
     return e < 0 ? 0 : e % TimeOfDayDefine_1.TOD_SECOND_PER_DAY;
   }
   static ConvertToHourMinuteString(e) {
-    var i = Math.floor(e / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR),
+    var t = Math.floor(e / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR),
       e = Math.floor(
-        (e - i * TimeOfDayDefine_1.TOD_SECOND_PER_HOUR) /
+        (e - t * TimeOfDayDefine_1.TOD_SECOND_PER_HOUR) /
           TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR,
       );
-    return ("0" + i).slice(-2) + ":" + ("0" + e).slice(-2);
+    return ("0" + t).slice(-2) + ":" + ("0" + e).slice(-2);
   }
   static ConvertToDay(e) {
     return e / TimeOfDayDefine_1.TOD_SECOND_PER_DAY;
@@ -74,19 +74,19 @@ class TodDayTime {
   static ConvertFromMinute(e) {
     return e * TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE;
   }
-  static ConvertFromHourMinute(e, i) {
+  static ConvertFromHourMinute(e, t) {
     return (
       e * TimeOfDayDefine_1.TOD_SECOND_PER_HOUR +
-      i * TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE
+      t * TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE
     );
   }
-  static CheckInMinuteSpan(e, i) {
+  static CheckInMinuteSpan(e, t) {
     if (!(e < 0 || e > TimeOfDayDefine_1.TOD_MINUTE_PER_DAY)) {
-      var t = i[0],
-        i = i[1];
-      if (t < i) {
-        if (t <= e && e < i) return !0;
-      } else if (t <= e || e < i) return !0;
+      var i = t[0],
+        t = t[1];
+      if (i < t) {
+        if (i <= e && e < t) return !0;
+      } else if (i <= e || e < t) return !0;
     }
     return !1;
   }
@@ -105,11 +105,22 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
       (this.xTo = 0),
       (this.wTo = 0),
       (this.BTo = 0),
-      (this.TimeRunLockState = !1),
-      (this.TimeSynLockState = !1);
+      (this.nL1 = !1),
+      (this.TimeRunLockStateClient = !1),
+      (this.TimeRunLockStateServer = !1),
+      (this.TimeSyncLockStateClient = !1),
+      (this.TimeSyncLockStateServer = !1);
   }
   get GameTime() {
     return this.RTo;
+  }
+  get TimeRunLockState() {
+    return this.nL1 ? this.TimeRunLockStateClient : this.TimeRunLockStateServer;
+  }
+  get TimeSynLockState() {
+    return this.nL1
+      ? this.TimeSyncLockStateClient
+      : this.TimeSyncLockStateServer;
   }
   GetPassSceneTime() {
     return this.BTo;
@@ -161,15 +172,15 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
             TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS;
   }
   GetTimeOfDayShowData() {
-    var i = new Array(),
-      t = ConfigManager_1.ConfigManager.TimeOfDayConfig.GetTimePresets();
+    var t = new Array(),
+      i = ConfigManager_1.ConfigManager.TimeOfDayConfig.GetTimePresets();
     let r = 0;
     var n,
       a = this.GameTime.Second,
       s =
         ConfigManager_1.ConfigManager.TimeOfDayConfig.GetDayTimeChangePresets();
     for (let e = 0; e < s.length; e++)
-      for (var [o] of t)
+      for (var [o] of i)
         (0 === s[e].ChangeDayNum && a > o) ||
           (((n = new TimeOfDaySecondItem_1.TimeOfDaySecondItemSt()).Id = r),
           (n.ChangeDayIndex = e),
@@ -177,18 +188,26 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
           (n.ShowName = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             s[e].Title,
           )),
-          i.push(n),
+          t.push(n),
           r++);
-    return i;
+    return t;
   }
   SetCurrentDay(e) {
     this.wTo !== e &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("TimeOfDay", 28, "日期调整"),
+      Log_1.Log.Debug("TimeOfDay", 27, "日期调整"),
       (this.wTo = e);
   }
   GetCurrentDay() {
     return this.wTo;
+  }
+  SetUseClientLockState(e) {
+    (this.nL1 = e),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("TimeOfDay", 26, "使用客户端时间锁定状态", [
+          "enable",
+          e,
+        ]);
   }
 }
 exports.TimeOfDayModel = TimeOfDayModel;

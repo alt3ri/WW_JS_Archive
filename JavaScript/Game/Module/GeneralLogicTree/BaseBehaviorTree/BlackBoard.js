@@ -4,18 +4,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest"),
   IUtil_1 = require("../../../../UniverseEditor/Interface/IUtil"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  MissionViewDefine_1 = require("../../BattleUi/Views/MissionView/MissionViewDefine"),
   GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine"),
   GeneralLogicTreeUtil_1 = require("../GeneralLogicTreeUtil"),
-  BehaviorTreeShowBridge_1 = require("./BehaviorTreeShowBridge"),
   BehaviorTreeTagComponent_1 = require("./BehaviorTreeTagComponent");
 class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
-  constructor(e, t, i, r, s) {
+  constructor(e, t, i, r, s, o, n, h) {
     switch (
       (super(),
       (this.gQt = 0),
@@ -24,6 +26,8 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       (this.TrackSource = void 0),
       (this.MapMarkResident = !1),
       (this.UseInnerTrackIconId = !1),
+      (this.OnlineType = ""),
+      (this.ZU_ = 0),
       (this.CurrentDungeonId = 0),
       (this.ChangeCurrentDungeonIdNodeId = 0),
       (this.IsTracking = !1),
@@ -31,9 +35,9 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       (this.BtType = Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid),
       (this.TreeIncId = BigInt(0)),
       (this.TreeConfigId = 0),
-      (this.wDa = []),
-      (this.BDa = new Map()),
-      (this.bDa = new Set()),
+      (this.GDa = []),
+      (this.ODa = new Map()),
+      (this.kDa = new Set()),
       (this.fZ = void 0),
       (this.pQt = void 0),
       (this.vQt = void 0),
@@ -41,6 +45,7 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       (this.SilentAreaShowInfo = []),
       (this.gKs = void 0),
       (this.RollbackPoint = 0),
+      (this.DisableExpression = !1),
       (this.TrackViewModel = "All"),
       (this.GetNodeConfig = (e) => {
         var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetNodeConfig(
@@ -53,7 +58,7 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "GeneralLogicTree",
-                19,
+                18,
                 "找不到节点配置",
                 [
                   "行为树类型",
@@ -70,6 +75,9 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       (this.TreeConfigId = i),
       (this.gQt = r),
       (this.CurrentDungeonId = r),
+      (this.OnlineType = o),
+      (this.ZU_ = n),
+      (this.DisableExpression = h),
       (this.fZ = new Map()),
       (this.pQt = new Map()),
       (this.vQt = new Map()),
@@ -120,9 +128,9 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     this.EQt(),
       this.vQt?.clear(),
       this.gKs?.clear(),
-      this.wDa.splice(0, this.wDa.length),
-      this.BDa.clear(),
-      this.bDa.clear();
+      this.GDa.splice(0, this.GDa.length),
+      this.ODa.clear(),
+      this.kDa.clear();
   }
   AddNode(e, t) {
     this.fZ.set(e, t);
@@ -172,12 +180,33 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       return e;
     }
   }
+  GetFirstNoHideTrackActiveChildQuestNode() {
+    var t = this.GetNodesByGroupId(1);
+    if (t) {
+      let e = void 0;
+      for (var [, i] of t)
+        if ("ChildQuest" === i.NodeType && !i.ContainTag(2)) {
+          e = i;
+          break;
+        }
+      return e;
+    }
+  }
   GetActiveChildQuestNodesId() {
     var e = this.GetNodesByGroupId(1);
     if (e) {
       var t,
         i = [];
       for ([, t] of e) "ChildQuest" === t.NodeType && i.push(t.NodeId);
+      return i;
+    }
+  }
+  GetActiveChildQuestNodes() {
+    var e = this.GetNodesByGroupId(1);
+    if (e) {
+      var t,
+        i = [];
+      for ([, t] of e) "ChildQuest" === t.NodeType && i.push(t);
       return i;
     }
   }
@@ -209,11 +238,14 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   SetMapMarkResident(e) {
     this.MapMarkResident = e;
   }
+  GetMapMarkResident() {
+    return this.MapMarkResident;
+  }
   SetUseInnerTrackIconId(e) {
     this.UseInnerTrackIconId = e;
   }
   IsSuspend() {
-    return this.ContainTag(9);
+    return this.ContainTag(10);
   }
   GetCurrentCommunicateId() {
     var e = this.GetCurrentActiveChildQuestNode();
@@ -224,29 +256,80 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       return e?.CommunicateId;
   }
   IsChallengeUi() {
-    return this.ContainTag(11);
+    return this.ContainTag(12);
   }
   IsCustomUi() {
-    return this.ContainTag(10);
+    return this.ContainTag(11);
   }
-  CreateShowBridge() {
-    return BehaviorTreeShowBridge_1.BehaviorTreeShowBridge.Create(this);
+  CreateShowData(e = !0) {
+    var t =
+      this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest
+        ? ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.TreeConfigId)
+            ?.NameKey
+        : void 0;
+    if (!e)
+      return MissionViewDefine_1.BehaviorTreeViewShowData.Create(
+        this.BtType,
+        this.TreeIncId,
+        this.TreeConfigId,
+        this.IsChallengeUi(),
+        this.TaskMarkTableId,
+        this.ZU_,
+        t,
+        this.UiTrackTextInfo.MainTitle,
+        this.UiTrackTextInfo.SubTitles,
+      );
+    let i = void 0;
+    var r,
+      s,
+      e = this.UiTrackTextInfo.MainTitle;
+    e &&
+      !this.iCc(e) &&
+      ((r = PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TidTitle)),
+      StringUtils_1.StringUtils.IsBlank(r) || (i = e));
+    let o = void 0;
+    if (0 < this.UiTrackTextInfo.SubTitles.length) {
+      o = [];
+      for (const n of this.UiTrackTextInfo.SubTitles)
+        !n ||
+          this.iCc(n) ||
+          ((s = PublicUtil_1.PublicUtil.GetConfigTextByKey(n.TidTitle)),
+          StringUtils_1.StringUtils.IsBlank(s)) ||
+          o.push(n);
+      1 !== o.length || i || ((i = o[0]), (o.length = 0));
+    }
+    return MissionViewDefine_1.BehaviorTreeViewShowData.Create(
+      this.BtType,
+      this.TreeIncId,
+      this.TreeConfigId,
+      this.IsChallengeUi(),
+      this.TaskMarkTableId,
+      this.ZU_,
+      t,
+      i,
+      o,
+    );
   }
-  GetTrackTextExpressInfo() {
-    return this.UiTrackTextInfo;
+  iCc(e) {
+    return (
+      e.QuestScheduleType?.Type ===
+        IQuest_1.EQuestScheduleType.ChildQuestCompleted &&
+      !!(e = this.GetNode(e.QuestScheduleType.ChildQuestId)) &&
+      e.ContainTag(2)
+    );
   }
   GetSilentAreaShowInfo() {
     if (0 !== this.SilentAreaShowInfo.length) return this.SilentAreaShowInfo[0];
   }
-  AddTag(e) {
-    super.AddTag(e),
+  AddTag(e, t) {
+    super.AddTag(e, t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeAddTag,
         e,
       );
   }
-  RemoveTag(e) {
-    super.RemoveTag(e),
+  RemoveTag(e, t) {
+    super.RemoveTag(e, t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeRemoveTag,
         e,
@@ -265,7 +348,7 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     e < 0 || this.SilentAreaShowInfo.splice(e, 1);
   }
   IsNeedScaledTrackMark(e) {
-    return this.ContainTag(10) && this.UiTrackTextInfo.IsSubTitle(e);
+    return this.ContainTag(11) && this.UiTrackTextInfo.IsSubTitle(e);
   }
   AddRefOccupationId(e, t) {
     let i = this.gKs.get(t);
@@ -273,21 +356,26 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   }
   RemoveRefOccupationId(t, e) {
     var i,
-      e = this.gKs.get(e);
-    !e || (i = e.findIndex((e) => e === t)) < 0 || e.splice(i, 1);
+      r = this.gKs.get(e);
+    !r ||
+      (i = r.findIndex((e) => e === t)) < 0 ||
+      (r.splice(i, 1), 0 === r.length && this.gKs.delete(e));
   }
   HasRefOccupiedEntity() {
-    for (var [e] of this.gKs) {
-      var t =
-        ModelManager_1.ModelManager.GeneralLogicTreeModel.IsOccupationExist(e);
-      if (t)
-        if (
-          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetOccupationTreeId(
+    if (this.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst)
+      for (var [e] of this.gKs) {
+        var t =
+          ModelManager_1.ModelManager.GeneralLogicTreeModel.IsOccupationExist(
             e,
-          ) !== this.TreeIncId
-        )
-          return !0;
-    }
+          );
+        if (t)
+          if (
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetOccupationTreeId(
+              e,
+            ) !== this.TreeIncId
+          )
+            return !0;
+      }
     return !1;
   }
   GetRefOccupiedEntityText() {
@@ -308,16 +396,48 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
         return r.Add(e), r.Add(t), UE.KuroStaticLibrary.KuroFormatText(i, r);
       }
   }
+  HasSpecRefOccupiedEntity(e) {
+    for (const i of e) {
+      var t =
+        ModelManager_1.ModelManager.GeneralLogicTreeModel.IsOccupationExist(i);
+      if (t)
+        if (
+          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetOccupationTreeId(
+            i,
+          ) !== this.TreeIncId
+        )
+          return !0;
+    }
+    return !1;
+  }
+  GetSpecRefOccupiedEntityText(e) {
+    if (this.HasSpecRefOccupiedEntity(e))
+      for (const o of e) {
+        var t =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetOccupationQuestName(
+              o,
+            ),
+          i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+            "QuestResourcesIsOccupiedInfo",
+          ),
+          r = UE.NewArray(UE.BuiltinString),
+          s =
+            ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationResourceName(
+              o,
+            );
+        return r.Add(s), r.Add(t), UE.KuroStaticLibrary.KuroFormatText(i, r);
+      }
+  }
   AddGuaranteeActionInfo(t, i, r, e) {
-    if (!this.qDa(r, e)) {
-      this.wDa.push(r);
-      let e = this.BDa.get(i);
-      e || ((e = new Set()), this.BDa.set(i, e)),
-        e.add(this.wDa.length - 1),
+    if (!this.NDa(r, e)) {
+      this.GDa.push(r);
+      let e = this.ODa.get(i);
+      e || ((e = new Set()), this.ODa.set(i, e)),
+        e.add(this.GDa.length - 1),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "GeneralLogicTree",
-            19,
+            18,
             "GeneralLogicTree:添加保底行为：" + r.Name,
             ["触发行为", t],
             ["ActionInfo", r],
@@ -325,10 +445,10 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
           );
     }
   }
-  qDa(t, i) {
+  NDa(t, i) {
     return (
       0 !== i &&
-      this.wDa.some((e) =>
+      this.GDa.some((e) =>
         1 === i
           ? e.Name === t.Name
           : e.Name === t.Name && (0, IUtil_1.deepEquals)(e, t),
@@ -336,16 +456,16 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     );
   }
   PopGuaranteeActionInfo(t, i) {
-    for (let e = this.wDa.length - 1; 0 <= e; e--) {
-      var r = this.wDa[e];
+    for (let e = this.GDa.length - 1; 0 <= e; e--) {
+      var r = this.GDa[e];
       if (r.Name === i.Name && (0, IUtil_1.deepEquals)(r, i)) {
-        this.wDa.splice(e, 1);
-        for (var [, s] of this.BDa) s.delete(e);
+        this.GDa.splice(e, 1);
+        for (var [, s] of this.ODa) s.delete(e);
         return (
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "GeneralLogicTree",
-              19,
+              18,
               "GeneralLogicTree:移除保底行为：" + i.Name,
               ["触发行为", t],
               ["ActionInfo", i],
@@ -358,23 +478,23 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   }
   ClearGuaranteeActions(e) {
     if (e) {
-      var t = this.BDa.get(e);
+      var t = this.ODa.get(e);
       if (t)
-        for (let e = this.wDa.length - 1; 0 <= e; e--)
-          t.has(e) && (this.wDa.splice(e, 1), t.delete(e));
-    } else this.wDa.splice(0, this.wDa.length);
+        for (let e = this.GDa.length - 1; 0 <= e; e--)
+          t.has(e) && (this.GDa.splice(e, 1), t.delete(e));
+    } else this.GDa.splice(0, this.GDa.length);
   }
   GetGuaranteeActions() {
-    return this.wDa;
+    return this.GDa;
   }
   AddCurrentExecuteActions(e) {
-    this.bDa.add(e);
+    this.kDa.add(e);
   }
   RemoveCurrentExecuteActions(e) {
-    this.bDa.delete(e);
+    this.kDa.delete(e);
   }
   GetCurrentExecuteActions() {
-    return this.bDa;
+    return this.kDa;
   }
 }
 exports.Blackboard = Blackboard;

@@ -36,6 +36,17 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       (this.GamepadMouseActor = void 0),
       (this.GamepadMouseItemInternal = void 0);
   }
+  Constructor() {
+    (this.TsScrollBarGroup = void 0),
+      (this.ViewHandle = void 0),
+      (this.IsInActive = !1),
+      (this.PanelHandle = void 0),
+      (this.ViewHandleCacheFunctionList = []),
+      (this.IncId = 0),
+      (this.HotKeyItemSet = void 0),
+      (this.CacheHotKeyStateMap = void 0),
+      (this.GamepadMouseItemInternal = void 0);
+  }
   AwakeBP() {
     GlobalData_1.GlobalData.GameInstance &&
       (this.InitDefaultParam(), this.InitPanelHandle());
@@ -96,16 +107,16 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
     );
   }
   GetGroupMap() {
-    var e = new Map();
+    var s = new Map();
     for (let i = 0, t = this.NormalGroup.Num(); i < t; ++i) {
-      var s = this.NormalGroup.Get(i),
-        a = ((s.GroupType = 0), new NavigationGroup_1.NavigationGroup(s));
-      e.set(s.GroupName, a);
+      var e = this.NormalGroup.Get(i),
+        o = ((e.GroupType = 0), new NavigationGroup_1.NavigationGroup(e));
+      s.set(e.GroupName, o);
     }
     for (let i = 0, t = this.BookmarkGroup.Num(); i < t; ++i) {
-      var o = this.BookmarkGroup.Get(i),
-        n = ((o.GroupType = 1), new NavigationGroup_1.NavigationGroup(o));
-      e.set(o.GroupName, n);
+      var a = this.BookmarkGroup.Get(i),
+        n = ((a.GroupType = 1), new NavigationGroup_1.NavigationGroup(a));
+      s.set(a.GroupName, n);
     }
     return (
       this.ScrollBarGroup &&
@@ -113,8 +124,8 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
         (this.TsScrollBarGroup = new NavigationGroup_1.NavigationGroup(
           this.ScrollBarGroup,
         )),
-        e.set(this.ScrollBarGroup.GroupName, this.TsScrollBarGroup)),
-      e
+        s.set(this.ScrollBarGroup.GroupName, this.TsScrollBarGroup)),
+      s
     );
   }
   InitPanelHandle() {
@@ -122,7 +133,8 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       NavigationPanelHandleCreator_1.NavigationPanelHandleCreator.GetPanelHandle(
         this.InteractiveTag,
       )),
-      this.PanelHandle?.SetGroupMap(this.GetGroupMap()),
+      this.PanelHandle.Init(),
+      this.PanelHandle.SetGroupMap(this.GetGroupMap()),
       this.PanelHandle.SetDefaultNavigationListenerList(
         this.DefaultNavigationActor,
       );
@@ -150,7 +162,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "UiNavigation",
-                11,
+                10,
                 "加入监听组件到导航组",
                 ["导航组名字", i.GroupName],
                 ["DisplayName", i.RootUIComp.displayName],
@@ -163,7 +175,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
           : Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "UiNavigation",
-              11,
+              10,
               "导航监听组件找不到对应的导航组",
               ["导航组名字", i.GroupName],
               [
@@ -186,7 +198,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "UiNavigation",
-              11,
+              10,
               "导航监听组件找不到对应的动态配置",
               ["导航组名字", i.GroupName],
               ["ViewName", this.ViewName],
@@ -194,19 +206,19 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiNavigation",
-            11,
+            10,
             "导航监听组件找不到对应的导航组",
             ["导航组名字", i.GroupName],
             ["ViewName", this.ViewName],
           ));
   }
-  UnRegisterNavigationListener(e) {
-    this.PanelHandle.DeleteListener(e);
-    var s = this.PanelHandle.GetNavigationGroup(e.GroupName);
-    if (s)
-      for (let i = 0, t = s.ListenerList.length; i < t; ++i)
-        if (s.ListenerList[i].GetOwner() === e.GetOwner()) {
-          s.RemoveListenerByIndex(i);
+  UnRegisterNavigationListener(s) {
+    this.PanelHandle.DeleteListener(s);
+    var e = this.PanelHandle.GetNavigationGroup(s.GroupName);
+    if (e)
+      for (let i = 0, t = e.ListenerList.length; i < t; ++i)
+        if (e.ListenerList[i].GetOwner() === s.GetOwner()) {
+          e.RemoveListenerByIndex(i);
           break;
         }
   }
@@ -226,31 +238,34 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
     var t = new FindNavigationResult_1.FindNavigationResult();
     if (this.IsAllowNavigate())
       if (this.RootUIComp.IsUIActiveInHierarchy()) {
-        for (const s of this.PanelHandle.GetSuitableNavigationListenerList(i))
-          if (s) {
-            let i = s;
-            if (s.IsScrollOrLayoutActor()) {
-              if (!s.IsScrollOrLayoutActive()) continue;
-              if (s.IsInScrollOrLayoutAnimation()) {
-                t.Result = 4;
-                break;
-              }
-              var e = this.PanelHandle.GetLoopOrLayoutListener(s);
-              if (!e) continue;
-              i = e;
-            } else
-              s.GetNavigationGroup()?.SuitableListenerByNoDynamic &&
-                (e = this.PanelHandle.GetSuitableListenerWithoutLayout(s)) &&
-                (i = e);
-            if (i.IsCanFocus()) {
-              if (!i.IsRegisterToPanelConfig()) {
-                t.Result = 5;
-                break;
-              }
-              (t.Result = 1), (t.Listener = i);
+        for (const e of this.PanelHandle.GetSuitableNavigationListenerList(i)) {
+          if (!e) {
+            t.Result = 6;
+            break;
+          }
+          let i = e;
+          if (e.IsScrollOrLayoutActor()) {
+            if (!e.IsScrollOrLayoutActive()) continue;
+            if (e.IsInScrollOrLayoutAnimation()) {
+              t.Result = 4;
               break;
             }
+            var s = this.PanelHandle.GetLoopOrLayoutListener(e);
+            if (!s) continue;
+            i = s;
+          } else
+            e.GetNavigationGroup()?.SuitableListenerByNoDynamic &&
+              (s = this.PanelHandle.GetSuitableListenerWithoutLayout(e)) &&
+              (i = s);
+          if (i.IsCanFocus()) {
+            if (!i.IsRegisterToPanelConfig()) {
+              t.Result = 5;
+              break;
+            }
+            (t.Result = 1), (t.Listener = i);
+            break;
           }
+        }
         0 === t.Result && (t.Result = 2), this.PanelHandle.NotifyFindResult(t);
       } else t.Result = 2;
     else t.Result = 2;
@@ -263,7 +278,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiNavigation",
-              11,
+              10,
               "[ReFindNavigation]独立界面刚刚隐藏,触发导航对象取消不做通知处理",
             ),
           1)
@@ -271,7 +286,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "UiNavigation",
-                11,
+                10,
                 "[ReFindNavigation]界面已经处于HasNavigationButDisActive状态,触发导航对象取消不做通知处理",
               ),
             1)
@@ -290,7 +305,8 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   FindNavigationInNoneState() {
     this.ViewHandle &&
       this.ViewHandle.IsNonNavigation() &&
-      this.ViewHandle.MarkRefreshNavigationDirty();
+      (this.ViewHandle.MarkResetCurrentPanelDirty(),
+      this.ViewHandle.MarkRefreshNavigationDirty());
   }
   IsAllowNavigate() {
     var i = Info_1.Info.IsInGamepad() ?? !1;
@@ -300,11 +316,11 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
     this.HotKeyItemSet.add(i), this.HandleAsyncHotKeyState(i);
   }
   HandleAsyncHotKeyState(i) {
-    for (var [t, e] of this.GetOrCreateCacheHotKeyStateMap())
-      for (const s of i.GetHotKeyComponentArray())
-        s.SetVisibleMode(t, e),
-          s.RefreshSelfHotKeyState(this.ViewHandle),
-          s.RefreshSelfHotKeyText(this.ViewHandle);
+    for (var [t, s] of this.GetOrCreateCacheHotKeyStateMap())
+      for (const e of i.GetHotKeyComponentArray())
+        e.SetVisibleMode(t, s),
+          e.RefreshSelfHotKeyState(this.ViewHandle),
+          e.RefreshSelfHotKeyText(this.ViewHandle);
   }
   GetOrCreateCacheHotKeyStateMap() {
     return (
@@ -317,17 +333,17 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
   }
   SetHotKeyVisibleMode(i, t) {
     if ((this.GetOrCreateCacheHotKeyStateMap().set(i, t), this.HotKeyItemSet))
-      for (const e of this.HotKeyItemSet)
-        for (const s of e.GetHotKeyComponentArray()) s.SetVisibleMode(i, t);
+      for (const s of this.HotKeyItemSet)
+        for (const e of s.GetHotKeyComponentArray()) e.SetVisibleMode(i, t);
   }
   NotifyListenerFocus(i) {
     this.IsAllowNavigate() && this.ViewHandle.UpdateFocus(i);
   }
   UpdateHotKeyTextForce(i, t) {
-    for (const s of this.HotKeyItemSet)
-      for (const a of s.GetHotKeyComponentArray()) {
-        var e = a.GetBindButtonTag();
-        i.Contains(e) && a.SetHotKeyDescTextForce(t);
+    for (const e of this.HotKeyItemSet)
+      for (const o of e.GetHotKeyComponentArray()) {
+        var s = o.GetBindButtonTag();
+        i.Contains(s) && o.SetHotKeyDescTextForce(t);
       }
   }
   GetListenerListByTag(i) {

@@ -9,7 +9,7 @@ const UE = require("ue"),
   MarkMenuItem_1 = require("./MarkMenuItem");
 class MarkMenu extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
-    super(...arguments), (this.Q2o = void 0), (this.XFa = []), (this.YFa = []);
+    super(...arguments), (this.Q2o = void 0), (this.d5a = []), (this.C5a = []);
   }
   GetResourceId() {
     return "UiItem_MarkList_Prefab";
@@ -26,25 +26,25 @@ class MarkMenu extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   OnStart() {
     this.GetItem(3).SetUIActive(!1);
   }
-  zFa(t) {
-    this.YFa = [];
-    var r = t - this.XFa.length;
+  g5a(t) {
+    this.C5a = [];
+    var r = t - this.d5a.length;
     for (let e = 0; e < r; ++e) {
       var i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(3), this.GetItem(2));
-      this.XFa.push(i);
+      this.d5a.push(i);
     }
-    for (let e = 0; e < this.XFa.length; ++e) {
+    for (let e = 0; e < this.d5a.length; ++e) {
       var s = e < t;
-      s && this.YFa.push(this.XFa[e]), this.XFa[e].SetUIActive(s);
+      s && this.C5a.push(this.d5a[e]), this.d5a[e].SetUIActive(s);
     }
-    return this.YFa;
+    return this.C5a;
   }
   OnShowWorldMapSecondaryUi(e) {
-    (this.YFa = this.zFa(e.length)), (this.Q2o = []);
+    (this.C5a = this.g5a(e.length)), (this.Q2o = []);
     let t = 0;
     for (const i of e) {
       const s = new MarkMenuItem_1.MarkMenuItem();
-      var r = this.YFa[t++];
+      var r = this.C5a[t++];
       s.Init(r, i).finally(() => {
         s.SetOnClick((e) => {
           1 === e &&
@@ -65,7 +65,7 @@ class MarkMenu extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnCloseWorldMapSecondaryUi() {
     for (const t of this.Q2o)
-      (this.XFa = this.XFa.filter((e) => e !== t.GetRootItem())), t.Destroy();
+      (this.d5a = this.d5a.filter((e) => e !== t.GetRootItem())), t.Destroy();
   }
   OnBeforeDestroy() {
     this.Q2o = [];

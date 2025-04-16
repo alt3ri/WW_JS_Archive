@@ -53,7 +53,7 @@ class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Activity",
-                38,
+                37,
                 "[日常探险活动] 任务信息打印",
                 ["TaskId", n.s5n],
                 ["State", r.TaskState],
@@ -66,7 +66,7 @@ class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
       }
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Activity", 38, "[日常探险活动] 活动数据未找到", [
+        Log_1.Log.Error("Activity", 37, "[日常探险活动] 活动数据未找到", [
           "ActivityId",
           this.Id,
         ]);
@@ -83,7 +83,7 @@ class ActivityDailyAdventureData extends ActivityData_1.ActivityBaseData {
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Activity",
-                38,
+                37,
                 "[日常探险活动] 积分奖励数据不存在",
                 ["Id", r],
               )),

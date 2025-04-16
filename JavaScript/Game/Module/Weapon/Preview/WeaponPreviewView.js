@@ -9,7 +9,8 @@ const UE = require("ue"),
   UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
   WeaponController_1 = require("../WeaponController"),
   WeaponDetailTipsComponent_1 = require("../WeaponDetailTipsComponent"),
-  WeaponListComponent_1 = require("../WeaponListComponent");
+  WeaponListComponent_1 = require("../WeaponListComponent"),
+  WeaponSkinDefine_1 = require("../../Skin/Tab/Weapon/WeaponSkinDefine");
 class WeaponPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -34,6 +35,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
             e,
             this.N2i,
             this.O2i,
+            WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID,
             this.Vjs,
           );
       }),
@@ -48,6 +50,7 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
             i,
             this.N2i,
             this.O2i,
+            WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID,
             this.Vjs,
           );
       });

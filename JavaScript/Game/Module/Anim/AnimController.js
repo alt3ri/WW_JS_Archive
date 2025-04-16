@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimController = void 0);
 const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
@@ -13,7 +14,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Controller", 25, "AnimController.OnInit"),
+        Log_1.Log.Info("Controller", 24, "AnimController.OnInit"),
       cpp_1.UKuroAnimJsSubsystem.RegisterUpdateAnimInfoFunction(
         GlobalData_1.GlobalData.GameInstance,
         AnimController.UpdateAnimInfo,
@@ -22,13 +23,25 @@ class AnimController extends ControllerBase_1.ControllerBase {
         GlobalData_1.GlobalData.GameInstance,
         AnimController.UpdateMonsterAnimInfo,
       ),
+      cpp_1.UKuroAnimJsSubsystem.RegisterUpdateNpcInfoFunction(
+        GlobalData_1.GlobalData.GameInstance,
+        AnimController.UpdateNpcAnimInfo,
+      ),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "p.KuroHumanIK.CVarIKPredictionMaxTraceCount 0",
+      ),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "p.KuroHumanIK.CVarExtendClimbTraceRadius 0",
+      ),
       !0
     );
   }
   static OnClear() {
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Controller", 25, "AnimController.OnClear"),
+        Log_1.Log.Info("Controller", 24, "AnimController.OnClear"),
       cpp_1.UKuroAnimJsSubsystem.UnregisterUpdateAnimInfoFunction(
         GlobalData_1.GlobalData.GameInstance,
       ),
@@ -51,21 +64,21 @@ class AnimController extends ControllerBase_1.ControllerBase {
     var e,
       n,
       r,
-      a = EntitySystem_1.EntitySystem.GetComponent(t, 163);
+      a = EntitySystem_1.EntitySystem.GetComponent(t, 175);
     a?.Valid &&
       ((e = a.MainAnimInstance.LogicParams),
       (a = a.AnimLogicParamsSetter),
       (n = EntitySystem_1.EntitySystem.GetComponent(t, 3))?.Valid &&
         ((r = n.InputDirectProxy),
         a.InputDirect.Equals(r) ||
-          (a.InputDirect.DeepCopy(r), (e.InputDirectRef = r.ToUeVector())),
+          (a.InputDirect.DeepCopy(r), (e.InputDirectRef = r.ToUeVectorOld())),
         (r = n.InputRotatorProxy),
         a.InputRotator.Equals(r) ||
           (a.InputRotator.DeepCopy(r), (e.InputRotatorRef = r.ToUeRotator()))),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 38))?.Valid &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 44))?.Valid &&
         ((r = n.Acceleration),
         a.Acceleration.Equals(r) ||
-          (a.Acceleration.DeepCopy(r), (e.AccelerationRef = r.ToUeVector())),
+          (a.Acceleration.DeepCopy(r), (e.AccelerationRef = r.ToUeVectorOld())),
         (r = n.IsMoving),
         a.IsMoving !== r && ((a.IsMoving = r), (e.IsMovingRef = r)),
         (r = n.HasMoveInput),
@@ -84,7 +97,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
         (r = n.ForceExitStateStop),
         a.ForceExitStateStop !== r) &&
         ((a.ForceExitStateStop = r), (e.ForceExitStateStopRef = r)),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 31))?.Valid &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 34))?.Valid &&
         ((r = n.GetTsClimbInfo()),
         a.ClimbInfo.Equals(r) ||
           (a.ClimbInfo.DeepCopy(r), (e.ClimbInfoRef = n.GetClimbInfoNew())),
@@ -94,7 +107,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
         (r = n.GetOnWallAngle()),
         a.ClimbOnWallAngle !== r) &&
         ((a.ClimbOnWallAngle = r), (e.ClimbOnWallAngleRef = r)),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 69))?.Valid &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 76))?.Valid &&
         ((r = n.SprintSwimOffset),
         a.SprintSwimOffset !== r &&
           ((a.SprintSwimOffset = r), (e.SprintSwimOffsetRef = r)),
@@ -102,17 +115,17 @@ class AnimController extends ControllerBase_1.ControllerBase {
         a.SprintSwimOffsetLerpSpeed !== r) &&
         ((a.SprintSwimOffsetLerpSpeed = r),
         (e.SprintSwimOffsetLerpSpeedRef = r)),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 32))?.Valid &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 35))?.Valid &&
         ((r = n.SlideForward),
         a.SlideForward.Equals(r) ||
-          (a.SlideForward.DeepCopy(r), (e.SlideForwardRef = r.ToUeVector())),
+          (a.SlideForward.DeepCopy(r), (e.SlideForwardRef = r.ToUeVectorOld())),
         (r = n.SlideSwitchThisFrame),
         a.SlideSwitchThisFrame !== r &&
           ((a.SlideSwitchThisFrame = r), (e.SlideSwitchThisFrameRef = r)),
         (r = n.StandMode),
         a.SlideStandMode !== r) &&
         ((a.SlideStandMode = r), (e.SlideStandModeRef = r)),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 98))?.Valid) &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 106))?.Valid) &&
       ((r = n.Active), a.IsInSplineMove !== r) &&
       ((a.IsInSplineMove = r), (e.bIsInSplineMove = r));
   }
@@ -120,7 +133,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
     var e,
       n,
       r,
-      a = EntitySystem_1.EntitySystem.GetComponent(t, 163);
+      a = EntitySystem_1.EntitySystem.GetComponent(t, 175);
     a?.Valid &&
       ((e = a.MainAnimInstance.LogicParams),
       (n = a.AnimLogicParamsSetter),
@@ -132,39 +145,30 @@ class AnimController extends ControllerBase_1.ControllerBase {
         ((n.DegMovementSlope = r), (e.DegMovementSlopeRef = r)),
       (r = a.GetTsSightDirect()),
       n.SightDirect.Equals(r) ||
-        (n.SightDirect.DeepCopy(r), (e.SightDirectRef = r.ToUeVector())),
-      (a = EntitySystem_1.EntitySystem.GetComponent(t, 64))) &&
+        (n.SightDirect.DeepCopy(r), (e.SightDirectRef = r.ToUeVectorOld())),
+      (a = EntitySystem_1.EntitySystem.GetComponent(t, 71))) &&
       ((r = a.GetRagRollQuitState()), n.RagQuitState !== r) &&
       ((n.RagQuitState = r), (e.RagQuitStateRef = r));
   }
   static UpdateAnimInfoHit(e) {
-    var n = EntitySystem_1.EntitySystem.GetComponent(e, 163);
+    var n = EntitySystem_1.EntitySystem.GetComponent(e, 175);
     if (n?.Valid) {
-      e = EntitySystem_1.EntitySystem.GetComponent(e, 53);
+      e = EntitySystem_1.EntitySystem.GetComponent(e, 60);
       if (e) {
         var r = n.MainAnimInstance.LogicParams,
           n = n.AnimLogicParamsSetter,
-          a = e.GetAcceptedNewBeHitAndReset(),
-          o =
-            (n.AcceptedNewBeHit !== a &&
-              ((n.AcceptedNewBeHit = a), (r.AcceptedNewBeHitRef = a)),
-            e.BeHitAnim);
-        n.BeHitAnim !== o && ((n.BeHitAnim = o), (r.BeHitAnimRef = o)),
-          (a = e.GetEnterFkAndReset()),
-          n.EnterFk !== a && ((n.EnterFk = a), (r.EnterFkRef = a)),
-          (a = e.GetDoubleHitInAir()),
-          n.DoubleHitInAir !== a &&
-            ((n.DoubleHitInAir = a), (r.DoubleHitInAirRef = a));
+          a = e.GetEnterFkAndReset();
+        n.EnterFk !== a && ((n.EnterFk = a), (r.EnterFkRef = a));
         let t = e.BeHitDirect;
         n.BeHitDirect.Equals(t) ||
-          (n.BeHitDirect.DeepCopy(t), (r.BeHitDirectRef = t.ToUeVector())),
+          (n.BeHitDirect.DeepCopy(t), (r.BeHitDirectRef = t.ToUeVectorOld())),
           (t = e.BeHitLocation),
           n.BeHitLocation.Equals(t) ||
             (n.BeHitLocation.DeepCopy(t),
-            (r.BeHitLocationRef = t.ToUeVector()));
-        o = e.BeHitSocketName;
-        n.BeHitSocketName.op_Equality(o) ||
-          ((n.BeHitSocketName = o), (r.BeHitSocketNameRef = o));
+            (r.BeHitLocationRef = t.ToUeVectorOld()));
+        a = e.BeHitSocketName;
+        n.BeHitSocketName.op_Equality(a) ||
+          ((n.BeHitSocketName = a), (r.BeHitSocketNameRef = a));
       }
     }
   }
@@ -172,9 +176,9 @@ class AnimController extends ControllerBase_1.ControllerBase {
     var e,
       n,
       r,
-      a = EntitySystem_1.EntitySystem.GetComponent(t, 163);
+      a = EntitySystem_1.EntitySystem.GetComponent(t, 175);
     a?.Valid &&
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 161)) &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 173)) &&
       ((e = a.MainAnimInstance.LogicParams),
       (a = a.AnimLogicParamsSetter),
       (r = n.MoveState),
@@ -186,7 +190,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
       (r = n.DirectionState),
       a.CharCameraState !== r &&
         ((a.CharCameraState = r), (e.CharCameraStateRef = r)),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 34)) &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 39)) &&
         a.SkillTarget !== (n.SkillTarget?.Id ?? 0) &&
         ((a.SkillTarget = n.SkillTarget?.Id ?? 0),
         (e.SkillTarget = n.SkillTarget?.Entity?.GetComponent(1)?.Owner)),
@@ -215,13 +219,15 @@ class AnimController extends ControllerBase_1.ControllerBase {
   static UpdateAnimInfoSceneInteract(t) {
     var e,
       n,
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 163);
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 175);
     r?.Valid &&
-      (t = EntitySystem_1.EntitySystem.GetComponent(t, 26)) &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 29)) &&
       ((e = r.MainAnimInstance.LogicParams),
       (r = r.AnimLogicParamsSetter),
       (n = t.GetSitDownState()),
       r.SitDown !== n && ((r.SitDown = n), (e.bSitDown = n)),
+      (n = t.SitDownTypeIndex),
+      r.SitDownType !== n && ((r.SitDownType = n), (e.SitDownType = n)),
       (n = t.EnterSitDownIndex),
       r.SitDownDirect !== n && ((r.SitDownDirect = n), (e.SitDownDirect = n)),
       (n = t.LeaveSitDownIndex),
@@ -230,22 +236,22 @@ class AnimController extends ControllerBase_1.ControllerBase {
   }
   static UpdateMonsterAnimInfoMove(t) {
     var e,
-      n = EntitySystem_1.EntitySystem.GetComponent(t, 163);
+      n = EntitySystem_1.EntitySystem.GetComponent(t, 175);
     n?.Valid &&
       ((e = n.MainAnimInstance.LogicParams),
       (n = n.AnimLogicParamsSetter),
       (t = EntitySystem_1.EntitySystem.GetComponent(t, 3))?.Valid) &&
       ((t = t.InputDirectProxy),
       n.InputDirect.Equals(t) ||
-        (n.InputDirect.DeepCopy(t), (e.InputDirectRef = t.ToUeVector())));
+        (n.InputDirect.DeepCopy(t), (e.InputDirectRef = t.ToUeVectorOld())));
   }
   static UpdateMonsterAnimInfoSkill(t) {
     var e,
-      n = EntitySystem_1.EntitySystem.GetComponent(t, 163);
+      n = EntitySystem_1.EntitySystem.GetComponent(t, 175);
     n?.Valid &&
       ((e = n.MainAnimInstance.LogicParams),
       (n = n.AnimLogicParamsSetter),
-      (t = EntitySystem_1.EntitySystem.GetComponent(t, 34))) &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 39))) &&
       n.SkillTarget !== (t.SkillTarget?.Id ?? 0) &&
       ((n.SkillTarget = t.SkillTarget?.Id ?? 0),
       (e.SkillTarget = t.SkillTarget?.Entity?.GetComponent(1)?.Owner));
@@ -254,37 +260,60 @@ class AnimController extends ControllerBase_1.ControllerBase {
     var e,
       n,
       r,
-      a,
-      o = EntitySystem_1.EntitySystem.GetComponent(t, 163);
-    o?.Valid &&
-      (e = EntitySystem_1.EntitySystem.GetComponent(t, 53)) &&
-      ((n = o.MainAnimInstance.LogicParams),
-      (o = o.AnimLogicParamsSetter),
-      (a = e.GetAcceptedNewBeHitAndReset()),
-      o.AcceptedNewBeHit !== a &&
-        ((o.AcceptedNewBeHit = a), (n.AcceptedNewBeHitRef = a)),
-      (r = e.BeHitAnim),
-      o.BeHitAnim !== r && ((o.BeHitAnim = r), (n.BeHitAnimRef = r)),
-      (a = e.GetEnterFkAndReset()),
-      o.EnterFk !== a && ((o.EnterFk = a), (n.EnterFkRef = a)),
-      e?.BeHitBones &&
-        0 < e?.BeHitBones?.length &&
-        o.BeHitBone !== e.BeHitBones[0] &&
-        ((o.BeHitBone = e.BeHitBones[0]), (n.BeHitBoneRef = e.BeHitBones[0])),
-      (r = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+      a = EntitySystem_1.EntitySystem.GetComponent(t, 175);
+    a?.Valid &&
+      (r = EntitySystem_1.EntitySystem.GetComponent(t, 60)) &&
+      ((e = a.MainAnimInstance.LogicParams),
+      (a = a.AnimLogicParamsSetter),
+      (n = r.GetEnterFkAndReset()),
+      a.EnterFk !== n && ((a.EnterFk = n), (e.EnterFkRef = n)),
+      r?.BeHitBones &&
+        0 < r?.BeHitBones?.length &&
+        a.BeHitBone !== r.BeHitBones[0] &&
+        ((a.BeHitBone = r.BeHitBones[0]), (e.BeHitBoneRef = r.BeHitBones[0])),
+      (n = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
         t,
         "HateTarget",
       ))) &&
-      ((a = EntitySystem_1.EntitySystem.GetComponent(r, 1)),
-      o.HateTarget !== r) &&
-      ((o.HateTarget = r), (n.HateTarget = a?.Owner));
+      ((r = EntitySystem_1.EntitySystem.GetComponent(n, 1)),
+      a.HateTarget !== n) &&
+      ((a.HateTarget = n), (e.HateTarget = r?.Owner));
   }
   static UpdateMonsterAnimInfoUnifiedState(t) {
     var e,
       n,
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 163);
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 175);
     r?.Valid &&
-      (t = EntitySystem_1.EntitySystem.GetComponent(t, 92)) &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 99)) &&
+      ((e = r.MainAnimInstance.LogicParams),
+      (r = r.AnimLogicParamsSetter),
+      (n = t.MoveState),
+      r.CharMoveState !== n &&
+        ((r.CharMoveState = n), (e.CharMoveStateRef = n)),
+      (n = t.PositionState),
+      r.CharPositionState !== n &&
+        ((r.CharPositionState = n), (e.CharPositionStateRef = n)),
+      (n = t.DirectionState),
+      r.CharCameraState !== n) &&
+      ((r.CharCameraState = n), (e.CharCameraStateRef = n));
+  }
+  static UpdateNpcAnimInfoMove(t) {
+    var e,
+      n = EntitySystem_1.EntitySystem.GetComponent(t, 175);
+    n?.Valid &&
+      ((e = n.MainAnimInstance.LogicParams),
+      (n = n.AnimLogicParamsSetter),
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 3))?.Valid) &&
+      ((t = t.InputDirectProxy),
+      n.InputDirect.Equals(t) ||
+        (n.InputDirect.DeepCopy(t), (e.InputDirectRef = t.ToUeVectorOld())));
+  }
+  static UpdateNpcAnimInfoUnifiedState(t) {
+    var e,
+      n,
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 175);
+    r?.Valid &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 99)) &&
       ((e = r.MainAnimInstance.LogicParams),
       (r = r.AnimLogicParamsSetter),
       (n = t.MoveState),
@@ -310,5 +339,9 @@ class AnimController extends ControllerBase_1.ControllerBase {
       AnimController.UpdateMonsterAnimInfoMove(t),
       AnimController.UpdateMonsterAnimInfoSkill(t),
       AnimController.UpdateMonsterAnimInfoUnifiedState(t);
+  }),
+  (AnimController.UpdateNpcAnimInfo = (t) => {
+    AnimController.UpdateNpcAnimInfoMove(t),
+      AnimController.UpdateNpcAnimInfoUnifiedState(t);
   });
 //# sourceMappingURL=AnimController.js.map

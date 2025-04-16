@@ -32,7 +32,8 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
         return new TabItem();
       }),
       (this.c4e = (t) => {
-        (this.Data = t), this.Refresh();
+        (this.Data && t.Source !== this.Data.Source) ||
+          ((this.Data = t), this.Refresh());
       }),
       (this.m4e = (t) => {
         var i = this.Data.DataPageList[t],
@@ -154,7 +155,7 @@ class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(t, i, e) {
     var s;
     t.NameTextId
-      ? ((s = t.NameTextArgs ?? []), this.Jma(t.NameTextId, s))
+      ? ((s = t.NameTextArgs ?? []), this.Zma(t.NameTextId, s))
       : this.mGe(t.NameText),
       this.v4e(t.RewardList ?? [], t.RewardState),
       this._Oe(t);
@@ -162,7 +163,7 @@ class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
   mGe(t) {
     this.GetText(0).SetText(t);
   }
-  Jma(t, i) {
+  Zma(t, i) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t, ...i);
   }
   v4e(t, i) {

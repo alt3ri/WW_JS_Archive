@@ -36,6 +36,9 @@ class NavigationRoleSkillTreeToggle extends NavigationToggle_1.NavigationToggle 
   OnHandlePointerSelectInheritance(e) {
     return !this.EBo || (this.EBo = !1);
   }
+  OnCheckFindNavigationBefore() {
+    return !this.PanelHandle.IsInPreview;
+  }
 }
 exports.NavigationRoleSkillTreeToggle = NavigationRoleSkillTreeToggle;
 //# sourceMappingURL=NavigationRoleSkillTreeToggle.js.map

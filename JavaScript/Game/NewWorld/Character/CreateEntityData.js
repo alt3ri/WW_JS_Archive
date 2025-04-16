@@ -3,10 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreateEntityData = void 0);
 const Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
+  Stats_1 = require("../../../Core/Common/Stats"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
   IEntity_1 = require("../../../UniverseEditor/Interface/IEntity"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class CreateEntityData {
   constructor() {
@@ -54,8 +56,10 @@ class CreateEntityData {
     );
   }
   InitPbEntityData() {
+    CreateEntityData.arl.Start();
     let t = void 0,
-      e = void 0;
+      e = void 0,
+      i = !1;
     switch (this.ConfigType) {
       case Protocol_1.Aki.Protocol.rLs.Proto_Global:
         (t = ModelManager_1.ModelManager.CreatureModel.GetDynamicEntityData(
@@ -63,7 +67,8 @@ class CreateEntityData {
         )),
           (e = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
             t.BlueprintType,
-          ));
+          )),
+          (i = !0);
         break;
       case Protocol_1.Aki.Protocol.rLs.F6n:
         if (
@@ -79,6 +84,7 @@ class CreateEntityData {
                 "[CreatureDataComponent.InitPbEntityData]找不到实体配置数据。",
                 ["PbDataId", this.PbDataId],
               ),
+            CreateEntityData.arl.Stop(),
             !1
           );
         e = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
@@ -103,9 +109,11 @@ class CreateEntityData {
                 ["PbDataId", this.PbDataId],
                 ["TemplateId", this.PbDataId],
               ),
+            CreateEntityData.arl.Stop(),
             !1
           );
-        t = { BlueprintType: e.BlueprintType, Name: e.Name, Id: e.Id };
+        (t = { BlueprintType: e.BlueprintType, Name: e.Name, Id: e.Id }),
+          (i = !0);
         break;
       case Protocol_1.Aki.Protocol.rLs.lTs:
         if (
@@ -124,29 +132,35 @@ class CreateEntityData {
               ["PrefabId", this.PrefabId],
               ["ConfigId", this.PbDataId],
             ),
+          CreateEntityData.arl.Stop(),
           !1
         );
     }
     return (
-      (this.TemplateData = e)
+      PublicUtil_1.PublicUtil.UseDbConfig() || (i = !0),
+      CreateEntityData.lrl.Start(),
+      (this.TemplateData = e),
+      (i || !ModelManager_1.ModelManager.CreatureModel.UseFbEntityConfig) && e
         ? (this.PbEntityInitData = (0, IEntity_1.decompressEntityData)(t, e))
         : (this.PbEntityInitData = t),
+      CreateEntityData.lrl.Stop(),
       this.PbEntityInitData?.ComponentsData &&
         ((this.PbModelConfigId = this.PbEntityInitData.BlueprintType),
         (this.IsConcealed =
           !!CreateEntityData.GetBaseInfo(this)?.ScanFunction?.IsConcealed)),
+      CreateEntityData.arl.Stop(),
       !0
     );
   }
   InitComponentData() {
-    this.ComponentDataMap.clear();
+    CreateEntityData.hrl.Start(), this.ComponentDataMap.clear();
     var t = this.EntityData.zEs;
     if (t)
       for (const i of t) {
         var e = i.C3s;
         this.ComponentDataMap.set(e, i);
       }
-    return !0;
+    return CreateEntityData.hrl.Stop(), !0;
   }
   AddComponent(t) {
     var e = t.Id;
@@ -243,7 +257,7 @@ class CreateEntityData {
     return !(!e || !t);
   }
   static IsFollowShooter(t) {
-    return !!t.ComponentDataMap.get("$ih");
+    return !!t.ComponentDataMap.get("tI_");
   }
   static GetMonsterComponent(t) {
     if (t.PbEntityInitData)
@@ -257,5 +271,8 @@ class CreateEntityData {
     return !!t && 0 !== t;
   }
 }
-exports.CreateEntityData = CreateEntityData;
+((exports.CreateEntityData = CreateEntityData).arl =
+  Stats_1.Stat.Create("InitPbEntityData")),
+  (CreateEntityData.lrl = Stats_1.Stat.Create("DecompressEntityData")),
+  (CreateEntityData.hrl = Stats_1.Stat.Create("InitComponentData"));
 //# sourceMappingURL=CreateEntityData.js.map

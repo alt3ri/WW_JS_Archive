@@ -8,7 +8,7 @@ class AudioUtils {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Audio",
-        40,
+        39,
         "[AudioBox] 更新音频盒子队列",
         ["Type", o],
         ["Box", e],
@@ -18,7 +18,7 @@ class AudioUtils {
       (o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         e.PbDataId,
       )) &&
-      (e = o.Entity.GetComponent(119)) &&
+      (e = o.Entity.GetComponent(129)) &&
       e.PostAudioBoxEvent();
   }
 }

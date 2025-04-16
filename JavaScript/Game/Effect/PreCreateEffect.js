@@ -19,6 +19,7 @@ const UE = require("ue"),
   FIGHT_EFFECT_LRU_SIZE = 600,
   NORMAL_EFFECT_LRU_SIZE = 100,
   CHANGE_COUNT_EVERY_TICK = 3,
+  PLAYER_CREATE_MAX = 150,
   commonFightEffect = [
     "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRole.DA_Fx_Group_ChangeRole",
     "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_ChangeRoleStart.DA_Fx_Group_ChangeRoleStart",
@@ -33,9 +34,10 @@ class PreCreateEffectData {
 }
 class PreCreateEffect {
   constructor() {
-    (this.Hpe = new UE.Transform()),
+    (this.Hpe = new UE.TransformDouble()),
       (this.jpe = new Map()),
       (this.Wpe = new Queue_1.Queue()),
+      (this.Vk_ = new Map()),
       (this.Kpe = new Map()),
       (this.Qpe = Stats_1.Stat.Create("PreCreateEffect")),
       (this.yW = void 0),
@@ -71,15 +73,15 @@ class PreCreateEffect {
             this.zpe,
           ),
           this.$pe.delete(t.Id),
-          this.jpe.has(t.Id)) &&
-          this.jpe.delete(t.Id);
+          this.jpe.has(t.Id) && this.jpe.delete(t.Id),
+          this.Vk_.delete(t.Id));
       }),
       (this.AiHateAddOrRemove = (e, t) => {
         if (e) {
           var e = t.CharActorComp.Entity.Id,
-            r = this.jpe.get(e);
-          if (r) {
-            for (; !r.Empty; ) this.Wpe.Push(r.Pop());
+            i = this.jpe.get(e);
+          if (i) {
+            for (; !i.Empty; ) this.Wpe.Push(i.Pop());
             this.jpe.delete(e);
           }
         }
@@ -113,13 +115,15 @@ class PreCreateEffect {
         EventDefine_1.EEventName.CreateEntity,
         this.Jpe,
       ),
-      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this);
+      EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
+      this.Vk_.clear();
   }
   static IsNeedPreCreateEffect() {
     return (
       !GlobalData_1.GlobalData.IsPlayInEditor ||
       (3e3 < ModelManager_1.ModelManager.GameModeModel.MapId &&
-        ModelManager_1.ModelManager.GameModeModel.MapId < 4e3)
+        ModelManager_1.ModelManager.GameModeModel.MapId < 4e3) ||
+      2 === ModelManager_1.ModelManager.GameModeModel.MapId
     );
   }
   Tick(e) {
@@ -150,17 +154,22 @@ class PreCreateEffect {
     });
   }
   ove(e) {
-    EntitySystem_1.EntitySystem.Get(e.EntityId)
-      ?.GetComponent(0)
-      ?.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player
-      ? this.Wpe.Push(e)
-      : (this.jpe.has(e.EntityId) ||
-          this.jpe.set(e.EntityId, new Queue_1.Queue()),
-        this.jpe.get(e.EntityId).Push(e),
-        this.Kpe.set(e.Path, this.Kpe.get(e.Path) + 1));
+    var t;
+    if (
+      EntitySystem_1.EntitySystem.Get(e.EntityId)
+        ?.GetComponent(0)
+        ?.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player
+    )
+      return (t = this.Vk_.get(e.EntityId) ?? 0) >= PLAYER_CREATE_MAX
+        ? void 0
+        : (this.Vk_.set(e.EntityId, t + 1), void this.Wpe.Push(e));
+    this.jpe.has(e.EntityId) || this.jpe.set(e.EntityId, new Queue_1.Queue()),
+      this.jpe.get(e.EntityId).Push(e),
+      this.Kpe.set(e.Path, this.Kpe.get(e.Path) + 1);
   }
   AddPreCreateEffect(e, t) {
     t &&
+      !t.includes("/Niagara") &&
       ((e = new PreCreateEffectData(e, t)),
       this.Kpe.get(t) || this.ove(e),
       this.Ype) &&
@@ -169,12 +178,12 @@ class PreCreateEffect {
   }
   AddPreCreateHitEffect(e, t) {
     if (t) {
-      var r = new PreCreateEffectData(e, t),
-        i =
+      var i = new PreCreateEffectData(e, t),
+        r =
           HIT_EFFECT_COUNT -
           EffectSystem_1.EffectSystem.GetEffectLruCount(t) -
           this.Kpe.get(t);
-      for (let e = 0; e < i; e++) this.ove(r);
+      for (let e = 0; e < r; e++) this.ove(i);
       this.Ype &&
         (PreCreateEffect.PreCreateEffectSet.add(t), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug("Preload", 4, "PreCreateEffect_被击特效", ["Path", t]);
@@ -231,7 +240,7 @@ class PreCreateEffect {
       ),
       (this.yW = void 0));
   }
-  ScheduledTick(e, t, r) {
+  ScheduledTick(e, t, i) {
     this.Tick(e);
   }
 }

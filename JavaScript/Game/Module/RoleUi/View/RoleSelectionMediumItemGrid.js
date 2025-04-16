@@ -22,6 +22,7 @@ class RoleSelectionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollM
         Type: 2,
         Data: e,
         ItemConfigId: e.GetRoleId(),
+        SkinId: e.GetRoleSkinId(),
         BottomTextId: "Text_LevelShow_Text",
         BottomTextParameter: [e.GetLevelData().GetLevel()],
         IsInTeam: i,

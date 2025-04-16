@@ -11,67 +11,25 @@ const ue_1 = require("ue"),
   PublicUtil_1 = require("../../../../Common/PublicUtil"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
-  GeneralLogicTreeDefine_1 = require("../../../GeneralLogicTree/Define/GeneralLogicTreeDefine"),
-  TreeStepBase_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepBase"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
-  MissionPanelChildStep_1 = require("./MissionPanelChildStep");
-class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
+  MissionPanelChildStep_1 = require("./MissionPanelChildStep"),
+  MissionViewStepTextUtil_1 = require("./MissionViewStepTextUtil"),
+  StepBaseItem_1 = require("./TreeStep/StepBaseItem");
+class MissionPanelStep extends StepBaseItem_1.StepBaseItem {
   constructor() {
     super(...arguments),
-      (this.Kct = void 0),
       (this.Qct = []),
       (this.TitleSequencePlayer = void 0),
-      (this.Zut = 0),
-      (this.C2a = 0),
-      (this.pxn = void 0),
-      (this.PlayStartSequence = (e, i, t) => {
-        return (
-          (this.Zut = e),
-          this.ZOn(i, t),
-          this.g2a(!1),
-          this.vxn()
-            ? (this.TitleSequencePlayer.StopCurrentSequence(!0, !0),
-              this.TitleSequencePlayer.PlayLevelSequenceByName("Start"),
-              "Disabled" !==
-                ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() &&
-                this.TitleSequencePlayer.StopCurrentSequence(!0, !0),
-              !1)
-            : (this.SetUiActive(!0), this.Mxn(this.Zut))
-        );
-      }),
-      (this.Ict = () => {
-        this.Zut &&
-          (EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.MissionPanelProcessEnd,
-            this.Zut,
-          ),
-          (this.Zut = 0));
-      }),
-      (this.owt = (e) => {
-        switch (e) {
+      (this.YF_ = void 0),
+      (this.zF_ = void 0),
+      (this.yct = (t) => {
+        switch (t) {
           case "Start":
-            this.SetUiActive(!0);
+            this.YF_?.IsPending() && this.YF_.SetResult(!0);
             break;
           case "Close":
           case "Finish":
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.MissionPanelStepTitleAnimStart,
-              this.TreeIncId,
-            );
-        }
-      }),
-      (this.yct = (e) => {
-        switch (e) {
-          case "Start":
-            this.Mxn(this.Zut);
-            break;
-          case "Close":
-          case "Finish":
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.MissionPanelStepTitleAnimEnd,
-              this.TreeIncId,
-            ),
-              this.pxn ? this.pxn() : this.Ict();
+            this.zF_?.IsPending() && this.zF_.SetResult(!0);
         }
       });
   }
@@ -80,157 +38,232 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
       this.ComponentRegisterInfos.push([2, ue_1.UIItem]),
       this.ComponentRegisterInfos.push([3, ue_1.UIItem]);
   }
-  OnStart() {
-    super.OnStart();
-    var e = this.GetItem(3),
-      e =
-        (e.SetUIActive(!0),
+  async OnBeforeStartAsync() {
+    await super.OnBeforeStartAsync();
+    var t = this.GetItem(3),
+      t =
+        (t.SetUIActive(!0),
         (this.TitleSequencePlayer =
-          new LevelSequencePlayer_1.LevelSequencePlayer(e)),
-        this.TitleSequencePlayer.BindSequenceStartEvent(this.owt),
+          new LevelSequencePlayer_1.LevelSequencePlayer(t)),
         this.TitleSequencePlayer.BindSequenceCloseEvent(this.yct),
-        this.GetItem(2)),
-      i = new MissionPanelChildStep_1.MissionPanelChildStep();
-    i.SetRootActor(e.GetOwner(), !0), this.Qct.push(i), e?.SetUIActive(!1);
+        new MissionPanelChildStep_1.MissionPanelChildStep(this.ViewId, 0)),
+      i = this.GetItem(2);
+    await t.CreateThenShowByActorAsync(i.GetOwner(), 0),
+      await t.HideAsync(),
+      this.Qct.push(t);
   }
-  Dispose() {
-    if ((super.Dispose(), this.Qct)) for (const e of this.Qct) e.Dispose();
+  OnBeforeDestroy() {
+    if (this.Qct) for (const t of this.Qct) t.Destroy();
     this.TitleSequencePlayer?.Clear(), (this.TitleSequencePlayer = void 0);
   }
-  PlayCloseSequence(e) {
-    if (!this.vxn()) return e(), !0;
-    (this.pxn = e), this.TitleSequencePlayer.StopCurrentSequence(!0, !0);
-    (e = this.Cjs() ? "Finish" : "Close"),
-      this.TitleSequencePlayer.PlayLevelSequenceByName(e),
-      (e =
-        "Disabled" !==
-        ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode());
-    return !!e && (this.TitleSequencePlayer.StopCurrentSequence(!0, !0), !0);
+  OnAfterShow() {
+    this.TitleSequencePlayer.ResumeSequence();
+    for (const t of this.Qct) t.Show();
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("BattleUiSet", 18, "MissionPanel:MissionPanelStepShow");
   }
-  PauseSequence() {
-    this.TitleSequencePlayer.GetCurrentSequence() &&
-      this.TitleSequencePlayer.PauseSequence();
+  OnAfterHide() {
+    this.TitleSequencePlayer.PauseSequence();
+    for (const t of this.Qct) t.Hide();
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("BattleUiSet", 18, "MissionPanel:MissionPanelStepHide");
   }
-  ResumeSequence() {
-    this.TitleSequencePlayer.GetCurrentSequence() &&
-      this.TitleSequencePlayer.ResumeSequence();
+  OnTick(t) {
+    if (this.IsShowOrShowing) {
+      super.OnTick(t);
+      for (const i of this.Qct) i.OnTick(t);
+    }
   }
-  async ExecuteSequenceOnUpdate(i, t, s) {
-    this.Zut = i;
-    var r = this.Kct,
-      h = t.TrackTextConfig;
-    if (
-      (0, GeneralLogicTreeDefine_1.checkMainTitleSame)(r.MainTitle, h.MainTitle)
+  Update() {
+    if ((this.UpdateByConfig(), this.ShowData && this.ShowData.SubStepTexts))
+      for (let t = 0; t < this.ShowData.SubStepTexts.length; t++)
+        this.Qct[t].UpdateByConfig();
+  }
+  async StartShow(t, i) {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
+        "BattleUiSet",
+        18,
+        "MissionPanel:MissionPanelStep.StartShow 更新自父步骤数据",
+      ),
+      await this.ZOn(t),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "BattleUiSet",
+          18,
+          "MissionPanel:MissionPanelStep.StartShow 隐藏子步骤",
+        ),
+      await this.Fj_(),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "BattleUiSet",
+          18,
+          "MissionPanel:MissionPanelStep.StartShow 显示父步骤",
+        ),
+      await this.ShowAsync(),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "BattleUiSet",
+          18,
+          "MissionPanel:MissionPanelStep.StartShow 播放父步骤Start动画",
+        ),
+      await this.bco(i),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "BattleUiSet",
+          18,
+          "MissionPanel:MissionPanelStep.StartShow 播放子步骤Start动画",
+        ),
+      await this.Xct(),
+      await this.Mxn(i),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "BattleUiSet",
+          18,
+          "MissionPanel:MissionPanelStep.StartShow 子步骤Start动画结束",
+        );
+  }
+  async OnReset() {
+    var t = [];
+    for (const i of this.Qct) t.push(i.OnReset());
+    await Promise.all(t), await super.OnReset(), await this.HideAsync();
+  }
+  async ExecuteSequenceOnUpdate(t, i, e) {
+    var s = this.ShowData,
+      a = t;
+    MissionViewStepTextUtil_1.MissionViewStepTextUtil.CheckTextEqual(
+      this.ShowData,
+      t,
     )
-      return (
-        await this.i2n(0, r.SubTitles),
-        s(),
-        this.ZOn(t.TreeIncId, h),
-        this.Mxn(this.Zut)
-      );
-    {
-      await this.i2n(0, r.SubTitles);
-      r = r.MainTitle;
-      let e = void 0;
-      if (
-        (r &&
-          (StringUtils_1.StringUtils.IsBlank(r.TidTitle)
-            ? Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Quest",
-                19,
-                "找不到任务主标题文本配置",
-                ["treeConfigId", t.TreeConfigId],
-                ["nextMainTitle", t.TrackTextConfig?.MainTitle],
-              )
-            : (e = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle))),
-        e && !StringUtils_1.StringUtils.IsBlank(e))
-      ) {
-        const n = new CustomPromise_1.CustomPromise();
-        this.PlayCloseSequence(() => {
-          n.SetResult(!0);
-        }),
-          await n.Promise;
+      ? (i(t), await this.ZOn(t), await this.Xct())
+      : ((a =
+          MissionViewStepTextUtil_1.MissionViewStepTextUtil.CheckStepTextSame(
+            s?.MainStepText,
+            a.MainStepText,
+          )),
+        await this.i2n(s?.SubStepTexts, e),
+        a || (await this.Gj_(e)),
+        i(t),
+        await this.ZOn(t),
+        a || (await this.bco(e)),
+        await this.Xct(),
+        await this.Mxn(e));
+  }
+  async bco(t) {
+    this.CheckVisible() &&
+      this.TitleSequencePlayer &&
+      (this.TitleSequencePlayer.PlayLevelSequenceByName("Start"),
+      (this.YF_ = new CustomPromise_1.CustomPromise()),
+      t && this.TitleSequencePlayer.EndSequenceLastFrame("Start"),
+      await this.YF_.Promise);
+  }
+  async Gj_(t) {
+    var i;
+    return (
+      this.CheckVisible() &&
+        (EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.MissionPanelStepTitleAnimStart,
+          this.ShowData.Id,
+        ),
+        (i = this.Cjs() ? "Finish" : "Close"),
+        this.TitleSequencePlayer.PlayLevelSequenceByName(i),
+        (this.zF_ = new CustomPromise_1.CustomPromise()),
+        t && this.TitleSequencePlayer.EndSequenceLastFrame(i),
+        await this.zF_.Promise,
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.MissionPanelStepTitleAnimEnd,
+          this.ShowData.Id,
+        )),
+      !0
+    );
+  }
+  async Mxn(i) {
+    var e = this.ShowData?.SubStepTexts;
+    if (e?.length) {
+      var s = [];
+      for (let t = 0; t < e.length; t++) {
+        var a = this.Qct[t];
+        s.push(a.StartShow(i));
       }
-      return s(), this.PlayStartSequence(i, t.TreeIncId, h);
+      await Promise.all(s);
     }
   }
-  Mxn(i) {
-    this.Xct();
-    var t = this.Kct?.SubTitles;
-    if (!t?.length) return this.Ict(), !0;
-    for (let e = 0; e < t.length; e++) this.Qct[e].PlayStartSequence(i);
-    return !1;
-  }
-  async i2n(i, t) {
-    if (t?.length) {
-      this.C2a = 0;
-      const s = new CustomPromise_1.CustomPromise();
-      for (let e = 0; e < t.length; e++)
-        this.Qct[e].PlayCloseSequence(i, () => {
-          this.C2a++, this.C2a === t.length && s.SetResult(!0);
-        });
-      await s.Promise;
+  async i2n(i, e) {
+    if (i && i.length) {
+      var s = [];
+      for (let t = 0; t < i.length; t++) {
+        var a = this.Qct[t];
+        s.push(a.EndShow(e));
+      }
+      await Promise.all(s);
     }
   }
-  Update(e, i) {
-    this.ZOn(e, i), this.Xct();
+  async ZOn(t) {
+    (this.ShowData = t), await this.Refresh(t, t.MainStepText);
   }
-  ZOn(e, i) {
-    (this.Kct = i), this.UpdateData(e, this.Kct?.MainTitle);
-  }
-  Xct() {
-    const r = this.GetItem(2);
-    if (r) {
-      const t = this.Kct;
-      if (t && t.SubTitles) {
+  async Xct() {
+    const a = this.GetItem(2);
+    if (a) {
+      var i = this.ShowData;
+      if (i && i.SubStepTexts && 0 !== i.SubStepTexts.length) {
         let s = 0;
-        t.SubTitles.forEach((e) => {
+        const n = [];
+        i.SubStepTexts.forEach((t) => {
           let i = void 0;
-          var t;
+          var e;
           this.Qct.length > s
             ? (i = this.Qct[s])
-            : ((t = LguiUtil_1.LguiUtil.CopyItem(r, r.GetParentAsUIItem())),
-              (i =
-                new MissionPanelChildStep_1.MissionPanelChildStep()).SetRootActor(
-                t.GetOwner(),
-                !0,
-              ),
+            : ((e = LguiUtil_1.LguiUtil.CopyItem(a, a.GetParentAsUIItem())),
+              (i = new MissionPanelChildStep_1.MissionPanelChildStep(
+                this.ViewId,
+                s,
+              )),
+              n.push(i.CreateThenShowByActorAsync(e.GetOwner(), 0)),
               this.Qct.push(i)),
-            i.UpdateData(this.TreeIncId, e),
             s++;
         }),
-          this.Qct.forEach((e, i) => {
-            e.SetUiVisible(i < t.SubTitles.length);
-          });
-      } else this.g2a(!1);
+          await Promise.all(n);
+        for (let t = (n.length = 0); t < i.SubStepTexts.length; t++) {
+          var e = i.SubStepTexts[t];
+          n.push(this.Qct[t].Refresh(i, e));
+        }
+        await Promise.all(n);
+      } else await this.Fj_();
     }
   }
-  g2a(e) {
-    for (const i of this.Qct) i.SetUiVisible(e);
+  async Fj_() {
+    var t = [];
+    for (const i of this.Qct) t.push(i.HideAsync());
+    await Promise.all(t);
   }
-  vxn() {
-    var e;
+  CheckVisible() {
+    var t;
     return (
-      void 0 !== this.Kct?.MainTitle &&
-      ((e = PublicUtil_1.PublicUtil.GetConfigTextByKey(
-        this.Kct?.MainTitle.TidTitle,
-      )),
-      !StringUtils_1.StringUtils.IsBlank(e))
+      !!this.Config &&
+      ((t = PublicUtil_1.PublicUtil.GetConfigTextByKey(this.Config.TidTitle)),
+      !StringUtils_1.StringUtils.IsBlank(t)) &&
+      super.CheckVisible()
     );
   }
   Cjs() {
-    var e = this.Kct?.MainTitle?.QuestScheduleType;
-    if (e && e.Type === IQuest_1.EQuestScheduleType.ChildQuestCompleted) {
-      var i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-        this.TreeIncId,
-      );
-      if (i) {
-        i = i.GetNode(e.ChildQuestId);
-        if (i) return i.IsSuccess;
+    if (0 === this.ShowData?.DataSource) {
+      var t = this.ShowData.MainStepText?.QuestScheduleType;
+      if (t && t.Type === IQuest_1.EQuestScheduleType.ChildQuestCompleted) {
+        var i =
+          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+            this.ShowData.Id,
+          );
+        if (i) {
+          i = i.GetNode(t.ChildQuestId);
+          if (i) return i.IsSuccess;
+        }
       }
     }
     return !0;
+  }
+  async ChildStepConditionIndexChange(i, t) {
+    var e = this.Qct.find((t) => t.StepId === i);
+    e && (await e.OnStepConditionIndexChange(t));
   }
 }
 exports.MissionPanelStep = MissionPanelStep;

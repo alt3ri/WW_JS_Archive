@@ -5,6 +5,7 @@ class TsAnimNotifyStateSkeletalMeshAnimPlay extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.Tag = void 0), (this.动画资产 = void 0);
   }
+  Constructor() {}
   K2_NotifyBegin(t, e, s) {
     var t = t
       .GetOwner()

@@ -26,8 +26,10 @@ var _ExecutionQueue_Handle,
         "Cannot write private member to an object whose class did not declare it",
       );
     };
-Object.defineProperty(exports, "__esModule", { value: !0 });
-const EXECUTION_QUEUE_ENABLE = !(exports.ExecutionQueue = void 0);
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.ExecutionQueue = void 0);
+const Log_1 = require("../Common/Log"),
+  EXECUTION_QUEUE_ENABLE = !0;
 class ExecutionQueue {
   constructor() {
     _ExecutionQueue_Handle.set(this, 0),
@@ -82,7 +84,20 @@ class ExecutionQueue {
           !1,
           "f",
         );
-      await e();
+      try {
+        await e();
+      } catch (e) {
+        e instanceof Error
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.ErrorWithStack(
+              "Audio",
+              56,
+              "[Core.ExecutionQueue] 任务执行异常",
+              e,
+            )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Audio", 56, "[Core.ExecutionQueue] 任务执行异常");
+      }
     }
   }
 }

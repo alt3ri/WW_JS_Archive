@@ -10,7 +10,7 @@ class DynamicScrollView {
       (this.XGo = void 0),
       (this.$Go = void 0),
       (this.YGo = new Map()),
-      (this.Wfa = new Map()),
+      (this.Vfa = new Map()),
       (this.r7 = void 0),
       (this.JGo = void 0),
       (this.cGo = void 0),
@@ -21,28 +21,28 @@ class DynamicScrollView {
       (this.tNo = (i, s) => {
         const e = this.r7[i];
         var t = this.zGo.get(s);
-        let h = void 0;
+        let r = void 0;
         return (
           t
-            ? ((h = t), this.iNo(e, i, s))
-            : ((h = this.QGo(e, s.GetUIItem(), i)),
+            ? ((r = t), this.iNo(e, i, s))
+            : ((r = this.QGo(e, s.GetUIItem(), i)),
               (t = new Promise((t) => {
-                h.Init(s.GetUIItem()).finally(() => {
-                  h.Update(e, i), t();
+                r.Init(s.GetUIItem()).finally(() => {
+                  r.Update(e, i), t();
                 });
               })),
-              this.zGo.set(s, h),
+              this.zGo.set(s, r),
               this.ZGo.set(s, t)),
-          this.oNo(h, i),
-          (h.SkipDestroyActor = !0),
-          this.YGo.set(i, h),
-          h.GetUsingItem(e)
+          this.oNo(r, i),
+          (r.SkipDestroyActor = !0),
+          this.YGo.set(i, r),
+          r.GetUsingItem(e)
         );
       }),
       (this.rNo = (t, i) => {
         this.YGo.delete(t);
-        var s = this.Wfa.get(t);
-        s && (s(), this.Wfa.delete(t));
+        var s = this.Vfa.get(t);
+        s && (s(), this.Vfa.delete(t));
       }),
       (this.nNo = () => {
         this.sNo();
@@ -111,14 +111,14 @@ class DynamicScrollView {
   NotifyAnimationEnd() {
     this.XGo.SetInAnimation(!1);
   }
-  RefreshByData(t, i = !1) {
-    (this.r7 = t), this.YGo.clear(), this.Wfa.clear();
-    var s = this.JGo.GetOwner();
+  RefreshByData(t, i = !1, s = !1) {
+    (this.r7 = t), this.YGo.clear(), this.Vfa.clear();
+    var e = this.JGo.GetOwner();
     this.JGo.SetUIActive(!0),
-      this.XGo.RefreshByData(s, t.length, i),
+      this.XGo.RefreshByData(e, t.length, i),
       this.JGo.SetUIActive(!1),
       this.XGo.SetInAnimation(!0),
-      this.lNo();
+      s || this.lNo();
   }
   sNo() {
     this.eNo && (this.XGo.OnLateUpdate.Unbind(), (this.eNo = !1));
@@ -156,14 +156,17 @@ class DynamicScrollView {
     this.LateUpdateCallBack = void 0;
   }
   AddListenerOnItemClear(t, i) {
-    this.YGo.has(t) && this.Wfa.set(t, i);
+    this.YGo.has(t) && this.Vfa.set(t, i);
   }
   ClearChildren() {
     for (const t of this.YGo.values()) t.ClearItem();
-    this.YGo.clear(), this.Wfa.clear(), this.cGo?.Clear();
+    this.YGo.clear(), this.Vfa.clear(), this.cGo?.Clear();
   }
-  async ScrollToItemIndex(t, i = !0) {
-    await this.uNo(t, i);
+  async ScrollToItemIndex(t, i = !0, s = !1) {
+    await this.uNo(t, i, s);
+  }
+  async WaitForInit() {
+    await Promise.all(this.ZGo.values());
   }
   ScrollToBottom(t) {
     this.XGo.ScrollToBottom(
@@ -173,10 +176,17 @@ class DynamicScrollView {
       t,
     );
   }
-  async uNo(t, i = !0) {
-    await Promise.all(this.ZGo.values()),
-      this.XGo.ScrollToItemIndex(t),
-      i && this.ResetGridController();
+  async uNo(t, i = !0, s = !1) {
+    if ((await Promise.all(this.ZGo.values()), s)) {
+      var e = this.XGo?.GetContent()
+        ?.GetComponentByClass(UE.UIItem.StaticClass())
+        .GetAttachUIChildren();
+      for (let t = 0; t < e.Num(); t++) {
+        var r = e.Get(t);
+        r.IsValid() && r.SetAlpha(1);
+      }
+    }
+    this.XGo.ScrollToItemIndex(t), i && this.ResetGridController();
   }
   ResetGridController() {
     this.cGo && this.cGo.PlayGridAnim(this.GetDisplayGridNum(), !0);

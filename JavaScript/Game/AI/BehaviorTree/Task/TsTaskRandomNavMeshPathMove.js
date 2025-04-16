@@ -5,9 +5,9 @@ const UE = require("ue"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   ColorUtils_1 = require("../../../Utils/ColorUtils"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   WorldGlobal_1 = require("../../../World/WorldGlobal"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
@@ -37,6 +37,21 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsTurnSpeed = 0),
       (this.TsOpenDebugNode = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.SelectedTargetLocation = void 0),
+      (this.FoundPath = !1),
+      (this.NavigationPath = void 0),
+      (this.CurrentNavigationIndex = 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsMoveState = 0),
+      (this.TsBlackboardLocation = ""),
+      (this.TsSampling = 0),
+      (this.TsRandomRange = 0),
+      (this.TsEndDistance = 0),
+      (this.TsTurnSpeed = 0),
+      (this.TsOpenDebugNode = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -50,19 +65,20 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    var e = t.AiController;
-    if (e) {
-      var r = e.CharActorComp,
-        s = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
-          e.CharAiDesignComp.Entity.Id,
-          this.TsBlackboardLocation,
-        );
-      if (s) {
-        (this.SelectedTargetLocation = WorldGlobal_1.WorldGlobal.ToUeVector(s)),
-          this.FindRandomPath(t, r.ActorLocation, this.SelectedTargetLocation),
+    var s = t.AiController;
+    if (s) {
+      var e = s.CharActorComp,
+        r =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
+            s.CharAiDesignComp.Entity.Id,
+            this.TsBlackboardLocation,
+          );
+      if (r) {
+        (this.SelectedTargetLocation = WorldGlobal_1.WorldGlobal.ToUeVector(r)),
+          this.FindRandomPath(t, e.ActorLocation, this.SelectedTargetLocation),
           (this.FoundPath = 0 < this.NavigationPath.length),
           (this.CurrentNavigationIndex = 1);
-        var o = e.CharAiDesignComp?.Entity.GetComponent(161);
+        var o = s.CharAiDesignComp?.Entity.GetComponent(173);
         if (o?.Valid)
           switch (this.TsMoveState) {
             case 1:
@@ -95,39 +111,39 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
         ]),
         this.FinishExecute(!1);
   }
-  FindRandomPath(r, s, t) {
+  FindRandomPath(e, r, t) {
     this.NavigationPath || (this.NavigationPath = new Array());
-    var i = Vector_1.Vector.Create(s),
+    var i = Vector_1.Vector.Create(r),
       o = Vector_1.Vector.Create(t),
-      a = Vector_1.Vector.Create(t),
-      i = (a.Subtraction(i, a), Vector_1.Vector.Dist(i, o));
+      h = Vector_1.Vector.Create(t),
+      i = (h.Subtraction(i, h), Vector_1.Vector.Dist(i, o));
     if (i < this.TsRandomRange || this.TsSampling < 1)
       this.FoundPath =
         AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
+          e,
           r,
-          s,
           t,
           this.NavigationPath,
         );
     else {
-      let e = s;
-      var h = i / (this.TsSampling + 1);
+      let s = r;
+      var a = i / (this.TsSampling + 1);
       for (let i = 0; i < this.TsSampling; i++) {
         let t = Vector_1.Vector.Create();
-        a.Multiply((i + 1) * h, t),
-          t.Addition(Vector_1.Vector.Create(s), t),
+        h.Multiply((i + 1) * a, t),
+          t.Addition(Vector_1.Vector.Create(r), t),
           (t = this.CalculateRandomPosition(t));
         var l = new Array();
         AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
-          r,
           e,
+          s,
           t.ToUeVector(),
           l,
         ) && this.NavigationPath.concat(l),
-          (e = t.ToUeVector());
+          (s = t.ToUeVector());
       }
       o = new Array();
-      AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(r, e, t, o) &&
+      AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(e, s, t, o) &&
         this.NavigationPath.concat(o);
     }
   }
@@ -136,38 +152,38 @@ class TsTaskRandomNavMeshPathMove extends TsTaskAbortImmediatelyBase_1.default {
         0,
         MathUtils_1.PI_DEG_DOUBLE,
       ),
-      e = Vector_1.Vector.Create(Vector_1.Vector.ForwardVector),
+      s = Vector_1.Vector.Create(Vector_1.Vector.ForwardVector),
       i =
-        (e.RotateAngleAxis(i, Vector_1.Vector.UpVectorProxy, e),
+        (s.RotateAngleAxis(i, Vector_1.Vector.UpVectorProxy, s),
         MathUtils_1.MathUtils.GetRandomFloatNumber(0, this.TsRandomRange));
-    return e.Multiply(i, e).Addition(t, e), e;
+    return s.Multiply(i, s).Addition(t, s), s;
   }
-  ReceiveTickAI(t, i, e) {
-    var r, s;
+  ReceiveTickAI(t, i, s) {
+    var e, r;
     this.FoundPath && t instanceof TsAiController_1.default
       ? ((t = t.AiController.CharActorComp),
-        (r = this.NavigationPath[this.CurrentNavigationIndex]),
+        (e = this.NavigationPath[this.CurrentNavigationIndex]),
         this.TsOpenDebugNode &&
           this.IsEditor &&
-          UE.KismetSystemLibrary.DrawDebugSphere(
+          UE.KismetSystemLibrary.D_DrawDebugSphere(
             this,
-            r.ToUeVector(),
+            e.ToUeVector(),
             30,
             10,
             ColorUtils_1.ColorUtils.LinearRed,
           ),
-        (r = Vector_1.Vector.Create(r)).Subtraction(t.ActorLocationProxy, r),
-        (r.Z = 0),
-        (s = r.Size()),
+        (e = Vector_1.Vector.Create(e)).Subtraction(t.ActorLocationProxy, e),
+        (e.Z = 0),
+        (r = e.Size()),
         this.CurrentNavigationIndex === this.NavigationPath.length - 1 &&
-        s < this.TsEndDistance
+        r < this.TsEndDistance
           ? this.Finish(!0)
-          : (s < NAVIGATION_COMPLETE_DISTANCE && this.CurrentNavigationIndex++,
-            r.DivisionEqual(s),
-            t.SetInputDirect(r, !0),
+          : (r < NAVIGATION_COMPLETE_DISTANCE && this.CurrentNavigationIndex++,
+            e.DivisionEqual(r),
+            t.SetInputDirect(e, !0),
             AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               t,
-              r,
+              e,
               this.TsTurnSpeed,
             )))
       : this.Finish(!1);

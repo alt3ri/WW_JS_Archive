@@ -28,7 +28,7 @@ class WeaponModel extends ModelBase_1.ModelBase {
       n = (this.Lko.set(t, e), e.HasRole());
     n &&
       ((n = e.GetRoleId()), this.Dko.set(n, t), Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Role", 44, "武器设置", ["roleId", n], ["incId", t]);
+      Log_1.Log.Info("Role", 43, "武器设置", ["roleId", n], ["incId", t]);
   }
   RemoveWeaponData(e) {
     var t = this.Lko.get(e);
@@ -60,11 +60,11 @@ class WeaponModel extends ModelBase_1.ModelBase {
     var t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e, t);
     return t.IsTrialRole() || t.IsOnlineRole()
       ? t.GetWeaponData()
-      : (t = this.Dko.get(e))
-        ? this.Lko.get(t)
+      : void 0 !== (t = this.GetWeaponInstanceByRoleId(e))
+        ? t
         : void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Role", 59, "获取不到武器数据", ["roleDataId", e])
+            Log_1.Log.Error("Role", 58, "获取不到武器数据", ["roleDataId", e])
           );
   }
   GetWeaponIdByRoleDataId(e) {
@@ -72,25 +72,31 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return t
       ? t.IsTrialRole()
         ? t.GetWeaponData().GetItemId()
-        : (t = this.Dko.get(e))
-          ? this.Lko.get(t)?.GetItemId()
+        : void 0 !== (t = this.GetWeaponInstanceByRoleId(e))
+          ? t.GetItemId()
           : void (
               Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Role", 59, "获取不到武器数据", ["roleDataId", e])
+              Log_1.Log.Error("Role", 58, "获取不到武器数据", ["roleDataId", e])
             )
       : ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)
           .InitWeaponItemId;
+  }
+  GetWeaponInstanceByRoleId(e) {
+    e = this.Dko.get(e);
+    if (e) return this.Lko.get(e);
   }
   GetWeaponDataByIncId(e) {
     return this.Lko.get(e);
   }
   WeaponRoleLoadEquip(e) {
-    for (const r of e.sort((e, t) => e.mjn - t.mjn)) {
-      var t = r.mjn,
-        n = r.djn;
-      this.ChangeWeaponEquip(n, t);
+    if (e) {
+      for (const o of e) {
+        var t = o.mjn,
+          n = o.djn;
+        this.ChangeWeaponEquip(n, t);
+      }
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.EquipWeapon);
     }
-    EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.EquipWeapon);
   }
   WeaponLevelUpResponse(e) {
     this.SetWeaponLevelData(e.w5n, e.gjn, e.Cjn),
@@ -99,8 +105,8 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
   wOo(e) {
     var t = [];
-    for (const r of Object.keys(e)) {
-      var n = [{ IncId: 0, ItemId: Number.parseInt(r) }, e[r]];
+    for (const o of Object.keys(e)) {
+      var n = [{ IncId: 0, ItemId: Number.parseInt(o) }, e[o]];
       t.push(n);
     }
     EventSystem_1.EventSystem.Emit(
@@ -110,22 +116,22 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
   ChangeWeaponEquip(e, t) {
     var n = this.Lko.get(e),
-      r = n.GetRoleId();
-    0 < r &&
-      (this.Dko.set(r, 0), Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Role", 44, "武器设置", ["lastRoleId", r], ["incId", 0]),
+      o = n.GetRoleId();
+    0 < o &&
+      (this.Dko.set(o, 0), Log_1.Log.CheckInfo()) &&
+      Log_1.Log.Info("Role", 43, "武器设置", ["lastRoleId", o], ["incId", 0]),
       n.SetRoleId(t),
       0 < t &&
         (this.Dko.set(t, e), Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("Role", 44, "武器设置", ["roleId", t], ["incId", e]);
+        Log_1.Log.Info("Role", 43, "武器设置", ["roleId", t], ["incId", e]);
   }
-  GetCurveValue(e, t, n, r) {
+  GetCurveValue(e, t, n, o) {
     return (
       t *
       ((ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponPropertyGrowthConfig(
         e,
         n,
-        r,
+        o,
       )?.CurveValue ?? 0) /
         WeaponDefine_1.WEAPON_CURVE_RATION)
     );
@@ -140,18 +146,18 @@ class WeaponModel extends ModelBase_1.ModelBase {
   GetResonanceMaterialList(e) {
     var t = ModelManager_1.ModelManager.InventoryModel,
       n = this.GetWeaponDataByIncId(e),
-      r = n.GetItemId(),
-      o = [];
+      o = n.GetItemId(),
+      r = [];
     for (const a of t.GetItemDataBaseByMainType(2))
-      a.GetConfigId() !== r ||
+      a.GetConfigId() !== o ||
         a.GetUniqueId() === e ||
         this.GetWeaponDataByIncId(a.GetUniqueId()).HasRole() ||
-        o.push(a);
+        r.push(a);
     n = n.GetResonanceConfig().AlternativeConsume;
     if (n && 0 < n.length)
       for (const i of n)
-        for (const s of t.GetItemDataBaseByConfigId(i)) o.push(s);
-    return o;
+        for (const s of t.GetItemDataBaseByConfigId(i)) r.push(s);
+    return r;
   }
   GetCanChangeMaterialList(e) {
     var t = new Map(),
@@ -159,35 +165,35 @@ class WeaponModel extends ModelBase_1.ModelBase {
         ConfigManager_1.ConfigManager.ItemConfig.GetConfigListByItemType(4),
       );
     n.sort(this.Uko);
-    let r = e;
+    let o = e;
     for (const i of n) {
-      var o,
+      var r,
         a = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponExpItemConfig(
           i.Id,
         );
-      r >= a.BasicExp &&
-        ((o = Math.floor(r / a.BasicExp)), t.set(i.Id, o), (r %= a.BasicExp));
+      o >= a.BasicExp &&
+        ((r = Math.floor(o / a.BasicExp)), t.set(i.Id, r), (o %= a.BasicExp));
     }
     return t;
   }
-  GetResonanceNeedMoney(t, n, r) {
-    let o = 0;
-    for (let e = n; e < r; e++)
-      o += ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
+  GetResonanceNeedMoney(t, n, o) {
+    let r = 0;
+    for (let e = n; e < o; e++)
+      r += ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
         t,
         e,
       ).GoldConsume;
-    return o;
+    return r;
   }
   GetWeaponBreachMaxLevel(e) {
     var t = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreachList(e),
       n = t.length;
-    let r = 0;
+    let o = 0;
     for (let e = 0; e < n; e++) {
-      var o = t[e];
-      o.Level > r && (r = o.Level);
+      var r = t[e];
+      r.Level > o && (o = r.Level);
     }
-    return r;
+    return o;
   }
   GetWeaponItemBaseExp(e) {
     if (4 === e.GetType()) {
@@ -204,13 +210,13 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
   GetWeaponConfigDescParams(e, t) {
     var n,
-      r = [];
-    for (const o of e.DescParams)
-      o &&
-        ((n = t >= o.ArrayString.length ? o.ArrayString.length : t),
-        (n = o.ArrayString[n - 1]),
-        r.push(n));
-    return r;
+      o = [];
+    for (const r of e.DescParams)
+      r &&
+        ((n = t >= r.ArrayString.length ? r.ArrayString.length : t),
+        (n = r.ArrayString[n - 1]),
+        o.push(n));
+    return o;
   }
   GetCurSelectViewName() {
     return this.Rko;
@@ -270,10 +276,10 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
   GetWeaponExpItemListCost(e) {
     let t = 0;
-    for (const r of e) {
-      if (0 === r[0].ItemId) break;
-      var n = this.GetWeaponItemExpCost(r[0].IncId, r[0].ItemId);
-      t += n * r[1];
+    for (const o of e) {
+      if (0 === o[0].ItemId) break;
+      var n = this.GetWeaponItemExpCost(o[0].IncId, o[0].ItemId);
+      t += n * o[1];
     }
     return t;
   }
@@ -287,14 +293,14 @@ class WeaponModel extends ModelBase_1.ModelBase {
   }
   GetWeaponExpItemListUseToAuto(e) {
     var t = [];
-    for (const r of this.GetWeaponExpItemList(e))
-      if (!r.GetIsLock()) {
-        if (2 === r.GetType()) {
-          var n = this.GetWeaponDataByIncId(r.GetUniqueId());
+    for (const o of this.GetWeaponExpItemList(e))
+      if (!o.GetIsLock()) {
+        if (2 === o.GetType()) {
+          var n = this.GetWeaponDataByIncId(o.GetUniqueId());
           if (this.IsWeaponHighResonanceLevel(n)) continue;
           if (this.IsWeaponHighLevel(n)) continue;
         }
-        t.push(r);
+        t.push(o);
       }
     return this.GetWeaponExpItemListWithSort(t), t;
   }
@@ -308,13 +314,13 @@ class WeaponModel extends ModelBase_1.ModelBase {
       e
     );
   }
-  AutoAddExpItem(e, t, n, r) {
-    let o = e;
+  AutoAddExpItem(e, t, n, o) {
+    let r = e;
     var a = [];
     for (const u of n) {
-      if (t <= a.length || o <= 0) break;
-      var i = r(u),
-        s = Math.ceil(o / i),
+      if (t <= a.length || r <= 0) break;
+      var i = o(u),
+        s = Math.ceil(r / i),
         f = u.Count - u.SelectedCount,
         s = u.SelectedCount + Math.min(s, f);
       0 < s &&
@@ -325,19 +331,32 @@ class WeaponModel extends ModelBase_1.ModelBase {
           SelectedCount: s,
         }),
         a.push(f),
-        (o -= s * i));
+        (r -= s * i));
     }
     return a;
   }
+  CheckSatisfyExp(e, t, n, o) {
+    let r = e,
+      a = 0;
+    for (const u of n) {
+      if (a >= t || r <= 0) break;
+      var i = o(u),
+        s = Math.ceil(r / i),
+        f = u.Count - u.SelectedCount,
+        s = u.SelectedCount + Math.min(s, f);
+      0 < s && (a++, (r -= s * i));
+    }
+    return r <= 0;
+  }
   AutoAddExpItemEx(e, t, n) {
-    let r = e;
+    let o = e;
     for (const s of t) {
-      if (r <= 0) break;
-      var o = n(s),
-        a = Math.ceil(r / o),
+      if (o <= 0) break;
+      var r = n(s),
+        a = Math.ceil(o / r),
         i = s.Count - s.SelectedCount,
         a = s.SelectedCount + Math.min(a, i);
-      (s.SelectedCount = a), (r -= a * o);
+      (s.SelectedCount = a), (o -= a * r);
     }
   }
   GetWeaponAttributeParamList(e) {
@@ -350,10 +369,10 @@ class WeaponModel extends ModelBase_1.ModelBase {
     var t,
       n,
       e = this.GetWeaponDataByIncId(e),
-      r = e.GetBreachConfig();
+      o = e.GetBreachConfig();
     if (
       !ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
-        r.ConditionId.toString(),
+        o.ConditionId.toString(),
         void 0,
         !0,
       )
@@ -364,12 +383,19 @@ class WeaponModel extends ModelBase_1.ModelBase {
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(t) < n
       )
         return 0;
-    e = r.GoldConsume;
+    e = o.GoldConsume;
     return ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
       ItemDefines_1.EItemId.Gold,
     ) < e
       ? 1
       : 2;
+  }
+  RedDotWeaponBreachCondition(e) {
+    e = this.GetWeaponInstanceByRoleId(e);
+    return (
+      !(void 0 === e || !e.CanGoBreach()) &&
+      2 === this.GetWeaponBreachState(e.GetIncId())
+    );
   }
 }
 exports.WeaponModel = WeaponModel;

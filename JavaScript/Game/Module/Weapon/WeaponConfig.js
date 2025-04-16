@@ -45,7 +45,7 @@ class WeaponConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Config",
-            11,
+            10,
             "武器基础配置表格查找武器成长数值失败 WeaponPropertyGrowth",
             ["曲线id", e],
             ["等级", n],
@@ -65,7 +65,7 @@ class WeaponConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Config",
-            38,
+            37,
             "武器基础配置表格查找武器共鸣配置[WeaponReson]失败,请查看对应表格",
             ["共鸣组id", e],
             ["共鸣等级", n],

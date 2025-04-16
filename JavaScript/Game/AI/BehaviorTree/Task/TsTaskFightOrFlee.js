@@ -4,7 +4,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskFightOrFlee extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -13,6 +13,11 @@ class TsTaskFightOrFlee extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsInitTsVariables = !1),
       (this.TsFightOrFlee = ""),
       (this.FightProbability = 0);
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsFightOrFlee = "");
   }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
@@ -23,25 +28,25 @@ class TsTaskFightOrFlee extends TsTaskAbortImmediatelyBase_1.default {
     var r = e.AiController;
     if (r) {
       var r = r.CharActorComp,
-        o = r.Entity.Id;
+        s = r.Entity.Id;
       if (!this.FightProbability) {
         var r = r.CreatureData,
-          s = r.GetPbEntityInitData().ComponentsData,
-          s = (0, IComponent_1.getComponent)(s, "AnimalComponent");
-        if (!s || void 0 === s.AnimalAttackRange)
+          i = r.GetPbEntityInitData().ComponentsData,
+          i = (0, IComponent_1.getComponent)(i, "AnimalComponent");
+        if (!i || void 0 === i.AnimalAttackRange)
           return (
             Log_1.Log.CheckError() &&
-              Log_1.Log.Error("BehaviorTree", 30, "缺少战斗概率配置", [
+              Log_1.Log.Error("BehaviorTree", 29, "缺少战斗概率配置", [
                 "EntityConfigId",
                 r.GetPbDataId(),
               ]),
             void this.FinishExecute(!1)
           );
-        this.FightProbability = s.AnimalAttackRange;
+        this.FightProbability = i.AnimalAttackRange;
       }
       r = MathUtils_1.MathUtils.GetRandomRange(0, 100) < this.FightProbability;
-      BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
-        o,
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetBooleanValueByEntity(
+        s,
         this.TsFightOrFlee,
         r,
       ),

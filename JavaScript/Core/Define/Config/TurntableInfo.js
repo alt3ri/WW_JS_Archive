@@ -14,6 +14,9 @@ class TurntableInfo {
   get CostItemCount() {
     return this.costitemcount();
   }
+  get TurntableType() {
+    return this.turntabletype();
+  }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
   }
@@ -33,6 +36,10 @@ class TurntableInfo {
   }
   costitemcount() {
     var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  turntabletype() {
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

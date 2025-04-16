@@ -38,7 +38,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
           i = t.ChildViewName,
           e = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, i, e, this.yki),
-          this.J4a(),
+          this.q8a(),
           this.GetItem(2).SetUIActive("BattlePassWeaponView" !== i),
           this.GetItem(4).SetUIActive("BattlePassWeaponView" !== i),
           this.GetItem(5).SetUIActive("BattlePassWeaponView" !== i),
@@ -65,7 +65,10 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
           .Info.Name === this.Info.Name &&
           BattlePassController_1.BattlePassController.TryShowUpLevelView(!1);
       }),
-      (this.vya = (e) => {
+      (this.cp1 = () => {
+        this.CloseMe();
+      }),
+      (this.Sya = (e) => {
         var t;
         "BattlePassWeaponView" ===
           this.TabViewComponent.GetCurrentTabViewName() &&
@@ -117,7 +120,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
       await this.TabComponent.RefreshTabItemByLengthAsync(
         this.TabDataList.length,
       ),
-      await this.TabComponent.CreatePopupToggleTab(this.vya),
+      await this.TabComponent.CreatePopupToggleTab(this.Sya),
       this.TabComponent.SetPopupToggleName("PrefabTextItem_3652268202_Text"),
       (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
         this.GetItem(1),
@@ -133,7 +136,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
   OnStart() {
     this.TabComponent.SelectToggleByIndex(0, !0);
   }
-  J4a() {
+  q8a() {
     var e, t;
     "BattlePassWeaponView" === this.TabViewComponent.GetCurrentTabViewName() &&
       ((e = this.TabViewComponent.GetCurrentTabView()),
@@ -144,13 +147,21 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnBattlePassLevelUpEvent,
       this.Iki,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnBattlePassSkip,
+        this.cp1,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnBattlePassLevelUpEvent,
       this.Iki,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnBattlePassSkip,
+        this.cp1,
+      );
   }
   BindTabViewRed(t, e) {
     var i = this.TabDataList.findIndex((e) => e.ChildViewName === t);

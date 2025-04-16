@@ -7,7 +7,6 @@ const ue_1 = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  CharacterAttributeTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
@@ -49,7 +48,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
           });
       }),
       (this.tyi = () => {
-        UiManager_1.UiManager.OpenView("LordGymChallengeRecordView");
+        UiManager_1.UiManager.OpenView("LordGymChallengeRecordView", this.jSi);
       }),
       (this.iyi = () => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewWithTab(
@@ -114,7 +113,9 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
           o = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(
             this.KSi,
           ),
-          h = i.MonsterLevel > this.oyi();
+          h =
+            i.MonsterLevel >
+            ModelManager_1.ModelManager.EditFormationModel.GetFormationAverageLevel();
         this.GetItem(20).SetUIActive(r || !o),
           this.GetItem(25).SetUIActive(h && !r && o),
           this.GetButton(19).RootUIComp.SetUIActive(!(r || !o)),
@@ -204,7 +205,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
       this.WSi && 0 !== this.WSi.length
         ? await this.$Si.RefreshByDataAsync(this.WSi)
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelPlay", 50, "获取领主道馆入口信息失败！", [
+          Log_1.Log.Error("LevelPlay", 49, "获取领主道馆入口信息失败！", [
             "领主道馆入口Id:",
             this.jSi,
           ]);
@@ -247,19 +248,6 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     (this.$Si = void 0), (this.T8e = void 0);
-  }
-  oyi() {
-    let e = 0,
-      i = 0;
-    for (const r of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities()) {
-      var t = r.Entity?.GetComponent(159);
-      t &&
-        ((e += t.GetCurrentValue(
-          CharacterAttributeTypes_1.EAttributeId.Proto_Lv,
-        )),
-        i++);
-    }
-    return i ? e / i : 0;
   }
 }
 exports.LordGymEntranceView = LordGymEntranceView;

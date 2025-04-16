@@ -16,6 +16,9 @@ class ExploreTools {
   get SkillType() {
     return this.skilltype();
   }
+  get CanEquip() {
+    return this.canequip();
+  }
   get CurrentSkillInfo() {
     return this.currentskillinfo();
   }
@@ -91,73 +94,91 @@ class ExploreTools {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   skilltype() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  canequip() {
+    var t = this.J7.__offset(this.z7, 10);
+    return !t || !!this.J7.readInt8(this.z7 + t);
+  }
   currentskillinfo(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   helpid() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icon(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   background(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   battleviewicon(t) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   sortid() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   autofill() {
-    var t = this.J7.__offset(this.z7, 22);
-    return !!t && !!this.J7.readInt8(this.z7 + t);
-  }
-  showunlock() {
     var t = this.J7.__offset(this.z7, 24);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
-  skillgroupid() {
+  showunlock() {
     var t = this.J7.__offset(this.z7, 26);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  skillgroupid() {
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   isuseinphantomteam() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 30);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   GetCostAt(t, i) {
     return this.cost(t);
   }
   cost(t, i) {
-    var s = this.J7.__offset(this.z7, 30);
-    return s
-      ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
-          this.J7,
-        )
-      : null;
-  }
-  costLength() {
-    var t = this.J7.__offset(this.z7, 30);
-    return t ? this.J7.__vector_len(this.z7 + t) : 0;
-  }
-  GetAuthorizationAt(t, i) {
-    return this.authorization(t);
-  }
-  authorization(t, i) {
     var s = this.J7.__offset(this.z7, 32);
     return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
@@ -166,12 +187,28 @@ class ExploreTools {
         )
       : null;
   }
-  authorizationLength() {
+  costLength() {
     var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
-  summonconfigid() {
+  GetAuthorizationAt(t, i) {
+    return this.authorization(t);
+  }
+  authorization(t, i) {
+    var s = this.J7.__offset(this.z7, 34);
+    return s
+      ? (i || new DicIntInt_1.DicIntInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  authorizationLength() {
     var t = this.J7.__offset(this.z7, 34);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  summonconfigid() {
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

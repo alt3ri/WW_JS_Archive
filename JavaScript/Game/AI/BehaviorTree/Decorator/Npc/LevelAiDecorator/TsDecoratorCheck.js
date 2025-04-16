@@ -5,6 +5,7 @@ class TsDecoratorCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments), (this.CheckValue = "");
   }
+  Constructor() {}
   PerformConditionCheckAI(e, r) {
     return !0;
   }

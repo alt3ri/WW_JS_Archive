@@ -10,7 +10,7 @@ class ChargingDeviceHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     super(...arguments),
       (this.Wlt = 0),
       (this.SPe = void 0),
-      (this.w2a = !1),
+      (this.uOa = !1),
       (this.OnProgressControlDataChange = (e) => {
         "ChargingDevice" === e.ProgressCtrlType &&
           this.x_t(e.CurrentValue / e.MaxValue);
@@ -24,7 +24,8 @@ class ChargingDeviceHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     ];
   }
   OnStart() {
-    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe?.PlayLevelSequenceByName("Start");
   }
   GetResourceId() {
     return "UiItem_HpClean";
@@ -57,8 +58,8 @@ class ChargingDeviceHeadState extends HeadStateViewBase_1.HeadStateViewBase {
         Math.round(MathUtils_1.MathUtils.RangeClamp(e, 0, 1, 0, 100)));
     this.GetText(0).SetText(t + "%"),
       1 <= e &&
-        !this.w2a &&
-        (this.SPe?.PlayLevelSequenceByName("Full"), (this.w2a = !0));
+        !this.uOa &&
+        (this.SPe?.PlayLevelSequenceByName("Full"), (this.uOa = !0));
   }
 }
 exports.ChargingDeviceHeadState = ChargingDeviceHeadState;

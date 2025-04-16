@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiDecoratorCheckInTodTimeSpan = void 0);
 const CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
-  TimeOfDayController_1 = require("../../../Module/TimeOfDay/TimeOfDayController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   LevelAiDecorator_1 = require("../LevelAiDecorator");
 class LevelAiDecoratorCheckInTodTimeSpan extends LevelAiDecorator_1.LevelAiDecorator {
   OnExecutionStart() {
@@ -11,13 +11,17 @@ class LevelAiDecoratorCheckInTodTimeSpan extends LevelAiDecorator_1.LevelAiDecor
   CheckCondition(e) {
     var o,
       r,
-      i = this.Params;
+      n = this.Params;
     return (
-      !(!i.Start || !i.End) &&
-      ((r = i.Start.Hour * CommonDefine_1.MINUTE_PER_HOUR + i.Start.Min),
-      (o = i.End.Hour * CommonDefine_1.MINUTE_PER_HOUR + i.End.Min),
-      (r = TimeOfDayController_1.TimeOfDayController.CheckInMinuteSpan(r, o)),
-      "Eq" === i.Compare ? r : !r)
+      !(!n.Start || !n.End) &&
+      ((r = n.Start.Hour * CommonDefine_1.MINUTE_PER_HOUR + n.Start.Min),
+      (o = n.End.Hour * CommonDefine_1.MINUTE_PER_HOUR + n.End.Min),
+      (r =
+        ControllerHolder_1.ControllerHolder.TimeOfDayController.CheckInMinuteSpan(
+          r,
+          o,
+        )),
+      "Eq" === n.Compare ? r : !r)
     );
   }
 }

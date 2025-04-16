@@ -17,7 +17,7 @@ class LevelEventAddTrialCharacter extends LevelGeneralBase_1.LevelEventBase {
   }
   ExecuteNew(e, r) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Event", 49, "[AddTrialEvent] 开始");
+      Log_1.Log.Info("Event", 48, "[AddTrialEvent] 开始");
     this.vLe = e.AutoChange ?? !1;
     var t = e.ActiveRange,
       o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity;
@@ -30,48 +30,45 @@ class LevelEventAddTrialCharacter extends LevelGeneralBase_1.LevelEventBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Event",
-              49,
+              48,
               "[AddTrialEvent] 当前角色不在试用范围内，完成",
             ),
           void this.FinishExecute(!0)
         );
     }
-    o = e.CharacterGroup;
-    !o || o.length <= 0
+    this.MLe = [];
+    o = e.CharacterGroupNew;
+    if (o) for (const n of o) this.MLe.push(n.CharacterId);
+    else for (const a of e.CharacterGroup) this.MLe.push(a);
+    this.MLe.length <= 0
       ? (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Event", 49, "[AddTrialEvent] 无试用角色id，完成"),
+          Log_1.Log.Info("Event", 48, "[AddTrialEvent] 无试用角色id，完成"),
         this.FinishExecute(!0))
-      : ((this.MLe = o),
-        this.ELe()
-          ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Event", 49, "[AddTrialEvent] 开始时编队已完成"),
-            this.FinishExecute(!0))
-          : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Event",
-              49,
-              "[AddTrialEvent] 编队未完成，开始等待",
-            ));
+      : this.ELe()
+        ? (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Event", 48, "[AddTrialEvent] 开始时编队已完成"),
+          this.FinishExecute(!0))
+        : Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Event", 48, "[AddTrialEvent] 编队未完成，开始等待");
   }
   OnTick(e) {
-    this.MLe &&
-      this.ELe() &&
+    this.ELe() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Event", 49, "[AddTrialEvent] 编队完成"),
+        Log_1.Log.Info("Event", 48, "[AddTrialEvent] 编队完成"),
       this.FinishExecute(!0));
   }
   ELe() {
-    if (!ModelManager_1.ModelManager.SceneTeamModel.IsTeamReady) return !1;
-    for (const r of this.MLe) if (!this.tPr(r)) return !1;
-    var e;
-    return (
+    if (this.MLe && !(this.MLe.length <= 0)) {
+      if (!ModelManager_1.ModelManager.SceneTeamModel.IsTeamReady) return !1;
+      for (const r of this.MLe) if (!this.tPr(r)) return !1;
+      var e;
       !this.vLe ||
         (e = this.tPr(this.MLe[0])).IsControl() ||
         ControllerHolder_1.ControllerHolder.SceneTeamController.RequestChangeRole(
           e.GetCreatureDataId(),
-        ),
-      !0
-    );
+        );
+    }
+    return !0;
   }
   tPr(e) {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalDecodeGamePlay = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class SignalDecodeGamePlay {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -33,12 +34,24 @@ class SignalDecodeGamePlay {
     );
   }
   id(t) {
-    var i = this.J7.__offset(this.z7, 4);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 4),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   name(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   signaldata1() {
     var t = this.J7.__offset(this.z7, 8);

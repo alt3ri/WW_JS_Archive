@@ -32,10 +32,7 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
       (this.OnClickConfirm = () => {
         var t = [],
           e = this.zmi.length;
-        for (let i = 0; i < e; i++) {
-          var s = this.zmi[i][0];
-          t.push(s.ItemId);
-        }
+        for (let i = 0; i < e; i++) t.push(this.zmi[i].ItemId);
         InventoryGiftController_1.InventoryGiftController.SendItemGiftUseRequest(
           this.Zmi.ConfigId,
           this.WGe?.GetSelectNumber() ?? 1,
@@ -62,6 +59,7 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
           i.Initialize(),
           i.SetOnToggleStateChangeFunction(this.OnToggleStateChangeFunction),
           i.SetOnReduceFunction(this.OnReduceFunction),
+          i.SetIsSelectOn(this.OnIsSelectOnFunction),
           i
         );
       }),
@@ -84,6 +82,7 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
         i = this.zmi.indexOf(i);
         -1 !== i && (this.zmi.splice(i, 1), this.RefreshSelectCountInfo());
       }),
+      (this.OnIsSelectOnFunction = (i) => this.zmi.includes(i)),
       (this.RefreshSelectCountInfo = () => {
         var i = this.Zmi.GiftPackage.AvailableNum,
           t = this.zmi.length,
@@ -148,7 +147,17 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
           GetExchangeTableText: this.KGe,
           ValueChangeFunction: () => {},
         });
-    this.WGe.Init(i), this.RefreshSelectCountInfo();
+    if ((this.WGe.Init(i), this.Zmi.InitializedSelectedId))
+      for (let i = 0; i < this.x5e.length; i++) {
+        var t = this.x5e[i];
+        if (t.ItemId === this.Zmi.InitializedSelectedId) {
+          this.zmi.push(t),
+            this.vVt.ScrollToGridIndex(i, !1),
+            this.vVt.SelectGridProxy(i, !0);
+          break;
+        }
+      }
+    this.RefreshSelectCountInfo();
   }
   OnAfterShow() {
     var i, t;

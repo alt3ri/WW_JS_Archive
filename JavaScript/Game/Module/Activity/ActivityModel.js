@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityModel = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Macro_1 = require("../../../Core/Preprocessor/Macro"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
@@ -13,7 +15,9 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
   LogReportController_1 = require("../LogReport/LogReportController"),
   LogReportDefine_1 = require("../LogReport/LogReportDefine"),
   ActivityCache_1 = require("./ActivityCache"),
@@ -25,7 +29,6 @@ const Log_1 = require("../../../Core/Common/Log"),
 class ActivityModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.k4e = 0),
       (this.h3e = new Map()),
       (this.F4e = new Array()),
       (this.V4e = new ActivityCache_1.ActivityCache()),
@@ -40,13 +43,13 @@ class ActivityModel extends ModelBase_1.ModelBase {
           (this.G5e = ""),
           (this.N5e = ""),
           (this.O5e = ""),
-          this.uma();
+          this.Lma();
       }),
       (this.W4e = new Map()),
       (this.K4e = new Set()),
       (this.Q4e = new Set()),
       (this.X4e = new Map()),
-      (this.P4a = (t, e) => {
+      (this.u8a = (t, e) => {
         var i = t.IsFinished ? 1 : 0,
           r = e.IsFinished ? 1 : 0;
         if (i != r) return i - r;
@@ -63,12 +66,15 @@ class ActivityModel extends ModelBase_1.ModelBase {
           n.push(t);
         }
         return n[0] - n[1];
-      });
+      }),
+      (this.Apl = !1),
+      (this.iec = !1),
+      (this.rec = []);
   }
   OnInit() {
     return (
       this.$4e(),
-      this.uma(),
+      this.Lma(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TextLanguageChange,
         this.OnLanguageChange,
@@ -92,7 +98,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
   InitCache() {
     this.V4e.InitData();
   }
-  uma() {
+  Lma() {
     var t;
     StringUtils_1.StringUtils.IsEmpty(this.q5e) &&
       (this.q5e =
@@ -118,11 +124,31 @@ class ActivityModel extends ModelBase_1.ModelBase {
     this.h3e.forEach((t, e) => {
       t.ForceClose();
     }),
-      t.forEach((t) => {
-        ActivityManager_1.ActivityManager.GetActivityController(t.h5n)
-          ? this.Y4e(t)?.Phrase(t)
-          : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Activity", 28, "尚未实现活动", ["type", t.h5n]);
+      t.forEach((e) => {
+        if (ActivityManager_1.ActivityManager.GetActivityController(e.h5n))
+          try {
+            this.Y4e(e)?.Phrase(e);
+          } catch (t) {
+            this.OpenActivityErrorConfirmBox(e.s5n, e.h5n),
+              t instanceof Error
+                ? Log_1.Log.CheckError() &&
+                  Log_1.Log.ErrorWithStack(
+                    "Activity",
+                    37,
+                    "[Activity]Phrase执行异常",
+                    t,
+                    ["id", e.s5n],
+                    ["error", t.message],
+                  )
+                : Log_1.Log.CheckError() &&
+                  Log_1.Log.Error("Activity", 37, "[Activity]Phrase执行异常", [
+                    "id",
+                    e.s5n,
+                  ]);
+          }
+        else
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("Activity", 27, "尚未实现活动", ["type", e.h5n]);
       });
     const e = new Map();
     t.forEach((t) => {
@@ -139,26 +165,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
       this.RefreshShowingActivities(),
       this.J4e(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Activity", 38, "ActivityRequest 收到活动数据");
-  }
-  SetCurrentSelectActivityId(t) {
-    this.k4e = t;
-  }
-  GetCurrentSelectActivityId() {
-    return this.k4e;
-  }
-  GetCurrentOpenActivityData(i) {
-    var r = this.GetCurrentShowingActivities(),
-      n = r.length;
-    if (0 !== n) {
-      let e = void 0;
-      for (let t = 0; t < n; t++)
-        if (r[t].Id === i) {
-          e = r[t];
-          break;
-        }
-      return (e = e || this.GetActivityById(r[0].Id));
-    }
+        Log_1.Log.Info("Activity", 37, "ActivityRequest 收到活动数据");
   }
   RedPointState() {
     if (this.GetIfFunctionOpen()) {
@@ -173,11 +180,31 @@ class ActivityModel extends ModelBase_1.ModelBase {
     t && t.SetFirstOpenFalse();
   }
   OnActivityUpdate(t) {
-    t.forEach((t) => {
-      ActivityManager_1.ActivityManager.GetActivityController(t.h5n)
-        ? this.Y4e(t)?.Phrase(t)
-        : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Activity", 28, "尚未实现活动", ["type", t.h5n]);
+    t.forEach((e) => {
+      if (ActivityManager_1.ActivityManager.GetActivityController(e.h5n))
+        try {
+          this.Y4e(e)?.Phrase(e);
+        } catch (t) {
+          this.OpenActivityErrorConfirmBox(e.s5n, e.h5n),
+            t instanceof Error
+              ? Log_1.Log.CheckError() &&
+                Log_1.Log.ErrorWithStack(
+                  "Activity",
+                  37,
+                  "[Activity]Phrase执行异常",
+                  t,
+                  ["id", e.s5n],
+                  ["error", t.message],
+                )
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Activity", 37, "[Activity]Phrase执行异常", [
+                  "id",
+                  e.s5n,
+                ]);
+        }
+      else
+        Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("Activity", 27, "尚未实现活动", ["type", e.h5n]);
     });
     const e = new Map();
     t.forEach((t) => {
@@ -209,18 +236,31 @@ class ActivityModel extends ModelBase_1.ModelBase {
       n = this.h3e.get(t.s5n);
     return (
       n ||
-        ((n = ActivityController_1.ActivityController.CreateActivityData(t)),
-        (r = TimeUtil_1.TimeUtil.GetServerTime()),
-        (i = Number(MathUtils_1.MathUtils.LongToBigInt(t.wps))),
-        (e = Number(MathUtils_1.MathUtils.LongToBigInt(t.Pps))),
-        r <= i && r <= e && ((r = Math.min(e, i)), this.z4e(r, t.s5n, !0)),
-        (e = Number(MathUtils_1.MathUtils.LongToBigInt(t.xps))),
-        (i = Number(MathUtils_1.MathUtils.LongToBigInt(t.Ups))),
-        (r = Math.max(e, i)),
-        this.z4e(r, t.s5n, !1),
-        this.h3e.set(t.s5n, n),
-        this.F4e.push(t.s5n)),
-      n
+      ((e = TimeUtil_1.TimeUtil.GetServerTime()),
+      (i = Number(MathUtils_1.MathUtils.LongToBigInt(t.wps))),
+      (r = Number(MathUtils_1.MathUtils.LongToBigInt(t.Pps))),
+      e <= i && e <= r
+        ? ((e = Math.min(r, i)),
+          this.z4e(e, t.s5n, !0),
+          void (
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Activity",
+              37,
+              "活动待开启",
+              ["Id", t.s5n],
+              ["ShowTime", i],
+              ["OpenTime", r],
+            )
+          ))
+        : ((e = Number(MathUtils_1.MathUtils.LongToBigInt(t.xps))),
+          (i = Number(MathUtils_1.MathUtils.LongToBigInt(t.Ups))),
+          (r = Math.max(e, i)),
+          this.z4e(r, t.s5n, !1),
+          (n = ActivityController_1.ActivityController.CreateActivityData(t)),
+          this.h3e.set(t.s5n, n),
+          this.F4e.push(t.s5n),
+          n))
     );
   }
   z4e(t, e, i) {
@@ -247,7 +287,7 @@ class ActivityModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Activity",
-        38,
+        37,
         "ActivityTimeStampCheck 活动开始结束时间检查",
       ),
       ActivityController_1.ActivityController.RequestActivityData().then();
@@ -263,9 +303,6 @@ class ActivityModel extends ModelBase_1.ModelBase {
   }
   GetAllActivityMap() {
     return this.h3e;
-  }
-  GetCurrentSelectActivity() {
-    return this.h3e.get(this.k4e);
   }
   GetActivityById(t) {
     return this.h3e.get(t);
@@ -290,6 +327,18 @@ class ActivityModel extends ModelBase_1.ModelBase {
   }
   GetCurrentShowingActivities() {
     return Array.from(this.W4e.values()).sort(ActivityModel.SortFunc);
+  }
+  Kuc() {
+    let t = Array.from(this.W4e.values());
+    return (t = this.iec ? t.filter((t) => this.rec.includes(t.Id)) : t);
+  }
+  HaveShowingActivity() {
+    return 0 < this.W4e.size;
+  }
+  GetIsActivityShowingByType(t) {
+    if (this.W4e && 0 !== this.W4e.size)
+      for (var [, e] of this.W4e) if (e.Type === t) return !0;
+    return !1;
   }
   RefreshShowingActivities() {
     this.K4e.clear(),
@@ -350,6 +399,9 @@ class ActivityModel extends ModelBase_1.ModelBase {
     t = this.GetActivityById(t);
     return this.V4e.GetCacheData(t, e, i, r, n);
   }
+  GetActivityRedDotState(t) {
+    return this.GetActivityById(t)?.RedPointShowState ?? !1;
+  }
   SendActivityViewOpenLogData(t) {
     var e = new LogReportDefine_1.ActivityViewOpenLogData();
     (e.i_open_way = t), LogReportController_1.LogReportController.LogReport(e);
@@ -402,6 +454,10 @@ class ActivityModel extends ModelBase_1.ModelBase {
     }
     return [!1, 0];
   }
+  GetActivityMapMarkState(t, e) {
+    t = ActivityManager_1.ActivityManager.GetActivityController(t);
+    return !!t && t.GetActivityMapMarkState(e);
+  }
   GetTimeVisibleAndRemainTime(t) {
     var e = t.CheckIfInShowTime(),
       i = t.CheckIfInOpenTime();
@@ -453,8 +509,12 @@ class ActivityModel extends ModelBase_1.ModelBase {
   }
   GetActivityConditionData(e) {
     var i = [];
+    let t = 0;
+    t = e.HasPreOpenCondition()
+      ? e.PreOpenConditionGroupId
+      : e.ConditionGroupId;
     for (const o of ConfigManager_1.ConfigManager.ConditionConfig.GetGroupConditionIds(
-      e.ConditionGroupId,
+      t,
     )) {
       var r =
         ConfigManager_1.ConfigManager.ConditionConfig.GetConditionConfig(o);
@@ -473,13 +533,42 @@ class ActivityModel extends ModelBase_1.ModelBase {
       };
       i.push(n);
     }
-    return i.sort(this.P4a), i;
+    return i.sort(this.u8a), i;
+  }
+  SetForceHideActivityTimeTextFlag(t) {
+    this.Apl = t;
+  }
+  SetDebugFilterMode(t, e) {
+    (this.iec = t), e && (this.rec = e);
+    for (const i of this.W4e.values())
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        i.Id,
+      );
+  }
+  OpenActivityErrorConfirmBox(t, e) {
+    var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(33),
+      t = StringUtils_1.StringUtils.Format(
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "ActivityErrorTips",
+        ) ?? "",
+        t.toString(),
+        e.toString(),
+      );
+    i.SetTextArgs(t),
+      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+        i,
+      );
   }
 }
 (exports.ActivityModel = ActivityModel).SortFunc = (t, e) =>
-  e.Sort === t.Sort
-    ? e.BeginOpenTime === t.BeginOpenTime
-      ? t.Id - e.Id
-      : t.BeginOpenTime - e.BeginOpenTime
-    : t.Sort - e.Sort;
+  t.FinishSinkState !== e.FinishSinkState
+    ? t.FinishSinkState
+      ? 1
+      : -1
+    : t.Sort !== e.Sort
+      ? t.Sort - e.Sort
+      : t.BeginOpenTime !== e.BeginOpenTime
+        ? t.BeginOpenTime - e.BeginOpenTime
+        : t.Id - e.Id;
 //# sourceMappingURL=ActivityModel.js.map

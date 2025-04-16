@@ -21,7 +21,7 @@ class LogicTreeTimerBase {
   Destroy() {
     void 0 !== this.TimerId && TimerSystem_1.TimerSystem.Remove(this.TimerId);
   }
-  StartShowTimer(e) {}
+  StartShowTimer(e, t) {}
   EndShowTimer() {}
   GetRemainTime() {
     return 0;

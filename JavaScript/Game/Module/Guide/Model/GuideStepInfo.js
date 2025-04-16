@@ -12,6 +12,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   UiBehaviorBase_1 = require("../../../Ui/Base/UiBehaviorBase"),
   UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation"),
   UiConfig_1 = require("../../../Ui/Define/UiConfig"),
+  UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
@@ -37,11 +38,11 @@ class ExecutingState extends StateBase_1.StateBase {
     const e = this.Owner;
     if (e.GuideView)
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Guide", 17, "重复打开引导界面", ["步骤Id", e.Id]);
+        Log_1.Log.Warn("Guide", 16, "重复打开引导界面", ["步骤Id", e.Id]);
     else
       switch (
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Guide", 17, "引导界面打开", ["步骤Id", e.Id]),
+          Log_1.Log.Debug("Guide", 16, "引导界面打开", ["步骤Id", e.Id]),
         e.Config.ContentType)
       ) {
         case 3: {
@@ -58,13 +59,13 @@ class ExecutingState extends StateBase_1.StateBase {
                   : Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "Guide",
-                      17,
+                      16,
                       "打开教学引导失败, 当前已退出执行状态, 步骤ID: " + e.Id,
                     )
                 : (Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "Guide",
-                      17,
+                      16,
                       "打开教学引导失败, 教学目录请求解锁协议返回失败, 触发打断, 步骤ID: " +
                         e.Id,
                     ),
@@ -98,7 +99,7 @@ class ExecutingState extends StateBase_1.StateBase {
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Guide",
-            17,
+            16,
             "引导保底时间被配置修改",
             ["步骤Id", this.Owner.Id],
             ["组Id", this.Owner.OwnerGroup.Id],
@@ -107,14 +108,16 @@ class ExecutingState extends StateBase_1.StateBase {
         (e = i + OFFSET_TIME)),
         (this.$Jt = TimerSystem_1.TimerSystem.Delay((i) => {
           (this.$Jt = void 0),
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Guide",
-                17,
-                `[引导步骤][时停设置超过保底时长(${e}秒)未清除, 触发保底机制恢复时停, 请检查引导配置触发流程是否合理！]`,
-                ["步骤Id", this.Owner.Id],
-              ),
-            this.Owner.SwitchState(3);
+            this.Owner.Config.IsTimeUpAsFinish
+              ? this.Owner.SwitchState(4)
+              : (Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "Guide",
+                    16,
+                    `[引导步骤][时停设置超过保底时长(${e}秒)未清除, 触发保底机制恢复时停, 请检查引导配置触发流程是否合理！]`,
+                    ["步骤Id", this.Owner.Id],
+                  ),
+                this.Owner.SwitchState(3));
         }, e));
     }
   }
@@ -123,14 +126,14 @@ class ExecutingState extends StateBase_1.StateBase {
     var i = this.Owner.Config,
       e = i.TimeScale,
       e =
-        (e < 1 &&
-          !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          (InputDistributeController_1.InputDistributeController.RefreshInputTag(),
-          UiTimeDilation_1.UiTimeDilation.SetTimeDilationHighLevel(
-            e,
-            "GuideStep",
-          ),
-          this.tzt()),
+        (e < 1 && !ModelManager_1.ModelManager.GameModeModel.IsMulti
+          ? (InputDistributeController_1.InputDistributeController.RefreshInputTag(),
+            UiTimeDilation_1.UiTimeDilation.SetTimeDilationHighLevel(
+              e,
+              "GuideStep",
+            ),
+            this.tzt())
+          : 0 < this.Owner.OwnerGroupPriority && this.tzt(),
         i.ShowDelay);
     0 < e
       ? (this.ZJt(),
@@ -151,13 +154,13 @@ class ExecutingState extends StateBase_1.StateBase {
       e = this.Owner,
       t = ((e.IsExitingFromExecuting = !0), this.Owner.Config.TimeScale),
       t =
-        (t < 1 &&
-          !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          (this.ezt(),
-          UiTimeDilation_1.UiTimeDilation.ResetTimeDilationHighLevel(
-            "GuideStep",
-          ),
-          InputDistributeController_1.InputDistributeController.RefreshInputTag()),
+        (t < 1 && !ModelManager_1.ModelManager.GameModeModel.IsMulti
+          ? (this.ezt(),
+            UiTimeDilation_1.UiTimeDilation.ResetTimeDilationHighLevel(
+              "GuideStep",
+            ),
+            InputDistributeController_1.InputDistributeController.RefreshInputTag())
+          : 0 < this.Owner.OwnerGroupPriority && this.ezt(),
         this.ZJt(),
         e.GuideView);
     t &&
@@ -207,6 +210,7 @@ class GuideStepInfo {
   constructor(i, e) {
     (this.Id = 0),
       (this.OwnerGroup = void 0),
+      (this.OwnerGroupPriority = 0),
       (this.StateMachine = void 0),
       (this.ViewData = void 0),
       (this.GuideView = void 0),
@@ -217,6 +221,9 @@ class GuideStepInfo {
       (this.IsExitingFromExecuting = !1),
       (this.Id = i),
       (this.OwnerGroup = e),
+      (this.OwnerGroupPriority =
+        ConfigManager_1.ConfigManager.GuideConfig.GetGroup(e.Id)?.Priority ??
+        0),
       (this.ViewData = new GuideViewData_1.GuideStepViewData(this)),
       (this.StateMachine = new StateMachine_1.StateMachine(this)),
       this.StateMachine.AddState(0, InitState),
@@ -247,7 +254,7 @@ class GuideStepInfo {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Guide",
-              17,
+              16,
               "引导界面赋值失败, 当前步骤已经终止, 清理已打开的引导界面",
               ["步骤Id", this.Id],
               ["viewName", e],
@@ -257,7 +264,7 @@ class GuideStepInfo {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Guide",
-              17,
+              16,
               "引导界面赋值",
               ["步骤Id", this.Id],
               ["viewName", e],
@@ -269,7 +276,7 @@ class GuideStepInfo {
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
-          17,
+          16,
           "[引导状态切换:步骤]失败, 当前步骤已被外部终止",
           ["步骤Id", this.Id],
           ["当前状态", stateDesc[this.StateMachine.CurrentState]],
@@ -278,7 +285,7 @@ class GuideStepInfo {
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             "[引导状态切换:步骤] 成功",
             ["步骤Id", this.Id],
             ["当前状态", stateDesc[this.StateMachine.CurrentState]],
@@ -315,7 +322,7 @@ class GuideStepInfo {
             ? (Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Guide",
-                  17,
+                  16,
                   "当前打开的界面与聚焦步骤的目标界面不一致",
                   ["当前打开界面", i.Info.Name],
                   ["聚焦引导目标界面", t],
@@ -331,7 +338,7 @@ class GuideStepInfo {
                 : (Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Guide",
-                      54,
+                      53,
                       "设置引导attachedview",
                       ["当前打开界面", i.Info.Name],
                       ["界面id", i.ComponentId],
@@ -341,11 +348,20 @@ class GuideStepInfo {
               0))
         )
       : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Guide", 17, "聚焦引导步骤未配置界面名称", [
+          Log_1.Log.Warn("Guide", 16, "聚焦引导步骤未配置界面名称", [
             "步骤Id",
             e.GuideId,
           ]),
         !1);
+  }
+  RQl() {
+    return (
+      !!UiTimeDilation_1.UiTimeDilation.IsUiTimeDilated ||
+      (void 0 === UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Pop) &&
+        "BattleView" ===
+          UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal)?.Info
+            ?.Name)
+    );
   }
   lzt() {
     this.nzt ||
@@ -354,7 +370,7 @@ class GuideStepInfo {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            54,
+            53,
             "[Guide][引导触发后5秒没打开对应界面,触发保底]",
             ["步骤Id", this.Id],
           ),
@@ -403,7 +419,7 @@ class GuideStepInfo {
           : (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "聚焦引导  依附的页签界面不存在或未打开",
                 ["this.Id", this.Id],
               ),
@@ -412,11 +428,34 @@ class GuideStepInfo {
       case 1:
         return !(
           !UiManager_1.UiManager.IsViewShow("BattleView") ||
-          (UiManager_1.UiManager.IsViewOpen("GuideTipsView") &&
-            (ModelManager_1.ModelManager.GuideModel.BreakTypeViewStep(
-              this.Config.ContentType,
+          (UiManager_1.UiManager.IsViewOpen("GuideTipsView")
+            ? (ModelManager_1.ModelManager.GuideModel.BreakTypeViewStep(
+                this.Config.ContentType,
+              ),
+              1)
+            : !this.RQl() &&
+              this.Config.TimeScale < 1 &&
+              (Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Guide",
+                  64,
+                  "[Guide][有时停的【tip引导】触发时，有非战斗的页面打开，且ui未时停。引导不可触发]",
+                  ["步骤Id", this.Id],
+                ),
+              1))
+        );
+      case 3:
+        return !(
+          !this.RQl() &&
+          this.Config.TimeScale < 1 &&
+          (Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "Guide",
+              64,
+              "[Guide][有时停的【图文引导】触发时，有非战斗的页面打开，且ui未时停。引导不可触发]",
+              ["步骤Id", this.Id],
             ),
-            1))
+          1)
         );
       default:
         return !0;

@@ -12,10 +12,10 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
     super(...arguments), (this.$Uo = void 0);
   }
   OnSpawnStructureActor() {
-    var t = new UE.Transform(
+    var t = new UE.TransformDouble(
       new UE.Quat(0),
-      new UE.Vector(0),
-      new UE.Vector(1, 1, 1),
+      new UE.VectorDouble(0),
+      new UE.VectorDouble(1, 1, 1),
     );
     return (
       (this.$Uo = ActorSystem_1.ActorSystem.Get(
@@ -24,6 +24,7 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
         void 0,
       )),
       this.$Uo.SetTickableWhenPaused(!0),
+      this.$Uo.SetActorTickEnabled(!0),
       this.$Uo.Initialize(),
       this.$Uo.CameraArm.SetTickableWhenPaused(!0),
       this.$Uo
@@ -42,8 +43,8 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
       r =
         (r.SetIsDitherEffectEnable(!1),
         e.SetDitherEffect(1, 1),
-        e.Mesh.GetSocketLocation(PhotographDefine_1.SPAWN_SOCKET_NAME)),
-      e = t.GetTransform();
+        e.Mesh.D_GetSocketLocation(PhotographDefine_1.SPAWN_SOCKET_NAME)),
+      e = t.D_GetTransform();
     this.$Uo.SetPlayerSourceLocation(r),
       this.$Uo.SetCameraInitializeTransform(e),
       this.$Uo.ActivateCamera(this.CameraActor);
@@ -53,7 +54,11 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
   }
   YUo() {
     this.$Uo?.IsValid() &&
-      (this.$Uo.DeactivateCamera(), ActorSystem_1.ActorSystem.Put(this.$Uo)),
+      (this.$Uo.DeactivateCamera(),
+      ActorSystem_1.ActorSystem.Put(
+        "UiCameraPhotographerStructure.DestroyPhotographer",
+        this.$Uo,
+      )),
       (this.$Uo = void 0);
   }
   DWi() {
@@ -79,20 +84,17 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
   SetCameraTransform(t) {
     this.$Uo.SetCameraTransform(t);
   }
+  MoveUp(t) {
+    this.$Uo.MoveUp(t);
+  }
+  MoveRight(t) {
+    this.$Uo.MoveRight(t);
+  }
   AddCameraArmPitchInput(t) {
     this.$Uo.AddCameraArmPitchInput(t);
   }
   AddCameraArmYawInput(t) {
     this.$Uo.AddCameraArmYawInput(t);
-  }
-  AddPhotographerYawInput(t) {
-    this.$Uo.AddPhotographerYawInput(t);
-  }
-  AddSourceYawInput(t) {
-    this.$Uo.AddSourceYawInput(t);
-  }
-  AddSourcePitchInput(t) {
-    this.$Uo.AddSourcePitchInput(t);
   }
   SetFov(t) {
     this.$Uo.SetFov(t);
@@ -102,6 +104,9 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
   }
   ResetCamera() {
     this.$Uo.ResetCamera();
+  }
+  SetCameraLUT(t) {
+    this.$Uo.SetCameraLUT(t);
   }
 }
 exports.UiCameraPhotographerStructure = UiCameraPhotographerStructure;

@@ -2,7 +2,8 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Heartbeat = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const cpp_1 = require("cpp"),
+  Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
@@ -31,7 +32,7 @@ class Heartbeat {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Heartbeat",
-          9,
+          8,
           "开启心跳",
           ["MaxTimeOutCount", this.TimeOutMaxCount],
           ["ConnectTimeOut", this.cMi],
@@ -44,7 +45,7 @@ class Heartbeat {
       switch ((this.mMi = t)) {
         case 0:
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Heartbeat", 9, "设置心跳配置为普通状态"),
+            Log_1.Log.Debug("Heartbeat", 8, "设置心跳配置为普通状态"),
             (this.TimeOutMaxCount =
               CommonParamById_1.configCommonParamById.GetIntConfig(
                 "normal_heartbeat_timeout_reconnect",
@@ -60,7 +61,7 @@ class Heartbeat {
           break;
         case 1:
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Heartbeat", 9, "设置心跳配置为战斗状态"),
+            Log_1.Log.Debug("Heartbeat", 8, "设置心跳配置为战斗状态"),
             (this.TimeOutMaxCount =
               CommonParamById_1.configCommonParamById.GetIntConfig(
                 "battle_heartbeat_timeout_reconnect",
@@ -84,7 +85,7 @@ class Heartbeat {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Heartbeat",
-          9,
+          8,
           "结束心跳",
           ["MaxTimeOutCount", this.TimeOutMaxCount],
           ["ConnectTimeOut", this.cMi],
@@ -97,7 +98,7 @@ class Heartbeat {
     this.uMi++,
       this.hMi &&
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Heartbeat", 9, "心跳超时", ["次数", this.uMi]),
+          Log_1.Log.Info("Heartbeat", 8, "心跳超时", ["次数", this.uMi]),
         this.uMi < this.TimeOutMaxCount
           ? this.SendHeartbeatImmediately()
           : TimerSystem_1.TimerSystem.Next(() => {
@@ -113,14 +114,16 @@ class Heartbeat {
   }
   static gMi() {
     (this.aMi = 0),
-      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Net", 9, "发送心跳");
-    var t = new Protocol_1.Aki.Protocol.Cos();
-    Net_1.Net.Call(
-      1650,
-      Protocol_1.Aki.Protocol.Cos.create(t),
-      this.fMi,
-      this.cMi,
-    ),
+      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Net", 8, "发送心跳");
+    var t = new Protocol_1.Aki.Protocol.Cos(),
+      e = cpp_1.FTpSafeProxy.GetAntiData2();
+    0 < e.byteLength && (t.HLa = new Uint8Array(e)),
+      Net_1.Net.Call(
+        1650,
+        Protocol_1.Aki.Protocol.Cos.create(t),
+        this.fMi,
+        this.cMi,
+      ),
       (this.lMi = !0),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SendHeartbeat);
   }

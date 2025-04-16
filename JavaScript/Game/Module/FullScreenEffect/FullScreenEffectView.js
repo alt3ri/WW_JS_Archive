@@ -53,7 +53,10 @@ class FullScreenEffectView {
   Destroy() {
     LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.hJ),
       this.F9t.clear(),
-      ActorSystem_1.ActorSystem.Put(this.RootActor);
+      ActorSystem_1.ActorSystem.Put(
+        "FullScreenEffectView.Destroy",
+        this.RootActor,
+      );
   }
   j9t() {
     TimerSystem_1.TimerSystem.Has(this.k9t) &&

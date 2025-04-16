@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configPackageCapacityByPackageId.Init"),
-  getConfigStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configPackageCapacityByPackageId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configPackageCapacityByPackageId.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configPackageCapacityByPackageId.GetConfig(";
 exports.configPackageCapacityByPackageId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (a, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${a})`),
+      getConfigStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${a})`),
       i =
-        (n.Start(),
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (o) {
@@ -45,8 +47,8 @@ exports.configPackageCapacityByPackageId = {
         const e = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (e)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -78,8 +80,8 @@ exports.configPackageCapacityByPackageId = {
               ((i = KEY_PREFIX + `#${a})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -87,8 +89,8 @@ exports.configPackageCapacityByPackageId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    n?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

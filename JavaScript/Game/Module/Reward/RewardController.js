@@ -18,24 +18,24 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
       (RewardController.Model = RewardModel_1.RewardModel),
-      Log_1.Log.CheckInfo() && Log_1.Log.Info("Reward", 9, "初始化"),
+      Log_1.Log.CheckInfo() && Log_1.Log.Info("Reward", 8, "初始化"),
       !0
     );
   }
   static OnClear() {
-    return Log_1.Log.CheckInfo() && Log_1.Log.Info("Reward", 9, "初始化"), !0;
+    return Log_1.Log.CheckInfo() && Log_1.Log.Info("Reward", 8, "初始化"), !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(28251, this.fao);
+    Net_1.Net.Register(25043, this.fao);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(28251);
+    Net_1.Net.UnRegister(25043);
   }
   static PickUpFightDrop(o, t, n) {
     var e;
     return RewardController.pao.has(o)
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Interaction", 37, "Pick up drop has locked", [
+          Log_1.Log.Debug("Interaction", 36, "Pick up drop has locked", [
             "creatureDataId",
             o,
           ]),
@@ -43,13 +43,13 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
       : (((e = Protocol_1.Aki.Protocol.HZn.create()).DHn =
           MathUtils_1.MathUtils.NumberToLong(o)),
         RewardController.pao.add(o),
-        Net_1.Net.Call(19528, Protocol_1.Aki.Protocol.HZn.create(e), (e) => {
+        Net_1.Net.Call(20637, Protocol_1.Aki.Protocol.HZn.create(e), (e) => {
           if ((RewardController.pao.delete(o), e))
             if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
               n && n(!1),
                 ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.Q4n,
-                  18264,
+                  26006,
                 ),
                 e.Q4n ===
                   Protocol_1.Aki.Protocol.Q4n.Proto_ErrPkgCapacityNotEnough &&
@@ -85,7 +85,7 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.OnInteractDropItemSuccess,
               ),
                 Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Reward", 9, "拾取掉落返回", [
+                  Log_1.Log.Debug("Reward", 8, "拾取掉落返回", [
                     "掉落物实体Id",
                     o,
                   ]);
@@ -94,7 +94,7 @@ class RewardController extends UiControllerBase_1.UiControllerBase {
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Interaction",
-                37,
+                36,
                 "Pick up drop call send failed",
                 ["creatureDataId", o],
               ),

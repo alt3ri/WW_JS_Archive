@@ -11,7 +11,6 @@ const UE = require("ue"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  TowerData_1 = require("../TowerData"),
   TowerModel_1 = require("../TowerModel");
 class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
@@ -64,36 +63,18 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetText(1).SetUIActive(!1);
   }
   Refresh(e) {
-    var t = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
-    (this.iDo = e), (this.tDo = t.AreaNum);
-    let r = "";
-    switch (t.AreaNum) {
-      case 1:
-        r = "Text_TowerOne_Text";
-        break;
-      case 2:
-        r =
-          t.Difficulty === TowerData_1.VARIATION_RISK_DIFFICULTY
-            ? "Text_TowerThree_Text"
-            : "Text_TowerTwo_Text";
-        break;
-      case 3:
-        r =
-          t.Difficulty === TowerData_1.VARIATION_RISK_DIFFICULTY
-            ? "Text_TowerTwo_Text"
-            : "Text_TowerThree_Text";
-        break;
-      default:
-        r = "Text_TowerOne_Text";
-    }
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), r), this.nDo(t);
+    var i = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
+    (this.iDo = e),
+      (this.tDo = i.AreaNum),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.AreaName),
+      this.nDo(i);
   }
   nDo(e) {
-    var t = ModelManager_1.ModelManager.TowerModel.GetAreaAllStars(
+    var i = ModelManager_1.ModelManager.TowerModel.GetAreaAllStars(
         e.Difficulty,
         e.AreaNum,
       ),
-      r = this.GetText(3);
+      t = this.GetText(3);
     if (
       ((this.Rjt = ModelManager_1.ModelManager.TowerModel.CurrentTowerLock),
       this.GetItem(8)?.SetUIActive(!0),
@@ -103,21 +84,21 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetItem(0).SetUIActive(!0),
         this.GetItem(5).SetUIActive(!1),
         this.GetItem(6).SetUIActive(!1),
-        r.SetText("0/" + t);
-      const i = UE.Color.FromHex(TowerModel_1.LOCK_COLOR);
-      r.SetColor(i), void this.GetItem(7).SetColor(i);
+        t.SetText("0/" + i);
+      const r = UE.Color.FromHex(TowerModel_1.LOCK_COLOR);
+      t.SetColor(r), void this.GetItem(7).SetColor(r);
     } else {
       this.GetItem(0).SetUIActive(!1);
       (e = ModelManager_1.ModelManager.TowerModel.GetAreaStars(
         e.Difficulty,
         e.AreaNum,
       )),
-        (t = (r.SetText(e + "/" + t), t === e));
-      this.GetItem(5).SetUIActive(!t), this.GetItem(6).SetUIActive(t);
-      const i = UE.Color.FromHex(
-        t ? TowerModel_1.FINISH_COLOR : TowerModel_1.NORMOL_COLOR,
+        (i = (t.SetText(e + "/" + i), i === e));
+      this.GetItem(5).SetUIActive(!i), this.GetItem(6).SetUIActive(i);
+      const r = UE.Color.FromHex(
+        i ? TowerModel_1.FINISH_COLOR : TowerModel_1.NORMOL_COLOR,
       );
-      r.SetColor(i), this.GetItem(7).SetColor(i);
+      t.SetColor(r), this.GetItem(7).SetColor(r);
     }
   }
   OnBeforeDestroy() {

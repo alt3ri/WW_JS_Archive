@@ -35,7 +35,7 @@ class BulletDataCacheInfo {
   constructor() {
     (this.BulletDataMap = new Map()),
       (this.DataTable = void 0),
-      (this.DataTableExtra = void 0),
+      (this.DataTableExtraList = void 0),
       (this.EntityCount = 0);
   }
 }
@@ -54,7 +54,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
-            18,
+            17,
             "删除实体时，子弹缓存里没有对应的数据",
             ["entityId", t],
             ["modelId", l],
@@ -66,7 +66,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       BulletConfig.N9o.clear();
   }
   GetBulletData(t, e, l = !0, a = -1) {
-    var o = t.GetComponent(34),
+    var o = t.GetComponent(39),
       i = t.Id;
     let n = BulletConfig.N9o.get(i),
       r = !0,
@@ -77,39 +77,46 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
       var s = u.BulletDataMap.get(e);
       if (s) return r || (BulletConfig.N9o.set(i, n), u.EntityCount++), s;
     }
-    let C = this.F9o(a, e);
-    if (C) return C;
-    let f = void 0,
-      g = void 0,
-      B =
-        ((g = u
-          ? ((f = u.DataTable), u.DataTableExtra)
-          : ((f = o?.DtBulletInfo), o?.DtBulletInfoExtra)),
-        DataTableUtil_1.DataTableUtil.GetDataTableRow(f, e));
-    if ((B = B || DataTableUtil_1.DataTableUtil.GetDataTableRow(g, e))) {
-      const C = new BulletDataMain_1.BulletDataMain(B, e);
-      return C.CheckValid()
+    let f = this.F9o(a, e);
+    if (f) return f;
+    let C = void 0,
+      g = void 0;
+    if (u) (C = u.DataTable), (g = u.DataTableExtraList);
+    else if (
+      ((C = o?.DtBulletInfo),
+      o?.DtBulletInfoExtraList && 0 < o?.DtBulletInfoExtraList.length)
+    ) {
+      g = [];
+      for (const _ of o.DtBulletInfoExtraList) g.push(_);
+    }
+    let B = DataTableUtil_1.DataTableUtil.GetDataTableRow(C, e);
+    if (!B && g)
+      for (const d of g)
+        if ((B = DataTableUtil_1.DataTableUtil.GetDataTableRow(d, e))) break;
+    if (B) {
+      const f = new BulletDataMain_1.BulletDataMain(B, e);
+      return f.CheckValid()
         ? (GlobalData_1.GlobalData.IsPlayInEditor ||
             (u ||
-              (((u = new BulletDataCacheInfo()).DataTable = f),
-              (u.DataTableExtra = g),
+              (((u = new BulletDataCacheInfo()).DataTable = C),
+              (u.DataTableExtraList = g),
               (u.EntityCount = 0),
               BulletConfig.O9o.set(n, u)),
-            u.BulletDataMap.set(e, C),
+            u.BulletDataMap.set(e, f),
             r) ||
             (BulletConfig.N9o.set(i, n), u.EntityCount++),
-          C)
+          f)
         : void CombatLog_1.CombatLog.Error("Bullet", void 0, "子弹配置非法", [
             "",
             e,
           ]);
     }
-    if ((C = this.V9o(a, e))) return C;
+    if ((f = this.V9o(a, e))) return f;
     l &&
       ((s = t.CheckGetComponent(3).Actor), Log_1.Log.CheckError()) &&
       Log_1.Log.Error(
         "Bullet",
-        18,
+        17,
         "子弹数据未找到!",
         ["角色:", s.GetName()],
         ["子弹名称:", e],
@@ -131,7 +138,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
-            18,
+            17,
             "该子弹的DT表没有加载，请检查触发子弹的玩法是否正确",
             ["bulletDataName", e],
             ["dtType", t],
@@ -175,31 +182,31 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
     }
   }
   GetBulletHitData(e, l) {
-    if (l !== FNameUtil_1.FNameUtil.EMPTY && l !== FNameUtil_1.FNameUtil.NONE) {
-      (e = e.GetComponent(34)), (l = l.toString());
+    if (!FNameUtil_1.FNameUtil.IsNothing(l)) {
+      var e = e.GetComponent(39),
+        a = l.toString();
       let t = void 0;
+      if (
+        e &&
+        !(t = DataTableUtil_1.DataTableUtil.GetDataTableRow(
+          e.DtHitEffect,
+          a,
+        )) &&
+        e.DtHitEffectExtraList
+      )
+        for (const o of e.DtHitEffectExtraList)
+          if ((t = DataTableUtil_1.DataTableUtil.GetDataTableRow(o, a))) break;
       return (t =
-        (t =
-          e &&
-          !(t = DataTableUtil_1.DataTableUtil.GetDataTableRow(
-            e.DtHitEffect,
-            l,
-          )) &&
-          e.DtHitEffectExtra
-            ? DataTableUtil_1.DataTableUtil.GetDataTableRow(
-                e.DtHitEffectExtra,
-                l,
-              )
-            : t) ||
+        t ||
         DataTableUtil_1.DataTableUtil.GetDataTableRow(
           ConfigManager_1.ConfigManager.WorldConfig.GetCommonHitEffectData(),
-          l,
+          a,
         ));
     }
   }
   PreloadCommonBulletData() {
     this.H9o(1),
-      ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike() &&
+      ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelikeOnly() &&
         this.H9o(2);
     var t = ConfigManager_1.ConfigManager.WorldConfig.GetCommonBulletData();
     return (
@@ -222,16 +229,16 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
           (((a = new BulletDataCacheInfo()).DataTable = t),
           BulletConfig.k9o.set(e, a),
           Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info("Bullet", 18, "预加载通用子弹DT", ["dtType", e]);
+          Log_1.Log.Info("Bullet", 17, "预加载通用子弹DT", ["dtType", e]);
     }
   }
   PreloadBulletData(t) {
     var e, l;
     t?.GetComponent(0)?.IsRole() &&
       (BulletConfig.j9o.Start(),
-      (e = t.CheckGetComponent(34)),
+      (e = t.CheckGetComponent(39)),
       (l = t.CheckGetComponent(0).GetModelId()),
-      this.W9o(e.DtBulletInfo, e.DtBulletInfoExtra, l, t.Id),
+      this.W9o(e.DtBulletInfo, e.DtBulletInfoExtraList, l, t.Id),
       BulletConfig.j9o.Stop());
   }
   W9o(e, l, a, o, i = void 0) {
@@ -246,21 +253,22 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
         t = [];
         i = new Array();
         DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(e, i);
-        for (const n of i) t.push(n);
+        for (const r of i) t.push(r);
       }
-      (i = new BulletDataCacheInfo()),
-        (l =
-          ((i.DataTable = e),
-          (i.DataTableExtra = l),
-          ModelManager_1.ModelManager.CharacterModel.IsValid(o) &&
-            ((i.EntityCount = 1), BulletConfig.N9o.set(o, a)),
-          BulletConfig.O9o.set(a, i),
-          new PreloadBulletConfig()));
-      (l.ModelId = a),
-        (l.DataTable = e),
-        (l.CurIndex = 0),
-        (l.RowNames = t),
-        this.G9o ? this.q9o.push(l) : (this.G9o = l);
+      var n = new BulletDataCacheInfo();
+      if (((n.DataTable = e), l)) {
+        n.DataTableExtraList = [];
+        for (const u of l) n.DataTableExtraList.push(u);
+      }
+      ModelManager_1.ModelManager.CharacterModel.IsValid(o) &&
+        ((n.EntityCount = 1), BulletConfig.N9o.set(o, a)),
+        BulletConfig.O9o.set(a, n);
+      i = new PreloadBulletConfig();
+      (i.ModelId = a),
+        (i.DataTable = e),
+        (i.CurIndex = 0),
+        (i.RowNames = t),
+        this.G9o ? this.q9o.push(i) : (this.G9o = i);
     }
   }
   TickPreload() {
@@ -292,7 +300,7 @@ class BulletConfig extends ConfigBase_1.ConfigBase {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Bullet",
-                18,
+                17,
                 "子弹配置为空",
                 ["rowName", t],
                 ["modelId", this.G9o?.ModelId],

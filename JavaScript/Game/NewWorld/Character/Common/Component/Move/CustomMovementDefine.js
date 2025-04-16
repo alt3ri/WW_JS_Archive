@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.CUSTOM_MOVEMENTMODE_ROLL =
+  (exports.CUSTOM_MOVEMENTMODE_RIDE =
+    exports.CUSTOM_MOVEMENTMODE_KITE =
+    exports.CUSTOM_MOVEMENTMODE_ROLL =
     exports.CUSTOM_MOVEMENTMODE_SKI =
     exports.CUSTOM_MOVEMENTMODE_SOAR =
     exports.CUSTOM_MOVEMENTMODE_LEISURE =
@@ -20,5 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CUSTOM_MOVEMENTMODE_LEISURE = 6),
   (exports.CUSTOM_MOVEMENTMODE_SOAR = 7),
   (exports.CUSTOM_MOVEMENTMODE_SKI = 8),
-  (exports.CUSTOM_MOVEMENTMODE_ROLL = 9);
+  (exports.CUSTOM_MOVEMENTMODE_ROLL = 9),
+  (exports.CUSTOM_MOVEMENTMODE_KITE = 10),
+  (exports.CUSTOM_MOVEMENTMODE_RIDE = 11);
 //# sourceMappingURL=CustomMovementDefine.js.map

@@ -18,7 +18,7 @@ class Application {
   }
   static Destroy() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Core", 42, "Application.Destroy OnEditorPreEndPIE"),
+      Log_1.Log.Debug("Core", 41, "Application.Destroy OnEditorPreEndPIE"),
       Application.gU &&
         (Application.A6.clear(),
         Application.PLn.clear(),
@@ -58,14 +58,14 @@ class Application {
         i();
       }),
       Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Core", 31, "ApplicationLifeTime: " + i);
+      Log_1.Log.Debug("Core", 30, "ApplicationLifeTime: " + i);
   }),
   (Application.U6 = (i) => {
     Application.PLn.forEach((i) => {
       i();
     }),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Core", 42, "OnEditorPreEndPIE: " + i);
+        Log_1.Log.Debug("Core", 41, "OnEditorPreEndPIE: " + i);
   }),
   (Application.GmSimulatePublication = !1);
 //# sourceMappingURL=Application.js.map

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -20,6 +20,15 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsBooleanMap = void 0),
       (this.TsVectorMap = void 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsStringMap = void 0),
+      (this.TsFloatMap = void 0),
+      (this.TsIntMap = void 0),
+      (this.TsBooleanMap = void 0),
+      (this.TsVectorMap = void 0);
+  }
   InitTsVariables() {
     if (!this.IsInitTsVariables || GlobalData_1.GlobalData.IsPlayInEditor) {
       (this.IsInitTsVariables = !0),
@@ -28,35 +37,35 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
         (this.TsIntMap = new Map()),
         (this.TsBooleanMap = new Map()),
         (this.TsVectorMap = new Map());
-      for (let t = 0, o = this.StringMap.Num(); t < o; t++) {
+      for (let t = 0, i = this.StringMap.Num(); t < i; t++) {
         var s = this.StringMap.GetKey(t),
           e = this.StringMap.Get(s);
         this.TsStringMap.set(s, e);
       }
-      for (let t = 0, o = this.FloatMap.Num(); t < o; t++) {
-        var r = this.FloatMap.GetKey(t),
-          i = this.FloatMap.Get(r);
-        this.TsFloatMap.set(r, i);
+      for (let t = 0, i = this.FloatMap.Num(); t < i; t++) {
+        var o = this.FloatMap.GetKey(t),
+          r = this.FloatMap.Get(o);
+        this.TsFloatMap.set(o, r);
       }
-      for (let t = 0, o = this.IntMap.Num(); t < o; t++) {
-        var a = this.IntMap.GetKey(t),
-          h = this.IntMap.Get(a);
-        this.TsIntMap.set(a, h);
+      for (let t = 0, i = this.IntMap.Num(); t < i; t++) {
+        var h = this.IntMap.GetKey(t),
+          a = this.IntMap.Get(h);
+        this.TsIntMap.set(h, a);
       }
-      for (let t = 0, o = this.BooleanMap.Num(); t < o; t++) {
+      for (let t = 0, i = this.BooleanMap.Num(); t < i; t++) {
         var l = this.BooleanMap.GetKey(t),
-          c = this.BooleanMap.Get(l);
-        this.TsBooleanMap.set(l, c);
+          d = this.BooleanMap.Get(l);
+        this.TsBooleanMap.set(l, d);
       }
-      for (let t = 0, o = this.VectorMap.Num(); t < o; t++) {
-        var d = this.VectorMap.GetKey(t),
-          v = this.VectorMap.Get(d),
-          v = Vector_1.Vector.Create(v);
-        this.TsVectorMap.set(d, v);
+      for (let t = 0, i = this.VectorMap.Num(); t < i; t++) {
+        var v = this.VectorMap.GetKey(t),
+          n = this.VectorMap.Get(v),
+          n = Vector_1.Vector.Create(n);
+        this.TsVectorMap.set(v, n);
       }
     }
   }
-  ReceiveExecuteAI(t, o) {
+  ReceiveExecuteAI(t, i) {
     var s = t.AiController;
     s
       ? (this.InitTsVariables(),
@@ -75,38 +84,42 @@ class TsTaskBlackBoardSetValues extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1));
   }
   ExecuteStringMap(t) {
-    for (var [o, s] of this.TsStringMap)
-      BlackboardController_1.BlackboardController.SetStringValueByEntity(
+    for (var [i, s] of this.TsStringMap)
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetStringValueByEntity(
         t,
-        o,
+        i,
         s,
       );
   }
   ExecuteFloatMap(t) {
-    for (var [o, s] of this.TsFloatMap)
-      BlackboardController_1.BlackboardController.SetFloatValueByEntity(
+    for (var [i, s] of this.TsFloatMap)
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetFloatValueByEntity(
         t,
-        o,
+        i,
         s,
       );
   }
   ExecuteIntMap(t) {
-    for (var [o, s] of this.TsIntMap)
-      BlackboardController_1.BlackboardController.SetIntValueByEntity(t, o, s);
+    for (var [i, s] of this.TsIntMap)
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
+        t,
+        i,
+        s,
+      );
   }
   ExecuteBooleanMap(t) {
-    for (var [o, s] of this.TsBooleanMap)
-      BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
+    for (var [i, s] of this.TsBooleanMap)
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetBooleanValueByEntity(
         t,
-        o,
+        i,
         s,
       );
   }
   ExecuteVectorMap(t) {
-    for (var [o, s] of this.TsVectorMap)
-      BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+    for (var [i, s] of this.TsVectorMap)
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
         t,
-        o,
+        i,
         s.X,
         s.Y,
         s.Z,

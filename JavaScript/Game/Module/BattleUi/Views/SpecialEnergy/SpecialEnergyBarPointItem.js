@@ -80,6 +80,7 @@ class SpecialEnergyBarPointItem extends UiPanelBase_1.UiPanelBase {
         o.SetAnchorOffsetX(h),
           r.IsPlaying || o.SetUIActive(!0),
           o.ActivateSystem(!0),
+          (r.IsPlaying = !0),
           (r.FinishTime = e);
       }
       this.Fdt = !0;
@@ -121,9 +122,12 @@ class SpecialEnergyBarPointItem extends UiPanelBase_1.UiPanelBase {
     var i = this.GetUiNiagara(1);
     this.PNn || (this.PNn = i.NiagaraSystemReference), i.SetNiagaraSystem(t);
   }
-  OnBeforeDestroy() {
+  ResetFullEffect() {
     this.PNn &&
       (this.GetUiNiagara(1).SetNiagaraSystem(this.PNn), (this.PNn = void 0));
+  }
+  OnBeforeDestroy() {
+    this.ResetFullEffect();
   }
 }
 exports.SpecialEnergyBarPointItem = SpecialEnergyBarPointItem;

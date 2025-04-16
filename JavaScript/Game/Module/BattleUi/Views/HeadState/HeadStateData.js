@@ -42,9 +42,10 @@ class HeadStateData {
       (this.v1t = void 0),
       (this.M1t = void 0),
       (this.E1t = void 0),
+      (this.Lz = Vector_1.Vector.Create()),
       (this.S1t = Vector_1.Vector.Create()),
-      (this._Oa = Vector_1.Vector.Create()),
-      (this.uOa = Vector_1.Vector.Create()),
+      (this._ka = Vector_1.Vector.Create()),
+      (this.uka = Vector_1.Vector.Create()),
       (this.y1t = Vector_1.Vector.Create()),
       (this.I1t = void 0),
       (this.T1t = void 0),
@@ -56,6 +57,8 @@ class HeadStateData {
       (this.P1t = void 0),
       (this.x1t = void 0),
       (this.w1t = void 0),
+      (this.txl = void 0),
+      (this.bk_ = void 0),
       (this.B1t = void 0),
       (this.b1t = void 0),
       (this.q1t = void 0),
@@ -109,6 +112,9 @@ class HeadStateData {
       (this.m2 = (t, i, s) => {
         this.w1t && this.w1t(t, i, s);
       }),
+      (this.Nbr = (t, i, s) => {
+        this.txl && this.txl(t, i, s);
+      }),
       (this.Ylt = () => {
         this.B1t && this.B1t();
       }),
@@ -123,14 +129,14 @@ class HeadStateData {
       (this.E0 = t.Id),
       (this.OC = t.GetComponent(1)?.Owner),
       (this.ActorComponent = t.GetComponent(1)),
-      (this.$te = t.GetComponent(159)),
-      (this.Xte = t.GetComponent(190)),
-      (this.l1t = t.GetComponent(67)),
-      (this._1t = t.GetComponent(135)),
+      (this.$te = t.GetComponent(171)),
+      (this.Xte = t.GetComponent(203)),
+      (this.l1t = t.GetComponent(74)),
+      (this._1t = t.GetComponent(146)),
       (this.u1t = t.GetComponent(0)),
-      (this.c1t = this.Jh.GetComponent(19)),
-      (this.m1t = this.Jh.GetComponent(160)),
-      (this.d1t = this.Jh.GetComponent(117));
+      (this.c1t = this.Jh.GetComponent(21)),
+      (this.m1t = this.Jh.GetComponent(172)),
+      (this.d1t = this.Jh.GetComponent(127));
     var t = this.u1t.GetBaseInfo();
     (this.h1t = t?.HeadStateViewConfig),
       (this.C1t = !1),
@@ -143,25 +149,29 @@ class HeadStateData {
       (this.f1t = this.h1t?.ZOffset ?? 0),
       (this.p1t = this.h1t?.ForwardOffset ?? 0),
       (this.Camp = this.u1t.GetEntityCamp()),
-      (this.k1t = ModelManager_1.ModelManager.BattleUiModel.GetHeadStateHpColor(
-        this.Camp,
-      )),
-      (this.HasHideTag = this.Xte?.HasTag(-13489149)),
-      (this.HasFallDownTag = this.Xte?.HasTag(1922078392)),
-      this.k1t ||
-        (Log_1.Log.CheckError() &&
+      this.Hlt(),
+      (this.HasHideTag = this.Xte?.HasTag(-13489149) ?? !1),
+      (this.HasFallDownTag = this.Xte?.HasTag(1922078392) ?? !1),
+      this.c$e();
+  }
+  Hlt() {
+    var t = ModelManager_1.ModelManager.BattleUiModel.GetHeadStateHpColor(
+      this.Camp,
+    );
+    t
+      ? (this.k1t = t)
+      : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Battle",
-            18,
+            17,
             "[headState]该怪物阵营没有配置血条颜色",
             ["EntityId", this.E0],
-            ["PbDataId", this.u1t.GetPbDataId()],
+            ["PbDataId", this.u1t?.GetPbDataId()],
             ["Camp", this.Camp],
             ["HpColor", this.k1t],
           ),
         (this.k1t =
-          ModelManager_1.ModelManager.BattleUiModel.GetHeadStateHpColor(1))),
-      this.c$e();
+          ModelManager_1.ModelManager.BattleUiModel.GetHeadStateHpColor(1)));
   }
   Clear() {
     this.m$e(),
@@ -191,8 +201,10 @@ class HeadStateData {
       (this.P1t = void 0),
       (this.x1t = void 0),
       (this.w1t = void 0),
+      (this.txl = void 0),
       (this.B1t = void 0),
-      (this.b1t = void 0);
+      (this.b1t = void 0),
+      (this.bk_ = void 0);
   }
   c$e() {
     var t;
@@ -237,7 +249,7 @@ class HeadStateData {
           EventDefine_1.EEventName.OnSceneItemEntityHit,
           this.Ylt,
         ),
-      (t = this.Jh.GetComponent(190))?.Valid &&
+      (t = this.Jh.GetComponent(203))?.Valid &&
         ((this.v1t = t.ListenForTagAddOrRemove(242005298, this.V1t)),
         (this.v1t = t.ListenForTagAddOrRemove(1261361093, this.Yrt)),
         (this.M1t = t.ListenForTagAddOrRemove(-1109506297, this.Zrt)),
@@ -246,15 +258,22 @@ class HeadStateData {
         (this.G1t = t.ListenForTagAddOrRemove(1008164187, this.n$e)),
         (this.N1t = t.ListenForTagAddOrRemove(1996802261, this.aXe)),
         (this.O1t = t.ListenForTagAddOrRemove(1922078392, this.zrt))),
-      (t = this.Jh.GetComponent(159))?.Valid &&
+      (t = this.Jh.GetComponent(171))?.Valid &&
         (t.AddListener(
           EAttributeId.Proto_Hardness,
           this.tnt,
           "Hardness.HeadState",
         ),
         t.AddListener(EAttributeId.Proto_Rage, this.tnt, "Range.HeadState"),
-        t.AddListener(EAttributeId.Proto_Lv, this.m2, "Lv.HeadState")),
-      (t = this.Jh.GetComponent(117))?.Valid) &&
+        t.AddListener(
+          EAttributeId.Proto_RageMax,
+          this.tnt,
+          "RangeMax.HeadState",
+        ),
+        t.AddListener(EAttributeId.Proto_Lv, this.m2, "Lv.HeadState"),
+        t.AddListener(EAttributeId.Proto_Life, this.Nbr, "Life.HeadState"),
+        t.AddListener(EAttributeId.l5n, this.Nbr, "LifeMax.HeadState")),
+      (t = this.Jh.GetComponent(127))?.Valid) &&
       t.AddProgressDataChangedCallback(this.H1t);
   }
   m$e() {
@@ -307,11 +326,14 @@ class HeadStateData {
       this.G1t && (this.G1t.EndTask(), (this.G1t = void 0)),
       this.N1t && (this.N1t.EndTask(), (this.N1t = void 0)),
       this.O1t && (this.O1t.EndTask(), (this.O1t = void 0)),
-      (t = this.Jh?.GetComponent(159)) &&
+      (t = this.Jh?.GetComponent(171)) &&
         (t.RemoveListener(EAttributeId.Proto_Hardness, this.tnt),
         t.RemoveListener(EAttributeId.Proto_Rage, this.tnt),
-        t.RemoveListener(EAttributeId.Proto_Lv, this.m2)),
-      (t = this.Jh?.GetComponent(117))) &&
+        t.RemoveListener(EAttributeId.Proto_RageMax, this.tnt),
+        t.RemoveListener(EAttributeId.Proto_Lv, this.m2),
+        t.RemoveListener(EAttributeId.Proto_Life, this.Nbr),
+        t.RemoveListener(EAttributeId.l5n, this.Nbr)),
+      (t = this.Jh?.GetComponent(127))) &&
       t.RemoveProgressDataChangedCallback(this.H1t);
   }
   BindOnShieldChanged(t) {
@@ -343,6 +365,12 @@ class HeadStateData {
   }
   BindOnLevelChanged(t) {
     this.w1t = t;
+  }
+  BindOnLifeChanged(t) {
+    this.txl = t;
+  }
+  BindOnCampChanged(t) {
+    this.bk_ = t;
   }
   BindOnSceneItemEntityHit(t) {
     this.B1t = t;
@@ -396,11 +424,11 @@ class HeadStateData {
     var t;
     return (
       this.C1t
-        ? this.uOa.FromUeVector(this.tfe.GetSocketLocation(this.g1t))
+        ? this.uka.FromUeVector(this.tfe.D_GetSocketLocation(this.g1t))
         : ((t = this.ActorComponent.ActorLocationProxy),
-          this.uOa.FromUeVector(t)),
+          this.uka.FromUeVector(t)),
       this.CommonParam.DrawHeadStateSocket &&
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           GlobalData_1.GlobalData.World,
           this.S1t.ToUeVector(),
           4,
@@ -409,10 +437,12 @@ class HeadStateData {
           0,
           3,
         ),
-      this.uOa.Equals(this._Oa, UPDATE_TOLERATION) ||
-        (this._Oa.FromUeVector(this.uOa),
-        this.S1t.FromUeVector(this._Oa),
-        (this.S1t.Z += this.f1t),
+      this.uka.Equals(this._ka, UPDATE_TOLERATION) ||
+        (this._ka.FromUeVector(this.uka),
+        this.S1t.FromUeVector(this._ka),
+        this.Lz.FromUeVector(this.ActorComponent.ActorGravityDirectProxy),
+        this.Lz.MultiplyEqual(-this.f1t),
+        this.S1t.AdditionEqual(this.Lz),
         0 !== this.p1t &&
           (CameraController_1.CameraController.CameraLocation.Subtraction(
             this.S1t,
@@ -480,6 +510,9 @@ class HeadStateData {
   }
   SetOriginalHp(t) {
     this.OriginalHp = t;
+  }
+  ModifyEntityCamp(t) {
+    this.Camp !== t && ((this.Camp = t), this.Hlt(), this.bk_?.());
   }
 }
 exports.HeadStateData = HeadStateData;

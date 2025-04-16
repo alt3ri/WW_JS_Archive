@@ -27,15 +27,15 @@ class SceneInteractionLevel {
       (this.OnLevelStreamingHideCallback = void 0),
       (this.t_r = !1);
   }
-  Init(t, i, s, e, h, r, o, n, c = !1) {
+  Init(t, i, e, s, h, r, o, n, a = !1) {
     (this.LevelStreamingDynamic = t),
       (this.LevelName = i),
-      (this.Location = s),
-      (this.Rotation = e),
+      (this.Location = e),
+      (this.Rotation = s),
       (this.HandleId = h),
       (this.CurrentState = r),
       (this.HasTempState = !1),
-      (this.t_r = c),
+      (this.t_r = a),
       (this.LevelStreamingDynamic.bInitiallyLoaded = !0),
       (this.LevelStreamingDynamic.bInitiallyVisible = !0),
       this.LevelStreamingDynamic.SetShouldBeLoaded(!0),
@@ -43,30 +43,53 @@ class SceneInteractionLevel {
       (this.LoadingLevelComplete = !1),
       (this.IsDestroyed = !1),
       (this.OnLevelStreamingShowCallback = o),
+      SceneInteractionLevel.wt1 &&
+        Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Interaction",
+          72,
+          "[SceneInteractionLevel.Init]",
+          ["HandleId", h],
+          ["LevelName", i],
+          ["IsInitShow", a],
+          ["afterLoadVisible", n],
+        ),
       this.LevelStreamingDynamic.OnLevelShown.Add(() => {
-        this.i_r();
+        this.i_r("Init");
       });
   }
-  ToggleLevelVisible(t, i, s = void 0) {
+  ToggleLevelVisible(t, i, e = void 0, s = "") {
     if (this.LevelStreamingDynamic?.IsValid()) {
-      var e = this.GetAllActorsInLevel();
-      if (e && !t && i)
-        for (let t = 0, i = e.Num(); t < i; t++) {
-          var h = e.Get(t);
-          h instanceof UE.Actor && h.SetActorHiddenInGame(!0);
+      var h = this.GetAllActorsInLevel();
+      if (h && !t && i)
+        for (let t = 0, i = h.Num(); t < i; t++) {
+          var r = h.Get(t);
+          r instanceof UE.Actor && r.SetActorHiddenInGame(!0);
         }
       this.LevelStreamingDynamic.SetShouldBeVisible(t),
+        SceneInteractionLevel.wt1 &&
+          Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Interaction",
+            72,
+            "[SceneInteractionLevel.ToggleLevelVisible]",
+            ["HandleId", this.HandleId],
+            ["LevelName", this.LevelName],
+            ["Visible", t],
+            ["NeedHidden", i],
+            ["Reason", s],
+          ),
         t
-          ? ((this.OnLevelStreamingShowCallback = s),
+          ? ((this.OnLevelStreamingShowCallback = e),
             this.LevelStreamingDynamic.OnLevelShown.Clear(),
             this.LevelStreamingDynamic.OnLevelShown.Add(() => {
-              this.i_r();
+              this.i_r(s);
             }))
           : (this.InteractionActor?.TryStopCurrentState(),
-            (this.OnLevelStreamingHideCallback = s),
+            (this.OnLevelStreamingHideCallback = e),
             this.LevelStreamingDynamic.OnLevelHidden.Clear(),
             this.LevelStreamingDynamic.OnLevelHidden.Add(() => {
-              this.MFa();
+              this.q4a(s);
             }));
     }
   }
@@ -80,7 +103,7 @@ class SceneInteractionLevel {
         ? UE.KuroRenderingRuntimeBPPluginBPLibrary.GetLevelActors(t)
         : void 0;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("RenderScene", 12, "错误，流送关卡为空!!!!!!!!!!!!!");
+      Log_1.Log.Error("RenderScene", 11, "错误，流送关卡为空!!!!!!!!!!!!!");
   }
   IsStreamingComplete() {
     return this.LoadingLevelComplete;
@@ -99,21 +122,22 @@ class SceneInteractionLevel {
       (this.InteractionActor = void 0),
       (this.OnLevelStreamingShowCallback = void 0);
   }
-  Update() {
+  Update(t) {
     !this.Active ||
       this.IsDestroyed ||
       (this.LoadingLevelComplete &&
         this.InteractionActor?.IsValid() &&
-        this.InteractionActor.Update());
+        this.InteractionActor.Update(t));
   }
-  SwitchToState(t, i, s, e) {
-    return this.InteractionActor
-      ? this.o_r(t, i, s, e)
-      : ((this.HasTempState = !0),
+  SwitchToState(t, i, e, s) {
+    if (this.Active) {
+      if (this.InteractionActor) return this.o_r(t, i, e, s);
+      (this.HasTempState = !0),
         (this.TempTargetState = t),
         (this.TempNeedTransition = i),
-        (this.TempForce = s),
-        !0);
+        (this.TempForce = e);
+    } else this.CurrentState = t;
+    return !0;
   }
   GetAllActor() {
     if (this.LoadingLevelComplete && this.InteractionActor?.IsValid())
@@ -128,7 +152,7 @@ class SceneInteractionLevel {
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "RenderScene",
-              12,
+              11,
               "获取actor失败 level:" +
                 this.LevelName +
                 " 不存在key=" +
@@ -146,15 +170,15 @@ class SceneInteractionLevel {
     if (this.LoadingLevelComplete && this.InteractionActor?.IsValid())
       return this.InteractionActor.GetRefActorsByTag(t);
   }
-  o_r(t, i, s, e) {
+  o_r(t, i, e, s) {
     return (
       !!this.InteractionActor?.IsValid() &&
-      (s || this.CurrentState !== t
-        ? ((this.CurrentState = t), this.InteractionActor.SetState(t, i, e), !0)
+      (e || this.CurrentState !== t
+        ? ((this.CurrentState = t), this.InteractionActor.SetState(t, i, s), !0)
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "RenderScene",
-              14,
+              13,
               "切换状态失败，无法切换到当前状态",
               ["LevelName", this.LevelName],
             ),
@@ -176,47 +200,77 @@ class SceneInteractionLevel {
   PlaySceneEndEffect(t) {
     this.InteractionActor && this.InteractionActor.PlayIndependentEndEffect(t);
   }
-  i_r() {
-    var t;
+  i_r(t) {
+    var i;
     this.LevelStreamingDynamic
       ? ((this.LoadingLevelComplete = !0),
-        (t = this.LevelStreamingDynamic.GetLoadedLevel()),
-        (t =
+        (i = this.LevelStreamingDynamic.GetLoadedLevel()),
+        (i =
           UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSceneInteractionLevelActor(
-            t,
+            i,
           )),
-        (this.InteractionActor = t),
+        (this.InteractionActor = i),
         this.InteractionActor?.IsValid()
-          ? (this.InteractionActor.Init(this.HandleId, this.LevelName),
-            this.o_r(this.CurrentState, !1, !0, !this.t_r),
-            this.OnLevelStreamingShowCallback &&
-              this.OnLevelStreamingShowCallback(),
-            (this.OnLevelStreamingShowCallback = void 0),
-            this.HasTempState &&
-              (this.o_r(
-                this.TempTargetState,
-                this.TempNeedTransition,
-                this.TempForce,
-                !this.t_r,
+          ? (this.InteractionActor.Init(this.HandleId, this.LevelName, () => {
+              this.o_r(this.CurrentState, !1, !0, !this.t_r),
+                this.OnLevelStreamingShowCallback &&
+                  this.OnLevelStreamingShowCallback(),
+                (this.OnLevelStreamingShowCallback = void 0),
+                this.HasTempState &&
+                  (this.o_r(
+                    this.TempTargetState,
+                    this.TempNeedTransition,
+                    this.TempForce,
+                    !this.t_r,
+                  ),
+                  (this.HasTempState = !1)),
+                this.LevelStreamingDynamic?.OnLevelShown.Clear();
+            }),
+            SceneInteractionLevel.wt1 &&
+              Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Interaction",
+                72,
+                "[SceneInteractionLevel.OnLevelShow]",
+                ["HandleId", this.HandleId],
+                ["Reason", t],
+                [
+                  "LastWorldOrigin",
+                  this.LevelStreamingDynamic?.LoadedLevel?.LastWorldOrigin,
+                ],
+                ["LevelName", this.LevelName],
+              ))
+          : (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "RenderScene",
+                11,
+                "找不到关卡蓝图,查看prefab是否按照规范进行制作",
               ),
-              (this.HasTempState = !1)))
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "RenderScene",
-              12,
-              "找不到关卡蓝图,查看prefab是否按照规范进行制作",
-            ),
-        this.LevelStreamingDynamic.OnLevelShown.Clear())
+            this.LevelStreamingDynamic.OnLevelShown.Clear()))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderScene", 12, "错误，流送关卡为空!!!!!!!!!!!!!", [
+        Log_1.Log.Error("RenderScene", 11, "错误，流送关卡为空!!!!!!!!!!!!!", [
           "this.LevelName",
           this.LevelName,
         ]);
   }
-  MFa() {
+  q4a(t) {
     this.OnLevelStreamingHideCallback && this.OnLevelStreamingHideCallback(),
       (this.OnLevelStreamingHideCallback = void 0),
-      this.LevelStreamingDynamic?.OnLevelHidden.Clear();
+      this.LevelStreamingDynamic?.OnLevelHidden.Clear(),
+      SceneInteractionLevel.wt1 &&
+        Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Interaction",
+          72,
+          "[SceneInteractionLevel.OnLevelHide]",
+          ["HandleId", this.HandleId],
+          ["Reason", t],
+          [
+            "LastWorldOrigin",
+            this.LevelStreamingDynamic?.LoadedLevel?.LastWorldOrigin,
+          ],
+          ["LevelName", this.LevelName],
+        );
   }
   GetAttachActor() {
     if (this.InteractionActor?.IsValid())
@@ -229,24 +283,27 @@ class SceneInteractionLevel {
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "RenderScene",
-            40,
+            39,
             "Prefab根场景组件的移动性为Static, 将被强行设置为Movable, 后续请检查Prefab并修改",
             ["LevelName", this.LevelName],
           ),
         this.InteractionActor.RootComponent.SetMobility(2)),
-      ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
-        this.InteractionActor,
-        t,
-        2,
-        "SceneInteractionLevel.AttachToActor",
-        void 0,
-        1,
-        1,
-        1,
-        !0,
-      ),
-      this.InteractionActor.K2_SetActorRelativeLocation(
-        Vector_1.Vector.ZeroVector,
+      (t =
+        ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
+          this.InteractionActor,
+          t,
+          2,
+          "AttachToActor",
+          void 0,
+          1,
+          1,
+          1,
+          !0,
+        )),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("RenderScene", 39, "测试AttachToActor", ["ret", t]),
+      this.InteractionActor.D_K2_SetActorRelativeLocation(
+        Vector_1.Vector.ZeroVectorDouble,
         !1,
         void 0,
         !1,
@@ -261,10 +318,10 @@ class SceneInteractionLevel {
   SetCollisionActorsOwner(i) {
     if (this.InteractionActor?.IsValid()) {
       if (this.InteractionActor.CollisionActors) {
-        var s = this.InteractionActor.CollisionActors.Num();
-        for (let t = 0; t < s; t++) {
-          var e = this.InteractionActor.CollisionActors.Get(t);
-          ObjectUtils_1.ObjectUtils.IsValid(e) && e.SetOwner(i);
+        var e = this.InteractionActor.CollisionActors.Num();
+        for (let t = 0; t < e; t++) {
+          var s = this.InteractionActor.CollisionActors.Get(t);
+          ObjectUtils_1.ObjectUtils.IsValid(s) && s.SetOwner(i);
         }
       }
       if (this.InteractionActor.PartCollisionActorsAndCorrespondingTags) {
@@ -305,6 +362,10 @@ class SceneInteractionLevel {
     this.InteractionActor?.IsValid() &&
       this.InteractionActor.PlayExtraEffectOnTagsChange(t, i);
   }
+  PlayKuroSkeletalMeshDestruction(t, i) {
+    this.InteractionActor?.IsValid() &&
+      this.InteractionActor.PlayKuroSkeletalMeshDestruction(t, i);
+  }
   StopExtraEffect(t) {
     this.InteractionActor?.IsValid() &&
       this.InteractionActor.StopExtraEffectOnTagsChange(t);
@@ -337,6 +398,16 @@ class SceneInteractionLevel {
     this.InteractionActor?.IsValid() &&
       this.InteractionActor.ResumeActiveTagSequence(t, i);
   }
+  GetIsActiveTagSequencePlayReverseFromConfig(t) {
+    if (this.InteractionActor?.IsValid())
+      return this.InteractionActor.GetIsActiveTagSequencePlayReverseFromConfig(
+        t,
+      );
+  }
+  PlayActiveTagSequenceTo(t, i, e = !1) {
+    this.InteractionActor?.IsValid() &&
+      this.InteractionActor.PlayActiveTagSequenceTo(t, i, e);
+  }
   GetReceivingDecalsActors() {
     if (this.InteractionActor?.IsValid())
       return this.InteractionActor.ReceivingDecalsActors;
@@ -350,5 +421,5 @@ class SceneInteractionLevel {
       this.InteractionActor && (this.InteractionActor.Active = !0);
   }
 }
-exports.SceneInteractionLevel = SceneInteractionLevel;
+(exports.SceneInteractionLevel = SceneInteractionLevel).wt1 = !1;
 //# sourceMappingURL=SceneInteractionLevel.js.map

@@ -122,6 +122,9 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
       );
   }
   OnBeforeShow() {
+    this.Oqe();
+  }
+  Oqe() {
     let e = !0;
     for (const i of this.vei)
       for (const o of i.GetChildItemList()) {
@@ -154,7 +157,7 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
       this.GenericLayout.ClearChildren(),
       this.GenericLayout.RefreshByData(this.pei, () => {
         var e = this.GetItem(0);
-        this.GetScrollViewWithScrollbar(3).ScrollTo(e);
+        this.GetScrollViewWithScrollbar(3).ScrollTo(e), this.Oqe();
       });
   }
   RefreshCollectText() {

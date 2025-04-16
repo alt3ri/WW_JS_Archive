@@ -14,7 +14,8 @@ const UE = require("ue"),
   ActivityDescriptionTypeB_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeB"),
   ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList"),
   ActivityFunctionalTypeA_1 = require("../UniversalComponents/Functional/ActivityFunctionalTypeA"),
-  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA");
+  ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA"),
+  ActivityRoleGuideRoleItem_1 = require("./ActivityRoleGuideRoleItem");
 class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
@@ -95,7 +96,11 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
         await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(9)),
       t = this.ActivityBaseData.GetRoleResourcePath();
-    StringUtils_1.StringUtils.IsEmpty(t) || (await this.LoadPrefabAsync(t, i));
+    StringUtils_1.StringUtils.IsEmpty(t) ||
+      (await new ActivityRoleGuideRoleItem_1.ActivityRoleGuideRoleItem().CreateThenShowByPathAsync(
+        t,
+        i,
+      ));
   }
   OnStart() {
     var i = this.ActivityBaseData.LocalConfig,

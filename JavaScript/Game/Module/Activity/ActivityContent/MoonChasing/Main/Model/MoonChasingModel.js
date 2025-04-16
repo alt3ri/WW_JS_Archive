@@ -25,8 +25,8 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
       (this.y7s = (e, t) => e.Goal - t.Goal),
       (this.I7s = (e, t) =>
         e.Sort === t.Sort ? e.Type - t.Type : e.Sort - t.Sort),
-      (this.Efa = void 0),
-      (this.gwa = void 0);
+      (this.vfa = void 0),
+      (this.Pwa = void 0);
   }
   OnInit() {
     return this.InitHandbookReward(), this.InitQuestInfo(), !0;
@@ -215,36 +215,36 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
         ? [1, e.Id]
         : void 0;
   }
-  get yfa() {
+  get pfa() {
     var e;
     return (
-      void 0 === this.Efa &&
+      void 0 === this.vfa &&
         ((e = LocalStorage_1.LocalStorage.GetPlayer(
           LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingDelegation,
           0,
         )),
-        (this.Efa = e)),
-      this.Efa
+        (this.vfa = e)),
+      this.vfa
     );
   }
-  set yfa(e) {
-    this.Efa !== e &&
+  set pfa(e) {
+    this.vfa !== e &&
       (LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingDelegation,
         e,
       ),
-      (this.Efa = e),
+      (this.vfa = e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MoonChasingRefreshDelegationRedDot,
       ));
   }
   CheckDelegationRedDotState() {
     return (
-      !this.yfa || TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp() !== this.yfa
+      !this.pfa || TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp() !== this.pfa
     );
   }
   RemoveDelegationRedDot() {
-    this.yfa = TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp();
+    this.pfa = TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp();
   }
   CheckRoleRedDotState() {
     return (
@@ -340,32 +340,32 @@ class MoonChasingModel extends ModelBase_1.ModelBase {
         EventDefine_1.EEventName.MoonChasingRefreshQuestRedDot,
       );
   }
-  get fwa() {
+  get wwa() {
     var e;
     return (
-      void 0 === this.gwa &&
+      void 0 === this.Pwa &&
         ((e = LocalStorage_1.LocalStorage.GetPlayer(
           LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingMemoryChecked,
           !1,
         )),
-        (this.gwa = e ?? !1)),
-      this.gwa
+        (this.Pwa = e ?? !1)),
+      this.Pwa
     );
   }
-  set fwa(e) {
-    this.gwa !== e &&
+  set wwa(e) {
+    this.Pwa !== e &&
       (LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingMemoryChecked,
         e,
       ),
-      (this.gwa = e),
+      (this.Pwa = e),
       ActivityMoonChasingController_1.ActivityMoonChasingController.RefreshActivityRedDot());
   }
   CheckMemoryRedDotState() {
-    return !this.fwa;
+    return !this.wwa;
   }
   RemoveMemoryRedDot() {
-    this.fwa = !0;
+    this.wwa = !0;
   }
 }
 exports.MoonChasingModel = MoonChasingModel;

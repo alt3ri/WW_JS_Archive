@@ -57,11 +57,11 @@ class RoguelikeRandomEventItem extends GridProxyAbstract_1.GridProxyAbstract {
       s =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), s?.Title ?? ""),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), s?.TextId ?? ""),
-        this.SetButtonState(!this.Data.IsSelect),
-        ModelManager_1.ModelManager.RoguelikeModel.GetRoguelikeCurrency(
-          RoguelikeDefine_1.INSIDE_CURRENCY_ID,
-        ) >= (e.Cost ?? 0));
-    this.GetExtendToggle(0)?.SetSelfInteractive(s);
+        this.Data.IsSell ??
+          ModelManager_1.ModelManager.RoguelikeModel.GetRoguelikeCurrency(
+            RoguelikeDefine_1.INSIDE_CURRENCY_ID,
+          ) >= (e.Cost ?? 0));
+    this.SetButtonState(!this.Data.IsSelect && s);
   }
 }
 class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
@@ -73,7 +73,7 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
       (this.LastSelectItem = void 0),
       (this.GenericLayout = void 0),
       (this.LevelSequencePlayer = void 0),
-      (this.sSa = !1),
+      (this.YMa = !1),
       (this.OnBtnConfirm = () => {
         RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
           7,
@@ -106,7 +106,7 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
                   : this.Yho(() => {
                       this.UpdateEventList(o, !1);
                     }) ||
-                    this.sSa ||
+                    this.YMa ||
                     this.UpdateEventList(o, !1);
             },
           )?.();
@@ -173,12 +173,12 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
         TimerSystem_1.TimerSystem.Remove(this.DelayShowTimerId),
       (this.EventItemList.length = 0),
       ((this.EventActorList.length = 0), this.OpenParam.SelectCallback)?.(
-        void 0 !== this.LastSelectItem ? this.LastSelectItem.GridIndex : 0,
+        void 0 !== this.LastSelectItem ? this.LastSelectItem.Data.ConfigId : 0,
       );
   }
   UpdateEventList(i, e = 0) {
     var t = 0 === i.RogueGainEntryList.length;
-    this.SOa(!1),
+    this.yka(!1),
       t
         ? this.CloseMe()
         : (async () => {
@@ -188,11 +188,11 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
               await this.GenericLayout?.RefreshByDataAsync(
                 i.RogueGainEntryList,
               ),
-              this.SOa(!0),
+              this.yka(!0),
               this.LevelSequencePlayer?.PlaySequencePurely("ShowPanel");
           })();
   }
-  SOa(e) {
+  yka(e) {
     this.GetItem(3).SetUIActive(e), this.GetButton(2).RootUIComp.SetUIActive(e);
   }
   Yho(e) {

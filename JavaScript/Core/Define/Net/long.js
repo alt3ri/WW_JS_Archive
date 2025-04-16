@@ -37,11 +37,13 @@ function fromNumber(t, o) {
     : fromBits(t % TWO_PWR_32_DBL | 0, (t / TWO_PWR_32_DBL) | 0, o);
 }
 function fromBigInt(t, o) {
-  return fromBits(
-    Number(t % BigInt_TWO_PWR_32_DBL),
-    Number(t / BigInt_TWO_PWR_32_DBL),
-    o,
-  );
+  return t < 0
+    ? fromBigInt(-t, o).neg()
+    : fromBits(
+        Number(t % BigInt_TWO_PWR_32_DBL),
+        Number(t / BigInt_TWO_PWR_32_DBL),
+        o,
+      );
 }
 function fromBits(t, o, r) {
   return new Long(t, o, r);

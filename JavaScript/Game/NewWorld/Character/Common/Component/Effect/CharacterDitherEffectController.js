@@ -86,7 +86,7 @@ class CharacterDitherEffectController {
           (this.Ane = s.DisableActor(
             "[CharacterDitherEffectController.SetHiddenInGame]",
           )),
-            s.Entity.GetComponent(171)?.IsNpcOutShowRange ||
+            s.Entity.GetComponent(184)?.IsNpcOutShowRange ||
               (this.Pne = s.DisableCollision(
                 "[CharacterDitherEffectController.SetHiddenInGame]",
               ));

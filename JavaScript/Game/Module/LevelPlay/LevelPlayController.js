@@ -1,15 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelPlayController = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../Common/TimeUtil"),
+  GlobalData_1 = require("../../GlobalData"),
   LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  PreloadConfigStatementPart4_1 = require("../../Preload/PreloadConfigStatementPart4"),
+  UiManager_1 = require("../../Ui/UiManager"),
   ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
   ControllerWithAssistantBase_1 = require("../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
@@ -19,30 +27,49 @@ const Log_1 = require("../../../Core/Common/Log"),
   GuideLineAssistant_1 = require("../QuestNew/Controller/GuideLineAssistant"),
   ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   LevelPlayDefine_1 = require("./LevelPlayDefine"),
-  INTERVAL_TIME = 1e3,
-  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  TimeUtil_1 = require("../../Common/TimeUtil"),
   assistantMap = { [0]: void 0 };
 class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnRegisterNetEvent() {
     super.OnRegisterNetEvent(),
-      Net_1.Net.Register(26838, LevelPlayController.Opi),
-      Net_1.Net.Register(22319, LevelPlayController.kpi),
-      Net_1.Net.Register(17477, LevelPlayController.Fpi),
-      Net_1.Net.Register(24465, LevelPlayController.Vpi),
-      Net_1.Net.Register(23560, LevelPlayController.Hpi),
-      Net_1.Net.Register(25876, LevelPlayController.jpi),
-      Net_1.Net.Register(21758, LevelPlayController.r9a);
+      Net_1.Net.Register(24704, LevelPlayController.Opi),
+      Net_1.Net.Register(19355, LevelPlayController.kpi),
+      Net_1.Net.Register(27614, LevelPlayController.Fpi),
+      Net_1.Net.Register(15020, LevelPlayController.Vpi),
+      Net_1.Net.Register(19122, LevelPlayController.Hpi),
+      Net_1.Net.Register(27174, LevelPlayController.jpi),
+      Net_1.Net.Register(17464, LevelPlayController.oja);
   }
   static OnUnRegisterNetEvent() {
     super.OnRegisterNetEvent(),
-      Net_1.Net.UnRegister(26838),
-      Net_1.Net.UnRegister(22319),
-      Net_1.Net.UnRegister(17477),
-      Net_1.Net.UnRegister(24465),
-      Net_1.Net.UnRegister(23560),
-      Net_1.Net.UnRegister(25876),
-      Net_1.Net.UnRegister(21758);
+      Net_1.Net.UnRegister(24704),
+      Net_1.Net.UnRegister(19355),
+      Net_1.Net.UnRegister(27614),
+      Net_1.Net.UnRegister(15020),
+      Net_1.Net.UnRegister(19122),
+      Net_1.Net.UnRegister(27174),
+      Net_1.Net.UnRegister(17464);
+  }
+  static OnAddEvents() {
+    super.OnAddEvents(),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.AnyCharGravityDirectChanged,
+        LevelPlayController.QVc,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnUpdateSceneTeam,
+        LevelPlayController.dLe,
+      );
+  }
+  static OnRemoveEvents() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.AnyCharGravityDirectChanged,
+      LevelPlayController.QVc,
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnUpdateSceneTeam,
+        LevelPlayController.dLe,
+      ),
+      super.OnRemoveEvents();
   }
   static RegisterAssistant() {
     this.AddAssistant(
@@ -54,6 +81,9 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
   }
   static cYt(e) {
     if (this.Assistants) return this.Assistants.get(e);
+  }
+  static OnInit() {
+    return this.InitTickOptimize(60, 120), super.OnInit();
   }
   static Wpi() {
     const o = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
@@ -67,9 +97,9 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
         !r ||
           (r.CanTrack && (r.UpdateDistanceSquared(o), r.IsInTrackRange())) ||
           (r = void 0);
-        const t = e.GetTrackLevelPlayId();
+        const a = e.GetTrackLevelPlayId();
         l.forEach((e, l) => {
-          l !== t &&
+          l !== a &&
             e.CanTrack &&
             (r
               ? e.TrackPriority < r.TrackPriority ||
@@ -88,76 +118,124 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
   }
   static Kpi(e) {
     ModelManager_1.ModelManager.TrackModel.IsTracking(4, e) &&
-      MapController_1.MapController.RequestTrackMapMark(10, e, !1);
+      MapController_1.MapController.RequestTrackMapMark({
+        MarkType: 10,
+        MarkId: e,
+        Track: !1,
+      });
   }
-  static ReceiveReward(e, l) {
+  static ReceiveReward(r, o) {
     if (!ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward) {
-      var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
-      if (r) {
-        r = r.Entity.GetComponent(0).GetPbDataId();
-        const o =
+      var a = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
+      if (a) {
+        a = a.Entity.GetComponent(0).GetPbDataId();
+        const n =
           ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfoByRewardEntityId(
-            r,
+            a,
           );
-        if (o) {
-          r =
+        if (n) {
+          a =
             ConfigManager_1.ConfigManager.LevelPlayConfig.GetExchangeRewardInfo(
-              o.RewardId,
+              n.RewardId,
             );
-          if (r && r.Cost) {
-            const t = r.Cost.get(5);
-            if (LevelPlayController.Qpi(t)) {
-              r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(64);
+          if (a && a.Cost) {
+            const i = a.Cost.get(5);
+            let e =
+                !(ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward =
+                  !0),
+              l = void 0;
+            if (0 < o) {
+              const n =
+                ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(o);
+              n &&
+                "SilentArea" === n.LevelPlayType &&
+                (l =
+                  ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
+                    [3],
+                    !1,
+                  )) &&
+                0 < l.LeftUpCount &&
+                (e = !0);
+            }
+            o = 0 < a.SharedId;
+            if (a.SharedId === LevelPlayDefine_1.WEEK_SHARE_ID) {
+              var t =
+                ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeRewardShareCount(
+                  a.SharedId,
+                );
               if (
-                ((r.ShowPowerItem = !0),
-                r.SetTextArgs(t.toString()),
-                r.FunctionMap.set(2, () => {
-                  LevelPlayController.Qpi(t) &&
-                    LevelPlayController.RequestReceiveReward(e, o);
+                ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetShareMaxCount(
+                  a.SharedId,
+                ) <= t
+              )
+                return (
+                  ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                    "Week_InstanceDungeonRewardTimeNotEnough_Text",
+                  ),
+                  void (ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward =
+                    !1)
+                );
+            }
+            !e &&
+            !o &&
+            ModelManager_1.ModelManager.FunctionModel.IsOpen(10071) &&
+            CommonParamById_1.configCommonParamById
+              .GetIntArrayConfig("MultiExchangeLevelPlayType")
+              ?.includes(n.LevelPlayTypeNumber)
+              ? ((a = {
+                  SinglePowerCost: i,
+                  RewardCallBack: (e) => {
+                    LevelPlayController.RequestReceiveReward(r, e, n);
+                  },
+                  NeedResetLevelPlayModelRewardFlag: !0,
                 }),
-                (r.DestroyFunction = () => {
+                UiManager_1.UiManager.OpenView(
+                  "PowerMagnificationRewardPopView",
+                  a,
+                ))
+              : (((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                  64,
+                )).ShowPowerItem = !0),
+                (t.CanExecuteCloseFunc = (e) =>
+                  2 !== e ||
+                  ModelManager_1.ModelManager.PowerModel.IsPowerEnough(i)),
+                t.SetTextArgs(i.toString()),
+                t.FunctionMap.set(2, () => {
+                  LevelPlayController.Qpi(i) &&
+                    LevelPlayController.RequestReceiveReward(r, 1, n);
+                }),
+                (t.DestroyFunction = () => {
                   ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward =
                     !1;
                 }),
-                0 < l)
-              ) {
-                const o =
-                  ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
-                    l,
-                  );
-                o &&
-                  "SilentArea" === o.LevelPlayType &&
-                  (l =
-                    ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
-                      [3],
-                      !1,
-                    )) &&
-                  0 < l.LeftUpCount &&
-                  (r.Tip = l.GetFullTip());
-              }
-              (ModelManager_1.ModelManager.LevelPlayModel.IsInReceiveReward =
-                !0),
+                e && l && (t.Tip = l.GetFullTip()),
                 ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                  r,
-                );
-            }
+                  t,
+                ));
           }
         }
       }
     }
   }
-  static RequestReceiveReward(e, l) {
+  static RequestReceiveReward(e, l, r) {
     e = Protocol_1.Aki.Protocol.Jns.create({
       F4n: MathUtils_1.MathUtils.NumberToLong(e),
+      Cal: l,
     });
-    Net_1.Net.Call(23388, e, (e) => {
-      e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
-        ? ((e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
-            e.Q4n,
-          )),
-          ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(e))
-        : l.UpdateCanGetReward(!1);
-    });
+    (ModelManager_1.ModelManager.ActivityRegressModel.LastUnGetRewardLevelPlayId =
+      r.Id),
+      Net_1.Net.Call(18536, e, (e) => {
+        (ModelManager_1.ModelManager.ActivityRegressModel.LastUnGetRewardLevelPlayId = 0),
+          e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ((e =
+                ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
+                  e.Q4n,
+                )),
+              ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
+                e,
+              ))
+            : r.UpdateCanGetReward(!1);
+      });
   }
   static Qpi(e) {
     var l;
@@ -174,15 +252,18 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
       !1)
     );
   }
+  static KVc() {
+    var e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+      GlobalData_1.GlobalData.World,
+      UE.KuroLevelPlaySubsystem.StaticClass(),
+    );
+    e?.IsValid() && e.ProcessAllItems();
+  }
 }
-((exports.LevelPlayController = LevelPlayController).e8 = 0),
-  (LevelPlayController.OnTick = (e) => {
-    ModelManager_1.ModelManager.GeneralLogicTreeModel.IsWakeUp &&
-      ((LevelPlayController.e8 += e),
-      LevelPlayController.e8 >= INTERVAL_TIME &&
-        ((LevelPlayController.e8 -= INTERVAL_TIME), LevelPlayController.Wpi()),
-      LevelPlayController.cYt(0)?.Tick(e));
-  }),
+((exports.LevelPlayController = LevelPlayController).OnTick = (e) => {
+  ModelManager_1.ModelManager.GeneralLogicTreeModel.IsWakeUp &&
+    (LevelPlayController.Wpi(), LevelPlayController.cYt(0)?.Tick(e));
+}),
   (LevelPlayController.Opi = (e) => {
     for (const r of e.Dxs) {
       var l =
@@ -199,7 +280,7 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneGameplay",
-            19,
+            18,
             "下发已开启的玩法",
             ["玩法id", r.s5n],
             ["玩法状态", LevelPlayDefine_1.levelPlayStatusLogString[r.Y4n]],
@@ -217,7 +298,7 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
         );
     r
       ? (r.UpdateFirstPass(!0),
-        void 0 !== r.FirstRewardId &&
+        r.FirstRewardId &&
           ((l = ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
             LevelPlayDefine_1.GAMEPLAY_FIRST_PROMPT_TYPE_ID,
           )),
@@ -232,15 +313,15 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
         (l = r.LevelPlayFirstPassAction) &&
           0 < l.length &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("SceneGameplay", 34, "开始执行玩法首通动作"),
+            Log_1.Log.Info("SceneGameplay", 33, "开始执行玩法首通动作"),
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
             l,
             LevelGeneralContextDefine_1.LevelPlayContext.Create(r.Id),
           )),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("SceneGameplay", 19, "玩法首通信息推送", ["id", e]))
+          Log_1.Log.Info("SceneGameplay", 18, "玩法首通信息推送", ["id", e]))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("SceneGameplay", 19, "玩法首通时，玩法不存在", [
+        Log_1.Log.Error("SceneGameplay", 18, "玩法首通时，玩法不存在", [
           "玩法Id",
           e,
         ]);
@@ -250,12 +331,13 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
     switch (e.Y4n) {
       case 1:
       case 2:
-        ModelManager_1.ModelManager.LevelPlayModel.SafeCreateLevelPlayInfo(
-          l,
-        ).UpdateState(e.Y4n);
+        var r =
+          ModelManager_1.ModelManager.LevelPlayModel.SafeCreateLevelPlayInfo(l);
+        r.UpdateState(e.Y4n),
+          ModelManager_1.ModelManager.WorldMapModel?.CheckGamePlayIsTracked(r);
         break;
       case 0:
-        var r = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(l);
+        r = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(l);
         r &&
           (ModelManager_1.ModelManager.LevelPlayModel.LevelPlayClose(r),
           r.MarkConfig) &&
@@ -268,7 +350,7 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "SceneGameplay",
-        19,
+        18,
         "玩法状态改变",
         ["玩法id", l],
         ["玩法状态", LevelPlayDefine_1.levelPlayStatusLogString[e.Y4n]],
@@ -291,7 +373,7 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "SceneGameplay",
-          34,
+          33,
           "开始执行玩法进入动作(Finish状态下不会执行)",
         ),
       ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
@@ -299,22 +381,22 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
         LevelGeneralContextDefine_1.LevelPlayContext.Create(r.Id),
       )),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("SceneGameplay", 19, "玩法进入", ["id", l]);
+        Log_1.Log.Info("SceneGameplay", 18, "玩法进入", ["id", l]);
   }),
   (LevelPlayController.jpi = (e) => {
     e = e.s5n;
     ModelManager_1.ModelManager.LevelPlayModel.LeaveLevelPlayRange(e),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("SceneGameplay", 19, "玩法离开", ["id", e]);
+        Log_1.Log.Info("SceneGameplay", 18, "玩法离开", ["id", e]);
   }),
-  (LevelPlayController.r9a = (e) => {
+  (LevelPlayController.oja = (e) => {
     var l,
       r = e.s5n,
       e = MathUtils_1.MathUtils.LongToNumber(e.ZLs),
       e = Math.floor(e - TimeUtil_1.TimeUtil.GetServerTime());
     e <= 0 ||
       ((l =
-        PreloadConfigStatementPart4_1.configMultiTextLang.GetLocalTextNew(
+        MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "Levelplay_reflesh",
         )),
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
@@ -323,7 +405,7 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "SceneGameplay",
-          66,
+          65,
           "多人联机获奖提示",
           ["id", r],
           ["countdown", e],
@@ -337,10 +419,24 @@ class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAs
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "SceneGameplay",
-          19,
+          18,
           "玩法开启时间更新",
           ["id", l],
           ["OpenTime", e.pDs],
         );
+  }),
+  (LevelPlayController.QVc = (e, l, r) => {
+    var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    o?.Valid
+      ? o.Entity === e && LevelPlayController.KVc()
+      : Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "LevelPlay",
+          72,
+          "[OnAnyCharGravityDirectChanged] 玩家实体无效",
+        );
+  }),
+  (LevelPlayController.dLe = () => {
+    LevelPlayController.KVc();
   });
 //# sourceMappingURL=LevelPlayController.js.map

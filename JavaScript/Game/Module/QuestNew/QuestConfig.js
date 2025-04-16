@@ -1,7 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestNewConfig = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
+  AreaQuestTrackingById_1 = require("../../../Core/Define/ConfigQuery/AreaQuestTrackingById"),
   DropPackageById_1 = require("../../../Core/Define/ConfigQuery/DropPackageById"),
   GlobalConfigFromCsvByName_1 = require("../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName"),
   ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
@@ -18,10 +21,37 @@ const Log_1 = require("../../../Core/Common/Log"),
   TaskMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/TaskMarkByMarkId"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
   PublicUtil_1 = require("../../Common/PublicUtil");
 class QuestNewConfig extends ConfigBase_1.ConfigBase {
+  constructor() {
+    super(...arguments), (this.W1_ = new Map());
+  }
   OnInit() {
-    return !0;
+    return this.Q1_(), !0;
+  }
+  Q1_() {
+    if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
+      var e = UE.KismetSystemLibrary.ConvertToAbsolutePath(
+          UE.BlueprintPathsLibrary.ProjectDir(),
+        ),
+        e = UE.KismetSystemLibrary.ConvertToAbsolutePath(
+          "" + e + IGlobal_1.globalConfig.AreaQuestTracking,
+        );
+      if (UE.BlueprintPathsLibrary.FileExists(e)) {
+        var r = (0, puerts_1.$ref)(""),
+          r =
+            (UE.KuroStaticLibrary.LoadFileToString(r, e),
+            (r = (0, puerts_1.$unref)(r)),
+            JSON.parse(r));
+        for (const t of r) this.W1_.set(t.QuestId + "_" + t.NodeId, t.AreaIds);
+      } else
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Editor", 18, "globalConfigTemp文件不存在", [
+            "Path",
+            e,
+          ]);
+    }
   }
   GetTrackEffectPath(e) {
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
@@ -34,7 +64,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Quest",
-          19,
+          18,
           "找不到全局配置表的配置",
           ["全局表路径", "Source/Config/Raw/Tables/q.全局配置"],
           ["查询条件", r],
@@ -52,7 +82,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Quest",
-          19,
+          18,
           "找不到全局配置表的配置",
           ["全局表路径", "Source/Config/Raw/Tables/q.全局配置"],
           ["查询条件", r],
@@ -65,7 +95,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
       return (
         (r = DropPackageById_1.configDropPackageById.GetConfig(e)) ||
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Quest", 19, "DropPackage表配置没找到", [
+            Log_1.Log.Error("Quest", 18, "DropPackage表配置没找到", [
               "rewardId",
               e,
             ])),
@@ -77,7 +107,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 19, "ItemInfo表配置没找到", ["Id", e])),
+          Log_1.Log.Error("Quest", 18, "ItemInfo表配置没找到", ["Id", e])),
       r
     );
   }
@@ -89,7 +119,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 19, "QuestType表配置没找到", ["Id", e])),
+          Log_1.Log.Error("Quest", 18, "QuestType表配置没找到", ["Id", e])),
       r
     );
   }
@@ -98,7 +128,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 19, "QuestMainType表配置没找到", ["Id", e])),
+          Log_1.Log.Error("Quest", 18, "QuestMainType表配置没找到", ["Id", e])),
       r
     );
   }
@@ -119,11 +149,14 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
   GetQuestTypeMark(e) {
     var r = TaskMarkByMarkId_1.configTaskMarkByMarkId.GetConfig(e);
     return r
-      ? r.MarkPic
+      ? (StringUtils_1.StringUtils.IsBlank(r.MarkPic) &&
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Quest", 65, "地图标记表MarkPic为空", ["markId", e]),
+        r.MarkPic)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Quest",
-            19,
+            18,
             "地图标记表TaskMark：MarkId = 的配置找不到",
             ["markId", e],
           ),
@@ -135,7 +168,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Quest",
-        19,
+        18,
         "地图标记表TaskMark：MarkId = 的配置找不到",
         ["markId", e],
       );
@@ -148,7 +181,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     var r = QuestChapterById_1.configQuestChapterById.GetConfig(e);
     if (r) return r;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Quest", 19, "任务章节表：id = 的配置找不到", [
+      Log_1.Log.Error("Quest", 18, "任务章节表：id = 的配置找不到", [
         "chapterId",
         e,
       ]);
@@ -160,7 +193,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Quest",
-            19,
+            18,
             "找不到占用配置表的配置",
             [
               "全局表路径",
@@ -179,7 +212,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Quest",
-            19,
+            18,
             "找不到占用配置表的配置",
             [
               "全局表路径",
@@ -203,7 +236,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 19, "找不到任务配置", ["questId", e])),
+          Log_1.Log.Error("Quest", 18, "找不到任务配置", ["questId", e])),
       r
     );
   }
@@ -217,7 +250,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Quest",
-            19,
+            18,
             "找不到任务节点配置",
             ["questId", e],
             ["nodeId", r],
@@ -229,7 +262,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     var r = this.GetQuestTypeConfig(e);
     if (r) return r.TypeColor;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Quest", 19, "任务类型表：id = 的配置找不到", [
+      Log_1.Log.Error("Quest", 18, "任务类型表：id = 的配置找不到", [
         "questType",
         e,
       ]);
@@ -238,7 +271,7 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     var r = this.GetQuestTypeConfig(e);
     if (r) return r.TextColor;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Quest", 19, "任务类型表：id = 的配置找不到", [
+      Log_1.Log.Error("Quest", 18, "任务类型表：id = 的配置找不到", [
         "questType",
         e,
       ]);
@@ -250,6 +283,24 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
   GetQuestUpdateShowTime(e) {
     e = this.GetQuestMainTypeConfig(e);
     return e ? e.QuestUpdateTipsTime : 0;
+  }
+  GetQuestNodeAreaInfo(e, r) {
+    var t,
+      o = e + "_" + r;
+    return PublicUtil_1.PublicUtil.UseDbConfig()
+      ? (t = AreaQuestTrackingById_1.configAreaQuestTrackingById.GetConfig(o))
+        ? t.AreaList
+        : void (
+            Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Quest",
+              18,
+              "找不到任务节点所在的区域信息",
+              ["questId", e],
+              ["nodeId", r],
+            )
+          )
+      : this.W1_.get(o);
   }
 }
 exports.QuestNewConfig = QuestNewConfig;

@@ -15,7 +15,7 @@ class RangeItemModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "SceneGameplay",
-        30,
+        29,
         "[RangeItemModel] Box Range Id 重复",
         ["BoxRangeItem", o.GetName()],
       ),

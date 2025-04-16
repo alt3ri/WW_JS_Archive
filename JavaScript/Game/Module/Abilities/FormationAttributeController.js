@@ -3,12 +3,10 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationAttributeController = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
-  Time_1 = require("../../../Core/Common/Time"),
   FormationPropertyAll_1 = require("../../../Core/Define/ConfigQuery/FormationPropertyAll"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   Net_1 = require("../../../Core/Net/Net"),
-  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -19,13 +17,13 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
     return (
       (this.ConfigList =
         FormationPropertyAll_1.configFormationPropertyAll.GetConfigList()),
+      Net_1.Net.Register(
+        15484,
+        FormationAttributeController.FormationAttrNotify,
+      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
         this.xie,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.WorldDone,
-        this.nye,
       ),
       !0
     );
@@ -35,17 +33,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
       for (const e of this.ConfigList.values()) this.OBe(e.Id);
   }
   static OnClear() {
-    return (
-      this.kBe(),
-      void 0 !== this.FBe && TimerSystem_1.TimerSystem.Remove(this.FBe),
-      !(this.FBe = void 0)
-    );
-  }
-  static GetPredictedServerStopTime() {
-    return Time_1.Time.WorldTime + this.VBe + Net_1.Net.RttMs / 2;
-  }
-  static GetPredictedServerTime() {
-    return Time_1.Time.Now + this.HBe + Net_1.Net.RttMs / 2;
+    return this.kBe(), Net_1.Net.UnRegister(15484), !0;
   }
   static OnFormationAttrChanged(t) {
     var e,
@@ -61,11 +49,11 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
       (r.I6n = i.Max),
       (r.T6n = i.BaseMax),
       (r.L6n = i.Speed),
-      Net_1.Net.Call(15588, e, () => {}),
+      Net_1.Net.Call(25135, e, () => {}),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Battle",
-        20,
+        19,
         "发送队伍属性变化push",
         ["clientTime", i.Timestamp],
         ["data", JSON.stringify(r)],
@@ -90,6 +78,19 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
   static GetMax(t) {
     return this.Model.GetMax(t);
   }
+  static AddMaxModifier(t, e, r, i) {
+    let o = this.MaxModifiers.get(e);
+    o || this.MaxModifiers.set(e, (o = new Map())),
+      o.set(t, { Percent: r, Offset: i }),
+      this.RefreshMax(e);
+  }
+  static RemoveMaxModifier(t, e) {
+    var r = this.MaxModifiers.get(e);
+    r &&
+      (r.delete(t),
+      0 === r.size && this.MaxModifiers.delete(e),
+      this.RefreshMax(e));
+  }
   static GetBaseMax(t) {
     return this.Model.GetBaseMax(t);
   }
@@ -102,17 +103,17 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
       CharacterAttributeTypes_1.PER_TEN_THOUSAND
     );
   }
-  static AddModifier(t, e, r, i) {
-    let o = this.Modifiers.get(e);
-    o || this.Modifiers.set(e, (o = new Map())),
+  static AddSpeedModifier(t, e, r, i) {
+    let o = this.SpeedModifiers.get(e);
+    o || this.SpeedModifiers.set(e, (o = new Map())),
       o.set(t, { Type: r, Value: i }),
       this.RefreshSpeed(e);
   }
-  static RemoveModifier(t, e) {
-    var r = this.Modifiers.get(e);
+  static RemoveSpeedModifier(t, e) {
+    var r = this.SpeedModifiers.get(e);
     r &&
       (r.delete(t),
-      0 === r.size && this.Modifiers.delete(e),
+      0 === r.size && this.SpeedModifiers.delete(e),
       this.RefreshSpeed(e));
   }
   static AddBoundsLocker(t, e, r) {
@@ -140,17 +141,17 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
         ((t = () => {
           var t =
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.CheckGetComponent(
-                190,
+                203,
               ),
             e = this.Model.GetConfig(r);
           e &&
             t &&
             (t.HasAnyTag(e.ForbidIncreaseTags)
-              ? this.AddModifier("TagForbidIncrease", r, 1, -1 / 0)
-              : this.RemoveModifier("TagForbidIncrease", r),
+              ? this.AddSpeedModifier("TagForbidIncrease", r, 1, -1 / 0)
+              : this.RemoveSpeedModifier("TagForbidIncrease", r),
             t.HasAnyTag(e.ForbidDecreaseTags)
-              ? this.AddModifier("TagForbidDecrease", r, 2, -1 / 0)
-              : this.RemoveModifier("TagForbidDecrease", r));
+              ? this.AddSpeedModifier("TagForbidDecrease", r, 2, -1 / 0)
+              : this.RemoveSpeedModifier("TagForbidDecrease", r));
         }),
         this.XBe.set(r, t)),
       t
@@ -170,7 +171,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
       for (const t of this.ConfigList.values()) this.RefreshSpeed(t.Id);
   }
   static RefreshSpeed(t) {
-    var r = this.Modifiers.get(t);
+    var r = this.SpeedModifiers.get(t);
     let i = this.Model.GetBaseRate(t),
       o = i;
     var e = this.Model.GetSpeed(t);
@@ -197,6 +198,23 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
     }
     o !== e && (this.Model.SetSpeed(t, o), this.OnFormationAttrChanged(t));
   }
+  static RefreshMax(t) {
+    var r = this.MaxModifiers.get(t),
+      i = this.Model.GetBaseMax(t);
+    let o = i;
+    var e = this.Model.GetMax(t);
+    if (r) {
+      let t = 0,
+        e = 0;
+      for (const a of r.values()) (t += a.Offset), (e += a.Percent);
+      o = i + t + i * e * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
+    }
+    e !== o &&
+      (this.Model.SetMax(t, o),
+      this.OBe(t),
+      this.OnSetMax(t, o, e),
+      this.OnFormationAttrChanged(t));
+  }
   static OBe(e) {
     var r = this.Model.GetValue(e);
     let i = this.KBe.get(e);
@@ -217,23 +235,23 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
               ? Log_1.Log.CheckError() &&
                 Log_1.Log.ErrorWithStack(
                   "Event",
-                  20,
+                  19,
                   "队伍属性回调异常",
                   t,
                   ...o,
                 )
               : Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Event", 20, "队伍属性回调异常", ...o);
+                Log_1.Log.Error("Event", 19, "队伍属性回调异常", ...o);
           }
       t = this.JBe.get(e);
       if (t) {
         var a = this.GetRatio(e);
-        for (const l of t) {
-          var s = a >= l.Min && a <= l.Max;
-          if (s !== l.InInterval) {
-            l.InInterval = s;
+        for (const h of t) {
+          var s = a >= h.Min && a <= h.Max;
+          if (s !== h.InInterval) {
+            h.InInterval = s;
             try {
-              l.Func(e, s, a);
+              h.Func(e, s, a);
             } catch (t) {
               s = [
                 ["attrId", e],
@@ -244,13 +262,13 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
                 ? Log_1.Log.CheckError() &&
                   Log_1.Log.ErrorWithStack(
                     "Event",
-                    20,
+                    19,
                     "队伍属性回调异常",
                     t,
                     ...s,
                   )
                 : Log_1.Log.CheckError() &&
-                  Log_1.Log.Error("Event", 20, "队伍属性回调异常", ...s);
+                  Log_1.Log.Error("Event", 19, "队伍属性回调异常", ...s);
             }
           }
         }
@@ -258,13 +276,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
     }
   }
   static kBe() {
-    EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.WorldDone,
-      this.nye,
-    ),
-      this.YBe.clear(),
-      this.JBe.clear(),
-      this.$Be.clear();
+    this.YBe.clear(), this.JBe.clear(), this.$Be.clear();
   }
   static AddValueListener(t, e, r) {
     let i = this.YBe.get(t);
@@ -279,7 +291,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Formation",
-          20,
+          19,
           "尝试添加的阈值监听器上限小于下限",
           ["attrId", e],
           ["区间上限", i],
@@ -311,15 +323,12 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
 }
 (exports.FormationAttributeController = FormationAttributeController),
   ((_a = FormationAttributeController).ConfigList = void 0),
-  (FormationAttributeController.HBe = 0),
-  (FormationAttributeController.VBe = 0),
-  (FormationAttributeController.FBe = void 0),
   (FormationAttributeController.FormationAttrNotify = (t) => {
     var r = MathUtils_1.MathUtils.LongToNumber(t.S6n ?? 0);
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
-        20,
+        19,
         "收到队伍属性变化通知",
         ["serverTime", r],
         ["notify", JSON.stringify(t.M6n)],
@@ -336,77 +345,30 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
         _a.OnSetMax(i, a, o);
     }
   }),
-  (FormationAttributeController.TimeCheck = (t, e, r, i) => {
-    var o = _a.HBe,
-      a = _a.VBe;
-    (_a.HBe = e - Time_1.Time.Now),
-      (_a.VBe = Number(r) - Time_1.Time.WorldTime),
-      Time_1.Time.SyncTime(e, i, Number(_a.HBe), Number(_a.VBe)),
-      (3e3 < _a.VBe - a || 3e3 < _a.HBe - o) &&
-        Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn(
-          "Battle",
-          36,
-          "对时通知",
-          ["clientTime", t],
-          ["serverTime", e],
-          ["serverStopTime", r],
-          ["PredictedServerTimeOffset", _a.HBe],
-          ["PredictedServerStopTimeOffset", _a.VBe],
-        );
-  }),
-  (FormationAttributeController.TimeCheckNotify = (t) => {
-    var e = MathUtils_1.MathUtils.LongToNumber(t.D6n),
-      r = MathUtils_1.MathUtils.LongToNumber(t.pGs),
-      i = MathUtils_1.MathUtils.LongToNumber(t.MGs),
-      t = MathUtils_1.MathUtils.LongToNumber(t.Hrh);
-    _a.TimeCheck(e, r, i, t);
-  }),
-  (FormationAttributeController.TimeCheckRequest = () => {
-    var t;
-    Net_1.Net.IsServerConnected() &&
-      (((t = Protocol_1.Aki.Protocol.WCs.create()).D6n = Time_1.Time.WorldTime),
-      (t.A6n = Time_1.Time.TimeDilation),
-      (t.U6n = ModelManager_1.ModelManager.GeneralLogicTreeModel?.TimeStop
-        ? 0
-        : 1),
-      Net_1.Net.Call(22047, t, (t) => {
-        var e, r, i;
-        t &&
-          ((e = MathUtils_1.MathUtils.LongToNumber(t.D6n)),
-          (r = MathUtils_1.MathUtils.LongToNumber(t.pGs)),
-          (i = MathUtils_1.MathUtils.LongToNumber(t.MGs)),
-          (t = MathUtils_1.MathUtils.LongToNumber(t.Hrh)),
-          _a.TimeCheck(e, r, i, t));
-      }));
-  }),
-  (FormationAttributeController.Modifiers = new Map()),
+  (FormationAttributeController.SpeedModifiers = new Map()),
+  (FormationAttributeController.MaxModifiers = new Map()),
   (FormationAttributeController.PauseLocks = new Set()),
   (FormationAttributeController.XBe = new Map()),
   (FormationAttributeController.xie = (t, e) => {
     if (_a.ConfigList)
       for (const n of _a.ConfigList.values()) {
         var r = n.Id,
-          i = t.Entity.CheckGetComponent(190);
+          i = t.Entity.CheckGetComponent(203);
         if (i) {
           var o = _a.Model.GetConfig(r);
-          for (const l of o?.ForbidIncreaseTags) {
+          for (const h of o?.ForbidIncreaseTags) {
             var a = _a.QBe(r);
-            i.HasTagAddOrRemoveListener(l, a) ||
-              i.AddTagAddOrRemoveListener(l, a);
+            i.HasTagAddOrRemoveListener(h, a) ||
+              i.AddTagAddOrRemoveListener(h, a);
           }
-          for (const h of o?.ForbidDecreaseTags) {
+          for (const l of o?.ForbidDecreaseTags) {
             var s = _a.QBe(r);
-            i.HasTagAddOrRemoveListener(h, s) ||
-              i.AddTagAddOrRemoveListener(h, s);
+            i.HasTagAddOrRemoveListener(l, s) ||
+              i.AddTagAddOrRemoveListener(l, s);
           }
         }
         _a.QBe(r)();
       }
-  }),
-  (FormationAttributeController.nye = () => {
-    _a.FBe ||
-      (_a.FBe = TimerSystem_1.TimerSystem.Forever(_a.TimeCheckRequest, 3e3));
   }),
   (FormationAttributeController.KBe = new Map()),
   (FormationAttributeController.YBe = new Map()),

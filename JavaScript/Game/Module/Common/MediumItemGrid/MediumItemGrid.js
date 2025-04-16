@@ -7,13 +7,19 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   ItemGridBase_1 = require("../ItemGridBase/ItemGridBase"),
   MediumItemGridBuffIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridBuffIconComponent"),
+  MediumItemGridChangeAbleComponent_1 = require("./MediumItemGridComponent/MediumItemGridChangeAbleComponent"),
   MediumItemGridCheckTickComponent_1 = require("./MediumItemGridComponent/MediumItemGridCheckTickComponent"),
+  MediumItemGridComposeTag_1 = require("./MediumItemGridComponent/MediumItemGridComposeTag"),
   MediumItemGridCoolDownComponent_1 = require("./MediumItemGridComponent/MediumItemGridCoolDownComponent"),
   MediumItemGridCostComponent_1 = require("./MediumItemGridComponent/MediumItemGridCostComponent"),
+  MediumItemGridDangoPluginIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridDangoPluginIconComponent"),
+  MediumItemGridDangoRoleHeadComponent_1 = require("./MediumItemGridComponent/MediumItemGridDangoRoleHeadComponent"),
   MediumItemGridDevelopRewardComponent_1 = require("./MediumItemGridComponent/MediumItemGridDevelopRewardComponent"),
   MediumItemGridDisableComponent_1 = require("./MediumItemGridComponent/MediumItemGridDisableComponent"),
   MediumItemGridElementComponent_1 = require("./MediumItemGridComponent/MediumItemGridElementComponent"),
+  MediumItemGridEmptyComponent_1 = require("./MediumItemGridComponent/MediumItemGridEmptyComponent"),
   MediumItemGridEmptySlotComponent_1 = require("./MediumItemGridComponent/MediumItemGridEmptySlotComponent"),
+  MediumItemGridHalfAreaComponent_1 = require("./MediumItemGridComponent/MediumItemGridHalfAreaComponent"),
   MediumItemGridLevelAndLockComponent_1 = require("./MediumItemGridComponent/MediumItemGridLevelAndLockComponent"),
   MediumItemGridMainVisionComponent_1 = require("./MediumItemGridComponent/MediumItemGridMainVisionComponent"),
   MediumItemGridNewFlagComponent_1 = require("./MediumItemGridComponent/MediumItemGridNewFlagComponent"),
@@ -30,8 +36,10 @@ const UE = require("ue"),
   MediumItemGridTeamIconComponent_1 = require("./MediumItemGridComponent/MediumItemGridTeamIconComponent"),
   MediumItemGridTimeFlagComponent_1 = require("./MediumItemGridComponent/MediumItemGridTimeFlagComponent"),
   MediumItemGridVisionFetterComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionFetterComponent"),
+  MediumItemGridVisionGreenSelectComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionGreenSelectComponent"),
   MediumItemGridVisionRoleHeadComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionRoleHeadComponent"),
   MediumItemGridVisionSlotComponent_1 = require("./MediumItemGridComponent/MediumItemGridVisionSlotComponent"),
+  MediumItemGridWeeklyRogueTagComponent_1 = require("./MediumItemGridComponent/MediumItemGridWeeklyRogueTagComponent"),
   TRIAL_ROLE_ID = 1e4;
 class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   constructor() {
@@ -64,7 +72,11 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       [4, UE.UIItem],
       [5, UE.UIItem],
       [6, UE.UIExtendToggle],
+      [7, UE.UIItem],
     ];
+  }
+  OnSetUnderTextAdditionItem() {
+    return this.GetItem(7);
   }
   OnSetBottomAdditionItem() {
     return this.GetItem(5);
@@ -81,6 +93,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     this.ClearVisibleComponent(),
       this.ClearComponentList(),
       1 === e.Type && this._wt(e),
+      5 === e.Type && this.xV_(e),
       4 === e.Type && this.uwt(e),
       3 === e.Type && this.cwt(e),
       2 === e.Type && this.mwt(e),
@@ -93,9 +106,19 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       this.UTt(void 0),
       this.dwt(void 0),
       this.Cwt(!1),
-      this.gwt(!1),
+      this.SetBottomTextVisible(!1),
       this.SetExtendToggleEnable(!0),
       this.ApplyEmptyDisplay(e);
+  }
+  xV_(e) {
+    (this.Data = e.Data),
+      this.UTt(void 0),
+      this.dwt(void 0),
+      this.Cwt(!1),
+      this.SetBottomTextVisible(!1),
+      this.SetExtendToggleEnable(!0),
+      this.SetBottomTextVisible(!1),
+      this.SetOnlyEmptyVisible(!0, e);
   }
   uwt(e) {
     var i = e.StarLevel,
@@ -106,20 +129,24 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       d = e.IsDeprecate,
       r = e.Level,
       s = e.IsLevelTextUseChangeColor,
-      h = e.CoolDown,
-      u = e.TotalCoolDown,
+      u = e.CoolDown,
+      h = e.TotalCoolDown,
       p = e.IsProhibit,
       I = e.ReduceButtonInfo,
-      C = e.IsCheckTick,
+      C = e.IsGreenSelected,
+      a = e.IsCheckTick,
       M = e.IsTimeFlagVisible,
-      a = e.IsReceivedFlagVisible,
+      G = e.IsReceivedFlagVisible,
       l = e.RoleHeadInfo,
-      G = e.SortIndex,
-      _ = e.IsDisable,
-      v = e.IsMainVisionVisible,
-      S = e.VisionFetterGroupId,
+      _ = e.SortIndex,
+      S = e.IsDisable,
+      g = e.IsMainVisionVisible,
+      v = e.VisionFetterGroupId,
       c = e.VisionRoleHeadInfo,
-      g =
+      R = e.DangoRoleHeadInfo,
+      y = e.ComposeIconTag,
+      T = e.ChangeAble,
+      q =
         3 ===
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
           e.ItemConfigId,
@@ -127,20 +154,24 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     this.SetStartLevel(i),
       this.SetBuffSprite(o),
       this.SetRedDotVisible(m),
-      this.SetLevelAndLock(r, n, s, g, d),
-      this.SetCoolDown(h, u),
+      this.SetLevelAndLock(r, n, s, q, d),
+      this.SetCoolDown(u, h),
       this.SetIsProhibit(p),
       this.SetReduceButton(I),
-      this.SetCheckTickVisible(C),
+      this.SetGreenSelected(C),
+      this.SetCheckTickVisible(a),
       this.SetTimeFlagVisible(M),
-      this.SetReceivedFlagVisible(a),
+      this.SetReceivedFlagVisible(G),
       this.SetRoleHead(l),
-      this.SetSortIndex(G),
-      this.SetIsDisable(_),
-      this.SetIsMainVision(v),
+      this.SetSortIndex(_),
+      this.SetIsDisable(S),
+      this.SetIsMainVision(g),
       this.SetNewVisible(!m && t),
-      this.SetVisionFetterGroup(S),
+      this.SetVisionFetterGroup(v),
       this.SetVisionRoleHead(c),
+      this.SetComposeIcon(y),
+      this.SetComposeChangeAble(T),
+      this.SetDangoRoleHead(R),
       this.ApplyPropBaseDisplay(e);
   }
   cwt(e) {
@@ -152,16 +183,16 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       d = e.IsDeprecate,
       r = e.IsPhantomLock,
       s = e.DevelopRewardInfo,
-      h = e.IsRedDotVisible,
-      u = e.Level,
+      u = e.IsRedDotVisible,
+      h = e.Level,
       p = e.IsLevelTextUseChangeColor,
       I = e.FetterGroupId,
       C = e.VisionRoleHeadInfo;
     this.SetStartLevel(i),
-      this.SetRedDotVisible(h),
+      this.SetRedDotVisible(u),
       this.SetIsMainVision(t),
       this.SetRoleHead(o),
-      this.SetLevelAndLock(u, n, p, !0, d),
+      this.SetLevelAndLock(h, n, p, !0, d),
       this.SetIsPhantomLock(r),
       this.SetDevelopRewardInfo(s),
       this.SetNewVisible(m),
@@ -179,12 +210,49 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       this.SetLevelAndLock(e.Level, e.IsShowLock, e.IsLevelTextUseChangeColor),
       this.SetNewVisible(e.IsNewVisible),
       this.fwt(e.IsShowCost, e.ItemConfigId),
+      this.SetHalfAreaInfo(e.HalfAreaInfo),
+      this.SetWeeklyRogueTag(e.IsShowWeeklyRogueTag),
       this.ApplyCharacterBaseDisplay(e);
+  }
+  SetWeeklyRogueTag(e) {
+    this.RefreshComponent(
+      MediumItemGridWeeklyRogueTagComponent_1.MediumItemGridWeeklyRogueTagComponent,
+      e,
+      e,
+    );
+  }
+  SetGreenSelected(e) {
+    this.RefreshComponent(
+      MediumItemGridVisionGreenSelectComponent_1.MediumItemGridVisionGreenSelectComponent,
+      e,
+      e,
+    );
+  }
+  SetDangoRoleHead(e) {
+    this.RefreshComponent(
+      MediumItemGridDangoRoleHeadComponent_1.MediumItemGridDangoRoleHeadComponent,
+      void 0 !== e && 0 < e.DangoConfigId,
+      e,
+    );
+  }
+  SetDangoPluginIcon(e) {
+    this.RefreshComponent(
+      MediumItemGridDangoPluginIconComponent_1.MediumItemGridDangoPluginIconComponent,
+      !0,
+      e,
+    );
   }
   SetBuffSprite(e) {
     this.RefreshComponent(
       MediumItemGridBuffIconComponent_1.MediumItemGridBuffIconComponent,
       void 0 !== e && 0 !== e,
+      e,
+    );
+  }
+  SetIsPhantomLock(e) {
+    this.RefreshComponent(
+      MediumItemGridPhantomLockComponent_1.MediumItemGridPhantomLockComponent,
+      e,
       e,
     );
   }
@@ -231,17 +299,24 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       e,
     );
   }
+  SetComposeIcon(e) {
+    this.RefreshComponent(
+      MediumItemGridComposeTag_1.MediumItemGridComposeTag,
+      void 0 !== e,
+      e,
+    );
+  }
+  SetComposeChangeAble(e) {
+    this.RefreshComponent(
+      MediumItemGridChangeAbleComponent_1.MediumItemGridChangeAbleComponent,
+      e,
+      e,
+    );
+  }
   SetVisionSlotState(e) {
     this.RefreshComponent(
       MediumItemGridVisionSlotComponent_1.MediumItemGridVisionSlotComponent,
       void 0 !== e && 0 < e.length,
-      e,
-    );
-  }
-  SetIsPhantomLock(e) {
-    this.RefreshComponent(
-      MediumItemGridPhantomLockComponent_1.MediumItemGridPhantomLockComponent,
-      e,
       e,
     );
   }
@@ -354,6 +429,16 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
         ? i.BindEmptySlotButtonCallback(this.OnClickedEmptySlotButton)
         : i.UnBindEmptySlotButtonCallback());
   }
+  SetOnlyEmptyVisible(e, i) {
+    e = this.RefreshComponent(
+      MediumItemGridEmptyComponent_1.MediumItemGridEmptyComponent,
+      e,
+      e,
+    );
+    e &&
+      ((e.OnClickedCallback = i.OnClickedCallback),
+      e.SetClickable(!!i.IsClickable));
+  }
   Cwt(e) {
     this.GetSprite(3).SetUIActive(e);
   }
@@ -412,7 +497,8 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       o =
         !StringUtils_1.StringUtils.IsEmpty(i) ||
         !StringUtils_1.StringUtils.IsEmpty(t);
-    this.gwt(o), o && (this.SetBottomTextId(i, e), this.SetBottomText(t));
+    this.SetBottomTextVisible(o),
+      o && (this.SetBottomTextId(i, e), this.SetBottomText(t));
   }
   ApplyPropBaseDisplay(e) {
     var i = e.ItemConfigId,
@@ -420,13 +506,19 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       o = e.BottomText,
       m = e.BottomTextParameter,
       n = e.SpriteIconPath,
+      d = ((this.Data = e.Data), this.GetTexture(1)),
+      r =
+        ConfigManager_1.ConfigManager.InventoryConfig?.GetItemDataTypeByConfigId(
+          e.ItemConfigId,
+        ),
       d =
-        ((this.Data = e.Data),
-        e.IconPath
-          ? ((d = this.GetTexture(1)),
-            this.SetTextureByPath(e.IconPath, d),
-            d?.SetUIActive(!0))
-          : this.UTt(i),
+        (e.IsIconHide
+          ? d?.SetUIActive(!1)
+          : e.IconPath
+            ? (this.SetTextureByPath(e.IconPath, d), d?.SetUIActive(!0))
+            : 13 === r
+              ? this.sL1(i)
+              : this.UTt(i),
         this.SetIconSprite(n),
         e.QualityId
           ? this.SetQualityIconById(
@@ -438,7 +530,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
           : this.dwt(i),
         !StringUtils_1.StringUtils.IsEmpty(t) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
-    this.gwt(d),
+    this.SetBottomTextVisible(d),
       d && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
       this.Cwt(!0);
@@ -465,7 +557,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
             : this.dwt(i),
         !StringUtils_1.StringUtils.IsEmpty(t) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
-    this.gwt(n),
+    this.SetBottomTextVisible(n),
       n && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
       this.Cwt(!0);
@@ -475,21 +567,22 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     var t = e.BottomTextId,
       o = e.BottomText,
       m = e.BottomTextParameter,
+      n = e.SkinId,
       e = ((this.Data = e.Data), this.GetTexture(1)),
-      n =
+      d =
         (i > TRIAL_ROLE_ID &&
-          ((n = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(i)),
-          (i = n.ParentId)),
-        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)),
-      n = n.RoleHeadIconLarge,
-      n =
-        (this.SetRoleIcon(n, e, i),
+          ((d = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(i)),
+          (i = d.ParentId)),
+        ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(n)),
+      d = d.RoleHeadIconLarge,
+      d =
+        (this.SetRoleSkinIcon(d, e, n),
         this.dwt(i),
         e?.SetUIActive(!0),
         !StringUtils_1.StringUtils.IsEmpty(t) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
-    this.gwt(n),
-      n && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
+    this.SetBottomTextVisible(d),
+      d && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
       this.Cwt(!0);
   }
@@ -499,6 +592,10 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       ? i.SetUIActive(!1)
       : (this.rwt !== e && ((this.rwt = e), this.SetItemIcon(i, e)),
         i.SetUIActive(!0));
+  }
+  sL1(e) {
+    this.SetDangoPluginIcon({ PluginItemId: e }),
+      this.GetTexture(1)?.SetUIActive(!1);
   }
   pwt(e) {
     var i = this.GetTexture(1);
@@ -513,15 +610,27 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     var i = this.GetSprite(0);
     void 0 === e
       ? i.SetUIActive(!1)
-      : (this.nwt !== e &&
-          ((this.nwt = e),
-          this.SetItemQualityIcon(
-            i,
-            e,
-            void 0,
-            "MediumItemGridQualitySpritePath",
-          )),
-        i.SetUIActive(!0));
+      : (this.nwt !== e && ((this.nwt = e), this.MT1(e)), i.SetUIActive(!0));
+  }
+  MT1(e) {
+    var i = this.GetSprite(0);
+    13 ===
+    ConfigManager_1.ConfigManager.InventoryConfig?.GetItemDataTypeByConfigId(e)
+      ? this.ET1(e)
+      : this.SetItemQualityIcon(
+          i,
+          e,
+          void 0,
+          "MediumItemGridQualitySpritePath",
+        );
+  }
+  ET1(e) {
+    var i = this.GetSprite(0),
+      e =
+        ConfigManager_1.ConfigManager.DangoAbyssConfig.GetAbyssQualityByPluginItemId(
+          e,
+        );
+    this.SetSpriteByPath(e.MediumItemGridQualitySpritePath, i, !0);
   }
   vwt(e) {
     var i = this.GetSprite(0);
@@ -531,7 +640,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       ? i.SetUIActive(!1)
       : (this.SetSpriteByPath(e, i, !0), i.SetUIActive(!0));
   }
-  gwt(e) {
+  SetBottomTextVisible(e) {
     var i = this.GetText(2);
     i.IsUIActiveSelf() !== e && i.SetUIActive(e);
   }
@@ -570,6 +679,14 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   }
   SetBottomTextColor(e) {
     this.GetText(2).SetColor(UE.Color.FromHex(e));
+  }
+  SetHalfAreaInfo(e) {
+    var i = !!e;
+    this.RefreshComponent(
+      MediumItemGridHalfAreaComponent_1.MediumItemGridHalfAreaComponent,
+      i,
+      e,
+    );
   }
 }
 exports.MediumItemGrid = MediumItemGrid;

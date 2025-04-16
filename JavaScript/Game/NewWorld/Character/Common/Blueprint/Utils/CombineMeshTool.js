@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CombineMeshTool = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
   ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils");
 class CombineMeshTool {
   static LoadDaConfig(t, e, i, s) {
@@ -50,7 +51,7 @@ class CombineMeshTool {
           r.SetSkeletalMesh(o, !0),
           r.SetMasterPoseComponent(s, !1);
         o = r.K2_AttachToComponent(s, h, 2, 2, 0, !0);
-        if (((r.CastShadow = !1), o))
+        if (((r.CastShadow = !1), (r.bForceCastRaytracingShadow = !0), o))
           return (
             a && r.K2_SetRelativeTransform(i, !1, void 0, !1),
             r.ComponentTags.Add(this.OKo),
@@ -65,28 +66,35 @@ class CombineMeshTool {
     t &&
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Skel_Hair_Color)).A = 1),
-      this.FKo(t, o.SkinDyeColor, e));
+      this.FKo(t, o.SkinDyeColor, e),
+      (i = o.Hair_Mat)?.IsValid()) &&
+      this.dJl(t, i);
   }
   static wKo(t, e, i, s, o) {
     e = this.NKo(o, t, e, i, s, this.VKo);
     e &&
       (t.IsA(UE.BP_BaseNPC_C.StaticClass()) && (t.CombineFaceMesh = e),
       o.bDyeColor) &&
-      this.FKo(e, o.SkinDyeColor);
+      (this.FKo(e, o.SkinDyeColor), (i = o.Face_Mat)?.IsValid()) &&
+      this.dJl(e, i);
   }
   static BKo(t, e, i, s, o) {
     t = this.NKo(o, t, e, i, s, this.HKo);
     t &&
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Skel_BodyUp_Color)).A = 1),
-      this.FKo(t, o.SkinDyeColor, e));
+      this.FKo(t, o.SkinDyeColor, e),
+      (i = o.Skel_BodyUp_Mat)?.IsValid()) &&
+      this.dJl(t, i);
   }
   static bKo(t, e, i, s, o) {
     t = this.NKo(o, t, e, i, s, this.jKo);
     t &&
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Skel_BodyDown_Color)).A = 1),
-      this.FKo(t, o.SkinDyeColor, e));
+      this.FKo(t, o.SkinDyeColor, e),
+      (i = o.Skel_BodyDown_Mat)?.IsValid()) &&
+      this.dJl(t, i);
   }
   static qKo(t, e, i, s, o) {
     t = this.NKo(o, t, e, i, s, this.WKo);
@@ -94,7 +102,9 @@ class CombineMeshTool {
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Body_Dyecolor01)).A = 1),
       ((i = new UE.LinearColor(o.Body_Dyecolor02)).A = 1),
-      this.FKo(t, o.SkinDyeColor, e, i));
+      this.FKo(t, o.SkinDyeColor, e, i),
+      (s = o.Skel_Body_Mat)?.IsValid()) &&
+      this.dJl(t, s);
   }
   static FKo(i, s, o, h) {
     var a = i.GetMaterials();
@@ -107,20 +117,31 @@ class CombineMeshTool {
         r.SetVectorParameterValue(this.XKo, h);
     }
   }
+  static dJl(e, t) {
+    e.SetMaterial(0, t);
+    t =
+      UE.KismetSystemLibrary.GetPathName(t).split(".")[0] +
+      "_OL." +
+      UE.KismetSystemLibrary.GetPathName(t).split(".")[1] +
+      "_OL";
+    ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.MaterialInstance, (t) => {
+      e.SetMaterial(1, t);
+    });
+  }
   static GKo(i, s, o, h, a) {
     if (h && o && 0 !== o.Num())
       if (s.DoesSocketExist(h))
         for (let t = 0, e = o.Num(); t < e; t++) {
           var r = o.Get(t),
-            n = r.Transform,
+            _ = r.Transform,
             r = r.Mesh;
-          this.NKo(a, i, n, s, r, h, !0);
+          this.NKo(a, i, _, s, r, h, !0);
         }
       else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            30,
+            29,
             "目标不存在挂点",
             ["Actor", i.GetName()],
             ["Socket", h],

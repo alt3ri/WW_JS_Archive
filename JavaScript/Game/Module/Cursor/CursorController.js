@@ -23,21 +23,21 @@ class CursorController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiCommon",
-        28,
+        27,
         "InitMouseByMousePos",
         ["viewPortMousePosition.X", r.X],
         ["viewPortMousePosition.Y", r.Y],
       ),
       (0 < r.X || 0 < r.Y) &&
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCommon", 28, "Mouse在屏幕内"),
+          Log_1.Log.Info("UiCommon", 27, "Mouse在屏幕内"),
         (o = UE.KuroStaticLibrary.GetGameViewPort()),
         UE.KuroStaticLibrary.DoGameViewPortMouseEnter(o, r.X, r.Y));
   }
   static SetWindowCursorStyle() {
     if (
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("UiCommon", 28, "SetWindowCursorStyle"),
+        Log_1.Log.Debug("UiCommon", 27, "SetWindowCursorStyle"),
       Info_1.Info.IsInKeyBoard())
     ) {
       let o = "";

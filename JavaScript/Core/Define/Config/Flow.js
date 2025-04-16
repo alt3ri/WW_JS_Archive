@@ -29,8 +29,14 @@ class Flow {
     );
   }
   id(t) {
-    var s = this.J7.__offset(this.z7, 4);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 4),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   dungeonid() {
     var t = this.J7.__offset(this.z7, 6);

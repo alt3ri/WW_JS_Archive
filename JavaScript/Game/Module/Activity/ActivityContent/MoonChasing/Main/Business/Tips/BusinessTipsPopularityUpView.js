@@ -17,7 +17,7 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.ExpTweener = void 0),
       (this.Delegate = void 0),
-      (this.ofa = void 0),
+      (this.efa = void 0),
       (this.PopularityValue = 0),
       (this.P1a = 0),
       (this.Oko = 0),
@@ -59,34 +59,34 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
     ]),
       (this.BtnBindInfo = [[4, this.Mke]]);
   }
-  Wpa() {
+  Qpa() {
     var i;
-    this.ofa.LastPopularity >= this.ofa.CurrentPopularity &&
+    this.efa.LastPopularity >= this.efa.CurrentPopularity &&
       (((i = new UiViewData_1.UiViewData()).StartSequenceName = "Start01"),
       this.UiViewSequence?.SetSequenceName(i));
   }
   async OnBeforeStartAsync() {
     var i, t;
-    (this.ofa = this.OpenParam),
-      void 0 === this.ofa
+    (this.efa = this.OpenParam),
+      void 0 === this.efa
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "MoonChasing",
-            59,
+            58,
             "BusinessTipsPopularityUpView无效输入",
           )
-        : (this.Wpa(),
+        : (this.Qpa(),
           (this.b1a = this.GetSprite(8)),
           (this.w1a = this.GetSprite(7)),
           (this.B1a = this.GetText(6)),
           (this.Delegate = (0, puerts_1.toManualReleaseDelegate)(this.OAn)),
           (i =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPopularityConfigByValue(
-              this.ofa.CurrentPopularity,
+              this.efa.CurrentPopularity,
             )),
           (t =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetPopularityConfigByValue(
-              this.ofa.LastPopularity,
+              this.efa.LastPopularity,
             )),
           (this.PopularityValue = t.PopularityValue),
           (this.P1a = i.Id - t.Id + 1),
@@ -99,10 +99,10 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
   }
   OnAfterPlayStartSequence() {
     this.UiViewSequence?.PlaySequencePurely("PopStart");
-    var i = this.ofa.CurrentPopularity,
-      t = this.ofa.LastPopularity,
+    var i = this.efa.CurrentPopularity,
+      t = this.efa.LastPopularity,
       i = i - t;
-    this.Qpa(), 0 < i && this.O1a(t);
+    this.Kpa(), 0 < i && this.O1a(t);
   }
   OnBeforeDestroy() {
     this.Delegate &&
@@ -116,7 +116,7 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
   }
   async ooa(i) {
     var t = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
-        this.ofa.RoleId,
+        this.efa.RoleId,
       ),
       t =
         (await this.SetSpineAssetByPath(
@@ -133,7 +133,7 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
     await this.SetTextureAsync(i, this.GetTexture(13));
   }
   soa() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), this.ofa.DialogName);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), this.efa.DialogName);
   }
   aoa(i) {
     this.GetItem(9)?.SetUIActive(i),
@@ -141,7 +141,7 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
       this.GetItem(12)?.SetUIActive(i);
   }
   XNi() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), this.ofa.Title);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), this.efa.Title);
   }
   hoa() {
     var i =
@@ -151,8 +151,8 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
           this.GetText(1),
           i.PopularityRating,
         ),
-        this.ofa.CurrentPopularity),
-      t = this.ofa.LastPopularity,
+        this.efa.CurrentPopularity),
+      t = this.efa.LastPopularity,
       i = i - t;
     this.GetText(5)?.SetUIActive(0 < i),
       0 < i && this.GetText(5)?.SetText("+" + i),
@@ -203,7 +203,7 @@ class BusinessTipsPopularityUpView extends UiViewBase_1.UiViewBase {
   gzi() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  Qpa() {
+  Kpa() {
     this.GetButton(4)?.RootUIComp.SetUIActive(!0),
       this.UiViewSequence?.PlaySequencePurely("BtnStart");
   }

@@ -1,63 +1,49 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiTaskPlayMontage = void 0);
-const BasePerformComponent_1 = require("../../../NewWorld/Character/Common/Component/BasePerformComponent"),
-  LevelAiTask_1 = require("../LevelAiTask");
+const LevelAiTask_1 = require("../LevelAiTask");
 class LevelAiTaskPlayMontage extends LevelAiTask_1.LevelAiTask {
   constructor() {
-    super(...arguments),
-      (this.bTe = 0),
-      (this.qTe = !1),
-      (this.GTe = !1),
-      (this.NTe = 0),
-      (this.OTe = 0),
-      (this.kTe = !1);
+    super(...arguments), (this.NTe = 0), (this.OTe = 0), (this.ZV_ = -1);
   }
   ExecuteTask() {
     const t = this.Params;
     if (!t) return 1;
-    (this.NTe = t.LoopDuration ?? 0),
-      (this.OTe = t.RepeatTimes ?? 0),
-      (this.qTe = void 0 !== this.NTe && 0 !== this.NTe),
-      (this.GTe = -1 === this.NTe || -1 === this.OTe);
+    (this.NTe = t.LoopDuration ?? 0), (this.OTe = t.RepeatTimes ?? 0);
     const e = this.CreatureDataComponent.Entity;
-    var s = e.GetComponent(39),
-      i = new BasePerformComponent_1.PlayMontageConfig(
-        this.OTe,
-        this.NTe,
-        this.qTe,
-        this.GTe,
-      ),
-      h = { IsAbp: t.IsAbpMontage, MontageId: t.MontageId };
-    this.kTe = !1;
+    var s = e.GetComponent(45),
+      i = { IsAbp: t.IsAbpMontage, MontageId: t.MontageId },
+      i = s.GetMontagePath(i);
+    if (!i) return 1;
+    let r = !1;
     return (
-      (this.bTe = s.LoadAndPlayMontageById(
-        h,
+      (this.ZV_ = s.VolatileMontagePlayByLoad(
+        3,
         i,
         (s) => {
-          t.FaceExpressionId &&
-            s?.BodyMontage?.IsValid() &&
+          s &&
+            t.FaceExpressionId &&
             e
-              ?.GetComponent(172)
+              ?.GetComponent(185)
               ?.ExpressionController?.ChangeFaceForExpression(
-                s.BodyMontage,
+                s,
                 t.FaceExpressionId,
               );
         },
-        () => {
-          this.kTe || this.FinishLatentTask(0);
+        (s) => {
+          r ? this.FinishLatentTask(0) : (r = !0);
         },
-        () => !this.kTe,
+        this.NTe,
+        this.OTe,
       )),
-      this.bTe < 0 ? 0 : 3
+      r ? 0 : ((r = !0), 3)
     );
   }
   AbortTask() {
     return (
-      (this.kTe = !0),
-      this.CreatureDataComponent.Entity.GetComponent(39).ClearAndStopMontage(
-        this.bTe,
-      ),
+      this.CreatureDataComponent.Entity.GetComponent(
+        45,
+      ).VolatileMontageStopByLoad(3, this.ZV_, 0),
       2
     );
   }

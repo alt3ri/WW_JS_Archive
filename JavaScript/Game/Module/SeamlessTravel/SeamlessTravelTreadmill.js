@@ -7,11 +7,13 @@ const UE = require("ue"),
   ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Transform_1 = require("../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   Global_1 = require("../../Global"),
+  GlobalData_1 = require("../../GlobalData"),
   DEFAULT_FLOOR_MESH_PATH = "/Engine/BasicShapes/Plane.Plane",
   floorMeshMaterialOffsetParam = new UE.FName("Offset"),
   floorMeshMaterialAlphaParam = new UE.FName("Alpha"),
@@ -20,7 +22,7 @@ const UE = require("ue"),
   DEFAULT_FLOOR_SCALE_X = 100,
   DEFAULT_FLOOR_SCALE_Y = 100,
   DEFAULT_FLOOR_SCALE_Z = 1;
-exports.DEFAULT_SEAMLESS_TRANSITION_HEIGHT = 2e4;
+exports.DEFAULT_SEAMLESS_TRANSITION_HEIGHT = 2e6;
 class FloorMaterialParams {
   constructor(t) {
     (this.Offset = new UE.LinearColor(0, 0, 0, 0)),
@@ -91,9 +93,12 @@ class SeamlessTravelTreadmill {
       (this.IsLockMove = !1),
       (this.IsActiveInternal = !1),
       (this.LockOnLocation = Vector_1.Vector.Create()),
+      (this.LockOnGravityDirect = Vector_1.Vector.Create()),
       (this.LocationDelta = Vector_1.Vector.Create()),
       (this.TmpVector = Vector_1.Vector.Create()),
-      (this.TmpTransform = Transform_1.Transform.Create());
+      (this.TmpTransform = Transform_1.Transform.Create()),
+      (this.TmpQuat = Quat_1.Quat.Create()),
+      (this.TmpRotator = Rotator_1.Rotator.Create());
   }
   get IsInit() {
     return this.IsInitInternal;
@@ -110,7 +115,7 @@ class SeamlessTravelTreadmill {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Teleport",
-            51,
+            50,
             "[万向跑步机]初始化失败，无效的ActorComp",
             ["ActorName", Global_1.Global.BaseCharacter?.GetName()],
           );
@@ -129,7 +134,11 @@ class SeamlessTravelTreadmill {
       this.FloorMatParams?.Update(t));
   }
   Destroy() {
-    this.Floor?.IsValid() && ActorSystem_1.ActorSystem.Put(this.Floor),
+    this.Floor?.IsValid() &&
+      ActorSystem_1.ActorSystem.Put(
+        "SeamlessTravelTreadmill.Destroy",
+        this.Floor,
+      ),
       (this.ActorComp = void 0),
       (this.Context = void 0),
       (this.Floor = void 0),
@@ -140,7 +149,9 @@ class SeamlessTravelTreadmill {
       this.LockOnLocation.Reset(),
       this.LocationDelta.Reset(),
       this.TmpVector.Reset(),
-      this.TmpTransform.Reset();
+      this.TmpTransform.Reset(),
+      this.TmpQuat.Reset(),
+      this.TmpRotator.Reset();
   }
   Reset() {
     (this.ActorComp = void 0),
@@ -150,23 +161,33 @@ class SeamlessTravelTreadmill {
       this.LockOnLocation.Reset(),
       this.LocationDelta.Reset(),
       this.TmpVector.Reset(),
-      this.TmpTransform.Reset();
+      this.TmpTransform.Reset(),
+      this.TmpQuat.Reset(),
+      this.TmpRotator.Reset();
   }
   GetInitFloorTransform(t) {
-    var s = this.LockOnLocation,
-      s =
-        ((s.Z -= this.ActorComp.HalfHeight + this.FloorExtend.Z),
-        t.SetLocation(s),
-        this.TmpVector.Set(
-          DEFAULT_FLOOR_SCALE_X,
-          DEFAULT_FLOOR_SCALE_Y,
-          DEFAULT_FLOOR_SCALE_Z,
-        ),
-        this.Context.FloorParams?.FloorScale &&
-          this.TmpVector.DeepCopy(this.Context.FloorParams?.FloorScale),
-        t.SetScale3D(this.TmpVector),
-        Rotator_1.Rotator.Create());
-    t.SetRotation(s.Quaternion());
+    this.LockOnGravityDirect.Multiply(
+      this.ActorComp.ScaledHalfHeight + this.FloorExtend.Z,
+      this.TmpVector,
+    ),
+      this.TmpVector.AdditionEqual(this.LockOnLocation),
+      t.SetLocation(this.TmpVector),
+      this.TmpVector.Set(
+        DEFAULT_FLOOR_SCALE_X,
+        DEFAULT_FLOOR_SCALE_Y,
+        DEFAULT_FLOOR_SCALE_Z,
+      ),
+      this.Context.FloorParams?.FloorScale &&
+        this.TmpVector.DeepCopy(this.Context.FloorParams?.FloorScale),
+      t.SetScale3D(this.TmpVector);
+    var s = Quat_1.Quat.Create();
+    Quat_1.Quat.FindBetween(
+      Vector_1.Vector.DownVectorProxy,
+      this.LockOnGravityDirect,
+      this.TmpQuat,
+    ),
+      this.TmpQuat.Multiply(Rotator_1.Rotator.ZeroRotatorProxy.Quaternion(), s),
+      t.SetRotation(s);
   }
   HandleFalseInit(t) {
     t(!1), (this.IsInitInternal = !0);
@@ -185,7 +206,9 @@ class SeamlessTravelTreadmill {
         this.ActorComp.Actor,
       )),
       this.Floor?.IsValid())
-        ? ((s = this.TmpTransform.GetScale3D()),
+        ? (GlobalData_1.GlobalData.IsPlayInEditor &&
+            this.Floor.SetActorLabel("SeamlessTravelTreadmillFloor"),
+          (s = this.TmpTransform.GetScale3D()),
           (i = t.GetBounds()),
           (this.FloorExtend.X = i.BoxExtent.X * s.X),
           (this.FloorExtend.Y = i.BoxExtent.Y * s.Y),
@@ -193,7 +216,7 @@ class SeamlessTravelTreadmill {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Character",
-              51,
+              50,
               "[万向跑步机]加载地板Mesh",
               ["Bound", this.FloorExtend],
               ["Path", e],
@@ -223,7 +246,7 @@ class SeamlessTravelTreadmill {
             this.FloorMatParams.Bind(t),
             this.Floor.StaticMeshComponent.SetMaterial(0, t),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Character", 51, "[万向跑步机]加载地板材质", [
+              Log_1.Log.Info("Character", 50, "[万向跑步机]加载地板材质", [
                 "Path",
                 i,
               ]))
@@ -232,7 +255,7 @@ class SeamlessTravelTreadmill {
     } else
       this.HandleFalseInit(s),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Character", 51, "[万向跑步机]没有配置材质，不加载");
+          Log_1.Log.Info("Character", 50, "[万向跑步机]没有配置材质，不加载");
   }
   UpdateFloorMatUV(t) {
     var s, i;
@@ -240,15 +263,29 @@ class SeamlessTravelTreadmill {
       this.FloorMatParams &&
       ((s = 2 * this.FloorExtend.X),
       (i = 2 * this.FloorExtend.Y),
-      (this.FloorMatParams.Offset.R += (t.X % s) / s),
-      (this.FloorMatParams.Offset.G += (t.Y % i) / i));
+      this.GetInitFloorTransform(this.TmpTransform),
+      this.TmpTransform.GetRotation().Inverse(this.TmpQuat),
+      this.TmpQuat.RotateVector(t, this.TmpVector),
+      (this.FloorMatParams.Offset.R += (this.TmpVector.X % s) / s),
+      (this.FloorMatParams.Offset.G += (this.TmpVector.Y % i) / i));
   }
   LockActorMove() {
+    var t;
     this.ActorComp &&
       this.IsLockMove &&
-      (this.TmpVector.DeepCopy(this.ActorComp.ActorLocationProxy),
-      (this.TmpVector.X = this.LockOnLocation.X),
-      (this.TmpVector.Y = this.LockOnLocation.Y),
+      (this.ActorComp.MoveComp?.SetGravityDirectWithoutRotate(
+        this.LockOnGravityDirect,
+      ),
+      this.ActorComp.ActorLocationProxy.Subtraction(
+        this.LockOnLocation,
+        this.TmpVector,
+      ),
+      (t = Vector_1.Vector.DotProduct(
+        this.TmpVector,
+        this.LockOnGravityDirect,
+      )),
+      this.LockOnGravityDirect.Multiply(t, this.TmpVector),
+      this.TmpVector.AdditionEqual(this.LockOnLocation),
       this.ActorComp.SetActorLocation(
         this.TmpVector.ToUeVector(),
         "万向跑步机锁定位置",
@@ -278,24 +315,35 @@ class SeamlessTravelTreadmill {
   EnableLockMove(t) {
     this.IsLockMove = t;
   }
-  ResetLockOnLocation(t) {
+  ResetLockOnLocation(t, s) {
     this.ActorComp &&
       (t
         ? this.LockOnLocation.DeepCopy(t)
         : this.LockOnLocation.DeepCopy(this.ActorComp.ActorLocationProxy),
+      s
+        ? this.LockOnGravityDirect.DeepCopy(s)
+        : this.LockOnGravityDirect.DeepCopy(
+            this.ActorComp.ActorGravityDirectProxy,
+          ),
       this.Floor?.IsValid() &&
         (this.GetInitFloorTransform(this.TmpTransform),
-        this.Floor.K2_SetActorTransform(
+        this.Floor.D_K2_SetActorTransform(
           this.TmpTransform.ToUeTransform(),
           !1,
           void 0,
           !0,
         )),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Movement", 51, "[万向跑步机]重置Lock位置", [
-        "LockLocation",
-        this.LockOnLocation,
-      ]);
+      Log_1.Log.Info(
+        "Movement",
+        50,
+        "[万向跑步机]重置Lock位置",
+        ["LockLocation", this.LockOnLocation],
+        ["FloorMeshLocation", this.Floor?.D_K2_GetActorLocation()],
+      );
+  }
+  GetLockOnLocation(t) {
+    t.DeepCopy(this.LockOnLocation);
   }
   GetFloorActor() {
     if (this.Floor?.IsValid()) return this.Floor;

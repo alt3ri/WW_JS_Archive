@@ -5,6 +5,9 @@ class LogicDataShowMesh extends LogicDataBase_1.default {
   constructor() {
     super(...arguments), (this.MaterialEffect = void 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataShowMesh;
 //# sourceMappingURL=LogicDataShowMesh.js.map

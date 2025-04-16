@@ -17,23 +17,25 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configPlotTypeAll.Init"),
-  getConfigListStat = Stats_1.Stat.Create("configPlotTypeAll.GetConfigList");
+const initStat = Stats_1.Stat.CreateNoFlameGraph("configPlotTypeAll.Init"),
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configPlotTypeAll.GetConfigList",
+  );
 exports.configPlotTypeAll = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (o = !0) => {
     var t;
     if (
       (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start(),
+      getConfigListStat?.Start(),
       (t = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
       if (o) {
@@ -41,7 +43,7 @@ exports.configPlotTypeAll = {
         const e = ConfigCommon_1.ConfigCommon.GetConfig(n);
         if (e)
           return (
-            getConfigListStat.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -61,7 +63,7 @@ exports.configPlotTypeAll = {
         )
           return (
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            getConfigListStat.Stop(),
+            getConfigListStat?.Stop(),
             void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
           );
         i = PlotType_1.PlotType.getRootAsPlotType(
@@ -74,12 +76,12 @@ exports.configPlotTypeAll = {
           ((n = KEY_PREFIX + ")"),
           ConfigCommon_1.ConfigCommon.SaveConfig(n, e, e.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-        getConfigListStat.Stop(),
+        getConfigListStat?.Stop(),
         ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         e
       );
     }
-    getConfigListStat.Stop(),
+    getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

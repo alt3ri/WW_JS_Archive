@@ -2,12 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Global = void 0);
 const UE = require("ue"),
+  TickSystem_1 = require("../Core/Tick/TickSystem"),
   TsBaseCharacter_1 = require("./Character/TsBaseCharacter"),
   EventDefine_1 = require("./Common/Event/EventDefine"),
   EventSystem_1 = require("./Common/Event/EventSystem"),
   GlobalData_1 = require("./GlobalData");
 class Global {
   constructor() {}
+  static get vMe() {
+    return this.F1_;
+  }
+  static set vMe(a) {
+    this.F1_ !== a &&
+      (this.F1_ = a) &&
+      TickSystem_1.TickSystem.AddTickPrerequisiteActor(0, a, 2);
+  }
   static get BaseCharacter() {
     return (
       (Global.pMe && Global.pMe.IsValid()) ||
@@ -82,7 +91,7 @@ class Global {
   }
 }
 ((exports.Global = Global).pMe = void 0),
-  (Global.vMe = void 0),
+  (Global.F1_ = void 0),
   (Global.MMe = void 0),
   (Global.EMe = void 0),
   (Global.WorldEntityHelperInner = void 0),

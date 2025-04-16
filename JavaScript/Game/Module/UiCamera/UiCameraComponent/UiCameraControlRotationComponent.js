@@ -6,7 +6,11 @@ const Info_1 = require("../../../../Core/Common/Info"),
   MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  HudUnitUtils_1 = require("../../HudUnit/Utils/HudUnitUtils"),
+  UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
+  WorldMapUtil_1 = require("../../WorldMap/WorldMapUtil"),
   UiCameraComponent_1 = require("./UiCameraComponent"),
   UiCameraPostEffectComponent_1 = require("./UiCameraPostEffectComponent");
 class VirtualCamera {
@@ -53,6 +57,10 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       (this.TempCameraVector = Vector_1.Vector.Create()),
       (this.TempCameraLocation = Vector_1.Vector.Create()),
       (this.TempSourceLocation = Vector_1.Vector.Create()),
+      (this.$eh = new Vector2D_1.Vector2D()),
+      (this.Xeh = Vector_1.Vector.Create(0, 0, 30)),
+      (this.Yeh = Vector_1.Vector.Create()),
+      (this.zeh = !1),
       (this.eUo = -0),
       (this.tUo = -0),
       (this.iUo = -0),
@@ -97,46 +105,50 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       t.最大臂长,
       t.Pitch限制Min,
       t.Pitch限制Max,
+      t.Yaw限制Min,
+      t.Yaw限制Max,
       t.相机相对角色的最低高度,
       t.最大臂长时的光圈,
       t.最小臂长时的光圈,
     );
   }
-  InitData(t, i, s, h, a, e, o, r, n, _, m, C, U) {
+  InitData(t, i, s, h, e, a, o, r, n, _, U, l, m, C, M) {
     (this.eUo = t),
       (this.tUo = i),
       (this.iUo = s),
       (this.oUo = h),
-      (this.rUo = a),
-      (this.nUo = e),
+      (this.rUo = e),
+      (this.nUo = a),
       (this.sUo = m);
     t = this.DesiredCamera;
     (t.MinArmLength = o),
       (t.MaxArmLength = r),
       (t.PitchLimitMin = n),
       (t.PitchLimitMax = _),
+      (t.YawLimitMin = U),
+      (t.YawLimitMax = l),
       (this.uUo = C),
-      (this.cUo = U);
+      (this.cUo = M);
   }
-  UpdateData(t, i, s, h, a) {
-    var e,
+  UpdateData(t, i, s, h, e) {
+    var a,
       o,
       r = this.GetCameraStructure();
     r &&
-      ((e = r.GetActorLocation()),
+      ((a = r.GetActorLocation()),
       (o = r.GetSpringRelativeRotation()),
       this.DesiredCamera.ArmRotation.DeepCopy(o),
-      this.DesiredCamera.DefaultLookCenterLocation.DeepCopy(e),
+      this.DesiredCamera.DefaultLookCenterLocation.DeepCopy(a),
       this.TempSourceLocation.DeepCopy(t),
-      this.TempCameraLocation.DeepCopy(e),
+      this.TempCameraLocation.DeepCopy(a),
       (t = Vector_1.Vector.Dist2D(
         this.TempSourceLocation,
         this.TempCameraLocation,
       )),
-      (e = o.Pitch),
-      (o = MathCommon_1.MathCommon.WrapAngle(e)),
-      (e = MathCommon_1.MathCommon.DegreeToRadian(o)),
-      (o = t * Math.tan(e) + this.TempCameraLocation.Z),
+      (a = o.Pitch),
+      (o = MathCommon_1.MathCommon.WrapAngle(a)),
+      (a = MathCommon_1.MathCommon.DegreeToRadian(o)),
+      (o = t * Math.tan(a) + this.TempCameraLocation.Z),
       (this.TempLookCenterLocation.X = this.TempSourceLocation.X),
       (this.TempLookCenterLocation.Y = this.TempSourceLocation.Y),
       (this.TempLookCenterLocation.Z = o),
@@ -148,7 +160,7 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "UiCamera",
-          44,
+          43,
           "UiCameraControlRotationComponent初始化",
           ["初始臂长", this.gUo],
         ),
@@ -157,7 +169,7 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       (this.aUo = i),
       (this.hUo = s),
       (this._Uo = h),
-      (this.lUo = a),
+      (this.lUo = e),
       (this.DesiredCamera.HeightOffset = 0),
       this.DefaultCamera.DeepCopy(this.DesiredCamera),
       this.CurrentCamera.DeepCopy(this.DesiredCamera));
@@ -168,7 +180,8 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       this.LUo(),
       this.DUo(),
       this.RUo(t),
-      this.UUo();
+      this.UUo(),
+      this.UpdateFloorReflectionSetting();
   }
   AUo() {
     (this.mUo = 0), (this.dUo = 0), (this.CUo = 0);
@@ -193,8 +206,17 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
         (this.DesiredCamera.ArmLength += h);
   }
   FPr() {
-    var t = this.DesiredCamera.ArmRotation.Yaw;
-    this.DesiredCamera.ArmRotation.Yaw = t = 180 < (t %= 360) ? t - 360 : t;
+    let t = this.DesiredCamera.ArmRotation.Yaw;
+    (t = 180 < (t %= 360) ? t - 360 : t),
+      Math.abs(this.DesiredCamera.YawLimitMin) +
+        Math.abs(this.DesiredCamera.YawLimitMax) <
+        360 &&
+        (t = MathUtils_1.MathUtils.Clamp(
+          t,
+          this.DesiredCamera.YawLimitMin,
+          this.DesiredCamera.YawLimitMax,
+        )),
+      (this.DesiredCamera.ArmRotation.Yaw = t);
   }
   LUo() {
     var t = this.DesiredCamera.ArmRotation.Pitch,
@@ -213,12 +235,12 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       this.DesiredCamera.MaxArmLength,
     );
   }
-  StartFade(t, i, s, h, a, e) {
+  StartFade(t, i, s, h, e, a) {
     this.LastCamera.DeepCopy(this.CurrentCamera),
       (this.EUo = s),
       (this.SUo = h),
-      (this.yUo = a),
-      (this.IUo = e),
+      (this.yUo = e),
+      (this.IUo = a),
       (this.fUo = !0),
       (this.pUo = t),
       (this.vUo = 0),
@@ -326,6 +348,24 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       this.OwnerUiCamera.GetUiCameraComponent(
         UiCameraPostEffectComponent_1.UiCameraPostEffectComponent,
       )?.SetCameraAperture(this.CurrentCamera.Aperture);
+  }
+  UpdateFloorReflectionSetting() {
+    if (this.zeh) {
+      this.TempSourceLocation.Addition(this.Xeh, this.Yeh);
+      var i = this.Yeh.ToUeVector();
+      let t = HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
+        i,
+        this.$eh,
+      );
+      t &&
+        ((i = WorldMapUtil_1.WorldMapUtil.GetViewportSizeByPool()),
+        (t =
+          Math.abs(this.$eh.X) <= i.X / 2 && Math.abs(this.$eh.Y) <= i.Y / 2)),
+        UiSceneManager_1.UiSceneManager.SetSceneFloorReflection(t, !1);
+    }
+  }
+  SetNeedFloorReflection(t) {
+    this.zeh = t;
   }
   AddZoomInput(t) {
     this.CUo = t;

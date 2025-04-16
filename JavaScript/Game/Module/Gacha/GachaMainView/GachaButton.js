@@ -55,7 +55,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
                     this.Times,
                   ),
                     Log_1.Log.CheckDebug() &&
-                      Log_1.Log.Debug("Gacha", 35, "needTokenCount <= 0");
+                      Log_1.Log.Debug("Gacha", 34, "needTokenCount <= 0");
                 else {
                   const n =
                     ModelManager_1.ModelManager.ItemExchangeModel.CalculateConsume(
@@ -92,7 +92,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
                     Log_1.Log.CheckDebug() &&
                       Log_1.Log.Debug(
                         "Gacha",
-                        35,
+                        34,
                         "exchangeSimulation is null",
                       );
                 }
@@ -106,7 +106,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
           }
         else
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Gacha", 35, "gachaInfo is null");
+            Log_1.Log.Debug("Gacha", 34, "gachaInfo is null");
       }),
       (this.Times = e);
   }

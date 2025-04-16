@@ -33,7 +33,7 @@ class VisionCameraInputItem extends UiPanelBase_1.UiPanelBase {
             ((t = UE.KuroCollectActorComponent.GetActorWithTag(
               FNameUtil_1.FNameUtil.GetDynamicFName("MonsterCase"),
               1,
-            ).K2_GetActorLocation()),
+            ).D_K2_GetActorLocation()),
             this.A8i.UpdateData(t, 0, 0, 0, 0),
             this.A8i.Activate(),
             this.A8i.ResumeTick());

@@ -34,7 +34,7 @@ const plotHandBookCsvFields = [
     Filter: "1",
     Condition: "notEmpty",
     Type: "String",
-    RenderType: 56,
+    RenderType: 57,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "ChapterId",
@@ -42,14 +42,15 @@ const plotHandBookCsvFields = [
     Filter: "1",
     Condition: "notEmpty",
     Type: "Int",
-    RenderType: 18,
+    RenderType: 19,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "BtData",
     CnName: "配置ID",
+    Filter: "1",
     Condition: "notEmpty",
     Type: "Array<String>",
-    RenderType: 54,
+    RenderType: 55,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "NodeId",
@@ -57,20 +58,22 @@ const plotHandBookCsvFields = [
     Filter: "1",
     Condition: "notEmpty",
     Type: "Int",
-    RenderType: 18,
+    RenderType: 19,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "TidTip",
     CnName: "追踪文本",
+    Filter: "1",
     Type: "String",
-    RenderType: 21,
+    RenderType: 22,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "PlotFlow",
     CnName: "剧情文件",
+    Filter: "1",
     Condition: "notEmpty",
     Type: "Array<String>",
-    RenderType: 55,
+    RenderType: 56,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "IsHideUi",
@@ -82,14 +85,12 @@ const plotHandBookCsvFields = [
   (0, CsvLoader_1.createCsvField)({
     Name: "ManualState",
     CnName: "手动标记",
-    Filter: "1",
-    RenderType: 57,
+    RenderType: 58,
   }),
   (0, CsvLoader_1.createCsvField)({
     Name: "ModifyState",
     CnName: "变更状态",
-    Filter: "1",
-    RenderType: 58,
+    RenderType: 59,
   }),
 ];
 class PlotHandBookCsvLoader extends CsvLoader_1.CsvLoader {

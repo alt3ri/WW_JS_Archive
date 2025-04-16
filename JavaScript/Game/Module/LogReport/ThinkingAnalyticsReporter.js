@@ -49,26 +49,12 @@ class ThinkingAnalyticsReporter {
   }),
   (ThinkingAnalyticsReporter.Qvi = () => {
     if (
-      ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk()
+      ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
+      !BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTipWithSkip()
     ) {
       var r = ModelManager_1.ModelManager.LoginModel?.GetServerId();
       let e = void 0;
-      var n =
-          BaseConfigController_1.BaseConfigController.GetLoginServerAdditionDataById(
-            r,
-          ),
-        n =
-          (n?.TDCfg &&
-            ((e = n.TDCfg), Log_1.Log.CheckInfo()) &&
-            Log_1.Log.Info(
-              "Log",
-              3,
-              "使用AdditionData的数数配置",
-              ["ServerId", r],
-              ["AppID", e?.AppID],
-              ["URL", e?.URL],
-            ),
-          BaseConfigController_1.BaseConfigController.GetLoginServerById(r));
+      var n = BaseConfigController_1.BaseConfigController.GetLoginServerById(r);
       if (
         (n?.TDCfg &&
           ((e = n.TDCfg), Log_1.Log.CheckInfo()) &&
@@ -104,10 +90,10 @@ class ThinkingAnalyticsReporter {
             (0, puerts_1.toManualReleaseDelegate)(_a.Xvi),
           ),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Login", 10, "数数上报实例已重新创建！");
+            Log_1.Log.Info("Login", 9, "数数上报实例已重新创建！");
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Login", 10, `未找到 ${r} 对应的数数上报配置`);
+          Log_1.Log.Error("Login", 9, `未找到 ${r} 对应的数数上报配置`);
     }
   }),
   (ThinkingAnalyticsReporter.Xvi = (e) => {
@@ -115,7 +101,7 @@ class ThinkingAnalyticsReporter {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "LogReport",
-          10,
+          9,
           "数数上报时间校准失败，可以因为以下问题导致：1.CDN数数上报配置错误；2.网络原因连接不上。",
         ));
   });

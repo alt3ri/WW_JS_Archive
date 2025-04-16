@@ -11,7 +11,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   AreaAtmosphere_1 = require("./AreaAtmosphere"),
-  AreaAudio_1 = require("./AreaAudio");
+  AreaAudio_1 = require("./AreaAudio"),
+  AreaTags_1 = require("./AreaTags");
 class AreaController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -20,6 +21,9 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
         AreaController.IWe.Init()),
       AreaController.TWe ||
         (AreaController.TWe = new AreaAtmosphere_1.AreaAtmosphere()),
+      AreaController.M3l ||
+        ((AreaController.M3l = new AreaTags_1.AreaTags()),
+        AreaController.M3l.Init()),
       this.RegisterNetEvent(),
       this.RegisterEvents(),
       !0
@@ -29,6 +33,7 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
     return (
       AreaController.IWe && AreaController.IWe.Destroy(),
       AreaController.TWe && AreaController.TWe.Destroy(),
+      AreaController.M3l && AreaController.M3l.Destroy(),
       this.UnRegisterNetEvent(),
       this.UnRegisterEvents(),
       !0
@@ -38,10 +43,10 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
     AreaController.TWe && AreaController.TWe.OnTick(e);
   }
   static RegisterNetEvent() {
-    Net_1.Net.Register(29646, this.LWe);
+    Net_1.Net.Register(27397, this.LWe);
   }
   static UnRegisterNetEvent() {
-    Net_1.Net.UnRegister(29646);
+    Net_1.Net.UnRegister(27397);
   }
   static RegisterEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.InitArea, this.DWe);
@@ -52,18 +57,16 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
       this.DWe,
     );
   }
-  static BeginOverlap(e, r = !1) {
-    e === ModelManager_1.ModelManager.AreaModel.AreaInfo?.AreaId &&
-      r &&
-      ModelManager_1.ModelManager.AreaModel.SetAreaName(e, !0);
-    r = Protocol_1.Aki.Protocol.iYn.create({ s5n: e, Lja: 0 });
+  static BeginOverlap(e, r) {
+    e = Protocol_1.Aki.Protocol.iYn.create({ s5n: e, NKa: 0 });
     const o = ModelManager_1.ModelManager.AreaModel.AreaInfo?.AreaId;
-    Net_1.Net.Call(20547, r, (e) => {
+    Net_1.Net.Call(26254, e, (e) => {
       e &&
-        (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+        (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.Proto_PlayerNotInTheScene
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              28024,
+              16766,
             )
           : ModelManager_1.ModelManager.AreaModel.AreaInfo?.AreaId !== e.s5n &&
             (Log_1.Log.CheckInfo() &&
@@ -73,6 +76,7 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
                 "[AreaController.BeginOverlap] 进入区域",
                 ["CurArea", o],
                 ["EnterArea", e.s5n],
+                ["reason", r],
               ),
             ModelManager_1.ModelManager.AreaModel.SetAreaName(e.s5n)));
     });
@@ -81,17 +85,20 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
     var e;
     0 !== r &&
       1 !== r &&
-      ((e = Protocol_1.Aki.Protocol.iYn.create({ s5n: 0, Lja: r })),
-      Net_1.Net.Call(20547, e, (e) => {
+      ((e = Protocol_1.Aki.Protocol.iYn.create({ s5n: 0, NKa: r })),
+      Net_1.Net.Call(26254, e, (e) => {
         e &&
-          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+          e.Q4n !== Protocol_1.Aki.Protocol.Q4n.Proto_PlayerNotInTheScene
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                28024,
+                16766,
               )
             : (ModelManager_1.ModelManager.AreaModel.SetAreaInfo(e.s5n),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.ChangeArea,
+                r,
+                e.s5n,
               ),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
@@ -107,6 +114,7 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.AreaController = AreaController).IWe = void 0),
   (AreaController.TWe = void 0),
+  (AreaController.M3l = void 0),
   (AreaController.DWe = (e) => {
     ModelManager_1.ModelManager.AreaModel.InitAreaStates(e),
       UnopenedAreaController_1.UnopenedAreaController.AreaCheckInit(e);

@@ -74,7 +74,7 @@ class GachaTagItem extends GridProxyAbstract_1.GridProxyAbstract {
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Gacha",
-            35,
+            34,
             "获取抽卡界面信息失败，请检查GachaViewInfo表，GachaId:" +
               this.GachaId,
           ));

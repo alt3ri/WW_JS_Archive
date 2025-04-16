@@ -9,10 +9,11 @@ class TsAnimNotifyBreakConstraint extends UE.KuroAnimNotify {
       (this.Impulse = new UE.Vector(0, 0, 0)),
       (this.HitLocation = new UE.Vector(0, 0, 0));
   }
-  K2_Notify(e, t) {
+  Constructor() {}
+  K2_Notify(t, e) {
     return (
-      e.GetOwner() instanceof TsBaseCharacter_1.default &&
-        e.BreakConstraint(this.Impulse, this.HitLocation, this.分离骨骼名),
+      t.GetOwner() instanceof TsBaseCharacter_1.default &&
+        t.BreakConstraint(this.Impulse, this.HitLocation, this.分离骨骼名),
       !0
     );
   }

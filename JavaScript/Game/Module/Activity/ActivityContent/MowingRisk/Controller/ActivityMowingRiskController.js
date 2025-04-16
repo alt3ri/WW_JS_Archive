@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityMowingRiskController = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
@@ -13,58 +14,73 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   ActivityManager_1 = require("../../../ActivityManager"),
   ActivityMowingRiskSubView_1 = require("../View/ActivityMowingRiskSubView");
 var Proto_ErrorCode = Protocol_1.Aki.Protocol.Q4n,
-  Proto_RiskHarvestInstRewardRequest = Protocol_1.Aki.Protocol.keh,
-  Proto_RiskHarvestScoreRewardRequest = Protocol_1.Aki.Protocol.Oeh;
+  Proto_RiskHarvestInstRewardRequest = Protocol_1.Aki.Protocol.Om_,
+  Proto_RiskHarvestScoreRewardRequest = Protocol_1.Aki.Protocol.Gm_,
+  Proto_RiskHarvestStarRewardRequest = Protocol_1.Aki.Protocol.uU_;
 const UiManager_1 = require("../../../../../Ui/UiManager"),
-  InstanceDungeonController_1 = require("../../../../InstanceDungeon/InstanceDungeonController"),
   ItemRewardController_1 = require("../../../../ItemReward/ItemRewardController"),
   ItemRewardDefine_1 = require("../../../../ItemReward/ItemRewardDefine");
-var Proto_RiskHarvestSettleRequest = Protocol_1.Aki.Protocol.Sth;
-const CustomPromise_1 = require("../../../../../../Core/Common/CustomPromise");
+var Proto_RiskHarvestSettleRequest = Protocol_1.Aki.Protocol.If_;
+const CustomPromise_1 = require("../../../../../../Core/Common/CustomPromise"),
+  RiskHarvestInstById_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstById"),
+  ConfigManager_1 = require("../../../../../Manager/ConfigManager");
 class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.XJa = new CustomPromise_1.CustomPromise()),
-      (this.P5a = (e) => {
-        this.w5a(e),
+      (this.Dnh = new CustomPromise_1.CustomPromise()),
+      (this.gVa = (e) => {
+        this.fVa(e),
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
             (ModelManager_1.ModelManager.MowingRiskModel.SyncProtocolRiskHarvestEndNotify(
               e,
             ),
-            this.YJa(e));
+            this.Anh(e));
       }),
-      (this.B5a = (e) => {
-        this.w5a(e),
+      (this.pVa = (e) => {
+        this.fVa(e),
           ModelManager_1.ModelManager.MowingRiskModel.SyncProtocolRiskHarvestInstUpdateNotify(
             e,
           );
       }),
-      (this.b5a = (e) => {
-        this.w5a(e),
+      (this.vVa = (e) => {
+        this.fVa(e),
           ModelManager_1.ModelManager.MowingRiskModel.SyncProtocolRiskHarvestArtifactNotify(
             e,
           );
       }),
-      (this.q5a = (e) => {
-        this.w5a(e);
+      (this.MVa = (e) => {
+        this.fVa(e);
         var t = ModelManager_1.ModelManager.MowingRiskModel;
         t.SyncProtocolRiskHarvestBuffUpdateNotify(e),
-          this.zJa(),
+          this.Rnh(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.MowingRiskInBattleRootUpdate,
             t.BuildInBattleRootData(),
           );
       }),
-      (this.G5a = (e) => {
-        this.w5a(e),
+      (this.yVa = (e) => {
+        this.fVa(e),
           ModelManager_1.ModelManager.MowingRiskModel.SyncProtocolRiskHarvestBuffUnlockNotify(
             e,
           );
       }),
-      (this.k5a = (e) => {
-        this.w5a(e),
-          ModelManager_1.ModelManager.MowingRiskModel.SyncProtocolRiskHarvestActivityUpdateNotify(
-            e,
+      (this.EVa = (e) => {
+        this.fVa(e);
+        var t = ModelManager_1.ModelManager.MowingRiskModel;
+        t.SyncProtocolRiskHarvestActivityUpdateNotify(e),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnNeedRefreshByProtocol,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.ActivityViewRefreshCurrent,
+            t.ActivityData.Id,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+            t.ActivityData.Id,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.MowingRiskOnRefreshRewardRedDot,
           );
       }),
       (this.uZs = () => {
@@ -76,22 +92,23 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
           ((ModelManager_1.ModelManager.DeadReviveModel.HandleOnClickGiveUpExternal =
             void 0),
           (InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.IsSettleExternalProcess =
-            !1));
+            !1),
+          ModelManager_1.ModelManager.MowingRiskModel.ResetCacheInBattle());
       }),
-      (this.vRa = () => {
+      (this.yRa = () => {
         this.CheckInInstanceDungeon() &&
           (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("MowingRisk", 65, "局内局内局内的起点"),
+            Log_1.Log.Debug("MowingRisk", 64, "局内局内局内的起点"),
           (ModelManager_1.ModelManager.DeadReviveModel.HandleOnClickGiveUpExternal =
             () => {
               this.RequestRiskHarvestSettleRequest();
             }),
           (InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.IsSettleExternalProcess =
             !0),
-          this.XJa.SetResult());
+          this.Dnh.SetResult());
       }),
-      (this.JJa = () => {
-        this.zJa();
+      (this.Unh = () => {
+        this.Rnh();
       });
   }
   static get Instance() {
@@ -113,20 +130,20 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
     return !1;
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(28790, this.P5a),
-      Net_1.Net.Register(23773, this.B5a),
-      Net_1.Net.Register(17020, this.b5a),
-      Net_1.Net.Register(19856, this.q5a),
-      Net_1.Net.Register(28879, this.G5a),
-      Net_1.Net.Register(19171, this.k5a);
+    Net_1.Net.Register(26124, this.gVa),
+      Net_1.Net.Register(27498, this.pVa),
+      Net_1.Net.Register(27658, this.vVa),
+      Net_1.Net.Register(16983, this.MVa),
+      Net_1.Net.Register(18643, this.yVa),
+      Net_1.Net.Register(17219, this.EVa);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(28790),
-      Net_1.Net.UnRegister(23773),
-      Net_1.Net.UnRegister(17020),
-      Net_1.Net.UnRegister(19856),
-      Net_1.Net.UnRegister(28879),
-      Net_1.Net.UnRegister(19171);
+    Net_1.Net.UnRegister(26124),
+      Net_1.Net.UnRegister(27498),
+      Net_1.Net.UnRegister(27658),
+      Net_1.Net.UnRegister(16983),
+      Net_1.Net.UnRegister(18643),
+      Net_1.Net.UnRegister(17219);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -143,11 +160,11 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        this.vRa,
+        this.yRa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MowingRiskOnBuffTipsAfterDestroy,
-        this.JJa,
+        this.Unh,
       );
   }
   OnRemoveEvents() {
@@ -165,102 +182,172 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        this.vRa,
+        this.yRa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MowingRiskOnBuffTipsAfterDestroy,
-        this.JJa,
+        this.Unh,
       );
+  }
+  GetActivityLevelUnlockState(e) {
+    return ModelManager_1.ModelManager.MowingRiskModel.IsInstanceUnlockedByInstanceId(
+      e,
+    );
   }
   async RequestRiskHarvestInstRewardRequest(e) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "MowingRisk",
-        65,
+        64,
         "RequestRiskHarvestInstRewardRequest:" + e,
       );
     var t = Proto_RiskHarvestInstRewardRequest.create(),
-      t = ((t.s5n = e), await Net_1.Net.CallAsync(18155, t));
+      t = ((t.s5n = e), await Net_1.Net.CallAsync(17304, t));
     void 0 !== t &&
       (t.Q4n !== Proto_ErrorCode.KRs
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "MowingRisk",
-              65,
+              64,
               "请求失败，关卡奖励：RiskHarvestInstRewardRequest---" + t.Q4n,
             ),
-          ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            t.Q4n,
-            15284,
-          ))
+          t.Q4n === Proto_ErrorCode.Proto_ErrRiskHarvestActivityNotOpen
+            ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "MowingRiskActivityNotOpenForReward",
+              )
+            : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                t.Q4n,
+                21255,
+              ))
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "MowingRisk",
-              65,
+              64,
               `RequestRiskHarvestInstRewardRequest:${e}--Success`,
             ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.MowingRiskOnRefreshRewardRedDot,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+            ModelManager_1.ModelManager.MowingRiskModel.ActivityData.Id,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.MowingRiskOnGetReward,
           )));
   }
   async RequestRiskHarvestScoreRewardRequest(e) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "MowingRisk",
-        65,
+        64,
         "RequestRiskHarvestScoreRewardRequest:" + e,
       );
     var t = Proto_RiskHarvestScoreRewardRequest.create(),
-      t = ((t.s5n = e), await Net_1.Net.CallAsync(28751, t));
+      t = ((t.s5n = e), await Net_1.Net.CallAsync(18172, t));
     void 0 !== t &&
       (t.Q4n !== Proto_ErrorCode.KRs
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "MowingRisk",
-              65,
+              64,
               "请求失败，积分奖励：RiskHarvestScoreRewardRequest---" + t.Q4n,
             ),
-          ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            t.Q4n,
-            20362,
-          ))
+          t.Q4n === Proto_ErrorCode.Proto_ErrRiskHarvestActivityNotOpen
+            ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "MowingRiskActivityNotOpenForReward",
+              )
+            : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                t.Q4n,
+                26950,
+              ))
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "MowingRisk",
-              65,
+              64,
               `RequestRiskHarvestScoreRewardRequest:${e}--Success`,
             ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.MowingRiskOnRefreshRewardRedDot,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+            ModelManager_1.ModelManager.MowingRiskModel.ActivityData.Id,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.MowingRiskOnGetReward,
+          )));
+  }
+  async RequestRiskHarvestStarRewardRequest(e, t) {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
+        "MowingRisk",
+        64,
+        "RequestRiskHarvestStarRewardRequest:" + e,
+      );
+    var o = Proto_RiskHarvestStarRewardRequest.create(),
+      t = ((o.s5n = e), (o.c5n = t), await Net_1.Net.CallAsync(15946, o));
+    void 0 !== t &&
+      (t.Q4n !== Proto_ErrorCode.KRs
+        ? (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "MowingRisk",
+              43,
+              "请求失败，阶段奖励：RequestRiskHarvestStarRewardRequest---" +
+                t.Q4n,
+            ),
+          t.Q4n === Proto_ErrorCode.Proto_ErrRiskHarvestActivityNotOpen
+            ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "MowingRiskActivityNotOpenForReward",
+              )
+            : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                t.Q4n,
+                23747,
+              ))
+        : (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "MowingRisk",
+              43,
+              `请求失败，阶段奖励：RequestRiskHarvestStarRewardRequest:${e}--Success`,
+            ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.MowingRiskOnRefreshRewardRedDot,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+            ModelManager_1.ModelManager.MowingRiskModel.ActivityData.Id,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.MowingRiskOnGetReward,
           )));
   }
   async RequestRiskHarvestSettleRequest() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("MowingRisk", 65, "请求请求请求结算");
+      Log_1.Log.Debug("MowingRisk", 64, "请求请求请求结算");
     var e = Proto_RiskHarvestSettleRequest.create(),
-      e = await Net_1.Net.CallAsync(24566, e);
+      e = await Net_1.Net.CallAsync(19001, e);
     void 0 !== e &&
       (e.Q4n !== Proto_ErrorCode.KRs
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "MowingRisk",
-            65,
+            64,
             "请求失败，退出请求结算：RequestRiskHarvestSettleRequest---" +
               e.Q4n,
           )
         : Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("MowingRisk", 65, "请求请求请求结算--Success"));
+          Log_1.Log.Debug("MowingRisk", 64, "请求请求请求结算--Success"));
   }
-  w5a(e) {
+  fVa(e) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "MowingRisk",
-        65,
+        64,
         "割草冒险Notify:" + e.constructor.name,
         ["msg", e],
       );
   }
-  zJa() {
+  Rnh() {
     var e, t, o;
     !UiManager_1.UiManager.IsViewOpen("MowingBuffNewBuffTipsView") &&
       this.CheckInInstanceDungeon() &&
@@ -268,18 +355,18 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
       ((o = e.BuildNewBuffTipsDataById(t)),
       UiManager_1.UiManager.OpenView("MowingBuffNewBuffTipsView", o),
       e.IsSuperBuffById(t)) &&
-      (this.ZJa(t),
+      (this.xnh(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MowingRiskOnNeedPlayLevelUpSequence,
       ));
   }
-  ZJa(e) {
+  xnh(e) {
     var t =
       ModelManager_1.ModelManager.MowingRiskModel.BuildInBattleBuffDataById(e);
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error(
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
         "MowingRisk",
-        65,
+        64,
         `显示场内Buff 中心Tips，buff Id：${e}----` + t.TitleTextId,
       ),
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
@@ -293,10 +380,16 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
         t,
       );
   }
-  async YJa(e) {
-    await this.eZa();
+  async Anh(e) {
+    await this.Pnh(),
+      RiskHarvestInstById_1.configRiskHarvestInstById.GetConfig(e.s5n)
+        .Accumulate
+        ? this.TU_(e)
+        : this.bU_(e);
+  }
+  TU_(e) {
     var t = {
-        ButtonTextId: "ConfirmBox_133_ButtonText_0",
+        ButtonTextId: "riskofrain_UIBacktoworld",
         DescriptionTextId: void 0,
         IsTimeDownCloseView: !1,
         IsClickedCloseView: !0,
@@ -306,28 +399,83 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
       },
       o = {
         ButtonTextId: "ConfirmBox_133_ButtonText_1",
-        DescriptionTextId: "MowingHighestPoint",
-        DescriptionArgs: [e.Wma.toString()],
         IsTimeDownCloseView: !1,
         IsClickedCloseView: !1,
         OnClickedCallback: function () {
-          var e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-            t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
-          if (0 !== t.length) {
-            var o = [];
-            for (const i of t) o.push(i.GetConfigId);
-            InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-              e,
-              o,
-            );
-          }
+          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestartInstanceDungeon();
         },
-      };
+        DescriptionTextId: void 0,
+      },
+      i = ModelManager_1.ModelManager.MowingRiskModel.GetMaxScoreById(e.s5n),
+      i = {
+        DetailScoreDataList: [
+          { DescTextId: "RiskHarvest_Timepoint", ScoreText: e.pM_.toString() },
+          {
+            DescTextId: "RiskHarvest_Monsterpoint",
+            ScoreText: e.aE_.toString(),
+          },
+        ],
+        TotalScoreDataList: [
+          { DescTextId: "RiskHarvest_Score", ScoreText: e.Yma.toString() },
+        ],
+        CurScore: e.fU_,
+        MaxScore: i,
+      },
+      r = 0 < e.pM_ ? void 0 : "riskofrain_UIFinish";
     ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
-      e.Iih
+      e.eE_
         ? ItemRewardDefine_1.MOWING_RESULT
         : ItemRewardDefine_1.MOWING_ERROR_RESULT,
-      e.Iih,
+      e.eE_,
+      void 0,
+      void 0,
+      void 0,
+      [t, o],
+      void 0,
+      void 0,
+      void 0,
+      void 0,
+      void 0,
+      void 0,
+      void 0,
+      void 0,
+      void 0,
+      i,
+      r,
+    );
+  }
+  bU_(e) {
+    var t = {
+        ButtonTextId: "riskofrain_UIBacktoworld",
+        DescriptionTextId: void 0,
+        IsTimeDownCloseView: !1,
+        IsClickedCloseView: !0,
+        OnClickedCallback: function () {
+          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
+        },
+      },
+      o = {
+        ButtonTextId: "ConfirmBox_133_ButtonText_1",
+        DescriptionTextId: "RiskHarvest_HistoryToppoint",
+        DescriptionArgs: [
+          ModelManager_1.ModelManager.MowingRiskModel.GetRecordScoreById(
+            e.s5n,
+          ).toString(),
+        ],
+        IsTimeDownCloseView: !1,
+        IsClickedCloseView: !1,
+        OnClickedCallback: function () {
+          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestartInstanceDungeon();
+        },
+      },
+      i = ModelManager_1.ModelManager.MowingRiskModel.GetMaxScoreById(e.s5n),
+      r = e.Yma,
+      n = 0 < e.pM_ ? void 0 : "riskofrain_UIFinish";
+    ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
+      e.eE_
+        ? ItemRewardDefine_1.MOWING_RESULT
+        : ItemRewardDefine_1.MOWING_ERROR_RESULT,
+      e.eE_,
       void 0,
       void 0,
       void 0,
@@ -342,24 +490,27 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
       {
         TargetReached: [
           {
-            Target: [e.Pih.toString()],
-            DescriptionTextId: "BossRushTimeScoreTips",
+            Target: [e.pM_.toString()],
+            DescriptionTextId: "RiskHarvest_Timepoint",
             IsReached: !0,
           },
           {
-            Target: [e.Uih.toString()],
-            DescriptionTextId: "BossRushMonsterScoreTips",
+            Target: [e.aE_.toString()],
+            DescriptionTextId: "RiskHarvest_Monsterpoint",
             IsReached: !0,
           },
         ],
         IfNewRecord: !1,
-        FullScore: e.Wma,
-        RecordTextId: "MowingCurrentPoint",
+        FullScore: r,
+        RecordTextId: r < i ? "RiskHarvest_Score" : "RiskHarvest_Scorelimit",
       },
+      void 0,
+      void 0,
+      n,
     );
   }
-  async eZa() {
-    await this.XJa.Promise, (this.XJa = new CustomPromise_1.CustomPromise());
+  async Pnh() {
+    await this.Dnh.Promise, (this.Dnh = new CustomPromise_1.CustomPromise());
   }
   CheckInInstanceDungeon() {
     var e;
@@ -370,6 +521,49 @@ class ActivityMowingRiskController extends ActivityControllerBase_1.ActivityCont
       22 === e.InstSubType
     );
   }
+  static IsMowingRiskInstanceDungeon(e) {
+    return (
+      !!e &&
+      22 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          ?.InstSubType
+    );
+  }
 }
-exports.ActivityMowingRiskController = ActivityMowingRiskController;
+(exports.ActivityMowingRiskController = ActivityMowingRiskController),
+  ((_a = ActivityMowingRiskController).GetInstanceSubtitleTextIdByInstanceId = (
+    e,
+  ) =>
+    ModelManager_1.ModelManager.MowingRiskModel.BuildInstanceSubtitleTextIdByInstanceId(
+      e,
+    )),
+  (ActivityMowingRiskController.GetInstanceSubtitleArgsByInstanceId = (e) =>
+    ModelManager_1.ModelManager.MowingRiskModel.BuildInstanceSubtitleTextArgsByInstanceId(
+      e,
+    )),
+  (ActivityMowingRiskController.CheckInstanceFinishedByInstanceId = (e) =>
+    ModelManager_1.ModelManager.MowingRiskModel.CheckInstanceFinishedByInstanceId(
+      e,
+    )),
+  (ActivityMowingRiskController.CheckInstanceUnlockByInstanceId = (e) =>
+    ModelManager_1.ModelManager.MowingRiskModel.IsInstanceUnlockedByInstanceId(
+      e,
+    )),
+  (ActivityMowingRiskController.GetInstanceLockTextIdByInstanceId = (e) =>
+    ModelManager_1.ModelManager.MowingRiskModel.GetInstanceLockTextIdByInstanceId(
+      e,
+    )),
+  (ActivityMowingRiskController.GetInstanceLockTextArgsByInstanceId = (e) =>
+    ModelManager_1.ModelManager.MowingRiskModel.GetLockTextArgsByInstanceId(e)),
+  (ActivityMowingRiskController.GetEntranceViewDefaultSelectData = (e) => {
+    let t = 0,
+      o = 0;
+    for (var [i, r] of e) {
+      t = i;
+      for (const n of r)
+        if (((o = n), !_a.CheckInstanceFinishedByInstanceId(n)))
+          return { InstanceId: o, SeriesId: t };
+    }
+    return { InstanceId: o, SeriesId: t };
+  });
 //# sourceMappingURL=ActivityMowingRiskController.js.map

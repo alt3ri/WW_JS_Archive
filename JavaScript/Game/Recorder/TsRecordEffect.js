@@ -14,7 +14,11 @@ class TsRecordEffect extends UE.KuroRecordEffect {
       (this.LifeTimeType = 0),
       (this.ManualProcessTime = 0),
       (this.EffectHandle = 0),
-      (this.Playing = !1);
+      (this.Playing = !1),
+      (this.LastHidden = !1);
+  }
+  Constructor() {
+    (this.EffectHandle = 0), (this.Playing = !1), (this.LastHidden = !1);
   }
   ReceiveBeginPlay() {
     RecorderBlueprintFunctionLibrary_1.default.RecorderPlayerInitializeTs(),
@@ -36,13 +40,20 @@ class TsRecordEffect extends UE.KuroRecordEffect {
       this.EffectHandle &&
         (Info_1.Info.IsGameRunning() ||
           EffectSystem_1.EffectSystem.TickHandleInEditor(this.EffectHandle, t),
-        3 === this.LifeTimeType) &&
-        EffectSystem_1.EffectSystem.HandleSeekToTimeWithProcess(
+        3 === this.LifeTimeType &&
+          -1 < this.ManualProcessTime &&
+          EffectSystem_1.EffectSystem.HandleSeekToTimeWithProcess(
+            this.EffectHandle,
+            this.ManualProcessTime,
+            !0,
+            t,
+          ),
+        this.LastHidden !== this.bHidden) &&
+        ((this.LastHidden = this.bHidden),
+        EffectSystem_1.EffectSystem.SetEffectHidden(
           this.EffectHandle,
-          this.ManualProcessTime,
-          !0,
-          t,
-        );
+          this.bHidden,
+        ));
   }
   OnPlay() {
     (this.Playing = !0), this.TryAddEffectView();
@@ -81,7 +92,7 @@ class TsRecordEffect extends UE.KuroRecordEffect {
       ((t = UE.KismetSystemLibrary.GetPathName(this.EffectModelData)),
       (this.EffectHandle = EffectSystem_1.EffectSystem.SpawnEffect(
         this,
-        this.GetTransform(),
+        this.D_GetTransform(),
         t,
         "[TsRecordEffect.TryAddEffectView]",
         new EffectContext_1.EffectContext(void 0, this),

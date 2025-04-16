@@ -12,6 +12,7 @@ class TsAnimNotifyStateGoThrough extends UE.KuroAnimNotifyState {
       (this.LeftTime = 0),
       (this.IsEnd = !1);
   }
+  Constructor() {}
   K2_NotifyBegin(t, s, e) {
     var t = t.GetOwner();
     return (

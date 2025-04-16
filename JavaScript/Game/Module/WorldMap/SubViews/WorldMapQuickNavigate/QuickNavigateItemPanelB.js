@@ -10,11 +10,11 @@ const UE = require("ue"),
 class QuickNavigateItemPanelB extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.hKa = void 0),
+      (this.RYa = void 0),
       (this.kqe = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.WorldMapFirstNavigateSelect,
-          this.hKa,
+          this.RYa,
         );
       });
   }
@@ -26,7 +26,7 @@ class QuickNavigateItemPanelB extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.kqe]]);
   }
   RefreshByData(e) {
-    var t = (this.hKa = e).StateId,
+    var t = (this.RYa = e).StateId,
       t = StateByStateId_1.configStateByStateId.GetConfig(t),
       i = this.GetText(1),
       i =

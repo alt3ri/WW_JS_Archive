@@ -26,16 +26,15 @@ const puerts_1 = require("puerts"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
-  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../../GlobalData"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   CharacterAnimOptimizationSetting_1 = require("../../../Setting/CharacterAnimOptimizationSetting"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  MontageManager_1 = require("./Anim/MontageManager"),
   SPLIT_LINE = -90,
   FORCE_DISABLE_ANIM_OPTIMIZATION_TIME = 100,
   animAssetsSetRef = (0, puerts_1.$ref)(UE.NewSet(UE.AnimationAsset)),
@@ -71,7 +70,9 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       (this.SpecialAnimInstanceInternal = void 0),
       (this.IsPlayer = !1),
       (this.ForceDisableAnimOptimizationSet = new Set()),
-      (this.DefaultVisibilityBasedAnimTickOption = 3);
+      (this.DefaultVisibilityBasedAnimTickOption = 3),
+      (this.MontageManager = new MontageManager_1.MontageManager()),
+      (this.CurMontageTimerHandle = void 0);
   }
   static get Dependencies() {
     return [2, 0];
@@ -96,7 +97,15 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     return this.SpecialAnimInstanceInternal;
   }
   OnInit() {
-    return (this.R2r = [...xAngleLimits]), (this.U2r = [...yAngleLimits]), !0;
+    return (
+      (this.R2r = [...xAngleLimits]),
+      (this.U2r = [...yAngleLimits]),
+      this.MontageManager.Init(this),
+      !0
+    );
+  }
+  OnClear() {
+    return this.MontageManager.Clear(), !0;
   }
   SetSightLimit(t, e) {
     (this.R2r = [
@@ -133,7 +142,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     return this.SightTargetPoint;
   }
   GetSightDirect() {
-    return this.SightDirect.ToUeVector();
+    return this.SightDirect.ToUeVectorOld();
   }
   GetTsSightDirect() {
     return this.SightDirect;
@@ -174,7 +183,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Pawn",
-                30,
+                29,
                 "Npc移动相关动画资源错误使用了RootMotion",
                 ["AssetName", this.ActorComp.Actor.GetName()],
                 ["AnimName", i],
@@ -251,7 +260,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Character",
-        58,
+        57,
         "检测出该Actor有空的动画LinkGraph节点,将会影响同步,GAS等功能,请找对应策划修复",
         ["Actor", this.ActorComp.Owner.GetName()],
         ["AnimInstance", this.Actor.Mesh.GetAnimInstance()?.GetName()],
@@ -292,101 +301,6 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     (s.X = Math.cos(i * MathUtils_1.MathUtils.DegToRad) * t),
       (s.Y = Math.sin(i * MathUtils_1.MathUtils.DegToRad) * t);
   }
-  IsMontagePlaying() {
-    return this.MainAnimInstanceInternal.IsAnyMontagePlaying();
-  }
-  LoadAsync(t, e) {
-    return ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.AnimMontage, e);
-  }
-  Play(t, e) {
-    this.MainAnimInstanceInternal.Montage_Play(t),
-      e && this.MainAnimInstanceInternal.OnMontageEnded.Add(e);
-  }
-  PlayOnce(t, e) {
-    this.MainAnimInstanceInternal.Montage_Play(t),
-      this.MainAnimInstanceInternal.Montage_SetNextSection(
-        CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
-        CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
-        t,
-      ),
-      e && this.MainAnimInstanceInternal.OnMontageEnded.Add(e);
-  }
-  PlayFromLoop(t, e) {
-    this.MainAnimInstanceInternal.Montage_Play(t),
-      this.MainAnimInstanceInternal.Montage_JumpToSection(
-        CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
-        t,
-      ),
-      e && this.MainAnimInstanceInternal.OnMontageEnded.Add(e);
-  }
-  PlayFromEnd(t, e) {
-    this.MainAnimInstanceInternal.Montage_Play(t),
-      this.MainAnimInstanceInternal.Montage_JumpToSection(
-        CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
-        t,
-      ),
-      e && this.MainAnimInstanceInternal.OnMontageEnded.Add(e);
-  }
-  Stop(t = !1, e) {
-    t
-      ? this.MainAnimInstanceInternal.Montage_JumpToSection(
-          CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
-          e,
-        )
-      : this.MainAnimInstanceInternal.Montage_SetNextSection(
-          CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
-          CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
-          e,
-        );
-  }
-  StopMontage(t = 0) {
-    this.MainAnimInstanceInternal.Montage_Stop(t);
-  }
-  ForceStop(t, e) {
-    this.MainAnimInstanceInternal.Montage_Stop(t ?? 0, e);
-  }
-  ForceStopWithBlendOut(t, e) {
-    var i = this.MainAnimInstanceInternal.Montage_GetPosition(e),
-      i = e.SequenceLength - i,
-      t = 1e3 * t;
-    t < i && this.MainAnimInstanceInternal.Montage_SetPlayRate(e, i / t),
-      this.MainAnimInstanceInternal.Montage_SetNextSection(
-        CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
-        CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
-        e,
-      );
-  }
-  AddOnMontageEnded(t) {
-    t && this.MainAnimInstanceInternal?.OnMontageEnded.Add(t);
-  }
-  RemoveOnMontageEnded(t) {
-    t && this.MainAnimInstanceInternal?.OnMontageEnded.Remove(t);
-  }
-  ClearOnMontageEnded() {
-    this.MainAnimInstanceInternal?.OnMontageEnded &&
-      this.MainAnimInstanceInternal?.OnMontageEnded.Clear();
-  }
-  GetCurrentSection() {
-    return this.MainAnimInstanceInternal.Montage_GetCurrentSection();
-  }
-  PlayMontageByName(t, e) {
-    return (
-      !!this.GetMontageResPathByName(t)?.includes("/") &&
-      this.LoadAsync(t, e) !== ResourceSystem_1.ResourceSystem.InvalidId
-    );
-  }
-  PlayMontageById(t, e) {
-    let i = void 0;
-    return (
-      !!(i = t.IsAbp
-        ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(t.MontageId)
-        : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(
-            t.MontageId,
-          )) &&
-      this.LoadAsync(i.ActionMontage, e) !==
-        ResourceSystem_1.ResourceSystem.InvalidId
-    );
-  }
   InitBaseInfo() {}
   GetAnimDefaultTickOption() {
     return this.DefaultVisibilityBasedAnimTickOption;
@@ -394,7 +308,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
   StartForceDisableAnimOptimization(t, e = !0) {
     return this.ForceDisableAnimOptimizationSet.has(t)
       ? (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Character", 36, "动画优化强制关闭-重复", [
+          Log_1.Log.Warn("Character", 35, "动画优化强制关闭-重复", [
             "reason",
             t,
           ]),
@@ -412,7 +326,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       this.RefreshAnimOptimization();
   }
   RefreshAnimOptimization() {
-    var t = this.Entity.GetComponent(161)?.IsInFighting ?? !1,
+    var t = this.Entity.GetComponent(173)?.IsInFighting ?? !1,
       e = 0 < this.ForceDisableAnimOptimizationSet.size,
       i = e || t,
       s = this.Actor.K2_GetComponentsByClass(
@@ -439,9 +353,86 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     }
     return i;
   }
+  UpdateLoopState(s, t) {
+    if (void 0 !== t) {
+      let e = !1,
+        i = !1;
+      for (let t = 0; t < s.CompositeSections.Num(); t++) {
+        var a = s.CompositeSections.Get(t);
+        if (
+          a.SectionName.op_Equality(
+            CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
+          )
+        ) {
+          e = !0;
+          break;
+        }
+        if (
+          a.SectionName.op_Equality(
+            CharacterNameDefines_1.CharacterNameDefines.DEFAULT_SECTION_NAME,
+          )
+        ) {
+          i = !0;
+          break;
+        }
+      }
+      t
+        ? e
+          ? this.MainAnimInstance.Montage_SetNextSection(
+              CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
+              CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
+              s,
+            )
+          : i &&
+            this.MainAnimInstance.Montage_SetNextSection(
+              CharacterNameDefines_1.CharacterNameDefines.DEFAULT_SECTION_NAME,
+              CharacterNameDefines_1.CharacterNameDefines.DEFAULT_SECTION_NAME,
+              s,
+            )
+        : e
+          ? this.MainAnimInstance.Montage_SetNextSection(
+              CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
+              CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
+              s,
+            )
+          : i &&
+            this.MainAnimInstance.Montage_SetNextSection(
+              CharacterNameDefines_1.CharacterNameDefines.DEFAULT_SECTION_NAME,
+              CharacterNameDefines_1.CharacterNameDefines.NULL_SECTION,
+              s,
+            );
+    }
+  }
+  StopMontageForLoopState(t, e = !0) {
+    var i = t.CompositeSections,
+      s = i.Num();
+    let a = !1;
+    for (let t = 0; t < s; t++)
+      if (
+        i
+          .Get(t)
+          .SectionName.op_Equality(
+            CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
+          )
+      ) {
+        a = !0;
+        break;
+      }
+    a
+      ? this.MainAnimInstance.Montage_GetCurrentSection().op_Equality(
+          CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
+        ) ||
+        this.MainAnimInstance.Montage_JumpToSection(
+          CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
+          t,
+        )
+      : e
+        ? this.MainAnimInstance.Montage_Stop(0.5, t)
+        : this.UpdateLoopState(t, !1);
+  }
 };
 (BaseAnimationComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(37)],
+  [(0, RegisterComponent_1.RegisterComponent)(43)],
   BaseAnimationComponent,
 )),
   (exports.BaseAnimationComponent = BaseAnimationComponent);

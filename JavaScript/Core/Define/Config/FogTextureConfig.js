@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FogTextureConfig = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class FogTextureConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -13,6 +14,9 @@ class FogTextureConfig {
   }
   get MapId() {
     return this.mapid();
+  }
+  get GravityFlip() {
+    return this.gravityflip();
   }
   get MapTilePath() {
     return this.maptilepath();
@@ -42,39 +46,85 @@ class FogTextureConfig {
     );
   }
   id(t) {
-    var i = this.J7.__offset(this.z7, 4);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 4),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   block(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   mapid() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 8;
   }
+  gravityflip() {
+    var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.readInt32(this.z7 + t) : 1;
+  }
   maptilepath(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   minimaptilepath(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   hdmaptilepath(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   fogtilepath(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   minifogtilepath(t) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   submapgroupid() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

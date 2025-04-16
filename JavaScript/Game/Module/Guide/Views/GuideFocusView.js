@@ -38,7 +38,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Guide",
-                17,
+                16,
                 "[聚焦引导界面:CheckAttachedItemVisible 附着UI对象可见性检查通过]",
                 ["引导步骤", this.GuideStepInfo.Id],
               ),
@@ -54,7 +54,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
           ((i = this.Config.InputEnums),
           this.UnbindInput(this.Config.InputEnums, i),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Guide", 54, "聚焦监听按键完成引导", [
+            Log_1.Log.Debug("Guide", 53, "聚焦监听按键完成引导", [
               "最后按键",
               t,
             ]),
@@ -132,7 +132,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Guide",
-            54,
+            53,
             "[Guide][引导界面打开后5秒后目标没有显示出来,触发保底]",
             ["步骤Id", this.GuideStepInfo.Id],
           ),
@@ -148,7 +148,8 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
       !t.GetRootActor() ||
       !t.IsUiActiveInHierarchy() ||
       !t.IsShow ||
-      this.HasConflictView()
+      this.HasConflictView() ||
+      !this.CheckTickCondition()
     )
       return (this.oZt = !1);
     this.oZt = !0;
@@ -166,7 +167,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Guide",
-        17,
+        16,
         "[聚焦引导界面:InitFocusItem 初始化附着UI对象管理类成功]",
         ["引导步骤", this.GuideStepInfo.Id],
         ["框住的按钮名称", i.GetDisplayName()],
@@ -180,7 +181,7 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
       this.GetRootItem().SetAlpha(1),
       this.sZt ? this.UiViewSequence.PlaySequence(this.sZt) : this.cZt(),
       Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Guide", 17, "[聚焦引导界面:ShowInner 真正显示]", [
+      Log_1.Log.Debug("Guide", 16, "[聚焦引导界面:ShowInner 真正显示]", [
         "引导步骤",
         this.GuideStepInfo.Id,
       ]);

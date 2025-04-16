@@ -13,7 +13,7 @@ class DamageImmune extends ExtraEffectBase_1.BuffEffect {
     }
   }
   OnExecute(e) {
-    return this.MXo[e.DamageData.Element];
+    return this.MXo[e.Element];
   }
   static ApplyEffects(e, t, r) {
     var s = r.Attacker.OwnerBuffComponent;

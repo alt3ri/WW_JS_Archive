@@ -11,25 +11,25 @@ const cpp_1 = require("cpp"),
 class TsPureKeyHandle {
   constructor() {
     (this.R$e = void 0),
-      (this.CDa = void 0),
+      (this.vDa = void 0),
       (this.OnPressAnyKey = (e) => {
         Info_1.Info.IsBuildShipping
           ? (ModelManager_1.ModelManager.PlatformModel.OnPressAnyKey(e),
             LogReportModel_1.LogReportModel.RecordOperateTime(),
-            this.CDa.PressAnyKey(e))
+            this.vDa.PressAnyKey(e))
           : this.R$e.OnPressAnyKey(e);
       }),
       (this.OnReleaseAnyKey = (e) => {
         Info_1.Info.IsBuildShipping
-          ? this.CDa.ReleaseAnyKey(e)
+          ? this.vDa.ReleaseAnyKey(e)
           : this.R$e.OnReleaseAnyKey(e);
       });
   }
   Initialize(e, i) {
-    (this.R$e = e), (this.CDa = i);
+    (this.R$e = e), (this.vDa = i);
   }
   Reset() {
-    (this.R$e = void 0), (this.CDa = void 0);
+    (this.R$e = void 0), (this.vDa = void 0);
   }
   BindKey() {
     cpp_1.FKuroInputInterface.RegisterKeyBinding(

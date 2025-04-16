@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleGiveController = void 0);
-const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+const Log_1 = require("../../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../../../Core/Net/Net"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -30,21 +31,32 @@ class ActivityRoleGiveController extends ActivityControllerBase_1.ActivityContro
     return !1;
   }
   static TrackMoonActivityRewardRequest() {
-    var e = new Protocol_1.Aki.Protocol.Eeh();
+    var e = new Protocol_1.Aki.Protocol.Im_();
     (e.w6n = ActivityRoleGiveController.CurrentActivityId),
-      Net_1.Net.Call(21232, e, (e) => {
-        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
-          ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.Q4n,
-            21417,
-          );
-        e = ActivityRoleGiveController.GetCurrentActivityData();
-        e &&
-          ((e.IsGetReward = !0),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-            ActivityRoleGiveController.CurrentActivityId,
-          ));
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("MoonChasing", 34, "TrackMoonActivityRewardRequest", [
+          "ActivityId:",
+          ActivityRoleGiveController.CurrentActivityId,
+        ]),
+      Net_1.Net.Call(24078, e, (e) => {
+        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+          ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+              e.Q4n,
+              19346,
+            )
+          : (e = ActivityRoleGiveController.GetCurrentActivityData()) &&
+            ((e.IsGetReward = !0),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+              ActivityRoleGiveController.CurrentActivityId,
+            ),
+            Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info(
+              "MoonChasing",
+              34,
+              "TrackMoonActivityRewardResponse",
+              ["ActivityId:", ActivityRoleGiveController.CurrentActivityId],
+            );
       });
   }
   static GetCurrentActivityData() {

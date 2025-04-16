@@ -3,8 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
   SELF_MASK = 1,
   ALLY_MASK = 2,
@@ -21,6 +20,19 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
       (this.CheckCampRelevance = 0),
       (this.CheckCamp = 0),
       (this.CheckTags = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsCheckSight = !1),
+      (this.TsNeedCheckAutonomous = !1),
+      (this.TsCheckCampRelevance = 0),
+      (this.TsCheckCamp = 0),
+      (this.DistanceRange = void 0),
+      (this.AngleRange = void 0),
+      (this.HeightRange = void 0),
+      (this.CheckTagsCopy = void 0),
+      (this.NeedOneTag = !1);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsCheckSight = !1),
       (this.TsNeedCheckAutonomous = !1),
@@ -57,15 +69,15 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
         (this.HeightRange = [-this.CheckHeight, this.CheckHeight]));
   }
   ReceiveTickAI(s, t, e) {
-    var a = s.AiController;
-    if (a) {
-      var r = a.CharActorComp;
+    var i = s.AiController;
+    if (i) {
+      var r = i.CharActorComp;
       if (
-        (BlackboardController_1.BlackboardController.RemoveValueByEntity(
+        (ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
           r.Entity.Id,
           "TargetArray",
         ),
-        BlackboardController_1.BlackboardController.RemoveValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
           r.Entity.Id,
           "Target",
         ),
@@ -74,7 +86,7 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
             TsTaskCheckTarget.TmpTargets2.clear())
           : ((TsTaskCheckTarget.TmpTargets = new Set()),
             (TsTaskCheckTarget.TmpTargets2 = new Set())),
-        this.RelevanceAndCamp(a, r),
+        this.RelevanceAndCamp(i, r),
         0 === TsTaskCheckTarget.TmpTargets.size)
       )
         this.FinishExecute(!1);
@@ -83,36 +95,36 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
       else {
         if (this.TsCheckSight) {
           TsTaskCheckTarget.SwapAndClearTmpTargets();
-          for (const i of TsTaskCheckTarget.TmpTargets2)
+          for (const h of TsTaskCheckTarget.TmpTargets2)
             MathUtils_1.MathUtils.LocationInRangeArray(
               r.FloorLocation,
               r.ActorRotationProxy,
-              i.FloorLocation,
-              r.ScaledRadius + i.ScaledRadius,
+              h.FloorLocation,
+              r.ScaledRadius + h.ScaledRadius,
               this.DistanceRange,
               this.AngleRange,
               this.HeightRange,
-            ) && TsTaskCheckTarget.TmpTargets.add(i);
+            ) && TsTaskCheckTarget.TmpTargets.add(h);
         }
-        var h = new Array();
+        var a = new Array();
         for (const T of TsTaskCheckTarget.TmpTargets)
           (!this.TsNeedCheckAutonomous ||
             T.Entity.GetComponent(3)?.IsAutonomousProxy) &&
-            h.push(T.Entity.Id);
-        0 === h.length
+            a.push(T.Entity.Id);
+        0 === a.length
           ? this.FinishExecute(!1)
-          : (BlackboardController_1.BlackboardController.SetIntValuesByEntity(
+          : (ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValuesByEntity(
               r.Entity.Id,
               "TargetArray",
-              h,
+              a,
             ),
-            (a = Math.floor(
-              MathUtils_1.MathUtils.GetRandomRange(0, h.length - 1),
+            (i = Math.floor(
+              MathUtils_1.MathUtils.GetRandomRange(0, a.length - 1),
             )),
-            BlackboardController_1.BlackboardController.SetEntityIdByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetEntityIdByEntity(
               r.Entity.Id,
               "Target",
-              h[a],
+              a[i],
             ),
             this.FinishExecute(!0));
       }
@@ -131,30 +143,30 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
       0 < (this.TsCheckCampRelevance & ALLY_MASK))
     ) {
       var e,
-        a = s.CharAiDesignComp.Entity.Id;
-      for (const i of s.AiPerception.Allies)
-        i !== a &&
+        i = s.CharAiDesignComp.Entity.Id;
+      for (const h of s.AiPerception.Allies)
+        h !== i &&
           (e =
-            CharacterController_1.CharacterController.GetCharacterActorComponentById(
-              i,
+            ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
+              h,
             )) &&
           TsTaskCheckTarget.TmpTargets.add(e);
     }
     if (0 < (this.TsCheckCampRelevance & ENEMY_MASK))
       for (const T of s.AiPerception.AllEnemies) {
         var r =
-          CharacterController_1.CharacterController.GetCharacterActorComponentById(
+          ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
             T,
           );
         r && TsTaskCheckTarget.TmpTargets.add(r);
       }
     if (0 < (this.TsCheckCampRelevance & NEUTRAL_MASK))
       for (const o of s.AiPerception.Neutrals) {
-        var h =
-          CharacterController_1.CharacterController.GetCharacterActorComponentById(
+        var a =
+          ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
             o,
           );
-        h && TsTaskCheckTarget.TmpTargets.add(h);
+        a && TsTaskCheckTarget.TmpTargets.add(a);
       }
     if (13 !== this.TsCheckCamp) {
       TsTaskCheckTarget.SwapAndClearTmpTargets();
@@ -174,17 +186,17 @@ class TsTaskCheckTarget extends TsTaskAbortImmediatelyBase_1.default {
     }
     if (this.CheckTagsCopy.length) {
       TsTaskCheckTarget.SwapAndClearTmpTargets();
-      for (const i of TsTaskCheckTarget.TmpTargets2) {
-        var a = i.Entity.GetComponent(190);
-        if (a?.Valid) {
+      for (const h of TsTaskCheckTarget.TmpTargets2) {
+        var i = h.Entity.GetComponent(203);
+        if (i?.Valid) {
           let s = !0;
-          for (var [r, h] of this.CheckTagsCopy)
-            if (a.HasTag(r?.TagId) !== h) {
+          for (var [r, a] of this.CheckTagsCopy)
+            if (i.HasTag(r?.TagId) !== a) {
               s = !1;
               break;
             }
-          s && TsTaskCheckTarget.TmpTargets.add(i);
-        } else this.NeedOneTag || TsTaskCheckTarget.TmpTargets.add(i);
+          s && TsTaskCheckTarget.TmpTargets.add(h);
+        } else this.NeedOneTag || TsTaskCheckTarget.TmpTargets.add(h);
       }
     }
   }

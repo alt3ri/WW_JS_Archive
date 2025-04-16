@@ -14,9 +14,9 @@ class ManipulaterModel extends ModelBase_1.ModelBase {
       (this.ExitHoldingStateCameraLocation = void 0),
       (this.wYo = 0),
       (this.BYo = new Set()),
-      (this.T0a = void 0),
-      (this.L0a = void 0),
-      (this.R0a = void 0);
+      (this.k0a = void 0),
+      (this.G0a = void 0),
+      (this.N0a = void 0);
   }
   SetManipulateMode(t) {
     this.PYo = t;
@@ -53,22 +53,26 @@ class ManipulaterModel extends ModelBase_1.ModelBase {
       );
   }
   GetProjectilePath() {
-    return void 0 === this.T0a && (this.T0a = UE.NewArray(UE.Vector)), this.T0a;
+    return (
+      void 0 === this.k0a && (this.k0a = UE.NewArray(UE.VectorDouble)), this.k0a
+    );
   }
   SetProjectilePath(t) {
-    this.T0a = t;
+    this.k0a = t;
   }
   GetAfterPortalProjectilePath() {
-    return void 0 === this.L0a && (this.L0a = UE.NewArray(UE.Vector)), this.L0a;
+    return (
+      void 0 === this.G0a && (this.G0a = UE.NewArray(UE.VectorDouble)), this.G0a
+    );
   }
   SetAfterPortalProjectilePath(t) {
-    this.L0a = t;
+    this.G0a = t;
   }
   GetAfterPortalStartPosition() {
-    return this.R0a;
+    return this.N0a;
   }
   SetAfterPortalStartPosition(t) {
-    this.R0a = t;
+    this.N0a = t;
   }
 }
 exports.ManipulaterModel = ManipulaterModel;

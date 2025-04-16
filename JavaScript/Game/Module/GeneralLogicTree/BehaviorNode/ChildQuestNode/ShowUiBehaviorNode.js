@@ -15,6 +15,11 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       (this.bZe = () => {
         this.y$t || this.SubmitNode();
       }),
+      (this.Y4c = (e, t) => {
+        this.y$t ||
+          (t !== (t = this.I$t.EndingId ?? 0) && 0 !== t) ||
+          this.SubmitNode();
+      }),
       (this.OnAfterSubmit = (e) => {
         this.y$t = !1;
       });
@@ -44,6 +49,11 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.ActiveBattleView,
           this.bZe,
+        ),
+      "CiacconaAvgBoard" === this.I$t.Type &&
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.NotifyBtCiacconaChapterFinish,
+          this.Y4c,
         );
   }
   RemoveEventsOnChildQuestEnd() {
@@ -52,6 +62,11 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ActiveBattleView,
           this.bZe,
+        ),
+      "CiacconaAvgBoard" === this.I$t.Type &&
+        EventSystem_1.EventSystem.Remove(
+          EventDefine_1.EEventName.NotifyBtCiacconaChapterFinish,
+          this.Y4c,
         );
   }
   OnBeforeSubmit() {

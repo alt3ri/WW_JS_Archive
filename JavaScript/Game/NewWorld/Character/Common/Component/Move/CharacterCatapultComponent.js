@@ -3,21 +3,21 @@ var CharacterCatapultComponent_1,
   __decorate =
     (this && this.__decorate) ||
     function (t, e, i, n) {
-      var r,
-        o = arguments.length,
-        s =
-          o < 3
+      var o,
+        a = arguments.length,
+        r =
+          a < 3
             ? e
             : null === n
               ? (n = Object.getOwnPropertyDescriptor(e, i))
               : n;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        s = Reflect.decorate(t, e, i, n);
+        r = Reflect.decorate(t, e, i, n);
       else
-        for (var a = t.length - 1; 0 <= a; a--)
-          (r = t[a]) &&
-            (s = (o < 3 ? r(s) : 3 < o ? r(e, i, s) : r(e, i)) || s);
-      return 3 < o && s && Object.defineProperty(e, i, s), s;
+        for (var s = t.length - 1; 0 <= s; s--)
+          (o = t[s]) &&
+            (r = (a < 3 ? o(r) : 3 < a ? o(e, i, r) : o(e, i)) || r);
+      return 3 < a && r && Object.defineProperty(e, i, r), r;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterCatapultComponent = void 0);
@@ -51,13 +51,16 @@ let CharacterCatapultComponent =
             this.Gce.MoveCharacter(CharacterCatapultComponent_1.Lz, t),
             this.LockRotator && this.Hte?.SetInputRotator(this.x$r.Rotator),
             this.P$r > this.x$r.TimeLength &&
-              (this.Gce.CharacterMovement.SetMovementMode(3),
+              (this.Hte?.Actor.KuroSetMovementMode({
+                Mode: 3,
+                Context: "[CharacterCatapultComponent.OnCustomMoveCatapult]",
+              }),
               this.x$r.GetSpeed(this.P$r, CharacterCatapultComponent_1.Lz),
               this.Gce.SetForceSpeed(CharacterCatapultComponent_1.Lz)));
         });
     }
     static get Dependencies() {
-      return [3, 164];
+      return [3, 176];
     }
     OnInitData() {
       return (this.x$r = new BigJumpUnit_1.BigJumpUnit()), !0;
@@ -65,7 +68,7 @@ let CharacterCatapultComponent =
     OnStart() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.Gce = this.Entity.GetComponent(164)),
+        (this.Gce = this.Entity.GetComponent(176)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveCatapult,
@@ -89,26 +92,27 @@ let CharacterCatapultComponent =
       e,
       i,
       n,
-      r = "",
-      o = BigJumpUnit_1.DEFAULT_GRAVITY,
-      s = void 0,
-      a = !1,
+      o = "",
+      a = BigJumpUnit_1.DEFAULT_GRAVITY,
+      r = void 0,
+      s = !1,
     ) {
-      (this.w$r = a),
-        (this.LockRotator = 0 < o),
-        this.x$r.SetAll(t, e, i, n, r, o, s);
+      (this.w$r = s),
+        (this.LockRotator = 0 < a),
+        this.x$r.SetAll(t, e, i, n, o, a, r);
     }
     StartCatapult() {
       this.x$r.SetStartPoint(this.Hte.ActorLocationProxy),
         this.x$r.Init(),
         (this.P$r = 0),
-        this.Gce.CharacterMovement.SetMovementMode(
-          6,
-          CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_LEISURE,
-        );
+        this.Hte?.Actor.KuroSetMovementMode({
+          Mode: 6,
+          CustomMode: CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_LEISURE,
+          Context: "[CharacterCatapultComponent.StartCatapult]",
+        });
       var t,
         e,
-        i = this.Entity.GetComponent(163);
+        i = this.Entity.GetComponent(175);
       i &&
         i.SetLocationAndRotatorWithModelBuffer(
           this.Hte.ActorLocationProxy.ToUeVector(),
@@ -117,7 +121,7 @@ let CharacterCatapultComponent =
           "Catapult Start",
         ),
         this.w$r &&
-          ((t = this.Entity.GetComponent(34).GetSkillMontageInstance(
+          ((t = this.Entity.GetComponent(39).GetSkillMontageInstance(
             Number(SUPER_CATAPULT_SKILL_ID),
             0,
           )),
@@ -140,7 +144,7 @@ let CharacterCatapultComponent =
 (CharacterCatapultComponent.Lz = Vector_1.Vector.Create()),
   (CharacterCatapultComponent = CharacterCatapultComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(30)],
+      [(0, RegisterComponent_1.RegisterComponent)(33)],
       CharacterCatapultComponent,
     )),
   (exports.CharacterCatapultComponent = CharacterCatapultComponent);

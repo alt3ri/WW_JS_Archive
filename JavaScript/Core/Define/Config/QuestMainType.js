@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestMainType = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class QuestMainType {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -38,11 +39,11 @@ class QuestMainType {
   get QuestUpdateTipsTime() {
     return this.questupdatetipstime();
   }
-  __init(t, i) {
-    return (this.z7 = t), (this.J7 = i), this;
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
   }
-  static getRootAsQuestMainType(t, i) {
-    return (i || new QuestMainType()).__init(
+  static getRootAsQuestMainType(t, e) {
+    return (e || new QuestMainType()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -52,28 +53,58 @@ class QuestMainType {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maintypename(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   questtabicon(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   questtypetitleicon(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 10),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   questchapterbg(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   trackiconid() {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 2;
   }
   typecolor(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var e = this.J7.__offset(this.z7, 16),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   sortvalue() {
     var t = this.J7.__offset(this.z7, 18);

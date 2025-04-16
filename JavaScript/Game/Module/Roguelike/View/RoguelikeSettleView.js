@@ -91,23 +91,29 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
       o =
         (this.GetText(21).SetText(o),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.Name),
-        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t.RoleId)),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t.RoleId));
+    if (o) {
+      let e = o.FormationRoleCard;
+      i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+        t.RoleId,
+      ).GetRoleSkinId();
+      -1 !== i &&
+        ((o = ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(i)),
+        (e = o.FormationRoleCard)),
+        this.SetTextureByPath(e, this.GetTexture(1));
+    }
+    s
+      ? (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), s.PokemonName),
+        this.SetTextureByPath(s.PokemonSettleIcon, this.GetTexture(3)))
+      : (this.GetText(4).SetUIActive(!1), this.GetTexture(3).SetUIActive(!1));
+    var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+        e.r6n,
+      ),
       i =
-        (o && this.SetTextureByPath(o.FormationRoleCard, this.GetTexture(1)),
-        s
-          ? (LguiUtil_1.LguiUtil.SetLocalTextNew(
-              this.GetText(4),
-              s.PokemonName,
-            ),
-            this.SetTextureByPath(s.PokemonSettleIcon, this.GetTexture(3)))
-          : (this.GetText(4).SetUIActive(!1),
-            this.GetTexture(3).SetUIActive(!1)),
-        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e.r6n)),
-      t =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.MapName),
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), t.MapName),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(8),
-          0 < i.difficultydescLength() ? i.DifficultyDesc[0] : "",
+          0 < t.difficultydescLength() ? t.DifficultyDesc[0] : "",
         ),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(10),
@@ -115,7 +121,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
         ),
         TimeUtil_1.TimeUtil.DateFormatString(e.aqs)),
-      o = (this.GetText(9).SetText(t), Math.floor((e.iqs / e.rqs) * 100)),
+      o = (this.GetText(9).SetText(i), Math.floor((e.iqs / e.rqs) * 100)),
       s =
         (this.GetSprite(14).SetFillAmount(o / 100),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -124,18 +130,18 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
           o,
         ),
         ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId()),
-      i = this.GetItem(0),
-      t = this.GetSprite(5),
+      t = this.GetItem(0),
+      i = this.GetSprite(5),
       r = this.GetSprite(14),
       a = this.GetTexture(19),
-      i =
+      t =
         (o >= s.RoguelikeSettleS
-          ? (i.SetUIActive(!0),
+          ? (t.SetUIActive(!0),
             this.SetSpriteByPath(
               CommonParamById_1.configCommonParamById.GetStringConfig(
                 "RoguelikeSettle_S_Sprite",
               ),
-              t,
+              i,
               !1,
             ),
             this.SetSpriteByPath(
@@ -147,12 +153,12 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
             ),
             this.SetTextureByPath(s.RoguelikeSettleBgS, a))
           : (o >= s.RoguelikeSettleA
-              ? (i.SetUIActive(!1),
+              ? (t.SetUIActive(!1),
                 this.SetSpriteByPath(
                   CommonParamById_1.configCommonParamById.GetStringConfig(
                     "RoguelikeSettle_A_Sprite",
                   ),
-                  t,
+                  i,
                   !1,
                 ),
                 this.SetSpriteByPath(
@@ -163,12 +169,12 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
                   !1,
                 ))
               : o >= s.RoguelikeSettleB
-                ? (i.SetUIActive(!1),
+                ? (t.SetUIActive(!1),
                   this.SetSpriteByPath(
                     CommonParamById_1.configCommonParamById.GetStringConfig(
                       "RoguelikeSettle_B_Sprite",
                     ),
-                    t,
+                    i,
                     !1,
                   ),
                   this.SetSpriteByPath(
@@ -178,12 +184,12 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
                     r,
                     !1,
                   ))
-                : (i.SetUIActive(!1),
+                : (t.SetUIActive(!1),
                   this.SetSpriteByPath(
                     CommonParamById_1.configCommonParamById.GetStringConfig(
                       "RoguelikeSettle_C_Sprite",
                     ),
-                    t,
+                    i,
                     !1,
                   ),
                   this.SetSpriteByPath(
@@ -208,7 +214,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
                   "settle_c",
                 ),
         LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11))),
-      t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11)),
+      i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11)),
       r = Object.keys(e.nBs);
     let n = 0,
       l = 0,
@@ -224,9 +230,9 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
     (a = new RoguelikeSettleRecordItem(0, e.hqs)),
       a.CreateThenShowByActorAsync(this.GetItem(12).GetOwner()),
       (o = new RoguelikeSettleRecordItem(1, e.lqs)),
-      o.CreateThenShowByActorAsync(i.GetOwner()),
+      o.CreateThenShowByActorAsync(t.GetOwner()),
       (s = new RoguelikeSettleRecordItem(2, g));
-    s.CreateThenShowByActorAsync(t.GetOwner());
+    s.CreateThenShowByActorAsync(i.GetOwner());
     let h = !(this.RecordItemList = [a, o, s]);
     for (const U of ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntries())
       U.Insts.includes(e.r6n) && (h = !0);

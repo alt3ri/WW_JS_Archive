@@ -31,6 +31,7 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
       (this.Wft = 0),
       (this.nvi = !1),
       (this.ZMt = void 0),
+      (this.Xtl = !1),
       (this.eEt =
         CommonParamById_1.configCommonParamById.GetIntConfig("ExpDisplayTime")),
       (this.tEt = CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -41,11 +42,11 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
           this.XMt >= this.YMt &&
             ((this.XMt = this.YMt),
             TimerSystem_1.TimerSystem.Remove(this.ZMt),
-            this.svi()),
+            this.Ytl()),
           this.oEt();
       }),
       (this.AMe = () => {
-        this.CloseMe();
+        this.svi();
       });
   }
   OnRegisterComponent() {
@@ -80,11 +81,14 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
       this.oEt(),
       this.WMt &&
         this.UiViewSequence.AddSequenceFinishEvent("LevelUp", () => {
-          (this.nvi = !0), this.svi();
+          (this.nvi = !0), this.Ytl();
         });
   }
+  Ytl() {
+    this.nvi && this.XMt >= this.YMt && this.svi();
+  }
   svi() {
-    this.nvi && this.XMt >= this.YMt && this.CloseMe();
+    this.Xtl || ((this.Xtl = !0), this.CloseMe());
   }
   OnBeforeShow() {
     this.WMt && this.avi(), this.KMt && this.hvi();
@@ -96,7 +100,7 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
           TimerSystem_1.MIN_TIME,
         ))
       : (this.ZMt = TimerSystem_1.TimerSystem.Delay(() => {
-          this.CloseMe();
+          this.svi();
         }, this.tEt));
   }
   get lvi() {
@@ -156,7 +160,7 @@ class LevelUpView extends UiViewBase_1.UiViewBase {
     Global_1.Global.BaseCharacter &&
       (e = EffectUtil_1.EffectUtil.GetEffectPath("WorldLevelUpEffect")) &&
       0 !== e.length &&
-      ((t = (i = Global_1.Global.BaseCharacter).GetTransform()),
+      ((t = (i = Global_1.Global.BaseCharacter).D_GetTransform()),
       (i = i.CapsuleComponent.CapsuleHalfHeight),
       ((s = t.GetLocation()).Z -= i),
       t.SetLocation(s),

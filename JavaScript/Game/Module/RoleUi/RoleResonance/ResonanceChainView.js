@@ -97,7 +97,7 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
     (this.d1o = this.ExtraParams),
       void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "ResonanceChainView",
           ])
@@ -276,7 +276,7 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (0 === e.length)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 17, "共鸣链聚焦引导extraParam字段配置错误", [
+        Log_1.Log.Error("Guide", 16, "共鸣链聚焦引导extraParam字段配置错误", [
           "configParams",
           e,
         ]);
@@ -286,7 +286,7 @@ class ResonanceChainView extends UiTabViewBase_1.UiTabViewBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Guide",
-          17,
+          16,
           "共鸣链聚焦引导extraParam字段配置错误, 找不到对应的共鸣链界面UI节点",
           ["configParams", e],
         );

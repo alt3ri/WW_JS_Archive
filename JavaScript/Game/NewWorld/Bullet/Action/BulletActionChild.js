@@ -47,7 +47,7 @@ class BulletActionChild extends BulletActionBase_1.BulletActionBase {
             !(this.ChildInfo.HaveSummonedBulletNumber[l] < e.Num)) ||
           (e.Delay < 0 &&
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Bullet", 21, "子弹Delay为负数！"),
+            Log_1.Log.Error("Bullet", 20, "子弹Delay为负数！"),
           this.BulletInfo.LiveTime <
             e.Delay * TimeUtil_1.TimeUtil.InverseMillisecond +
               this.ChildInfo.HaveSummonedBulletNumber[l] *
@@ -55,24 +55,27 @@ class BulletActionChild extends BulletActionBase_1.BulletActionBase {
                 TimeUtil_1.TimeUtil.InverseMillisecond)
         )
       ) {
-        var o = BulletController_1.BulletController.CreateBulletCustomTarget(
+        this.ChildInfo.HaveSummonedBulletNumber[l]++;
+        l = BulletController_1.BulletController.CreateBulletCustomTarget(
           this.BulletInfo.AttackerActorComp.Actor,
           e.RowName.toString(),
           this.BulletInfo.ActorComponent.ActorTransform,
           {
             SkillId: this.BulletInfo.BulletInitParams.SkillId,
+            SkillContextId: this.BulletInfo.BulletInitParams.SkillContextId,
             ParentTargetId: this.BulletInfo.Target?.Id,
             ParentId: this.BulletInfo.Entity.Id,
             DtType: this.BulletInfo.BulletInitParams.DtType,
+            BattleFlags: this.BulletInfo.BulletInitParams.BattleFlags,
+            ParentIds: void 0,
           },
           this.BulletInfo.ContextId,
         );
-        if (o)
+        if (l)
           BulletUtil_1.BulletUtil.ProcessHandOverEffectToSon(
             this.BulletInfo,
-            o,
-          ),
-            this.ChildInfo.HaveSummonedBulletNumber[l]++;
+            l,
+          );
         else if (e.BreakOnFail) return;
       }
     }

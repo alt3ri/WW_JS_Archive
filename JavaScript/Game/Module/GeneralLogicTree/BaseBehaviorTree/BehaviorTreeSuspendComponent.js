@@ -64,7 +64,7 @@ class BehaviorTreeSuspendComponent {
   UpdateOccupations(e, t, i) {
     if (0 === (this.Wjs = t)) this.ClearOccupations();
     else {
-      this.Yre.RemoveTag(9), this._Qt.splice(0, this._Qt.length);
+      this.Yre.RemoveTag(10), this._Qt.splice(0, this._Qt.length);
       for (const n of i) {
         var s = MathUtils_1.MathUtils.LongToBigInt(n.w5n),
           s =
@@ -85,7 +85,7 @@ class BehaviorTreeSuspendComponent {
             TreeIncId: MathUtils_1.MathUtils.LongToBigInt(n.w5n),
           });
       }
-      this.Yre.AddTag(9), (this.uQt = void 0);
+      this.Yre.AddTag(10), (this.uQt = void 0);
       (t = this.Yre.GetNode(e)),
         (i =
           (t && t.ContainTag(1) && (t.AddTag(0), (this.uQt = e)),
@@ -107,7 +107,7 @@ class BehaviorTreeSuspendComponent {
   }
   ClearOccupations() {
     this._Qt.splice(0, this._Qt.length),
-      this.Yre.RemoveTag(9),
+      this.Yre.RemoveTag(10),
       this.uQt &&
         (this.Yre.GetNode(this.uQt)?.RemoveTag(0), (this.uQt = void 0)),
       EventSystem_1.EventSystem.Emit(

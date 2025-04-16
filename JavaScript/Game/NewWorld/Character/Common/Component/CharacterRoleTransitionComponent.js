@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, r, o) {
+  function (e, t, o, r) {
     var i,
       n = arguments.length,
       s =
         n < 3
           ? t
-          : null === o
-            ? (o = Object.getOwnPropertyDescriptor(t, r))
-            : o;
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, o))
+            : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(e, t, r, o);
+      s = Reflect.decorate(e, t, o, r);
     else
       for (var l = e.length - 1; 0 <= l; l--)
-        (i = e[l]) && (s = (n < 3 ? i(s) : 3 < n ? i(t, r, s) : i(t, r)) || s);
-    return 3 < n && s && Object.defineProperty(t, r, s), s;
+        (i = e[l]) && (s = (n < 3 ? i(s) : 3 < n ? i(t, o, s) : i(t, o)) || s);
+    return 3 < n && s && Object.defineProperty(t, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterRoleTransitionComponent = void 0);
@@ -27,7 +27,6 @@ const UE = require("ue"),
   Global_1 = require("../../../../Global"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  CharacterController_1 = require("../../CharacterController"),
   CHECK_CHANGE_ROLE_TIME = 1e3;
 let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent extends EntityComponent_1.EntityComponent {
   constructor() {
@@ -70,13 +69,13 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
               this.Wjr(this.Entity.Id, t)))));
   }
   jjr() {
-    for (const r of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
-      if (r?.IsInit) {
-        var e = r.Entity.GetComponent(0);
+    for (const o of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
+      if (o?.IsInit) {
+        var e = o.Entity.GetComponent(0);
         if (e.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player) {
           e =
-            CharacterController_1.CharacterController.GetCharacterActorComponentById(
-              r.Id,
+            ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
+              o.Id,
             );
           if (
             e &&
@@ -86,10 +85,10 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
             var t = this.Hte.ActorLocation,
               e = e.ActorLocation;
             if (
-              UE.KismetMathLibrary.Vector_DistanceSquared(t, e) <
+              UE.KismetMathLibrary.D_Vector_DistanceSquared(t, e) <
               this.kjr * this.kjr
             )
-              return r.Entity;
+              return o.Entity;
           }
         }
       }
@@ -102,7 +101,7 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
   }
 };
 (CharacterRoleTransitionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(66)],
+  [(0, RegisterComponent_1.RegisterComponent)(73)],
   CharacterRoleTransitionComponent,
 )),
   (exports.CharacterRoleTransitionComponent = CharacterRoleTransitionComponent);

@@ -26,6 +26,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   SkyboxById_1 = require("../../../../Core/Define/ConfigQuery/SkyboxById"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
@@ -34,7 +35,6 @@ const UE = require("ue"),
   GlobalData_1 = require("../../../GlobalData"),
   ComponentForceTickController_1 = require("../../../World/Controller/ComponentForceTickController"),
   RoleTriggerController_1 = require("../../Character/Role/RoleTriggerController"),
-  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   DEFAULT_PRIORITY = 10,
   TICK_TIME = 1e3;
 let PostProcessBridgeComponent =
@@ -88,7 +88,7 @@ let PostProcessBridgeComponent =
           ? (this.Ynn =
               1 / (t.FadeTime * TimeUtil_1.TimeUtil.InverseMillisecond))
           : (this.Ynn = 0),
-        (this.Jue = t.Priority ?? DEFAULT_PRIORITY),
+        (this.Jue = t.Priority || DEFAULT_PRIORITY),
         (this.Knn = void 0 === t.TriggerMode),
         (this.Qnn = t.TriggerMode),
         t.TriggerMode?.Type === IComponent_1.ETriggerMode.Distance
@@ -122,13 +122,13 @@ let PostProcessBridgeComponent =
           this.tsn(),
           this.Knn)
         ) {
-          if (((this.jnn = this.Entity.GetComponent(77)), !this.jnn))
+          if (((this.jnn = this.Entity.GetComponent(84)), !this.jnn))
             return (
               (this.gU = !1),
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Entity",
-                  18,
+                  17,
                   "氛围组件初始化失败，缺少RangeComponent",
                 ),
               !1
@@ -170,14 +170,14 @@ let PostProcessBridgeComponent =
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Entity",
-            18,
+            17,
             "氛围组件初始化失败",
             ["WeatherDataAssetPath", this.knn],
             ["TodDataAssetPath", this.Fnn],
           );
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Entity", 18, "氛围组件初始化失败, actor为空");
+          Log_1.Log.Error("Entity", 17, "氛围组件初始化失败, actor为空");
       return !1;
     }
     OnTriggerEnter() {
@@ -188,7 +188,7 @@ let PostProcessBridgeComponent =
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Entity",
-          18,
+          17,
           "氛围组件触发",
           ["WeatherDataAssetPath", this.knn],
           ["TodDataAssetPath", this.Fnn],
@@ -202,7 +202,7 @@ let PostProcessBridgeComponent =
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Entity",
-          18,
+          17,
           "氛围组件关闭",
           ["WeatherDataAssetPath", this.knn],
           ["TodDataAssetPath", this.Fnn],
@@ -281,7 +281,7 @@ let PostProcessBridgeComponent =
   });
 (PostProcessBridgeComponent = PostProcessBridgeComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(97)],
+    [(0, RegisterComponent_1.RegisterComponent)(104)],
     PostProcessBridgeComponent,
   )),
   (exports.PostProcessBridgeComponent = PostProcessBridgeComponent);

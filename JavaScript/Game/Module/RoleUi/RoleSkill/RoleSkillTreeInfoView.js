@@ -30,6 +30,11 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       (this.Mmo = 0),
       (this.Bmo = void 0),
       (this.bmo = void 0),
+      (this.wmo = 0),
+      (this.B9l = 0),
+      (this.G9l = 0),
+      (this.ESo = void 0),
+      (this.O9l = void 0),
       (this.qmo = void 0),
       (this.Gmo = void 0),
       (this.lqe = void 0),
@@ -40,9 +45,12 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       (this.kmo = 1),
       (this.Fmo = []),
       (this.Vmo = []),
-      (this.x5t = !1),
+      (this.Dcl = 0),
       (this.Hmo = (i, t) => {
         this.Update(i, t), this.jmo(this.kmo);
+      }),
+      (this.qdi = () => {
+        this.Refresh();
       }),
       (this.pFe = () => {
         UiManager_1.UiManager.CloseView("RoleSkillTreeInfoView"),
@@ -51,11 +59,15 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.Wmo = (i) => {
-        (this.Omo = i), this.Kmo(this.kmo, i), this.Qmo(i);
+        (this.Omo = i)
+          ? ((this.kmo = 2), this.jmo(this.kmo))
+          : this.Kmo(this.kmo, i),
+          this.Qmo(i);
       }),
-      (this.w5t = (i) => {
-        (ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc = i),
-          (this.x5t = i),
+      (this.Pcl = (i) => {
+        1 === this.Dcl
+          ? (ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc = i)
+          : (ModelManager_1.ModelManager.RoleModel.IsShowSkillResume = i),
           this.Update(this.dFe, this.Mmo);
       }),
       (this.Xmo = () => {
@@ -129,7 +141,8 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
             i = i.Data;
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
               i.ItemId,
-            );
+            ),
+              (ModelManager_1.ModelManager.ComposeModel.ComposeSelectItem = i);
           }),
           i.BindOnCanExecuteChange(() => !1),
           i
@@ -139,7 +152,9 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
         var t = new RoleSkillTreeAttributeItem_1.RoleSkillTreeAttributeItem(t),
           s = this.Fmo[e],
           h = e < this.Vmo.length ? this.Vmo[e] : void 0;
-        return t.Refresh(s, h), { Key: e, Value: t };
+        return (
+          t.Refresh(s, h), t.SetNextLevelItem(this.Omo), { Key: e, Value: t }
+        );
       });
   }
   OnRegisterComponent() {
@@ -177,6 +192,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       [30, UE.UIExtendToggle],
       [31, UE.UIItem],
       [32, UE.UIText],
+      [33, UE.UIText],
     ]),
       (this.BtnBindInfo = [
         [4, this.zmo],
@@ -186,7 +202,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
         [25, this.Xmo],
         [26, this.tdo],
         [29, this.Ymo],
-        [30, this.w5t],
+        [30, this.Pcl],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -209,29 +225,62 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       (this.p9t = new ButtonItem_1.ButtonItem(this.GetItem(14))),
       this.p9t.SetFunction(this.edo),
       this.GetItem(20).SetUIActive(!1),
-      this.SetItemIcon(this.GetTexture(12), ItemDefines_1.EItemId.Gold);
-    var i = ModelManager_1.ModelManager.GameModeModel.IsMulti,
-      i =
-        (this.GetItem(31).SetUIActive(i),
-        (this.x5t =
-          ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
-        this.x5t ? 1 : 0),
-      i = (this.GetExtendToggle(30).SetToggleState(i), this.OpenParam),
-      t = i.RoleId,
-      i = i.SkillNodeId;
-    (this.kmo = 1), this.Update(t, i), this.odo(!1);
+      this.SetItemIcon(this.GetTexture(12), ItemDefines_1.EItemId.Gold),
+      this.xcl();
+    var i = this.OpenParam;
+    (this.dFe = i.RoleId), (this.Mmo = i.SkillNodeId), (this.kmo = 1);
+  }
+  OnBeforeShow() {
+    this.Update(this.dFe, this.Mmo), this.jmo(this.kmo);
+  }
+  xcl() {
+    var i;
+    (this.Dcl = ModelManager_1.ModelManager.RoleModel.GetRoleSkillDescType()),
+      1 === this.Dcl
+        ? ((i = ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc
+            ? 1
+            : 0),
+          this.GetExtendToggle(30).SetToggleState(i),
+          LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(33),
+            "MultiplayerSkillDescription_text",
+          ))
+        : ((i = ModelManager_1.ModelManager.RoleModel.IsShowSkillResume
+            ? 1
+            : 0),
+          this.GetExtendToggle(30).SetToggleState(i),
+          LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(33),
+            "SkillBriefDescription_text",
+          ));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateSkillTreeInfoView,
       this.Hmo,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
+      ),
+      ControllerHolder_1.ControllerHolder.TermExplanationController.RegisterTextHyperlink(
+        this.GetText(10),
+        1,
+        2,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateSkillTreeInfoView,
       this.Hmo,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
+      ),
+      ControllerHolder_1.ControllerHolder.TermExplanationController.UnRegisterTextHyperlink(
+        this.GetText(10),
+      );
   }
   Update(i, t) {
     (this.dFe = i),
@@ -239,7 +288,26 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       (this.bmo =
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
           this.Mmo,
-        ));
+        )),
+      (this.wmo = this.bmo.SkillId),
+      (this.B9l =
+        ModelManager_1.ModelManager.RoleModel.GetUpgradeSkillIdIfUpgraded(
+          this.wmo,
+          i,
+        )),
+      (this.G9l = 0 < this.B9l ? this.B9l : this.wmo),
+      (this.ESo =
+        0 < this.wmo
+          ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
+              this.wmo,
+            )
+          : void 0),
+      (this.O9l =
+        0 < this.G9l
+          ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
+              this.G9l,
+            )
+          : void 0);
     let e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i);
     (e = e || ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i)),
       (this.Bmo = e.GetSkillData()),
@@ -293,6 +361,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
         i.PropertyNodeDescribe,
         ...i.PropertyNodeParam,
       ),
+      (this.GetText(10).bBestFit = !1),
       this.ldo(),
       this._do();
   }
@@ -318,9 +387,7 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
         this.dFe,
         this.Mmo,
       ),
-      t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
-        this.bmo.SkillId,
-      ).MaxSkillLevel;
+      t = this.ESo.MaxSkillLevel;
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "RoleResonanceLevel", i),
       i === t
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -335,42 +402,48 @@ class RoleSkillTreeInfoView extends UiViewBase_1.UiViewBase {
       this.cdo();
   }
   Jlo() {
-    var i,
-      t = this.bmo.SkillId;
-    t &&
-      0 < t &&
-      ((t =
-        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(t)),
-      (i =
+    var i, t;
+    this.O9l &&
+      ((i = this.O9l),
+      (t =
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTypeNameLocalText(
-          t.SkillType,
-        )) && this.GetText(2).SetText(i),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), t.SkillName),
-      this.x5t
-        ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(10),
-            t.MultiSkillDescribe,
-            ...t.MultiSkillDetailNum,
-          )
-        : LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(10),
-            t.SkillDescribe,
-            ...t.SkillDetailNum,
-          ));
+          i.SkillType,
+        )) && this.GetText(2).SetText(t),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), i.SkillName),
+      (t = this.GetText(10)),
+      1 === this.Dcl
+        ? ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc
+          ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+              t,
+              i.MultiSkillDescribe,
+              ...i.MultiSkillDetailNum,
+            )
+          : LguiUtil_1.LguiUtil.SetLocalTextNew(
+              t,
+              i.SkillDescribe,
+              ...i.SkillDetailNum,
+            )
+        : ModelManager_1.ModelManager.RoleModel.IsShowSkillResume
+          ? LguiUtil_1.LguiUtil.SetLocalTextNew(
+              t,
+              i.SkillResume,
+              ...i.SkillResumeNum,
+            )
+          : LguiUtil_1.LguiUtil.SetLocalTextNew(
+              t,
+              i.SkillDescribe,
+              ...i.SkillDetailNum,
+            ),
+      (t.bBestFit = !1));
   }
   _do() {
-    var i = this.bmo.SkillId;
-    let t = void 0;
-    t =
-      i && 0 < i
-        ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(i)
-            ?.Icon
-        : this.bmo.PropertyNodeIcon;
-    var i = this.GetTexture(1),
+    let i = void 0;
+    i = this.O9l ? this.O9l.Icon : this.bmo.PropertyNodeIcon;
+    var t = this.GetTexture(1),
       e = this.GetSprite(0);
     this.vmo
-      ? (i.SetUIActive(!0), e.SetUIActive(!1), this.SetTextureByPath(t, i))
-      : (i.SetUIActive(!1), e.SetUIActive(!0), this.SetSpriteByPath(t, e, !1));
+      ? (t.SetUIActive(!0), e.SetUIActive(!1), this.SetTextureByPath(i, t))
+      : (t.SetUIActive(!1), e.SetUIActive(!0), this.SetSpriteByPath(i, e, !1));
   }
   Pke(t = 1) {
     t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillTreeConsume(

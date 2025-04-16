@@ -9,7 +9,10 @@ class TsAnimNotifyStateMeshVisibility extends UE.KuroAnimNotifyState {
       (this.Visibility = !0),
       (this.EntityMeshMap = void 0);
   }
-  K2_NotifyBegin(t, e, i) {
+  Constructor() {
+    this.EntityMeshMap = void 0;
+  }
+  K2_NotifyBegin(t, i, e) {
     this.EntityMeshMap || (this.EntityMeshMap = new Map());
     var t = t.GetOwner(),
       s = t.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
@@ -52,22 +55,22 @@ class TsAnimNotifyStateMeshVisibility extends UE.KuroAnimNotifyState {
     }
     return !0;
   }
-  K2_NotifyEnd(t, e) {
+  K2_NotifyEnd(t, i) {
     var t = t.GetOwner(),
-      i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
-    if (1 !== i && 3 !== i) {
+      e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(t);
+    if (1 !== e && 3 !== e) {
       var s = t.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
-      let e = void 0;
+      let i = void 0;
       for (let t = 0; t < s.Num(); t++)
         if (s.Get(t).GetName() === this.HideMeshName) {
-          e = s.Get(t);
+          i = s.Get(t);
           break;
         }
-      e && e.SetVisibility(!this.Visibility);
+      i && i.SetVisibility(!this.Visibility);
     } else {
-      i = t.GetEntityId();
-      this.EntityMeshMap.has(i) &&
-        (t = this.EntityMeshMap.get(i).find(
+      e = t.GetEntityId();
+      this.EntityMeshMap.has(e) &&
+        (t = this.EntityMeshMap.get(e).find(
           (t) => t.GetName() === this.HideMeshName,
         )) &&
         t.SetVisibility(!this.Visibility);

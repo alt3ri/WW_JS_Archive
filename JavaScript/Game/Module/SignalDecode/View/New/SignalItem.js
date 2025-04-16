@@ -30,9 +30,10 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       (this.LevelSequencePlayer = void 0),
       (this.ac = 0);
   }
-  Init(t) {
+  Init(t, i) {
     this.SetRootActor(t.GetOwner(), !0),
       (this.Width = this.RootItem.Width),
+      this.RootItem.SetAnchorOffsetX(i),
       (this.vEo = UE.Color.FromHex("E8CD74")),
       (this.EEo = UE.Color.FromHex("FF6A6A")),
       (this.MEo = UE.Color.FromHex("9DED87")),
@@ -94,7 +95,10 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       this.fEo.SetColor(UE.Color.FromHex(t));
   }
   OnUpdate() {
-    super.OnUpdate(), this.UpdateState(), 1 === this.ac && this.yEo();
+    return (
+      !!super.OnUpdate() &&
+      (this.UpdateState(), 1 === this.ac && this.yEo(), !0)
+    );
   }
   UpdateState() {
     var t = -this.StartDecisionSize / 2;

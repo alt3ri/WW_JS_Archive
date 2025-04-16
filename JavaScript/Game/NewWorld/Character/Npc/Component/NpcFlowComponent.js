@@ -1,42 +1,39 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, o, r) {
-    var i,
-      s = arguments.length,
-      n =
-        s < 3
-          ? t
-          : null === r
-            ? (r = Object.getOwnPropertyDescriptor(t, o))
-            : r;
+  function (t, e, o, i) {
+    var n,
+      r = arguments.length,
+      s =
+        r < 3
+          ? e
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(e, o))
+            : i;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(e, t, o, r);
+      s = Reflect.decorate(t, e, o, i);
     else
-      for (var c = e.length - 1; 0 <= c; c--)
-        (i = e[c]) && (n = (s < 3 ? i(n) : 3 < s ? i(t, o, n) : i(t, o)) || n);
-    return 3 < s && n && Object.defineProperty(t, o, n), n;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (n = t[a]) && (s = (r < 3 ? n(s) : 3 < r ? n(e, o, s) : n(e, o)) || s);
+    return 3 < r && s && Object.defineProperty(e, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcFlowComponent = void 0);
-const UE = require("ue"),
-  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
-  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   CharacterFlowComponent_1 = require("../../Common/Component/Flow/CharacterFlowComponent"),
   NpcFlowLogic_1 = require("../Logics/NpcFlowLogic"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   STOP_MONTAGE_BLEND_OUT_TIME = 0.3;
 let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.CharacterFlowComponent {
   constructor() {
-    super(...arguments), (this.Stn = void 0), (this.Ftn = !1);
+    super(...arguments), (this.Stn = void 0), (this.yj_ = -1), (this.KYs = -1);
   }
   OnStart() {
-    return (this.Stn = this.Entity.GetComponent(109)), super.OnStart(), !0;
+    return (this.Stn = this.Entity.GetComponent(119)), super.OnStart(), !0;
   }
-  InitFlowLogic(e) {
-    e &&
-      ((this.FlowLogic = new NpcFlowLogic_1.NpcFlowLogic(this.ActorComp, e)),
+  InitFlowLogic(t) {
+    t &&
+      ((this.FlowLogic = new NpcFlowLogic_1.NpcFlowLogic(this.ActorComp, t)),
       this.InitFlowLogicRange(
         this.FlowData?.EnterRange,
         this.FlowData?.LeaveRange,
@@ -44,11 +41,11 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
       (this.IsEnter = !1),
       (this.IsInit = !0));
   }
-  InitFlowLogicRange(e, t) {
+  InitFlowLogicRange(t, e) {
     return (
-      !!super.InitFlowLogicRange(e, t) &&
+      !!super.InitFlowLogicRange(t, e) &&
       (this.Stn?.SetLogicRange(
-        t ?? CharacterFlowComponent_1.DEFAULT_BUBBLE_LEAVE_RANGE,
+        e ?? CharacterFlowComponent_1.DEFAULT_BUBBLE_LEAVE_RANGE,
       ),
       !0)
     );
@@ -63,43 +60,46 @@ let NpcFlowComponent = class NpcFlowComponent extends CharacterFlowComponent_1.C
         (this.ForceStopFlow(), !1))
     );
   }
-  TryPlayMontage(e) {
-    const t = this.Entity.GetComponent(37);
+  TryPlayMontage(t) {
+    (this.KYs = -1), (this.yj_ = -1);
+    var e = this.Entity.GetComponent(45);
     return (
-      t &&
-        e?.includes("/") &&
-        ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.AnimMontage, (e) => {
-          ObjectUtils_1.ObjectUtils.IsValid(e) &&
-            t?.MainAnimInstance &&
-            ((this.Ftn = !0),
-            t.PlayOnce(e, () => {
-              this.Ftn = !1;
-            }));
-        }),
+      e &&
+        t?.includes("/") &&
+        (this.KYs = e.PlayPerformMontage(3, {
+          MontagePath: t,
+          OnStartCallback: (t) => {
+            this.yj_ = t;
+          },
+          OnEndCallback: () => {
+            this.yj_ = -1;
+          },
+        })),
       !1
     );
   }
   Vtn() {
-    var e;
+    var t;
     this.ActorComp &&
       this.ActorComp.SkeletalMesh &&
-      (e = this.Entity.GetComponent(37)) &&
-      (this.Ftn &&
-        e.IsMontagePlaying() &&
-        e.StopMontage(STOP_MONTAGE_BLEND_OUT_TIME),
-      (this.Ftn = !1));
+      (t = this.Entity.GetComponent(45)) &&
+      (t.EnableAction(this.KYs, !1),
+      t.StopPerformMontage(3, {
+        Method: 0,
+        BlendOutTime: STOP_MONTAGE_BLEND_OUT_TIME,
+        HandleId: this.yj_,
+      }));
   }
   RemoveFlowActions() {
-    this.Entity.GetComponent(73).HideDialogueText(),
-      this.FlowLogic?.ClearAudio(),
-      this.Vtn();
+    var t = this.FlowLogic;
+    t?.HideDialogueText(), t?.ClearAudio(), this.Vtn();
   }
   GetTimberId() {
     return this.FlowData?.TimberId;
   }
 };
 (NpcFlowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(170)],
+  [(0, RegisterComponent_1.RegisterComponent)(183)],
   NpcFlowComponent,
 )),
   (exports.NpcFlowComponent = NpcFlowComponent);

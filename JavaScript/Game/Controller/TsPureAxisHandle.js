@@ -11,31 +11,31 @@ class TsPureAxisHandle {
   constructor() {
     (this.R$e = void 0),
       (this.sEe = void 0),
-      (this.mDa = void 0),
-      (this.dDa = void 0),
+      (this.fDa = void 0),
+      (this.pDa = void 0),
       (this.ABo = (i) => {
-        this.mDa.Start(), this.dDa(this.sEe, i, !1), this.mDa.Stop();
+        this.fDa.Start(), this.pDa(this.sEe, i, !1), this.fDa.Stop();
       }),
-      (this.UDa = (i) => {
-        this.mDa.Start(), this.dDa(this.sEe, i, !0), this.mDa.Stop();
+      (this.BDa = (i) => {
+        this.fDa.Start(), this.pDa(this.sEe, i, !0), this.fDa.Stop();
       });
   }
   Initialize(i) {
     (this.R$e = i),
-      (this.mDa = Stats_1.Stat.Create(
+      (this.fDa = Stats_1.Stat.Create(
         "TsPureAxisHandle.OnInputAxis",
         "",
         StatDefine_1.BATTLESTAT_GROUP,
       ));
   }
   Reset() {
-    (this.R$e = void 0), (this.sEe = void 0), (this.dDa = void 0);
+    (this.R$e = void 0), (this.sEe = void 0), (this.pDa = void 0);
   }
   AddAxisBinding(i, t) {
     t
       ? ((this.sEe = i),
-        (this.dDa = t),
-        TsPureAxisHandle.xDa.includes(i)
+        (this.pDa = t),
+        TsPureAxisHandle.bDa.includes(i)
           ? cpp_1.FKuroInputInterface.RegisterAxisBinding(
               FNameUtil_1.FNameUtil.GetDynamicFName(i),
               this.R$e,
@@ -46,16 +46,16 @@ class TsPureAxisHandle {
               FNameUtil_1.FNameUtil.GetDynamicFName(i),
               this.R$e,
               this,
-              this.UDa,
+              this.BDa,
             ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Controller", 8, "添加Axis输入绑定时，回调不存在", [
+        Log_1.Log.Error("Controller", 10, "添加Axis输入绑定时，回调不存在", [
           "axisName",
           i,
         ]);
   }
 }
-(exports.TsPureAxisHandle = TsPureAxisHandle).xDa = [
+(exports.TsPureAxisHandle = TsPureAxisHandle).bDa = [
   InputMappingsDefine_1.axisMappings.LookUp,
   InputMappingsDefine_1.axisMappings.LookUpRate,
   InputMappingsDefine_1.axisMappings.MoveForward,

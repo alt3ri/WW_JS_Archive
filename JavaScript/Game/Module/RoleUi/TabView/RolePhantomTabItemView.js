@@ -37,7 +37,7 @@ class RolePhantomAttributeItem extends UiPanelBase_1.UiPanelBase {
           ),
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 8, "属性表中找不到对应的属性ID配置数据");
+        Log_1.Log.Error("Role", 58, "属性表中找不到对应的属性ID配置数据");
   }
 }
 exports.RolePhantomAttributeItem = RolePhantomAttributeItem;

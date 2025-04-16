@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configAbpMontageDataById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configAbpMontageDataById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configAbpMontageDataById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configAbpMontageDataById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configAbpMontageDataById.GetConfig(";
 exports.configAbpMontageDataById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var t = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       a =
-        (t.Start(),
+        (t?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (a) {
       if (n) {
@@ -43,8 +47,8 @@ exports.configAbpMontageDataById = {
         const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (i)
           return (
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -76,8 +80,8 @@ exports.configAbpMontageDataById = {
               ((a = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(a, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -85,8 +89,8 @@ exports.configAbpMontageDataById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    t.Stop(),
-      getConfigStat.Stop(),
+    t?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

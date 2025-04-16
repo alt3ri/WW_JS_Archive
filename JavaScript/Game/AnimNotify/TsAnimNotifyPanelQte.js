@@ -6,22 +6,26 @@ const UE = require("ue"),
   PanelQteController_1 = require("../Module/PanelQte/PanelQteController");
 class TsAnimNotifyPanelQte extends UE.KuroAnimNotify {
   constructor() {
-    super(...arguments), (this.QteId = 0);
+    super(...arguments), (this.QteId = 0), (this.CheckAutonomousProxy = !1);
   }
-  K2_Notify(e, t) {
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("PanelQte", 18, "AN触发通用QTE");
-    let r = void 0;
-    var o = e.GetOwner();
+  Constructor() {}
+  K2_Notify(e, r) {
+    Log_1.Log.CheckDebug() && Log_1.Log.Debug("PanelQte", 17, "AN触发通用QTE");
+    var t = e.GetOwner();
+    if (!(t instanceof TsBaseCharacter_1.default)) return !1;
+    if (this.CheckAutonomousProxy) {
+      var o = t.CharacterActorComponent;
+      if (!o?.Valid) return !1;
+      if (!o.IsAutonomousProxy) return !1;
+    }
+    o = t?.CharacterActorComponent?.Entity?.GetComponent(
+      207,
+    ).CreateAnimNotifyContent(r.GetName(), this.exportIndex);
     return (
-      o instanceof TsBaseCharacter_1.default &&
-        ((o = o?.CharacterActorComponent?.Entity)
-          ?.GetComponent(34)
-          ?.SetCurAnInfo(this.exportIndex, t.GetName()),
-        (r = o?.GetComponent(194).CreateAnimNotifyContent())),
       PanelQteController_1.PanelQteController.StartAnimNotifyQte(
         this.QteId,
         e,
-        r,
+        o,
       ),
       !0
     );

@@ -12,9 +12,8 @@ const UE = require("ue"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  GeneralLogicTreeController_1 = require("../../Module/GeneralLogicTree/GeneralLogicTreeController"),
-  SceneTeamController_1 = require("../../Module/SceneTeam/SceneTeamController"),
   ParkourModel_1 = require("./ParkourModel");
 class ParkourController extends ControllerBase_1.ControllerBase {
   static StartParkour(e, r, o) {
@@ -43,7 +42,10 @@ class ParkourController extends ControllerBase_1.ControllerBase {
               ((o = (l = l[o]).Point), !l.IsRecycled) &&
               o?.IsValid() &&
               (o.ReceiveEndPlay(0),
-              ActorSystem_1.ActorSystem.Put(o),
+              ActorSystem_1.ActorSystem.Put(
+                "ParkourController.HandleParkourPoint",
+                o,
+              ),
               (l.IsRecycled = !0)),
             0 !== r)
           ) {
@@ -54,7 +56,7 @@ class ParkourController extends ControllerBase_1.ControllerBase {
             if (l?.ModifiedTime && t.ParkourContext) {
               let e = Protocol_1.Aki.Protocol.s3s.Proto_Add;
               l.ModifiedTime < 0 && (e = Protocol_1.Aki.Protocol.s3s.Proto_Sub),
-                GeneralLogicTreeController_1.GeneralLogicTreeController.RequestSetTimerInfo(
+                ControllerHolder_1.ControllerHolder.GeneralLogicTreeController.RequestSetTimerInfo(
                   t.ParkourContext.TreeIncId,
                   t.ParkourContext.NodeId,
                   "CountDownChallenge",
@@ -73,8 +75,8 @@ class ParkourController extends ControllerBase_1.ControllerBase {
               l?.BuffId &&
                 (o = Global_1.Global.BaseCharacter)?.IsValid() &&
                 (r = o?.CharacterActorComponent.Entity)?.Valid &&
-                ((a = r.GetComponent(160))
-                  ? a.AddBuff(BigInt(l.BuffId), {
+                ((a = r.GetComponent(172))
+                  ? a.AddBuff(l.BuffId, {
                       InstigatorId: a.CreatureDataId,
                       Reason: "Parkour",
                     })
@@ -100,7 +102,7 @@ class ParkourController extends ControllerBase_1.ControllerBase {
         let e = 0;
         for (const s of i.PointGroup.Points) {
           var l = Vector_1.Vector.Create(s.X ?? 0, s.Y ?? 0, s.Z ?? 0),
-            l = UE.KismetMathLibrary.MakeTransform(
+            l = UE.KismetMathLibrary.MakeTransformDouble(
               l.ToUeVector(),
               MathUtils_1.MathUtils.DefaultTransform.Rotator(),
               MathUtils_1.MathUtils.DefaultTransform.GetScale3D(),
@@ -118,7 +120,7 @@ class ParkourController extends ControllerBase_1.ControllerBase {
             (e.OriginRotation &&
               e.OriginRotation.Quaternion().RotateVector(n, n),
             e.OriginLocation && n.Addition(e.OriginLocation, n),
-            UE.KismetMathLibrary.MakeTransform(
+            UE.KismetMathLibrary.MakeTransformDouble(
               n.ToUeVector(),
               MathUtils_1.MathUtils.DefaultTransform.Rotator(),
               MathUtils_1.MathUtils.DefaultTransform.GetScale3D(),
@@ -158,7 +160,7 @@ class ParkourController extends ControllerBase_1.ControllerBase {
       );
     }
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Level", 32, "[GenerateParkPointActor] 生成Actor失败");
+      Log_1.Log.Error("Level", 31, "[GenerateParkPointActor] 生成Actor失败");
   }
   static MatchParkourRoleConfig(e) {
     e = ModelManager_1.ModelManager.ParkourModel.GetParkour(e);
@@ -166,7 +168,7 @@ class ParkourController extends ControllerBase_1.ControllerBase {
       !!e &&
       (!e.MatchRoleOption || e.MatchRoleOption?.length <= 0
         ? !ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam
-        : SceneTeamController_1.SceneTeamController.IsMatchRoleOption(
+        : ControllerHolder_1.ControllerHolder.SceneTeamController.IsMatchRoleOption(
             e.MatchRoleOption,
           ))
     );

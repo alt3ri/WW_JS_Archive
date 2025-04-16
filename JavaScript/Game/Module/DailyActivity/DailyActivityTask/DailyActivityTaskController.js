@@ -70,7 +70,7 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
             break;
           }
         e &&
-          ((a = { MarkId: e.MarkId, MarkType: 12, OpenAreaId: 0 }),
+          ((a = { MarkId: e.MarkId, MarkType: 12, OpenFogId: 0 }),
           WorldMapController_1.WorldMapController.OpenView(2, !1, a));
       }
     } else
@@ -91,7 +91,7 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "AdventureGuide",
-                  38,
+                  37,
                   "[活跃度系统] 地图跳转Id错误,MarkId数量未对应国家Id",
                   ["当前国家Id", a],
                   ["MarkId数量", e.length],
@@ -103,7 +103,7 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
       return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
         "FunctionDisable",
       );
-    e = { MarkId: r, MarkType: 0, OpenAreaId: 0 };
+    e = { MarkId: r, MarkType: 0, OpenFogId: 0 };
     WorldMapController_1.WorldMapController.OpenView(2, !1, e);
   }
   static Vkt(e = "DailyActivityTabView", r) {
@@ -129,7 +129,7 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
         MarkId: e.DeliveryMarkId,
         MarkType: 0,
         StartScale: ModelManager_1.ModelManager.WorldMapModel.MapScaleMin,
-        OpenAreaId: 0,
+        OpenFogId: 0,
       }),
       WorldMapController_1.WorldMapController.OpenView(2, !1, e));
   }

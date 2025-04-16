@@ -13,23 +13,14 @@ class MapLoggerComponent extends MapComponent_1.MapComponent {
   set EnableLog(e) {
     this.PropertyMap.set(0, e);
   }
-  get EnableCacheLog() {
-    return this.PropertyMap.tryGet(1, !1);
-  }
-  set EnableCacheLog(e) {
-    this.PropertyMap.set(1, e);
-  }
   LogInfo(e, o, ...t) {
-    this.EnableLog && MapLogger_1.MapLogger.Info(e, o, ...t),
-      this.EnableCacheLog && MapLogger_1.MapLogger.CacheInfo(e, o, ...t);
+    this.EnableLog && MapLogger_1.MapLogger.Info(e, o, ...t);
   }
   LogWarn(e, o, ...t) {
-    this.EnableLog && MapLogger_1.MapLogger.Warn(e, o, ...t),
-      this.EnableCacheLog && MapLogger_1.MapLogger.CacheWarn(e, o, ...t);
+    this.EnableLog && MapLogger_1.MapLogger.Warn(e, o, ...t);
   }
   LogError(e, o, ...t) {
-    this.EnableLog && MapLogger_1.MapLogger.Error(e, o, ...t),
-      this.EnableCacheLog && MapLogger_1.MapLogger.CacheError(e, o, ...t);
+    this.EnableLog && MapLogger_1.MapLogger.Error(e, o, ...t);
   }
 }
 exports.MapLoggerComponent = MapLoggerComponent;

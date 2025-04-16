@@ -128,7 +128,7 @@ class InventoryView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.InventoryModel.GetSelectedItemData();
         t && SkipTaskManager_1.SkipTaskManager.Run(5, t.GetUniqueId());
       }),
-      (this.o4a = () => {
+      (this.O6a = () => {
         ControllerHolder_1.ControllerHolder.FragmentMemoryController.OpenFragmentMemoryView();
       }),
       (this.Vgt = () => {
@@ -160,6 +160,12 @@ class InventoryView extends UiViewBase_1.UiViewBase {
               )),
             this.kdi(0, t <= 0));
       }),
+      (this.X4l = (t, e) => {
+        var i;
+        this.Kci &&
+          (i = this.Kci.GetItemDataBase()).IsBuffEquipItem() &&
+          this.Y4l(i);
+      }),
       (this.e9e = (t, e) => {}),
       (this.$Ge = (t) => {
         "UseBuffItemView" === t &&
@@ -171,7 +177,7 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       (this.zze = () => {
         this.Fdi();
       }),
-      (this.SNa = (e) => {
+      (this.I3a = (e) => {
         var i =
           ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(e);
         if (i)
@@ -250,49 +256,77 @@ class InventoryView extends UiViewBase_1.UiViewBase {
               "ItemDestroyNotChoose",
             );
           else {
-            let i = !1;
-            const h = [];
-            var s = Array.from(this.Zdi.values()),
-              r = (s.sort(this.SortViewDataConfigId), s.length);
-            for (let e = 0; e < r; e++) {
+            let i = !1,
+              s = !1,
+              r = !1;
+            const o = [];
+            var t,
+              n = Array.from(this.Zdi.values()),
+              h = (n.sort(this.SortViewDataConfigId), n.length);
+            for (let e = 0; e < h; e++) {
               let t = 0;
               for (
                 ;
-                e + 1 < r &&
-                s[e].GetConfigId() === s[e + 1].GetConfigId() &&
-                0 === s[e].GetUniqueId() &&
-                0 === s[e + 1].GetUniqueId();
+                e + 1 < h &&
+                n[e].GetConfigId() === n[e + 1].GetConfigId() &&
+                0 === n[e].GetUniqueId() &&
+                0 === n[e + 1].GetUniqueId();
 
               )
-                (t += s[e].GetSelectNum()), e++;
-              var n = {
-                L8n: s[e].GetConfigId(),
-                b9n: s[e].GetUniqueId(),
-                m9n: t + s[e].GetSelectNum(),
+                (t += n[e].GetSelectNum()), e++;
+              var a = {
+                L8n: n[e].GetConfigId(),
+                b9n: n[e].GetUniqueId(),
+                m9n: t + n[e].GetSelectNum(),
               };
-              h.push(n), !i && 4 <= s[e].GetQuality() && (i = !0);
+              o.push(a),
+                0 < a.b9n &&
+                  ModelManager_1.ModelManager.VisionEquipGroupModel.CheckVisionListIfInGroup(
+                    [a.b9n],
+                  ) &&
+                  (i = !0),
+                4 <= n[e].GetQuality() && (r = !0),
+                (i || (!s && r)) && (s = !0);
             }
-            var t,
-              e = () => {
-                ControllerHolder_1.ControllerHolder.InventoryController.ItemDestructPreviewRequest(
-                  h,
-                );
+            const e = () => {
+              ControllerHolder_1.ControllerHolder.InventoryController.ItemDestructPreviewRequest(
+                o,
+              );
+            };
+            if (
+              ModelManager_1.ModelManager.InventoryModel.IsConfirmDestruction ||
+              !s
+            )
+              e();
+            else {
+              const _ = () => {
+                var t;
+                r
+                  ? (((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                      167,
+                    )).HasToggle = !0),
+                    (t.ToggleText =
+                      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                        "Text_ItemRecycleConfirmToggle_text",
+                      )),
+                    t.SetToggleFunction(this.RMt),
+                    t.FunctionMap.set(2, e),
+                    ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                      t,
+                    ))
+                  : e();
               };
-            ModelManager_1.ModelManager.InventoryModel.IsConfirmDestruction ||
-            !i
-              ? e()
-              : (((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                  167,
-                )).HasToggle = !0),
-                (t.ToggleText =
-                  MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-                    "Text_ItemRecycleConfirmToggle_text",
-                  )),
-                t.SetToggleFunction(this.RMt),
-                t.FunctionMap.set(2, e),
-                ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                  t,
-                ));
+              i
+                ? ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                    247,
+                  )).FunctionMap.set(2, () => {
+                    _();
+                  }),
+                  ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                    t,
+                  ))
+                : _();
+            }
           }
       }),
       (this.RMt = (t) => {
@@ -386,8 +420,13 @@ class InventoryView extends UiViewBase_1.UiViewBase {
         Index: 0,
       }),
       this.TipsButtonRelationMap.set(4, {
-        Function: this.o4a,
+        Function: this.O6a,
         Text: "Text_FragmentMemoryButton_Text",
+        Index: 0,
+      }),
+      this.TipsButtonRelationMap.set(5, {
+        Function: this.OnClickedUseItemButton,
+        Text: "Mask_Wear_01",
         Index: 0,
       });
   }
@@ -429,7 +468,7 @@ class InventoryView extends UiViewBase_1.UiViewBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Inventory",
-        8,
+        37,
         "背包物品滚动框ViewPort尺寸：",
         ["宽度", i],
         ["高度", e],
@@ -492,11 +531,15 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUseBuffItem,
         this.Uft,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnEquipBuffItemUpdate,
+        this.X4l,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemUse,
@@ -542,11 +585,15 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUseBuffItem,
         this.Uft,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnEquipBuffItemUpdate,
+        this.X4l,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemUse,
@@ -645,7 +692,11 @@ class InventoryView extends UiViewBase_1.UiViewBase {
         ? this.Udi(0, t.HasRedDot())
         : this.Udi(0, !1);
   }
-  n4a(t) {
+  Y4l(t) {
+    t = t.IsBuffEquippedItem();
+    this.fCi(5, t ? "Mask_Remove_01" : "Mask_Wear_01");
+  }
+  G6a(t) {
     var e = new Array();
     if (this.Kci)
       switch (this.Kci.GetItemType()) {
@@ -670,7 +721,9 @@ class InventoryView extends UiViewBase_1.UiViewBase {
           e.push(3);
           break;
         default:
-          t.GetConfig().ShowUseButton && e.push(0);
+          i = t;
+          i.GetConfig().ShowUseButton &&
+            (i.IsBuffEquipItem() ? e.push(5) : e.push(0));
       }
     return e;
   }
@@ -1087,12 +1140,15 @@ class InventoryView extends UiViewBase_1.UiViewBase {
   RefreshItemTipsFunction(t) {
     var e = this.Kci.GetItemType(),
       t = t.GetItemDataBase(),
-      i = (this.vxt.ClearButtonList(), this.n4a(t));
+      i = (this.vxt.ClearButtonList(), this.G6a(t));
     this.mCi(i),
       13 === e
         ? ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen() &&
+          !i.includes(4) &&
           this.Ydi()
-        : 9 !== e && 2 !== e && this.cCi(t);
+        : 9 !== e &&
+          2 !== e &&
+          ((i = t).IsBuffEquipItem() ? this.Y4l(i) : this.cCi(i));
   }
   RefreshItemDescription(t) {
     var t = t.GetItemDataBase(),
@@ -1140,7 +1196,7 @@ class InventoryView extends UiViewBase_1.UiViewBase {
       if (!s)
         return void (
           Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Inventory", 38, "背包Tips按钮功能设置错误")
+          Log_1.Log.Error("Inventory", 37, "背包Tips按钮功能设置错误")
         );
       (s.Index = e), this.TipsButtonIndexMap.set(r, e), i.push(s), e++;
     }
@@ -1233,7 +1289,7 @@ class InventoryView extends UiViewBase_1.UiViewBase {
           this.SetDestroyAllSelectedState(!1);
     }
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Inventory", 38, "切换摧毁模式表现", [
+      Log_1.Log.Info("Inventory", 37, "切换摧毁模式表现", [
         "Mode",
         this.zdi.toString(),
       ]);

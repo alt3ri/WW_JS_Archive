@@ -12,7 +12,7 @@ class LevelEventInterludeActions extends LevelGeneralBase_1.LevelEventBase {
       (this.nx = void 0),
       (this.RDe = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("LevelEvent", 18, "幕间行为执行完成"),
+          Log_1.Log.Debug("LevelEvent", 17, "幕间行为执行完成"),
           this.UDe();
       });
   }
@@ -20,22 +20,22 @@ class LevelEventInterludeActions extends LevelGeneralBase_1.LevelEventBase {
     this.FinishExecute(!0);
   }
   ExecuteNew(e, t) {
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("LevelEvent", 18, "幕间行为触发"),
+    Log_1.Log.CheckDebug() && Log_1.Log.Debug("LevelEvent", 17, "幕间行为触发"),
       e
         ? ((this.pDe = e),
           (this.nx = t),
           this.pDe.IsFadeIn ? this.ADe() : this.PDe())
         : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("LevelEvent", 18, "幕间行为结束【inParams为空】"),
+            Log_1.Log.Debug("LevelEvent", 17, "幕间行为结束【inParams为空】"),
           this.FinishExecute(!0));
   }
   ADe() {
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("LevelEvent", 18, "幕间行为淡入");
+    Log_1.Log.CheckDebug() && Log_1.Log.Debug("LevelEvent", 17, "幕间行为淡入");
   }
   PDe() {
     this.pDe?.InterludeActionList && 0 < this.pDe?.InterludeActionList.length
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("LevelEvent", 18, "幕间行为开始执行"),
+          Log_1.Log.Debug("LevelEvent", 17, "幕间行为开始执行"),
         ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
           this.pDe.InterludeActionList,
           LevelGeneralContextDefine_1.GeneralContext.Copy(this.nx),
@@ -46,7 +46,7 @@ class LevelEventInterludeActions extends LevelGeneralBase_1.LevelEventBase {
   UDe() {
     this.pDe?.IsFadeOut
       ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("LevelEvent", 18, "幕间行为淡出")
+        Log_1.Log.Debug("LevelEvent", 17, "幕间行为淡出")
       : this.FinishExecute(!0);
   }
 }

@@ -24,7 +24,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       (this.NXs = void 0),
       (this.fea = void 0),
       (this.OnClose = () => {
-        this.ConfirmBoxButtonClick();
+        (this.SelectedIndex = -1), this.ConfirmBoxButtonClick();
       }),
       (this.JGe = (t, i, e) => {
         var s = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
@@ -55,7 +55,10 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[6, this.Bke]]);
   }
   ConfirmBoxButtonClick() {
-    this.CloseMe(this.ConfirmBoxData.GetCloseFunction());
+    var t = this.ConfirmBoxData?.CanExecuteCloseFunc;
+    t && !t(this.SelectedIndex)
+      ? (t = this.ConfirmBoxData?.FunctionMap.get(this.SelectedIndex)) && t()
+      : this.CloseMe(this.ConfirmBoxData.GetCloseFunction());
   }
   vqt() {
     -1 === this.SelectedIndex &&
@@ -63,6 +66,12 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       this.ConfirmBoxData.IsEscViewTriggerCallBack
         ? (this.SelectedIndex = 1)
         : (this.SelectedIndex = 0));
+  }
+  OnGetTimeDilation() {
+    var t = this.OpenParam;
+    return ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetConfirmBoxConfig(
+      t.ConfigId,
+    ).TimeDilation;
   }
   async OnBeforeStartAsync() {
     this.ButtonComponentList.push(this.GetButton(4)),
@@ -124,9 +133,9 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.OnClose),
       this.ConfirmBoxData.ShowPowerItem &&
         (this.fea
-          ?.GetRootItem()
-          .SetUIParent(this.ChildPopView?.PopItem?.GetCostParent()),
-        this.NXs?.GetRootItem().SetUIParent(
+          ?.GetOriginalItem()
+          ?.SetUIParent(this.ChildPopView?.PopItem?.GetCostParent()),
+        this.NXs?.GetOriginalItem()?.SetUIParent(
           this.ChildPopView?.PopItem?.GetCostParent(),
         ),
         this.NXs.ShowWithoutText(ItemDefines_1.EItemId.Power),
@@ -137,8 +146,8 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
   OnAfterShow() {
     this.ConfirmBoxData.GetAfterShowFunction()?.();
   }
-  OnBeforePlayCloseSequence() {
-    this.ConfirmBoxData?.BeforePlayCloseFunction?.();
+  OnBeforeHide() {
+    this.LastHide && this.ConfirmBoxData?.BeforePlayCloseFunction?.();
   }
   async InitButton() {
     var t = this.GetItem(2),
@@ -168,9 +177,12 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
               this.Config.DelayTime,
               this.ConfirmBoxData.CanClickDuringTimer,
             )
-          : s.SetText(this.Config.ButtonText[i])),
+          : ((t = this.ConfirmBoxData.GetBtnText(i)),
+            StringUtils_1.StringUtils.IsBlank(t)
+              ? s.SetTextById(this.Config.ButtonText[i])
+              : s.SetText(t))),
       this.ConfirmBoxData.InteractionMap.has(i) &&
-        ((t = this.ConfirmBoxData.InteractionMap.get(i)), s.SetBtnCanClick(t)),
+        ((e = this.ConfirmBoxData.InteractionMap.get(i)), s.SetBtnCanClick(e)),
       this.Config.ButtonText.length >= i + 1 && (await s.ShowAsync()),
       s
     );

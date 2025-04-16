@@ -16,9 +16,15 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
       (this.TsHiddenMap = void 0),
       (this.TsNoHitEffect = !1);
   }
-  K2_NotifyBegin(t, e, s) {
-    var r,
-      i,
+  Constructor() {
+    (this.TsHideMesh = !1),
+      (this.TsHideEffect = !1),
+      (this.TsHiddenMap = void 0),
+      (this.TsNoHitEffect = !1);
+  }
+  K2_NotifyBegin(t, s, e) {
+    var i,
+      r,
       a = t.GetOwner();
     if (!(a instanceof TsBaseCharacter_1.default)) return !1;
     if (!a.CharacterActorComponent.IsAutonomousProxy) return !1;
@@ -28,60 +34,60 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
     for (const o of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       o.IsInit &&
         o.Entity.Active &&
-        (i = (r = o.Entity.GetComponent(3))?.Actor) &&
-        i !== a &&
-        1 !== CampUtils_1.CampUtils.GetCampRelationship(i.Camp, a.Camp) &&
+        (r = (i = o.Entity.GetComponent(3))?.Actor) &&
+        r !== a &&
+        1 !== CampUtils_1.CampUtils.GetCampRelationship(r.Camp, a.Camp) &&
         (this.TsHiddenMap || (this.TsHiddenMap = new Map()),
         this.TsHideEffect &&
           (this.HideEffect(o, !0), this.TsHiddenMap.set(o, -1)),
         this.TsHideMesh) &&
-        ((i = r.DisableActor(
+        ((r = i.DisableActor(
           "[TsAnimNotifyStateCleanBurstCamera] 大招镜头帧事件隐藏Mesh",
         )),
-        this.TsHiddenMap.set(o, i));
+        this.TsHiddenMap.set(o, r));
     return (
       this.TsNoHitEffect &&
         ((t = a.GetEntityNoBlueprint())
-          ? (t = t.GetComponent(190)) &&
+          ? (t = t.GetComponent(203)) &&
             t.TagContainer.UpdateExactTag(2, -1728163740, 1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Test",
-              21,
+              20,
               "No Entity for TsBaseCharacter ANS CleanBurstCamera Begin",
               ["Name", a.GetName()],
             )),
       !0
     );
   }
-  K2_NotifyTick(t, e, s) {
+  K2_NotifyTick(t, s, e) {
     if (this.TsHideEffect && this.TsHiddenMap)
-      for (const r of this.TsHiddenMap.keys())
-        r.Valid && this.HideEffect(r, !0);
+      for (const i of this.TsHiddenMap.keys())
+        i.Valid && this.HideEffect(i, !0);
     return !0;
   }
-  K2_NotifyEnd(t, e) {
-    var s;
+  K2_NotifyEnd(t, s) {
+    var e;
     if (
       (this.TsNoHitEffect &&
         (t = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
-        ((s = t.GetEntityNoBlueprint())
-          ? (s = s.GetComponent(190)) &&
-            s.TagContainer.UpdateExactTag(2, -1728163740, -1)
+        ((e = t.GetEntityNoBlueprint())
+          ? (e = e.GetComponent(203)) &&
+            e.TagContainer.UpdateExactTag(2, -1728163740, -1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Test",
-              21,
+              20,
               "No Entity for TsBaseCharacter ANS CleanBurstCamera End",
               ["Name", t.GetName()],
             )),
       this.TsHiddenMap)
     ) {
-      for (var [r, i] of this.TsHiddenMap)
-        r.Valid &&
-          (this.TsHideMesh && r.Entity.GetComponent(3).EnableActor(i),
+      for (var [i, r] of this.TsHiddenMap)
+        i.Valid &&
+          (this.TsHideMesh && i.Entity.GetComponent(3).EnableActor(r),
           this.TsHideEffect) &&
-          this.HideEffect(r, !1);
+          this.HideEffect(i, !1);
       this.TsHiddenMap = void 0;
     }
     return !0;
@@ -89,9 +95,9 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
   GetNotifyName() {
     return "大招时显隐Mesh和特效";
   }
-  HideEffect(t, e) {
-    t.Entity.GetComponent(34)?.CurrentSkill?.SetEffectHidden(e),
-      t.Entity.GetComponent(19)?.SetHidden(e);
+  HideEffect(t, s) {
+    t.Entity.GetComponent(39)?.CurrentSkill?.SetEffectHidden(s),
+      t.Entity.GetComponent(21)?.SetHidden(s);
   }
 }
 exports.default = TsAnimNotifyStateCleanBurstCamera;

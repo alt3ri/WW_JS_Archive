@@ -12,7 +12,7 @@ class UiInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Input",
-              8,
+              10,
               "[InputDistribute]刷新UI输入时，主界面已经打开，设置输入分发Tag为 UiInputRootTag",
             ),
           this.SetInputDistributeTag(
@@ -21,7 +21,7 @@ class UiInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Input",
-              8,
+              10,
               "[InputDistribute]刷新UI输入时，主界面没有打开，设置输入分发Tag为 ShortcutKeyTag，MouseInputTag，NavigationTag",
             ),
           this.SetInputDistributeTags([

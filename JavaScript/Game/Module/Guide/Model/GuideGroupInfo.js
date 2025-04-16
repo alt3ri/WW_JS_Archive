@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideGroupInfo = void 0);
-const Info_1 = require("../../../../Core/Common/Info"),
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   StateBase_1 = require("../../../../Core/Utils/StateMachine/StateBase"),
@@ -9,8 +10,8 @@ const Info_1 = require("../../../../Core/Common/Info"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  UiManager_1 = require("../../../Ui/UiManager"),
   GuideConfig_1 = require("../GuideConfig"),
   GuideController_1 = require("../GuideController"),
   GuideStepInfo_1 = require("./GuideStepInfo"),
@@ -25,7 +26,11 @@ class InitState extends StateBase_1.StateBase {
       this.Owner.StepInfoList.push(
         new GuideStepInfo_1.GuideStepInfo(e, this.Owner),
       );
-    (this.Owner.CurrentStepIndex = -1), (this.Owner.IsFake = !1);
+    (this.Owner.CurrentStepIndex = -1),
+      (this.Owner.IsFake = !1),
+      this.Owner.FinishPromise &&
+        (this.Owner.FinishPromise.SetResult(),
+        (this.Owner.FinishPromise = void 0));
   }
   OnEnter() {
     (this.Owner.CurrentStepIndex = -1), (this.Owner.IsFake = !1);
@@ -39,6 +44,10 @@ class OpeningState extends StateBase_1.StateBase {
     var e;
     this.PJt ||
       ((this.PJt = !0),
+      this.Owner.FinishPromise &&
+        (this.Owner.FinishPromise.SetResult(),
+        (this.Owner.FinishPromise = void 0)),
+      (this.Owner.FinishPromise = new CustomPromise_1.CustomPromise()),
       (e = this.Owner.GetIfPreExecute()) && this.Owner.SwitchState(2),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GuideGroupOpening,
@@ -77,7 +86,10 @@ class PendingState extends StateBase_1.StateBase {
 class FinishingState extends StateBase_1.StateBase {
   OnEnter() {
     var e = this.Owner.IsFake;
-    GuideController_1.GuideController.FinishGuide(this.Owner.Id, e);
+    GuideController_1.GuideController.FinishGuide(this.Owner.Id, e),
+      this.Owner.FinishPromise &&
+        (this.Owner.FinishPromise.SetResult(),
+        (this.Owner.FinishPromise = void 0));
   }
 }
 class GuideGroupInfo {
@@ -87,6 +99,7 @@ class GuideGroupInfo {
       (this.StepInfoList = []),
       (this.IsFake = !1),
       (this.CurrentStepIndex = -1),
+      (this.FinishPromise = void 0),
       (this.Id = e),
       (this.StateMachine = new StateMachine_1.StateMachine(this)),
       this.StateMachine.AddState(0, InitState),
@@ -111,18 +124,18 @@ class GuideGroupInfo {
     var i;
     1 === e && 0 !== this.StateMachine.CurrentState
       ? Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Guide", 17, "引导组正在执行中, 不再重复执行")
+        Log_1.Log.Warn("Guide", 16, "引导组正在执行中, 不再重复执行")
       : (2 !== e ||
           this.CanEnterExecuting() ||
           (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Guide", 17, "引导组暂时无法执行, 挂起"),
+            Log_1.Log.Warn("Guide", 16, "引导组暂时无法执行, 挂起"),
           (t = 3)),
         4 === e &&
           (this.IsFake
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Guide",
-                17,
+                16,
                 "引导组是通过GM调用的, 跳过服务端完成步骤",
               )
             : ((e = ModelManager_1.ModelManager.GuideModel.IsGroupFinished(
@@ -136,7 +149,7 @@ class GuideGroupInfo {
                 (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Guide",
-                    17,
+                    16,
                     "引导组未配置为可重复完成但重复请求完成, 跳过服务端完成步骤",
                     ["GroupId", this.Id],
                     ["isFinish", e],
@@ -146,7 +159,7 @@ class GuideGroupInfo {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             "[引导状态切换:引导组]",
             ["组Id", this.Id],
             ["当前状态", stateDesc[this.StateMachine.CurrentState]],
@@ -155,25 +168,72 @@ class GuideGroupInfo {
         this.StateMachine.Switch(t));
   }
   PumpStep() {
-    var e;
-    0 === this.StepInfoList.length
-      ? (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "Guide",
-            17,
-            "引导组未配置当前平台的步骤, 执行失败, 中断当前引导组",
-            ["组Id", this.Id],
-          ),
-        this.Break())
-      : (this.wJt(),
-        (e = this.CurrentStepIndex + 1) >= this.StepInfoList.length
-          ? this.SwitchState(4)
-          : ((this.CurrentStepIndex = e),
-            (e = this.StepInfoList[e]),
-            GuideConfig_1.GuideConfig.GmMuteTutorial &&
-            3 === e.Config.ContentType
-              ? e.SwitchState(4)
-              : (e.SwitchState(0), e.TryEnterExecuting())));
+    if (0 === this.StepInfoList.length)
+      Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Guide",
+          16,
+          "引导组未配置当前平台的步骤, 执行失败, 中断当前引导组",
+          ["组Id", this.Id],
+        ),
+        this.Break();
+    else {
+      this.wJt();
+      var e = this.CurrentStepIndex + 1;
+      if (e >= this.StepInfoList.length) this.SwitchState(4);
+      else {
+        this.CurrentStepIndex = e;
+        e = this.StepInfoList[e];
+        if (
+          GuideConfig_1.GuideConfig.GmMuteTutorial &&
+          3 === e.Config.ContentType
+        )
+          e.SwitchState(4);
+        else {
+          if (e.Config.BreakCondition)
+            if (
+              ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
+                e.Config.BreakCondition.toString(),
+                void 0,
+                !1,
+              )
+            )
+              return (
+                Log_1.Log.CheckDebug() &&
+                  Log_1.Log.Debug(
+                    "Guide",
+                    74,
+                    "引导步骤中断条件达成，中断当前引导",
+                    ["组Id", this.Id],
+                    ["步骤Id", e.Id],
+                    ["中断条件", e.Config.BreakCondition],
+                  ),
+                void e.SwitchState(3)
+              );
+          if (e.Config.SkipCondition)
+            if (
+              ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
+                e.Config.SkipCondition.toString(),
+                void 0,
+                !1,
+              )
+            )
+              return (
+                Log_1.Log.CheckDebug() &&
+                  Log_1.Log.Debug(
+                    "Guide",
+                    74,
+                    "引导步骤跳过条件达成，跳过当前步骤",
+                    ["组Id", this.Id],
+                    ["步骤Id", e.Id],
+                    ["跳过条件", e.Config.SkipCondition],
+                  ),
+                void e.SwitchState(4)
+              );
+          e.SwitchState(0), e.TryEnterExecuting();
+        }
+      }
+    }
   }
   wJt() {
     var e = this.CurrentStepIndex;
@@ -199,10 +259,10 @@ class GuideGroupInfo {
   }
   Break() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Guide", 17, "引导组中断", ["组Id", this.Id]),
+      Log_1.Log.Debug("Guide", 16, "引导组中断", ["组Id", this.Id]),
       0 === this.StateMachine.CurrentState
         ? Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Guide", 17, "引导组已被外部终止, 中断时不做处理", [
+          Log_1.Log.Debug("Guide", 16, "引导组已被外部终止, 中断时不做处理", [
             "组Id",
             this.Id,
           ])
@@ -213,14 +273,14 @@ class GuideGroupInfo {
               this.Id,
             ),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Guide", 17, "引导组中断后状态切换为未完成", [
+              Log_1.Log.Debug("Guide", 16, "引导组中断后状态切换为未完成", [
                 "组Id",
                 this.Id,
               ]))
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Guide",
-                17,
+                16,
                 "引导组中断时, 配置为不可重复触发, 引导组算作完成",
                 ["组Id", this.Id],
               ),
@@ -229,9 +289,9 @@ class GuideGroupInfo {
   CanEnterExecuting() {
     return (
       (!ModelManager_1.ModelManager.LoadingModel.IsLoading &&
-        !UiManager_1.UiManager.IsViewShow("LoadingView")) ||
+        !ModelManager_1.ModelManager.LoadingModel.IsLoadingView) ||
       (Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Guide", 17, "引导组不能打开, 因为loading还没完成", [
+        Log_1.Log.Warn("Guide", 16, "引导组不能打开, 因为loading还没完成", [
           "组Id",
           this.Id,
         ]),

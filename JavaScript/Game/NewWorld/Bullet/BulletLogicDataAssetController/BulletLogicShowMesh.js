@@ -44,7 +44,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
       if (((this.N7o = this.j7o(t)), this.N7o))
         return (
           (t = (0, puerts_1.$ref)(new UE.HitResult())),
-          this.N7o.K2_SetWorldTransform(
+          this.N7o.D_K2_SetWorldTransform(
             this.a7o.ActorComponent.ActorTransform,
             !1,
             t,
@@ -92,7 +92,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
   V7o() {
     var t = this.Bullet.GetBulletInfo().Target;
     if (t) {
-      var e = t.GetComponent(72);
+      var e = t.GetComponent(79);
       if (e) {
         (e = e.GetWeaponMesh()),
           (t = t.GetComponent(0).GetRoleConfig().WeaponScale);
@@ -141,10 +141,10 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
       );
   }
   W7o(t, e, i) {
-    var s = new UE.Transform();
+    var s = new UE.TransformDouble();
     s.SetScale3D(i),
       t.K2_AttachToComponent(this.N7o, e, 0, 0, 0, !0),
-      t.K2_SetRelativeTransform(s, !1, void 0, !0);
+      t.D_K2_SetRelativeTransform(s, !1, void 0, !0);
   }
 }
 exports.BulletLogicShowMesh = BulletLogicShowMesh;

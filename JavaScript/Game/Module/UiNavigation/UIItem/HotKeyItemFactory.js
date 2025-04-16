@@ -10,97 +10,116 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ClickBtnInsideComponent_1 = require("../UIComponent/ClickBtnInsideComponent"),
   ClickBtnInsideReleaseComponent_1 = require("../UIComponent/ClickBtnInsideReleaseComponent"),
   ClickBtnReleaseComponent_1 = require("../UIComponent/ClickBtnReleaseComponent"),
+  CommonConsumeNavigationNext_1 = require("../UIComponent/CommonConsumeNavigationNext"),
   DraggableComponent_1 = require("../UIComponent/DraggableComponent"),
   DraggableInsideComponent_1 = require("../UIComponent/DraggableInsideComponent"),
   FollowItemComponent_1 = require("../UIComponent/FollowItemComponent"),
   GamepadInteractComponent_1 = require("../UIComponent/GamepadInteractComponent"),
+  InstanceDungeonWorldClickComponent_1 = require("../UIComponent/InstanceDungeonWorldClickComponent"),
   InteractComponent_1 = require("../UIComponent/InteractComponent"),
   InteractReleaseComponent_1 = require("../UIComponent/InteractReleaseComponent"),
   InteractWheelComponent_1 = require("../UIComponent/InteractWheelComponent"),
   LongPressComponent_1 = require("../UIComponent/LongPressComponent"),
   LongPressInsideComponent_1 = require("../UIComponent/LongPressInsideComponent"),
   LongTimeToTriggerComponent_1 = require("../UIComponent/LongTimeToTriggerComponent"),
+  MapDragComponent_1 = require("../UIComponent/MapDragComponent"),
   MapInteractComponent_1 = require("../UIComponent/MapInteractComponent"),
+  MapRogueQuicklyMoveComponent_1 = require("../UIComponent/MapRogueQuicklyMoveComponent"),
+  MapTravelTaskNavigationNextComponent_1 = require("../UIComponent/MapTravelTaskNavigationNextComponent"),
   MarkBookComponent_1 = require("../UIComponent/MarkBookComponent"),
   MaskComponent_1 = require("../UIComponent/MaskComponent"),
   NavigationGroupComponent_1 = require("../UIComponent/NavigationGroupComponent"),
   OpenRouletteSetViewComponent_1 = require("../UIComponent/OpenRouletteSetViewComponent"),
+  PhotographSetVisibleComponent_1 = require("../UIComponent/PhotographSetVisibleComponent"),
   PlotInteractComponent_1 = require("../UIComponent/PlotInteractComponent"),
+  RewardTakeComponent_1 = require("../UIComponent/RewardTakeComponent"),
   RoleInteractComponent_1 = require("../UIComponent/RoleInteractComponent"),
   RouletteNavigationComponent_1 = require("../UIComponent/RouletteNavigationComponent"),
   ScrollBarComponent_1 = require("../UIComponent/ScrollBarComponent"),
   ScrollBarInsideComponent_1 = require("../UIComponent/ScrollBarInsideComponent"),
   ScrollSwitchComponent_1 = require("../UIComponent/ScrollSwitchComponent"),
+  ShipTowerAutoLeftTeamComponent_1 = require("../UIComponent/ShipTowerAutoLeftTeamComponent"),
+  ShipTowerSwitchRightTeamComponent_1 = require("../UIComponent/ShipTowerSwitchRightTeamComponent"),
   ShowOnlyComponent_1 = require("../UIComponent/ShowOnlyComponent"),
   SliderComponent_1 = require("../UIComponent/SliderComponent"),
   SliderInsideComponent_1 = require("../UIComponent/SliderInsideComponent"),
+  TermExplanationComponent_1 = require("../UIComponent/TermExplanationComponent"),
   TextInputComponent_1 = require("../UIComponent/TextInputComponent"),
   TextInputInsideComponent_1 = require("../UIComponent/TextInputInsideComponent"),
+  WorldMapShowOnlyComponent_1 = require("../UIComponent/WorldMapShowOnlyComponent"),
   MultipleHotKeyItem_1 = require("./MultipleHotKeyItem"),
   SingleHotKeyItem_1 = require("./SingleHotKeyItem");
 class HotKeyItemFactory {
-  static async CreateHotKeyItem(e, n, o) {
-    switch (n) {
+  static async CreateHotKeyItem(e, o, n) {
+    switch (o) {
       case "SingleHotKey":
-        return HotKeyItemFactory.Bqe(e, SingleHotKeyItem_1.SingleHotKeyItem, o);
+        return HotKeyItemFactory.Bqe(e, SingleHotKeyItem_1.SingleHotKeyItem, n);
       case "MultipleHotKey":
         return HotKeyItemFactory.Bqe(
           e,
           MultipleHotKeyItem_1.MultipleHotKeyItem,
-          o,
+          n,
         );
       default:
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "导航快捷键的参数配置错误!",
-            ["Mode", n],
-            ["index", o],
+            ["Mode", o],
+            ["index", n],
           )
         );
     }
   }
-  static async Bqe(e, n, o) {
-    n = new n();
-    return await n.CreateThenShowByActorAsync(e, o), n;
+  static async Bqe(e, o, n) {
+    o = new o();
+    return await o.CreateThenShowByActorAsync(e, n), o;
   }
-  static async CreateHotKeyComponent(e, n, o) {
+  static async CreateHotKeyComponent(e, o, n) {
     var t =
-      ConfigManager_1.ConfigManager.UiNavigationConfig.GetHotKeyMapConfig(n);
+      ConfigManager_1.ConfigManager.UiNavigationConfig.GetHotKeyMapConfig(o);
     if (t) {
-      var r = this.Aqo.get(t.Type);
-      if (r)
+      var a = this.Aqo.get(t.Type);
+      if (a)
         return (
-          (r = this.Pqo(r, n)).SetHotKeyFunctionType(t.Type),
-          await r.CreateThenShowByActorAsync(e),
-          r.SetHotKeyType(o),
-          r.InitHotKeyLogicMode(),
-          r
+          (a = this.Pqo(a, o)).SetHotKeyFunctionType(t.Type),
+          await a.CreateThenShowByActorAsync(e),
+          a.SetHotKeyType(n),
+          a.InitHotKeyLogicMode(),
+          a
         );
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           "热键组件类型不存在!代码未进行注册",
           ["type", t.Type],
         );
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("UiNavigation", 11, "导航组中单个配置找不到", [
+        Log_1.Log.Warn("UiNavigation", 10, "导航组中单个配置找不到", [
           "hotKeyMapId",
-          n,
+          o,
         ]);
   }
-  static Pqo(e, n) {
-    return new e(n);
+  static Pqo(e, o) {
+    return new e(o);
   }
 }
 (exports.HotKeyItemFactory = HotKeyItemFactory).Aqo = new Map([
   ["MarkBookNext", MarkBookComponent_1.MarkBookNextComponent],
   ["MarkBookPrev", MarkBookComponent_1.MarkBookPrevComponent],
   ["NavigationNext", NavigationGroupComponent_1.NavigationGroupNextComponent],
+  [
+    "NavigationUpNext",
+    NavigationGroupComponent_1.NavigationGroupUpNextComponent,
+  ],
+  [
+    "NavigationDownNext",
+    NavigationGroupComponent_1.NavigationGroupDownNextComponent,
+  ],
   ["NavigationPrev", NavigationGroupComponent_1.NavigationGroupPrevComponent],
   [
     "NavigationInside",
@@ -149,10 +168,15 @@ class HotKeyItemFactory {
   ],
   ["Mask", MaskComponent_1.MaskComponent],
   ["ShowOnly", ShowOnlyComponent_1.ShowOnlyComponent],
+  ["WorldMapShowOnly", WorldMapShowOnlyComponent_1.WorldMapShowOnlyComponent],
   ["FollowItem", FollowItemComponent_1.FollowItemComponent],
   [
     "BagTagNavigationNext",
     BagTagNavigationNextComponent_1.BagTagNavigationNextComponent,
+  ],
+  [
+    "CommonConsumeNavigationNext",
+    CommonConsumeNavigationNext_1.CommonConsumeNavigationNext,
   ],
   ["BattleViewCamera", BattleViewCameraComponent_1.BattleViewCameraComponent],
   [
@@ -167,6 +191,7 @@ class HotKeyItemFactory {
     "SettingSliderReduceInside",
     SliderInsideComponent_1.SettingSliderReduceInsideComponent,
   ],
+  ["RewardTake", RewardTakeComponent_1.RewardTakeComponent],
   ["MapCheck", MapInteractComponent_1.MapCheckComponent],
   ["MapFocusPlayer", MapInteractComponent_1.MapFocusPlayerComponent],
   ["MapMoveForward", MapInteractComponent_1.MapMoveForwardComponent],
@@ -182,6 +207,7 @@ class HotKeyItemFactory {
   ],
   ["GamepadMoveRight", GamepadInteractComponent_1.GamepadMoveRightComponent],
   ["GamepadCheck", GamepadInteractComponent_1.GamepadCheckComponent],
+  ["GamepadWheel", GamepadInteractComponent_1.GamepadWheelComponent],
   ["PlotMoveForward", PlotInteractComponent_1.PlotMoveForwardComponent],
   ["PlotMoveRight", PlotInteractComponent_1.PlotMoveRightComponent],
   ["PlotZoom", PlotInteractComponent_1.PlotZoomComponent],
@@ -189,6 +215,40 @@ class HotKeyItemFactory {
   [
     "OpenRouletteSetView",
     OpenRouletteSetViewComponent_1.OpenRouletteSetViewComponent,
+  ],
+  [
+    "PhotographSetVisible",
+    PhotographSetVisibleComponent_1.PhotographSetVisibleComponent,
+  ],
+  [
+    "MapTravelTaskNavigationNext",
+    MapTravelTaskNavigationNextComponent_1.MapTravelTaskNavigationNextComponent,
+  ],
+  [
+    "ShipTowerSwitchRightTeam",
+    ShipTowerSwitchRightTeamComponent_1.ShipTowerSwitchRightTeamComponent,
+  ],
+  [
+    "ShipTowerAutoLeftTeam",
+    ShipTowerAutoLeftTeamComponent_1.ShipTowerAutoLeftTeamComponent,
+  ],
+  [
+    "OpenTermExplanationView",
+    TermExplanationComponent_1.TermExplanationComponent,
+  ],
+  [
+    "MapRogueQuicklyMove",
+    MapRogueQuicklyMoveComponent_1.MapRogueQuicklyMoveComponent,
+  ],
+  ["MapDragForward", MapDragComponent_1.MapDragForwardComponent],
+  ["MapDragRight", MapDragComponent_1.MapDragRightComponent],
+  [
+    "DangoLevelUp",
+    InstanceDungeonWorldClickComponent_1.InstanceDungeonWorldClickComponent,
+  ],
+  [
+    "DangoShop",
+    InstanceDungeonWorldClickComponent_1.InstanceDungeonWorldClickComponent,
   ],
 ]);
 //# sourceMappingURL=HotKeyItemFactory.js.map

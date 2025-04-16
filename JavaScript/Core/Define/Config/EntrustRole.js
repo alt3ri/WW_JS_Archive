@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntrustRole = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class EntrustRole {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -88,20 +89,44 @@ class EntrustRole {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icon(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   headicon(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   smallheadicon(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   name(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   unlockcondition() {
     var t = this.J7.__offset(this.z7, 14);
@@ -128,52 +153,124 @@ class EntrustRole {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   faildialog(t) {
-    var s = this.J7.__offset(this.z7, 26);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 26),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   successdialog(t) {
-    var s = this.J7.__offset(this.z7, 28);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 28),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   investdialog(t) {
-    var s = this.J7.__offset(this.z7, 30);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 30),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   investsuccessdialog(t) {
-    var s = this.J7.__offset(this.z7, 32);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 32),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   investfaildialog(t) {
-    var s = this.J7.__offset(this.z7, 34);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 34),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   joindialog(t) {
-    var s = this.J7.__offset(this.z7, 36);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 36),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   buildsuccessdialog(t) {
-    var s = this.J7.__offset(this.z7, 38);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 38),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   spineatlas(t) {
-    var s = this.J7.__offset(this.z7, 40);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 40),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   spineskeletondata(t) {
-    var s = this.J7.__offset(this.z7, 42);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 42),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   smallspineatlas(t) {
-    var s = this.J7.__offset(this.z7, 44);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 44),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   smallspineskeletondata(t) {
-    var s = this.J7.__offset(this.z7, 46);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 46),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   portrait(t) {
-    var s = this.J7.__offset(this.z7, 48);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 48),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.EntrustRole = EntrustRole;

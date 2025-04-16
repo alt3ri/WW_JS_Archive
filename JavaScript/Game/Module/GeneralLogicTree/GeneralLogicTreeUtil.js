@@ -5,6 +5,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   QuestChapterById_1 = require("../../../Core/Define/ConfigQuery/QuestChapterById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Transform_1 = require("../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   KuroSdkReport_1 = require("../../KuroSdk/KuroSdkReport"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -13,15 +14,15 @@ const Log_1 = require("../../../Core/Common/Log"),
   LguiUtil_1 = require("../Util/LguiUtil");
 class GeneralLogicTreeUtil {
   static GetEntityConfigPosition(e, r) {
-    let o = void 0;
+    let t = void 0;
     e = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e, r);
-    return (o = e
+    return (t = e
       ? Vector_1.Vector.Create(
           e.Transform?.Pos.X ?? 0,
           e.Transform?.Pos.Y ?? 0,
           e.Transform?.Pos.Z ?? 0,
         )
-      : o);
+      : t);
   }
   static GetEntityConfigRotator(e) {
     let r = void 0;
@@ -34,6 +35,32 @@ class GeneralLogicTreeUtil {
         )
       : r);
   }
+  static GetEntityConfigTransform(e) {
+    let r = void 0;
+    var t,
+      o,
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e);
+    return (
+      e &&
+        ((t = Rotator_1.Rotator.Create(
+          e.Transform?.Rot?.Y ?? 0,
+          e.Transform?.Rot?.Z ?? 0,
+          e.Transform?.Rot?.X ?? 0,
+        )),
+        (o = Vector_1.Vector.Create(
+          e.Transform?.Pos.X ?? 0,
+          e.Transform?.Pos.Y ?? 0,
+          e.Transform?.Pos.Z ?? 0,
+        )),
+        (e = Vector_1.Vector.Create(
+          e.Transform?.Scale?.X ?? 1,
+          e.Transform?.Scale?.Y ?? 1,
+          e.Transform?.Scale?.Z ?? 1,
+        )),
+        (r = Transform_1.Transform.Create(t.Quaternion(), o, e))),
+      r
+    );
+  }
   static GetPlayerLocation() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (e) {
@@ -41,50 +68,50 @@ class GeneralLogicTreeUtil {
       if (e) return e.ActorLocationProxy;
     }
   }
-  static GetNodeConfig(e, r, o) {
-    let t = void 0;
-    switch (e) {
-      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
-        t = ModelManager_1.ModelManager.QuestNewModel.GetQuestNodeConfig(r, o);
-        break;
-      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
-      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
-        t = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayNodeConfig(
-          r,
-          o,
-        );
-    }
-    return t;
-  }
-  static GetLogicTreeContainer(e, r) {
+  static GetNodeConfig(e, r, t) {
     let o = void 0;
     switch (e) {
       case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
-        o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(r);
+        o = ModelManager_1.ModelManager.QuestNewModel.GetQuestNodeConfig(r, t);
         break;
       case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
-        o =
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
+        o = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayNodeConfig(
+          r,
+          t,
+        );
+    }
+    return o;
+  }
+  static GetLogicTreeContainer(e, r) {
+    let t = void 0;
+    switch (e) {
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest:
+        t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(r);
+        break;
+      case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
+        t =
           ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
             r,
           );
         break;
       case Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst:
-        o =
+        t =
           ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonInfo();
     }
-    return o;
+    return t;
   }
-  static OpenQuestChapterView(e, r, o) {
-    var t;
+  static OpenQuestChapterView(e, r, t) {
+    var o;
     e &&
-      ((t =
+      ((o =
         ModelManager_1.ModelManager.QuestNewModel.GetShowQuestChapterIdFromConfig(
           r,
         )) ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelEvent",
-            19,
+            18,
             "任务没有配章节ID，章节内容显示不对找策划同学补上章节Id，目前章节提示需要读取“r.任务章节”的ID来显示内容",
             ["出问题的任务Id", r],
           )),
@@ -92,50 +119,69 @@ class GeneralLogicTreeUtil {
         ModelManager_1.ModelManager.QuestNewModel.GetShowQuestConditionFromConfig(
           r,
         )),
-      GeneralLogicTreeUtil.OpenChapterViewV2(e.ChapterState, t, !1, r),
-      KuroSdkReport_1.KuroSdkReport.OnChapterStart(t, e.ChapterState));
+      GeneralLogicTreeUtil.OpenChapterViewV2(e.ChapterState, o, !1, r),
+      KuroSdkReport_1.KuroSdkReport.OnChapterStart(o, e.ChapterState));
   }
-  static OpenChapterViewV2(e, r, o = !1, t) {
-    let a = 0;
-    var i,
-      l,
-      n = [r.toString()];
-    switch (e) {
-      case 2:
-        (a = o ? 16 : 10), t && n.push(t);
-        break;
-      case 0:
-        a = o ? 16 : 10;
-        break;
-      case 1:
-        a = o ? 17 : 11;
-        var _ =
-          ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-            "QuestChapterFinish",
-          );
-        n.push(_);
-    }
-    a
-      ? ((i = QuestChapterById_1.configQuestChapterById.GetConfig(r)),
-        (i = new LguiUtil_1.TableTextArgNew(i.ActName)),
-        (l = {}),
-        o && (l.CanOpenInPlot = !0),
-        ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
-          a,
-          i,
-          void 0,
-          [],
-          n,
-          void 0,
-          void 0,
-          l,
-        ),
-        KuroSdkReport_1.KuroSdkReport.OnChapterStart(r, e))
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("LevelEvent", 19, "配置了客户端还未支持的状态", [
-          "ChapterState",
-          e,
-        ]);
+  static OpenChapterViewV2(e, r, t = !1, o) {
+    var a = QuestChapterById_1.configQuestChapterById.GetConfig(r);
+    let i = 0,
+      n = new LguiUtil_1.TableTextArgNew(a.ActName);
+    var l = [r.toString()],
+      s = {};
+    if ("UiView_TaskTips_Prefab" === a?.PrefabName) {
+      switch (e) {
+        case 2:
+          (i = t ? 16 : 10), o && l.push(o);
+          break;
+        case 0:
+          i = t ? 16 : 10;
+          break;
+        case 1:
+          i = t ? 17 : 11;
+          var _ =
+            ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+              "QuestChapterFinish",
+            );
+          l.push(_);
+      }
+      if (!i)
+        return void (
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error("LevelEvent", 18, "配置了客户端还未支持的状态", [
+            "ChapterState",
+            e,
+          ])
+        );
+    } else if ("UiView_BattleDeclarationRed" === a?.PrefabName)
+      (n = new LguiUtil_1.TableTextArgNew(a.ChapterNum)), (i = 24);
+    else if ("UiView_BattleDeclarationWhite" === a?.PrefabName)
+      (n = new LguiUtil_1.TableTextArgNew(a.ChapterNum)), (i = 25);
+    else if ("UiView_TasktipsA_Prefab" === a?.PrefabName)
+      switch (((i = 26), (s.ChapterState = e))) {
+        case 2:
+          o && l.push(o);
+          break;
+        case 1:
+          var c =
+            ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+              "QuestChapterFinish",
+            );
+          l.push(c);
+      }
+    (s.ResumeTimeDilation = t),
+      ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
+        i,
+        n,
+        void 0,
+        [],
+        l,
+        void 0,
+        void 0,
+        s,
+        void 0,
+        t,
+      ),
+      KuroSdkReport_1.KuroSdkReport.OnChapterStart(r, e);
   }
 }
 exports.GeneralLogicTreeUtil = GeneralLogicTreeUtil;

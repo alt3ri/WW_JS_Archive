@@ -34,7 +34,7 @@ class LockOnDebugData {
       case 3:
         a = LockOnDebugData.eJo;
     }
-    UE.KismetSystemLibrary.DrawDebugArrow(
+    UE.KismetSystemLibrary.D_DrawDebugArrow(
       GlobalData_1.GlobalData.World,
       t.GetComponent(1)?.ActorLocationProxy.ToUeVector(),
       this.Due.ToUeVector(),
@@ -42,7 +42,7 @@ class LockOnDebugData {
       a,
     ),
       this.ShowTip &&
-        UE.KismetSystemLibrary.DrawDebugString(
+        UE.KismetSystemLibrary.D_DrawDebugString(
           GlobalData_1.GlobalData.World,
           this.Due.ToUeVector(),
           this.ShowTip,
@@ -57,8 +57,8 @@ class LockOnDebugData {
       ((t = t.Mesh),
       (e = FNameUtil_1.FNameUtil.GetDynamicFName(e)),
       t?.DoesSocketExist(e))
-      ? t.GetSocketTransform(e, 0)
-      : MathUtils_1.MathUtils.DefaultTransform;
+      ? t.D_GetSocketTransform(e, 0)
+      : MathUtils_1.MathUtils.DefaultTransformDouble;
   }
 }
 ((exports.LockOnDebugData = LockOnDebugData).zYo = new UE.LinearColor(

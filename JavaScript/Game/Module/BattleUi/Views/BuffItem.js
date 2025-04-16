@@ -17,9 +17,12 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.Hnt = void 0),
       (this.Ust = void 0),
+      (this.gKl = void 0),
       (this.Ast = void 0),
       (this.Pst = void 0),
+      (this.i0o = void 0),
       (this.xst = ""),
+      (this.fKl = 0),
       (this.wst = 0),
       (this.Bst = -0),
       (this.bst = void 0),
@@ -41,12 +44,16 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
       [7, UE.UIItem],
       [8, UE.UISprite],
+      [9, UE.UISprite],
+      [10, UE.UITexture],
     ];
   }
   OnStart() {
     (this.Ust = this.GetTexture(1)),
+      (this.gKl = this.GetTexture(10)),
       (this.Ast = this.GetText(3)),
       (this.Pst = this.GetSprite(2)),
+      (this.i0o = this.GetSprite(9)),
       this.Est(5),
       this.Est(6),
       this.Est(7);
@@ -54,35 +61,48 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
   Activate(t, i, s = !1) {
     GlobalData_1.GlobalData.IsPlayInEditor &&
       this.RootActor?.SetActorLabel("buffItem_" + t.Id),
-      (this.bst = i),
-      this.Ost(t.Path),
-      i
-        ? (this.kst(i.StackCount),
-          i.Duration <= 0
-            ? this.Fst(1)
-            : this.Fst(i.GetRemainDuration() / i.Duration))
-        : (this.kst(1), this.Fst(1));
-    i = t.Parameters.length;
-    let h = void 0;
-    0 < i && (h = t.Parameters[0]),
-      this.GetSprite(8)?.SetUIActive(h === BUFF),
-      this.GetSprite(4)?.SetUIActive(h === DEBUFF),
-      1 < i && "" !== t.Parameters[1] ? this.Vst(t.Parameters[1]) : this.Vst(),
-      2 < i && "" !== t.Parameters[2] ? this.yga(t.Parameters[2]) : this.yga(),
-      this.SetActive(!0),
+      (this.bst = i);
+    var h = t.Parameters.length;
+    let e = 0,
+      o =
+        (3 < h && "" !== t.Parameters[3] && (e = Number(t.Parameters[3])),
+        this.Ost(t.Path, e),
+        i
+          ? (this.kst(i.StackCount),
+            i.Duration <= 0
+              ? this.Fst(1)
+              : this.Fst(i.GetRemainDuration() / i.Duration))
+          : (this.kst(1), this.Fst(1)),
+        void 0);
+    0 < h && (o = t.Parameters[0]),
+      this.GetSprite(8)?.SetUIActive(o === BUFF),
+      this.GetSprite(4)?.SetUIActive(o === DEBUFF),
+      1 < h && "" !== t.Parameters[1] ? this.Vst(t.Parameters[1]) : this.Vst(),
+      2 < h && "" !== t.Parameters[2] ? this.yga(t.Parameters[2]) : this.yga(),
+      this.SetUiActive(!0),
       this.Gnt(6),
       s
         ? this.bnt(5)
         : (this.RootItem?.SetAlpha(1),
           this.RootItem?.SetUIItemScale(Vector_1.Vector.OneVector));
   }
-  Ost(t) {
-    this.xst !== t &&
+  Ost(t, i) {
+    (this.xst === t && this.fKl === i) ||
       ((this.xst = t),
-      this.Ust.SetAlpha(0),
-      this.SetTextureByPath(t, this.Ust, void 0, (t) => {
-        t && this.Ust.SetAlpha(1);
-      }));
+      (this.fKl = i),
+      this.Ust.SetUIActive(!1),
+      this.gKl.SetUIActive(!1),
+      1 === i
+        ? (this.i0o.SetUIActive(!1),
+          this.Pst.SetUIActive(!1),
+          this.SetTextureByPath(t, this.gKl, void 0, (t) => {
+            t && this.gKl?.SetUIActive(!0);
+          }))
+        : (this.i0o.SetUIActive(!0),
+          this.Pst.SetUIActive(!0),
+          this.SetTextureByPath(t, this.Ust, void 0, (t) => {
+            t && this.Ust?.SetUIActive(!0);
+          })));
   }
   kst(t) {
     t !== this.wst &&
@@ -122,14 +142,16 @@ class BuffItem extends UiPanelBase_1.UiPanelBase {
       this.kst(this.bst.StackCount));
   }
   TickHiding(t) {
-    return this.Gst > Time_1.Time.Now || (this.Gnt(6), this.SetActive(!1), !1);
+    return (
+      this.Gst > Time_1.Time.Now || (this.Gnt(6), this.SetUiActive(!1), !1)
+    );
   }
   Deactivate() {
     this.Gnt(5),
       this.RootItem?.SetUIItemScale(Vector_1.Vector.OneVector),
       this.Gnt(6),
       this.Hst(!1),
-      this.SetActive(!1);
+      this.SetUiActive(!1);
   }
   DeactivateWithCloseAnim() {
     this.Gnt(5),

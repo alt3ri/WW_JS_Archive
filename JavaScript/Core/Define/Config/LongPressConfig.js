@@ -23,11 +23,14 @@ class LongPressConfig {
       this,
     );
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  get AudioIntervalLimit() {
+    return this.audiointervallimit();
   }
-  static getRootAsLongPressConfig(t, s) {
-    return (s || new LongPressConfig()).__init(
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
+  }
+  static getRootAsLongPressConfig(t, i) {
+    return (i || new LongPressConfig()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -40,8 +43,8 @@ class LongPressConfig {
     return this.presstime(t);
   }
   presstime(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+    var i = this.J7.__offset(this.z7, 6);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   presstimeLength() {
     var t = this.J7.__offset(this.z7, 6);
@@ -61,8 +64,8 @@ class LongPressConfig {
     return this.triggertime(t);
   }
   triggertime(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+    var i = this.J7.__offset(this.z7, 8);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   triggertimeLength() {
     var t = this.J7.__offset(this.z7, 8);
@@ -77,6 +80,10 @@ class LongPressConfig {
           this.J7.__vector_len(this.z7 + t),
         )
       : null;
+  }
+  audiointervallimit() {
+    var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.LongPressConfig = LongPressConfig;

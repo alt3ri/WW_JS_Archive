@@ -55,6 +55,35 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsPause = !1),
       (this.ForceExit = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.TsMoveState = 0),
+      (this.TsMoveOnePath = !1),
+      (this.TsUseLastMoveIndex = !1),
+      (this.TsMoveSpeed = 0),
+      (this.TsCheckObstacles = !1),
+      (this.TsCheckObstacleTime = 0),
+      (this.TsCheckObstacleLength = 0),
+      (this.Entity = void 0),
+      (this.ActorComp = void 0),
+      (this.MoveComp = void 0),
+      (this.StateComp = void 0),
+      (this.AnimComp = void 0),
+      (this.PatrolLogic = void 0),
+      (this.PatrolConfig = void 0),
+      (this.TraceElement = void 0),
+      (this.IsSplineLoading = !1),
+      (this.IsInitTsVariables = !1),
+      (this.IsInitComp = !1),
+      (this.IsAvoidObstacles = !1),
+      (this.CacheVector = Vector_1.Vector.Create()),
+      (this.CurTime = -0),
+      (this.IsMoveFlyingState = !1),
+      (this.FrameSeconds = -0),
+      (this.FrameRate = -0),
+      (this.IsPause = !1),
+      (this.ForceExit = !1);
+  }
   InitTsVariables() {
     (this.TsMoveState = this.MoveState),
       (this.TsMoveOnePath = this.MoveOnePath),
@@ -76,12 +105,15 @@ class TsTaskPatrolLogic extends TsTaskAbortImmediatelyBase_1.default {
         ? ((this.IsMoveFlyingState = this.PatrolConfig.ContainZ),
           (this.Entity = t.CharAiDesignComp.Entity),
           (this.ActorComp = t.CharActorComp),
-          (this.MoveComp = this.Entity.GetComponent(38)),
+          (this.MoveComp = this.Entity.GetComponent(44)),
           this.IsMoveFlyingState &&
             this.MoveComp &&
-            this.MoveComp.CharacterMovement.SetMovementMode(5),
-          (this.StateComp = this.Entity.GetComponent(92)),
-          (this.AnimComp = this.Entity.GetComponent(163)),
+            this.ActorComp?.Actor.KuroSetMovementMode({
+              Mode: 5,
+              Context: "[TsTaskPatrolLogic.InitComp]",
+            }),
+          (this.StateComp = this.Entity.GetComponent(99)),
+          (this.AnimComp = this.Entity.GetComponent(175)),
           this.PatrolLogic.IsInitialized || this.PatrolLogic.GeneratePatrol(!1),
           (this.IsSplineLoading = !0),
           (this.IsInitComp = !0))

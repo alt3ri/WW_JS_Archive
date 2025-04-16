@@ -6,6 +6,7 @@ class TsAnimNotifyStateSetHitPriority extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.HitPriority = 0);
   }
+  Constructor() {}
   K2_NotifyBegin(t, e) {
     t = t.GetOwner();
     return (
@@ -19,7 +20,7 @@ class TsAnimNotifyStateSetHitPriority extends UE.KuroAnimNotifyState {
       t instanceof TsBaseCharacter_1.default &&
       (t
         .GetEntityNoBlueprint()
-        .GetComponent(164)
+        .GetComponent(176)
         .ResetHitPriorityAndGoThrough(),
       !0)
     );

@@ -20,7 +20,7 @@ class DelegationResultData {
       (this.IsInvestSuccess = !1),
       (this.IsBest = !1),
       (this.jke = new Map()),
-      (this.tDa = []),
+      (this.nDa = []),
       (this.Wke = []),
       (this.Kke = []),
       (this.LastPopularity = 0);
@@ -33,7 +33,7 @@ class DelegationResultData {
           s.push(i.OGs),
           s.push(i.kGs),
           {
-            SuccessResult: Protocol_1.Aki.Protocol.voh.Proto_Normal,
+            SuccessResult: Protocol_1.Aki.Protocol.oA_.Proto_Normal,
             CharacterValueList: s,
           });
       this.jke.set(i.Q6n, s);
@@ -45,12 +45,12 @@ class DelegationResultData {
       s = 0,
       i = 0;
     for (const a of t) (e += a.GGs), (s += a.OGs), (i += a.kGs);
-    this.tDa.push(e), this.tDa.push(s), this.tDa.push(i);
+    this.nDa.push(e), this.nDa.push(s), this.nDa.push(i);
   }
   UseInvestProperData() {
-    this.Kke[0].SetCurrentValue(this.tDa[0]),
-      this.Kke[1].SetCurrentValue(this.tDa[1]),
-      this.Kke[2].SetCurrentValue(this.tDa[2]);
+    this.Kke[0].SetCurrentValue(this.nDa[0]),
+      this.Kke[1].SetCurrentValue(this.nDa[1]),
+      this.Kke[2].SetCurrentValue(this.nDa[2]);
   }
   SetRoleIdList(t) {
     this.Wke = t;

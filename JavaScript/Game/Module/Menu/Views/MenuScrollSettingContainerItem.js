@@ -5,13 +5,15 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
+  GameSettingsDeviceRender_1 = require("../../../GameSettings/GameSettingsDeviceRender"),
   GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   GenericPromptController_1 = require("../../GenericPrompt/GenericPromptController"),
-  MenuController_1 = require("../MenuController"),
-  MenuDefine_1 = require("../MenuDefine"),
   MenuScrollSettingButtonItem_1 = require("./MenuScrollSettingButtonItem"),
   MenuScrollSettingDropDown_1 = require("./MenuScrollSettingDropDown"),
   MenuScrollSettingSliderItem_1 = require("./MenuScrollSettingSliderItem"),
@@ -26,35 +28,27 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       (this.IGe = void 0),
       (this.YBi = void 0),
       (this.SPe = void 0),
-      (this.vVa = void 0),
+      (this.mHa = void 0),
       (this.Yai = (e) => {
-        this.Pe && (1 === e && this.MVa(), this.vVa) && this.vVa(this, e);
+        this.Pe && (1 === e && this.dHa(), this.mHa) && this.mHa(this, e);
       }),
       (this.JBi = (e) => {
         void 0 !== this.Pe && this.Pe.FunctionId === e && this.bNe();
-      }),
-      (this.zGa = (e) => {
-        void 0 !== this.Pe && this.Pe.FunctionId === e && this.bNe();
-      }),
-      (this.BMa = (e, t) => {
-        this.Pe && e === this.Pe.FunctionId && this.ZBi(this.Pe.GetEnable());
       }),
       (this.tbi = (e) => {
         this.SPe.PlayLevelSequenceByName(e);
       }),
       (this.ibi = (e) => {
-        MenuController_1.MenuController.SetApplySave(this.Pe, e);
-        var t,
-          e = this.Pe.FunctionId;
-        MenuDefine_1.imageConfigSet.has(e) &&
-          (10 !== e &&
-            ((t = GameSettingsManager_1.GameSettingsManager.Get(10))?.Set(4),
-            t?.Save()),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.ConfigLoadChange,
-            e,
-          )),
-          (ModelManager_1.ModelManager.MenuModel.IsEdited = !0);
+        this.Pe.FunctionId === GameSettingsDefine_1.EFunction.RayTracing
+          ? this.vUc(e)
+          : this.Pe.FunctionId === GameSettingsDefine_1.EFunction.NVIDIADLSSFG
+            ? this.yUc(e)
+            : this.Pe.FunctionId === GameSettingsDefine_1.EFunction.Vulkan
+              ? this.SL1(e)
+              : ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+                  this.Pe,
+                  e,
+                );
       });
   }
   async Init(e) {
@@ -81,14 +75,6 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       EventDefine_1.EEventName.RefreshMenuSetting,
       this.JBi,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnGameplaySettingsSet,
-        this.zGa,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnMenuDataEnableChanged,
-        this.BMa,
-      ),
       this.GetExtendToggle(0).OnStateChange.Add(this.Yai);
   }
   RemoveEventListener() {
@@ -96,30 +82,22 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       EventDefine_1.EEventName.RefreshMenuSetting,
       this.JBi,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnGameplaySettingsSet,
-        this.zGa,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnMenuDataEnableChanged,
-        this.BMa,
-      ),
       this.GetExtendToggle(0).OnStateChange.Clear();
   }
   BindOnToggleStateChangedCallback(e) {
-    this.vVa = e;
+    this.mHa = e;
   }
-  MVa() {
+  dHa() {
     if (this.Pe) {
       var e = this.Pe.ClickedTips;
       if (e && !StringUtils_1.StringUtils.IsBlank(e)) {
         var t,
           i,
-          s = ModelManager_1.ModelManager.MenuModel;
+          r = ModelManager_1.ModelManager.MenuModel;
         for ([t, i] of this.Pe.ClickedTipsMap)
           if (
-            s.IsInMenuDataByFunctionId(t) &&
-            s.GetGameSettingsHandleEditValue(t) === i
+            r.IsInMenuDataByFunctionId(t) &&
+            GameSettingsManager_1.GameSettingsManager.GetCurrentValue(t) === i
           )
             return void GenericPromptController_1.GenericPromptController.ShowPromptByCode(
               e,
@@ -133,7 +111,7 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       (this.SPe = void 0),
       this.YBi?.ClearItem(),
       (this.YBi = void 0),
-      (this.vVa = void 0),
+      (this.mHa = void 0),
       this.gPe();
   }
   ClearItem() {
@@ -219,7 +197,11 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
     return t.Initialize(this.GetItem(e), this.ibi, this.tbi), t;
   }
   bNe() {
-    this.YBi && this.YBi.ExecuteUpdate(this.Pe, !0);
+    this.YBi &&
+      (this.YBi.ExecuteUpdate(this.Pe, !0),
+      0 !== this.MenuScrollItemData?.Type
+        ? this.ZBi(this.Pe.GetEnable())
+        : this.ZBi(!1));
   }
   obi() {
     this.GetItem(1).SetUIActive(!1),
@@ -230,9 +212,118 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
   }
   ZBi(e) {
     var t = this.GetExtendToggle(0);
-    t.SetToggleState(e ? 0 : 2, !1),
+    e
+      ? 1 === t.GetToggleState()
+        ? t.SetToggleState(1, !1)
+        : t.SetToggleState(0, !1)
+      : t.SetToggleState(2, !1),
       t.SetSelfInteractive(e),
       0 !== this.Type && this.YBi && this.YBi.SetInteractionActive(e);
+  }
+  H01(e) {
+    e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(e);
+    e.FunctionMap.set(1, () => {
+      ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+        this.Pe,
+        0,
+      );
+    }),
+      e.FunctionMap.set(2, () => {
+        ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+          this.Pe,
+          0,
+        );
+      }),
+      e.SetCloseFunction(() => {
+        ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+          this.Pe,
+          0,
+        );
+      }),
+      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+        e,
+      );
+  }
+  vUc(e) {
+    var t;
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDxr1_1NotSupported() &&
+    0 < e
+      ? this.H01(301)
+      : GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDriverNeedUpdateForRayTracing() &&
+          0 < e
+        ? this.H01(273)
+        : ((t = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+            this.Pe.FunctionId,
+          )),
+          (ModelManager_1.ModelManager.MenuModel.NeedRayTracingSubChange =
+            t + e === 1),
+          0 !== t ||
+          1 !== e ||
+          ModelManager_1.ModelManager.MenuModel.IsRayTracingOpenChecked
+            ? ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+                this.Pe,
+                e,
+              )
+            : ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                248,
+              )).FunctionMap.set(2, () => {
+                (ModelManager_1.ModelManager.MenuModel.IsRayTracingOpenChecked =
+                  !0),
+                  ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+                    this.Pe,
+                    e,
+                  );
+              }),
+              ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                t,
+              )));
+  }
+  yUc(e) {
+    var t;
+    0 < e &&
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlss3HardwareSchedulingDisabled()
+      ? ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(292)).FunctionMap.set(
+          1,
+          () => {
+            ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+              this.Pe,
+              0,
+            );
+          },
+        ),
+        t.FunctionMap.set(2, () => {
+          ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+            this.Pe,
+            0,
+          );
+        }),
+        t.SetCloseFunction(() => {
+          ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+            this.Pe,
+            0,
+          );
+        }),
+        ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+          t,
+        ))
+      : ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+          this.Pe,
+          e,
+        );
+  }
+  SL1(e) {
+    var t;
+    0 < e &&
+      !ModelManager_1.ModelManager.MenuModel.IsVulkanOpenChecked &&
+      ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(316)),
+      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+        t,
+      ),
+      (ModelManager_1.ModelManager.MenuModel.IsVulkanOpenChecked = !0)),
+      ControllerHolder_1.ControllerHolder.MenuController.HandleFireSaveMenuChange(
+        this.Pe,
+        e,
+      );
   }
   SetDetailVisible(e) {
     this.YBi && this.YBi.SetDetailVisible(e);

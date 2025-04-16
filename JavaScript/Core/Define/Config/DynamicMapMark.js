@@ -10,6 +10,9 @@ class DynamicMapMark {
   get MarkId() {
     return this.markid();
   }
+  get InstanceDungeonId() {
+    return this.instancedungeonid();
+  }
   get MapId() {
     return this.mapid();
   }
@@ -80,6 +83,12 @@ class DynamicMapMark {
   get Reward() {
     return this.reward();
   }
+  get TrackHudEnable() {
+    return this.trackhudenable();
+  }
+  get TrackAutoCancelDistance() {
+    return this.trackautocanceldistance();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -93,28 +102,32 @@ class DynamicMapMark {
     var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  mapid() {
+  instancedungeonid() {
     var t = this.J7.__offset(this.z7, 6);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  mapid() {
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 8;
   }
   relativesubtype() {
-    var t = this.J7.__offset(this.z7, 8);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  foghide() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  relativetype() {
+  foghide() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  relativeid() {
+  relativetype() {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  relativeid() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   markvector(t) {
-    var i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? (t || new IntVector_1.IntVector()).__init(
           this.J7.__indirect(this.z7 + i),
@@ -123,46 +136,58 @@ class DynamicMapMark {
       : null;
   }
   entityconfigid() {
-    var t = this.J7.__offset(this.z7, 18);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  objecttype() {
     var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  marktitle(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
-  }
-  markdesc(t) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
-  }
-  tobediscovered() {
-    var t = this.J7.__offset(this.z7, 26);
+  objecttype() {
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  ismonster() {
+  marktitle(t) {
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  markdesc(t) {
+    var i = this.J7.__offset(this.z7, 26),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  tobediscovered() {
     var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  showpriority() {
+  ismonster() {
     var t = this.J7.__offset(this.z7, 30);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  showpriority() {
+    var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetShowrangeAt(t) {
     return this.showrange(t);
   }
   showrange(t) {
-    var i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   showrangeLength() {
-    var t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   showrangeArray() {
-    var t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 34);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -172,36 +197,56 @@ class DynamicMapMark {
       : null;
   }
   lockmarkpic(t) {
-    var i = this.J7.__offset(this.z7, 34);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 36),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   unlockmarkpic(t) {
-    var i = this.J7.__offset(this.z7, 36);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 38),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   showcondition() {
-    var t = this.J7.__offset(this.z7, 38);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  fogshow() {
     var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  mapshow() {
+  fogshow() {
     var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  scale() {
+  mapshow() {
     var t = this.J7.__offset(this.z7, 44);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  scale() {
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
   firstreward() {
-    var t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   reward() {
-    var t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
+  }
+  trackhudenable() {
+    var t = this.J7.__offset(this.z7, 52);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  trackautocanceldistance() {
+    var t = this.J7.__offset(this.z7, 54);
+    return t ? this.J7.readFloat32(this.z7 + t) : -1;
   }
 }
 exports.DynamicMapMark = DynamicMapMark;

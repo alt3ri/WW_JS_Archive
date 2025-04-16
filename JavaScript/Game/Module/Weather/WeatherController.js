@@ -77,10 +77,10 @@ class WeatherController extends ControllerBase_1.ControllerBase {
       (WeatherController.Wko = void 0));
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(16084, WeatherController.Qko);
+    Net_1.Net.Register(20630, WeatherController.Qko);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(16084);
+    Net_1.Net.UnRegister(20630);
   }
   static jko() {
     WeatherModel_1.WeatherModel.GetWorldWeatherActor().Destroy();
@@ -88,11 +88,11 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   static RequestChangeWeather(e) {
     var t = new Protocol_1.Aki.Protocol.Ods();
     (t.pjn = e),
-      Net_1.Net.Call(29155, t, (e) => {
+      Net_1.Net.Call(24532, t, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            18110,
+            20775,
           );
       });
   }
@@ -143,7 +143,7 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   }),
   (WeatherController.Qko = (e) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Weather", 28, "OnWeatherNotify", ["WeatherNotify", e]),
+      Log_1.Log.Info("Weather", 27, "OnWeatherNotify", ["WeatherNotify", e]),
       e.kDs
         ? WeatherController.ChangeCurrentWeather(
             e.pjn,

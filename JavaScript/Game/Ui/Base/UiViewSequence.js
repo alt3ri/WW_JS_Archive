@@ -8,8 +8,8 @@ class UiBehaviorLevelSequence {
     (this.rcr = void 0),
       (this.ncr = "Start"),
       (this.scr = "Close"),
-      (this.pva = "ShowView"),
-      (this.Mva = "HideView"),
+      (this.dva = "ShowView"),
+      (this.mva = "HideView"),
       (this.acr = new Map()),
       (this.hcr = new Map()),
       (this.lcr = ""),
@@ -37,16 +37,16 @@ class UiBehaviorLevelSequence {
     return this.scr;
   }
   get ShowSequenceName() {
-    return this.pva;
+    return this.dva;
   }
   set ShowSequenceName(e) {
-    this.pva = e;
+    this.dva = e;
   }
   get HideSequenceName() {
-    return this.Mva;
+    return this.mva;
   }
   set HideSequenceName(e) {
-    this.Mva = e;
+    this.mva = e;
   }
   OnAfterUiStart() {
     (this.rcr = new UiSequencePlayer_1.UiSequencePlayer(
@@ -82,7 +82,7 @@ class UiBehaviorLevelSequence {
     i || ((i = new Set()), this.hcr.set(e, i)),
       i.has(t)
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("UiCore", 28, "AddSequenceStartEvent重复添加。")
+          Log_1.Log.Error("UiCore", 27, "AddSequenceStartEvent重复添加。")
         : i.add(t);
   }
   StopSequenceByKey(e, t = !1, i = !1) {
@@ -91,21 +91,21 @@ class UiBehaviorLevelSequence {
   SequencePlayReverseByKey(e, t) {
     this.rcr.PlaySequencePurely(e, t, !0);
   }
-  PlaySequence(e, t = !1) {
+  PlaySequence(e, t = !1, i = void 0) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("UiCore", 28, "开始PlaySequence", ["Name", e]),
+      Log_1.Log.Debug("UiCore", 27, "开始PlaySequence", ["Name", e]),
       (this.lcr = e),
-      this.rcr.PlaySequence(e, t);
+      this.rcr.PlaySequence(e, t, i);
   }
   get CurrentSequenceName() {
     return this.lcr;
   }
-  async PlaySequenceAsync(e, t, i = !1, s = !1) {
-    (this.lcr = e), await this.rcr?.PlaySequenceAsync(e, t, i, s);
+  async PlaySequenceAsync(e, t, i = !1, s = !1, h = void 0) {
+    (this.lcr = e), await this.rcr?.PlaySequenceAsync(e, t, i, s, h);
   }
   PlaySequencePurely(e, t = !1, i = !1) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("UiCore", 28, "开始PurePlaySequence", ["Name", e]),
+      Log_1.Log.Debug("UiCore", 27, "开始PurePlaySequence", ["Name", e]),
       (this.lcr = e),
       this.rcr?.PlaySequencePurely(e, t, i);
   }

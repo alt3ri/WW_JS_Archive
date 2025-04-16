@@ -2,58 +2,75 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewInfo = void 0);
 const Info_1 = require("../../../Core/Common/Info"),
-  ConfigManager_1 = require("../../Manager/ConfigManager");
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  UiLayerType_1 = require("./UiLayerType");
 class UiViewInfo {
   constructor(
     e,
     i,
-    o,
     t,
+    o,
     s,
     a,
     h,
-    R,
     n,
-    w,
-    V,
-    l,
+    R,
     r,
+    V,
+    w,
+    l,
     c,
     u,
     p,
+    y,
     f,
     g,
-    v,
     C,
-    I,
-    M,
+    _,
     S,
-    W = "",
+    U,
+    I,
+    M = "",
   ) {
     (this.Name = e),
       (this.Type = i),
-      (this.Ctor = o),
-      (this.Path = t),
+      (this.Ctor = t),
+      (this.Path = o),
       (this.PcPath = s),
       (this.BeObstructView = a),
       (this.AudioEvent = h),
-      (this.OpenAudioEvent = R),
-      (this.CloseAudioEvent = n),
-      (this.TimeDilation = w),
-      (this.ShowCursorType = V),
+      (this.OpenAudioEvent = n),
+      (this.LoopAudioEvent = R),
+      (this.CloseAudioEvent = r),
+      (this.TimeDilation = V),
+      (this.ShowCursorType = w),
       (this.CanOpenViewByShortcutKey = l),
-      (this.IsShortKeysExitView = r),
-      (this.SourceType = c),
-      (this.LoadAsync = u),
-      (this.NeedGc = p),
+      (this.IsShortKeysExitView = c),
+      (this.SourceType = u),
+      (this.LoadAsync = p),
+      (this.NeedGc = y),
       (this.IsFullScreen = f),
       (this.SortIndex = g),
-      (this.CommonPopBg = v),
-      (this.CommonPopBgKey = C),
-      (this.ScenePathInternal = I),
-      (this.IsPermanent = M),
-      (this.SkipAnimActions = S),
-      (this.ScenePointTag = W);
+      (this.CommonPopBg = C),
+      (this.CommonPopBgKey = _),
+      (this.ScenePathInternal = S),
+      (this.IsPermanent = U),
+      (this.SkipAnimActions = I),
+      (this.ScenePointTag = M),
+      (this.CF_ = UiLayerType_1.ELayerType.Normal),
+      (this.CF_ = this.Type);
+  }
+  SetContainerLayerType(e) {
+    e
+      ? ((this.CF_ = e), this.Type < e && (this.Type = e))
+      : ((e = ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(
+          this.Name,
+        )),
+        (e = UiLayerType_1.ELayerType[e.Type]),
+        (this.CF_ = e));
+  }
+  GetContainerLayerType() {
+    return this.CF_;
   }
   get UiPath() {
     return !Info_1.Info.IsInTouch() && this.PcPath ? this.PcPath : this.Path;
@@ -78,8 +95,11 @@ class UiViewInfo {
   ["WeaponReplaceView", "WeaponRootView"],
   ["WeaponBreachSuccessView", "WeaponRootView"],
   ["WeaponResonanceSuccessView", "WeaponRootView"],
+  ["SkinRootView", "WeaponRootView"],
   ["VisionRecoveryResultView", "CalabashRootView"],
   ["VisionRecoveryBatchResultView", "CalabashRootView"],
+  ["VisionRefineResultView", "CalabashRootView"],
   ["GachaScanView", "DrawMainView"],
+  ["RogueAttributeDetailView", "WeeklyRogueInfo"],
 ]);
 //# sourceMappingURL=UiViewInfo.js.map

@@ -6,8 +6,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  ActivityRogueController_1 = require("../../Activity/ActivityContent/RougeActivity/ActivityRogueController"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
@@ -34,7 +34,8 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
           1 === e.GetToggleState() ||
           ((e =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePopularEntrieArg(
-              ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.UHn,
+              ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+                .SeasonData.UHn,
               this.OpenParam.r6n,
             ).Slot),
           !(
@@ -152,7 +153,8 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
     }
     var e =
       ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRoguePopularEntrieArg(
-        ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.UHn,
+        ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+          .SeasonData.UHn,
         this.OpenParam.r6n,
       );
     e &&

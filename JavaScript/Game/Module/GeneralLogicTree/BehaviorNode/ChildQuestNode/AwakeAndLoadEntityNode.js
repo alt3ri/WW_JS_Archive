@@ -10,9 +10,9 @@ class AwakeAndLoadEntityNode extends TickBehaviorNode_1.TickBehaviorNode {
   constructor() {
     super(...arguments),
       (this.fLe = void 0),
-      (this.u$t = !1),
-      (this.aHa = (e) => {
-        this.u$t = !1;
+      (this.HRc = 0),
+      (this.lQa = (e) => {
+        this.HRc = e ? 2 : 0;
       });
   }
   OnCreate(e) {
@@ -23,7 +23,7 @@ class AwakeAndLoadEntityNode extends TickBehaviorNode_1.TickBehaviorNode {
     );
   }
   OnTick() {
-    if (!this.u$t) {
+    if (0 === this.HRc) {
       if (this.fLe && 0 !== this.fLe.length)
         for (const t of this.fLe)
           if (ModelManager_1.ModelManager.CreatureModel.GetEntityData(t)) {
@@ -35,7 +35,7 @@ class AwakeAndLoadEntityNode extends TickBehaviorNode_1.TickBehaviorNode {
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Entity",
-                  19,
+                  18,
                   "GeneralLogicTree.AwakeAndLoadEntityNode AOI范围外的实体",
                   ["entityId", t],
                 );
@@ -43,24 +43,24 @@ class AwakeAndLoadEntityNode extends TickBehaviorNode_1.TickBehaviorNode {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Entity",
-                19,
+                18,
                 "GeneralLogicTree.AwakeAndLoadEntityNode 找不到实体配置",
                 ["entityId", t],
               );
-      this.lHa();
+      this._Qa();
     }
   }
-  lHa() {
-    this.Blackboard.ContainTag(6) ||
+  _Qa() {
+    this.Blackboard.ContainTag(7) ||
       this.Blackboard.IsSuspend() ||
-      (this.hHa(),
+      (this.uQa(),
       GeneralLogicTreeController_1.GeneralLogicTreeController.RequestSubmitAwakeAndLoadEntityNode(
         this.Context,
-        this.aHa,
+        this.lQa,
       ));
   }
-  hHa() {
-    this.u$t = !0;
+  uQa() {
+    this.HRc = 1;
   }
 }
 exports.AwakeAndLoadEntityNode = AwakeAndLoadEntityNode;

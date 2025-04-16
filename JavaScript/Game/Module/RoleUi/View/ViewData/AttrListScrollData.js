@@ -8,6 +8,7 @@ class AttrListScrollData extends ScrollViewDataBase_1.ScrollViewDataBase {
       (this.IsRatio = !1),
       (this.IsUnknown = !1),
       (this.CombineNum = 0),
+      (this.NeedHighLight = !1),
       (this.Id = t),
       (this.BaseValue = s),
       (this.AddValue = e),

@@ -83,7 +83,7 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Battle",
-                18,
+                17,
                 "怪物部位血条非法：不存在SocketName",
                 ["", this.g1t],
               ))
@@ -91,12 +91,12 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Battle",
-              18,
+              17,
               "怪物部位血条非法：不存在SkeletalMesh",
             ))
       : ((this.zct = !1),
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Battle", 18, "怪物部位血条非法：不存在Entity"));
+          Log_1.Log.Warn("Battle", 17, "怪物部位血条非法：不存在Entity"));
   }
   ResetPartState() {
     this.zct && (this.kre(), this.ist()),
@@ -181,8 +181,8 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
     var t, i;
     this.zct &&
       (i = UiLayer_1.UiLayer.UiRootItem) &&
-      ((t = this.tfe.GetSocketLocation(this.g1t)),
-      UE.GameplayStatics.ProjectWorldToScreen(this.R$e, t, this.Jct, !1)
+      ((t = this.tfe.D_GetSocketLocation(this.g1t)),
+      UE.GameplayStatics.D_ProjectWorldToScreen(this.R$e, t, this.Jct, !1)
         ? ((t = (0, puerts_1.$unref)(this.Jct)),
           (i = i.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(t)),
           this.RootItem.SetAnchorOffset(i),

@@ -11,11 +11,16 @@ class ManufactureMaterialItem extends LoopScrollMediumItemGrid_1.LoopScrollMediu
     super(...arguments), (this.fGt = void 0), (this.BIi = 0);
   }
   OnRefresh(e, t, i) {
-    var r = { Type: 4, Data: (this.fGt = e), BottomText: this.bIi() };
-    e.K6n && (r.ItemConfigId = e.L8n),
-      this.Apply(r),
-      this.SetIsPhantomLock(!e.K6n),
-      this.SetSelected(!1);
+    if ((this.fGt = e).IsEmpty) {
+      const r = { Type: 1 };
+      this.Apply(r), void this.SetSelected(!1);
+    } else {
+      const r = { Type: 4, Data: e, BottomText: this.bIi() };
+      e.K6n && (r.ItemConfigId = e.L8n),
+        this.Apply(r),
+        this.SetIsPhantomLock(!e.K6n),
+        this.SetSelected(!1);
+    }
   }
   bIi() {
     if (!this.fGt) return "";

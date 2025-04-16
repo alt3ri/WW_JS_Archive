@@ -19,7 +19,7 @@ const ue_1 = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   FormationAttributeController_1 = require("../../../Module/Abilities/FormationAttributeController"),
   CharacterUnifiedStateTypes_1 = require("../Common/Component/Abilities/CharacterUnifiedStateTypes"),
-  RoleSceneInteractComponent_1 = require("./Component/RoleSceneInteractComponent"),
+  fixHookSkillIds = new Set([100020, 100021, 100022, 100024, 210130]),
   ROLE_CHANGE_FRONT_EVENT = "scene_role_switched_front",
   DEFAULT_INTERVAL_TIME = 1e4,
   ENTER_FIGHT_DISTANCE = 1e3,
@@ -33,64 +33,65 @@ class RoleAudioCoolDownTime {
       (this.TeamIntervalTime = 0),
       (this.RoletervalTime = 0),
       (this.Probabilities = 0);
-    var t = e.valueOf(),
+    var o = e.valueOf(),
       e =
         ((this.Type = e),
-        RoleAudioRulesById_1.configRoleAudioRulesById.GetConfig(t));
+        RoleAudioRulesById_1.configRoleAudioRulesById.GetConfig(o));
     (this.TeamIntervalTime = e?.TeamColdTime ?? DEFAULT_INTERVAL_TIME),
       (this.RoletervalTime = e?.CharacterColdTime ?? DEFAULT_INTERVAL_TIME),
       (this.Probabilities = (e?.PostProbability ?? 100) / 100);
   }
-  CheckAndUpdateCoolDownTime(e, t = !0, o = !0) {
-    var r = Math.random();
-    if (r > this.Probabilities && o)
-      return (
-        Log_1.Log.CheckDebug() &&
+  CheckProbabilitiesCoolDown(e, o = !0, t = !0) {
+    var i = Math.random();
+    return i > this.Probabilities && t
+      ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Audio",
-            43,
+            42,
             "[Game.Role] PostEvent 概率触发为False，取消触发角色语音",
             ["RoleId", e],
             ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(this.Type)],
             ["概率", this.Probabilities],
-            ["随机数", r],
+            ["随机数", i],
           ),
-        !1
-      );
-    r = ModelManager_1.ModelManager.SceneTeamModel?.GetTeamItems();
-    if (!r)
+        !1)
+      : this.CheckCoolDownTime(e, o, t);
+  }
+  CheckCoolDownTime(e, o = !0, t = !0) {
+    var i = ModelManager_1.ModelManager.SceneTeamModel?.GetTeamItems();
+    if (!i)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Audio",
-            43,
+            42,
             "[CheckAndUpdateCoolDownTime] GetTeamItems失败",
           ),
         !1
       );
-    let i = 0,
+    let r = 0,
       n = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
-    for (const l of r) {
+    for (const l of i) {
       if (l.GetConfigId === e) {
         n = l.GetPlayerId();
         break;
       }
-      i++;
+      r++;
     }
-    var r = Time_1.Time.Now - this.CurrentRoleTime[i],
-      s = r >= this.RoletervalTime;
-    r < this.RoletervalTime &&
-      o &&
+    var i = Time_1.Time.Now - this.CurrentRoleTime[r],
+      s = i >= this.RoletervalTime;
+    i < this.RoletervalTime &&
+      t &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Audio",
-        43,
+        42,
         "[Game.Role] PostEvent 角色CD中，取消触发角色语音",
         ["RoleId", e],
         ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(this.Type)],
         [
           "剩余时间/秒",
-          (this.RoletervalTime - r) / CommonDefine_1.MILLIONSECOND_PER_SECOND,
+          (this.RoletervalTime - i) / CommonDefine_1.MILLIONSECOND_PER_SECOND,
         ],
         [
           "CD/秒",
@@ -105,24 +106,24 @@ class RoleAudioCoolDownTime {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Audio",
-            43,
+            42,
             "[CheckAndUpdateCoolDownTime] GetCurrentTeamListById失败",
           ),
         !1)
-      : ((r = Time_1.Time.Now - this.CurrentTeamTime[a]),
-        (s = s && r >= this.TeamIntervalTime),
-        r < this.TeamIntervalTime &&
-          o &&
+      : ((i = Time_1.Time.Now - this.CurrentTeamTime[a]),
+        (s = s && i >= this.TeamIntervalTime),
+        i < this.TeamIntervalTime &&
+          t &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Audio",
-            43,
+            42,
             "[Game.Role] PostEvent 队伍CD中，取消触发角色语音",
             ["RoleId", e],
             ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(this.Type)],
             [
               "剩余时间/秒",
-              (this.TeamIntervalTime - r) /
+              (this.TeamIntervalTime - i) /
                 CommonDefine_1.MILLIONSECOND_PER_SECOND,
             ],
             [
@@ -131,23 +132,23 @@ class RoleAudioCoolDownTime {
             ],
           ),
         s &&
-          t &&
-          ((this.CurrentRoleTime[i] = Time_1.Time.Now),
+          o &&
+          ((this.CurrentRoleTime[r] = Time_1.Time.Now),
           (this.CurrentTeamTime[a] = Time_1.Time.Now)),
         s);
   }
 }
 class RoleAudioController extends ControllerBase_1.ControllerBase {
-  static rca() {
+  static sca() {
     for (const e of [
-      0, 1001, 1002, 1003, 1004, 1005, 1006, 1007, 2001, 2002, 2004, 2005, 2006,
-      2007, 2008,
+      0, 1001, 1002, 1003, 1004, 10041, 10042, 1005, 1006, 1007, 2001, 2002,
+      2004, 2005, 2006, 2007, 2008,
     ])
-      this.oca.set(e, new RoleAudioCoolDownTime(e));
+      this.aca.set(e, new RoleAudioCoolDownTime(e));
   }
   static OnInit() {
     return (
-      this.rca(),
+      this.sca(),
       (this.Sir =
         (CommonParamById_1.configCommonParamById.GetIntConfig(
           "LowEndurancePercent",
@@ -164,6 +165,10 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.OpenTreasureBox,
         this.yir,
       ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnUpdateSceneTeam,
+        this.dLe,
+      ),
       FormationAttributeController_1.FormationAttributeController.AddValueListener(
         1,
         this.Pni,
@@ -173,18 +178,17 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
   }
   static OnTick() {
     return (
-      Global_1.Global.BaseCharacter &&
-        this.ActorComponent &&
-        ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-        !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
-        (this.Mja
-          ? (this.Sja(), (this.Pln = Time_1.Time.Now))
-          : (this.ActorComponent?.MoveComp?.IsMoving
-              ? (this.Phn = MIN_INTERVAL_TIME)
-              : (this.Phn = INTERVAL_TIME),
-            Time_1.Time.Now - this.Pln < this.Phn ||
-              ((this.Pln = Time_1.Time.Now),
-              this.SetUpdateAudioDynamicTrace()))),
+      this.BKa
+        ? (this.bKa(), (this.Pln = Time_1.Time.Now))
+        : Global_1.Global.BaseCharacter &&
+          this.ActorComponent &&
+          ModelManager_1.ModelManager.GameModeModel.WorldDone &&
+          !ModelManager_1.ModelManager.GameModeModel.IsTeleport &&
+          (this.ActorComponent?.MoveComp?.IsMoving
+            ? (this.Phn = MIN_INTERVAL_TIME)
+            : (this.Phn = INTERVAL_TIME),
+          Time_1.Time.Now - this.Pln < this.Phn ||
+            ((this.Pln = Time_1.Time.Now), this.SetUpdateAudioDynamicTrace())),
       !0
     );
   }
@@ -210,87 +214,145 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetUpdateAudioDynamicTrace(e = !1) {
-    (this.yja = e), this.Mja || ((this.Mja = !0), (this.Eja = !1));
+    (this.qKa = e), this.BKa || ((this.BKa = !0), (this.OKa = !1));
   }
-  static Sja() {
+  static bKa() {
     var e = ue_1.KuroAudioStatics.GetAudioEnvironmentSubsystem(
       Info_1.Info.World,
     );
     e
-      ? this.Eja
+      ? this.OKa
         ? (e?.DynamicReverbApply(),
-          (this.Eja = !1),
-          (this.Mja = !1),
-          this.yja && this.SetUpdateAudioDynamicTrace(!0))
-        : (this.ActorComponent &&
-            (e?.DynamicReverbTrace(this.ActorComponent.ActorLocation, this.yja),
-            (this.yja = !1)),
-          (this.Eja = !0))
-      : ((this.Eja = !1), (this.Mja = !1));
+          (this.OKa = !1),
+          (this.BKa = !1),
+          this.qKa && this.SetUpdateAudioDynamicTrace(!0))
+        : this.ActorComponent
+          ? (e?.D_DynamicReverbTrace(
+              this.ActorComponent.ActorLocation,
+              this.qKa,
+            ),
+            (this.qKa = !1),
+            (this.OKa = !0))
+          : (this.BKa = !1)
+      : ((this.OKa = !1), (this.BKa = !1));
   }
-  static PlayRoleAudio(e, t) {
-    var o = e?.GetComponent(3),
-      r = e?.GetComponent(174),
-      i = r?.GetAkComponent();
+  static PlayRoleAudio(e, o) {
+    var t = e?.GetComponent(3),
+      i = e?.GetComponent(187),
+      r = i?.GetAkComponent();
     e &&
-      o &&
-      r &&
+      t &&
       i &&
-      r.Config &&
+      r &&
+      i.Config &&
       this.xzs(
-        o.CreatureData.GetPbDataId(),
-        i,
-        t,
-        RoleAudioController.GetRoleAudioConfig(r.Config, t),
+        t.CreatureData.GetPbDataId(),
+        r,
+        o,
+        RoleAudioController.GetRoleAudioConfig(i.Config, o),
       );
   }
-  static xzs(e, t, o, r) {
-    var i;
-    this.oca.get(0).CheckAndUpdateCoolDownTime(e, !0, !1) &&
-      ((i = this.oca.get(o))
-        ? i.CheckAndUpdateCoolDownTime(e) &&
-          (AudioSystem_1.AudioSystem.PostEvent(r, t), Log_1.Log.CheckDebug()) &&
+  static xzs(e, o, t, i) {
+    var r;
+    this.aca.get(0).CheckProbabilitiesCoolDown(e, !0, !1) &&
+      (this.ActorComponent?.Entity.GetComponent(44)?.IsInRoll()
+        ? Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Audio",
-            43,
-            "[Game.Role] PostEvent 触发角色语音",
+            42,
+            "[Game.Role] PostEvent 特殊移动模式下不触发角色语音",
             ["RoleId", e],
-            ["Event", r],
-            ["Owner", t.GetOwner()?.GetName()],
-            ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(o)],
+            ["Event", i],
+            ["Owner", o.GetOwner()?.GetName()],
+            ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(t)],
           )
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Audio",
-            43,
-            "IntervalCoolDownTimeMap没注册音频配置数据",
-            ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(o)],
-          ));
+        : (r = this.aca.get(t))
+          ? !i || i.length < 1
+            ? Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Audio",
+                42,
+                "event为空 在尝试播放角色未配置的语音",
+                ["RoleId", e],
+                ["Event", i],
+                ["Owner", o.GetOwner()?.GetName()],
+                ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(t)],
+              )
+            : r.CheckProbabilitiesCoolDown(e) &&
+              (AudioSystem_1.AudioSystem.PostEvent(i, o),
+              Log_1.Log.CheckDebug()) &&
+              Log_1.Log.Debug(
+                "Audio",
+                42,
+                "[Game.Role] PostEvent 触发角色语音",
+                ["RoleId", e],
+                ["Event", i],
+                ["Owner", o.GetOwner()?.GetName()],
+                ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(t)],
+              )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Audio",
+              42,
+              "IntervalCoolDownTimeMap没注册音频配置数据",
+              ["AudioType", RoleAudioController.GetRoleAudioTypeDesc(t)],
+            ));
   }
   static OnPlayerIsHit(e) {
     TimerSystem_1.TimerSystem.Next(() => {
       this.PlayRoleAudio(e, 2007);
     });
   }
-  static OnPlayerEnterFight(e, t) {
-    t < ENTER_FIGHT_DISTANCE || this.PlayRoleAudio(e, 2006);
+  static OnPlayerEnterFight(e, o) {
+    o < ENTER_FIGHT_DISTANCE || e.Id !== Global_1.Global.BaseCharacter?.EntityId
+      ? Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Audio",
+          42,
+          "[Game.Role] 触发进战语音距离不满足或非前台角色",
+          ["Dist", o],
+          ["Id", e.Id],
+          ["Global", Global_1.Global.BaseCharacter?.EntityId],
+        )
+      : this.PlayRoleAudio(e, 2006);
   }
-  static OnMoveStateChange(e, t) {
+  static OnMoveStateChange(e, o) {
     switch (e) {
       case CharacterUnifiedStateTypes_1.ECharMoveState.Glide:
-        this.PlayRoleAudio(t, 1002);
+        this.PlayRoleAudio(o, 1002);
         break;
       case CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp:
-        this.PlayRoleAudio(t, 2008);
+        this.PlayRoleAudio(o, 2008);
         break;
       case CharacterUnifiedStateTypes_1.ECharMoveState.FastClimb:
         TimerSystem_1.TimerSystem.Next(() => {
-          this.PlayRoleAudio(t, 1001);
+          this.PlayRoleAudio(o, 1001);
         });
     }
   }
-  static GetRoleAudioConfig(e, t) {
-    switch (t) {
+  static OnPlayerDies(e) {
+    var o = e?.GetComponent(3),
+      t = e?.GetComponent(187),
+      i = t?.GetAkComponent();
+    e &&
+      o &&
+      t &&
+      i &&
+      t.Config &&
+      e.Id === Global_1.Global.BaseCharacter?.EntityId &&
+      (AudioSystem_1.AudioSystem.PostEvent(t.Config.DeathEvent, i),
+      Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug(
+        "Audio",
+        42,
+        "[Game.Role] PostEvent 触发角色语音",
+        ["RoleId", o.CreatureData.GetPbDataId()],
+        ["Event", t.Config.DeathEvent],
+        ["Owner", i.GetOwner()?.GetName()],
+      );
+  }
+  static GetRoleAudioConfig(e, o) {
+    switch (o) {
       case 1001:
         return e.FastClimbEvent;
       case 1002:
@@ -320,9 +382,9 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
       default:
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Audio", 43, "[GetRoleAudioConfig] 错误的类型", [
+            Log_1.Log.Error("Audio", 42, "[GetRoleAudioConfig] 错误的类型", [
               "type",
-              t,
+              o,
             ]),
           ""
         );
@@ -339,6 +401,8 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
       case 1003:
         return "跨越";
       case 1004:
+      case 10041:
+      case 10042:
         return "体力变化";
       case 1005:
         return "使用钩锁技能";
@@ -368,21 +432,44 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
   ((_a = RoleAudioController).ActorComponent = void 0),
   (RoleAudioController.AudioComponent = void 0),
   (RoleAudioController.Sir = 0),
-  (RoleAudioController.oca = new Map()),
+  (RoleAudioController.aca = new Map()),
   (RoleAudioController.Phn = INTERVAL_TIME),
   (RoleAudioController.Pln = 0),
-  (RoleAudioController.Eja = !1),
-  (RoleAudioController.Mja = !1),
-  (RoleAudioController.yja = !1),
-  (RoleAudioController.yzo = (e, t, o) => {
+  (RoleAudioController.OKa = !1),
+  (RoleAudioController.BKa = !1),
+  (RoleAudioController.qKa = !1),
+  (RoleAudioController.yzo = (e, o, t) => {
     e = EntitySystem_1.EntitySystem.Get(e);
-    e &&
-      (RoleSceneInteractComponent_1.fixHookSkillIds.has(t) || 210001 === t) &&
-      _a.PlayRoleAudio(e, 1005);
+    e && (fixHookSkillIds.has(o) || 210001 === o) && _a.PlayRoleAudio(e, 1005);
   }),
-  (RoleAudioController.xie = (e, t) => {
+  (RoleAudioController.Crl = []),
+  (RoleAudioController.grl = []),
+  (RoleAudioController.dLe = () => {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
+        "Audio",
+        42,
+        "[Game.Role] 随队伍预加载角色Foley和脚步声音效",
+      ),
+      (_a.grl.length = 0),
+      _a.grl.push(..._a.Crl),
+      (_a.Crl.length = 0);
+    for (const o of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities()) {
+      var e = o.Entity?.CheckGetComponent(187);
+      e?.Config &&
+        (_a.Crl.includes(e.Config.FootstepEvent) ||
+          _a.Crl.push(e.Config.FootstepEvent),
+        _a.Crl.includes(e.Config.FoleyEvent) ||
+          _a.Crl.push(e.Config.FoleyEvent));
+    }
+    for (const t of _a.grl)
+      _a.Crl.includes(t) || AudioSystem_1.AudioSystem.ReleaseAudioEvent(t);
+    for (const i of _a.Crl)
+      _a.grl.includes(i) || AudioSystem_1.AudioSystem.PreloadAudioEvent(i);
+  }),
+  (RoleAudioController.xie = (e, o) => {
     (_a.ActorComponent = e.Entity?.CheckGetComponent(3)),
-      (_a.AudioComponent = e.Entity?.CheckGetComponent(174)),
+      (_a.AudioComponent = e.Entity?.CheckGetComponent(187)),
       _a.AudioComponent?.Config &&
         AudioSystem_1.AudioSystem.SetState(
           "role_name",
@@ -393,7 +480,7 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Audio",
-          43,
+          42,
           "[Game.Role] PostEvent 角色进场语音事件",
           ["RoleId", _a.ActorComponent?.CreatureData.GetPbDataId()],
           ["Event", ROLE_CHANGE_FRONT_EVENT],
@@ -404,24 +491,39 @@ class RoleAudioController extends ControllerBase_1.ControllerBase {
   (RoleAudioController.yir = () => {
     _a.ActorComponent && _a.PlayRoleAudio(_a.ActorComponent.Entity, 1007);
   }),
-  (RoleAudioController.Pni = (e, t, o) => {
-    1 !== e ||
-      o < t ||
-      ModelManager_1.ModelManager.SceneTeamModel?.ChangingRole ||
-      t /
-        (e =
-          FormationAttributeController_1.FormationAttributeController.GetMax(
-            1,
-          )) >
-        _a.Sir ||
-      ((t = _a.AudioComponent?.GetAkComponent()),
-      (o =
-        o / e > _a.Sir
-          ? _a.AudioComponent?.Config?.LowStrengthEventList[0]
-          : _a.AudioComponent?.Config?.LowStrengthEventList[1]),
-      _a.ActorComponent &&
-        t &&
-        o &&
-        _a.xzs(_a.ActorComponent.CreatureData.GetPbDataId(), t, 1004, o));
+  (RoleAudioController.Pni = (o, t, i) => {
+    if (
+      !(
+        1 !== o ||
+        i < t ||
+        ModelManager_1.ModelManager.SceneTeamModel?.ChangingRole
+      )
+    ) {
+      o = FormationAttributeController_1.FormationAttributeController.GetMax(1);
+      if (!(t / o > _a.Sir)) {
+        var t = _a.AudioComponent?.GetAkComponent(),
+          r = _a.AudioComponent?.Config?.LowStrengthEvent;
+        if (_a.ActorComponent && t && r) {
+          var n = _a.aca.get(10041),
+            s = _a.aca.get(10042);
+          if (n && s) {
+            var a = _a.ActorComponent.CreatureData.GetPbDataId();
+            if (n.CheckCoolDownTime(a, !1) && s.CheckCoolDownTime(a, !1)) {
+              let e = !1;
+              (e = (i / o > _a.Sir ? n : s).CheckProbabilitiesCoolDown(
+                a,
+                !0,
+              )) &&
+                _a.xzs(
+                  _a.ActorComponent.CreatureData.GetPbDataId(),
+                  t,
+                  1004,
+                  r,
+                );
+            }
+          }
+        }
+      }
+    }
   });
 //# sourceMappingURL=RoleAudioController.js.map

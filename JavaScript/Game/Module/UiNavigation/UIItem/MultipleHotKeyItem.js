@@ -52,7 +52,7 @@ class MultipleHotKeyItem extends HotKeyItem_1.HotKeyItem {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           "快捷键界面配置错误, 快捷键类型的数量为0",
         ),
       this.eGe.RebuildLayoutByDataNew(e.FunctionButtonArray),

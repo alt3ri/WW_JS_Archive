@@ -22,9 +22,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
-  MathUtils_1 = require("../../Core/Utils/MathUtils"),
-  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
+  MathUtils_1 = require("../../Core/Utils/MathUtils");
 let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -55,8 +55,11 @@ let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends Entity
         ((this.vwr = h),
         (t = this.ZPr.CineCamera),
         this.vwr
-          ? (this.pwr = t.SceneComponent.RelativeLocation)
-          : (this.pwr = t.K2_GetActorLocation()),
+          ? ((e = UE.KismetMathLibrary.Conv_VectorToVectorDouble(
+              t.SceneComponent.RelativeLocation,
+            )),
+            (this.pwr = e))
+          : (this.pwr = t.D_K2_GetActorLocation()),
         r
           ? this.Due.FromUeVector(n)
           : this.Due.FromUeVector(this.pwr.op_Addition(n)),
@@ -81,20 +84,20 @@ let WidgetCameraBlendComponent = class WidgetCameraBlendComponent extends Entity
   Swr(t) {
     var e, i;
     this.Cwr &&
-      ((t = UE.KismetMathLibrary.VLerp(this.pwr, this.Due.ToUeVector(), t)),
+      ((t = UE.KismetMathLibrary.D_VLerp(this.pwr, this.Due.ToUeVector(), t)),
       (e = this.ZPr.CineCamera),
       this.vwr
         ? ((i = new UE.HitResult()),
           (i = (0, puerts_1.$ref)(i)),
-          e.K2_SetActorRelativeLocation(t, !1, i, !1),
+          e.D_K2_SetActorRelativeLocation(t, !1, i, !1),
           Vector_1.Vector.Create(e.SceneComponent.RelativeLocation).Equals(
             this.Due,
             0.1,
           ) && (this.Cwr = !1))
         : ((i = new UE.HitResult()),
           (i = (0, puerts_1.$ref)(i)),
-          e.K2_SetActorRelativeLocation(t, !1, i, !1),
-          Vector_1.Vector.Create(e.K2_GetActorLocation()).Equals(
+          e.D_K2_SetActorRelativeLocation(t, !1, i, !1),
+          Vector_1.Vector.Create(e.D_K2_GetActorLocation()).Equals(
             this.Due,
             0.1,
           ) && (this.Cwr = !1)));

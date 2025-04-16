@@ -18,7 +18,7 @@ class TickIntervalSchedulerBase {
       (this.MaxTickCountDelta = 0),
       (this.CurrentCountDelta = 0),
       (this.DeltaRatio = 1),
-      (this.MJ = Stats_1.Stat.Create(this.constructor.name));
+      (this.MJ = Stats_1.Stat.CreateNoFlameGraph(this.constructor.name));
   }
   SetBaseConfigs(t, s, e) {
     (this.MaxNoIntervalCount = Math.max(0, t)),

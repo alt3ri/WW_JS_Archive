@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DeviceRenderFeature = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class DeviceRenderFeature {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -151,8 +152,14 @@ class DeviceRenderFeature {
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   othercommand(t) {
-    var i = this.J7.__offset(this.z7, 42);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 42),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.DeviceRenderFeature = DeviceRenderFeature;

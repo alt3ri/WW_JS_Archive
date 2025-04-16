@@ -25,8 +25,7 @@ const puerts_1 = require("puerts"),
   LoginDefine_1 = require("../../Login/Data/LoginDefine"),
   LoginController_1 = require("../../Login/LoginController"),
   ReconnectDefine_1 = require("../../ReConnect/ReconnectDefine"),
-  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
-  UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager");
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController");
 class LoginDebugView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -55,16 +54,10 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
                   "r.DepthOfFieldQuality 1",
                 ),
               this.CloseMe((e) => {
-                e &&
-                  UiLoginSceneManager_1.UiLoginSceneManager.LoadSequenceAsync(
-                    "LevelSequence_LoginAccount",
-                    () => {
-                      UiManager_1.UiManager.OpenView("LoginView");
-                    },
-                  );
+                e && UiManager_1.UiManager.OpenView("LoginView");
               }))
           : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！");
+            Log_1.Log.Info("Login", 8, "正在登录中, 请勿重复操作！");
       }),
       (this.f3t = () => {
         ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
@@ -75,12 +68,17 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
                 "LoginFailEmptyAccount",
               )
             : (this.g3t(),
+              Platform_1.Platform.IsWindowsPlatform() ||
+                UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.DepthOfFieldQuality 1",
+                ),
               ModelManager_1.ModelManager.LoginModel.SetPlayerName(
                 "一键登录账号",
               ),
               this.p3t())
           : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！");
+            Log_1.Log.Info("Login", 8, "正在登录中, 请勿重复操作！");
       }),
       (this.v3t = () => {
         var e;
@@ -88,9 +86,14 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           LoginDefine_1.ELoginStatus.Init,
         )
           ? (this.g3t(),
+            Platform_1.Platform.IsWindowsPlatform() ||
+              UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.DepthOfFieldQuality 1",
+              ),
             (e = this.M3t()),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 9, "生成账号", ["ip", e]),
+              Log_1.Log.Info("Login", 8, "生成账号", ["ip", e]),
             this.GetInputText(2).SetText(e),
             ModelManager_1.ModelManager.LoginModel.SetAccount(e),
             ModelManager_1.ModelManager.LoginModel.SetPlayerName(
@@ -98,7 +101,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             ),
             this.p3t())
           : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！");
+            Log_1.Log.Info("Login", 8, "正在登录中, 请勿重复操作！");
       }),
       (this.E3t = (e) => {
         this.GetSprite(8).SetUIActive(1 === e);
@@ -106,7 +109,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       (this.S3t = (e) => {
         this.GetSprite(10).SetUIActive(1 === e);
       }),
-      (this.YIa = (e) => {
+      (this.zIa = (e) => {
         1 === e
           ? ((ModelManager_1.ModelManager.LoginModel.IsCopyAccount = !0),
             this.GetItem(17)?.SetUIActive(!0))
@@ -128,7 +131,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
                   )
                 : (this.g3t(), this.p3t()))
             : Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！"));
+              Log_1.Log.Info("Login", 8, "正在登录中, 请勿重复操作！"));
       }),
       (this.I3t = (e) => {
         -1 !== (this._3t = e) &&
@@ -136,7 +139,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             LoginDefine_1.ELoginStatus.Init,
           ) ||
             (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！")),
+              Log_1.Log.Info("Login", 8, "正在登录中, 请勿重复操作！")),
           UiManager_1.UiManager.OpenView("LoginDebugPlayerNameView", this.T3t));
       }),
       (this.T3t = () => {
@@ -156,7 +159,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Login",
-              9,
+              8,
               "创建新的GM账号",
               ["index", "" + t],
               ["配置id", "" + i[t].Id],
@@ -208,7 +211,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             ((t = Json_1.Json.Parse(o))
               ? ModelManager_1.ModelManager.LoginModel.AddServerInfos(t)
               : Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Login", 42, "序列化ServerInfo失败", [
+                Log_1.Log.Debug("Login", 41, "序列化ServerInfo失败", [
                   "JsonData",
                   o,
                 ])),
@@ -236,6 +239,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       [15, UE.UITextInputComponent],
       [16, UE.UIExtendToggle],
       [17, UE.UIItem],
+      [18, UE.UITextInputComponent],
     ]),
       (this.BtnBindInfo = [
         [0, this.d3t],
@@ -244,7 +248,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         [6, this.f3t],
         [7, this.E3t],
         [9, this.S3t],
-        [16, this.YIa],
+        [16, this.zIa],
       ]);
   }
   OnStart() {
@@ -286,7 +290,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Login",
-          9,
+          8,
           "debug 登录信息",
           ["serverIp", a],
           ["serverInfoList", t],
@@ -297,12 +301,19 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           var n = t[e];
           o.Options.Add(new UE.UIDropdownOptionData(n.Name, r, 0, "")),
             n.Ip === a &&
-              ((o.Value = e), o.CaptionText.UIText.SetText(n.Name), (i = !0));
+              (Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("Login", 10, "设置服务器下拉列表", ["Value", e]),
+              (o.Value = e),
+              o.CaptionText.UIText.SetText(n.Name),
+              (i = !0));
         }
       i ||
         (t &&
           0 < t.length &&
-          ((e = t[(o.Value = 0)]), o.CaptionText.UIText.SetText(e.Name)));
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Login", 10, "设置服务器下拉列表", ["Value", 0]),
+          (e = t[(o.Value = 0)]),
+          o.CaptionText.UIText.SetText(e.Name)));
     }
   }
   x3t() {
@@ -314,19 +325,19 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           (r.Options.Empty(),
           ModelManager_1.ModelManager.LoginModel.GetSingleMapList()),
         n = ModelManager_1.ModelManager.LoginModel.GetSingleMapId(),
-        _ = ConfigManager_1.ConfigManager.LoginConfig.GetDefaultSingleMapId();
+        l = ConfigManager_1.ConfigManager.LoginConfig.GetDefaultSingleMapId();
       let i = void 0,
         o = !1;
       if (a)
         for (let e = 0; e < a.length; ++e) {
-          var g = a[e],
-            l = g.MapId + "-" + g.MapName,
-            s = new UE.UIDropdownOptionData(l, t, 0, "");
+          var _ = a[e],
+            g = _.MapId + "-" + _.MapName,
+            s = new UE.UIDropdownOptionData(g, t, 0, "");
           this.u3t.Add(s),
             r.Options.Add(s),
-            g.MapId === n &&
-              ((r.Value = e), r.CaptionText.UIText.SetText(l), (o = !0)),
-            g.MapId === _ && (i = e);
+            _.MapId === n &&
+              ((r.Value = e), r.CaptionText.UIText.SetText(g), (o = !0)),
+            _.MapId === l && (i = e);
         }
       o ||
         ((e = i || 0),
@@ -368,7 +379,10 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       (this.m3t = void 0)),
       this.GetDropdown(13).OnSelectChange.Unbind(),
       ModelManager_1.ModelManager.LoginModel.SaveRecentlyAccountList(),
-      ModelManager_1.ModelManager.LoginModel.CleanConfig();
+      ModelManager_1.ModelManager.LoginModel.CleanConfig(),
+      ModelManager_1.ModelManager.LoginModel.SetServerId(
+        this.GetInputText(18).GetText(),
+      );
   }
   q3t() {
     var e = this.GetDropdown(14);
@@ -402,7 +416,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       () => {
         UE.KuroPakKeyLibrary.HasPendingEncryptedPaks()
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 22, "存在未成功挂载的Pak包！"),
+              Log_1.Log.Info("Login", 21, "存在未成功挂载的Pak包！"),
             LoginController_1.LoginController.GetAndShowStopServerNotice())
           : LoginController_1.LoginController.GetHttp(!0);
       },
@@ -419,10 +433,10 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
     if (e && e.groups) return { Ip: e.groups.ip, Port: e.groups.port };
   }
   g3t() {
-    var e = this.GetDropdown(4);
-    let i = e?.Value;
-    -1 === i && (i = 0);
-    var o = e.GetOption(i);
+    var i = this.GetDropdown(4);
+    let e = i?.Value;
+    -1 === e && (e = 0);
+    var o = i.GetOption(e);
     let r = -1;
     for (let e = 0; e < this.u3t.Num(); e++)
       if (this.u3t.Get(e).TextOrConfigTableName === o.TextOrConfigTableName) {
@@ -433,46 +447,52 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Login",
-          11,
+          10,
           "当前选择的地图 在初始地图数据集合里 不存在",
           ["地图名称", o.TextOrConfigTableName],
         ),
       (r = 0)),
       void 0 !== r &&
         0 <= r &&
-        (e = ModelManager_1.ModelManager.LoginModel.GetSingleMapIp(r)) &&
-        ModelManager_1.ModelManager.LoginModel.SetSingleMapId(e);
-    var e = this.GetDropdown(3),
-      e =
-        (e
-          ? ((e = e.Value),
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 11, "获取服务器下拉列表当前设置值", [
-                "serverValue",
-                e,
-              ]),
-            void 0 !== e &&
-              0 <= e &&
-              ((e = ModelManager_1.ModelManager.LoginModel.GetServerInfo(e))
-                ? (ModelManager_1.ModelManager.LoginModel.SetServerName(e.Name),
-                  this.iFn(e.Ip, 1))
-                : ((e =
-                    ModelManager_1.ModelManager.LoginModel.GetServerInfoList()),
-                  Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info("Login", 11, "获取服务器数据为空", [
-                      "serverInfoList",
-                      e,
-                    ]))))
-          : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Login", 11, "服务器下拉列表节点获取不到"),
-        this.GetInputText(12).GetText()),
-      e =
-        (StringUtils_1.StringUtils.IsEmpty(e) ||
-          ((t = this.aGn(e)) &&
+        (i = ModelManager_1.ModelManager.LoginModel.GetSingleMapIp(r)) &&
+        ModelManager_1.ModelManager.LoginModel.SetSingleMapId(i);
+    var i = this.GetDropdown(3);
+    if (i) {
+      let e = i.GetValue();
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Login", 10, "获取服务器下拉列表当前设置值", [
+          "serverValue",
+          e,
+        ]),
+        void 0 !== e &&
+          (e < 0 &&
+            (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Login",
+                10,
+                "服务器下拉列表当前设置值不符合预期,默认为0",
+              ),
+            (e = 0)),
+          (i = ModelManager_1.ModelManager.LoginModel.GetServerInfo(e))
+            ? (ModelManager_1.ModelManager.LoginModel.SetServerName(i.Name),
+              this.iFn(i.Ip, 1))
+            : ((i = ModelManager_1.ModelManager.LoginModel.GetServerInfoList()),
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("Login", 10, "获取服务器数据为空", [
+                  "serverInfoList",
+                  i,
+                ])));
+    } else
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Login", 10, "服务器下拉列表节点获取不到");
+    var i = this.GetInputText(12).GetText(),
+      i =
+        (StringUtils_1.StringUtils.IsEmpty(i) ||
+          ((t = this.aGn(i)) &&
             (ModelManager_1.ModelManager.LoginModel.SetServerName(
               "手动输入IP地址服务器",
             ),
-            this.iFn(e, 2),
+            this.iFn(i, 2),
             ModelManager_1.ModelManager.LoginModel.TrySetCustomServerPort(
               t.Port,
               2,
@@ -483,9 +503,9 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       t =
         (LocalStorage_1.LocalStorage.SetGlobal(
           LocalStorageDefine_1.ELocalStorageGlobalKey.LoginSex,
-          e === LoginDefine_1.ELoginSex.Girl,
+          i === LoginDefine_1.ELoginSex.Girl,
         ),
-        ModelManager_1.ModelManager.LoginModel.SetPlayerSex(e),
+        ModelManager_1.ModelManager.LoginModel.SetPlayerSex(i),
         ModelManager_1.ModelManager.LoginModel.SetAccount(
           this.GetInputText(2).Text,
         ),
@@ -500,7 +520,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Login",
-          9,
+          8,
           "已保存登录数据",
           ["ServerIp", this.tFn()],
           [
@@ -513,7 +533,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             ModelManager_1.ModelManager.LoginModel.GetMultiMapId(),
           ],
           ["Account", ModelManager_1.ModelManager.LoginModel.GetAccount()],
-          ["LoginSex", LoginDefine_1.ELoginSex[e]],
+          ["LoginSex", LoginDefine_1.ELoginSex[i]],
         );
   }
   A3t() {

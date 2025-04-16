@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
@@ -42,6 +43,9 @@ class AchievementMainView extends UiViewBase_1.UiViewBase {
       [5, UE.UIItem],
       [6, UE.UIItem],
     ];
+  }
+  async OnCreateAsync() {
+    await ControllerHolder_1.ControllerHolder.AchievementController.RequestUpdateAchievementInfo();
   }
   OnStart() {
     (this.Kqe = this.GetText(0)),
@@ -95,11 +99,11 @@ class AchievementMainView extends UiViewBase_1.UiViewBase {
     var e =
         ModelManager_1.ModelManager.AchievementModel.GetRecentFinishedAchievementList(),
       i = 0 < e.length;
-    const s = new Array();
+    const r = new Array();
     e.forEach((e) => {
-      s.push(t.GetAchievementData(e));
+      r.push(t.GetAchievementData(e));
     }),
-      this.Qqe.RefreshByData(s),
+      this.Qqe.RefreshByData(r),
       this.Qqe.SetTargetRootComponentActive(i),
       this.GetItem(6).SetUIActive(!i);
   }

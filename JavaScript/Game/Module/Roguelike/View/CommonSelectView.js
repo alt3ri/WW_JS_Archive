@@ -72,10 +72,12 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
             }
             h.GetNewUnlockAffixEntry().size <= 0 && !s
               ? UiManager_1.UiManager.CloseView(this.Info.Name)
-              : UiManager_1.UiManager.CloseAndOpenView(
-                  this.Info.Name,
+              : UiManager_1.UiManager.OpenView(
                   "CommonSelectResultView",
                   h,
+                  () => {
+                    this.CloseMe();
+                  },
                 );
           }
         }
@@ -268,7 +270,7 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       );
     }
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         i,
       ]);

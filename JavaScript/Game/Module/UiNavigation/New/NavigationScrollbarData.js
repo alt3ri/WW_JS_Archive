@@ -28,7 +28,7 @@ class NavigationScrollbarData {
       (this.Kwo = i),
       (this.Qwo = i?.GetBehaviorComponent()),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("UiNavigation", 11, "设置当前的滚动区域对象", [
+        Log_1.Log.Debug("UiNavigation", 10, "设置当前的滚动区域对象", [
           "名字",
           i?.RootUIComp.displayName,
         ]);

@@ -116,7 +116,7 @@ class ExitSkillItem extends UiPanelBase_1.UiPanelBase {
       } else this.GetSprite(5).SetUIActive(!1);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Formation", 49, "ExitSkillItem,找不到角色配置");
+        Log_1.Log.Warn("Formation", 48, "ExitSkillItem,找不到角色配置");
   }
   A5t(i) {
     this.GetItem(0).SetUIActive(i),

@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.isServerReloadReady =
     exports.sendReloadServer =
     exports.sendPrepareReloadServer =
+    exports.requestCondition =
     exports.requestPlayerBuffOp =
     exports.requestEntityBuffOp =
     exports.requestServerBehaviorTreeRunningData =
@@ -12,12 +13,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.requestServerData =
     exports.requestServerResponse =
       void 0);
-const Config_1 = require("../Config"),
+const ICondition_1 = require("../../Interface/ICondition"),
+  Config_1 = require("../Config"),
   Util_1 = require("../Unreal/Util"),
   Async_1 = require("./Async"),
   Log_1 = require("./Log"),
   Util_2 = require("./Util");
-async function requestServerResponse(e, r, t = "localhost", a) {
+async function requestServerResponse(e, r, t = "localhost", o, a = "POST") {
   if (
     !(
       (0, Util_2.isInPie)() ||
@@ -27,34 +29,37 @@ async function requestServerResponse(e, r, t = "localhost", a) {
     )
   )
     return [!1, void 0];
-  let o = a;
-  let n =
-    `http://${t}:${(o = void 0 === a ? Config_1.Config.Instance.ServerPort : o)}/GameCurrStateDebug/` +
+  let n = o;
+  let i =
+    `http://${t}:${(n = void 0 === o ? Config_1.Config.Instance.ServerPort : n)}/GameCurrStateDebug/` +
     e;
   r &&
     ((t = Object.entries(r)
       .map(([e, r]) => e + "=" + r)
       .join("&")),
-    (n += "?" + t));
-  a = await (0, Util_2.doJsonHttpPost)(n);
-  return a ? [!0, a] : [!1, void 0];
+    (i += "?" + t));
+  o =
+    "POST" === a
+      ? await (0, Util_2.doJsonHttpPost)(i)
+      : await (0, Util_2.doJsonHttpGet)(i);
+  return o ? [!0, o] : [!1, void 0];
 }
-async function requestServerData(e, r, t = "localhost", a) {
-  var [e, r] = await requestServerResponse(e, r, t, a);
+async function requestServerData(e, r, t = "localhost", o) {
+  var [e, r] = await requestServerResponse(e, r, t, o);
   return e && r && r.data && "null" !== r.data
     ? [!0, (0, Util_2.parse)(r.data)]
     : [!1, void 0];
 }
-async function requestServerEntityRunningData(e, r, t, a) {
-  var o = [];
-  for (let e = 0; e < t.length; e += 25) o.push(t.slice(e, e + 25));
+async function requestServerEntityRunningData(e, r, t, o) {
+  var a = [];
+  for (let e = 0; e < t.length; e += 25) a.push(t.slice(e, e + 25));
   var n = [];
-  for (const d of o) {
+  for (const d of a) {
     var i = d.join(","),
       [s, u] = await requestServerData(
         "GetEntityCurrState",
         { playerId: e, configIdList: i, instId: r },
-        a,
+        o,
       );
     s
       ? u.States && 0 < u.States.length && n.push(...u.States)
@@ -71,12 +76,12 @@ async function requestServerBehaviorTreeRunningData(e, r) {
     "request server BehaviorTree running data failed. playerId = " + e,
   );
 }
-async function requestEntityBuffOp(e, r, t, a) {
+async function requestEntityBuffOp(e, r, t, o) {
   var [e, r] = await requestServerResponse("AddEntityBuff", {
     playerId: e,
     configId: r,
     buffId: t,
-    op: "Add" === a ? 1 : 0,
+    op: "Add" === o ? 1 : 0,
   });
   return e && void 0 !== r && 0 === r.code;
 }
@@ -87,6 +92,34 @@ async function requestPlayerBuffOp(e, r, t) {
     op: "Add" === t ? 1 : 0,
   });
   return e && void 0 !== r && 0 === r.code;
+}
+async function requestCondition(e, r, t) {
+  var [r, t] = await requestServerResponse(
+    "GetGameCurrCondition",
+    {
+      playerId: e,
+      requestId: r.RequestId,
+      conditionType: r.ConditionGroup.Type,
+      uuid: r.Uid,
+      conditionGroup: encodeURIComponent(
+        (0, Util_2.stringify)(
+          r.ConditionGroup.Type ===
+            ICondition_1.EConditionLogicType.BaseAccessQuest
+            ? r.ConditionGroup.BaseAccessQuestConditionGroup
+            : r.ConditionGroup.Condition2Group,
+          !0,
+          !1,
+        ),
+      ),
+    },
+    t,
+    void 0,
+    "GET",
+  );
+  if (r) return t && t.data ? (0, Util_2.parse)(t?.data) : void 0;
+  (0, Log_1.warn)(
+    "request server BehaviorTree running data failed. playerId = " + e,
+  );
 }
 function getPortFromServerType(e) {
   if (e)
@@ -151,6 +184,7 @@ async function getPlayerPosInfo(e, r) {
     requestServerBehaviorTreeRunningData),
   (exports.requestEntityBuffOp = requestEntityBuffOp),
   (exports.requestPlayerBuffOp = requestPlayerBuffOp),
+  (exports.requestCondition = requestCondition),
   (exports.sendPrepareReloadServer = sendPrepareReloadServer),
   (exports.sendReloadServer = sendReloadServer),
   (exports.isServerReloadReady = isServerReloadReady),

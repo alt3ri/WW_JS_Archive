@@ -12,10 +12,11 @@ class FlowActionServerAction extends FlowActionBase_1.FlowActionBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Plot",
-        18,
+        17,
         "===>服务器剧情行为开始",
         ["", t.Name],
         ["actionId", t.ActionId],
+        ["background", o.IsBackground],
       ),
       (this.Context = o),
       (this.ActionInfo = t),
@@ -26,7 +27,7 @@ class FlowActionServerAction extends FlowActionBase_1.FlowActionBase {
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
-              27,
+              26,
               "非服务器触发的剧情无法使用服务器行为！",
             ),
           this.FinishExecute(!0));

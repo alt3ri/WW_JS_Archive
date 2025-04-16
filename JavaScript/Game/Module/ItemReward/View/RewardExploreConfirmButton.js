@@ -108,11 +108,12 @@ class RewardExploreConfirmButton extends UiPanelBase_1.UiPanelBase {
           i,
           e / TimeUtil_1.TimeUtil.InverseMillisecond,
         ),
+        this.Mfi(),
         this.Tfi(e))
       : LguiUtil_1.LguiUtil.SetLocalTextNew(s, i, ...t);
   }
   Tfi(i) {
-    (this.ffi = i / TimeUtil_1.TimeUtil.InverseMillisecond),
+    this.ffi || (this.ffi = i / TimeUtil_1.TimeUtil.InverseMillisecond),
       (this.pfi = TimerSystem_1.TimerSystem.Forever(this.vfi, 1e3));
   }
   Mfi() {

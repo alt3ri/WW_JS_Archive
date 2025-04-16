@@ -7,12 +7,12 @@ const UE = require("ue"),
   LguiUtil_1 = require("../LguiUtil"),
   ScrollViewDelegate_1 = require("../ScrollView/ScrollViewDelegate");
 class OperationParam {
-  constructor(t = void 0, i = void 0, e = !1) {
-    (this.Data = t), (this.CallBack = i), (this.PlayGridAnim = e);
+  constructor(t = void 0, i = void 0, s = !1) {
+    (this.Data = t), (this.CallBack = i), (this.PlayGridAnim = s);
   }
 }
 class GenericLayout {
-  constructor(t, i, e = void 0) {
+  constructor(t, i, s = void 0, e = !1) {
     (this.eGe = void 0),
       (this.uGo = void 0),
       (this.cGo = void 0),
@@ -24,12 +24,14 @@ class GenericLayout {
       (this.fGo = void 0),
       (this.gWt = new Queue_1.Queue()),
       (this.pjt = !1),
+      (this.IsRefreshAsync = !1),
       (this.pGo = () => {
         this.UnBindLateUpdate();
       }),
+      (this.IsRefreshAsync = e),
       (this.eGe = t),
       this.eGe.GetOwner().OnDestroyed.Add(this.pGo),
-      (this.fGo = e || t.RootUIComp.GetAttachUIChild(0)?.GetOwner()),
+      (this.fGo = s || t.RootUIComp.GetAttachUIChild(0)?.GetOwner()),
       this.fGo &&
         (this.fGo.GetUIItem().SetUIActive(!1),
         (this.uGo = new ScrollViewDelegate_1.ScrollViewDelegate(i)),
@@ -64,8 +66,8 @@ class GenericLayout {
     if (!(t < 0 || t >= this.CGo.length)) {
       var i = this.CGo[t];
       if (i) {
-        var e = this.uGo.GetDatas()[t];
-        if (e) return i.GetKey(e, t);
+        var s = this.uGo.GetDatas()[t];
+        if (s) return i.GetKey(s, t);
       }
     }
   }
@@ -80,81 +82,102 @@ class GenericLayout {
       this.gGo.clear();
   }
   async LoadGrid(i) {
-    var e = [];
+    var s = [];
     for (let t = this.mGo.length; t < i; t++) {
-      var s = this.V2e();
-      e.push(this.uGo.CreateGridProxyAsync(t, s.GetOwner())), this.mGo.push(s);
+      var e = this.V2e();
+      s.push(this.uGo.CreateGridProxyAsync(t, e.GetOwner())), this.mGo.push(e);
     }
-    await Promise.all(e);
+    await Promise.all(s);
   }
-  RefreshByDataDirectly(t) {
+  async RefreshByDataDirectly(t) {
     var i = t.length;
     if (i > this.mGo.length) return !1;
     this.uGo.SetData(t), this.uGo.ClearSelectInfo(), this.gGo.clear();
     for (let t = this.dGo.length; t < i; t++) {
-      var e = this.mGo[t];
-      e.SetUIActive(!0),
-        this.dGo.push(e),
+      var s = this.mGo[t];
+      s.SetUIActive(!0),
+        this.dGo.push(s),
         this.CGo.push(this.uGo.GetGridProxy(t));
     }
-    return this.vGo(), !0;
+    return this.IsRefreshAsync ? await this.F6_() : this.N6_(), !0;
   }
-  RefreshByData(t, i, e = !1) {
-    var s;
+  RefreshByData(t, i, s = !1) {
+    var e;
     this.Rjt
-      ? ((s = new OperationParam(t, i, e)), this.gWt.Push(s))
+      ? ((e = new OperationParam(t, i, s)), this.gWt.Push(e))
       : (this.Ujt(),
-        this.RefreshByDataAsync(t, e).finally(() => {
+        this.RefreshByDataAsync(t, s).finally(() => {
           i?.(), this.Jft();
         }));
   }
-  async RefreshByDataAsync(t, i = !1, e = t.length) {
-    await this.MGo(t, e),
+  async RefreshByDataAsync(t, i = !1, s = t.length) {
+    await this.MGo(t, s),
       i && this.cGo && this.cGo.PlayGridAnim(this.GetDisplayGridNum());
   }
-  vGo() {
-    if (0 !== this.dGo.length)
-      for (let t = 0; t < this.dGo.length; t++) this.EGo(t);
+  RefreshWithoutDataSync() {
+    this.N6_();
   }
-  EGo(t) {
+  N6_() {
+    if (0 !== this.dGo.length)
+      for (let t = 0; t < this.dGo.length; t++) this.V6_(t);
+  }
+  async F6_() {
+    var i = this.dGo.length;
+    if (0 !== i) {
+      var s = new Array(i);
+      for (let t = 0; t < i; t++) s[t] = this.j6_(t);
+      await Promise.all(s);
+    }
+  }
+  V6_(t) {
     this.uGo.RefreshGridProxy(t, t);
     var i = this.CGo[t];
     this.gGo.set(this.GetKey(t), i);
   }
+  async j6_(t) {
+    await this.uGo.RefreshGridProxyAsync(t, t);
+    var i = this.CGo[t];
+    this.gGo.set(this.GetKey(t), i);
+  }
   async MGo(t, i) {
-    var e = i,
-      s =
+    var s = i,
+      e =
         (this.uGo.SetData(t),
         this.uGo.ClearSelectInfo(),
         this.gGo.clear(),
         this.dGo.length);
-    if (e <= s) {
-      for (let t = e; t < s; t++) this.mGo[t].SetUIActive(!1);
-      (this.dGo.length = e), (this.CGo.length = e), this.vGo();
-    } else if (this.mGo.length >= e) {
-      for (let t = s; t < e; t++) {
+    if (s <= e) {
+      for (let t = s; t < e; t++) this.mGo[t].SetUIActive(!1);
+      (this.dGo.length = s),
+        (this.CGo.length = s),
+        this.IsRefreshAsync ? await this.F6_() : this.N6_();
+    } else if (this.mGo.length >= s) {
+      for (let t = e; t < s; t++) {
         var r = this.mGo[t];
         r.SetUIActive(!0),
           this.dGo.push(r),
           this.CGo.push(this.uGo.GetGridProxy(t));
       }
-      this.vGo();
+      this.IsRefreshAsync ? await this.F6_() : this.N6_();
     } else {
       var h = this.mGo.length;
-      for (let t = s; t < h; t++) {
+      for (let t = e; t < h; t++) {
         var a = this.mGo[t];
         a.SetUIActive(!0),
           this.dGo.push(a),
           this.CGo.push(this.uGo.GetGridProxy(t));
       }
-      this.vGo(), await this.LoadGrid(e);
+      this.IsRefreshAsync ? await this.F6_() : this.N6_(),
+        await this.LoadGrid(s);
+      var n = this.IsRefreshAsync ? [] : void 0;
       for (let t = h; t < this.mGo.length; t++) {
-        var n = this.mGo[t];
-        n.SetUIActive(!0),
-          this.dGo.push(n),
+        var o = this.mGo[t];
+        o.SetUIActive(!0),
+          this.dGo.push(o),
           this.CGo.push(this.uGo.GetGridProxy(t)),
-          this.EGo(t);
+          this.IsRefreshAsync ? n.push(this.j6_(t)) : this.V6_(t);
       }
+      this.IsRefreshAsync && n && 0 < n.length && (await Promise.all(n));
     }
   }
   GetItemByIndex(t) {
@@ -180,8 +203,8 @@ class GenericLayout {
   GetDatas() {
     return this.uGo.GetDatas();
   }
-  SelectGridProxy(t) {
-    this.uGo.SelectGridProxy(t, t, !1);
+  SelectGridProxy(t, i = !1) {
+    this.uGo.SelectGridProxy(t, t, i);
   }
   DeselectCurrentGridProxy() {
     this.uGo.DeselectCurrentGridProxy(!1);

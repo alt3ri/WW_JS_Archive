@@ -11,6 +11,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ActivityRogueController_1 = require("../../Activity/ActivityContent/RougeActivity/ActivityRogueController"),
   PayShopViewData_1 = require("../../PayShop/PayShopData/PayShopViewData"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   RoguelikeController_1 = require("../RoguelikeController");
@@ -19,16 +20,18 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.jho = () => {
         var e,
-          o = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
-        void 0 !== o &&
-          ((o =
+          t =
+            ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+              ?.SeasonData;
+        void 0 !== t &&
+          ((t =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-              o.UHn,
+              t.UHn,
             )),
           ((e = new PayShopViewData_1.PayShopViewData()).ShowShopIdList = [
-            o.ShopId,
+            t.ShopId,
           ]),
-          (e.PayShopId = o.ShopId),
+          (e.PayShopId = t.ShopId),
           ModelManager_1.ModelManager.RoguelikeModel?.RecordRoguelikeShopRedDot(
             !0,
           ),
@@ -40,7 +43,9 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
           ));
       }),
       (this.Kho = () => {
-        var e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
+        var e =
+          ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+            ?.SeasonData;
         void 0 !== e &&
           RoguelikeController_1.RoguelikeController.OpenRoguelikeSkillView(
             e.UHn,
@@ -67,13 +72,20 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
     ModelManager_1.ModelManager.RoguelikeModel.CheckRogueIsOpen() &&
       void 0 !==
         (e =
-          await RoguelikeController_1.RoguelikeController.RoguelikeSeasonDataRequest()) &&
+          ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+            ?.SeasonData) &&
       (await RoguelikeController_1.RoguelikeController.RoguelikeTalentInfoRequest(
         e.UHn,
       ));
   }
   OnStart() {
     this.Refresh();
+  }
+  OnBeforeShow() {
+    this.BindRedDot();
+  }
+  OnAfterHide() {
+    this.UnBindRedDot();
   }
   BindRedDot() {
     RedDotController_1.RedDotController.BindRedDot(
@@ -86,31 +98,39 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
       );
   }
   UnBindRedDot() {
-    RedDotController_1.RedDotController.UnBindRedDot("RogueSkillUnlock"),
-      RedDotController_1.RedDotController.UnBindRedDot("RoguelikeShop");
+    RedDotController_1.RedDotController.UnBindGivenUi(
+      "RogueSkillUnlock",
+      this.GetItem(5),
+    ),
+      RedDotController_1.RedDotController.UnBindGivenUi(
+        "RoguelikeShop",
+        this.GetItem(6),
+      );
   }
   Refresh() {
-    var e = ModelManager_1.ModelManager.RoguelikeModel?.CurrSeasonData,
-      o =
+    var e =
+        ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+          ?.SeasonData,
+      t =
         (e &&
-          ((r =
+          ((o =
             ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId()
               ?.WeekTokenMaxCount ?? 1),
-          (o = e.yqs / r),
-          this.GetSprite(4)?.SetFillAmount(o),
+          (t = e.yqs / o),
+          this.GetSprite(4)?.SetFillAmount(t),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(3),
             "Roguelike_ActivityMain_Score",
             e.yqs,
-            r,
+            o,
           )),
         MathUtils_1.MathUtils.LongToBigInt(
           ModelManager_1.ModelManager.RoguelikeModel?.TempCountdown ?? 0,
         )),
-      e = Number(o) - TimeUtil_1.TimeUtil.GetServerTime(),
-      r = TimeUtil_1.TimeUtil.CalculateRemainingTime(e);
-    r &&
-      LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), r.TextId, r.TimeValue);
+      e = Number(t) - TimeUtil_1.TimeUtil.GetServerTime(),
+      o = TimeUtil_1.TimeUtil.CalculateRemainingTime(e);
+    o &&
+      LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), o.TextId, o.TimeValue);
   }
 }
 exports.RoguelikeInstanceBtnPanel = RoguelikeInstanceBtnPanel;

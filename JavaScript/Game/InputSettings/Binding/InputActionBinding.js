@@ -16,16 +16,16 @@ class InputActionBinding {
       (this.tEe = []),
       (this.iEe = []),
       (this.rEe = []),
-      (this.JXa = 0),
-      (this.ZXa = 0);
+      (this.Xih = 0),
+      (this.Yih = 0);
   }
   Initialize(t) {
     (this.ZMe = t.ActionName),
       (this.Lo = t),
       (this.Mne = this.Lo.Id),
       (this.eEe = this.Lo.ActionType),
-      (this.JXa = t.KeyboardVersion),
-      (this.ZXa = t.GamepadVersion);
+      (this.Xih = t.KeyboardVersion),
+      (this.Yih = t.GamepadVersion);
   }
   Clear() {
     (this.ZMe = void 0),
@@ -34,23 +34,23 @@ class InputActionBinding {
       (this.tEe.length = 0),
       (this.iEe.length = 0),
       (this.rEe.length = 0),
-      (this.JXa = 0),
-      (this.ZXa = 0);
+      (this.Xih = 0),
+      (this.Yih = 0);
   }
   GetActionName() {
     return this.ZMe;
   }
   SetKeyboardVersion(t) {
-    this.JXa = t;
+    this.Xih = t;
   }
   GetKeyboardVersion() {
-    return this.JXa;
+    return this.Xih;
   }
   SetGamepadVersion(t) {
-    this.ZXa = t;
+    this.Yih = t;
   }
   GetGamepadVersion() {
-    return this.ZXa;
+    return this.Yih;
   }
   GetInputActionKeyMap() {
     return InputSettings_1.InputSettings.GetInputActionKeyMap(this.ZMe);
@@ -190,7 +190,7 @@ class InputActionBinding {
         t &&
           (t.IsKeyboardKey || t.IsMouseButton
             ? this.tEe.push(e)
-            : t.IsGamepadKey && this.iEe.push(e));
+            : (t.IsGamepadKey || t.IsPcPsTouchPadKey) && this.iEe.push(e));
       }
   }
   ConvertSort() {

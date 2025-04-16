@@ -18,7 +18,7 @@ class EditTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Data = void 0),
       (this.RedDotState = !1),
       (this.Cke = (t) => {
-        this.afa(), this.OnClickEvent(this.Data.Id, 1 === t, this.GridIndex);
+        this.rfa(), this.OnClickEvent(this.Data.Id, 1 === t, this.GridIndex);
       }),
       (this.gke = () => {
         var t = this.GetExtendToggle(0).GetToggleState();
@@ -87,7 +87,7 @@ class EditTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.RedDotState !== t &&
       ((this.RedDotState = t), this.GetItem(11).SetUIActive(this.RedDotState));
   }
-  afa() {
+  rfa() {
     this.RedDotState &&
       this.Data.IsOwn &&
       (ModelManager_1.ModelManager.MoonChasingModel.ReadRoleIdUnlockFlag(

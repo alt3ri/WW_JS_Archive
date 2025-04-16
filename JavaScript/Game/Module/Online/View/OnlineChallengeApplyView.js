@@ -23,7 +23,7 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
       (this.yNi = -1),
       (this.XFt = void 0),
       (this.pNi = void 0),
-      (this.dIa = !1),
+      (this.gIa = !1),
       (this.MNi = () => {
         if (
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
@@ -66,6 +66,9 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
             )),
             (this.SNi = e),
             this.TNi());
+      }),
+      (this.M2r = () => {
+        this.CloseMe();
       });
   }
   OnRegisterComponent() {
@@ -108,16 +111,24 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshSuggestChallengePlayerInfo,
       this.EWs,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.PlotNetworkStart,
+        this.M2r,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshSuggestChallengePlayerInfo,
       this.EWs,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.PlotNetworkStart,
+        this.M2r,
+      );
   }
   OnTick(e) {
-    this.dIa ||
+    this.gIa ||
       ((this.SNi -= e * TimeUtil_1.TimeUtil.Millisecond),
       this.SNi <= 0
         ? (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
@@ -130,7 +141,7 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
                 !1,
               ),
           this.CloseMe(),
-          (this.dIa = !0))
+          (this.gIa = !0))
         : (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
           this.pNi.SetFillAmount(this.SNi / this.yNi)));
   }
@@ -154,25 +165,27 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
       ? (this.GetText(1).SetText(t.Name),
         this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
         this.pNi.SetFillAmount(this.SNi / this.yNi),
-        (i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+        (i = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(
           t.HeadId,
-        )?.Card) && this.SetTextureByPath(i, this.GetTexture(0)),
-        this.qxa(t.PlayerDetails.Vxa, t.PlayerDetails.$xa),
-        this.iPa(t.PlayerDetails.Vxa))
+          !1,
+        )) &&
+          this.SetTextureByPath(i.GetRoleHeadIconCircle(), this.GetTexture(0)),
+        this.Nxa(t.PlayerDetails.Qxa, t.PlayerDetails.Jxa),
+        this.sPa(t.PlayerDetails.Qxa))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("MultiPlayerTeam", 5, "未找到发起邀请的玩家", [
           "playerId：",
           e,
         ]);
   }
-  qxa(e, t) {
+  Nxa(e, t) {
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((t = void 0 !== t && "" !== t),
         this.GetItem(16)?.SetUIActive(t),
         t && ((t = e ?? ""), this.GetText(17)?.SetText(t)))
       : this.GetItem(16)?.SetUIActive(!1);
   }
-  iPa(e) {
+  sPa(e) {
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e = void 0 !== e && "" !== e), this.GetItem(15)?.SetUIActive(!e))
       : this.GetItem(15)?.SetUIActive(!1);
@@ -195,16 +208,18 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
     e
       ? (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
         this.pNi.SetFillAmount(this.SNi / this.yNi),
-        (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+        (e = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(
           e.HeadId,
-        )?.Card) && this.SetTextureByPath(e, this.GetTexture(0)),
-        this.qxa(void 0, void 0),
-        this.iPa(void 0))
+          !1,
+        )) &&
+          this.SetTextureByPath(e.GetRoleHeadIconCircle(), this.GetTexture(0)))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("MultiPlayerTeam", 5, "未找到发起邀请的玩家", [
           "playerId：",
           t,
-        ]);
+        ]),
+      this.GetItem(16)?.SetUIActive(!1),
+      this.GetItem(15)?.SetUIActive(!1);
   }
 }
 exports.OnlineChallengeApplyView = OnlineChallengeApplyView;

@@ -19,35 +19,51 @@ class PhysicsAssetConfig {
       this,
     );
   }
-  __init(s, t) {
-    return (this.z7 = s), (this.J7 = t), this;
+  __init(t, s) {
+    return (this.z7 = t), (this.J7 = s), this;
   }
-  static getRootAsPhysicsAssetConfig(s, t) {
-    return (t || new PhysicsAssetConfig()).__init(
-      s.readInt32(s.position()) + s.position(),
-      s,
+  static getRootAsPhysicsAssetConfig(t, s) {
+    return (s || new PhysicsAssetConfig()).__init(
+      t.readInt32(t.position()) + t.position(),
+      t,
     );
   }
-  id(s) {
-    var t = this.J7.__offset(this.z7, 4);
-    return t ? this.J7.__string(this.z7 + t, s) : null;
+  id(t) {
+    var s = this.J7.__offset(this.z7, 4),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
-  physicsassetpath(s) {
-    var t = this.J7.__offset(this.z7, 6);
-    return t ? this.J7.__string(this.z7 + t, s) : null;
+  physicsassetpath(t) {
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
-  GetBonenamesAt(s) {
-    return this.bonenames(s);
+  GetBonenamesAt(t) {
+    return this.bonenames(t);
   }
-  bonenames(s, t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * s, t)
-      : null;
+  bonenames(t, s) {
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   bonenamesLength() {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__vector_len(this.z7 + s) : 0;
+    var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.PhysicsAssetConfig = PhysicsAssetConfig;

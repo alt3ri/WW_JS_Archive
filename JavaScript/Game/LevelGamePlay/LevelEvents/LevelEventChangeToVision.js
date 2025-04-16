@@ -5,15 +5,15 @@ const Global_1 = require("../../Global"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventChangeToVision extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, l) {
-    var o;
+    var s;
     e &&
-      ((o = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity)
+      ((s = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity)
         .GetComponent(3)
         .ClearInput(),
-      o.GetComponent(190)?.AddTag(-1697149502),
-      (o = o.GetComponent(34))) &&
-      (o.EndOwnerAndFollowSkills(),
-      o.BeginSkill(e.Id, { Context: "LevelEventChangeToVision.ExecuteNew" }));
+      s.GetComponent(203)?.AddTag(-1697149502),
+      (s = s.GetComponent(39))) &&
+      (s.EndOwnerAndFollowSkills(),
+      s.BeginSkill(e.Id, { Reason: "LevelEventChangeToVision.ExecuteNew" }));
   }
 }
 exports.LevelEventChangeToVision = LevelEventChangeToVision;

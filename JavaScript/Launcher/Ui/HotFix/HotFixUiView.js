@@ -7,13 +7,17 @@ const puerts_1 = require("puerts"),
   HotPatchEventSystem_1 = require("../../PlayerInput/HotPatchEventSystem"),
   HotPatchInputManager_1 = require("../../PlayerInput/HotPatchInputManager"),
   LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib"),
+  LauncherLog_1 = require("../../Util/LauncherLog"),
   LauncherResourceLib_1 = require("../../Util/LauncherResourceLib"),
   LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
   LaunchUtil_1 = require("../LaunchUtil"),
   SdkProtocolView_1 = require("../SdkView/SdkProtocolView"),
+  HotFixDownLoadFreeSpaceTipsView_1 = require("./HotFixDownLoadFreeSpaceTipsView"),
+  HotFixDownLoadView_1 = require("./HotFixDownLoadView"),
+  HotFixListenDeviceSwitchText_1 = require("./HotFixListenDeviceSwitchText"),
   HotFixManager_1 = require("./HotFixManager"),
-  HotFixPopupRepairView_1 = require("./HotFixPopupRepairView"),
-  HotFixPopupUiView_1 = require("./HotFixPopupUiView");
+  HotFixPopupUiView_1 = require("./HotFixPopupUiView"),
+  HotFixToolWindowView_1 = require("./HotFixToolWindowView");
 class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   constructor() {
     super(...arguments),
@@ -24,7 +28,7 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       (this.Iyr = void 0),
       (this.Tyr = void 0),
       (this.Cve = void 0),
-      (this.ZOa = void 0),
+      (this.iNa = void 0),
       (this.xyr = "WutheringWave_"),
       (this.wyr = (t) => {
         this.UiRoot = t;
@@ -32,6 +36,20 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       (this.Byr = (t) => {
         this.SetRootActorLaunchComponentsAction(t),
           this.SetContainerItemActive(!1);
+      }),
+      (this.SetDownLoadActive = (t) => {
+        this.GetElement(102).SetActive(t),
+          LauncherLog_1.LauncherLog.Info("SetDownLoadActive", ["value", t]);
+      }),
+      (this.SetFreeSpaceTipsPopActive = (t) => {
+        this.GetElement(103).SetActive(t),
+          LauncherLog_1.LauncherLog.Info(
+            "SetHotFixDownLoadFreeSpaceTipsViewActive",
+            ["value", t],
+          );
+      }),
+      (this.sM1 = () => {
+        HotFixManager_1.HotFixManager.ShowNoticeWindowByUser();
       });
   }
   async InitAsync(t) {
@@ -54,7 +72,7 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
         this.UiRoot.RootComponent,
         this.Byr,
       ),
-      await this.LoadResourceAsync(),
+      await this.LoadResourceAsync(t),
       (this.Cve = new UE.KuroTickManager(
         this.WorldContext,
         "HotFixUiTickManager",
@@ -62,26 +80,43 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.OnShow();
   }
   SetProtocolViewViewState(t) {
-    this.ZOa?.SetActive(t);
+    this.iNa?.SetActive(t);
   }
   async ShowProtocolView(t) {
-    (this.ZOa = new SdkProtocolView_1.SdkProtocolView()),
-      this.ZOa.SetViewData(t),
-      await this.ZOa.Init(this.WorldContext, this.UiRoot.RootComponent);
+    (this.iNa = new SdkProtocolView_1.SdkProtocolView()),
+      this.iNa.SetViewData(t),
+      await this.iNa.Init(this.WorldContext, this.UiRoot.RootComponent);
   }
-  async LoadResourceAsync() {
+  async LoadResourceAsync(t) {
     await this.AttachElementAsyncFromPath(
       100,
       "/Game/Aki/UI/Module/HotFix/Prefab/UiView_HotFixPopup.UiView_HotFixPopup",
       HotFixPopupUiView_1.HotFixPopupUiView,
     ),
-      this.SetConfirmationItemActive(!1),
-      await this.AttachElementAsyncFromPath(
-        101,
-        "/Game/Aki/UI/Module/HotFix/Prefab/UiView_HotFixPopup.UiView_HotFixPopup",
-        HotFixPopupRepairView_1.HotFixPopupRepairView,
-      ),
-      this.qyr(!1),
+      this.SetConfirmationItemActive(!1);
+    var i = await this.AttachElementAsyncFromPath(
+      101,
+      "/Game/Aki/UI/Module/HotFix/Prefab/UiView_ToolPopup.UiView_ToolPopup",
+      HotFixToolWindowView_1.HotFixToolWindowView,
+    );
+    this.SetToolWindowActive(!1),
+      await i.LoadAsync(t),
+      ((
+        await this.AttachElementAsyncFromPath(
+          102,
+          "/Game/Aki/UI/Module/HotFix/Prefab/UiView_Download.UiView_Download",
+          HotFixDownLoadView_1.HotFixDownLoadView,
+        )
+      ).SetFreeSpaceTipsPopActiveCallBack = this.SetFreeSpaceTipsPopActive),
+      this.SetDownLoadActive(!1),
+      ((
+        await this.AttachElementAsyncFromPath(
+          103,
+          "/Game/Aki/UI/Module/HotFix/Prefab/UiView_DownloadMemory.UiView_DownloadMemory",
+          HotFixDownLoadFreeSpaceTipsView_1.HotFixDownLoadFreeSpaceTipsView,
+        )
+      ).SetDownLoadActiveCallBack = this.SetDownLoadActive),
+      this.SetFreeSpaceTipsPopActive(!1),
       await this.Gyr();
   }
   async Gyr() {
@@ -112,15 +147,29 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
         );
       });
   }
+  OnStart() {
+    this.GetButton(12).OnClickCallBack.Bind(this.sM1);
+  }
   OnBeforeDestroy() {
     this.Cve && (this.Cve = void 0),
-      this.xvi && (this.xvi = void 0),
+      this.xvi && (this.xvi.RemoveGamepadChange(), (this.xvi = void 0)),
       this.yyr && (this.yyr = void 0),
       this.Iyr && (this.Iyr = void 0),
-      this.Tyr && (this.Tyr = void 0);
+      this.Tyr && (this.Tyr = void 0),
+      this.GetButton(12).OnClickCallBack.Unbind();
   }
   OnShow() {
-    (this.xvi = this.GetText(4)),
+    var t;
+    this.xvi ||
+      ((t = new Map([
+        ["DownloadContinue", ["Ps5_Cilck_Continue", "手柄右边下键"]],
+      ])),
+      (this.xvi =
+        new HotFixListenDeviceSwitchText_1.HotFixListenDeviceSwitchText(
+          this.GetText(4),
+          t,
+        )),
+      this.xvi.AddGamepadChange()),
       (this.yyr = this.GetText(8)),
       (this.Iyr = this.GetText(7)),
       (this.Tyr = this.GetTexture(3)),
@@ -128,8 +177,12 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.SetRepairButtonText("PatchClearbutton"),
       this.SetRepairButtonEnable(!1),
       this.SetRepairButtonCallBack(() => {
-        this.qyr(!0);
-      });
+        this.SetToolWindowActive(!0);
+      }),
+      HotFixManager_1.HotFixManager.SetLocalText(
+        this.GetText(13),
+        "Notice_Btn_Text",
+      );
   }
   SetContainerItemActive(t) {
     var i = this.GetItem(0);
@@ -145,16 +198,15 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   SetConfirmationItemActive(t) {
     this.GetElement(100).SetActive(t);
   }
-  qyr(t) {
-    this.GetElement(101).SetActive(t);
+  SetToolWindowActive(t) {
+    this.GetElement(101).SetActive(t),
+      LauncherLog_1.LauncherLog.Info("SetToolWindowActive", ["value", t]);
   }
   SetProgressLeftTips(t, ...i) {
-    HotFixManager_1.HotFixManager.SetLocalText(this.xvi, t, ...i),
-      this.yyr.SetText(""),
-      this.Iyr.SetText("");
+    this.xvi.SetLocalText(t, ...i), this.yyr.SetText(""), this.Iyr.SetText("");
   }
   SetProgressText(t, ...i) {
-    HotFixManager_1.HotFixManager.SetLocalText(this.xvi, t, ...i);
+    this.xvi.SetLocalText(t, ...i);
   }
   SetPatchText(t, ...i) {
     HotFixManager_1.HotFixManager.SetLocalText(this.yyr, t, ...i);
@@ -163,7 +215,7 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
     HotFixManager_1.HotFixManager.SetLocalText(this.Iyr, t, ...i);
   }
   SetProgressLeftActive(t) {
-    this.xvi.SetUIActive(t), this.yyr.SetUIActive(t), this.Iyr.SetUIActive(t);
+    this.xvi.SetUiActive(t), this.yyr.SetUIActive(t), this.Iyr.SetUIActive(t);
   }
   SetProgressRightTips(t) {
     HotFixManager_1.HotFixManager.SetLocalText(this.GetText(5), t);

@@ -23,55 +23,58 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
   NVo(e) {
     var i = this.L5o,
       l = i.length;
-    let r = void 0;
+    let s = void 0;
     for (let t = 0; t < l; ++t)
       if (i[t].Condition === e.ChildrenType) {
-        var s = i[t];
+        var r = i[t];
         if (
-          (!(0 < s.Num) ||
-            this.ChildInfo.HaveSummonedBulletNumber[t] < s.Num) &&
-          0 !== Number(s.RowName)
+          (!(0 < r.Num) ||
+            this.ChildInfo.HaveSummonedBulletNumber[t] < r.Num) &&
+          0 !== Number(r.RowName)
         ) {
-          !r &&
+          !s &&
             e.ParentImpactPoint &&
             e.ParentLastPosition &&
             ((o = BulletPool_1.BulletPool.CreateVector()),
-            (u = BulletPool_1.BulletPool.CreateVector()),
+            (h = BulletPool_1.BulletPool.CreateVector()),
             o.FromUeVector(e.ParentImpactPoint),
             o.SubtractionEqual(e.ParentLastPosition),
-            u.FromUeVector(this.BulletInfo.MoveInfo.BulletSpeedDir),
-            u.Normalize(),
-            (h = o.DotProduct(u)),
-            u.Multiply(h, o),
-            e.ParentLastPosition.Addition(o, u),
-            (r = this.BulletInfo.ActorComponent.ActorTransform).SetLocation(
-              u.ToUeVector(),
+            h.FromUeVector(this.BulletInfo.MoveInfo.BulletSpeedDir),
+            h.Normalize(),
+            (u = o.DotProduct(h)),
+            h.Multiply(u, o),
+            e.ParentLastPosition.Addition(o, h),
+            (s = this.BulletInfo.ActorComponent.ActorTransform).SetLocation(
+              h.ToUeVector(),
             ),
-            BulletPool_1.BulletPool.RecycleVector(u),
-            BulletPool_1.BulletPool.RecycleVector(o));
+            BulletPool_1.BulletPool.RecycleVector(h),
+            BulletPool_1.BulletPool.RecycleVector(o)),
+            this.ChildInfo.HaveSummonedBulletNumber[t]++;
           var o,
-            u,
-            h = BulletController_1.BulletController.CreateBulletCustomTarget(
+            h,
+            u = BulletController_1.BulletController.CreateBulletCustomTarget(
               this.BulletInfo.AttackerActorComp.Actor,
-              s.RowName.toString(),
-              r ?? this.BulletInfo.ActorComponent.ActorTransform,
+              r.RowName.toString(),
+              s ?? this.BulletInfo.ActorComponent.ActorTransform,
               {
                 SkillId: this.BulletInfo.BulletInitParams.SkillId,
+                SkillContextId: this.BulletInfo.BulletInitParams.SkillContextId,
                 ParentVictimId: e.Victim?.Id,
                 ParentTargetId: this.BulletInfo.Target?.Id,
                 ParentId: this.BulletInfo.Entity.Id,
                 DtType: this.BulletInfo.BulletInitParams.DtType,
                 CreateOnAuthority: e.CreateOnAuthority,
+                BattleFlags: this.BulletInfo.BulletInitParams.BattleFlags,
+                ParentIds: void 0,
               },
               this.BulletInfo.ContextId,
             );
-          if (h)
+          if (u)
             BulletUtil_1.BulletUtil.ProcessHandOverEffectToSon(
               this.BulletInfo,
-              h,
-            ),
-              this.ChildInfo.HaveSummonedBulletNumber[t]++;
-          else if (s.BreakOnFail) return;
+              u,
+            );
+          else if (r.BreakOnFail) return;
         }
       }
   }
@@ -79,29 +82,33 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
     var i = this.L5o.length;
     for (let t = 0; t < i; ++t) {
       var l = this.L5o[t],
-        r = t;
+        s = t;
       if (
         5 === l.Condition &&
         !(
           (0 < l.Num &&
-            !(this.ChildInfo.HaveSummonedBulletNumber[r] < l.Num)) ||
+            !(this.ChildInfo.HaveSummonedBulletNumber[s] < l.Num)) ||
           this.BulletInfo.LiveTime <
-            this.ChildInfo.HaveSummonedBulletNumber[r] *
+            this.ChildInfo.HaveSummonedBulletNumber[s] *
               l.Interval *
               TimeUtil_1.TimeUtil.InverseMillisecond
         )
       ) {
-        var s = BulletController_1.BulletController.CreateBulletCustomTarget(
+        this.ChildInfo.HaveSummonedBulletNumber[s]++;
+        s = BulletController_1.BulletController.CreateBulletCustomTarget(
           this.BulletInfo.AttackerActorComp.Actor,
           l.RowName.toString(),
           this.BulletInfo.ActorComponent.ActorTransform,
           {
             SkillId: this.BulletInfo.BulletInitParams.SkillId,
+            SkillContextId: this.BulletInfo.BulletInitParams.SkillContextId,
             ParentVictimId: e.Victim?.Id,
             ParentTargetId: this.BulletInfo.Target?.Id,
             ParentId: this.BulletInfo.Entity.Id,
             DtType: this.BulletInfo.BulletInitParams.DtType,
             CreateOnAuthority: e.CreateOnAuthority,
+            BattleFlags: this.BulletInfo.BulletInitParams.BattleFlags,
+            ParentIds: void 0,
           },
           this.BulletInfo.ContextId,
         );
@@ -109,8 +116,7 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
           BulletUtil_1.BulletUtil.ProcessHandOverEffectToSon(
             this.BulletInfo,
             s,
-          ),
-            this.ChildInfo.HaveSummonedBulletNumber[r]++;
+          );
         else if (l.BreakOnFail) return;
       }
     }

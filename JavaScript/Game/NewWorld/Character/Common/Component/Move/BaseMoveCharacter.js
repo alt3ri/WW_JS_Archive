@@ -7,6 +7,7 @@ const cpp_1 = require("cpp"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   LogAnalyzer_1 = require("../../../../../../Core/Common/LogAnalyzer"),
   Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   Net_1 = require("../../../../../../Core/Net/Net"),
   MathCommon_1 = require("../../../../../../Core/Utils/Math/MathCommon"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
@@ -30,18 +31,18 @@ const cpp_1 = require("cpp"),
   NO_RESET_ANGLE = 20,
   NO_RESET_DISTANCE = 50,
   PER_TICK_MIN_MOVE_SPEED = 30,
-  IS_WITH_EDITOR = cpp_1.FKuroUtilityForPuerts.IsWithEditor() ? 1 : void 0;
+  WHILE_UPDATE_MOVE_POINT_COUNT = 2,
+  IS_WITH_EDITOR = cpp_1.KuroApplication.IsWithEditor() ? 1 : void 0;
 class BaseMoveCharacter {
   constructor() {
     (this.wDe = 0),
       (this.Jh = void 0),
       (this.Hte = void 0),
       (this.rJo = void 0),
-      (this.XNa = !1),
+      (this.JLe = void 0),
       (this.nJo = 0),
       (this.sJo = !1),
       (this.aJo = !1),
-      (this.hJo = !1),
       (this.lJo = 0),
       (this._Jo = !1),
       (this.uJo = Vector_1.Vector.Create()),
@@ -56,7 +57,6 @@ class BaseMoveCharacter {
       (this.tKo = void 0),
       (this.hse = void 0),
       (this.mie = 0),
-      (this.pJo = !1),
       (this.Ero = !1),
       (this.vJo = void 0),
       (this.MJo = new PatrolMovePointsLogic_1.PatrolMovePointsLogic()),
@@ -73,11 +73,11 @@ class BaseMoveCharacter {
           (i.P5n = this.Hte.ActorLocationProxy),
           (i.g8n = void 0),
           (t.iVn = [i]),
-          Net_1.Net.Send(21915, t),
+          Net_1.Net.Send(17177, t),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "AI",
-              43,
+              42,
               "向服务器同步NPC位置",
               ["EntityId", this.Jh.Id],
               ["PbDataId", this.wDe],
@@ -87,12 +87,13 @@ class BaseMoveCharacter {
             );
       }),
       (this.xsa = (t, i) => {
-        var s;
+        var e;
         this.MJo.TargetPoint &&
-          (s = this.bJo(this.MJo.TargetPoint.MoveState)) &&
-          CharacterUnifiedStateTypes_1.legalMoveStates.get(i).has(s) &&
-          this.rJo.SetMoveState(s);
-      });
+          (e = this.bJo(this.MJo.TargetPoint.MoveState)) &&
+          CharacterUnifiedStateTypes_1.legalMoveStates.get(i).has(e) &&
+          this.rJo.SetMoveState(e);
+      }),
+      (this.vMc = !1);
   }
   get CurrentToLocation() {
     return this.MJo.TargetPoint.Position;
@@ -100,7 +101,7 @@ class BaseMoveCharacter {
   Init(t) {
     (this.Jh = t),
       (this.Hte = this.Jh.GetComponent(3)),
-      (this.rJo = this.Jh.GetComponent(92)),
+      (this.rJo = this.Jh.GetComponent(99)),
       (this.wDe = this.Hte.CreatureData.GetPbDataId()),
       (this.fJo = []),
       (this.Ero = !1),
@@ -117,54 +118,76 @@ class BaseMoveCharacter {
           this.xsa,
         );
   }
-  UpdateMove(e) {
-    if (this.IsRunning)
-      if (this.MJo.TargetPoint) {
-        (this.mie += e),
+  UpdateMove(t) {
+    this.IsRunning &&
+      (this.MJo.TargetPoint
+        ? ((this.mie += t),
           1 < this.mie && ((this.mie = 0), this.yJo()),
           GlobalData_1.GlobalData.IsPlayInEditor &&
             MoveToLocationLogic_1.MoveToLocationController.DebugDraw &&
-            this.IJo();
-        let t = !1,
-          i = !1;
-        var h =
-          this.sJo ||
-          this.rJo?.PositionState ===
-            CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
-        let s = this.EJo.UpdateMove(e, this.pJo);
-        for (; !s; ) {
-          if (
-            ((i = i || 0 <= this.MJo.TargetPoint.Index),
-            this.TJo(),
-            this.MJo.CheckMoveLastPoint())
-          ) {
-            const t = this.EJo.ResetLastPointCondition();
-            return (
-              !h && t && this.EJo.ResetLastPatrolPoint(e),
-              this.RJo(),
-              void this.MoveEnd(1)
-            );
-          }
-          if (((t = !0), this.LJo(), this.XNa)) break;
-          s = this.EJo.UpdateMove(e, this.pJo);
-        }
-        !h &&
-          this.EJo.ResetLastPointCondition() &&
-          this.DJo() &&
-          this.EJo.ResetLastPatrolPoint(e),
-          t && i && this.RJo(),
-          this.cJo &&
-            e > MathCommon_1.MathCommon.KindaSmallNumber &&
-            this.UJo(e, t);
-      } else this.MoveEnd(2);
+            this.IJo(),
+          this.Dlh(t))
+        : this.MoveEnd(2));
+  }
+  Dlh(t) {
+    let i = !1,
+      e = !1;
+    var s =
+      this.sJo ||
+      this.rJo?.PositionState ===
+        CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
+    let h = this.EJo.UpdateMove(t),
+      r = 0;
+    for (; !h && this.IsRunning && r < WHILE_UPDATE_MOVE_POINT_COUNT; ) {
+      if (
+        (r++,
+        (e = e || 0 <= this.MJo.TargetPoint.Index),
+        this.TJo(),
+        this.MJo.CheckMoveLastPoint())
+      ) {
+        const h = this.EJo.ResetLastPointCondition();
+        return !s && h && this.mqn(t), this.RJo(), void this.MoveEnd(1);
+      }
+      if (((i = !0), !this.LJo()))
+        return (
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "AI",
+              42,
+              "未能正常获取下个移动点，巡逻失败结束",
+              ["EntityId", this.Jh.Id],
+              ["PbDataId", this.wDe],
+            ),
+          void this.MoveEnd(2)
+        );
+      if (this.JLe?.ResetAllPoints) break;
+      h = this.EJo.UpdateMove(t);
+    }
+    !s && this.EJo.ResetLastPointCondition() && this.DJo() && this.mqn(t),
+      i && e && this.RJo(),
+      this.cJo &&
+        t > MathCommon_1.MathCommon.KindaSmallNumber &&
+        this.UJo(t, i);
+  }
+  mqn(t) {
+    this.EJo.ResetLastPatrolPoint(t),
+      this.jye.DeepCopy(this.CurrentToLocation),
+      this.jye.SubtractionEqual(this.Hte.ActorLocationProxy),
+      this.sJo || (this.jye.Z = 0),
+      this.jye.Normalize(),
+      this.Hte?.ClearInput(),
+      this.Hte?.SetInputDirect(this.jye);
+    t = this.Hte.ActorVelocityProxy.Size();
+    this.jye.MultiplyEqual(t),
+      this.Hte.ActorVelocityProxy.Set(this.jye.X, this.jye.Y, this.jye.Z);
   }
   UJo(t, i) {
-    var s = Vector_1.Vector.Dist(
+    var e = Vector_1.Vector.Dist(
       this.Hte.ActorLocationProxy,
       this.CurrentToLocation,
     );
     if (
-      Math.abs(this.CJo - s) / t > PER_TICK_MIN_MOVE_SPEED ||
+      Math.abs(this.CJo - e) / t > PER_TICK_MIN_MOVE_SPEED ||
       0 === this.CJo ||
       i
     )
@@ -174,7 +197,7 @@ class BaseMoveCharacter {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "AI",
-            43,
+            42,
             "检测到移动行为不符合预期,持续卡住超时,返回移动失败",
             ["EntityId", this.Jh.Id],
             ["PbDataId", this.wDe],
@@ -182,20 +205,22 @@ class BaseMoveCharacter {
           ),
         void this.MoveEnd(2)
       );
-    this.CJo = s;
+    this.CJo = e;
   }
   LJo() {
-    this._Jo && (this._Jo = !1),
-      this.MJo.ChangeToNextPoint(),
-      this.AJo(
-        this.MJo.GetPreviousLocation(),
-        this.MJo.TargetPoint.Position,
-        this.aJo,
-        !1,
-      );
+    return (
+      this._Jo && (this._Jo = !1),
+      this.MJo.ChangeToNextPoint() &&
+        this.AJo(
+          this.MJo.GetPreviousLocation(),
+          this.MJo.TargetPoint.Position,
+          this.aJo,
+          !1,
+        )
+    );
   }
   DJo() {
-    if (this.XNa) return !0;
+    if (this.JLe?.ResetAllPoints) return !0;
     var t = this.MJo.GetPreviousLocation();
     if (!t) return !1;
     this.jye.DeepCopy(this.Hte.ActorLocationProxy),
@@ -225,7 +250,7 @@ class BaseMoveCharacter {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "中断巡逻",
           ["EntityId", this.Jh.Id],
           ["PbDataId", this.wDe],
@@ -256,96 +281,113 @@ class BaseMoveCharacter {
           this.xsa,
         );
   }
-  MoveAlongPath(t) {
-    var i;
-    this.Hte
-      ? ((this.Ero = !0),
-        (i = t.TurnSpeed ?? DEFAULT_TURN_SPEED),
-        (this.lJo = i),
-        (this.aJo = t.Navigation && !t.IsFly),
-        (this.nJo = t.Distance ?? END_DISTANCE),
-        (this.pJo = t.DebugMode),
-        (this.vJo = t.Callback),
-        (this.hJo = t.ReturnFalseWhenNavigationFailed),
-        (this.XNa = t.ResetAllPoints ?? !1),
-        t.ReturnTimeoutFailed && 0 !== t.ReturnTimeoutFailed
+  MoveAlongPath(i) {
+    if (this.Hte) {
+      (this.Ero = !0),
+        (this.JLe = i),
+        (this.lJo = i.TurnSpeed ?? DEFAULT_TURN_SPEED),
+        (this.aJo = i.Navigation && !i.IsFly),
+        (this.nJo = i.Distance ?? END_DISTANCE),
+        (this.vJo = i.Callback),
+        i.ReturnTimeoutFailed && 0 !== i.ReturnTimeoutFailed
           ? ((this.cJo = !0),
-            (this.mJo = t.ReturnTimeoutFailed),
-            (this.dJo = t.ReturnTimeoutFailed))
+            (this.mJo = i.ReturnTimeoutFailed),
+            (this.dJo = i.ReturnTimeoutFailed))
           : (this.cJo = !1),
-        this.MJo.UpdateMovePoints(t),
+        this.MJo.UpdateMovePoints(i),
         (this.sJo =
           this.MJo.TargetPoint?.PosState ===
-            CharacterUnifiedStateTypes_1.ECharPositionState.Air || t.IsFly),
+            CharacterUnifiedStateTypes_1.ECharPositionState.Air || i.IsFly),
         this.yJo(),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "AI",
-            43,
+            42,
             "开始巡逻",
             ["EntityId", this.Jh.Id],
             ["PbDataId", this.wDe],
-            ["循环巡逻", t.Loop],
-            ["环形巡逻", t.CircleMove ?? !1],
+            ["循环巡逻", i.Loop],
+            ["环形巡逻", i.CircleMove ?? !1],
             ["飞行模式", this.sJo],
             ["寻路", this.aJo],
             ["容差", this.nJo],
-          ),
-        (i = Vector_1.Vector.Dist2D(this.uJo, this.Hte.ActorLocationProxy)),
-        t.UsePreviousIndex && this._Jo && i > this.nJo
-          ? (this.AJo(
-              this.uJo,
-              this.MJo.TargetPoint.Position,
-              i > NAV_DISTANCE || this.aJo,
-              !0,
-            ),
-            Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug(
-                "AI",
-                43,
-                "恢复中断巡逻",
-                ["EntityId", this.Jh.Id],
-                ["PbDataId", this.wDe],
-                ["当前目标点Index", this.MJo.TargetIndex],
-                ["PreLocation", this.uJo],
-                ["Current", this.Hte.ActorLocationProxy],
-              ))
-          : ((this._Jo = !1),
-            this.AJo(void 0, this.MJo.TargetPoint.Position, this.aJo, !0)))
-      : ((t = this.Jh?.GetComponent(0)),
+            ["碰撞启用", this.Hte?.DisableCollisionHandle?.Empty],
+          );
+      var e = Vector_1.Vector.Dist2D(this.uJo, this.Hte.ActorLocationProxy);
+      let t = !1;
+      i.UsePreviousIndex && this._Jo && e > this.nJo
+        ? ((t = this.AJo(
+            this.uJo,
+            this.MJo.TargetPoint.Position,
+            e > NAV_DISTANCE || this.aJo,
+            !0,
+          )),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "AI",
+              42,
+              "恢复中断巡逻",
+              ["EntityId", this.Jh.Id],
+              ["PbDataId", this.wDe],
+              ["当前目标点Index", this.MJo.TargetIndex],
+              ["PreLocation", this.uJo],
+              ["Current", this.Hte.ActorLocationProxy],
+            ))
+        : ((this._Jo = !1),
+          (t = this.AJo(
+            void 0,
+            this.MJo.TargetPoint.Position,
+            this.aJo || !!i.NavigateToStartPos,
+            !0,
+          ))),
+        t ||
+          (this.MoveEnd(2),
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "AI",
+              42,
+              "未正常生成寻路路径，巡逻失败结束",
+              ["EntityId", this.Jh.Id],
+              ["PbDataId", this.wDe],
+            ));
+    } else
+      (e = this.Jh?.GetComponent(0)),
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "AI",
-            51,
+            50,
             "[BaseMoveCharacter.MoveAlongPath]获取ActorComp失败",
-            ["PbDataId", t?.GetPbDataId()],
-          ));
+            ["PbDataId", e?.GetPbDataId()],
+          );
   }
   MoveEnd(t) {
     this._Jo = !1;
     this.StopMove(),
       this.MJo.Reset(),
       this.SJo(t),
+      this.vMc &&
+        (this.yMc(CharacterUnifiedStateTypes_1.ECharMoveState.Run),
+        (this.vMc = !1)),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "结束巡逻",
           ["EntityId", this.Jh.Id],
           ["PbDataId", this.wDe],
           ["EndState", t],
         );
   }
-  AJo(t, i, s, e) {
+  AJo(t, i, e, s) {
     if (
       ((this.tKo = []),
-      (!e && t) ||
+      (!s && t) ||
         (this.gJo.DeepCopy(this.Hte.LastActorLocation),
         this.sJo || (this.gJo.Z -= this.Hte.HalfHeight),
         this.tKo.push(this.gJo)),
       t && this.tKo.push(t),
       this.tKo.push(i),
-      s)
+      e)
     ) {
       (this.hse = []), this.hse.push(this.tKo[0]);
       for (let t = 0; t < this.tKo.length - 1; t++)
@@ -357,27 +399,28 @@ class BaseMoveCharacter {
         else if (this.xJo(this.tKo[t], this.tKo[t + 1], this.fJo))
           for (let t = 1; t < this.fJo.length; t++) this.hse.push(this.fJo[t]);
         else {
-          if (this.hJo) return void this.MoveEnd(2);
+          if (this.JLe?.ReturnFalseWhenNavigationFailed) return !1;
           this.hse.push(this.tKo[t + 1]);
         }
       this.EJo.UpdateMovePath(this.hse, this.sJo, this.lJo, this.nJo);
     } else this.EJo.UpdateMovePath(this.tKo, this.sJo, this.lJo, this.nJo);
+    return !0;
   }
-  xJo(t, i, s) {
+  xJo(t, i, e) {
     return (
       AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
         this.Hte.Owner.GetWorld(),
         t.ToUeVector(),
         i.ToUeVector(),
-        s,
-      ) && 0 < s.length
+        e,
+      ) && 0 < e.length
     );
   }
   TJo() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "AI",
-        43,
+        42,
         "到达点",
         ["EntityId", this.Jh.Id],
         ["PbDataId", this.wDe],
@@ -394,45 +437,46 @@ class BaseMoveCharacter {
           CharacterUnifiedStateTypes_1.ECharPositionState.Air);
   }
   RJo() {
-    var t = WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
-      this.Hte.Entity.Id,
-    );
-    t === Protocol_1.Aki.Protocol.kks.Proto_Npc && this.wJo(),
-      t === Protocol_1.Aki.Protocol.kks.Proto_Monster && this.BJo();
+    var t;
+    this.JLe?.NoAsyncPoint ||
+      ((t = WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
+        this.Hte.Entity.Id,
+      )) === Protocol_1.Aki.Protocol.kks.Proto_Npc && this.wJo(),
+      t === Protocol_1.Aki.Protocol.kks.Proto_Monster && this.BJo());
   }
   BJo() {
-    var t = this.Hte.Entity.GetComponent(60),
+    var t = this.Hte.Entity.GetComponent(67),
       i = t.GetCurrentMoveSample(),
-      s =
+      e =
         ((i.P5n = this.Hte.ActorLocationProxy),
         t.PendingMoveInfos.push(i),
         Protocol_1.Aki.Protocol.Yus.create());
-    (s.qZa = ModelManager_1.ModelManager.GameModeModel.IsMulti
+    (e.uhh = ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? ModelManager_1.ModelManager.OnlineModel.OwnerId
       : ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
-      s.WRs.push(t.CollectPendingMoveInfos()),
-      Net_1.Net.Send(28450, s),
+      e.WRs.push(t.CollectPendingMoveInfos()),
+      Net_1.Net.Send(16361, e),
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         ((t = {
           scene_id: ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
           instance_id:
             ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-          msg_id: 28450,
+          msg_id: 16361,
           immediately: !0,
-          sub_count: s.WRs.length,
+          sub_count: e.WRs.length,
           is_multi: ModelManager_1.ModelManager.GameModeModel.IsMulti,
           ed: IS_WITH_EDITOR,
           br: LogAnalyzer_1.LogAnalyzer.GetBranch(),
         }),
-        (s = JSON.stringify(t)),
+        (e = JSON.stringify(t)),
         CombatDebugController_1.CombatDebugController.DataReport(
           "COMBAT_MESSAGE_COUNT",
-          s,
+          e,
         )),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "向服务器同步怪物位置",
           ["EntityId", this.Jh.Id],
           ["PbDataId", this.wDe],
@@ -451,11 +495,11 @@ class BaseMoveCharacter {
         (t.g8n = this.Hte.ActorRotationProxy),
         Protocol_1.Aki.Protocol.ecs.create());
     (i.iVn = [t]),
-      Net_1.Net.Send(21915, i),
+      Net_1.Net.Send(17177, i),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "向服务器同步NPC位置",
           ["EntityId", this.Jh.Id],
           ["PbDataId", this.wDe],
@@ -467,16 +511,31 @@ class BaseMoveCharacter {
   yJo() {
     var t, i;
     this.MJo.TargetPoint &&
-      (i = this.Jh.GetComponent(38)) &&
+      (i = this.Jh.GetComponent(44)) &&
       ((t = this.MJo.TargetPoint.MoveSpeed),
       this.sJo
-        ? (i.CharacterMovement.SetMovementMode(5), t && i.SetMaxSpeed(t))
+        ? (this.Hte?.Actor.KuroSetMovementMode({
+            Mode: 5,
+            Context: "[BaseMoveCharacter.UpdateMoveStateAndSpeed]",
+          }),
+          t && i.SetMaxSpeed(t))
         : (t && i.SetMaxSpeed(t),
           (i = this.bJo(this.MJo.TargetPoint.MoveState)) &&
             CharacterUnifiedStateTypes_1.legalMoveStates
               .get(this.rJo.PositionState)
               .has(i) &&
-            this.rJo.SetMoveState(i)));
+            ((i !== CharacterUnifiedStateTypes_1.ECharMoveState.Walk &&
+              i !== CharacterUnifiedStateTypes_1.ECharMoveState.Run) ||
+              this.yMc(i),
+            this.rJo.SetMoveState(i))));
+  }
+  yMc(t) {
+    this.Hte?.IsRoleAndCtrlByMe &&
+      (0, RegisterComponent_1.isComponentInstance)(this.rJo, 173) &&
+      (this.rJo.MarkWalkOrRun(
+        t === CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
+      ),
+      (this.vMc = t === CharacterUnifiedStateTypes_1.ECharMoveState.Walk));
   }
   bJo(t) {
     if (t && this.rJo?.Valid)
@@ -514,7 +573,7 @@ class BaseMoveCharacter {
     )
       for (let t = this.MJo.MovePoint.length - 1; -1 < t; t--) {
         var i = this.MJo.MovePoint[t].Position;
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           GlobalData_1.GlobalData.World,
           i.ToUeVector(),
           30,

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ResourceSystem =
+    exports.ASYNC_LOAD_TIMEOUT_MS =
     exports.SYNC_LOAD_PRIORITY =
     exports.WAIT_RENDER_ASSET_DURATION =
     exports.RENDER_ASSETS_TIMEOUT =
@@ -20,7 +21,7 @@ const cpp_1 = require("cpp"),
   GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController"),
   TimeLimit_1 = require("../Performance/TimeLimit"),
   TimerSystem_1 = require("../Timer/TimerSystem"),
-  ASYNC_LOAD_TIMEOUT_MS =
+  RESET_TIME =
     ((exports.CHECK_STREAMING_INTERVAL = 100),
     (exports.CHECK_RENDERASSETS_INTERVAL = 100),
     (exports.STREAMING_SOURCE_RADIUS = 7e3),
@@ -28,8 +29,9 @@ const cpp_1 = require("cpp"),
     (exports.RENDER_ASSETS_TIMEOUT = 4e4),
     (exports.WAIT_RENDER_ASSET_DURATION = 42),
     (exports.SYNC_LOAD_PRIORITY = 1073741823),
-    6e4),
-  RESET_TIME = 18e4;
+    (exports.ASYNC_LOAD_TIMEOUT_MS = 6e4),
+    18e4),
+  RESET_TIME_PIE = 9e5;
 class LoadCallbackTask {
   constructor(e, s, t, o) {
     (this.Id = e),
@@ -40,7 +42,10 @@ class LoadCallbackTask {
 }
 class ResourceSystem {
   static GetLoadMode() {
-    return this.lwa;
+    return this.Iwa;
+  }
+  static IsLoadingReasonNotEmpty(e) {
+    return ResourceSystem.uJ.get(e);
   }
   static Initialize() {
     (0, puerts_1.registerLoadType)((e) => {
@@ -50,7 +55,7 @@ class ResourceSystem {
       ResourceSystem.WY.LoadResourceDelegate.Bind((e) => {
         ResourceSystem.KY(e);
       }),
-      ResourceSystem.Uxa.clear(),
+      ResourceSystem.Bxa.clear(),
       ResourceSystem.XY.clear(),
       (ResourceSystem.$Y = cpp_1.KuroApplication.IsAsyncLoadingThreadEnabled());
   }
@@ -84,7 +89,7 @@ class ResourceSystem {
     0 === s.size && t?.();
     const o = Date.now();
     for (const r of s)
-      ResourceSystem.tJ(r, () => {
+      ResourceSystem.LoadTypeAsync(r, () => {
         var e;
         s.delete(r),
           0 === s.size &&
@@ -104,13 +109,16 @@ class ResourceSystem {
     var s = new Set();
     for (const t in ClassDefine_1.typeDefined)
       ResourceSystem.XY.has(t) ||
-        (0 !== ClassDefine_1.typeDefined[t][0] && s.add(t));
+        (0 === ClassDefine_1.typeDefined[t][2] &&
+          0 !== ClassDefine_1.typeDefined[t][0] &&
+          s.add(t));
     ResourceSystem.eJ(s, e);
   }
   static PreloadOtherTypes(e = void 0) {
     var s = new Set();
     for (const t in ClassDefine_1.typeDefined)
-      ResourceSystem.XY.has(t) || s.add(t);
+      ResourceSystem.XY.has(t) ||
+        (0 === ClassDefine_1.typeDefined[t][2] && s.add(t));
     ResourceSystem.eJ(s, e);
   }
   static iJ(e) {
@@ -148,6 +156,14 @@ class ResourceSystem {
     if (!ResourceSystem.XY.has(s)) {
       var t = ResourceSystem.iJ(s);
       if (t) {
+        1 === t[2] &&
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Resource",
+            62,
+            "异步加载的类型不允许走同步加载，请先异步加载",
+            ["type", s],
+          );
         var o = ResourceSystem.oJ(s, t);
         if (o) {
           var r = t[0];
@@ -199,8 +215,9 @@ class ResourceSystem {
       }
     }
   }
-  static tJ(t, o) {
-    if (!ResourceSystem.XY.has(t)) {
+  static LoadTypeAsync(t, o) {
+    if (ResourceSystem.XY.has(t)) o();
+    else {
       var e = ResourceSystem.iJ(t);
       if (e) {
         var s = ResourceSystem.oJ(t, e);
@@ -213,7 +230,7 @@ class ResourceSystem {
                 Log_1.Log.Error(
                   "Resource",
                   1,
-                  "预加载类型失败",
+                  "异步加载类型失败",
                   ["name", t],
                   ["type", a],
                   ["path", s],
@@ -235,7 +252,7 @@ class ResourceSystem {
                 Log_1.Log.Error(
                   "Resource",
                   1,
-                  "预加载类型错误",
+                  "异步加载类型错误",
                   ["name", t],
                   ["type", a],
                   ["path", s],
@@ -247,9 +264,9 @@ class ResourceSystem {
     }
   }
   static KY(e) {
-    var s = ResourceSystem.Uxa.get(e);
+    var s = ResourceSystem.Bxa.get(e);
     s &&
-      (ResourceSystem.Uxa.delete(e),
+      (ResourceSystem.Bxa.delete(e),
       ResourceSystem.zY.Push(s),
       ResourceSystem.UpdateDelayCallback(!1));
   }
@@ -323,7 +340,7 @@ class ResourceSystem {
   }
   static Load(e, s) {
     ResourceSystem.aJ.Start();
-    var t = Stats_1.Stat.Create("RS.Load-" + e),
+    var t = Stats_1.Stat.CreateNoFlameGraph("RS.Load-" + e),
       s = (t.Start(), ResourceSystem.nJ(e, s));
     if (s) {
       var o = ++ResourceSystem.hJ;
@@ -348,7 +365,7 @@ class ResourceSystem {
   }
   static LoadAsync(e, s, t, o = 100) {
     ResourceSystem.lJ.Start();
-    var r = Stats_1.Stat.Create("RS.LoadAsync-" + e);
+    var r = Stats_1.Stat.CreateNoFlameGraph("RS.LoadAsync-" + e);
     if ((r.Start(), !t))
       return (
         Log_1.Log.CheckError() &&
@@ -378,7 +395,7 @@ class ResourceSystem {
       return (
         ResourceSystem.zY.Push(
           new LoadCallbackTask(a, o, void 0, () => {
-            ResourceSystem.xxa(t, void 0, e, c);
+            ResourceSystem.bxa(t, void 0, e, c);
           }),
         ),
         r.Stop(),
@@ -391,7 +408,7 @@ class ResourceSystem {
           Log_1.Log.Error("Resource", 1, "资源加载错误", ["path", e]),
           ResourceSystem.zY.Push(
             new LoadCallbackTask(a, o, void 0, () => {
-              ResourceSystem.xxa(t, void 0, e, c);
+              ResourceSystem.bxa(t, void 0, e, c);
             }),
           ),
           (a = ResourceSystem.InvalidId);
@@ -400,13 +417,13 @@ class ResourceSystem {
         {
           const i = TimerSystem_1.TimerSystem.Delay(() => {
             Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Resource", 31, "资源加载超时", ["path", e]);
-          }, ASYNC_LOAD_TIMEOUT_MS);
-          ResourceSystem.Uxa.set(
+              Log_1.Log.Error("Resource", 30, "资源加载超时", ["path", e]);
+          }, exports.ASYNC_LOAD_TIMEOUT_MS);
+          ResourceSystem.Bxa.set(
             a,
             new LoadCallbackTask(a, o, i, () => {
               i?.Valid() && TimerSystem_1.TimerSystem.Remove(i),
-                ResourceSystem.xxa(t, ResourceSystem.Ed(e, a, m), e, c);
+                ResourceSystem.bxa(t, ResourceSystem.Ed(e, a, m), e, c);
             }),
           );
         }
@@ -414,14 +431,14 @@ class ResourceSystem {
       case 1:
         ResourceSystem.zY.Push(
           new LoadCallbackTask(a, o, void 0, () => {
-            ResourceSystem.xxa(t, ResourceSystem.Ed(e, a, m), e, c);
+            ResourceSystem.bxa(t, ResourceSystem.Ed(e, a, m), e, c);
           }),
         ),
           ResourceSystem.UpdateDelayCallback(!1);
     }
     return r.Stop(), ResourceSystem.lJ.Stop(), a;
   }
-  static xxa(e, s, t, o) {
+  static bxa(e, s, t, o) {
     var r = cpp_1.KuroTime.GetMicroseconds64();
     ResourceSystem._J.Start(), o?.Start();
     try {
@@ -452,15 +469,15 @@ class ResourceSystem {
   }
   static CancelAsyncLoad(e) {
     ResourceSystem.WY.Release(e);
-    var s = ResourceSystem.Uxa.get(e);
+    var s = ResourceSystem.Bxa.get(e);
     void 0 !== s
       ? (s.TimeoutTimer?.Valid() &&
           TimerSystem_1.TimerSystem.Remove(s.TimeoutTimer),
-        ResourceSystem.Uxa.delete(e),
+        ResourceSystem.Bxa.delete(e),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Resource", 31, "取消Loading中的异步加载", ["id", e]))
+          Log_1.Log.Debug("Resource", 30, "取消Loading中的异步加载", ["id", e]))
       : (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Resource", 31, "取消等待回调的异步加载", ["id", e]),
+          Log_1.Log.Debug("Resource", 30, "取消等待回调的异步加载", ["id", e]),
         ResourceSystem.ZY.add(e));
   }
   static IsAsyncLoadingThreadEnabled() {
@@ -478,14 +495,14 @@ class ResourceSystem {
           ? ((t = ResourceSystem.uJ.get(s)), ResourceSystem.uJ.set(s, ++t))
           : (ResourceSystem.uJ.set(s, 1),
             1 < ResourceSystem.uJ.size ||
-              (ResourceSystem.GUa
+              (ResourceSystem.FUa
                 ? Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "GameMode",
-                    39,
+                    38,
                     "进入 LoadModeInLoading 忽略，因为处于强制游戏模式中。",
                   )
-                : this.fka(e))))
+                : this.SFa(e))))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("GameMode", 3, "SetLoadModeInLoading reason 为空");
   }
@@ -496,14 +513,14 @@ class ResourceSystem {
           Log_1.Log.Info("GameMode", 4, "[SetLoadMode]:InGame", ["Reason", s]),
         1 < t ? ResourceSystem.uJ.set(s, t - 1) : ResourceSystem.uJ.delete(s),
         0 < ResourceSystem.uJ.size ||
-          (ResourceSystem.GUa
+          (ResourceSystem.FUa
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "GameMode",
-                39,
+                38,
                 "退出 LoadModeInLoading 忽略，因为处于强制游戏模式中。",
               )
-            : this.vka(e)))
+            : this.EFa(e)))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "GameMode",
@@ -514,15 +531,15 @@ class ResourceSystem {
         );
   }
   static SetForceLoadModeInGame(e, s) {
-    (ResourceSystem.GUa = s)
+    (ResourceSystem.FUa = s)
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("GameMode", 39, "开启 ForceLoadModeInGame"),
-        this.vka(e))
+          Log_1.Log.Debug("GameMode", 38, "开启 ForceLoadModeInGame"),
+        this.EFa(e))
       : (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("GameMode", 39, "退出 ForceLoadModeInGame"),
-        0 < ResourceSystem.uJ.size && this.fka(e));
+          Log_1.Log.Debug("GameMode", 38, "退出 ForceLoadModeInGame"),
+        0 < ResourceSystem.uJ.size && this.SFa(e));
   }
-  static vka(e) {
+  static EFa(e) {
     ResourceSystem.mJ.Start(),
       cpp_1.FKuroPerfSightHelper.EndExtTag("InLoadingMode"),
       Info_1.Info.IsPlayInEditor
@@ -554,12 +571,12 @@ class ResourceSystem {
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateMinUpdateFifoBudgetTime(
         3,
       ),
-      this.vOa &&
-        (TimerSystem_1.TimerSystem.Remove(this.vOa), (this.vOa = void 0)),
-      (this.lwa = 2),
+      this.Ska &&
+        (TimerSystem_1.TimerSystem.Remove(this.Ska), (this.Ska = void 0)),
+      (this.Iwa = 2),
       ResourceSystem.mJ.Stop();
   }
-  static fka(e) {
+  static SFa(e) {
     ResourceSystem.cJ.Start(),
       cpp_1.FKuroPerfSightHelper.BeginExtTag("InLoadingMode"),
       Info_1.Info.IsPlayInEditor
@@ -595,21 +612,22 @@ class ResourceSystem {
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateMinUpdateFifoBudgetTime(
         9999,
       ),
-      this.vOa && TimerSystem_1.TimerSystem.Remove(this.vOa),
-      (this.vOa = TimerSystem_1.TimerSystem.Delay(
-        () => {
-          (this.vOa = void 0), this.ResetLoadMode(Info_1.Info.GameInstance);
-        },
-        RESET_TIME,
-        void 0,
-        "ResetLoadModeTimer",
-        !1,
-      )),
-      (this.lwa = 1),
+      this.Ska && TimerSystem_1.TimerSystem.Remove(this.Ska);
+    e = Info_1.Info.IsPlayInEditor ? RESET_TIME_PIE : RESET_TIME;
+    (this.Ska = TimerSystem_1.TimerSystem.Delay(
+      () => {
+        (this.Ska = void 0), this.ResetLoadMode(Info_1.Info.GameInstance);
+      },
+      e,
+      void 0,
+      "ResetLoadModeTimer",
+      !1,
+    )),
+      (this.Iwa = 1),
       ResourceSystem.cJ.Stop();
   }
   static ResetLoadMode(e, s = !1) {
-    2 !== this.lwa &&
+    2 !== this.Iwa &&
       (s
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -625,10 +643,10 @@ class ResourceSystem {
             "长时间处于InLoading加载模式，触发保底",
             ["LoadingReasonMap", this.uJ],
           ),
-      ResourceSystem.MOa(),
-      ResourceSystem.vka(e));
+      ResourceSystem.Eka(),
+      ResourceSystem.EFa(e));
   }
-  static MOa() {
+  static Eka() {
     ResourceSystem.uJ.clear();
   }
   static DebugDumpLoadingAssets() {
@@ -636,14 +654,14 @@ class ResourceSystem {
   }
 }
 ((exports.ResourceSystem = ResourceSystem).WY = void 0),
-  (ResourceSystem.Uxa = new Map()),
+  (ResourceSystem.Bxa = new Map()),
   (ResourceSystem.zY = new PriorityQueue_1.PriorityQueue((e, s) =>
     e.Priority === s.Priority ? e.Id - s.Id : s.Priority - e.Priority,
   )),
   (ResourceSystem.ZY = new Set()),
   (ResourceSystem.YY = new TimeLimit_1.TimeLimit()),
   (ResourceSystem.LBn = !1),
-  (ResourceSystem.GUa = !1),
+  (ResourceSystem.FUa = !1),
   (ResourceSystem.XY = new Map()),
   (ResourceSystem.aJ = Stats_1.Stat.Create("RS.Load")),
   (ResourceSystem.lJ = Stats_1.Stat.Create("RS.LoadASync")),
@@ -655,7 +673,7 @@ class ResourceSystem {
   (ResourceSystem.$Y = !1),
   (ResourceSystem.InvalidId = -1),
   (ResourceSystem.uJ = new Map()),
-  (ResourceSystem.vOa = void 0),
-  (ResourceSystem.lwa = 0),
+  (ResourceSystem.Ska = void 0),
+  (ResourceSystem.Iwa = 0),
   ResourceSystem.Initialize();
 //# sourceMappingURL=ResourceSystem.js.map

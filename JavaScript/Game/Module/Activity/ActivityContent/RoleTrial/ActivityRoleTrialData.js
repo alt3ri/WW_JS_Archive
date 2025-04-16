@@ -3,17 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityRoleTrialData = exports.stateResolver = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  ActivityData_1 = require("../../ActivityData");
+  ActivityData_1 = require("../../ActivityData"),
+  ActivityRoleTrialController_1 = require("./ActivityRoleTrialController");
 exports.stateResolver = {
   [Protocol_1.Aki.Protocol.Lps.Proto_Running]: 0,
   [Protocol_1.Aki.Protocol.Lps.Proto_WaitTakeReward]: 1,
-  [Protocol_1.Aki.Protocol.Lps.Proto_Finish]: 2,
+  [Protocol_1.Aki.Protocol.Lps.a3_]: 2,
 };
 class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
       (this.RoleIdList = []),
       (this.RoleTrialIdList = []),
+      (this.TrialToIdMap = new Map()),
       (this.Z2e = new Map()),
       (this.CurrentRoleId = 0),
       (this.eFe = 0);
@@ -28,7 +30,11 @@ class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
     return 3 === this.eFe;
   }
   PhraseEx(t) {
-    (this.RoleIdList.length = 0), (this.RoleTrialIdList.length = 0);
+    this.CheckIfInShowTime() &&
+      (ActivityRoleTrialController_1.ActivityRoleTrialController.CurrentActivityId =
+        t.s5n),
+      (this.RoleIdList.length = 0),
+      (this.RoleTrialIdList.length = 0);
     t = t.Vps;
     if (t)
       for (const o of t.Rps) {
@@ -39,6 +45,7 @@ class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
             );
         this.RoleTrialIdList.push(r.TrialRoleId),
           this.RoleIdList.push(o.Q6n),
+          this.TrialToIdMap.set(r.TrialRoleId, o.Q6n),
           this.Z2e.set(o.Q6n, e);
       }
   }
@@ -61,13 +68,22 @@ class ActivityRoleTrialData extends ActivityData_1.ActivityBaseData {
     if (e && e.RewardItem) {
       var r,
         o,
-        a = this.GetRewardStateByRoleId(t),
-        i = [];
+        i = this.GetRewardStateByRoleId(t),
+        a = [];
       for ([r, o] of e.RewardItem) {
-        var s = [{ IncId: 0, ItemId: r }, o];
-        i.push({ Item: s, HasClaimed: 2 === a });
+        var n = [{ IncId: 0, ItemId: r }, o];
+        a.push({ Item: n, HasClaimed: 2 === i });
       }
-      return i;
+      return a;
+    }
+  }
+  GetConfigByRoleAndInstance(t, e) {
+    for (const o of this.RoleIdList) {
+      var r =
+        ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
+          o,
+        );
+      if (r && r.RoleId === t && r.InstanceId === e) return r;
     }
   }
   NeedSelfControlFirstRedPoint() {

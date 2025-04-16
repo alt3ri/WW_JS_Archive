@@ -76,10 +76,9 @@ class VisionCommonDragItem {
       (this.Ngo = (t) => {
         ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCanDrag() &&
           !this.Sgo &&
-          (ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCanDrag() &&
-            ModelManager_1.ModelManager.PhantomBattleModel.SetCurrentDragIndex(
-              this.Xy,
-            ),
+          (ModelManager_1.ModelManager.PhantomBattleModel.SetCurrentDragIndex(
+            this.Xy,
+          ),
           (this.lgo = !1),
           (this.Uqe = 0),
           (this.ugo = !1),
@@ -102,7 +101,7 @@ class VisionCommonDragItem {
         this.Fgo(),
           this.Vgo(),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
+            Log_1.Log.Debug("UiCommon", 27, "OnPointUp", [
               "OnPointUp",
               this.Xy,
             ]),
@@ -116,13 +115,13 @@ class VisionCommonDragItem {
                 : this.jgo()
               : this.$8i
                 ? (Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
+                    Log_1.Log.Debug("UiCommon", 27, "OnPointUp", [
                       "this.IfBeginDrag",
                       this.cgo,
                     ]),
                   (i = this.Uqe < CLICKTIME),
                   Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
+                    Log_1.Log.Debug("UiCommon", 27, "OnPointUp", [
                       "timeState",
                       i,
                     ]),
@@ -142,7 +141,9 @@ class VisionCommonDragItem {
           (ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
             this.Xy,
           ) &&
-            ((this.Mgo = []), (this._go = !0), (this.cgo = !0)));
+            (this.$8i
+              ? ((this.Mgo = []), (this._go = !0), (this.cgo = !0))
+              : ModelManager_1.ModelManager.PhantomBattleModel.ClearCurrentDragIndex()));
       }),
       (this.Kgo = (t) => {
         this.Ggo ||

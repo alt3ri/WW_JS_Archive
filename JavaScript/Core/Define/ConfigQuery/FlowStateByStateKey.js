@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configFlowStateByStateKey.Init"),
-  getConfigStat = Stats_1.Stat.Create("configFlowStateByStateKey.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configFlowStateByStateKey.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configFlowStateByStateKey.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configFlowStateByStateKey.GetConfig(";
 exports.configFlowStateByStateKey = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (t, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${t})`),
+      getConfigStat?.Start();
+    var e = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${t})`),
       n =
-        (e.Start(),
+        (e?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (n) {
       if (o) {
@@ -43,8 +47,8 @@ exports.configFlowStateByStateKey = {
         const a = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (a)
           return (
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -76,8 +80,8 @@ exports.configFlowStateByStateKey = {
               ((n = KEY_PREFIX + `#${t})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(n, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -85,8 +89,8 @@ exports.configFlowStateByStateKey = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    e.Stop(),
-      getConfigStat.Stop(),
+    e?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -7,8 +7,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   FormationPropertyAll_1 = require("../../../Core/Define/ConfigQuery/FormationPropertyAll"),
   FormationPropertyById_1 = require("../../../Core/Define/ConfigQuery/FormationPropertyById"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
-  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
-  FormationAttributeController_1 = require("./FormationAttributeController");
+  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils");
 class FormationAttributeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -54,13 +53,13 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
   GetValue(e) {
     var t,
       r,
-      o = this.GetData(e);
-    return o
-      ? ((r = this.GetPredictedServerStopTime() - o.Timestamp),
-        0 === (t = o.Speed) || r <= 0
-          ? o.Value
+      i = this.GetData(e);
+    return i
+      ? ((r = this.GetPredictedServerStopTime() - i.Timestamp),
+        0 === (t = i.Speed) || r <= 0
+          ? i.Value
           : ((r = r * CommonDefine_1.SECOND_PER_MILLIONSECOND * t),
-            this.ClampValue(e, o.Value + r, 0, o.Max)))
+            this.ClampValue(e, i.Value + r, 0, i.Max)))
       : 0;
   }
   GetMax(e) {
@@ -79,18 +78,18 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
     var t = this.zBe.get(e);
     if (t) return t;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("CombatInfo", 20, "尝试读取不存在的队伍属性。", [
+      Log_1.Log.Error("CombatInfo", 19, "尝试读取不存在的队伍属性。", [
         "typeId",
         e,
       ]);
   }
-  SetData(e, t, r, o, i, a) {
+  SetData(e, t, r, i, o, a) {
     e = this.GetData(e);
     e &&
       ((e.Max = t),
       (e.BaseMax = r),
-      (e.Value = o),
-      (e.Speed = i),
+      (e.Value = i),
+      (e.Speed = o),
       (e.Timestamp = a));
   }
   SetSpeed(e, t) {
@@ -115,39 +114,39 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
       (r.Value = Math.min(e, t)),
       (r.Max = t));
   }
-  ClampValue(e, t, r, o) {
-    let i = t,
+  ClampValue(e, t, r, i) {
+    let o = t,
       a = r,
-      s = o;
+      s = i;
     var n,
       t = this.BoundsLockerMap.get(e);
     if (t)
       for (const h of t.values())
         h.LockLowerBounds &&
-          ((n = h.LowerPercent * o + h.LowerOffset), (a = Math.max(a ?? n, n))),
+          ((n = h.LowerPercent * i + h.LowerOffset), (a = Math.max(a ?? n, n))),
           h.LockUpperBounds &&
-            ((n = h.UpperPercent * o + h.UpperOffset),
+            ((n = h.UpperPercent * i + h.UpperOffset),
             (s = Math.min(s ?? n, n)));
     return (
-      void 0 !== s && (i = Math.min(s, i)),
-      (i = void 0 !== a ? Math.max(a, i) : i)
+      void 0 !== s && (o = Math.min(s, o)),
+      (o = void 0 !== a ? Math.max(a, o) : o)
     );
   }
   AddBoundsLocker(e, t, r) {
     this.SetValue(e, this.GetValue(e));
-    let o = this.BoundsLockerMap.get(e);
+    let i = this.BoundsLockerMap.get(e);
     return (
-      o || this.BoundsLockerMap.set(e, (o = new Map())),
-      o.has(r) &&
+      i || this.BoundsLockerMap.set(e, (i = new Map())),
+      i.has(r) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Battle",
-          20,
+          19,
           "重复添加队伍属性锁",
           ["attrId", e],
           ["handle", r],
         ),
-      o.set(r, t),
+      i.set(r, t),
       this.SetValue(e, this.GetValue(e)),
       r
     );
@@ -158,9 +157,7 @@ class FormationAttributeModel extends ModelBase_1.ModelBase {
     return !(!r || !r.delete(t) || (this.SetValue(e, this.GetValue(e)), 0));
   }
   GetPredictedServerStopTime() {
-    return Number(
-      FormationAttributeController_1.FormationAttributeController.GetPredictedServerStopTime(),
-    );
+    return Time_1.Time.ServerCombatStopTime;
   }
 }
 exports.FormationAttributeModel = FormationAttributeModel;

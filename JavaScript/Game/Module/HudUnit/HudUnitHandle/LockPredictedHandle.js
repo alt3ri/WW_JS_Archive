@@ -16,7 +16,7 @@ const UE = require("ue"),
 class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Nma = new Vector2D_1.Vector2D()),
+      (this.jma = new Vector2D_1.Vector2D()),
       (this.lga = void 0),
       (this.v$e = !1),
       (this.dDr = !1),
@@ -27,7 +27,7 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.lne = (e, t) => {
         (this.dDr = t),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Battle", 18, "预测锁定Tag改变", ["HasTag", t]),
+            Log_1.Log.Debug("Battle", 17, "预测锁定Tag改变", ["HasTag", t]),
           this.dDr || this.Deactivate();
       });
   }
@@ -71,13 +71,13 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         (e = this.GetWorldLocation(e)) &&
         HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
           e,
-          this.Nma,
+          this.jma,
         )
           ? (this.Activate(),
             this.lga &&
               this.lga
                 .GetRootItem()
-                ?.SetAnchorOffset(this.Nma.ToUeVector2D(!0)))
+                ?.SetAnchorOffset(this.jma.ToUeVector2D(!0)))
           : this.Deactivate());
   }
   Activate() {
@@ -101,7 +101,7 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   GetTargetInfo() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     if (e?.Valid)
-      return e.Entity.CheckGetComponent(29).GetPredictedLockOnTarget();
+      return e.Entity.CheckGetComponent(32).GetPredictedLockOnTarget();
   }
   GetWorldLocation(t) {
     var i = t.EntityHandle;
@@ -112,7 +112,7 @@ class LockPredictedHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         let e = FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName);
         return (
           (e && i.DoesSocketExist(e)) || (e = HIT_CASE_SOCKET),
-          i.GetSocketLocation(e)
+          i.D_GetSocketLocation(e)
         );
       }
     }

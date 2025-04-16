@@ -11,13 +11,15 @@ class SpecialEnergyBarSlot extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
     super(...arguments),
       (this.SlotNum = 0),
       (this.SlotItemList = []),
-      (this.IsMorph = !1);
+      (this.IsMorph = !1),
+      (this.ForceHideBottomLine = !1),
+      (this.ForceEffectBasePercent = -1);
   }
   OnRegisterComponent() {
     (this.SlotNum = this.Config.SlotNum),
       0 === this.SlotNum &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 18, "槽型的能量条，分段数量不能为0", [
+        Log_1.Log.Error("Battle", 17, "槽型的能量条，分段数量不能为0", [
           "id",
           this.Config.Id,
         ]);
@@ -36,7 +38,10 @@ class SpecialEnergyBarSlot extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   }
   OnStart() {
     if (this.Config) {
-      var e = effectBasePercents[this.SlotNum - 1];
+      var e =
+        0 < this.ForceEffectBasePercent
+          ? this.ForceEffectBasePercent
+          : effectBasePercents[this.SlotNum - 1];
       for (const r of this.SlotItemList) r.SetEffectBasePercent(e);
       if (this.Config.EffectColor) {
         var s = UE.Color.FromHex(this.Config.EffectColor),
@@ -50,7 +55,8 @@ class SpecialEnergyBarSlot extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
             h.SetFullEffectColor(i, this.IsMorph);
       }
       let t = !0;
-      this.IsMorph && this.Config?.IconPath && (t = !1),
+      (this.ForceHideBottomLine || (this.IsMorph && this.Config?.IconPath)) &&
+        (t = !1),
         this.GetItem(this.SlotNum + 1)?.SetUIActive(t),
         this.RefreshBarPercent(!0);
     }
@@ -78,6 +84,12 @@ class SpecialEnergyBarSlot extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   UpdateFullEffectOffsetBySlotWidth() {
     for (const t of this.SlotItemList)
       t.SetFullEffectOffsetX(t.GetRootItem().Width / 2);
+  }
+  SetCustomEffectBasePercent(t) {
+    for (const e of this.SlotItemList) e.SetEffectBasePercent(t);
+  }
+  SetFullEffectVisible(t, e) {
+    this.SlotItemList[t]?.SetFullEffectVisible(e);
   }
 }
 exports.SpecialEnergyBarSlot = SpecialEnergyBarSlot;

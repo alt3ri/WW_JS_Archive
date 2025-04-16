@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AbilityUtils = void 0);
+const EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
 class AbilityUtils {
   static GetLevelValue(t, e, r) {
     return t && 0 !== t.length
@@ -28,6 +30,11 @@ class AbilityUtils {
       default:
         return t.GetBaseValue(e);
     }
+  }
+  static SetSpecialEnergyAttrValue(t, e, r) {
+    CharacterAttributeTypes_1.specialEnergyIds.includes(e) &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 170))?.Valid &&
+      t.SetBaseValue(e, r);
   }
 }
 exports.AbilityUtils = AbilityUtils;

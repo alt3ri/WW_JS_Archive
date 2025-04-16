@@ -28,7 +28,7 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.m8t = () => {
         this.RoguelikeChooseData.RogueGainEntryList.length <= 0
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Roguelike", 9, "当前可选角色为0")
+            Log_1.Log.Error("Roguelike", 8, "当前可选角色为0")
           : ((ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
               this.RoguelikeChooseData.RogueGainEntryList[0]),
             RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(

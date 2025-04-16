@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.PhantomFettersObtainItem = exports.PhantomFettersItem = void 0);
+  (exports.PhantomFettersObtainItem =
+    exports.PhantomFettersItem =
+    exports.PhantomFetterItemData =
+      void 0);
 const UE = require("ue"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
@@ -8,6 +11,12 @@ const UE = require("ue"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
   VisionFetterSuitItem_1 = require("../../Vision/View/VisionFetterSuitItem");
+class PhantomFetterItemData {
+  constructor() {
+    (this.PhantomFetterGroup = void 0), (this.RoleId = 0);
+  }
+}
+exports.PhantomFetterItemData = PhantomFetterItemData;
 class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -25,6 +34,7 @@ class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
       [2, UE.UIItem],
       [3, UE.UIItem],
       [4, UE.UIText],
+      [5, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[0, this.BTt]]);
   }
@@ -43,13 +53,28 @@ class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.RefreshName(),
       this.m8i(),
       this.RefreshUnlockText(),
+      this.Eo_(),
       this.N6e(e, !1);
   }
+  Eo_() {
+    var t =
+      ModelManager_1.ModelManager.VisionRecommendModel.GetRoleFetterRecommendInfo(
+        this.fGt.RoleId,
+      );
+    let e = !1;
+    if (t)
+      for (const i of t)
+        if (i.GetRecommendFetterGroupId() === this.fGt.PhantomFetterGroup.Id) {
+          e = !0;
+          break;
+        }
+    this.GetItem(5).SetUIActive(e);
+  }
   RefreshName() {
-    this.GetText(1).ShowTextNew(this.fGt.FetterGroupName);
+    this.GetText(1).ShowTextNew(this.fGt.PhantomFetterGroup.FetterGroupName);
   }
   RefreshUnlockText() {
-    var t = this.fGt.Id,
+    var t = this.fGt.PhantomFetterGroup.Id,
       t =
         ModelManager_1.ModelManager.PhantomBattleModel.GetFetterGroupMonsterIdArray(
           t,
@@ -70,7 +95,7 @@ class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.N6e(!1);
   }
   m8i() {
-    this.bxt.Update(this.fGt);
+    this.bxt.Update(this.fGt.PhantomFetterGroup);
   }
   N6e(t, e = !0) {
     var i = this.GetExtendToggle(0);

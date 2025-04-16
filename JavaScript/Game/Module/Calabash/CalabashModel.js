@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CalabashModel = exports.CalabashDevelopRewardData = void 0);
-const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+const Log_1 = require("../../../Core/Common/Log"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   PhantomFetterGroupById_1 = require("../../../Core/Define/ConfigQuery/PhantomFetterGroupById"),
+  RefineRecommendByCost_1 = require("../../../Core/Define/ConfigQuery/RefineRecommendByCost"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -62,6 +64,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
       (this.tpt = void 0),
       (this.ipt = void 0),
       (this.HideVisionRecoveryConfirmBox = !1),
+      (this.RefineAttribute = void 0),
       (this.opt = new Array());
   }
   rpt() {
@@ -322,6 +325,19 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
   GmClearData() {
     this.opt.length = 0;
+  }
+  GetVisionRefineRecommendAttributes(e, t) {
+    var a =
+      RefineRecommendByCost_1.configRefineRecommendByCost.GetConfigList(e);
+    if (a) {
+      for (const r of a) if (r.FetterArray.includes(t)) return r.PropertyArray;
+    } else
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Calabash", 75, "获取洗炼推荐配置失败, 请检查配置表", [
+          "cost",
+          e,
+        ]);
+    return [];
   }
 }
 exports.CalabashModel = CalabashModel;

@@ -34,6 +34,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.Fri = 0),
       (this.Vri = 0),
       (this.Hri = 0),
+      (this.PVs = 0),
       (this.gri = void 0),
       (this.GUe = (t, s, e) => {
         this.jri(s.Entity) &&
@@ -72,16 +73,15 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         (this.p7e = s) ? this.Kri() : (this.Jri(), this.$ri());
       }),
       (this.zri = () => {
-        var t;
         this.CurrentEntity?.Valid &&
           (MonsterCursorHandle.Zri.Start(),
           this.Nri.clear(),
-          (t = this.j$e()),
           this.HudEntitySet.Num() <= this.bri
-            ? this.eni(t)
-            : this.tni(t) || this.ini(t) || this.oni(t),
+            ? this.eni()
+            : this.tni() || this.ini() || this.oni(),
           MonsterCursorHandle.Zri.Stop());
-      });
+      }),
+      (this.wal = []);
   }
   OnInitialize() {
     var t;
@@ -95,6 +95,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.Hri = CommonParamById_1.configCommonParamById.GetIntConfig(
         "MonsterCursorMaxDistance",
       )),
+      (this.PVs = Math.pow(this.Hri, 2)),
       (this.Ori = CommonParamById_1.configCommonParamById.GetIntConfig(
         "MonsterCursorMaxScale",
       )),
@@ -113,7 +114,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
       this.CurrentEntity?.Valid &&
         ((this.dri = this.CurrentEntity.Entity.GetComponent(1)),
-        (t = this.CurrentEntity.Entity.GetComponent(190)),
+        (t = this.CurrentEntity.Entity.GetComponent(203)),
         (this.p7e = t.HasTag(1996802261)),
         this.NewHudEntitySet(),
         this.rni(),
@@ -208,7 +209,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       s =
         (t.SetComponent(0),
         t.SetComponent(1),
-        t.SetComponent(190),
+        t.SetComponent(203),
         t.ListenForTagCountChanged(-1371021686, this.Yri),
         t.GetMonsterMatchType());
     let e = this.Bri.get(s);
@@ -226,7 +227,7 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
   O7e(t) {
     this.N7e();
-    t = t.Entity.GetComponent(190);
+    t = t.Entity.GetComponent(203);
     this.f7e = t.ListenForTagAddOrRemove(
       1996802261,
       this.v7e,
@@ -247,54 +248,49 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     TimerSystem_1.TimerSystem.Has(this.Gri) &&
       (TimerSystem_1.TimerSystem.Remove(this.Gri), (this.Gri = void 0));
   }
-  eni(t) {
-    for (const s of this.HudEntitySet.GetAll())
-      if ((this.lni(s, t), this.Nri.size >= this.bri)) break;
+  eni() {
+    for (const t of this.HudEntitySet.GetAll())
+      if ((this.lni(t), this.Nri.size >= this.bri)) break;
     this._ni(this.Nri);
   }
-  tni(t) {
-    for (const s of this.wri)
-      if ((this.lni(s, t), this.Nri.size >= this.bri))
+  tni() {
+    for (const t of this.wri)
+      if ((this.lni(t), this.Nri.size >= this.bri))
         return this._ni(this.Nri), !0;
     return !1;
   }
-  ini(s) {
+  ini() {
     for (let t = 2; 1 <= t; t--) {
-      var e = this.Bri.get(t);
-      if (e && !(e.size <= 0))
-        for (const r of e)
-          if ((this.lni(r, s), this.Nri.size >= this.bri))
+      var s = this.Bri.get(t);
+      if (s && !(s.size <= 0))
+        for (const e of s)
+          if ((this.lni(e), this.Nri.size >= this.bri))
             return this._ni(this.Nri), !0;
     }
     return !1;
   }
-  oni(e) {
-    let r = 0;
-    var i = this.HudEntitySet.GetAll(),
-      o = this.HudEntitySet.Num();
-    for (let s = 0; s < o; s++) {
-      var t = i[(r = s)],
-        n = (MonsterCursorHandle.uni.Start(), t.GetDistanceSquaredTo(e));
-      MonsterCursorHandle.uni.Stop();
-      for (let t = s + 1; t < o; t++) {
-        var h = i[t],
-          h =
-            (MonsterCursorHandle.GetTargetInfo2StatObject.Start(),
-            h.GetDistanceSquaredTo(e));
-        MonsterCursorHandle.GetTargetInfo2StatObject.Stop(), h < n && (r = t);
-      }
-      r !== s && ((t = i[r]), (i[r] = i[s]), (i[s] = t));
-      t = i[s];
-      if ((this.lni(t, e), this.Nri.size >= this.bri)) break;
+  oni() {
+    ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(
+      this.PVs,
+      24,
+      this.wal,
+    );
+    for (const s of this.wal) {
+      var t = this.HudEntitySet.GetByEntityId(s.Id);
+      if (t && this.lni(t, !1) && this.Nri.size >= this.bri) break;
     }
     this._ni(this.Nri);
   }
-  lni(t, s) {
-    !t.IsValid() ||
-      t.GetDistanceSquaredTo(s) > this.Hri ||
-      !this.cni(t) ||
-      this.mni(t.GetLocationProxy()) ||
-      this.Nri.add(t.GetId());
+  lni(t, s = !0) {
+    return (
+      !!t.IsValid() &&
+      !(
+        (s && t.GetEntity().DistanceWithCamera > this.PVs) ||
+        !this.cni(t) ||
+        this.mni(t.GetLocationProxy()) ||
+        (this.Nri.add(t.GetId()), 0)
+      )
+    );
   }
   cni(t) {
     return (
@@ -376,9 +372,6 @@ class MonsterCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   (MonsterCursorHandle.Cni = Stats_1.Stat.Create("[MonsterCursor]IsInScreen")),
   (MonsterCursorHandle.dni = Stats_1.Stat.Create(
     "[MonsterCursor]CheckMonsterCursorTagStatObject",
-  )),
-  (MonsterCursorHandle.uni = Stats_1.Stat.Create(
-    "[MonsterCursor]GetTargetInfo1StatObject",
   )),
   (MonsterCursorHandle.GetTargetInfo2StatObject = Stats_1.Stat.Create(
     "[MonsterCursor]GetTargetInfo2StatObject",

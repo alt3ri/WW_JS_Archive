@@ -9,58 +9,91 @@ const Log_1 = require("../../../Core/Common/Log"),
 class ComponentForceTickController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      (this.S0r = [126]),
-      (this.y0r = [46, 60, 126, 97, 143, 145, 136, 134, 138, 146]),
-      (this.I0r = [56, 60, 145]),
+      (this.S0r = [137]),
+      (this.y0r = [52, 67, 137, 104, 154, 156, 147, 145, 149, 157, 215]),
+      (this.I0r = [63, 67, 156]),
       !0
     );
   }
-  static RegisterPreTick(o, e) {
+  static RegisterPreMoveTick(o, r) {
     this.T0r(o)
-      ? Core_1.Core.RegisterPreTick(e)
+      ? this.Eq_.has(o)
+        ? Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "TickController",
+            35,
+            "[ComponentForceTickController.RegisterPreMoveTick] 当前Comp已经注册过ForceTick",
+            ["Comp", o.toString()],
+          )
+        : this.Eq_.set(o, r)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "TickController",
-          32,
+          35,
+          "[ComponentForceTickController.RegisterPreMoveTick] 当前Comp不允许注册到ForceTickController",
+          ["Comp", o.toString()],
+        );
+  }
+  static RegisterPreTick(o, r) {
+    this.T0r(o)
+      ? Core_1.Core.RegisterPreTick(r)
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "TickController",
+          31,
           "[ComponentForceTickController.RegisterTick] 当前Comp不允许注册到ForceTickController",
           ["Comp", o.toString()],
         );
   }
-  static RegisterTick(o, e) {
+  static UnregisterPreTick(o) {
+    Core_1.Core.UnRegisterPreTick(o);
+  }
+  static RegisterTick(o, r) {
     this.L0r(o)
       ? this.D0r.has(o)
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "TickController",
-            32,
+            31,
             "[ComponentForceTickController.RegisterTick] 当前Comp已经注册过ForceTick",
             ["Comp", o.toString()],
           )
-        : this.D0r.set(o, e)
+        : this.D0r.set(o, r)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "TickController",
-          32,
+          31,
           "[ComponentForceTickController.RegisterTick] 当前Comp不允许注册到ForceTickController",
           ["Comp", o.toString()],
         );
   }
-  static RegisterAfterTick(o, e) {
+  static RegisterAfterTick(o, r) {
     this.R0r(o)
       ? this._It.has(o)
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "TickController",
-            32,
+            31,
             "[ComponentForceTickController.RegisterAfterTick] 当前Comp已经注册过ForceAfterTick",
             ["Comp", o.toString()],
           )
-        : this._It.set(o, e)
+        : this._It.set(o, r)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "TickController",
-          32,
+          31,
           "[ComponentForceTickController.RegisterAfterTick] 当前Comp不允许注册到ForceTickController",
+          ["Comp", o.toString()],
+        );
+  }
+  static UnregisterPreMoveTick(o) {
+    this.Eq_.has(o)
+      ? this.Eq_.delete(o)
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "TickController",
+          35,
+          "[ComponentForceTickController.UnregisterPreTick] 当前Comp未注册过",
           ["Comp", o.toString()],
         );
   }
@@ -70,7 +103,7 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "TickController",
-          32,
+          31,
           "[ComponentForceTickController.UnregisterTick] 当前Comp未注册过ForceTick",
           ["Comp", o.toString()],
         );
@@ -81,97 +114,127 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "TickController",
-          32,
+          31,
           "[ComponentForceTickController.UnregisterAfterTick] 当前Comp未注册过ForceAfterTick",
           ["Comp", o.toString()],
         );
   }
-  static UnregisterPreTick(o) {
-    Core_1.Core.UnRegisterPreTick(o);
-  }
-  static OnTick(o) {
-    for (var [e, r] of this.D0r)
-      if (e.Active)
+  static MoveTickPriority1(o) {
+    for (var [r, e] of this.Eq_)
+      if (r.Active)
         try {
           var t = this.m6(
-            this.U0r,
-            e.constructor.name,
-            "ComponentForceTickController.OnTick.",
+            this.Iq_,
+            r.constructor.name,
+            "ComponentForceTickController.PreMoveTick",
           );
-          t?.Start(), r(o * this.SW), t?.Stop();
+          t?.Start(), e(o * this.SW), t?.Stop();
         } catch (o) {
           o instanceof Error
             ? Log_1.Log.CheckError() &&
               Log_1.Log.ErrorWithStack(
                 "TickController",
-                32,
+                35,
                 "处理方法执行异常",
                 o,
-                ["comp", e.toString()],
+                ["comp", r.toString()],
                 ["error", o.message],
               )
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "TickController",
-                32,
+                35,
                 "处理方法执行异常",
-                ["comp", e.toString()],
+                ["comp", r.toString()],
+                ["error", o],
+              );
+        }
+  }
+  static OnTick(o) {
+    for (var [r, e] of this.D0r)
+      if (r.Active)
+        try {
+          var t = this.m6(
+            this.U0r,
+            r.constructor.name,
+            "ComponentForceTickController.OnTick.",
+          );
+          t?.Start(), e(o * this.SW), t?.Stop();
+        } catch (o) {
+          o instanceof Error
+            ? Log_1.Log.CheckError() &&
+              Log_1.Log.ErrorWithStack(
+                "TickController",
+                31,
+                "处理方法执行异常",
+                o,
+                ["comp", r.toString()],
+                ["error", o.message],
+              )
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "TickController",
+                31,
+                "处理方法执行异常",
+                ["comp", r.toString()],
                 ["error", o],
               );
         }
   }
   static OnAfterTick(o) {
-    for (var [e, r] of this._It)
+    for (var [r, e] of this._It)
       try {
         var t;
-        e.Active &&
+        r.Active &&
           ((t = this.m6(
             this.A0r,
-            e.constructor.name,
+            r.constructor.name,
             "ComponentForceTickController.OnAfterTick.",
           ))?.Start(),
-          r(o * this.SW),
+          e(o * this.SW),
           t?.Stop());
       } catch (o) {
         o instanceof Error
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "TickController",
-              32,
+              31,
               "处理方法执行异常",
               o,
-              ["comp", e.toString()],
+              ["comp", r.toString()],
               ["error", o.message],
             )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "TickController",
-              32,
+              31,
               "处理方法执行异常",
-              ["comp", e.toString()],
+              ["comp", r.toString()],
               ["error", o],
             );
       }
   }
-  static T0r(e) {
+  static T0r(r) {
     return Boolean(
-      this.S0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
+      this.S0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(r, o)),
     );
   }
-  static L0r(e) {
+  static L0r(r) {
     return Boolean(
-      this.y0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
+      this.y0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(r, o)),
     );
   }
-  static R0r(e) {
+  static R0r(r) {
     return Boolean(
-      this.I0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
+      this.I0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(r, o)),
     );
   }
-  static m6(e, r, t) {
+  static m6(r, e, t) {
     if (Stats_1.Stat.Enable) {
-      let o = e.get(r);
-      return o || ((o = Stats_1.Stat.Create(t + r)), e.set(r, o)), o;
+      let o = r.get(e);
+      return (
+        o || ((o = Stats_1.Stat.CreateNoFlameGraph(t + e)), r.set(e, o)), o
+      );
     }
   }
   static SetTimeDilation(o) {
@@ -182,9 +245,11 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
   []),
   (ComponentForceTickController.I0r = []),
   (ComponentForceTickController.S0r = []),
+  (ComponentForceTickController.Iq_ = new Map()),
   (ComponentForceTickController.U0r = new Map()),
   (ComponentForceTickController.A0r = new Map()),
   (ComponentForceTickController.SW = 1),
+  (ComponentForceTickController.Eq_ = new Map()),
   (ComponentForceTickController.D0r = new Map()),
   (ComponentForceTickController._It = new Map());
 //# sourceMappingURL=ComponentForceTickController.js.map

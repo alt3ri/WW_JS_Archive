@@ -26,8 +26,8 @@ class InputCombinationAxisMapping {
         n.push(t),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
-            "Test",
-            8,
+            "InputSettings",
+            10,
             "[AddKeyMap]",
             ["mainKeyName", s],
             ["secondaryKeyName", e],

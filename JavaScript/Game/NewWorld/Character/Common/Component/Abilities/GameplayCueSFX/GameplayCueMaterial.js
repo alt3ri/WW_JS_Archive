@@ -13,24 +13,12 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
       (this.rKt = 0),
       (this.aYo = 0),
       (this.hYo = (e) => {
-        if (e === this.rKt) {
-          switch (this.aYo) {
-            case 1:
-              EventSystem_1.EventSystem.RemoveWithTarget(
-                this.ActorInternal.CharRenderingComponent,
-                EventDefine_1.EEventName.OnRemoveMaterialController,
-                this.hYo,
-              );
-              break;
-            case 2:
-              EventSystem_1.EventSystem.RemoveWithTarget(
-                this.ActorInternal.CharRenderingComponent,
-                EventDefine_1.EEventName.OnRemoveMaterialControllerGroup,
-                this.hYo,
-              );
-          }
-          this.EndCallback?.();
-        }
+        e === this.rKt &&
+          this.EndCallback &&
+          (this.EAl(),
+          (e = this.EndCallback),
+          (this.EndCallback = void 0),
+          e());
       });
   }
   OnInit() {
@@ -41,7 +29,7 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
   }
   OnCreate() {
     ResourceSystem_1.ResourceSystem.LoadAsync(
-      this.CueConfig.Path,
+      this.GetPath(),
       UE.Object,
       (e) => {
         if (
@@ -68,7 +56,7 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
                 Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Battle",
-                    29,
+                    28,
                     "附加材质类型错误:",
                     ["Buff特效Id", this.CueConfig.Id],
                     ["材质路径", this.CueConfig.Path],
@@ -91,6 +79,7 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
           this.rKt,
         );
     }
+    this.hYo(this.rKt);
   }
   OnSetMagnitude(e) {
     this.ActorInternal.CharRenderingComponent.SetEffectProgress(e, this.rKt);
@@ -103,7 +92,7 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
         : 0;
   }
   I$o() {
-    if (this.EndCallback)
+    if (this.EndCallback && !this.IsInstant)
       switch (this.aYo) {
         case 1:
           EventSystem_1.EventSystem.AddWithTarget(
@@ -119,6 +108,33 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
             this.hYo,
           );
       }
+  }
+  EAl() {
+    switch (this.aYo) {
+      case 1:
+        EventSystem_1.EventSystem.HasWithTarget(
+          this.ActorInternal.CharRenderingComponent,
+          EventDefine_1.EEventName.OnRemoveMaterialController,
+          this.hYo,
+        ) &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.ActorInternal.CharRenderingComponent,
+            EventDefine_1.EEventName.OnRemoveMaterialController,
+            this.hYo,
+          );
+        break;
+      case 2:
+        EventSystem_1.EventSystem.HasWithTarget(
+          this.ActorInternal.CharRenderingComponent,
+          EventDefine_1.EEventName.OnRemoveMaterialControllerGroup,
+          this.hYo,
+        ) &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.ActorInternal.CharRenderingComponent,
+            EventDefine_1.EEventName.OnRemoveMaterialControllerGroup,
+            this.hYo,
+          );
+    }
   }
 }
 exports.GameplayCueMaterial = GameplayCueMaterial;

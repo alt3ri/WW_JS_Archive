@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configTimePointRewardActivityById.Init"),
-  getConfigStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTimePointRewardActivityById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configTimePointRewardActivityById.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configTimePointRewardActivityById.GetConfig(";
 exports.configTimePointRewardActivityById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (i, t = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${i})`),
+      getConfigStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${i})`),
       n =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (n) {
       if (t) {
@@ -45,8 +47,8 @@ exports.configTimePointRewardActivityById = {
         const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (a)
           return (
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -79,8 +81,8 @@ exports.configTimePointRewardActivityById = {
               ((n = KEY_PREFIX + `#${i})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(n, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -88,8 +90,8 @@ exports.configTimePointRewardActivityById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigStat.Stop(),
+    o?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -101,7 +101,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           (this.p9s = !0));
       }),
       (this.VTi = () => {
-        UiManager_1.UiManager.IsViewShow("ComposeRootView") &&
+        UiManager_1.UiManager.IsViewShow("ComposeCarryOnView") &&
           ComposeController_1.ComposeController.PlayCompositeLoopDisplay();
       }),
       (this.$Ge = (e) => {
@@ -136,7 +136,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           (t.IsNew &&
             (ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
               LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-              t.ItemId,
+              t.ConfigId,
             ),
             (t.IsNew = !1)),
           this.BTi.SelectGridProxy(i),
@@ -341,7 +341,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Compose",
-            8,
+            64,
             "[LevelEventOpenSystem] 打开合成界面时找不到交互对象，直接关闭界面",
           ),
         this.CloseMe());
@@ -555,7 +555,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
               Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Guide",
-                54,
+                53,
                 "合成界面聚焦引导的额外参数配置错误",
                 ["configParams", e],
               )

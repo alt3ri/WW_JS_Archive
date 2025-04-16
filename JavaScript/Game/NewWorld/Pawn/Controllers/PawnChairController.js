@@ -16,7 +16,7 @@ class SubEntityInteractLogicController {
       (this.CreatureDataComp = t),
       (this.Entity = t.Entity),
       (this.InteractComp =
-        this.Entity.GetComponent(182)?.GetInteractController());
+        this.Entity.GetComponent(195)?.GetInteractController());
   }
   Possess(t, r = 0) {
     return !0;
@@ -42,7 +42,7 @@ class SubEntityInteractLogicController {
   (SubEntityInteractLogicController.TmpVector2 = Vector_1.Vector.Create());
 class PawnChairController extends SubEntityInteractLogicController {
   constructor() {
-    super(...arguments), (this.CFa = 40), (this.mrr = void 0);
+    super(...arguments), (this.x4a = 40), (this.mrr = void 0);
   }
   Possess(t, r) {
     return (this.MasterEntity = t), !0;
@@ -58,7 +58,7 @@ class PawnChairController extends SubEntityInteractLogicController {
       e = i.ScaledHalfHeight,
       i = i.ActorLocationProxy;
     return (
-      (this.mrr || s).ActorRightProxy.Multiply(this.CFa, t),
+      (this.mrr || s).ActorRightProxy.Multiply(this.x4a, t),
       (r.Z = this.mrr ? this.mrr.ActorLocationProxy.Z + e : i.Z),
       t.AdditionEqual(r),
       t
@@ -82,7 +82,7 @@ class PawnChairController extends SubEntityInteractLogicController {
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "AI",
-          51,
+          50,
           "[PawnChairController.IgnoreChairActorsCollision] 场景交互物体未加载完全",
           ["itemPbDataId", this.CreatureDataComp.GetPbDataId()],
           ["OwnerPbDataId", this.mrr.CreatureData.GetPbDataId()],
@@ -105,14 +105,14 @@ class PawnChairController extends SubEntityInteractLogicController {
     }
   }
   ResetCollision() {
-    this.Entity.GetComponent(187) && this.drr(!1);
+    this.Entity.GetComponent(200) && this.drr(!1);
   }
   IgnoreCollision() {
-    this.Entity.GetComponent(187) && this.drr(!0);
+    this.Entity.GetComponent(200) && this.drr(!0);
   }
   IsSceneInteractionLoadCompleted() {
     var t,
-      r = this.Entity.GetComponent(187);
+      r = this.Entity.GetComponent(200);
     return !(
       !r ||
       !r.GetIsSceneInteractionLoadCompleted() ||
@@ -121,7 +121,7 @@ class PawnChairController extends SubEntityInteractLogicController {
         ? !(t =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t))
             ?.Valid ||
-          ((this.mrr = t.Entity.GetComponent(187)), !this.mrr) ||
+          ((this.mrr = t.Entity.GetComponent(200)), !this.mrr) ||
           !this.mrr.GetIsSceneInteractionLoadCompleted()
         : ((this.mrr = r), 0))
     );

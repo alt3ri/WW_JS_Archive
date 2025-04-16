@@ -11,7 +11,7 @@ class AnimalPerformStandState extends AnimalPerformStateBase_1.AnimalPerformStat
   }
   OnExit(t) {
     this.EcologicalInterface?.IsValid() &&
-      (this.Owner.GetComponent(182)?.SetInteractionState(
+      (this.Owner.GetComponent(195)?.SetInteractionState(
         !1,
         "AnimalPerformStandState OnExit",
       ),

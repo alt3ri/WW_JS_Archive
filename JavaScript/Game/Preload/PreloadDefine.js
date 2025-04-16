@@ -11,6 +11,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AssetElement =
     exports.EntityMainAssetRecord =
     exports.PbDataAssetRecord =
+    exports.CharacterAssetRecord =
     exports.TemplateDataAssetRecord =
     exports.StateMachineAssetRecord =
     exports.BulletAssetRecord =
@@ -20,9 +21,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UE = require("ue"),
   Log_1 = require("../../Core/Common/Log"),
-  EntitySkillPreloadByActorBlueprint_1 = require("../../Core/Define/ConfigQuery/EntitySkillPreloadByActorBlueprint"),
+  Macro_1 = require("../../Core/Preprocessor/Macro"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../Core/Utils/DataTableUtil"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
+  Stats_1 = require("../../Core/Common/Stats"),
   FORBID_PATH = ((exports.USE_DB = !1), "/Game/Aki/Scene/Assets/Temp");
 class AssetRecord {
   constructor() {
@@ -43,7 +47,11 @@ class AssetRecord {
     this.lar(t) && this.Animations.push(t);
   }
   AddEffect(t) {
-    return !!this.lar(t) && (this.Effects.push(t), !0);
+    let s = t;
+    return (
+      t.includes("GA_") && (s = t.concat("_C")),
+      !!this.lar(s) && (this.Effects.push(s), !0)
+    );
   }
   AddAudio(t) {
     this.lar(t) && this.Audios.push(t);
@@ -116,6 +124,12 @@ class TemplateDataAssetRecord {
   }
 }
 exports.TemplateDataAssetRecord = TemplateDataAssetRecord;
+class CharacterAssetRecord {
+  constructor() {
+    (this.RoleId = 0), (this.AiId = 0), (this.AssetRecord = new AssetRecord());
+  }
+}
+exports.CharacterAssetRecord = CharacterAssetRecord;
 class PbDataAssetRecord {
   constructor() {
     (this.PbDataId = 0), (this.AssetRecord = new AssetRecord());
@@ -142,8 +156,40 @@ class AssetElement {
       (this.LoadedSet = new Set()),
       (this.AddObjectCallback = void 0),
       (this.LoadPriority = 100),
+      (this.ReplaceEffectMap = new Map()),
+      (this.ReplaceMontageMap = new Map()),
       (this.B7 = void 0),
-      (this.XJr = t);
+      (this.XJr = t)?.MainAsset?.ReplaceEffectMap &&
+        (this.ReplaceEffectMap = t?.MainAsset.ReplaceEffectMap),
+      t?.MainAsset?.ReplaceMontageMap &&
+        (this.ReplaceMontageMap = t?.MainAsset.ReplaceMontageMap);
+  }
+  SetupReplaceEffect(t) {
+    (t = ResourceSystem_1.ResourceSystem.Load(t, UE.DataTable)),
+      (t = DataTableUtil_1.DataTableUtil.GetDataTableAllRowFromTable(t));
+    if (t.length)
+      for (const e of t) {
+        let s = e.NewEffect?.ToAssetPathName();
+        if (s?.length && "None" !== s) {
+          let t = e.OldEffect.ToAssetPathName();
+          s.includes("GA_") && ((s = s.concat("_C")), (t = t.concat("_C"))),
+            this.ReplaceEffectMap.set(t, s);
+        }
+      }
+  }
+  SetupReplaceMontage(t) {
+    (t = ResourceSystem_1.ResourceSystem.Load(t, UE.DataTable)),
+      (t = DataTableUtil_1.DataTableUtil.GetDataTableAllRowFromTable(t));
+    if (t.length)
+      for (const e of t) {
+        var s = e.NewMontage?.ToAssetPathName();
+        s?.length &&
+          "None" !== s &&
+          this.ReplaceMontageMap.set(
+            e.OldMontage.ToAssetPathName(),
+            e.NewMontage.ToAssetPathName(),
+          );
+      }
   }
   GetEntityAssetElement() {
     return this.XJr;
@@ -186,14 +232,14 @@ class AssetElement {
   AddAnimation(t) {
     return (
       !!this.CheckPath(t) &&
-      !!this.AddPath(t) &&
+      ((t = this.ReplaceMontageMap.get(t) ?? t), !!this.AddPath(t)) &&
       (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(1), !0)
     );
   }
   AddEffect(t) {
     return (
       !!this.CheckPath(t) &&
-      !!this.AddPath(t) &&
+      ((t = this.ReplaceEffectMap.get(t) ?? t), !!this.AddPath(t)) &&
       (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(2), !0)
     );
   }
@@ -221,7 +267,7 @@ class AssetElement {
   AddOther(t) {
     return (
       !!this.CheckPath(t) &&
-      !!this.AddPath(t) &&
+      ((t = this.ReplaceEffectMap.get(t) ?? t), !!this.AddPath(t)) &&
       (this.NeedLoadAssets.push(t), this.NeedLoadAssetTypes.push(7), !0)
     );
   }
@@ -322,32 +368,34 @@ exports.CommonAssetElement = CommonAssetElement;
 class SkillAssetManager {
   constructor(t) {
     (this.FightAssetManager = t),
-      (this.IWa = void 0),
+      (this.V$a = void 0),
       (this.SkillAssetMap = new Map()),
       (this._ar = void 0);
   }
   GetEntitySkillPreload(t) {
     var s;
     return (
-      this.IWa ||
-        ((this.IWa = new Map()),
+      this.V$a ||
+        ((this.V$a = new Map()),
         (s = this.FightAssetManager.EntityAssetElement.BlueprintClassPath)
           ?.length &&
-          EntitySkillPreloadByActorBlueprint_1.configEntitySkillPreloadByActorBlueprint
-            .GetConfigList(s)
-            ?.forEach((t) => {
-              this.IWa.set(t.SkillId, t);
-            })),
-      this.IWa.get(t)
+          ModelManager_1.ModelManager.PreloadModelNew.GetSkillPreloadData(
+            s,
+          )?.forEach((t) => {
+            this.V$a.set(t.SkillId, t);
+          })),
+      this.V$a.get(t)
     );
   }
   AddSkill(e, t) {
     return (
       void 0 === this._ar &&
+        (SkillAssetManager.aEc.Start(),
         (this._ar = UE.NewObject(
           UE.HoldPreloadObject.StaticClass(),
           GlobalData_1.GlobalData.GameInstance,
         )),
+        SkillAssetManager.aEc.Stop()),
       this.SkillAssetMap.has(e) &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("World", 3, "[预加载] 覆盖添加技能", ["SkillId", e]),
@@ -382,7 +430,9 @@ class SkillAssetManager {
     this.SkillAssetMap.clear(), this._ar?.Clear();
   }
 }
-exports.SkillAssetManager = SkillAssetManager;
+(exports.SkillAssetManager = SkillAssetManager).aEc = Stats_1.Stat.Create(
+  "Preload.AddSkill.NewObject",
+);
 class BulletAssetManager {
   constructor(t) {
     (this.FightAssetManager = t),
@@ -541,10 +591,9 @@ class EntityAssetElement {
       (ModelManager_1.ModelManager.PreloadModelNew.LoadingNeedWaitEntitySet.has(
         t.Id,
       ) ||
-        (this.CreatureDataComponent.IsRole() &&
-          this.CreatureDataComponent.GetPlayerId() ===
-            ModelManager_1.ModelManager.CreatureModel.GetPlayerId())) &&
-        (this.LoadPriority = 101);
+        this.CreatureDataComponent.IsRole()) &&
+        (this.LoadPriority = 101),
+      (t.Priority = Math.max(this.LoadPriority, t.Priority));
   }
   get LoadState() {
     return this.uar;
@@ -608,5 +657,6 @@ class PreloadSetting {
   }
 }
 ((exports.PreloadSetting = PreloadSetting).Default = new PreloadSetting()),
-  (PreloadSetting.dar = !0);
+  (PreloadSetting.dar = !0),
+  (PreloadSetting.LoadAllPreloadData = !1);
 //# sourceMappingURL=PreloadDefine.js.map

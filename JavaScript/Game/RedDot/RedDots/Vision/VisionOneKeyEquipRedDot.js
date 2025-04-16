@@ -12,7 +12,7 @@ class VisionOneKeyEquipRedDot extends RedDotBase_1.RedDotBase {
     return !0;
   }
   OnCheck(e) {
-    return ModelManager_1.ModelManager.PhantomBattleModel.CheckVisionOneKeyEquipRedDot(
+    return ModelManager_1.ModelManager.VisionRecommendModel.CheckVisionOneKeyEquipRedDot(
       e,
     );
   }

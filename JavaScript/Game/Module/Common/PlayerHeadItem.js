@@ -37,16 +37,27 @@ class PlayerHeadItem extends UiPanelBase_1.UiPanelBase {
     this.RefreshByRoleId(e);
   }
   RefreshByRoleId(e) {
-    var r, a;
-    0 < e &&
-      ((r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(e)),
-      (a = this.GetTexture(0)),
-      this.SetRoleIcon(r, a, e));
+    const r = this.GetTexture(0);
+    var a = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(e, !1);
+    a
+      ? (r.SetUIActive(!1),
+        this.SetTextureShowUntilLoaded(a.GetRoleHeadIconCircle(), r, () => {
+          r.SetUIActive(!0);
+        }))
+      : 0 < e &&
+        ((a = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(e)),
+        this.SetRoleIcon(a, r, e));
   }
   RefreshByRoleIdUseCard(e) {
-    var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).Card,
-      a = this.GetTexture(0);
-    this.SetRoleIcon(r, a, e);
+    const r = this.GetTexture(0);
+    var a = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(e, !1);
+    a
+      ? (r.SetUIActive(!1),
+        this.SetTextureShowUntilLoaded(a.GetRoleHeadIconCircle(), r, () => {
+          r.SetUIActive(!0);
+        }))
+      : ((a = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).Card),
+        this.SetRoleIcon(a, r, e));
   }
   SetIsGray(e) {
     this.GetTexture(0).SetIsGray(e);

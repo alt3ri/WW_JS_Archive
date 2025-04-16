@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   TickSystem_1 = require("../../../Core/Tick/TickSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
@@ -13,11 +14,14 @@ const UE = require("ue"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
   UiManager_1 = require("../../Ui/UiManager"),
   ColorUtils_1 = require("../../Utils/ColorUtils"),
+  PlotModel_1 = require("../Plot/PlotModel"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   BlackScreenFadeController_1 = require("./BlackScreenFadeController"),
   BlackScreenViewData_1 = require("./BlackScreenViewData"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
   GUARANTEED_TIME = 1e4,
   MAX_FADE_VALUE = 0.9;
 class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
@@ -26,18 +30,21 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
       (this._0t = 0),
       (this.u0t = 0),
       (this.c0t = 0),
+      (this.Iii = 0),
+      (this.$Cl = 0),
       (this.a1e = !0),
       (this.m0t = TickSystem_1.TickSystem.InvalidId),
       (this.d0t = TickSystem_1.TickSystem.InvalidId),
       (this.C0t = new BlackScreenViewData_1.BlackScreenViewData()),
       (this.g0t = void 0),
+      (this.XCl = void 0),
       (this.f0t = () => {
         this.a1e
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("BlackScreen", 46, "黑幕FadeIn结束"),
+              Log_1.Log.Info("BlackScreen", 45, "黑幕FadeIn结束"),
             ModelManager_1.ModelManager.LevelLoadingModel.FinishCameraShowPromise())
           : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("BlackScreen", 46, "黑幕FadeOut结束"),
+              Log_1.Log.Info("BlackScreen", 45, "黑幕FadeOut结束"),
             ModelManager_1.ModelManager.LevelLoadingModel.FinishCameraHidePromise(),
             this.SetActive(!1),
             (BlackScreenFadeController_1.BlackScreenFadeController.NeedInputDis =
@@ -47,7 +54,7 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
             ),
             ModelManager_1.ModelManager.InputDistributeModel.RefreshInputDistributeTag(),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("BlackScreen", 46, "黑幕输入恢复", [
+              Log_1.Log.Info("BlackScreen", 45, "黑幕输入恢复", [
                 "BlackScreenFadeController.NeedInputDis",
                 BlackScreenFadeController_1.BlackScreenFadeController
                   .NeedInputDis,
@@ -56,47 +63,73 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
               "All",
               BlackScreenFadeController_1.BlackScreenFadeController
                 .CheckCanOpen,
+            ),
+            GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelTemporaryDisableDLSSG(
+              "BlackScreen",
             ));
       }),
       (this.p0t = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("BlackScreen", 46, "开始显示黑屏"),
+          Log_1.Log.Debug("BlackScreen", 45, "开始显示黑屏"),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnBlackFadeScreenStart,
           ),
           this.v0t(this.m0t),
-          this.SetActive(!0);
+          this.SetActive(!0),
+          this.yAl();
       }),
       (this.M0t = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("BlackScreen", 46, "开始隐藏黑屏"),
+          Log_1.Log.Debug("BlackScreen", 45, "开始隐藏黑屏"),
           this.SetActive(!0),
-          this.v0t(this.m0t);
+          this.v0t(this.m0t),
+          this.yAl(),
+          (ModelManager_1.ModelManager.PlotModel.LastPlotColor =
+            PlotModel_1.INVALID_NUM);
       }),
       (this.E0t = (e) => {
-        0 < this.u0t && (this.u0t -= e),
-          this.u0t <= 0 &&
-            ((this.u0t = 0),
-            this.a1e && (Global_1.Global.CharacterCameraManager.FadeAmount = 0),
+        var t, i, s;
+        0 < this.Iii &&
+          ((t = MathUtils_1.MathUtils.GetRangePct(
+            0,
+            this.$Cl,
+            this.$Cl - this.Iii,
+          )),
+          (i = ModelManager_1.ModelManager.PlotModel.BlackScreenLastAspect),
+          (s = ModelManager_1.ModelManager.PlotModel.BlackScreenNowAspect),
+          this.ZCl(i + (s - i) * t),
+          this.SetFadeTime(0),
+          (this.Iii -= e)),
+          0 < this.u0t &&
+            ((this.u0t -= e), this.u0t <= 0 && (this.u0t = 0), this.y0t()),
+          this.u0t <= 0 && (this.u0t = 0),
+          this.Iii <= 0 && (this.Iii = 0),
+          0 === this.u0t &&
+            0 === this.Iii &&
+            (this.a1e &&
+              (Global_1.Global.CharacterCameraManager.FadeAmount = 0),
             this.f0t(),
-            this.S0t(this.m0t)),
-          this.y0t();
+            this.S0t(this.m0t));
       }),
       (this.I0t = (e) => {
         (this._0t += e),
           this._0t > GUARANTEED_TIME &&
             (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("BlackScreen", 46, "触发保底机制,内部隐藏黑屏"),
+              Log_1.Log.Debug("BlackScreen", 45, "触发保底机制,内部隐藏黑屏"),
             this.HideItem());
       });
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [[0, UE.UITexture]];
+    this.ComponentRegisterInfos = [
+      [0, UE.UITexture],
+      [1, UE.UITexture],
+    ];
   }
   OnStart() {
     this.C0t.RegisterStateDelegate(2, this.p0t),
       this.C0t.RegisterStateDelegate(4, this.M0t),
-      (this.g0t = this.GetTexture(0)),
+      (this.g0t = this.GetTexture(1)),
+      (this.XCl = this.GetTexture(0)),
       LguiUtil_1.LguiUtil.SetActorIsPermanent(this.RootActor, !0, !0),
       this.C0t.TriggerCurrentStateDelegate();
   }
@@ -109,8 +142,15 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
       (this.c0t = 0),
       (this.u0t = 0),
       (this.g0t = void 0),
+      (this.XCl = void 0),
       this.S0t(this.m0t),
       this.S0t(this.d0t);
+  }
+  yAl() {
+    ModelManager_1.ModelManager.PlotModel.LastPlotColor ===
+    PlotModel_1.COLOR_BLACK
+      ? this.g0t?.SetUIActive(!1)
+      : this.g0t?.SetUIActive(!0);
   }
   v0t(e) {
     e === TickSystem_1.TickSystem.InvalidId &&
@@ -157,17 +197,81 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
       case IAction_1.EFadeInScreenShowType.Black:
         this.g0t?.SetColor(ColorUtils_1.ColorUtils.ColorBlack),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("BlackScreen", 46, "改变黑幕颜色为黑色");
+            Log_1.Log.Debug("BlackScreen", 45, "改变黑幕颜色为黑色"),
+          (ModelManager_1.ModelManager.PlotModel.LastPlotColor =
+            PlotModel_1.COLOR_BLACK);
         break;
       case IAction_1.EFadeInScreenShowType.White:
         this.g0t?.SetColor(ColorUtils_1.ColorUtils.ColorWhile),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("BlackScreen", 46, "改变黑幕颜色为白色");
+            Log_1.Log.Debug("BlackScreen", 45, "改变黑幕颜色为白色"),
+          (ModelManager_1.ModelManager.PlotModel.LastPlotColor =
+            PlotModel_1.COLOR_WHITE);
     }
+    this.XCl?.SetColor(ColorUtils_1.ColorUtils.ColorBlack);
+  }
+  UpdateScreenColorAndChangeVisible(e) {
+    switch (e) {
+      case IAction_1.EFadeInScreenShowType.Black:
+        this.g0t?.SetColor(ColorUtils_1.ColorUtils.ColorBlack),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("BlackScreen", 45, "改变黑幕颜色为黑色"),
+          (ModelManager_1.ModelManager.PlotModel.LastPlotColor =
+            PlotModel_1.COLOR_BLACK);
+        break;
+      case IAction_1.EFadeInScreenShowType.White:
+        this.g0t?.SetColor(ColorUtils_1.ColorUtils.ColorWhile),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("BlackScreen", 45, "改变黑幕颜色为白色"),
+          (ModelManager_1.ModelManager.PlotModel.LastPlotColor =
+            PlotModel_1.COLOR_WHITE);
+    }
+    this.XCl?.SetColor(ColorUtils_1.ColorUtils.ColorBlack), this.yAl();
+  }
+  ChangeAspect(e, t) {
+    var i =
+      UiLayer_1.UiLayer.UiRootItem.GetWidth() /
+      UiLayer_1.UiLayer.UiRootItem.GetHeight();
+    if (!(i < 1)) {
+      if (t)
+        ModelManager_1.ModelManager.PlotModel.BlackScreenLastAspect =
+          ModelManager_1.ModelManager.PlotModel.BlackScreenNowAspect;
+      else if (
+        2.3 < ModelManager_1.ModelManager.PlotModel.BlackScreenNowAspect !=
+          2.3 < e &&
+        ModelManager_1.ModelManager.PlotModel.LastPlotAspect !==
+          PlotModel_1.INVALID_NUM &&
+        ModelManager_1.ModelManager.PlotModel.LastPlotColor ===
+          PlotModel_1.COLOR_WHITE
+      )
+        return (
+          (ModelManager_1.ModelManager.PlotModel.BlackScreenLastAspect =
+            ModelManager_1.ModelManager.PlotModel.BlackScreenNowAspect),
+          (ModelManager_1.ModelManager.PlotModel.BlackScreenNowAspect =
+            2.3 < e ? e : i),
+          (t =
+            CommonParamById_1.configCommonParamById.GetIntConfig(
+              "BlackScreenFadeLerpFullTime",
+            ) ?? 3),
+          (this.Iii = 1e3 * t),
+          (this.$Cl = 1e3 * t),
+          this.g0t?.SetUIActive(!0),
+          !0
+        );
+      (ModelManager_1.ModelManager.PlotModel.BlackScreenNowAspect =
+        2.3 < e ? e : i),
+        this.ZCl(ModelManager_1.ModelManager.PlotModel.BlackScreenNowAspect);
+    }
+    return !1;
+  }
+  ZCl(e) {
+    e = UiLayer_1.UiLayer.UiRootItem.GetWidth() / e;
+    this.g0t?.SetHeight(e),
+      this.g0t?.SetWidth(UiLayer_1.UiLayer.UiRootItem.GetWidth());
   }
   y0t() {
     var e = this.T0t();
-    this.g0t?.SetAlpha(e);
+    this.XCl?.SetAlpha(e), this.g0t?.SetAlpha(e);
   }
   T0t() {
     return this.a1e
@@ -185,7 +289,7 @@ class BlackScreenFadeView extends UiPanelBase_1.UiPanelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "BlackScreen",
-          46,
+          45,
           "现在的Fade时间为：",
           ["this.FadeTime", this.u0t],
           ["this.FullFadeTime", this.c0t],

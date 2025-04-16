@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionLevelUpView = void 0);
 const UE = require("ue"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
@@ -25,6 +26,7 @@ const UE = require("ue"),
   ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
   UiSceneManager_1 = require("../../../UiComponent/UiSceneManager"),
   UiModelUtil_1 = require("../../../UiModel/UiModelUtil"),
+  PhantomBattleController_1 = require("../../PhantomBattle/PhantomBattleController"),
   VisionIdentifyComponent_1 = require("./VisionIdentifyComponent"),
   VisionMainAttributeComponent_1 = require("./VisionMainAttributeComponent"),
   VisionNameText_1 = require("./VisionNameText");
@@ -43,6 +45,7 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       (this.Mji = 0),
       (this.NHi = !1),
       (this.p9i = void 0),
+      (this.Ndl = !1),
       (this.oLt = (e) => {
         this.Mji = e;
         e =
@@ -57,12 +60,14 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       (this.Eji = (e) => {
         e &&
           (UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !1),
+          (this.Ndl = !1),
           (e = this.Sji()),
           (this.vji = e),
           this.dji.UpdateInitState(e));
       }),
       (this.yji = () => {
         UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !0),
+          (this.Ndl = !0),
           this.dji.PlayExpTween(this.vji),
           (this.fji = []),
           this.Iji(),
@@ -77,8 +82,11 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
             );
         this.Cji.SetMaxState(e === t), (this.gji = 0), this.Rft(), this.Tji();
       }),
-      (this.SNa = (e) => {
+      (this.I3a = (e) => {
         e === this.qHi && this.Oqe();
+      }),
+      (this.f1l = () => {
+        this.v1l();
       }),
       (this.Lji = () => {
         if (0 === this.fji?.length)
@@ -112,28 +120,28 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
               (i = !0);
           }
           let o = void 0;
-          var s,
-            n = [];
+          var n,
+            s = [];
           switch (
             (e &&
-              ((s =
+              ((n =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "VisionHighQuality",
                 )),
-              n.push(s)),
+              s.push(n)),
             t &&
-              ((s =
+              ((n =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "VisionHighLevel",
                 )),
-              n.push(s)),
+              s.push(n)),
             i &&
-              ((s =
+              ((n =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                   "VisionHighRare",
                 )),
-              n.push(s)),
-            n.length)
+              s.push(n)),
+            s.length)
           ) {
             case 1:
               o = 127;
@@ -145,14 +153,14 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
               o = 125;
           }
           o
-            ? ((s = new ConfirmBoxDefine_1.ConfirmBoxDataNew(o)).SetTextArgs(
-                ...n,
+            ? ((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(o)).SetTextArgs(
+                ...s,
               ),
-              s.FunctionMap.set(2, () => {
+              n.FunctionMap.set(2, () => {
                 this.Dji();
               }),
               ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                s,
+                n,
               ))
             : this.Dji();
         } else
@@ -181,7 +189,9 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
             ModelManager_1.ModelManager.PhantomBattleModel.CalculateExpBackItem(
               e,
             )),
-          this.Rji(e, o)),
+          this.Rji(e, o));
+        const t = () => {
+          var e;
           0 < o.size
             ? (((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(24)).ItemIdMap =
                 o),
@@ -198,43 +208,80 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
                 this.qHi,
                 i,
               );
+        };
+        let r = !1;
+        for (const n of i)
+          if (
+            0 < n.w5n &&
+            ModelManager_1.ModelManager.VisionEquipGroupModel.CheckVisionListIfInGroup(
+              [n.w5n],
+            )
+          ) {
+            r = !0;
+            break;
+          }
+        r
+          ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+              247,
+            )).FunctionMap.set(2, () => {
+              t();
+            }),
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+              e,
+            ))
+          : t();
       }),
       (this.Uji = () => {
         (this.fji = []), this.Aji();
       }),
       (this.Pji = () => {
-        var e =
+        var t =
             ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityList()[
               this.Mji
             ].Id,
-          e =
-            ModelManager_1.ModelManager.PhantomBattleModel.GetSortedExpMaterialList(
-              this.qHi,
-              e,
-            );
-        if (0 === e.length)
+          i = ModelManager_1.ModelManager.PhantomBattleModel,
+          o = i.GetVisionLevelUpMaterialUseType(),
+          t = i.GetSortedExpMaterialList(this.qHi, t, 0 === o);
+        if (0 === t.length)
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-            "WeaponNoMaterial",
+            "RoleNoMaterial",
           );
         else {
-          const t = new Array();
-          e.forEach((e) => {
+          const s = new Array();
+          t.forEach((e) => {
             e = {
               IncId: e.GetUniqueId(),
               ItemId: e.GetConfigId(),
               Count: e.GetCount(),
               SelectedCount: 0,
             };
-            t.push(e);
+            s.push(e);
           });
-          (e = this.vji.GetExpDistanceToMax()),
-            (e = ModelManager_1.ModelManager.WeaponModel.AutoAddExpItem(
-              e,
-              20,
-              t,
-              this.xji,
-            ));
-          (this.fji = e), this.Aji();
+          o = 1 === i.GetVisionLevelUpMaterialPutInMode();
+          let e = 0;
+          if (o) {
+            var t = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+                "VisionLevelStageList",
+              ),
+              r = this.vji.GetCurrentLevel(),
+              n = this.vji.GetCurrentMaxLevel();
+            for (const h of t) {
+              if (h > n) break;
+              if (h > r) {
+                e = this.vji.GetExpDistanceToLevel(h);
+                break;
+              }
+            }
+          } else e = this.vji.GetExpDistanceToMax();
+          (i = ModelManager_1.ModelManager.WeaponModel),
+            (t =
+              (o &&
+                !i.CheckSatisfyExp(e, 20, s, this.xji) &&
+                ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+                  "Text_EchoMaterialLack_Text",
+                ),
+              i.AutoAddExpItem(e, 20, s, this.xji)));
+          (this.fji = t), this.Aji();
         }
       }),
       (this.wji = (t, i) => {
@@ -257,22 +304,22 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
             ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
               this.qHi,
             ),
-          s = new CommonIntensifyPropExpData_1.CommonIntensifyPropExpData(),
+          n = new CommonIntensifyPropExpData_1.CommonIntensifyPropExpData(),
           r =
-            ((s.CurrentExp = r.GetExp()),
-            (s.CurrentLevel = r.GetPhantomLevel()),
-            (s.CurrentMaxLevel =
+            ((n.CurrentExp = r.GetExp()),
+            (n.CurrentLevel = r.GetPhantomLevel()),
+            (n.CurrentMaxLevel =
               ControllerHolder_1.ControllerHolder.PhantomBattleController.GetMaxLevel(
                 this.qHi,
               )),
-            (s.MaxExpFunction = this.qji),
-            (s.GetItemExpFunction = this.xji),
+            (n.MaxExpFunction = this.qji),
+            (n.GetItemExpFunction = this.xji),
             this.fji),
           o =
             ((i.ItemDataBaseList = o),
             (i.SelectedDataList = r),
             (i.UseWayId = 26),
-            (i.ExpData = s),
+            (i.ExpData = n),
             new SelectableComponent_1.SelectableComponentData());
         (o.IsSingleSelected = !1),
           ((i.SelectableComponentData = o).OnChangeSelectedFunction = this.AMt),
@@ -359,6 +406,7 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
         this.GetItem(2),
         e,
         "VisionLevelUpView",
+        !0,
       )),
       await this.Cji.Init(),
       this.Cji.SetActive(!0),
@@ -372,7 +420,18 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       this.dji.SetLevelFormatText("VisionLevel"),
       this.dji.BindPlayCompleteCallBack(this.Eji),
       this.Cji.InitFilter(0, this.oLt),
-      this.Cji.SetConsumeTexture(ItemDefines_1.EItemId.Gold);
+      this.Cji.SetConsumeTexture(ItemDefines_1.EItemId.Gold),
+      this.Cji.SetSettingButtonVisible(!0),
+      this.Cji.BindSettingButtonRedDot("VisionLevelUpSetting"),
+      this.Cji.SetSettingButtonClickCallBack(() => {
+        var e = ModelManager_1.ModelManager.RedDotModel.GetRedDot(
+          "VisionLevelUpSetting",
+        );
+        e &&
+          e.IsRedDotActive() &&
+          PhantomBattleController_1.PhantomBattleController.RecordVisionLevelUpSettingRedDot(),
+          UiManager_1.UiManager.OpenView("VisionLevelUpSettingPopView");
+      });
     var t = this.Cji.GetMaxCount();
     this.pji = new Array(t);
     for (let e = 0; e < t; e++) this.pji[e] = [{ IncId: 0, ItemId: 0 }, 0];
@@ -436,7 +495,11 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnVisionLevelUpMaterialPutInModeChange,
+        this.f1l,
       ),
       (this.NHi = !0),
       (this.qHi = this.ExtraParams),
@@ -444,7 +507,8 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       this.Gji(this.qHi),
       this.Rft(),
       this.P5e(),
-      this.Oqe();
+      this.Oqe(),
+      this.v1l();
   }
   P5e() {
     var e =
@@ -478,6 +542,13 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       (e = t.GetIsDeprecated() ? 1 : 0),
       this.GetExtendToggle(6).SetToggleState(e, !1));
   }
+  v1l() {
+    var e =
+      ModelManager_1.ModelManager.PhantomBattleModel.GetVisionLevelUpMaterialPutInMode();
+    this.Cji?.UpdateAutoSelectTextByTextId(
+      0 === e ? "Text_QuickInsertion_Text" : "Text_StageInsertion_Text",
+    );
+  }
   dSe() {
     this.NHi &&
       ((this.NHi = !1),
@@ -487,7 +558,11 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnVisionLevelUpMaterialPutInModeChange,
+        this.f1l,
       ));
   }
   OnBeforeHide() {
@@ -529,7 +604,10 @@ class VisionLevelUpView extends UiTabViewBase_1.UiTabViewBase {
     });
   }
   OnBeforeDestroy() {
-    this.dSe(), this.bHi.Destroy(), this.BHi.Destroy();
+    this.dSe(),
+      this.bHi.Destroy(),
+      this.BHi.Destroy(),
+      this.Ndl && UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !1);
   }
 }
 exports.VisionLevelUpView = VisionLevelUpView;

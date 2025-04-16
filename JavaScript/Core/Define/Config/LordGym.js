@@ -21,6 +21,9 @@ class LordGym {
   get GymTitle() {
     return this.gymtitle();
   }
+  get NewGymTitle() {
+    return this.newgymtitle();
+  }
   get IconPath() {
     return this.iconpath();
   }
@@ -48,6 +51,9 @@ class LordGym {
   }
   get FilterType() {
     return this.filtertype();
+  }
+  get IsNew() {
+    return this.isnew();
   }
   get IsDebug() {
     return this.isdebug();
@@ -78,34 +84,62 @@ class LordGym {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   gymtitle(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  newgymtitle(t) {
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   iconpath(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   playdescription(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   helpid() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetMonsterlistAt(t) {
     return this.monsterlist(t);
   }
   monsterlist(t) {
-    var i = this.J7.__offset(this.z7, 20);
+    var i = this.J7.__offset(this.z7, 22);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   monsterlistLength() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   monsterlistArray() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 22);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -115,23 +149,33 @@ class LordGym {
       : null;
   }
   monsterlevel() {
-    var t = this.J7.__offset(this.z7, 22);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  lockcon() {
     var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  lockcon() {
+    var t = this.J7.__offset(this.z7, 26);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   lockdescription(t) {
-    var i = this.J7.__offset(this.z7, 26);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 28),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   filtertype() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
+  isnew() {
+    var t = this.J7.__offset(this.z7, 32);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
   isdebug() {
-    var t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 34);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }

@@ -6,9 +6,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  InputController_1 = require("../../Input/InputController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   LevelEventLockInputState_1 = require("../LevelEventLockInputState"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventAddInputTag extends LevelGeneralBase_1.LevelEventBase {
@@ -35,7 +34,7 @@ class LevelEventAddInputTag extends LevelGeneralBase_1.LevelEventBase {
           break;
         case IAction_1.ELimitPlayOperation.AllowMove:
           n.Type.IsOnlyForward &&
-            InputController_1.InputController.SetMoveControlEnabled(
+            ControllerHolder_1.ControllerHolder.InputController.SetMoveControlEnabled(
               !0,
               !1,
               !1,
@@ -44,7 +43,7 @@ class LevelEventAddInputTag extends LevelGeneralBase_1.LevelEventBase {
             (e = "FightInputRoot.FightInput.AxisInput.MoveInput");
           break;
         case IAction_1.ELimitPlayOperation.AllowMoveNew:
-          InputController_1.InputController.SetMoveControlEnabled(
+          ControllerHolder_1.ControllerHolder.InputController.SetMoveControlEnabled(
             n.Type.Forward,
             n.Type.Back,
             n.Type.Left,
@@ -52,11 +51,11 @@ class LevelEventAddInputTag extends LevelGeneralBase_1.LevelEventBase {
           ),
             (e = "FightInputRoot.FightInput.AxisInput.MoveInput"),
             o?.Valid &&
-              (o.GetComponent(190)?.AddTag(477750727),
+              (o.GetComponent(203)?.AddTag(477750727),
               Log_1.Log.CheckDebug()) &&
               Log_1.Log.Debug(
                 "Test",
-                30,
+                29,
                 "[LevelEventAddInputTag.ExecuteNew] AddTag 禁止冲刺",
               );
           break;
@@ -74,7 +73,7 @@ class LevelEventAddInputTag extends LevelGeneralBase_1.LevelEventBase {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelEvent",
-              25,
+              24,
               "没有定义ELimitPlayOperation对应什么InputTag!",
               ["ELimitPlayOperation", n.Type],
             )
@@ -84,7 +83,7 @@ class LevelEventAddInputTag extends LevelGeneralBase_1.LevelEventBase {
         ? (LevelEventLockInputState_1.LevelEventLockInputState.InputTagNames.push(
             e,
           ),
-          InputDistributeController_1.InputDistributeController.RefreshInputTag())
+          ControllerHolder_1.ControllerHolder.InputDistributeController.RefreshInputTag())
         : (ModelManager_1.ModelManager.InputDistributeModel.SetInputDistributeTag(
             e,
           ),

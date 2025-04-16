@@ -28,9 +28,9 @@ class AudioVisualizationManager {
             (this.MaterialParametersCollectionFile = i.MPCFile),
             this.MaterialParametersCollectionFile?.IsValid() ||
               (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Render", 26, "音频可视化缺失MPC文件")))
+                Log_1.Log.Error("Render", 25, "音频可视化缺失MPC文件")))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Render", 26, "音频可视化未找到全局配置文件", [
+            Log_1.Log.Error("Render", 25, "音频可视化未找到全局配置文件", [
               "path",
               "/Game/Aki/Audio/AudioVisualization/Data/DA_AudioVisualizationGlobalConfigs.DA_AudioVisualizationGlobalConfigs",
             ]);

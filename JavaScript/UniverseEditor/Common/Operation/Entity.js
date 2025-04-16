@@ -68,16 +68,21 @@ function formatEntityData(t) {
     BlueprintType: t.BlueprintType,
     Name: t.Name,
     Id: t.Id,
+    EdBundleMainEntityId: t.EdBundleMainEntityId,
     InSleep: t.InSleep,
+    IsScaleEnabled: t.IsScaleEnabled,
     IsHidden: t.IsHidden,
     IsClientHidden: t.IsClientHidden,
     IsAlwaysLoad: t.IsAlwaysLoad,
+    IsClientAlwaysLoad: t.IsClientAlwaysLoad,
     Transform: t.Transform,
     EdWpPath: t.EdWpPath,
+    EdStreamingLevelPath: t.EdStreamingLevelPath,
     ComponentsData: t.ComponentsData,
     EdEntityTip: t.EdEntityTip,
     Children: t.Children,
     Reference: t.Reference,
+    WeakReference: t.WeakReference,
   };
 }
 function compressEntityData(t, e) {
@@ -95,15 +100,20 @@ function compressEntityData(t, e) {
         Name: t.Name,
         Id: t.Id,
         InSleep: t.InSleep,
+        IsScaleEnabled: t.IsScaleEnabled,
         IsHidden: t.IsHidden,
         IsClientHidden: t.IsClientHidden,
         IsAlwaysLoad: t.IsAlwaysLoad,
+        IsClientAlwaysLoad: t.IsClientAlwaysLoad,
         Transform: t.Transform,
         EdWpPath: t.EdWpPath,
+        EdStreamingLevelPath: t.EdStreamingLevelPath,
         ComponentsData: e,
         EdEntityTip: t.EdEntityTip,
         Children: t.Children,
         Reference: t.Reference,
+        WeakReference: t.WeakReference,
+        EdBundleMainEntityId: t.EdBundleMainEntityId,
       }));
 }
 function decompressEntityData(t, e) {
@@ -121,16 +131,21 @@ function decompressEntityData(t, e) {
         Name: t.Name,
         Id: t.Id,
         InSleep: t.InSleep,
+        IsScaleEnabled: t.IsScaleEnabled,
         IsHidden: t.IsHidden,
         IsClientHidden: t.IsClientHidden,
         IsAlwaysLoad: t.IsAlwaysLoad,
+        IsClientAlwaysLoad: t.IsClientAlwaysLoad,
         Transform: t.Transform,
         EdWpPath: t.EdWpPath,
+        EdStreamingLevelPath: t.EdStreamingLevelPath,
         ComponentsData: e,
         EdEntityTip: t.EdEntityTip,
         Children: t.Children,
         Reference: t.Reference,
+        WeakReference: t.WeakReference,
         AreaId: t.AreaId,
+        EdBundleMainEntityId: t.EdBundleMainEntityId,
       }));
 }
 (exports.entityConfig = {
@@ -172,56 +187,52 @@ function getLevelIdAndEntityIdByJsonPath(t) {
       ]
     : [-1, -1];
 }
-function getEntityAoiDistXyByBaseInfo(t) {
-  let e = t?.AoiLayer ?? 0;
-  return (
-    4 === e && (e = 0),
-    IComponent_1.aoiXyLayerValues[e] / exports.AOI_METRIC_SCALE
-  );
+function getEntityAoiDistXyByBaseInfo(t, e = !0) {
+  let n = t?.AoiLayer ?? 0;
+  4 === n && (n = 0);
+  t = e ? exports.AOI_METRIC_SCALE : 1;
+  return IComponent_1.aoiXyLayerValues[n] / t;
 }
 function getEntityAoiDistXy(t) {
   return getEntityAoiDistXyByBaseInfo(
     (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent"),
   );
 }
-function checkPosInEntityAoi(t, e) {
-  var n = (0, IComponent_1.getComponent)(e.ComponentsData, "BaseInfoComponent");
-  if (!n) return !1;
-  var o = n.AoiLayer ?? 0,
-    o = IComponent_1.aoiXyLayerValues[o],
-    i = n.AoiZRadius ?? 0;
-  let r = IComponent_1.aoizLayerValues[i],
-    s = r;
-  n.CustomAoiZRadius &&
-    ((r = n.CustomAoiZRadius.Up ?? 0), (s = n.CustomAoiZRadius.Down ?? 0));
+function checkPosInEntityAoi(t, e, n) {
+  var o = (0, IComponent_1.getComponent)(e.ComponentsData, "BaseInfoComponent");
+  if (!o) return !1;
+  var i = o.AoiLayer ?? 0;
+  let r = IComponent_1.aoiXyLayerValues[i];
+  i = o.AoiZRadius ?? 0;
+  let s = IComponent_1.aoizLayerValues[i],
+    a = (n && (r += IComponent_1.AOI_EXITRANGE_INCREMENT), s);
+  o.CustomAoiZRadius &&
+    ((s = o.CustomAoiZRadius.Up ?? 0), (a = o.CustomAoiZRadius.Down ?? 0));
   var i = e.Transform.Pos.X ?? 0,
     n = e.Transform.Pos.Y ?? 0,
-    e = e.Transform.Pos.Z ?? 0,
-    p = t.Pos.X ?? 0,
-    a = t.Pos.Y ?? 0,
+    o = e.Transform.Pos.Z ?? 0,
+    e = t.Pos.X ?? 0,
+    p = t.Pos.Y ?? 0,
     t = t.Pos.Z ?? 0,
-    i = Math.sqrt(Math.pow(i - p, 2) + Math.pow(n - a, 2)),
-    p = Math.abs(e - t),
-    n = !(-1 !== r) || (e <= t && p <= r) || (t < e && p <= s);
-  return i <= o && n;
+    i = Math.sqrt(Math.pow(i - e, 2) + Math.pow(n - p, 2)),
+    e = Math.abs(o - t),
+    n = !(-1 !== s) || (o <= t && e <= s) || (t < o && e <= a);
+  return i <= r && n;
 }
-function getEntityAoiDistZByBaseInfo(t) {
-  var e, n;
+function getEntityAoiDistZByBaseInfo(t, e = !0) {
+  var n, o;
   return t
-    ? t.CustomAoiZRadius
-      ? [
-          t.CustomAoiZRadius.Up
-            ? t.CustomAoiZRadius.Up / exports.AOI_METRIC_SCALE
-            : -1,
-          t.CustomAoiZRadius.Down
-            ? t.CustomAoiZRadius.Down / exports.AOI_METRIC_SCALE
-            : -1,
-        ]
-      : 0 !== (e = t?.AoiZRadius || 0)
-        ? [(n = IComponent_1.aoizLayerValues[e] / exports.AOI_METRIC_SCALE), n]
-        : 0 === e
-          ? [(n = getEntityAoiDistXyByBaseInfo(t)), n / 2]
-          : [0, 0]
+    ? ((o = e ? exports.AOI_METRIC_SCALE : 1),
+      t.CustomAoiZRadius
+        ? [
+            t.CustomAoiZRadius.Up ? t.CustomAoiZRadius.Up / o : -1,
+            t.CustomAoiZRadius.Down ? t.CustomAoiZRadius.Down / o : -1,
+          ]
+        : 0 !== (n = t?.AoiZRadius || 0)
+          ? [(o = IComponent_1.aoizLayerValues[n] / o), o]
+          : 0 === n
+            ? [(o = getEntityAoiDistXyByBaseInfo(t, e)), o / 2]
+            : [0, 0])
     : [0, 0];
 }
 function getEntityAoiDistZ(t) {

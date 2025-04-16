@@ -13,7 +13,7 @@ class LevelConditionCheckUIState extends LevelGeneralBase_1.LevelConditionBase {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             `配置错误！条件${e.Id}的参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.CheckUIState}的定义`,
           ),
         !1)

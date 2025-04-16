@@ -27,13 +27,16 @@ class FunctionModel extends ModelBase_1.ModelBase {
       (this.R7t = () =>
         ControllerHolder_1.ControllerHolder.KuroSdkController.NeedShowCustomerService()),
       (this.U7t = () =>
-        ChannelController_1.ChannelController.CheckKuroStreetOpen());
+        ChannelController_1.ChannelController.CheckKuroStreetOpen()),
+      (this.Wtl = () =>
+        ModelManager_1.ModelManager.MailBindModel.CheckGlobalMailBindOpen());
   }
   OnInit() {
     return (
       this.L7t.set(10053, this.D7t),
       this.L7t.set(10028, this.R7t),
       this.L7t.set(10058, this.U7t),
+      this.L7t.set(10072, this.Wtl),
       !0
     );
   }
@@ -54,7 +57,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Functional",
-            11,
+            10,
             "功能数据添加",
             ["Id", t.s5n],
             ["IsOpen", n],
@@ -70,7 +73,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
           (n =
             ((t = t.GetIsOpen()) &&
               Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Functional", 11, "功能数据更新", ["Id", o.s5n]),
+              Log_1.Log.Info("Functional", 10, "功能数据更新", ["Id", o.s5n]),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnFunctionOpenUpdate,
               o.s5n,
@@ -87,11 +90,11 @@ class FunctionModel extends ModelBase_1.ModelBase {
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Functional",
-              11,
+              10,
               "[UpdateFunctionOpenInfo]用了GM屏蔽功能开启界面显示",
             ))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Functional", 11, "当前刷新的功能id不在功能列表中", [
+          Log_1.Log.Error("Functional", 10, "当前刷新的功能id不在功能列表中", [
             "功能Id",
             o.s5n,
           ]);
@@ -107,7 +110,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Functional",
-            11,
+            10,
             "[UpdateFunctionOpenLockByBehaviorTree]行为树执行了系统功能的启用/禁用",
             ["功能ID", e],
             ["是否禁用", n],
@@ -115,7 +118,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Functional",
-          11,
+          10,
           "[BehaviorTree]当前的功能id不在功能列表中",
           ["功能Id", e],
         );
@@ -133,7 +136,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
             !ModelManager_1.ModelManager.SundryModel.IsBlockTips &&
             this.T7t.push(n),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Functional", 11, "手动开启功能开启界面成功", [
+            Log_1.Log.Info("Functional", 10, "手动开启功能开启界面成功", [
               "FunctionId",
               o,
             ]),
@@ -141,11 +144,11 @@ class FunctionModel extends ModelBase_1.ModelBase {
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Functional",
-              11,
+              10,
               "[RefreshInfoManualState]用了GM屏蔽功能开启界面显示",
             ))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Functional", 11, "当前刷新的功能id不在功能列表中", [
+          Log_1.Log.Error("Functional", 10, "当前刷新的功能id不在功能列表中", [
             "功能Id",
             o,
           ]);
@@ -312,6 +315,12 @@ class FunctionModel extends ModelBase_1.ModelBase {
         return "CustomerService";
       case 10026:
         return "FunctionPhantomExploreSet";
+      case 10072:
+        return "FunctionMailBind";
+      case 10058:
+        return "FunctionKuroStreet";
+      case 10015:
+        return "FunctionMap";
     }
   }
   RedDotFunctionPhantomCondition() {

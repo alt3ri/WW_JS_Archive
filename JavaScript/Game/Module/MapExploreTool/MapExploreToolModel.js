@@ -13,6 +13,7 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.BAi = new Map()),
       (this.bAi = new Map()),
+      (this.tml = new Map()),
       (this.qAi = new Map()),
       (this.GAi = new Map()),
       (this.NAi = !1),
@@ -32,6 +33,16 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
                 e.MarkType,
               ) ?? 0;
             this.SetToolPlaceNum(1012, o, !0);
+            break;
+          case 16:
+          case 21:
+            var o =
+                ModelManager_1.ModelManager.MapModel?.GetMarkCountByType(16) ??
+                0,
+              t =
+                ModelManager_1.ModelManager.MapModel?.GetMarkCountByType(21) ??
+                0;
+            this.SetToolPlaceNum(1011, o + t, !0);
         }
       }),
       (this.FAi = (e, o) => {
@@ -45,6 +56,16 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
             t =
               ModelManager_1.ModelManager.MapModel?.GetMarkCountByType(e) ?? 0;
             this.SetToolPlaceNum(1012, t, !1);
+            break;
+          case 16:
+          case 21:
+            var t =
+                ModelManager_1.ModelManager.MapModel?.GetMarkCountByType(16) ??
+                0,
+              r =
+                ModelManager_1.ModelManager.MapModel?.GetMarkCountByType(21) ??
+                0;
+            this.SetToolPlaceNum(1011, t + r, !1);
         }
       });
   }
@@ -83,7 +104,7 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
           ],
           [
             Protocol_1.Aki.Protocol.Q4n.Proto_ErrSkillIsEffect,
-            "ExploreActivating",
+            "ShengXiaDetectTip",
           ],
           [
             Protocol_1.Aki.Protocol.Q4n.Proto_ErrNoSoundBox,
@@ -114,6 +135,8 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
           ],
         ]),
       ),
+      this.tml.set(1010, "ExploreTeleporterItemLack"),
+      this.tml.set(1011, "ExploreShengXiaItemLack"),
       this.qAi.set(
         1011,
         new Set([
@@ -160,6 +183,7 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
     return (
       this.BAi.clear(),
       this.bAi.clear(),
+      this.tml.clear(),
       this.qAi.clear(),
       this.OAi.clear(),
       (this.NAi = !1),
@@ -184,30 +208,57 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
     return this.BAi.get(e);
   }
   GetRespTipsId(e, o) {
-    return this.bAi.get(e.PhantomSkillId)?.get(o.Cvs);
+    return this.bAi.get(e.PhantomSkillId)?.get(o.Content.Cvs);
   }
-  GetRespConfirmBoxId(e, o) {
-    if (this.IsRespMeanCheckPass(e, o))
-      switch (e.PhantomSkillId) {
-        case 1010:
-          return this.IsToolReachPlaceLimit(e.PhantomSkillId) ? 142 : 141;
-        case 1011:
-          return 139;
-        case 1012:
-          return this.IsToolReachPlaceLimit(e.PhantomSkillId) ? 140 : void 0;
-      }
+  GetNotEnoughTipsId(e) {
+    return this.tml.get(e.PhantomSkillId);
+  }
+  GetConfirmBoxId(e, o) {
+    var t = void 0 === o;
+    switch (e.PhantomSkillId) {
+      case 1010:
+        return t
+          ? this.IsToolReachPlaceLimit(e.PhantomSkillId)
+            ? 142
+            : 141
+          : void 0;
+      case 1011:
+        return t
+          ? this.IsToolReachPlaceLimit(e.PhantomSkillId)
+            ? void 0
+            : 139
+          : this.IsRespMeanCheckPass(e, o)
+            ? 139
+            : void 0;
+      case 1012:
+        return t && this.IsToolReachPlaceLimit(e.PhantomSkillId) ? 140 : void 0;
+    }
+  }
+  ShowCostConfirmBox(e, o) {
+    var t = void 0 === o;
+    switch (e.PhantomSkillId) {
+      case 1010:
+        if (t) return !0;
+        break;
+      case 1011:
+        if (!t && this.IsRespMeanCheckPass(e, o)) return !0;
+        break;
+      case 1012:
+        if (t) return !0;
+    }
+    return !1;
   }
   IsRespMeanSuccess(e, o) {
-    return this.qAi.get(e.PhantomSkillId)?.has(o.Cvs) ?? !1;
+    return this.qAi.get(e.PhantomSkillId)?.has(o.Content.Cvs) ?? !1;
   }
   IsRespMeanCheckPass(e, o) {
-    return this.GAi.get(e.PhantomSkillId)?.has(o.Cvs) ?? !1;
+    return this.GAi.get(e.PhantomSkillId)?.has(o.Content.Cvs) ?? !1;
   }
   SetCharExploreSkillBusy(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Phantom",
-        40,
+        39,
         "[MapExploreTool] 设置CharExploreSkillBusy",
         ["OldVal", this.NAi],
         ["NewVal", e],
@@ -223,6 +274,8 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
         return ConfigManager_1.ConfigManager.RouletteConfig?.GetTempTeleporterPlaceLimit();
       case 1012:
         return ConfigManager_1.ConfigManager.RouletteConfig?.GetTreasureBoxDetectorPlaceLimit();
+      case 1011:
+        return ConfigManager_1.ConfigManager.RouletteConfig?.GetSoundBoxPlaceLimit();
     }
   }
   IsToolHasPlaceLimit(e) {
@@ -240,7 +293,7 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Phantom",
-          40,
+          39,
           "[MapExploreTool] 设置ToolPlaceNum",
           ["PhantomSkillId", e],
           ["PlaceNum", o],

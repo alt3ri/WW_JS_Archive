@@ -34,7 +34,7 @@ class LevelConditionCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelC
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Entity",
-              18,
+              17,
               "不存在Tag,请检查条件配置",
               ["tag", a],
               ["条件Id", e.Id],
@@ -53,7 +53,7 @@ class LevelConditionCheckEntityCommonTagBySelf extends LevelGeneralBase_1.LevelC
         return !1;
       (o = t), (t = EntitySystem_1.EntitySystem.Get(o.GetEntityId()));
       if (!t) return !1;
-      var i = t.GetComponent(181);
+      var i = t.GetComponent(194);
       if (!i) return !1;
       for (const s of n.TagIds) if (!i.HasTag(s)) return !1;
     }

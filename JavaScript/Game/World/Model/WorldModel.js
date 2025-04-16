@@ -5,11 +5,22 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MOBILE_CSM_DISTANCE_OUTCAVE =
     exports.MOBILE_CSM_DISTANCE_INCAVE =
       void 0);
-const Queue_1 = require("../../../Core/Container/Queue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Time_1 = require("../../../Core/Common/Time"),
+  Queue_1 = require("../../../Core/Container/Queue"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  Net_1 = require("../../../Core/Net/Net"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IVar_1 = require("../../../UniverseEditor/Interface/IVar"),
+  GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  DEFAULT_ENVIRONMENTTYPE = 255;
+  VOXEL_ENV_REQUEST_INTERVAL = 1e3,
+  DEFAULT_ENVIRONMENTTYPE = 255,
+  ENVIRONMENT_TOLERANCE = 5;
 (exports.MOBILE_CSM_DISTANCE_INCAVE = 2e4),
   (exports.MOBILE_CSM_DISTANCE_OUTCAVE = 8e3);
 class WorldEnvironmentInfo {
@@ -18,7 +29,9 @@ class WorldEnvironmentInfo {
       (this.NEr = ""),
       (this.OEr = ""),
       (this.un = 6),
-      (this.jNn = 1);
+      (this.UTl = 1),
+      (this.ServerCaveMode = 1),
+      (this.pk = 0);
   }
   get DataLayerType() {
     return this.NEr;
@@ -29,11 +42,30 @@ class WorldEnvironmentInfo {
   get LoadType() {
     return this.un;
   }
-  get CaveMode() {
-    return this.jNn;
+  get jNn() {
+    return this.UTl;
   }
-  IsEqual(t) {
-    return this.E9 === t;
+  set jNn(e) {
+    this.UTl !== e && ((this.UTl = e), this.RequestUpdateVoxelEnv());
+  }
+  RequestUpdateVoxelEnv() {
+    var e;
+    this.UTl === this.ServerCaveMode ||
+      Time_1.Time.Now - this.pk < VOXEL_ENV_REQUEST_INTERVAL ||
+      (((e = Protocol_1.Aki.Protocol.Rp_.create()).DTl = this.UTl),
+      Net_1.Net.Call(24104, e, (e) => {
+        e &&
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                e.Q4n,
+                28434,
+              )
+            : (this.ServerCaveMode = e.DTl));
+      }),
+      (this.pk = Time_1.Time.Now));
+  }
+  IsEqual(e) {
+    return this.E9 === e;
   }
   IsEnCloseEnvironment() {
     return 0 === this.E9 || 1 === this.E9;
@@ -41,8 +73,8 @@ class WorldEnvironmentInfo {
   get EnvType() {
     return this.E9;
   }
-  SetInfo(t) {
-    switch (t.EnvType) {
+  SetInfo(e) {
+    switch (e.EnvType) {
       case 0:
         (this.NEr = "DataLayerRuntime_EncloseSpace"),
           (this.OEr = "DataLayerRuntime_EncloseSpaceSub"),
@@ -61,10 +93,23 @@ class WorldEnvironmentInfo {
       default:
         this.jNn = 1;
     }
-    (this.un = t.StreamingType), (this.E9 = t.EnvType);
+    (this.un = e.StreamingType), (this.E9 = e.EnvType);
   }
   ResetInfo() {
-    this.E9 = DEFAULT_ENVIRONMENTTYPE;
+    (this.E9 = DEFAULT_ENVIRONMENTTYPE),
+      cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalCavernMode(1);
+    var e,
+      t,
+      r = GlobalData_1.GlobalData.World;
+    r?.IsValid() &&
+      (UE.KuroRenderingRuntimeBPPluginBPLibrary.WpCancelAdjustLoadRange(r),
+      (e = FNameUtil_1.FNameUtil.GetDynamicFName(
+        "DataLayerRuntime_EncloseSpace",
+      )),
+      (t = FNameUtil_1.FNameUtil.GetDynamicFName(
+        "DataLayerRuntime_EncloseSpaceSub",
+      )),
+      UE.KuroRenderingRuntimeBPPluginBPLibrary.WpBeginLeaveCaveOrRoom(r, e, t));
   }
 }
 exports.WorldEnvironmentInfo = WorldEnvironmentInfo;
@@ -73,110 +118,116 @@ class WorldModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.TickIntervalSchedulers = new Array()),
       (this.kEr = void 0),
-      (this.$5e = !1),
       (this.FEr = !1),
       (this.ChangeSchedulerLastType = 0),
       (this.ChangeSchedulerDeltaFrameCount = 0),
       (this.CurrentSchedulerDelta = 0),
       (this.VEr = new Map()),
-      (this.VZa = new Map()),
       (this.DestroyActorQueue = new Queue_1.Queue()),
       (this.ActorsToIgnoreSet = new Set()),
       (this.CurEnvironmentInfo = new WorldEnvironmentInfo()),
+      (this.Vd_ = void 0),
+      (this.jd_ = 0),
       (this.IsEnableEnvironmentDetecting = !0);
   }
   get ControlPlayerLastLocation() {
     return ModelManager_1.ModelManager.WorldModel.kEr;
   }
-  set ControlPlayerLastLocation(t) {
-    this.kEr = t;
-  }
-  get WorldStateMap() {
-    return this.VEr;
-  }
-  set WorldStateMap(t) {
-    this.VEr = t;
-  }
-  get WorldStateBooleanMap() {
-    return this.VZa;
-  }
-  set WorldStateBooleanMap(t) {
-    this.VZa = t;
+  set ControlPlayerLastLocation(e) {
+    this.kEr = e;
   }
   UpdateWorldState(e) {
     for (const r of Object.keys(e)) {
-      var s = e[r];
-      let t = void 0;
-      switch (
-        (s.oTs && (t = Number(MathUtils_1.MathUtils.LongToBigInt(s.oTs))), r)
-      ) {
-        case "DefaultState":
-        case "NpcWorldState":
-          t && this.VEr.set(r, t);
-          break;
-        default:
-          t && this.VEr.set(r, t), this.VZa.set(r, s.rTs ?? !1);
-      }
+      var t = e[r];
+      this.VEr.set(r, t);
     }
+  }
+  GetWorldState(e) {
+    if (e) {
+      var t = this.VEr.get(e);
+      if (t)
+        switch ((0, IVar_1.getVarTypeByIndex)(t.iTs)) {
+          case "Boolean":
+            return t.rTs;
+          case "Float":
+            return t.sTs;
+          case "Int":
+            return MathUtils_1.MathUtils.LongToNumber(t.oTs);
+          case "String":
+            return t.nTs;
+          default:
+            return;
+        }
+    }
+  }
+  GetWorldStateGeneric(e) {
+    e = this.GetWorldState(e);
+    if (void 0 !== e) return e;
   }
   GetMapDone() {
     return this.FEr;
   }
-  SetMapDone(t) {
-    this.FEr = t;
+  SetMapDone(e) {
+    this.FEr = e;
   }
-  GetWorldDone() {
-    return this.$5e;
+  static AddTsSimpleInteractItem(e) {
+    let t = this.HEr.get(e.TypeId);
+    t || ((t = new Set()), this.HEr.set(e.TypeId, t)), t.add(e);
   }
-  SetWorldDone(t) {
-    this.$5e = t;
+  static RemoveTsSimpleInteractItem(e) {
+    var t = this.HEr.get(e.TypeId);
+    t && t.delete(e);
   }
-  static AddTsSimpleInteractItem(t) {
-    let e = this.HEr.get(t.TypeId);
-    e || ((e = new Set()), this.HEr.set(t.TypeId, e)), e.add(t);
+  static GetTsSimpleInteractItemById(e) {
+    return this.HEr.get(e);
   }
-  static RemoveTsSimpleInteractItem(t) {
-    var e = this.HEr.get(t.TypeId);
-    e && e.delete(t);
-  }
-  static GetTsSimpleInteractItemById(t) {
-    return this.HEr.get(t);
-  }
-  AddDestroyActor(t, e, s) {
-    s?.IsValid() && this.DestroyActorQueue.Push([t, e, s]);
+  AddDestroyActor(e, t, r) {
+    r?.IsValid() && this.DestroyActorQueue.Push([e, t, r]);
   }
   PopDestroyActor() {
     if (0 !== this.DestroyActorQueue.Size) return this.DestroyActorQueue.Pop();
   }
-  AddIgnore(t) {
-    !t?.IsValid() ||
-      this.ActorsToIgnoreSet.has(t) ||
-      this.ActorsToIgnoreSet.add(t);
+  AddIgnore(e) {
+    !e?.IsValid() ||
+      this.ActorsToIgnoreSet.has(e) ||
+      this.ActorsToIgnoreSet.add(e);
   }
-  RemoveIgnore(t) {
-    return !!t?.IsValid() && this.ActorsToIgnoreSet.delete(t);
+  RemoveIgnore(e) {
+    return !!e?.IsValid() && this.ActorsToIgnoreSet.delete(e);
   }
   ClearIgnore() {
     this.ActorsToIgnoreSet.clear();
   }
-  HandleEnvironmentUpdate(t) {
+  HandleEnvironmentUpdate(e) {
+    var t = this.Vd_;
+    return (
+      (this.Vd_ = e),
+      !t ||
+        (this.Vd_.EnvType !== t.EnvType ? (this.jd_ = 0) : this.jd_++,
+        this.jd_ > ENVIRONMENT_TOLERANCE)
+    );
+  }
+  GetCachedVoxelInfo() {
+    return this.Vd_;
+  }
+  ApplyEnvironmentUpdate() {
     let e = 0;
-    if (!this.CurEnvironmentInfo.IsEqual(t.EnvType)) {
+    if (this.Vd_ && !this.CurEnvironmentInfo.IsEqual(this.Vd_.EnvType)) {
       switch (this.CurEnvironmentInfo.EnvType) {
         case DEFAULT_ENVIRONMENTTYPE:
-          2 === t.EnvType && (e = 1),
-            (0 !== t.EnvType && 1 !== t.EnvType) || (e = 5);
+          2 === this.Vd_.EnvType && (e = 1),
+            (0 !== this.Vd_.EnvType && 1 !== this.Vd_.EnvType) || (e = 5);
           break;
         case 2:
-          t.EnvType === DEFAULT_ENVIRONMENTTYPE && (e = 4),
-            (0 !== t.EnvType && 1 !== t.EnvType) || (e = 3);
+          this.Vd_.EnvType === DEFAULT_ENVIRONMENTTYPE && (e = 4),
+            (0 !== this.Vd_.EnvType && 1 !== this.Vd_.EnvType) || (e = 3);
           break;
         case 0:
         case 1:
-          t.EnvType === DEFAULT_ENVIRONMENTTYPE && (e = 6),
-            2 === t.EnvType && (e = 2);
+          this.Vd_.EnvType === DEFAULT_ENVIRONMENTTYPE && (e = 6),
+            2 === this.Vd_.EnvType && (e = 2);
       }
-      this.CurEnvironmentInfo.SetInfo(t);
+      this.CurEnvironmentInfo.SetInfo(this.Vd_);
     }
     return e;
   }

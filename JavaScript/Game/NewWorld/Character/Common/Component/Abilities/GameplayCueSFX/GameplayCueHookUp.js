@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayCueHookUp = void 0);
 const UE = require("ue"),
   FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil"),
-  GameplayCueController_1 = require("./Controller/GameplayCueController"),
+  GameplayCueHookCommonItem_1 = require("./CommonItem/GameplayCueHookCommonItem"),
   GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueHookUp extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
@@ -12,22 +12,19 @@ class GameplayCueHookUp extends GameplayCueBase_1.GameplayCueBase {
   OnInit() {}
   OnTick(e) {}
   OnCreate() {
-    this.$$o =
-      GameplayCueController_1.GameplayCueController.SpawnGameplayCueHook(
-        this.ActorInternal,
-        FNameUtil_1.FNameUtil.GetDynamicFName(this.CueConfig.Socket),
-        this.GetTargetPosition(),
-        this.CueConfig.Resources,
-      );
-  }
-  OnDestroy() {
-    GameplayCueController_1.GameplayCueController.DestroyGameplayCueHook(
-      this.$$o,
+    this.$$o = GameplayCueHookCommonItem_1.GameplayCueHookCommonItem.Spawn(
+      this.ActorInternal,
+      FNameUtil_1.FNameUtil.GetDynamicFName(this.CueConfig.Socket),
+      this.STl(),
+      this.CueConfig.Resources,
     );
   }
-  GetTargetPosition() {
-    return this.ActorInternal.GetTransform().TransformPositionNoScale(
-      new UE.Vector(
+  OnDestroy() {
+    this.$$o.Destroy();
+  }
+  STl() {
+    return this.ActorInternal.D_GetTransform().TransformPositionNoScale(
+      new UE.VectorDouble(
         this.CueConfig.Location.X,
         this.CueConfig.Location.Y,
         this.CueConfig.Location.Z,

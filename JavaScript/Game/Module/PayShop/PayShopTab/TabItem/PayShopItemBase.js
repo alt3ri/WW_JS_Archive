@@ -6,6 +6,7 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   HelpController_1 = require("../../../Help/HelpController"),
   PayShopGoods_1 = require("../../PayShopData/PayShopGoods"),
@@ -134,6 +135,7 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
   Refresh(t, i, s) {
     (this.Pe && this.Pe.Id === t.Id) || (this.q3i = !1),
       (this.Pe = t),
+      (this.N3i = !0),
       this.k3i(),
       this.Aqe(),
       this.F3i(),
@@ -159,9 +161,11 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
     this.GetButton(3).RootUIComp.SetUIActive(this.Pe.Id === t);
   }
   k3i() {
-    var t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
-      this.Pe.Quality,
-    ).PayShopQualitySprite;
+    var t =
+      ModelManager_1.ModelManager.PayShopModel.GetPayShopItemQualitySpriteByItemIdAndQuality(
+        this.Pe.ItemId,
+        this.Pe.Quality,
+      );
     this.SetSpriteByPath(t, this.GetSprite(0), !1);
   }
   Aqe() {

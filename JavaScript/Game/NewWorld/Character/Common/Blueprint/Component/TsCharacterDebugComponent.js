@@ -4,8 +4,10 @@ const UE = require("ue"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
   ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
+  GravityUtils_1 = require("../../../../../Utils/GravityUtils"),
   JUMPED_TURN_SPEED_THREADHOLD = 100,
-  ACTIVE_DISTANCE = 5e3;
+  ACTIVE_DISTANCE = 5e3,
+  tmpVector = Vector_1.Vector.Create();
 class NavigationErrorData {
   constructor() {
     (this.Start = void 0), (this.End = void 0), (this.Results = void 0);
@@ -35,11 +37,19 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
       (this.ClimbingTrace = 0),
       (this.NoTop = !1);
   }
+  Constructor() {
+    (this.BaseChar = void 0),
+      (this.OriginWalkableAngle = 0),
+      (this.DebugRiseModeOn = !1),
+      (this.DebugPatrolPoints = void 0),
+      (this.DebugNavigationErrorPaths = void 0),
+      (this.NoTop = !1);
+  }
   Destroy() {
     this.BaseChar = void 0;
   }
   SetMovementDebug(t) {
-    this.BaseChar.CharacterActorComponent.Entity.GetComponent(27).SetDebug(t);
+    this.BaseChar.CharacterActorComponent.Entity.GetComponent(30).SetDebug(t);
   }
   ChangeEnterClimbTrace() {
     switch (this.EnterClimbTrace) {
@@ -53,7 +63,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
         this.EnterClimbTrace = 0;
     }
     this.BaseChar.CharacterActorComponent.Entity.GetComponent(
-      31,
+      34,
     ).UpdateClimbDebug();
   }
   ChangeVaultClimbTrace() {
@@ -68,7 +78,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
         this.VaultClimbTrace = 0;
     }
     this.BaseChar.CharacterActorComponent.Entity.GetComponent(
-      31,
+      34,
     ).UpdateClimbDebug();
   }
   ChangeUpArriveClimbTrace() {
@@ -83,7 +93,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
         this.UpArriveClimbTrace = 0;
     }
     this.BaseChar.CharacterActorComponent.Entity.GetComponent(
-      31,
+      34,
     ).UpdateClimbDebug();
   }
   ChangeClimbingTrace() {
@@ -91,13 +101,13 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
       ? (this.ClimbingTrace = 1)
       : (this.ClimbingTrace = 0),
       this.BaseChar.CharacterActorComponent.Entity.GetComponent(
-        31,
+        34,
       ).UpdateClimbDebug();
   }
   ChangeNoTop() {
     (this.NoTop = !this.NoTop),
       this.BaseChar.CharacterActorComponent.Entity.GetComponent(
-        31,
+        34,
       ).UpdateClimbDebug();
   }
   ReceiveBeginPlay() {
@@ -112,7 +122,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
   }
   ActivateDebugSpeed(t) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Character", 40, "[Debug功能] 快速移动", ["功能激活", t]),
+      Log_1.Log.Debug("Character", 39, "[Debug功能] 快速移动", ["功能激活", t]),
       t
         ? (this.BaseChar.CharacterMovement.SetWalkableFloorAngle(90),
           0 === this.MaxFixSpeed && (this.MaxFixSpeed = 5e3))
@@ -122,23 +132,31 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
           0 !== this.MaxFixSpeed && (this.MaxFixSpeed = 0));
   }
   DebugRising(t) {
-    var i;
     this.DebugRiseModeOn &&
-      (((i = Vector_1.Vector.Create(
-        this.BaseChar.CharacterActorComponent.ActorLocation,
-      )).Z += this.TestRiseSpeed * t),
-      this.BaseChar.K2_SetActorLocation(i.ToUeVector(), !1, void 0, !1),
-      this.BaseChar.CharacterMovement.Velocity.Set(0, 0, 0));
+      (tmpVector.Reset(),
+      GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+        this.BaseChar.CharacterActorComponent,
+        tmpVector,
+        this.TestRiseSpeed * t,
+      ),
+      this.BaseChar.CharacterActorComponent.AddActorWorldOffset(
+        tmpVector.ToUeVector(),
+        "DebugRising",
+        !1,
+      ),
+      this.BaseChar.CharacterActorComponent.MoveComp.SetForceSpeed(
+        Vector_1.Vector.ZeroVectorProxy,
+      ));
   }
   DebugDrawActivateArea() {
     var t = this.BaseChar.CharacterActorComponent.ActorLocation,
-      i = new UE.Vector(t);
+      i = new UE.VectorDouble(t);
     (i.Z += JUMPED_TURN_SPEED_THREADHOLD),
-      UE.KismetSystemLibrary.DrawDebugCylinder(this, t, i, ACTIVE_DISTANCE);
+      UE.KismetSystemLibrary.D_DrawDebugCylinder(this, t, i, ACTIVE_DISTANCE);
   }
   SetDebugRiseEnable(t) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Character", 40, "[Debug功能] 飞行", ["功能激活", t]),
+      Log_1.Log.Debug("Character", 39, "[Debug功能] 飞行", ["功能激活", t]),
       this.DebugRiseModeOn !== t &&
         ((this.DebugRiseModeOn = t), this.SetComponentTickEnabled(t));
   }
@@ -153,7 +171,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
     if (this.DebugPatrolPoints && 0 !== this.DebugPatrolPoints.length) {
       var t = this.DebugPatrolPoints[0],
         i =
-          (UE.KismetSystemLibrary.DrawDebugSphere(
+          (UE.KismetSystemLibrary.D_DrawDebugSphere(
             this,
             t.ToUeVector(),
             18,
@@ -164,7 +182,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
           this.DebugPatrolPoints.length - 1);
       for (let t = 1; t < i; t++) {
         var s = this.DebugPatrolPoints[t];
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           this,
           s.ToUeVector(),
           6,
@@ -175,7 +193,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
       }
       0 < i &&
         ((t = this.DebugPatrolPoints[i]),
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           this,
           t.ToUeVector(),
           18,
@@ -194,7 +212,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
       (h.Results = new Array());
     for (let t = 0, i = s.length; t < i; t++) {
       var e = s[t],
-        r = new UE.Vector();
+        r = new UE.VectorDouble();
       r.Set(e.X, e.Y, e.Z), h.Results.push(r);
     }
     this.DebugNavigationErrorPaths.push(h);
@@ -203,7 +221,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
     if (this.DebugNavigationErrorPaths)
       for (let t = 0, i = this.DebugNavigationErrorPaths.length; t < i; t++) {
         var s = this.DebugNavigationErrorPaths[t];
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           this,
           s.Start.ToUeVector(),
           18,
@@ -213,7 +231,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
         );
         for (let t = 0, i = s.Results.length; t < i; t++) {
           var h = s.Results[t];
-          UE.KismetSystemLibrary.DrawDebugSphere(
+          UE.KismetSystemLibrary.D_DrawDebugSphere(
             this,
             h,
             6,
@@ -222,7 +240,7 @@ class TsCharacterDebugComponent extends UE.ActorComponent {
             60,
           );
         }
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           this,
           s.End.ToUeVector(),
           18,

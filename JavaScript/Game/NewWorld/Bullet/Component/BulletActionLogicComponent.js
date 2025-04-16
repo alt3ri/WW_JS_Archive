@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionLogicComponent = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   PerformanceDecorators_1 = require("../../../../Core/Performance/PerformanceDecorators"),
   BulletLogicAdditiveAccelerateController_1 = require("../BulletLogicDataAssetController/BulletLogicAdditiveAccelerateController"),
   BulletLogicCreateBulletController_1 = require("../BulletLogicDataAssetController/BulletLogicCreateBulletController"),
@@ -33,6 +34,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   BulletLogicManipulatableTagsChange_1 = require("../BulletLogicDataAssetController/BulletLogicManipulatableTagsChange"),
   BulletLogicReboundController_1 = require("../BulletLogicDataAssetController/BulletLogicReboundController"),
   BulletLogicShakeCameraController_1 = require("../BulletLogicDataAssetController/BulletLogicShakeCameraController"),
+  BulletLogicShieldController_1 = require("../BulletLogicDataAssetController/BulletLogicShieldController"),
   BulletLogicShowMesh_1 = require("../BulletLogicDataAssetController/BulletLogicShowMesh"),
   BulletLogicSpawnObstacles_1 = require("../BulletLogicDataAssetController/BulletLogicSpawnObstacles"),
   BulletLogicSpeedReduceController_1 = require("../BulletLogicDataAssetController/BulletLogicSpeedReduceController"),
@@ -49,14 +51,14 @@ const Log_1 = require("../../../../Core/Common/Log"),
   LogicDataManipulatableTagsChange_1 = require("../LogicDataClass/LogicDataManipulatableTagsChange"),
   LogicDataRebound_1 = require("../LogicDataClass/LogicDataRebound"),
   LogicDataShakeScreen_1 = require("../LogicDataClass/LogicDataShakeScreen"),
+  LogicDataShield_1 = require("../LogicDataClass/LogicDataShield"),
   LogicDataShowMesh_1 = require("../LogicDataClass/LogicDataShowMesh"),
   LogicDataSpawnObstacles_1 = require("../LogicDataClass/LogicDataSpawnObstacles"),
   LogicDataSpeedReduce_1 = require("../LogicDataClass/LogicDataSpeedReduce"),
   LogicDataSplineMovement_1 = require("../LogicDataClass/LogicDataSplineMovement"),
   LogicDataSuiGuang_1 = require("../LogicDataClass/LogicDataSuiGuang"),
   LogicDataSupport_1 = require("../LogicDataClass/LogicDataSupport"),
-  LogicDataWhirlpool_1 = require("../LogicDataClass/LogicDataWhirlpool"),
-  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent");
+  LogicDataWhirlpool_1 = require("../LogicDataClass/LogicDataWhirlpool");
 let BulletActionLogicComponent = class BulletActionLogicComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -68,6 +70,7 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
       (this.bBr = void 0),
       (this.qBr = void 0),
       (this.GBr = void 0),
+      (this.qSc = void 0),
       (this.NBr = void 0),
       (this.OBr = !1),
       (this.kBr = !1);
@@ -80,7 +83,8 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
       ((this.a7o.ActionLogicComponent = this).PBr = this.a7o.BulletDataMain),
       (this.kBr =
         this.PBr.Base.ContinuesCollision &&
-        (0 < this.PBr.Base.Interval || 0 < this.PBr.Base.CollisionActiveDelay));
+        (0 < this.a7o.CollisionInfo.IntervalMs ||
+          0 < this.PBr.Base.CollisionActiveDelay));
     var t = this.PBr.Execution.GbDataList;
     if (t && 0 < t.length)
       for (const o of t) {
@@ -95,8 +99,10 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
                 ? (this.bBr || (this.bBr = []), this.bBr.push(e))
                 : 4 === o.ExecuteStage
                   ? (this.qBr || (this.qBr = []), this.qBr.push(e))
-                  : 5 === o.ExecuteStage &&
-                    (this.GBr || (this.GBr = []), this.GBr.push(e)),
+                  : 5 === o.ExecuteStage
+                    ? (this.GBr || (this.GBr = []), this.GBr.push(e))
+                    : 6 === o.ExecuteStage &&
+                      (this.qSc || (this.qSc = []), this.qSc.push(e)),
           e.NeedTick && (this.NBr || (this.NBr = []), this.NBr.push(e));
       }
     return !0;
@@ -108,6 +114,7 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
     if (this.bBr) for (const i of this.bBr) i.OnInit();
     if (this.qBr) for (const l of this.qBr) l.OnInit();
     if (this.GBr) for (const a of this.GBr) a.OnInit();
+    if (this.qSc) for (const r of this.qSc) r.OnInit();
   }
   OnTick(t) {
     if (this.a7o.IsInit) {
@@ -124,6 +131,7 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
     if (this.bBr) for (const i of this.bBr) i.OnBulletDestroy();
     if (this.qBr) for (const l of this.qBr) l.OnBulletDestroy();
     if (this.GBr) for (const a of this.GBr) a.OnBulletDestroy();
+    if (this.qSc) for (const r of this.qSc) r.OnBulletDestroy();
     return !(this.OBr = !1);
   }
   ActionDestroy() {
@@ -146,7 +154,7 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Bullet",
-          21,
+          20,
           "与子弹碰撞, 执行Support",
           ["This.Id", this.a7o.BulletRowName],
           ["this.OnSupportController.Len", this.qBr?.length],
@@ -157,6 +165,9 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
   }
   ActionTickMovement(t) {
     if (this.GBr) for (const e of this.GBr) e.BulletLogicAction(t);
+  }
+  ActionHitBullet(t) {
+    if (this.qSc) for (const e of this.qSc) e.BulletLogicAction(t);
   }
   FBr(t) {
     return t instanceof LogicDataCreateBullet_1.default
@@ -248,7 +259,12 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
                                           t,
                                           this.Entity,
                                         )
-                                      : void 0;
+                                      : t instanceof LogicDataShield_1.default
+                                        ? new BulletLogicShieldController_1.BulletLogicShieldController(
+                                            t,
+                                            this.Entity,
+                                          )
+                                        : void 0;
   }
 };
 (BulletActionLogicComponent = __decorate(

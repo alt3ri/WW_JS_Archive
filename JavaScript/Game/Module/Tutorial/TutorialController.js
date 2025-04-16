@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -25,10 +26,10 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(20918, this.PRo);
+    Net_1.Net.Register(27351, this.PRo);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(20918);
+    Net_1.Net.UnRegister(27351);
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -50,9 +51,9 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static GmUnlockOneTutorial(e) {
-    var t = Protocol_1.Aki.Protocol.E0s.create();
-    (t.s5n = e),
-      Net_1.Net.Call(18457, t, (e) => {
+    var o = Protocol_1.Aki.Protocol.E0s.create();
+    (o.s5n = e),
+      Net_1.Net.Call(25338, o, (e) => {
         e &&
           e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
           ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(
@@ -64,34 +65,44 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.TutorialModel.RemoveRedDotTutorialId(e),
       this.xRo(e);
   }
-  static xRo(o) {
-    var e = Protocol_1.Aki.Protocol.E0s.create();
-    (e.s5n = o),
-      Net_1.Net.Call(27821, e, (e) => {
-        var t;
+  static xRo(n) {
+    var e;
+    ConfigManager_1.ConfigManager.TutorialConfig.HasUnlockReward(n) &&
+      (((e = Protocol_1.Aki.Protocol.E0s.create()).s5n = n),
+      Net_1.Net.Call(18851, e, (e) => {
+        var o, t, r;
         e &&
           e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
-          ((t = Number(Object.keys(e._vs)[0])),
-          (e = e._vs[t]),
-          ModelManager_1.ModelManager.TutorialModel.RewardInfo
-            ? (ModelManager_1.ModelManager.TutorialModel.RewardInfo.O9n[0].m9n +=
-                e)
-            : ((t = {
-                P6n: ConfigManager_1.ConfigManager.TutorialConfig.GetTutorial(o)
+          ((o = Number(Object.keys(e._vs)[0])),
+          (e = e._vs[o]),
+          (t = ModelManager_1.ModelManager.TutorialModel.RewardInfo)
+            ? !(t = t.gws) ||
+              !(r = Object.keys(t)) ||
+              r.length <= 0 ||
+              !(t = t[r[0]]?.O9n) ||
+              t.length <= 0 ||
+              (t[0].m9n += e)
+            : ((r = {
+                P6n: ConfigManager_1.ConfigManager.TutorialConfig.GetTutorial(n)
                   .DropId,
-                O9n: [
-                  {
-                    W9n: TutorialDefine_1.TutorialUtils.FixedDropDropShowPlanId,
-                    L8n: t,
-                    m9n: e,
-                    b9n: 0,
-                  },
-                ],
                 x9n: 0,
                 B9n: 1,
+                gws: {
+                  0: {
+                    O9n: [
+                      {
+                        W9n: TutorialDefine_1.TutorialUtils
+                          .FixedDropDropShowPlanId,
+                        L8n: o,
+                        m9n: e,
+                        b9n: 0,
+                      },
+                    ],
+                  },
+                },
               }),
-              (ModelManager_1.ModelManager.TutorialModel.RewardInfo = t)));
-      });
+              (ModelManager_1.ModelManager.TutorialModel.RewardInfo = r)));
+      }));
   }
   static TryOpenAwardUiViewPending() {
     var e;
@@ -100,29 +111,41 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
       ItemHintController_1.ItemHintController.AddItemRewardList(e),
       (ModelManager_1.ModelManager.TutorialModel.RewardInfo = void 0));
   }
-  static TryUnlockAndOpenTutorialTip(e, t = void 0) {
-    var o;
-    ModelManager_1.ModelManager.TutorialModel.GetSavedDataById(e)
-      ? t(!0)
-      : (((o = Protocol_1.Aki.Protocol.E0s.create()).s5n = e),
-        Net_1.Net.Call(18457, o, (e) => {
-          !e || e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
-            ? t(!1)
-            : (ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(
-                e.aOs,
-              ),
-              t(!0));
-        }));
+  static TryUnlockAndOpenTutorialTip(e, o = void 0) {
+    var t = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(e),
+      r = t?.CopiedFrom || e;
+    const n = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(r);
+    t?.PageId?.length !== n?.PageId?.length ||
+    t?.PageId?.some((e, o) => e !== n?.PageId[o])
+      ? (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Tutorial",
+            74,
+            "复制图文引导和源图文引导内容不一致",
+            ["Id", e],
+          ),
+        o(!1))
+      : ModelManager_1.ModelManager.TutorialModel.GetSavedDataById(r)
+        ? o(!0)
+        : (((t = Protocol_1.Aki.Protocol.E0s.create()).s5n = r),
+          Net_1.Net.Call(25338, t, (e) => {
+            !e || e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+              ? o(!1)
+              : (ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(
+                  e.aOs,
+                ),
+                o(!0));
+          }));
   }
 }
 ((exports.TutorialController = TutorialController).PRo = (e) => {
   if (e)
-    for (const t of e.sOs)
-      ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(t);
+    for (const o of e.sOs)
+      ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(o);
 }),
   (TutorialController.Q5e = () => {
     var e = Protocol_1.Aki.Protocol.p0s.create();
-    Net_1.Net.Call(21138, e, (e) => {
+    Net_1.Net.Call(20738, e, (e) => {
       e &&
         (ModelManager_1.ModelManager.TutorialModel.InitUnlockTutorials(e.sOs),
         (e =

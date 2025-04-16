@@ -1,37 +1,39 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComposeStructureSort = void 0);
-const CommonSort_1 = require("./CommonSort");
+const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
+  CommonSort_1 = require("./CommonSort");
 class ComposeStructureSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.ZDt = (t, r, o) => {
-        return t.SubType !== r.SubType
-          ? (r.SubType - t.SubType) * (o ? -1 : 1)
+      (this.ZDt = (r, t, e) => {
+        return r.SubType !== t.SubType
+          ? (t.SubType - r.SubType) * (e ? -1 : 1)
           : 0;
       }),
-      (this.zDt = (t, r, o) => {
-        var s = t.IsUnlock,
-          e = r.IsUnlock,
-          t = t.IsStructure,
-          r = r.IsStructure;
-        return s !== e
-          ? o
-            ? e - s
-            : s - e
-          : r !== t
-            ? o
-              ? r - t
-              : t - r
-            : 0;
+      (this.zDt = (r, t, e) => {
+        var o = r.IsUnlock,
+          s = t.IsUnlock;
+        return o !== s
+          ? e
+            ? s - o
+            : o - s
+          : (e = ModelManager_1.ModelManager.ComposeModel.CheckBaseItemData(r)
+                ? 0
+                : 1) !=
+              (o = ModelManager_1.ModelManager.ComposeModel.CheckBaseItemData(t)
+                ? 0
+                : 1)
+            ? e - o
+            : r.SortId - t.SortId;
       }),
-      (this.KDt = (t, r, o) => {
-        var s;
-        return r.IsUnlock !== t.IsUnlock
-          ? ((s = r.IsUnlock - t.IsUnlock), o ? s : -s)
-          : t.Quality !== r.Quality
-            ? (r.Quality - t.Quality) * (o ? -1 : 1)
-            : 0;
+      (this.KDt = (r, t, e) => {
+        var o;
+        return t.IsUnlock !== r.IsUnlock
+          ? ((o = t.IsUnlock - r.IsUnlock), e ? o : -o)
+          : r.Quality !== t.Quality
+            ? (t.Quality - r.Quality) * (e ? -1 : 1)
+            : r.SortId - t.SortId;
       });
   }
   OnInitSortMap() {

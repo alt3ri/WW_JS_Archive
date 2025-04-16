@@ -2,21 +2,21 @@
 var CommonConnectComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (t, e, i, r) {
-      var s,
+    function (t, e, i, s) {
+      var r,
         o = arguments.length,
         n =
           o < 3
             ? e
-            : null === r
-              ? (r = Object.getOwnPropertyDescriptor(e, i))
-              : r;
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        n = Reflect.decorate(t, e, i, r);
+        n = Reflect.decorate(t, e, i, s);
       else
         for (var h = t.length - 1; 0 <= h; h--)
-          (s = t[h]) &&
-            (n = (o < 3 ? s(n) : 3 < o ? s(e, i, n) : s(e, i)) || n);
+          (r = t[h]) &&
+            (n = (o < 3 ? r(n) : 3 < o ? r(e, i, n) : r(e, i)) || n);
       return 3 < o && n && Object.defineProperty(e, i, n), n;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -75,18 +75,19 @@ let CommonConnectComponent =
         (this.cQs = 0),
         (this.mQs = MathUtils_1.MathUtils.MaxFloat),
         (this.pQs = void 0),
-        (this.Gga = []),
-        (this.bWa = 0),
+        (this.RSa = []),
+        (this.tXa = 0),
         (this.NeedBeProcessingEntity = new Map()),
         (this.CanInteractEntity = new Set()),
         (this.ServerProcessingEntities = new Set()),
         (this.ServerProcessingEntitiesParams = new Map()),
-        (this.qWa = -600601599),
+        (this.iXa = -600601599),
         (this.Tna = void 0),
         (this.Lna = void 0),
-        (this.OWa = void 0),
+        (this.rXa = void 0),
+        (this.kCl = void 0),
         (this.Dna = -1),
-        (this.EZa = void 0),
+        (this.bsh = void 0),
         (this.uoe = void 0),
         (this.Ana = (t) => {
           for (const e of this.Una) if (e === t) return !0;
@@ -148,6 +149,12 @@ let CommonConnectComponent =
           this.Nna(t);
       }
     }
+    OnDisable() {
+      2 === this.fie && this.R1h();
+    }
+    OnEnable() {
+      2 === this.fie && this.U1h();
+    }
     OnEnd() {
       switch ((this.ClearEffectSplines(), this.fie)) {
         case 1:
@@ -163,34 +170,34 @@ let CommonConnectComponent =
         ModelManager_1.ModelManager.ConnectGamePlayModel?.GetRelationByEntityId(
           this.Entity.Id,
         );
-      for (const s of t) {
-        var r = s.GetComponent(209);
-        (i && i.has(s.Id)) ||
+      for (const r of t) {
+        var s = r.GetComponent(224);
+        (i && i.has(r.Id)) ||
           (this.ServerProcessingEntities &&
-            this.ServerProcessingEntities.has(s.Id)) ||
-          (r &&
-            r !== this &&
-            this.CheckEntityMatchCondition(e, s) &&
-            this.NeedBeProcessingEntity.set(s, new PassThroughPortalParam()));
+            this.ServerProcessingEntities.has(r.Id)) ||
+          (s &&
+            s !== this &&
+            this.CheckEntityMatchCondition(e, r) &&
+            this.NeedBeProcessingEntity.set(r, new PassThroughPortalParam()));
       }
     }
     CheckEntityMatchCondition(t, e) {
       if (t && !(t.length <= 0)) {
         var i = e?.GetComponent(1),
-          r = e?.GetComponent(181);
-        if (i && r) {
-          var s = i.CreatureData.GetBaseInfo();
-          if (s)
+          s = e?.GetComponent(194);
+        if (i && s) {
+          var r = i.CreatureData.GetBaseInfo();
+          if (r)
             for (const o of t) {
               let e = !0;
-              if ((0, IUtil_1.isEntitiyMatch)(o, s.Category)) {
+              if ((0, IUtil_1.isEntitiyMatch)(o, r.Category)) {
                 !o.State?.State ||
-                  r.ContainsTagByName(o.State.State) ||
+                  s.ContainsTagByName(o.State.State) ||
                   (e = !1);
                 let t = !1;
                 if (o.HasProperty && 0 < o.HasProperty.length) {
                   for (const n of o.HasProperty)
-                    if (!r.ContainsTagByName(n)) {
+                    if (!s.ContainsTagByName(n)) {
                       t = !0;
                       break;
                     }
@@ -198,7 +205,7 @@ let CommonConnectComponent =
                 }
                 if (((t = !1), o.NoProperty && 0 < o.NoProperty.length)) {
                   for (const h of o.NoProperty)
-                    if (r.ContainsTagByName(h)) {
+                    if (s.ContainsTagByName(h)) {
                       t = !0;
                       break;
                     }
@@ -213,50 +220,50 @@ let CommonConnectComponent =
     }
     TryStartConnect() {
       if (!(this.NeedBeProcessingEntity.size <= 0)) {
-        this.Gga.length = 0;
+        this.RSa.length = 0;
         for (var [t, e] of this.NeedBeProcessingEntity) {
           var i,
-            r,
-            s = [];
+            s,
+            r = [];
           0 !== e.Type &&
             ((i = e.PortalPairId),
-            (r =
+            (s =
               ModelManager_1.ModelManager.CreatureModel?.GetEntity(
                 i,
-              )?.Entity?.GetComponent(200))) &&
-            ((r = r.GetPairCreatureDataId()),
+              )?.Entity?.GetComponent(213))) &&
+            ((s = s.GetPairCreatureDataId()),
             1 === e.Type
-              ? (s.push(MathUtils_1.MathUtils.NumberToLong(i)),
-                s.push(MathUtils_1.MathUtils.NumberToLong(r)))
+              ? (r.push(MathUtils_1.MathUtils.NumberToLong(i)),
+                r.push(MathUtils_1.MathUtils.NumberToLong(s)))
               : 2 === e.Type &&
-                (s.push(MathUtils_1.MathUtils.NumberToLong(r)),
-                s.push(MathUtils_1.MathUtils.NumberToLong(i)))),
-            this.Gga.push({ Target: t, PortalsId: s }),
+                (r.push(MathUtils_1.MathUtils.NumberToLong(s)),
+                r.push(MathUtils_1.MathUtils.NumberToLong(i)))),
+            this.RSa.push({ Target: t, PortalsId: r }),
             ModelManager_1.ModelManager.ConnectGamePlayModel?.SetRelationPortalParam(
               t.Id,
               e,
             );
         }
-        this.RequestConnect(this.Entity, this.Gga, !0);
+        this.RequestConnect(this.Entity, this.RSa, !0);
       }
     }
     ServerConnectEntities(t) {
       var e = this.ActorComp.ActorLocationProxy,
-        i = UE.NewArray(UE.Vector),
-        r = [];
+        i = UE.NewArray(UE.VectorDouble),
+        s = [];
       for (const _ of t) {
-        var s = ModelManager_1.ModelManager.CreatureModel?.GetEntity(_);
+        var r = ModelManager_1.ModelManager.CreatureModel?.GetEntity(_);
         if (this.ConnectedEffectPath) {
-          var o = s?.Entity?.GetComponent(1);
+          var o = r?.Entity?.GetComponent(1);
           if (!o) continue;
-          var n = s.Entity.Id,
+          var n = r.Entity.Id,
             h =
               ModelManager_1.ModelManager.ConnectGamePlayModel?.GetRelationPassThroughParam(
                 n,
               );
           switch (h?.Type) {
             case 0:
-              this.Nga(e, i, o);
+              this.ASa(e, i, o);
               var a = GameSplineUtils_1.GameSplineUtils.GenerateGuideEffect(
                 e,
                 i,
@@ -271,37 +278,37 @@ let CommonConnectComponent =
                 this.EffectSplines.set(n, [a]));
               break;
             case 1:
-              this.Fga(e, i, o, h.PortalPairId, !0), this.Vga(i, o, e, n);
+              this.USa(e, i, o, h.PortalPairId, !0), this.xSa(i, o, e, n);
               break;
             case 2:
-              this.Fga(e, i, o, h.PortalPairId, !1), this.Vga(i, o, e, n);
+              this.USa(e, i, o, h.PortalPairId, !1), this.xSa(i, o, e, n);
           }
         }
-        r.push(s.Entity.Id), this.ServerProcessingEntities.delete(s.Entity.Id);
+        s.push(r.Entity.Id), this.ServerProcessingEntities.delete(r.Entity.Id);
       }
       ModelManager_1.ModelManager.ConnectGamePlayModel?.AddConnectedRelation(
         this.Entity.Id,
-        r,
+        s,
       );
     }
-    Nga(t, e, i) {
+    ASa(t, e, i) {
       e.Empty();
-      var r = Vector_1.Vector.Create(
+      var s = Vector_1.Vector.Create(
           this.ConnectedEffectStartPoint
             ? this.ActorComp?.GetSocketLocation(this.ConnectedEffectStartPoint)
             : this.ActorComp?.ActorLocation,
         ),
-        r =
-          (r.SubtractionEqual(t),
-          e.Add(r.ToUeVector()),
+        s =
+          (s.SubtractionEqual(t),
+          e.Add(s.ToUeVector()),
           Vector_1.Vector.Create(
             this.ConnectedEffectEndPoint
               ? i.GetSocketLocation(this.ConnectedEffectEndPoint)
               : i.ActorLocation,
           ));
-      r.SubtractionEqual(t), e.Add(r.ToUeVector());
+      s.SubtractionEqual(t), e.Add(s.ToUeVector());
     }
-    Fga(t, e, i, r, s) {
+    USa(t, e, i, s, r) {
       e.Empty();
       var o = Vector_1.Vector.Create(
           this.ConnectedEffectStartPoint
@@ -317,18 +324,18 @@ let CommonConnectComponent =
               ? i.GetSocketLocation(this.ConnectedEffectEndPoint)
               : i.ActorLocation,
           )),
-        a = ModelManager_1.ModelManager.PortalModel?.GetPortal(r),
+        a = ModelManager_1.ModelManager.PortalModel?.GetPortal(s),
         _ = Vector_1.Vector.Create(),
         c =
-          (PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(h, r, !s, _),
+          (PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(h, s, !r, _),
           Vector_1.Vector.Create(
-            (s
+            (r
               ? a?.PortalWorldTransform1
               : a?.PortalWorldTransform2
             ).GetLocation(),
           )),
         l = Vector_1.Vector.Create(
-          (s ? a?.PortalWorldTransform1 : a?.PortalWorldTransform2)
+          (r ? a?.PortalWorldTransform1 : a?.PortalWorldTransform2)
             .GetRotation()
             .GetForwardVector(),
         ),
@@ -346,26 +353,26 @@ let CommonConnectComponent =
           (h.Subtraction(t, n),
           e.Add(n.ToUeVector()),
           Vector_1.Vector.Create());
-      PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(o, r, s, _),
+      PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(o, s, r, _),
         (c = Vector_1.Vector.Create(
-          (s
+          (r
             ? a?.PortalWorldTransform2
             : a?.PortalWorldTransform1
           ).GetLocation(),
         )),
         (l = Vector_1.Vector.Create(
-          (s ? a?.PortalWorldTransform2 : a?.PortalWorldTransform1)
+          (r ? a?.PortalWorldTransform2 : a?.PortalWorldTransform1)
             .GetRotation()
             .GetForwardVector(),
         )),
         MathUtils_1.MathUtils.LinePlaneIntersectionOriginNormal(h, _, c, l, _),
         _.IsZero() || (_.SubtractionEqual(t), e.Add(_.ToUeVector()));
     }
-    Vga(t, e, i, r) {
-      var s,
-        o = UE.NewArray(UE.Vector);
+    xSa(t, e, i, s) {
+      var r,
+        o = UE.NewArray(UE.VectorDouble);
       4 === t.Num() &&
-        ((s = []),
+        ((r = []),
         o.Empty(),
         o.Add(t.Get(0)),
         o.Add(t.Get(1)),
@@ -379,7 +386,7 @@ let CommonConnectComponent =
           i.EffectHandle,
           !0,
         ),
-        s.push(i),
+        r.push(i),
         o.Empty(),
         o.Add(t.Get(2)),
         o.Add(t.Get(3)),
@@ -393,16 +400,16 @@ let CommonConnectComponent =
           i.EffectHandle,
           !0,
         ),
-        s.push(i),
-        this.EffectSplines.set(r, s));
+        r.push(i),
+        this.EffectSplines.set(s, r));
     }
     UQs(t) {
       var e = [];
-      for (const r of t) {
-        var i = EntitySystem_1.EntitySystem.Get(r);
+      for (const s of t) {
+        var i = EntitySystem_1.EntitySystem.Get(s);
         i && e.push({ Target: i, PortalsId: [] }),
           ModelManager_1.ModelManager.ConnectGamePlayModel?.RemoveRelationPortalType(
-            r,
+            s,
           );
       }
       e.length <= 0 || this.RequestConnect(this.Entity, e, !1);
@@ -414,10 +421,10 @@ let CommonConnectComponent =
         );
       if (t && !(t.size <= 0)) {
         var e = [];
-        for (const r of t) {
-          var i = EntitySystem_1.EntitySystem.Get(r);
+        for (const s of t) {
+          var i = EntitySystem_1.EntitySystem.Get(s);
           i &&
-            !this.ServerProcessingEntities.has(r) &&
+            !this.ServerProcessingEntities.has(s) &&
             e.push({ Target: i, PortalsId: [] });
         }
         e.length <= 0 || this.RequestConnect(this.Entity, e, !1);
@@ -445,7 +452,10 @@ let CommonConnectComponent =
               !0,
             ),
             e.SplineActor?.IsValid() &&
-              ActorSystem_1.ActorSystem.Put(e.SplineActor);
+              ActorSystem_1.ActorSystem.Put(
+                "SceneItemConnectorComponent.ClearEffectSplines",
+                e.SplineActor,
+              );
       this.EffectSplines.clear();
     }
     RemoveSpecificSpline(t) {
@@ -459,7 +469,10 @@ let CommonConnectComponent =
               !0,
             ),
             i.SplineActor?.IsValid() &&
-              ActorSystem_1.ActorSystem.Put(i.SplineActor);
+              ActorSystem_1.ActorSystem.Put(
+                "SceneItemConnectorComponent.RemoveSpecificSpline",
+                i.SplineActor,
+              );
         this.EffectSplines.delete(t);
       }
     }
@@ -480,8 +493,8 @@ let CommonConnectComponent =
                   this.ActorComp.ActorLocationProxy,
                   c.ActorLocationProxy,
                 );
-                let r = MathUtils_1.MathUtils.MaxFloat,
-                  s = 0,
+                let s = MathUtils_1.MathUtils.MaxFloat,
+                  r = 0,
                   o = MathUtils_1.MathUtils.MaxFloat,
                   n = 0;
                 var c =
@@ -491,16 +504,16 @@ let CommonConnectComponent =
                   l =
                     (ModelManager_1.ModelManager.PortalModel.GetPortals().forEach(
                       (t, e) => {
-                        var i = this.$ga(f, !0, e);
-                        i < r && ((r = i), (s = e)),
-                          (i = this.$ga(f, !1)) < o && ((o = i), (n = e));
+                        var i = this.PSa(f, !0, e);
+                        i < s && ((s = i), (r = e)),
+                          (i = this.PSa(f, !1)) < o && ((o = i), (n = e));
                       },
                     ),
-                    Math.min(r, o)),
-                  m = r < o ? 1 : 2;
+                    Math.min(s, o)),
+                  m = s < o ? 1 : 2;
                 if ((m = e < l ? 0 : m) !== c?.Type) {
                   let t = 0;
-                  0 != m && (t = 1 == m ? s : n),
+                  0 != m && (t = 1 == m ? r : n),
                     (e = l),
                     ModelManager_1.ModelManager.ConnectGamePlayModel?.SetRelationPortalParam(
                       f,
@@ -509,7 +522,7 @@ let CommonConnectComponent =
                 }
                 switch (m) {
                   case 1:
-                    e = r;
+                    e = s;
                     break;
                   case 2:
                     e = o;
@@ -518,7 +531,7 @@ let CommonConnectComponent =
                   ? (a.push(f), this.jna(f))
                   : (this.CheckEntityMatchCondition(i, _) &&
                       (!h || h(f)) &&
-                      this.ywa(f)) ||
+                      this.kwa(f)) ||
                     a.push(f);
               } else a.push(f);
             } else a.push(f);
@@ -526,17 +539,17 @@ let CommonConnectComponent =
         this.UQs(a);
       }
     }
-    ywa(e, i, r) {
+    kwa(e, i, s) {
       this.uoe || this.k7r();
-      var s = Global_1.Global.BaseCharacter,
-        s =
-          (s &&
-            (this.uoe.ActorsToIgnore.Empty(), this.uoe.ActorsToIgnore.Add(s)),
+      var r = Global_1.Global.BaseCharacter,
+        r =
+          (r &&
+            (this.uoe.ActorsToIgnore.Empty(), this.uoe.ActorsToIgnore.Add(r)),
           this.uoe.SetDrawDebugTrace(
             CommonConnectComponent_1.DrawTraceDebug ? 2 : 0,
           ),
           EntitySystem_1.EntitySystem.GetComponent(e, 1));
-      if (!s) return !1;
+      if (!r) return !1;
       i =
         i ??
         ModelManager_1.ModelManager.ConnectGamePlayModel?.GetRelationPassThroughParam(
@@ -550,30 +563,30 @@ let CommonConnectComponent =
           ),
           TraceElementCommon_1.TraceElementCommon.SetEndLocation(
             this.uoe,
-            s.ActorLocation,
+            r.ActorLocation,
           ),
           !TraceElementCommon_1.TraceElementCommon.LineTrace(
             this.uoe,
             PROFILE_KEY,
-          ) || this.I0a(s)
+          ) || this.O0a(r)
         );
       if (1 === i || 2 === i) {
-        var o = Vector_1.Vector.Create(s.ActorLocationProxy),
+        var o = Vector_1.Vector.Create(r.ActorLocationProxy),
           i = 1 === i,
-          r =
-            r ??
+          s =
+            s ??
             ModelManager_1.ModelManager.ConnectGamePlayModel.GetRelationPassThroughParam(
               e,
             ).PortalPairId,
-          e = ModelManager_1.ModelManager.PortalModel?.GetPortal(r);
+          e = ModelManager_1.ModelManager.PortalModel?.GetPortal(s);
         if (!e) return !1;
         var n =
             ModelManager_1.ModelManager.CreatureModel?.GetEntity(
-              r,
-            )?.Entity?.GetComponent(200),
+              s,
+            )?.Entity?.GetComponent(213),
           h = ModelManager_1.ModelManager.CreatureModel?.GetEntity(
             n.GetPairCreatureDataId(),
-          )?.Entity?.GetComponent(200),
+          )?.Entity?.GetComponent(213),
           n = n?.GetTriggerComp(),
           h = h?.GetTriggerComp();
         if (!n || !h) return !1;
@@ -581,7 +594,7 @@ let CommonConnectComponent =
           o = Vector_1.Vector.Create(o),
           _ = Vector_1.Vector.Create(),
           c =
-            (PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(o, r, !i, _),
+            (PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(o, s, !i, _),
             i ? e.PortalWorldTransform1 : e.PortalWorldTransform2),
           l = Vector_1.Vector.Create(c.GetLocation()),
           c = Vector_1.Vector.Create(c.GetRotation().GetForwardVector()),
@@ -596,7 +609,7 @@ let CommonConnectComponent =
             ),
             i ? n : h),
           l = i ? e.PortalWorldTransform1 : e.PortalWorldTransform2;
-        if (!this.Iwa(a, l, _.K2_GetComponentLocation(), _.BoxExtent))
+        if (!this.Nwa(a, l, _.D_K2_GetComponentLocation(), _.BoxExtent))
           return !1;
         if (a.IsZero()) return !1;
         let t = !0;
@@ -610,12 +623,12 @@ let CommonConnectComponent =
             !TraceElementCommon_1.TraceElementCommon.LineTrace(
               this.uoe,
               PROFILE_KEY,
-            ) || this.Twa()))
+            ) || this.Fwa()))
         )
           return t;
         (c = Vector_1.Vector.Create()),
           (n =
-            (PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(m, r, i, c),
+            (PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(m, s, i, c),
             i ? e.PortalWorldTransform2 : e.PortalWorldTransform1)),
           (h = Vector_1.Vector.Create(n.GetLocation())),
           (l = Vector_1.Vector.Create(n.GetRotation().GetForwardVector()));
@@ -640,18 +653,18 @@ let CommonConnectComponent =
             !TraceElementCommon_1.TraceElementCommon.LineTrace(
               this.uoe,
               PROFILE_KEY,
-            ) || this.Twa(s)))
+            ) || this.Fwa(r)))
         )
           return t;
       }
       return !0;
     }
-    Iwa(t, e, i, r) {
+    Nwa(t, e, i, s) {
       e.SetLocation(i);
       i = e.InverseTransformPositionNoScale(t.ToUeVector());
-      return Math.abs(i.Y) <= r.Y && Math.abs(i.Z) <= r.Z;
+      return Math.abs(i.Y) <= s.Y && Math.abs(i.Z) <= s.Z;
     }
-    I0a(e) {
+    O0a(e) {
       if (this.uoe.HitResult.bBlockingHit)
         for (let t = 0; t < this.uoe.HitResult.Actors.Num(); t++) {
           var i = this.uoe.HitResult.Actors.Get(t);
@@ -673,7 +686,7 @@ let CommonConnectComponent =
         }
       return !0;
     }
-    Twa(e) {
+    Fwa(e) {
       if (this.uoe.HitResult.bBlockingHit)
         for (let t = 0; t < this.uoe.HitResult.Actors.Num(); t++) {
           var i = this.uoe.HitResult.Actors.Get(t);
@@ -697,9 +710,9 @@ let CommonConnectComponent =
         }
       return !0;
     }
-    $ga(t, e, i) {
-      var r,
-        s,
+    PSa(t, e, i) {
+      var s,
+        r,
         o,
         n,
         h =
@@ -707,28 +720,28 @@ let CommonConnectComponent =
             t,
           );
       return !h ||
-        !(r = ModelManager_1.ModelManager.PortalModel?.GetPortal(
+        !(s = ModelManager_1.ModelManager.PortalModel?.GetPortal(
           i ?? h.PortalPairId,
         )) ||
         !(t = EntitySystem_1.EntitySystem.GetComponent(t, 1)) ||
-        (([r, n] = e
+        (([s, n] = e
           ? [
               Vector_1.Vector.Create(
-                r.PortalWorldTransform1.GetRotation().GetForwardVector(),
+                s.PortalWorldTransform1.GetRotation().GetForwardVector(),
               ),
-              Vector_1.Vector.Create(r.PortalWorldTransform1.GetLocation()),
+              Vector_1.Vector.Create(s.PortalWorldTransform1.GetLocation()),
             ]
           : [
               Vector_1.Vector.Create(
-                r.PortalWorldTransform2.GetRotation().GetForwardVector(),
+                s.PortalWorldTransform2.GetRotation().GetForwardVector(),
               ),
-              Vector_1.Vector.Create(r.PortalWorldTransform2.GetLocation()),
+              Vector_1.Vector.Create(s.PortalWorldTransform2.GetLocation()),
             ]),
-        (s = this.ActorComp.ActorLocationProxy),
+        (r = this.ActorComp.ActorLocationProxy),
         (o = Vector_1.Vector.Create()),
-        s.Subtraction(n, o),
+        r.Subtraction(n, o),
         o.Normalize(),
-        Vector_1.Vector.DotProduct(r, o) < 0)
+        Vector_1.Vector.DotProduct(s, o) < 0)
         ? MathUtils_1.MathUtils.MaxFloat
         : ((n = Vector_1.Vector.Create()),
           PortalUtils_1.PortalUtils.GetMappingPosToOtherPortal(
@@ -737,45 +750,45 @@ let CommonConnectComponent =
             !e,
             n,
           ),
-          Vector_1.Vector.Dist(n, s));
+          Vector_1.Vector.Dist(n, r));
     }
     UpdateSplineEffect() {
       var t,
         e,
         i = this.ActorComp.ActorLocationProxy,
-        r = UE.NewArray(UE.Vector);
+        s = UE.NewArray(UE.VectorDouble);
       for ([t, e] of this.EffectSplines) {
-        var s = EntitySystem_1.EntitySystem.GetComponent(t, 1);
-        if (s)
+        var r = EntitySystem_1.EntitySystem.GetComponent(t, 1);
+        if (r)
           if (1 === e.length) {
             var o =
               ModelManager_1.ModelManager.ConnectGamePlayModel?.GetRelationPassThroughParam(
-                s.Entity.Id,
+                r.Entity.Id,
               );
             o &&
               (0 !== o.Type
-                ? (this.RemoveSpecificSpline(s.Entity.Id),
-                  this.Fga(i, r, s, o.PortalPairId, 1 === o.Type),
-                  this.Vga(r, s, i, s.Entity.Id))
-                : (this.Nga(i, r, s),
-                  e[0].SplineActor.K2_SetActorLocation(
+                ? (this.RemoveSpecificSpline(r.Entity.Id),
+                  this.USa(i, s, r, o.PortalPairId, 1 === o.Type),
+                  this.xSa(s, r, i, r.Entity.Id))
+                : (this.ASa(i, s, r),
+                  e[0].SplineActor.D_K2_SetActorLocation(
                     this.ActorComp?.ActorLocation,
                     !1,
                     void 0,
                     !1,
                   ),
-                  e[0].SplineComp.SetSplinePoints(r, 0)));
+                  e[0].SplineComp.D_SetSplinePoints(s, 0)));
           } else if (2 === e.length) {
             o =
               ModelManager_1.ModelManager.ConnectGamePlayModel?.GetRelationPassThroughParam(
-                s.Entity.Id,
+                r.Entity.Id,
               );
             if (o)
               if (0 === o.Type) {
-                this.RemoveSpecificSpline(s.Entity.Id), this.Nga(i, r, s);
+                this.RemoveSpecificSpline(r.Entity.Id), this.ASa(i, s, r);
                 var n = GameSplineUtils_1.GameSplineUtils.GenerateGuideEffect(
                   i,
-                  r,
+                  s,
                   this.ConnectedEffectPath,
                 );
                 if (!n || !this.ActorComp?.Owner) break;
@@ -783,51 +796,52 @@ let CommonConnectComponent =
                   n.EffectHandle,
                   !0,
                 ),
-                  this.EffectSplines.set(s.Entity.Id, [n]);
+                  this.EffectSplines.set(r.Entity.Id, [n]);
               } else {
-                this.Fga(i, r, s, o.PortalPairId, 1 === o.Type);
-                n = UE.NewArray(UE.Vector);
-                e[0].SplineActor.K2_SetActorLocation(
+                this.USa(i, s, r, o.PortalPairId, 1 === o.Type);
+                n = UE.NewArray(UE.VectorDouble);
+                e[0].SplineActor.D_K2_SetActorLocation(
                   this.ActorComp?.ActorLocation,
                   !1,
                   void 0,
                   !1,
                 ),
                   n.Empty(),
-                  n.Add(r.Get(0)),
-                  n.Add(r.Get(1)),
-                  e[0].SplineComp.SetSplinePoints(n, 0),
-                  e[1].SplineActor.K2_SetActorLocation(
-                    s.ActorLocation,
+                  n.Add(s.Get(0)),
+                  n.Add(s.Get(1)),
+                  e[0].SplineComp.D_SetSplinePoints(n, 0),
+                  e[1].SplineActor.D_K2_SetActorLocation(
+                    r.ActorLocation,
                     !1,
                     void 0,
                     !1,
                   ),
                   n.Empty(),
-                  n.Add(r.Get(2)),
-                  n.Add(r.Get(3)),
-                  e[1].SplineComp.SetSplinePoints(n, 0);
+                  n.Add(s.Get(2)),
+                  n.Add(s.Get(3)),
+                  e[1].SplineComp.D_SetSplinePoints(n, 0);
               }
           }
       }
     }
     RequestConnect(t, e, i) {
-      var r = Protocol_1.Aki.Protocol.a$s.create(),
+      i && this.kCl && this.kCl.CollectSampleAndSend(!0);
+      var s = Protocol_1.Aki.Protocol.a$s.create(),
         t = t.GetComponent(0),
-        s = Protocol_1.Aki.Protocol.g$s.create();
-      (s.d$s = MathUtils_1.MathUtils.NumberToLong(t.GetCreatureDataId())),
-        (s.KHa = []);
+        r = Protocol_1.Aki.Protocol.g$s.create();
+      (r.d$s = MathUtils_1.MathUtils.NumberToLong(t.GetCreatureDataId())),
+        (r.YQa = []);
       for (const h of e) {
         var o = h.Target.GetComponent(0),
-          n = Protocol_1.Aki.Protocol.noh.create();
+          n = Protocol_1.Aki.Protocol.eR_.create();
         (n.CVn = MathUtils_1.MathUtils.NumberToLong(o.GetCreatureDataId())),
-          (n.$Ha = h.PortalsId),
-          s.KHa.push(n),
+          (n.zQa = h.PortalsId),
+          r.YQa.push(n),
           this.ServerProcessingEntities.add(h.Target.Id);
       }
-      (s.C$s = i),
-        (r.g$s = s),
-        Net_1.Net.Call(24239, r, (t) => {
+      (r.C$s = i),
+        (s.g$s = r),
+        Net_1.Net.Call(15592, s, (t) => {
           switch (
             (e.forEach((t) => {
               this.ServerProcessingEntities.delete(t.Target.Id);
@@ -840,7 +854,7 @@ let CommonConnectComponent =
             default:
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 t.Q4n,
-                21324,
+                24469,
               );
           }
         });
@@ -871,8 +885,9 @@ let CommonConnectComponent =
     bna() {
       return (
         (this.ActorComp = this.Entity.GetComponent(3)),
-        (this.Lna = this.Entity.GetComponent(108)),
-        (this.OWa = this.Entity.GetComponent(190)),
+        (this.Lna = this.Entity.GetComponent(118)),
+        (this.rXa = this.Entity.GetComponent(203)),
+        (this.kCl = this.Entity.GetComponent(66)),
         "Range" === this.Tna.LogicType.Type &&
           ((this.cQs = this.Tna.LogicType.EnterRange),
           (this.mQs = this.Tna.LogicType.LeaveRange),
@@ -898,12 +913,23 @@ let CommonConnectComponent =
         (t.OnExitSensoryRange = (t) => {
           this.jna(t);
         }),
-        (this.EZa = t),
+        (this.bsh = t),
         (this.Dna = this.Lna.AddSensoryInfo(t));
+    }
+    U1h() {
+      this.pQs = TimerSystem_1.TimerSystem.Forever(() => {
+        this.Vna();
+      }, ModelManager_1.ModelManager.ConnectGamePlayModel.TryConnectInterval);
+    }
+    R1h() {
+      this.pQs &&
+        (TimerSystem_1.TimerSystem.Remove(this.pQs),
+        (this.pQs = void 0),
+        this.TryCancelAllConnect());
     }
     Nna(t) {
       "Range" === this.Tna.LogicType.Type &&
-        (this.GWa() || this.TryCancelAllConnect(),
+        (this.oXa() || this.TryCancelAllConnect(),
         this.UpdateConnectorRange(
           this.mQs,
           this.Tna?.LogicType.KeepConditions,
@@ -924,10 +950,10 @@ let CommonConnectComponent =
     }
     Vna() {
       this.NeedBeProcessingEntity.clear(), this.CanInteractEntity.clear();
-      for (const r of this.Una) {
+      for (const s of this.Una) {
         var t,
           e,
-          i = EntitySystem_1.EntitySystem.Get(r);
+          i = EntitySystem_1.EntitySystem.Get(s);
         i &&
           i?.Valid &&
           (this.NeedBeProcessingEntity.has(i) ||
@@ -939,64 +965,64 @@ let CommonConnectComponent =
               this.CanInteractEntity.add(i)));
       }
       ModelManager_1.ModelManager.PortalModel.GetPortals().forEach((t, e) => {
-        this.Hga(e, !0), this.Hga(e, !1);
+        this.wSa(e, !0), this.wSa(e, !1);
       }),
-        this.GWa() && this.TryStartConnect(),
-        0 === this.bWa && 0 !== this.CanInteractEntity.size
-          ? this.OWa?.HasTag(this.qWa) ||
-            (this.OWa?.AddTag(this.qWa), this.NXa(!0))
-          : 0 !== this.bWa &&
+        this.oXa() && this.TryStartConnect(),
+        0 === this.tXa && 0 !== this.CanInteractEntity.size
+          ? this.rXa?.HasTag(this.iXa) ||
+            (this.rXa?.AddTag(this.iXa), this.kZa(!0))
+          : 0 !== this.tXa &&
             0 === this.CanInteractEntity.size &&
-            this.OWa?.HasTag(this.qWa) &&
-            (this.OWa?.RemoveTag(this.qWa), this.NXa(!1)),
-        (this.bWa = this.CanInteractEntity.size);
+            this.rXa?.HasTag(this.iXa) &&
+            (this.rXa?.RemoveTag(this.iXa), this.kZa(!1)),
+        (this.tXa = this.CanInteractEntity.size);
     }
-    NXa(t) {
-      var e = Protocol_1.Aki.Protocol.Gth.create(),
+    kZa(t) {
+      var e = Protocol_1.Aki.Protocol.Zf_.create(),
         i = MathUtils_1.MathUtils.NumberToLong(
           this.ActorComp.CreatureData.GetCreatureDataId(),
         );
       (e.F4n = i),
         (e.SDs = t),
-        Net_1.Net.Call(16180, e, (t) => {
+        Net_1.Net.Call(17652, e, (t) => {
           t?.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t.Q4n,
-              22034,
+              19926,
             );
         });
     }
-    GWa() {
+    oXa() {
       var t = this.Tna?.LogicType.TagConditions;
       if (t && 0 !== t.length)
-        for (const e of t) if (!this.OWa?.HasTag(e)) return !1;
+        for (const e of t) if (!this.rXa?.HasTag(e)) return !1;
       return !0;
     }
-    Hga(t, e) {
+    wSa(t, e) {
       if (t) {
         var i = ModelManager_1.ModelManager.PortalModel.GetPortal(t);
         if (i && i.Portal1Enable && i.Portal2Enable) {
-          var r =
+          var s =
               ModelManager_1.ModelManager.CreatureModel?.GetEntity(
                 t,
-              )?.Entity?.GetComponent(200),
-            s = (0, puerts_1.$ref)(void 0),
-            s = (r?.PortalCapture?.GetPair(s), (0, puerts_1.$unref)(s));
-          if (e ? r?.GetPbDataId() : s?.PbdataId) {
-            var [r, s] = e
+              )?.Entity?.GetComponent(213),
+            r = (0, puerts_1.$ref)(void 0),
+            r = (s?.PortalCapture?.GetPair(r), (0, puerts_1.$unref)(r));
+          if (e ? s?.GetPbDataId() : r?.PbdataId) {
+            var [s, r] = e
                 ? [i.PortalWorldTransform1, i.PortalWorldTransform2]
                 : [i.PortalWorldTransform2, i.PortalWorldTransform1],
-              i = Vector_1.Vector.Create(r.GetLocation()),
-              o = Vector_1.Vector.Create(s.GetLocation()),
+              i = Vector_1.Vector.Create(s.GetLocation()),
+              o = Vector_1.Vector.Create(r.GetLocation()),
               n = this.ActorComp.ActorLocationProxy;
             const C = Vector_1.Vector.Create();
             n.Subtraction(i, C), (C.Z = 0), C.Normalize();
-            n = Vector_1.Vector.Create(r.GetRotation().GetForwardVector());
+            n = Vector_1.Vector.Create(s.GetRotation().GetForwardVector());
             n.Normalize();
             const M = Vector_1.Vector.DotProduct(n, C);
             if (!(M < 0)) {
               var h = Vector_1.Vector.Create(
-                  s.GetRotation().GetForwardVector(),
+                  r.GetRotation().GetForwardVector(),
                 ),
                 i = (h.Normalize(), []),
                 a =
@@ -1041,8 +1067,8 @@ let CommonConnectComponent =
                         l,
                         this.ActorComp.ActorLocationProxy,
                       )) > this.cQs) ||
-                      (this.ywa(c.Id, e ? 1 : 2, t) &&
-                        ((l = c.GetComponent(209)),
+                      (this.kwa(c.Id, e ? 1 : 2, t) &&
+                        ((l = c.GetComponent(224)),
                         ([m, f] = this.CheckEntityMatchCondition(
                           a?.MatchConditions,
                           c,
@@ -1073,16 +1099,16 @@ let CommonConnectComponent =
         : this.ActorComp &&
             (e = this.Tna?.LogicType) &&
             t.GetComponent(1) &&
-            this.ywa(t.Id, 0) &&
-            t.GetComponent(209)
+            this.kwa(t.Id, 0) &&
+            t.GetComponent(224)
           ? this.CheckEntityMatchCondition(e?.MatchConditions, t)
           : [!1, !1];
     }
     Hna(t) {
-      return t.GetComponent(209) && this.Una.add(t.Id), !0;
+      return t.GetComponent(224) && this.Una.add(t.Id), !0;
     }
     jna(t) {
-      this.Una.delete(t), this.EZa?.OnEntityExitConnectRange(t);
+      this.Una.delete(t), this.bsh?.OnEntityExitConnectRange(t);
     }
     Pna(t) {
       this.fie = 1;
@@ -1091,15 +1117,15 @@ let CommonConnectComponent =
     }
     Bna() {
       return (
-        (this.ActorComp = this.Entity.GetComponent(187)),
-        (this.mBe = this.Entity.GetComponent(120)),
+        (this.ActorComp = this.Entity.GetComponent(200)),
+        (this.mBe = this.Entity.GetComponent(131)),
         this.Rna?.LogicType.MatchConditions &&
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
             this.g_n,
           ),
-        (this.mBe = this.Entity.GetComponent(120)),
+        (this.mBe = this.Entity.GetComponent(131)),
         "Range" === this.Rna.LogicType.Type &&
           ((this.EQs = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
             this.Rna.LogicType.ActiveState,
@@ -1171,7 +1197,7 @@ let CommonConnectComponent =
 (CommonConnectComponent.DrawTraceDebug = !1),
   (CommonConnectComponent = CommonConnectComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(209)],
+      [(0, RegisterComponent_1.RegisterComponent)(224)],
       CommonConnectComponent,
     )),
   (exports.CommonConnectComponent = CommonConnectComponent);

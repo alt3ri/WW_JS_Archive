@@ -44,7 +44,7 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
                 e,
               )),
             (this.CdKeyErrorText = r ?? this.CdKeyErrorText),
-            this.RefreshTips(5));
+            this.RefreshTips(6));
       },
       () => {},
     );
@@ -54,7 +54,7 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
   }
   cEt() {
     var e = CdKeyInputController_1.CdKeyInputController.CheckInCdKeyUseCd();
-    return e && this.RefreshTips(6), e;
+    return e && this.RefreshTips(7), e;
   }
   mEt(e) {
     e = StringUtils_1.StringUtils.CheckIsOnlyLettersAndNumbers(e);

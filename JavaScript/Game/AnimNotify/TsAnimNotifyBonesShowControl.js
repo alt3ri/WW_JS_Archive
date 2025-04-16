@@ -5,6 +5,7 @@ class TsAnimNotifyBonesShowControl extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.BoneName = void 0), (this.Show = !1);
   }
+  Constructor() {}
   K2_Notify(t, s) {
     return (
       t.IsBoneHiddenByName(this.BoneName) === this.Show &&

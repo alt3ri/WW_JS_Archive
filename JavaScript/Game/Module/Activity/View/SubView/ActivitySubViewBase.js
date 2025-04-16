@@ -70,7 +70,7 @@ class ActivitySubViewBase extends UiPanelBase_1.UiPanelBase {
   async OnBeforeShowSelfAsync() {}
   async OnBeforeHideSelfAsync() {}
   PlaySubViewSequence(e, i = !1) {
-    this.LevelSequencePlayer.GetCurrentSequence() === e
+    this.LevelSequencePlayer.CheckSeqActorIsSeqPlaying(e)
       ? this.LevelSequencePlayer.ReplaySequenceByKey(e)
       : this.LevelSequencePlayer.PlayLevelSequenceByName(e, i);
   }

@@ -3,12 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableCastToOutletState = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
   SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
-  constructor(t, i) {
-    super(t, i), (this.NHo = void 0), (this.StateType = "BeCastingToOutlet");
+  constructor() {
+    super(...arguments), (this.NHo = void 0);
   }
   SetTarget(t) {
     this.NHo = t;
@@ -21,24 +23,29 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
       ? (super.OnEnter(),
         (this.SceneItem.IsCanBeHeld = !1),
         (this.SceneItem.TargetActorComponent = this.NHo.GetComponent(1)),
-        (this.SceneItem.TargetOutletComponent = this.NHo.GetComponent(148)),
+        (this.SceneItem.TargetOutletComponent = this.NHo.GetComponent(159)),
+        this.NeedNotifyServer &&
+          LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
+            this.SceneItem.Entity.Id,
+            Protocol_1.Aki.Protocol.Zw_.Proto_EControlStateLockBaseThrowing,
+          ),
         this.StartCast(),
         this.CalcDirection())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SceneItem",
-          32,
+          31,
           "被控物进入CastToTarget时,没有设置目标",
         );
   }
   OnTick(t) {
     this.Timer += t;
-    let i = MathUtils_1.MathUtils.Clamp(this.Timer / this.CastDuration, 0, 1);
+    let e = MathUtils_1.MathUtils.Clamp(this.Timer / this.CastDuration, 0, 1);
     return (
       this.SceneItem.CastCurve &&
-        (i = this.SceneItem.CastCurve.GetFloatValue(i)),
-      this.UpdateLocation(i),
-      this.T_e(i),
+        (e = this.SceneItem.CastCurve.GetFloatValue(e)),
+      this.UpdateLocation(e),
+      this.T_e(e),
       this.kxe(),
       !0
     );
@@ -48,13 +55,13 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
   }
   T_e(t) {
     var t = UE.KismetMathLibrary.Ease(0, 1, t, 7),
-      i = this.SceneItem.TargetOutletComponent.GetSocketRotator(
+      e = this.SceneItem.TargetOutletComponent.GetSocketRotator(
         this.SceneItem.Entity,
       ),
-      s = Rotator_1.Rotator.Create();
-    Rotator_1.Rotator.Lerp(this.StartRot, i, t, s),
+      i = Rotator_1.Rotator.Create();
+    Rotator_1.Rotator.Lerp(this.StartRot, e, t, i),
       this.SceneItem.ActorComp.SetActorRotation(
-        s.ToUeRotator(),
+        i.ToUeRotator(),
         "[ManipulableCastToOutletState.UpdateRotation]",
         !1,
       );
@@ -76,9 +83,9 @@ class SceneItemManipulableCastToOutletState extends SceneItemManipulableCastStat
     var t = this.SceneItem.TargetOutletComponent.Entity;
     this.SceneItem.ShouldPlayMismatchSequence(t)
       ? ((this.SceneItem.CastFreeState.NeedResetPhysicsMode = !1),
-        (this.SceneItem.CurrentState = this.SceneItem.CastFreeState),
+        this.SceneItem?.SetState(9, "CastToOutlet Finish"),
         this.SceneItem?.TryPlayMismatchSequence(t))
-      : ((this.SceneItem.CurrentState = this.SceneItem.MatchOutletState),
+      : (this.SceneItem?.SetState(10, "CastToOutlet Finish"),
         this.SceneItem.RequestAttachToOutlet());
   }
 }

@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../Core/Common/Log"),
   ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
-  CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class HudEntityData {
   constructor() {
     (this.Jh = void 0),
@@ -35,7 +35,7 @@ class HudEntityData {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "HudUnit",
-            8,
+            17,
             "获取Hud实体数据时，找不到实体对应组件，请在初始化时调用SetComponent记录对应组件",
           )),
       t
@@ -44,14 +44,16 @@ class HudEntityData {
   IsValid() {
     return (
       !!ObjectSystem_1.ObjectSystem.IsValid(this.Jh) &&
-      !!CharacterController_1.CharacterController.GetCharacter(this.Jh)
+      !!ControllerHolder_1.ControllerHolder.CharacterController.GetCharacter(
+        this.Jh,
+      )
     );
   }
   GetId() {
     return this.Jh.Id;
   }
   ListenForTagCountChanged(t, e) {
-    var r = this.GetComponent(190);
+    var r = this.GetComponent(203);
     r &&
       ((this.eoi = e),
       (e = r.ListenForTagAddOrRemove(t, this.toi)),
@@ -64,7 +66,7 @@ class HudEntityData {
     }
   }
   ContainsTagById(t) {
-    return this.GetComponent(190).HasTag(t);
+    return this.GetComponent(203).HasTag(t);
   }
   GetLocationProxy() {
     return this.GetComponent(1).ActorLocationProxy;
@@ -82,6 +84,9 @@ class HudEntityData {
   GetDistanceSquaredTo(t) {
     var e = this.GetLocationProxy();
     return Vector_1.Vector.DistSquared(t, e);
+  }
+  GetEntity() {
+    return this.Jh;
   }
 }
 exports.HudEntityData = HudEntityData;

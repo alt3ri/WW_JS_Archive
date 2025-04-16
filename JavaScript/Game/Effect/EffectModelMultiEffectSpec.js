@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelMultiEffectSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment"),
   EffectModelHelper_1 = require("../Render/Effect/Data/EffectModelHelper"),
   MultiEffectBuffBall_1 = require("../Render/Effect/Data/MultiEffect/MultiEffectBuffBall"),
   CustomMap_1 = require("../World/Define/CustomMap"),
@@ -43,17 +45,17 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
   OnTick(t) {
     var e = this.EffectSpecMap.GetItems(),
       f = this.MultiEffect.GetDesiredNum(this.LifeTime.PassTime),
-      s =
+      i =
         (this.AdjustNumber(f),
         this.MultiEffect.Update(t, this.LifeTime.PassTime, e),
         this.Handle.GetSureEffectActor()?.bHidden ?? !1);
     for (const c of e) {
-      var i = EffectSystem_1.EffectSystem.GetSureEffectActor(c);
-      i?.IsValid() &&
-        i.bHidden !== s &&
+      var s = EffectSystem_1.EffectSystem.GetSureEffectActor(c);
+      s?.IsValid() &&
+        s.bHidden !== i &&
         EffectSystem_1.EffectSystem.SetEffectHidden(
           c,
-          s,
+          i,
           "EffectModelMultiEffectSpec.Tick",
         );
     }
@@ -68,7 +70,7 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
     var e = new Array();
     for (const f of this.EffectSpecMap.GetItems())
       EffectSystem_1.EffectSystem.IsValid(f) && e.push(f);
-    for (const s of e) EffectSystem_1.EffectSystem.StopEffectById(s, t, !0);
+    for (const i of e) EffectSystem_1.EffectSystem.StopEffectById(i, t, !0);
     this.EffectSpecMap.Clear();
   }
   OnClear() {
@@ -82,42 +84,56 @@ class EffectModelMultiEffectSpec extends EffectSpec_1.EffectSpec {
     return this.EffectSpecMap.Clear(), !0;
   }
   AdjustNumber(t) {
-    var e,
-      f,
-      s = this.EffectSpecMap.Size();
-    s < t
-      ? ((f = this.Handle.GetSureEffectActor()),
-        (e = UE.KismetSystemLibrary.GetPathName(
+    var e = this.EffectSpecMap.Size();
+    if (e < t) {
+      var f = this.Handle.GetSureEffectActor(),
+        i = UE.KismetSystemLibrary.GetPathName(
           this.GetEffectModel().EffectData,
-        )),
-        (f = EffectSystem_1.EffectSystem.SpawnEffect(
-          f.GetOuter(),
-          f.GetTransform(),
-          e,
-          "[EffectModelMultiEffectSpec.EffectModelGroupSpec]",
-          this.Handle.GetContext(),
-        )),
-        EffectSystem_1.EffectSystem.IsValid(f) &&
-          (this.EffectSpecMap.Set(f, f),
-          EffectSystem_1.EffectSystem.AddFinishCallback(f, (t) => {
-            this.EffectSpecMap.Remove(t);
-          }),
-          EffectSystem_1.EffectSystem.GetEffectActor(f).K2_AttachToActor(
-            this.Handle.GetSureEffectActor(),
-            void 0,
-            1,
-            1,
-            1,
-            !1,
-          )))
-      : t < s &&
-        (f = this.EffectSpecMap.GetByIndex((e = s - 1))) &&
-        (this.EffectSpecMap.RemoveByIndex(e),
+        );
+      const s = EffectSystem_1.EffectSystem.SpawnEffect(
+        f.GetOuter(),
+        f.D_GetTransform(),
+        i,
+        "[EffectModelMultiEffectSpec.EffectModelGroupSpec]",
+        this.Handle.GetContext(),
+      );
+      EffectSystem_1.EffectSystem.IsValid(s) &&
+        (this.EffectSpecMap.Set(s, s),
+        EffectSystem_1.EffectSystem.AddFinishCallback(s, (t) => {
+          this.EffectSpecMap.Remove(t),
+            EffectEnvironment_1.EffectEnvironment.OpenTickOptimize &&
+              this.Handle &&
+              cpp_1.FKuroEffectSystemInterface.RemoveMultiEffect(
+                this.Handle.Id,
+                s,
+              );
+        }),
+        EffectSystem_1.EffectSystem.GetEffectActor(s).K2_AttachToActor(
+          this.Handle.GetSureEffectActor(),
+          void 0,
+          1,
+          1,
+          1,
+          !1,
+        ),
+        EffectEnvironment_1.EffectEnvironment.OpenTickOptimize) &&
+        this.Handle &&
+        cpp_1.FKuroEffectSystemInterface.AddMultiEffect(this.Handle.Id, s);
+    } else
+      t < e &&
+        (i = this.EffectSpecMap.GetByIndex((f = e - 1))) &&
+        (this.EffectSpecMap.RemoveByIndex(f),
         EffectSystem_1.EffectSystem.StopEffectById(
-          f,
+          i,
           "[EffectModelMultiEffectSpec.AdjustNumber]",
           !0,
-        ));
+        ),
+        EffectEnvironment_1.EffectEnvironment.OpenTickOptimize) &&
+        this.Handle &&
+        cpp_1.FKuroEffectSystemInterface.RemoveMultiEffect(this.Handle.Id, i);
+  }
+  IsOverrideTick() {
+    return !0;
   }
 }
 exports.EffectModelMultiEffectSpec = EffectModelMultiEffectSpec;

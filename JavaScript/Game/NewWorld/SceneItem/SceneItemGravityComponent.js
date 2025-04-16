@@ -14,14 +14,15 @@ var SceneItemGravityComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         a = Reflect.decorate(t, e, i, s);
       else
-        for (var r = t.length - 1; 0 <= r; r--)
-          (n = t[r]) &&
+        for (var o = t.length - 1; 0 <= o; o--)
+          (n = t[o]) &&
             (a = (h < 3 ? n(a) : 3 < h ? n(e, i, a) : n(e, i)) || a);
       return 3 < h && a && Object.defineProperty(e, i, a), a;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemGravityComponent = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
@@ -30,8 +31,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
+  LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   LevelGeneralNetworks_1 = require("../../LevelGamePlay/LevelGeneralNetworks"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  RangeComponentMessageManager_1 = require("../Character/Custom/RangeComponentMessageManager"),
   CHECK_DISTANCE_INTERVAL = 100;
 let SceneItemGravityComponent =
   (SceneItemGravityComponent_1 = class SceneItemGravityComponent extends (
@@ -63,11 +66,18 @@ let SceneItemGravityComponent =
         (this.Rnn = () => {
           this.V0n("[SceneItemGravityComponent] 场景交互物加载完毕");
         }),
+        (this.ful = (t, e, i, s) => {
+          (s !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrOnlineInteractNotOpen &&
+            s !==
+              Protocol_1.Aki.Protocol.Q4n.Proto_ErrOnlineInteractNoPermission &&
+            s !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrInteractMultiGameMode) ||
+            LevelGamePlayController_1.LevelGamePlayController.ShowFakeErrorCodeTips();
+        }),
         (this.H0n = (t, e) => {
           var e = e.Entity;
           (e?.GetComponent(3) ?? !t) ||
             (!1 !== this.R0n.StopTeleControlMove &&
-              ((t = e?.GetComponent(143)), (e = e?.GetComponent(187)), t) &&
+              ((t = e?.GetComponent(154)), (e = e?.GetComponent(200)), t) &&
               e?.IsAutonomousProxy &&
               t.ForceStopDropping());
         }),
@@ -104,10 +114,10 @@ let SceneItemGravityComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.CheckGetComponent(187)),
-        (this.Lie = this.Entity.CheckGetComponent(181)),
-        (this.mBe = this.Entity.CheckGetComponent(120)),
-        (this._un = this.Entity.CheckGetComponent(118)),
+        (this.Hte = this.Entity.CheckGetComponent(200)),
+        (this.Lie = this.Entity.CheckGetComponent(194)),
+        (this.mBe = this.Entity.CheckGetComponent(131)),
+        (this._un = this.Entity.CheckGetComponent(128)),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnEntityInOutRangeLocal,
@@ -117,6 +127,18 @@ let SceneItemGravityComponent =
             this.Entity,
             EventDefine_1.EEventName.OnEntityInOutRangeLocal,
             this.H0n,
+          ),
+        RangeComponentMessageManager_1.RangeComponentMessageManager.Instance.HasMessage(
+          this.Entity,
+          Protocol_1.Aki.Protocol.i6n.Proto_RangeEnter,
+          Protocol_1.Aki.Protocol.WR_.Proto_Trample,
+          this.ful,
+        ) ||
+          RangeComponentMessageManager_1.RangeComponentMessageManager.Instance.RegisterMessage(
+            this.Entity,
+            Protocol_1.Aki.Protocol.i6n.Proto_RangeEnter,
+            Protocol_1.Aki.Protocol.WR_.Proto_Trample,
+            this.ful,
           ),
         !0
       );
@@ -131,7 +153,7 @@ let SceneItemGravityComponent =
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Temp",
-              32,
+              31,
               "SceneItemGravityComponent.OnActivate: 重复添加事件",
               ["PbDataId", this.EIe?.GetPbDataId()],
             )
@@ -205,6 +227,18 @@ let SceneItemGravityComponent =
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
             this.Rnn,
           ),
+        RangeComponentMessageManager_1.RangeComponentMessageManager.Instance.HasMessage(
+          this.Entity,
+          Protocol_1.Aki.Protocol.i6n.Proto_RangeEnter,
+          Protocol_1.Aki.Protocol.WR_.Proto_Trample,
+          this.ful,
+        ) &&
+          RangeComponentMessageManager_1.RangeComponentMessageManager.Instance.UnRegisterMessage(
+            this.Entity,
+            Protocol_1.Aki.Protocol.i6n.Proto_RangeEnter,
+            Protocol_1.Aki.Protocol.WR_.Proto_Trample,
+            this.ful,
+          ),
         void 0 !== this.O0n &&
           (TimerSystem_1.TimerSystem.Remove(this.O0n), (this.O0n = void 0)),
         !0
@@ -214,7 +248,7 @@ let SceneItemGravityComponent =
       this.W0n(t * this.nxe);
     }
     OnChangeTimeDilation(t) {
-      var e = this.Entity.GetComponent(110);
+      var e = this.Entity.GetComponent(120);
       (this.nxe = e ? t * e.CurrentTimeScale : 1),
         LevelGeneralNetworks_1.LevelGeneralNetworks.CheckEntityCanPushTimeDilation(
           this.EIe.GetEntityTimeScaleModifyStrategy(),
@@ -256,7 +290,7 @@ let SceneItemGravityComponent =
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            40,
+            39,
             "[SceneItemGravityComponent] ChangeAnimState",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["FromAnimState", this.U0n],
@@ -406,7 +440,7 @@ let SceneItemGravityComponent =
   });
 (SceneItemGravityComponent = SceneItemGravityComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(139)],
+    [(0, RegisterComponent_1.RegisterComponent)(150)],
     SceneItemGravityComponent,
   )),
   (exports.SceneItemGravityComponent = SceneItemGravityComponent);

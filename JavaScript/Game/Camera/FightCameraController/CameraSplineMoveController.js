@@ -6,12 +6,14 @@ const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   Global_1 = require("../../Global"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  CameraUtility_1 = require("../CameraUtility"),
   CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraSplineMoveController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
       (this.YawAngle = 0),
       (this.PitchAngle = 0),
+      (this.RollAngle = 0),
       (this.FadeInTime = -0),
       (this.SplineId = void 0),
       (this.Spline = void 0),
@@ -46,13 +48,16 @@ class CameraSplineMoveController extends CameraControllerBase_1.CameraController
   }
   ApplyCameraSplineInternal(t, i, s, h, e) {
     this.SplineId || this.Unlock(this),
+      this.Gue.Set(h, s, 0),
+      CameraUtility_1.CameraUtility.GetRotatorInGravity(this.Gue, this.Gue),
       (this.SplineId = t),
       (this.Spline = i),
-      (this.YawAngle = s),
-      (this.PitchAngle = h),
+      (this.YawAngle = this.Gue.Yaw),
+      (this.PitchAngle = this.Gue.Pitch),
+      (this.RollAngle = this.Gue.Roll),
       (this.FadeInTime = e),
       (this.bce = 0),
-      this.fle.DeepCopy(this.Camera.CameraRotation);
+      this.fle.DeepCopy(this.Camera.CameraRotationInGravity);
   }
   EndCameraSpline() {
     this.SplineId &&
@@ -83,7 +88,7 @@ class CameraSplineMoveController extends CameraControllerBase_1.CameraController
     var i;
     this.Spline &&
       Global_1.Global.BaseCharacter &&
-      ((i = this.Spline.FindInputKeyClosestToWorldLocation(
+      ((i = this.Spline.D_FindInputKeyClosestToWorldLocation(
         Global_1.Global.BaseCharacter.CharacterActorComponent.ActorLocationProxy.ToUeVector(),
       )),
       this.Bce.FromUeVector(this.Spline.GetDirectionAtSplineInputKey(i, 1)),
@@ -91,18 +96,13 @@ class CameraSplineMoveController extends CameraControllerBase_1.CameraController
       this.bce < this.FadeInTime
         ? ((this.bce = Math.min(this.FadeInTime, this.bce + t)),
           (t = MathUtils_1.MathUtils.GetCubicValue(this.bce / this.FadeInTime)),
-          this.Gue.Set(this.PitchAngle, i + this.YawAngle, 0),
-          Rotator_1.Rotator.Lerp(
-            this.fle,
-            this.Gue,
-            t,
-            this.Camera.DesiredCamera.ArmRotation,
-          ))
-        : this.Camera.DesiredCamera.ArmRotation.Set(
-            this.PitchAngle,
-            i + this.YawAngle,
-            0,
-          ),
+          this.Gue.Set(this.PitchAngle, i + this.YawAngle, this.RollAngle),
+          Rotator_1.Rotator.Lerp(this.fle, this.Gue, t, this.Gue))
+        : this.Gue.Set(this.PitchAngle, i + this.YawAngle, 0),
+      CameraUtility_1.CameraUtility.SetRotatorInGravity(
+        this.Camera.DesiredCamera.ArmRotation,
+        this.Gue,
+      ),
       (this.Camera.IsModifiedArmRotationPitch = !0),
       (this.Camera.IsModifiedArmRotationYaw = !0));
   }

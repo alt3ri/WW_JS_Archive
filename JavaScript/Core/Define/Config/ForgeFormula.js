@@ -22,6 +22,9 @@ class ForgeFormula {
   get Unlock() {
     return this.unlock();
   }
+  get SortId() {
+    return this.sortid();
+  }
   get Name() {
     return this.name();
   }
@@ -74,15 +77,25 @@ class ForgeFormula {
     var t = this.J7.__offset(this.z7, 12);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
+  sortid() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   name(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetConsumeitemsAt(t, s) {
     return this.consumeitems(t);
   }
   consumeitems(t, s) {
-    var i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 18);
     return i
       ? (s || new OneItemConfig_1.OneItemConfig()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
@@ -91,30 +104,42 @@ class ForgeFormula {
       : null;
   }
   consumeitemsLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   forgecontent(t) {
-    var s = this.J7.__offset(this.z7, 18);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 20),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   background(t) {
-    var s = this.J7.__offset(this.z7, 20);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 22),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetRolelistAt(t) {
     return this.rolelist(t);
   }
   rolelist(t) {
-    var s = this.J7.__offset(this.z7, 22);
+    var s = this.J7.__offset(this.z7, 24);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   rolelistLength() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rolelistArray() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 24);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

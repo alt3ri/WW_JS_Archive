@@ -21,13 +21,13 @@ class PanelQteTimeDilation {
         ? (this.ROi = 1)
         : ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("PanelQte", 18, "联机下界面QTE只时停自己"),
+              Log_1.Log.Debug("PanelQte", 17, "联机下界面QTE只时停自己"),
             (this.UOi = this.ROi),
             (this.ROi = 1),
             (this.sDe =
               ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity),
             this.sDe?.IsInit &&
-              (t = this.sDe.Entity.GetComponent(110)) &&
+              (t = this.sDe.Entity.GetComponent(120)) &&
               (this.Hhn = t.SetTimeScale(
                 TIME_SCALE_PRIORITY,
                 this.UOi,
@@ -36,7 +36,7 @@ class PanelQteTimeDilation {
                 7,
               )))
           : (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("PanelQte", 18, "界面QTE时停开始"),
+              Log_1.Log.Debug("PanelQte", 17, "界面QTE时停开始"),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.UpdatePanelQteWorldTimeDilation,
               this.ROi,
@@ -47,18 +47,18 @@ class PanelQteTimeDilation {
     1 !== this.ROi &&
       ((this.ROi = 1),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("PanelQte", 18, "界面QTE时停结束"),
+        Log_1.Log.Debug("PanelQte", 17, "界面QTE时停结束"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.UpdatePanelQteWorldTimeDilation,
         this.ROi,
       )),
       1 !== this.UOi &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("PanelQte", 18, "联机下界面QTE时停结束"),
+          Log_1.Log.Debug("PanelQte", 17, "联机下界面QTE时停结束"),
         (this.UOi = 1),
         this.sDe?.IsInit &&
           0 < this.Hhn &&
-          (t = this.sDe.Entity.GetComponent(110)) &&
+          (t = this.sDe.Entity.GetComponent(120)) &&
           t.RemoveTimeScale(this.Hhn),
         (this.sDe = void 0),
         (this.Hhn = 0));

@@ -33,8 +33,8 @@ class MonsterDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.$Ve.OnPostAudioEvent.Bind((t) => {
         t && this.PostClickAudioEvent(t);
       }),
-      this.$Ve.OnPostAudioStateEvent.Bind((t, i) => {
-        i && this.PostClickAudioEvent(i);
+      this.$Ve.OnPostAudioStateEvent.Bind((t, e) => {
+        e && this.PostClickAudioEvent(e);
       });
   }
   OnBeforeDestroy() {
@@ -42,7 +42,7 @@ class MonsterDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.$Ve.OnPostAudioEvent.Unbind(),
       this.$Ve.OnPostAudioStateEvent.Unbind();
   }
-  Refresh(t, i, e) {
+  Refresh(t, e, i) {
     this.Pe = t;
     var s,
       r = this.GetItem(2),
@@ -77,8 +77,11 @@ class MonsterDetectItem extends GridProxyAbstract_1.GridProxyAbstract {
   G6e() {
     this.q6e && this.q6e(this.Pe.Conf.Id, this.$Ve);
   }
-  N6e(t, i = !0) {
-    t ? this.$Ve.SetToggleState(1, i) : this.$Ve.SetToggleState(0, !1);
+  N6e(t, e = !0) {
+    t ? this.$Ve.SetToggleState(1, e) : this.$Ve.SetToggleState(0, !1);
+  }
+  GetToggleItem() {
+    return this.GetExtendToggle(0).RootUIComp;
   }
 }
 exports.MonsterDetectItem = MonsterDetectItem;

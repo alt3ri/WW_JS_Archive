@@ -12,6 +12,7 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiLayer_1 = require("../../../Ui/UiLayer"),
   UiManager_1 = require("../../../Ui/UiManager"),
   BuffItemControl_1 = require("../../BuffItem/BuffItemControl"),
   CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
@@ -26,7 +27,8 @@ const UE = require("ue"),
   EditFormationController_1 = require("../EditFormationController"),
   EditFormationDefine_1 = require("../EditFormationDefine"),
   ExitSkillView_1 = require("./ExitSkill/ExitSkillView"),
-  FormationRoleView_1 = require("./FormationRoleView");
+  FormationRoleView_1 = require("./FormationRoleView"),
+  GameSettingsDeviceRender_1 = require("../../../GameSettings/GameSettingsDeviceRender");
 class EditFormationView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -46,24 +48,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         for (const t of this.l5t) t.GetPlayer() === e && t.RefreshPing(i);
       }),
       (this.p5t = () => {
-        var e;
-        this.m5t ||
-          (this.v5t() &&
-            ((e = () => {
-              (this.c5t = this._5t),
-                ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-                  ModelManager_1.ModelManager.EditFormationModel.ApplyCurrentFormationData(
-                    this.c5t,
-                  ),
-                this.M5t();
-            }),
-            (ModelManager_1.ModelManager.GameModeModel.IsMulti
-              ? EditFormationController_1.EditFormationController.UpdateFightRoleRequest()
-              : EditFormationController_1.EditFormationController.EditFormationRequest(
-                  this._5t,
-                )
-            ).finally(e),
-            this.E5t()));
+        this.m5t || (this.v5t() && (this.sn_(), this.E5t()));
       }),
       (this.G4t = () => {
         if (!UiManager_1.UiManager.IsViewOpen("QuickRoleSelectView")) {
@@ -119,28 +104,9 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.I5t = () => {
-        var e, i, t;
         this.m5t ||
           (this._5t === this.c5t && !this.v5t()) ||
-          ((e = () => {
-            this.M5t();
-          }),
-          ModelManager_1.ModelManager.GameModeModel.IsMulti
-            ? EditFormationController_1.EditFormationController.UpdateFightRoleRequest().finally(
-                e,
-              )
-            : ((i =
-                ModelManager_1.ModelManager.EditFormationModel
-                  .GetCurrentFormationId),
-              (t = this._5t === i),
-              EditFormationController_1.EditFormationController.EditFormationRequest(
-                i,
-              ).finally(e),
-              t &&
-                ModelManager_1.ModelManager.EditFormationModel.ApplyCurrentFormationData(
-                  this.c5t,
-                )),
-          this.E5t());
+          (this.an_(), this.E5t());
       }),
       (this.F4t = () => {
         if (!UiManager_1.UiManager.IsViewShow("ExitSkillView")) {
@@ -186,23 +152,23 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
           ? t.GetEditingRoleId(this._5t, r)
             ? o === r
               ? (Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("Formation", 49, "编队角色位置相同，换下", [
+                  Log_1.Log.Info("Formation", 48, "编队角色位置相同，换下", [
                     "位置",
                     r,
                   ]),
                 t.SetEditingRoleId(this._5t, r))
               : ((i = t.GetEditingRoleId(this._5t, r)),
                 Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("Formation", 49, "编队角色更换"),
+                  Log_1.Log.Info("Formation", 48, "编队角色更换"),
                 t.SetEditingRoleId(this._5t, r, e),
                 t.SetEditingRoleId(this._5t, o, i))
             : (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Formation", 49, "编队角色换下", ["位置", o]),
+                Log_1.Log.Info("Formation", 48, "编队角色换下", ["位置", o]),
               t.SetEditingRoleId(this._5t, o))
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Formation",
-                49,
+                48,
                 "编队角色加入",
                 ["位置", r],
                 ["roleId", e],
@@ -323,7 +289,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       t = i.GetCurrentFormationId;
     if (void 0 === t)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Formation", 49, "打开大世界编队界面时，当前编队为空");
+        Log_1.Log.Error("Formation", 48, "打开大世界编队界面时，当前编队为空");
     else {
       (this._5t = t),
         (this.c5t = t),
@@ -355,7 +321,15 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.EditFormationModel.GetCurrentFormationId -
         1),
       this.Ivt.GetTabItemByIndex(e).ShowTeamBattleTips()),
-      this.f5t(this._5t);
+      this.f5t(this._5t),
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.TemporaryDisableDLSSG(
+        "EditFormationView",
+      );
+  }
+  OnAfterHide() {
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelTemporaryDisableDLSSG(
+      "EditFormationView",
+    );
   }
   OnAddEventListener() {
     ModelManager_1.ModelManager.GameModeModel.IsMulti &&
@@ -388,9 +362,26 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
           TimerSystem_1.TimerSystem.Remove(this.C5t),
         (this.C5t = void 0));
   }
+  async sn_() {
+    var e = ModelManager_1.ModelManager.GameModeModel.IsMulti;
+    let i = !1;
+    (i = e
+      ? await EditFormationController_1.EditFormationController.UpdateFightRoleRequest()
+      : await EditFormationController_1.EditFormationController.EditFormationRequest(
+          this._5t,
+        )),
+      (this.c5t = this._5t),
+      !e &&
+        i &&
+        ModelManager_1.ModelManager.EditFormationModel.ApplyCurrentFormationData(
+          this.c5t,
+        ),
+      this.M5t();
+  }
   E5t() {
     this.d5t ||
-      (this.GetItem(14).SetUIActive(!0),
+      (UiLayer_1.UiLayer.SetShowMaskLayer("EditFormationViewClosing", !0),
+      this.GetItem(14).SetUIActive(!0),
       (this.d5t = TimerSystem_1.TimerSystem.Delay(() => {
         this.k4t(!1),
           this.GetButton(1).RootUIComp.SetUIActive(!1),
@@ -398,13 +389,35 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       }, EditFormationDefine_1.DELAY_SHOW_LOADING))),
       this.C5t ||
         (this.C5t = TimerSystem_1.TimerSystem.Delay(() => {
-          UiManager_1.UiManager.ResetToBattleView();
+          UiLayer_1.UiLayer.SetShowMaskLayer("EditFormationViewClosing", !1),
+            UiManager_1.UiManager.ResetToBattleView();
         }, EditFormationDefine_1.AUTO_CLOSE_EDIT_FORMATION));
   }
   async M5t() {
     (this.m5t = !0),
       await ModelManager_1.ModelManager.SceneTeamModel.LoadTeamPromise?.Promise,
+      UiLayer_1.UiLayer.SetShowMaskLayer("EditFormationViewClosing", !1),
       UiManager_1.UiManager.ResetToBattleView();
+  }
+  async an_() {
+    var e = ModelManager_1.ModelManager.GameModeModel.IsMulti;
+    let i = !1;
+    var t =
+        ModelManager_1.ModelManager.EditFormationModel.GetCurrentFormationId,
+      t =
+        ((i = e
+          ? await EditFormationController_1.EditFormationController.UpdateFightRoleRequest()
+          : await EditFormationController_1.EditFormationController.EditFormationRequest(
+              t,
+            )),
+        this._5t === t);
+    !e &&
+      t &&
+      i &&
+      ModelManager_1.ModelManager.EditFormationModel.ApplyCurrentFormationData(
+        this.c5t,
+      ),
+      this.M5t();
   }
   D5t() {
     var e = ModelManager_1.ModelManager.EditFormationModel,
@@ -435,7 +448,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       )?.JoinTeamEvent;
     e &&
       (AudioSystem_1.AudioSystem.PostEvent(e), Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Audio", 57, "[Game.EditFormationView] PostEvent", [
+      Log_1.Log.Debug("Audio", 56, "[Game.EditFormationView] PostEvent", [
         "Event",
         e,
       ]);
@@ -476,32 +489,38 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(7), e);
     }
   }
-  f5t(n) {
-    var s = ModelManager_1.ModelManager.EditFormationModel,
+  f5t(s) {
+    var l = ModelManager_1.ModelManager.EditFormationModel,
       e = this.GetButton(1).RootUIComp;
-    if (s.GetEditingRoleIdList(n).length <= 0) {
+    if (l.GetEditingRoleIdList(s).length <= 0) {
       for (const i of this.l5t) i.ResetRole();
       e.SetUIActive(!1);
     } else {
       e.SetUIActive(!0);
       var h,
-        l,
         _,
-        m =
+        m,
+        g,
+        d =
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
-      for (let a = 1; a <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; a++) {
+      for (let n = 1; n <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; n++) {
         let e = 0,
           i = 0,
           t = "",
           o = 0,
-          r = 0;
-        s.IsMyPosition(a)
-          ? ((l = ModelManager_1.ModelManager.RoleModel),
-            (e = s.GetEditingRoleId(n, a)),
-            (h = l.GetRoleInstanceById(e))
-              ? ((h = h.GetLevelData()),
+          r = 0,
+          a = "";
+        l.IsMyPosition(n)
+          ? ((_ = ModelManager_1.ModelManager.RoleModel),
+            (e = l.GetEditingRoleId(s, n)),
+            (m = _.GetRoleInstanceById(e))
+              ? ((h = m.GetLevelData()),
+                (m = m.GetRoleSkinId()),
                 (i = h.GetLevel()),
                 (r = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+                (a =
+                  ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyOnlineId() ??
+                  ""),
                 ModelManager_1.ModelManager.GameModeModel.IsMulti
                   ? ((t =
                       ModelManager_1.ModelManager.FunctionModel.GetPlayerName() ??
@@ -510,57 +529,59 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
                       ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
                         r,
                       )?.PlayerNumber ?? 1))
-                  : (t = l.GetRoleName(e)),
-                this.t5t(a, e, i, t, o, r))
-              : this.t5t(a))
-          : (h = s.GetCurrentFormationData?.GetRoleDataByPosition(a))
+                  : (t = _.GetRoleName(e)),
+                this.t5t(n, e, m, i, t, o, r, a))
+              : this.t5t(n))
+          : (h = l.GetCurrentFormationData?.GetRoleDataByPosition(n))
             ? ((r = h.PlayerId),
-              (l =
+              (_ =
                 ModelManager_1.ModelManager.CreatureModel.GetScenePlayerData(
                   r,
                 )),
-              m && !l
-                ? this.t5t(a)
+              d && !_
+                ? this.t5t(n)
                 : ((e = h.ConfigId),
-                  (_ =
+                  (m =
                     ModelManager_1.ModelManager.OnlineModel.GetWorldTeamPlayerFightInfo(
                       r,
                     )),
+                  (g = h.RoleSkinId),
                   (i = h.Level),
-                  (t = _?.Name ?? ""),
+                  (t = m?.Name ?? ""),
+                  (a = m?.ThirdPartyOnlineName ?? ""),
                   (o =
                     ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
                       r,
                     )?.PlayerNumber ?? 1),
-                  this.t5t(a, e, i, t, o, r)))
-            : this.t5t(a);
+                  this.t5t(n, e, g, i, t, o, r, a)))
+            : this.t5t(n);
       }
     }
   }
-  t5t(e, i = 0, t = 0, o = "", r = 0, a = 0) {
+  t5t(e, i = 0, t = 0, o = 0, r = "", a = 0, n = 0, s = "") {
     var e = e - 1,
-      n = this.l5t[e];
-    const s = this.GetUiSpriteTransition(this.u4t[e]);
-    let h = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+      l = this.l5t[e];
+    const h = this.GetUiSpriteTransition(this.u4t[e]);
+    let _ = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       "SP_TeamRoleSkillNone",
     );
     if (i) {
-      n.Refresh(i, t, o, r, a);
+      l.Refresh(i, t, o, r, a, n, s);
       e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)?.SkillId;
       if (e)
-        for (const l of ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
+        for (const m of ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
           e,
         ))
-          if (l.SkillType === EditFormationDefine_1.EXIT_SKILL_TYPE) {
-            h = l.Icon;
+          if (m.SkillType === EditFormationDefine_1.EXIT_SKILL_TYPE) {
+            _ = m.Icon;
             break;
           }
-    } else n.ResetRole();
+    } else l.ResetRole();
     ResourceSystem_1.ResourceSystem.LoadAsync(
-      h,
+      _,
       UE.LGUISpriteData_BaseObject,
       (e, i) => {
-        s.SetAllTransitionSprite(e);
+        h.SetAllTransitionSprite(e);
       },
       102,
     );
@@ -612,7 +633,7 @@ class EditFormationView extends UiViewBase_1.UiViewBase {
       if (i) return [i, i];
     }
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         e,
       ]);

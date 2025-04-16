@@ -90,7 +90,7 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
   async Refresh(e) {
     if (e.length !== TURNTABLE_GRID_SIZE)
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Activity", 38, "[转盘活动] 转盘奖励数量配置不正确", [
+        Log_1.Log.Warn("Activity", 37, "[转盘活动] 转盘奖励数量配置不正确", [
           "Count",
           e.length,
         ]);

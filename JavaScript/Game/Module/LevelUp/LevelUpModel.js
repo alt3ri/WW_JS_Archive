@@ -21,17 +21,23 @@ class LevelUpModel extends ModelBase_1.ModelBase {
   ONn(e) {
     this.GNn &&
       (e.AddExp && (this.GNn.AddExp = e.AddExp),
-      e.PreExp <= this.GNn.PreExp && (this.GNn.PreExp = e.PreExp),
-      e.PreLevel <= this.GNn.PreLevel && (this.GNn.PreLevel = e.PreLevel),
-      e.CurExp >= this.GNn.CurExp && (this.GNn.CurExp = e.CurExp),
-      e.CurLevel >= this.GNn.CurLevel) &&
-      (this.GNn.CurLevel = e.CurLevel);
+      e.PreLevel < this.GNn.PreLevel
+        ? ((this.GNn.PreLevel = e.PreLevel), (this.GNn.PreExp = e.PreExp))
+        : e.PreLevel === this.GNn.PreLevel &&
+          e.PreExp <= this.GNn.PreExp &&
+          (this.GNn.PreExp = e.PreExp),
+      e.CurLevel > this.GNn.CurLevel
+        ? ((this.GNn.CurLevel = e.CurLevel), (this.GNn.CurExp = e.CurExp))
+        : e.CurLevel === this.GNn.CurLevel &&
+          e.CurExp >= this.GNn.CurExp &&
+          (this.GNn.CurExp = e.CurExp));
   }
   ovi(e) {
     UiManager_1.UiManager.IsViewOpen("LevelUpView") && this.GNn
       ? this.ONn(e)
       : ((this.GNn = e),
-        UiManager_1.UiManager.OpenView("LevelUpView", this.GNn));
+        UiManager_1.UiManager.GetViewByName("LevelUpView") ||
+          UiManager_1.UiManager.OpenView("LevelUpView", this.GNn));
   }
   GetCacheData() {
     return this.GNn;

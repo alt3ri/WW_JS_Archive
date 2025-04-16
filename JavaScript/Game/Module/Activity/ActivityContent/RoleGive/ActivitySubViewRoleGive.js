@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewRoleGive = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
@@ -24,42 +25,44 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
       (this.LNe = void 0),
       (this.DNe = void 0),
       (this.ANe = void 0),
-      (this.NUa = void 0),
+      (this.jUa = void 0),
       (this.U2i = void 0),
       (this.Pe = void 0),
       (this.DFe = () => {
         var i, t;
-        this.Pe?.RedPointShowState
-          ? ((i = this.Pe?.GetExtraConfig()),
-            (t =
-              ModelManager_1.ModelManager.MoonChasingModel?.GetPopularityValue()),
-            !i ||
-              !t ||
-              t < i.PopularityNeed ||
-              ActivityRoleGiveController_1.ActivityRoleGiveController.TrackMoonActivityRewardRequest())
-          : ModelManager_1.ModelManager.ActivityModel.GetActivitiesByType(
-              Protocol_1.Aki.Protocol.uks.Proto_TrackMoonActivity,
-            ).forEach((i) => {
-              var t = i;
-              0 === t.ActivityFlowState &&
-                (t.GetPreGuideQuestFinishState()
-                  ? ((i = {
-                      MarkId:
-                        ConfigManager_1.ConfigManager.ActivityMoonChasingConfig.GetActivityMoonChasingConfig(
-                          i.Id,
-                        ).FocusMarkId,
-                      MarkType: 6,
-                    }),
-                    ControllerHolder_1.ControllerHolder.WorldMapController.OpenView(
-                      2,
-                      !1,
-                      i,
-                    ))
-                  : UiManager_1.UiManager.OpenView(
-                      "QuestView",
-                      t.GetUnFinishPreGuideQuestId(),
-                    ));
-            });
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("MoonChasing", 34, "点击领取奖励"),
+          this.Pe?.RedPointShowState
+            ? ((i = this.Pe?.GetExtraConfig()),
+              (t =
+                ModelManager_1.ModelManager.MoonChasingModel?.GetPopularityValue()),
+              !i ||
+                !t ||
+                t < i.PopularityNeed ||
+                ActivityRoleGiveController_1.ActivityRoleGiveController.TrackMoonActivityRewardRequest())
+            : ModelManager_1.ModelManager.ActivityModel.GetActivitiesByType(
+                Protocol_1.Aki.Protocol.uks.Proto_TrackMoonActivity,
+              ).forEach((i) => {
+                var t = i;
+                0 === t.ActivityFlowState &&
+                  (t.GetPreGuideQuestFinishState()
+                    ? ((i = {
+                        MarkId:
+                          ConfigManager_1.ConfigManager.ActivityMoonChasingConfig.GetActivityMoonChasingConfig(
+                            i.Id,
+                          ).FocusMarkId,
+                        MarkType: 6,
+                      }),
+                      ControllerHolder_1.ControllerHolder.WorldMapController.OpenView(
+                        2,
+                        !1,
+                        i,
+                      ))
+                    : UiManager_1.UiManager.OpenView(
+                        "QuestView",
+                        t.GetUnFinishPreGuideQuestId(),
+                      ));
+              });
       }),
       (this.aFo = () => {
         RoleController_1.RoleController.OpenRoleMainView(1, 0, [
@@ -98,10 +101,10 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
           this.Pe,
         )),
         await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
-        (this.NUa = new RoleDescribeComponent_1.RoleDescribeComponent()),
+        (this.jUa = new RoleDescribeComponent_1.RoleDescribeComponent()),
         this.GetItem(2)),
       i =
-        (await this.NUa.CreateThenShowByActorAsync(i.GetOwner()),
+        (await this.jUa.CreateThenShowByActorAsync(i.GetOwner()),
         (this.U2i = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
         this.GetItem(5));
     await this.U2i.CreateThenShowByActorAsync(i.GetOwner());
@@ -128,7 +131,7 @@ class ActivitySubViewRoleGive extends ActivitySubViewBase_1.ActivitySubViewBase 
       (e = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
         r.RoleTrialId,
       )),
-      this.NUa?.Update(e.ParentId),
+      this.jUa?.Update(e.ParentId),
       this.U2i?.RefreshByConfigId(e.ParentId),
       this.OnRefreshView());
   }

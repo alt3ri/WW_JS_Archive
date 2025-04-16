@@ -6,8 +6,7 @@ const UE = require("ue"),
   RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  CharacterController_1 = require("../../../NewWorld/Character/CharacterController"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -17,6 +16,14 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
       (this.AngleRange = void 0),
       (this.HeightRange = void 0),
       (this.IsInitTsVariables = !1),
+      (this.TsKeyActorA = ""),
+      (this.TsKeyActorB = ""),
+      (this.TsDistanceRange = void 0),
+      (this.TsAngleRange = void 0),
+      (this.TsHeightRange = void 0);
+  }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
       (this.TsKeyActorA = ""),
       (this.TsKeyActorB = ""),
       (this.TsDistanceRange = void 0),
@@ -36,7 +43,7 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
         this.HeightRange,
       )));
   }
-  PerformConditionCheckAI(t, r) {
+  PerformConditionCheckAI(t, i) {
     var e = t.AiController;
     if (!e)
       return (
@@ -48,15 +55,16 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
         !1
       );
     this.InitTsVariables();
-    var i = e.CharActorComp,
-      o = i.Entity.Id;
-    let s = i;
+    var r = e.CharActorComp,
+      o = r.Entity.Id;
+    let s = r;
     if (this.TsKeyActorA) {
-      i = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-        o,
-        this.TsKeyActorA,
-      );
-      if (!i)
+      r =
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+          o,
+          this.TsKeyActorA,
+        );
+      if (!r)
         return (
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -68,25 +76,26 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
             ),
           !1
         );
-      var a =
-        CharacterController_1.CharacterController.GetCharacterActorComponentById(
-          i,
+      var h =
+        ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
+          r,
         );
-      if (!a)
+      if (!h)
         return (
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("BehaviorTree", 6, "不存在Entity", ["Id", i]),
+            Log_1.Log.Warn("BehaviorTree", 6, "不存在Entity", ["Id", r]),
           !1
         );
-      s = a;
+      s = h;
     }
-    let h = e.AiHateList.GetCurrentTarget()?.Entity?.GetComponent(2);
+    let n = e.AiHateList.GetCurrentTarget()?.Entity?.GetComponent(2);
     if (this.TsKeyActorB) {
-      i = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-        o,
-        this.TsKeyActorB,
-      );
-      if (!i)
+      r =
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+          o,
+          this.TsKeyActorB,
+        );
+      if (!r)
         return (
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -98,26 +107,26 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
             ),
           !1
         );
-      a = EntitySystem_1.EntitySystem.GetComponent(i, 2);
-      if (!a)
+      h = EntitySystem_1.EntitySystem.GetComponent(r, 2);
+      if (!h)
         return (
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("BehaviorTree", 6, "不存在Entity", ["Id", i]),
+            Log_1.Log.Warn("BehaviorTree", 6, "不存在Entity", ["Id", r]),
           !1
         );
-      h = a;
+      n = h;
     }
-    if (!h) return !1;
+    if (!n) return !1;
     let l = void 0;
     return (
-      (l = (0, RegisterComponent_1.isComponentInstance)(h, 3)
-        ? h.FloorLocation
-        : h.ActorLocationProxy),
+      (l = (0, RegisterComponent_1.isComponentInstance)(n, 3)
+        ? n.FloorLocation
+        : n.ActorLocationProxy),
       MathUtils_1.MathUtils.LocationInFastUeRange(
         s.FloorLocation,
         s.ActorRotationProxy,
         l,
-        s.ScaledRadius + h.ScaledRadius,
+        s.ScaledRadius + n.ScaledRadius,
         this.TsDistanceRange,
         this.TsAngleRange,
         this.TsHeightRange,

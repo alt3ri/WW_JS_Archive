@@ -12,7 +12,7 @@ class LevelConditionCheckBattleRoleWeaponType extends LevelGeneralBase_1.LevelCo
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),

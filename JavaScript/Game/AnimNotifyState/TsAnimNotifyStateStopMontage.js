@@ -4,13 +4,14 @@ const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   QUIT_BLEND_TIME = 0.1;
 class TsAnimNotifyStateStopMontage extends UE.KuroAnimNotifyState {
-  K2_NotifyTick(e, t, a) {
+  Constructor() {}
+  K2_NotifyTick(e, t, r) {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       !!(e = e.CharacterActorComponent?.Entity) &&
-      (e.GetComponent(164)?.HasMoveInput &&
-        (e = e.GetComponent(163)) &&
+      (e.GetComponent(176)?.HasMoveInput &&
+        (e = e.GetComponent(175)) &&
         e.MainAnimInstance.Montage_Stop(QUIT_BLEND_TIME),
       !0)
     );

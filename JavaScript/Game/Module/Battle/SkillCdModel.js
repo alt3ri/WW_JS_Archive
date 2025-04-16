@@ -12,7 +12,8 @@ class SkillCdModel extends ModelBase_1.ModelBase {
       (this.dQe = new SkillCdData_1.WorldSkillCdData()),
       (this.CQe = new PassiveSkillCdData_1.WorldPassiveSkillCdData()),
       (this.gQe = new SkillCdData_1.WorldSkillCdData()),
-      (this.fQe = new PassiveSkillCdData_1.WorldPassiveSkillCdData());
+      (this.fQe = new PassiveSkillCdData_1.WorldPassiveSkillCdData()),
+      (this.SkillDebugMode = !1);
   }
   OnInit() {
     return !0;
@@ -24,9 +25,6 @@ class SkillCdModel extends ModelBase_1.ModelBase {
     return (
       this.dQe.Clear(), this.CQe.Clear(), this.gQe.Clear(), this.fQe.Clear(), !0
     );
-  }
-  Tick(e) {
-    this.dQe.Tick(e), this.CQe.Tick(e), this.gQe.Tick(e), this.fQe.Tick(e);
   }
   GetCurWorldSkillCdData() {
     return this.pQe() ? this.dQe : this.gQe;

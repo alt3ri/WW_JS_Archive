@@ -7,10 +7,12 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   AchievementController_1 = require("../../Achievement/AchievementController"),
+  ActivityRogueController_1 = require("../../Activity/ActivityContent/RougeActivity/ActivityRogueController"),
   CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
   CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
   CommonTabData_1 = require("../../Common/TabComponent/CommonTabData"),
@@ -130,7 +132,10 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    var e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
+    await ControllerHolder_1.ControllerHolder.AchievementController.RequestUpdateAchievementInfo();
+    var e =
+      ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData()
+        ?.SeasonData;
     if (void 0 !== e) {
       e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
@@ -146,7 +151,7 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Roguelike",
-            59,
+            58,
             "RoguelikeAchievementView成就id无效",
             ["AchievementId", e.Achievement.toString()],
           );

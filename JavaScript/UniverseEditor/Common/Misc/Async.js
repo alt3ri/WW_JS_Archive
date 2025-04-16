@@ -82,54 +82,54 @@ async function asyncRetryUntil(t, s = 10, i = 2e3) {
   (exports.asyncRetryUntil = asyncRetryUntil);
 class ResolvablePromise {
   constructor() {
-    (this.SRa = !1),
-      (this.ERa = new Promise((t, s) => {
-        (this.yRa = t), (this.IRa = s);
+    (this.TRa = !1),
+      (this.LRa = new Promise((t, s) => {
+        (this.DRa = t), (this.ARa = s);
       }));
   }
   get Promise() {
-    return this.ERa;
+    return this.LRa;
   }
   get IsFinished() {
-    return this.SRa;
+    return this.TRa;
   }
   Resolve(t) {
-    if (this.SRa) throw new Error("Already finished");
-    (this.SRa = !0), this.yRa(t);
+    if (this.TRa) throw new Error("Already finished");
+    (this.TRa = !0), this.DRa(t);
   }
   Reject(t) {
-    if (this.SRa) throw new Error("Already finished");
-    (this.SRa = !0), this.IRa(t);
+    if (this.TRa) throw new Error("Already finished");
+    (this.TRa = !0), this.ARa(t);
   }
 }
 exports.ResolvablePromise = ResolvablePromise;
 class IdleValue {
   constructor(t, s = (0, Task_1.getIdleCallbackService)()) {
-    (this.TRa = s),
-      (this.bAa = !1),
-      (this.qAa = () => {
+    (this.RRa = s),
+      (this.aAa = !1),
+      (this.hAa = () => {
         try {
-          this.GAa = t();
+          this.lAa = t();
         } catch (t) {
-          this.OAa = t;
+          this._Aa = t;
         } finally {
-          this.bAa = !0;
+          this.aAa = !0;
         }
       }),
       (this.vJ = s.Call(() => {
-        this.qAa();
+        this.hAa();
       }));
   }
   Dispose() {
-    this.TRa.Cancel(this.vJ);
+    this.RRa.Cancel(this.vJ);
   }
   get Value() {
-    if ((this.bAa || (this.TRa.Cancel(this.vJ), this.qAa()), this.OAa))
-      throw this.OAa;
-    return this.GAa;
+    if ((this.aAa || (this.RRa.Cancel(this.vJ), this.hAa()), this._Aa))
+      throw this._Aa;
+    return this.lAa;
   }
   get IsInitialized() {
-    return this.bAa;
+    return this.aAa;
   }
 }
 exports.IdleValue = IdleValue;
@@ -137,193 +137,196 @@ class IdleArray {
   constructor(t, s, i, e = (0, Task_1.getIdleCallbackService)()) {
     (this.he = t),
       (this.OPt = s),
-      (this.qAa = i),
-      (this.TRa = e),
-      (this.LRa = 0),
-      (this.DRa = []),
-      (this.hba = !1),
-      (this.ARa = new ResolvablePromise()),
-      (this.RRa = new Array(s.length));
+      (this.hAa = i),
+      (this.RRa = e),
+      (this.URa = 0),
+      (this.xRa = []),
+      (this.Iba = !1),
+      (this.PRa = new ResolvablePromise()),
+      (this.wRa = new Array(s.length));
     const h = () =>
       e.Call(() => {
         var t;
-        this.URa(this.LRa),
-          this.LRa++,
-          this.LRa < this.Size
+        this.BRa(this.URa),
+          this.URa++,
+          this.URa < this.Size
             ? (this.vJ = h())
             : ((this.vJ = void 0),
-              (this.hba = !0),
-              1 === this.DRa.length
-                ? ((t = this.DRa[0]), this.ARa.Reject(t))
-                : 1 < this.DRa.length
-                  ? this.ARa.Reject(
+              (this.Iba = !0),
+              1 === this.xRa.length
+                ? ((t = this.xRa[0]), this.PRa.Reject(t))
+                : 1 < this.xRa.length
+                  ? this.PRa.Reject(
                       new Error_1.AggregateError(
-                        this.DRa,
+                        this.xRa,
                         `IdleArray ${this.he} failed`,
                       ),
                     )
-                  : this.ARa.Resolve());
+                  : this.PRa.Resolve());
       });
-    0 < this.Size ? (this.vJ = h()) : ((this.hba = !0), this.ARa.Resolve());
+    0 < this.Size ? (this.vJ = h()) : ((this.Iba = !0), this.PRa.Resolve());
   }
   get Ready() {
-    return this.ARa;
+    return this.PRa;
   }
   get Size() {
     return this.OPt.length;
   }
   ToString() {
-    return `${this.he}(${this.LRa}/${this.Size})`;
+    return `${this.he}(${this.URa}/${this.Size})`;
   }
   get IsInitialized() {
-    return this.hba;
+    return this.Iba;
   }
   get ReadyCount() {
-    return this.LRa;
+    return this.URa;
   }
-  URa(t) {
+  BRa(t) {
     try {
-      this.RRa[t] = this.qAa(this.OPt[t]);
+      this.wRa[t] = this.hAa(this.OPt[t]);
     } catch (t) {
-      this.DRa.push(t);
+      this.xRa.push(t);
     }
   }
   Dispose() {
-    void 0 !== this.vJ && this.TRa.Cancel(this.vJ);
+    void 0 !== this.vJ && this.RRa.Cancel(this.vJ);
   }
   get Value() {
     if (!this.IsInitialized) {
-      void 0 !== this.vJ && (this.TRa.Cancel(this.vJ), (this.vJ = void 0));
-      for (let t = this.LRa; t < this.OPt.length; t++) this.URa(t);
+      void 0 !== this.vJ && (this.RRa.Cancel(this.vJ), (this.vJ = void 0));
+      for (let t = this.URa; t < this.OPt.length; t++) this.BRa(t);
       if (
-        ((this.LRa = this.OPt.length), (this.hba = !0), 1 === this.DRa.length)
+        ((this.URa = this.OPt.length), (this.Iba = !0), 1 === this.xRa.length)
       )
-        throw this.DRa[0];
-      if (1 < this.DRa.length)
+        throw this.xRa[0];
+      if (1 < this.xRa.length)
         throw new Error_1.AggregateError(
-          this.DRa,
+          this.xRa,
           `IdleArray ${this.he} failed`,
         );
-      this.ARa.Resolve();
+      this.PRa.Resolve();
     }
-    return this.RRa;
+    return this.wRa;
+  }
+  Load(t) {
+    this.wRa.length = 0;
+    for (const s of t) this.wRa.push(s);
+    (this.URa = t.length), (this.Iba = !0);
   }
 }
 exports.IdleArray = IdleArray;
 class AsyncIdleValue {
   constructor(t, s = (0, Task_1.getIdleCallbackService)()) {
-    (this.qAa = t),
-      (this.TRa = s),
-      (this.xRa = !1),
+    (this.hAa = t),
+      (this.RRa = s),
+      (this.bRa = !1),
       (this.IYt = Date.now()),
-      (this.PRa = 0),
-      (this.wRa = this.m8()),
-      this.wRa
-        .then((t) => {
-          this.GAa = t;
-        })
-        .catch((t) => {
-          this.OAa = t;
-        });
+      (this.qRa = 0),
+      (this.GRa = this.m8()),
+      this.GRa.then((t) => {
+        this.lAa = t;
+      }).catch((t) => {
+        this._Aa = t;
+      });
   }
   get Value() {
-    if (void 0 !== this.OAa) throw this.OAa;
-    return this.wRa;
+    if (void 0 !== this._Aa) throw this._Aa;
+    return this.GRa;
   }
   get TickCount() {
-    return this.PRa;
+    return this.qRa;
   }
   get IsInitialized() {
-    return void 0 !== this.GAa || void 0 !== this.OAa;
+    return void 0 !== this.lAa || void 0 !== this._Aa;
   }
   get IsInstant() {
-    return this.xRa;
+    return this.bRa;
   }
   set IsInstant(t) {
-    (this.xRa = t), this.BRa?.Resolve();
+    (this.bRa = t), this.ORa?.Resolve();
   }
   async m8() {
-    return this.qAa(async () => {
+    return this.hAa(async () => {
       var t;
-      this.xRa ||
+      this.bRa ||
         (t = Date.now()) - this.IYt < 10 ||
-        (this.PRa++,
+        (this.qRa++,
         (this.IYt = t),
-        (this.BRa = new ResolvablePromise()),
-        (this.bRa = this.TRa.Call(() => {
-          this.BRa.Resolve(), (this.bRa = void 0);
+        (this.ORa = new ResolvablePromise()),
+        (this.kRa = this.RRa.Call(() => {
+          this.ORa.Resolve(), (this.kRa = void 0);
         })),
-        await this.BRa.Promise);
+        await this.ORa.Promise);
     });
   }
   Dispose() {
-    void 0 !== this.bRa && this.TRa.Cancel(this.bRa);
+    void 0 !== this.kRa && this.RRa.Cancel(this.kRa);
   }
 }
 exports.AsyncIdleValue = AsyncIdleValue;
 class GeneratorIdleValue {
   constructor(t) {
-    (this.lba = t),
-      (this.hba = !1),
-      (this._ba = 0),
-      (this.uba = !1),
-      (this.cba = this.lba()),
-      (this.ARa = new ResolvablePromise()),
+    (this.Tba = t),
+      (this.Iba = !1),
+      (this.Lba = 0),
+      (this.Dba = !1),
+      (this.Aba = this.Tba()),
+      (this.PRa = new ResolvablePromise()),
       (this.vJ = (0, Task_1.getIdleCallbackService)().Call(() => {
-        this.mba(!0);
+        this.Rba(!0);
       }));
   }
   get IsPaused() {
-    return this.uba;
+    return this.Dba;
   }
   set IsPaused(t) {
-    this.uba !== t &&
+    this.Dba !== t &&
       (this.IsInitialized ||
-        (this.uba
+        (this.Dba
           ? (this.vJ = (0, Task_1.getIdleCallbackService)().Call(() => {
-              this.mba(!0);
+              this.Rba(!0);
             }))
           : ((0, Task_1.getIdleCallbackService)().Cancel(this.vJ),
             (this.vJ = void 0))),
-      (this.uba = t));
+      (this.Dba = t));
   }
-  mba(t) {
+  Rba(t) {
     try {
-      var s = this.cba.next();
-      this._ba++,
-        s.done && ((this.GAa = s.value), (this.hba = !0), this.ARa.Resolve());
+      var s = this.Aba.next();
+      this.Lba++,
+        s.done && ((this.lAa = s.value), (this.Iba = !0), this.PRa.Resolve());
     } catch (t) {
-      (this.hba = !0), (this.OAa = t), this.ARa.Reject(t);
+      (this.Iba = !0), (this._Aa = t), this.PRa.Reject(t);
     }
-    this.hba
+    this.Iba
       ? ((0, Task_1.getIdleCallbackService)().Cancel(this.vJ),
         (this.vJ = void 0))
       : t &&
         (this.vJ = (0, Task_1.getIdleCallbackService)().Call(() => {
-          this.mba(t);
+          this.Rba(t);
         }));
   }
   get StepCount() {
-    return this._ba;
+    return this.Lba;
   }
   get IsInitialized() {
-    return this.hba;
+    return this.Iba;
   }
   get Value() {
     for (
-      this.uba && (this.uba = !1),
+      this.Dba && (this.Dba = !1),
         void 0 !== this.vJ &&
           ((0, Task_1.getIdleCallbackService)().Cancel(this.vJ),
           (this.vJ = void 0));
-      !this.hba;
+      !this.Iba;
 
     )
-      this.mba(!1);
-    if (void 0 !== this.OAa) throw this.OAa;
-    return this.GAa;
+      this.Rba(!1);
+    if (void 0 !== this._Aa) throw this._Aa;
+    return this.lAa;
   }
   get Ready() {
-    return this.ARa;
+    return this.PRa;
   }
   Dispose() {
     void 0 !== this.vJ &&

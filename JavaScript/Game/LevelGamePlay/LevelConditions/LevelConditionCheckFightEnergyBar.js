@@ -11,7 +11,7 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -20,14 +20,14 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的机制条状态只能是0，1`,
             ),
           !1)
         : ((e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
           (i = this.GetCurrentSpecialEnergyAttributeId(e.Entity))
-            ? ((o = e.Entity.GetComponent(159)?.GetCurrentValue(i.AttributeId)),
-              (e = e.Entity.GetComponent(159)?.GetCurrentValue(
+            ? ((o = e.Entity.GetComponent(171)?.GetCurrentValue(i.AttributeId)),
+              (e = e.Entity.GetComponent(171)?.GetCurrentValue(
                 i.MaxAttributeId,
               )),
               (0 === o && 0 === t) ||
@@ -36,13 +36,13 @@ class LevelConditionCheckFightEnergyBar extends LevelGeneralBase_1.LevelConditio
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelCondition",
-                  17,
+                  16,
                   "查询角色特殊能量条属性错误",
                 ),
               !1));
   }
   GetCurrentSpecialEnergyAttributeId(e) {
-    var r = e.GetComponent(190);
+    var r = e.GetComponent(203);
     if (r) {
       e = this.GetRoleConfig(e);
       if (e) {

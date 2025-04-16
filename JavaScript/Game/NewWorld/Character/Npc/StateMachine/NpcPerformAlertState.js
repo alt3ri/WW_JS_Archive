@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformAlertState = void 0);
-const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
-  AiContollerLibrary_1 = require("../../../../AI/Controller/AiContollerLibrary"),
+const AiContollerLibrary_1 = require("../../../../AI/Controller/AiContollerLibrary"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   Global_1 = require("../../../../Global"),
+  NpcPerformBaseState_1 = require("./NpcPerformBaseState"),
   TURN_SPEED = 2e4;
-class NpcPerformAlertState extends StateBase_1.StateBase {
+class NpcPerformAlertState extends NpcPerformBaseState_1.NpcPerformBaseState {
   constructor() {
     super(...arguments),
       (this.Oer = () => {
@@ -15,10 +15,10 @@ class NpcPerformAlertState extends StateBase_1.StateBase {
       });
   }
   CanChangeFrom(e) {
-    var t = this.Owner.Entity.GetComponent(172);
+    var t = this.Owner.Entity.GetComponent(185);
     return (
       void 0 !==
-        this.Owner.Entity.GetComponent(40)?.AiController?.AiAlert
+        this.Owner.Entity.GetComponent(46)?.AiController?.AiAlert
           ?.AiAlertConfig &&
       1 === e &&
       !t.IsInPlot

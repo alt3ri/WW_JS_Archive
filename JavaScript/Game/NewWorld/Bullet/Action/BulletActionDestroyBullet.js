@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionDestroyBullet = void 0);
 const UE = require("ue"),
-  Log_1 = require("../../../../Core/Common/Log"),
   Stats_1 = require("../../../../Core/Common/Stats"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
@@ -20,16 +19,7 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
     var t = this.ActionInfo;
     if (
       (t.SummonChild &&
-        (this.BulletInfo.ChildInfo
-          ? this.BulletInfo.ChildInfo.SetIsActiveSummonChildBullet(!0)
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Bullet",
-              18,
-              "销毁时生成子子弹，但是缺少子子弹的配置",
-              ["BulletId", this.BulletInfo.BulletRowName],
-              ["EntityId", this.BulletInfo.BulletEntityId],
-            )),
+        this.BulletInfo.ChildInfo?.SetIsActiveSummonChildBullet(!0),
       1 === t.DestroyReason && this.U5o(),
       this.BulletInfo.AttackerHandle?.Valid &&
         this.BulletInfo.AttackerActorComp?.Actor &&
@@ -51,14 +41,14 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       t = this.BulletInfo.CollisionInfo;
     for ([e, l] of t.HitTimeScaleEntityMap.entries()) {
       var i = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);
-      i?.Valid && i.Entity.GetComponent(110)?.RemoveTimeScale(l);
+      i?.Valid && i.Entity.GetComponent(120)?.RemoveTimeScale(l);
     }
     t.HitTimeScaleEntityMap.clear();
-    for (const r of t.LastArrayHitActorData)
-      r.IsValidHit &&
+    for (const s of t.LastArrayHitActorData)
+      s.IsValidHit &&
         BulletCollisionUtil_1.BulletCollisionUtil.EntityLeave(
           this.BulletInfo,
-          r,
+          s,
         );
   }
   U5o() {
@@ -110,23 +100,26 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       i = l.length;
     for (let t = 0; t < i; ++t) {
       var o,
-        r = l[t];
-      ((4 === r.Condition && this.BulletInfo.IsTimeNotEnough) ||
-        (3 === r.Condition && e.IsNumberNotEnough) ||
-        (0 === r.Condition && e.IsActiveSummonChildBullet)) &&
-        ((o = Number(r.RowName)),
+        s = l[t];
+      ((4 === s.Condition && this.BulletInfo.IsTimeNotEnough) ||
+        (3 === s.Condition && e.IsNumberNotEnough) ||
+        (0 === s.Condition && e.IsActiveSummonChildBullet)) &&
+        ((o = Number(s.RowName)),
         isNaN(o) ||
           !o ||
-          r.Num < 1 ||
+          s.Num < 1 ||
           ((o = BulletController_1.BulletController.CreateBulletCustomTarget(
             this.BulletInfo.AttackerActorComp.Actor,
-            r.RowName.toString(),
+            s.RowName.toString(),
             this.BulletInfo.ActorComponent.ActorTransform,
             {
               SkillId: this.BulletInfo.BulletInitParams.SkillId,
+              SkillContextId: this.BulletInfo.BulletInitParams.SkillContextId,
               ParentTargetId: this.BulletInfo.Target?.Id,
               ParentId: this.BulletInfo.Entity.Id,
               DtType: this.BulletInfo.BulletInitParams.DtType,
+              BattleFlags: this.BulletInfo.BulletInitParams.BattleFlags,
+              ParentIds: void 0,
             },
             this.BulletInfo.ContextId,
           )) &&

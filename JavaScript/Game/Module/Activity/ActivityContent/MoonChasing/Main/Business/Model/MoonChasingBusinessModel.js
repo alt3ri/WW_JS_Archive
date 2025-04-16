@@ -18,7 +18,7 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
       (this.$ke = void 0),
       (this.rha = []),
       (this.oha = !1),
-      (this.cTa = (e, t) => {
+      (this.dTa = (e, t) => {
         var a, r;
         return e.IsOwn !== t.IsOwn
           ? e.IsOwn
@@ -147,13 +147,13 @@ class MoonChasingBusinessModel extends ModelBase_1.ModelBase {
     var t = [];
     for (const a of this.Xke.values())
       !this.x1a(a.Type) || (0 !== a.Type && !e) || t.push(a);
-    return t.sort(this.cTa), t;
+    return t.sort(this.dTa), t;
   }
   GetUnlockHelpEditTeamDataList(e = !1) {
     var t = [];
     for (const a of this.Xke.values())
       this.x1a(a.Type) && (0 === a.Type || e) && a.IsOwn && t.push(a);
-    return t.sort(this.cTa), t;
+    return t.sort(this.dTa), t;
   }
   GetPlayerRoleId() {
     for (const e of this.Xke.values())

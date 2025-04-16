@@ -68,17 +68,17 @@ class AnimalPerformSystemUiState extends AnimalPerformStateBase_1.AnimalPerformS
           )),
       0 === t &&
         this.AnimalEcologicalInterface.StateMachineInitializationComplete(),
-      (t = this.Owner.GetComponent(190)) && this.mKo(t),
+      (t = this.Owner.GetComponent(203)) && this.mKo(t),
       this.EcologicalInterface.SystemUiStart());
   }
   OnExit(t) {
     this.EcologicalInterface?.IsValid() &&
-      (this.Owner.GetComponent(182)?.SetInteractionState(
+      (this.Owner.GetComponent(195)?.SetInteractionState(
         !0,
         "AnimalPerformSystemUiState OnExit",
       ),
       this.EcologicalInterface.SystemUiEnd(),
-      this.Owner.GetComponent(190)?.RemoveTag(1819982634),
+      this.Owner.GetComponent(203)?.RemoveTag(1819982634),
       (this._Ko = !1),
       (this.uKo = void 0));
   }

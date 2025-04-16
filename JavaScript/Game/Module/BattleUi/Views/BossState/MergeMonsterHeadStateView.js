@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MergeMonsterHeadStateView = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   PublicUtil_1 = require("../../../../Common/PublicUtil"),
@@ -101,7 +102,11 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
     this.SPe.Clear(),
       (this.SPe = void 0),
       this.ont.Reset(),
-      (this.ont = void 0);
+      (this.ont = void 0),
+      0 <= this.gnt &&
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Battle", 17, "[合并血条]销毁时重置受击shader特效"),
+        this.hst(0));
   }
   OnBeforeShow() {
     this.Lst(), this.ont.SetVisible(!0, SHOW_VIEW_ANIM_TIME);
@@ -163,12 +168,14 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
   }
   hst(i) {
     this.Cnt &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Battle", 17, "[合并血条]播放受击shader特效", ["", i]),
       UE.KismetMaterialLibrary.SetScalarParameterValue(
         GlobalData_1.GlobalData.GameInstance.GetWorld(),
         this.Cnt,
         rgbSplitProgress,
         i,
-      );
+      ));
   }
   ist() {
     this.GetItem(8).SetUIActive(!1), this.cnt.Reset(), (this.Ant = !1);

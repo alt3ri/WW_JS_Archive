@@ -108,7 +108,7 @@ class AutoStatEffectDataMgr {
     Info_1.Info.IsBuildDevelopmentOrDebug
       ? (this.av(),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("RenderEffect", 41, "加载特效路径"),
+          Log_1.Log.Debug("RenderEffect", 40, "加载特效路径"),
         ResourceSystem_1.ResourceSystem.LoadAsync(
           EFFECT_PATHS_DA_PATH,
           UE.PDA_EffectPaths_C,
@@ -125,7 +125,7 @@ class AutoStatEffectDataMgr {
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "RenderEffect",
-                  41,
+                  40,
                   "加载特效路径完成",
                   ["特效数量", this.BasePaths.length],
                   ["开始索引", s],
@@ -136,7 +136,7 @@ class AutoStatEffectDataMgr {
           },
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderEffect", 41, "shipping 包或test 包");
+        Log_1.Log.Error("RenderEffect", 40, "shipping 包或test 包");
   }
   PlayWithTrace() {
     Info_1.Info.IsBuildDevelopmentOrDebug
@@ -158,14 +158,14 @@ class AutoStatEffectDataMgr {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "RenderEffect",
-            41,
+            40,
             "",
             ["特效数量", this.BasePaths.length],
             ["最大播放时长(ms)", AutoStatEffectDataMgr.s1r],
             ["播放间歇时长(ms)", AutoStatEffectDataMgr.a1r],
           ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderEffect", 41, "shipping 包或test 包");
+        Log_1.Log.Error("RenderEffect", 40, "shipping 包或test 包");
   }
   Usi(t) {
     switch (((this.e1r += t), this.ac)) {
@@ -214,7 +214,7 @@ class AutoStatEffectDataMgr {
       var e = `${UE.KismetSystemLibrary.GetProjectSavedDirectory()}Profiling/${Date.now()}_EffectStats.csv`,
         e =
           (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("RenderEffect", 41, "", ["保存统计信息", e]),
+            Log_1.Log.Debug("RenderEffect", 40, "", ["保存统计信息", e]),
           UE.KuroStaticLibrary.SaveStringToFile(
             EffectStatData.CsvHeader + t.join("\n"),
             e,
@@ -242,7 +242,7 @@ class AutoStatEffectDataMgr {
           (s = AutoStatEffectDataMgr.GetMicrosecond()),
           (this.rvi = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
-            e.GetTransform(),
+            e.D_GetTransform(),
             this.o1r,
             "[AutoStatEffectDataMgr.PlayNext]",
             void 0,
@@ -255,15 +255,15 @@ class AutoStatEffectDataMgr {
             ? ((e = AutoStatEffectDataMgr.GetMicrosecond()),
               AutoStatEffectDataMgr.Dpe.Stop(),
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("RenderEffect", 41, "", ["测试特效", this.o1r]),
+                Log_1.Log.Debug("RenderEffect", 40, "", ["测试特效", this.o1r]),
               this.t1r.push(new EffectStatData(this.o1r, e - s)))
             : Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("RenderEffect", 41, "", [
+              Log_1.Log.Debug("RenderEffect", 40, "", [
                 "播放特效失败",
                 this.o1r,
               ]))
         : Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("RenderEffect", 41, "未找到主角位置");
+          Log_1.Log.Debug("RenderEffect", 40, "未找到主角位置");
     }
   }
 }

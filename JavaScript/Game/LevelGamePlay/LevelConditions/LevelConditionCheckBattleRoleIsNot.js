@@ -12,7 +12,7 @@ class LevelConditionCheckBattleRoleIsNot extends LevelGeneralBase_1.LevelConditi
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -22,7 +22,7 @@ class LevelConditionCheckBattleRoleIsNot extends LevelGeneralBase_1.LevelConditi
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的RoleId参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.CheckBattleRole}的定义`,
             ),
           !1);

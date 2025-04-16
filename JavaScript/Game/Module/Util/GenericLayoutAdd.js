@@ -19,29 +19,29 @@ class GenericLayoutAdd {
     if (this.Kqo) {
       var i = this.Jqo().GetAttachUIChildren();
       for (let t = 0, e = i.Num(); t < e; ++t) {
-        var o = i.Get(t);
-        o.SetUIActive(!1), this.Xqo.set(t, o);
+        var r = i.Get(t);
+        r.SetUIActive(!1), this.Xqo.set(t, r);
       }
     }
   }
   Jqo() {
     return this.Kqo.GetRootComponent();
   }
-  AddItemToLayout(o, r = 0) {
-    var s = this.Xqo.get(r);
+  AddItemToLayout(r, o = 0) {
+    var s = this.Xqo.get(o);
     if (s) {
       s.SetUIActive(!0);
-      let i = this.AQ.get(r);
-      i || ((i = new Map()), this.AQ.set(r, i));
-      for (let t = 0, e = o.length; t < e; ++t) {
+      let i = this.AQ.get(o);
+      i || ((i = new Map()), this.AQ.set(o, i));
+      for (let t = 0, e = r.length; t < e; ++t) {
         var h = LguiUtil_1.LguiUtil.CopyItem(s, this.Jqo()),
-          a = this.Qqo(o[t], h, t, r);
+          a = this.Qqo(r[t], h, t, o);
         i.set(a.Key, a.Value), this.$qo.push(h);
       }
       s.SetUIActive(!1);
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("ModuleUtil", 11, "查找不到对应HierarchyIndex的UIItem");
+        Log_1.Log.Error("ModuleUtil", 10, "查找不到对应HierarchyIndex的UIItem");
   }
   GetLayoutItemByKey(t, e = 0) {
     e = this.AQ.get(e);
@@ -57,7 +57,11 @@ class GenericLayoutAdd {
       t.clear();
     }
     this.AQ.clear();
-    for (const i of this.$qo) ActorSystem_1.ActorSystem.Put(i.GetOwner());
+    for (const i of this.$qo)
+      ActorSystem_1.ActorSystem.Put(
+        "GenericLayoutAdd.ClearChildren",
+        i.GetOwner(),
+      );
     this.$qo.length = 0;
   }
 }

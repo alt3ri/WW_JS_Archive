@@ -42,10 +42,10 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
       });
   }
   OnStartImplement() {
-    this.Ore();
+    this.AddEvents();
   }
   OnBeforeDestroyImplement() {
-    this.UnBindAction(), this.kre(), this.Reset();
+    this.UnBindAction(), this.RemoveEvents(), this.Reset();
   }
   Reset() {
     (this.Lut = void 0),
@@ -74,7 +74,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Battle",
-            8,
+            10,
             "[KeyItem]刷新按键图标时找不到对应Action",
             ["actionName", this.ActionName],
           )
@@ -85,7 +85,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Battle",
-            8,
+            10,
             "[KeyItem]刷新按键图标时Action没有对应按键",
             ["actionName", this.ActionName],
           )
@@ -118,7 +118,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
         this.Uut,
       );
   }
-  Ore() {
+  AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.InputControllerChange,
       this.XBo,
@@ -132,7 +132,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
         this.Rut,
       );
   }
-  kre() {
+  RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.InputControllerChange,
       this.XBo,
@@ -154,7 +154,7 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          8,
+          10,
           "[KeyItem]设置按键图片",
           ["actionName", this.ActionName],
           ["keyName", i],

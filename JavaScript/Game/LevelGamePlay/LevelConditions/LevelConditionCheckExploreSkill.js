@@ -11,7 +11,7 @@ class LevelConditionCheckExploreSkill extends LevelGeneralBase_1.LevelConditionB
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -21,7 +21,7 @@ class LevelConditionCheckExploreSkill extends LevelGeneralBase_1.LevelConditionB
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的探索技能Id应该是数字`,
             ),
           !1);

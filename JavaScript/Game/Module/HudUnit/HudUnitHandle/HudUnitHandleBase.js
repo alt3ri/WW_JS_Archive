@@ -139,13 +139,13 @@ class HudUnitHandleBase {
     return i.Subtraction(t, this.Roi), this.Roi;
   }
   K$e() {
-    return this.x$e.GetCameraRotation().Vector();
+    return this.x$e.GetCameraRotation().VectorDouble();
   }
   GetProjectionToFrontPosition(t, i) {
     this.Due.Set(i.X, i.Y, i.Z);
     var i = this.Uoi(t, this.Due),
       e = this.K$e(),
-      e = UE.KismetMathLibrary.ProjectVectorOnToVector(
+      e = UE.KismetMathLibrary.D_ProjectVectorOnToVector(
         i.ToUeVector(),
         e,
       ).op_Multiply(2);
@@ -157,19 +157,19 @@ class HudUnitHandleBase {
     );
   }
   ProjectWorldToScreen(t) {
-    if (UE.GameplayStatics.ProjectWorldToScreen(this.R$e, t, this.S$e))
+    if (UE.GameplayStatics.D_ProjectWorldToScreen(this.R$e, t, this.S$e))
       return (
         (t = (0, puerts_1.$unref)(this.S$e)),
         this.Toi.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(t)
       );
   }
   GetInEllipsePosition(t, i) {
-    var e = UE.GameplayStatics.ProjectWorldToScreen(this.R$e, i, this.S$e),
+    var e = UE.GameplayStatics.D_ProjectWorldToScreen(this.R$e, i, this.S$e),
       s = (0, puerts_1.$unref)(this.S$e);
     return e
       ? [this.ScreenPositionToEllipsePosition(s, !0), s]
       : ((e = this.GetProjectionToFrontPosition(t, i)),
-        UE.GameplayStatics.ProjectWorldToScreen(
+        UE.GameplayStatics.D_ProjectWorldToScreen(
           this.R$e,
           e.ToUeVector(),
           this.S$e,

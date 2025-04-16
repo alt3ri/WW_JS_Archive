@@ -4,11 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LandscapeMarkItemView_1 = require("../MarkItemView/LandscapeMarkItemView"),
   ConfigMarkItem_1 = require("./ConfigMarkItem");
 class LandscapeMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
-  constructor(e, t, a, r, s, i = 1) {
-    super(e, t, a, r, s, i);
+  constructor(e, r, t, a, s, n = 1) {
+    super(e, r, t, a, s, n);
   }
-  OnCreateView() {
-    this.InnerView = new LandscapeMarkItemView_1.LandscapeMarkItemView(this);
+  GetMarkItemViewType() {
+    return 13;
+  }
+  CreateView() {
+    return new LandscapeMarkItemView_1.LandscapeMarkItemView(this);
   }
   GetInteractiveFlag() {
     return !1;

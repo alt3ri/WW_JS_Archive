@@ -5,6 +5,7 @@ class NiagaraScalabilitySetting extends UE.PrimaryDataAsset {
   constructor() {
     super(...arguments), (this.NiagaraEffectTypes = void 0);
   }
+  Constructor() {}
 }
 exports.default = NiagaraScalabilitySetting;
 //# sourceMappingURL=NiagaraScalabilitySetting.js.map

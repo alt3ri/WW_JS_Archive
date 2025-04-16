@@ -46,17 +46,27 @@ class PlayerStateRestriction {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   type(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetIncludedtagsAt(t) {
     return this.includedtags(t);
   }
   includedtags(t, s) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s)
-      : null;
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   includedtagsLength() {
     var t = this.J7.__offset(this.z7, 8);
@@ -66,10 +76,14 @@ class PlayerStateRestriction {
     return this.excludedtags(t);
   }
   excludedtags(t, s) {
-    var e = this.J7.__offset(this.z7, 10);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s)
-      : null;
+    var e = this.J7.__offset(this.z7, 10),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   excludedtagsLength() {
     var t = this.J7.__offset(this.z7, 10);
@@ -80,8 +94,14 @@ class PlayerStateRestriction {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   remark(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.PlayerStateRestriction = PlayerStateRestriction;

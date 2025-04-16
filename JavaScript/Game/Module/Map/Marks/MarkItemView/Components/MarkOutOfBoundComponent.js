@@ -2,29 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkOutOfBoundComponent = void 0);
 const UE = require("ue"),
-  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
+  MarkPanelBase_1 = require("../MarkPanelBase"),
   RAD_2_DEG = 180 / Math.PI,
   DEG_PI_4 = 90;
-class MarkOutOfBoundComponent extends UiPanelBase_1.UiPanelBase {
+class MarkOutOfBoundComponent extends MarkPanelBase_1.MarkPanelBase {
   constructor() {
-    super(...arguments), (this.cie = void 0);
+    super(...arguments), (this.cie = new UE.Rotator(0));
   }
   OnRegisterComponent() {
-    (this.cie = new UE.Rotator(0)),
-      (this.ComponentRegisterInfos = [[0, UE.UIItem]]);
+    this.ComponentRegisterInfos = [[0, UE.UIItem]];
+  }
+  OnBeforeShow() {
+    this.T_e();
   }
   SetOutOfBoundDirection(e) {
-    var t = this.GetItem(0);
-    t &&
-      ((e = Math.atan2(e.Y, e.X) * RAD_2_DEG - DEG_PI_4),
-      (this.cie.Yaw = e),
-      t.SetUIRelativeRotation(this.cie));
+    e = Math.atan2(e.Y, e.X) * RAD_2_DEG - DEG_PI_4;
+    (this.cie.Yaw = e), this.IsShowOrShowing && this.T_e();
   }
-  SetActive(e) {
-    this.RootItem.SetUIActive(e);
-  }
-  OnBeforeDestroy() {
-    this.cie = void 0;
+  T_e() {
+    this.GetItem(0).SetUIRelativeRotation(this.cie);
   }
 }
 exports.MarkOutOfBoundComponent = MarkOutOfBoundComponent;

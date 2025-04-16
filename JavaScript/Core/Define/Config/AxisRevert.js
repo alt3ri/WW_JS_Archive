@@ -48,8 +48,14 @@ class AxisRevert {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   axisname(t) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   GetRevertinfoAt(t, e) {
     return this.revertinfo(t);

@@ -15,18 +15,20 @@ class TreasureBoxDetectorMarkItem extends ServerMarkItem_1.ServerMarkItem {
   get IsNewCustomMarkItem() {
     return this.NDi;
   }
-  Initialize() {
-    super.Initialize();
+  OnInitialize() {
+    super.OnInitialize();
     var e = this.ServerMarkInfo;
     this.SetTrackData(e.TrackTarget),
       this.SetConfigId(this.ConfigId),
-      this.UpdateTrackState();
+      this.UpdateVisibleRelativeState();
   }
-  OnCreateView() {
-    this.InnerView =
-      new TreasureBoxDetectorMarkItemView_1.TreasureBoxDetectorMarkItemView(
-        this,
-      );
+  GetMarkItemViewType() {
+    return 26;
+  }
+  CreateView() {
+    return new TreasureBoxDetectorMarkItemView_1.TreasureBoxDetectorMarkItemView(
+      this,
+    );
   }
   SetConfigId(e) {
     (this.ServerMarkInfo.MarkConfigId = e), this.OnSetConfigId(e);
@@ -36,7 +38,9 @@ class TreasureBoxDetectorMarkItem extends ServerMarkItem_1.ServerMarkItem {
       ConfigManager_1.ConfigManager.MapConfig.GetTreasureBoxDetectorMarkConfig(
         e,
       );
-    this.OnAfterSetConfigId(e);
+    (this.MarkItemEntity.GetOrAddComponent(15).TreasureBoxDetectorMarkConfig =
+      e),
+      this.OnAfterSetConfigId(e);
   }
   SetIsNew(e) {
     this.NDi = e;

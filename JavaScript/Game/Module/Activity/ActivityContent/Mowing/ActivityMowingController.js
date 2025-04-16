@@ -37,11 +37,11 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
         var o = Protocol_1.Aki.Protocol.P$n.create();
         (o.w6n = t),
           (o.r6n = n),
-          Net_1.Net.Call(28979, o, (e) => {
+          Net_1.Net.Call(21140, o, (e) => {
             e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.Q4n,
-                  17604,
+                  29122,
                 )
               : ((e =
                   ModelManager_1.ModelManager.ActivityModel.GetActivityById(
@@ -95,7 +95,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
             (t &&
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                17159,
+                18677,
               ),
             {
               ButtonTextId: "ConfirmBox_133_ButtonText_0",
@@ -113,19 +113,18 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
             IsTimeDownCloseView: !1,
             IsClickedCloseView: !1,
             OnClickedCallback: function () {
-              var e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-                t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
-              if (0 !== t.length) {
-                var n = [];
-                for (const o of t) n.push(o.GetConfigId);
-                InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-                  e,
-                  n,
+              var e =
+                ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
+              if (0 !== e.length) {
+                var t = [];
+                for (const n of e) t.push(n.GetConfigId);
+                InstanceDungeonController_1.InstanceDungeonController.SingleInstReChallengeRequest(
+                  t,
                 );
               }
             },
           },
-          r = {
+          i = {
             TitleTextId: "MowingCurrentPoint",
             Record: e.iMs.toString(),
             IsNewRecord: e.iMs > e.rMs,
@@ -136,7 +135,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
             : ItemRewardDefine_1.MOWING_RESULT,
           !t && e.tMs,
           void 0,
-          t ? void 0 : r,
+          t ? void 0 : i,
           void 0,
           t ? [n] : [n, o],
           void 0,
@@ -146,14 +145,14 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(18616, this.d2e),
-      Net_1.Net.Register(25466, this.C2e),
-      Net_1.Net.Register(17159, this.g2e);
+    Net_1.Net.Register(20997, this.d2e),
+      Net_1.Net.Register(23729, this.C2e),
+      Net_1.Net.Register(18677, this.g2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(18616),
-      Net_1.Net.UnRegister(25466),
-      Net_1.Net.UnRegister(17159);
+    Net_1.Net.UnRegister(20997),
+      Net_1.Net.UnRegister(23729),
+      Net_1.Net.UnRegister(18677);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -195,11 +194,11 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
     var e = Protocol_1.Aki.Protocol.D$n.create();
     (e.w6n = t),
       (e.s5n = n),
-      Net_1.Net.Call(20168, e, (e) => {
+      Net_1.Net.Call(27337, e, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              29836,
+              23261,
             )
           : ((e =
               ModelManager_1.ModelManager.ActivityModel.GetActivityById(
@@ -226,7 +225,7 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
   }
   static RequestExitDungeon() {
     var e = new Protocol_1.Aki.Protocol.q$n();
-    Net_1.Net.Call(19966, e, (e) => {
+    Net_1.Net.Call(18053, e, (e) => {
       e ||
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeonRequest();
     });
@@ -255,18 +254,21 @@ class ActivityMowingController extends ActivityControllerBase_1.ActivityControll
     var e = Protocol_1.Aki.Protocol.w$n.create();
     (e.w6n = n),
       (e.z6n = o),
-      Net_1.Net.Call(21385, e, (e) => {
+      Net_1.Net.Call(18967, e, (e) => {
         var t;
         e &&
           e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            19565,
+            17041,
           );
         for ([, t] of ModelManager_1.ModelManager.ActivityModel.GetActivityById(
           n,
         ).MowingLevelInfoDict)
           t.z6n = o;
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnRefreshInstancedRecommendLevel,
+        );
       });
   }),
   (ActivityMowingController.GetRecommendLevel = (e, t) => {

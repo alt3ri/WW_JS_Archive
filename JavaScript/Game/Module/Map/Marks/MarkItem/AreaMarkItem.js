@@ -4,11 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const AreaMarkItemView_1 = require("../MarkItemView/AreaMarkItemView"),
   ConfigMarkItem_1 = require("./ConfigMarkItem");
 class AreaMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
-  constructor() {
-    super(...arguments), (this.InnerView = void 0);
+  GetMarkItemViewType() {
+    return 1;
   }
-  OnCreateView() {
-    this.InnerView = new AreaMarkItemView_1.AreaMarkItemView(this);
+  CreateView() {
+    return new AreaMarkItemView_1.AreaMarkItemView(this);
   }
   GetInteractiveFlag() {
     return !1;

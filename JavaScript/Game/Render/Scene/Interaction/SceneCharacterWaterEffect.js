@@ -5,11 +5,13 @@ const UE = require("ue"),
   AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   GlobalData_1 = require("../../../GlobalData"),
+  CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   RenderDataManager_1 = require("../../Data/RenderDataManager"),
   ONE_SECOND = 1e3;
@@ -150,7 +152,7 @@ class SceneCharacterWaterEffect {
       (this.CurrentWaterNormal = Vector_1.Vector.Create()),
       (this.CurrentWaterDepth = 0),
       (this.VelocityHistory = new VelocityHistoryCache()),
-      (this.EmptyUeTransform = new UE.Transform()),
+      (this.EmptyUeTransform = new UE.TransformDouble()),
       (this.IsEnabled = !1);
   }
   Start(t) {
@@ -175,7 +177,7 @@ class SceneCharacterWaterEffect {
       this.VelocityHistory.Initialize(12),
         (this.IsReady = !0),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("RenderEffect", 26, "WaterEffect Start", [
+          Log_1.Log.Info("RenderEffect", 25, "WaterEffect Start", [
             "Owner",
             t.GetName(),
           ]);
@@ -184,10 +186,10 @@ class SceneCharacterWaterEffect {
   Enable() {
     this.IsReady &&
       ((this.OwnerStateComponent =
-        this.Owner.CharacterActorComponent?.Entity?.GetComponent(161)),
+        this.Owner.CharacterActorComponent?.Entity?.GetComponent(173)),
       (this.IsEnabled = !0),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("RenderEffect", 26, "WaterEffect Enabled", [
+      Log_1.Log.Info("RenderEffect", 25, "WaterEffect Enabled", [
         "Owner",
         this.Owner.GetName(),
       ]);
@@ -210,54 +212,72 @@ class SceneCharacterWaterEffect {
         (this.AudioEffectHandle = 0)),
       (this.IsEnabled = !1),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("RenderEffect", 26, "WaterEffect Disabled", [
+      Log_1.Log.Info("RenderEffect", 25, "WaterEffect Disabled", [
         "Owner",
         this.Owner.GetName(),
       ]);
   }
   Tick() {
-    var t, e, i, s;
-    this.IsEnabled &&
-      (EffectSystem_1.EffectSystem.IsValid(this.Handle) &&
-        (EffectSystem_1.EffectSystem.HandleSeekToTime(
-          this.Handle,
-          this.CurrentSpeed,
-          !1,
-        ),
-        (s = EffectSystem_1.EffectSystem.GetEffectActor(
-          this.Handle,
-        )).K2_SetActorLocation(
-          this.CurrentWaterLocation.ToUeVector(!0),
-          !1,
-          void 0,
-          !0,
-        ),
-        (t = this.CurrentWaterNormal.ToUeVector(!0)),
-        (i = this.Owner.GetActorForwardVector()),
-        (e = UE.KismetMathLibrary.Cross_VectorVector(t, i)),
-        (i = UE.KismetMathLibrary.Cross_VectorVector(e, t)),
-        s.K2_SetActorRotation(
-          UE.KismetMathLibrary.MakeRotationFromAxes(i, e, t),
-          !0,
-        ),
-        EffectSystem_1.EffectSystem.IsValid(this.AudioEffectHandle)) &&
-        EffectSystem_1.EffectSystem.GetEffectActor(
-          this.AudioEffectHandle,
-        ).K2_SetActorLocation(
-          this.CurrentWaterLocation.ToUeVector(!0),
-          !1,
-          void 0,
-          !0,
-        ),
-      0 < this.OwnerHeight) &&
-      ((s = MathUtils_1.MathUtils.Clamp(
-        this.CurrentWaterDepth / this.OwnerHeight,
-        0,
-        1,
-      )),
-      AudioSystem_1.AudioSystem.SetRtpcValue("amb_water_depth", s, {
-        Actor: this.Owner,
-      }));
+    if (this.IsEnabled) {
+      var t,
+        e,
+        i = this.Owner.CharacterActorComponent?.Entity?.GetComponent(176);
+      if (i) {
+        var s = this.CurrentWaterNormal;
+        if (
+          (this.CurrentWaterNormal.UnaryNegation(s),
+          !i.GravityDirect.Equals(
+            s,
+            MathCommon_1.MathCommon.ThreshPointOnPlane,
+          ))
+        )
+          return;
+      }
+      void 0 ===
+        this.Owner.CharacterActorComponent?.Entity?.GetComponent(
+          172,
+        )?.GetBuffById(CharacterBuffIds_1.buffId.ElevatorBuff) &&
+        (EffectSystem_1.EffectSystem.IsValid(this.Handle) &&
+          (EffectSystem_1.EffectSystem.HandleSeekToTime(
+            this.Handle,
+            this.CurrentSpeed,
+            !1,
+          ),
+          (i = EffectSystem_1.EffectSystem.GetEffectActor(
+            this.Handle,
+          )).D_K2_SetActorLocation(
+            this.CurrentWaterLocation.ToUeVector(!0),
+            !1,
+            void 0,
+            !0,
+          ),
+          (s = this.CurrentWaterNormal.ToUeVector(!0)),
+          (e = this.Owner.D_GetActorForwardVector()),
+          (t = UE.KismetMathLibrary.D_Cross_VectorVector(s, e)),
+          (e = UE.KismetMathLibrary.D_Cross_VectorVector(t, s)),
+          i.K2_SetActorRotation(
+            UE.KismetMathLibrary.D_MakeRotationFromAxes(e, t, s),
+            !0,
+          ),
+          EffectSystem_1.EffectSystem.IsValid(this.AudioEffectHandle)) &&
+          EffectSystem_1.EffectSystem.GetEffectActor(
+            this.AudioEffectHandle,
+          ).D_K2_SetActorLocation(
+            this.CurrentWaterLocation.ToUeVector(!0),
+            !1,
+            void 0,
+            !0,
+          ),
+        0 < this.OwnerHeight) &&
+        ((i = MathUtils_1.MathUtils.Clamp(
+          this.CurrentWaterDepth / this.OwnerHeight,
+          0,
+          1,
+        )),
+        AudioSystem_1.AudioSystem.SetRtpcValue("amb_water_depth", i, {
+          Actor: this.Owner,
+        }));
+    }
   }
   IsMaterialInUse(t) {
     return (
@@ -284,31 +304,42 @@ class SceneCharacterWaterEffect {
       (this.State = 0));
   }
   SetStateInWater(t, e, i, s, h) {
+    var r;
     this.IsEnabled &&
-      ((this.CurrentWaterDepth = t),
-      this.CurrentWaterLocation.Set(s.X, s.Y, h),
-      (this.CurrentWaterNormal = e),
-      this.VelocityHistory.AddVelocity(i),
-      (this.CurrentSpeed = i.Size()),
-      0 === this.State &&
-        this.OnCharacterFallInWater(
-          i,
-          this.CurrentWaterLocation,
-          e,
-          this.InWaterSubConfig,
-          t,
-        ),
-      (h = this.OwnerStateComponent?.MoveState) ===
-      CharacterUnifiedStateTypes_1.ECharMoveState.NormalSwim
-        ? this.SpawnEffect(this.SwimNormalEffect, void 0, s, e)
-        : h === CharacterUnifiedStateTypes_1.ECharMoveState.FastSwim
-          ? this.SpawnEffect(this.SwimFastEffect, void 0, s, e)
-          : (i = this.InWaterSubConfig.FindMoveEffect(t, this.CurrentSpeed))
-            ? this.SpawnEffect(i.EffectDataPath, i.AudioEffectDataPath, s, e)
-            : t > this.InWaterSubConfig.FallJumpDepthThreshold &&
-              this.SpawnEffect(this.SwimIdleEffect, void 0, s, e),
-      (this.CurrentSubConfig = this.InWaterSubConfig),
-      (this.State = 1));
+      ((r = this.Owner.CharacterActorComponent?.Entity?.GetComponent(226)) &&
+      r.IsOnVehicle
+        ? this.SetStateNone(i)
+        : ((this.CurrentWaterDepth = t),
+          this.CurrentWaterLocation.Set(s.X, s.Y, h),
+          (this.CurrentWaterNormal = e),
+          this.VelocityHistory.AddVelocity(i),
+          (this.CurrentSpeed = i.Size()),
+          0 === this.State &&
+            this.OnCharacterFallInWater(
+              i,
+              this.CurrentWaterLocation,
+              e,
+              this.InWaterSubConfig,
+              t,
+            ),
+          (r = this.OwnerStateComponent?.MoveState) ===
+          CharacterUnifiedStateTypes_1.ECharMoveState.NormalSwim
+            ? this.SpawnEffect(this.SwimNormalEffect, void 0, s, e)
+            : r === CharacterUnifiedStateTypes_1.ECharMoveState.FastSwim
+              ? this.SpawnEffect(this.SwimFastEffect, void 0, s, e)
+              : (h = this.InWaterSubConfig.FindMoveEffect(t, this.CurrentSpeed))
+                ? this.SpawnEffect(
+                    h.EffectDataPath,
+                    h.AudioEffectDataPath,
+                    s,
+                    e,
+                  )
+                : t > this.InWaterSubConfig.FallJumpDepthThreshold &&
+                    r === CharacterUnifiedStateTypes_1.ECharMoveState.Other
+                  ? this.SpawnEffect(this.SwimIdleEffect, void 0, s, e)
+                  : this.StopEffect(),
+          (this.CurrentSubConfig = this.InWaterSubConfig),
+          (this.State = 1)));
   }
   SetStateOnMaterial(t, e, i, s, h, r) {
     this.IsEnabled &&
@@ -332,7 +363,7 @@ class SceneCharacterWaterEffect {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "RenderEffect",
-          26,
+          25,
           "WaterEffect Spawn Fall In Water",
           ["Owner", this.Owner.GetName()],
           ["vel", this.VelocityHistory.GetMaxVelocityZnegative()],
@@ -353,7 +384,7 @@ class SceneCharacterWaterEffect {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "RenderEffect",
-          26,
+          25,
           "WaterEffect Spawn Jump Out of Water",
           ["Owner", this.Owner.GetName()],
         ),
@@ -372,7 +403,7 @@ class SceneCharacterWaterEffect {
     var e;
     t &&
       EffectSystem_1.EffectSystem.IsValid(t) &&
-      (EffectSystem_1.EffectSystem.HandleSeekToTime(t, 0, !1),
+      (EffectSystem_1.EffectSystem.HandleSeekToTime(t, -1, !1),
       (e = this.Config.TimeExistAfterDead * ONE_SECOND) > TimerSystem_1.MIN_TIME
         ? TimerSystem_1.TimerSystem.Delay(() => {
             EffectSystem_1.EffectSystem.IsValid(t) &&
@@ -428,28 +459,43 @@ class SceneCharacterWaterEffect {
   }
   SpawnFallEffect(t, e, i, s) {
     if (!t) return -1;
+    var h = this.Owner?.CharacterActorComponent?.Entity?.GetComponent(176);
+    if (h) {
+      var r = this.CurrentWaterNormal;
+      if (
+        (this.CurrentWaterNormal.UnaryNegation(r),
+        !h.GravityDirect.Equals(r, MathCommon_1.MathCommon.ThreshPointOnPlane))
+      )
+        return -1;
+      if (
+        Math.abs(h.GravityDirect.Z) <
+        1 - MathCommon_1.MathCommon.ThreshPointOnPlane
+      )
+        return -1;
+    }
     this.EmptyUeTransform.SetLocation(i.ToUeVector(!0)),
       this.EmptyUeTransform.SetRotation(
-        UE.KismetMathLibrary.MakeRotFromZ(s.ToUeVector(!0)).Quaternion(),
+        UE.KismetMathLibrary.D_MakeRotFromZ(s.ToUeVector(!0)).Quaternion(),
       );
-    i = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
+    r = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
       GlobalData_1.GlobalData.World,
       this.EmptyUeTransform,
       t.ToAssetPathName(),
       "[SceneCharacterWaterEffect.SpawnFallEffect]",
+      new EffectContext_1.EffectContext(void 0, this.Owner),
     );
     return (
       e &&
-        0 < (s = e.ToAssetPathName()).length &&
+        0 < (h = e.ToAssetPathName()).length &&
         EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
           GlobalData_1.GlobalData.World,
           this.EmptyUeTransform,
-          s,
+          h,
           "[SceneCharacterWaterEffect.SpawnFallEffect(Audio)]",
           void 0,
           0,
         ),
-      i
+      r
     );
   }
 }

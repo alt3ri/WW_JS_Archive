@@ -4,10 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
   CommonItemSmallItemGrid_1 = require("../Common/ItemGrid/CommonItemSmallItemGrid"),
+  LguiUtil_1 = require("../Util/LguiUtil"),
   GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew");
 class InstanceDungeonEntranceTowerDefenceItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
+      (this.Uth = void 0),
       (this.Hzs = void 0),
       (this.JGe = () =>
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid());
@@ -29,14 +31,20 @@ class InstanceDungeonEntranceTowerDefenceItem extends UiPanelBase_1.UiPanelBase 
     )),
       this.GetItem(3).SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1),
-      this.SetButtonUiActive(1, !1);
+      this.SetButtonUiActive(1, !1),
+      this.Uth && this.RefreshItem(this.Uth.Data),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(2),
+        "TowerDefence_Vison",
+      );
   }
-  SetPhantoms(e) {
-    this.Hzs.RefreshByDataAsync(e).then(() => {
-      this.Hzs.GetScrollItemList().forEach((e) => {
-        e.SetToggleInteractive(!1), e.SetQuality();
-      });
-    });
+  RefreshItem(e) {
+    this.InAsyncLoading()
+      ? (this.Uth = { Data: e })
+      : this.Hzs.RefreshByData(e, () => {
+          for (const e of this.Hzs.GetScrollItemList())
+            e.SetQuality(), e.SetAllowClickBack(!1);
+        });
   }
 }
 exports.InstanceDungeonEntranceTowerDefenceItem =

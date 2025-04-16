@@ -18,24 +18,26 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.geo = void 0),
       (this.xOi = void 0),
+      (this._9_ = !1),
       (this.vto = !1),
       (this.CZi = () => {
         this.$eo();
       }),
       (this.Jeo = () => {
         this.Feo(),
+          (this._9_ = !1),
           ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SubmitSubtitle(
             this.geo.CurrentContent,
           );
       }),
       (this.Mto = (e) => {
-        this.vto || this.geo.UpdatePlotSubtitle(e);
+        this.vto || ((this._9_ = !0), this.geo.UpdatePlotSubtitle(e));
       }),
       (this.Weo = (e, t) => {
         this.geo.HandlePortraitVisible(this.RootItem, e, t);
       }),
       (this.rto = () => {
-        this.geo.ClearPlotContent(), this.Feo();
+        (this._9_ = !1), this.geo.ClearPlotContent(), this.Feo();
       }),
       (this.Eto = (e = !1, t = !0) => {
         this.vto === e ||
@@ -205,14 +207,14 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Plot",
-                27,
+                26,
                 "[PlotViewHud] 父界面已经隐藏，attach时子界面主动隐藏",
               ),
             this.Hide()))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
-              27,
+              26,
               "[PlotViewHud] 父界面已经不在，子界面直接关闭",
               ["parent", t.ViewName],
             ),
@@ -225,11 +227,12 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
   }
   J2n() {
     ModelManager_1.ModelManager.PlotModel.CurTalkItem &&
-      (this.geo.ResumeSubtitle(
-        ModelManager_1.ModelManager.PlotModel.CurTalkItem,
-      ),
-      this.xOi) &&
-      this.xOi.Resume();
+      (this._9_
+        ? (this.geo.ResumeSubtitle(
+            ModelManager_1.ModelManager.PlotModel.CurTalkItem,
+          ),
+          this.xOi && this.xOi.Resume())
+        : this.Mto(ModelManager_1.ModelManager.PlotModel.CurTalkItem));
   }
 }
 exports.PlotViewHud = PlotViewHud;

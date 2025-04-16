@@ -19,6 +19,7 @@ class FlowActionPlayMovie extends FlowActionBase_1.FlowActionBase {
       },
       e.BackgroundFade,
       o,
+      !0,
     );
   }
   OnInterruptExecute() {

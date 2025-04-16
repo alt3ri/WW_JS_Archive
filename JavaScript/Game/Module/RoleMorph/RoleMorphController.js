@@ -5,6 +5,7 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  RoleMorphLiuLiDaoLingHandle_1 = require("./handle/RoleMorphLiuLiDaoLingHandle"),
   RoleMorphPaoTaiHandle_1 = require("./handle/RoleMorphPaoTaiHandle");
 class RoleMorphController extends UiControllerBase_1.UiControllerBase {
   static OnLeaveLevel() {
@@ -28,7 +29,9 @@ class RoleMorphController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.RoleMorphController = RoleMorphController).A6 = new Map([
   [5012, RoleMorphPaoTaiHandle_1.RoleMorphPaoTaiHandle],
+  [5020, RoleMorphLiuLiDaoLingHandle_1.RoleMorphLiuLiDaoLingHandle],
 ])),
+  (RoleMorphController.klo = void 0),
   (RoleMorphController.xie = () => {
     RoleMorphController.EndMorph();
     var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();

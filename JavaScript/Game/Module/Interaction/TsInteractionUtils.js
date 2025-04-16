@@ -49,7 +49,7 @@ class TsInteractionUtils {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Interaction",
-            37,
+            36,
             "当前正在等待交互协议返回，无法继续发送交互请求",
           );
     else
@@ -60,7 +60,7 @@ class TsInteractionUtils {
         ),
         3 !== t.OptionType &&
           Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity?.GetComponent(
-            60,
+            67,
           )?.CollectSampleAndSend(!0),
         t.DelayRemove ? 3 : t.OptionType)
       ) {
@@ -133,7 +133,7 @@ class TsInteractionUtils {
           break;
         default:
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Interaction", 19, "未定义的交互选项类型", [
+            Log_1.Log.Error("Interaction", 18, "未定义的交互选项类型", [
               "optionType",
               t.OptionType,
             ]);
@@ -148,14 +148,18 @@ class TsInteractionUtils {
   static async OpenInteractHintView() {
     if (
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Interaction", 8, "[InteractionDebug]尝试打开交互界面"),
+        Log_1.Log.Debug(
+          "Interaction",
+          36,
+          "[InteractionDebug]尝试打开交互界面",
+        ),
       this.IsInteractHintViewOpened())
     )
       return (
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Interaction",
-            8,
+            36,
             "[InteractionDebug]尝试打开交互界面时，交互界面已经打开，直接做刷新",
           ),
         this.UpdateInteractHintView(),
@@ -172,7 +176,7 @@ class TsInteractionUtils {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Interaction",
-            8,
+            36,
             "[InteractionDebug]尝试打开交互界面时，交互在等待打开其他界面，直接返回",
             ["WaitOpenViewName", this.WaitOpenViewName],
           ),
@@ -182,7 +186,7 @@ class TsInteractionUtils {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Interaction",
-          8,
+          36,
           "[InteractionDebug]尝试打开交互界面，开始打开交互界面",
         );
     var e = await UiManager_1.UiManager.OpenViewAsync("InteractionHintView");
@@ -191,7 +195,7 @@ class TsInteractionUtils {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Interaction",
-          8,
+          36,
           "[InteractionDebug]尝试打开交互界面，完成打开交互界面",
           ["bSuccess", TsInteractionUtils.G_i],
         ),
@@ -200,13 +204,13 @@ class TsInteractionUtils {
   }
   static CloseInteractHintView() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Interaction", 8, "[InteractionDebug]尝试关闭交互界面"),
+      Log_1.Log.Debug("Interaction", 36, "[InteractionDebug]尝试关闭交互界面"),
       this.IsInteractHintViewOpened()
         ? UiManager_1.UiManager.IsViewDestroying("InteractionHintView")
           ? Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Interaction",
-              8,
+              36,
               "[InteractionDebug]尝试关闭交互界面时，交互界面已经在关闭中",
             )
           : UiManager_1.UiManager.CloseViewAsync("InteractionHintView").then(
@@ -215,7 +219,7 @@ class TsInteractionUtils {
                   Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Interaction",
-                      8,
+                      36,
                       "[InteractionDebug]尝试关闭交互界面完成",
                     );
               },
@@ -224,7 +228,7 @@ class TsInteractionUtils {
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Interaction",
-            8,
+            36,
             "[InteractionDebug]尝试关闭交互界面时，检测到交互界面没有打开",
           );
   }
@@ -243,11 +247,11 @@ class TsInteractionUtils {
         TimerSystem_1.TimerSystem.Delay(() => {
           this.WaitOpenViewName === e &&
             (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Interaction", 37, "等待界面打开超时"),
+              Log_1.Log.Warn("Interaction", 36, "等待界面打开超时"),
             this.N_i());
         }, 1e4))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Interaction", 37, "等待打开的界面为 Undefined");
+        Log_1.Log.Warn("Interaction", 36, "等待打开的界面为 Undefined");
   }
   static Init() {
     EventSystem_1.EventSystem.Add(
@@ -294,18 +298,20 @@ class TsInteractionUtils {
       );
   }
   static UpdateInteractHintView() {
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.InteractionViewUpdate,
-    );
+    TsInteractionUtils.q_i ||
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.InteractionViewUpdate,
+      );
   }
   static HandleEntityInteractByServerNotify(r, a, e) {
     WaitEntityTask_1.WaitEntityTask.Create(
+      "TsInteractionUtils.HandleEntityInteractByServerNotify",
       a,
       (t) => {
         if (t) {
           t = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
           if (t) {
-            t = t.Entity.GetComponent(182);
+            t = t.Entity.GetComponent(195);
             if (t) {
               t = t.GetInteractController();
               if (t) {
@@ -315,7 +321,7 @@ class TsInteractionUtils {
                     Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "Interaction",
-                        37,
+                        36,
                         "[基础交互选项继续执行]实体当前交互不是行为",
                       );
                   else {
@@ -344,41 +350,42 @@ class TsInteractionUtils {
                       r.w5n,
                       r.K5n,
                       r.mvs,
+                      r.sS_,
                     );
                   }
                 else
                   Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "Interaction",
-                      37,
+                      36,
                       "[基础交互选项继续执行]实体当前交互选项为空",
                     );
               } else
                 Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Interaction",
-                    37,
+                    36,
                     "[基础交互选项继续执行]实体交互控制器为空",
                   );
             } else
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Interaction",
-                  37,
+                  36,
                   "[基础交互选项继续执行]实体交互组件为空",
                 );
           } else
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Interaction",
-                37,
+                36,
                 "[基础交互选项继续执行]查找不到对应实体",
               );
         } else
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Interaction",
-              37,
+              36,
               "[基础交互选项继续执行]等待实体超时",
             );
       },
@@ -402,7 +409,7 @@ class TsInteractionUtils {
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Interaction",
-              37,
+              36,
               "[动态交互选项继续执行]动态交互选项不是行为",
             )
           : (a instanceof LevelGeneralContextDefine_1.EntityContext &&
@@ -420,15 +427,16 @@ class TsInteractionUtils {
               e.w5n,
               e.K5n,
               e.mvs,
+              e.sS_,
             ))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Interaction",
-            37,
+            36,
             "[动态交互选项继续执行]动态交互选项为空",
           )
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Interaction", 37, "[动态交互选项继续执行]上下文缺失");
+        Log_1.Log.Warn("Interaction", 36, "[动态交互选项继续执行]上下文缺失");
   }
 }
 (exports.TsInteractionUtils = TsInteractionUtils),

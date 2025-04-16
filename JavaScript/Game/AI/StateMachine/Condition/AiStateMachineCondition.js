@@ -46,18 +46,30 @@ class AiStateMachineCondition {
   }
   OnExit() {}
   Tick() {
-    var t;
-    this.OnTick(),
-      this.CheckForClient &&
-        this.Result !== this.LastResult &&
-        (((t = Protocol_1.Aki.Protocol._4n.create()).$4n =
-          this.Node.RootNode.Uuid),
-        (t.J4n = this.Transition.From),
-        (t.z4n = this.Transition.To),
-        (t.t5n = this.Index),
-        (t.e5n = this.Result),
-        CombatMessage_1.CombatNet.Call(26085, this.Node.Entity, t, (t) => {})),
-      (this.LastResult = this.Result);
+    if (
+      (this.OnTick(),
+      !this.Node.RootNode.IsAnimStateMachine &&
+        this.CheckForClient &&
+        this.Result !== this.LastResult)
+    ) {
+      const i = Protocol_1.Aki.Protocol._4n.create();
+      (i.$4n = this.Node.RootNode.Uuid),
+        (i.J4n = this.Transition.From),
+        (i.z4n = this.Transition.To),
+        (i.t5n = this.Index),
+        (i.e5n = this.Result),
+        CombatMessage_1.CombatNet.Call(26741, this.Node.Entity, i, (t) => {
+          t.fMs?.Q4n &&
+            CombatLog_1.CombatLog.Warn(
+              "StateMachineNew",
+              this.Node?.Entity,
+              `客户端条件完成response [${i.J4n}=>${i.z4n}],index:${this.Index},request value:` +
+                i.e5n,
+              ["response", t.fMs],
+            );
+        });
+    }
+    this.LastResult = this.Result;
   }
   OnTick() {}
   Clear() {

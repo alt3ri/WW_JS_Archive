@@ -27,28 +27,27 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
       });
   }
   OnInit() {
-    var t = this.EntityHandle.Entity;
-    (this.$te = t.CheckGetComponent(158)),
-      (this.m1t = t.CheckGetComponent(194)),
-      (this.Xte = t.CheckGetComponent(190)),
-      (this.one = this.CueConfig.Min),
-      (this.rne = this.CueConfig.Max);
+    (this.one = this.CueConfig.Min), (this.rne = this.CueConfig.Max);
   }
   OnTick(t) {
     super.OnTick(t),
       this.Z$o && ((t = this.iYo()), this.eYo(t, !1), t || (this.Z$o = 0));
   }
   OnCreate() {
-    this.UseMagnitude() && (this.Y$o = this.oYo());
+    this.iqi(), (this.Y$o = this.oYo());
   }
   OnDestroy() {
-    this.Y$o && this.rYo();
+    this.rYo();
   }
   OnSetMagnitude(t) {}
+  OnChangeRole(t) {
+    this.rYo(), super.OnChangeRole(t), this.iqi(), (this.Y$o = this.oYo());
+  }
   UseMagnitude() {
     return 0 !== this.CueConfig.Magni && !this.IsInstant;
   }
   oYo() {
+    if (!this.UseMagnitude()) return !1;
     let t = 0;
     switch (this.CueConfig.Magni) {
       case 1:
@@ -89,23 +88,24 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
     return this.eYo(t);
   }
   rYo() {
-    switch (this.CueConfig.Magni) {
-      case 1:
-        this.CueConfig.bListenAttr &&
-          (this.$te.RemoveListener(this.CueConfig.AttrId, this._yo),
-          this.z$o) &&
-          this.$te.RemoveListener(this.z$o, this._yo);
-        break;
-      case 2:
-        this.CueConfig.bListenAttr &&
-          this.J$o &&
-          (this.J$o.EndTask(), (this.J$o = void 0));
-        break;
-      case 3:
-        break;
-      case 4:
-        this.CueConfig.bListenAttr && (this.Z$o = 0);
-    }
+    if (this.Y$o)
+      switch (this.CueConfig.Magni) {
+        case 1:
+          this.CueConfig.bListenAttr &&
+            (this.$te.RemoveListener(this.CueConfig.AttrId, this._yo),
+            this.z$o) &&
+            this.$te.RemoveListener(this.z$o, this._yo);
+          break;
+        case 2:
+          this.CueConfig.bListenAttr &&
+            this.J$o &&
+            (this.J$o.EndTask(), (this.J$o = void 0));
+          break;
+        case 3:
+          break;
+        case 4:
+          this.CueConfig.bListenAttr && (this.Z$o = 0);
+      }
   }
   eYo(t, i = !0) {
     if (!this.Ii(this.rne >= this.one, "Buff特效表Min>Max！有问题")) return !1;
@@ -116,8 +116,8 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          29,
-          "Buff特效幅度",
+          28,
+          "Cue特效幅度",
           ["BuffId", this.BuffId],
           ["CueId", this.CueConfig.Id],
           ["EntityId", this.EntityHandle.Id],
@@ -140,7 +140,7 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
     return (
       !!t ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 29, i, ["CueId", this.CueConfig.Id]),
+        Log_1.Log.Error("Battle", 28, i, ["CueId", this.CueConfig.Id]),
       !1)
     );
   }
@@ -149,6 +149,11 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
         this.m1t.GetBuffByHandle(this.ActiveHandleId)?.GetRemainDuration() ?? 0,
       i = this.m1t.GetBuffByHandle(this.ActiveHandleId)?.Duration ?? 1;
     return 0 < i ? t / i : 0;
+  }
+  iqi() {
+    (this.$te = this.EntityHandle.Entity.CheckGetComponent(170)),
+      (this.m1t = this.EntityHandle.Entity.CheckGetComponent(207)),
+      (this.Xte = this.EntityHandle.Entity.CheckGetComponent(203));
   }
 }
 exports.GameplayCueMagnitude = GameplayCueMagnitude;

@@ -36,7 +36,7 @@ class FrequencyMonitor {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "FrequencyMonitor",
-              15,
+              14,
               "业务逻辑执行频率过高",
               ...e,
             );

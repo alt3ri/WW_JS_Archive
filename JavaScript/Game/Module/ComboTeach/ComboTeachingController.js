@@ -56,7 +56,7 @@ class ComboTeachingController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ComboTeaching",
-          35,
+          34,
           "角色出招教学，成功条件检查未实现",
           ["type", e],
         ),
@@ -84,7 +84,7 @@ class ComboTeachingController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ComboTeaching",
-          35,
+          34,
           "角色出招教学，失败条件检查未实现",
           ["type", e],
         ),

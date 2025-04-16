@@ -11,6 +11,11 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
       (this.vmo = i),
       (this.dFe = 0),
       (this.Mmo = 0),
+      (this.wmo = 0),
+      (this.B9l = 0),
+      (this.q9l = void 0),
+      (this.ESo = void 0),
+      (this.k9l = void 0),
       (this.pqe = void 0),
       (this.cFe = () => {
         this.pqe && this.pqe();
@@ -42,10 +47,34 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.cFe]]);
   }
   Update(t, i) {
-    (this.dFe = t), (this.Mmo = i), this.Refresh();
+    this.SetId(t, i), this.Refresh();
   }
   SetId(t, i) {
-    (this.dFe = t), (this.Mmo = i);
+    (this.dFe = t),
+      (this.Mmo = i),
+      (this.q9l =
+        ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
+          this.Mmo,
+        ));
+    i = this.q9l.SkillId;
+    (this.wmo = i),
+      (this.ESo =
+        0 < this.wmo
+          ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(i)
+          : void 0),
+      (this.B9l =
+        0 < i
+          ? ModelManager_1.ModelManager.RoleModel.GetUpgradeSkillIdIfUpgraded(
+              i,
+              t,
+            )
+          : 0),
+      (this.k9l =
+        0 < this.B9l
+          ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
+              this.B9l,
+            )
+          : void 0);
   }
   Refresh() {
     this.RefreshSkillIcon(), this.RefreshState();
@@ -74,16 +103,10 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(3)?.SetUIActive(1 !== s && 0 === t);
   }
   RefreshSkillIcon() {
-    var t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
-        this.Mmo,
-      ),
-      i = t.SkillId;
-    let s = void 0;
-    (s =
-      i && 0 < i
-        ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(i)
-            ?.Icon
-        : t.PropertyNodeIcon) && this.Emo(s);
+    var t = this.wmo;
+    let i = void 0;
+    (i = t && 0 < t && this.ESo ? this.ESo.Icon : this.q9l.PropertyNodeIcon) &&
+      this.Emo(i);
   }
   Emo(t) {
     this.vmo
@@ -119,6 +142,21 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
   }
   GetSkillNodeId() {
     return this.Mmo;
+  }
+  GetSkillId() {
+    return this.wmo;
+  }
+  GetUpgradeSkillId() {
+    return this.B9l;
+  }
+  GetSkillTreeNodeConfig() {
+    return this.q9l;
+  }
+  GetSkillConfig() {
+    return this.ESo;
+  }
+  GetUpgradeSkillConfig() {
+    return this.k9l;
   }
   SetToggleCallBack(t) {
     this.pqe = t;

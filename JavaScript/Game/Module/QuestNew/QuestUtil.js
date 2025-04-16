@@ -18,7 +18,7 @@ class QuestUtil {
     (i =
       r instanceof Vector_1.Vector
         ? Vector_1.Vector.Dist(r, t) * MapDefine_1.FLOAT_0_01
-        : ue_1.Vector.Dist(r, t.ToUeVector()) * MapDefine_1.FLOAT_0_01),
+        : ue_1.Vector.Dist(r, t.ToUeVectorOld()) * MapDefine_1.FLOAT_0_01),
       (i = Math.round(i));
     var r = r.Z - t.Z,
       t = i.toString();

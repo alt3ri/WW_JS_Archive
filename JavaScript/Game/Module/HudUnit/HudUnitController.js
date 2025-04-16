@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HudUnitController = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
@@ -29,6 +30,14 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
       EventDefine_1.EEventName.InputControllerChange,
       this.OnInputControllerChange,
     ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnEnterVehicle,
+        this.OnEnterVehicle,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnLeaveVehicle,
+        this.OnLeaveVehicle,
+      ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         17,
         this.iJe,
@@ -39,6 +48,14 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
       EventDefine_1.EEventName.InputControllerChange,
       this.OnInputControllerChange,
     ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnEnterVehicle,
+        this.OnEnterVehicle,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnLeaveVehicle,
+        this.OnLeaveVehicle,
+      ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         17,
         this.iJe,
@@ -53,23 +70,38 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
     e && HudUnitManager_1.HudUnitManager.Destroy(e);
   }
 }
-((exports.HudUnitController = HudUnitController).iJe = () => {
-  var e = UiLayer_1.UiLayer.GetBattleViewUnit(1),
-    t = UiLayer_1.UiLayer.GetBattleViewUnit(3),
-    n =
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
-        17,
-      );
-  e.SetUIActive(n),
-    t.SetUIActive(n),
-    n
-      ? ModelManager_1.ModelManager.GameModeModel.WorldDone
-        ? HudUnitManager_1.HudUnitManager.ShowHud()
-        : Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Battle", 18, "WorldDone前不允许打开hud")
-      : HudUnitManager_1.HudUnitManager.HideHud();
-}),
+(exports.HudUnitController = HudUnitController),
+  ((_a = HudUnitController).iJe = () => {
+    var e = UiLayer_1.UiLayer.GetBattleViewUnit(1),
+      t = UiLayer_1.UiLayer.GetBattleViewUnit(3),
+      n =
+        ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
+          17,
+        );
+    e.SetUIActive(n),
+      t.SetUIActive(n),
+      n
+        ? ModelManager_1.ModelManager.GameModeModel.WorldDone
+          ? HudUnitManager_1.HudUnitManager.ShowHud()
+          : Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Battle", 17, "WorldDone前不允许打开hud")
+        : HudUnitManager_1.HudUnitManager.HideHud();
+  }),
   (HudUnitController.OnInputControllerChange = (e, t) => {
     HudUnitManager_1.HudUnitManager.RefreshHudOnInputControllerChanged(e, t);
+  }),
+  (HudUnitController.OnEnterVehicle = (e) => {
+    e.IsRolePassenger(!0) &&
+      ModelManager_1.ModelManager.TreasureHuntModel?.IsEnableCompassTrack(
+        e.VehicleType,
+      ) &&
+      _a.TryCreateHud(4);
+  }),
+  (HudUnitController.OnLeaveVehicle = (e) => {
+    e.IsRolePassenger(!0) &&
+      ModelManager_1.ModelManager.TreasureHuntModel?.IsEnableCompassTrack(
+        e.VehicleType,
+      ) &&
+      _a.TryDestroyHud(4);
   });
 //# sourceMappingURL=HudUnitController.js.map

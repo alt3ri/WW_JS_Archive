@@ -43,6 +43,7 @@ const UE = require("ue"),
   GlobalData_1 = require("../../GlobalData"),
   LevelGameplayActionsDefine_1 = require("../../LevelGamePlay/LevelGameplayActionsDefine"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   RewardController_1 = require("../../Module/Reward/RewardController"),
   ComponentForceTickController_1 = require("../../World/Controller/ComponentForceTickController"),
@@ -87,10 +88,12 @@ class DropItemData {
       (this.RotationProtectTime = -0),
       (this.AdsorptionTime = 0),
       (this.AdsorptionProtectTime = 0.2),
-      (this.QualityIndex = -0),
       (this.DropState = 0),
       (this.MeshIsInited = !1),
-      (this.DropFinished = !1);
+      (this.DropFinished = !1),
+      (this.BornEffectPath = ""),
+      (this.TailEffectPath = ""),
+      (this.DestroyEffectPath = "");
   }
 }
 let SceneItemDropItemComponent =
@@ -141,7 +144,7 @@ let SceneItemDropItemComponent =
             (this.Zdn = EffectSystem_1.EffectSystem.SpawnEffect(
               GlobalData_1.GlobalData.World,
               this.Hte.ActorTransform,
-              BORN_EFFECTS[this.fGt.QualityIndex],
+              this.fGt.BornEffectPath,
               "[SceneItemDropItemComponent.DownProcess]",
               new EffectContext_1.EffectContext(this.Entity.Id),
             )),
@@ -187,7 +190,7 @@ let SceneItemDropItemComponent =
                   (e.Normalize(),
                   e.MultiplyEqual(this.fGt.StartSpeed * t),
                   e.AdditionEqual(this.Hte.ActorLocationProxy),
-                  this.Hte.StaticMesh.K2_SetWorldLocation(
+                  this.Hte.StaticMesh.D_K2_SetWorldLocation(
                     e.ToUeVector(),
                     !1,
                     void 0,
@@ -251,7 +254,7 @@ let SceneItemDropItemComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Hte = this.Entity.GetComponent(200)),
         this.InitDropStateFunction(),
         !0
       );
@@ -307,17 +310,31 @@ let SceneItemDropItemComponent =
             (this.fGt.AdsorptionType = t?.Adsorption),
             (this.fGt.StartSpeed = e.GetSpeed()),
             (this.fGt.RotationProtectTime = e.GetDropRotationProtectTime()),
-            (t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
-              o.QualityId,
-            )),
-            (this.fGt.QualityIndex = t.Id - 1))
+            13 ===
+            ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+              i,
+            )
+              ? ((t =
+                  ConfigManager_1.ConfigManager.DangoAbyssConfig.GetAbyssQualityById(
+                    o.QualityId,
+                  )),
+                (this.fGt.BornEffectPath = t.AbyssSpecialEffects),
+                (this.fGt.TailEffectPath = t.AbyssTailEffects),
+                (this.fGt.DestroyEffectPath = t.AbyssDissipateEffects))
+              : ((e =
+                  ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
+                    o.QualityId,
+                  ).Id - 1),
+                (this.fGt.BornEffectPath = BORN_EFFECTS[e]),
+                (this.fGt.TailEffectPath = TRAIL_EFFECTS[e]),
+                (this.fGt.DestroyEffectPath = DESTROY_EFFECTS[e])))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("World", 11, "掉落配置查询Mesh字段配置为空", [
+            Log_1.Log.Error("World", 10, "掉落配置查询Mesh字段配置为空", [
               "道具id",
               i,
             ])
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("World", 11, "掉落配置查询数据为空", ["道具id", i]);
+          Log_1.Log.Error("World", 10, "掉落配置查询数据为空", ["道具id", i]);
     }
     mCn(t) {
       if (!t.A5n) return !0;
@@ -423,13 +440,13 @@ let SceneItemDropItemComponent =
               2 * Math.random() - 1,
               2 * Math.random() - 1,
             ),
-            i.SetCenterOfMass(t.ToUeVector(), FNameUtil_1.FNameUtil.EMPTY),
+            i.SetCenterOfMass(t.ToUeVectorOld(), FNameUtil_1.FNameUtil.EMPTY),
             i.SetCollisionEnabled(2),
             i.SetSimulatePhysics(!0),
             i.SetCollisionProfileName(COLLISION_PROFILE_NAME),
             (t = this.Ovr.GetRotation().Yaw),
             (t = this.GetRandomForce(t)),
-            i.AddImpulse(t.ToUeVector(), FNameUtil_1.FNameUtil.EMPTY, !0),
+            i.AddImpulse(t.ToUeVectorOld(), FNameUtil_1.FNameUtil.EMPTY, !0),
             (i.BodyInstance.bLockXRotation = !0),
             (i.BodyInstance.bLockYRotation = !0),
             i.SetConstraintMode(6),
@@ -453,7 +470,7 @@ let SceneItemDropItemComponent =
         );
     }
     gCn() {
-      var t = this.Hte.StaticMesh.GetRelativeTransform();
+      var t = this.Hte.StaticMesh.D_GetRelativeTransform();
       (this.Zdn = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
         GlobalData_1.GlobalData.World,
         t,
@@ -474,7 +491,7 @@ let SceneItemDropItemComponent =
     }
     fCn() {
       var t,
-        e = this.Entity.GetComponent(182);
+        e = this.Entity.GetComponent(195);
       e &&
         (e = e.GetInteractController()) &&
         (((t =
@@ -517,7 +534,9 @@ let SceneItemDropItemComponent =
     }
     rCn(t) {
       var e;
-      this.Hte.SetActorLocation(this.Hte.StaticMesh.K2_GetComponentLocation()),
+      this.Hte.SetActorLocation(
+        this.Hte.StaticMesh.D_K2_GetComponentLocation(),
+      ),
         this.vCn()
           ? this.uCn()
           : (e = this.eCn.get(this.fGt.DropState)) && e(t);
@@ -533,7 +552,7 @@ let SceneItemDropItemComponent =
         (this.Zdn = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           this.Hte.ActorTransform,
-          TRAIL_EFFECTS[this.fGt.QualityIndex],
+          this.fGt.TailEffectPath,
           "[SceneItemDropItemComponent.CreateAutoAttachEffect]",
           new EffectContext_1.EffectContext(this.Entity.Id),
         )),
@@ -603,7 +622,7 @@ let SceneItemDropItemComponent =
       var t = EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
         this.Hte.ActorTransform,
-        DESTROY_EFFECTS[this.fGt.QualityIndex],
+        this.fGt.DestroyEffectPath,
         "[SceneItemDropItemComponent.DestroyWithEffect]",
         new EffectContext_1.EffectContext(this.Entity.Id),
       );
@@ -619,8 +638,7 @@ let SceneItemDropItemComponent =
         this.Entity.Disable(
           "[SceneItemDropItemComponent.DestroyWithEffect] 播放销毁特效",
         ),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.DelayRemoveEntityFinished,
+        ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
           this.Entity,
         );
     }
@@ -636,7 +654,7 @@ let SceneItemDropItemComponent =
 (SceneItemDropItemComponent.cz = Vector_1.Vector.Create()),
   (SceneItemDropItemComponent = SceneItemDropItemComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(136)],
+      [(0, RegisterComponent_1.RegisterComponent)(147)],
       SceneItemDropItemComponent,
     )),
   (exports.SceneItemDropItemComponent = SceneItemDropItemComponent);

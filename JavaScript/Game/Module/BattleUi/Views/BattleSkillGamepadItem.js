@@ -2,10 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleSkillGamepadItem = void 0);
 const UE = require("ue"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
   InputEnums_1 = require("../../../Input/InputEnums"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   BattleSkillItem_1 = require("./BattleSkillItem"),
-  BattleSkillSecondCdItem_1 = require("./BattleSkillSecondCdItem");
+  BattleSkillSwitchInteractItem_1 = require("./BattleSkillSwitchInteractItem");
 class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments),
@@ -14,10 +16,11 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       (this.IsSecondButton = !1),
       (this.HEe = ""),
       (this.eit = !1),
-      (this.tit = void 0),
+      (this.BehaviorButtonData = void 0),
+      (this.SrcBehaviorButtonData = void 0),
       (this.SPe = void 0),
       (this.iit = !1),
-      (this.oit = void 0);
+      (this.Dah = void 0);
   }
   get IsMainButton() {
     return 0 === this.ButtonAreaType;
@@ -47,16 +50,6 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
               (this.IsHideNumComp = !0))
             : ((this.ButtonAreaType = 2), (this.CdFixedPoint = 1));
   }
-  async InitializeAsync() {
-    await super.InitializeAsync(),
-      this.IsMainButton &&
-        ((this.oit = new BattleSkillSecondCdItem_1.BattleSkillSecondCdItem()),
-        this.oit.SetIndex(this.GetInputIndex()),
-        await this.oit.CreateByResourceIdAsync(
-          "UiItem_BattleSkillSecondCdItem",
-          this.GetExtraContainer(),
-        ));
-  }
   SetKeyName(t) {
     (this.HEe = t),
       this.IsMainButton || this.IsLeftButton
@@ -66,39 +59,65 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
           this.KeyItem.SetActive(!0));
   }
   Tick(t) {
-    super.Tick(t), this.oit?.Tick(t);
+    super.Tick(t);
   }
   Refresh(t) {
     var i;
-    !t && this.IsSecondButton
+    (!t && this.IsSecondButton) ||
+    (this.IsSecondButton &&
+      void 0 === this.SrcBehaviorButtonData &&
+      7 === t?.GetButtonType() &&
+      this.GamepadData?.SwitchInteractData.IsSwitchInteractOpen &&
+      2 === this.GamepadData.SwitchInteractData.State)
       ? this.Deactivate()
-      : ((i = void 0 !== this.SkillButtonData || void 0 !== this.tit),
-        (this.tit = void 0),
+      : ((i =
+          void 0 !== this.SkillButtonData ||
+          void 0 !== this.BehaviorButtonData),
+        (this.BehaviorButtonData = void 0),
         t
           ? (this.SkillButtonData !== t &&
               (this.OnCoolDownFinishedCallback = void 0),
-            super.Refresh(t))
+            super.Refresh(t),
+            this.SrcBehaviorButtonData && this.SwitchInteract(!1))
           : (!i && this.eit) || ((this.eit = !0), this.rit()));
   }
-  rit() {
-    this.IsMainButton
-      ? ((this.SkillButtonData = void 0),
-        this.SetSkillIcon(this.GamepadData.NoneIcon),
-        this.RefreshSkillName(),
-        this.ResetSkillCoolDown(),
-        (this.SetTextureHandleId = 0),
+  SwitchInteract(t, i) {
+    t
+      ? ((this.SrcBehaviorButtonData = this.BehaviorButtonData),
+        (this.BehaviorButtonData = void 0),
         (this.OnCoolDownFinishedCallback = void 0),
-        (this.KeyActionName = void 0),
-        (this.KeyOperationType = void 0),
-        (this.PressActionType = InputEnums_1.EInputAction.None),
-        this.RefreshDynamicEffect(),
-        this.CancelLoadDynamicEffectNiagara(),
-        this.CancelLoadCdCompletedNiagara(),
-        this.UltraComponent && this.UltraComponent.SetComponentActive(!1),
-        this.NumComponent && this.NumComponent.SetComponentActive(!1),
-        this.SwitchComponent && this.SwitchComponent.SetComponentActive(!1),
-        this.IsShowOrShowing || this.Show())
-      : this.Deactivate();
+        super.Refresh(i))
+      : (this.SrcBehaviorButtonData = void 0),
+      this.Dah
+        ? this.Dah.RefreshEnable(t)
+        : t &&
+          ((this.Dah =
+            new BattleSkillSwitchInteractItem_1.BattleSkillSwitchInteractItem()),
+          this.Dah.Init(this.GetExtraContainer()),
+          this.Dah.RefreshEnable(!0));
+  }
+  rit() {
+    this.SrcBehaviorButtonData && this.SwitchInteract(!1),
+      this.IsMainButton
+        ? ((this.SkillButtonData = void 0),
+          this.SetSkillIcon(this.GamepadData.NoneIcon),
+          this.RefreshSkillName(),
+          this.ResetSkillCoolDown(),
+          (this.SetTextureHandleId = 0),
+          (this.OnCoolDownFinishedCallback = void 0),
+          (this.KeyActionName = void 0),
+          (this.KeyOperationType = void 0),
+          (this.PressActionType = InputEnums_1.EInputAction.None),
+          this.RefreshDynamicEffect(),
+          this.CancelLoadDynamicEffectNiagara(),
+          this.CancelLoadCdCompletedNiagara(),
+          this.UltraComponent && this.UltraComponent.SetComponentActive(!1),
+          this.NumComponent && this.NumComponent.SetComponentActive(!1),
+          this.SwitchComponent && this.SwitchComponent.SetComponentActive(!1),
+          this.ConfigLongPressComponent &&
+            this.ConfigLongPressComponent.SetComponentActive(!1),
+          this.IsShowOrShowing || this.Show())
+        : this.Deactivate();
   }
   RefreshVisible() {
     this.IsMainButton
@@ -108,8 +127,8 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       : super.RefreshVisible();
   }
   RefreshEnable(t = !1) {
-    this.tit
-      ? this.SetSkillItemEnable(this.tit.IsEnable, t)
+    this.BehaviorButtonData
+      ? this.SetSkillItemEnable(this.BehaviorButtonData.IsEnable, t)
       : super.RefreshEnable(t);
   }
   RefreshSkillCoolDown() {
@@ -117,10 +136,28 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       ? super.RefreshSkillCoolDown()
       : this.FinishSkillCoolDown();
   }
+  PlaySwitchCd() {
+    this.HideCdText = !0;
+    var t =
+      (this.GamepadData?.SwitchInteractData.SwitchTime ?? 0) *
+      TimeUtil_1.TimeUtil.Millisecond;
+    this.PlaySkillTimeDown(t, t, void 0);
+  }
   RefreshByBehaviorButtonData(t) {
-    (this.SkillButtonData = void 0),
-      (this.tit = t),
-      this.ResetSkillCoolDown(),
+    if (
+      ((this.SkillButtonData = void 0),
+      104 === (this.BehaviorButtonData = t).ButtonType &&
+        this.GamepadData?.SwitchInteractData.IsSwitchInteractOpen) &&
+      2 === this.GamepadData.SwitchInteractData.State
+    ) {
+      t =
+        ModelManager_1.ModelManager.SkillButtonUiModel?.GetSkillButtonDataByButton(
+          7,
+        );
+      if (t?.IsVisible() && t.GetSkillId())
+        return void this.SwitchInteract(!0, t);
+    }
+    this.ResetSkillCoolDown(),
       (this.SetTextureHandleId = 0),
       (this.OnCoolDownFinishedCallback = void 0),
       (this.PressActionType = InputEnums_1.EInputAction.None),
@@ -134,25 +171,28 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       this.RefreshSkillIcon(),
       this.RefreshSkillName(),
       this.RefreshKey(),
-      this.RefreshEnable();
+      this.RefreshEnable(),
+      this.SrcBehaviorButtonData && this.SwitchInteract(!1);
   }
   CheckSkillIconIsTexture(t) {
     return !!this.SkillButtonData && super.CheckSkillIconIsTexture(t);
   }
   RefreshSkillIcon() {
-    this.tit
-      ? this.SetSkillIcon(this.tit.SkillIconPathList[this.tit.State])
-      : this.GamepadData.InWater && 5 === this.SkillButtonData?.GetButtonType()
-        ? this.SetSkillIcon(this.GamepadData.SwimIcon)
-        : super.RefreshSkillIcon();
+    this.BehaviorButtonData
+      ? this.SetSkillIcon(
+          this.BehaviorButtonData.SkillIconPathList[
+            this.BehaviorButtonData.State
+          ],
+        )
+      : super.RefreshSkillIcon();
   }
   IsVisible() {
     return (
       (!this.GamepadData.GetIsPressCombineButton() ||
         ("Gamepad_LeftTrigger" !== this.HEe &&
           "Gamepad_RightTrigger" !== this.HEe)) &&
-      (this.tit
-        ? this.tit.IsVisible
+      (this.BehaviorButtonData
+        ? this.BehaviorButtonData.IsVisible
         : !(
             11 !== this.SkillButtonData?.GetButtonType() ||
             !this.GamepadData.IsAim()
@@ -171,8 +211,10 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       : this.KeyItem.SetActive(!0);
   }
   OnInputAction(t = !1) {
-    this.tit
-      ? this.tit.IsEnable && this.tit.IsVisible && this.ClickEffect?.Play()
+    this.BehaviorButtonData
+      ? this.BehaviorButtonData.IsEnable &&
+        this.BehaviorButtonData.IsVisible &&
+        this.ClickEffect?.Play()
       : super.OnInputAction(t);
   }
   PlayPressCombineButtonSeq() {

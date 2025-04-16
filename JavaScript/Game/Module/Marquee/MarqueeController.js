@@ -57,7 +57,7 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
   static WAi(e, n) {
     const a = ModelManager_1.ModelManager.MarqueeModel;
     200 !== e && 404 === e
-      ? MarqueeController.KAi()
+      ? MarqueeController.nhh()
       : n?.includes("contents") &&
         ((e = Json_1.Json.Parse(n))
           ? (e.forEach((e) => {
@@ -69,18 +69,23 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
                 a.CurMarquee.WhiteLists,
               ) &&
               MarqueeController.CloseMarqueeView(!1))
-          : MarqueeController.KAi());
+          : MarqueeController.nhh());
   }
-  static KAi() {
+  static AddClientMarqueeData(e) {
+    e.IsClientMarquee &&
+      (ModelManager_1.ModelManager.MarqueeModel.AddOrUpdateMarqueeDate(e),
+      MarqueeController.QAi());
+  }
+  static nhh() {
     UiManager_1.UiManager.IsViewShow("MarqueeView") &&
       UiManager_1.UiManager.CloseView("MarqueeView"),
-      ModelManager_1.ModelManager.MarqueeModel.RemoveAllMarqueeData();
+      ModelManager_1.ModelManager.MarqueeModel.RemoveServerMarqueeData();
   }
   static CloseMarqueeView(e = !0) {
     var n = ModelManager_1.ModelManager.MarqueeModel.CurMarquee;
     ModelManager_1.ModelManager.MarqueeModel.RemoveMarqueeData(n?.Id) ||
       (Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Marquee", 28, "跑马灯数据异常, 数据重复删除", [
+        Log_1.Log.Warn("Marquee", 27, "跑马灯数据异常, 数据重复删除", [
           "incId",
           n?.Id,
         ])),
@@ -89,12 +94,12 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
         ? UiManager_1.UiManager.CloseView("MarqueeView", () => {
             e &&
               (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Marquee", 28, "关闭跑马灯检查下一个跑马灯"),
+                Log_1.Log.Info("Marquee", 27, "关闭跑马灯检查下一个跑马灯"),
               MarqueeController.QAi());
           })
         : e &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Marquee", 28, "检查下一个跑马灯"),
+            Log_1.Log.Info("Marquee", 27, "检查下一个跑马灯"),
           MarqueeController.QAi());
   }
   static QAi() {
@@ -104,7 +109,7 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
       ? Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Marquee",
-          28,
+          27,
           "CheckMarquee",
           ["IsViewShow", UiManager_1.UiManager.IsViewShow("MarqueeView")],
           ["IsViewOpen", UiManager_1.UiManager.IsViewOpen("MarqueeView")],
@@ -117,7 +122,7 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
             : (ModelManager_1.ModelManager.MarqueeModel.RemoveMarqueeData(e.Id),
               MarqueeController.QAi())
           : Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Marquee", 28, "获取队列的第一个跑马灯数据空"));
+            Log_1.Log.Debug("Marquee", 27, "获取队列的第一个跑马灯数据空"));
   }
   static CheckCurMarqueeValid(e) {
     var n, a;

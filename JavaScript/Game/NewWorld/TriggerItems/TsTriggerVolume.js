@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   AudioController_1 = require("../../../Core/Audio/AudioController"),
-  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
@@ -55,6 +54,15 @@ class TsTriggerVolume extends UE.KuroEffectActor {
       (this.BuffTimerId = void 0),
       (this.PropsIds = void 0),
       (this.AddBuffType = void 0),
+      (this.HandleWorldDone = void 0);
+  }
+  Constructor() {
+    (this.IsAreaEnterHanlde = !1),
+      (this.IsAreaLeaveHanlde = !1),
+      (this.AreaEnterCdId = void 0),
+      (this.AreaLeaveCdId = void 0),
+      (this.CountInTrigger = 0),
+      (this.BuffTimerId = void 0),
       (this.HandleWorldDone = void 0);
   }
   ReceiveBeginPlay() {
@@ -111,7 +119,12 @@ class TsTriggerVolume extends UE.KuroEffectActor {
         this.TriggerId,
       ),
       this.AreaId &&
-        ((this.AreaLeaveCdId = void 0),
+        (0 < this.CountInTrigger &&
+          this.HandleAreaLeave(
+            RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger(),
+            void 0,
+          ),
+        (this.AreaLeaveCdId = void 0),
         (this.IsAreaEnterHanlde = !0),
         ModelManager_1.ModelManager.AreaModel?.RemoveArea(this.AreaId),
         TimerSystem_1.TimerSystem.Has(this.AreaEnterCdId) &&
@@ -192,16 +205,17 @@ class TsTriggerVolume extends UE.KuroEffectActor {
       (this.AreaEnterCdId = TimerSystem_1.TimerSystem.Delay(() => {
         this.IsAreaEnterHanlde = !0;
       }, AREA_CD)),
-      Info_1.Info.IsPlayInEditor &&
-        Log_1.Log.CheckInfo() &&
+      Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Area",
           7,
           "[AreaController.EnterOverlap_TstriggerVolume] 进入区域",
-          ["EnterArea", this.AreaId],
-          ["VolumeName", i?.GetActorLabel()],
+          ["LeaveArea", this.AreaId],
         ),
-      AreaController_1.AreaController.BeginOverlap(this.AreaId));
+      AreaController_1.AreaController.BeginOverlap(
+        this.AreaId,
+        "AreaController.EnterOverlap_TstriggerVolume",
+      ));
   }
   HandleAreaLeave(e, i) {
     e === RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger() &&
@@ -210,14 +224,12 @@ class TsTriggerVolume extends UE.KuroEffectActor {
       (this.AreaLeaveCdId = TimerSystem_1.TimerSystem.Delay(() => {
         this.IsAreaLeaveHanlde = !0;
       }, AREA_CD)),
-      Info_1.Info.IsPlayInEditor &&
-        Log_1.Log.CheckInfo() &&
+      Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Area",
           7,
           "[AreaController.EndOverlap_TstriggerVolume] 离开区域",
           ["LeaveArea", this.AreaId],
-          ["VolumeName", i?.GetActorLabel()],
         ),
       AreaController_1.AreaController.EndOverlap(this.AreaId));
   }

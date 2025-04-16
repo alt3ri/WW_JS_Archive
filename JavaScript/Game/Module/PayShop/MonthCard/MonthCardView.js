@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonthCardView = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
-  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -18,7 +17,6 @@ const UE = require("ue"),
   HelpController_1 = require("../../Help/HelpController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   PayShopDefine_1 = require("../PayShopDefine"),
-  CHECKSDKGAP = 500,
   MONTH_CARD_HELP_ID = 9;
 class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
@@ -27,7 +25,6 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       (this.Z2i = void 0),
       (this.eFi = void 0),
       (this.tFi = !1),
-      (this.PNa = void 0),
       (this.dtt = () => {
         HelpController_1.HelpController.OpenHelpById(MONTH_CARD_HELP_ID);
       }),
@@ -44,7 +41,7 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       (this.rFi = () => {
         this.nFi(), this.sFi();
       }),
-      (this.Eza = () => {
+      (this.Wih = () => {
         PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.ShowPlayStationStoreIcon(
           0,
         );
@@ -62,6 +59,8 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       [7, UE.UIItem],
       [8, UE.UIItem],
       [9, UE.UIText],
+      [10, UE.UIText],
+      [11, UE.UITexture],
     ]),
       (this.BtnBindInfo = [[2, this.dtt]]);
   }
@@ -78,10 +77,10 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       (this.eFi = new GetItemPanel()),
       await this.eFi.CreateByActorAsync(this.GetItem(6).GetOwner()),
       this.AddChild(this.eFi),
-      this.BNa();
+      this.G3a();
   }
   OnBeforeShow() {
-    this.Eza();
+    this.Wih();
   }
   OnStart() {
     (this.z2i = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(4))),
@@ -92,12 +91,13 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       this.eFi.Refresh(t[0].ItemId, t[1]),
       this.rFi(),
       this.iFi(),
+      this.BV_(),
       this.GetText(9).ShowTextNew("MonthCardDes_1"),
       this.GetTabBehavior(UiTabSequence_1.UiTabSequence)
         ?.GetLevelSequencePlayer()
         .PlayLevelSequenceByName("Loop");
   }
-  BNa() {
+  G3a() {
     var e;
     return (
       !PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedConfirmSdkProductInfo() ||
@@ -115,32 +115,18 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
         e,
       ),
-      this.bNa(),
+      this.O3a(),
       !1)
     );
   }
-  async bNa() {
+  async O3a() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Shop", 28, "OpenThirdPartyMessageBox"),
-      (await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().OpenMessageBox(
+      Log_1.Log.Debug("Shop", 27, "OpenThirdPartyMessageBox"),
+      await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().OpenMessageBox(
         ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyUserId(),
         3,
         0,
-      )) &&
-        (this.qNa(),
-        (this.PNa = TimerSystem_1.TimerSystem.Forever(() => {
-          PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetMessageBoxCurrentState(
-            (e) => {
-              3 === e &&
-                (this.qNa(),
-                PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().TerminateMessageBox());
-            },
-          );
-        }, CHECKSDKGAP)));
-  }
-  qNa() {
-    this.PNa &&
-      (TimerSystem_1.TimerSystem.Remove(this.PNa), (this.PNa = void 0));
+      );
   }
   iFi() {
     var e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
@@ -148,11 +134,24 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
     );
     this.GetText(3).SetText(e.GetDirectPriceText());
   }
+  BV_() {
+    var e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
+        PayShopDefine_1.MONTH_CARD_SHOP_ID,
+      ),
+      t = e.HasCloudGameInfo(),
+      i = this.GetText(10),
+      r = this.GetTexture(11);
+    i.SetUIActive(t),
+      r.SetUIActive(t),
+      t &&
+        (i.SetText(e.GetCloudGameDesc()),
+        this.SetTextureShowUntilLoaded(e.GetCloudGameIcon(), r));
+  }
   OnBeforeHide() {
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.HidePlayStationStoreIcon();
   }
   OnBeforeDestroy() {
-    this.qNa(), this.z2i?.Destroy(), (this.z2i = void 0);
+    this.z2i?.Destroy(), (this.z2i = void 0);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -161,7 +160,7 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SdkPayEnd,
-        this.Eza,
+        this.Wih,
       );
   }
   RemoveEventListener() {
@@ -171,7 +170,7 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SdkPayEnd,
-        this.Eza,
+        this.Wih,
       );
   }
   OnAfterShow() {
@@ -179,9 +178,9 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       ?.GetLevelSequencePlayer()
       .PlayLevelSequenceByName("Start"),
       ModelManager_1.ModelManager.MonthCardModel.RefreshNextShowPayButtonRedDotTime(),
-      this.KZa();
+      this.Shh();
   }
-  async KZa() {
+  async Shh() {
     var e, t;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce() ||
       ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(

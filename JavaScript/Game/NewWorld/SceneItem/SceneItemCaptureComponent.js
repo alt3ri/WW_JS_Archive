@@ -2,20 +2,20 @@
 var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, o) {
-    var n,
+    var s,
       r = arguments.length,
-      s =
+      n =
         r < 3
           ? t
           : null === o
             ? (o = Object.getOwnPropertyDescriptor(t, i))
             : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(e, t, i, o);
+      n = Reflect.decorate(e, t, i, o);
     else
       for (var a = e.length - 1; 0 <= a; a--)
-        (n = e[a]) && (s = (r < 3 ? n(s) : 3 < r ? n(t, i, s) : n(t, i)) || s);
-    return 3 < r && s && Object.defineProperty(t, i, s), s;
+        (s = e[a]) && (n = (r < 3 ? s(n) : 3 < r ? s(t, i, n) : s(t, i)) || n);
+    return 3 < r && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemCaptureComponent = void 0);
@@ -28,6 +28,7 @@ const UE = require("ue"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
   GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -42,7 +43,9 @@ const UE = require("ue"),
   CodeDefineLevelConditionInfo_1 = require("../../LevelGamePlay/LevelConditions/CodeDefineLevelConditionInfo"),
   LevelGameplayActionsDefine_1 = require("../../LevelGamePlay/LevelGameplayActionsDefine"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  GravityUtils_1 = require("../../Utils/GravityUtils"),
   BlackboardController_1 = require("../../World/Controller/BlackboardController"),
   CommonCaptureActionId = 220002,
   SpecialDropEntityConfigId = 31e7,
@@ -62,6 +65,8 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
       (this.ydn = 3e3),
       (this.Idn = 500),
       (this.rvi = 0),
+      (this.Lz = Vector_1.Vector.Create()),
+      (this.az = Quat_1.Quat.Create()),
       (this.Gue = Rotator_1.Rotator.Create()),
       (this.l9e = void 0),
       (this._9e = 0),
@@ -74,6 +79,7 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
       (this.Rdn = Vector_1.Vector.Create()),
       (this.i4o = void 0),
       (this.Ora = !1),
+      (this.Ad_ = !1),
       (this.Udn = () => {
         this.l9e.RemoveMaterialControllerDataGroupWithEnding(this._9e);
       }),
@@ -81,18 +87,17 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
         this.Entity.Disable(
           "[SceneItemCaptureComponent.OnCaptureFinished] 捕获隐藏实体",
         ),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DelayRemoveEntityFinished,
+          ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
             this.Entity,
           );
       });
   }
   OnActivate() {
     var e;
-    (this.i4o = this.Entity.GetComponent(182)),
+    (this.i4o = this.Entity.GetComponent(195)),
       this.i4o &&
         ((this.vzi = this.i4o.GetInteractController()), this.vzi) &&
-        (e = this.Entity.GetComponent(105)) &&
+        (e = this.Entity.GetComponent(115)) &&
         (e.SetPawnNameKey(ABSORB_PAWN_NAME_KEY),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Battle", 4, "开始生成抓取幻象Item", [
@@ -126,7 +131,7 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
   }
   Cmn() {
     let t = 0;
-    const i = this.Entity.GetComponent(187);
+    const i = this.Entity.GetComponent(200);
     let e = 100;
     var o = i.CreatureData.GetPbEntityInitData();
     if (
@@ -138,7 +143,7 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
           Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 4, "无法找到monsterCaptureComponent数据")
         );
-      var n = o.IIs,
+      var s = o.IIs,
         o =
           ((this.Ldn = o.F4n),
           0 < o.TIs &&
@@ -154,16 +159,16 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
               ["MonsterId", o.TIs],
               ["半径", e],
             ),
-          ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(n));
+          ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(s));
       if (!o)
         return void (
           Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 4, "模板ID不存在", ["TemplateId", n])
+          Log_1.Log.Error("Battle", 4, "模板ID不存在", ["TemplateId", s])
         );
-      n = ModelManager_1.ModelManager.CreatureModel.GetEntityModel(
+      s = ModelManager_1.ModelManager.CreatureModel.GetEntityModel(
         o.BlueprintType,
       );
-      if (!n)
+      if (!s)
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 4, "无法找到EntityModel", [
@@ -171,7 +176,7 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
             o.BlueprintType,
           ])
         );
-      t = n.ModelId;
+      t = s.ModelId;
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 4, "无法找到EComponent.VisionItemComponent");
@@ -183,27 +188,27 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
       );
     var r,
       o = new LevelGameplayActionsDefine_1.ActionSendGameplayEvent(),
-      n =
+      s =
         ((o.Tag =
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(447475264)),
         (o.Both = !0),
         new LevelGameplayActionsDefine_1.ActionCaptureRequest()),
       o =
-        ((n.SuccessEvent = o),
+        ((s.SuccessEvent = o),
         new CodeDefineLevelConditionInfo_1.LevelConditionGroup()),
-      s =
+      n =
         ((o.Type = 0),
         GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
           "行为状态.位置状态.空中",
         ));
-    s &&
+    n &&
       (((r =
         new CodeDefineLevelConditionInfo_1.LevelConditionCheckCharacterTagInfo()).TagId =
-        s),
+        n),
       (r.IsContain = !1),
       o.Conditions.push(r)),
       this.vzi.AddClientInteractOption(
-        n,
+        s,
         o,
         "Direct",
         e,
@@ -224,8 +229,9 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
       0,
       t.toString(),
     );
-    a
-      ? (i.InitSkeletalMeshComponent(),
+    if (a)
+      if (
+        (i.InitSkeletalMeshComponent(),
         (this.Tdn = a.蓝图.ToAssetPathName()),
         (this.Tdn = this.Tdn.substr(0, this.Tdn.lastIndexOf("/"))),
         (this.Tdn = this.Tdn.concat("/CommonAnim/Death_Shoufu.Death_Shoufu")),
@@ -236,33 +242,52 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
             MathUtils_1.MathUtils.DefaultTransform,
             !1,
           )),
-        this.l9e
-          ? ResourceSystem_1.ResourceSystem.LoadAsync(
-              a.网格体.ToAssetPathName(),
-              UE.SkeletalMesh,
-              (e) => {
-                this.Pdn(e, i, t, a);
-              },
-            )
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 4, "渲染组件添加失败"))
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("SceneItem", 37, "模型设置为空", ["modelId", t]);
+        this.l9e)
+      ) {
+        let e = a.声骸掉落替换模型.ToAssetPathName();
+        "" !== e ? (this.Ad_ = !0) : (e = a.网格体.ToAssetPathName()),
+          ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.SkeletalMesh, (e) => {
+            this.Pdn(e, i, t, a);
+          });
+      } else
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Battle", 4, "渲染组件添加失败");
+    else
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error("SceneItem", 36, "模型设置为空", ["modelId", t]);
   }
   Ifr() {
     (this.Mao && this.vao) || this.koe();
-    var e = this.Entity.GetComponent(187),
+    var e = this.Entity.GetComponent(200),
       t = e.ActorLocation,
       i =
         (TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.Mao, t),
-        this.Mao.SetEndLocation(t.X, t.Y, t.Z - CHECK_WATER_OFFSET_Z),
+        this.Lz.DeepCopy(t),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          e,
+          this.Lz,
+          -CHECK_WATER_OFFSET_Z,
+        ),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          this.Mao,
+          this.Lz,
+        ),
         TraceElementCommon_1.TraceElementCommon.SphereTrace(
           this.Mao,
           CHECK_WATER_PROFILE_KEY,
         )),
       t =
         (TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.vao, t),
-        this.vao.SetEndLocation(t.X, t.Y, t.Z - CHECK_GROUND_OFFSET_Z),
+        this.Lz.DeepCopy(t),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          e,
+          this.Lz,
+          -CHECK_GROUND_OFFSET_Z,
+        ),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          this.vao,
+          this.Lz,
+        ),
         TraceElementCommon_1.TraceElementCommon.SphereTrace(
           this.vao,
           CHECK_GROUND_PROFILE_KEY,
@@ -279,7 +304,11 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
           this.Ddn,
         ),
         e.SetActorLocation(
-          (this.Ddn.Z > this.Rdn.Z ? this.Ddn : this.Rdn).ToUeVector(),
+          (GravityUtils_1.GravityUtils.GetZnInGravityForActor(e, this.Ddn) >
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(e, this.Rdn)
+            ? this.Ddn
+            : this.Rdn
+          ).ToUeVector(),
           "SceneItemCaptureFixBornLocation",
           !1,
         ))
@@ -324,7 +353,7 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
       (e.SkeletalMeshComp = i.SkeletalMesh),
         (this.rvi = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          i.Owner.GetTransform(),
+          i.Owner.D_GetTransform(),
           AbsorbedStartEffectPath,
           "[SceneItemCapture.OnLoadAnimFinish]",
           e,
@@ -371,13 +400,20 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
     this.Entity.Valid &&
       (e
         ? ((this._9e = this.l9e.AddMaterialControllerDataGroup(e)),
-          ResourceSystem_1.ResourceSystem.LoadAsync(
-            this.Tdn,
-            UE.AnimationAsset,
-            (e) => {
-              this.wdn(e);
-            },
-          ))
+          this.Ad_
+            ? (this.Entity.GetComponent(200).SkeletalMesh.SetHiddenInGame(!1),
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug("Battle", 4, "生成抓取幻象Item结束", [
+                  "EntityId",
+                  this.Entity.Id,
+                ]))
+            : ResourceSystem_1.ResourceSystem.LoadAsync(
+                this.Tdn,
+                UE.AnimationAsset,
+                (e) => {
+                  this.wdn(e);
+                },
+              ))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 4, "无法找到收服材质效果", [
             "AbsorbedStateEffectPath",
@@ -388,7 +424,7 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
     var t;
     this.Entity.Valid &&
       (e
-        ? ((t = this.Entity.GetComponent(187).SkeletalMesh).PlayAnimation(
+        ? ((t = this.Entity.GetComponent(200).SkeletalMesh).PlayAnimation(
             e,
             !1,
           ),
@@ -408,36 +444,37 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
   }
   ExecuteCapture(e) {
     this.Ora = !0;
-    var t = this.Entity.GetComponent(187).ActorLocationProxy,
+    var t = this.Entity.GetComponent(200).ActorLocationProxy,
       i = Global_1.Global.BaseCharacter.CharacterActorComponent,
       o = Vector_1.Vector.Create(t),
-      n =
+      i =
         (o.SubtractionEqual(i.ActorLocationProxy),
-        (o.Z = 0),
-        o.Normalize(),
-        new UE.Rotator()),
-      o =
-        (o.ToOrientationRotator(n),
-        i.Entity.GetComponent(38)?.SetForceSpeed(
+        MathUtils_1.MathUtils.LookRotationUpFirst(
+          o,
+          i.MoveComp?.GravityUp ?? Vector_1.Vector.UpVectorProxy,
+          this.az,
+        ),
+        this.az.Rotator(this.Gue),
+        i.Entity.GetComponent(44)?.SetForceSpeed(
           Vector_1.Vector.ZeroVectorProxy,
         ),
-        i.SetActorRotation(n, this.constructor.name, !1),
+        i.SetActorRotation(this.Gue.ToUeRotator(), this.constructor.name, !1),
         this.Ldn !== SpecialDropEntityConfigId &&
-          ((o = i.Entity.GetComponent(34)) &&
+          ((o = i.Entity.GetComponent(39)) &&
             o.BeginSkill(CommonCaptureActionId, {
               Target: this.Entity,
-              Context: "SceneItemCaptureComponent.ExecuteCapture",
+              Reason: "SceneItemCaptureComponent.ExecuteCapture",
             }),
-          (n = i.Entity.Id),
+          (o = i.Entity.Id),
           BlackboardController_1.BlackboardController.SetVectorValueByEntity(
-            n,
+            o,
             "ShoufuLocation",
             t.X,
             t.Y,
             t.Z,
           )),
-        this.Entity.GetComponent(106));
-    o && o.CloseInteract("触发收复后关闭交互"),
+        this.Entity.GetComponent(116));
+    i && i.CloseInteract("触发收复后关闭交互"),
       this.Ldn &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSceneItemVisionCaptureRemove,
@@ -454,7 +491,7 @@ let SceneItemCaptureComponent = class SceneItemCaptureComponent extends EntityCo
   }
 };
 (SceneItemCaptureComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(133)],
+  [(0, RegisterComponent_1.RegisterComponent)(144)],
   SceneItemCaptureComponent,
 )),
   (exports.SceneItemCaptureComponent = SceneItemCaptureComponent);

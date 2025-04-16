@@ -12,13 +12,18 @@ const UE = require("ue"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   ItemRewardController_1 = require("../ItemRewardController"),
+  BagFullTip_1 = require("./BagFullTip"),
+  RewardExploreAccumulatedScoreItem_1 = require("./RewardExploreAccumulatedScoreItem"),
+  RewardExploreBabelSuccessItem_1 = require("./RewardExploreBabelSuccessItem"),
   RewardExploreBarList_1 = require("./RewardExploreBarList"),
   RewardExploreConfirmButton_1 = require("./RewardExploreConfirmButton"),
+  RewardExploreDangoAbyssSuccessItem_1 = require("./RewardExploreDangoAbyssSuccessItem"),
   RewardExploreDescription_1 = require("./RewardExploreDescription"),
   RewardExploreFriendItem_1 = require("./RewardExploreFriendItem"),
   RewardExploreOnlineChallengePlayer_1 = require("./RewardExploreOnlineChallengePlayer"),
   RewardExploreRecord_1 = require("./RewardExploreRecord"),
   RewardExploreScore_1 = require("./RewardExploreScore"),
+  RewardExploreScoreSubTitle_1 = require("./RewardExploreScoreSubTitle"),
   RewardExploreTargetReachedList_1 = require("./RewardExploreTargetReachedList"),
   RewardExploreToggle_1 = require("./RewardExploreToggle"),
   RewardItemList_1 = require("./RewardItemList"),
@@ -35,10 +40,15 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       (this.Y0i = void 0),
       (this.J0i = void 0),
       (this.z0i = void 0),
+      (this.TUl = void 0),
       (this.dWs = void 0),
       (this.Xzs = void 0),
+      (this.H5_ = void 0),
       (this.Z0i = void 0),
       (this.Iyn = void 0),
+      (this.hD_ = void 0),
+      (this.LCc = void 0),
+      (this.Hf1 = void 0),
       (this.Het = []),
       (this.efi = () => {
         var t = this.N0i.ButtonInfoList;
@@ -64,7 +74,10 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
         this.sOe && this.sOe.Refresh(this.$Tt.GetItemList());
       }),
       (this.zzs = () =>
-        new RewardExploreFriendItem_1.RewardExploreFriendItem());
+        new RewardExploreFriendItem_1.RewardExploreFriendItem()),
+      (this.gf1 = () => {
+        this.dWs?.FullRefresh();
+      });
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -80,6 +93,7 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       [20, UE.UIItem],
       [21, UE.UIVerticalLayout],
       [22, UE.UIItem],
+      [23, UE.UIItem],
     ]),
       (this.BtnBindInfo = []);
   }
@@ -103,7 +117,9 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FriendAdded,
         this.Yzs,
-      );
+      ),
+      this.UiViewSequence.AddSequenceFinishEvent("Success", this.gf1),
+      this.UiViewSequence.AddSequenceFinishEvent("Fail", this.gf1);
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
@@ -125,23 +141,26 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FriendAdded,
         this.Yzs,
-      );
+      ),
+      this.UiViewSequence.RemoveSequenceFinishEvent("Success", this.gf1),
+      this.UiViewSequence.RemoveSequenceFinishEvent("Fail", this.gf1);
   }
   async OnBeforeStartAsync() {
     (this.$Tt = this.OpenParam),
       (this.G0i = this.$Tt.GetRewardInfo()),
       (this.N0i = this.$Tt.GetExtendRewardInfo()),
       this.GetItem(5).SetUIActive(!1),
+      this.G0i.IsBagFull && (await this.$5_()),
       this.G0i.IsRecordVisible &&
         this.N0i.ExploreRecordInfo &&
-        (await this.tfi()),
+        (this.H5_ && this.H5_.SetAdjustPanelVisible(!0), await this.tfi()),
       this.G0i.IsDescription &&
         !StringUtils_1.StringUtils.IsEmpty(this.G0i.Description) &&
         (await this.ifi()),
       this.G0i.IsItemVisible &&
-        this.N0i.ItemList &&
-        0 < this.N0i.ItemList?.length &&
-        (await this.ofi()),
+        (this.N0i.ItemList && 0 < this.N0i.ItemList?.length
+          ? await this.ofi()
+          : void 0 === this.G0i.IsBagFull && (await this.$5_())),
       this.G0i.IsShowOnlineChallengePlayer && (await this.CWs()),
       this.G0i.IsExploreProgressVisible &&
         this.N0i.ExploreBarDataList &&
@@ -149,9 +168,13 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       this.N0i.TargetReached &&
         0 < this.N0i.TargetReached?.length &&
         (await this.nfi()),
+      this.N0i.ScoreHalfArea && (await this.LUl()),
       this.N0i.StateToggle && (await this.sfi()),
       this.N0i.ScoreReached && (await this.Tyn()),
-      this.N0i.ExploreFriendDataList && (await this.Zzs());
+      this.N0i.AccumulatedScoreData && (await this.lD_()),
+      this.N0i.ExploreFriendDataList && (await this.Zzs()),
+      this.N0i.BabelTowerSuccessData && (await this.wCc()),
+      this.N0i.DangoAbyssSuccessData && (await this.$f1());
     var t = this.N0i.ButtonInfoList;
     if (t && 0 < t?.length) {
       let e = 0;
@@ -185,10 +208,14 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       (this.Y0i = void 0),
       this.z0i?.Destroy(),
       (this.z0i = void 0),
+      this.TUl?.Destroy(),
+      (this.TUl = void 0),
       this.Z0i?.Destroy(),
       (this.Z0i = void 0),
       this.J0i?.Destroy(),
-      (this.J0i = void 0);
+      (this.J0i = void 0),
+      this.H5_?.Destroy(),
+      (this.H5_ = void 0);
     for (const e of this.Het) e.Destroy();
     (this.Het.length = 0),
       ModelManager_1.ModelManager.ItemRewardModel.ClearCurrentRewardData(),
@@ -252,13 +279,23 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
   }
   async ofi() {
     var e,
-      t = this.$Tt.GetItemList();
-    !t ||
-      t.length < 1 ||
+      t,
+      i = this.$Tt.GetItemList();
+    !i ||
+      i.length < 1 ||
       ((e = this.GetItem(3)),
       (this.sOe = new RewardItemList_1.RewardItemList()),
-      await this.sOe.CreateThenShowByResourceIdAsync("Uiitem_TipsItem", e),
-      this.sOe.Refresh(t));
+      (t = this.G0i?.IsRewardMultiLine
+        ? "Uiitem_TipsItemNew"
+        : "Uiitem_TipsItem"),
+      await this.sOe.CreateThenShowByResourceIdAsync(t, e),
+      this.sOe.Refresh(i));
+  }
+  async $5_() {
+    var e = this.GetItem(20);
+    (this.H5_ = new BagFullTip_1.BagFullTip()),
+      await this.H5_.CreateThenShowByResourceIdAsync("UiItem_BagFullTips", e),
+      this.H5_.SetAdjustPanelVisible(!1);
   }
   async rfi() {
     var e,
@@ -290,14 +327,21 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       await this.z0i.CreateThenShowByResourceIdAsync("UiItem_Settlement", e),
       this.z0i.SetBarList(t));
   }
+  async LUl() {
+    var e,
+      t = this.N0i.ScoreHalfArea;
+    t &&
+      ((e = this.GetItem(20)),
+      (this.TUl =
+        new RewardExploreScoreSubTitle_1.RewardExploreScoreSubTitle()),
+      await this.TUl.CreateThenShowByResourceIdAsync("UiItem_ResultScoreA", e),
+      this.TUl.RefreshData(t));
+  }
   async CWs() {
-    var e = this.GetItem(20);
+    var e = this.GetItem(23);
     (this.dWs =
       new RewardExploreOnlineChallengePlayer_1.RewardExploreOnlineChallengePlayer()),
-      await this.dWs.CreateThenShowByResourceIdAsync(
-        "UiItem_ChallengeAgain",
-        e,
-      );
+      await this.dWs.CreateByResourceIdAsync("UiItem_ChallengeAgain", e);
   }
   async sfi() {
     var e,
@@ -320,18 +364,54 @@ class ExploreRewardView extends UiViewBase_1.UiViewBase {
       await this.Iyn.CreateThenShowByResourceIdAsync("UiItem_ResultScore", e),
       this.Iyn.Refresh(t));
   }
+  async lD_() {
+    var e,
+      t = this.N0i.AccumulatedScoreData;
+    t &&
+      ((e = this.GetItem(20)),
+      (this.hD_ =
+        new RewardExploreAccumulatedScoreItem_1.RewardExploreAccumulatedScoreItem()),
+      await this.hD_.CreateThenShowByResourceIdAsync("UiItem_ResultScoreD", e),
+      this.hD_.Refresh(t));
+  }
   async Zzs() {
     var e = this.N0i.ExploreFriendDataList,
       t = this.GetVerticalLayout(21),
       i = new GenericLayout_1.GenericLayout(t, this.zzs);
     await i.RefreshByDataAsync(e), t.RootUIComp.SetUIActive(!0), (this.Xzs = i);
   }
+  async wCc() {
+    var e,
+      t = this.N0i.BabelTowerSuccessData;
+    t &&
+      ((e = this.GetItem(20)),
+      (this.LCc =
+        new RewardExploreBabelSuccessItem_1.RewardExploreBabelSuccessItem()),
+      await this.LCc.CreateThenShowByResourceIdAsync(
+        "UiItem_BabelTowerSuccessItem",
+        e,
+      ),
+      this.LCc.Refresh(t));
+  }
+  async $f1() {
+    var e,
+      t = this.N0i.DangoAbyssSuccessData;
+    t &&
+      ((e = this.GetItem(20)),
+      (this.Hf1 =
+        new RewardExploreDangoAbyssSuccessItem_1.RewardExploreDangoAbyssSuccessItem()),
+      await this.Hf1.CreateThenShowByResourceIdAsync("PnlCelebrationResult", e),
+      this.Hf1.Refresh(t));
+  }
   afi(e, t) {
     var i = this.GetItem(5),
-      r = this.GetItem(4),
-      i = LguiUtil_1.LguiUtil.DuplicateActor(i.GetOwner(), r),
-      r = new RewardExploreConfirmButton_1.RewardExploreConfirmButton(i, t);
-    return r.Refresh(e), r.SetActive(!0), this.Het.push(r), r;
+      s = this.GetItem(4),
+      i = LguiUtil_1.LguiUtil.DuplicateActor(i.GetOwner(), s),
+      s = new RewardExploreConfirmButton_1.RewardExploreConfirmButton(i, t);
+    return s.Refresh(e), s.SetActive(!0), this.Het.push(s), s;
+  }
+  GetBottomToggleState() {
+    return this.Z0i?.GetToggleState();
   }
 }
 exports.ExploreRewardView = ExploreRewardView;

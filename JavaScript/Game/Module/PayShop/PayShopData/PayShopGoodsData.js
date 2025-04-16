@@ -18,6 +18,7 @@ class PayShopGoodsData {
   constructor() {
     (this.Id = 0),
       (this.TabId = 0),
+      (this.ShopId = 0),
       (this.ItemId = 0),
       (this.ItemCount = 0),
       (this.Locked = !1),
@@ -44,8 +45,12 @@ class PayShopGoodsData {
       (this.OBn = ""),
       (this.Kjs = !1),
       (this.UnFinishedCondition = void 0),
-      (this.SYa = !1),
-      (this.$Za = "");
+      (this.WZa = !1),
+      (this.yhh = ""),
+      (this.CloudGameTime = 0),
+      (this.CloudGameIcon = ""),
+      (this.CloudGameDesc = ""),
+      (this.pk = 0);
   }
   Phrase(t) {
     this.Id = t.s5n;
@@ -53,6 +58,7 @@ class PayShopGoodsData {
       t.s5n,
     );
     (this.TabId = i.TabId),
+      (this.ShopId = i.ShopId),
       (this.ItemId = t.L8n),
       (this.ItemCount = t.n9n),
       (this.Locked = t.pBs),
@@ -77,12 +83,22 @@ class PayShopGoodsData {
       (this.Sort = i.Sort),
       (this.PromotionShow = i.PromotionShow),
       (this.Kjs = i.SoldoutShowInShop),
-      (this.SYa = t.brh),
-      this.MFi();
+      (this.WZa = t.zb_),
+      this.MFi(),
+      this.V0c();
+  }
+  V0c() {
+    1 === this.UpdateType
+      ? (this.pk = this.UpdateTime - TimeUtil_1.TimeUtil.OneDaySeconds)
+      : 2 === this.UpdateType
+        ? (this.pk = this.UpdateTime - 7 * TimeUtil_1.TimeUtil.OneDaySeconds)
+        : 3 === this.UpdateType &&
+          (this.pk = this.UpdateTime - 30 * TimeUtil_1.TimeUtil.OneDaySeconds);
   }
   GetIfCanBuy() {
     if (this.IfRoleCallBackItem())
       return !(!this.IfHaveRoleCallBackItemNeedRole() || !this.IfCanResonant());
+    if (this.IfRoleItem()) return this.IfCanBuyRoleItem();
     if (
       this.CheckIfMonthCardItem() &&
       !ModelManager_1.ModelManager.MonthCardModel.CheckMonthCardIfCanBuy()
@@ -90,9 +106,26 @@ class PayShopGoodsData {
       return !1;
     return !!this.yFi;
   }
+  IfRoleItem() {
+    return (
+      1 ===
+      ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+        this.ItemId,
+      )
+    );
+  }
   IfRoleCallBackItem() {
     var t = this.GetItemConfig();
     return !!t && !!t.ShowTypes && t.ShowTypes.includes(30);
+  }
+  IfCanBuyRoleItem() {
+    return (
+      !ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.ItemId) ||
+      0 <
+        ModelManager_1.ModelManager.RoleModel.GetRoleLeftResonantCountWithInventoryItem(
+          this.ItemId,
+        )
+    );
   }
   IfHaveRoleCallBackItemNeedRole() {
     if (this.IfRoleCallBackItem()) {
@@ -141,17 +174,19 @@ class PayShopGoodsData {
         );
     }
     var t;
-    return this.CheckIfMonthCardItem()
-      ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-          "Text_MonthlyCardMax_Text",
-        )
-      : 0 !== (t = this.GetBuyConditionId())
-        ? ((t =
-            LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
-              t,
-            ) ?? ""),
-          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t))
-        : "";
+    return this.IfRoleItem()
+      ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew("RoleBrenchItemMax")
+      : this.CheckIfMonthCardItem()
+        ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            "Text_MonthlyCardMax_Text",
+          )
+        : 0 !== (t = this.GetBuyConditionId())
+          ? ((t =
+              LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
+                t,
+              ) ?? ""),
+            MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t))
+          : "";
   }
   CheckIfMonthCardItem() {
     return (
@@ -193,10 +228,10 @@ class PayShopGoodsData {
       (this.Price.Id = t.PayId),
       (this.BeginTime = t.BeginTime),
       (this.EndTime = t.EndTime),
-      (this.UpdateTime = t.EndTime),
-      (this.UpdateType = 0),
+      (this.UpdateTime = t.UpdateTime),
+      (this.UpdateType = t.UpdateType),
       (this.ShopItemType = 1),
-      (this.LabelId = 0),
+      (this.LabelId = t.LabelId),
       (this.LabelBeginTime = 0),
       (this.LabelEndTime = 0),
       (this.Sort = t.Sort),
@@ -204,17 +239,21 @@ class PayShopGoodsData {
       (this.TabId = t.TabId),
       (this.StageImage = t.StageImage),
       (this.IFi = 1),
-      (this.SYa = t.IsRemind),
+      (this.WZa = t.IsRemind),
+      (this.CloudGameTime = t.CloudGameTime),
+      (this.CloudGameIcon = t.CloudGameIcon),
+      (this.CloudGameDesc = t.CloudGameDesc),
       0 < t.BuyCondition &&
         ((this.UnFinishedCondition = []),
         this.UnFinishedCondition.push(t.BuyCondition)),
-      (this.$Za = t.ProductId),
+      (this.yhh = t.ProductId),
       ModelManager_1.ModelManager.RechargeModel.SetRechargeInfo(
         t.PayId,
         t.Amount,
         t.ProductId,
       ),
-      (this.he = t.GetName());
+      (this.he = t.GetName()),
+      this.V0c();
   }
   PhraseFromTempData(t, i) {
     (this.ItemId = t), (this.ItemCount = i), (this.IFi = -1);
@@ -263,6 +302,9 @@ class PayShopGoodsData {
   IsWeeklyRefresh() {
     return 0 !== this.UpdateType && 4 !== this.UpdateType;
   }
+  SetShowAfterSoldOut(t) {
+    this.Kjs = t;
+  }
   IfShowAfterSoldOut() {
     return this.Kjs;
   }
@@ -286,7 +328,9 @@ class PayShopGoodsData {
     if (this.HasDiscount()) return this.Price.Count;
   }
   GetDiscount() {
-    return this.Price.GetDiscount();
+    return 0 < this.PromotionShow
+      ? this.PromotionShow / 100
+      : this.Price.GetDiscount();
   }
   GetRemainingCount() {
     return this.BuyLimit - this.BoughtCount;
@@ -336,7 +380,7 @@ class PayShopGoodsData {
         this.Id,
       );
       if (t) return t.Show && !this.Locked;
-    }
+    } else if (1 === this.IFi) return !this.Locked;
     return !0;
   }
   IfPayGift() {
@@ -360,7 +404,7 @@ class PayShopGoodsData {
     ).ItemType;
   }
   GetProductId() {
-    return this.$Za;
+    return this.yhh;
   }
   GetIfNeedRemind() {
     var t = LocalStorage_1.LocalStorage.GetPlayer(
@@ -371,10 +415,12 @@ class PayShopGoodsData {
       t = t.get(this.IFi);
       if (t) {
         t = t.get(this.Id);
-        if (void 0 !== t && 0 < t) return !1;
+        if (0 < this.pk && void 0 !== t) {
+          if (0 < t && t > this.pk && t < this.UpdateTime) return !1;
+        } else if (void 0 !== t && 0 < t) return !1;
       }
     }
-    return this.SYa;
+    return this.WZa;
   }
   SaveRemindState(t) {
     let i = LocalStorage_1.LocalStorage.GetPlayer(
@@ -384,14 +430,17 @@ class PayShopGoodsData {
       e = (i = i || new Map()).get(this.IFi);
     e || ((e = new Map()), i.set(this.IFi, e));
     var s = e.get(this.Id);
-    return void 0 !== s && 0 < s
-      ? -1
-      : (e.set(this.Id, t),
-        LocalStorage_1.LocalStorage.SetPlayer(
-          LocalStorageDefine_1.ELocalStoragePlayerKey.GoodsRemindMap,
-          i,
-        ),
-        0);
+    if (0 === this.pk) {
+      if (void 0 !== s && 0 < s) return -1;
+    } else if (void 0 !== s && s > this.pk && s < this.UpdateTime) return -1;
+    return (
+      e.set(this.Id, t),
+      LocalStorage_1.LocalStorage.SetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.GoodsRemindMap,
+        i,
+      ),
+      0
+    );
   }
 }
 exports.PayShopGoodsData = PayShopGoodsData;

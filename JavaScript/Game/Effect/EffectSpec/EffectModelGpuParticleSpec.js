@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelGpuParticleSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
   EffectSpec_1 = require("./EffectSpec");
@@ -101,6 +102,24 @@ class EffectModelGpuParticleSpec extends EffectSpec_1.EffectSpec {
   OnEffectTypeChange() {
     this.GpuMeshComponent?.IsValid() &&
       this.GpuMeshComponent.SetIsUIScenePrimitive(1 === this.GetEffectType());
+  }
+  IsOverrideTick() {
+    return !0;
+  }
+  RegisterToKuroEffectSystem() {
+    var t;
+    this.Handle &&
+      this.GpuMeshComponent &&
+      this.EffectModel &&
+      (t = this.Handle.GetSureEffectActor()) &&
+      ((this.HasInitTickOptimize = !0),
+      cpp_1.FKuroEffectSystemInterface.RegisterEffectCommonHandle(
+        this.Handle.Id,
+        this.Handle.Parent?.Id ?? 0,
+        this.EffectModel,
+        t,
+        this.GpuMeshComponent,
+      ));
   }
 }
 exports.EffectModelGpuParticleSpec = EffectModelGpuParticleSpec;

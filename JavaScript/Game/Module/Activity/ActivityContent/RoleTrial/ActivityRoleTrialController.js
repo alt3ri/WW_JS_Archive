@@ -20,8 +20,12 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
   constructor() {
     super(...arguments),
       (this.Y2e = (e) => {
-        var t = ActivityRoleTrialController.J2e();
-        t && t.IsRolePreviewOn() && (t.CurrentRoleId = e);
+        var t;
+        e &&
+          (t = ActivityRoleTrialController.J2e()) &&
+          t.IsRolePreviewOn() &&
+          (e = t.TrialToIdMap.get(e)) &&
+          (t.CurrentRoleId = e);
       }),
       (this.nye = () => {
         var e = ActivityRoleTrialController.J2e();
@@ -36,10 +40,10 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            27498,
+            25911,
           ),
           (e = {
-            ButtonTextId: "ConfirmBox_133_ButtonText_0",
+            ButtonTextId: "ConfirmBox_250_ButtonText_0",
             DescriptionTextId: void 0,
             IsTimeDownCloseView: !1,
             IsClickedCloseView: !0,
@@ -58,10 +62,10 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(27498, this.z2e);
+    Net_1.Net.Register(25911, this.z2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(27498);
+    Net_1.Net.UnRegister(25911);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -89,6 +93,11 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
     );
     if (e) return e;
   }
+  static GetCurrentActivityDataList() {
+    return ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
+      Protocol_1.Aki.Protocol.uks.Proto_RoleTrialActivity,
+    );
+  }
   OnGetActivityResource(e) {
     return "UiItem_ActivityRoleTrial";
   }
@@ -96,10 +105,7 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
     return new ActivitySubViewRoleTrial_1.ActivitySubViewRoleTrial();
   }
   OnCreateActivityData(e) {
-    return (
-      (ActivityRoleTrialController.CurrentActivityId = e.s5n),
-      new ActivityRoleTrialData_1.ActivityRoleTrialData()
-    );
+    return new ActivityRoleTrialData_1.ActivityRoleTrialData();
   }
   OnOpenView(e) {}
   OnGetIsOpeningActivityRelativeView() {
@@ -108,19 +114,19 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
   static RequestRoleInstanceReward(t) {
     var e = new Protocol_1.Aki.Protocol.xus();
     (e.Q6n = t),
-      Net_1.Net.Call(16800, e, (e) => {
+      Net_1.Net.Call(20509, e, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              27936,
+              21587,
             ),
           (e = this.J2e())) &&
           (e.SetRewardStateByRoleId(t, 2),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Activity",
-              38,
+              37,
               "[角色试用活动]试用副本奖励领取成功",
               ["RoleId", t],
             ),
@@ -130,11 +136,22 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
           ));
       });
   }
-  static EnterRoleTrialDungeonDirectly(e) {
-    InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-      e,
-      [],
+  static async EnterRoleTrialDungeonDirectly(e, t, r) {
+    t = { w6n: t, Q6n: r };
+    return (
+      (ModelManager_1.ModelManager.InstanceDungeonModel.InstanceEnterContentText.jah =
+        t),
+      InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
+        e,
+        [],
+        0,
+        0,
+      )
     );
+  }
+  static PushRoleIntroductionViewDone() {
+    var e = Protocol_1.Aki.Protocol.Wp_.create();
+    Net_1.Net.Send(26756, e);
   }
 }
 (exports.ActivityRoleTrialController =

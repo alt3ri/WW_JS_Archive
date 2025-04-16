@@ -9,54 +9,99 @@ const puerts_1 = require("puerts"),
   Platform_1 = require("../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  LocalStorage_1 = require("../Common/LocalStorage"),
-  LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
   GlobalData_1 = require("../GlobalData"),
   ConfigManager_1 = require("../Manager/ConfigManager"),
-  KuroAutoCoolController_1 = require("../Module/KuroAutoCool/KuroAutoCoolController"),
   PerfSightController_1 = require("../PerfSight/PerfSightController"),
-  DeviceRenderFeatureData_1 = require("./DeviceRenderFeatureData"),
+  GameSettingsDefine_1 = require("./GameSettingsDefine"),
   GameSettingsDeviceRenderDefine_1 = require("./GameSettingsDeviceRenderDefine"),
   GameSettingsManager_1 = require("./GameSettingsManager");
 class GameSettingsDeviceRender {
-  static Initialize() {
-    this.SGa(),
-      this.EGa(),
-      this.yGa(),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.AfterGameQualitySettingsManagerInitialize,
-      );
+  static get Qlc() {
+    if (void 0 === this.Klc) {
+      var e =
+        ConfigManager_1.ConfigManager.GameSettingsConfig.GetDeviceRenderFeatureConfigListByDeviceId(
+          this.DeviceType,
+        );
+      if (void 0 === e)
+        return void (
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error("GameSettings", 64, "当前机型未定义RenderFeature", [
+            "deviceType",
+            this.DeviceType,
+          ])
+        );
+      this.Klc = new Map();
+      for (const t of e) this.Klc.set(t.QualityType, t);
+    }
+    return this.Klc;
   }
-  static Clear() {
-    LocalStorage_1.LocalStorage.SetGlobal(
-      LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualityLevel,
-      this.GameQualitySettingLevel,
-    ),
-      this.CancelAllPerformanceLimit();
+  static get oml() {
+    if (void 0 === this.Xlc) {
+      var e =
+        ConfigManager_1.ConfigManager.GameSettingsConfig.GetDeviceRenderFeatureConfigListByDeviceId(
+          this.DeviceType,
+        );
+      if (void 0 === e)
+        return void (
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error("GameSettings", 64, "当前机型未定义RenderFeature", [
+            "deviceType",
+            this.DeviceType,
+          ])
+        );
+      for (const t of e)
+        if (1 === t.DefaultQuality) {
+          this.Xlc = t.QualityType;
+          break;
+        }
+    }
+    return this.Xlc;
   }
-  static IsDriverNeedUpdate() {
-    var e = /(\d{1,2})-(\d{1,2})-(\d{4})/.exec(this.DriverDate);
-    return 4 === e?.length && Number(e[3]) < 2023;
+  static get GameQualitySettingLevel() {
+    return GameSettingsManager_1.GameSettingsManager.GetCurrentValueSafely(
+      GameSettingsDefine_1.EFunction.IMAGEQUALITY,
+      2,
+    );
   }
-  static SGa() {
-    (this.IGa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetPhysicalGBRam()),
-      (this.TGa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIVendorName()),
-      (this.LGa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDeviceName()),
-      (this.AGa =
+  static get eMe() {
+    return GameSettingsDeviceRender.IsRedMagic()
+      ? GameSettingsDeviceRenderDefine_1.frameRateListAndroidForRedMagic
+      : GameSettingsDeviceRenderDefine_1.frameRateListAndroid;
+  }
+  static InitializeBaseInfo() {
+    (this.ANa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetPhysicalGBRam()),
+      (this.DNa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIVendorName()),
+      (this.RNa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDeviceName()),
+      (this.UNa =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDeviceProfileBaseProfileName()),
       (this.DeviceScore =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDeviceProfileDeviceScore()),
-      (this.DGa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIName()),
-      (this.RGa =
+      (this.xNa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIName()),
+      (this.PNa =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDeviceHardwareLevel()),
       (this.DriverDate =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDriverDate()),
+      (this.IsAdreno =
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDeviceProfileProfileName().includes(
+          "Adreno",
+        )),
+      (this.kE1 =
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetMobileDeviceModel()),
       (this.CPUFrequency =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUFrequency()),
       (this.CPUCores = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUCores()),
       (this.CPUCoresIncludingHyperthreads =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUCoresIncludingHyperthreads()),
       (this.CPUBrand = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCPUBrand()),
+      Platform_1.Platform.IsMobilePlatform()
+        ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Mobile.UseClusteredDeferredShading -1",
+          )
+        : UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Mobile.UseClusteredDeferredShading 2",
+          ),
       Platform_1.Platform.IsIOSPlatform()
         ? ((this.DeviceType = 32),
           this.DeviceScore < 150
@@ -64,104 +109,166 @@ class GameSettingsDeviceRender {
             : 250 < this.DeviceScore && this.DeviceScore < 360
               ? (this.DeviceType = 33)
               : 360 <= this.DeviceScore && (this.DeviceType = 34),
-          this.IGa < 4 && (this.DeviceType = 31))
+          this.ANa < 4 && (this.DeviceType = 31))
         : Platform_1.Platform.IsAndroidPlatform() ||
             0 ===
               UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
                 GlobalData_1.GlobalData.World,
               )
-          ? ("Android_Low" === this.AGa
+          ? ("Android_Low" === this.UNa
               ? (this.DeviceType = 21)
-              : "Android_Mid" !== this.AGa && "Android_High" === this.AGa
-                ? (this.DeviceType = 23)
-                : (this.DeviceType = 22),
+              : "Android_Mid" === this.UNa
+                ? (this.DeviceType = 22)
+                : "Android_High" === this.UNa
+                  ? (this.DeviceType = 23)
+                  : "Android_VeryHigh" === this.UNa
+                    ? (this.DeviceType = 24)
+                    : (this.DeviceType = 22),
             this.IsHuaweiNewPhone() ||
-              this.IsMaliNewSocOrXclipse() ||
+              this.IsMaliNewSocOrXclipseOrPowerVR() ||
               UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
                 "r.HZBOcclusion 2",
-              ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.Mobile.UseClusteredDeferredShading -1",
-            ))
+              ))
           : Platform_1.Platform.IsPs5Platform()
-            ? (this.DeviceType = 36)
+            ? (this.DeviceType = 41)
             : Platform_1.Platform.IsMacPlatform()
-              ? "Mac_Low" === this.AGa
+              ? "Mac_Low" === this.UNa
                 ? (this.DeviceType = 11)
-                : "Mac_Mid" === this.AGa
+                : "Mac_Mid" === this.UNa || "Mac_High" === this.UNa
                   ? (this.DeviceType = 12)
-                  : "Mac_High" !== this.AGa && "Mac_VeryHigh" === this.AGa
-                    ? (this.DeviceType = 14)
+                  : "Mac_VeryHigh" === this.UNa
+                    ? ((this.DeviceType = 13), (this.DeviceScore = 550))
                     : (this.DeviceType = 13)
-              : "Windows_Low" === this.AGa
-                ? (this.DeviceType = 11)
-                : "Windows_Mid" === this.AGa
-                  ? (this.DeviceType = 12)
-                  : "Windows_High" !== this.AGa &&
-                      ("Windows_VeryHigh" === this.AGa ||
-                        "Windows" === this.AGa)
-                    ? (this.DeviceType = 14)
-                    : (this.DeviceType = 13),
+              : Platform_1.Platform.IsCloudGame()
+                ? (this.DeviceType = 51)
+                : "Windows_Low" === this.UNa
+                  ? (this.DeviceType = 11)
+                  : "Windows_Mid" === this.UNa
+                    ? (this.DeviceType = 12)
+                    : "Windows_High" !== this.UNa &&
+                        ("Windows_VeryHigh" === this.UNa ||
+                          "Windows" === this.UNa)
+                      ? (this.DeviceType = 14)
+                      : (this.DeviceType = 13),
+      this.iml(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Render",
-          8,
+          64,
           "初始化当前设备基本信息",
-          ["VendorName", this.TGa],
-          ["DeviceName", this.LGa],
-          ["BaseProfileName", this.AGa],
-          ["PhysicalGBRam", this.IGa],
+          ["VendorName", this.DNa],
+          ["DeviceName", this.RNa],
+          ["BaseProfileName", this.UNa],
+          ["PhysicalGBRam", this.ANa],
           ["DeviceScore", this.DeviceScore],
-          ["RHIName", this.DGa],
-          ["HardwareLevel", this.RGa],
+          ["RHIName", this.xNa],
+          ["HardwareLevel", this.PNa],
           ["DeviceType", this.DeviceType],
+          ["QualityRange", this.rml],
           ["platform", Platform_1.Platform.Type],
+          ["MobileDeviceModel", this.kE1],
         );
   }
-  static EGa() {
-    var t =
-      ConfigManager_1.ConfigManager.GameSettingsConfig.GetDeviceRenderFeatureConfigListByDeviceId(
-        this.DeviceType,
-      );
-    if (t) {
-      let e = 3;
-      for (const s of t) {
-        var i = new DeviceRenderFeatureData_1.DeviceRenderFeatureData(s);
-        this.UGa.set(s.QualityType, i), i.IsDefault() && (e = i.QualityType);
-      }
-      t = LocalStorage_1.LocalStorage.GetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualityLevel,
-        e,
-      );
-      this.GameQualitySettingLevel = t;
+  static Initialize() {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.AfterGameQualitySettingsManagerInitialize,
+    );
+  }
+  static Clear() {
+    this.CancelAllPerformanceLimit();
+  }
+  static IsDriverNeedUpdate() {
+    var e = /(\d{1,2})-(\d{1,2})-(\d{4})/.exec(this.DriverDate);
+    return (
+      (4 === e?.length && Number(e[3]) < 2023) ||
+      !UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDriverValid()
+    );
+  }
+  static IsDriverNeedUpdateForRayTracing() {
+    var e = /(\d{1,2})-(\d{1,2})-(\d{4})/.exec(this.DriverDate);
+    return (
+      (4 === e?.length && Number(e[3]) < 2024) ||
+      (4 === e?.length && 2024 === Number(e[3]) && Number(e[1]) < 6) ||
+      (4 === e?.length &&
+        2024 === Number(e[3]) &&
+        6 === Number(e[1]) &&
+        Number(e[2]) < 4)
+    );
+  }
+  static IsDxr1_1NotSupported() {
+    return (
+      1 ===
+      UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRayTracingSupportedType()
+    );
+  }
+  static iml() {
+    switch (this.DeviceType) {
+      case 11:
+      case 12:
+      case 15:
+      case 21:
+      case 22:
+      case 31:
+      case 32:
+        break;
+      case 13:
+      case 14:
+      case 23:
+      case 24:
+      case 33:
+      case 34:
+        this.rml = 1;
+        break;
+      case 35:
+        break;
+      case 41:
+        this.rml = 2;
+        break;
+      case 51:
+        this.rml = 3;
+        break;
+      default:
+        this.rml = 0;
     }
   }
-  static yGa() {
-    this.IsFoldingScreen() &&
-      2 === Info_1.Info.PlatformType &&
-      (22 === this.DeviceType &&
-        UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.MobileContentScaleFactor 2",
-        ),
-      23 === this.DeviceType &&
-        UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.MobileContentScaleFactor 2.5",
-        ),
-      24 === this.DeviceType) &&
-      UE.KismetSystemLibrary.ExecuteConsoleCommand(
-        GlobalData_1.GlobalData.World,
-        "r.MobileContentScaleFactor 3",
-      );
+  static GetDeviceRenderFeature(e) {
+    return this.Qlc?.get(e);
   }
-  static GetDeviceReaderFeatureData(e) {
-    return this.UGa.get(e);
+  static GetCurrentDeviceRenderFeature() {
+    return this.Qlc?.get(this.GameQualitySettingLevel);
   }
-  static GetCurrentDeviceReaderFeatureData() {
-    return this.UGa.get(this.GameQualitySettingLevel);
+  static GetDefaultDeviceRenderFeature() {
+    var e = this.Qlc;
+    if (void 0 !== e) for (var [, t] of e) if (1 === t.DefaultQuality) return t;
+  }
+  static GetOtherChangedValue(e) {
+    return (
+      this.Ylc.clear(),
+      this.Ylc.set(
+        GameSettingsDefine_1.EFunction.HIGHESTFPS,
+        this.GetFrameIndexByList(e.FPS),
+      ),
+      this.Ylc.set(
+        GameSettingsDefine_1.EFunction.SHADOWQUALITY,
+        e.ShadowQuality,
+      ),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.NIAGARAQUALITY, e.FxQuality),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.IMAGEDETAIL, e.ImageDetail),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.ANTIALISING, e.AntiAliasing),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.SCENEAO, e.AO),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.VOLUMEFOG, e.VolumeFog),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.VOLUMELIGHT, e.VolumeLight),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.MOTIONBLUR, e.MotionBlur),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.PCVSYNC, e.VSync),
+      this.Ylc.set(
+        GameSettingsDefine_1.EFunction.MOBILERESOLUTION,
+        e.ScreenPercentage,
+      ),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.NPCDENSITY, e.NpcDensity),
+      this.Ylc.set(GameSettingsDefine_1.EFunction.BLOOM, e.Bloom),
+      this.Ylc
+    );
   }
   static IsIosAndAndroidHighDevice() {
     return (
@@ -185,14 +292,23 @@ class GameSettingsDeviceRender {
   static IsAndroidPlatformLow() {
     return 21 === this.DeviceType;
   }
+  static IsPcPlatformVeryHigh() {
+    return 15 === this.DeviceType;
+  }
+  static IsAndroidAdreno() {
+    return this.IsAdreno;
+  }
+  static IsRedMagic() {
+    return this.kE1.includes("NX789J");
+  }
   static IsLowMemoryDevice() {
     return (
-      (1 === Info_1.Info.PlatformType && this.IGa < 4) ||
-      (2 === Info_1.Info.PlatformType && this.IGa <= 4)
+      (1 === Info_1.Info.PlatformType && this.ANa < 4) ||
+      (2 === Info_1.Info.PlatformType && this.ANa <= 4)
     );
   }
   static GetD3D12Type() {
-    return this.DGa.includes("D3D12") ? 1 : 0;
+    return this.xNa.includes("D3D12") ? 1 : 0;
   }
   static IsFoldingScreen() {
     var e =
@@ -201,40 +317,44 @@ class GameSettingsDeviceRender {
     return (
       (e < 1.8 || 2.6 < e) &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Render", 60, "折叠屏适配", ["ScreenRatio", e]),
+        Log_1.Log.Info("Render", 59, "折叠屏适配", ["ScreenRatio", e]),
       !0)
     );
   }
-  static IsMaliNewSocOrXclipse() {
+  static IsMaliNewSocOrXclipseOrPowerVR() {
     return !!(
-      this.LGa.includes("G710") ||
-      this.LGa.includes("G715") ||
-      this.LGa.includes("G720") ||
-      this.LGa.includes("G610") ||
-      this.LGa.includes("G615") ||
-      this.LGa.includes("G620") ||
-      this.LGa.includes("Xclipse")
+      this.RNa.includes("G710") ||
+      this.RNa.includes("G715") ||
+      this.RNa.includes("G720") ||
+      this.RNa.includes("G610") ||
+      this.RNa.includes("G615") ||
+      this.RNa.includes("G620") ||
+      this.RNa.includes("Xclipse") ||
+      this.RNa.includes("BXM-8-256")
     );
   }
   static IsHuaweiNewPhone() {
-    return this.TGa
-      ? !!this.LGa.includes("Maleoon")
+    return this.DNa
+      ? !!this.RNa.includes("Maleoon")
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Render", 41, "GameSettingsManager尚未初始化"),
+          Log_1.Log.Error("Render", 40, "GameSettingsManager尚未初始化"),
         !1);
   }
   static IsUltraGpuDevice() {
-    return this.TGa
-      ? !("NVIDIA" !== this.TGa || !this.LGa.includes("RTX"))
+    return this.DNa
+      ? !("NVIDIA" !== this.DNa || !this.RNa.includes("RTX"))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Render", 41, "GameSettingsManager尚未初始化"),
+          Log_1.Log.Error("Render", 40, "GameSettingsManager尚未初始化"),
         !1);
   }
+  static IsNvidia4060() {
+    return "NVIDIA" === this.DNa && this.RNa.includes("4060");
+  }
   static Is120FrameGPU() {
-    return this.TGa
-      ? ("AMD" === this.TGa || "NVIDIA" === this.TGa) && 1500 < this.DeviceScore
+    return this.DNa
+      ? ("AMD" === this.DNa || "NVIDIA" === this.DNa) && 1300 < this.DeviceScore
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Render", 41, "GameQualitySettingsManager尚未初始化"),
+          Log_1.Log.Error("Render", 40, "GameQualitySettingsManager尚未初始化"),
         !1);
   }
   static IsLaptopCPU() {
@@ -365,12 +485,18 @@ class GameSettingsDeviceRender {
       this.CPUBrand.includes("1700")
     );
   }
+  static IsFrameRate120IOSDevice() {
+    return 1 === Info_1.Info.PlatformType && 500 < this.DeviceScore;
+  }
+  static IsFrameRate120MacDevice() {
+    return 4 === Info_1.Info.PlatformType && 500 < this.DeviceScore;
+  }
   static IsFrameRate120Device() {
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Render",
-          69,
+          68,
           "判断IsFrameRate120Device",
           ["this.CPUFrequency", this.CPUFrequency],
           [
@@ -382,33 +508,30 @@ class GameSettingsDeviceRender {
         ),
       !(
         !(
-          (3200 <= this.CPUFrequency &&
+          (3e3 <= this.CPUFrequency &&
             16 <= this.CPUCoresIncludingHyperthreads) ||
           this.IsLaptopCPU()
         ) || !this.Is120FrameGPU()
       )
     );
   }
+  static IsAndroidHighestResolutionDevice() {
+    return 24 === this.DeviceType;
+  }
+  static IsAndroidHighResolutionDevice() {
+    return 23 === this.DeviceType || 24 === this.DeviceType;
+  }
   static IsMetalFxDevice() {
     return UE.KuroRenderingRuntimeBPPluginBPLibrary.IsSupportsMetalFx();
   }
   static IsPWSDKDevice() {
-    return (
-      2 === Info_1.Info.PlatformType &&
-      0 !== UE.PWSDKInterfaceBP.GetDeviceIRXState()
-    );
+    return !1;
   }
   static IsIRXActive() {
     return (
       2 === Info_1.Info.PlatformType &&
       2 === UE.PWSDKInterfaceBP.GetDeviceIRXState()
     );
-  }
-  static SetUILimitFrameMode(e) {
-    this.Mka = e;
-  }
-  static GetIsUILimitFrameMode() {
-    return this.Mka;
   }
   static TurnOffIRX() {
     this.IsPWSDKDevice() && UE.PWSDKInterfaceBP.TurnOffSRAndFRC();
@@ -432,16 +555,97 @@ class GameSettingsDeviceRender {
     );
   }
   static IsDlssGpuDevice() {
-    return this.TGa
-      ? !("NVIDIA" !== this.TGa || !this.LGa.includes("RTX"))
+    return this.DNa
+      ? !("NVIDIA" !== this.DNa || !this.RNa.includes("RTX"))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Render", 41, "GameSettingsManager尚未初始化"),
+          Log_1.Log.Error("Render", 40, "GameSettingsManager尚未初始化"),
+        !1);
+  }
+  static jT1(e) {
+    return (e = e && /RTX\s*(\d+)/i.exec(e)) && e[1] ? e[1] : void 0;
+  }
+  static IsRayTracingGpuDevice() {
+    var e;
+    return "NVIDIA" !== this.DNa
+      ? !this.RNa.toLowerCase().includes("rx 67") &&
+          !this.RNa.toLowerCase().includes("rx 76") &&
+          0 ===
+            UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRayTracingSupportedType()
+      : this.RNa.toLowerCase().includes("titan rtx")
+        ? 0 ===
+          UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRayTracingSupportedType()
+        : void 0 === (e = this.jT1(this.RNa))
+          ? (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Render",
+                64,
+                "非RTX系列，或者型号解析不出来，不能开启光追",
+              ),
+            !1)
+          : 2070 <= (e = parseInt(e)) &&
+            (e < 3e3 || 3060 <= e) &&
+            0 ===
+              UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRayTracingSupportedType();
+  }
+  static IsShowRayTracingSetting() {
+    return (
+      this.IsRayTracingGpuDevice() ||
+      1 ===
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRayTracingSupportedType()
+    );
+  }
+  static IsDlss3HardwareSchedulingDisabled() {
+    return this.DNa
+      ? GameSettingsDeviceRender.IsNvidiaDlssPluginLoaded() &&
+        GameSettingsDeviceRender.IsNvidiaStreamlinePluginLoaded()
+        ? 5 === UE.StreamlineLibraryDLSSG.QueryDLSSGSupport()
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Render", 73, "DlSS or Streamline尚未加载"),
+          !1)
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Render", 40, "GameSettingsManager尚未初始化"),
+        !1);
+  }
+  static IsDlss3GpuDevice() {
+    return this.DNa
+      ? !(
+          "NVIDIA" !== this.DNa ||
+          (!this.RNa.includes("RTX 40") && !this.RNa.includes("RTX 50"))
+        )
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Render", 40, "GameSettingsManager尚未初始化"),
         !1);
   }
   static IsFsrDevice() {
     var e = GameSettingsDeviceRender.IsDlssGpuDevice(),
       t = UE.XeSSBlueprintLibrary.IsXeSSSupported();
     return !e && !t && !GameSettingsDeviceRender.IsMetalFxDevice();
+  }
+  static IsVulkanDevice() {
+    let e = !1;
+    if (UE.KismetSystemLibrary.IsVulkanAutoDetectMode())
+      e = UE.KuroRenderingRuntimeBPPluginBPLibrary.SupportVulkan();
+    else {
+      var s = UE.KismetSystemLibrary.GetVulkanAllowedModels(),
+        a = UE.KismetSystemLibrary.GetVulkanBlockedModels(),
+        r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetMobileDeviceModel();
+      if (0 !== r.length) {
+        let t = !1;
+        for (let e = 0; e < s.Num(); ++e)
+          if (s.Get(e).includes(r)) {
+            t = !0;
+            break;
+          }
+        let i = !1;
+        for (let e = 0; e < a.Num(); ++e)
+          if (a.Get(e).includes(r)) {
+            i = !0;
+            break;
+          }
+        e = t && !i;
+      }
+    }
+    return e;
   }
   static IsEnableVolumeFog() {
     return this.dMe;
@@ -469,7 +673,7 @@ class GameSettingsDeviceRender {
           var s = i.Get(e);
           s && t.push(s),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Menu", 8, "", ["resolution", s]);
+              Log_1.Log.Debug("Menu", 64, "", ["resolution", s]);
         }
       }
       t.length
@@ -478,15 +682,24 @@ class GameSettingsDeviceRender {
             UE.GameUserSettings.GetGameUserSettings().GetDesktopResolution(),
           ),
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Menu", 41, "获取分辨率列表失败"));
+            Log_1.Log.Warn("Menu", 40, "获取分辨率列表失败"));
     }
-    return t;
+    return 0 < t.length && 3620 === t[0].X && 2036 === t[0].Y && t.shift(), t;
   }
   static GetResolutionIndexByList(e) {
-    let t = 0;
-    for (const i of this.GetResolutionList()) {
-      if (i.op_Equality(e)) return t;
-      ++t;
+    var t = this.GetResolutionList();
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "Render",
+        64,
+        "获取分辨率索引时的列表",
+        ["resolutionList", t],
+        ["current resolution", e],
+      );
+    let i = 0;
+    for (const s of t) {
+      if (s.op_Equality(e)) return i;
+      ++i;
     }
     return -1;
   }
@@ -515,7 +728,7 @@ class GameSettingsDeviceRender {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Render",
-          41,
+          40,
           `默认分辨率：${this.jve.X}x` + this.jve.Y,
         );
     }
@@ -527,19 +740,49 @@ class GameSettingsDeviceRender {
         ? [70, 80, 85, 100]
         : this.IsAndroidPlatformLow()
           ? [60, 80, 85, 90]
-          : [80, 90, 100, 100]
+          : this.IsAndroidHighestResolutionDevice()
+            ? [66, 75, 83, 100]
+            : [80, 90, 100, 100]
     )[e];
   }
   static GetFrameIndexByList(e) {
-    var t;
     return 1 === Info_1.Info.PlatformType
-      ? GameSettingsDeviceRenderDefine_1.frameRateListIos.indexOf(e)
+      ? GameSettingsDeviceRenderDefine_1.frameRateListIos.includes(e)
+        ? GameSettingsDeviceRenderDefine_1.frameRateListIos.indexOf(e)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "GameSettings",
+              64,
+              "[ios]当前帧数不在帧数列表中，返回0",
+              ["frameRate", e],
+              ["list", GameSettingsDeviceRenderDefine_1.frameRateListIos],
+            ),
+          0)
       : 2 === Info_1.Info.PlatformType
-        ? ((t = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(128)),
-          this.IsIRXActive() && 1 === t
-            ? GameSettingsDeviceRenderDefine_1.frameRateListAndroid.indexOf(30)
-            : GameSettingsDeviceRenderDefine_1.frameRateListAndroid.indexOf(e))
-        : GameSettingsDeviceRenderDefine_1.frameRateListPc.indexOf(e);
+        ? GameSettingsDeviceRender.eMe.includes(e)
+          ? GameSettingsDeviceRender.eMe.indexOf(e)
+          : 40 <= e && e <= 45 && GameSettingsDeviceRender.eMe.includes(40)
+            ? GameSettingsDeviceRender.eMe.indexOf(40)
+            : (Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "GameSettings",
+                  64,
+                  "[android]当前帧数不在帧数列表中，返回0",
+                  ["frameRate", e],
+                  ["list", GameSettingsDeviceRender.eMe],
+                ),
+              0)
+        : GameSettingsDeviceRenderDefine_1.frameRateListPc.includes(e)
+          ? GameSettingsDeviceRenderDefine_1.frameRateListPc.indexOf(e)
+          : (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "GameSettings",
+                64,
+                "[pc]当前帧数不在帧数列表中，返回0",
+                ["frameRate", e],
+                ["list", GameSettingsDeviceRender.eMe],
+              ),
+            0);
   }
   static GetFrameByList(e) {
     if (1 === Info_1.Info.PlatformType) {
@@ -554,9 +797,9 @@ class GameSettingsDeviceRender {
       const t = MathUtils_1.MathUtils.Clamp(
         e,
         0,
-        GameSettingsDeviceRenderDefine_1.frameRateListAndroid.length - 1,
+        GameSettingsDeviceRender.eMe.length - 1,
       );
-      return GameSettingsDeviceRenderDefine_1.frameRateListAndroid[t];
+      return GameSettingsDeviceRender.eMe[t];
     }
     const t = MathUtils_1.MathUtils.Clamp(
       e,
@@ -565,15 +808,76 @@ class GameSettingsDeviceRender {
     );
     return GameSettingsDeviceRenderDefine_1.frameRateListPc[t];
   }
+  static EnableDLSSG(e) {
+    (this.Xn_ = 0 !== e),
+      0 === e
+        ? (UE.StreamlineLibraryReflex.SetReflexMode(0),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Game", 47, "SetReflexMode 0"))
+        : (UE.StreamlineLibraryReflex.SetReflexMode(3),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Game", 47, "SetReflexMode 3"));
+  }
+  static IsEnableDLSSG() {
+    return this.Xn_;
+  }
+  static ApplyDLSSG(e) {
+    0 === e
+      ? (this.ApplyFrameRate(this.BNa),
+        UE.StreamlineLibraryDLSSG.SetDLSSGMode(0),
+        Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 47, "EnableDLSSG 0"))
+      : this.Xn_ &&
+        (this.ApplyFrameRate(0),
+        UE.StreamlineLibraryDLSSG.SetDLSSGMode(2),
+        Log_1.Log.CheckInfo()) &&
+        Log_1.Log.Info("Game", 47, "EnableDLSSG 1");
+  }
+  static TemporaryDisableDLSSG(e) {
+    GameSettingsDeviceRender.IsDlss3GpuDevice() &&
+      GameSettingsDeviceRender.IsNvidiaStreamlinePluginLoaded() &&
+      (this.cZ_.set(e, 1),
+      0 < this.cZ_.size && GameSettingsDeviceRender.ApplyDLSSG(0),
+      Log_1.Log.CheckInfo()) &&
+      Log_1.Log.Info(
+        "Functional",
+        47,
+        "disable DLSSG temploary",
+        ["key", e],
+        ["num", this.cZ_.size],
+      );
+  }
+  static CancelTemporaryDisableDLSSG(e) {
+    GameSettingsDeviceRender.IsDlss3GpuDevice() &&
+      GameSettingsDeviceRender.IsNvidiaStreamlinePluginLoaded() &&
+      (this.cZ_.delete(e),
+      0 === this.cZ_.size &&
+        GameSettingsDeviceRender.IsEnableDLSSG() &&
+        GameSettingsDeviceRender.ApplyDLSSG(1),
+      Log_1.Log.CheckInfo()) &&
+      Log_1.Log.Info(
+        "Functional",
+        47,
+        "recover DLSSG",
+        ["key", e],
+        ["num", this.cZ_.size],
+      );
+  }
   static ApplyFrameRate(e) {
-    this.xGa = MathUtils_1.MathUtils.Clamp(e, 24, 120);
-    (e = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(128)),
-      this.IsIRXActive() && 1 === e && (this.xGa = 30),
-      (this.PGa = 1 / this.xGa),
-      (e = UE.GameUserSettings.GetGameUserSettings());
-    let t = this.xGa;
-    0 < this.yve && (t = this.yve),
-      e.SetFrameRateLimit(t),
+    let t = 0;
+    0 < e &&
+      ((this.BNa = MathUtils_1.MathUtils.Clamp(e, 24, 120)),
+      this.IsIRXActive() &&
+        1 ===
+          GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+            GameSettingsDefine_1.EFunction.IRX,
+          ) &&
+        (this.BNa = 30),
+      (this.bNa = 1 / this.BNa),
+      (t = this.BNa),
+      0 < this.yve) &&
+      (t = this.yve);
+    e = UE.GameUserSettings.GetGameUserSettings();
+    e.SetFrameRateLimit(t),
       e.ApplySettings(!0),
       PerfSightController_1.PerfSightController.IsEnable &&
         UE.PerfSightHelper.PostEvent(801, t.toString()),
@@ -583,10 +887,10 @@ class GameSettingsDeviceRender {
       );
   }
   static get FrameRate() {
-    return this.xGa;
+    return this.BNa;
   }
   static get FrameSeconds() {
-    return this.PGa;
+    return this.bNa;
   }
   static GetMaxRoleShadowNum() {
     var e = GameSettingsDeviceRender.GameQualitySettingLevel;
@@ -618,26 +922,26 @@ class GameSettingsDeviceRender {
   }
   static SetFrameRateTemploary(e) {
     (this.yve = MathUtils_1.MathUtils.Clamp(e, 24, 120)),
-      (this.PGa = 1 / this.yve);
+      (this.bNa = 1 / this.yve);
   }
   static SetSequenceFrameRateLimit() {
     1 === Info_1.Info.PlatformType
-      ? 45 < this.xGa &&
-        (this.SetFrameRateTemploary(30), this.ApplyFrameRate(this.xGa))
+      ? 31 < this.BNa &&
+        (this.SetFrameRateTemploary(30), this.ApplyFrameRate(this.BNa))
       : 2 === Info_1.Info.PlatformType &&
-        40 < this.xGa &&
-        (this.SetFrameRateTemploary(30), this.ApplyFrameRate(this.xGa)),
+        31 < this.BNa &&
+        (this.SetFrameRateTemploary(30), this.ApplyFrameRate(this.BNa)),
       Info_1.Info.IsMobilePlatform() &&
         this.TryReduceCsmUpdateFrequency("Plot");
   }
   static CancleSequenceFrameRateLimit() {
     this.CancelFrameRateTemploary(),
-      this.ApplyFrameRate(this.xGa),
+      this.ApplyFrameRate(this.BNa),
       (1 !== Info_1.Info.PlatformType && 2 !== Info_1.Info.PlatformType) ||
         this.TryRestoreCsmUpdateFrequency("Plot");
   }
   static CancelFrameRateTemploary() {
-    (this.yve = 0), (this.PGa = 1 / this.xGa);
+    (this.yve = 0), (this.bNa = 1 / this.BNa);
   }
   static TryReduceCsmUpdateFrequency(e) {
     var t = this.Tve.size;
@@ -678,15 +982,9 @@ class GameSettingsDeviceRender {
     }),
       Info_1.Info.IsPcOrGamepadPlatform() ||
         (0 < i
-          ? (this.SetUILimitFrameMode(!0),
-            this.SetFrameRateTemploary(30),
-            this.TurnOffIRX())
-          : (this.SetUILimitFrameMode(!1),
-            this.CancelFrameRateTemploary(),
-            1 ===
-              GameSettingsManager_1.GameSettingsManager.GetCurrentValue(128) &&
-              this.TurnOnIRX()),
-        this.ApplyFrameRate(this.xGa)),
+          ? this.SetFrameRateTemploary(30)
+          : this.CancelFrameRateTemploary(),
+        this.ApplyFrameRate(this.BNa)),
       1 === s
         ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
@@ -702,7 +1000,7 @@ class GameSettingsDeviceRender {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Game",
-          48,
+          47,
           "performanceControl:RefreshPerformanceLimit result",
           ["reason", e],
           ["frameLimit", i],
@@ -717,7 +1015,7 @@ class GameSettingsDeviceRender {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Game",
-          48,
+          47,
           "performanceControl:ApplyPerformanceLimit",
           ["source", e],
           ["frameLimit", t.FrameLimit],
@@ -730,7 +1028,7 @@ class GameSettingsDeviceRender {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Game",
-          48,
+          47,
           "performanceControl:CancelPerformanceLimit",
           ["source", e],
         ),
@@ -749,7 +1047,7 @@ class GameSettingsDeviceRender {
   static CancelAllPerformanceLimit() {
     this.PerformanceLimitRunning.clear(),
       this.CancelFrameRateTemploary(),
-      this.ApplyFrameRate(this.xGa),
+      this.ApplyFrameRate(this.BNa),
       this.RefreshPerformanceLimit("[CancelAll]");
   }
   static SetIsAutoAdjustImageQuality(e) {
@@ -758,36 +1056,46 @@ class GameSettingsDeviceRender {
           GlobalData_1.GlobalData.World,
           "r.Kuro.AutoCoolUIEnable 1",
         )
-      : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+      : UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.Kuro.AutoCoolUIEnable 0",
-        ),
-        KuroAutoCoolController_1.KuroAutoCoolController.RestoreLastConfig());
+        );
+  }
+  static GetRecommendQualityLv() {
+    return this.oml;
+  }
+  static GetQualityRange() {
+    return this.rml;
   }
 }
-((exports.GameSettingsDeviceRender = GameSettingsDeviceRender).UGa = new Map()),
-  (GameSettingsDeviceRender.GameQualitySettingLevel = 3),
-  (GameSettingsDeviceRender.IGa = 0),
+((exports.GameSettingsDeviceRender = GameSettingsDeviceRender).Klc = void 0),
+  (GameSettingsDeviceRender.Xlc = void 0),
+  (GameSettingsDeviceRender.ANa = 0),
   (GameSettingsDeviceRender.CPUFrequency = 0),
   (GameSettingsDeviceRender.CPUCores = 0),
   (GameSettingsDeviceRender.CPUCoresIncludingHyperthreads = 0),
   (GameSettingsDeviceRender.CPUBrand = ""),
   (GameSettingsDeviceRender.DriverDate = "Unknown"),
-  (GameSettingsDeviceRender.TGa = ""),
-  (GameSettingsDeviceRender.LGa = ""),
-  (GameSettingsDeviceRender.AGa = ""),
+  (GameSettingsDeviceRender.IsAdreno = !1),
+  (GameSettingsDeviceRender.kE1 = ""),
+  (GameSettingsDeviceRender.DNa = ""),
+  (GameSettingsDeviceRender.RNa = ""),
+  (GameSettingsDeviceRender.UNa = ""),
   (GameSettingsDeviceRender.DeviceScore = 0),
-  (GameSettingsDeviceRender.DGa = ""),
-  (GameSettingsDeviceRender.RGa = 0),
+  (GameSettingsDeviceRender.xNa = ""),
+  (GameSettingsDeviceRender.PNa = 0),
   (GameSettingsDeviceRender.DeviceType = 14),
+  (GameSettingsDeviceRender.rml = 1),
   (GameSettingsDeviceRender.dMe = !0),
   (GameSettingsDeviceRender.jve = void 0),
   (GameSettingsDeviceRender.Vve = void 0),
   (GameSettingsDeviceRender.yve = 0),
-  (GameSettingsDeviceRender.xGa = 0),
-  (GameSettingsDeviceRender.PGa = -0),
+  (GameSettingsDeviceRender.BNa = 0),
+  (GameSettingsDeviceRender.Xn_ = !1),
+  (GameSettingsDeviceRender.bNa = -0),
   (GameSettingsDeviceRender.Tve = new Set()),
   (GameSettingsDeviceRender.PerformanceLimitRunning = new Map()),
   (GameSettingsDeviceRender.InCacheSceneColorMode = 0),
-  (GameSettingsDeviceRender.Mka = !1);
+  (GameSettingsDeviceRender.Ylc = new Map()),
+  (GameSettingsDeviceRender.cZ_ = new Map());
 //# sourceMappingURL=GameSettingsDeviceRender.js.map

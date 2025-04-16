@@ -6,8 +6,7 @@ const puerts_1 = require("puerts"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Vector2D_1 = require("../../Core/Utils/Math/Vector2D"),
-  CameraController_1 = require("../Camera/CameraController"),
-  InputController_1 = require("../Input/InputController"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
   InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine"),
   UiLayer_1 = require("../Ui/UiLayer"),
@@ -18,6 +17,12 @@ const puerts_1 = require("puerts"),
 class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerController {
   constructor() {
     super(...arguments),
+      (this.CursorInputVector = void 0),
+      (this.MoveInputVector = void 0),
+      (this.TsUiKeyHandle = void 0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.CursorInputVector = void 0),
       (this.MoveInputVector = void 0),
       (this.TsUiKeyHandle = void 0);
@@ -34,11 +39,12 @@ class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerControl
         (this.TsUiKeyHandle.Reset(), (this.TsUiKeyHandle = void 0));
   }
   ReceivePossess(e) {
-    super.ReceivePossess(e), CameraController_1.CameraController.OnPossess(e);
+    super.ReceivePossess(e),
+      ControllerHolder_1.ControllerHolder.CameraController.OnPossess(e);
   }
   ReceiveUnPossess(e) {
     super.ReceiveUnPossess(e),
-      CameraController_1.CameraController.OnPossess(void 0);
+      ControllerHolder_1.ControllerHolder.CameraController.OnPossess(void 0);
   }
   OnSetupInputComponent() {
     super.OnSetupInputComponent(),
@@ -99,21 +105,21 @@ class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerControl
         (this.MoveInputVector.X = r);
   }
   ReceivePreProcessInput(e, r) {
-    InputController_1.InputController.PreProcessInput(e, r);
+    ControllerHolder_1.ControllerHolder.InputController.PreProcessInput(e, r);
   }
   ReceivePostProcessInput(e, r) {
-    InputController_1.InputController.PostProcessInput(e, r);
+    ControllerHolder_1.ControllerHolder.InputController.PostProcessInput(e, r);
   }
   OnSetUiRootActive() {
     ModelManager_1.ModelManager.SundryModel.CanOpenGmView &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Input", 8, "按下 】 键显示所有界面"),
+        Log_1.Log.Info("Input", 10, "按下 】 键显示所有界面"),
       UiLayer_1.UiLayer.ForceShowUi());
   }
   OnSetUiRootDeactivate() {
     ModelManager_1.ModelManager.SundryModel.CanOpenGmView &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Input", 8, "按下 【 键隐藏所有界面"),
+        Log_1.Log.Info("Input", 10, "按下 【 键隐藏所有界面"),
       UiLayer_1.UiLayer.ForceHideUi());
   }
   GetCursorInputVector() {

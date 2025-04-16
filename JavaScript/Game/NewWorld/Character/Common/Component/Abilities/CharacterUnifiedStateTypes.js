@@ -15,7 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (t[(t.Climb = 1)] = "Climb"),
       (t[(t.Air = 2)] = "Air"),
       (t[(t.Water = 3)] = "Water"),
-      (t[(t.Ski = 4)] = "Ski");
+      (t[(t.Ski = 4)] = "Ski"),
+      (t[(t.Ride = 5)] = "Ride");
   })(
     (ECharPositionState =
       exports.ECharPositionState || (exports.ECharPositionState = {})),
@@ -50,7 +51,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (t[(t.NormalSki = 26)] = "NormalSki"),
       (t[(t.StandUp = 27)] = "StandUp"),
       (t[(t.Soar = 28)] = "Soar"),
-      (t[(t.Roll = 29)] = "Roll");
+      (t[(t.Roll = 29)] = "Roll"),
+      (t[(t.Kite = 30)] = "Kite"),
+      (t[(t.Gongduola = 31)] = "Gongduola"),
+      (t[(t.NpcVehicle = 32)] = "NpcVehicle");
   })(
     (ECharMoveState = exports.ECharMoveState || (exports.ECharMoveState = {})),
   ),
@@ -108,6 +112,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
         ECharMoveState.Flying,
         ECharMoveState.Soar,
         ECharMoveState.Roll,
+        ECharMoveState.Kite,
       ]),
     ],
     [
@@ -121,6 +126,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     [
       ECharPositionState.Ski,
       new Set([ECharMoveState.Other, ECharMoveState.NormalSki]),
+    ],
+    [
+      ECharPositionState.Ride,
+      new Set([
+        ECharMoveState.Other,
+        ECharMoveState.Gongduola,
+        ECharMoveState.NpcVehicle,
+      ]),
     ],
   ])),
   (function (t) {

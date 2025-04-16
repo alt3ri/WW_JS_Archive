@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Teleporter = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class Teleporter {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -13,9 +14,6 @@ class Teleporter {
   }
   get ObjectId() {
     return this.objectid();
-  }
-  get AreaId() {
-    return this.areaid();
   }
   get FogId() {
     return this.fogid();
@@ -56,32 +54,34 @@ class Teleporter {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  areaid() {
+  fogid() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  fogid() {
+  type() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  type() {
+  teleportentityconfigid() {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  teleportentityconfigid() {
-    var t = this.J7.__offset(this.z7, 16);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
   plot(t) {
-    var r = this.J7.__offset(this.z7, 18);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 16),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   afternetworkaction() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showworldmap() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 20);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }

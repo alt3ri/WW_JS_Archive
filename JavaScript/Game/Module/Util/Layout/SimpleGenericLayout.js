@@ -13,12 +13,12 @@ class SimpleGenericLayout {
     t && t.IsValid()
       ? ((this.BGo = t), this.x5e.push(this.BGo))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCommon", 44, "Layout下不存在有效的子节点");
+        Log_1.Log.Error("UiCommon", 43, "Layout下不存在有效的子节点");
   }
   RebuildLayout(t) {
     (this.BGo && this.BGo.IsValid()) ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCommon", 44, "Layout下不存在有效的子节点")),
+        Log_1.Log.Error("UiCommon", 43, "Layout下不存在有效的子节点")),
       (this.bGo = t);
     var i = this.Layout.RootUIComp;
     for (let t = this.x5e.length; t < this.bGo; t++) {

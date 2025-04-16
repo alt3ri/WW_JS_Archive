@@ -44,33 +44,51 @@ class ElementLevel {
   }
   buffid() {
     var t = this.J7.__offset(this.z7, 6);
-    return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
+    return t ? this.J7.readFloat64(this.z7 + t) : 0;
   }
   GetAddbuffsAt(t) {
     return this.addbuffs(t);
   }
   addbuffs(t) {
     var s = this.J7.__offset(this.z7, 8);
-    return s
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + s) + 8 * t)
-      : BigInt(0);
+    return s ? this.J7.readFloat64(this.J7.__vector(this.z7 + s) + 8 * t) : 0;
   }
   addbuffsLength() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  addbuffsArray() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   textid(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetTextidargsAt(t) {
     return this.textidargs(t);
   }
   textidargs(t, s) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s)
-      : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   textidargsLength() {
     var t = this.J7.__offset(this.z7, 12);

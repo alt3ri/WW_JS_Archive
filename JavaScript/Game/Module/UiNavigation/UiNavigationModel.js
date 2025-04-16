@@ -18,8 +18,8 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
   }
   InputControllerModeChange() {
     for (const t of this.Nqo.values()) for (const e of t) e.RefreshMode();
-    for (const i of this.Oqo.values()) for (const o of i) o.RefreshMode();
-    for (const r of this.kqo) r.ChangeAlpha();
+    for (const i of this.Oqo.values()) for (const r of i) r.RefreshMode();
+    for (const o of this.kqo) o.ChangeAlpha();
   }
   OnClear() {
     return (
@@ -40,11 +40,17 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
   SetCursorActiveDelayTime(t) {
     this.yBo.SetCursorActiveDelayTime(t);
   }
+  TrySetCursorActive(t) {
+    this.yBo.TrySetUseItemUiActive(t);
+  }
+  RefreshCursorActive() {
+    this.yBo.RefreshCursorActive();
+  }
   RepeatMove() {
     this.yBo.RepeatMove();
   }
   ClearCursor() {
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("UiNavigation", 11, "清理光标"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("UiNavigation", 10, "清理光标"),
       this.yBo.Clear();
   }
   OnLeaveLevel() {
@@ -68,14 +74,14 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     InputSettingsManager_1.InputSettingsManager.GetActionBinding(
       t,
     ).GetCurrentPlatformKeyNameList(i);
-    for (const o of i) if (e.has(o)) return o;
+    for (const r of i) if (e.has(r)) return r;
   }
-  mGa(t, e) {
+  rNa(t, e) {
     var i = [];
     InputSettingsManager_1.InputSettingsManager.GetAxisBinding(
       t,
     ).GetCurrentPlatformKeyNameList(i);
-    for (const o of i) if (e.has(o)) return o;
+    for (const r of i) if (e.has(r)) return r;
   }
   Hqo(t) {
     var e =
@@ -92,7 +98,7 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
       if ((e.GetCurrentPlatformKeyNameList(i), 0 < i.length)) return i;
     }
   }
-  dGa(t) {
+  oNa(t) {
     var t = InputSettingsManager_1.InputSettingsManager.GetAxisBinding(t);
     if (t) return t.GetCurrentPlatformKeyNameList((t = [])), t;
   }
@@ -100,19 +106,19 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     var e = this.Hqo(t);
     if (e) {
       var i,
-        o,
-        r = new Set(e);
-      for ([i, o] of this.Nqo)
+        r,
+        o = new Set(e);
+      for ([i, r] of this.Nqo)
         if (t !== i) {
-          var n = this.Vqo(i, r);
+          var n = this.Vqo(i, o);
           if (n)
-            for (const s of o)
+            for (const s of r)
               if (s.IsHotKeyActive() && s.IsOccupancyFightInput())
                 return (
                   Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "UiNavigation",
-                      11,
+                      10,
                       "非导航输入被导航输入占用",
                       ["非导航输入", t],
                       ["导航输入", i],
@@ -125,15 +131,15 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     return !1;
   }
   CheckAxisNameListInNavigation(t) {
-    var e = this.dGa(t);
+    var e = this.oNa(t);
     if (e) {
       var i,
-        o,
-        r = new Set(e);
-      for ([i, o] of this.Oqo)
+        r,
+        o = new Set(e);
+      for ([i, r] of this.Oqo)
         if (t !== i)
-          if (this.mGa(i, r))
-            for (const n of o)
+          if (this.rNa(i, o))
+            for (const n of r)
               if (
                 n.IsHotKeyActive() &&
                 "ShowOnly" !== n.GetHotKeyFunctionType()

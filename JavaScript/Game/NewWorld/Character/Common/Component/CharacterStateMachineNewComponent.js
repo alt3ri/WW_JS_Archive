@@ -22,8 +22,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
-  ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
-  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
   AiStateMachineGroup_1 = require("../../../../AI/StateMachine/AiStateMachineGroup"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
 let CharacterStateMachineNewComponent = class CharacterStateMachineNewComponent extends EntityComponent_1.EntityComponent {
@@ -45,33 +43,7 @@ let CharacterStateMachineNewComponent = class CharacterStateMachineNewComponent 
     );
   }
   OnActivate() {
-    var t = this.Entity.GetComponent(3),
-      e = this.Entity.GetComponent(190),
-      t = t.CreatureData?.GetPbEntityInitData();
-    if (t) {
-      var o = (0, IComponent_1.getComponent)(t.ComponentsData, "AiComponent");
-      switch (o?.InitState?.Type) {
-        case 0:
-          e.AddTag(1927538016);
-          break;
-        case 1:
-          for (const a of ObjectUtils_1.ObjectUtils.GetGameplayTags(
-            o.InitState.StandbyTags,
-          ))
-            e.AddTag(a?.TagId);
-          break;
-        case 2:
-          e.AddTag(447365096);
-          break;
-        case 3:
-          e.AddTag(-1183618125);
-          break;
-        case 4:
-          e.AddTag(-1609174800);
-      }
-      this.StateMachineGroup.OnActivate();
-    }
-    return !0;
+    return this.StateMachineGroup.OnActivate(), !0;
   }
   OnEnd() {
     return this.StateMachineGroup?.Clear(), !(this.StateMachineGroup = void 0);
@@ -81,57 +53,57 @@ let CharacterStateMachineNewComponent = class CharacterStateMachineNewComponent 
   }
   static ChangeStateNotify(t, e, o) {
     o = MathUtils_1.MathUtils.LongToBigInt(o.$8n);
-    t?.GetComponent(68)?.StateMachineGroup.HandleSwitch(e.$4n, e.J4n, e.z4n, o);
+    t?.GetComponent(75)?.StateMachineGroup.HandleSwitch(e.$4n, e.J4n, e.z4n, o);
   }
   static ChangeStateConfirmNotify(t, e) {
-    t?.GetComponent(68)?.StateMachineGroup.HandleChangeStateConfirm(
+    t?.GetComponent(75)?.StateMachineGroup.HandleChangeStateConfirm(
       e.$4n,
       e.Y4n,
     );
   }
   static FsmResetNotify(t, e, o) {
     o = MathUtils_1.MathUtils.LongToBigInt(o.$8n);
-    t?.GetComponent(68)?.StateMachineGroup.ResetStateMachine(e.Uys, o);
+    t?.GetComponent(75)?.StateMachineGroup.ResetStateMachine(e.Uys, o);
   }
   static FsmBlackboardNotify(t, e) {
-    t?.GetComponent(68)?.StateMachineGroup.HandleBlackboard(e);
+    t?.GetComponent(75)?.StateMachineGroup.HandleBlackboard(e);
   }
   static FsmCustomBlackboardNotify(t, e) {
-    t?.GetComponent(68)?.StateMachineGroup.HandleCustomBlackboard(e);
+    t?.GetComponent(75)?.StateMachineGroup.HandleCustomBlackboard(e);
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("e3n")],
+  [CombatMessage_1.CombatNet.Listen("e3n", !0)],
   CharacterStateMachineNewComponent,
   "ChangeStateNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("t3n")],
+    [CombatMessage_1.CombatNet.Listen("t3n", !0)],
     CharacterStateMachineNewComponent,
     "ChangeStateConfirmNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("n3n")],
+    [CombatMessage_1.CombatNet.Listen("n3n", !0)],
     CharacterStateMachineNewComponent,
     "FsmResetNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("h3n")],
+    [CombatMessage_1.CombatNet.Listen("h3n", !0)],
     CharacterStateMachineNewComponent,
     "FsmBlackboardNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("I3n")],
+    [CombatMessage_1.CombatNet.Listen("I3n", !0)],
     CharacterStateMachineNewComponent,
     "FsmCustomBlackboardNotify",
     null,
   ),
   (CharacterStateMachineNewComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(68)],
+    [(0, RegisterComponent_1.RegisterComponent)(75)],
     CharacterStateMachineNewComponent,
   )),
   (exports.CharacterStateMachineNewComponent =

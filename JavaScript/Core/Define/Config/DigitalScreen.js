@@ -28,6 +28,9 @@ class DigitalScreen {
   get TextFactor() {
     return this.textfactor();
   }
+  get LogoIconPath() {
+    return this.logoiconpath();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -42,8 +45,14 @@ class DigitalScreen {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   backgroundpicture(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   prefab() {
     var t = this.J7.__offset(this.z7, 8);
@@ -77,6 +86,16 @@ class DigitalScreen {
   textfactor() {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
+  }
+  logoiconpath(t) {
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.DigitalScreen = DigitalScreen;

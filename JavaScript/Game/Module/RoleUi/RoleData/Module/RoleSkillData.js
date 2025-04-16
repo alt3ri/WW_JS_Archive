@@ -9,7 +9,7 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  CharacterAbilityComponent_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterAbilityComponent"),
+  BaseAbilityComponent_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/BaseAbilityComponent"),
   RoleModuleDataBase_1 = require("./RoleModuleDataBase");
 var ERoleSkillReferenceType;
 !(function (e) {
@@ -24,6 +24,7 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
   constructor() {
     super(...arguments),
       (this.RoleSkillMap = new Map()),
+      (this.RoleUpgradeSkillMap = new Map()),
       (this.RoleSkillReferenceMap = new Map()),
       (this.SkillNodeState = []),
       (this.z1o = new Map()),
@@ -43,7 +44,14 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return this.RoleSkillMap.get(e) ?? 0;
   }
   SetSkillLevel(e, r) {
-    this.RoleSkillMap.set(e, r);
+    this.RoleSkillMap.set(e, r),
+      0 < r &&
+        0 <
+          (r =
+            ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
+              e,
+            ).UpgradeSkillId) &&
+        this.RoleUpgradeSkillMap.set(r, e);
   }
   GetAllSkillLevel() {
     return Array.from(this.RoleSkillMap.values());
@@ -88,11 +96,11 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
   GetDefaultSkillLevel(e) {
     switch (e) {
       case ERoleSkillReferenceType.SkillInfo:
-        return CharacterAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL;
+        return BaseAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL;
       case ERoleSkillReferenceType.Buff:
       case ERoleSkillReferenceType.Damage:
       default:
-        return CharacterAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND;
+        return BaseAbilityComponent_1.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND;
     }
   }
   SetSkillReferenceMapBySkillId(r) {
@@ -105,7 +113,7 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
           t
             ? t !== r &&
               Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Role", 44, "技能表里的这个ID不能对应多个技能", [
+              Log_1.Log.Error("Role", 43, "技能表里的这个ID不能对应多个技能", [
                 "ID",
                 l,
               ])
@@ -186,8 +194,8 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
     var i = this.GetSkillNodeStateData(),
       l = i.length;
     for (let e = 0; e < l; e++) {
-      var o = i[e];
-      if (o.SkillNodeId === r && o.IsActive) {
+      var n = i[e];
+      if (n.SkillNodeId === r && n.IsActive) {
         t = !0;
         break;
       }
@@ -199,31 +207,31 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
       i = t.length;
     for (let e = 0; e < i; e++) {
       var l = t[e],
-        o =
+        n =
           ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConditionById(
             l,
           ),
-        n = r.NodeGroup;
-      if (o)
-        if (1 === o.ConditionType)
-          for (var [a, s] of o.ConditionParam) {
+        o = r.NodeGroup;
+      if (n)
+        if (1 === n.ConditionType)
+          for (var [a, s] of n.ConditionParam) {
             a =
               ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNodeByGroupIdAndIndex(
-                n,
+                o,
                 a,
               );
-            if (this.GetSkillNodeLevel(a) < s) return o;
+            if (this.GetSkillNodeLevel(a) < s) return n;
           }
-        else if (2 === o.ConditionType) {
+        else if (2 === n.ConditionType) {
           var f = r.ParentNodes.length;
           for (let e = 0; e < f; e++) {
             var u = r.ParentNodes[e],
               u =
                 ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNodeByGroupIdAndIndex(
-                  n,
+                  o,
                   u,
                 );
-            if (0 === this.GetSkillNodeLevel(u)) return o;
+            if (0 === this.GetSkillNodeLevel(u)) return n;
           }
         }
     }
@@ -243,6 +251,12 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
         )
           return !1;
     return !0;
+  }
+  GetSkillIdAfterUpgrade(e) {
+    return this.RoleUpgradeSkillMap.get(e) ?? 0;
+  }
+  HasAnySkillUpgrade() {
+    return 0 < this.RoleUpgradeSkillMap.size;
   }
 }
 exports.RoleSkillData = RoleSkillData;

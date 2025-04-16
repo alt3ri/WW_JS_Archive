@@ -12,19 +12,19 @@ class LevelConditionCheckClientUseSkill extends LevelGeneralBase_1.LevelConditio
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
         !1)
       : (o = e.LimitParams.get("SkillId"))
         ? !!(n = Global_1.Global.BaseCharacter) &&
-          !!(n = n.GetEntityNoBlueprint()?.GetComponent(34)) &&
+          !!(n = n.GetEntityNoBlueprint()?.GetComponent(39)) &&
           !!n.GetSkill(Number(o))?.Active
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.CheckClientUseSkill}的定义`,
             ),
           !1);

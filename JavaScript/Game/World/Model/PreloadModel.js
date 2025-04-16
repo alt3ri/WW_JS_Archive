@@ -142,9 +142,7 @@ class EntityAssetElement extends AssetElement {
       (ModelManager_1.ModelManager.PreloadModel.LoadingNeedWaitEntitySet.has(
         t.Id,
       ) ||
-        (this.CreatureDataComponent.IsRole() &&
-          this.CreatureDataComponent.GetPlayerId() ===
-            ModelManager_1.ModelManager.CreatureModel.GetPlayerId())) &&
+        this.CreatureDataComponent.IsRole()) &&
         (this.IEr = 101),
       (t.Priority = this.IEr);
   }

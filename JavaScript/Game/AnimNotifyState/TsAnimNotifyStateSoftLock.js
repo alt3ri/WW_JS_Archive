@@ -5,6 +5,7 @@ const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   ModelManager_1 = require("../Manager/ModelManager");
 class TsAnimNotifyStateSoftLock extends UE.KuroAnimNotifyState {
+  Constructor() {}
   K2_NotifyBegin(t, e, a) {
     t = t.GetOwner();
     return (

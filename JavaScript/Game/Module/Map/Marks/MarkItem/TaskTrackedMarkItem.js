@@ -24,7 +24,7 @@ class TaskTrackedMarkItem {
       (this.NodeId = 0),
       (this.TrackTarget = void 0),
       (this.MarkPointInfo = void 0),
-      (this.M$a = !1),
+      (this.Qza = !1),
       (this.ECt = 2),
       (this.NRi = !1),
       (this.ige = !1),
@@ -47,7 +47,7 @@ class TaskTrackedMarkItem {
         (this.TreeConfigId = this.Tree.TreeConfigId);
       (i = this.Tree.GetNode(this.NodeId)),
         (i =
-          (i.TrackTarget &&
+          (i?.TrackTarget &&
             i.TrackTarget.ZaxisViewRange &&
             ((this.RangeMarkShowDisUp =
               i.TrackTarget.ZaxisViewRange.Up / ONE_HUNDRED),
@@ -62,7 +62,15 @@ class TaskTrackedMarkItem {
       (this.BtType = Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest),
         (this.TreeConfigId = t.TreeId);
     i = this.MarkRange;
-    this.NRi = 0 < i;
+    (this.NRi = 0 < i),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.TaskRangeTrackStateChange,
+        this.ECt,
+        this.TreeIncId,
+        this.MarkPointInfo.NodeId,
+        this.MarkPointInfo.MarkId,
+        !1,
+      );
   }
   Update() {
     var t;
@@ -75,7 +83,7 @@ class TaskTrackedMarkItem {
     if (this.NRi) {
       var h,
         r = this.RangeMarkShowDis,
-        o = r + 2;
+        n = r + 2;
       let t = 0,
         i = !1,
         e = !0;
@@ -92,24 +100,24 @@ class TaskTrackedMarkItem {
           : (t =
               Vector_1.Vector.Dist(s, this.WorldPosition) *
               MapDefine_1.FLOAT_0_01) > r),
-        this.ige ? (this.cGa(!i), (this.ige = !1)) : this.cGa(t < o && e);
+        this.ige ? (this.vNa(!i), (this.ige = !1)) : this.vNa(t < n && e);
     }
   }
   get WorldPosition() {
-    var t =
-      this.MarkPointInfo.MapId ===
-      ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
     return MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
       this.TrackTarget,
       !1,
       void 0,
-      t,
+      this.MarkPointInfo.MapId,
     );
   }
-  cGa(t) {
+  get InstanceDungeonId() {
+    if (this.Tree) return this.Tree.GetNodeDungeonId();
+  }
+  vNa(t) {
     this.NRi &&
-      this.M$a !== t &&
-      ((this.M$a = t),
+      this.Qza !== t &&
+      ((this.Qza = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TaskRangeTrackStateChange,
         this.ECt,
@@ -123,9 +131,20 @@ class TaskTrackedMarkItem {
     var t, i;
     return (
       !!this.Tree &&
-      ((t = this.Tree.GetNodeDungeonId(this.NodeId) ?? 0),
+      ((t = this.Tree.GetNodeDungeonId()),
       (i = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
-      !0 === MapUtil_1.MapUtil.IsDungeonDiffWorld(i, t))
+      !(
+        !ModelManager_1.ModelManager.WorldMapModel.IsPlayerInStoryInstanceDungeon() ||
+        !this.AW_()
+      ) || !0 === MapUtil_1.MapUtil.IsDungeonDiffWorld(i, t))
+    );
+  }
+  AW_() {
+    return (
+      0 !== this.InstanceDungeonId &&
+      void 0 !== this.InstanceDungeonId &&
+      this.InstanceDungeonId !==
+        ModelManager_1.ModelManager.CreatureModel.GetInstanceId()
     );
   }
 }

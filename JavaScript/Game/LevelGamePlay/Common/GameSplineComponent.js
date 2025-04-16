@@ -10,7 +10,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   AiPatrolController_1 = require("../../AI/Controller/AiPatrolController"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   SAMPLE_ANGLE_LIMIT = 15,
-  SAMPLE_STEP_DIST = 50;
+  SAMPLE_STEP_DIST = 200;
 class GameSplineComponent {
   constructor(t) {
     (this.SplineId = 0),
@@ -21,6 +21,7 @@ class GameSplineComponent {
       (this.MainPointIndexArray = void 0),
       (this.Hye = void 0),
       (this.jye = Vector_1.Vector.Create()),
+      (this.RTe = Vector_1.Vector.Create()),
       (this.Wye = Vector_1.Vector.Create()),
       (this.Kye = Rotator_1.Rotator.Create()),
       (this.Qye = Vector_1.Vector.Create()),
@@ -41,7 +42,7 @@ class GameSplineComponent {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            43,
+            42,
             "[GameSplineComponent.Initialize] 无法找到SplineEntityData",
             ["SplineEntityId", this.SplineId],
           ),
@@ -72,7 +73,7 @@ class GameSplineComponent {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            43,
+            42,
             "[GameSplineComponent.Initialize] 无法找到样条组件配置",
             ["SplineEntityId", this.SplineId],
           ),
@@ -132,7 +133,7 @@ class GameSplineComponent {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            43,
+            42,
             "[GameSplineComponent.Initialize] 无法找到样条组件配置",
             ["SplineEntityId", this.SplineId],
           ),
@@ -193,7 +194,7 @@ class GameSplineComponent {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Level",
-              43,
+              42,
               "[GameSplineComponent.GetWorldLocationAtSplinePoint] Index越界",
               ["Points.length", this.Hye.Points.length],
               ["index", t],
@@ -212,7 +213,7 @@ class GameSplineComponent {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            43,
+            42,
             "[GameSplineComponent.Initialize] 无法找到SplineEntityData",
             ["SplineEntityId", this.SplineId],
           ),
@@ -229,7 +230,7 @@ class GameSplineComponent {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            43,
+            42,
             "[GameSplineComponent.Initialize] 无法找到样条组件配置",
             ["SplineEntityId", this.SplineId],
           ),
@@ -252,7 +253,7 @@ class GameSplineComponent {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            32,
+            31,
             "[NpcPasserbyComponent] Spline获取失败",
             ["SplineEntityId", this.SplineId],
           ),
@@ -260,39 +261,43 @@ class GameSplineComponent {
       );
     var o = i,
       i = s.GetNumberOfSplinePoints(),
-      n = this.PathPoint;
-    (n.length = 0),
-      n.splice(0, n.length),
+      r = this.PathPoint;
+    (r.length = 0),
+      r.splice(0, r.length),
       (this.MainPointIndexArray = new Array());
     for (let t = 0, e = i; t < e; t++) {
-      var r = s.GetWorldLocationAtSplinePoint(t),
+      var n = s.D_GetLocationAtSplinePoint(t, 1),
         h = new AiPatrolController_1.PatrolPoint(),
-        r =
+        n =
           ((h.IsMain = !0),
-          (h.Point = Vector_1.Vector.Create(r)),
+          (h.Point = Vector_1.Vector.Create(n)),
           o.SplineData),
-        r =
-          ((h.MoveState = r.Points[t].MoveState),
-          (h.MoveSpeed = r.Points[t].MoveSpeed),
-          (h.IsIgnorePoint = r.Points[t].IgnorePoint ?? !1),
-          (h.StayTime = r.Points[t].StayTime ?? 0),
-          (h.IsHide = r.Points[t].IsHide ?? !1),
-          r.Points[t].Actions);
-      r && (h.Actions = r), this.MainPointIndexArray.push(n.length), n.push(h);
+        n =
+          ((h.MoveState = n.Points[t].MoveState),
+          (h.MoveSpeed = n.Points[t].MoveSpeed),
+          (h.IsIgnorePoint = n.Points[t].IgnorePoint ?? !1),
+          (h.StayTime = n.Points[t].StayTime ?? 0),
+          (h.IsHide = n.Points[t].IsHide ?? !1),
+          n.Points[t].Actions);
+      n && (h.Actions = n), this.MainPointIndexArray.push(r.length), r.push(h);
       let i = s.GetDirectionAtSplinePoint(t, 1);
       if (t < e - 1) {
-        var r = s.GetDistanceAlongSplineAtSplinePoint(t),
+        var n = s.GetDistanceAlongSplineAtSplinePoint(t),
           l = s.GetDistanceAlongSplineAtSplinePoint(t + 1);
-        for (let t = r + SAMPLE_STEP_DIST; t < l; t += SAMPLE_STEP_DIST) {
+        for (
+          let t = n + SAMPLE_STEP_DIST;
+          t < l - SAMPLE_STEP_DIST;
+          t += SAMPLE_STEP_DIST
+        ) {
           var a,
             _ = s.GetDirectionAtDistanceAlongSpline(t, 1);
           MathUtils_1.MathUtils.GetAngleByVectorDot(i, _) <
             SAMPLE_ANGLE_LIMIT ||
             ((i = _),
-            (_ = s.GetWorldLocationAtDistanceAlongSpline(t)),
+            (_ = s.D_GetLocationAtDistanceAlongSpline(t, 1)),
             ((a = new AiPatrolController_1.PatrolPoint()).IsMain = !1),
             (a.Point = Vector_1.Vector.Create(_)),
-            n.push(a));
+            r.push(a));
         }
       }
     }
@@ -304,6 +309,73 @@ class GameSplineComponent {
       ),
       !0
     );
+  }
+  InitializeWithSplineCurve(e, s, o = !0) {
+    if (((this.SplineComponentData = s), !this.SplineComponentData))
+      return (
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Level",
+            42,
+            "[GameSplineComponent.Initialize] 无法找到样条组件配置",
+            ["SplineEntityId", this.SplineId],
+          ),
+        !1
+      );
+    this.Hye = this.SplineComponentData.Option;
+    var s = e.GetSplinePointsNum(),
+      r = this.PathPoint;
+    (r.length = 0),
+      r.splice(0, r.length),
+      (this.MainPointIndexArray = new Array());
+    for (let t = 0, i = s; t < i; t++) {
+      var n = Vector_1.Vector.Create(),
+        h =
+          (e.GetWorldLocationAtSplinePoint(t, n),
+          new AiPatrolController_1.PatrolPoint()),
+        n =
+          ((h.IsMain = !0),
+          (h.Point = Vector_1.Vector.Create(n)),
+          this.SplineComponentData.Option),
+        n =
+          ((h.MoveState = n.Points[t].MoveState),
+          (h.MoveSpeed = n.Points[t].MoveSpeed),
+          (h.IsIgnorePoint = n.Points[t].IgnorePoint ?? !1),
+          (h.StayTime = n.Points[t].StayTime ?? 0),
+          (h.IsHide = n.Points[t].IsHide ?? !1),
+          n.Points[t].Actions);
+      if (
+        (n && (h.Actions = n),
+        this.MainPointIndexArray.push(r.length),
+        r.push(h),
+        o)
+      ) {
+        e.GetDirectionAtSplinePoint(t, 1, this.jye);
+        var l = this.jye;
+        if (t < i - 1) {
+          var n = e.GetDistanceAlongSplineAtSplinePoint(t),
+            a = e.GetDistanceAlongSplineAtSplinePoint(t + 1);
+          for (
+            let t = n + SAMPLE_STEP_DIST;
+            t < a - SAMPLE_STEP_DIST;
+            t += SAMPLE_STEP_DIST
+          ) {
+            e.GetDirectionAtDistanceAlongSpline(t, 1, this.RTe);
+            var _,
+              p = this.RTe;
+            MathUtils_1.MathUtils.GetAngleByVectorDot(l, p) <
+              SAMPLE_ANGLE_LIMIT ||
+              (l.DeepCopy(p),
+              (p = Vector_1.Vector.Create()),
+              e.GetWorldLocationAtDistanceAlongSpline(t, p),
+              ((_ = new AiPatrolController_1.PatrolPoint()).IsMain = !1),
+              (_.Point = p),
+              r.push(_));
+          }
+        }
+      }
+    }
+    return (this.IsInitSubPoint = !0);
   }
   GetLastMainPointIndex(t) {
     if (!this.IsInitSubPoint) return t;

@@ -10,12 +10,15 @@ const cpp_1 = require("cpp"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   Net_1 = require("../../../Core/Net/Net"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  CloudGameManagerLauncher_1 = require("../../../Launcher/Platform/CloudGameManagerLauncher"),
+  CloudGameManager_1 = require("../../Manager/CloudGameManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine");
 class PlatformController extends ControllerBase_1.ControllerBase {
   static Init() {
-    return this.ControlScreenSaver(!1), this.hEa(), this.oXi(), this.OnInit();
+    return this.ControlScreenSaver(!1), this._Ea(), this.oXi(), this.OnInit();
   }
   static OnClear() {
     return this.rXi(), !0;
@@ -32,7 +35,7 @@ class PlatformController extends ControllerBase_1.ControllerBase {
       this.nXi,
     );
   }
-  static hEa() {
+  static _Ea() {
     Info_1.Info.IsPcPlatform() ||
       ModelManager_1.ModelManager.PlatformModel?.RefreshPlatformByDevice(
         "InitDeviceInfo",
@@ -40,48 +43,55 @@ class PlatformController extends ControllerBase_1.ControllerBase {
   }
   static ControlScreenSaver(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Platform", 28, "控制屏幕", ["state", e]),
+      Log_1.Log.Info("Platform", 27, "控制屏幕", ["state", e]),
       UE.KismetSystemLibrary.ControlScreensaver(e);
   }
   static SendClientBasicInfo() {
     var e = new Protocol_1.Aki.Protocol.fYn(),
-      t = PlatformController.PackageClientBasicInfo();
-    (e.Z9n = t),
-      Net_1.Net.Call(18252, e, () => {}),
-      t &&
+      r = PlatformController.PackageClientBasicInfo();
+    (e.Z9n = r),
+      Net_1.Net.Call(18408, e, () => {}),
+      r &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Platform",
-          8,
+          27,
           "客户端上报一些设备基础信息",
-          ["CPU", t.rHn],
-          ["DeviceId", t.oHn],
-          ["Model", t.nHn],
-          ["NetStatus", t.sHn],
-          ["Platform", t.f7n],
+          ["CPU", r.rHn],
+          ["DeviceId", r.oHn],
+          ["Model", r.nHn],
+          ["NetStatus", r.sHn],
+          ["Platform", r.f7n],
         );
   }
   static PackageClientBasicInfo() {
     var e = new Protocol_1.Aki.Protocol.Z9n(),
-      t =
+      r =
         ((e.sHn = ModelManager_1.ModelManager.PlatformModel.GetNetStatus()),
         (e.f7n = cpp_1.KuroApplication.IniPlatformName()),
         ModelManager_1.ModelManager.KuroSdkModel.GetBasicInfo()),
-      t =
-        ((e.rHn = t?.CPUModelName ?? ""),
-        (e.oHn = t?.DeviceId ?? ""),
-        (e.nHn = t?.ModelName ?? ""),
+      r =
+        ((e.rHn = r?.CPUModelName ?? ""),
+        (e.oHn = r?.DeviceId ?? ""),
+        (e.nHn = r?.ModelName ?? ""),
         (e.aHn = UE.ThinkingAnalytics.GetDeviceId()),
         (e.r9n = LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(
           LanguageSystem_1.LanguageSystem.PackageLanguage,
         ).LanguageType),
+        (e.kll =
+          ControllerHolder_1.ControllerHolder.KuroSdkController.GetPackageId() ??
+          ""),
+        CloudGameManager_1.CloudGameManager.IsCloudGame &&
+          (e.Yu_ =
+            CloudGameManagerLauncher_1.CloudGameManagerLauncher.ServerTag),
         UE.KuroStaticLibrary.GetMacAddress());
-    return StringUtils_1.StringUtils.IsEmpty(t) || (e.hHn = t), e;
+    return StringUtils_1.StringUtils.IsEmpty(r) || (e.hHn = r), e;
   }
 }
-(exports.PlatformController = PlatformController).nXi = (e, t) => {
-  0 === t ||
+(exports.PlatformController = PlatformController).nXi = (e, r) => {
+  0 === r ||
     Info_1.Info.IsInKeyBoard() ||
+    CloudGameManager_1.CloudGameManager.IsCloudGame ||
     Info_1.Info.SwitchInputControllerType(1, "MouseAxisInput");
 };
 //# sourceMappingURL=PlatformController.js.map

@@ -3,23 +3,24 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulatableCastProjectileState = void 0);
 const UE = require("ue"),
   ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulatableCastProjectileState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
-  constructor(t, i) {
-    super(t, i),
+  constructor() {
+    super(...arguments),
       (this.Vnr = void 0),
       (this.Hnr = void 0),
-      (this.U0a = void 0),
-      (this.w0a = void 0),
+      (this.wga = void 0),
+      (this.Pga = void 0),
       (this.jnr = 0),
       (this.nJo = 0),
       (this.Wnr = Vector_1.Vector.Create()),
       (this.Knr = Vector_1.Vector.Create()),
-      (this.P0a = !1),
-      (this.StateType = "BeCastingFree");
+      (this.xga = !1);
   }
   OnEnter() {
     super.OnEnter(),
@@ -27,32 +28,41 @@ class SceneItemManipulatableCastProjectileState extends SceneItemManipulableCast
       (this.jnr = this.SceneItem.ManipulateBaseConfig.抛物瞄准模式初速度),
       (this.nJo = 0),
       (this.Wnr = Vector_1.Vector.Create(this.SceneItem.LastHoldingLocation)),
-      (this.P0a = !1),
+      (this.xga = !1),
+      this.NeedNotifyServer &&
+        LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
+          this.SceneItem.Entity.Id,
+          Protocol_1.Aki.Protocol.Zw_.Proto_EControlStateFreeThrowing,
+        ),
       this.EnterCallback && this.EnterCallback();
   }
   OnTick(t) {
     t = this.jnr * t;
     this.nJo += t;
-    let i = new UE.Vector();
+    let e = new UE.VectorDouble();
     return (
-      (i = (
-        this.P0a ? this.U0a : this.Vnr
-      ).GetWorldLocationAtDistanceAlongSpline(this.nJo)),
-      this.SceneItem.ActorComp.SetActorLocation(i),
-      !this.P0a && this.nJo >= this.Vnr.GetSplineLength()
-        ? this.U0a
-          ? ((this.P0a = !0),
+      (e = (this.xga ? this.wga : this.Vnr).D_GetLocationAtDistanceAlongSpline(
+        this.nJo,
+        1,
+      )),
+      this.SceneItem.ActorComp.SetActorLocation(e),
+      !this.xga && this.nJo >= this.Vnr.GetSplineLength()
+        ? this.wga
+          ? ((this.xga = !0),
             this.SceneItem.ActorComp.SetActorLocation(
-              this.U0a.GetWorldLocationAtDistanceAlongSpline(0),
+              this.wga.D_GetLocationAtDistanceAlongSpline(0, 1),
               "[SceneItemManipulatableCastProjectileState] OnTeleport",
               !1,
             ),
             (this.nJo = 0))
           : ((this.SceneItem.CastFreeState.NeedNotifyServer = !1),
-            (this.SceneItem.CurrentState = this.SceneItem.CastFreeState))
-        : this.P0a &&
-          this.nJo >= this.U0a.GetSplineLength() &&
-          (this.SceneItem.CurrentState = this.SceneItem.ResetState),
+            this.SceneItem?.SetState(
+              9,
+              "CastProjectileState over spline and no afterPortal",
+            ))
+        : this.xga &&
+          this.nJo >= this.wga.GetSplineLength() &&
+          this.SceneItem?.SetState(1, "CastProjectileState over spline"),
       (this.SceneItem.ActorComp.PhysicsMode = 3),
       (this.Knr = Vector_1.Vector.Create()),
       this.SceneItem.ActorComp.ActorLocationProxy.Subtraction(
@@ -69,60 +79,69 @@ class SceneItemManipulatableCastProjectileState extends SceneItemManipulableCast
   OnExit() {
     super.OnExit(),
       this.SceneItem.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
-        this.Knr.MultiplyEqual(this.jnr).ToUeVector(),
+        this.Knr.MultiplyEqual(this.jnr).ToUeVectorOld(),
       ),
       this.Hnr?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.Hnr),
+        (ActorSystem_1.ActorSystem.Put(
+          "SceneItemManipulatableCastProjectileState.OnExit1",
+          this.Hnr,
+        ),
         (this.Hnr = void 0),
         (this.Vnr = void 0)),
-      this.w0a?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.w0a),
-        (this.w0a = void 0),
-        (this.U0a = void 0));
+      this.Pga?.IsValid() &&
+        (ActorSystem_1.ActorSystem.Put(
+          "SceneItemManipulatableCastProjectileState.OnExit2",
+          this.Pga,
+        ),
+        (this.Pga = void 0),
+        (this.wga = void 0));
   }
   Qnr() {
     var t,
-      i = this.SceneItem.LastHoldingLocation.ToUeVector(),
-      e = ModelManager_1.ModelManager.ManipulaterModel.GetProjectilePath(),
+      e = this.SceneItem.LastHoldingLocation.ToUeVector(),
+      i = ModelManager_1.ModelManager.ManipulaterModel.GetProjectilePath(),
       s =
         ModelManager_1.ModelManager.ManipulaterModel.GetAfterPortalProjectilePath(),
-      h = Vector_1.Vector.Create(e.Get(e.Num() - 1));
-    h.SubtractionEqual(Vector_1.Vector.Create(e.Get(e.Num() - 2))),
-      h.Normalize(),
+      r = Vector_1.Vector.Create(i.Get(i.Num() - 1));
+    r.SubtractionEqual(Vector_1.Vector.Create(i.Get(i.Num() - 2))),
+      r.Normalize(),
       s.Num() <= 0
-        ? ((t = Vector_1.Vector.Create(e.Get(e.Num() - 1))).AdditionEqual(
-            h.MultiplyEqual(
+        ? ((t = Vector_1.Vector.Create(i.Get(i.Num() - 1))).AdditionEqual(
+            r.MultiplyEqual(
               2 * this.SceneItem.ManipulateBaseConfig.抛物瞄准射线检测半径,
             ),
           ),
-          e.Add(t.ToUeVector()))
+          i.Add(t.ToUeVector()))
         : ((t = Vector_1.Vector.Create(s.Get(s.Num() - 1))).AdditionEqual(
-            h.MultiplyEqual(
+            r.MultiplyEqual(
               2 * this.SceneItem.ManipulateBaseConfig.抛物瞄准射线检测半径,
             ),
           ),
           s.Add(t.ToUeVector())),
       (this.Hnr = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePathLine_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
       )),
-      this.Hnr.K2_SetActorLocation(i, !1, void 0, !0),
+      this.Hnr.D_K2_SetActorLocation(e, !1, void 0, !0),
       (this.Vnr = this.Hnr.GetComponentByClass(
         UE.SplineComponent.StaticClass(),
       )),
-      this.Vnr.SetSplinePoints(e, 0, !0),
+      this.Vnr.D_SetSplinePoints(i, 0, !0),
       0 < s.Num() &&
-        ((this.w0a = ActorSystem_1.ActorSystem.Get(
+        ((this.Pga = ActorSystem_1.ActorSystem.Get(
           UE.BP_BasePathLine_C.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
         )),
-        (h =
+        (r =
           ModelManager_1.ModelManager.ManipulaterModel.GetAfterPortalStartPosition()),
-        this.w0a.K2_SetActorLocation(h, !1, void 0, !0),
-        (this.U0a = this.w0a.GetComponentByClass(
+        this.Pga.D_K2_SetActorLocation(r, !1, void 0, !0),
+        (this.wga = this.Pga.GetComponentByClass(
           UE.SplineComponent.StaticClass(),
         )),
-        this.U0a.SetSplinePoints(s, 0, !0));
+        this.wga.D_SetSplinePoints(s, 0, !0));
+  }
+  IsNoLockCasting() {
+    return !0;
   }
 }
 exports.SceneItemManipulatableCastProjectileState =

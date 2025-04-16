@@ -54,11 +54,11 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
         (this.GetText(0).SetText(e.toString()),
         ConfigManager_1.ConfigManager.WorldLevelConfig.GetWorldLevelConfig(
           e - 1,
-        ).PlayerLevelMax),
+        )?.PlayerLevelMax),
       e =
         ConfigManager_1.ConfigManager.WorldLevelConfig.GetWorldLevelConfig(
           e,
-        ).PlayerLevelMax;
+        )?.PlayerLevelMax;
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(1),
       "WorldLevelTips",
@@ -83,7 +83,7 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
     Global_1.Global.BaseCharacter &&
       (e = EffectUtil_1.EffectUtil.GetEffectPath("WorldLevelUpEffect")) &&
       0 !== e.length &&
-      ((t = (i = Global_1.Global.BaseCharacter).GetTransform()),
+      ((t = (i = Global_1.Global.BaseCharacter).D_GetTransform()),
       (i = i.CapsuleComponent.CapsuleHalfHeight),
       ((r = t.GetLocation()).Z -= i),
       t.SetLocation(r),

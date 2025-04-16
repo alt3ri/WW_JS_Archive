@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.NodeTypeData =
       void 0);
 const IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest"),
+  TimerNode_1 = require("../../TimerNode"),
   AwakeAndLoadEntityNode_1 = require("../BehaviorNode/ChildQuestNode/AwakeAndLoadEntityNode"),
   CheckCombatStateBehaviorNode_1 = require("../BehaviorNode/ChildQuestNode/CheckCombatStateBehaviorNode"),
   CheckEntityStateNode_1 = require("../BehaviorNode/ChildQuestNode/CheckEntityStateNode"),
@@ -25,6 +26,7 @@ const IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest"),
   ServerAchieveChildQuestNode_1 = require("../BehaviorNode/ChildQuestNode/ServerAchieveChildQuestNode"),
   ShowUiBehaviorNode_1 = require("../BehaviorNode/ChildQuestNode/ShowUiBehaviorNode"),
   UseItemBehaviorNode_1 = require("../BehaviorNode/ChildQuestNode/UseItemBehaviorNode"),
+  WalkingPatternBehaviorNode_1 = require("../BehaviorNode/ChildQuestNode/WalkingPatternBehaviorNode"),
   ParallelSelectNode_1 = require("../BehaviorNode/LogicNode/ParallelSelectNode"),
   SequenceNode_1 = require("../BehaviorNode/LogicNode/SequenceNode"),
   QuestFailedBehaviorNode_1 = require("../BehaviorNode/QuestFailedBehaviorNode");
@@ -80,9 +82,7 @@ function newNodeObj(o) {
     [IQuest_1.EChildQuest.DetectCombatState]: new NodeTypeData(
       CheckCombatStateBehaviorNode_1.CheckCombatStateBehaviorNode,
     ),
-    [IQuest_1.EChildQuest.Timer]: new NodeTypeData(
-      ServerAchieveChildQuestNode_1.ServerAchieveChildQuestNode,
-    ),
+    [IQuest_1.EChildQuest.Timer]: new NodeTypeData(TimerNode_1.TimerNode),
     [IQuest_1.EChildQuest.Parkour]: new NodeTypeData(
       ParkourBehaviorNode_1.ParkourBehaviorNode,
     ),
@@ -164,7 +164,12 @@ function newNodeObj(o) {
     [IQuest_1.EChildQuest.AwakeAndLoadEntity]: new NodeTypeData(
       AwakeAndLoadEntityNode_1.AwakeAndLoadEntityNode,
     ),
-    [IQuest_1.EChildQuest.WalkingPattern]: new NodeTypeData(void 0),
+    [IQuest_1.EChildQuest.WalkingPattern]: new NodeTypeData(
+      WalkingPatternBehaviorNode_1.WalkingPatternBehaviorNode,
+    ),
+    [IQuest_1.EChildQuest.DetectCombatState2]: new NodeTypeData(
+      ServerAchieveChildQuestNode_1.ServerAchieveChildQuestNode,
+    ),
   }),
   (exports.newNodeObj = newNodeObj);
 //# sourceMappingURL=NodeTypeDefine.js.map

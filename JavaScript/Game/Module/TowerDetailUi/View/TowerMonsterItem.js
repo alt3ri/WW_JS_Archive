@@ -5,39 +5,48 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
-  LguiUtil_1 = require("../../Util/LguiUtil");
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  TowerElementItem_1 = require("./TowerElementItem");
 class TowerMonsterItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super();
+    super(),
+      (this.Mli = void 0),
+      (this.jli = () => {
+        return new TowerElementItem_1.TowerElementItem();
+      });
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UIText],
       [1, UE.UIText],
       [2, UE.UITexture],
-      [3, UE.UITexture],
-      [4, UE.UIItem],
+      [3, UE.UIHorizontalLayout],
     ];
   }
-  Refresh(e, r, t) {
-    var n = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterIcon(e),
-      n =
-        (this.SetTextureByPath(n, this.GetTexture(2)),
+  OnStart() {
+    this.Mli = new GenericLayout_1.GenericLayout(
+      this.GetHorizontalLayout(3),
+      this.jli,
+    );
+  }
+  Refresh(e, t, r) {
+    var i = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterIcon(e),
+      i =
+        (this.SetTextureByPath(i, this.GetTexture(2)),
         ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(e)
-          .ElementId),
-      n = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(n),
-      n =
-        (this.SetTextureByPath(n.Icon, this.GetTexture(3)),
-        this.GetItem(4)?.SetColor(UE.Color.FromHex(n.ElementColor)),
+          .ElementIdArray),
+      i =
+        (this.Mli?.RefreshByData(i),
         ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterName(e)),
       e =
-        (this.GetText(0).SetText(n),
+        (this.GetText(0).SetText(i),
         ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
           ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor,
         )),
-      n = e.InstanceId,
+      i = e.InstanceId,
       e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
-        n,
+        i,
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       );
     LguiUtil_1.LguiUtil.SetLocalTextNew(

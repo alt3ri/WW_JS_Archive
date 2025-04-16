@@ -17,29 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configTemporaryTeleportMarkByMarkId.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configTemporaryTeleportMarkByMarkId.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configTemporaryTeleportMarkByMarkId.GetConfig(";
 exports.configTemporaryTeleportMarkByMarkId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var r = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var r = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       n =
-        (r.Start(),
+        (r?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (n) {
       if (e) {
@@ -47,8 +47,8 @@ exports.configTemporaryTeleportMarkByMarkId = {
         const a = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (a)
           return (
-            r.Stop(),
-            getConfigStat.Stop(),
+            r?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -81,8 +81,8 @@ exports.configTemporaryTeleportMarkByMarkId = {
               ((n = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(n, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r.Stop(),
-            getConfigStat.Stop(),
+            r?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -90,8 +90,8 @@ exports.configTemporaryTeleportMarkByMarkId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    r.Stop(),
-      getConfigStat.Stop(),
+    r?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

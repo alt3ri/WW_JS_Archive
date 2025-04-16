@@ -13,7 +13,7 @@ const UE = require("ue"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   SPEED = 0.05,
-  ALLOW_MOVE_TICK_LIMIT = 1e3;
+  ALLOW_MOVE_TICK_LIMIT = 2e3;
 class Cursor {
   constructor() {
     (this.Bxo = void 0),
@@ -55,7 +55,7 @@ class Cursor {
       this.Bxo?.IsValid() &&
         (this.bxo?.IsValid()
           ? (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("UiNavigation", 11, "拷贝一份新的光标"),
+              Log_1.Log.Debug("UiNavigation", 10, "拷贝一份新的光标"),
             (this.qxo = LguiUtil_1.LguiUtil.CopyItem(this.bxo, this.Bxo)),
             LguiUtil_1.LguiUtil.SetActorIsPermanent(
               this.qxo.GetOwner(),
@@ -69,19 +69,20 @@ class Cursor {
             ),
             (this.Kxo = this.qxo.IsUIActiveSelf()),
             (i = void 0 !== this.Gxo),
-            this.$xo(i),
+            this.TrySetUseItemUiActive(i),
             Cursor.kRe.Set(0, 0, 0))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("UiNavigation", 11, "光标原始节点出现问题")));
+            Log_1.Log.Error("UiNavigation", 10, "光标原始节点出现问题")));
   }
   Yxo() {
-    var i = this.Gxo.K2_GetComponentLocation();
-    Cursor.Jxo.Set(i.X + Cursor.zxo, 0, i.Z + Cursor.Zxo),
+    var i = this.Gxo.D_K2_GetComponentLocation(),
+      t = this.Gxo.D_K2_GetComponentScale();
+    Cursor.Jxo.Set(i.X + Cursor.zxo * t.X, 0, i.Z + Cursor.Zxo * t.Y),
       Cursor.ewo.DeepCopy(Cursor.Jxo),
       Cursor.kRe.DeepCopy(Cursor.Jxo),
       this.qxo
         .GetOwner()
-        .K2_SetActorLocation(Cursor.Jxo.ToUeVector(), !1, void 0, !1);
+        .D_K2_SetActorLocation(Cursor.Jxo.ToUeVector(), !1, void 0, !1);
   }
   SetFollowItem(i) {
     (this.Nxo = i),
@@ -94,9 +95,9 @@ class Cursor {
         ? ((this.Fxo = !0),
           (this.Vxo = i.Cursor.Switch),
           this.two(),
-          this.$xo(!0),
+          this.TrySetUseItemUiActive(!0),
           this.iwo())
-        : this.$xo(!1);
+        : this.TrySetUseItemUiActive(!1);
   }
   RepeatMove() {
     (this.Fxo = !0), (this.jxo = 0);
@@ -119,20 +120,24 @@ class Cursor {
       (Cursor.C2n = e),
       (Cursor.g2n = h));
   }
+  v6l() {
+    this.Kxo && this.qxo.SetAlpha(this.Gxo.GetCalculatedParentAlpha());
+  }
   SetIsUseMouse(i) {
     var t;
     this.Hxo !== i &&
       ((this.Hxo = i),
       (t = !!this.Gxo && this.Gxo.bIsUIActive),
-      this.$xo(t),
+      this.TrySetUseItemUiActive(t),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("UiNavigation", 11, "[InputChange]使用鼠标标记发生变更!", [
+      Log_1.Log.Info("UiNavigation", 10, "[InputChange]使用鼠标标记发生变更!", [
         "使用鼠标",
         i,
       ]);
   }
   iwo() {
-    this.IsMoveInstantly && ((this.IsMoveInstantly = !1), this.Yxo());
+    this.IsMoveInstantly &&
+      ((this.IsMoveInstantly = !1), this.Yxo(), this.v6l());
   }
   owo() {
     return !(
@@ -142,14 +147,14 @@ class Cursor {
       (this.Nxo
         ? !this.Fxo
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("UiNavigation", 11, "光标, 找不到导航对象"),
+            Log_1.Log.Error("UiNavigation", 10, "光标, 找不到导航对象"),
           1))
     );
   }
   rwo() {
-    var i = this.Gxo.K2_GetComponentLocation(),
-      t = this.Gxo.K2_GetComponentScale();
-    Cursor.Jxo.Set(i.X + Cursor.zxo * t.X, 0, i.Z + Cursor.Zxo * t.Z),
+    var i = this.Gxo.D_K2_GetComponentLocation(),
+      t = this.Gxo.D_K2_GetComponentScale();
+    Cursor.Jxo.Set(i.X + Cursor.zxo * t.X, 0, i.Z + Cursor.Zxo * t.Y),
       Vector_1.Vector.Lerp(Cursor.kRe, Cursor.Jxo, this.kxo, Cursor.ewo),
       (this.kxo += SPEED),
       Vector_1.Vector.PointsAreSame(Cursor.ewo, Cursor.Jxo) &&
@@ -157,16 +162,19 @@ class Cursor {
       Cursor.kRe.DeepCopy(Cursor.ewo),
       this.qxo
         .GetOwner()
-        .K2_SetActorLocation(Cursor.ewo.ToUeVector(), !1, void 0, !1),
-      this.two();
+        .D_K2_SetActorLocation(Cursor.ewo.ToUeVector(), !1, void 0, !1),
+      this.two(),
+      this.v6l();
   }
   Tick(i) {
     this.owo() && (this.rwo(), this.swo(i));
   }
   Clear() {
     LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.Oxo),
-      this.Bxo?.IsValid() && ActorSystem_1.ActorSystem.Put(this.Bxo.GetOwner()),
-      this.qxo?.IsValid() && ActorSystem_1.ActorSystem.Put(this.qxo.GetOwner()),
+      this.Bxo?.IsValid() &&
+        ActorSystem_1.ActorSystem.Put("Cursor.Clear1", this.Bxo.GetOwner()),
+      this.qxo?.IsValid() &&
+        ActorSystem_1.ActorSystem.Put("Cursor.Clear2", this.qxo.GetOwner()),
       this.awo(),
       (this.Oxo = LguiResourceManager_1.LguiResourceManager.InvalidId),
       (this.Qxo = 0),
@@ -184,7 +192,7 @@ class Cursor {
   swo(i) {
     this.jxo <= 0 || ((this.jxo -= i), this.jxo <= 0 && (this.Fxo = !1));
   }
-  $xo(i) {
+  TrySetUseItemUiActive(i) {
     this.qxo &&
       this.qxo.IsValid() &&
       ((i = i && this.Vxo && !this.Hxo), this.Kxo !== i) &&
@@ -193,7 +201,7 @@ class Cursor {
   lwo(i) {
     this.qxo.SetUIActive(i),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiNavigation", 11, "[InputChange]鼠标显隐发生变更!", [
+        Log_1.Log.Info("UiNavigation", 10, "[InputChange]鼠标显隐发生变更!", [
           "active",
           this.Kxo,
         ]);
@@ -213,6 +221,10 @@ class Cursor {
   }
   SetCursorActiveDelayTime(i) {
     this.Qxo = i;
+  }
+  RefreshCursorActive() {
+    this.Nxo &&
+      ((this.Vxo = this.Nxo.Cursor.Switch), this.TrySetUseItemUiActive(!0));
   }
 }
 ((exports.Cursor = Cursor).kRe = Vector_1.Vector.Create()),

@@ -51,13 +51,15 @@ class RewardItemList extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(e) {
     e.sort((e, r) => {
-      var i = e.GetTypeSortIndex(),
-        t = r.GetTypeSortIndex();
+      var i = e.GetDropItemType(),
+        t = r.GetDropItemType();
       return i !== t
         ? t - i
-        : (t = e.GetQualityId()) !== (i = r.GetQualityId())
+        : (t = e.GetTypeSortIndex()) !== (i = r.GetTypeSortIndex())
           ? i - t
-          : e.ConfigId - r.ConfigId;
+          : (i = e.GetQualityId()) !== (t = r.GetQualityId())
+            ? t - i
+            : e.ConfigId - r.ConfigId;
     }),
       this.kGe.RefreshByData(e);
   }

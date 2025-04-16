@@ -47,13 +47,21 @@ class BuffItem {
   }
   buffs(t) {
     var s = this.J7.__offset(this.z7, 8);
-    return s
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + s) + 8 * t)
-      : BigInt(0);
+    return s ? this.J7.readFloat64(this.J7.__vector(this.z7 + s) + 8 * t) : 0;
   }
   buffsLength() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  buffsArray() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   cd() {
     var t = this.J7.__offset(this.z7, 10);

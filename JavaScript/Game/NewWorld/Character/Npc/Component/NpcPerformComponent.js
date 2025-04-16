@@ -3,31 +3,33 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, i) {
     var o,
-      n = arguments.length,
-      s =
-        n < 3
+      s = arguments.length,
+      n =
+        s < 3
           ? e
           : null === i
             ? (i = Object.getOwnPropertyDescriptor(e, r))
             : i;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(t, e, r, i);
+      n = Reflect.decorate(t, e, r, i);
     else
       for (var h = t.length - 1; 0 <= h; h--)
-        (o = t[h]) && (s = (n < 3 ? o(s) : 3 < n ? o(e, r, s) : o(e, r)) || s);
-    return 3 < n && s && Object.defineProperty(e, r, s), s;
+        (o = t[h]) && (n = (s < 3 ? o(n) : 3 < s ? o(e, r, n) : o(e, r)) || n);
+    return 3 < s && n && Object.defineProperty(e, r, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformComponent = exports.DEFUALT_DITHER_TIME = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
-  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../Global"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   EnvironmentalPerceptionController_1 = require("../../../../World/Enviroment/EnvironmentalPerceptionController"),
   BasePerformComponent_1 = require("../../Common/Component/BasePerformComponent"),
   CharacterActorComponent_1 = require("../../Common/Component/CharacterActorComponent"),
@@ -45,6 +47,8 @@ let NpcPerformComponent = class NpcPerformComponent extends BasePerformComponent
       (this.OverrideShowRange = 0),
       (this.IsForceInShowRange = !1),
       (this.IsNpcOutShowRangeInternal = !1),
+      (this.IsNpcVisible = !0),
+      (this.IsNpcFirstVisible = !0),
       (this.IsPendingDestroy = !1),
       (this.IsUseFixLocation = !1),
       (this.DestroyVisibleDitherEvent = () => {
@@ -58,9 +62,13 @@ let NpcPerformComponent = class NpcPerformComponent extends BasePerformComponent
   get IsNpcOutShowRange() {
     return this.IsNpcOutShowRangeInternal;
   }
+  GetIsUseFixLocation() {
+    return this.IsUseFixLocation;
+  }
   OnStart() {
-    (this.ActorComp = this.Entity.GetComponent(2)),
-      (this.AnimComp = this.Entity.GetComponent(37)),
+    super.OnStart(),
+      (this.ActorComp = this.Entity.GetComponent(2)),
+      (this.AnimComp = this.Entity.GetComponent(43)),
       (this.Owner = this.ActorComp.Owner);
     var t,
       e = this.ActorComp?.CreatureData?.GetPbEntityInitData();
@@ -99,43 +107,71 @@ let NpcPerformComponent = class NpcPerformComponent extends BasePerformComponent
   OnPlayerImpactEnd() {}
   SetNpcShowState(t, e) {
     this.IsNpcOutShowRangeInternal === t &&
-      (this.IsNpcOutShowRangeInternal = !t);
+      ((this.IsNpcOutShowRangeInternal = !t), this.RefreshNpcDither(e));
   }
-  TrySetNpcDither(t) {
-    var e = this.ActorComp?.Actor?.DitherEffectController;
-    e &&
+  TrySetNpcDither(t, e) {
+    var r = this.ActorComp?.Actor?.DitherEffectController;
+    r &&
       !this.IsPendingDestroy &&
-      (t || this.IsForceInShowRange
-        ? this.IsNpcOutShowRange &&
-          (Log_1.Log.CheckDebug() &&
+      (t
+        ? (this.IsNpcFirstVisible &&
+            ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+            ((this.IsNpcFirstVisible = !1),
+            (t = (t =
+              Global_1.Global.BaseCharacter?.CharacterActorComponent
+                ?.ActorLocationProxy)
+              ? Vector_1.Vector.Dist2D(t, this.ActorComp.ActorLocationProxy)
+              : -1),
+            Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info(
+              "NPC",
+              50,
+              "NPC首次显示",
+              ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
+              ["EntityId", this.Entity.Id],
+              ["CreatureId", this.ActorComp?.CreatureData.GetCreatureDataId()],
+              ["ShowRange", this.GetNpcShowRange()],
+              ["Dist", t],
+              ["IsForce", this.IsForceInShowRange],
+            ),
+          Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "NPC",
-              51,
-              "进入NPC显示范围",
+              50,
+              "[NpcPerformComp] NPC显示",
               ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
               [
                 "CreatureData",
                 this.ActorComp?.CreatureData.GetCreatureDataId(),
               ],
+              ["Reason", e],
             ),
-          this.SetNpcShowState(!0, "TrySetNpcDither"),
-          e.EnterAppearEffect(1, 1, !1),
-          this.Entity.GetComponent(73)?.EnableHeadInfo(!0))
-        : this.IsNpcOutShowRange ||
-          (Log_1.Log.CheckDebug() &&
+          r.EnterAppearEffect(1, 1, !1),
+          this.Entity.GetComponent(80)?.EnableHeadInfo(!0))
+        : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "NPC",
-              51,
-              "离开NPC显示范围",
+              50,
+              "[NpcPerformComp] NPC隐藏",
               ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
               [
                 "CreatureData",
                 this.ActorComp?.CreatureData.GetCreatureDataId(),
               ],
+              ["Reason", e],
             ),
-          this.SetNpcShowState(!1, "TrySetNpcDither"),
-          e.EnterDisappearEffect(1, 1, !1),
-          this.Entity.GetComponent(73)?.EnableHeadInfo(!1)));
+          r.EnterDisappearEffect(1, 1, !1),
+          this.Entity.GetComponent(80)?.EnableHeadInfo(!1)));
+  }
+  RefreshNpcDither(t) {
+    var e = this.IsForceInShowRange || !this.IsNpcOutShowRange;
+    this.IsNpcVisible !== e &&
+      ((this.IsNpcVisible = e), this.TrySetNpcDither(e, t));
+  }
+  SetForceInShowRange(t) {
+    this.IsForceInShowRange !== t &&
+      ((this.IsForceInShowRange = t),
+      this.RefreshNpcDither("SetForceInShowRange"));
   }
   HandlePendingDestroy() {
     (this.IsPendingDestroy = !0),
@@ -145,8 +181,7 @@ let NpcPerformComponent = class NpcPerformComponent extends BasePerformComponent
         !1,
       ),
       TimerSystem_1.TimerSystem.Delay(() => {
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.DelayRemoveEntityFinished,
+        ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
           this.Entity,
         );
       }, exports.DEFUALT_DITHER_TIME);
@@ -154,29 +189,51 @@ let NpcPerformComponent = class NpcPerformComponent extends BasePerformComponent
   InitVisibleDitherCheck() {
     this.SetNpcShowState(!1, "默认出生隐藏"),
       this.ActorComp.Actor.DitherEffectController.ForceResetDither(),
-      (this.IsForceInShowRange =
+      this.SetForceInShowRange(
         ControllerHolder_1.ControllerHolder.NpcPerformController.ForceNpcDitherVisibleMap.has(
           this.ActorComp.CreatureData.GetPbDataId(),
-        )),
-      this.IsForceInShowRange && this.TrySetNpcDither(!0);
+        ),
+      );
     var t = this.GetNpcShowRange(),
-      e = t + DEFAULT_EXIT_SHOW_RANGE_OFFSET;
+      e = t + DEFAULT_EXIT_SHOW_RANGE_OFFSET,
+      r = this.Entity.GameBudgetManagedToken;
     (this.VisibleDitherEvent =
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent()),
       this.VisibleDitherEvent.Init(
         t,
-        this.Entity?.GameBudgetManagedToken,
+        r,
         () => {
-          this.TrySetNpcDither(!0);
+          this.SetNpcShowState(!0, "感知进入");
         },
         () => {
-          this.TrySetNpcDither(!1);
+          this.SetNpcShowState(!1, "感知离开");
         },
         this.DestroyVisibleDitherEvent,
         void 0,
         e,
         void 0,
-      );
+      ),
+      r &&
+        cpp_1.FKuroPerceptionInterface.MarkElementDisable(
+          r,
+          !this.Entity.Active,
+        );
+  }
+  OnEnable() {
+    super.OnEnable(),
+      this.Entity.GameBudgetManagedToken &&
+        cpp_1.FKuroPerceptionInterface.MarkElementDisable(
+          this.Entity.GameBudgetManagedToken,
+          !1,
+        );
+  }
+  OnDisable(t) {
+    super.OnDisable(t),
+      this.Entity.GameBudgetManagedToken &&
+        cpp_1.FKuroPerceptionInterface.MarkElementDisable(
+          this.Entity.GameBudgetManagedToken,
+          !0,
+        );
   }
   GetNpcShowRange() {
     return (
@@ -190,17 +247,23 @@ let NpcPerformComponent = class NpcPerformComponent extends BasePerformComponent
     MathUtils_1.MathUtils.CommonTempVector.DeepCopy(
       this.ActorComp.CreatureData.GetInitLocation(),
     ),
-      this.ActorComp.Actor.CharacterMovement?.SetMovementMode(5),
+      this.ActorComp.Actor.KuroSetMovementMode({
+        Mode: 5,
+        Context: "[NpcPerformComponent.FixNpcOnInitLocation]",
+      }),
       this.ActorComp.SetActorLocation(
         MathUtils_1.MathUtils.CommonTempVector.ToUeVector(),
         "NPC待机表演使用固定位置",
         !1,
-      ),
-      this.Entity.GetComponent(101)?.Disable("NPC待机表演使用固定位置");
+      );
+    var t = this.Entity.GetComponent(179),
+      e = this.Entity.GetComponent(111);
+    t?.Disable("NPC待机表演使用固定位置"),
+      e?.Disable("NPC待机表演使用固定位置");
   }
 };
 (NpcPerformComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(171)],
+  [(0, RegisterComponent_1.RegisterComponent)(184)],
   NpcPerformComponent,
 )),
   (exports.NpcPerformComponent = NpcPerformComponent);

@@ -15,11 +15,15 @@ class RedDotAttributeTab extends RedDotBase_1.RedDotBase {
       EventDefine_1.EEventName.RoleBreakUp,
       EventDefine_1.EEventName.CurWorldLevelChange,
       EventDefine_1.EEventName.ActiveRole,
+      EventDefine_1.EEventName.RoleSkinRedDotRefresh,
     ];
   }
   OnCheck(e) {
-    return ModelManager_1.ModelManager.RoleModel.RedDotAttributeTabBreakUpCondition(
-      e,
+    return (
+      ModelManager_1.ModelManager.RoleModel.RedDotAttributeTabBreakUpCondition(
+        e,
+      ) ||
+      ModelManager_1.ModelManager.RoleSkinModel.HasRoleSkinRedDotByRoleId(e)
     );
   }
 }

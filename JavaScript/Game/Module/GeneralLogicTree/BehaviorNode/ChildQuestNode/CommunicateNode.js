@@ -16,7 +16,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       (this.bXt = !1),
       (this.qXt = (e) => {
         e === this.CommunicateId &&
-          (this.Blackboard.RemoveTag(7), this.SubmitNode());
+          (this.Blackboard.RemoveTag(8), this.SubmitNode());
       }),
       (this.GXt = (e) => {
         e === this.CommunicateId && this.NXt();
@@ -35,7 +35,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
         "CommunicateView" !== e ||
           this.ChildQuestStatus !==
             Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress ||
-          (this.Blackboard.AddTag(7), this.bXt) ||
+          (this.Blackboard.AddTag(8), this.bXt) ||
           this.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest ||
           ((this.bXt = !0),
           QuestController_1.QuestNewController.RedDotRequest(
@@ -112,7 +112,7 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       super.OnEnd(e);
   }
   NXt() {
-    this.Blackboard.RemoveTag(7),
+    this.Blackboard.RemoveTag(8),
       UiManager_1.UiManager.OpenView("CommunicateView", this.CommunicateId);
   }
 }

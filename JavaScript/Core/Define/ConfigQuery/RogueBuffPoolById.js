@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configRogueBuffPoolById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configRogueBuffPoolById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configRogueBuffPoolById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configRogueBuffPoolById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configRogueBuffPoolById.GetConfig(";
 exports.configRogueBuffPoolById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var e = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       f =
-        (e.Start(),
+        (e?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (f) {
       if (n) {
@@ -43,8 +47,8 @@ exports.configRogueBuffPoolById = {
         const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (t)
           return (
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -76,8 +80,8 @@ exports.configRogueBuffPoolById = {
               ((f = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(f, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -85,8 +89,8 @@ exports.configRogueBuffPoolById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    e.Stop(),
-      getConfigStat.Stop(),
+    e?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -5,17 +5,20 @@ const UE = require("ue"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  SplineMoveComponent_1 = require("../NewWorld/Common/Component/SplineMoveComponent");
+  CharacterSplineMoveComponent_1 = require("../NewWorld/Character/Common/Component/CharacterSplineMoveComponent");
 class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.AddSpeedMap = void 0);
+  }
+  Constructor() {
+    this.AddSpeedMap = void 0;
   }
   K2_NotifyTick(t, e, i) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var n = t.GetEntityNoBlueprint();
     if (!n?.Valid) return !1;
-    n = n.GetComponent(98);
+    n = n.GetComponent(106);
     if (!n?.Active) return !1;
     if ("PathLine" !== n.CurrentSplineMoveType) return !1;
     n = t.CharacterActorComponent;
@@ -23,9 +26,9 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
     if (
       (TsAnimNotifyStateAccelInSplineMove.Initialize(),
       this.InitializeSelf(),
-      n.Entity.GetComponent(163)?.HasKuroRootMotion)
+      n.Entity.GetComponent(175)?.HasKuroRootMotion)
     ) {
-      var o = n.Entity.GetComponent(164);
+      var o = n.Entity.GetComponent(176);
       if (!o) return !1;
       let e = this.AddSpeedMap.get(t);
       return (e ||
@@ -47,7 +50,7 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
             TsAnimNotifyStateAccelInSplineMove.TmpVector,
           ),
           (t.CharacterMovement.Velocity =
-            TsAnimNotifyStateAccelInSplineMove.TmpVector.ToUeVector()),
+            TsAnimNotifyStateAccelInSplineMove.TmpVector.ToUeVectorOld()),
           !0)
         : !1;
     }
@@ -63,7 +66,7 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
         t,
       ) &&
         ((t.CharacterMovement.Velocity =
-          TsAnimNotifyStateAccelInSplineMove.CurrentSpeed.ToUeVector()),
+          TsAnimNotifyStateAccelInSplineMove.CurrentSpeed.ToUeVectorOld()),
         !0)
     );
   }
@@ -80,8 +83,8 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
             Math.max(
               0,
               o -
-                SplineMoveComponent_1.SplineMoveComponent.SplineMoveConfig
-                  .AnsAccel *
+                CharacterSplineMoveComponent_1.CharacterSplineMoveComponent
+                  .SplineMoveConfig.AnsAccel *
                   i,
             ) / o),
           (e.X *= o),
@@ -89,12 +92,14 @@ class TsAnimNotifyStateAccelInSplineMove extends UE.KuroAnimNotifyState {
         !0
       );
     t.InputDirectProxy.Multiply(
-      SplineMoveComponent_1.SplineMoveComponent.SplineMoveConfig.AnsAccel * i,
+      CharacterSplineMoveComponent_1.CharacterSplineMoveComponent
+        .SplineMoveConfig.AnsAccel * i,
       TsAnimNotifyStateAccelInSplineMove.TmpVector,
     ),
       e.AdditionEqual(TsAnimNotifyStateAccelInSplineMove.TmpVector);
     var o = MathUtils_1.MathUtils.Square(
-        SplineMoveComponent_1.SplineMoveComponent.SplineMoveConfig.MaxFlySpeed,
+        CharacterSplineMoveComponent_1.CharacterSplineMoveComponent
+          .SplineMoveConfig.MaxFlySpeed,
       ),
       t = e.SizeSquared2D();
     return (

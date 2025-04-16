@@ -8,28 +8,32 @@ class TsAnimNotifySkillBehavior extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.技能行为 = void 0);
   }
-  K2_Notify(i, e) {
+  Constructor() {}
+  K2_Notify(i, r) {
     i = i.GetOwner();
     if (!(i instanceof TsBaseCharacter_1.default)) return !1;
     var i = i.CharacterActorComponent.Entity,
-      r = i.GetComponent(34),
-      o = i.GetComponent(34)?.CurrentSkill;
-    if (!r || !o) return !1;
-    r.SetCurAnInfo(this.exportIndex, e.GetName());
-    var t = { Entity: i, SkillComponent: r, Skill: o };
+      e = i.GetComponent(39),
+      o = i.GetComponent(207),
+      t = i.GetComponent(39)?.CurrentSkill;
+    if (!e || !t || e.IsSkillMontageInvalid(r.GetName())) return !1;
+    var o = o?.CreateAnimNotifyContent(r.GetName(), this.exportIndex),
+      l =
+        ((t.SkillBehaviorAnimNotifyMessageId = o),
+        { Entity: i, SkillComponent: e, Skill: t });
     for (let i = 0; i < this.技能行为.Num(); i++) {
-      var l = this.技能行为.Get(i);
+      var a = this.技能行为.Get(i);
       if (
         SkillBehaviorCondition_1.SkillBehaviorCondition.SatisfyGroup(
-          l.SkillBehaviorConditionGroup,
-          l.SkillBehaviorConditionFormula,
-          t,
+          a.SkillBehaviorConditionGroup,
+          a.SkillBehaviorConditionFormula,
+          l,
         ) &&
         (SkillBehaviorAction_1.SkillBehaviorAction.BeginGroup(
-          l.SkillBehaviorActionGroup,
-          t,
+          a.SkillBehaviorActionGroup,
+          l,
         ),
-        !l.SkillBehaviorContinue)
+        !a.SkillBehaviorContinue)
       )
         break;
     }

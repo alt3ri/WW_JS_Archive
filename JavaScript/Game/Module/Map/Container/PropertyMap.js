@@ -3,22 +3,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PropertyMap = void 0);
 class PropertyMap extends Map {
   constructor() {
-    super(...arguments), (this.JQa = new Map());
+    super(...arguments), (this.pYa = new Map());
   }
-  set(t, r) {
-    return super.get(t) === r ? this : (this.JQa.set(t, !0), super.set(t, r));
+  set(t, s) {
+    return super.get(t) === s ? this : (this.setDirty(t), super.set(t, s));
   }
   get(t) {
-    return this.flushDirty(t), super.get(t);
+    return this.cleanDirty(t), super.get(t);
   }
-  tryGet(t, r, s = !0) {
-    return s && this.flushDirty(t), this.get(t) ?? r;
+  tryGet(t, s, r = !0) {
+    return r && this.cleanDirty(t), super.get(t) ?? s;
   }
-  flushDirty(t) {
-    this.JQa.set(t, !1);
+  cleanDirty(t) {
+    this.pYa.set(t, !1);
+  }
+  setDirty(t) {
+    this.pYa.set(t, !0);
+  }
+  setAllDirty() {
+    for (const t of this.pYa.keys()) this.pYa.set(t, !0);
   }
   isDirty(t) {
-    return this.JQa.get(t) ?? !1;
+    return this.pYa.get(t) ?? !1;
   }
 }
 exports.PropertyMap = PropertyMap;

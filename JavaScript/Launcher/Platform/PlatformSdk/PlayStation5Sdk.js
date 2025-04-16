@@ -1,287 +1,482 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayStation5Sdk = exports.AuthCodeData = void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
+  UE = require("ue"),
   ue_1 = require("ue"),
   LauncherLanguageLib_1 = require("../../Util/LauncherLanguageLib"),
   LauncherLog_1 = require("../../Util/LauncherLog"),
   LauncherStorageLib_1 = require("../../Util/LauncherStorageLib"),
   PlatformSdkConfig_1 = require("./PlatformSdkConfig"),
   PlatformSdkNew_1 = require("./PlatformSdkNew"),
+  PlatformSdkReportData_1 = require("./PlatformSdkReportData"),
   PlatformSdkServer_1 = require("./PlatformSdkServer"),
   PlayStationTrophy_1 = require("./PlayStationTrophy"),
   UniversalDataSystemManager_1 = require("./UniversalDataSystemManager"),
   SDKMAXBLOCKUSER = 2e3,
   CACHEAGREEKEY = "AgreeState",
-  AGREEVALUE = "1";
+  AGREEVALUE = "1",
+  EXIT_WAIT_TIME = 1,
+  MAX_PENDING_LOG = 1e3,
+  SEND_HTTP_TIMEOUT = 1e4,
+  CALIBRATE_INTERVAL = 10,
+  CALIBRATE_STOP_TIMER = !0;
 class AuthCodeData {
-  constructor(e, t) {
-    (this.AuthCode = e), (this.IssuerId = t);
+  constructor(t, e) {
+    (this.AuthCode = t), (this.IssuerId = e);
   }
 }
-var EPlayStaionScope;
-(exports.AuthCodeData = AuthCodeData),
-  (function (e) {
-    (e.DeviceId = "psn:s2s openid id_token:psn.basic_claims id_token:duid"),
-      (e.Login = "psn:s2s openid id_token:psn.basic_claims");
-  })((EPlayStaionScope = EPlayStaionScope || {}));
+exports.AuthCodeData = AuthCodeData;
 class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
   constructor() {
     super(...arguments),
-      (this.Lwa = void 0),
-      (this.QBa = void 0),
-      (this.cka = void 0),
-      (this.kNa = !1),
-      (this.T$a = new Map()),
-      (this.L$a = 0),
-      (this.$za = ""),
-      (this.Xza = new Map()),
+      (this.Vwa = void 0),
+      (this.hba = void 0),
+      (this.CFa = void 0),
+      (this.V3a = !1),
       (this.Yza = new Map()),
-      (this.zza = new Map()),
-      (this.SZa = ""),
-      (this.mka = void 0),
-      (this.dka = 0);
+      (this.zza = 0),
+      (this.Vrh = new Map()),
+      (this.Hrh = new Map()),
+      (this.jrh = new Map()),
+      (this.wsh = ""),
+      (this.Rqe = void 0),
+      (this.Rsl = new Map()),
+      (this.Asl = 0),
+      (this.xsl = 0),
+      (this.FSr = ""),
+      (this.Psl = 50),
+      (this.wsl = ""),
+      (this.Bsl = new Array()),
+      (this.uSl = !1),
+      (this.Szl = ""),
+      (this.Mzl = ""),
+      (this.gFa = void 0),
+      (this.pFa = 0);
   }
   OnInit() {
-    var e,
-      t = this.rAa(EPlayStaionScope.Login);
+    var t,
+      e = this.ZAa("psn:s2s openid id_token:psn.basic_claims");
     return (
-      !!t &&
-      ((e = this.GetUserId()),
-      (this.Lwa =
+      !!e &&
+      ((t = this.GetUserId()),
+      (this.Vwa =
         new UniversalDataSystemManager_1.UniversalDataSystemManager()),
-      this.Lwa.Initialize(e),
-      this.Lwa.Start(),
-      (this.QBa = new PlayStationTrophy_1.PlayStationTrophy()),
-      this.QBa.Init(this.Lwa, this),
-      (this.cka = t),
-      (e = ue_1.KuroStaticPS5Library.GetCacheMapElement(CACHEAGREEKEY)) &&
-        e === AGREEVALUE &&
-        (this.kNa = !0),
+      this.Vwa.Initialize(t),
+      this.Vwa.Start(),
+      (this.hba = new PlayStationTrophy_1.PlayStationTrophy()),
+      this.hba.Init(this.Vwa, this),
+      (this.CFa = e),
+      (t = ue_1.KuroStaticPS5Library.GetCacheMapElement(CACHEAGREEKEY)) &&
+        t === AGREEVALUE &&
+        (this.V3a = !0),
+      (e = new PlatformSdkReportData_1.PlatformReportLaunchGame()),
+      this.ReportToThirdParty(e),
       !0)
     );
   }
-  InitWebComponent() {
-    var e = this.GetUserId();
-    ue_1.KuroStaticPS5Library.InitWebApi((0, puerts_1.$ref)(e));
-  }
-  OnUnInit() {
-    return this.Lwa?.Stop(), !0;
-  }
-  ConnectToServer(e) {
-    PlatformSdkServer_1.PlatformSdkServer.Connect(
-      "&pkg=" + PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5.pkg,
+  InitPlatformSdkReportData() {
+    var t = PlatformSdkConfig_1.PlatformSdkConfig.GetProductId(),
+      e = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformPkg(),
+      r = PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId(),
+      a = this.GetRunningOnlyCode(),
+      o = UE.KuroLauncherLibrary.GetAppVersion(),
+      i = PlatformSdkConfig_1.PlatformSdkConfig.GetSdkVersion(),
+      n = this.dic(),
+      s = this.qsl(),
+      d = this.InitTime.toString(),
+      u = this.GetGameId(),
+      h = this.ThirdUnionId;
+    PlatformSdkReportData_1.PlatformSdkReportBaseData.InitSdkBaseValue(
+      t,
       e,
+      r,
+      "PlayStation",
+      "",
+      s,
+      a,
+      o,
+      i,
+      n,
+      d,
+      u,
+      h,
     );
   }
-  rAa(e) {
-    var t = PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5,
-      t = (0, puerts_1.$ref)(t.client_id),
-      e = (0, puerts_1.$ref)(e),
+  OnInitDataReport() {
+    var t, e, r;
+    UE.ThinkingAnalytics.HasInstanceInitialized(this.Psl) ||
+      ((t = PlatformSdkConfig_1.PlatformSdkConfig.GetDataReportUrl()),
+      (e = PlatformSdkConfig_1.PlatformSdkConfig.GetDataReportId()),
+      (r =
+        PlatformSdkReportData_1.PlatformSdkReportBaseData.GetPuid().toString()),
+      (r = new UE.CreateInstanceParam(
+        this.Psl,
+        t,
+        e,
+        UE.ThinkingAnalytics.GetMachineID(),
+        r,
+        "SdkData",
+        "",
+        1e3,
+        0,
+        0,
+        0,
+        !0,
+        !1,
+        !1,
+        !0,
+        EXIT_WAIT_TIME,
+        MAX_PENDING_LOG,
+        SEND_HTTP_TIMEOUT,
+        !0,
+        CALIBRATE_INTERVAL,
+        CALIBRATE_STOP_TIMER,
+        !1,
+      )),
+      LauncherLog_1.LauncherLog.Debug(
+        "[PlatformSdkNew][PlayStation5Sdk] InitDataReport",
+        ["url", t],
+        ["appId", e],
+      ),
+      UE.ThinkingAnalytics.CreateSimpleInstance(r)),
+      this.zQl();
+  }
+  zQl() {
+    if (0 < this.Bsl.length) {
+      for (const t of this.Bsl) this.jhl(t);
+      this.Bsl = [];
+    }
+  }
+  dic() {
+    var t = this.GetIdToken(
+      "psn:s2s openid id_token:psn.basic_claims id_token:duid",
+    );
+    return (t = t && this.Osl(t))
+      ? (LauncherLog_1.LauncherLog.Debug(
+          "[PlatformSdkNew][PlayStation5Sdk] DeviceId",
+          ["DeviceId", this.FSr],
+        ),
+        t.duid)
+      : "";
+  }
+  Osl(t) {
+    var t = t.split(".")[1];
+    if (t)
+      return (
+        (t = ue_1.KuroStaticLibrary.Base64Decode(t)),
+        LauncherLog_1.LauncherLog.Info(
+          "[PlatformSdkNew][PlayStation5Sdk] TryDecodeJtwToken",
+          ["decodedPayload", t],
+        ),
+        JSON.parse(t)
+      );
+  }
+  ksl(t) {
+    this.Asl++, this.Rsl.set(this.Asl, t), this.Nsl();
+  }
+  Nsl() {
+    !this.Rqe &&
+      this.TickInnerState &&
+      ((this.Rqe = new UE.KuroTickManager(this.WorldContext)),
+      this.Rqe.AddTick(
+        0,
+        (0, puerts_1.toManualReleaseDelegate)((t) => {
+          this.J_(t);
+        }),
+      ));
+  }
+  J_(t) {
+    if (0 !== this.Rsl.size) {
+      var e,
+        r,
+        a = [];
+      for ([e, r] of this.Rsl) -1 === r() && a.push(e);
+      for (const o of a) this.Rsl.delete(o);
+      0 === this.Rsl.size && this.Fsl();
+    }
+  }
+  Fsl() {
+    this.Rqe &&
+      this.TickInnerState &&
+      (this.Rqe.ClearTick(), (this.Rqe = void 0));
+  }
+  InitWebComponent() {
+    var t = this.GetUserId();
+    ue_1.KuroStaticPS5Library.InitWebApi((0, puerts_1.$ref)(t));
+  }
+  OnUnInit() {
+    return this.Vwa?.Stop(), !0;
+  }
+  ConnectToServer(a) {
+    var t = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformPkg();
+    PlatformSdkServer_1.PlatformSdkServer.Connect("&pkg=" + t, (t, e, r) => {
+      a(t, e, r);
+    });
+  }
+  ZAa(t) {
+    var e = (0, puerts_1.$ref)(
+        PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformClientId(),
+      ),
+      t = (0, puerts_1.$ref)(t),
       r = (0, puerts_1.$ref)(""),
       a = (0, puerts_1.$ref)(0),
-      t = ue_1.KuroStaticPS5Library.GetAuthCode(t, e, r, a);
-    if (0 === t)
+      e = ue_1.KuroStaticPS5Library.GetAuthCode(e, t, r, a);
+    if (0 === e)
       return (
         LauncherLog_1.LauncherLog.Info(
           "[PlatformSdkNew][PlayStation5Sdk] GetAuthCode",
-          ["result", t],
+          ["result", e],
           ["authCode", r],
           ["issuerId", a],
         ),
+        (t = new PlatformSdkReportData_1.PlatformReportGetPsnAuth()),
+        this.ReportToThirdParty(t),
         new AuthCodeData((0, puerts_1.$unref)(r), (0, puerts_1.$unref)(a))
       );
     LauncherLog_1.LauncherLog.Error(
       "[PlatformSdkNew][PlayStation5Sdk] GetAuthCode failed",
-      ["result", t],
+      ["result", e],
     );
   }
-  GetIdToken(e) {
-    var t = PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5,
-      r = (0, puerts_1.$ref)(t.client_id),
-      t = (0, puerts_1.$ref)(t.client_secret),
-      e = (0, puerts_1.$ref)(e),
+  GetIdToken(t) {
+    var e = (0, puerts_1.$ref)(
+        PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformClientId(),
+      ),
+      r = (0, puerts_1.$ref)(
+        PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformClientSecret(),
+      ),
+      t = (0, puerts_1.$ref)(t),
       a = (0, puerts_1.$ref)(""),
-      r = ue_1.KuroStaticPS5Library.GetIdToken(r, t, e, a);
-    if (0 === r)
+      e = ue_1.KuroStaticPS5Library.GetIdToken(e, r, t, a);
+    if (0 === e)
       return (
         LauncherLog_1.LauncherLog.Info(
           "[PlatformSdkNew][PlayStation5Sdk] GetIdToken",
-          ["result", r],
+          ["result", e],
           ["idToken", a],
         ),
+        (r = new PlatformSdkReportData_1.PlatformReportPsnAccessId()),
+        this.ReportToThirdParty(r),
         (0, puerts_1.$unref)(a)
       );
     LauncherLog_1.LauncherLog.Error(
       "[PlatformSdkNew][PlayStation5Sdk] GetIdToken failed",
-      ["result", r],
+      ["result", e],
     );
   }
   NeedPrivacyProtocol() {
     return !0;
   }
   GetDeviceId() {
-    return "test_deviceId";
-  }
-  Login(e) {
     var t,
+      e,
       r,
-      a = this.rAa(EPlayStaionScope.Login);
+      a = new PlatformSdkReportData_1.PlatformReportGetDid();
+    return (
+      this.ReportToThirdParty(a),
+      "" === this.FSr &&
+        ((a = this.dic()),
+        (this.FSr = a),
+        (a = new PlatformSdkReportData_1.PlatformReportFirstGetDid()),
+        (r = PlatformSdkConfig_1.PlatformSdkConfig.GetProjectId()),
+        (t = PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId()),
+        (e = this.FSr),
+        (a.first_check_id = r + `_${t}_` + e),
+        this.ReportToThirdParty(a)),
+      "" === this.FSr
+        ? (LauncherLog_1.LauncherLog.Debug(
+            "[PlatformSdkNew][PlayStation5Sdk] GetDeviceId failed, empty DeviceId",
+          ),
+          "")
+        : ((r = new PlatformSdkReportData_1.PlatformReportGetDidSuccess()),
+          this.ReportToThirdParty(r),
+          this.FSr)
+    );
+  }
+  Login(t) {
+    var e,
+      r,
+      a = this.ZAa("psn:s2s openid id_token:psn.basic_claims");
     a
-      ? ((t = PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5),
-        (r = PlatformSdkConfig_1.PlatformSdkConfig.GetMainlandOrGlobalConfig()),
-        (a = `&psnCode=${a?.AuthCode}&psnEnvIssuerId=${a?.IssuerId}&pkg=${t.pkg}&client_id=${r.client_id}&redirect_uri=1&response_type=code`),
-        PlatformSdkServer_1.PlatformSdkServer.Login(a, e))
+      ? ((e = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformPkg()),
+        (r = PlatformSdkConfig_1.PlatformSdkConfig.GetClientId()),
+        (a = `&psnCode=${a?.AuthCode}&psnEnvIssuerId=${a?.IssuerId}&pkg=${e}&client_id=${r}&redirect_uri=1&response_type=code`),
+        PlatformSdkServer_1.PlatformSdkServer.Login(a, t))
       : (LauncherLog_1.LauncherLog.Error(
           "[PlatformSdkNew][PlayStation5Sdk] Login failed, empty authCode",
         ),
-        e("PsnAuthFail", !1, void 0));
+        t("PsnAuthFail", !1, !1, void 0));
+  }
+  BindAccountThenLogin(e, r = "", a = "") {
+    var o = this.ZAa("psn:s2s openid id_token:psn.basic_claims");
+    if (o) {
+      var i = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformPkg(),
+        n = PlatformSdkConfig_1.PlatformSdkConfig.GetClientId();
+      let t = `&psnCode=${o?.AuthCode}&psnEnvIssuerId=${o?.IssuerId}&pkg=${i}&client_id=${n}&redirect_uri=1&response_type=code`;
+      "" !== r && "" !== a && (t += `&email=${r}&emailCode=` + a),
+        PlatformSdkServer_1.PlatformSdkServer.BindAccountThenLogin(t, e);
+    } else
+      LauncherLog_1.LauncherLog.Error(
+        "[PlatformSdkNew][PlayStation5Sdk] BindAccountThenLogin failed, empty authCode",
+      ),
+        e("PsnAuthFail", !1, !1, void 0);
   }
   SetServerCommonParam() {
-    var e = PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5,
-      t = PlatformSdkConfig_1.PlatformSdkConfig.GetMainlandOrGlobalConfig();
+    var t = PlatformSdkConfig_1.PlatformSdkConfig.GetProductId(),
+      e = PlatformSdkConfig_1.PlatformSdkConfig.GetProjectId(),
+      r = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatform(),
+      a = PlatformSdkConfig_1.PlatformSdkConfig.GetSdkVersion(),
+      o = PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId();
     PlatformSdkServer_1.PlatformSdkServer.InitCommonParam(
-      `productId=${e.productId}&projectId=${t.projectId}&deviceNum=${this.GetDeviceId()}&platform=${e.platform}&sdkVersion=${e.sdkVersion}&channelId=` +
-        e.channelId,
+      `productId=${t}&projectId=${e}&deviceNum=${this.GetDeviceId()}&platform=${r}&sdkVersion=${a}&channelId=` +
+        o,
     );
   }
   GetUserId() {
     return ue_1.KuroStaticPS5Library.GetUserId();
   }
-  async yZa() {
-    var e;
+  async Bsh() {
+    var t;
     return (
-      "" === this.SZa &&
-        (e = (await this.GetSdkAccountId([this.GetUserId()])).get(
+      "" === this.wsh &&
+        (t = (await this.GetSdkAccountId([this.GetUserId()])).get(
           this.GetUserId(),
         )) &&
-        (this.SZa = e),
-      this.SZa
+        (this.wsh = t),
+      this.wsh
     );
   }
   GetPrivacyAgreeState() {
-    var e, t;
+    var t, e;
     return (
-      !!this.kNa ||
-      (!!(t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+      !!this.V3a ||
+      (!!(e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
         LauncherStorageLib_1.ELauncherStorageGlobalKey.UserProtocolAgreeState,
       )) &&
-        ((e = LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage()),
-        !!(t = t.get(this.GetUserId()))) &&
-        t.get(e))
+        ((t = this.qsl()), !!(e = e.get(this.GetUserId()))) &&
+        ((e = e.get(t)) &&
+          ue_1.KuroStaticPS5Library.AddCacheMapElement(
+            CACHEAGREEKEY,
+            AGREEVALUE,
+          ),
+        e))
     );
   }
-  SavePrivacyAgreeState(e) {
-    let t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+  SavePrivacyAgreeState(t) {
+    var e = new PlatformSdkReportData_1.PlatformReportAgreementClick();
+    this.ReportToThirdParty(e);
+    let r = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey.UserProtocolAgreeState,
     );
-    t = t || new Map();
-    var r = LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage();
-    t.get(this.GetUserId()) || t.set(this.GetUserId(), new Map()),
-      t.get(this.GetUserId()).set(r, e),
+    r = r || new Map();
+    e = this.qsl();
+    r.get(this.GetUserId()) || r.set(this.GetUserId(), new Map()),
+      r.get(this.GetUserId()).set(e, t),
       LauncherStorageLib_1.LauncherStorageLib.SetGlobal(
         LauncherStorageLib_1.ELauncherStorageGlobalKey.UserProtocolAgreeState,
-        t,
+        r,
       ),
       ue_1.KuroStaticPS5Library.AddCacheMapElement(CACHEAGREEKEY, AGREEVALUE);
   }
-  async GetSdkOnlineId(e) {
+  async GetSdkOnlineId(t) {
     const r = new Map();
-    e = e.map(async (e) => {
-      var t = await this.GetPlayStationOnlineId(e);
-      0 === t.ResultCode && r.set(e, t.OnlineId);
+    t = t.map(async (t) => {
+      var e = await this.GetPlayStationOnlineId(t);
+      0 === e.ResultCode && r.set(t, e.OnlineId);
     });
     return (
-      await Promise.all(e),
+      await Promise.all(t),
       LauncherLog_1.LauncherLog.Debug("当前获取的onlineIdMap", ["map", r]),
       r
     );
   }
   async GetSdkBlockingUser() {
-    var e = Date.now();
+    var t = Date.now();
     return (
-      e - this.L$a < 12e4
+      t - this.zza < 12e4 && this.uSl
         ? LauncherLog_1.LauncherLog.Debug(
             "频繁调用，直接返回缓存的屏蔽用户列表",
           )
-        : ((this.L$a = e),
+        : ((this.zza = t),
           LauncherLog_1.LauncherLog.Debug("GetSdkBlockingUser"),
-          (this.T$a = new Map()),
+          (this.Yza = new Map()),
           await new Promise((a) => {
-            const n = (e) => {
-              (0, puerts_1.releaseManualReleaseDelegate)(n);
-              var t = e;
+            const o = (t) => {
+              (0, puerts_1.releaseManualReleaseDelegate)(o);
+              var e = t;
               if (
                 (LauncherLog_1.LauncherLog.Debug("当前获取的blockingUser", [
                   "num",
-                  t.blockUsers.Num(),
+                  e.blockUsers.Num(),
                 ]),
-                t && t.blockUsers)
+                e && e.blockUsers)
               ) {
-                var r = t.blockUsers.Num();
-                for (let e = 0; e < r; e++)
-                  this.T$a.set(t.blockUsers.Get(e), !0);
+                var r = e.blockUsers.Num();
+                for (let t = 0; t < r; t++)
+                  this.Yza.set(e.blockUsers.Get(t), !0);
               }
-              a(this.T$a);
+              (this.uSl = !0), a(this.Yza);
             };
-            var e = (0, puerts_1.$ref)(0),
-              t = (0, puerts_1.$ref)(SDKMAXBLOCKUSER);
+            var t = (0, puerts_1.$ref)(0),
+              e = (0, puerts_1.$ref)(SDKMAXBLOCKUSER);
             ue_1.KuroStaticPS5Library.GetBlockUserListAsync(
-              e,
               t,
-              (0, puerts_1.toManualReleaseDelegate)(n),
+              e,
+              (0, puerts_1.toManualReleaseDelegate)(o),
             );
           })),
-      this.T$a
+      this.Yza
     );
   }
-  async GetSdkAccountId(e) {
+  async GetSdkAccountId(t) {
     const r = new Map();
-    e = e.map(async (e) => {
-      var t = await this.GetPlayStationAccountId(e);
-      0 === t.ResultCode && r.set(e, t.AccountId);
+    t = t.map(async (t) => {
+      var e = await this.GetPlayStationAccountId(t);
+      0 === e.ResultCode && r.set(t, e.AccountId);
     });
-    return await Promise.all(e), r;
+    return await Promise.all(t), r;
   }
-  async GetSdkUserIdByAccountId(e) {
-    return new Promise((e) => {
-      e("");
+  async GetSdkUserIdByAccountId(t) {
+    return new Promise((t) => {
+      t("");
     });
   }
-  ShowPlayStationStoreIcon(e) {
-    return ue_1.KuroStaticPS5Library.ShowPsStoreIcon(e);
+  ShowPlayStationStoreIcon(t) {
+    return ue_1.KuroStaticPS5Library.ShowPsStoreIcon(t);
   }
   HidePlayStationStoreIcon() {
     return ue_1.KuroStaticPS5Library.HidePsStoreIcon();
   }
-  async GetPlayStationOnlineId(t) {
-    return new Promise((e) => {
-      e({
+  async GetPlayStationOnlineId(e) {
+    return new Promise((t) => {
+      t({
         OnlineId: ue_1.KuroStaticPS5Library.GetOnlineIdByUserId(
-          (0, puerts_1.$ref)(t),
+          (0, puerts_1.$ref)(e),
         ),
         ResultCode: 0,
       });
     });
   }
-  async GetPlayStationAccountId(t) {
-    return new Promise((e) => {
-      e({
+  async GetPlayStationAccountId(e) {
+    return new Promise((t) => {
+      t({
         AccountId: ue_1.KuroStaticPS5Library.GetAccountIdByUserId(
-          (0, puerts_1.$ref)(t),
+          (0, puerts_1.$ref)(e),
         ),
         ResultCode: 0,
       });
     });
   }
-  async GetSdkTrophyInfo(e = 0, t = 0) {
-    return this.QBa?.GetSdkTrophyInfo(e, t) ?? [];
+  async GetSdkTrophyInfo(t = 0, e = 0) {
+    return this.hba?.GetSdkTrophyInfo(t, e) ?? [];
   }
-  async UnlockSdkTrophy(e) {
-    return this.QBa?.UnlockSdkTrophy(e) ?? !1;
+  async UnlockSdkTrophy(t) {
+    return this.hba?.UnlockSdkTrophy(t) ?? !1;
   }
-  async UpdateSdkTrophyProgress(e, t) {
-    return this.QBa?.UpdateSdkTrophyProgress(e, t) ?? !1;
+  async UpdateSdkTrophyProgress(t, e) {
+    return this.hba?.UpdateSdkTrophyProgress(t, e) ?? !1;
   }
   NeedShowThirdPartyId() {
     return !0;
@@ -293,23 +488,27 @@ class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
     return !0;
   }
   GetSdkFriendOnlyState() {
-    var e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+    var t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayStationFriendOnly,
     );
-    return e || !1;
+    return t || !1;
   }
-  SaveSdkFriendOnlyState(e) {
+  SaveSdkFriendOnlyState(t) {
     LauncherStorageLib_1.LauncherStorageLib.SetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayStationFriendOnly,
-      e,
+      t,
     );
   }
   GetProductId() {
-    return PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5.productId;
+    return PlatformSdkConfig_1.PlatformSdkConfig.GetProductId();
   }
-  OpenWebView(e) {
-    LauncherLog_1.LauncherLog.Debug("OpenWebView", ["url", e]),
-      ue_1.KuroStaticPS5Library.OpenWebBrowser((0, puerts_1.$ref)(e));
+  OpenWebView(t, e) {
+    const r = () => {
+      e?.(), this.OnWebViewCloseCallBack?.();
+    };
+    LauncherLog_1.LauncherLog.Info("OpenWebView", ["url", t]),
+      ue_1.KuroStaticPS5Library.OpenWebBrowser((0, puerts_1.$ref)(t)),
+      this.ksl(() => (this.PollWebViewClose() ? (r(), -1) : 0));
   }
   NeedCheckPlayOnly() {
     return !0;
@@ -317,149 +516,169 @@ class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
   NeedShowShopIcon() {
     return !0;
   }
-  StartActivity(e) {
-    this.Lwa?.StartActivity(e);
+  StartActivity(t) {
+    this.Vwa?.StartActivity(t);
   }
-  EndActivity(e) {
-    this.Lwa?.EndActivity(e);
+  EndActivity(t) {
+    this.Vwa?.EndActivity(t);
   }
-  Clear() {
-    LauncherLog_1.LauncherLog.Info("Clear PlayStationSdk"),
-      this.QBa && this.QBa.Clear();
-  }
-  OpenWebBrowser(e) {
-    return 0 === ue_1.KuroStaticPS5Library.OpenWebView((0, puerts_1.$ref)(e));
+  ChangeActivityAvailability(t, e) {
+    this.Vwa?.ChangeActivityAvailability(t, e);
   }
   PollWebViewClose() {
     return ue_1.KuroStaticPS5Library.PollWebBrowser();
   }
-  Cka() {
-    var e = Date.now();
+  fFa() {
+    var t = Date.now();
     return (
-      3e4 < e - this.dka &&
-        ((this.dka = e),
-        (this.mka = ue_1.KuroStaticPS5Library.GetStoreProducts())),
-      this.mka
+      3e4 < t - this.pFa &&
+        ((this.pFa = t),
+        (this.gFa = ue_1.KuroStaticPS5Library.GetStoreProducts())),
+      this.gFa
     );
   }
-  async QueryProductInfo(t) {
-    var r = this.Cka();
+  async QueryProductInfo(e) {
+    var t = new PlatformSdkReportData_1.PlatformReportGetEntitlementLabelList(),
+      r = (this.ReportToThirdParty(t), this.fFa());
     if (!r || 0 === r.Num())
       return (
         LauncherLog_1.LauncherLog.Error(
           "[PlatformSdkNew][PlayStation5Sdk] QueryProductInfo error, psnProducts is empty",
         ),
+        ((t =
+          new PlatformSdkReportData_1.PlatformReportGetEntitlementLabelListFail()).code =
+          "-1"),
+        (t.msg = "psnProducts is empty"),
+        this.ReportToThirdParty(t),
         {
           FailReason: "psnProducts is empty",
           NeedReLogin: !1,
           DataList: void 0,
         }
       );
-    for (let e = 0; e < r.Num(); e++) {
-      var a = r.Get(e);
+    for (let t = 0; t < r.Num(); t++) {
+      var a = r.Get(t);
       LauncherLog_1.LauncherLog.Debug(
         "[PlatformSdkNew][PlayStation5Sdk] QueryProductInfo psnProducts",
-        ["index", e],
+        ["index", t],
         ["id", a.id],
         ["displayName", a.displayName],
         ["displayPrice", a.displayPrice],
       );
     }
-    let n = "";
-    var o = t.length;
-    for (let e = 0; e < o; e++) (n += t[e]), e !== o - 1 && (n += ",");
-    var e = PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5,
-      i = PlatformSdkServer_1.PlatformSdkServer.GeneratePayHeader(
-        e.productId,
-        e.version,
-        e.sdkVersion,
-      ),
-      [i, e, s] =
+    let o = "";
+    var i = e.length;
+    for (let t = 0; t < i; t++) (o += e[t]), t !== i - 1 && (o += ",");
+    var t =
+        new PlatformSdkReportData_1.PlatformReportGetEntitlementLabelListSuccess(),
+      t =
+        ((t.channel_goodsid = o),
+        (t.channel_goodsid_count = i),
+        this.ReportToThirdParty(t),
+        PlatformSdkConfig_1.PlatformSdkConfig.GetProductId()),
+      n = PlatformSdkConfig_1.PlatformSdkConfig.GetVersion(),
+      s = PlatformSdkConfig_1.PlatformSdkConfig.GetSdkVersion(),
+      d = PlatformSdkServer_1.PlatformSdkServer.GeneratePayHeader(t, n, s),
+      u = PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId(),
+      h = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformPkg(),
+      _ = new PlatformSdkReportData_1.PlatformReportGetGoodsList(),
+      [_, d, S] =
+        ((_.goodsid = o),
+        (_.goodsid_count = i),
+        this.ReportToThirdParty(_),
         await PlatformSdkServer_1.PlatformSdkServer.QueryStoreProductsAsync(
-          i,
+          d,
           ["productId"],
-          e.productId,
+          t,
           ["channelId"],
-          e.channelId,
+          u,
           ["dn"],
           this.GetDeviceId(),
           ["pkg"],
-          e.pkg,
+          h,
           ["vn"],
-          e.version,
+          n,
           ["svn"],
-          e.sdkVersion,
+          s,
           ["plat"],
           4,
           ["goodsIds"],
-          n,
-        );
-    if (!s)
+          o,
+        ));
+    if (!S)
       return (
         LauncherLog_1.LauncherLog.Error(
           "[PlatformSdkNew][PlayStation5Sdk] QueryProductInfo error, serverData is undefined",
         ),
-        { FailReason: i, NeedReLogin: e, DataList: void 0 }
+        { FailReason: _, NeedReLogin: d, DataList: void 0 }
       );
     LauncherLog_1.LauncherLog.Debug(
       "[PlatformSdkNew][PlayStation5Sdk] QueryProductInfo",
-      ["serverData", s],
+      ["serverData", S],
     );
-    let u = !1;
-    var d = [];
-    for (let e = 0; e < r.Num(); e++) {
-      var S = r.Get(e);
-      const _ = S.id;
-      var c,
-        h = s.find((e) => e.channelGoodsId === _);
-      h
-        ? (((c = new PlatformSdkNew_1.DisplayProductInfo()).GoodId = h.goodsId),
-          (c.Price = S.displayPrice),
-          (c.ChannelGoodId = _),
-          (c.GoodLabel = S.label),
-          (c.Desc = S.description),
-          (c.Name = S.displayName),
-          d.push(c))
+    let l = !1;
+    var c = [];
+    for (let t = 0; t < r.Num(); t++) {
+      var P = r.Get(t);
+      const m = P.id;
+      var f,
+        p = S.find((t) => t.channelGoodsId === m);
+      p
+        ? (((f = new PlatformSdkNew_1.DisplayProductInfo()).GoodId = p.goodsId),
+          (f.Price = P.displayPrice),
+          (f.ChannelGoodId = m),
+          (f.GoodLabel = P.label),
+          (f.Desc = P.description),
+          (f.Name = P.displayName),
+          c.push(f))
         : (LauncherLog_1.LauncherLog.Error(
             "[PlatformSdkNew][PlayStation5Sdk] QueryProductInfo Error, PSN商品信息在SDK商品配置中找不到",
-            ["PSN商品信息 psnId", _],
-            ["PSN商品信息 displayName", S.displayName],
-            ["PSN商品信息 displayPrice", S.displayPrice],
+            ["PSN商品信息 psnId", m],
+            ["PSN商品信息 displayName", P.displayName],
+            ["PSN商品信息 displayPrice", P.displayPrice],
           ),
-          (u = !0));
+          (l = !0));
     }
-    if (u) {
+    if (l) {
       LauncherLog_1.LauncherLog.Error(
         "QueryProductInfo Error, PSN商品信息与SDK商品配置不一致",
-        ["SDK商品列表", s],
+        ["SDK商品列表", S],
       );
-      for (let e = 0; e < r.Num(); e++) {
-        var l = r.Get(e);
+      for (let t = 0; t < r.Num(); t++) {
+        var k = r.Get(t);
         LauncherLog_1.LauncherLog.Info(
           "[PlatformSdkNew][PlayStation5Sdk] PSN商品列表",
-          ["index", e],
-          ["id", l.id],
-          ["displayName", l.displayName],
-          ["displayPrice", l.displayPrice],
+          ["index", t],
+          ["id", k.id],
+          ["displayName", k.displayName],
+          ["displayPrice", k.displayPrice],
         );
       }
     }
     return (
       LauncherLog_1.LauncherLog.Debug(
         "[PlatformSdkNew][PlayStation5Sdk] QueryProductInfo result",
-        ["resultList", d],
+        ["resultList", c],
       ),
-      { FailReason: i, NeedReLogin: !1, DataList: d }
+      { FailReason: _, NeedReLogin: !1, DataList: c }
     );
   }
-  OpenCheckoutDialog(e) {
-    e = ue_1.KuroStaticPS5Library.OpenCheckoutDialog((0, puerts_1.$ref)(e));
+  OpenCheckoutDialog(t, e, r) {
+    var a = new PlatformSdkReportData_1.PlatformReportOpenPsnCheckOut(),
+      r =
+        ((a.product_id = r),
+        (a.goodsId = e),
+        (a.psnenvlssuer = this.CFa.IssuerId.toString()),
+        (this.Szl = r),
+        (this.Mzl = e),
+        this.ReportToThirdParty(a),
+        ue_1.KuroStaticPS5Library.OpenCheckoutDialog((0, puerts_1.$ref)(t)));
     return (
       LauncherLog_1.LauncherLog.Debug(
         "[PlatformSdkNew][PlayStation5Sdk] OpenCheckoutDialog",
-        ["ret", e],
+        ["ret", r],
       ),
-      0 === e
+      0 === r
     );
   }
   PollCheckoutDialogResult() {
@@ -467,47 +686,57 @@ class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
       case -1:
         return 1;
       case 2:
-        return 2;
+        return this.Vsl(), 2;
       default:
-        return 0;
+        return this.Vsl(), 0;
     }
   }
-  RequestCheckoutProduct(e, t) {
-    var r = PlatformSdkConfig_1.PlatformSdkConfig.Json.PS5,
-      a = PlatformSdkServer_1.PlatformSdkServer.GeneratePayHeader(
-        r.productId,
-        r.version,
-        r.sdkVersion,
-      );
+  Vsl() {
+    var t = new PlatformSdkReportData_1.PlatformReportClosePsnCheckOut();
+    (t.product_id = this.Szl),
+      (t.goodsId = this.Mzl),
+      (t.psnenvlssuer = this.CFa.IssuerId.toString()),
+      this.ReportToThirdParty(t);
+  }
+  RequestCheckoutProduct(t, e, r) {
+    var a = PlatformSdkConfig_1.PlatformSdkConfig.GetProductId(),
+      o = PlatformSdkConfig_1.PlatformSdkConfig.GetVersion(),
+      i = PlatformSdkConfig_1.PlatformSdkConfig.GetSdkVersion(),
+      n = PlatformSdkServer_1.PlatformSdkServer.GeneratePayHeader(a, o, i),
+      s = PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId(),
+      d = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformPkg(),
+      u = this.CFa.IssuerId;
     PlatformSdkServer_1.PlatformSdkServer.RequestCheckoutProduct(
-      t,
-      a,
+      r,
+      u,
+      e,
+      n,
       ["productId"],
-      r.productId,
+      a,
       ["channelId"],
-      r.channelId,
+      s,
       ["dn"],
       this.GetDeviceId(),
       ["pkg"],
-      r.pkg,
+      d,
       ["vn"],
-      r.version,
+      o,
       ["svn"],
-      r.sdkVersion,
+      i,
       ["plat"],
       4,
       ["access_token"],
-      e.AccessToken,
+      t.AccessToken,
       ["psnEnvIssuerId"],
-      this.cka.IssuerId,
+      this.CFa.IssuerId,
       ["serverId"],
-      e.ServerId,
+      t.ServerId,
       ["serverName"],
-      e.ServerName,
+      t.ServerName,
       ["roleId"],
-      e.RoleId,
+      t.RoleId,
       ["roleName"],
-      e.RoleName,
+      t.RoleName,
     );
   }
   NeedConfirmSdkProductInfo() {
@@ -516,49 +745,61 @@ class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
   NeedShowSdkProductInfoBeforePay() {
     return !0;
   }
-  GetMessageBoxCurrentState(t) {
-    const r = (e) => {
-      (0, puerts_1.releaseManualReleaseDelegate)(r), t(e);
+  GetMessageBoxCurrentState(e) {
+    const r = (t) => {
+      (0, puerts_1.releaseManualReleaseDelegate)(r), e(t);
     };
     ue_1.KuroStaticPS5Library.GetMessageDialogStateAsync(
       (0, puerts_1.toManualReleaseDelegate)(r),
     );
   }
-  async OpenMessageBox(e, a, n) {
+  async OpenMessageBox(t, a, o) {
     return (
       LauncherLog_1.LauncherLog.Debug("打开messageBox"),
-      new Promise((t) => {
-        const r = (e) => {
-          (0, puerts_1.releaseManualReleaseDelegate)(r), t(0 === e);
+      new Promise((e) => {
+        const r = (t) => {
+          (0, puerts_1.releaseManualReleaseDelegate)(r);
+          t = 0 === t;
+          e(t),
+            t &&
+              ((this.xsl = 0),
+              this.ksl(
+                () => (
+                  this.GetMessageBoxCurrentState((t) => {
+                    3 === (this.xsl = t) && this.TerminateMessageBox();
+                  }),
+                  3 === this.xsl ? -1 : 0
+                ),
+              ));
         };
         ue_1.KuroStaticPS5Library.OpenMessageDialog(
-          (0, puerts_1.$ref)(e),
+          (0, puerts_1.$ref)(t),
           a,
-          n,
+          o,
           (0, puerts_1.toManualReleaseDelegate)(r),
         );
       })
     );
   }
-  GetCommunicationRestricted(e, r) {
-    e || r(0);
-    const a = (e, t) => {
+  GetCommunicationRestricted(t, r) {
+    t || r(0);
+    const a = (t, e) => {
       (0, puerts_1.releaseManualReleaseDelegate)(a),
         LauncherLog_1.LauncherLog.Debug("GetCommunicationRestricted", [
           "ret",
-          e,
+          t,
         ]),
-        r(1 === t ? 1 : 0);
+        r(1 === e ? 1 : 0);
     };
     ue_1.KuroStaticPS5Library.GetCommunicationRestrictionStatusAsync(
-      (0, puerts_1.$ref)(e),
+      (0, puerts_1.$ref)(t),
       (0, puerts_1.toManualReleaseDelegate)(a),
     );
   }
-  async GetCommunicationRestrictedAsync(e) {
-    return new Promise((t) => {
-      this.GetCommunicationRestricted(e, (e) => {
-        t(e);
+  async GetCommunicationRestrictedAsync(t) {
+    return new Promise((e) => {
+      this.GetCommunicationRestricted(t, (t) => {
+        e(t);
       });
     });
   }
@@ -566,99 +807,253 @@ class PlayStation5Sdk extends PlatformSdkNew_1.PlatformSdkNew {
     return !1;
   }
   CheckUserPremium() {
-    var e = this.GetUserId();
-    return ue_1.KuroStaticPS5Library.CheckUserPremium((0, puerts_1.$ref)(e));
-  }
-  NotifyPlayStationPremium(e) {
     var t = this.GetUserId();
-    ue_1.KuroStaticPS5Library.NotifyPremiumFeature((0, puerts_1.$ref)(t), e);
+    return ue_1.KuroStaticPS5Library.CheckUserPremium((0, puerts_1.$ref)(t));
   }
-  CreatePlayerSession(e, t) {
-    return ue_1.KuroStaticPS5Library.CreatePlayerSession(
-      e,
-      (0, puerts_1.$ref)(t.toString()),
-    );
-  }
-  SetPlayerSessionJoinAbleUserType(e) {
-    ue_1.KuroStaticPS5Library.SetPlayerSessionJoinableUserType(e);
-  }
-  LeavePlayerSession() {
-    ue_1.KuroStaticPS5Library.LeavePlayerSession();
-  }
-  JoinPlayerSession(e) {
-    ue_1.KuroStaticPS5Library.JoinPlayerSession((0, puerts_1.$ref)(e));
-  }
-  CheckJoinSession() {
-    return ue_1.KuroStaticPS5Library.CheckJoinSession();
-  }
-  GetPlayerIdByPlayerSessionId(e) {
-    return ue_1.KuroStaticPS5Library.GetPlayerIdByPlayerSessionId(
-      (0, puerts_1.$ref)(e),
-    );
+  NotifyPlayStationPremium(t) {
+    var e = this.GetUserId();
+    ue_1.KuroStaticPS5Library.NotifyPremiumFeature((0, puerts_1.$ref)(e), t);
   }
   TerminateMessageBox() {
     ue_1.KuroStaticPS5Library.TerminateMessageDialog();
   }
+  CreatePlayerSession(t, e) {
+    return ue_1.KuroStaticPS5Library.CreatePlayerSession(
+      t,
+      (0, puerts_1.$ref)(e.toString()),
+    );
+  }
+  SetPlayerSessionJoinAbleUserType(t) {
+    ue_1.KuroStaticPS5Library.SetPlayerSessionJoinableUserType(t);
+  }
+  LeavePlayerSession() {
+    ue_1.KuroStaticPS5Library.LeavePlayerSession();
+  }
+  JoinPlayerSession(t) {
+    ue_1.KuroStaticPS5Library.JoinPlayerSession((0, puerts_1.$ref)(t));
+  }
+  CheckJoinSession() {
+    return ue_1.KuroStaticPS5Library.CheckJoinSession();
+  }
+  GetPlayerIdByPlayerSessionId(t) {
+    return ue_1.KuroStaticPS5Library.GetPlayerIdByPlayerSessionId(
+      (0, puerts_1.$ref)(t),
+    );
+  }
   IsPlatformNetworkReachable() {
-    var e = this.GetUserId(),
-      t = (0, puerts_1.$ref)(0);
+    var t = this.GetUserId(),
+      e = (0, puerts_1.$ref)(0);
     return 0 !==
       ue_1.KuroStaticPS5Library.SceNpGetNpReachabilityState(
-        (0, puerts_1.$ref)(e),
-        t,
+        (0, puerts_1.$ref)(t),
+        e,
       )
       ? (LauncherLog_1.LauncherLog.Error(
           "[PlatformSdkNew][PlayStation5Sdk] SceNpGetNpReachabilityState failed",
         ),
         !1)
-      : 2 === (0, puerts_1.$unref)(t);
+      : 2 === (0, puerts_1.$unref)(e);
   }
-  async GetTargetRelation(e) {
-    const t = await this.yZa();
-    e = e.filter((e) => e !== t).filter((e) => !this.Xza.has(e));
-    if (0 === e.length) return this.Xza;
-    const a = e.join(",");
+  async GetTargetRelation(t) {
+    const e = await this.Bsh();
+    let r = t.filter((t) => t !== e).filter((t) => !this.Vrh.has(t));
+    if (0 === r.length) return this.Vrh;
+    if (0 === (r = r.filter((t) => "" !== t)).length) return this.Vrh;
+    const a = r.join(",");
     if (
       (LauncherLog_1.LauncherLog.Debug("GetTargetRelation", ["checkStr", a]),
-      this.Yza.has(a))
+      this.Hrh.has(a))
     )
       return (
         LauncherLog_1.LauncherLog.Debug("重复获取,等待任务结束"),
-        await this.Yza.get(a),
+        await this.Hrh.get(a),
         LauncherLog_1.LauncherLog.Debug("任务结束"),
-        this.Xza
+        this.Vrh
       );
-    e = new Promise((e) => {
-      this.zza.set(a, e);
+    t = new Promise((t) => {
+      this.jrh.set(a, t);
     });
-    LauncherLog_1.LauncherLog.Debug("开始获取任务"), this.Yza.set(a, e);
-    const n = this.rAa(EPlayStaionScope.Login);
-    return n
-      ? (LauncherLog_1.LauncherLog.Debug("AuthCode", ["authCode", n]),
+    LauncherLog_1.LauncherLog.Debug("开始获取任务"), this.Hrh.set(a, t);
+    const o = this.ZAa("psn:s2s openid id_token:psn.basic_claims");
+    return o
+      ? (LauncherLog_1.LauncherLog.Debug("AuthCode", ["authCode", o]),
         new Promise((r) => {
-          var e =
-            `&access_token=${this.$za}&psnEnvIssuerId=${n?.IssuerId}&accountIds=` +
+          var t =
+            `&access_token=${this.CurrentAccessToken}&psnEnvIssuerId=${o?.IssuerId}&accountIds=` +
             a;
-          PlatformSdkServer_1.PlatformSdkServer.GetSdkRelation(e, (e, t) => {
-            e &&
-              t &&
-              t.data &&
-              t.data.blockList &&
-              t.data.blockList.forEach((e) => {
-                var t = e.isBlocked || e.isBlocking;
-                this.Xza.set(e.accountId, t ? 5 : 0);
+          PlatformSdkServer_1.PlatformSdkServer.GetSdkRelation(t, (t, e) => {
+            t &&
+              e &&
+              e.data &&
+              e.data.blockList &&
+              e.data.blockList.forEach((t) => {
+                var e = t.isBlocked || t.isBlocking;
+                this.Vrh.set(t.accountId, e ? 5 : 0);
               }),
-              this.zza.get(a)(this.Xza),
-              r(this.Xza);
+              this.jrh.get(a)(this.Vrh),
+              r(this.Vrh);
           });
         }))
       : (LauncherLog_1.LauncherLog.Error(
           "[PlatformSdkNew][PlayStation5Sdk] Login failed, empty authCode",
         ),
-        this.Xza);
+        this.Vrh);
   }
-  RefreshAccessToken(e) {
-    this.$za = e;
+  GetIfNeedQueryProductInfoForce() {
+    return !1;
+  }
+  async RequestEmailCode(t) {
+    const e = "&actionType=PSN_EMAIL_LOGIN&emailTo=" + t;
+    return new Promise((o) => {
+      PlatformSdkServer_1.PlatformSdkServer.RequestEmailAddressCode(
+        e,
+        (t, e, r, a) => {
+          LauncherLog_1.LauncherLog.Debug(
+            "RequestEmailCode",
+            ["success", t],
+            ["msg", r],
+            ["timestamp", a],
+          );
+          a = new PlatformSdkNew_1.RequestEmailCodeResponse();
+          (a.Code = e), (a.Msg = r), (a.IfSuccess = t), o(a);
+        },
+      );
+    });
+  }
+  SupportExternalWebBrowser() {
+    return !1;
+  }
+  OpenUserCenter(t, e) {
+    var r = new PlatformSdkReportData_1.PlatformReportClickAccountCenter(),
+      r =
+        (this.ReportToThirdParty(r),
+        PlatformSdkServer_1.PlatformSdkServer.GetUserCenterUrl()),
+      a = PlatformSdkConfig_1.PlatformSdkConfig.GetClientId(),
+      o = PlatformSdkConfig_1.PlatformSdkConfig.GetProductId(),
+      i = PlatformSdkConfig_1.PlatformSdkConfig.GetProjectId(),
+      n = PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId(),
+      s = this.qsl(),
+      d = PlatformSdkConfig_1.PlatformSdkConfig.GetPlatformPkg(),
+      u = this.CurrentAccessToken,
+      h = this.GetDeviceId(),
+      _ = PlatformSdkConfig_1.PlatformSdkConfig.GetSdkVersion(),
+      S = this.GetRunningOnlyCode(),
+      r =
+        r +
+        `?__e__=1&accessToken=${u}&response_type=code&redirect_uri=1&language=${s}&isSDK=1&pkg=${d}&userID=${t}&client_id=${a}&deviceNum=${h}&gameName=${this.GetGameName()}&channelId=${n}&productId=${o}&accountType=0&projectId=${i}&sdkVersion=${_}&loginId=` +
+        S;
+    LauncherLog_1.LauncherLog.Info("打开用户中心开始", ["url", r]),
+      this.OpenWebView(r, () => {
+        LauncherLog_1.LauncherLog.Info("打开用户中心结束"), e?.();
+      });
+  }
+  OpenCustomerService() {
+    var t = new PlatformSdkReportData_1.PlatformReportClickCustomerService(),
+      t =
+        (this.ReportToThirdParty(t),
+        PlatformSdkServer_1.PlatformSdkServer.IsCustomerServiceEnable);
+    t
+      ? ((t =
+          PlatformSdkConfig_1.PlatformSdkConfig.GetCustomServiceUrl() +
+          `?productId=${PlatformSdkConfig_1.PlatformSdkConfig.GetProductId()}&channelId=${PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId()}&projectId=${PlatformSdkConfig_1.PlatformSdkConfig.GetProjectId()}&language=` +
+          this.qsl()),
+        LauncherLog_1.LauncherLog.Info("打开客服", ["url", t]),
+        this.OpenWebView(t))
+      : LauncherLog_1.LauncherLog.Info("关闭了客服");
+  }
+  ReportToServer(t, e) {
+    var r = JSON.stringify(e),
+      a = e.roleId,
+      o = e.roleName,
+      i = e.serverId,
+      n = e.serverName;
+    PlatformSdkReportData_1.PlatformSdkReportBaseData.InitSdkRoleValue(
+      a,
+      o,
+      i,
+      n,
+    ),
+      PlatformSdkServer_1.PlatformSdkServer.RequestReportData(
+        this.CurrentAccessToken,
+        r,
+        (t, e, r) => {
+          LauncherLog_1.LauncherLog.Debug(
+            "ReportToServer",
+            ["code", t],
+            ["msg", e],
+            ["timestamp", r],
+          );
+        },
+      ),
+      0 === t
+        ? ((a = new PlatformSdkReportData_1.PlatformReportCreateRole()),
+          this.ReportToThirdParty(a))
+        : 2 === t
+          ? ((o = new PlatformSdkReportData_1.PlatformReportUpgradeRole()),
+            this.ReportToThirdParty(o))
+          : 1 === t &&
+            (((i =
+              new PlatformSdkReportData_1.PlatformReportLoginRole()).level =
+              e.roleLevel),
+            this.ReportToThirdParty(i));
+  }
+  ReportToThirdParty(t) {
+    this.DataReportInitState ? this.jhl(t) : this.Bsl.push(t);
+  }
+  jhl(t) {
+    var e;
+    PlatformSdkServer_1.PlatformSdkServer.IsReportEnable
+      ? ((e = t.GetReportEventName()),
+        (t = t.GetReportData()),
+        LauncherLog_1.LauncherLog.Debug(
+          "ReportToThirdParty",
+          ["eventName", e],
+          ["data", t],
+        ),
+        cpp_1.FThinkingAnalyticsForPuerts.Track(e, t, this.Psl))
+      : LauncherLog_1.LauncherLog.Debug("关闭了数数上报");
+  }
+  NotifyCurrentLanguage(t) {
+    var e = new PlatformSdkReportData_1.PlatformReportGetGameLanguage();
+    this.ReportToThirdParty(e),
+      PlatformSdkReportData_1.PlatformSdkReportBaseData.ChangeLanguage(t),
+      PlatformSdkServer_1.PlatformSdkServer.SetLanguage(t),
+      (this.wsl = t);
+  }
+  qsl() {
+    return "" === this.wsl
+      ? LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage()
+      : this.wsl;
+  }
+  BlockServerArea() {
+    return (
+      "Development" !== cpp_1.KuroApplication.GetAppReleaseType() &&
+      (LauncherLog_1.LauncherLog.Info(
+        "开启了锁区，注意服务器列表配置（将CDN服务器region字段修改成当前国家码可显示）",
+      ),
+      !0)
+    );
+  }
+  GetChannelId() {
+    return PlatformSdkConfig_1.PlatformSdkConfig.GetChannelId();
+  }
+  GetPackageId() {
+    return PlatformSdkConfig_1.PlatformSdkConfig.GetProductId();
+  }
+  GetSdkCountry() {
+    var t = this.GetUserId(),
+      t = ue_1.KuroStaticPS5Library.GetCountryCodeByUserId(
+        (0, puerts_1.$ref)(t),
+      );
+    return (
+      LauncherLog_1.LauncherLog.Debug("GetSdkCountry", ["countryCode", t]), t
+    );
+  }
+  Tick(t) {
+    this.J_(t);
+  }
+  NeedLimitUserInfoWhenSocialLimit() {
+    return !0;
   }
 }
 exports.PlayStation5Sdk = PlayStation5Sdk;

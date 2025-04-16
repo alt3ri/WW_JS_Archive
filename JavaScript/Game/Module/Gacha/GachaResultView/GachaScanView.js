@@ -21,6 +21,7 @@ const UE = require("ue"),
   CameraController_1 = require("../../../Camera/CameraController"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
   GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   GlobalData_1 = require("../../../GlobalData"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -39,7 +40,8 @@ const UE = require("ue"),
   SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GachaDefine_1 = require("../GachaDefine"),
-  GachaSceneView_1 = require("../GachaUiSceneManager/GachaSceneView");
+  GachaSceneView_1 = require("../GachaUiSceneManager/GachaSceneView"),
+  Info_1 = require("../../../../Core/Common/Info");
 (exports.SCENE_CAMERA_TAG = new UE.FName("SequenceCamera")),
   (exports.SCENE_ROLE_TAG = new UE.FName("Role"));
 class GachaScanView extends GachaSceneView_1.GachaSceneView {
@@ -74,6 +76,7 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
       (this.dKt = 190),
       (this.CKt = !1),
       (this.gKt = void 0),
+      (this.C4_ = !1),
       (this.OWt = () => {
         var e,
           i =
@@ -212,6 +215,15 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
       ]);
   }
   async OnBeforeStartAsync() {
+    (this.C4_ =
+      0 ===
+      UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+        "r.SkyBlending.AllowSettingLerpPerFrame",
+      )),
+      this.C4_ &&
+        UE.KuroSequencePerformanceManager.SimpleExecuteCommand(
+          "r.SkyBlending.AllowSettingLerpPerFrame 1",
+        );
     var e = this.OpenParam;
     if (void 0 !== e && e.SkipOnLoadResourceFinish) {
       var i = [];
@@ -275,13 +287,13 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
       this.tKt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1),
       this.iKt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1),
       this.oKt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1);
-    var e = new UE.Vector(200, 0, 0),
-      i = new UE.Vector(60, 0, 0),
+    var e = new UE.VectorDouble(200, 0, 0),
+      i = new UE.VectorDouble(60, 0, 0),
       t = new UE.Rotator(0, 90, 0);
-    this.eKt.K2_SetActorRelativeLocation(i, !1, void 0, !1),
-      this.tKt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
-      this.iKt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
-      this.oKt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
+    this.eKt.D_K2_SetActorRelativeLocation(i, !1, void 0, !1),
+      this.tKt.D_K2_SetActorRelativeLocation(e, !1, void 0, !1),
+      this.iKt.D_K2_SetActorRelativeLocation(e, !1, void 0, !1),
+      this.oKt.D_K2_SetActorRelativeLocation(e, !1, void 0, !1),
       this.eKt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
       this.tKt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
       this.iKt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
@@ -326,7 +338,7 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
     var e = this.fKt().e9n?.L8n ?? 0;
     e <= 0
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Gacha", 44, "抽卡获得物品为空")
+        Log_1.Log.Error("Gacha", 43, "抽卡获得物品为空")
       : (3 === (e = ModelManager_1.ModelManager.GachaModel.GetGachaQuality(e))
           ? AudioSystem_1.AudioSystem.SetState("ui_gacha_quality", "normal")
           : 4 === e
@@ -352,6 +364,7 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
       this.ZWt?.StopSequenceByKey("ConvertShow"),
       this.GetItem(13).SetAlpha(0),
       this.GetItem(22).SetAlpha(0),
+      this.GetItem(18).GetParentAsUIItem().SetUIActive(!1),
       1 === t
         ? (this.GetItem(3).SetUIActive(!0),
           (t = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(i)),
@@ -383,15 +396,6 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
     var i = 5 === r || (4 === r && e.IsNew),
       a =
         (this.GetButton(0).RootUIComp.SetUIActive(!i),
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Gacha",
-            35,
-            "星星刷新:",
-            ["qualityId", r],
-            ["LayoutDisplayCount", this.$be.GetDisplayCount()],
-            ["LayoutItemList", this.$be.GetItemList()?.length],
-          ),
         this.$be.RebuildLayout(r),
         e.h9n);
     if (
@@ -433,24 +437,24 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
             n.L8n,
           );
-        }),
-        this.ZWt.PlayLevelSequenceByName("ConvertShow", !1);
+        });
     } else this.JWt.SetActive(!1);
     1 < (t?.length ?? 0) &&
       ((i = t[1]), Log_1.Log.CheckError()) &&
       Log_1.Log.Error(
         "Gacha",
-        9,
+        8,
         "转换奖励只能有一个!, 请检查配置表",
         ["itemId", i.L8n],
         ["itemCount", i.n9n],
       );
     a = e.l9n;
-    a && 0 < a.L8n && 0 < a.n9n
-      ? (this.GetItem(14).SetUIActive(!0),
-        this.SetItemIcon(this.GetTexture(15), a.L8n),
-        this.GetText(16)?.SetText(a.n9n.toString()))
-      : this.GetItem(14).SetUIActive(!1);
+    this.GetItem(14).GetParentAsUIItem().SetUIActive(!1),
+      a && 0 < a.L8n && 0 < a.n9n
+        ? (this.SetItemIcon(this.GetTexture(15), a.L8n),
+          this.GetText(16)?.SetText(a.n9n.toString()),
+          this.GetItem(14).SetUIActive(!0))
+        : this.GetItem(14).SetUIActive(!1);
   }
   RefreshModel() {
     var e = this.SKt();
@@ -477,7 +481,8 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
           s.SequencePath,
         ),
         a =
-          (this.DKt(),
+          (UE.KuroSequencePerformanceManager.OpenKuroPerformanceMode(s),
+          this.DKt(),
           CameraController_1.CameraController.SetViewTarget(
             this.exe,
             "GachaScanView.RefreshModel",
@@ -488,7 +493,7 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
           (a.bPauseAtEnd = !0),
           (this.b2t = ActorSystem_1.ActorSystem.Spawn(
             UE.LevelSequenceActor.StaticClass(),
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
             void 0,
           )),
           (this.b2t.PlaybackSettings = a),
@@ -512,7 +517,10 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
                   FNameUtil_1.FNameUtil.GetDynamicFName("KuroUiSceneRoot"),
                   1,
                 )),
-                (a.TransformOrigin = s.GetTransform()))
+                (s = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(
+                  s.D_GetTransform(),
+                )),
+                (a.TransformOrigin = s))
             : 0 < e.BindPoint?.length &&
               ((this.b2t.bOverrideInstanceData = !0),
               (this.b2t.DefaultInstanceData.TransformOriginActor =
@@ -533,6 +541,7 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
             var d = l.Get(e);
             d && d.SetTickableWhenPaused(!0);
           }
+          n instanceof UE.BP_BaseRole_Seq_V2_C && n.SetTickableWhenPaused(!0);
         }
       }
       (this.CKt = !1),
@@ -598,8 +607,8 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
     this.SPe && (this.SPe.OnStop.Clear(), this.SPe.Stop(), (this.SPe = void 0)),
       this.b2t?.IsValid() &&
         (this.b2t.ResetBindings(),
-        (this.b2t.bOverrideInstanceData = !1),
-        (this.b2t.DefaultInstanceData.TransformOriginActor = void 0),
+        this.b2t.SetSequence(void 0),
+        this.b2t.K2_DestroyActor(),
         (this.b2t = void 0));
   }
   UKt(e) {
@@ -642,7 +651,7 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
             (e.SetLocation(s.Location),
             e.SetRotation(i.Quaternion()),
             e.SetScale3D(t.ToUeVector()),
-            a.MainMeshComponent?.K2_SetRelativeTransform(
+            a.MainMeshComponent?.D_K2_SetRelativeTransform(
               e.ToUeTransform(),
               !1,
               void 0,
@@ -669,7 +678,7 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
                 (e.Actor.K2_AttachToActor(a?.Actor, void 0, 2, 1, 1, !1),
                 Transform_1.Transform.Create());
             i.SetLocation(s.ScabbardOffset),
-              e?.MainMeshComponent?.K2_SetRelativeTransform(
+              e?.MainMeshComponent?.D_K2_SetRelativeTransform(
                 i.ToUeTransform(),
                 !1,
                 void 0,
@@ -702,9 +711,24 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
   }
   Finish() {
     (ModelManager_1.ModelManager.GachaModel.CanCloseView = !0),
-      UiManager_1.UiManager.OpenView("GachaResultView", this.OpenParam, () => {
-        UiManager_1.UiManager.CloseView(this.Info.Name);
-      }),
+      BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
+        "Start",
+        "GachaSkip",
+      )
+        .then(() => {
+          CameraController_1.CameraController.SetViewTarget(
+            this.gKt,
+            "GachaScanView.Finish",
+          ),
+            UiManager_1.UiManager.OpenView(
+              "GachaResultView",
+              this.OpenParam,
+              () => {
+                UiManager_1.UiManager.CloseView(this.Info.Name);
+              },
+            );
+        })
+        .finally(void 0),
       (ModelManager_1.ModelManager.GachaModel.CanCloseView = !1);
   }
   OnBeforeShow() {
@@ -754,7 +778,9 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
       this.Refresh();
   }
   OnBeforeHideImplement() {
-    GameSettingsManager_1.GameSettingsManager.ReApply(132),
+    GameSettingsManager_1.GameSettingsManager.ReApply(
+      GameSettingsDefine_1.EFunction.BLOOM,
+    ),
       this.hKt?.IsValid() && this.hKt?.EndGachaScene(),
       ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(0);
   }
@@ -765,17 +791,23 @@ class GachaScanView extends GachaSceneView_1.GachaSceneView {
       UiSceneManager_1.UiSceneManager.DestroyGachaItemObserver(),
       UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(this.EKt),
       this.cKt &&
-        (TimerSystem_1.TimerSystem.Remove(this.cKt), (this.cKt = void 0)),
-      CameraController_1.CameraController.SetViewTarget(
-        this.gKt,
-        "GachaScanView.OnBeforeDestroyImplementImplement",
-      );
+        (TimerSystem_1.TimerSystem.Remove(this.cKt), (this.cKt = void 0));
   }
   OnBeforeDestroy() {
     this.AddChild(this.xWt),
       this.AddChild(this.JWt),
       this.TKt(),
-      ModelManager_1.ModelManager.GachaModel.ReleaseLoadGachaSequence();
+      ModelManager_1.ModelManager.GachaModel.ReleaseLoadGachaSequence(),
+      UE.KuroSequencePerformanceManager.CloseKuroPerformanceMode(),
+      this.C4_ &&
+        UE.KuroSequencePerformanceManager.SimpleExecuteCommand(
+          "r.SkyBlending.AllowSettingLerpPerFrame 0",
+        ),
+      Info_1.Info.IsMacPlatform() &&
+        UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          GlobalData_1.GlobalData.World,
+          "r.AllowHardwareOcclusion 1",
+        );
   }
 }
 exports.GachaScanView = GachaScanView;

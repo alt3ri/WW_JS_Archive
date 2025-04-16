@@ -19,7 +19,7 @@ class GiftPackageConfig extends ConfigBase_1.ConfigBase {
       }
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Temp", 11, "GiftPackage里没有该id", ["Id", e]);
+        Log_1.Log.Error("Temp", 10, "GiftPackage里没有该id", ["Id", e]);
   }
 }
 exports.GiftPackageConfig = GiftPackageConfig;

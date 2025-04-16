@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewBase = void 0);
 const UE = require("ue"),
   AudioController_1 = require("../../../Core/Audio/AudioController"),
-  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../Core/Common/Log"),
   Queue_1 = require("../../../Core/Container/Queue"),
@@ -44,8 +43,10 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       (this.OpenPromise = void 0),
       (this.ClosePromise = void 0),
       (this.ShowPromise = void 0),
+      (this.HidePromise = void 0),
       (this.LoadScenePromise = void 0),
       (this.Kur = !1),
+      (this.MaskTag = ""),
       (this.Qur = (e, i) => {
         0 === i &&
           ((this.Kur = !0),
@@ -67,7 +68,8 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       (this.SkipReleaseScene = !1),
       (this.SceneLoaded = !1),
       (this.SkipRemoveBlackScreen = !1),
-      (this.Info = e);
+      (this.Info = e),
+      (this.MaskTag = e.Name + this.ComponentId);
   }
   get IsQueueView() {
     return void 0 !== this.Info && 0 <= this.Info.SortIndex;
@@ -96,7 +98,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[CloseMe]流程执行异常",
               e,
               ["error", e.message],
@@ -105,7 +107,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[CloseMe]流程执行异常",
               ["ViewName", this.Info.Name],
               ["error", e],
@@ -123,9 +125,9 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   PlaySequence(e, i = void 0, t = !1) {
     this.PlaySequenceAsync(e, t).then(i);
   }
-  async PlaySequenceAsync(e, i = !1) {
-    var t = new CustomPromise_1.CustomPromise();
-    await this.UiViewSequence.PlaySequenceAsync(e, t, i);
+  async PlaySequenceAsync(e, i = !1, t = !1, s = void 0) {
+    var r = new CustomPromise_1.CustomPromise();
+    await this.UiViewSequence.PlaySequenceAsync(e, r, i, t, s);
   }
   SetAudioEvent(e) {
     this.AudioEvent = e;
@@ -174,6 +176,9 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         : this.RootActor
     ).GetComponentByClass(UE.UIViewAudioEffectComponent.StaticClass());
   }
+  GetLoopAudioEventSwitch() {
+    return !0;
+  }
   Zur() {
     var e, i;
     return this.IsPreOpening
@@ -203,19 +208,17 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeCreateImplementImplement() {}
   OnBeforeCreateImplement() {
-    this.RegisterUiBehavior(),
-      this.ecr(),
-      this.OnBeforeCreateImplementImplement();
+    this.RegisterUiBehavior(), this.OnBeforeCreateImplementImplement();
   }
   OnAfterCreateImplement() {
     (this.IsExistInLeaveLevel || UiManager_1.UiManager.IsLockOpen) &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCore", 11, "场景切换过程中, 设置无缝加载标记"),
+        Log_1.Log.Info("UiCore", 10, "场景切换过程中, 设置无缝加载标记"),
       this.tcr());
   }
   tcr() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "SetViewPermanent", [
+      Log_1.Log.Info("UiCore", 16, "SetViewPermanent", [
         "ViewName",
         this.Info.Name,
       ]),
@@ -289,7 +292,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "播放界面动画Start(开始)",
             ["ViewName", this.Info.Name],
             ["SequenceName", this.UiViewSequence.StartSequenceName],
@@ -305,7 +308,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "播放界面动画Show(开始)",
             ["ViewName", this.Info.Name],
             ["SequenceName", this.UiViewSequence.ShowSequenceName],
@@ -317,7 +320,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       this.Info.IsFullScreen &&
         UE.LGUIBPLibrary.SetIsFullScreenUIRendering(this.GetRootActor(), !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCore", 17, "播放界面动画(结束)", [
+        Log_1.Log.Info("UiCore", 16, "播放界面动画(结束)", [
           "ViewName",
           this.Info.Name,
         ]);
@@ -325,7 +328,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   TryEmitInterruptOpExitView() {
     this.Kur &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCore", 38, "跳过界面动画Start流程,关闭界面", [
+        Log_1.Log.Info("UiCore", 37, "跳过界面动画Start流程,关闭界面", [
           "ViewName",
           this.Info.Name,
         ]),
@@ -346,6 +349,18 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       this.ShowPromise?.SetResult(void 0),
       this.HandleAllLoadingFinishOperation();
   }
+  HandleCacheShowActionFailIfIsPair() {
+    this.Hur &&
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiCore",
+          10,
+          "界面在首次打开时已经执行了Hide逻辑,Show逻辑不生效",
+          ["ViewName", this.Info.Name],
+          ["ComponentId", this.ComponentId],
+        ),
+      this.OpenPromise?.SetResult(!0));
+  }
   async OnHideAsyncImplementImplement() {
     GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelPerformanceSeqLimit(
       this.Info.Name,
@@ -361,7 +376,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
             this.OnBeforePlayCloseSequence(),
             await Promise.all([this.icr(), this.OnPlayingCloseSequenceAsync()]))
           : await this.zur(this.UiViewSequence.HideSequenceName)),
-      this.ReleaseScene();
+      await this.ReleaseScene();
   }
   OnHideAsyncImplementImplementCompatible() {
     GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelPerformanceSeqLimit(
@@ -389,22 +404,21 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       ),
       GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelPerformanceLimit(
         this.Info.Name,
-      );
+      ),
+      this.HidePromise?.SetResult(void 0);
   }
   async OnDestroyAsyncImplementImplement() {
     return (
       (this.ChildPopView = void 0),
       this.ResetOperationQueue(),
       UiManager_1.UiManager.RemoveView(this.GetViewId()),
-      this.ocr(),
       Promise.resolve()
     );
   }
   OnDestroyAsyncImplementImplementCompatible() {
     (this.ChildPopView = void 0),
       this.ResetOperationQueue(),
-      UiManager_1.UiManager.RemoveView(this.GetViewId()),
-      this.ocr();
+      UiManager_1.UiManager.RemoveView(this.GetViewId());
   }
   OnAfterDestroyImplement() {
     this.ClosePromise?.SetResult(void 0),
@@ -415,7 +429,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       ),
       this.Info.NeedGc &&
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 38, "执行Force GC", [
+          Log_1.Log.Info("UiCore", 37, "执行Force GC", [
             "ViewName",
             this.Info.Name,
           ]),
@@ -429,14 +443,6 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   AddChildViewById(e) {
     this.AddChild(UiManager_1.UiManager.GetView(e));
   }
-  ecr() {
-    this.Info?.OpenAudioEvent &&
-      AudioSystem_1.AudioSystem.PostEvent(this.Info.OpenAudioEvent);
-  }
-  ocr() {
-    this.Info?.CloseAudioEvent &&
-      AudioSystem_1.AudioSystem.PostEvent(this.Info.CloseAudioEvent);
-  }
   async icr() {
     var e = this.UiViewSequence.CloseSequenceName;
     e && (await this.zur(e));
@@ -449,6 +455,12 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   }
   OnGetLayer() {
     return this.Info.Type;
+  }
+  GetTimeDilation() {
+    return this.OnGetTimeDilation();
+  }
+  OnGetTimeDilation() {
+    return this.Info.TimeDilation;
   }
   SetLoadingFinishOperation(e) {
     this.gWt.Push(e);
@@ -476,27 +488,31 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "开始加载UI场景",
             ["ViewName", this.Info.Name],
             ["ScenePath", this.Info.ScenePath],
           ),
-        await UiSceneManager_1.UiSceneManager.LoadScene(this.Info.ScenePath),
-        this.OnHandleLoadScene())
+        await UiSceneManager_1.UiSceneManager.LoadScene(
+          this.Info.ScenePath,
+          () => {
+            this.OnHandleLoadScene();
+          },
+        ))
       : (this.SkipLoadScene = !1);
   }
-  ReleaseScene() {
+  async ReleaseScene() {
     this.WillReleaseScene()
       ? ((this.SceneLoaded = !1),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "开始释放UI场景",
             ["ViewName", this.Info.Name],
             ["ScenePath", this.Info.ScenePath],
           ),
-        UiSceneManager_1.UiSceneManager.ExitScene(),
+        await UiSceneManager_1.UiSceneManager.ExitScene(),
         this.OnHandleReleaseScene())
       : (this.SkipReleaseScene = !1);
   }
@@ -506,7 +522,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            17,
+            16,
             "[PreOpeningTimerId] 预打开界面超时未调用打开, 自动销毁界面",
             ["ViewName", this.Info.Name],
           ),
@@ -522,8 +538,10 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       (this.Wur = void 0),
       this.GetRootItem().SetUIParent(this.Zur());
   }
-  GetViewParam() {
-    return this.OpenParam;
+  SetParentUiItem(e) {
+    this.ParentUiItem !== e &&
+      ((this.ParentUiItem = e), (e = this.GetRootItem())) &&
+      e.SetUIParent(this.ParentUiItem);
   }
   async ClearAsync() {
     await this.OpenPromise?.Promise,
@@ -531,7 +549,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            11,
+            10,
             "[Clear] 完成销毁的界面",
             ["Name", this.constructor.name],
             ["ComponentId", this.ComponentId],

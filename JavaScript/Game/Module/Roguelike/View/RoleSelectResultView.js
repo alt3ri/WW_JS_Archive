@@ -44,7 +44,7 @@ class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResult
       this.UiPoolActorPrivate.UiItem.SetUIParent(
         this.GetHorizontalLayout(3).GetRootComponent(),
       ),
-      (this.jao = this.GetViewParam()),
+      (this.jao = this.OpenParam),
       (this.Plo = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
         this.xlo,

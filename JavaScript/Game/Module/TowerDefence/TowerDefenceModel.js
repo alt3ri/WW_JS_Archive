@@ -18,29 +18,47 @@ const Log_1 = require("../../../Core/Common/Log"),
   TowerDefenceInstanceByInstanceId_1 = require("../../../Core/Define/ConfigQuery/TowerDefenceInstanceByInstanceId"),
   TowerDefencePhantomById_1 = require("../../../Core/Define/ConfigQuery/TowerDefencePhantomById"),
   TowerDefencePhantomLevelByGroupId_1 = require("../../../Core/Define/ConfigQuery/TowerDefencePhantomLevelByGroupId"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   LocalStorage_1 = require("../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  EditFormationDefine_1 = require("../EditFormation/EditFormationDefine");
+  EditFormationDefine_1 = require("../EditFormation/EditFormationDefine"),
+  TowerDefenseRankGlobalData_1 = require("./Rank/TowerDefenseRankGlobalData");
 class TowerDefenseModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.fZs = new Map()),
       (this.IsUiFlowOpen = !1),
       (this.IsPhantomViewOpened = !1),
-      (this.AOa = void 0),
+      (this.Uka = void 0),
       (this.pZs = []),
       (this.PhantomMessageCache = new ParsedTowerDefenseMsg()),
       (this.CurrentSelfPhantomIdInUiTemp = TowerDefenceDefine_1.DEFAULT_ID),
+      (this.SelfReviveTargetTimestampForUi = void 0),
       (this.PhantomOwnerDataList = []),
       (this.RoleCfgId2PhantomIdMapCache = new Map()),
       (this.DelayedEndNotify = void 0),
-      (this.TimerCacheInBattle = new Set()),
-      (this.vZs = (e, t) => e.Id - t.Id);
+      (this.TimerCacheInBattle = new Map()),
+      (this.RankData =
+        new TowerDefenseRankGlobalData_1.TowerDefenseRankGlobalData()),
+      (this.vZs = (e, t) => e.Id - t.Id),
+      (this.Vil = (e, t) =>
+        e.RewardState === t.RewardState
+          ? e.Id - t.Id
+          : 1 === e.RewardState
+            ? -1
+            : 1 === t.RewardState
+              ? 1
+              : 0 === e.RewardState
+                ? -1
+                : 0 === t.RewardState
+                  ? 1
+                  : 0);
   }
   get IsEnterInActivityClicked() {
-    if (void 0 === this.AOa) {
+    if (void 0 === this.Uka) {
       let e = LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.TowerDefenseEntered,
       );
@@ -50,13 +68,13 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
           !1,
         ),
         (e = !1)),
-        (this.AOa = e);
+        (this.Uka = e);
     }
-    return this.AOa;
+    return this.Uka;
   }
   set IsEnterInActivityClicked(e) {
-    this.AOa !== e &&
-      ((this.AOa = e),
+    this.Uka !== e &&
+      ((this.Uka = e),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.TowerDefenseEntered,
         e,
@@ -70,7 +88,7 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     return (
-      this.yCa(),
+      this.ICa(),
       this.ResetCurrentPhantomIdInUiTempToFirstAvailable(),
       this.ResetPhantomOwnerDataList(),
       !0
@@ -81,14 +99,14 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "TowerDefense",
-          65,
+          64,
           "标记真正的离开场景时机，用于还原数据",
         ),
       this.PhantomMessageCache.OwnPhantomInBattleDataCache.clear(),
       !0
     );
   }
-  yCa() {
+  ICa() {
     for (const n of TowerDefencePhantomAll_1.configTowerDefencePhantomAll.GetConfigList()) {
       var e = [],
         t =
@@ -134,7 +152,7 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "TowerDefense",
-            65,
+            64,
             "塔防战斗中获取声骸ID失败：未赋值声骸",
             ["PlayerID", t],
             ["RoleCfgID", e],
@@ -144,7 +162,7 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "TowerDefense",
-            65,
+            64,
             "塔防战斗中获取声骸ID失败：未获取OwnerData",
             ["PlayerID", t],
             ["RoleCfgID", e],
@@ -157,7 +175,7 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
     return t
       ? t.SkillDataList
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("TowerDefense", 65, "未能获得塔防声骸技能配置", [
+          Log_1.Log.Error("TowerDefense", 64, "未能获得塔防声骸技能配置", [
             "TowerDefensePhantomId",
             e,
           ]),
@@ -189,7 +207,7 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "TowerDefense",
-              65,
+              64,
               "战斗中声骸ID，协议与配置不匹配，以协议ID找不到配置数据",
               ["协议声骸ID", t.s5n],
             ),
@@ -197,7 +215,8 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
         );
       var o = t.F6n;
       let e = 0;
-      1 < o &&
+      1 <= o &&
+        1 < n.MaxLevel &&
         (e =
           (n.MaxLevel === t.F6n
             ? n.SkillDataList[o - 2]
@@ -241,6 +260,17 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
       return t;
     }
   }
+  GetPreviewRewardCount() {
+    let e = 0,
+      t = 0;
+    for (const r of TowerDefenceRewardAll_1.configTowerDefenceRewardAll.GetConfigList())
+      r.ActivityId === this.PhantomMessageCache.Id &&
+        (2 === this.PhantomMessageCache.GetScoreRewardStateById(r.Id) && e++,
+        t++);
+    for (const n of this.PhantomMessageCache.StageListCache)
+      2 === this.PhantomMessageCache.GetPassRewardStateById(n.Id) && e++, t++;
+    return [e, t];
+  }
   GetPreviewRewardData() {
     var e = [];
     for (const T of TowerDefenceRewardAll_1.configTowerDefenceRewardAll.GetConfigList())
@@ -254,6 +284,7 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
           n.push([{ ItemId: t, IncId: 0 }, r]);
         var o = this.PhantomMessageCache.GetScoreRewardStateById(T.Id),
           o = {
+            Id: T.Id,
             NameText: "",
             NameTextId: "ConditionGroup_12100402_HintText",
             NameTextArgs: [T.Score.toString()],
@@ -269,75 +300,81 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
           };
         e.push(o);
       }
+    e.sort(this.Vil);
     var i = [],
       a = [];
-    for (const w of this.PhantomMessageCache.StageListCache) {
+    for (const I of this.PhantomMessageCache.StageListCache) {
       var s,
         f,
         c = [],
         h = TowerDefenceInstanceById_1.configTowerDefenceInstanceById.GetConfig(
-          w.Id,
+          I.Id,
         ),
         D = h.InstanceId,
-        D = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(D),
-        D = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(D.MapName),
-        l = h.RewardId;
-      for ([s, f] of DropPackageById_1.configDropPackageById.GetConfig(l)
+        l = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(D),
+        l = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(l.MapName),
+        d = h.RewardId;
+      for ([s, f] of DropPackageById_1.configDropPackageById.GetConfig(d)
         .DropPreview)
         c.push([{ ItemId: s, IncId: 0 }, f]);
-      (l = this.PhantomMessageCache.GetPassRewardStateById(w.Id)),
+      (d = this.PhantomMessageCache.GetPassRewardStateById(I.Id)),
         (D = {
+          Id: D,
           NameText: "",
           NameTextId: h.IsDifficult
             ? "TowerDefenceclear"
             : "ConditionGroup_12100401_HintText",
-          NameTextArgs: h.IsDifficult ? [D] : [D, h.RewardScore.toString()],
+          NameTextArgs: h.IsDifficult ? [l] : [l, h.RewardScore.toString()],
           RewardList: c,
-          RewardState: l,
-          RewardButtonText: this.Vea(l),
-          RewardButtonRedDot: 1 === l,
+          RewardState: d,
+          RewardButtonText: this.Vea(d),
+          RewardButtonRedDot: 1 === d,
           ClickFunction: () => {
             TowerDefenceController_1.TowerDefenseController.RequestInstanceReward(
-              w.Id,
+              I.Id,
             );
           },
         });
       (h.IsDifficult ? a : i).push(D);
     }
-    var d = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+    i.sort(this.Vil), a.sort(this.Vil);
+    var _ = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "TowerDefenceFullPoint",
       ),
-      d = d
+      _ = _
         ? StringUtils_1.StringUtils.Format(
-            d,
+            _,
             this.PhantomMessageCache.TotalScore.toString(),
           )
-        : "";
-    return {
-      DataPageList: [
-        {
-          TabName: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            "TowerDefenceLevelRewardText",
-          ),
-          TabTips: d,
-          DataList: i,
-        },
-        {
-          TabName: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            "TowerDefenceScoreRewardText",
-          ),
-          TabTips: d,
-          DataList: e,
-        },
-        {
-          TabName: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            "PrefabTextItem_1347286118_Text",
-          ),
-          TabTips: d,
-          DataList: a,
-        },
-      ],
-    };
+        : "",
+      w = [],
+      _ =
+        (0 < i.length &&
+          w.push({
+            TabName: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              "TowerDefenceLevelRewardText",
+            ),
+            TabTips: _,
+            DataList: i,
+          }),
+        0 < e.length &&
+          w.push({
+            TabName: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              "TowerDefenceScoreRewardText",
+            ),
+            TabTips: _,
+            DataList: e,
+          }),
+        0 < a.length &&
+          w.push({
+            TabName: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              "PrefabTextItem_1347286118_Text",
+            ),
+            TabTips: _,
+            DataList: a,
+          }),
+        { DataPageList: w, Source: "TowerDefence" });
+    return _;
   }
   Vea(e) {
     switch (e) {
@@ -381,6 +418,7 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
         PlayerId: ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
         IsSelf: !0,
         RoleCfgId: TowerDefenceDefine_1.DEFAULT_ID,
+        RoleSkinId: TowerDefenceDefine_1.DEFAULT_ID,
         PhantomId: TowerDefenceDefine_1.DEFAULT_ID,
       });
   }
@@ -389,6 +427,8 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
       ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
       (this.PhantomOwnerDataList[e].IsSelf = !0),
       (this.PhantomOwnerDataList[e].RoleCfgId =
+        TowerDefenceDefine_1.DEFAULT_ID),
+      (this.PhantomOwnerDataList[e].RoleSkinId =
         TowerDefenceDefine_1.DEFAULT_ID),
       (this.PhantomOwnerDataList[e].PhantomId =
         TowerDefenceDefine_1.DEFAULT_ID);
@@ -399,15 +439,51 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
       this.ResetPhantomOwnerDataByIndex(e);
     this.RoleCfgId2PhantomIdMapCache.clear();
   }
+  ResetPhantomOwnerDataByConfigId(t) {
+    for (let e = 0; e < this.PhantomOwnerDataList.length; e++) {
+      var r = this.PhantomOwnerDataList[e];
+      if (r.IsSelf && r.RoleCfgId === t) {
+        this.ResetPhantomOwnerDataByIndex(e);
+        break;
+      }
+    }
+    this.RoleCfgId2PhantomIdMapCache.delete(t);
+  }
   ResetTimerCacheInBattle() {
-    for (const e of this.TimerCacheInBattle) e.Remove();
+    for (var [, e] of this.TimerCacheInBattle) {
+      for (var [, t] of e) t.Remove();
+      e.clear();
+    }
     this.TimerCacheInBattle.clear();
   }
-  TryAddTimerInBattle(e) {
-    e && this.TimerCacheInBattle.add(e);
+  TryAddTimerInBattle(e, t, r) {
+    var n;
+    void 0 !== e &&
+      (this.TimerCacheInBattle.has(t) ||
+        this.TimerCacheInBattle.set(t, new Map()),
+      (n = this.TimerCacheInBattle.get(t)).has(r) &&
+        (n.get(r).Remove(), Log_1.Log.CheckError()) &&
+        Log_1.Log.Error(
+          "TowerDefense",
+          64,
+          "同一玩家的同一角色已经有timer用于复活倒计时，其将被停止，用新timer取代",
+          ["playerId", t],
+          ["roleId", r],
+        ),
+      n.set(r, e));
   }
-  TryRemoveTimerInBattle(e) {
-    e && (e.Remove(), this.TimerCacheInBattle.delete(e));
+  TryRemoveTimerInBattle(e, t) {
+    var r = this.TimerCacheInBattle.get(e);
+    if (void 0 !== r)
+      if (void 0 === t) {
+        for (const [, n] of r) n.Remove();
+        this.TimerCacheInBattle.delete(e);
+      } else {
+        const n = r.get(t);
+        void 0 !== n &&
+          (n.Remove(), r.delete(t), 0 === r.size) &&
+          this.TimerCacheInBattle.delete(e);
+      }
   }
   CheckHasReward() {
     return this.CheckHasPassReward() || this.CheckHasScoreReward();
@@ -416,7 +492,12 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
     var e = TowerDefenceRewardAll_1.configTowerDefenceRewardAll.GetConfigList(),
       t = this.PhantomMessageCache;
     for (const r of e)
-      if (t.TotalScore >= r.Score && !t.ScoreRewardCache.has(r.Id)) return !0;
+      if (
+        r.ActivityId === this.PhantomMessageCache.Id &&
+        t.TotalScore >= r.Score &&
+        !t.ScoreRewardCache.has(r.Id)
+      )
+        return !0;
     return !1;
   }
   CheckHasPassReward() {
@@ -438,11 +519,87 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
       if (t.UnlockTime < e && !t.Passed) return !0;
     return !1;
   }
+  yDc(e) {
+    let t = LocalStorage_1.LocalStorage.GetPlayer(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.TowerDefenseNewLevel,
+    );
+    return t
+      ? (t.get(e) ?? !1)
+      : ((t = new Map()),
+        LocalStorage_1.LocalStorage.SetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey.TowerDefenseNewLevel,
+          t,
+        ),
+        !1);
+  }
+  CheckTowerDefenseInstanceHasRedDot(e) {
+    return (
+      !!ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
+        e,
+      ) && !ModelManager_1.ModelManager.TowerDefenseModel.yDc(e)
+    );
+  }
+  SetLevelHasClickByInstanceId(t) {
+    let e = !1;
+    for (const n of this.PhantomMessageCache.StageListCache) {
+      var r =
+        TowerDefenceInstanceById_1.configTowerDefenceInstanceById.GetConfig(
+          n.Id,
+        )?.InstanceId ?? 0;
+      if (r && r === t) {
+        if (
+          !ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
+            t,
+          )
+        )
+          return;
+        e = !0;
+        break;
+      }
+    }
+    if (e) {
+      let e = LocalStorage_1.LocalStorage.GetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.TowerDefenseNewLevel,
+      );
+      (e = e || new Map()).set(t, !0),
+        LocalStorage_1.LocalStorage.SetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey.TowerDefenseNewLevel,
+          e,
+        ),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+          this.PhantomMessageCache.Id,
+        ),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnChallengeInstanceRedDot,
+          t,
+        );
+    }
+  }
+  HasNotClickNewLevel() {
+    if (this.PhantomMessageCache.GetPreGuideQuestFinishState())
+      for (const t of this.PhantomMessageCache.StageListCache) {
+        var e =
+          TowerDefenceInstanceById_1.configTowerDefenceInstanceById.GetConfig(
+            t.Id,
+          )?.InstanceId ?? 0;
+        if (e && this.CheckTowerDefenseInstanceHasRedDot(e)) return !0;
+      }
+    return !1;
+  }
   CheckPhantomAvailableInActivityByActivityId(e) {
     return e === this.PhantomMessageCache.Id;
   }
-  CheckCurrentActivityIsSecondEdition() {
-    return 101900001 === this.PhantomMessageCache.Id;
+  CheckCurrentActivityShowDifferent() {
+    var e = this.GetCurrentActivityConfig();
+    return e
+      ? e.ShowDifferent
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("TowerDefense", 10, "塔防活动配置数据为空", [
+            "ActivityId",
+            this.PhantomMessageCache.Id,
+          ]),
+        !1);
   }
   CheckPhantomIsOccupied(e) {
     for (const t of this.PhantomOwnerDataList)
@@ -459,6 +616,54 @@ class TowerDefenseModel extends ModelBase_1.ModelBase {
     for (const r of this.PhantomOwnerDataList) r.PlayerId === e && t.push(r);
     return t;
   }
+  GetCurrentActivityConfig() {
+    var e =
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig?.GetTowerDefenseConfigByActivityId(
+        this.PhantomMessageCache.Id,
+      );
+    if (e) return e;
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("TowerDefense", 10, "塔防活动配置数据为空", [
+        "ActivityId",
+        this.PhantomMessageCache.Id,
+      ]);
+  }
+  GetSortedByTitleEntranceInstanceIdList() {
+    var e =
+      ModelManager_1.ModelManager.InstanceDungeonEntranceModel
+        .EntranceInstanceIdList;
+    if (e) {
+      var t = new Map();
+      for (const n of e) {
+        var r =
+          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTowerDefenseInstanceByInstance(
+            n,
+          );
+        t.set(n, r.GroupId);
+      }
+      return t;
+    }
+  }
+  GetInstanceUnlockState(e, t) {
+    t =
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTowerDefenseConfigById(
+        t,
+      );
+    if (!this.PhantomMessageCache.IsStageUnLocked(t.InstanceId)) return !1;
+    if (0 !== e) {
+      t =
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTowerDefenseConfigById(
+          e,
+        );
+      if (
+        !ModelManager_1.ModelManager.TowerDefenseModel.PhantomMessageCache.IsPassedInstance(
+          t.InstanceId,
+        )
+      )
+        return !1;
+    }
+    return !0;
+  }
 }
 exports.TowerDefenseModel = TowerDefenseModel;
 class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
@@ -471,6 +676,11 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
       (this.OwnPhantomInBattleNewLevelUpFlagCache = new Map()),
       (this.TotalScore = 0);
   }
+  OnInit(e) {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.TowerDefenseDataInit,
+    );
+  }
   PhraseEx(e) {
     var t = e.pzs;
     t
@@ -478,7 +688,7 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "TowerDefense",
-          65,
+          64,
           "塔防数据为空，请确认活动协议类型是否正确",
           ["ActivityId", e.s5n],
           ["ActivityType", e.h5n],
@@ -492,7 +702,7 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
   }
   ParseTowerDefenseActivityData(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("TowerDefense", 65, "解析塔防活动数据", ["data", e]),
+      Log_1.Log.Debug("TowerDefense", 64, "解析塔防活动数据", ["data", e]),
       this.ScoreRewardCache.clear(),
       (this.TotalScore = 0);
     for (const r of e.Szs) {
@@ -500,14 +710,14 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
         TowerDefenceRewardById_1.configTowerDefenceRewardById.GetConfig(r);
       this.ScoreRewardCache.set(r, t);
     }
-    this.ParseTowerDefenseInstanceDataList(e.Mzs), (this.TotalScore = e.Wma);
+    this.ParseTowerDefenseInstanceDataList(e.Mzs), (this.TotalScore = e.Yma);
   }
   ParseTowerDefenseInstanceDataList(e, t = !0) {
     if (
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "TowerDefense",
-          65,
+          64,
           "解析塔防关卡数据",
           ["dataList", e],
           ["是否全量更新", t],
@@ -538,7 +748,7 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "TowerDefense",
-              65,
+              64,
               "塔防副本协议数据与配置不匹配，协议ID：" + i.s5n,
             );
       }
@@ -549,7 +759,7 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "TowerDefense",
-              65,
+              64,
               "塔防关卡协议存量更新时，出现未缓存的数据，本条协议不更新",
               ["协议数据", e],
             )
@@ -573,7 +783,7 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
   }
   ParseTowerDefenseOwnPhantomDataList(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("TowerDefense", 65, "解析塔防声骸数据", ["infoList", e]);
+      Log_1.Log.Debug("TowerDefense", 64, "解析塔防声骸数据", ["infoList", e]);
     for (const r of e) {
       var t = this.OwnPhantomInBattleDataCache.get(r.s5n);
       t &&
@@ -629,25 +839,62 @@ class ParsedTowerDefenseMsg extends ActivityData_1.ActivityBaseData {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "TowerDefense",
-            65,
+            64,
             "塔防关卡协议数据丢失",
             ["TowerDefenseInstanceId", e],
             ["关卡协议缓存", this.StageMapCache],
           ),
         !1);
   }
+  IsPassedInstance(e) {
+    var e =
+        TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
+          e,
+        ),
+      t = this.StageMapCache.get(e.Id);
+    return t
+      ? t.Passed
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "TowerDefense",
+            64,
+            "是否通关数据查询,塔防关卡协议数据丢失",
+            ["TowerDefenseInstanceId", e.Id],
+            ["关卡协议缓存", this.StageMapCache],
+          ),
+        !1);
+  }
+  GetPassTimeByInstanceId(e) {
+    var e =
+        TowerDefenceInstanceByInstanceId_1.configTowerDefenceInstanceByInstanceId.GetConfig(
+          e,
+        ),
+      t = this.StageMapCache.get(e.Id);
+    return t
+      ? t.PassTime
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "TowerDefense",
+            64,
+            "获取通关时间数据,塔防关卡协议数据丢失",
+            ["TowerDefenseInstanceId", e.Id],
+            ["关卡协议缓存", this.StageMapCache],
+          ),
+        0);
+  }
   GetSuitableInstanceId() {
     let e = 0;
-    for (const t of this.StageListCache)
-      if (
-        this.IsStageUnlockedByTowerDefenseInstanceId(t.Id) &&
-        ((e =
+    for (const r of this.StageListCache)
+      if (this.IsStageUnlockedByTowerDefenseInstanceId(r.Id)) {
+        var t =
           TowerDefenceInstanceById_1.configTowerDefenceInstanceById.GetConfig(
-            t.Id,
-          )?.InstanceId ?? 0),
-        0 === t.Record)
-      )
-        break;
+            r.Id,
+          );
+        if (((e = t?.InstanceId ?? 0), 0 === r.Record)) {
+          if (!t?.IsDifficult) break;
+          if (!r.Passed) break;
+        }
+      }
     return e;
   }
 }

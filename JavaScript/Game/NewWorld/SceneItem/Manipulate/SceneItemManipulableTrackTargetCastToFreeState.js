@@ -8,20 +8,21 @@ const puerts_1 = require("puerts"),
   TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
   CameraController_1 = require("../../../Camera/CameraController"),
   SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   PROFILE_KEY = "[SceneItemManipulableTrackTargetCastToFreeState.OnEnter]",
   MAX_DISTANCE = 5e3,
   SPHERE_TRACE_RADIUS = 1;
 class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
-  constructor(e, t) {
-    super(e, t),
+  constructor() {
+    super(...arguments),
       (this.Usr = void 0),
       (this.Asr = void 0),
       (this.Psr = void 0),
       (this.xsr = void 0),
       (this.wsr = void 0),
       (this.Bsr = !1),
-      (this.jnr = 0),
-      (this.StateType = "BeCastingFree");
+      (this.jnr = 0);
   }
   SetStartCameraLocation(e) {
     this.Usr = e;
@@ -69,6 +70,11 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
         (this.xsr = Vector_1.Vector.Create(this.Psr)),
         this.xsr.SubtractionEqual(this.Asr),
         this.xsr.Normalize(),
+        this.NeedNotifyServer &&
+          LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
+            this.SceneItem.Entity.Id,
+            Protocol_1.Aki.Protocol.Zw_.Proto_EControlStateFreeThrowing,
+          ),
         this.EnterCallback && this.EnterCallback(),
         (this.SceneItem.ActorComp.PhysicsMode = 0));
   }
@@ -115,14 +121,14 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
         (this.SceneItem.ActorComp.PhysicsMode = 3),
         (a = Vector_1.Vector.Create(this.xsr)),
         this.SceneItem.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
-          a.MultiplyEqual(this.jnr).ToUeVector(),
+          a.MultiplyEqual(this.jnr).ToUeVectorOld(),
         );
     }
     return (
       this.SceneItem.ManipulateBaseConfig.随速度调整朝向 &&
         !this.AfterHit &&
         ((t = Vector_1.Vector.Create(this.xsr.ToUeVector()).ToUeVector()),
-        (e = UE.KismetMathLibrary.FindLookAtRotation(
+        (e = UE.KismetMathLibrary.D_FindLookAtRotation(
           this.SceneItem.ActorComp.ActorLocation,
           this.SceneItem.ActorComp.ActorLocation.op_Addition(t),
         )),
@@ -133,6 +139,9 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
         )),
       !0
     );
+  }
+  IsNoLockCasting() {
+    return !0;
   }
 }
 (exports.SceneItemManipulableTrackTargetCastToFreeState =

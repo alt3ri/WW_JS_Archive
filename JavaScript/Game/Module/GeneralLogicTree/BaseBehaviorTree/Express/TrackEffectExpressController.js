@@ -129,7 +129,7 @@ class NodeTrackEffect {
         );
     StringUtils_1.StringUtils.IsEmpty(i)
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("GeneralLogicTree", 19, "找不到追踪特效配置路径", [
+        Log_1.Log.Error("GeneralLogicTree", 18, "找不到追踪特效配置路径", [
           "trackEffectType",
           "LongLightBeam",
         ])
@@ -139,7 +139,7 @@ class NodeTrackEffect {
           )),
         StringUtils_1.StringUtils.IsEmpty(t)
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error("GeneralLogicTree", 19, "找不到追踪特效配置路径", [
+            Log_1.Log.Error("GeneralLogicTree", 18, "找不到追踪特效配置路径", [
               "trackEffectType",
               "ShortLightBeam",
             ])
@@ -149,7 +149,7 @@ class NodeTrackEffect {
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "GeneralLogicTree",
-                19,
+                18,
                 "找不到追踪位置",
                 ["trackEffectType", "ShortLightBeam"],
                 ["nodeId", this.Jut],
@@ -187,10 +187,10 @@ class NodeTrackEffect {
         (this.Wse.Z -= 5),
         EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          new UE.Transform(
+          new UE.TransformDouble(
             Rotator_1.Rotator.ZeroRotator,
             this.Wse.ToUeVector(),
-            Vector_1.Vector.OneVector,
+            Vector_1.Vector.OneVectorDouble,
           ),
           t,
           "[TrackEffectExpress.CreateTrackEffect]",

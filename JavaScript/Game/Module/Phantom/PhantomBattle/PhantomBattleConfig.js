@@ -19,8 +19,10 @@ const Info_1 = require("../../../../Core/Common/Info"),
   PhantomLevelByGroupId_1 = require("../../../../Core/Define/ConfigQuery/PhantomLevelByGroupId"),
   PhantomLevelByGroupIdAndLevel_1 = require("../../../../Core/Define/ConfigQuery/PhantomLevelByGroupIdAndLevel"),
   PhantomMainPropertyById_1 = require("../../../../Core/Define/ConfigQuery/PhantomMainPropertyById"),
+  PhantomMainPropertyByRandGroupId_1 = require("../../../../Core/Define/ConfigQuery/PhantomMainPropertyByRandGroupId"),
   PhantomMainPropItemById_1 = require("../../../../Core/Define/ConfigQuery/PhantomMainPropItemById"),
   PhantomQualityByQuality_1 = require("../../../../Core/Define/ConfigQuery/PhantomQualityByQuality"),
+  PhantomRarityAll_1 = require("../../../../Core/Define/ConfigQuery/PhantomRarityAll"),
   PhantomRarityByRare_1 = require("../../../../Core/Define/ConfigQuery/PhantomRarityByRare"),
   PhantomSkillById_1 = require("../../../../Core/Define/ConfigQuery/PhantomSkillById"),
   PhantomSkillByPhantomSkillId_1 = require("../../../../Core/Define/ConfigQuery/PhantomSkillByPhantomSkillId"),
@@ -30,6 +32,7 @@ const Info_1 = require("../../../../Core/Common/Info"),
   TrailPhantomPropById_1 = require("../../../../Core/Define/ConfigQuery/TrailPhantomPropById"),
   TrialPhantomPropItemById_1 = require("../../../../Core/Define/ConfigQuery/TrialPhantomPropItemById"),
   ConfigBase_1 = require("../../../../Core/Framework/ConfigBase"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   COST3 = 3,
   COST1 = 1;
 exports.COSTLIST = [1, 3, 4];
@@ -44,7 +47,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象道具配置列表失败, 请检查配置表",
           )),
       e
@@ -55,7 +58,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     return (
       t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Phantom", 28, "获取幻象道具配置失败, 请检查配置表", [
+          Log_1.Log.Error("Phantom", 27, "获取幻象道具配置失败, 请检查配置表", [
             "id",
             e,
           ])),
@@ -77,7 +80,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象技能配置列表失败, 请检查配置表",
             ["SkillId", e],
           )),
@@ -99,6 +102,13 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     return (r < t ? e.LevelDescStrArray[r - 1] : e.LevelDescStrArray[t - 1])
       .ArrayString;
   }
+  GetPhantomSkillDescStringBySkillIdAndQuality(e, t = 2) {
+    (t = this.GetPhantomSkillDescExBySkillIdAndQuality(e, t)),
+      (e =
+        PhantomSkillById_1.configPhantomSkillById.GetConfig(e).DescriptionEx),
+      (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e));
+    return StringUtils_1.StringUtils.Format(e, ...t);
+  }
   GetPhantomSkillBySkillId(e) {
     var t =
       PhantomSkillByPhantomSkillId_1.configPhantomSkillByPhantomSkillId.GetConfigList(
@@ -109,7 +119,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Phantom",
-          28,
+          27,
           "获取幻象技能配置失败, 请检查配置表, 也可能是探索技能",
           ["SkillId", e],
         ),
@@ -119,13 +129,26 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
   GetPhantomRareConfig(e) {
     return PhantomRarityByRare_1.configPhantomRarityByRare.GetConfig(e);
   }
+  GetPhantomRareConfigAll() {
+    var e = PhantomRarityAll_1.configPhantomRarityAll.GetConfigList();
+    return (
+      e ||
+        (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Phantom",
+            75,
+            "获取幻象洗炼材料配置失败, 请检查配置表",
+          )),
+      e
+    );
+  }
   GetPhantomQualityByItemQuality(e) {
     var t =
       PhantomQualityByQuality_1.configPhantomQualityByQuality.GetConfig(e);
     return (
       t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Phantom", 28, "获取幻象品质配置失败, 请检查配置表", [
+          Log_1.Log.Error("Phantom", 27, "获取幻象品质配置失败, 请检查配置表", [
             "id",
             e,
           ])),
@@ -140,12 +163,24 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象主属性配置失败, 请检查配置表",
             ["id", e],
           )),
       t
     );
+  }
+  GetPhantomMainPropertyByRandGroupId(e) {
+    var t =
+      PhantomMainPropertyByRandGroupId_1.configPhantomMainPropertyByRandGroupId.GetConfigList(
+        e,
+      );
+    if (t) return t;
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("Phantom", 75, "获取幻象主属性方案组失败, 请检查配表", [
+        "id",
+        e,
+      ]);
   }
   GetPhantomMainPropertyItemId(e) {
     var t =
@@ -155,7 +190,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象主属性配置失败, 请检查配置表",
             ["id", e],
           )),
@@ -167,7 +202,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     return (
       t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Phantom", 28, "获取幻象属性配置失败, 请检查配置表", [
+          Log_1.Log.Error("Phantom", 27, "获取幻象属性配置失败, 请检查配置表", [
             "id",
             e,
           ])),
@@ -181,7 +216,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象羁绊配置列表失败, 请检查配置表",
           )),
       e
@@ -194,7 +229,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象羁绊配置列表失败, 请检查配置表",
           )),
       e
@@ -205,7 +240,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     return (
       t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Phantom", 28, "获取幻象羁绊配置失败, 请检查配置表", [
+          Log_1.Log.Error("Phantom", 27, "获取幻象羁绊配置失败, 请检查配置表", [
             "Id",
             e,
           ])),
@@ -223,7 +258,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象升级消耗配置失败, 请检查配置表",
             ["groupId", e],
             ["level", t],
@@ -239,7 +274,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象升级消耗配置列表失败, 请检查配置表",
             ["groupId", e],
           )),
@@ -251,7 +286,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     return (
       t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Phantom", 28, "获取道具配置失败, 请检查配置表", [
+          Log_1.Log.Error("Phantom", 27, "获取道具配置失败, 请检查配置表", [
             "itemId",
             e,
           ])),
@@ -265,7 +300,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象经验道具配置失败, 请检查配置表",
             ["itemId", e],
           )),
@@ -289,7 +324,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取幻象成长曲线值配置失败, 请检查配置表",
             ["growthId", e],
             ["level", t],
@@ -317,7 +352,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            28,
+            27,
             "获取configTrialPhantomPropItemById, 请检查配置表",
             ["id", e],
           )),
@@ -615,6 +650,31 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
   GetVisionRecoveryDesperateIcon() {
     return CommonParamById_1.configCommonParamById.GetStringConfig(
       "VisionRecoveryDesperate",
+    );
+  }
+  GetVisionRecommendRuleLevel() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "VisionRecommendRuleLevel",
+    );
+  }
+  GetPhantomEquipGroupCountMax() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "PhantomEquipGroupCount",
+    );
+  }
+  GetPhantomEquipHelpGroupId() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "VisionEquipHelpGroupId",
+    );
+  }
+  GetPhantomRecommendHelpGroupId() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "VisionRecommendHelpId",
+    );
+  }
+  GetVisionAttrSortArray() {
+    return CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+      "VisionMainViewExtraAttributeForPreset",
     );
   }
   OnClear() {

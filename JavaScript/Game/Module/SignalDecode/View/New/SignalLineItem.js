@@ -9,8 +9,10 @@ class SignalLineItem extends SignalItemBase_1.SignalItemBase {
   constructor() {
     super(...arguments), (this.DEo = void 0), (this.REo = void 0);
   }
-  Init(e) {
-    this.SetRootActor(e.GetOwner(), !0), (this.Width = this.RootItem.Width);
+  Init(t, i) {
+    this.SetRootActor(t.GetOwner(), !0),
+      (this.Width = this.RootItem.Width),
+      this.RootItem.SetAnchorOffsetX(i);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -21,30 +23,38 @@ class SignalLineItem extends SignalItemBase_1.SignalItemBase {
   OnStart() {
     (this.DEo = this.GetSprite(0)), (this.REo = this.GetSprite(1));
   }
+  AddWidth(t) {
+    (this.Width += t), this.RootItem.SetWidth(this.Width);
+  }
   OnReset() {
     this.DEo.SetUIActive(!0),
       this.REo.SetFillAmount(0),
       this.REo.SetUIActive(!0);
   }
-  InitByGameplayType(e) {
-    super.InitByGameplayType(e);
-    let t =
-      2 === e ? "SP_SignalNoteSolidLineGreen" : "SP_SignalNoteSolidLineYellow";
-    3 === e && (t = "SP_SignalNoteSolidLineOrange");
-    e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t);
-    this.SetSpriteByPath(e, this.REo, !1), this.Reset();
+  InitByGameplayType(t) {
+    super.InitByGameplayType(t);
+    let i =
+      2 === t ? "SP_SignalNoteSolidLineGreen" : "SP_SignalNoteSolidLineYellow";
+    3 === t && (i = "SP_SignalNoteSolidLineOrange");
+    t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
+    this.SetSpriteByPath(t, this.REo, !1), this.Reset();
   }
   OnUpdate() {
-    super.OnUpdate();
-    var e = -this.DecisionShowSize / 2;
-    this.CurrentRelativeX < e
-      ? this.REo.SetFillAmount(0)
-      : ((e = this.GetProgress()), this.REo.SetFillAmount(e));
+    var t, i;
+    return (
+      !!super.OnUpdate() &&
+      ((i = -this.DecisionShowSize / 2),
+      (t = this.REo.GetFillAmount()),
+      this.CurrentRelativeX < i
+        ? 0 !== t && this.REo.SetFillAmount(0)
+        : t !== (i = this.GetProgress()) && this.REo.SetFillAmount(i),
+      !0)
+    );
   }
   GetProgress() {
-    var e = -this.DecisionShowSize / 2,
-      e = this.CurrentRelativeX - e;
-    return MathCommon_1.MathCommon.Clamp(e / this.RootItem.Width, 0, 1);
+    var t = -this.DecisionShowSize / 2,
+      t = this.CurrentRelativeX - t;
+    return MathCommon_1.MathCommon.Clamp(t / this.RootItem.Width, 0, 1);
   }
 }
 exports.SignalLineItem = SignalLineItem;

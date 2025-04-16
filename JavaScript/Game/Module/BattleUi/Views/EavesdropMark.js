@@ -41,7 +41,7 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
       (this.$1t = Rotator_1.Rotator.Create()),
       (this.B2n = 3),
       (this.w2n = 3),
-      (this.zVa = -1),
+      (this.$Ha = -1),
       (this.b2n = (t, i) => {
         i && 0 !== this.B2n && this.PlayChangeToNormalSeq();
       }),
@@ -86,7 +86,7 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
         ((this.E$e = t),
         (this.A2n = i),
         (t = EntitySystem_1.EntitySystem.Get(i))) &&
-        ((this.U2n = t.GetComponent(190)),
+        ((this.U2n = t.GetComponent(203)),
         this.U2n.AddTagAddOrRemoveListener(normalTag, this.b2n),
         this.U2n.AddTagAddOrRemoveListener(startTakingTag, this.q2n),
         this.U2n.AddTagAddOrRemoveListener(endTag, this.G2n));
@@ -119,11 +119,11 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
       this.Swr(),
       void 0 !== t &&
         SneakController_1.SneakController.IsSneaking &&
-        (this.zVa < t && !this.GetActive()
+        (this.$Ha < t && !this.GetActive()
           ? this.SetActive(!0)
-          : this.zVa >= t && this.GetActive() && this.SetActive(!1)),
+          : this.$Ha >= t && this.GetActive() && this.SetActive(!1)),
       this.RootItem.SetUIRelativeScale3D(
-        Vector_1.Vector.Create(0.5, 0.5, 0.5).ToUeVector(!0),
+        Vector_1.Vector.Create(0.5, 0.5, 0.5).ToUeVectorOld(!0),
       );
   }
   Update() {
@@ -132,9 +132,9 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
       this.Swr(),
       void 0 !== t &&
         SneakController_1.SneakController.IsSneaking &&
-        (this.zVa < t && this.GetActive()
+        (this.$Ha < t && this.GetActive()
           ? this.SetActive(!1)
-          : this.zVa >= t && !this.GetActive() && this.SetActive(!0));
+          : this.$Ha >= t && !this.GetActive() && this.SetActive(!0));
   }
   T_e() {
     var t = CameraController_1.CameraController.CameraRotator,
@@ -153,7 +153,7 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
     var t =
         Global_1.Global.BaseCharacter?.CharacterActorComponent
           ?.ActorLocationProxy,
-      i = this.E$e?.K2_GetActorLocation();
+      i = this.E$e?.D_K2_GetActorLocation();
     if (t && i)
       return (
         (i = Vector_1.Vector.Create(i).SubtractionEqual(
@@ -165,8 +165,11 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
     this.R2n?.SetText("");
   }
   Swr() {
-    var t = this.yen.GetSocketLocation(headName);
-    (t.Z += HEAD_OFFSET), this.RootItem.SetUIRelativeLocation(t);
+    var t = this.yen.D_GetSocketLocation(headName),
+      t =
+        ((t.Z += HEAD_OFFSET),
+        UE.KismetMathLibrary.Conv_VectorDoubleToVector(t));
+    this.RootItem.SetUIRelativeLocation(t);
   }
   PlayFoundSeq() {
     2 !== this.B2n &&
@@ -203,7 +206,7 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
   }
   Initialize(t, i) {
     this.CreateThenShowByResourceIdAsync("UiItem_Eavesdrop", t),
-      (this.zVa = i),
+      (this.$Ha = i),
       this.SetActive(SneakController_1.SneakController.IsSneaking),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SneakStart,

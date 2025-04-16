@@ -8,8 +8,12 @@ class TsSkeletalObserver extends UE.Actor {
   constructor() {
     super(...arguments), (this.Model = void 0);
   }
+  Constructor() {
+    this.Model = void 0;
+  }
   Init(e) {
     this.SetTickableWhenPaused(!0),
+      this.SetActorTickEnabled(!0),
       UE.KuroRenderingRuntimeBPPluginBPLibrary.SetActorUISceneRendering(
         this,
         !0,
@@ -28,7 +32,7 @@ class TsSkeletalObserver extends UE.Actor {
     this.Model?.End(),
       this.Model?.Clear(),
       (this.Model = void 0),
-      ActorSystem_1.ActorSystem.Put(this);
+      ActorSystem_1.ActorSystem.Put("TsSkeletalObserver.Destroy", this);
   }
 }
 (exports.TsSkeletalObserver = TsSkeletalObserver),

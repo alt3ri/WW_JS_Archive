@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayGiftModel = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   PayPackageData_1 = require("./PayShopData/PayPackageData");
 class PayGiftModel extends ModelBase_1.ModelBase {
@@ -15,18 +17,18 @@ class PayGiftModel extends ModelBase_1.ModelBase {
       (this.cFi = new Map()),
       (this.mFi = new Array());
   }
-  InitDataByServer(t) {
-    if (0 !== t.length) {
+  InitDataByServer(e, t = !1) {
+    if (0 !== e.length) {
       (this._Fi = []),
         (this.lFi = []),
         (this.mFi = []),
         this.uFi.clear(),
         this.cFi.clear();
-      var e = new Array();
-      for (const r of t) {
+      var r = new Array();
+      for (const o of e) {
         var a = new PayPackageData_1.PayPackageData();
-        a.Phrase(r),
-          e.push(r.uBs),
+        a.Phrase(o),
+          r.push(o.uBs),
           this.lFi.push(a),
           this._Fi.push(a.GetPayShopGoods()),
           this.uFi.set(a.Id, a.GetPayShopGoods()),
@@ -35,36 +37,44 @@ class PayGiftModel extends ModelBase_1.ModelBase {
             a.ShowInShop() &&
             this.mFi.push(a.TabId);
       }
+      if (t) {
+        var s = new Set();
+        for (const i of this.mFi) s.add(i);
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RefreshGoodsList,
+          s,
+        );
+      }
     }
   }
   IfHaveFreeGift() {
-    for (const t of this.lFi) if ("0" === t.Amount) return !0;
+    for (const e of this.lFi) if ("0" === e.Amount) return !0;
     return !1;
   }
   GetTabList() {
-    var t = new Set(),
-      e = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(3);
-    for (const a of this.mFi) t.add(a);
-    for (const r of e) t.add(r);
-    return Array.from(t);
+    var e = new Set(),
+      t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(3);
+    for (const r of this.mFi) e.add(r);
+    for (const a of t) e.add(a);
+    return Array.from(e);
   }
-  GetPayShopGoodsById(t) {
-    var e = this.uFi.get(t);
+  GetPayShopGoodsById(e) {
+    var t = this.uFi.get(e);
     return (
-      e ||
+      t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Pay", 28, "找不到对应的商品，检查配置或者协议顺序", [
+          Log_1.Log.Error("Pay", 27, "找不到对应的商品，检查配置或者协议顺序", [
             "id",
-            t,
+            e,
           ])),
-      e
+      t
     );
   }
   GetPayGiftDataList() {
     return this.lFi;
   }
-  GetPayGiftDataById(t) {
-    return this.cFi.get(t);
+  GetPayGiftDataById(e) {
+    return this.cFi.get(e);
   }
   GetPayShopGoodsList() {
     return this._Fi;

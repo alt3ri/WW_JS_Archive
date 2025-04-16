@@ -12,14 +12,15 @@ class EditBattleRoleSlotData {
   }
   SetRoleDataByPrewarInfo(t) {
     var e = t.GetConfigId(),
-      a = t.GetOnlineNumber(),
-      i = t.GetPlayerName(),
-      o = t.GetPlayerId(),
-      r = t.GetLevel(),
-      s = t.IsSelf(),
-      l = t.GetIsReady();
+      a = t.GetSkinId(),
+      i = t.GetOnlineNumber(),
+      o = t.GetPlayerName(),
+      r = t.GetPlayerId(),
+      s = t.GetLevel(),
+      l = t.IsSelf(),
+      h = t.GetIsReady();
     this.Wst || (this.Wst = new EditBattleRoleData_1.EditBattleRoleData()),
-      this.Wst.Init(o, e, a, i, r, s, l),
+      this.Wst.Init(r, e, a, i, o, s, l, h),
       (this.Wst.ThirdPartyOnlineId = t.GetPlayerOnlineId());
   }
   ResetRoleData() {

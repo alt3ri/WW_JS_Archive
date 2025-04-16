@@ -11,7 +11,7 @@ const UE = require("ue"),
 class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.qya = []),
+      (this.Oya = []),
       (this.Hnt = void 0),
       (this.zst = void 0),
       (this.Bst = 0),
@@ -43,7 +43,7 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
   }
   InitPropertyId(t) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "初始化环境叙事球", ["propertyId", t]),
+      Log_1.Log.Debug("Battle", 17, "初始化环境叙事球", ["propertyId", t]),
       (this.zst =
         ModelManager_1.ModelManager.BattleUiModel.FormationData.GetUiEnvironmentProperty(
           t,
@@ -56,24 +56,24 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
       ((t = this.zst.IconFrame.AssetPathName.toString()),
       (s = this.zst.Icon.AssetPathName.toString()),
       (i = this.zst.IconFull.AssetPathName.toString()),
-      (e = []).push(this.Gya(t, 0)),
-      e.push(this.Gya(s, 1)),
-      e.push(this.Gya(i, 2)),
+      (e = []).push(this.kya(t, 0)),
+      e.push(this.kya(s, 1)),
+      e.push(this.kya(i, 2)),
       await Promise.all(e));
   }
-  async Gya(t, s) {
+  async kya(t, s) {
     const i = new CustomPromise_1.CustomPromise();
     ResourceSystem_1.ResourceSystem.LoadAsync(
       t,
       UE.LGUISpriteData_BaseObject,
       (t) => {
-        t.IsValid() && (this.qya[s] = t), i.SetResult(!0);
+        t.IsValid() && (this.Oya[s] = t), i.SetResult(!0);
       },
     ),
       await i.Promise;
   }
   OnStart() {
-    this.Oya(1, 0), this.Oya(4, 1), this.Oya(5, 2), (this.qya.length = 0);
+    this.Nya(1, 0), this.Nya(4, 1), this.Nya(5, 2), (this.Oya.length = 0);
     var t,
       s = this.zst?.SceneEffect.ToAssetPathName(),
       s =
@@ -90,17 +90,17 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
       this.Est(9),
       this.Est(10);
   }
-  Oya(t, s) {
-    (t = this.GetSprite(t)), (s = this.qya[s]);
+  Nya(t, s) {
+    (t = this.GetSprite(t)), (s = this.Oya[s]);
     s && t?.SetSprite(s, !1);
   }
   OnBeforeShow() {
-    this.kya(this.qte, this.BY);
+    this.Fya(this.qte, this.BY);
   }
   SetPercent(t, s) {
-    (this.qte = t), (this.BY = s), this.IsShowOrShowing && this.kya(t, s);
+    (this.qte = t), (this.BY = s), this.IsShowOrShowing && this.Fya(t, s);
   }
-  kya(i, e) {
+  Fya(i, e) {
     if (i <= 0 || e <= 0) (this.Bst = 0), this.aat(!1);
     else if (this.zst) {
       i = Math.min(1, Math.max(0, i / e));

@@ -45,6 +45,22 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       (this.StartLocation = void 0),
       (this.EndLocation = void 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.SelfForward = void 0),
+      (this.SelfBackward = void 0),
+      (this.SelfRight = void 0),
+      (this.SelfUp = void 0),
+      (this.IsHorizontalPlane = !1),
+      (this.TmpResultLocation = void 0),
+      (this.TmpResultRotator = void 0),
+      (this.ForwardSizeSquared2D = -0),
+      (this.Forward2D = void 0),
+      (this.NormalRotator = void 0),
+      (this.TmpLocation = void 0),
+      (this.StartLocation = void 0),
+      (this.EndLocation = void 0);
+  }
   OnBeginPlay() {
     (this.SelfForward = Vector_1.Vector.Create()),
       (this.SelfRight = Vector_1.Vector.Create()),
@@ -88,10 +104,10 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       if (0 === t.Num() || t.Get(0) !== this) return this.IsLegal;
     }
     this.LineTrace || this.InitTraceInfo();
-    var h = Math.ceil((2 * this.PlaneHalfHeight) / LEGAL_CHECK_PERIOD) + 1,
-      i = 1 < h ? (2 * this.PlaneHalfHeight) / (h - 1) : 0;
+    var i = Math.ceil((2 * this.PlaneHalfHeight) / LEGAL_CHECK_PERIOD) + 1,
+      h = 1 < i ? (2 * this.PlaneHalfHeight) / (i - 1) : 0;
     let s = -this.PlaneHalfHeight;
-    for (let t = 0; t < h; ++t) {
+    for (let t = 0; t < i; ++t) {
       if (
         ((this.TmpLocation.X = 0),
         (this.TmpLocation.Y = -this.PlaneHalfWidth),
@@ -120,7 +136,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         ))
       )
         return !1;
-      s += i;
+      s += h;
     }
     var e = Math.ceil((2 * this.PlaneHalfWidth) / LEGAL_CHECK_PERIOD) + 1,
       a = 1 < e ? (2 * this.PlaneHalfWidth) / (e - 1) : 0;
@@ -159,27 +175,27 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
     return !0;
   }
   OnDraw() {
-    var i = this.IsLegal ? greenColor : yellowColor,
+    var h = this.IsLegal ? greenColor : yellowColor,
       s = ((this.TmpLocation.X = 0), drawPoints.length);
-    for (let h = 0; h < s; ++h) {
-      (this.TmpLocation.Y = drawPoints[h].Y * this.PlaneHalfWidth),
-        (this.TmpLocation.Z = drawPoints[h].Z * this.PlaneHalfHeight),
+    for (let i = 0; i < s; ++i) {
+      (this.TmpLocation.Y = drawPoints[i].Y * this.PlaneHalfWidth),
+        (this.TmpLocation.Z = drawPoints[i].Z * this.PlaneHalfHeight),
         this.SelfTransform.TransformPositionNoScale(
           this.TmpLocation,
           this.StartLocation,
         );
-      for (let t = h + 1; t < s; ++t)
+      for (let t = i + 1; t < s; ++t)
         (this.TmpLocation.Y = drawPoints[t].Y * this.PlaneHalfWidth),
           (this.TmpLocation.Z = drawPoints[t].Z * this.PlaneHalfHeight),
           this.SelfTransform.TransformPositionNoScale(
             this.TmpLocation,
             this.EndLocation,
           ),
-          UE.KismetSystemLibrary.DrawDebugLine(
+          UE.KismetSystemLibrary.D_DrawDebugLine(
             this,
             this.StartLocation.ToUeVector(),
             this.EndLocation.ToUeVector(),
-            i,
+            h,
             DRAW_TIME,
             DEFAULT_THICKNESS,
           );
@@ -188,9 +204,9 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       forwardOffset,
       this.EndLocation,
     ),
-      UE.KismetSystemLibrary.DrawDebugArrow(
+      UE.KismetSystemLibrary.D_DrawDebugArrow(
         this,
-        this.K2_GetActorLocation(),
+        this.D_K2_GetActorLocation(),
         this.EndLocation.ToUeVector(),
         DEFAULT_ARROW_SIZE,
         redColor,
@@ -204,24 +220,24 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       this.Text.SetTextRenderColor(textColor),
       (this.Text.Text = "Plane " + this.TypeId);
   }
-  OnGetBestTransform(t, h, i, s) {
+  OnGetBestTransform(t, i, h, s) {
     this.UpdateData();
     var e = this.TmpResult;
     return (
-      this.ActorLocation.FromUeVector(t.K2_GetActorLocation()),
+      this.ActorLocation.FromUeVector(t.D_K2_GetActorLocation()),
       this.ActorLocation.Subtraction(this.SelfLocation, this.SelfToActor),
       (e.Success = this.SelfToActor.DotProduct(this.SelfForward) > s),
       e.Success &&
-        (this.MoveOffset.FromUeVector(h),
+        (this.MoveOffset.FromUeVector(i),
         this.IsHorizontalPlane
-          ? ((h = this.GetBestTransformHorizontal(i, s)),
-            (e.Location = h[0].ToUeVector()),
-            (e.Rotator = h[1].ToUeRotator()),
-            (e.SquaredOffsetLength = h[2]))
-          : ((h = this.GetBestTransformNotHorizontal(i, s)),
-            (e.Location = h[0].ToUeVector()),
-            (e.Rotator = h[1].ToUeRotator()),
-            (e.SquaredOffsetLength = h[2])),
+          ? ((i = this.GetBestTransformHorizontal(h, s)),
+            (e.Location = i[0].ToUeVectorOld()),
+            (e.Rotator = i[1].ToUeRotator()),
+            (e.SquaredOffsetLength = i[2]))
+          : ((i = this.GetBestTransformNotHorizontal(h, s)),
+            (e.Location = i[0].ToUeVectorOld()),
+            (e.Rotator = i[1].ToUeRotator()),
+            (e.SquaredOffsetLength = i[2])),
         (this.LineTrace.WorldContextObject = t),
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(
           this.LineTrace,
@@ -239,10 +255,10 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       e
     );
   }
-  GetBestTransformHorizontal(t, h) {
-    var i = this.SelfRight.DotProduct(this.SelfToActor),
+  GetBestTransformHorizontal(t, i) {
+    var h = this.SelfRight.DotProduct(this.SelfToActor),
       s = this.SelfUp.DotProduct(this.SelfToActor),
-      e = i + this.SelfRight.DotProduct(this.MoveOffset),
+      e = h + this.SelfRight.DotProduct(this.MoveOffset),
       a = s + this.SelfUp.DotProduct(this.MoveOffset),
       r = Math.abs(e),
       o = Math.abs(a),
@@ -252,7 +268,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       return (
         this.ActorLocation.Addition(this.MoveOffset, this.TmpResultLocation),
         (o =
-          (r = this.SelfLocation.Z + this.SelfForward.X * h) -
+          (r = this.SelfLocation.Z + this.SelfForward.X * i) -
           this.TmpResultLocation.Z),
         (this.TmpResultLocation.Z = r),
         MathUtils_1.MathUtils.LookRotationForwardFirst(
@@ -262,14 +278,14 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         ),
         [this.TmpResultLocation, this.TmpResultRotator, o * o]
       );
-    var r = Math.abs(i),
+    var r = Math.abs(h),
       o = Math.abs(s),
       M =
         MathUtils_1.MathUtils.Square(r + _) +
         MathUtils_1.MathUtils.Square(o + l),
       n = this.MoveOffset.SizeSquared2D();
     if (M <= n) {
-      (this.TmpResultLocation.X = h),
+      (this.TmpResultLocation.X = i),
         (this.TmpResultLocation.Y = 0 < e ? -_ : _),
         (this.TmpResultLocation.Z = 0 < a ? -l : l),
         this.SelfTransform.TransformPositionNoScale(
@@ -288,8 +304,8 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         ) + MathUtils_1.MathUtils.Square(Math.sqrt(n) - Math.sqrt(M));
       return [this.TmpResultLocation, this.TmpResultRotator, E];
     }
-    if (this.FindHitMatrixAndCircle(_, l, i, s, n, e, a)) {
-      (this.TmpResultLocation.X = h),
+    if (this.FindHitMatrixAndCircle(_, l, h, s, n, e, a)) {
+      (this.TmpResultLocation.X = i),
         this.TmpResultLocation.Subtraction(this.ActorLocation, this.TmpVector1),
         MathUtils_1.MathUtils.LookRotationForwardFirst(
           this.SelfBackward,
@@ -301,7 +317,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       );
       return [this.TmpResultLocation, this.TmpResultRotator, E];
     }
-    (this.TmpResultLocation.X = h),
+    (this.TmpResultLocation.X = i),
       (this.TmpResultLocation.Y = 0 < e ? _ : -_),
       (this.TmpResultLocation.Z = 0 < a ? l : -l),
       this.SelfTransform.TransformPositionNoScale(
@@ -326,16 +342,16 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
       2 * Math.sqrt(n * M);
     return [this.TmpResultLocation, this.TmpResultRotator, E];
   }
-  FindHitMatrixAndCircle(h, i, s, e, a, r, o) {
+  FindHitMatrixAndCircle(i, h, s, e, a, r, o) {
     let _ = 10 * a;
     for (let t = 0; t < 2; ++t) {
       var l,
         M,
-        n = 0 === t ? h : -h,
+        n = 0 === t ? i : -i,
         E = a - MathUtils_1.MathUtils.Square(s - n);
       0 < E &&
         ((l = e - (E = Math.sqrt(E))),
-        Math.abs(l) < i &&
+        Math.abs(l) < h &&
           (M =
             MathUtils_1.MathUtils.Square(n - r) +
             MathUtils_1.MathUtils.Square(l - o)) < _ &&
@@ -343,7 +359,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
           (this.TmpResultLocation.Y = n),
           (this.TmpResultLocation.Z = l)),
         (l = e + E),
-        Math.abs(l) < i) &&
+        Math.abs(l) < h) &&
         (M =
           MathUtils_1.MathUtils.Square(n - r) +
           MathUtils_1.MathUtils.Square(l - o)) < _ &&
@@ -354,11 +370,11 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
     for (let t = 0; t < 2; ++t) {
       var U,
         c,
-        m = 0 === t ? i : -i,
+        m = 0 === t ? h : -h,
         C = a - MathUtils_1.MathUtils.Square(e - m);
       0 < C &&
         ((U = s - (C = Math.sqrt(C))),
-        Math.abs(s) < h &&
+        Math.abs(s) < i &&
           (c =
             MathUtils_1.MathUtils.Square(U - r) +
             MathUtils_1.MathUtils.Square(m - o)) < _ &&
@@ -366,7 +382,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
           (this.TmpResultLocation.Y = U),
           (this.TmpResultLocation.Z = m)),
         (U = s + C),
-        Math.abs(U) < i) &&
+        Math.abs(U) < h) &&
         (c =
           MathUtils_1.MathUtils.Square(U - r) +
           MathUtils_1.MathUtils.Square(m - o)) < _ &&
@@ -376,11 +392,11 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
     }
     return _ < 10 * a;
   }
-  GetBestTransformNotHorizontal(t, h) {
+  GetBestTransformNotHorizontal(t, i) {
     this.TmpVector1.DeepCopy(this.SelfToActor),
       (this.TmpVector1.Z += this.MoveOffset.Z);
-    var i = this.SelfForward.DotProduct(this.TmpVector1),
-      s = MathUtils_1.MathUtils.Square(i - h) / this.ForwardSizeSquared2D,
+    var h = this.SelfForward.DotProduct(this.TmpVector1),
+      s = MathUtils_1.MathUtils.Square(h - i) / this.ForwardSizeSquared2D,
       e = this.MoveOffset.SizeSquared2D(),
       a = this.PlaneHalfWidth,
       r = this.PlaneHalfHeight;
@@ -389,7 +405,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         this.TmpVector2.DeepCopy(this.Forward2D),
         this.TmpVector2.MultiplyEqual(Math.sqrt(e)),
         this.TmpVector1.SubtractionEqual(this.TmpVector2),
-        (this.TmpResultLocation.X = h),
+        (this.TmpResultLocation.X = i),
         (this.TmpResultLocation.Y = MathUtils_1.MathUtils.Clamp(
           this.SelfRight.DotProduct(this.TmpVector1),
           -a,
@@ -423,7 +439,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         this.TmpVector2,
       ),
       this.TmpVector2.MultiplyEqual(
-        Math.sign(i - h) * Math.sqrt(s / this.TmpVector2.SizeSquared()),
+        Math.sign(h - i) * Math.sqrt(s / this.TmpVector2.SizeSquared()),
       ),
       this.TmpVector2.AdditionEqual(this.ActorLocation),
       (this.TmpVector2.Z += this.MoveOffset.Z),
@@ -452,7 +468,7 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         this.TmpVector4,
         this.TmpVector4,
       );
-    i =
+    h =
       MathUtils_1.MathUtils.Square(
         Math.max(0, Math.abs(this.TmpVector4.Y) - a),
       ) +
@@ -460,8 +476,8 @@ class TsSimpleInteractPlane extends TsSimpleInteractBase_1.default {
         Math.max(0, Math.abs(this.TmpVector4.Z) - r),
       );
     return (
-      o > i || (Math.abs(o - i) < SMALL_VALUE && 0.5 <= Math.random())
-        ? ((o = i),
+      o > h || (Math.abs(o - h) < SMALL_VALUE && 0.5 <= Math.random())
+        ? ((o = h),
           (this.TmpVector4.Y =
             Math.sign(this.TmpVector4.Y) *
             Math.min(Math.abs(this.TmpVector4.Y), a)),

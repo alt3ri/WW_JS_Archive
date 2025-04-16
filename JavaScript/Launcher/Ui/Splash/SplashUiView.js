@@ -36,7 +36,7 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
   async InitAsync(i) {
     var t;
-    Platform_1.Platform.IsWindowsPlatform() ||
+    Platform_1.Platform.IsMobilePlatform() &&
       ((t = UE.GameUserSettings.GetGameUserSettings()).SetFrameRateLimit(30),
       t.ApplySettings(!0),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -58,7 +58,7 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
         this.Byr,
       ),
       await this.LoadResourceAsync(),
-      this.Jyr();
+      this.vrc();
   }
   async LoadResourceAsync() {
     await this.zyr("/Game/Aki/HotPatch/Splash/SplashTable.SplashTable"),
@@ -79,14 +79,12 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       (this.Kyr = void 0),
       (this.Qyr = void 0);
   }
-  Jyr() {
+  vrc() {
     this.eIr(), this.tIr();
   }
   eIr() {
-    this.GetTexture(1).SetTexture(this.Yyr),
-      this.GetTexture(1).SetSizeFromTexture(),
-      this.GetTexture(5).SetTexture(this.$yr),
-      this.GetTexture(5).SetSizeFromTexture();
+    this.GetTexture(3).SetTexture(this.$yr),
+      this.GetTexture(3).SetSizeFromTexture();
   }
   szs() {
     return (
@@ -101,30 +99,30 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       s =
         (("" !== t && void 0 !== t) ||
           (t = this.iIr(this.Qyr, "SplashCautionTitle")),
-        this.GetText(7).SetText(t),
+        this.GetText(5).SetText(t),
         this.iIr(this.Kyr, "SplashCautionContent")),
       h =
         (("" !== s && void 0 !== s) ||
           (s = this.iIr(this.Qyr, "SplashCautionContent")),
-        this.GetText(8).SetText(s),
+        this.GetText(6).SetText(s),
         this.iIr(this.Kyr, "SplashLoading")),
       e =
         (("" !== h && void 0 !== h) ||
           (h = this.iIr(this.Qyr, "SplashLoading")),
-        this.GetText(9).SetText(h),
+        this.GetText(7).SetText(h),
         ""),
       a =
         (i ||
           ("" !== (e = this.iIr(this.Kyr, "SplashHealthyGamingAdvisory")) &&
             void 0 !== e) ||
           (e = this.iIr(this.Qyr, "SplashHealthyGamingAdvisory")),
-        this.GetText(2).SetText(e),
+        this.GetText(0).SetText(e),
         "");
     i ||
       ("" !== (a = this.iIr(this.Kyr, "SplashCopyrightInformation")) &&
         void 0 !== a) ||
       (a = this.iIr(this.Qyr, "SplashCopyrightInformation")),
-      this.GetText(3).SetText(a);
+      this.GetText(1).SetText(a);
   }
   PlayAnimationLogo(i) {
     this.oIr("LogoAnimation", i);

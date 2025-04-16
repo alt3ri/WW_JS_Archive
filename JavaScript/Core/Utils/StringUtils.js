@@ -39,32 +39,32 @@ class StringUtils {
   static Format(t, ...r) {
     var e,
       s = new StringBuilder_1.StringBuilder();
-    let o = 0;
+    let n = 0;
     for (; null !== (e = StringUtils.Fz.exec(t)); ) {
-      var i = parseInt(e[1]);
-      s.Append(t.substring(o, e.index)),
-        s.Append(r[i] ?? `{${i}}`),
-        (o = e.index + e[0].length);
+      var o = parseInt(e[1]);
+      s.Append(t.substring(n, e.index)),
+        s.Append(r[o] ?? `{${o}}`),
+        (n = e.index + e[0].length);
     }
-    return s.Append(t.substring(o)), s.ToString();
+    return s.Append(t.substring(n)), s.ToString();
   }
   static FormatStaticBuilder(t, ...e) {
     var s = t.split(StringUtils.Vz),
-      o = this.jz;
-    o.Clear();
+      n = this.jz;
+    n.Clear();
     for (let t = 0, r = s.length; t < r; ++t)
-      o.Append(s[t]), t !== s.length - 1 && o.Append(e[t] ?? `{${t}}`);
-    return o.ToString();
+      n.Append(s[t]), t !== s.length - 1 && n.Append(e[t] ?? `{${t}}`);
+    return n.ToString();
   }
   static Uint8ArrayToString(t) {
     var r;
     let e = void 0;
     var s,
-      o = new Array(),
-      i = t.length;
-    let n = 0;
-    for (; n < i; )
-      switch ((r = t[n++]) >> 4) {
+      n = new Array(),
+      o = t.length;
+    let i = 0;
+    for (; i < o; )
+      switch ((r = t[i++]) >> 4) {
         case 0:
         case 1:
         case 2:
@@ -73,28 +73,28 @@ class StringUtils {
         case 5:
         case 6:
         case 7:
-          o.push(String.fromCharCode(r));
+          n.push(String.fromCharCode(r));
           break;
         case 12:
         case 13:
-          (e = t[n++]), o.push(String.fromCharCode(((31 & r) << 6) | (63 & e)));
+          (e = t[i++]), n.push(String.fromCharCode(((31 & r) << 6) | (63 & e)));
           break;
         case 14:
-          (e = t[n++]),
-            (s = t[n++]),
-            o.push(
+          (e = t[i++]),
+            (s = t[i++]),
+            n.push(
               String.fromCharCode(
                 ((15 & r) << 12) | ((63 & e) << 6) | ((63 & s) << 0),
               ),
             );
       }
-    return o.join(exports.EMPTY_STRING);
+    return n.join(exports.EMPTY_STRING);
   }
   static GetStringRealCount(r) {
     let e = 0;
     var s,
-      o = r.length;
-    for (let t = 0; t < o; t++)
+      n = r.length;
+    for (let t = 0; t < n; t++)
       (s = r.charCodeAt(t)), (e += 0 <= s && s <= 128 ? 1 : 2);
     return e;
   }
@@ -125,27 +125,38 @@ class StringUtils {
     let r = "",
       e = [""];
     var s,
-      o = [e];
-    let i = 0,
-      n = 0,
+      n = [e];
+    let o = 0,
+      i = 0,
       a = !0;
     for (s of t.startsWith(UTF8_BOM_HEAD) ? t.replace(/^\ufeff/, "") : t)
       '"' === s
-        ? (a && s === r && (e[i] += s), (a = !a))
+        ? (a && s === r && (e[o] += s), (a = !a))
         : "," === s && a
-          ? ((e[++i] = ""), (s = ""))
+          ? ((e[++o] = ""), (s = ""))
           : "\n" === s && a
-            ? ("\r" === r && (e[i] = e[i].slice(0, -1)),
+            ? ("\r" === r && (e[o] = e[o].slice(0, -1)),
               (e = [(s = "")]),
-              (o[++n] = e),
-              (i = 0))
-            : (e[i] += s),
+              (n[++i] = e),
+              (o = 0))
+            : (e[o] += s),
         (r = s);
-    t = o[o.length - 1];
-    return 1 === t.length && "" === t[0] && o.splice(o.length - 1, 1), o;
+    t = n[n.length - 1];
+    return 1 === t.length && "" === t[0] && n.splice(n.length - 1, 1), n;
   }
   static CheckIsOnlyLettersAndNumbers(t) {
     return /^[A-Za-z0-9]*$/.test(t);
+  }
+  static CheckIsOnlyBlank(t) {
+    return /^\s*$/.test(t);
+  }
+  static ParseCSVStringToMap(t) {
+    var r = new Map();
+    for (const n of t.split(",")) {
+      var [e, s] = n.split(":");
+      e && s && r.set(e, s);
+    }
+    return r;
   }
 }
 ((exports.StringUtils = StringUtils).Vz = new RegExp(REG_PATTERN, REG_FLAGS)),

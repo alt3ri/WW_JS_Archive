@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerNormalView = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -20,11 +21,11 @@ const UE = require("ue"),
 class TowerNormalView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.FDo = void 0),
-      (this.VDo = void 0),
+      (this.zji = void 0),
       (this.HDo = void 0),
+      (this.Ncl = void 0),
       (this.jDo = !1),
-      (this.WDo = !0),
+      (this.Fcl = !1),
       (this.gLt = void 0),
       (this.SPe = void 0),
       (this.KDo = 1),
@@ -33,19 +34,27 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
       }),
       (this.QDo = (e) => {
         1 === e &&
-          (this.SPe.StopCurrentSequence(),
+          (this.zji?.SetToggleState(0),
+          (this.zji = this.GetExtendToggle(4)),
+          this.SPe.StopCurrentSequence(),
           this.SPe.PlaySequencePurely("Switch"),
-          (this.WDo = !0),
-          this.VDo.SetToggleState(0),
           this.XDo(TowerData_1.LOW_RISK_DIFFICULTY));
       }),
       (this.$Do = (e) => {
         1 === e &&
-          (this.SPe.StopCurrentSequence(),
+          (this.zji?.SetToggleState(0),
+          (this.zji = this.GetExtendToggle(5)),
+          this.SPe.StopCurrentSequence(),
           this.SPe.PlaySequencePurely("Switch"),
-          (this.WDo = !1),
-          this.FDo.SetToggleState(0),
           this.XDo(TowerData_1.HIGH_RISK_DIFFICULTY));
+      }),
+      (this.Vcl = (e) => {
+        1 === e &&
+          (this.zji?.SetToggleState(0),
+          (this.zji = this.GetExtendToggle(18)),
+          this.SPe.StopCurrentSequence(),
+          this.SPe.PlaySequencePurely("Switch"),
+          this.XDo(TowerData_1.OVERLOCK_RISK_DIFFICULTY));
       }),
       (this.YDo = () => {
         1 ===
@@ -102,11 +111,20 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
       [14, UE.UIItem],
       [15, UE.UIItem],
       [16, UE.UIItem],
+      [17, UE.UIItem],
+      [18, UE.UIExtendToggle],
+      [19, UE.UIItem],
+      [20, UE.UIItem],
+      [21, UE.UIItem],
+      [22, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [2, this.YDo],
         [3, this.JDo],
         [10, this.zDo],
+        [4, this.QDo],
+        [5, this.$Do],
+        [18, this.Vcl],
       ]);
   }
   async eRo() {
@@ -127,28 +145,43 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
     );
   }
   OnStart() {
-    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+    ModelManager_1.ModelManager.TowerModel.CheckInTower() &&
+      TowerController_1.TowerController.ClearAllHatredInTower(),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       (this.HDo = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(1),
         this.sGe,
+        this.GetItem(19).GetOwner(),
       )),
-      (this.FDo = this.GetExtendToggle(4)),
-      (this.VDo = this.GetExtendToggle(5)),
-      this.FDo.OnStateChange.Add(this.QDo),
-      this.VDo.OnStateChange.Add(this.$Do),
+      (this.Ncl = new GenericLayout_1.GenericLayout(
+        this.GetHorizontalLayout(1),
+        this.sGe,
+        this.GetItem(17).GetOwner(),
+      )),
       (this.jDo = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
         TowerData_1.LOW_RISK_DIFFICULTY,
       )),
-      (this.jDo
-        ? ((this.WDo = !1),
-          this.XDo(TowerData_1.HIGH_RISK_DIFFICULTY),
-          this.VDo)
-        : ((this.WDo = !0), this.XDo(TowerData_1.LOW_RISK_DIFFICULTY), this.FDo)
-      ).SetToggleState(1),
+      (this.Fcl = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
+        TowerData_1.VARIATION_RISK_DIFFICULTY,
+      )),
+      this.jDo && !this.Fcl
+        ? (this.XDo(TowerData_1.HIGH_RISK_DIFFICULTY),
+          (this.zji = this.GetExtendToggle(5)))
+        : this.Fcl || this.jDo
+          ? (this.XDo(TowerData_1.OVERLOCK_RISK_DIFFICULTY),
+            (this.zji = this.GetExtendToggle(18)))
+          : (this.XDo(TowerData_1.LOW_RISK_DIFFICULTY),
+            (this.zji = this.GetExtendToggle(4))),
+      this.zji.SetToggleState(1),
       this.GetItem(7).SetUIActive(this.jDo),
       this.GetItem(8).SetUIActive(
         ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
           TowerData_1.HIGH_RISK_DIFFICULTY,
+        ),
+      ),
+      this.GetItem(20).SetUIActive(
+        ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
+          TowerData_1.OVERLOCK_RISK_DIFFICULTY,
         ),
       ),
       (this.gLt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
@@ -165,8 +198,6 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
           : this.eRo();
       })),
       this.gLt.RefreshText("InstanceDungeonTitle_31_CommonText"),
-      (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock =
-        !this.WDo && !this.jDo),
       this.ZDo();
   }
   OnBeforeShow() {
@@ -192,6 +223,12 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
         void 0,
         3,
       ),
+      RedDotController_1.RedDotController.BindRedDot(
+        "TowerRewardByDifficulties",
+        this.GetItem(22),
+        void 0,
+        4,
+      ),
       (ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties =
         this.KDo),
       EventSystem_1.EventSystem.Emit(
@@ -199,7 +236,15 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
-        this.KDo,
+        1,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
+        2,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
+        3,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
@@ -209,8 +254,7 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroy() {
     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity(),
       this.HDo && (this.HDo = void 0),
-      (this.FDo = void 0),
-      (this.VDo = void 0),
+      (this.zji = void 0),
       this.gLt?.Destroy(),
       this.SPe?.Clear(),
       (this.SPe = void 0),
@@ -235,18 +279,25 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
         "TowerRewardByDifficulties",
         this.GetItem(13),
         3,
+      ),
+      RedDotController_1.RedDotController.UnBindGivenUi(
+        "TowerRewardByDifficulties",
+        this.GetItem(22),
+        4,
       );
   }
   XDo(e) {
     (ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties = e),
       (this.KDo = e),
-      (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock =
-        !this.WDo && !this.jDo),
-      this.HDo.RefreshByData(
-        ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
-          e,
-        ),
-      ),
+      this.Hcl();
+    e =
+      ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(e);
+    this.KDo === TowerData_1.OVERLOCK_RISK_DIFFICULTY
+      ? (this.HDo.RefreshByData([]),
+        this.Ncl.RefreshByData(e),
+        ModelManager_1.ModelManager.TowerModel.CurrentTowerLock ||
+          ModelManager_1.ModelManager.TowerModel.SetOverLockHasShow())
+      : (this.Ncl.RefreshByData([]), this.HDo.RefreshByData(e)),
       this.ZDo(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerReward,
@@ -254,11 +305,31 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
         this.KDo,
-      ),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
-        4,
       );
+  }
+  Hcl() {
+    switch (this.KDo) {
+      case TowerData_1.LOW_RISK_DIFFICULTY:
+        (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock = !1),
+          this.GetItem(21).SetUIActive(!1);
+        break;
+      case TowerData_1.HIGH_RISK_DIFFICULTY:
+        (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock = !this.jDo),
+          this.GetItem(21).SetUIActive(!1);
+        break;
+      case TowerData_1.OVERLOCK_RISK_DIFFICULTY:
+        (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock = !this.Fcl),
+          this.GetItem(21).SetUIActive(
+            ModelManager_1.ModelManager.TowerModel.CurrentTowerLock,
+          );
+        break;
+      default:
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error("CycleTower", 5, "逆境深塔选择难度时异常", [
+            "难度:",
+            this.KDo,
+          ]);
+    }
   }
 }
 exports.TowerNormalView = TowerNormalView;

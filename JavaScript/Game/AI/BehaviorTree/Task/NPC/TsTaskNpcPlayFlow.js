@@ -23,7 +23,21 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
       (this.TimeRemain = 0),
       (this.FlowEnd = !0),
       (this.HeadInfoComp = void 0),
-      (this.AnimInstance = void 0);
+      (this.AnimComp = void 0),
+      (this.PerformComp = void 0);
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsFlowListName = ""),
+      (this.TsFlowSubTitle = ""),
+      (this.TempTalkItems = void 0),
+      (this.TempFlowIndex = 0),
+      (this.TimeRemain = 0),
+      (this.FlowEnd = !0),
+      (this.HeadInfoComp = void 0),
+      (this.AnimComp = void 0),
+      (this.PerformComp = void 0);
   }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
@@ -38,9 +52,9 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
       this.TsFlowSubTitle &&
       (t = t.AiController.CharActorComp)
         ? (this.Reset(),
-          (this.HeadInfoComp = t.Entity.GetComponent(73)),
-          (t = t.Entity.GetComponent(163)) &&
-            (this.AnimInstance = t.MainAnimInstance),
+          (this.HeadInfoComp = t.Entity.GetComponent(80)),
+          (this.AnimComp = t.Entity.GetComponent(175)),
+          (this.PerformComp = t.Entity.GetComponent(45)),
           this.HandlePlayFlow() ? this.HandleFlowAction(0) : this.Finish(!1))
         : this.FinishExecute(!1);
   }
@@ -78,7 +92,7 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
       s &&
         ((i = !0), this.HeadInfoComp) &&
         this.HeadInfoComp.SetDialogueText(s),
-      this.AnimInstance &&
+      this.AnimComp &&
         (t.Montage
           ? ((i = !0),
             (s = t.Montage.ActionMontage.Path),
@@ -87,12 +101,15 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
               UE.AnimMontage,
               (t) => {
                 t?.IsValid() &&
-                  this.AnimInstance &&
-                  this.AnimInstance.Montage_Play(t);
+                  this.PerformComp &&
+                  this.PerformComp.PlayPerformMontage(3, { MontageAsset: t });
               },
             ))
-          : this.AnimInstance.IsAnyMontagePlaying() &&
-            this.AnimInstance.Montage_Stop(STOP_MONTAGE_BLEND_OUT_TIME)),
+          : this.PerformComp &&
+            this.PerformComp.StopPerformMontage(3, {
+              Method: 0,
+              BlendOutTime: STOP_MONTAGE_BLEND_OUT_TIME,
+            })),
       i
     );
   }
@@ -110,9 +127,11 @@ class TsTaskNpcPlayFlow extends TsTaskAbortImmediatelyBase_1.default {
     this.Reset(),
       this.HeadInfoComp &&
         (this.HeadInfoComp.HideDialogueText(), (this.HeadInfoComp = void 0)),
-      this.AnimInstance?.IsAnyMontagePlaying() &&
-        (this.AnimInstance.Montage_Stop(STOP_MONTAGE_BLEND_OUT_TIME),
-        (this.AnimInstance = void 0));
+      this.PerformComp &&
+        this.PerformComp.StopPerformMontage(3, {
+          Method: 0,
+          BlendOutTime: STOP_MONTAGE_BLEND_OUT_TIME,
+        });
   }
 }
 exports.default = TsTaskNpcPlayFlow;

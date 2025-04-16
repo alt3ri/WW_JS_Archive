@@ -88,7 +88,7 @@ let PawnAdsorbComponent =
         (this.Bsn = t.Range),
         (this.bsn = t.StartVelocity),
         (this.qsn = t.Acceleration),
-        (this.rzr = this.Entity.GetComponent(109)),
+        (this.rzr = this.Entity.GetComponent(119)),
         this.rzr.SetLogicRange(SENSORY_RANGE),
         this.Ore(),
         !0
@@ -100,17 +100,17 @@ let PawnAdsorbComponent =
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Interaction",
-              30,
+              29,
               "[PawnAdsorbComponent.OnStart] 吸收组件初始化失败 Actor Component Undefined",
             ),
           !1
         );
-      if (((this.xsn = this.Entity.GetComponent(106)), !this.xsn))
+      if (((this.xsn = this.Entity.GetComponent(116)), !this.xsn))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Interaction",
-              30,
+              29,
               "[PawnAdsorbComponent.OnStart] 吸收组件初始化失败 Pawn Interact Component Undefined",
             ),
           !1
@@ -122,7 +122,7 @@ let PawnAdsorbComponent =
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Interaction",
-              30,
+              29,
               "[PawnAdsorbComponent.OnStart] 吸收组件初始化失败 Config Invalid",
               ["CreatureGenID:", t.GetOwnerId()],
               ["PbDataId:", t.GetPbDataId()],
@@ -133,14 +133,14 @@ let PawnAdsorbComponent =
       t = t.GetBaseInfo();
       if (
         ((this.Qsn = t.OnlineInteractType ?? 0),
-        (this.wsn = this.Entity.GetComponent(181)),
+        (this.wsn = this.Entity.GetComponent(194)),
         !this.wsn)
       )
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Interaction",
-              30,
+              29,
               "[PawnAdsorbComponent.OnStart] 吸收组件初始化失败 LevelTagComponent Undefined",
               ["EntityConfigID:", this.Mne],
             ),
@@ -190,7 +190,7 @@ let PawnAdsorbComponent =
         (i.g8n.Yaw = s.Yaw),
         (i.J8n = Time_1.Time.NowSeconds),
         t.iVn.push(i),
-        CombatMessage_1.CombatNet.Send(22496, this.Entity, t);
+        CombatMessage_1.CombatNet.Send(18264, this.Entity, t);
     }
     OnEnd() {
       return this.kre(), !0;
@@ -231,7 +231,7 @@ let PawnAdsorbComponent =
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Interaction",
-                30,
+                29,
                 "[PawnAdsorbComponent] 不支持的联机模式配置",
               ),
             !1
@@ -289,7 +289,7 @@ let PawnAdsorbComponent =
           ? ((this.Hsn = MAX_SPEED), this.Vsn.MultiplyEqual(MAX_SPEED))
           : this.Vsn.MultiplyEqual(this.Hsn),
         this.Vsn.Multiply(i, this.Fsn),
-        (t = this.Entity.GetComponent(38))
+        (t = this.Entity.GetComponent(44))
           ? t.MoveCharacter(this.Fsn, i, "Pawn吸附更新")
           : this.Hte.AddActorWorldOffset(
               this.Fsn.ToUeVector(),
@@ -349,7 +349,7 @@ let PawnAdsorbComponent =
   });
 (PawnAdsorbComponent = PawnAdsorbComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(103)],
+    [(0, RegisterComponent_1.RegisterComponent)(113)],
     PawnAdsorbComponent,
   )),
   (exports.PawnAdsorbComponent = PawnAdsorbComponent);

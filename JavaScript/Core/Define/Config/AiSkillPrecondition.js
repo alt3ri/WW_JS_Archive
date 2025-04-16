@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiSkillPrecondition = void 0);
-const FloatRange_1 = require("./SubType/FloatRange");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange");
 class AiSkillPrecondition {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -77,8 +78,14 @@ class AiSkillPrecondition {
       : null;
   }
   needtag(t) {
-    var e = this.J7.__offset(this.z7, 14);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 14),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   needtarget() {
     var t = this.J7.__offset(this.z7, 16);

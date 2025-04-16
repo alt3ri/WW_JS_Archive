@@ -66,9 +66,11 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e),
       (e = this.Data.ItemCount),
       this.GetText(2).SetText(e.toString()),
-      (e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
-        t.QualityId,
-      ))) &&
+      (e =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityByItemIdAndQuality(
+          this.Data.ItemId,
+          t.QualityId,
+        ))) &&
       ((e = UE.Color.FromHex(e.TextColor)),
       this.GetText(1).SetColor(e),
       this.GetText(3).SetColor(e),
@@ -93,11 +95,11 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
           ),
           (ItemController_1.ItemController.LastItemHintAudioLevel = 2),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Audio", 56, "[Item] 播放高品质物品提示音效"),
+            Log_1.Log.Info("Audio", 55, "[Item] 播放高品质物品提示音效"),
           (ItemController_1.ItemController.LastItemHintAudioPlayedTime =
             Time_1.Time.Now))
         : Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Audio", 56, "[Item] 物品音效冷却中，不播放音效")
+          Log_1.Log.Info("Audio", 55, "[Item] 物品音效冷却中，不播放音效")
       : !ItemController_1.ItemController.LastItemHintAudioPlayedTime ||
           Time_1.Time.Now -
             ItemController_1.ItemController.LastItemHintAudioPlayedTime >
@@ -107,11 +109,11 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
           ),
           (ItemController_1.ItemController.LastItemHintAudioLevel = 1),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Audio", 56, "[Item] 播放普通品质物品提示音效"),
+            Log_1.Log.Info("Audio", 55, "[Item] 播放普通品质物品提示音效"),
           (ItemController_1.ItemController.LastItemHintAudioPlayedTime =
             Time_1.Time.Now))
         : Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Audio", 56, "[Item] 物品提示音效冷却中，跳过播放");
+          Log_1.Log.Info("Audio", 55, "[Item] 物品提示音效冷却中，跳过播放");
   }
   PlayHalfway() {
     this.LevelSequencePlayer.PlayLevelSequenceByName("Move"),

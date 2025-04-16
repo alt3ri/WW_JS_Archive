@@ -9,6 +9,7 @@ class EffectClusteredStuffSettings extends UE.PrimaryDataAsset {
       (this.AttachToActor = !0),
       (this.AbsoluteWorldPosition = void 0);
   }
+  Constructor() {}
 }
 exports.default = EffectClusteredStuffSettings;
 //# sourceMappingURL=EffectClusteredStuffSettings.js.map

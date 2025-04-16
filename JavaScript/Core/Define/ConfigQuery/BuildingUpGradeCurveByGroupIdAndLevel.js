@@ -18,29 +18,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBuildingUpGradeCurveByGroupIdAndLevel.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBuildingUpGradeCurveByGroupIdAndLevel.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configBuildingUpGradeCurveByGroupIdAndLevel.GetConfig(";
 exports.configBuildingUpGradeCurveByGroupIdAndLevel = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n})`),
+      getConfigStat?.Start();
+    var i = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o}#${n})`),
       r =
-        (i.Start(),
+        (i?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (r) {
       if (e) {
@@ -48,8 +48,8 @@ exports.configBuildingUpGradeCurveByGroupIdAndLevel = {
         const C = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (C)
           return (
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -87,8 +87,8 @@ exports.configBuildingUpGradeCurveByGroupIdAndLevel = {
               ((r = KEY_PREFIX + `#${o}#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(r, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -96,8 +96,8 @@ exports.configBuildingUpGradeCurveByGroupIdAndLevel = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    i.Stop(),
-      getConfigStat.Stop(),
+    i?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

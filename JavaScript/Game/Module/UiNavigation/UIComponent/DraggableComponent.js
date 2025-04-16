@@ -21,6 +21,12 @@ class DraggableComponent extends HotKeyComponent_1.HotKeyComponent {
       });
   }
   OnPress(e) {
+    this.TKl(), this.IKl();
+  }
+  OnRelease(e) {
+    this.TKl();
+  }
+  IKl() {
     (this.e8 = TRIGGER_TIME),
       (this.LDe = TickSystem_1.TickSystem.Add(
         this.J_,
@@ -29,8 +35,8 @@ class DraggableComponent extends HotKeyComponent_1.HotKeyComponent {
         !0,
       ).Id);
   }
-  OnRelease(e) {
-    this.LDe &&
+  TKl() {
+    this.LDe !== TickSystem_1.TickSystem.InvalidId &&
       (TickSystem_1.TickSystem.Remove(this.LDe),
       (this.LDe = TickSystem_1.TickSystem.InvalidId));
   }
@@ -41,6 +47,9 @@ class DraggableComponent extends HotKeyComponent_1.HotKeyComponent {
       this.SetVisibleMode(2, e?.IsListenerActive() ?? !1));
   }
   TriggerEvent() {}
+  OnUnRegisterMe() {
+    this.TKl();
+  }
 }
 class DraggablePrevComponent extends (exports.DraggableComponent =
   DraggableComponent) {

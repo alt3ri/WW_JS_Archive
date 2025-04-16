@@ -10,7 +10,8 @@ const MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ActivityData_1 = require("../../ActivityData"),
-  ActivityCorniceMeetingController_1 = require("./ActivityCorniceMeetingController");
+  ActivityCorniceMeetingController_1 = require("./ActivityCorniceMeetingController"),
+  FIRST_VERSION_ACTIVITY_ID = 102400001;
 class ActivityCorniceMeetingLevelEntryData {
   constructor(t, e) {
     (this.LevelPlayId = 0),
@@ -21,9 +22,9 @@ class ActivityCorniceMeetingLevelEntryData {
       (this.RewardedMap = new Map()),
       (this.LevelPlayId = e),
       (this.MaxScore = t.tBs),
-      (this.RemainTime = t.gih),
+      (this.RemainTime = t.ZS_),
       (this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.yzs)),
-      t.fih.forEach((t) => {
+      t.eM_.forEach((t) => {
         this.RewardedMap.set(t, !0);
       });
   }
@@ -36,12 +37,12 @@ class ActivityCorniceMeetingLevelEntryData {
     return this.RewardedMap.has(t);
   }
   IsAllFinished() {
-    return this.MaxScore === this.GetMaxScoreConfig();
+    return this.MaxScore >= this.GetMaxScoreConfig();
   }
   UpdateData(t) {
     (this.MaxScore = t.tBs),
       (this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.yzs)),
-      t.fih.forEach((t) => {
+      t.eM_.forEach((t) => {
         this.RewardedMap.set(t, !0);
       });
   }
@@ -143,19 +144,20 @@ class ActivityCorniceMeetingData extends ActivityData_1.ActivityBaseData {
       (this.UnlockTime = 0);
   }
   PhraseEx(t) {
-    this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.dih.lih);
-    for (const e of Object.keys(t.dih._ih))
+    this.UnlockTime = MathUtils_1.MathUtils.LongToNumber(t.FS_.BS_);
+    for (const e of Object.keys(t.FS_.kS_))
       0 === this.CurrentSelectLevelPlayId &&
         (this.CurrentSelectLevelPlayId = Number(e)),
         this.LevelEntryMap.has(Number(e))
-          ? this.LevelEntryMap.get(Number(e))?.UpdateData(t.dih._ih[Number(e)])
+          ? this.LevelEntryMap.get(Number(e))?.UpdateData(t.FS_.kS_[Number(e)])
           : this.LevelEntryMap.set(
               Number(e),
               new ActivityCorniceMeetingLevelEntryData(
-                t.dih._ih[Number(e)],
+                t.FS_.kS_[Number(e)],
                 Number(e),
               ),
             );
+    this.RefreshAllLevelEntryDataRedDot();
   }
   GetLevelPlayIdList(t = !0) {
     return t
@@ -224,6 +226,7 @@ class ActivityCorniceMeetingData extends ActivityData_1.ActivityBaseData {
       : 0;
   }
   IsUnlockTailQuest() {
+    if (this.Id !== FIRST_VERSION_ACTIVITY_ID) return !1;
     let t = !0;
     for (const e of this.GetLevelPlayIdList())
       if (0 === this.GetLevelEntryData(e)?.MaxScore) {
@@ -286,6 +289,14 @@ class ActivityCorniceMeetingData extends ActivityData_1.ActivityBaseData {
         EventDefine_1.EEventName.RefreshCorniceMeetingRedDot,
         t,
       );
+  }
+  get NeedTailQuest() {
+    return this.Id === FIRST_VERSION_ACTIVITY_ID;
+  }
+  get TaskTitleTextId() {
+    return this.Id !== FIRST_VERSION_ACTIVITY_ID
+      ? "ActivityCorniceMeetingPointNeed_02"
+      : "ActivityCorniceMeetingPointNeed";
   }
 }
 exports.ActivityCorniceMeetingData = ActivityCorniceMeetingData;

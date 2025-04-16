@@ -9,10 +9,11 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  CharacterController_1 = require("../../../../NewWorld/Character/CharacterController"),
   MapController_1 = require("../../../Map/Controller/MapController"),
   MapDefine_1 = require("../../../Map/MapDefine"),
+  MapUtil_1 = require("../../../Map/MapUtil"),
   TrackController_1 = require("../../../Track/TrackController"),
   GeneralLogicTreeUtil_1 = require("../../GeneralLogicTreeUtil"),
   INVALID_MARKID = 0;
@@ -36,19 +37,19 @@ class TrackMarkExpressController {
     for (var [, t] of this.JQt) t.Destroy();
     this.JQt.clear();
   }
-  NodeTrackMarkStart(t, e, i, s) {
-    this.FQt(t, e, i).OnNodeStart(s);
+  NodeTrackMarkStart(t, e, i, r) {
+    this.FQt(t, e, i).OnNodeStart(r);
   }
   NodeTrackMarkEnd(t) {
     this.GetNodeTrackMarkCreator(t)?.OnNodeEnd(), this.JQt.delete(t);
   }
   FQt(t, e, i) {
-    var s = this.GetNodeTrackMarkCreator(t);
+    var r = this.GetNodeTrackMarkCreator(t);
     return (
-      s ||
-      ((s = new NodeTrackMark(e, e.TreeIncId, e.TreeConfigId, t)).Init(i),
-      this.JQt.set(t, s),
-      s)
+      r ||
+      ((r = new NodeTrackMark(e, e.TreeIncId, e.TreeConfigId, t)).Init(i),
+      this.JQt.set(t, r),
+      r)
     );
   }
   GetNodeTrackMarkCreator(t) {
@@ -66,11 +67,12 @@ class TrackMarkExpressController {
   UpdateTrackMarkExpression(t, e, i) {
     switch (i) {
       case Protocol_1.Aki.Protocol.BNs._5n:
-        var s;
+        var r;
         "ChildQuest" !== e.NodeType &&
-          (s = e.TrackTarget) &&
+          (r = e.TrackTarget) &&
           e.ContainTag(0) &&
-          this.NodeTrackMarkStart(e.NodeId, t, s, t.IsOccupied);
+          !e.ContainTag(2) &&
+          this.NodeTrackMarkStart(e.NodeId, t, r, t.IsOccupied);
         break;
       case Protocol_1.Aki.Protocol.BNs.Proto_CompletedSuccess:
       case Protocol_1.Aki.Protocol.BNs.Proto_CompletedFailed:
@@ -96,9 +98,10 @@ class TrackMarkExpressController {
 }
 exports.TrackMarkExpressController = TrackMarkExpressController;
 class NodeTrackMark {
-  constructor(t, e, i, s) {
+  constructor(t, e, i, r) {
     (this.zQt = void 0),
       (this.TrackEffectOption = void 0),
+      (this.Uxc = void 0),
       (this.ZQt = void 0),
       (this.MarkRange = 0),
       (this.RangeMarkShowDis = 0),
@@ -160,23 +163,23 @@ class NodeTrackMark {
           t) &&
           (this.lXt(t), this.oXt.delete(e.ConfigIndex));
       }),
-      (this.egt = (t, e, i, s, r) => {
+      (this.egt = (t, e, i, r, s) => {
         e === this.$mt &&
           i === this.Jut &&
-          (this.tXt.set(s, r),
+          (this.tXt.set(r, s),
           this.DefaultMapMarkId
             ? (i = this.tXt.get(this.DefaultMapMarkId)) !==
-                this.eXt.ContainTag(12) &&
-              (i ? this.eXt.AddTag(12) : this.eXt.RemoveTag(12),
+                this.eXt.ContainTag(13) &&
+              (i ? this.eXt.AddTag(13) : this.eXt.RemoveTag(13),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RangeTrackStateChanged,
                 e,
               ))
-            : this.eXt.RemoveTag(12));
+            : this.eXt.RemoveTag(13));
       }),
       (this.$mt = e),
       (this.Yut = i),
-      (this.Jut = s),
+      (this.Jut = r),
       (this.eXt = t),
       (this.oXt = new Map()),
       (this.tXt = new Map()),
@@ -202,19 +205,20 @@ class NodeTrackMark {
       case "Locations":
         for (const i of t.TrackType.Locations)
           this.zQt.push(Vector_1.Vector.Create(i.X ?? 0, i.Y ?? 0, i.Z ?? 0));
+        this.Uxc = t.TrackType.GravityDirection;
         break;
       case "Entities":
-        for (const s of t.TrackType.EntityIds) this.zQt.push(s);
+        for (const r of t.TrackType.EntityIds) this.zQt.push(r);
         break;
       case "CaptureVisions":
-        for (const r of t.TrackType.VisionDropEntities) {
+        for (const s of t.TrackType.VisionDropEntities) {
           var e = new TrackVision();
-          (e.VisionOwnerId = r), this.zQt.push(e);
+          (e.VisionOwnerId = s), this.zQt.push(e);
         }
     }
     (this.TrackEffectOption = t.EffectOption),
       (this.MarkRange = t.Range ?? 0),
-      (this.RangeMarkShowDis = t.ViewRange ?? 1.3 * t.Range),
+      (this.RangeMarkShowDis = t.ViewRange || 1.3 * t.Range),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TaskRangeTrackStateChange,
         this.egt,
@@ -265,10 +269,10 @@ class NodeTrackMark {
   OnNodeProgressChanged(i) {
     if (this.zQt && i)
       for (let e = 0; e < this.zQt.length; e++) {
-        const r = this.zQt[e];
-        var s = i.findIndex((t) => t === r);
+        const s = this.zQt[e];
+        var r = i.findIndex((t) => t === s);
         let t = this.oXt.get(e);
-        s < 0
+        r < 0
           ? (this.iXt.delete(e),
             this.nXt &&
               !t &&
@@ -293,25 +297,25 @@ class NodeTrackMark {
       if (e) {
         var i = e[0],
           e = e[1],
-          s = this.oXt.get(t);
-        if (s) {
-          var r = ModelManager_1.ModelManager.MapModel.GetMark(
+          r = this.oXt.get(t);
+        if (r) {
+          var s = ModelManager_1.ModelManager.MapModel.GetMark(
             this.MarkType,
-            s,
+            r,
           );
-          if (this.mXt(r, i, e)) return s;
-          this.lXt(r.MarkId), this.oXt.delete(t);
+          if (this.mXt(s, i, e)) return r;
+          this.lXt(s.MarkId), this.oXt.delete(t);
         }
         if (e instanceof Vector_1.Vector) {
-          const a = this.hXt(i, e, "Locations");
+          const a = this.hXt(i, e, "Locations", t);
           return this.oXt.set(t, a), a;
         }
         if (e instanceof TrackVision) {
-          s = ModelManager_1.ModelManager.VisionCaptureModel?.GetVisionCapture(
+          r = ModelManager_1.ModelManager.VisionCaptureModel?.GetVisionCapture(
             e.VisionOwnerId,
           );
-          if (s) {
-            e.EntityId = s;
+          if (r) {
+            e.EntityId = r;
             const a = this.hXt(i, e, "CaptureVisions");
             return (
               this.oXt.set(t, a),
@@ -339,21 +343,20 @@ class NodeTrackMark {
                 this.sXt,
               );
         } else {
-          r = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(i);
-          if (r) {
-            if (
-              ModelManager_1.ModelManager.WorldMapModel.GetEntityPosition(
-                e,
-                r.MapConfigId,
-              )
-            ) {
+          s = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(i);
+          if (s) {
+            r = ModelManager_1.ModelManager.WorldMapModel.GetEntityPosition(
+              e,
+              s.MapConfigId,
+            );
+            if (r && !r.IsZero()) {
               const a = this.hXt(i, e, "Entities");
               return this.oXt.set(t, a), a;
             }
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "GeneralLogicTree",
-                19,
+                18,
                 "追踪实体数据为空，请检查本地配置",
                 ["行为树Id", this.Yut],
                 ["节点Id", this.Jut],
@@ -364,7 +367,7 @@ class NodeTrackMark {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "GeneralLogicTree",
-                19,
+                18,
                 "GeneralLogicTree：找不到副本的配置",
                 ["行为树Id", this.Yut],
                 ["节点Id", this.Jut],
@@ -374,13 +377,13 @@ class NodeTrackMark {
       }
     }
   }
-  hXt(t, e, i) {
+  hXt(t, e, i, r) {
     if (!e)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Quest",
-            19,
+            18,
             "添加追踪标记时，追踪坐标为空，请检查配置",
             ["行为树Id", this.Yut],
             ["节点Id", this.Jut],
@@ -390,27 +393,96 @@ class NodeTrackMark {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Quest",
-        19,
+        18,
         "行为树添加追踪标记",
         ["行为树Id", this.Yut],
         ["节点Id", this.Jut],
         ["追踪目标副本Id", t],
         ["追踪目标", e],
       );
-    t = new MapDefine_1.QuestMarkCreateInfo(
-      t,
-      this.$mt,
-      this.Jut,
-      this.dXt(e),
-      this.TaskMarkTableId,
-      this.MarkType,
-      0,
-      this.TrackSource,
-    );
-    return ModelManager_1.ModelManager.MapModel.CreateMapMark(t);
+    let s = this.TaskMarkTableId;
+    var a = this.eXt.GetNode(this.Jut);
+    "ChildQuest" === a?.NodeType &&
+      a.CustomTrackIconId &&
+      (s = a.CustomTrackIconId);
+    let o = 0;
+    switch (i) {
+      case "Locations":
+        void 0 !== r &&
+          this.eXt?.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
+          (n =
+            ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t)) &&
+          13 === n.InstSubType &&
+          (n =
+            ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestNodeAreaInfo(
+              this.Yut,
+              this.Jut,
+            )) &&
+          n.length > r &&
+          (o = n[r]);
+        break;
+      case "Entities":
+        var n =
+          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t);
+        n &&
+          (o =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityData(
+              e,
+              n.MapConfigId,
+            )?.AreaId ?? 0);
+        break;
+      case "CaptureVisions":
+        var h,
+          n = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t);
+        n &&
+          ((h = e),
+          (o =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityData(
+              h.EntityId,
+              n.MapConfigId,
+            )?.AreaId ?? 0));
+    }
+    a = this.dXt(e);
+    let _ = void 0;
+    "number" == typeof a && (_ = a);
+    i = new MapDefine_1.QuestMarkCreateInfo({
+      TrackTarget: a,
+      MarkConfigId: s,
+      MarkType: this.MarkType,
+      MarkId: 0,
+      TrackSource: this.TrackSource,
+      TreeId: this.$mt,
+      NodeId: this.Jut,
+      AreaId: o,
+      EntityConfigId: _,
+      Gravity: this.Bxc(t),
+      MapAndDungeonInfo: { DungeonId: t },
+    });
+    return ModelManager_1.ModelManager.MapModel.CreateMapMark(i);
   }
   dXt(t) {
     return t instanceof TrackVision ? t.EntityId : t;
+  }
+  Bxc(t) {
+    var e = this.Uxc?.Type;
+    return "VectorInfo" === e
+      ? MapUtil_1.MapUtil.IsStandardGravity(this.Uxc.Direction.Z ?? 0)
+        ? 1
+        : 2
+      : "WorldAxis" === e
+        ? "NegativeZ" === this.Uxc.WorldAxis
+          ? 1
+          : 2
+        : "EntityGravity" === e
+          ? ((e =
+              ModelManager_1.ModelManager.MapModel.GetDungeonWorldMapConfigId(
+                t,
+              )),
+            ConfigManager_1.ConfigManager.WorldMapConfig.GetEntityGravityDirection(
+              e,
+              this.Uxc.EntityId,
+            ))
+          : void 0;
   }
   _Xt() {
     this.CXt(!1);
@@ -419,7 +491,7 @@ class NodeTrackMark {
     this.oXt.clear(),
       (this.nXt = !1),
       this.tXt.clear(),
-      this.eXt.RemoveTag(12),
+      this.eXt.RemoveTag(13),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RangeTrackStateChanged,
         this.$mt,
@@ -440,9 +512,15 @@ class NodeTrackMark {
           : this._Xt());
   }
   CXt(t) {
-    for (var [i, s] of this.oXt) {
-      var r = ModelManager_1.ModelManager.MapModel.GetMark(this.MarkType, s);
-      if (r)
+    if (t && this.eXt.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeInst)
+      switch (this.eXt.OnlineType) {
+        case "Hang":
+        case "Local":
+          if (ModelManager_1.ModelManager.GameModeModel.IsMulti) return;
+      }
+    for (var [i, r] of this.oXt) {
+      var s = ModelManager_1.ModelManager.MapModel.GetMark(this.MarkType, r);
+      if (s)
         if (t) {
           (i = this.zQt[i]), (i = this.cXt(1, i));
           if (i) {
@@ -456,76 +534,78 @@ class NodeTrackMark {
                 (a && (e = a.AutoHideTrackMark),
                 {
                   TrackSource: this.TrackSource,
-                  Id: s,
+                  Id: r,
+                  MarkType: this.MarkType,
                   IconPath:
                     ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
-                      r.MarkConfigId,
+                      s.MarkConfigId,
                     ).MarkPic,
                   TrackTarget: this.dXt(i[1]),
+                  TrackInstanceId: i[0],
                   ShowGroupId: t,
                   AutoHideTrack: e,
-                  IsInTrackRange: this.eXt.ContainTag(12),
+                  IsInTrackRange: this.eXt.ContainTag(13),
                   IsSubTrack: this.eXt.IsNeedScaledTrackMark(this.Jut),
                 });
             TrackController_1.TrackController.StartTrack(a);
           }
-        } else TrackController_1.TrackController.EndTrack(this.TrackSource, s);
+        } else TrackController_1.TrackController.EndTrack(this.TrackSource, r);
       else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "GeneralLogicTree",
-            19,
+            18,
             "BehaviorTree:创建追踪标记时找不到地图标记数据",
             ["行为树Id", this.Yut],
             ["节点Id", this.Jut],
-            ["markId", s],
+            ["markId", r],
           );
     }
   }
-  cXt(i, s) {
-    var r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-      a = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(r);
+  cXt(i, r) {
+    var s = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+      a = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(s);
     if (a) {
       var o = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         this.DungeonId,
       );
       if (o) {
-        if (r === this.DungeonId)
+        if (s === this.DungeonId)
           return this.eXt.BtType !==
             Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest ||
             13 === a.InstSubType ||
             0 !== i ||
             a.EntranceEntities?.length
-            ? [r, s]
+            ? [s, r]
             : void 0;
-        var h = a.InstSubType,
-          n = o.InstSubType;
+        var n = a.InstSubType,
+          h = o.InstSubType;
         let t = void 0,
           e = 0;
-        switch (h) {
+        switch (n) {
           case 13:
-            13 === n
-              ? ((t = s), (e = this.DungeonId))
+            13 === h
+              ? ((t = r), (e = this.DungeonId))
               : (_ = o.EntranceEntities)?.length &&
                 ((t = _[0].EntranceEntityId), (e = _[0].DungeonId));
             break;
           case 12:
             if (0 === i) {
-              if (13 !== n) {
+              if (13 !== h) {
                 var _ = o.EntranceEntities;
                 if (!_?.length) break;
                 (t = _[0].EntranceEntityId), (e = _[0].DungeonId);
                 break;
               }
-              (t = s), (e = this.DungeonId);
+              (t = r), (e = this.DungeonId);
             } else if (1 === i) {
               if (!a.ExitEntities?.length) break;
-              (t = a.ExitEntities[0]), (e = r);
+              (t = a.ExitEntities[0]), (e = s);
             }
             break;
           default:
             if (1 !== i)
-              if (13 === n) (e = this.DungeonId), (t = s);
+              if (13 === h) (e = this.DungeonId), (t = r);
               else {
                 _ = o.EntranceEntities;
                 if (!_?.length) break;
@@ -537,7 +617,7 @@ class NodeTrackMark {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "GeneralLogicTree",
-          19,
+          18,
           "GeneralLogicTree：找不到追踪目标副本的配置",
           ["行为树Id", this.Yut],
           ["副本Id", this.DungeonId],
@@ -546,24 +626,17 @@ class NodeTrackMark {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "GeneralLogicTree",
-          19,
+          18,
           "GeneralLogicTree：找不到当前副本的配置",
           ["行为树Id", this.Yut],
-          ["副本Id", r],
+          ["副本Id", s],
         );
   }
   GetTrackPosition(e = !1) {
-    let i = void 0;
-    if (
-      (i =
-        (void 0 !== this.DefaultMapMarkId &&
-          ((r = ModelManager_1.ModelManager.TrackModel.GetTrackData(
-            this.TrackSource,
-            this.DefaultMapMarkId,
-          )),
-          (i = r?.TrackTarget))) ||
-        this.gXt())
-    ) {
+    var i = this.Uec(),
+      r = i[0],
+      i = i[1];
+    if (i) {
       if (i instanceof Vector_1.Vector) return i;
       let t = void 0;
       if (i instanceof TrackVision)
@@ -576,24 +649,54 @@ class NodeTrackMark {
         ) || e
           ? GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetEntityConfigPosition(
               i,
-              this.DungeonId,
+              r ?? this.DungeonId,
             )
           : void 0;
       if (t) {
-        var s,
-          r = CharacterController_1.CharacterController.GetActorComponent(t);
-        if (r && ObjectUtils_1.ObjectUtils.IsValid(r.Owner))
+        e =
+          ControllerHolder_1.ControllerHolder.CharacterController.GetActorComponent(
+            t,
+          );
+        if (e && ObjectUtils_1.ObjectUtils.IsValid(e.Owner))
           return (
-            (e = Vector_1.Vector.Create(r.ActorLocationProxy)),
-            (s = t.Entity.GetComponent(0)) &&
-              ((s = s.GetPbModelConfig())?.TrackHeight
-                ? (e.Z += s.TrackHeight)
-                : (0, RegisterComponent_1.isComponentInstance)(r, 3) &&
-                  (e.Z += r.ScaledHalfHeight)),
-            e
+            (i = Vector_1.Vector.Create(e.ActorLocationProxy)),
+            (r = t.Entity.GetComponent(0)) &&
+              ((r = r.GetPbModelConfig())?.TrackHeight
+                ? (i.Z += r.TrackHeight)
+                : (0, RegisterComponent_1.isComponentInstance)(e, 3) &&
+                  (i.Z += e.ScaledHalfHeight)),
+            i
           );
       }
     }
+  }
+  GetTrackAreaInfo() {
+    var t,
+      e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestNodeAreaInfo(
+        this.Yut,
+        this.Jut,
+      );
+    return e && 0 !== e.length
+      ? e[0]
+      : ((t = (e = this.Uec())[0]),
+        "number" == typeof (e = e[1])
+          ? ModelManager_1.ModelManager.CreatureModel.GetEntityData(
+              e,
+              t ?? this.DungeonId,
+            )?.AreaId
+          : void 0);
+  }
+  Uec() {
+    let t = void 0,
+      e = void 0;
+    if (void 0 !== this.DefaultMapMarkId) {
+      var i = ModelManager_1.ModelManager.TrackModel.GetTrackData(
+        this.TrackSource,
+        this.DefaultMapMarkId,
+      );
+      if (((t = i?.TrackTarget), (e = i?.TrackInstanceId), t)) return [e, t];
+    }
+    return (i = this.gXt()), (e = i?.[0]), (t = i?.[1]), [e, t];
   }
   GetDefaultMark() {
     return this.DefaultMapMarkId;
@@ -601,9 +704,7 @@ class NodeTrackMark {
   gXt() {
     var t;
     if (this.zQt && this.zQt.length)
-      return (
-        (t = this.zQt.find((t, e) => !this.iXt.get(e))), this.cXt(1, t)?.[1]
-      );
+      return (t = this.zQt.find((t, e) => !this.iXt.get(e))), this.cXt(0, t);
   }
   mXt(t, e, i) {
     return (

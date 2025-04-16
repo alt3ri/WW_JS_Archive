@@ -109,7 +109,7 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Role",
-                8,
+                58,
                 "怪物id为:" + t.MonsterId + "对应声骸图鉴数据找不到！",
               ));
       }),

@@ -10,6 +10,9 @@ class LogicDataManipulatableCreateBullet extends LogicDataBase_1.default {
       (this.CreateBulletRowName = void 0),
       (this.BulletTransform = 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataManipulatableCreateBullet;
 //# sourceMappingURL=LogicDataManipulatableCreateBullet.js.map

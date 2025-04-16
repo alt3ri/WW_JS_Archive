@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Info_1 = require("../../../../Core/Common/Info"),
   Time_1 = require("../../../../Core/Common/Time"),
+  ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
@@ -27,6 +28,9 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
       (this.iii = 0),
       (this.oii = 0),
       (this.rii = !1),
+      (this.xst = void 0),
+      (this.V7l = void 0),
+      (this.j7l = 0),
       (this.nii = () => {
         (this._at = TimerSystem_1.TimerSystem.Delay(this.dat, CLOSE_ANIM_TIME)),
           this.mct?.SetUIActive(!1),
@@ -68,6 +72,7 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
           this.Zti.SetUIActive(!1))
         : (i = this.GetItem(13)) &&
           ((this.Qtt = new CombineKeyItem_1.CombineKeyItem()),
+          (this.Qtt.SkipDestroyActor = !0),
           await this.Qtt.CreateThenShowByActorAsync(i.GetOwner()),
           this.SetKeyAction(InputMappingsDefine_1.actionMappings.幻象1)),
       this.Qnt(),
@@ -76,13 +81,19 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
   }
   OnBeforeDestroy() {
     this.Jti(),
+      this.xst && this.V7l && this.Dmt && this.Dmt.SetSprite(this.V7l, !1),
+      (this.xst = void 0),
+      (this.V7l = void 0),
       (this.Dmt = void 0),
       (this.Zti = void 0),
       (this.eii = void 0),
-      (this.Qtt = void 0),
+      this.Qtt && (this.Qtt.Destroy(), (this.Qtt = void 0)),
       (this.mct = void 0),
       (this.tii = void 0),
       (this.$ti = void 0),
+      0 !== this.j7l &&
+        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.j7l),
+        (this.j7l = 0)),
       super.OnBeforeDestroy();
   }
   Refresh(i, t, s) {
@@ -104,6 +115,31 @@ class ManipulateCursorUnit extends HudUnitBase_1.HudUnitBase {
           ? this.SetKeyAction(InputMappingsDefine_1.actionMappings.攻击)
           : this.SetKeyAction(InputMappingsDefine_1.actionMappings.幻象1)
         : (this.Dmt.SetUIActive(!i), this.Zti.SetUIActive(i)));
+  }
+  SetIconPath(t) {
+    this.Dmt &&
+      this.xst !== t &&
+      (void 0 === this.xst &&
+        void 0 === this.V7l &&
+        (this.V7l = this.Dmt.GetSprite()),
+      (this.xst = t),
+      0 !== this.j7l &&
+        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.j7l),
+        (this.j7l = 0)),
+      void 0 === t
+        ? (this.Dmt.SetSprite(this.V7l, !1), this.Dmt.SetUIActive(!0))
+        : (this.Dmt.SetUIActive(!1),
+          (this.j7l = ResourceSystem_1.ResourceSystem.LoadAsync(
+            t,
+            UE.LGUISpriteData_BaseObject,
+            (i) => {
+              this.Dmt &&
+                this.xst === t &&
+                i &&
+                (this.Dmt.SetSprite(i, !1), this.Dmt.SetUIActive(!0));
+            },
+            103,
+          ))));
   }
   SetKeyAction(i) {
     this.Qtt?.RefreshAction(i);

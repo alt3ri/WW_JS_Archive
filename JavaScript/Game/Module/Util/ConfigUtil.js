@@ -17,7 +17,7 @@ class ConfigUtil {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Config",
-              11,
+              10,
               "表格查询不到配置ID",
               ["表格", t],
               ["ID", e],

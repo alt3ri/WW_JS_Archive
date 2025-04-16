@@ -40,10 +40,10 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
     );
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(26420, this.w2e);
+    Net_1.Net.Register(19328, this.w2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(26420);
+    Net_1.Net.UnRegister(19328);
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
@@ -64,11 +64,11 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
   RequestReward(t) {
     var e = Protocol_1.Aki.Protocol.Ahs.create();
     (e.F6n = t),
-      Net_1.Net.Call(22195, e, (e) => {
+      Net_1.Net.Call(26256, e, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              19281,
+              20821,
             )
           : (ModelManager_1.ModelManager.ActivityModel.GetActivityById(
               this.sNe,

@@ -1,31 +1,27 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleTopBuffView = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../../Core/Common/Log"),
+const Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BattleChildView_1 = require("./BattleChildView/BattleChildView"),
+  BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView"),
   TopBuffYouHu_1 = require("./TopBuff/TopBuffYouHu"),
   roleClassMap = new Map([[1106, TopBuffYouHu_1.TopBuffYouHu]]);
-class RoleTopBuffView extends BattleChildView_1.BattleChildView {
+class RoleTopBuffView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
       (this.E0 = void 0),
       (this.Edt = void 0),
       (this.Sdt = new Map()),
-      (this.gQa = new Set()),
+      (this.FXa = new Set()),
       (this.kpe = () => {
         this.ydt(), this.Idt();
       });
   }
-  OnRegisterComponent() {
-    this.ComponentRegisterInfos = [[0, UE.UIItem]];
-  }
   OnStart() {
-    this.Ore();
+    this.InitChildType(25), this.Ore();
   }
   OnBeforeDestroy() {
     this.Edt = void 0;
@@ -40,7 +36,7 @@ class RoleTopBuffView extends BattleChildView_1.BattleChildView {
   OnChangeRole(e) {
     (this.E0 = e?.EntityHandle?.Id ?? 0),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "开始切换角色特殊buff条", [
+        Log_1.Log.Debug("Battle", 17, "开始切换角色特殊buff条", [
           "entityId",
           this.E0,
         ]),
@@ -51,7 +47,7 @@ class RoleTopBuffView extends BattleChildView_1.BattleChildView {
     var t = this.Sdt.get(e);
     t
       ? (t.Destroy(), this.Sdt.delete(e), this.Edt === t && (this.Edt = void 0))
-      : this.gQa.delete(e);
+      : this.FXa.delete(e);
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
@@ -80,14 +76,14 @@ class RoleTopBuffView extends BattleChildView_1.BattleChildView {
       i = e.EntityHandle?.Id;
     !i ||
       this.Sdt.has(i) ||
-      this.gQa.has(i) ||
+      this.FXa.has(i) ||
       ((t = e.CreatureRoleId) &&
       ((t = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(t)),
       (t = roleClassMap.get(t)))
         ? ((t = new t()),
           this.Sdt.set(i, t),
           await t.InitAsync(this.RootItem, e))
-        : this.gQa.add(i));
+        : this.FXa.add(i));
   }
   Idt() {
     for (var [e, t] of this.Sdt)

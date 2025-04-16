@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configTowerDefenceRewardById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configTowerDefenceRewardById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTowerDefenceRewardById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTowerDefenceRewardById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configTowerDefenceRewardById.GetConfig(";
 exports.configTowerDefenceRewardById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (e, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      getConfigStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${e})`),
       i =
-        (n.Start(),
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (o) {
@@ -43,8 +47,8 @@ exports.configTowerDefenceRewardById = {
         const f = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (f)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -77,8 +81,8 @@ exports.configTowerDefenceRewardById = {
               ((i = KEY_PREFIX + `#${e})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -86,8 +90,8 @@ exports.configTowerDefenceRewardById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    n?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonIndex = void 0);
 const GameUtils_1 = require("../../../Game/GameUtils"),
-  DicStringIntArray_1 = require("./SubType/DicStringIntArray");
+  DicIntIntArray_1 = require("./SubType/DicIntIntArray"),
+  GameplayTagArray_1 = require("./SubType/GameplayTagArray"),
+  IntArray_1 = require("./SubType/IntArray");
 class SkillButtonIndex {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -21,6 +23,27 @@ class SkillButtonIndex {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.padbuttontypelistLength(),
       this.padbuttontypelist,
+      this,
+    );
+  }
+  get TagList() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.taglistLength(),
+      this.taglist,
+      this,
+    );
+  }
+  get TagDesktopButtonTypeList() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.tagdesktopbuttontypelistLength(),
+      this.tagdesktopbuttontypelist,
+      this,
+    );
+  }
+  get TagPadButtonTypeList() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.tagpadbuttontypelistLength(),
+      this.tagpadbuttontypelist,
       this,
     );
   }
@@ -51,6 +74,20 @@ class SkillButtonIndex {
   }
   padbuttontypemapValue(t) {
     return this.padbuttontypemap(t)?.value();
+  }
+  get GamepadButtonTypeMap() {
+    return GameUtils_1.GameUtils.ConvertToMap(
+      this.gamepadbuttontypemapLength(),
+      this.gamepadbuttontypemapKey,
+      this.gamepadbuttontypemapValue,
+      this,
+    );
+  }
+  gamepadbuttontypemapKey(t) {
+    return this.gamepadbuttontypemap(t)?.key();
+  }
+  gamepadbuttontypemapValue(t) {
+    return this.gamepadbuttontypemap(t)?.value();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
@@ -107,36 +144,100 @@ class SkillButtonIndex {
         )
       : null;
   }
+  GetTaglistAt(t, s) {
+    return this.taglist(t);
+  }
+  taglist(t, s) {
+    var i = this.J7.__offset(this.z7, 10);
+    return i
+      ? (s || new GameplayTagArray_1.GameplayTagArray()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  taglistLength() {
+    var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  GetTagdesktopbuttontypelistAt(t, s) {
+    return this.tagdesktopbuttontypelist(t);
+  }
+  tagdesktopbuttontypelist(t, s) {
+    var i = this.J7.__offset(this.z7, 12);
+    return i
+      ? (s || new IntArray_1.IntArray()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  tagdesktopbuttontypelistLength() {
+    var t = this.J7.__offset(this.z7, 12);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  GetTagpadbuttontypelistAt(t, s) {
+    return this.tagpadbuttontypelist(t);
+  }
+  tagpadbuttontypelist(t, s) {
+    var i = this.J7.__offset(this.z7, 14);
+    return i
+      ? (s || new IntArray_1.IntArray()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  tagpadbuttontypelistLength() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
   GetDesktopbuttontypemapAt(t, s) {
     return this.desktopbuttontypemap(t);
   }
   desktopbuttontypemap(t, s) {
-    var i = this.J7.__offset(this.z7, 10);
+    var i = this.J7.__offset(this.z7, 16);
     return i
-      ? (s || new DicStringIntArray_1.DicStringIntArray()).__init(
+      ? (s || new DicIntIntArray_1.DicIntIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
           this.J7,
         )
       : null;
   }
   desktopbuttontypemapLength() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetPadbuttontypemapAt(t, s) {
     return this.padbuttontypemap(t);
   }
   padbuttontypemap(t, s) {
-    var i = this.J7.__offset(this.z7, 12);
+    var i = this.J7.__offset(this.z7, 18);
     return i
-      ? (s || new DicStringIntArray_1.DicStringIntArray()).__init(
+      ? (s || new DicIntIntArray_1.DicIntIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
           this.J7,
         )
       : null;
   }
   padbuttontypemapLength() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  GetGamepadbuttontypemapAt(t, s) {
+    return this.gamepadbuttontypemap(t);
+  }
+  gamepadbuttontypemap(t, s) {
+    var i = this.J7.__offset(this.z7, 20);
+    return i
+      ? (s || new DicIntIntArray_1.DicIntIntArray()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  gamepadbuttontypemapLength() {
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }

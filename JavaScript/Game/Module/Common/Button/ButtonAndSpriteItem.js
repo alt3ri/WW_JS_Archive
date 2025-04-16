@@ -30,7 +30,7 @@ class ButtonAndSpriteItem extends UiPanelBase_1.UiPanelBase {
   RefreshSprite(e) {
     e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Temp", 44, "realPath:  ", ["realPath", e]),
+      Log_1.Log.Debug("Temp", 43, "realPath:  ", ["realPath", e]),
       this.SetSpriteByPath(
         e,
         this.GetSprite(1),

@@ -20,7 +20,7 @@ class UiRoleUtils {
         )) && l?.AddRenderingMaterialByData(o),
         UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(e, "ChangeRoleEffect"))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 17, "PlayRoleChangeEffect roleActor is null");
+        Log_1.Log.Error("Role", 16, "PlayRoleChangeEffect roleActor is null");
   }
   static PlayRoleLevelUpEffect(e) {
     e
@@ -31,7 +31,7 @@ class UiRoleUtils {
         ),
         UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(e, "RoleLevelUpEffect"))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 17, "PlayRoleLevelUpEffect roleActor is null");
+        Log_1.Log.Error("Role", 16, "PlayRoleLevelUpEffect roleActor is null");
   }
   static PlayRoleBreachFinishEffect(e) {
     e
@@ -44,7 +44,7 @@ class UiRoleUtils {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Role",
-          17,
+          16,
           "PlayRoleBreachFinishEffect roleActor is null",
         );
   }

@@ -2,13 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   GlobalData_1 = require("../../../../GlobalData"),
-  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   TsAiController_1 = require("../../../Controller/TsAiController");
 class TsDecoratorPlayerAttackCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
       (this.BlackboardKey = "玩家攻击"),
       (this.IsCollected = !1),
+      (this.IsInitTsVariables = !1),
+      (this.TsBlackboardKey = "");
+  }
+  Constructor() {
+    (this.IsCollected = !1),
       (this.IsInitTsVariables = !1),
       (this.TsBlackboardKey = "");
   }
@@ -28,7 +33,7 @@ class TsDecoratorPlayerAttackCheck extends UE.BTDecorator_BlueprintBase {
         !!(e = r.AiController.CharActorComp)) &&
         ((r = e.Entity.Id),
         1 ===
-          BlackboardController_1.BlackboardController.GetIntValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
             r,
             this.TsBlackboardKey,
           ))

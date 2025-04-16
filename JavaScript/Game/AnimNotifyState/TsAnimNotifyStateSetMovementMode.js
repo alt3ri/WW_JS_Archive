@@ -9,6 +9,7 @@ class TsAnimNotifyStateSetMovementMode extends UE.KuroAnimNotifyState {
       (this.LeaveMode = 0),
       (this.LeaveCustomMode = 0);
   }
+  Constructor() {}
   K2_NotifyBegin(t, e, s) {
     t = t.GetOwner();
     return (
@@ -24,6 +25,9 @@ class TsAnimNotifyStateSetMovementMode extends UE.KuroAnimNotifyState {
     t = t.GetOwner();
     return (
       t instanceof UE.Character &&
+      t.CharacterMovement.MovementMode === this.EnterMode &&
+      (6 !== this.EnterMode ||
+        t.CharacterMovement.CustomMovementMode === this.LeaveCustomMode) &&
       (t.CharacterMovement.SetMovementMode(
         this.LeaveMode,
         this.LeaveCustomMode,

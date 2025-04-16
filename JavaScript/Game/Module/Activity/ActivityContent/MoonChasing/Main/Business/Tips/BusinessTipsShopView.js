@@ -42,9 +42,9 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       }),
       (this.i2e = () => new CharacterItemWithAdd_1.CharacterItemWithAdd()),
       (this.q1a = () => {
-        this.Ypa(), this.Jpa();
+        this.Jpa(), this.zpa();
       }),
-      (this.Kpa = (i) => {
+      (this.$pa = (i) => {
         for (const t of this.CharacterListModule.GetItemList())
           t.RefreshCurrentValue(i);
       });
@@ -134,7 +134,7 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       this.GetItem(8)?.SetUIActive(!1),
       this.GetItem(9)?.SetUIActive(!1),
       (this.Delegate = (0, puerts_1.toManualReleaseDelegate)(this.OAn)),
-      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.Kpa)),
+      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.$pa)),
       this.j1a(),
       await Promise.all([this.PAr(), this.mJs()]),
       AudioSystem_1.AudioSystem.PostEvent("play_ui_zuiyuejie_loading");
@@ -154,7 +154,7 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       ((0, puerts_1.releaseManualReleaseDelegate)(this.OAn),
       (this.Delegate = void 0)),
       this.ValueDelegate &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.Kpa),
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.$pa),
         (this.ValueDelegate = void 0)),
       this.gzi();
   }
@@ -185,7 +185,7 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       this.HelperRoleItem?.SwitchRoleSpineAnim("happy", 0),
       this.PlayerRoleItem?.SwitchRoleSpineAnim("happy", 0),
       AudioSystem_1.AudioSystem.ExecuteAction("play_ui_zuiyuejie_loading", 0),
-      this.Xpa();
+      this.Ypa();
   }
   RemoveTimerHandle() {
     return !(
@@ -200,7 +200,7 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
   gzi() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  Xpa() {
+  Ypa() {
     for (const i of this.CharacterListModule.GetItemList())
       i.SetLightProgressWidth(), i.PlayAddAction(), i.RefreshAddText();
     (this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
@@ -213,10 +213,10 @@ class BusinessTipsShopView extends UiViewBase_1.UiViewBase {
       this.ExpTweener?.OnCompleteCallBack.Bind(this.q1a),
       AudioSystem_1.AudioSystem.PostEvent("play_ui_zhuiyuejie_favorability");
   }
-  Ypa() {
+  Jpa() {
     for (const i of this.CharacterListModule.GetItemList()) i.PlayEndAction();
   }
-  Jpa() {
+  zpa() {
     this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
       GlobalData_1.GlobalData.World,
       this.ValueDelegate,

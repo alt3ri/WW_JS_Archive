@@ -7,6 +7,9 @@ class LogicDataAdditiveAccelerate extends LogicDataBase_1.default {
       (this.Acceleration = void 0),
       (this.AccelerationCurve = void 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataAdditiveAccelerate;
 //# sourceMappingURL=LogicDataAdditiveAccelerate.js.map

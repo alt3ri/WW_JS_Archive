@@ -25,15 +25,17 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
       (this.TabViewComponent = void 0),
       (this.TabComponent = void 0),
       (this.TabDataList = []),
+      (this.t01 = !0),
       (this.DOo = 0),
+      (this.nxl = -1),
       (this.N2i = void 0),
       (this.O2i = void 0),
       (this.R6e = (e) => new WeaponTabItem_1.WeaponTabItem()),
       (this.pqe = (e) => {
         var t = this.TabDataList[e],
-          n = t.ChildViewName,
+          i = t.ChildViewName,
           e = this.TabComponent.GetTabItemByIndex(e);
-        this.TabViewComponent.ToggleCallBack(t, n, e, this.DOo);
+        this.TabViewComponent.ToggleCallBack(t, i, e, this.DOo);
       }),
       (this.yqe = (e) => {
         e = this.TabDataList[e];
@@ -50,13 +52,16 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
           (UiLayer_1.UiLayer.SetShowMaskLayer("WeaponRootView", !1),
           this.N2i) &&
           this.O2i &&
-          WeaponController_1.WeaponController.OnSelectedWeaponChange(
+          this.t01 &&
+          (WeaponController_1.WeaponController.OnSelectedWeaponChange(
             ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
               this.DOo,
             ),
             this.N2i,
             this.O2i,
-          );
+            this.nxl,
+          ),
+          (this.t01 = !1));
       }),
       (this.W7t = () => {
         this.CloseMe();
@@ -71,12 +76,15 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
   OnBeforeCreate() {
     var e = this.OpenParam;
     e
-      ? ((this.DOo = e.WeaponIncId),
+      ? (e.IsFromRoleRootView ||
+          ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(2),
+        (this.DOo = e.WeaponIncId),
+        (this.nxl = e.WeaponSkinId),
         (this.N2i = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
         (this.O2i =
           UiSceneManager_1.UiSceneManager.InitWeaponScabbardObserver()))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Weapon", 44, "进入武器培养界面未传参");
+        Log_1.Log.Error("Weapon", 43, "进入武器培养界面未传参");
   }
   async OnBeforeStartAsync() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(
@@ -105,14 +113,17 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
   OnBeforeShow() {
     UiLayer_1.UiLayer.SetShowMaskLayer("WeaponRootView", !0),
       this.UpdateDynamicTabComponent(),
-      UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation() ||
+      !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation() &&
+        this.t01 &&
         (WeaponController_1.WeaponController.OnSelectedWeaponChange(
           ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
             this.DOo,
           ),
           this.N2i,
           this.O2i,
+          this.nxl,
         ),
+        (this.t01 = !1),
         UiLayer_1.UiLayer.SetShowMaskLayer("WeaponRootView", !1));
   }
   OnAfterShow() {
@@ -157,8 +168,9 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
           this.O2i,
           "ShowHideWeaponEffect",
         ),
-        UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(this.N2i),
-        (this.O2i = void 0));
+        UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(this.O2i),
+        (this.O2i = void 0)),
+      (this.t01 = !0);
   }
   OnBeforeDestroy() {
     var e = this.OpenParam;
@@ -189,13 +201,13 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
         ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
           "WeaponRootView",
         ),
-      n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
+      i = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
         this.DOo,
       ).CanGoBreach();
-    for (const i of t)
-      ("WeaponBreachView" === i.ChildViewName && !n) ||
-        ("WeaponLevelUpView" === i.ChildViewName && n) ||
-        e.push(i);
+    for (const n of t)
+      ("WeaponBreachView" === n.ChildViewName && !i) ||
+        ("WeaponLevelUpView" === n.ChildViewName && i) ||
+        e.push(n);
     return e;
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
@@ -206,7 +218,7 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            54,
+            53,
             "角色界面聚焦引导的额外参数配置有误, 找不到Layout",
             ["configParams", e],
           )

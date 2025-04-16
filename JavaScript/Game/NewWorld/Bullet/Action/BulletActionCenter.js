@@ -16,6 +16,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   BulletActionInitHit_1 = require("./BulletActionInitHit"),
   BulletActionInitMove_1 = require("./BulletActionInitMove"),
   BulletActionInitRender_1 = require("./BulletActionInitRender"),
+  BulletActionSceneInteract_1 = require("./BulletActionSceneInteract"),
   BulletActionSummonBullet_1 = require("./BulletActionSummonBullet"),
   BulletActionSummonEntity_1 = require("./BulletActionSummonEntity"),
   BulletActionTimeScale_1 = require("./BulletActionTimeScale"),
@@ -33,7 +34,7 @@ class BulletActionCenter {
     this.f5o = void 0;
   }
   LTe() {
-    (this.f5o = new Array(18)),
+    (this.f5o = new Array(19)),
       this.SXi(
         0,
         BulletActionInfo_1.BulletActionInfoSimple,
@@ -131,6 +132,12 @@ class BulletActionCenter {
         BulletActionInfo_1.BulletActionInfoDestroyBullet,
         BulletActionDelayDestroyBullet_1.BulletActionDelayDestroyBullet,
         !0,
+      ),
+      this.SXi(
+        18,
+        BulletActionInfo_1.BulletActionInfoSimple,
+        BulletActionSceneInteract_1.BulletActionSceneInteract,
+        !0,
       );
   }
   SXi(t, e, i, l = !1) {
@@ -214,7 +221,7 @@ class BulletActionContainer {
     this.I5o ||
       (t.IsInPool
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Bullet", 18, "BulletActionInfo重复入池")
+          Log_1.Log.Error("Bullet", 17, "BulletActionInfo重复入池")
         : (t.Clear(), (t.IsInPool = !0), this.TXi.push(this.E5o[t.Index])));
   }
   RecycleAction(t) {
@@ -237,7 +244,7 @@ class BulletActionContainer {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
-              18,
+              17,
               "BulletActionInfo回收时，该变量不为undefined",
               ["type", e.Type],
               ["key", u],
@@ -258,7 +265,7 @@ class BulletActionContainer {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
-              18,
+              17,
               "BulletAction回收时，该变量不为undefined",
               ["type", t.Type],
               ["key", c],
@@ -268,7 +275,7 @@ class BulletActionContainer {
     this.M5o &&
       (t.IsInPool
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Bullet", 18, "BulletAction重复入池")
+          Log_1.Log.Error("Bullet", 17, "BulletAction重复入池")
         : ((t.IsInPool = !0), this.y5o.push(this.S5o[t.Index])));
   }
 }

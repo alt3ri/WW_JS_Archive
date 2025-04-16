@@ -20,11 +20,14 @@ const cpp_1 = require("cpp"),
   GlobalData_1 = require("../../../GlobalData"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage"),
+  ColorUtils_1 = require("../../../Utils/ColorUtils"),
   BulletStaticFunction_1 = require("../../Bullet/BulletStaticMethod/BulletStaticFunction"),
+  BulletConstant_1 = require("../BulletConstant"),
   BulletController_1 = require("../BulletController"),
   BulletUtil_1 = require("../BulletUtil"),
   BulletPool_1 = require("../Model/BulletPool"),
-  BulletSystemBase_1 = require("./BulletSystemBase");
+  BulletSystemBase_1 = require("./BulletSystemBase"),
+  MIN_HEIGHT_FOLLOW_TARGET = 1200;
 class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
   constructor() {
     super(...arguments), (this.mie = 0);
@@ -69,7 +72,7 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
             ? Log_1.Log.CheckError() &&
               Log_1.Log.ErrorWithStack(
                 "Bullet",
-                18,
+                17,
                 "BulletMoveTick Error",
                 t,
                 ["BulletEntityId", o.BulletEntityId],
@@ -79,7 +82,7 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Bullet",
-                18,
+                17,
                 "BulletMoveTick Error",
                 ["EntityId", o.BulletEntityId],
                 ["BulletRowName", o.BulletRowName],
@@ -106,32 +109,32 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
   dXs(e, l) {
     if (0 !== e.CreateFrame && e.CreateFrame !== Time_1.Time.Frame) {
       var o = e.Actor,
-        r = e.Entity.TimeDilation,
-        a = e.BulletDataMain;
+        r = e.Entity.TimeDilation;
       let t = e.LiveTime;
-      o?.IsValid() ? (t += l * o.CustomTimeDilation * r) : (t += l * r),
-        0 <= a.Base.Duration &&
-          ((o = a.Base.Duration * TimeUtil_1.TimeUtil.InverseMillisecond),
-          t > o) &&
+      var a = e.LiveTimeRatio;
+      0 < a &&
+        (o?.IsValid()
+          ? (t += l * o.CustomTimeDilation * r * a)
+          : (t += l * r * a)),
+        0 <= e.Duration &&
+          ((o = e.Duration * TimeUtil_1.TimeUtil.InverseMillisecond), t > o) &&
           (t = o),
         (e.LiveTimeAddDelta = t);
     }
   }
   NWo(t) {
-    var e,
-      l = t.MoveInfo;
-    l.BaseAdditiveAccelerate.IsZero() &&
-      l.AdditiveAccelerateCurve &&
-      ((e = t.BulletDataMain.Base),
-      (t = BulletStaticFunction_1.BulletStaticFunction.CompCurveVector(
+    var e = t.MoveInfo;
+    e.BaseAdditiveAccelerate.IsZero() &&
+      e.AdditiveAccelerateCurve &&
+      ((t = BulletStaticFunction_1.BulletStaticFunction.CompCurveVector(
         t.LiveTime / TimeUtil_1.TimeUtil.InverseMillisecond,
-        e.Duration,
-        l.AdditiveAccelerateCurve,
+        t.Duration,
+        e.AdditiveAccelerateCurve,
       )),
-      l.AdditiveAccelerate.Set(
-        l.BaseAdditiveAccelerate.X * t.X,
-        l.BaseAdditiveAccelerate.Y * t.Y,
-        l.BaseAdditiveAccelerate.Z * t.Z,
+      e.AdditiveAccelerate.Set(
+        e.BaseAdditiveAccelerate.X * t.X,
+        e.BaseAdditiveAccelerate.Y * t.Y,
+        e.BaseAdditiveAccelerate.Z * t.Z,
       ));
   }
   OWo(t, e) {
@@ -149,7 +152,9 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
         break;
       case 5:
       case 4:
-        this.WWo(t);
+        (t.AttackerMoveComp?.IsStandardGravity ?? !0)
+          ? this.wNc(t)
+          : this.WWo(t);
     }
   }
   KWo(t) {
@@ -171,8 +176,32 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
         if (t.BulletInitParams.FromRemote) return t.TargetActorComp;
         (e = t.GetLockOnTargetDynamic()),
           this.OnChangeTargetRequest(t, e?.Entity ? e?.Entity.Id : -1);
+        break;
+      case 11:
+        e = this.oc1(t);
     }
     return e;
+  }
+  oc1(t) {
+    var e = t.Target;
+    if (e)
+      return (e = e.GetComponent(0))?.IsRole()
+        ? (e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
+            e.GetPlayerId(),
+            { ParamType: 2, IsControl: !0 },
+          )) && e.EntityHandle?.Valid
+          ? (t.SetTargetById(e.EntityHandle.Id), t.TargetActorComp)
+          : void (
+              Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Bullet",
+                20,
+                "找不到技能目标的主控角色",
+                ["TeamItem", void 0 === e],
+                ["TeamItemValid", e?.EntityHandle?.Valid],
+              )
+            )
+        : t.TargetActorComp;
   }
   QWo(t) {
     var e,
@@ -183,12 +212,14 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
     a?.Valid &&
       ((e = BulletPool_1.BulletPool.CreateVector()),
       r.FollowTargetBottom
-        ? ((l = (o = a.Entity.GetComponent(164)).ActorComp.ActorLocation),
+        ? ((l = (o = a.Entity.GetComponent(176)).ActorComp.ActorLocation),
           e.Set(
             l.X,
             l.Y,
             l.Z -
-              Math.min(o.GetHeightAboveGround(), r.MinFollowHeight) -
+              o.GetHeightAboveGround(
+                Math.min(r.MinFollowHeight, MIN_HEIGHT_FOLLOW_TARGET),
+              ) -
               o.ActorComp.HalfHeight,
           ))
         : ((l = t.BulletDataMain?.Move.TrackTargetBone),
@@ -215,30 +246,71 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
       e = BulletUtil_1.BulletUtil.GetTargetLocation(e, t.SkillBoneName, t);
     e &&
       t.SetActorRotation(
-        UE.KismetMathLibrary.FindLookAtRotation(
+        UE.KismetMathLibrary.D_FindLookAtRotation(
           t.ActorComponent.ActorLocation,
           e,
         ),
       );
   }
-  HWo(t, e) {
-    var l = this.KWo(t),
-      o = t.BulletDataMain?.Move.TrackTargetBone,
-      o = BulletUtil_1.BulletUtil.GetTargetLocation(
-        l,
-        StringUtils_1.StringUtils.IsNothing(o)
-          ? t.SkillBoneName
-          : FNameUtil_1.FNameUtil.GetDynamicFName(o),
-        t,
-      );
-    o &&
-      (l?.Entity.GetComponent(190)?.HasTag(1008164187)
-        ? t.OnTargetInValid()
-        : (l = t.BulletDataMain.Move).TrackParams.length <= 0 ||
-          (0 !== l.TrackParams[0].X
-            ? this.XWo(t, o, e)
-            : (0 === l.TrackParams[0].Y && 0 === l.TrackParams[0].Z) ||
-              this.$Wo(t, o)));
+  HWo(e, l) {
+    var o = e.BulletDataMain.Move,
+      r = o.TrackParams.length;
+    if (!(r < 1)) {
+      var a = this.KWo(e);
+      let t = void 0;
+      if (1 < r) {
+        r = a?.Entity?.GetComponent(176);
+        if (!r?.Valid) return;
+        var i = BulletPool_1.BulletPool.CreateVector(),
+          _ = BulletPool_1.BulletPool.CreateVector(),
+          u = o.TrackParams[1],
+          u = (i.FromUeVector(u), i.Z),
+          s = ((i.Z = 0), r.ActorComp),
+          r =
+            (MathUtils_1.MathUtils.TransformPosition(
+              s.ActorLocationProxy,
+              s.ActorRotationProxy,
+              s.ActorScaleProxy,
+              i,
+              _,
+            ),
+            r.GetHeightAboveGround(4e3));
+        s.ActorUpProxy.Multiply(r + s.ScaledHalfHeight - u, i),
+          _.SubtractionEqual(i),
+          (t = _.ToUeVector()),
+          Info_1.Info.IsBuildDevelopmentOrDebug &&
+            ModelManager_1.ModelManager.BulletModel.ShowBulletCollision(
+              e.AttackerId,
+            ) &&
+            UE.KismetSystemLibrary.D_DrawDebugSphere(
+              GlobalData_1.GlobalData.GameInstance,
+              t,
+              20,
+              10,
+              ColorUtils_1.ColorUtils.LinearGreen,
+              2,
+              4,
+            ),
+          BulletPool_1.BulletPool.RecycleVector(i),
+          BulletPool_1.BulletPool.RecycleVector(_);
+      } else {
+        r = e.BulletDataMain?.Move.TrackTargetBone;
+        t = BulletUtil_1.BulletUtil.GetTargetLocation(
+          a,
+          StringUtils_1.StringUtils.IsNothing(r)
+            ? e.SkillBoneName
+            : FNameUtil_1.FNameUtil.GetDynamicFName(r),
+          e,
+        );
+      }
+      t &&
+        (a?.Entity.GetComponent(203)?.HasTag(1008164187)
+          ? e.OnTargetInValid()
+          : 0 !== o.TrackParams[0].X
+            ? this.XWo(e, t, l)
+            : (0 === o.TrackParams[0].Y && 0 === o.TrackParams[0].Z) ||
+              this.$Wo(e, t));
+    }
   }
   XWo(e, l, o) {
     var r = BulletPool_1.BulletPool.CreateVector(),
@@ -251,29 +323,28 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
     BulletPool_1.BulletPool.RecycleVector(r);
     if (!(a <= 0)) {
       var r = e.BulletDataMain.Move,
-        i = e.BulletDataMain.Base,
-        _ = r.TrackParams[0].X;
+        i = r.TrackParams[0].X;
       let t = 0;
       t =
         0 < r.TrackCurves.length
           ? BulletStaticFunction_1.BulletStaticFunction.CompCurveVector(
               e.LiveTime / TimeUtil_1.TimeUtil.InverseMillisecond,
-              i.Duration,
+              e.Duration,
               r.TrackCurves[0],
             ).X *
             this.mie *
-            _
-          : _ * this.mie;
-      (i = Math.min(a, t)),
-        (r = UE.KismetMathLibrary.FindLookAtRotation(
+            i
+          : i * this.mie;
+      (r = Math.min(a, t)),
+        (i = UE.KismetMathLibrary.D_FindLookAtRotation(
           e.ActorComponent.ActorLocation,
           l,
         )),
-        (_ = e.MoveInfo),
-        (l =
-          (_.TraceRotator.Set(
-            r.Pitch,
-            r.Yaw,
+        (l = e.MoveInfo),
+        (i =
+          (l.TraceRotator.Set(
+            i.Pitch,
+            i.Yaw,
             e.ActorComponent.ActorRotation.Roll,
           ),
           (a = MathUtils_1.MathUtils.IsNearlyZero(
@@ -285,11 +356,11 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
           Rotator_1.Rotator.Create()));
       Rotator_1.Rotator.Lerp(
         e.ActorComponent.ActorRotationProxy,
-        _.TraceRotator,
-        (i * o) / a,
-        l,
+        l.TraceRotator,
+        (r * o) / a,
+        i,
       ),
-        e.SetActorRotation(l);
+        e.SetActorRotation(i);
     }
   }
   $Wo(t, e) {
@@ -297,7 +368,7 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
       o = l.TrackParams[0].Y,
       r = l.TrackParams[0].Z,
       a = t.ActorComponent,
-      e = UE.KismetMathLibrary.FindLookAtRotation(a.ActorLocation, e),
+      e = UE.KismetMathLibrary.D_FindLookAtRotation(a.ActorLocation, e),
       i = e.Pitch - a.ActorRotationProxy.Pitch;
     let _ = e.Yaw - a.ActorRotationProxy.Yaw,
       u =
@@ -310,10 +381,9 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
       s = 0;
     (s = Math.abs(_) > r * this.mie ? r * this.mie * Math.sign(_) : _),
       0 < l.TrackCurves.length &&
-        ((e = t.BulletDataMain.Base),
-        (e = BulletStaticFunction_1.BulletStaticFunction.CompCurveVector(
+        ((e = BulletStaticFunction_1.BulletStaticFunction.CompCurveVector(
           t.LiveTime / TimeUtil_1.TimeUtil.InverseMillisecond,
-          e.Duration,
+          t.Duration,
           l.TrackCurves[0],
         )),
         (s = e.Z * this.mie * r * Math.sign(_)),
@@ -328,33 +398,95 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
   jWo(t, e) {
     var l = t.MoveInfo,
       o = BulletPool_1.BulletPool.CreateVector(),
-      r =
-        (o.FromUeVector(t.ActorComponent.ActorLocationProxy),
-        o.SubtractionEqual(l.RoundCenter),
-        t.BulletDataMain.Move),
+      r = t.BulletDataMain.Move,
       e =
         (r.Speed * this.mie * e * MathCommon_1.MathCommon.RadToDeg) /
         r.TrackParams[0].X,
       a = BulletPool_1.BulletPool.CreateVector(),
       i =
-        (a.FromUeVector(l.RoundCenter), BulletPool_1.BulletPool.CreateVector());
-    o.RotateAngleAxis(e, l.RoundOnceAxis, i),
-      a.AdditionEqual(i),
-      t.SetActorRotation(
-        UE.KismetMathLibrary.FindLookAtRotation(
-          t.ActorComponent.ActorLocation,
-          a.ToUeVector(),
-        ),
-      ),
-      0 !== r.TrackTarget &&
-        10 !== r.TrackTarget &&
-        (e = this.KWo(t)?.Entity) &&
-        ((r = BulletPool_1.BulletPool.CreateVector()),
-        t.SetTargetById(e.Id),
-        this.YWo(t, t.TargetActorComp, r),
-        a.AdditionEqual(r),
-        l.RoundCenter.AdditionEqual(r),
-        BulletPool_1.BulletPool.RecycleVector(r)),
+        (a.FromUeVector(l.RoundCenter), BulletPool_1.BulletPool.CreateVector()),
+      _ = 1 < r.TrackParams.length ? r.TrackParams[1] : void 0;
+    const u = t.AttackerMoveComp?.IsStandardGravity ?? !0;
+    if (_) {
+      var s = r.TrackParams[0],
+        n =
+          (0 === r.TrackTarget || 10 === r.TrackTarget
+            ? (n = BulletUtil_1.BulletUtil.GetCurrentRole(t))?.Valid
+              ? BulletUtil_1.BulletUtil.AroundBulletAxisAndBeginVector(
+                  s,
+                  _,
+                  l.RoundOnceAxis,
+                  o,
+                  n,
+                  u ? void 0 : t.AttackerMoveComp.GravityUp,
+                )
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "Bullet",
+                  20,
+                  "围绕中心旋转子弹获取不到当前玩家控制的角色",
+                  ["Id", t.BulletRowName],
+                  ["Attacker", t.AttackerActorComp.Actor.GetName()],
+                )
+            : (n = this.KWo(t))?.Valid
+              ? BulletUtil_1.BulletUtil.AroundBulletAxisAndBeginVector(
+                  s,
+                  _,
+                  l.RoundOnceAxis,
+                  o,
+                  n,
+                  u ? void 0 : t.AttackerMoveComp.GravityUp,
+                )
+              : BulletUtil_1.BulletUtil.AroundBulletAxisAndBeginVector(
+                  s,
+                  _,
+                  l.RoundOnceAxis,
+                  o,
+                  void 0,
+                  u ? void 0 : t.AttackerMoveComp.GravityUp,
+                ),
+          (l.AroundAngle += e),
+          o.RotateAngleAxis(l.AroundAngle, l.RoundOnceAxis, i),
+          i.MultiplyEqual(s.X),
+          a.AdditionEqual(i),
+          o.RotateAngleAxis(l.AroundAngle + 90, l.RoundOnceAxis, i),
+          BulletPool_1.BulletPool.CreateRotator());
+      MathUtils_1.MathUtils.LookRotationUpFirst(i, l.RoundOnceAxis, n),
+        t.SetActorRotation(n),
+        BulletPool_1.BulletPool.RecycleRotator(n);
+    } else {
+      o.FromUeVector(t.ActorComponent.ActorLocationProxy),
+        o.SubtractionEqual(l.RoundCenter),
+        o.RotateAngleAxis(e, l.RoundOnceAxis, i),
+        a.AdditionEqual(i);
+      const u = t.AttackerMoveComp?.IsStandardGravity ?? !0;
+      u
+        ? t.SetActorRotation(
+            UE.KismetMathLibrary.D_FindLookAtRotation(
+              t.ActorComponent.ActorLocation,
+              a.ToUeVector(),
+            ),
+          )
+        : ((_ = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+            t.GetActorLocation(),
+          ),
+          _.SubtractionEqual(l.RoundCenter),
+          _.Normalize(),
+          (s = BulletPool_1.BulletPool.CreateRotator()),
+          MathUtils_1.MathUtils.LookRotationUpFirst(_, l.RoundOnceAxis, s),
+          t.SetActorRotation(s),
+          BulletPool_1.BulletPool.RecycleRotator(s),
+          BulletPool_1.BulletPool.RecycleVector(_));
+    }
+    0 !== r.TrackTarget &&
+      10 !== r.TrackTarget &&
+      (n = this.KWo(t)?.Entity) &&
+      ((e = BulletPool_1.BulletPool.CreateVector()),
+      t.SetTargetById(n.Id),
+      this.YWo(t, t.TargetActorComp, e),
+      a.AdditionEqual(e),
+      l.RoundCenter.AdditionEqual(e),
+      BulletPool_1.BulletPool.RecycleVector(e)),
       t.SetActorLocation(a),
       BulletPool_1.BulletPool.RecycleVector(o),
       BulletPool_1.BulletPool.RecycleVector(a),
@@ -366,6 +498,38 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
       t.RoundCenterLastLocation.FromUeVector(e);
   }
   WWo(t) {
+    var e,
+      l,
+      o,
+      r,
+      a,
+      i = t.BulletDataMain.Move.TrackParams;
+    !i ||
+      i.length < 2 ||
+      (((i = t.MoveInfo).BulletSpeedZ += i.Gravity * this.mie),
+      (i.BulletSpeed = Math.sqrt(
+        Math.pow(i.BulletSpeed2D, 2) + Math.pow(i.BulletSpeedZ, 2),
+      )),
+      (e = BulletPool_1.BulletPool.CreateVector()),
+      (l = BulletPool_1.BulletPool.CreateVector()),
+      i.GravityMoveForward.Multiply(i.BulletSpeed2D, e),
+      (t.AttackerMoveComp?.GravityUp ?? Vector_1.Vector.UpVectorProxy).Multiply(
+        i.BulletSpeedZ,
+        l,
+      ),
+      e.AdditionEqual(l),
+      e.Normalize(),
+      (o = i.GravityMoveRotator),
+      e.Rotation(o),
+      (r = t.BulletDataMain.Move).InitVelocityRot.IsNearlyZero() ||
+        ((a = BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(o),
+        MathUtils_1.MathUtils.ComposeRotator(r.InitVelocityRot, a, o),
+        BulletPool_1.BulletPool.RecycleRotator(a)),
+      BulletPool_1.BulletPool.RecycleVector(e),
+      BulletPool_1.BulletPool.RecycleVector(l),
+      i.ActorRotateParabola && t.SetActorRotation(i.GravityMoveRotator));
+  }
+  wNc(t) {
     var e,
       l = t.BulletDataMain.Move.TrackParams;
     !l ||
@@ -384,11 +548,10 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
   }
   kWo(t, e) {
     var l = t.MoveInfo,
-      o = t.BulletDataMain.Move,
-      r = t.BulletDataMain.Base;
-    let a = 0,
-      i =
-        ((a = o.SpeedCurve
+      o = t.BulletDataMain.Move;
+    let r = 0,
+      a =
+        ((r = o.SpeedCurve
           ? (Info_1.Info.IsBuildDevelopmentOrDebug &&
               !o.SpeedCurve.IsValid() &&
               UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -397,29 +560,30 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
               ),
             BulletStaticFunction_1.BulletStaticFunction.CompCurveFloat(
               t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond,
-              r.Duration,
+              t.Duration,
               o.SpeedCurve,
             ) * l.BulletSpeed)
           : l.BulletSpeed),
-        r.Duration);
-    var _,
+        t.Duration);
+    var i,
+      _,
       u,
       s = BulletPool_1.BulletPool.CreateVector();
     switch (o.Trajectory) {
       case 2:
         0 < o.TrackParams.length &&
           0 < o.TrackParams[0].X &&
-          (i = o.TrackParams[0].X);
+          (a = o.TrackParams[0].X);
         var n,
-          h,
-          B = BulletUtil_1.BulletUtil.GetTargetLocation(
+          B,
+          h = BulletUtil_1.BulletUtil.GetTargetLocation(
             t.TargetActorComp,
             t.SkillBoneName,
             t,
           );
-        B
+        h
           ? ((n =
-              i -
+              a -
               (Time_1.Time.WorldTime - t.GenerateTime) /
                 TimeUtil_1.TimeUtil.InverseMillisecond),
             (n = MathUtils_1.MathUtils.IsNearlyZero(
@@ -428,16 +592,16 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
             )
               ? MathCommon_1.MathCommon.KindaSmallNumber
               : n),
-            (h = BulletPool_1.BulletPool.CreateVector()).FromUeVector(B),
-            (a =
-              Vector_1.Vector.Dist(t.ActorComponent.ActorLocationProxy, h) / n),
-            BulletPool_1.BulletPool.RecycleVector(h),
-            a < o.Speed && (a = o.Speed),
-            l.UpdateDirVector.Set(a * this.mie * e, 0, 0),
+            (B = BulletPool_1.BulletPool.CreateVector()).FromUeVector(h),
+            (r =
+              Vector_1.Vector.Dist(t.ActorComponent.ActorLocationProxy, B) / n),
+            BulletPool_1.BulletPool.RecycleVector(B),
+            r < o.Speed && (r = o.Speed),
+            l.UpdateDirVector.Set(r * this.mie * e, 0, 0),
             t.ActorRotateVector(l.UpdateDirVector, s))
-          : ((a = l.BulletSpeed),
+          : ((r = l.BulletSpeed),
             l.BeginSpeedRotator.Vector(s),
-            s.MultiplyEqual(a * this.mie * e));
+            s.MultiplyEqual(r * this.mie * e));
         break;
       case 5:
       case 4:
@@ -445,34 +609,44 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
           Vector_1.Vector.ForwardVectorProxy,
           s,
         ),
-          s.MultiplyEqual(a * this.mie * e);
+          s.MultiplyEqual(r * this.mie * e);
         break;
       case 1:
-        t.GetActorForward(s), s.MultiplyEqual(a * this.mie * e);
+        t.GetActorForward(s), s.MultiplyEqual(r * this.mie * e);
         break;
       case 3:
         return void BulletPool_1.BulletPool.RecycleVector(s);
       case 6:
         return this.QWo(t), void BulletPool_1.BulletPool.RecycleVector(s);
       default:
-        l.BeginSpeedRotator.Vector(s), s.MultiplyEqual(a * this.mie * e);
+        l.BeginSpeedRotator.Vector(s), s.MultiplyEqual(r * this.mie * e);
     }
     s.MultiplyEqual(l.BulletSpeedRatio),
       l.BaseAdditiveAccelerate.IsZero() ||
-        ((r = BulletPool_1.BulletPool.CreateVector()),
-        l.V0.Multiply(this.mie, r),
+        ((i = BulletPool_1.BulletPool.CreateVector()),
+        l.V0.Multiply(this.mie, i),
         (_ = BulletPool_1.BulletPool.CreateVector()),
         l.AdditiveAccelerate.Multiply(0.5 * this.mie * this.mie, _),
-        r.AdditionEqual(_),
-        s.AdditionEqual(r),
+        i.AdditionEqual(_),
+        s.AdditionEqual(i),
         (u = BulletPool_1.BulletPool.CreateVector()),
         l.AdditiveAccelerate.Multiply(this.mie, u),
         l.V0.AdditionEqual(u),
-        BulletPool_1.BulletPool.RecycleVector(r),
+        BulletPool_1.BulletPool.RecycleVector(i),
         BulletPool_1.BulletPool.RecycleVector(_),
         BulletPool_1.BulletPool.RecycleVector(u)),
       l.BulletSpeedDir.FromUeVector(s),
       this.JWo(t, s),
+      BulletConstant_1.BulletConstant.OpenMoveLog &&
+        Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Bullet",
+          20,
+          "OnTickMove",
+          ["Bullet", t.BulletRowName],
+          ["finalDirMove", s],
+          ["Location", t.GetActorLocation()],
+        ),
       BulletPool_1.BulletPool.RecycleVector(s),
       this.zWo(t, l, o.TrackTarget);
   }
@@ -544,7 +718,7 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
-            21,
+            20,
             "动态改变目标的子弹必须设置 基础设置.网络同步类型 为 网络同步子弹",
             ["BulletId", t.BulletRowName],
             ["Attacker", t.AttackerActorComp?.Actor?.GetName()],
@@ -555,16 +729,16 @@ class BulletMoveSystem extends BulletSystemBase_1.BulletSystemBase {
             )),
             (o =
               ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e)),
-            ((r = Protocol_1.Aki.Protocol.W3n.create()).Ajn = {
+            ((r = Protocol_1.Aki.Protocol.Ce_.create()).Ajn = {
               K8n: void 0,
               uVn: l,
               CVn: MathUtils_1.MathUtils.NumberToLong(o),
             }),
-            CombatMessage_1.CombatNet.Call(21995, t.Attacker, r),
+            CombatMessage_1.CombatNet.Send(24809, t.Attacker, r),
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "Bullet",
-              21,
+              20,
               "修改子弹目标请求",
               ["新的目标id", e],
               ["CreatureId", o],

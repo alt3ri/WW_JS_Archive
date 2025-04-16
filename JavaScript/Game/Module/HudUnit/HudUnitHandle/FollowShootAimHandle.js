@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FollowShootAimHandle = void 0);
-const UE = require("ue"),
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   Stats_1 = require("../../../../Core/Common/Stats"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
@@ -19,67 +21,134 @@ class FollowShootAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
       (this.noi = void 0),
-      (this.Aka = 0),
+      (this.UFa = 0),
       (this.sDe = void 0),
       (this.Xte = void 0),
       (this.ldt = []),
-      (this.Dka = !1),
+      (this.xFa = !1),
       (this.soi = Vector_1.Vector.Create()),
       (this.aoi = Vector_1.Vector.Create()),
       (this.hoi = void 0),
-      (this.zpe = (t, e) => {
-        this.sDe === e && this.m$e();
+      (this.zpe = (t, i) => {
+        this.sDe === i && this.m$e();
       }),
-      (this.ZHa = (t, e) => {
-        (this.Dka = e), this.j2a();
+      (this.tKa = (t, i) => {
+        (this.xFa = i), this.HGa();
       }),
-      (this.Rka = (t) => {
+      (this.PFa = (t) => {
         if (t) {
-          var e =
+          var i =
             ModelManager_1.ModelManager.BattleUiModel.FormationData?.GetFollowerEntityHandle();
-          if ((this.eja(e), !this.noi)) return void this.Soi();
+          if ((this.iKa(i), !this.noi)) return void this.Soi();
         }
         this.noi && this.noi.SetVisible(t);
+      }),
+      (this.QWl = 0),
+      (this.KWl = 0),
+      (this.HWl = void 0),
+      (this.WWl = (t, i, e, s) => {
+        try {
+          if (
+            !(e < this.QWl) &&
+            !(e === this.QWl && s < this.KWl) &&
+            this.noi?.GetVisible()
+          ) {
+            if (t) {
+              var o = i.HitResult;
+              if (o) {
+                var r = o.Actors,
+                  h = r.Num();
+                if (!(h <= 0))
+                  for (let i = 0; i < h; i++) {
+                    var n = r.Get(i);
+                    if (!n?.IsValid()) return void this.noi.SetIsAimTarget(!1);
+                    let t = ActorUtils_1.ActorUtils.GetEntityByActor(n, !1);
+                    if (
+                      !(t =
+                        t ||
+                        ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
+                          n,
+                          !1,
+                        ))
+                    )
+                      return void this.noi.SetIsAimTarget(!1);
+                    var a = t.Entity.GetComponent(0),
+                      _ = a?.GetEntityType();
+                    if (
+                      _ !== Protocol_1.Aki.Protocol.kks.Proto_Player &&
+                      _ !== Protocol_1.Aki.Protocol.kks.Proto_Npc
+                    )
+                      return _ ===
+                        Protocol_1.Aki.Protocol.kks.Proto_SceneItem &&
+                        "PortalCreater" ===
+                          a.GetBaseInfo()?.Category.MechanismType &&
+                        void 0 !== t.Entity.GetComponent(152)
+                        ? void this.noi.SetIsAimTarget(!0)
+                        : void this.noi.SetIsAimTarget(!1);
+                  }
+              }
+            }
+            this.noi.SetIsAimTarget(!1);
+          }
+        } catch (t) {
+          t instanceof Error
+            ? Log_1.Log.CheckError() &&
+              Log_1.Log.ErrorWithStack(
+                "Role",
+                20,
+                "AimTraceHitResultHandle异常",
+                t,
+                ["error", t.message],
+              )
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error("Role", 20, "AimTraceHitResultHandle异常", [
+                "error",
+                t,
+              ]);
+        }
       });
   }
   OnInitialize() {
-    super.OnInitialize(), (this.Aka = 1101008132);
+    super.OnInitialize(), (this.UFa = 1101008132);
     var t =
       ModelManager_1.ModelManager.BattleUiModel.FormationData?.GetFollowerEntityHandle();
-    this.eja(t);
+    this.iKa(t), (this.HWl = (0, puerts_1.toManualReleaseDelegate)(this.WWl));
   }
-  eja(t) {
+  iKa(t) {
     t !== this.sDe &&
       (this.m$e(),
       t?.Valid
         ? ((this.sDe = t),
-          (this.Xte = this.sDe.Entity?.GetComponent(190)),
+          (this.Xte = this.sDe.Entity?.GetComponent(203)),
           this.c$e(),
-          (this.Dka = this.Xte?.HasTag(this.Aka) ?? !1),
-          this.j2a())
+          (this.xFa = this.Xte?.HasTag(this.UFa) ?? !1),
+          this.HGa())
         : (this.sDe = void 0));
   }
-  j2a() {
-    this.noi && this.noi.RefreshState(this.Dka);
+  HGa() {
+    this.noi && this.noi.RefreshState(this.xFa);
   }
   OnDestroyed() {
-    this.yoi();
+    this.yoi(),
+      (0, puerts_1.releaseManualReleaseDelegate)(this.WWl),
+      this.hoi?.Dispose(),
+      (this.hoi = void 0);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.SetFollowShootAimVisible,
-      this.Rka,
+      this.PFa,
     );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.RemoveAllTargetUseKey(this),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetFollowShootAimVisible,
-        this.Rka,
+        this.PFa,
       );
   }
   c$e() {
-    this.mdt(this.Aka, this.ZHa),
+    this.mdt(this.UFa, this.tKa),
       EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
         this,
         this.sDe,
@@ -102,8 +171,8 @@ class FollowShootAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       this.doi(),
       FollowShootAimHandle.Ult.Stop();
   }
-  mdt(t, e) {
-    t = this.Xte?.ListenForTagAddOrRemove(t, e);
+  mdt(t, i) {
+    t = this.Xte?.ListenForTagAddOrRemove(t, i);
     t && this.ldt.push(t);
   }
   Soi() {
@@ -112,7 +181,7 @@ class FollowShootAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       "UiItem_AimTransmit",
       !0,
       () => {
-        this.j2a();
+        this.HGa();
       },
     )),
       this.noi.SetVisible(!0);
@@ -121,63 +190,31 @@ class FollowShootAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
     this.noi && (this.DestroyHudUnit(this.noi), (this.noi = void 0));
   }
   doi() {
-    if (this.noi?.GetVisible()) {
-      var t = this.Coi();
-      if (t) {
-        var i = t.Actors,
-          s = i.Num();
-        if (!(s <= 0))
-          for (let e = 0; e < s; e++) {
-            var o = i.Get(e);
-            if (!o?.IsValid()) return void this.noi.SetIsAimTarget(!1);
-            let t = ActorUtils_1.ActorUtils.GetEntityByActor(o, !1);
-            if (
-              !(t =
-                t ||
-                ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
-                  o,
-                  !1,
-                ))
-            )
-              return void this.noi.SetIsAimTarget(!1);
-            var o = t.Entity.GetComponent(0),
-              r = o?.GetEntityType();
-            if (
-              r !== Protocol_1.Aki.Protocol.kks.Proto_Player &&
-              r !== Protocol_1.Aki.Protocol.kks.Proto_Npc
-            )
-              return r === Protocol_1.Aki.Protocol.kks.Proto_SceneItem &&
-                "PortalCreater" === o.GetBaseInfo()?.Category.MechanismType &&
-                void 0 !== t.Entity.GetComponent(141)
-                ? void this.noi.SetIsAimTarget(!0)
-                : void this.noi.SetIsAimTarget(!1);
-          }
-      }
-      this.noi.SetIsAimTarget(!1);
-    }
+    this.noi?.GetVisible() && this.Coi();
   }
   Coi() {
     var t = Global_1.Global.CharacterCameraManager,
-      e = this.soi,
-      i = this.aoi,
+      i = this.soi,
+      e = this.aoi,
       t =
-        (e.FromUeVector(t.GetCameraLocation()),
-        i.FromUeVector(t.GetActorForwardVector()),
-        i.MultiplyEqual(MAX_AIM_DISTANCE),
-        i.AdditionEqual(e),
+        (i.FromUeVector(t.D_GetCameraLocation()),
+        e.FromUeVector(t.GetActorForwardVector()),
+        e.MultiplyEqual(MAX_AIM_DISTANCE),
+        e.AdditionEqual(i),
         (this.hoi =
           this.hoi ??
           ModelManager_1.ModelManager.BulletModel.NewTraceElement(
-            UE.TraceLineElement.StaticClass(),
+            UE.TraceLineElement,
             ModelManager_1.ModelManager.BulletModel.ObjectTypeTakeAim,
           )),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.hoi, e),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.hoi, i),
-        TraceElementCommon_1.TraceElementCommon.LineTrace(
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.hoi, i),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.hoi, e),
+        TraceElementCommon_1.TraceElementCommon.AsyncLineTrace(
           this.hoi,
           PROFILE_AIM_TRACE,
+          this.HWl,
         ));
-    if (t) return this.hoi.HitResult;
+    (this.QWl = t.Frame), (this.KWl = t.Index);
   }
 }
 (exports.FollowShootAimHandle = FollowShootAimHandle).Ult = Stats_1.Stat.Create(

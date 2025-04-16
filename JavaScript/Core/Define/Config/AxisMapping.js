@@ -81,8 +81,14 @@ class AxisMapping {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   axisname(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   axistype() {
     var t = this.J7.__offset(this.z7, 8);
@@ -137,8 +143,14 @@ class AxisMapping {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   displayname(t) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   keyboardversion() {
     var t = this.J7.__offset(this.z7, 18);

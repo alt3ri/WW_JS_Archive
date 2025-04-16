@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../Core/Common/Log"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../GlobalData");
 class LevelLoadingModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -38,21 +40,28 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
           ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
             GlobalData_1.GlobalData.World,
             o,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.AddLevelLoadingTimeDilationTag,
           ))
         : (this.Ipi(),
           this.ClearLoadingPerforms(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Loading", 7, "LevelLoading:LoadingModeDisable"),
-          ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
-            GlobalData_1.GlobalData.World,
-            o,
+          ResourceSystem_1.ResourceSystem.IsLoadingReasonNotEmpty(o) &&
+            ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
+              GlobalData_1.GlobalData.World,
+              o,
+            ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RemoveLevelLoadingTimeDilationTag,
           )));
   }
   AddLoadingReason(e, o) {
     this.Epi.set(e, o),
       this.AddLoadingPerform(o),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Loading", 19, "LevelLoading:AddLoadingReason", [
+        Log_1.Log.Info("Loading", 18, "LevelLoading:AddLoadingReason", [
           "reason",
           e,
         ]);
@@ -62,7 +71,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
     this.Epi.delete(e),
       this.RemoveLoadingPerform(o),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Loading", 19, "LevelLoading:RemoveLoadingReason", [
+        Log_1.Log.Info("Loading", 18, "LevelLoading:RemoveLoadingReason", [
           "reason",
           e,
         ]);
@@ -73,7 +82,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Loading",
-          19,
+          18,
           "LevelLoading:AddLoadingPerform",
           ["perform", e],
           ["count", o],
@@ -84,7 +93,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
     o &&
       (this.Spi.set(e, --o), o <= 0) &&
       (this.Spi.delete(e), Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Loading", 19, "LevelLoading:RemoveLoadingPerform", [
+      Log_1.Log.Info("Loading", 18, "LevelLoading:RemoveLoadingPerform", [
         "perform",
         e,
       ]);
@@ -95,12 +104,12 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
   Ipi() {
     this.Epi.clear(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Loading", 19, "LevelLoading:ClearLoadingReason");
+        Log_1.Log.Info("Loading", 18, "LevelLoading:ClearLoadingReason");
   }
   ClearLoadingPerforms() {
     this.Spi.clear(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Loading", 19, "LevelLoading:ClearLoadingPerforms");
+        Log_1.Log.Info("Loading", 18, "LevelLoading:ClearLoadingPerforms");
   }
   CheckLoadingPerformsEmpty() {
     return 0 === this.Spi.size;

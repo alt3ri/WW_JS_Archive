@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillCommonButton = void 0);
 const GameUtils_1 = require("../../../Game/GameUtils"),
-  DicStringInt_1 = require("./SubType/DicStringInt"),
-  DicStringIntArray_1 = require("./SubType/DicStringIntArray");
+  DicIntInt_1 = require("./SubType/DicIntInt"),
+  DicIntIntArray_1 = require("./SubType/DicIntIntArray");
 class SkillCommonButton {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -102,6 +102,13 @@ class SkillCommonButton {
   attributeidtagmapValue(t) {
     return this.attributeidtagmap(t)?.value();
   }
+  get AttributeEnableTags() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.attributeenabletagsLength(),
+      this.attributeenabletags,
+      this,
+    );
+  }
   get MaxAttributeBurstEffectId() {
     return this.maxattributebursteffectid();
   }
@@ -128,6 +135,13 @@ class SkillCommonButton {
   dynamiceffecttagmapValue(t) {
     return this.dynamiceffecttagmap(t)?.value();
   }
+  get ShowLongPressTags() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.showlongpresstagsLength(),
+      this.showlongpresstags,
+      this,
+    );
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -142,8 +156,14 @@ class SkillCommonButton {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   buttontype() {
     var t = this.J7.__offset(this.z7, 8);
@@ -163,7 +183,7 @@ class SkillCommonButton {
   skillidtagmap(t, i) {
     var s = this.J7.__offset(this.z7, 14);
     return s
-      ? (i || new DicStringInt_1.DicStringInt()).__init(
+      ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
@@ -176,41 +196,65 @@ class SkillCommonButton {
   GetSkillicontagsAt(t) {
     return this.skillicontags(t);
   }
-  skillicontags(t, i) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+  skillicontags(t) {
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   skillicontagsLength() {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  skillicontagsArray() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   GetEnabletagsAt(t) {
     return this.enabletags(t);
   }
-  enabletags(t, i) {
-    var s = this.J7.__offset(this.z7, 18);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+  enabletags(t) {
+    var i = this.J7.__offset(this.z7, 18);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   enabletagsLength() {
     var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  enabletagsArray() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   GetDisabletagsAt(t) {
     return this.disabletags(t);
   }
-  disabletags(t, i) {
-    var s = this.J7.__offset(this.z7, 20);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+  disabletags(t) {
+    var i = this.J7.__offset(this.z7, 20);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   disabletagsLength() {
     var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  disabletagsArray() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   GetDisableskillidtagsAt(t, i) {
     return this.disableskillidtags(t);
@@ -218,7 +262,7 @@ class SkillCommonButton {
   disableskillidtags(t, i) {
     var s = this.J7.__offset(this.z7, 22);
     return s
-      ? (i || new DicStringIntArray_1.DicStringIntArray()).__init(
+      ? (i || new DicIntIntArray_1.DicIntIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
@@ -231,15 +275,23 @@ class SkillCommonButton {
   GetHiddentagsAt(t) {
     return this.hiddentags(t);
   }
-  hiddentags(t, i) {
-    var s = this.J7.__offset(this.z7, 24);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+  hiddentags(t) {
+    var i = this.J7.__offset(this.z7, 24);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   hiddentagsLength() {
     var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  hiddentagsArray() {
+    var t = this.J7.__offset(this.z7, 24);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   iscdvisible() {
     var t = this.J7.__offset(this.z7, 26);
@@ -259,7 +311,7 @@ class SkillCommonButton {
   attributeidtagmap(t, i) {
     var s = this.J7.__offset(this.z7, 32);
     return s
-      ? (i || new DicStringIntArray_1.DicStringIntArray()).__init(
+      ? (i || new DicIntIntArray_1.DicIntIntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
@@ -269,37 +321,79 @@ class SkillCommonButton {
     var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
-  maxattributebursteffectid() {
-    var t = this.J7.__offset(this.z7, 34);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  GetAttributeenabletagsAt(t) {
+    return this.attributeenabletags(t);
   }
-  cdcompletedeffectid() {
+  attributeenabletags(t) {
+    var i = this.J7.__offset(this.z7, 34);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  attributeenabletagsLength() {
+    var t = this.J7.__offset(this.z7, 34);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  attributeenabletagsArray() {
+    var t = this.J7.__offset(this.z7, 34);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  maxattributebursteffectid() {
     var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  islongpresscontrolcamera() {
+  cdcompletedeffectid() {
     var t = this.J7.__offset(this.z7, 38);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  islongpresscontrolcamera() {
+    var t = this.J7.__offset(this.z7, 40);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   longpresstime() {
-    var t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetDynamiceffecttagmapAt(t, i) {
     return this.dynamiceffecttagmap(t);
   }
   dynamiceffecttagmap(t, i) {
-    var s = this.J7.__offset(this.z7, 42);
+    var s = this.J7.__offset(this.z7, 44);
     return s
-      ? (i || new DicStringInt_1.DicStringInt()).__init(
+      ? (i || new DicIntInt_1.DicIntInt()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
   }
   dynamiceffecttagmapLength() {
-    var t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  GetShowlongpresstagsAt(t) {
+    return this.showlongpresstags(t);
+  }
+  showlongpresstags(t) {
+    var i = this.J7.__offset(this.z7, 46);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  showlongpresstagsLength() {
+    var t = this.J7.__offset(this.z7, 46);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  showlongpresstagsArray() {
+    var t = this.J7.__offset(this.z7, 46);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
 }
 exports.SkillCommonButton = SkillCommonButton;

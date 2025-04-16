@@ -21,7 +21,7 @@ class ModifyCd extends ExtraEffectBase_1.BuffEffect {
       (this.Voa = t.ExtraEffectGrowParameters1);
   }
   OnCreated() {
-    var t = this.ExactOwnerEntity?.GetComponent(191);
+    var t = this.ExactOwnerEntity?.GetComponent(204);
     t &&
       ((this.ModifyValue = AbilityUtils_1.AbilityUtils.GetLevelValue(
         this.Voa,
@@ -34,7 +34,7 @@ class ModifyCd extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved(t) {
-    var e = this.ExactOwnerEntity?.GetComponent(191);
+    var e = this.ExactOwnerEntity?.GetComponent(204);
     e && e.UpdateModifyCdEffect(!1, this);
   }
 }

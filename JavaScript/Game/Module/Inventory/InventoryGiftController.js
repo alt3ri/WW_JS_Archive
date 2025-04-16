@@ -6,12 +6,13 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   UiManager_1 = require("../../Ui/UiManager"),
   AcquireData_1 = require("../Acquire/AcquireData"),
   ItemDefines_1 = require("../Item/Data/ItemDefines"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  InventoryGiftData_1 = require("./InventoryGiftData");
 class InventoryGiftController extends UiControllerBase_1.UiControllerBase {
   static SendItemGiftUseRequest(t, e, r) {
     var n = Protocol_1.Aki.Protocol.dns.create();
@@ -20,24 +21,41 @@ class InventoryGiftController extends UiControllerBase_1.UiControllerBase {
       i = r.GetConfig();
     i.Parameters.get(ItemDefines_1.EItemFunctionType.ManualOpenGift) ||
       i.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenGift);
-    const o = r.GetCount() - e;
-    Net_1.Net.Call(19104, n, (e) => {
+    const a = r.GetCount() - e;
+    Net_1.Net.Call(22370, n, (e) => {
       var r;
       e &&
         (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              16068,
+              23905,
             )
           : (UiManager_1.UiManager.IsViewShow("InventoryGiftView") &&
               UiManager_1.UiManager.CloseView("InventoryGiftView"),
             (e = ModelManager_1.ModelManager.InventoryModel.GetAcquireData()) &&
-              ((r = [{ ItemId: t, IncId: 0 }, o]),
-              e.SetRemainItemCount(o),
-              e.SetMaxAmount(o),
+              ((r = [{ ItemId: t, IncId: 0 }, a]),
+              e.SetRemainItemCount(a),
+              e.SetMaxAmount(a),
               e.SetItemData([r]),
               this.ShowAcquireView(e))));
     });
+  }
+  static SendGiftPackPreviewRequest(o, _, l) {
+    var e = new Protocol_1.Aki.Protocol.bg_();
+    (e.Igl = _.Id),
+      Net_1.Net.Call(22401, e, (e) => {
+        if (e) {
+          var r,
+            t,
+            n = [];
+          for ([r, t] of _.Content) {
+            var i = new InventoryGiftData_1.GiftItemData(r, t, 0);
+            e.Ab_[r] && i.SetPhantomItemData(e.Ab_[r]), n.push(i);
+          }
+          var a = new InventoryGiftData_1.InventoryGiftData(o, n, _, l);
+          UiManager_1.UiManager.OpenView("InventoryGiftView", a);
+        }
+      });
   }
   static ShowAcquireView(e) {
     ModelManager_1.ModelManager.InventoryModel.SetAcquireData(e),
@@ -66,10 +84,10 @@ class InventoryGiftController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.CloseView("AcquireView");
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(22735, InventoryGiftController.ItemGiftUseNotify);
+    Net_1.Net.Register(25301, InventoryGiftController.ItemGiftUseNotify);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(22735);
+    Net_1.Net.UnRegister(25301);
   }
 }
 (exports.InventoryGiftController = InventoryGiftController).ItemGiftUseNotify =
@@ -82,9 +100,9 @@ class InventoryGiftController extends UiControllerBase_1.UiControllerBase {
         n = [];
       for (let e = 0; e < t; e++) {
         var i = r.OUs[e],
-          o = i.s5n,
+          a = i.s5n,
           i = i.m9n;
-        n.push([{ IncId: 0, ItemId: o }, i]);
+        n.push([{ IncId: 0, ItemId: a }, i]);
       }
       e = new AcquireData_1.AcquireData();
       e.SetAcquireViewType(1),

@@ -110,7 +110,7 @@ class NpcIconConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Test",
-            11,
+            10,
             "查找不到对应的NPC头顶信息数据，检查一下NPC头顶信息表格",
             ["ID", e],
           )),

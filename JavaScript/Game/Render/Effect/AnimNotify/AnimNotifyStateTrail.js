@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
-  EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
+  SkeletalMeshEffectContext_1 = require("../../../Effect/EffectContext/SkeletalMeshEffectContext"),
   EffectSystem_1 = require("../../../Effect/EffectSystem");
 class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
   constructor() {
@@ -13,6 +13,9 @@ class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
       (this.WeaponCaseIndex = 0),
       (this.Handle = 0);
   }
+  Constructor() {
+    this.Handle = 0;
+  }
   K2_ValidateAssets() {
     return !0;
   }
@@ -20,13 +23,13 @@ class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
     if (((this.Handle = 0), !t))
       return (
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("RenderEffect", 26, "拖尾特效传入空参数", ["动画", e]),
+          Log_1.Log.Warn("RenderEffect", 25, "拖尾特效传入空参数", ["动画", e]),
         !1
       );
     if (!this.TrailingConfigData)
       return (
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("RenderEffect", 26, "拖尾特效缺失配置", [
+          Log_1.Log.Warn("RenderEffect", 25, "拖尾特效缺失配置", [
             "动画",
             e.GetName(),
           ]),
@@ -34,41 +37,39 @@ class AnimNotifyStateTrail extends UE.KuroAnimNotifyState {
       );
     let r = t;
     if (this.UseWeapon) {
-      var f = "WeaponCase" + this.WeaponCaseIndex,
-        s = t
+      var s = "WeaponCase" + this.WeaponCaseIndex,
+        f = t
           .GetOwner()
           .K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
       let e = !1;
-      for (let t = 0; t < s.Num(); t++)
-        if (s.Get(t).GetName() === f) {
-          (r = s.Get(t)), (e = !0);
+      for (let t = 0; t < f.Num(); t++)
+        if (f.Get(t).GetName() === s) {
+          (r = f.Get(t)), (e = !0);
           break;
         }
       if (!e)
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Render", 26, "AnimNotifyStateTrail未找到武器"),
+            Log_1.Log.Error("Render", 25, "AnimNotifyStateTrail未找到武器"),
           !1
         );
     }
     var e = r.GetOwner(),
-      o = new EffectContext_1.EffectContext(void 0);
+      o = new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(void 0);
     return (
       e instanceof TsBaseCharacter_1.default &&
         e.CharacterActorComponent?.Entity &&
         (o.EntityId = e.CharacterActorComponent?.Entity.Id),
       (o.SourceObject = r.GetOwner()),
+      (o.SkeletalMeshComp = r),
       (this.Handle = EffectSystem_1.EffectSystem.SpawnEffect(
         e,
-        t.K2_GetComponentToWorld(),
+        t.D_K2_GetComponentToWorld(),
         this.TrailingConfigData.ToAssetPathName(),
         "[AnimNotifyStateTrail.K2_NotifyBegin]",
         o,
         3,
         void 0,
-        (t, e) => {
-          5 === t && EffectSystem_1.EffectSystem.SetupEffectTrailSpec(e, r);
-        },
       )),
       !!EffectSystem_1.EffectSystem.IsValid(this.Handle) &&
         (EffectSystem_1.EffectSystem.SetEffectNotRecord(this.Handle, !0), !0)

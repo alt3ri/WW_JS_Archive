@@ -6,9 +6,6 @@ class EntityMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   constructor(e) {
     super(e);
   }
-  OnInitialize() {
-    super.OnInitialize(), this.OnIconPathChanged(this.Holder.IconPath);
-  }
 }
 exports.EntityMarkItemView = EntityMarkItemView;
 //# sourceMappingURL=EntityMarkItemView.js.map

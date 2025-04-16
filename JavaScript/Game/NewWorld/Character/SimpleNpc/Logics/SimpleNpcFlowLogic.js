@@ -23,7 +23,7 @@ class SimpleNpcFlowLogic {
       (this.mor = void 0),
       (this.dor = void 0),
       (this.sor = t),
-      (this.dor = t.K2_GetActorLocation());
+      (this.dor = t.D_K2_GetActorLocation());
   }
   StartFlowLogic() {
     (this.aor = this.sor.GetComponentByClass(
@@ -52,7 +52,7 @@ class SimpleNpcFlowLogic {
       var i = (t = this.aor ? this.aor.CheckRange.UpperBound.Value : t) + 500;
       (this.hor = new NpcIconComponent_1.NpcIconComponent(this)),
         this.hor.SetupCheckRange(i * i),
-        await this.hor.AddNpcIconAsync(void 0),
+        await this.hor.AddNpcIconAsync(),
         this.hor.SetCharacterIconLocation(),
         this.hor.SetHeadInfoNameState(!1),
         this.hor.HideDialogueText();
@@ -116,7 +116,7 @@ class SimpleNpcFlowLogic {
     var t = Global_1.Global.BaseCharacter;
     t &&
       ((t = t.CharacterActorComponent.ActorLocation),
-      (t = UE.Vector.DistSquared2D(t, this.dor)) < this.cor
+      (t = UE.VectorDouble.DistSquared2D(t, this.dor)) < this.cor
         ? (this.hBe ||
             (this.lor.IsPlaying || this.sor.IsHiding
               ? (this.lor.IsPause = !1)
@@ -128,8 +128,8 @@ class SimpleNpcFlowLogic {
             (this.lor.IsPause = !0),
             this.lor.IsPlaying && this.lor.StopFlow()));
   }
-  FilterFlowWorldState(t) {
-    this.lor?.FilterFlowWorldState(t);
+  FilterFlowWorldState() {
+    this.lor?.FilterFlowWorldState();
   }
   ForceStopFlow() {
     (this.hBe = !1), this.lor?.IsPlaying && this.lor.StopFlow();

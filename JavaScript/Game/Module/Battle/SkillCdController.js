@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillCdController = void 0);
-const Stats_1 = require("../../../Core/Common/Stats"),
-  Time_1 = require("../../../Core/Common/Time"),
-  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
+const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   Net_1 = require("../../../Core/Net/Net"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -12,22 +10,15 @@ const Stats_1 = require("../../../Core/Common/Stats"),
 class SkillCdController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(25328, this.uQe),
-      Net_1.Net.Register(16179, this.cQe),
+      Net_1.Net.Register(28097, this.uQe),
+      Net_1.Net.Register(21850, this.cQe),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(25328), Net_1.Net.UnRegister(16179), !0;
+    return Net_1.Net.UnRegister(28097), Net_1.Net.UnRegister(21850), !0;
   }
-  static OnTick(e) {
-    this.IsPause() ||
-      (SkillCdController.gW.Start(),
-      ModelManager_1.ModelManager.SkillCdModel.Tick(
-        e * Time_1.Time.TimeDilation,
-      ),
-      SkillCdController.gW.Stop());
-  }
+  static OnTick(e) {}
   static Pause(e, t) {
     var r = this.IsPause(),
       t =
@@ -47,9 +38,7 @@ class SkillCdController extends ControllerBase_1.ControllerBase {
     return 0 !== this.mQe;
   }
 }
-((exports.SkillCdController = SkillCdController).gW =
-  Stats_1.Stat.Create("SkillCdTick")),
-  (SkillCdController.mQe = 0),
+((exports.SkillCdController = SkillCdController).mQe = 0),
   (SkillCdController.uQe = (e) => {
     ModelManager_1.ModelManager.SkillCdModel?.HandlePlayerSkillInfoPbNotify(e);
   }),

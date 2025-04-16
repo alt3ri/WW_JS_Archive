@@ -4,29 +4,33 @@ const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyStateCaughtTrigger extends UE.KuroAnimNotifyState {
   constructor() {
-    super(...arguments), (this.CaughtIds = void 0), (this.SkillId = 0);
+    super(...arguments), (this.CaughtIds = void 0);
   }
-  K2_NotifyBegin(t, e, r) {
+  Constructor() {}
+  K2_NotifyBegin(e, t, r) {
     var s,
-      t = t.GetOwner();
+      e = e.GetOwner();
     return (
-      t instanceof TsBaseCharacter_1.default &&
-      !!(t = t.CharacterActorComponent.Entity) &&
-      ((s = t.GetComponent(34)),
-      (this.SkillId = s?.CurrentSkill?.SkillId ?? 0),
-      s?.SetCurAnInfo(this.exportIndex, e.GetName()),
-      !!(s = t.GetComponent(45))) &&
-      (s.BeginCaughtTrigger(this.CaughtIds, this.SkillId), !0)
+      e instanceof TsBaseCharacter_1.default &&
+      !!(e = e.CharacterActorComponent.Entity) &&
+      ((t = e
+        .GetComponent(207)
+        ?.CreateAnimNotifyContent(t.GetName(), this.exportIndex)),
+      (s = e.GetComponent(39)),
+      !!(e = e.GetComponent(51))) &&
+      (e.SetCaughtTriggerAnsInfo(t),
+      e.BeginCaughtTrigger(this.CaughtIds, s?.CurrentSkill?.SkillId ?? 0),
+      !0)
     );
   }
-  K2_NotifyEnd(t, e) {
-    t = t.GetOwner();
-    if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    t = t.CharacterActorComponent.Entity;
-    if (!t) return !1;
-    t.GetComponent(34)?.SetCurAnInfo(this.exportIndex, e.GetName());
-    e = t.GetComponent(45);
-    return !!e && (e.EndCaughtTrigger(), !0);
+  K2_NotifyEnd(e, t) {
+    var e = e.GetOwner();
+    return (
+      e instanceof TsBaseCharacter_1.default &&
+      !!(e = e.CharacterActorComponent.Entity) &&
+      !!(e = e.GetComponent(51)) &&
+      (e.EndCaughtTrigger(), !0)
+    );
   }
   GetNotifyName() {
     return "抓取判定";

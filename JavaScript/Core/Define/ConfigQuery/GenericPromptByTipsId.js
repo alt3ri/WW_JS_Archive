@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configGenericPromptByTipsId.Init"),
-  getConfigStat = Stats_1.Stat.Create("configGenericPromptByTipsId.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGenericPromptByTipsId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGenericPromptByTipsId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configGenericPromptByTipsId.GetConfig(";
 exports.configGenericPromptByTipsId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var i = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       e =
-        (i.Start(),
+        (i?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (n) {
@@ -43,8 +47,8 @@ exports.configGenericPromptByTipsId = {
         const r = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (r)
           return (
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
@@ -76,8 +80,8 @@ exports.configGenericPromptByTipsId = {
               ((e = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
@@ -85,8 +89,8 @@ exports.configGenericPromptByTipsId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    i.Stop(),
-      getConfigStat.Stop(),
+    i?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -26,12 +26,13 @@ class PointInPolygonTest {
   zwe(t) {
     t = ActorSystem_1.ActorSystem.Get(
       t,
-      MathUtils_1.MathUtils.DefaultTransform,
+      MathUtils_1.MathUtils.DefaultTransformDouble,
     );
     let e = void 0;
     t.IsA(UE.BP_BasePathLine_Edgewall_C.StaticClass()) &&
       ((i = (e = t).OriginalLocation),
-      t.K2_SetActorLocationAndRotation(
+      (i = UE.KismetMathLibrary.Conv_VectorToVectorDouble(i)),
+      t.D_K2_SetActorLocationAndRotation(
         i,
         Rotator_1.Rotator.ZeroRotator,
         !1,
@@ -42,7 +43,7 @@ class PointInPolygonTest {
       i = r.GetNumberOfSplinePoints();
     this.JRi.slice(0, i);
     for (let t = 0, e = i; t < e; t++) {
-      var s = r.GetWorldLocationAtSplinePoint(t);
+      var s = r.D_GetLocationAtSplinePoint(t, 1);
       this.JRi.push(new Vector2D_1.Vector2D(s.X, s.Y));
     }
     t.K2_DestroyActor();

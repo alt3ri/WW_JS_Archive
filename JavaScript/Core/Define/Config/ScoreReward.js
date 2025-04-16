@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScoreReward = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class ScoreReward {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -46,8 +47,14 @@ class ScoreReward {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   desc(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 12),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
 }
 exports.ScoreReward = ScoreReward;

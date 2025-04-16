@@ -11,8 +11,8 @@ const puerts_1 = require("puerts"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
   BOOST_SWITCH = !0,
-  REPORT_SWITCH = !0,
-  BOOST_TIME = 1e4;
+  GAP_TIME = 1e3,
+  SERVICE_CODE = 79;
 class KuroPerformanceController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     var e;
@@ -20,7 +20,7 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
       (this.IsEnable =
         UE.KuroPerformanceBPLibrary.IsPerformanceAdaptiveInitialize()),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 55, "KuroPerformanceController.OnInit", [
+        Log_1.Log.Info("Performance", 54, "KuroPerformanceController.OnInit", [
           "IsEnable",
           this.IsEnable,
         ]),
@@ -30,14 +30,17 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Performance",
-            55,
+            54,
             "KuroPerformanceController.OnInit",
             ["name", e],
           ),
+        UE.KuroPerformanceBPLibrary.StartService(SERVICE_CODE),
+        (e = GameSettingsDeviceRender_1.GameSettingsDeviceRender.FrameRate),
+        UE.KuroPerformanceBPLibrary.InitGameConfigFPS(e),
         UE.KuroPerformanceBPLibrary.InitGameConfigSceneTransition(!1),
         Application_1.Application.AddApplicationHandler(
           3,
-          KuroPerformanceController.Vza,
+          KuroPerformanceController.brh,
         ),
         Application_1.Application.AddApplicationHandler(
           2,
@@ -63,7 +66,7 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
           EventDefine_1.EEventName.TeleportComplete,
           this.Ilt,
         ),
-        (this.Hza = (0, puerts_1.toManualReleaseDelegate)(this.jza))),
+        (this.qrh = (0, puerts_1.toManualReleaseDelegate)(this.Orh))),
       !0
     );
   }
@@ -72,7 +75,7 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
       this.IsEnable &&
         (Application_1.Application.RemoveApplicationHandler(
           3,
-          KuroPerformanceController.Vza,
+          KuroPerformanceController.brh,
         ),
         Application_1.Application.RemoveApplicationHandler(
           2,
@@ -98,15 +101,15 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
           EventDefine_1.EEventName.TeleportComplete,
           this.Ilt,
         ),
-        (0, puerts_1.releaseManualReleaseDelegate)(this.jza)),
+        (0, puerts_1.releaseManualReleaseDelegate)(this.Orh),
+        UE.KuroPerformanceBPLibrary.StopService(SERVICE_CODE)),
       !0
     );
   }
   static OnTick(e) {
     this.IsEnable &&
-      ((this.HFt += e), this.HFt > BOOST_TIME) &&
-      ((this.HFt = 0), this.Wza(), 0 < this.gLn.size) &&
-      this.kyn(!0);
+      ((this.HFt += e), this.HFt > GAP_TIME) &&
+      ((this.HFt = 0), this.npl());
   }
   static Open(e) {
     var r, o;
@@ -116,12 +119,10 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
         1 < this.gLn.size ||
           ((o = GameSettingsDeviceRender_1.GameSettingsDeviceRender.FrameRate),
           UE.KuroPerformanceBPLibrary.SetTargetFPS(o),
-          UE.KuroPerformanceBPLibrary.PredictWorkload(150, 0),
-          this.kyn(!0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Performance",
-              29,
+              28,
               "KuroPerformanceController.Open",
               ["Reason", e],
               ["Handle", r],
@@ -136,31 +137,23 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
         ? (this.gLn.delete(e),
           0 < this.gLn.size ||
             (UE.KuroPerformanceBPLibrary.SetTargetFPS(0),
-            UE.KuroPerformanceBPLibrary.PredictWorkload(0, 0),
-            this.kyn(!1),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Performance",
-                29,
+                28,
                 "KuroPerformanceController.Close",
                 ["Reason", r],
                 ["Handle", e],
               )))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Performance", 29, "性能模式句柄不存在", [
+          Log_1.Log.Error("Performance", 28, "性能模式句柄不存在", [
             "Handle",
             e,
           ]));
   }
-  static Wza() {
-    REPORT_SWITCH &&
-      UE.KuroPerformanceBPLibrary.GetTickedPerformanceReportAndAdvice(this.Hza);
-  }
-  static kyn(e) {
-    UE.KuroPerformanceBPLibrary.BoostCPU(e ? 100 : 0, BOOST_TIME) &&
-      e &&
-      Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Performance", 29, "KuroPerformanceController.BoostCpu");
+  static npl() {
+    0 < this.gLn.size &&
+      UE.KuroPerformanceBPLibrary.GetTickedPerformanceReportAndAdvice(this.qrh);
   }
 }
 (exports.KuroPerformanceController = KuroPerformanceController),
@@ -171,13 +164,13 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
   (KuroPerformanceController.pLn = 0),
   (KuroPerformanceController.vLn = 0),
   (KuroPerformanceController.RKo = !1),
-  (KuroPerformanceController.Hza = void 0),
-  (KuroPerformanceController.Vza = () => {
+  (KuroPerformanceController.qrh = void 0),
+  (KuroPerformanceController.brh = () => {
     var e = UE.KuroPerformanceBPLibrary.SetForeground(!0);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Performance",
-        55,
+        54,
         "ApplicationHasEnteredForeground设置前台",
         ["result", e],
       );
@@ -187,7 +180,7 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Performance",
-        55,
+        54,
         "ApplicationWillEnterBackground取消设置前台",
         ["result", e],
       );
@@ -196,7 +189,8 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
     e ? (_a.pLn = _a.Open("Battle")) : _a.Close(_a.pLn);
   }),
   (KuroPerformanceController.zfi = (e) => {
-    0 < _a.gLn.size && UE.KuroPerformanceBPLibrary.SetTargetFPS(e);
+    0 < _a.gLn.size && UE.KuroPerformanceBPLibrary.SetTargetFPS(e),
+      UE.KuroPerformanceBPLibrary.UpdateGameConfigFPS(e);
   }),
   (KuroPerformanceController.Zfi = (e, r) => {
     e && !r ? (_a.vLn = _a.Open("PerformanceLimitMode")) : _a.Close(_a.vLn);
@@ -206,7 +200,7 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Performance",
-        55,
+        54,
         "KuroPerformanceController.OnTeleportStart",
         ["result", e],
       );
@@ -216,22 +210,22 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Performance",
-        55,
+        54,
         "KuroPerformanceController.OnTeleportComplete",
         ["result", e],
       );
   }),
-  (KuroPerformanceController.jza = (e) => {
+  (KuroPerformanceController.Orh = (e) => {
     _a.RKo &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Performance",
-        55,
+        54,
         "KuroPerformanceController.report",
         ["CPULoadStatus", e.CPULoadStatus],
         ["GPULoadStatus", e.GPULoadStatus],
         ["TargetFPS", e.TargetFPS],
-        ["CPUPerfIndex", e.CPULoadIndex],
+        ["CPUPerfIndex", e.CPUPerfIndex],
         ["CPULoadIndex", e.CPULoadIndex],
         ["GPUPerfIndex", e.GPUPerfIndex],
         ["GPULoadIndex", e.GPULoadIndex],
@@ -241,14 +235,6 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
         ["PerformanceAdvice", e.PerformanceAdvice],
         ["ThermalStatus", e.ThermalStatus],
         ["ThermalTempBudget", e.ThermalTempBudget],
-      ),
-      0 === e.CPULoadStatus
-        ? UE.KuroPerformanceBPLibrary.PredictWorkload(0, 0)
-        : 1 === e.CPULoadStatus
-          ? UE.KuroPerformanceBPLibrary.PredictWorkload(100, 0)
-          : 2 === e.CPULoadStatus
-            ? UE.KuroPerformanceBPLibrary.PredictWorkload(150, 0)
-            : 2 < e.CPULoadStatus &&
-              UE.KuroPerformanceBPLibrary.PredictWorkload(200, 0);
+      );
   });
 //# sourceMappingURL=KuroPerformanceController.js.map

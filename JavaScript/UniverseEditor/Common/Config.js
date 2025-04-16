@@ -12,19 +12,21 @@ const IEditor_1 = require("../Interface/IEditor"),
   File_1 = require("./Misc/File"),
   JsonConfig_1 = require("./Misc/JsonConfig"),
   Log_1 = require("./Misc/Log"),
-  Util_1 = require("./Misc/Util");
+  Util_1 = require("./Misc/Util"),
+  Platform_1 = require("./Platform/Platform");
 function checkVersionIsLatest(e, t = exports.EDITOR_VERSION) {
-  if (e) {
-    var r = e.split("."),
-      i = t.split(".");
-    for (let e = 0; e < r.length; e++) {
-      var n = parseInt(r[e]);
-      if (parseInt(i[e]) < n) return !0;
-    }
+  if (!e) return !1;
+  var r = e.split("."),
+    i = t.split(".");
+  for (let e = 0; e < r.length; e++) {
+    var o = parseInt(r[e]),
+      n = parseInt(i[e]);
+    if (n < o) return !0;
+    if (o < n) return !1;
   }
-  return !1;
+  return !0;
 }
-(exports.EDITOR_VERSION = "2024.01.18"),
+(exports.EDITOR_VERSION = "2025.01.09"),
   (exports.checkVersionIsLatest = checkVersionIsLatest);
 const GAME_CLIENT_GM_PORT_OFFSET = 11,
   configRecords = {
@@ -53,20 +55,15 @@ const GAME_CLIENT_GM_PORT_OFFSET = 11,
     PlannedBranch: "development",
     AutoCaptureTree: [],
     IsShowFullDateCheckError: !1,
-    IsEnableBtStateConflictCheck: !1,
-    IsEnableSetPlotModeCheck: !0,
     IsEnableOnlineChainCheck: !1,
-    IsEnableRepetitiveOccupyCheck: !1,
-    IsEnableFunctionalEntitiesOccupyCheck: !1,
-    IsEnableChangeEntityStateCheck: !1,
-    IsEnableSetTimeLockStateCheck: !1,
-    IsEnableEntityExternalReferenceCheck: !1,
-    IsEnableSameOccupationInQuestCheck: !1,
-    IsEnableDifferentOccupationUnderParallelSelectNodeCheck: !1,
-    IsEnableOccupationInDungeonCheck: !1,
-    IsEnableWutheriumerInSleepCheck: !1,
-    IsEnableLevelAiReachAreaCheck: !1,
-    IsEnablePlotPosCheck: !1,
+    DeployConfig: (0, IEditor_1.createDefaultDeployConfig)(),
+    IsEnableLocalDataCheck: !0,
+    IsShowTrackingTargetOffRangeWarningText: !0,
+    IsChangeEntityStateCreateDefault: !0,
+    IsGenTipActorFocus: !0,
+    IsAllowCopyIgnoreField: !1,
+    EntityAssignPriority: IEditor_1.EEntityAssignPriority.EntityActor,
+    EditorObjectCacheInfo: { UseCache: !1, Timestamp: 0 },
   };
 let clusterRecords = void 0;
 function getClusterTimestamp() {
@@ -83,17 +80,41 @@ function getClusterTimestamp() {
   );
 }
 exports.serverInfoList = [
-  { Ip: "10.0.7.6", Name: "final1.1周包服" },
-  { Ip: "10.0.7.14", Name: "final1.2周包服" },
-  { Ip: "10.0.7.100", Name: "final1.3周包服" },
-  { Ip: "10.0.7.80", Name: "branch_1.1公共服" },
-  { Ip: "10.0.7.77", Name: "branch_1.2公共服" },
-  { Ip: "10.0.7.26", Name: "branch_1.3公共服" },
+  { Ip: "10.63.35.115", Name: "final2.1周包服" },
+  { Ip: "10.63.35.76", Name: "final2.2周包服" },
+  { Ip: "10.63.35.131", Name: "final2.3周包服" },
+  { Ip: "10.63.35.74", Name: "branch_2.1公共服" },
+  { Ip: "10.63.35.37", Name: "branch_2.2公共服" },
+  { Ip: "10.63.35.130", Name: "branch_2.3公共服" },
   { Ip: "127.0.0.1", Name: "本地服" },
   { Ip: "10.0.61.42", Name: "雷涛", IsTest: !0 },
   { Ip: "10.0.70.231", Name: "黄俊集", IsTest: !0 },
 ];
-const eventDefine = { OnConfigChanged: (e, t, r) => {} };
+const editorConnectionConfig = {
+    ConnectionGroups: [
+      {
+        EditorPort: 8890,
+        P4Proxy: { Address: "localhost", Port: 8900 },
+        GameClientGmPort: 9001,
+      },
+      {
+        EditorPort: 8891,
+        P4Proxy: { Address: "localhost", Port: 8901 },
+        GameClientGmPort: 9002,
+      },
+      {
+        EditorPort: 8892,
+        P4Proxy: { Address: "localhost", Port: 8902 },
+        GameClientGmPort: 9003,
+      },
+      {
+        EditorPort: 8893,
+        P4Proxy: { Address: "localhost", Port: 8903 },
+        GameClientGmPort: 9004,
+      },
+    ],
+  },
+  eventDefine = { OnConfigChanged: (e, t, r) => {} };
 class Config extends JsonConfig_1.JsonConfig {
   constructor() {
     if (
@@ -106,7 +127,9 @@ class Config extends JsonConfig_1.JsonConfig {
     )
       throw (
         (EventSystem_1.editorEventDispatcher.Dispatch("EditorPortAllInUse"),
-        new Error("所有EditorCommandService端口已被使用"))
+        new Error(
+          "所有EditorCommandService端口已被使用, 解决方法:\n1. 已启动本地服, 尝试关闭本地服\n2. 可能其他进程占用端口, 请重启电脑解决",
+        ))
       );
   }
   static get Instance() {
@@ -138,6 +161,9 @@ class Config extends JsonConfig_1.JsonConfig {
       r,
       i = (0, Util_1.getEditorCommandArgs)();
     if (i) {
+      i.ExecCmds &&
+        i.ExecCmds.includes("Automation") &&
+        ((0, Platform_1.getPlatform)().IsPipelineEnv = !0);
       let e = void 0;
       return (
         void 0 !== i.TsEditorServicePort &&
@@ -172,13 +198,15 @@ class Config extends JsonConfig_1.JsonConfig {
     }
   }
   l() {
-    var e = (0, File_1.getProjectPath)(
-      (0, Init_1.isUe5)()
-        ? "Content/Editor/Config/EditorConnectionConfig.json"
-        : "Content/Aki/UniverseEditor/Config/EditorConnectionConfig.json",
-    );
-    for (const t of (0, Util_1.readJsonObj)(e).ConnectionGroups)
-      if (!(0, Util_1.isPortInUse)(t.EditorPort)) return t;
+    let e = void 0;
+    var t;
+    for (const r of (e = (0, Init_1.isUe5)()
+      ? ((t = (0, File_1.getProjectPath)(
+          "Content/Editor/Config/EditorConnectionConfig.json",
+        )),
+        (0, Util_1.readJsonObj)(t))
+      : editorConnectionConfig).ConnectionGroups)
+      if (!(0, Util_1.isPortInUse)(r.EditorPort)) return r;
   }
   static wkn(e) {
     e.PlannedBranch = (0, BranchDefine_1.getDefaultPlannedBranch)();
@@ -189,7 +217,9 @@ class Config extends JsonConfig_1.JsonConfig {
   }
   get NetworkAddress() {
     return (
-      void 0 === this.p && (this.p = (0, Util_1.getNetWorkAddress)() ?? ""),
+      void 0 === this.p &&
+        ((this.p = (0, Util_1.getNetWorkAddress)() ?? ""),
+        (0, Log_1.log)("get NetworkAddress: " + this.p)),
       this.p
     );
   }
@@ -203,7 +233,9 @@ class Config extends JsonConfig_1.JsonConfig {
   get MacAddress() {
     return (
       this.VirtualMacAddress ||
-      (void 0 === this.Q1a && (this.Q1a = (0, Util_1.getMacAddress)()),
+      (void 0 === this.Q1a &&
+        ((this.Q1a = (0, Util_1.getMacAddress)()),
+        (0, Log_1.log)("get MacAddress: " + this.Q1a)),
       this.Q1a)
     );
   }
@@ -233,13 +265,15 @@ class Config extends JsonConfig_1.JsonConfig {
         ? Config.GameCommandRuntimePort
         : this.Get("IsSimulateGameCommandService")
           ? Config.GameCommandServiceSimulatePort
-          : (0, Util_1.isInPie)() && Config.IsPkgRunning
-            ? e === IEditor_1.EEditorLaunchMode.PIE
-              ? this.GameClientGmPort
-              : Config.PkgCommandServicePort
-            : (0, Util_1.isInPie)()
-              ? this.GameClientGmPort
-              : Config.PkgCommandServicePort;
+          : (0, Util_1.isRunInStandaloneGameWithCache)()
+            ? this.GameClientGmPort
+            : (0, Util_1.isInPie)() && Config.IsPkgRunning
+              ? e === IEditor_1.EEditorLaunchMode.PIE
+                ? this.GameClientGmPort
+                : Config.PkgCommandServicePort
+              : (0, Util_1.isInPie)()
+                ? this.GameClientGmPort
+                : Config.PkgCommandServicePort;
   }
   get PieServerPort() {
     return (
@@ -270,9 +304,19 @@ class Config extends JsonConfig_1.JsonConfig {
         this.Get("PlannedBranch"))
       : "development";
   }
+  get IsUseEditorObjectCacheData() {
+    var e = this.Get("EditorObjectCacheInfo").UseCache,
+      t = this.Get("EditorObjectCacheInfo").Timestamp;
+    return e && Date.now() - t < 3e4;
+  }
   Set(e, t) {
     var r = (0, Util_1.deepCopyData)(this.Get(e));
     super.Set(e, t), this.Dispatcher.Dispatch("OnConfigChanged", e, r, t);
+  }
+  HasSetPostProcessComponents() {
+    return (
+      0 < Array.from(this.Get("DeployConfig").PostProcessComponents).length
+    );
   }
 }
 ((exports.Config = Config).FlowListPrefix = (0, Init_1.isUe5)()

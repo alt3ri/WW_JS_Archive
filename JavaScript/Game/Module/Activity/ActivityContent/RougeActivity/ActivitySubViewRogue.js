@@ -15,6 +15,7 @@ const UE = require("ue"),
   RedDotController_1 = require("../../../../RedDot/RedDotController"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   PayShopViewData_1 = require("../../../PayShop/PayShopData/PayShopViewData"),
+  RoguelikeBlackFlowerItem_1 = require("../../../Roguelike/View/RoguelikeBlackFlowerItem"),
   ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
   ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
   ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA"),
@@ -30,6 +31,7 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
+      (this.Sgl = void 0),
       (this.OnBtnAchievement = () => {
         2 ===
         ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData().GetRogueActivityState()
@@ -39,14 +41,14 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
           : UiManager_1.UiManager.OpenView("RoguelikeAchievementView");
       }),
       (this.OnBtnShop = () => {
-        var i, e;
-        2 ===
-        ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData().GetRogueActivityState()
+        var i,
+          e =
+            ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData();
+        2 === e.GetRogueActivityState()
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "Rogue_Function_End_Tip",
             )
-          : void 0 !==
-              (e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) &&
+          : void 0 !== (e = e?.SeasonData) &&
             ((e =
               ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
                 e.UHn,
@@ -95,6 +97,7 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
       [7, UE.UIItem],
       [8, UE.UIItem],
       [9, UE.UIItem],
+      [10, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [4, this.OnBtnAchievement],
@@ -115,11 +118,15 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
       i =
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
         await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
-        this.GetItem(3));
-    (this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
-      this.ActivityBaseData,
-    )),
-      await this.ANe.CreateThenShowByActorAsync(i.GetOwner());
+        this.GetItem(3)),
+      i =
+        ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+          this.ActivityBaseData,
+        )),
+        await this.ANe.CreateThenShowByActorAsync(i.GetOwner()),
+        this.GetItem(10));
+    (this.Sgl = new RoguelikeBlackFlowerItem_1.RoguelikeBlackFlowerItem()),
+      await this.Sgl.CreateThenShowByActorAsync(i.GetOwner());
   }
   OnStart() {
     var i,

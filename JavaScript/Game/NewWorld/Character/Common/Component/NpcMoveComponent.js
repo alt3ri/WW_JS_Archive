@@ -4,20 +4,20 @@ var NpcMoveComponent_1,
     (this && this.__decorate) ||
     function (t, e, i, s) {
       var h,
-        r = arguments.length,
-        a =
-          r < 3
+        n = arguments.length,
+        r =
+          n < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
               : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        a = Reflect.decorate(t, e, i, s);
+        r = Reflect.decorate(t, e, i, s);
       else
-        for (var n = t.length - 1; 0 <= n; n--)
-          (h = t[n]) &&
-            (a = (r < 3 ? h(a) : 3 < r ? h(e, i, a) : h(e, i)) || a);
-      return 3 < r && a && Object.defineProperty(e, i, a), a;
+        for (var o = t.length - 1; 0 <= o; o--)
+          (h = t[o]) &&
+            (r = (n < 3 ? h(r) : 3 < n ? h(e, i, r) : h(e, i)) || r);
+      return 3 < n && r && Object.defineProperty(e, i, r), r;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcMoveComponent = void 0);
@@ -32,7 +32,6 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
   PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes"),
@@ -40,8 +39,7 @@ const UE = require("ue"),
   BaseMoveComponent_1 = require("./BaseMoveComponent"),
   MIN_MOVE_SPEED = 20,
   MAX_IN_WATER_SPEED = 800,
-  BASE_MOVE_INHERIT_TIME = 1.5,
-  IN_TURN_TOLERANCE = 0.1;
+  BASE_MOVE_INHERIT_TIME = 1.5;
 let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
   BaseMoveComponent_1.BaseMoveComponent
 ) {
@@ -49,7 +47,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
     super(...arguments),
       (this.CanResponseInputTasks = new Array()),
       (this.CachedDeltaYaw = 0),
-      (this.IsTurning = !1),
+      (this.IsTurningInternal = !1),
       (this.OnPositionStateChanged = (t, e) => {
         switch (
           (t === CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
@@ -59,7 +57,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Character",
-              21,
+              20,
               "OnPositionStateChanged:",
               ["NPCName:", this.ActorComp.Actor.GetName()],
               ["oldPositionState->", t],
@@ -72,12 +70,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
             var i = this.VelocityVector.Size();
             i > MAX_IN_WATER_SPEED &&
               (this.VelocityVector.MultiplyEqual(MAX_IN_WATER_SPEED / i),
-              this.CharacterMovement.Velocity.Set(
-                this.VelocityVector.X,
-                this.VelocityVector.Y,
-                this.VelocityVector.Z,
-              ),
-              this.ActorComp.ResetCachedVelocityTime());
+              this.ActorComp?.SetActorVelocity(this.VelocityVector));
             break;
           case CharacterUnifiedStateTypes_1.ECharPositionState.Climb:
           case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
@@ -98,6 +91,21 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
   }
   static get Dependencies() {
     return [3];
+  }
+  get IsTurning() {
+    return this.IsTurningInternal;
+  }
+  set IsTurning(t) {
+    this.IsTurningInternal !== t &&
+      ((this.IsTurningInternal = t)
+        ? EventSystem_1.EventSystem.EmitWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharTurnBegin,
+          )
+        : EventSystem_1.EventSystem.EmitWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharTurnEnd,
+          ));
   }
   SetMaxSpeed(t) {
     let e = CharacterAttributeTypes_1.PER_TEN_THOUSAND;
@@ -137,8 +145,8 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
       (this.CharacterMovement = t.Actor.CharacterMovement),
       (this.CharacterMovement.GravityScale = 2),
       (this.CharacterMovement.bRotationFollowBaseMovement = !0),
-      (this.AnimComp = this.Entity.GetComponent(163)),
-      (this.UnifiedStateComponent = this.Entity.GetComponent(92)),
+      (this.AnimComp = this.Entity.GetComponent(175)),
+      (this.UnifiedStateComponent = this.Entity.GetComponent(99)),
       (this.CapsuleOffset = Vector_1.Vector.Create(
         0,
         0,
@@ -153,7 +161,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            58,
+            57,
             "以下BP_{Character}没有在蓝图中配置Dt_BaseMovementSetting找对应的蓝图负责人处理",
             ["Character", this.ActorComp.Actor.GetName()],
           )),
@@ -209,6 +217,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
     return (this.CanResponseInputTasks.length = 0), !(this.IsHidden = !1);
   }
   OnActivate() {
+    var t;
     this.OnMoveStateChange(
       CharacterUnifiedStateTypes_1.ECharMoveState.Stand,
       CharacterUnifiedStateTypes_1.ECharMoveState.Run,
@@ -219,16 +228,25 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
       ),
       this.CharacterMovement.MovementMode !==
         this.CharacterMovement.DefaultLandMovementMode &&
-        this.CharacterMovement.SetMovementMode(
-          this.CharacterMovement.DefaultLandMovementMode,
-        );
+        ((t =
+          1 === ModelManager_1.ModelManager.WorldModel?.CurEnvironmentInfo.jNn),
+        this.Entity.IsEncloseSpace && t
+          ? this.ActorComp?.Actor.KuroSetMovementMode({
+              Mode: 0,
+              Context:
+                "[NpcMoveComponent.OnActivate:人在山洞外,实体在山洞里的情况，将movementMode设成none防止掉落]",
+            })
+          : this.ActorComp?.Actor.KuroSetMovementMode({
+              Mode: this.CharacterMovement.DefaultLandMovementMode,
+              Context: "[NpcMoveComponent.OnActivate]",
+            }));
   }
   OnTick(i) {
     if (
       (super.OnTick(i),
       this.ActorComp &&
-        ((this.CharHeightAboveGround = -1),
-        (this.DeltaTimeSeconds = i * MathUtils_1.MathUtils.MillisecondToSecond),
+        ((this.DeltaTimeSeconds =
+          i * MathUtils_1.MathUtils.MillisecondToSecond),
         this.MoveController?.UpdateMove(this.DeltaTimeSeconds),
         0 < this.SpeedLockFrame && --this.SpeedLockFrame,
         this.IsJump && --this.JumpFrameCount,
@@ -244,51 +262,28 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
         this.ActorComp.IsMoveAutonomousProxy)
       ) {
         this.UpdateMovementInput(this.ActorComp.InputDirect);
-        var s =
-          1 < this.Entity.GetTickInterval() &&
-          this.AnimComp?.Valid &&
-          this.ActorComp.Owner.WasRecentlyRenderedOnScreen();
+        var s,
+          h =
+            1 < this.Entity.GetTickInterval() &&
+            this.AnimComp?.Valid &&
+            this.ActorComp.Owner.WasRecentlyRenderedOnScreen();
         let t = void 0,
-          e = (s && (t = this.AnimComp.GetMeshTransform()), !1);
+          e = (h && (t = this.AnimComp.GetMeshTransform()), !1);
         this.CanResponseInput()
           ? (this.SetInfoVar(),
-            (h = this.ActorComp.ActorRotationProxy.Pitch),
+            (s = this.ActorComp.ActorRotationProxy.Pitch),
             this.UpdateFacing(),
-            (e ||= h !== this.ActorComp.ActorRotationProxy.Pitch),
+            (e ||= s !== this.ActorComp.ActorRotationProxy.Pitch),
             this.CacheVar())
           : (this.HasMoveInput = !1),
-          this.UpdateAddMoveSpeed() && (e = !0),
-          this.UpdateAddMoveOffset() && (e = !0),
-          s && e && this.AnimComp.SetModelBuffer(t, i),
+          h && e && this.AnimComp.SetModelBuffer(t, i),
           this.OnTickGravityScale(),
           this.HasBaseMovement &&
             (this.DeltaBaseMovementQuat.RotateVector(
               this.ActorComp.InputFacingProxy,
               this.TmpVector,
             ),
-            this.ActorComp.SetInputFacing(this.TmpVector, !0));
-        var h = GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInput(
-          this.ActorComp,
-        );
-        this.CanResponseInput() &&
-          (MathUtils_1.MathUtils.IsNearlyZero(
-            this.CachedDeltaYaw,
-            IN_TURN_TOLERANCE,
-          ) && !MathUtils_1.MathUtils.IsNearlyZero(h, IN_TURN_TOLERANCE)
-            ? EventSystem_1.EventSystem.EmitWithTarget(
-                this.Entity,
-                EventDefine_1.EEventName.CharTurnBegin,
-              )
-            : !MathUtils_1.MathUtils.IsNearlyZero(
-                this.CachedDeltaYaw,
-                IN_TURN_TOLERANCE,
-              ) &&
-              MathUtils_1.MathUtils.IsNearlyZero(h, IN_TURN_TOLERANCE) &&
-              EventSystem_1.EventSystem.EmitWithTarget(
-                this.Entity,
-                EventDefine_1.EEventName.CharTurnEnd,
-              ),
-          (this.CachedDeltaYaw = h)),
+            this.ActorComp.SetInputFacing(this.TmpVector, !0)),
           ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
             this.PrintAnimInstanceMovementInfo();
       } else
@@ -304,77 +299,78 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
       (this.CharacterMovement.GoThroughPriority =
         this.CreatureProperty.穿透优先级);
   }
-  UpdateAddMoveSpeed(t = 0) {
-    if (0 === this.VelocityAdditionMap.size) return !1;
-    NpcMoveComponent_1.VelocityAdditionTotal.Reset();
-    for (var [e, i] of this.VelocityAdditionMap)
-      0 <= i.Duration && i.ElapsedTime >= i.Duration
-        ? this.VelocityAdditionMap.delete(e)
-        : i.MovementMode &&
-            this.CharacterMovement.CustomMovementMode !== i.MovementMode
-          ? this.VelocityAdditionMap.delete(e)
-          : ((i.ElapsedTime += this.DeltaTimeSeconds),
-            this.VelocityVector.FromUeVector(i.Velocity),
-            i.CurveFloat?.IsValid() &&
-              this.VelocityVector.MultiplyEqual(
-                i.CurveFloat.GetFloatValue(
-                  0 < i.Duration ? i.ElapsedTime / i.Duration : 1,
+  GetAndConsumeAddMove(t, e, i) {
+    if (
+      (e.Reset(),
+      i.Reset(),
+      this.AddMoveOffset &&
+        (this.TmpVector.FromUeVector(this.AddMoveOffset),
+        e.AdditionEqual(this.TmpVector),
+        (this.AddMoveOffset = void 0)),
+      this.AddMoveRotation.IsNearlyZero() ||
+        (i.DeepCopy(this.AddMoveRotation), this.AddMoveRotation.Reset()),
+      0 !== this.VelocityAdditionMap.size)
+    ) {
+      NpcMoveComponent_1.VelocityAdditionTotal.Reset();
+      for (var [s, h] of this.VelocityAdditionMap)
+        0 <= h.Duration && h.ElapsedTime >= h.Duration
+          ? this.VelocityAdditionMap.delete(s)
+          : h.MovementMode &&
+              this.CharacterMovement.CustomMovementMode !== h.MovementMode
+            ? this.VelocityAdditionMap.delete(s)
+            : ((h.ElapsedTime += this.DeltaTimeSeconds),
+              this.VelocityVector.FromUeVector(h.Velocity),
+              h.CurveFloat?.IsValid() &&
+                this.VelocityVector.MultiplyEqual(
+                  h.CurveFloat.GetFloatValue(
+                    0 < h.Duration ? h.ElapsedTime / h.Duration : 1,
+                  ),
                 ),
-              ),
-            0 < i.Duration &&
-              i.ElapsedTime > i.Duration &&
-              ((e = i.ElapsedTime - i.Duration),
-              (i = (this.DeltaTimeSeconds - e) / this.DeltaTimeSeconds),
-              this.VelocityVector.MultiplyEqual(i)),
-            NpcMoveComponent_1.VelocityAdditionTotal.AdditionEqual(
-              this.VelocityVector,
-            ));
-    return (
-      0 !== this.VelocityAdditionMap.size &&
-      (this.ActorComp.IsRoleAndCtrlByMe &&
-        Math.abs(NpcMoveComponent_1.VelocityAdditionTotal.X) <
-          MathUtils_1.MathUtils.SmallNumber &&
-        Math.abs(NpcMoveComponent_1.VelocityAdditionTotal.Y) <
-          MathUtils_1.MathUtils.SmallNumber &&
-        Math.abs(NpcMoveComponent_1.VelocityAdditionTotal.Z - 50) <
-          MathUtils_1.MathUtils.SmallNumber &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Movement", 6, "叠加向上移动50厘米", [
-          "Actor",
-          this.ActorComp.Actor.GetName(),
-        ]),
-      this.UnifiedStateComponent.PositionState ===
-      CharacterUnifiedStateTypes_1.ECharPositionState.Ground
-        ? this.ActorComp.KuroMoveAlongFloor(
-            NpcMoveComponent_1.VelocityAdditionTotal.ToUeVector(),
-            this.DeltaTimeSeconds,
-            "UpdateAddMoveSpeed",
-          )
-        : (NpcMoveComponent_1.VelocityAdditionDestination.DeepCopy(
-            NpcMoveComponent_1.VelocityAdditionTotal,
-          ),
-          NpcMoveComponent_1.VelocityAdditionDestination.MultiplyEqual(
-            this.DeltaTimeSeconds,
-          ),
-          this.ActorComp.AddActorWorldOffset(
-            NpcMoveComponent_1.VelocityAdditionDestination.ToUeVector(),
-            "UpdateAddMoveSpeed",
-            !0,
-          )),
-      !0)
-    );
+              0 < h.Duration &&
+                h.ElapsedTime > h.Duration &&
+                ((s = h.ElapsedTime - h.Duration),
+                (h = (this.DeltaTimeSeconds - s) / this.DeltaTimeSeconds),
+                this.VelocityVector.MultiplyEqual(h)),
+              NpcMoveComponent_1.VelocityAdditionTotal.AdditionEqual(
+                this.VelocityVector,
+              ));
+      BaseMoveComponent_1.BaseMoveComponent.VelocityAdditionTotal.Multiply(
+        t,
+        BaseMoveComponent_1.BaseMoveComponent.VelocityAdditionDestination,
+      ),
+        BaseMoveComponent_1.BaseMoveComponent.VelocityAdditionDestination.ContainsNaN()
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Movement",
+              6,
+              "VelocityAdditionDestination NaN",
+              [
+                "VelocityAdditionDestination",
+                BaseMoveComponent_1.BaseMoveComponent
+                  .VelocityAdditionDestination,
+              ],
+              [
+                "VelocityAdditionTotal",
+                BaseMoveComponent_1.BaseMoveComponent.VelocityAdditionTotal,
+              ],
+              ["deltaTimeSeconds", t],
+            )
+          : e.AdditionEqual(
+              BaseMoveComponent_1.BaseMoveComponent.VelocityAdditionDestination,
+            );
+    }
   }
   UpdateMovementInput(t) {
     switch (this.UnifiedStateComponent?.PositionState) {
       case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
-        this.ActorComp.Actor.AddMovementInput(
+        this.ActorComp.Actor.D_AddMovementInput(
           t,
           this.AnimComp?.Valid ? this.AnimComp.GetWalkRunMix() : 1,
           !1,
         );
         break;
       case CharacterUnifiedStateTypes_1.ECharPositionState.Air:
-        this.ActorComp.Actor.AddMovementInput(t, 1, !1);
+        this.ActorComp.Actor.D_AddMovementInput(t, 1, !1);
     }
   }
   UpdateFacing() {
@@ -393,7 +389,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
 });
 (NpcMoveComponent = NpcMoveComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(166)],
+    [(0, RegisterComponent_1.RegisterComponent)(179)],
     NpcMoveComponent,
   )),
   (exports.NpcMoveComponent = NpcMoveComponent);

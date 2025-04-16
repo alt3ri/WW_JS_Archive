@@ -21,7 +21,7 @@ const ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
   },
   damageViewConfig = {
     ResourceId: "UiItem_DamageView_Prefab",
-    PreloadCount: 21,
+    PreloadCount: 40,
   },
   buffItemConfig = { ResourceId: "UiItem_BuffItem_Prefab", PreloadCount: 5 },
   environmentItemConfig = {
@@ -33,7 +33,8 @@ class BattleUiPoolElement {
     (this.ActorList = void 0), (this.ExistMulti = !0), (this.Actor = void 0);
   }
   Clear() {
-    for (const t of this.ActorList) ActorSystem_1.ActorSystem.Put(t);
+    for (const t of this.ActorList)
+      ActorSystem_1.ActorSystem.Put("BattleUiPool.Clear", t);
     (this.ActorList.length = 0), (this.Actor = void 0);
   }
 }
@@ -60,14 +61,14 @@ class BattleUiPool {
     if (!t?.IsValid())
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "WorldSpaceUiRootItem为空"),
+          Log_1.Log.Error("Battle", 17, "WorldSpaceUiRootItem为空"),
         !1
       );
     this.XXe = t;
     t = UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pool);
     if (!t?.IsValid())
       return (
-        Log_1.Log.CheckError() && Log_1.Log.Error("Battle", 18, "PoolRoot为空"),
+        Log_1.Log.CheckError() && Log_1.Log.Error("Battle", 17, "PoolRoot为空"),
         !1
       );
     this.$Xe = t;
@@ -77,7 +78,7 @@ class BattleUiPool {
         (this.JXe = UiLayer_1.UiLayer.GetBattleViewUnit(0)),
         !0)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "UiRootItem为空"),
+          Log_1.Log.Error("Battle", 17, "UiRootItem为空"),
         !1);
   }
   async ZXe() {
@@ -100,7 +101,7 @@ class BattleUiPool {
     if (!o?.IsValid())
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "预加载Actor失败", [
+          Log_1.Log.Error("Battle", 17, "预加载Actor失败", [
             "resourceId",
             e.ResourceId,
           ]),
@@ -128,13 +129,13 @@ class BattleUiPool {
           ? (i && o.K2_AttachRootComponentTo(e), o)
           : void (
               Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Battle", 18, "BattleUiPool重复获取单一预制体", [
+              Log_1.Log.Error("Battle", 17, "BattleUiPool重复获取单一预制体", [
                 "resourceId",
                 t,
               ])
             );
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "BattleUiPool没有缓存该预制体", [
+      Log_1.Log.Debug("Battle", 17, "BattleUiPool没有缓存该预制体", [
         "resourceId",
         t,
       ]);
@@ -148,14 +149,14 @@ class BattleUiPool {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Battle",
-                18,
+                17,
                 "BattleUiPool重复Recycle单一预制体",
                 ["resourceId", t],
               ),
             !1)
           : (o.ActorList.push(e), !0))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "BattleUiPool没有缓存该预制体", [
+          Log_1.Log.Error("Battle", 17, "BattleUiPool没有缓存该预制体", [
             "resourceId",
             t,
           ]),
@@ -165,7 +166,7 @@ class BattleUiPool {
     var e = this.WXe.get(t);
     if (e?.Actor) return e.Actor;
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "BattleUiPool没有缓存该预制体", [
+      Log_1.Log.Debug("Battle", 17, "BattleUiPool没有缓存该预制体", [
         "resourceId",
         t,
       ]);
@@ -182,7 +183,8 @@ class BattleUiPool {
   RecycleDamageView(t) {
     return this.tZ
       ? this.RecycleActor(damageViewConfig.ResourceId, t)
-      : (ActorSystem_1.ActorSystem.Put(t), !0);
+      : (ActorSystem_1.ActorSystem.Put("BattleUiPool.RecycleDamageView", t),
+        !0);
   }
   GetBuffItem(t) {
     return this.GetActor(buffItemConfig.ResourceId, t, !0);
@@ -190,7 +192,7 @@ class BattleUiPool {
   RecycleBuffItem(t) {
     return this.tZ
       ? this.RecycleActor(buffItemConfig.ResourceId, t, !0)
-      : (ActorSystem_1.ActorSystem.Put(t), !0);
+      : (ActorSystem_1.ActorSystem.Put("BattleUiPool.RecycleBuffItem", t), !0);
   }
   GetEnvironmentItem(t) {
     return this.GetActor(environmentItemConfig.ResourceId, t, !0);
@@ -198,7 +200,11 @@ class BattleUiPool {
   RecycleEnvironmentItem(t) {
     return this.tZ
       ? this.RecycleActor(environmentItemConfig.ResourceId, t, !0)
-      : (ActorSystem_1.ActorSystem.Put(t), !0);
+      : (ActorSystem_1.ActorSystem.Put(
+          "BattleUiPool.RecycleEnvironmentItem",
+          t,
+        ),
+        !0);
   }
   async LoadActor(t, e) {
     var i,
@@ -208,7 +214,7 @@ class BattleUiPool {
       ? this.t$e(r, e)
       : (o = await this.QXe.LoadPrefabAsync(t, this.$Xe))?.IsValid()
         ? ((r = this.WXe.get(t))
-            ? ActorSystem_1.ActorSystem.Put(o)
+            ? ActorSystem_1.ActorSystem.Put("BattleUiPool.LoadActor", o)
             : ((r = new BattleUiPoolElement()),
               this.WXe.set(t, r),
               (i = new Array()).push(o),
@@ -218,7 +224,7 @@ class BattleUiPool {
           this.t$e(r, e))
         : void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 18, "加载Actor失败", ["", t])
+            Log_1.Log.Error("Battle", 17, "加载Actor失败", ["", t])
           );
   }
   t$e(t, e) {
@@ -234,7 +240,10 @@ class BattleUiPool {
           ? (t.ActorList.push(e),
             e.RootComponent.SetUIActive(!1),
             i && e.K2_AttachRootComponentTo(this.$Xe))
-          : ActorSystem_1.ActorSystem.Put(e)),
+          : ActorSystem_1.ActorSystem.Put(
+              "BattleUiPool.RecycleActorByPath",
+              e,
+            )),
       !0
     );
   }
@@ -246,7 +255,7 @@ class BattleUiPool {
         ? (this.KXe.set(t, i), i)
         : void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 18, "加载Actor失败", ["", t])
+            Log_1.Log.Error("Battle", 17, "加载Actor失败", ["", t])
           );
   }
   RecycleSingleActor(t, e = !1) {
@@ -265,7 +274,8 @@ class BattleUiPool {
     this.QXe.Clear();
     for (const t of this.WXe.values()) t.Clear();
     this.WXe.clear();
-    for (const e of this.KXe.values()) ActorSystem_1.ActorSystem.Put(e);
+    for (const e of this.KXe.values())
+      ActorSystem_1.ActorSystem.Put("BattleUiPool.Clear", e);
     this.KXe.clear(),
       (this.tZ = !1),
       (this.XXe = void 0),

@@ -15,18 +15,18 @@ class LevelConditionCheckPlayerStateRestriction extends LevelGeneralBase_1.Level
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "LevelCondition",
-            37,
+            36,
             "[CheckPlayerStateRestriction]无法获取当前角色",
           ),
         !1
       );
-    var a = t.Entity.GetComponent(190);
+    var a = t.Entity.GetComponent(203);
     if (!a)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "LevelCondition",
-            37,
+            36,
             "[CheckPlayerStateRestriction]无法获取当前角色BaseTagComponent组件",
           ),
         !1

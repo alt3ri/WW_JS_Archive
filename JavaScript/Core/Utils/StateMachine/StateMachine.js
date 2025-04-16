@@ -13,7 +13,7 @@ class StateMachine {
   Start(t) {
     return void 0 !== this.xz
       ? (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("StateMachine", 12, "状态机重复启动", ["state", t]),
+          Log_1.Log.Error("StateMachine", 11, "状态机重复启动", ["state", t]),
         !1)
       : ((this.xz = this.GetState(t)),
         !!this.xz && (this.xz.Start(), this.Pz && this.Pz(t, t), !0));
@@ -25,7 +25,7 @@ class StateMachine {
     if (void 0 === this.xz)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("StateMachine", 12, "状态机没有开始", ["state", t]),
+          Log_1.Log.Error("StateMachine", 11, "状态机没有开始", ["state", t]),
         !1
       );
     StateMachine.wz.Start();
@@ -58,7 +58,7 @@ class StateMachine {
   AddState(t, e, a) {
     this.kh.has(t)
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("StateMachine", 12, "状态重复添加", ["state", t])
+        Log_1.Log.Error("StateMachine", 11, "状态重复添加", ["state", t])
       : ((e = new e(this.Owner, t, this)),
         this.kh.set(t, e),
         StateMachine.qz.Start(),
@@ -70,7 +70,7 @@ class StateMachine {
     return (
       e ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("StateMachine", 12, "状态不存在", ["state", t])),
+          Log_1.Log.Error("StateMachine", 11, "状态不存在", ["state", t])),
       e
     );
   }

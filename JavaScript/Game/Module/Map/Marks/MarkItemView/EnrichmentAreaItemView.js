@@ -1,80 +1,69 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EnrichmentAreaItemView = void 0);
-const UE = require("ue"),
-  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  WorldMapDefine_1 = require("../../../WorldMap/WorldMapDefine"),
-  MarkBlueRangeImageComponent_1 = require("./Components/MarkBlueRangeImageComponent"),
+const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EnrichmentAreaItemRangeHandle_1 = require("./Handles/EnrichmentAreaItemRangeHandle"),
   ServerMarkItemView_1 = require("./ServerMarkItemView");
 class EnrichmentAreaItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
-    super(e), (this.uGa = void 0), (this.kRi = void 0);
+    super(e),
+      (this.Zbn = (e) => {
+        var t = this.Holder;
+        (t.IsSelectThisFloor = t.GetMultiMapId() === e),
+          this.OnIconPathChanged(t.IconPath);
+      });
   }
   OnInitialize() {
     super.OnInitialize(),
-      (this.kRi = new UE.Vector2D(
-        this.Holder.UiPosition.X,
-        this.Holder.UiPosition.Y,
-      )),
-      this.cGa(!0),
-      this.OnIconPathChanged(this.Holder.IconPath);
+      (this.Holder.MarkItemEntity.ViewLifeCircle.EnableVerticalPointer = !1),
+      this.MarkItemRangeHandle.SetVisible(!0);
   }
-  async GetRangeComponentAsync() {
-    var e;
-    return (
-      this.RangeComponentInternal ||
-        ((this.RangeComponentInternal =
-          new MarkBlueRangeImageComponent_1.MarkBlueRangeImageComponent()),
-        await this.RangeComponentInternal.CreateThenShowByResourceIdAsync(
-          "UiItem_ProbeArea",
-          this.RootItem.GetParentAsUIItem(),
-          !0,
-        ),
-        this.RangeComponentInternal?.GetRootItem()?.SetAnchorOffset(this.kRi),
-        this.RangeComponentInternal?.GetRootItem().SetAsFirstHierarchy(),
-        this.SetScale(this.Holder.MarkScale),
-        (e = this.Holder.MarkRange),
-        this.RangeComponentInternal.RangeImage.SetWidth(2 * e),
-        this.RangeComponentInternal.RangeImage.SetHeight(2 * e)),
-      this.RangeComponentInternal
+  OnReset() {
+    super.OnReset(),
+      (this.Holder.MarkItemEntity.ViewLifeCircle.EnableVerticalPointer = !1),
+      this.MarkItemRangeHandle.SetVisible(!0);
+  }
+  OnBeforeShow() {
+    EventSystem_1.EventSystem.Add(
+      EventDefine_1.EEventName.WorldMapSelectMultiMap,
+      this.Zbn,
     );
   }
-  cGa(e) {
-    this.uGa !== e &&
-      ((this.uGa = e),
-      this.GetRangeComponentAsync().then((e) => {
-        e.SetActive(this.uGa),
-          this.RangeComponentInternal?.GetRootItem()?.SetAnchorOffset(this.kRi);
-      }));
+  OnAfterHide() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.WorldMapSelectMultiMap,
+      this.Zbn,
+    );
+  }
+  OnAfterShow() {
+    super.OnAfterShow(),
+      this.UpdateMultiMapFloorSelectedState(),
+      this.OnIconPathChanged(this.Holder.IconPath);
   }
   OnSafeUpdate(e, t, i) {
-    var r, s, n;
+    var n, r, s;
     this.Holder &&
-      ((r = this.GetSprite(1)),
-      (s = (n = this.Holder).CheckCanShowIcon()),
-      (n = n.CheckCanShowView()),
-      r?.SetUIActive(s),
-      this.RangeComponentInternal?.SetUiActive(n));
+      ((n = this.GetSprite(1)),
+      (r = (s = this.Holder).CheckCanShowIcon()),
+      (s = s.CheckCanShowView()),
+      n?.SetUIActive(r),
+      this.MarkItemRangeHandle.SetVisible(s));
   }
   OnIconPathChanged(e) {
-    const t = this.Holder.CheckCanShowIcon();
-    var i = this.GetSprite(1);
-    i.SetUIActive(t),
-      this.LoadIcon(i, e),
-      this.Holder.IsMultiMap() &&
-        this.GetChildIconComponentAsync().then((e) => {
-          e.SetUiActive(t),
-            (e.Icon =
-              ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-                WorldMapDefine_1.MULTI_MAP_ICON_PATH,
-              ));
-        });
+    var t = this.Holder.CheckCanShowIcon(),
+      i = this.GetSprite(1);
+    t ? this.LoadIcon(i, e) : i.SetUIActive(t),
+      this.MarkItemChildIconHandle.Update();
   }
-  ShowVerticalPointer() {
-    return !1;
+  UpdateMultiMapFloorSelectedState() {
+    var e = this.Holder,
+      t = this.Holder.IsSelectThisFloor;
+    (this.Holder.IsSelectThisFloor = e.GetIsSelectThisFloor()),
+      t !== this.Holder.IsSelectThisFloor && this.OnIconPathChanged(e.IconPath);
   }
-  OnBeforeDestroy() {
-    this.RangeComponentInternal?.Destroy(), super.OnBeforeDestroy();
+  CreateRangeHandle(e) {
+    return new EnrichmentAreaItemRangeHandle_1.EnrichmentAreaItemRangeHandle(e);
   }
 }
 exports.EnrichmentAreaItemView = EnrichmentAreaItemView;

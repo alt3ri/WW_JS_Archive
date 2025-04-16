@@ -24,8 +24,8 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
     );
     return (
       !!e &&
-      ((this.wba = TimerSystem_1.TimerSystem.Forever(
-        LogReportController.Bba,
+      ((this.Xba = TimerSystem_1.TimerSystem.Forever(
+        LogReportController.Yba,
         e * TimeUtil_1.TimeUtil.InverseMillisecond,
         void 0,
         void 0,
@@ -37,16 +37,16 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
   }
   static OnClear() {
     return (
-      this.wba &&
-        (TimerSystem_1.TimerSystem.Remove(this.wba), (this.wba = void 0)),
+      this.Xba &&
+        (TimerSystem_1.TimerSystem.Remove(this.Xba), (this.Xba = void 0)),
       !0
     );
   }
   static LogReport(e) {
     "" === e.event_id &&
       Log_1.Log.CheckError() &&
-      Log_1.Log.Error("LogReport", 31, "event_id 不能为空", ["logData", e]),
-      LogReportController.bba(e),
+      Log_1.Log.Error("LogReport", 30, "event_id 不能为空", ["logData", e]),
+      LogReportController.zba(e),
       ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Report(
         "c" + e.event_id,
         Json_1.Json.Stringify(e) ?? "",
@@ -58,7 +58,7 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
     );
     o && o.SetLogDataToAssembly(e);
   }
-  static bba(e) {
+  static zba(e) {
     (e.client_version = LogReportController.Fvi),
       (e.platform = ModelManager_1.ModelManager.LoginModel.Platform),
       e instanceof LogReportDefine_1.PlayerCommonLogData &&
@@ -84,8 +84,8 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
   }
 }
 ((exports.LogReportController = LogReportController).Fvi = ""),
-  (LogReportController.wba = void 0),
-  (LogReportController.Bba = (e) => {
+  (LogReportController.Xba = void 0),
+  (LogReportController.Yba = (e) => {
     var o,
       r = [];
     for (const t of ModelManager_1.ModelManager.LogReportModel.GetAllTimerAssemblyLogData())
@@ -96,14 +96,14 @@ class LogReportController extends UiControllerBase_1.UiControllerBase {
         t.CheckIsSend() &&
           (r.push(t.AssemblyId),
           (o = t.AssemblyLogData),
-          LogReportController.bba(o),
+          LogReportController.zba(o),
           ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Report(
             "c" + o.event_id,
             Json_1.Json.Stringify(o) ?? "",
           ),
           t.AfterSend()));
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("LogReport", 38, "已发送集合日志Id", [
+      Log_1.Log.Info("LogReport", 37, "已发送集合日志Id", [
         "AssemblyIdList",
         r,
       ]);

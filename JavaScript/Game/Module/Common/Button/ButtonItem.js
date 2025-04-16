@@ -14,7 +14,7 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
       (this.ije = () => {
         this.Gke && this.Gke(this.Pe);
       }),
-      this.CreateThenShowByActor(t.GetOwner());
+      t && this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -39,6 +39,9 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
   }
   SetLocalTextNew(t, ...e) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t, ...e);
+  }
+  TrySetLocalTextNew(t, ...e) {
+    LguiUtil_1.LguiUtil.TrySetLocalTextNew(this.GetText(1), t, ...e);
   }
   SetShowText(t) {
     this.GetText(1).ShowTextNew(t);

@@ -10,7 +10,9 @@ class AiStateMachineConditionMontageTimeRemaining extends AiStateMachineConditio
     return (
       (this.HasTaskFinishCondition = !0),
       (this.Ql = 0.001 * i.CondMontageTimeRemaining.Time),
-      102 !== this.Node.Task?.Type && 3 !== this.Node.Task?.Type
+      102 !== this.Node.Task?.Type &&
+      3 !== this.Node.Task?.Type &&
+      105 !== this.Node.Task?.Type
         ? this.Node.Owner.PushErrorMessage(
             `初始化条件[动画剩余时间]失败，node[${this.Node.Name}|${this.Node.Uuid}], to:` +
               this.Transition.To,

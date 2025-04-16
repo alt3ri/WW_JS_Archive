@@ -4,11 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   RenderConfig_1 = require("../../../Config/RenderConfig"),
-  CharRenderBase_1 = require("../../Manager/CharRenderBase");
+  CharRenderBase_1 = require("../../Manager/CharRenderBase"),
+  CharMaterialContainer_1 = require("../MaterialContainer/CharMaterialContainer"),
+  CharMaterialContainerV2_1 = require("./CharMaterialContainerV2");
 class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
-      (this.CharNpcDither = void 0),
       (this.MaterialContainer = void 0),
       (this.mhr = -0),
       (this.dhr = -0),
@@ -16,30 +17,25 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
       (this.fhr = 0),
       (this.phr = -0),
       (this.vhr = !1),
-      (this.Mhr = void 0);
+      (this.Mhr = void 0),
+      (this.jO_ = !1),
+      (this.Jxl = []);
   }
   Start() {
-    this.Ehr()
-      ? ((this.CharNpcDither = this.RenderComponent.GetComponent(
-          RenderConfig_1.RenderConfig.IdNpcDitherEffect,
-        )),
-        this.CharNpcDither ||
-          (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "RenderCharacter",
-              12,
-              "NPC类型没有添加组件 npc dither effect",
-            )))
-      : ((this.MaterialContainer = this.RenderComponent.GetComponent(
+    this.RenderComponent.UseMaterialContainerV2
+      ? (this.MaterialContainer = this.RenderComponent.GetComponent(
+          RenderConfig_1.RenderConfig.IdMaterialContainerV2,
+        ))
+      : (this.MaterialContainer = this.RenderComponent.GetComponent(
           RenderConfig_1.RenderConfig.IdMaterialContainer,
         )),
-        this.MaterialContainer ||
-          (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "RenderCharacter",
-              12,
-              "非NPC类型没有添加组件 material container",
-            ))),
+      this.MaterialContainer ||
+        (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "RenderCharacter",
+            11,
+            "非NPC类型没有添加组件 material container",
+          )),
       (this.phr = 1),
       (this.mhr = 0),
       (this.dhr = -0.2),
@@ -49,16 +45,10 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
       (this.Mhr = new Map()),
       this.OnInitSuccess();
   }
-  ResetDitherEffect() {
+  OnResetRenderState() {
     this.Shr(1), (this.fhr = 0), (this.vhr = !1), this.Mhr.clear();
   }
-  UpdateNpcDitherComponent() {
-    this.Ehr() &&
-      this.CharNpcDither &&
-      this.CharNpcDither.UpdateSkeletalComponents(
-        this.RenderComponent.GetCachedOwner(),
-      );
-  }
+  UpdateNpcDitherComponent() {}
   SetDitherEffect(i, s) {
     if (i !== this.phr) {
       let t = i < 0 || 1 <= i ? !0 : !1;
@@ -76,6 +66,11 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
           (this.fhr === s || this.fhr < s) &&
             ((this.fhr = s), this.vhr || this.yhr(), this.Shr(i));
     }
+  }
+  SetDitherMask(t, i) {
+    (this.Jxl = t),
+      (this.jO_ = i),
+      this.vhr && (this.Ihr(), this.Thr(), this.Lhr(this.mhr));
   }
   RemoveDitherEffect() {
     this.Ihr(), this.Shr(1), (this.vhr = !1);
@@ -95,42 +90,129 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
       Math.abs(this.phr - t) < 1e-6 || (this.Lhr(this.mhr), (this.phr = t));
   }
   Thr() {
-    this.Ehr()
-      ? this.CharNpcDither?.EnableNpcDitherEffect()
-      : (this.MaterialContainer.UseAlphaTestCommon(),
+    if (
+      (3 === this.GetRenderingComponent().RenderType
+        ? Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "RenderCharacter",
+            25,
+            "NpcEnableDither",
+            ["CharName", this.GetRenderingComponent()?.GetCachedOwnerName()],
+            [
+              "Entity",
+              this.GetRenderingComponent()?.GetCachedOwnerEntity()?.Id,
+            ],
+            ["Type", this.fhr],
+          )
+        : Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "RenderCharacter",
+            25,
+            "CharacterEnableDither",
+            ["CharName", this.GetRenderingComponent()?.GetCachedOwnerName()],
+            [
+              "Entity",
+              this.GetRenderingComponent()?.GetCachedOwnerEntity()?.Id,
+            ],
+            ["Type", this.fhr],
+          ),
+      this.MaterialContainer instanceof
+        CharMaterialContainerV2_1.CharMaterialContainerV2)
+    )
+      if ((this.MaterialContainer.AddAlphaTestCount(0), 0 < this.Jxl.length))
+        for (const t of this.Jxl)
+          this.MaterialContainer.SetFloatUpdateParamPermanent(
+            RenderConfig_1.RenderConfig.UseDitherEffect,
+            1,
+            0,
+            0,
+            t,
+          );
+      else
+        this.MaterialContainer.SetFloatUpdateParamPermanent(
+          RenderConfig_1.RenderConfig.UseDitherEffect,
+          1,
+          0,
+          0,
+        );
+    else
+      this.MaterialContainer instanceof
+        CharMaterialContainer_1.CharMaterialContainer &&
+        (this.MaterialContainer.UseAlphaTestCommon(),
         this.MaterialContainer.SetFloat(
           RenderConfig_1.RenderConfig.UseDitherEffect,
           1,
           0,
-          -1,
           0,
         ));
   }
   Lhr(t) {
-    this.Ehr()
-      ? this.CharNpcDither?.SetNpcDitherEffect(t)
-      : this.MaterialContainer.SetFloat(
+    this.MaterialContainer instanceof
+    CharMaterialContainerV2_1.CharMaterialContainerV2
+      ? (this.MaterialContainer.SetFloatUpdateParamPermanent(
           RenderConfig_1.RenderConfig.DitherValue,
-          t,
+          this.jO_ ? 1.2 : t,
           0,
-          -1,
           0,
-        );
-  }
-  Ihr() {
-    this.Ehr()
-      ? this.CharNpcDither?.RemoveNpcDitherEffect()
-      : (this.MaterialContainer.RevertAlphaTestCommon(),
+        ),
+        this.MaterialContainer.SetFloatUpdateParamPermanent(
+          RenderConfig_1.RenderConfig.DitherValueMainPass,
+          this.jO_ ? t : 1.2,
+          0,
+          0,
+        ))
+      : this.MaterialContainer instanceof
+          CharMaterialContainer_1.CharMaterialContainer &&
+        (this.MaterialContainer.SetFloat(
+          RenderConfig_1.RenderConfig.DitherValue,
+          this.jO_ ? 1.2 : t,
+          0,
+          0,
+        ),
         this.MaterialContainer.SetFloat(
-          RenderConfig_1.RenderConfig.UseDitherEffect,
+          RenderConfig_1.RenderConfig.DitherValueMainPass,
+          this.jO_ ? t : 1.2,
           0,
-          0,
-          -1,
           0,
         ));
   }
-  Ehr() {
-    return !!this.RenderComponent && 3 === this.RenderComponent.GetRenderType();
+  Ihr() {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "RenderCharacter",
+        25,
+        "CharacterDisableDither",
+        ["CharName", this.GetRenderingComponent()?.GetCachedOwnerName()],
+        ["Entity", this.GetRenderingComponent()?.GetCachedOwnerEntity()?.Id],
+        ["Type", this.fhr],
+      ),
+      this.MaterialContainer instanceof
+      CharMaterialContainerV2_1.CharMaterialContainerV2
+        ? (this.MaterialContainer.RemoveFloatUpdateParamPermanent(
+            RenderConfig_1.RenderConfig.UseDitherEffect,
+            0,
+            0,
+          ),
+          this.MaterialContainer.RemoveFloatUpdateParamPermanent(
+            RenderConfig_1.RenderConfig.DitherValue,
+            0,
+            0,
+          ),
+          this.MaterialContainer.RemoveFloatUpdateParamPermanent(
+            RenderConfig_1.RenderConfig.DitherValueMainPass,
+            0,
+            0,
+          ),
+          this.MaterialContainer.RemoveAlphaTestCount(0))
+        : this.MaterialContainer instanceof
+            CharMaterialContainer_1.CharMaterialContainer &&
+          (this.MaterialContainer.RevertAlphaTestCommon(),
+          this.MaterialContainer.SetFloat(
+            RenderConfig_1.RenderConfig.UseDitherEffect,
+            0,
+            0,
+            0,
+          ));
   }
   GetStatName() {
     return "CharDitherEffect";

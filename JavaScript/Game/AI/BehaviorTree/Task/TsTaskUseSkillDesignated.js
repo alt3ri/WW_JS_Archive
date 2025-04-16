@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -11,6 +11,13 @@ class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
       (this.BlackboardKeyTarget = ""),
       (this.SkillInfoId = 0),
       (this.DebugLog = !1),
+      (this.IsInitTsVariables = !1),
+      (this.TsBlackboardKeyTarget = ""),
+      (this.TsSkillInfoId = 0),
+      (this.TsDebugLog = !1);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsBlackboardKeyTarget = ""),
       (this.TsSkillInfoId = 0),
@@ -34,33 +41,33 @@ class TsTaskUseSkillDesignated extends TsTaskAbortImmediatelyBase_1.default {
               "controller",
               e?.GetName(),
             ]);
-        var o = t.AiSkill.SkillInfos.get(this.TsSkillInfoId);
-        if (o) {
+        var r = t.AiSkill.SkillInfos.get(this.TsSkillInfoId);
+        if (r) {
           let e = t.AiHateList.GetCurrentTarget();
           this.TsBlackboardKeyTarget &&
-            ((r =
-              BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+            ((o =
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
                 t.CharAiDesignComp.Entity.Id,
                 this.TsBlackboardKeyTarget,
               )),
-            (r = ModelManager_1.ModelManager.CreatureModel.GetEntityById(r))) &&
-            (e = r);
-          var r = t.CharAiDesignComp.Entity.GetComponent(34);
-          r.Valid
+            (o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(o))) &&
+            (e = o);
+          var o = t.CharAiDesignComp.Entity.GetComponent(39);
+          o.Valid
             ? (this.TsDebugLog &&
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "BehaviorTree",
                   6,
                   "UseSkillDesignated TrySkill",
-                  ["skill", o.SkillId],
+                  ["skill", r.SkillId],
                 ),
-              (r = r.BeginSkill(Number(o.SkillId), {
+              (o = o.BeginSkill(Number(r.SkillId), {
                 Target: e?.Entity,
-                Context: "TsTaskUseSkillDesignated.ReceiveTickAI",
+                Reason: "TsTaskUseSkillDesignated.ReceiveTickAI",
               })),
-              this.FinishExecute(r),
-              r && t.AiSkill && t.AiSkill.SetSkillCdFromNow(this.TsSkillInfoId))
+              this.FinishExecute(o),
+              o && t.AiSkill && t.AiSkill.SetSkillCdFromNow(this.TsSkillInfoId))
             : (this.TsDebugLog &&
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(

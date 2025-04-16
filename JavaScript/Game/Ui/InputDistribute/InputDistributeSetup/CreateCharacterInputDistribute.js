@@ -12,7 +12,7 @@ class CreateCharacterInputDistribute extends InputDistributeSetup_1.InputDistrib
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]在创角中，则设置输入分发tag为 UiInputRootTag",
         ),
       this.SetInputDistributeTag(

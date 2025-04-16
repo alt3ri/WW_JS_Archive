@@ -18,7 +18,10 @@ class RedDotChatRoom extends RedDotBase_1.RedDotBase {
     );
   }
   OnGetEvents() {
-    return [EventDefine_1.EEventName.OnRefreshChatRoomRedDot];
+    return [
+      EventDefine_1.EEventName.OnRefreshChatRoomRedDot,
+      EventDefine_1.EEventName.OnRemoveFriend,
+    ];
   }
 }
 exports.RedDotChatRoom = RedDotChatRoom;

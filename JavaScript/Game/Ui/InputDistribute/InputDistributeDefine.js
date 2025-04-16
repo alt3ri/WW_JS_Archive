@@ -229,6 +229,11 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
       exports.inputDistributeTagDefine.FightInputRoot.ActionInput
         .CharacterSkillInputTag,
     ],
+    [
+      InputMappingsDefine_1.actionMappings.Link大招,
+      exports.inputDistributeTagDefine.FightInputRoot.ActionInput
+        .CharacterSkillInputTag,
+    ],
     [InputMappingsDefine_1.actionMappings.Gm指令, void 0],
     [
       InputMappingsDefine_1.actionMappings.任务,
@@ -349,6 +354,22 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
     ],
     [
       InputMappingsDefine_1.actionMappings.UI鼠标中键手柄特右,
+      exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.退出精简模式,
+      exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.退出精简模式PC触摸板,
+      exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.割草BUFF信息,
+      exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.割草BUFF信息PC触摸板,
       exports.inputDistributeTagDefine.UiInputRoot.ShortcutKeyTag,
     ],
     [
@@ -491,6 +512,42 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
       InputMappingsDefine_1.actionMappings.UI键盘V手柄特左,
       exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
     ],
+    [
+      InputMappingsDefine_1.actionMappings.UI键盘数字1手柄上,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.UI键盘数字2手柄左,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.UI键盘数字3手柄右,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.UI键盘数字4手柄下,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.UI键盘回车,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.团子养成,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.团子商店,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.退出团子副本,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.actionMappings.UI键盘空格,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
   ])),
   (exports.axisTagMap = new Map([
     [
@@ -589,6 +646,10 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
       exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
     ],
     [
+      InputMappingsDefine_1.axisMappings.NextGroup2,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
       InputMappingsDefine_1.axisMappings.MapIncrease,
       exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
     ],
@@ -610,6 +671,14 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
     ],
     [
       InputMappingsDefine_1.axisMappings.MapMoveRight,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.axisMappings.MapMoveForward2,
+      exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
+    ],
+    [
+      InputMappingsDefine_1.axisMappings.MapMoveRight2,
       exports.inputDistributeTagDefine.UiInputRoot.NavigationTag,
     ],
     [

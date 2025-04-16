@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputSettings = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../Manager/ConfigManager"),
+  InputKeyUtils_1 = require("./InputKeyUtils"),
   InputActionKey_1 = require("./Key/InputActionKey"),
   InputAxisKey_1 = require("./Key/InputAxisKey"),
   InputCombinationActionKey_1 = require("./Key/InputCombinationActionKey"),
@@ -15,7 +16,7 @@ const puerts_1 = require("puerts"),
 class InputSettings {
   static Initialize() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("InputSettings", 8, "初始化InputSettings"),
+      Log_1.Log.Debug("InputSettings", 10, "初始化InputSettings"),
       (this.CEe = UE.InputSettings.GetInputSettings()),
       this.Refresh();
   }
@@ -77,7 +78,7 @@ class InputSettings {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "InputSettings",
-        8,
+        10,
         "删除组合Action按键映射",
         ["actionName", t],
         ["mainKeyName", e],
@@ -101,7 +102,7 @@ class InputSettings {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "InputSettings",
-        8,
+        10,
         "添加组合Action按键映射",
         ["actionName", t],
         ["mainKeyName", i],
@@ -199,20 +200,19 @@ class InputSettings {
   }
   static GetKeyIconPath(t) {
     var i,
-      e,
-      n = this.GetKey(t);
-    if (n)
+      e = this.GetKey(t);
+    if (e)
       return (
         (i = ConfigManager_1.ConfigManager.InputSettingsConfig),
-        n.IsKeyboardKey || n.IsMouseButton
-          ? (e = i?.GetPcKeyConfig(t))
-            ? e.KeyIconPath
+        e.IsKeyboardKey || e.IsMouseButton
+          ? (i = i?.GetPcKeyConfig(t))
+            ? i.KeyIconPath
             : void 0
-          : n.IsGamepadKey && (e = i?.GetGamepadKeyConfig(t))
-            ? !Info_1.Info.IsXboxGamepad() && Info_1.Info.IsPsGamepad()
-              ? e.PsKeyIconPath
-              : e.KeyIconPath
-            : void 0
+          : !e.IsGamepadKey ||
+              ((i = InputKeyUtils_1.InputKeyUtils.GetGamepadKeyIconPath(t)),
+              StringUtils_1.StringUtils.IsBlank(i))
+            ? void 0
+            : i
       );
   }
   static SetActionMapping(t, i) {
@@ -220,7 +220,7 @@ class InputSettings {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "InputSettings",
-          8,
+          10,
           "设置Action按键映射",
           ["actionName", t],
           ["keys", i],
@@ -231,7 +231,7 @@ class InputSettings {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InputSettings",
-          8,
+          10,
           "设置Action按键映射时，InputSetting不可用",
           ["actionName", t],
         );
@@ -241,7 +241,7 @@ class InputSettings {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "InputSettings",
-            8,
+            10,
             "添加Action按键映射",
             ["actionName", t],
             ["key", i],
@@ -250,7 +250,7 @@ class InputSettings {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InputSettings",
-          8,
+          10,
           "添加Action按键映射时，InputSetting不可用",
           ["actionName", t],
         );
@@ -275,13 +275,13 @@ class InputSettings {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "InputSettings",
-            8,
+            10,
             "删除Action按键映射时，InputSetting不可用",
             ["actionName", t],
           );
     else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("InputSettings", 8, "请使用RemoveActionMapping");
+        Log_1.Log.Error("InputSettings", 10, "请使用RemoveActionMapping");
   }
   static RemoveActionMapping(t, i) {
     var e, n;
@@ -291,7 +291,7 @@ class InputSettings {
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "InputSettings",
-                8,
+                10,
                 "删除Action按键映射",
                 ["actionName", t],
                 ["key", i],
@@ -300,7 +300,7 @@ class InputSettings {
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "InputSettings",
-              8,
+              10,
               "删除Action按键映射时,找不到对应按键",
               ["actionName", t],
               ["key", i],
@@ -308,7 +308,7 @@ class InputSettings {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InputSettings",
-          8,
+          10,
           "删除Action按键映射时，InputSetting不可用",
           ["actionName", t],
         );
@@ -323,7 +323,7 @@ class InputSettings {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InputSettings",
-          8,
+          10,
           "删除Action所有按键映射时，InputSetting不可用",
           ["actionName", t],
         );
@@ -361,7 +361,7 @@ class InputSettings {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "InputSettings",
-          8,
+          10,
           "设置Axis按键映射",
           ["actionName", t],
           ["keys", i],
@@ -379,7 +379,7 @@ class InputSettings {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "InputSettings",
-              8,
+              10,
               "删除不在新数据里的数据",
               ["AxisName", t],
               ["key", g.KeyName],
@@ -392,7 +392,7 @@ class InputSettings {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "InputSettings",
-              8,
+              10,
               "新增不在当前的数据",
               ["axisName", t],
               ["key", e],
@@ -403,7 +403,7 @@ class InputSettings {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InputSettings",
-          8,
+          10,
           "设置Axis按键映射时，InputSetting不可用",
           ["actionName", t],
         );
@@ -413,7 +413,7 @@ class InputSettings {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "InputSettings",
-            8,
+            10,
             "添加Axis按键映射",
             ["axisName", t],
             ["key", i],
@@ -423,7 +423,7 @@ class InputSettings {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InputSettings",
-          8,
+          10,
           "添加Axis按键映射时，InputSetting不可用",
           ["actionName", t],
         );
@@ -448,13 +448,13 @@ class InputSettings {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "InputSettings",
-            8,
+            10,
             "删除Action按键映射时，InputSetting不可用",
             ["actionName", t],
           );
     else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("InputSettings", 8, "请使用RemoveActionMapping");
+        Log_1.Log.Error("InputSettings", 10, "请使用RemoveActionMapping");
   }
   static RemoveAxisMapping(t, i) {
     var e, n;
@@ -464,7 +464,7 @@ class InputSettings {
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "InputSettings",
-                8,
+                10,
                 "删除Axis按键映射",
                 ["axisName", t],
                 ["key", i],
@@ -473,7 +473,7 @@ class InputSettings {
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "InputSettings",
-              8,
+              10,
               "删除Axis按键映射,找不到对应按键",
               ["actionName", t],
               ["key", i],
@@ -481,7 +481,7 @@ class InputSettings {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InputSettings",
-          8,
+          10,
           "添加Axis按键映射时，InputSetting不可用",
           ["actionName", t],
         );
@@ -496,7 +496,7 @@ class InputSettings {
       for (const e of i.values())
         this.CEe.RemoveAxisMapping(e.ToUeInputAxisKeyMapping());
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("InputSettings", 8, "删除Axis所有按键映射", [
+        Log_1.Log.Debug("InputSettings", 10, "删除Axis所有按键映射", [
           "axisName",
           t,
         ]),

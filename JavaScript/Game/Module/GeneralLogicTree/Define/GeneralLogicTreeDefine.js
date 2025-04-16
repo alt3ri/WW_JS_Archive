@@ -1,11 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ChallengeCountDownViewParams =
+  (exports.PunishReportSettlementViewParams =
+    exports.FlySettlementViewParams =
+    exports.ChallengeCountDownViewParams =
     exports.SilentAreaShowInfo =
     exports.TreeTrackTextExpressionInfo =
-    exports.checkSubTitleSame =
-    exports.checkMainTitleSame =
-    exports.NodeStatusChangeInfo =
     exports.BtCustomUiConfig =
     exports.btChildQuestNodeStatusLogString =
     exports.btNodeStatusLogString =
@@ -18,7 +17,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.INVALID_INTERACTOPTION_ID =
       void 0);
 const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
-  PublicUtil_1 = require("../../../Common/PublicUtil");
+  MissionViewDefine_1 = require("../../BattleUi/Views/MissionView/MissionViewDefine");
 (exports.INVALID_INTERACTOPTION_ID = -1),
   (exports.COMMONLEVELPLAY_TRACKICONID = 8),
   (exports.CHALLENGELEVELPLAY_TRACKICONID = 9),
@@ -53,44 +52,11 @@ class NodeInfo extends Protocol_1.Aki.Protocol.qNs {
     [Protocol_1.Aki.Protocol.FNs.Proto_CQNS_FinishAction]: "5-完成行为",
   });
 class BtCustomUiConfig {
-  constructor(t, o) {
-    (this.SourceOfAdd = t), (this.CustomUiConfig = o);
+  constructor(o, t) {
+    (this.SourceOfAdd = o), (this.CustomUiConfig = t);
   }
 }
 exports.BtCustomUiConfig = BtCustomUiConfig;
-class NodeStatusChangeInfo {
-  constructor(t, o, e, r) {
-    (this.TreeIncId = t),
-      (this.NodeId = o),
-      (this.IsGmFinished = e),
-      (this.ShowBridge = r);
-  }
-  Clear() {
-    (this.TreeIncId = BigInt(0)), (this.NodeId = 0), (this.ShowBridge = void 0);
-  }
-}
-function checkMainTitleSame(t, o) {
-  return (
-    (!t && !o) ||
-    !(
-      !t ||
-      !o ||
-      (t.TidTitle !== o.TidTitle &&
-        PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidTitle) !==
-          PublicUtil_1.PublicUtil.GetConfigTextByKey(o.TidTitle))
-    )
-  );
-}
-function checkSubTitleSame(t, o) {
-  return (
-    t.TidTitle === o.TidTitle ||
-    PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidTitle) ===
-      PublicUtil_1.PublicUtil.GetConfigTextByKey(o.TidTitle)
-  );
-}
-(exports.NodeStatusChangeInfo = NodeStatusChangeInfo),
-  (exports.checkMainTitleSame = checkMainTitleSame),
-  (exports.checkSubTitleSame = checkSubTitleSame);
 class TreeTrackTextExpressionInfo {
   constructor() {
     (this.MainTitle = void 0), (this.SubTitles = []), (this.MainTitle = void 0);
@@ -98,48 +64,70 @@ class TreeTrackTextExpressionInfo {
   Clear() {
     (this.MainTitle = void 0), this.ClearSubTitle();
   }
-  SetMainTitle(t) {
-    this.MainTitle = t;
+  SetMainTitle(o) {
+    this.MainTitle = o
+      ? new MissionViewDefine_1.BehaviorTreeStepTextInfo(
+          o.TidTitle,
+          o.QuestScheduleType,
+        )
+      : void 0;
   }
-  AddSubTitle(t) {
-    this.SubTitles.push(t);
+  AddSubTitle(o) {
+    this.SubTitles.push(
+      new MissionViewDefine_1.BehaviorTreeStepTextInfo(
+        o.TidTitle,
+        o.QuestScheduleType,
+        o.ShowConditions,
+        o.ConditionText,
+      ),
+    );
   }
   ClearSubTitle() {
-    this.SubTitles.length = 0;
+    this.SubTitles = [];
   }
-  CopyConfig(t) {
-    (this.MainTitle = t.MainTitle), (this.SubTitles = [...t.SubTitles]);
+  CopyConfig(o) {
+    this.SetMainTitle(o.MainTitle), this.ClearSubTitle();
+    for (const t of o.SubTitles) this.AddSubTitle(t);
   }
-  CheckTextEqual(o) {
-    if (!o) return !1;
-    if (!checkMainTitleSame(this.MainTitle, o.MainTitle)) return !1;
-    if (this.SubTitles.length !== o.SubTitles.length) return !1;
-    for (let t = 0; t < this.SubTitles.length; t++)
-      if (!checkSubTitleSame(this.SubTitles[t], o.SubTitles[t])) return !1;
-    return !0;
-  }
-  IsSubTitle(o) {
+  IsSubTitle(t) {
     return (
       !(!this.SubTitles || 0 === this.SubTitles.length) &&
       void 0 !==
-        this.SubTitles.find((t) => {
-          t = t.QuestScheduleType;
-          return void 0 !== t && t.ChildQuestId === o;
+        this.SubTitles.find((o) => {
+          o = o.QuestScheduleType;
+          return void 0 !== o && o.ChildQuestId === t;
         })
     );
   }
 }
 exports.TreeTrackTextExpressionInfo = TreeTrackTextExpressionInfo;
 class SilentAreaShowInfo {
-  constructor(t, o) {
-    (this.SourceOfAdd = t), (this.ShowInfo = o);
+  constructor(o, t) {
+    (this.SourceOfAdd = o), (this.ShowInfo = t);
   }
 }
 exports.SilentAreaShowInfo = SilentAreaShowInfo;
 class ChallengeCountDownViewParams {
-  constructor(t, o) {
-    (this.TimerEndTime = t), (this.UiTitleKey = o);
+  constructor(o, t) {
+    (this.TimerEndTime = o), (this.UiTitleKey = t);
   }
 }
 exports.ChallengeCountDownViewParams = ChallengeCountDownViewParams;
+class FlySettlementViewParams {
+  constructor(o, t, e, s, r, i) {
+    (this.Score = o),
+      (this.RankS = t),
+      (this.RankA = e),
+      (this.RankB = s),
+      (this.BestRecordScore = r),
+      (this.IncId = i);
+  }
+}
+exports.FlySettlementViewParams = FlySettlementViewParams;
+class PunishReportSettlementViewParams {
+  constructor(o, t) {
+    (this.TreeConfigId = o), (this.States = t);
+  }
+}
+exports.PunishReportSettlementViewParams = PunishReportSettlementViewParams;
 //# sourceMappingURL=GeneralLogicTreeDefine.js.map

@@ -18,29 +18,31 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configWeaponVisibleConfigByIdWithZero.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configWeaponVisibleConfigByIdWithZero.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configWeaponVisibleConfigByIdWithZero.GetConfig(";
 exports.configWeaponVisibleConfigByIdWithZero = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, i, n, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i}#${n})`),
+      getConfigStat?.Start();
+    var t = Stats_1.Stat.CreateNoFlameGraph(
+        CONFIG_STAT_PREFIX + `#${o}#${i}#${n})`,
+      ),
       C =
-        (t.Start(),
+        (t?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (C) {
       if (e) {
@@ -48,8 +50,8 @@ exports.configWeaponVisibleConfigByIdWithZero = {
         const g = ConfigCommon_1.ConfigCommon.GetConfig(f);
         if (g)
           return (
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
@@ -90,8 +92,8 @@ exports.configWeaponVisibleConfigByIdWithZero = {
               ((C = KEY_PREFIX + `#${o}#${i}#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(C, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
@@ -99,8 +101,8 @@ exports.configWeaponVisibleConfigByIdWithZero = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    t.Stop(),
-      getConfigStat.Stop(),
+    t?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

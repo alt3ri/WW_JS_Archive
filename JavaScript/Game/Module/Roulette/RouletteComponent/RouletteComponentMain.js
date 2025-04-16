@@ -13,7 +13,7 @@ const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   RouletteComponent_1 = require("./RouletteComponent");
 class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
   constructor() {
-    super(...arguments), (this.sIa = !0);
+    super(...arguments), (this.hIa = !0), (this.bll = !1);
   }
   OnStart() {
     var e;
@@ -21,7 +21,7 @@ class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
       Info_1.Info.IsInGamepad() &&
         ((e =
           ModelManager_1.ModelManager.RouletteModel.GetRouletteSelectConfig()),
-        (this.sIa = 1 === e));
+        (this.hIa = 1 === e));
   }
   GamepadReturnEmptyGrid() {
     var e, t, o;
@@ -37,12 +37,15 @@ class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
           (e?.SetGridEquipped(!1),
           t?.SetGridEquipped(!0),
           (this.CurrentEquipGridIndex = this.CurrentGridIndex),
-          this.GetCurrentGrid()?.SelectOnGrid(!0),
+          this.OnEmitCurrentGridSelectOn(),
           this.CloseRouletteMain())),
       (this.IsEmptyChoose = !0);
   }
+  TryEmitCurrentGridSelectOn() {
+    this.hIa && this.OnEmitCurrentGridSelectOn();
+  }
   OnEmitCurrentGridSelectOn() {
-    this.sIa && this.GetCurrentGrid()?.SelectOnGrid(!0);
+    this.bll || ((this.bll = !0), this.GetCurrentGrid()?.SelectOnGrid(!0));
   }
   IsCurrentEquippedId(e) {
     switch (e.GridType) {
@@ -55,8 +58,12 @@ class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
     }
     return !1;
   }
-  JudgeGridStateByData(e, t) {
-    return void 0 !== e && 0 !== e ? 1 : 3;
+  GetGridId(e, t) {
+    return ModelManager_1.ModelManager.RouletteModel.GetRouletteGridId(
+      e,
+      t,
+      !0,
+    );
   }
   SetCurrentToggleState(e) {
     this.GetCurrentGrid()?.SetGridToggleState(e),
@@ -88,7 +95,15 @@ class RouletteComponentMainExplore extends (exports.RouletteComponentMain =
     return RouletteComponent_1.exploreRouletteMap;
   }
   JudgeGridStateByData(e, t) {
-    return 2 === t || (void 0 !== e && 0 !== e) ? 1 : 3;
+    var o = void 0 !== e && 0 !== e,
+      i = 2 === t,
+      t =
+        RouletteGridForbiddenSettings_1.RouletteGridForbiddenSettings.CheckGridSpecialState(
+          1,
+          t,
+          e,
+        );
+    return o || i ? (void 0 !== t ? t : 1) : 3;
   }
   RefreshRouletteItem() {
     this.GetItem(10).SetUIActive(!1),
@@ -121,6 +136,16 @@ exports.RouletteComponentMainExplore = RouletteComponentMainExplore;
 class RouletteComponentMainFunction extends RouletteComponentMain {
   GetRouletteInfoMap() {
     return RouletteComponent_1.functionRouletteMap;
+  }
+  JudgeGridStateByData(e, t) {
+    var o = void 0 !== e && 0 !== e,
+      t =
+        RouletteGridForbiddenSettings_1.RouletteGridForbiddenSettings.CheckGridSpecialState(
+          1,
+          t,
+          e,
+        );
+    return o ? (void 0 !== t ? t : 1) : 3;
   }
   RefreshRouletteItem() {
     this.GetItem(10).SetUIActive(!0),

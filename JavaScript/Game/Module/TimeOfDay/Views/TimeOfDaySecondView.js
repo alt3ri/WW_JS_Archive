@@ -56,19 +56,22 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
           this.LTn) &&
           (this.LTn(), (this.LTn = void 0));
       }),
-      (this.ELt = (i) => {
+      (this.ELt = (e) => {
         if (
           !(
-            i < 0 ||
+            e < 0 ||
             ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt
-              ?.ChangeDayIndex === i
+              ?.ChangeDayIndex === e
           )
         ) {
-          this.Sui.SelectGridProxy(i);
-          for (let e = 0; e < this.SLo.length; e++)
-            if (this.SLo[e].ChangeDayIndex === i) {
+          this.Sui.SelectGridProxy(e);
+          var i =
+            TimeOfDayDefine_1.DEFAULT_JUMP_HOUR *
+            TimeOfDayDefine_1.TOD_SECOND_PER_HOUR;
+          for (const t of this.SLo)
+            if (t.ChangeDayIndex === e && (0 === e || t.SetTime === i)) {
               ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt =
-                this.SLo[e];
+                t;
               break;
             }
           this.ELo.AttachToIndex(
@@ -218,6 +221,15 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       );
+  }
+  OnAfterShow() {
+    var e;
+    void 0 !== this.OpenParam &&
+      ((e = this.OpenParam),
+      this.RLo(
+        ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second,
+        e.SetTime,
+      ));
   }
   DLo() {
     var e = ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt;

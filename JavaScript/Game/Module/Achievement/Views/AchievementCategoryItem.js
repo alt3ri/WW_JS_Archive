@@ -34,7 +34,7 @@ class AchievementCategoryItem extends GridProxyAbstract_1.GridProxyAbstract {
               e[0].GetId(),
             ))
           : (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Achievement", 28, "分类下没有成就组"),
+              Log_1.Log.Debug("Achievement", 27, "分类下没有成就组"),
             (ModelManager_1.ModelManager.AchievementModel.CurrentSelectGroup =
               void 0),
             AchievementController_1.AchievementController.OpenAchievementDetailView(

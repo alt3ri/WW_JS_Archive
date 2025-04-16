@@ -14,7 +14,7 @@ class ReconnectInputDistribute extends InputDistributeSetup_1.InputDistributeSet
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Input",
-              8,
+              10,
               "[InputDistribute]刷新重连状态输入Tag时，可点击鼠标",
             ),
           this.SetInputDistributeTags([
@@ -26,7 +26,7 @@ class ReconnectInputDistribute extends InputDistributeSetup_1.InputDistributeSet
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Input",
-              8,
+              10,
               "[InputDistribute]刷新重连状态输入Tag时，禁用所有操作",
             ),
           this.SetInputDistributeTag(

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.SuccessSdkPayEvent =
-    exports.StartSdkPayEvent =
+  (exports.ActivityPreheatLogData =
+    exports.ActivityRegressLogData =
     exports.ActivityRecallLogData =
     exports.ActivityLockConditionClickLogData =
     exports.ActivityViewJumpClickLogData =
@@ -51,7 +51,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.PlayerCommonLogData =
     exports.CommonLogData =
       void 0),
-  (exports.SdkPayGetServerBillEvent = exports.FailSdkPayEvent = void 0);
+  (exports.CiacconaEnterMainViewLogEvent =
+    exports.PreDownloadDownloadModeSuccessRecord =
+    exports.PreDownloadPauseRecord =
+    exports.PreDownloadDownloadModeSwitchRecord =
+    exports.PreDownloadEntranceRecord =
+    exports.BirthdayRepeatEnterEvent =
+    exports.BirthdaySelectRoleEvent =
+    exports.LinkageClickGoEvent =
+    exports.LinkageSwitchModuleEvent =
+    exports.SdkStartReview =
+    exports.ShareEvent =
+    exports.MailBindJumpToWebViewEvent =
+    exports.MailBindClickEvent =
+    exports.GamepadActiveEvent =
+    exports.SdkPayGetServerBillEvent =
+    exports.FailSdkPayEvent =
+    exports.SuccessSdkPayEvent =
+    exports.StartSdkPayEvent =
+      void 0);
 const UE = require("ue"),
   Json_1 = require("../../../Core/Common/Json"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
@@ -432,24 +450,24 @@ class InstFightEndRecord extends PlayerCommonLogData {
 }
 exports.InstFightEndRecord = InstFightEndRecord;
 class InstRoleStateRecord extends RoleStateRecord {
-  constructor(t, s, i) {
+  constructor(t, s, o) {
     super(t),
       (this.event_id = "102804"),
       (this.i_inst_id = 0),
       (this.s_fight_id = ""),
       (this.i_inst_id = s),
-      (this.s_fight_id = i);
+      (this.s_fight_id = o);
   }
 }
 exports.InstRoleStateRecord = InstRoleStateRecord;
 class InstMonsterStateRecord extends MonsterStateRecord {
-  constructor(t, s, i, o) {
+  constructor(t, s, o, i) {
     super(t, s),
       (this.event_id = "102805"),
       (this.i_inst_id = 0),
       (this.s_fight_id = ""),
-      (this.i_inst_id = i),
-      (this.s_fight_id = o);
+      (this.i_inst_id = o),
+      (this.s_fight_id = i);
   }
 }
 exports.InstMonsterStateRecord = InstMonsterStateRecord;
@@ -476,13 +494,13 @@ class InstReactionLogRecord extends ReactionLogRecord {
 }
 exports.InstReactionLogRecord = InstReactionLogRecord;
 class InstMonsterSkillReportLog extends MonsterSkillReportLog {
-  constructor(t, s, i, o) {
+  constructor(t, s, o, i) {
     super(t, s),
       (this.event_id = "102808"),
       (this.i_inst_id = 0),
       (this.s_fight_id = ""),
-      (this.i_inst_id = i),
-      (this.s_fight_id = o);
+      (this.i_inst_id = o),
+      (this.s_fight_id = i);
   }
 }
 exports.InstMonsterSkillReportLog = InstMonsterSkillReportLog;
@@ -543,7 +561,8 @@ class LoginProcessLink extends CommonLogData {
       (this.s_cpu_info = ""),
       (this.s_device_info = ""),
       (this.s_driver_date = ""),
-      (this.s_device_id = "");
+      (this.s_device_id = ""),
+      (this.s_command_line = "");
   }
 }
 exports.LoginProcessLink = LoginProcessLink;
@@ -610,7 +629,8 @@ class PhotographerLogData extends PlayerCommonLogData {
       (this.i_shot_option = 0),
       (this.i_self_option = 0),
       (this.i_info_option = 0),
-      (this.i_dof_option = 0);
+      (this.i_dof_option = 0),
+      (this.i_filter_id = 0);
   }
 }
 exports.PhotographerLogData = PhotographerLogData;
@@ -826,10 +846,31 @@ class ActivityRecallLogData extends PlayerCommonLogData {
       (this.i_activity_type = 0),
       (this.i_time_left = 0),
       (this.i_type = 0),
-      (this.i_quest_id = 0);
+      (this.i_quest_id = 0),
+      (this.i_grade_id = 0);
   }
 }
 exports.ActivityRecallLogData = ActivityRecallLogData;
+class ActivityRegressLogData extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.i_activity_id = 0),
+      (this.i_grade_id = 0),
+      (this.i_question_id = 0);
+  }
+}
+exports.ActivityRegressLogData = ActivityRegressLogData;
+class ActivityPreheatLogData extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1030"),
+      (this.i_activity_id = 0),
+      (this.i_activity_type = 0),
+      (this.i_time_left = 0),
+      (this.i_type = 0);
+  }
+}
+exports.ActivityPreheatLogData = ActivityPreheatLogData;
 class StartSdkPayEvent extends PlayerCommonLogData {
   constructor() {
     super(...arguments), (this.event_id = "1040"), (this.s_sdk_pay_order = "");
@@ -857,4 +898,132 @@ class SdkPayGetServerBillEvent extends PlayerCommonLogData {
   }
 }
 exports.SdkPayGetServerBillEvent = SdkPayGetServerBillEvent;
+class GamepadActiveEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1050"),
+      (this.i_gamepad_count = 0),
+      (this.i_gamepad_time = 0);
+  }
+}
+exports.GamepadActiveEvent = GamepadActiveEvent;
+class MailBindClickEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1051"),
+      (this.i_language = 0),
+      (this.i_if_binded = 0);
+  }
+}
+exports.MailBindClickEvent = MailBindClickEvent;
+class MailBindJumpToWebViewEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments), (this.event_id = "1052"), (this.i_language = 0);
+  }
+}
+exports.MailBindJumpToWebViewEvent = MailBindJumpToWebViewEvent;
+class ShareEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1053"),
+      (this.i_share_channel = 0),
+      (this.i_share_result = 0),
+      (this.i_share_scene = 0);
+  }
+}
+exports.ShareEvent = ShareEvent;
+class SdkStartReview extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1044"),
+      (this.s_channel = ""),
+      (this.i_id = 0);
+  }
+}
+exports.SdkStartReview = SdkStartReview;
+class LinkageSwitchModuleEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1058"),
+      (this.i_activity_id = 0),
+      (this.i_activity_type = 0),
+      (this.i_id = 0),
+      (this.i_if_finish = 0);
+  }
+}
+exports.LinkageSwitchModuleEvent = LinkageSwitchModuleEvent;
+class LinkageClickGoEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1059"),
+      (this.i_activity_id = 0),
+      (this.i_activity_type = 0),
+      (this.i_id = 0);
+  }
+}
+exports.LinkageClickGoEvent = LinkageClickGoEvent;
+class BirthdaySelectRoleEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1062"),
+      (this.i_role_id = 0),
+      (this.b_if_selected_role = !1),
+      (this.i_birthday_count = 0),
+      (this.i_trigger_type = 0);
+  }
+}
+exports.BirthdaySelectRoleEvent = BirthdaySelectRoleEvent;
+class BirthdayRepeatEnterEvent extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments), (this.event_id = "1063"), (this.i_trigger_type = 0);
+  }
+}
+exports.BirthdayRepeatEnterEvent = BirthdayRepeatEnterEvent;
+class PreDownloadEntranceRecord extends PlayerCommonLogData {
+  constructor(t) {
+    super(),
+      (this.event_id = "1054"),
+      (this.i_entrance_id = 0),
+      (this.i_entrance_id = t);
+  }
+}
+exports.PreDownloadEntranceRecord = PreDownloadEntranceRecord;
+class PreDownloadDownloadModeSwitchRecord extends PlayerCommonLogData {
+  constructor(t) {
+    super(),
+      (this.event_id = "1055"),
+      (this.i_download_mode = 0),
+      (this.i_download_mode = t);
+  }
+}
+exports.PreDownloadDownloadModeSwitchRecord =
+  PreDownloadDownloadModeSwitchRecord;
+class PreDownloadPauseRecord extends PlayerCommonLogData {
+  constructor(t) {
+    super(),
+      (this.event_id = "1056"),
+      (this.i_pause_reason = 0),
+      (this.i_pause_reason = t);
+  }
+}
+exports.PreDownloadPauseRecord = PreDownloadPauseRecord;
+class PreDownloadDownloadModeSuccessRecord extends PlayerCommonLogData {
+  constructor(t) {
+    super(),
+      (this.event_id = "1057"),
+      (this.i_download_mode = 0),
+      (this.i_download_mode = t);
+  }
+}
+exports.PreDownloadDownloadModeSuccessRecord =
+  PreDownloadDownloadModeSuccessRecord;
+class CiacconaEnterMainViewLogEvent extends PlayerCommonLogData {
+  constructor(t) {
+    super(),
+      (this.event_id = "156003"),
+      (this.i_trigger_type = 0),
+      (this.i_trigger_type = t);
+  }
+}
+exports.CiacconaEnterMainViewLogEvent = CiacconaEnterMainViewLogEvent;
 //# sourceMappingURL=LogReportDefine.js.map

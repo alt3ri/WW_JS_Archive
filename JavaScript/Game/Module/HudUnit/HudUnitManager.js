@@ -16,9 +16,9 @@ class HudUnitManager {
     this.Hni.delete(t);
   }
   static ShowHud() {
-    if (!this.K2a) {
+    if (!this.QGa) {
       for (const t of this.HudUnitHandleClassArray) this.New(t);
-      this.K2a = !0;
+      this.QGa = !0;
     }
     for (const s of this.Hni.values()) s.OnShowHud();
   }
@@ -31,7 +31,7 @@ class HudUnitManager {
   }
   static Clear() {
     for (const t of this.Hni.values()) t.Destroy();
-    this.Hni.clear(), (this.K2a = !1);
+    this.Hni.clear(), (this.QGa = !1);
   }
   static RefreshHudOnInputControllerChanged(t, s) {
     for (const i of this.Hni.values()) i.OnInputControllerChanged(t, s);
@@ -48,6 +48,6 @@ class HudUnitManager {
   new Array()),
   (HudUnitManager.HudUnitHandleClassMap = new Map()),
   (HudUnitManager.Hni = new Map()),
-  (HudUnitManager.K2a = !1),
+  (HudUnitManager.QGa = !1),
   (HudUnitManager.TickCount = 0);
 //# sourceMappingURL=HudUnitManager.js.map

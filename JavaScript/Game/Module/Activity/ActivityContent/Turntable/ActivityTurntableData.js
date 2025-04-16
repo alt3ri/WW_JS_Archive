@@ -7,18 +7,21 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  ActivityCommonDefine_1 = require("../../ActivityCommonDefine"),
   ActivityData_1 = require("../../ActivityData");
 class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
       (this.QuestStateMap = new Map()),
       (this.QuestList = []),
+      (this.DailyTaskInfo = new Map()),
       (this.AllRewardInfo = new Map()),
       (this.RoundRewardIdMap = new Map()),
       (this.RoundIdList = []),
       (this.TurntableCostConfigId = 0),
       (this.TurntableCostCount = 0),
       (this._Ln = []),
+      (this.TurntableType = 1),
       (this.OnCommonItemCountAnyChange = (t, e) => {
         t === this.TurntableCostConfigId &&
           EventSystem_1.EventSystem.Emit(
@@ -30,97 +33,122 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         var i = t.IsSpecial ? 1 : 0,
           s = e.IsSpecial ? 1 : 0;
         return i == s ? t.Id - e.Id : s - i;
+      }),
+      (this.eLl = (t, e) => {
+        var i =
+            ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableTaskByTaskId(
+              t.Id,
+            ),
+          s =
+            ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableTaskByTaskId(
+              e.Id,
+            );
+        return i.TaskSort === s.TaskSort
+          ? t.Id - e.Id
+          : i.TaskSort - s.TaskSort;
       });
   }
   PhraseEx(t) {
-    (this.QuestList.length = 0), this.QuestStateMap.clear();
     var e =
-      ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableActivityByActivityId(
-        this.Id,
-      );
-    for (let t = 0; t < e.length; t++) {
-      this.QuestList.push(e[t].CoinQuestId);
-      var i = {
-        QuestState: ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
-          e[t].CoinQuestId,
-        ),
-        QuestUnlockStamp: this.TNe(this.BeginOpenTime, t),
-      };
-      this.QuestStateMap.set(e[t].CoinQuestId, i);
-    }
-    var s =
       ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableInfoByActivityId(
         this.Id,
       );
-    if (s) {
-      (this.TurntableCostConfigId = s.CostItemId),
-        (this.TurntableCostCount = s.CostItemCount),
+    if (e) {
+      (this.TurntableCostConfigId = e.CostItemId),
+        (this.TurntableCostCount = e.CostItemCount),
+        (this.TurntableType = e.TurntableType);
+      e = t.Qps;
+      if (e) {
+        if (
+          ((this.QuestList.length = 0),
+          this.QuestStateMap.clear(),
+          this.DailyTaskInfo.clear(),
+          1 === this.TurntableType)
+        ) {
+          var i =
+            ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableActivityByActivityId(
+              this.Id,
+            );
+          for (let t = 0; t < i.length; t++) {
+            this.QuestList.push(i[t].CoinQuestId);
+            var s = {
+              QuestState:
+                ModelManager_1.ModelManager.QuestNewModel.GetQuestState(
+                  i[t].CoinQuestId,
+                ),
+              QuestUnlockStamp: this.TNe(this.BeginOpenTime, t),
+            };
+            this.QuestStateMap.set(i[t].CoinQuestId, s);
+          }
+        } else if (2 === this.TurntableType && e.JS_)
+          for (const c of e.JS_) this.RefreshTask(c, !0);
         this.AllRewardInfo.clear(),
-        this.RoundRewardIdMap.clear(),
-        (this.RoundIdList.length = 0);
-      (s =
-        ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableAwardsByActivityId(
-          this.Id,
-        )),
-        (t = t.Qps);
-      if (t) {
+          this.RoundRewardIdMap.clear(),
+          (this.RoundIdList.length = 0);
         var r,
           n,
-          a = t.sMs,
-          h = t.aMs,
-          o = t.hMs,
+          t =
+            ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableAwardsByActivityId(
+              this.Id,
+            ),
+          a = e.sMs,
+          h = e.aMs,
+          o = e.hMs,
           u = new Map();
-        for (const M of s) {
+        for (const g of t) {
           var f,
-            v,
-            _ = [];
-          for ([f, v] of M.RewardItem) {
-            var l = [{ IncId: 0, ItemId: f }, v];
-            _.push(l);
+            _,
+            l = [];
+          for ([f, _] of g.RewardItem) {
+            var v = [{ IncId: 0, ItemId: f }, _];
+            l.push(v);
           }
-          if (1 !== _.length)
+          if (1 !== l.length)
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Activity",
-                38,
+                37,
                 "[转盘活动] 转盘奖项配置物品数量错误",
-                ["Id", M.Id],
+                ["Id", g.Id],
               );
           else {
             let t = !1;
-            (a || M.GroupId < h || o.includes(M.Id)) && (t = !0);
-            var c = {
-              Id: M.Id,
-              RoundId: M.GroupId,
+            (a || g.GroupId < h || o.includes(g.Id)) && (t = !0);
+            var d = {
+              Id: g.Id,
+              RoundId: g.GroupId,
               IsClaimed: t,
-              RewardItem: _[0],
-              IsSpecial: M.IsSpecial,
+              RewardItem: l[0],
+              IsSpecial: g.IsSpecial,
             };
-            this.AllRewardInfo.set(M.Id, c);
-            let e = u.get(c.RoundId);
-            (e = e || []).push(c), u.set(c.RoundId, e);
+            this.AllRewardInfo.set(g.Id, d);
+            let e = u.get(d.RoundId);
+            (e = e || []).push(d), u.set(d.RoundId, e);
           }
         }
         for ([r, n] of u.entries()) {
           n.sort(this.SNe);
-          var d = [];
-          for (const g of n) d.push(g.Id);
-          this.RoundRewardIdMap.set(r, d), this.RoundIdList.push(r);
+          var M = [];
+          for (const m of n) M.push(m.Id);
+          this.RoundRewardIdMap.set(r, M), this.RoundIdList.push(r);
         }
         this.RoundIdList.sort((t, e) => t - e);
       }
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Activity", 38, "[转盘活动] 未找到对应TurntableInfo", [
+        Log_1.Log.Error("Activity", 37, "[转盘活动] 未找到对应TurntableInfo", [
           "ActivityId",
           this.Id,
         ]);
   }
   GetExDataRedPointShowState() {
     return (
-      this.IsHasPreQuestRedDot() ||
-      this.IsHasNewQuestRedDot() ||
-      this.IsHasRewardRedDot()
+      !!this.IsActivityUnFinished() &&
+      (!!this.IsHasPreQuestRedDot() ||
+        !!this.IsHasRewardRedDot() ||
+        !!this.IsHasUnlockRedDot() ||
+        this.IsHasDailyRedDot() ||
+        this.IsHasNewQuestRedDot())
     );
   }
   GetActivityCurrencyCount() {
@@ -139,8 +167,8 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
       this.QuestStateMap.set(t, r),
       ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
         this.Id,
+        1,
         t,
-        0,
         0,
         2 === s ? 1 : 0,
       ),
@@ -163,8 +191,8 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
       2 === this.QuestStateMap.get(t).QuestState &&
         ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
           this.Id,
+          1,
           t,
-          0,
           0,
           0,
         ),
@@ -185,18 +213,25 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
     return this.QuestList.length - 1;
   }
   IsHasNewQuestRedDot() {
-    if (this.IsActivityUnFinished() && this.GetPreGuideQuestFinishState())
-      for (const t of this.QuestList)
-        if (
-          ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
-            this.Id,
-            0,
-            t,
-            0,
-            0,
+    if (
+      1 === this.TurntableType &&
+      this.IsActivityUnFinished() &&
+      this.GetPreGuideQuestFinishState()
+    )
+      for (const e of this.QuestList) {
+        var t = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e);
+        if (2 === t)
+          if (
+            ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+              this.Id,
+              0,
+              1,
+              e,
+              0,
+            )
           )
-        )
-          return !0;
+            return !0;
+      }
     return !1;
   }
   GetCurrentQuestProgress() {
@@ -210,22 +245,25 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
   }
   TNe(t, e) {
     (t = new Date(t * TimeUtil_1.TimeUtil.InverseMillisecond)),
-      t.setHours(TimeUtil_1.TimeUtil.CrossDayHour),
+      t.getHours() < TimeUtil_1.TimeUtil.CrossDayHour &&
+        t.setDate(t.getDate() - 1),
+      t.setHours(TimeUtil_1.TimeUtil.CrossDayHour, 0, 0, 0),
       (t = t.getTime() * TimeUtil_1.TimeUtil.Millisecond);
     return t + e * TimeUtil_1.TimeUtil.OneDaySeconds;
   }
   SavePreQuestRedDot(t) {
-    ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
-      this.Id,
-      t,
-      0,
-      0,
-      1,
-    ),
+    this.IsHasPreQuestRedDot() &&
+      (ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
+        this.Id,
+        1,
+        t,
+        0,
+        1,
+      ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.Id,
-      );
+      ));
   }
   IsHasPreQuestRedDot() {
     return (
@@ -234,8 +272,8 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
           this.Id,
           0,
+          1,
           this.GetUnFinishPreGuideQuestId(),
-          0,
           0,
         )
     );
@@ -274,6 +312,74 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
   }
   GetRunResult() {
     return this._Ln;
+  }
+  RefreshTask(t, e) {
+    let i = this.DailyTaskInfo.get(t.s5n);
+    if (!i) {
+      if (!e) return;
+      (i = new ActivityCommonDefine_1.ActivityTaskData()),
+        this.DailyTaskInfo.set(t.s5n, i);
+    }
+    i.Refresh(t);
+  }
+  GetAllTurntableDailyQuestData() {
+    return Array.from(this.DailyTaskInfo.values()).sort(this.eLl);
+  }
+  IsHasDailyRedDot() {
+    return (
+      2 === this.TurntableType &&
+      !!this.GetPreGuideQuestFinishState() &&
+      TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp() !==
+        ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+          this.Id,
+          0,
+          3,
+          0,
+          0,
+        )
+    );
+  }
+  SaveDailyRedDot() {
+    var t;
+    this.IsHasDailyRedDot() &&
+      ((t = TimeUtil_1.TimeUtil.GetCurrentCrossDayStamp()),
+      ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
+        this.Id,
+        3,
+        0,
+        0,
+        t,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        this.Id,
+      ));
+  }
+  SaveUnlockRedDot() {
+    this.IsHasUnlockRedDot() &&
+      (ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
+        this.Id,
+        2,
+        0,
+        0,
+        1,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        this.Id,
+      ));
+  }
+  IsHasUnlockRedDot() {
+    return (
+      0 ===
+      ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+        this.Id,
+        0,
+        2,
+        0,
+        0,
+      )
+    );
   }
 }
 exports.ActivityTurntableData = ActivityTurntableData;

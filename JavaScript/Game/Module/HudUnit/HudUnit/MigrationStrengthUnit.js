@@ -20,22 +20,22 @@ const UE = require("ue"),
 class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
-      (this.Nma = new Vector2D_1.Vector2D()),
+      (this.jma = new Vector2D_1.Vector2D()),
       (this.dii = []),
-      (this.b2a = []),
+      (this.BGa = []),
       (this.gii = new UE.Rotator(0, 0, 0)),
-      (this.q2a = [UE.Color.FromHex("#3db9cb"), UE.Color.FromHex("#cb3d55")]),
-      (this.O2a = [UE.Color.FromHex("#234063"), UE.Color.FromHex("#633323")]),
+      (this.bGa = [UE.Color.FromHex("#3db9cb"), UE.Color.FromHex("#cb3d55")]),
+      (this.qGa = [UE.Color.FromHex("#234063"), UE.Color.FromHex("#633323")]),
       (this.EntityHandle = void 0),
       (this.ActorComponent = void 0),
-      (this.rNa = -1),
-      (this.oNa = 0),
-      (this.nNa = !1),
-      (this.HFa = 0),
-      (this.jFa = 0),
-      (this.sNa = 0),
-      (this.VOa = 0),
-      (this.k2a = 1),
+      (this.s3a = -1),
+      (this.a3a = 0),
+      (this.h3a = !1),
+      (this.h5a = 0),
+      (this.l5a = 0),
+      (this.l3a = 0),
+      (this.jka = 0),
+      (this.GGa = 1),
       (this.mii = !1),
       (this.Rii = 0),
       (this.Uii = 0),
@@ -44,7 +44,7 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
       (this.xii = void 0);
   }
   InitData(t) {
-    (this.k2a = t), this.qni(this.k2a), this.kii(this.k2a);
+    (this.GGa = t), this.qni(this.GGa), this.kii(this.GGa);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -63,7 +63,7 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   OnStart() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "洄游鱼玩法充能条Start"),
+      Log_1.Log.Debug("Battle", 17, "洄游鱼玩法充能条Start"),
       this.RootItem.SetAnchorAlign(2, 2);
     for (let t = 0; t < PRELOAD_SINGLE_STRENGTH_ITEM_COUNT; t++)
       this.bii(0 === t);
@@ -71,17 +71,17 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   OnAfterShow() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "洄游鱼玩法充能条显示"),
+      Log_1.Log.Debug("Battle", 17, "洄游鱼玩法充能条显示"),
       this.hga();
   }
   async OnBeforeHideAsync() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "洄游鱼玩法充能条隐藏"),
+      Log_1.Log.Debug("Battle", 17, "洄游鱼玩法充能条隐藏"),
       await this.Wti();
   }
   OnBeforeDestroy() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "洄游鱼玩法充能条Destroy"),
+      Log_1.Log.Debug("Battle", 17, "洄游鱼玩法充能条Destroy"),
       this.RefreshEntity(void 0),
       this.Gii(),
       super.OnBeforeDestroy();
@@ -92,8 +92,8 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
         this.GetTexture(0).SetUIActive(t),
         this.GetTexture(1).SetUIActive(!t);
       var i = this.mii ? 0 : 1;
-      this.GetTexture(3).SetColor(this.q2a[i]);
-      for (const s of this.b2a) s.SetColor(this.O2a[i]);
+      this.GetTexture(3).SetColor(this.bGa[i]);
+      for (const s of this.BGa) s.SetColor(this.qGa[i]);
     }
   }
   qni(t) {
@@ -126,7 +126,7 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
       .GetAttachUIChild(0)
       .GetOwner()
       .GetComponentByClass(UE.UISprite.StaticClass());
-    return this.dii.push(h), this.b2a.push(t), h;
+    return this.dii.push(h), this.BGa.push(t), h;
   }
   Fii(t) {
     return this.dii[t];
@@ -139,72 +139,72 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   SetStrengthPercent(t, i) {
     t = i <= 0 ? 0 : t / i;
-    this.rNa !== t &&
-      (this.oNa < t && -1 !== this.rNa
-        ? (this.sNa = (t - this.oNa) / RECOVER_ANIM_TIME)
-        : ((this.oNa = t),
-          (this.sNa = 0),
-          this.GetTexture(3).SetFillAmount(this.oNa),
+    this.s3a !== t &&
+      (this.a3a < t && -1 !== this.s3a
+        ? (this.l3a = (t - this.a3a) / RECOVER_ANIM_TIME)
+        : ((this.a3a = t),
+          (this.l3a = 0),
+          this.GetTexture(3).SetFillAmount(this.a3a),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Battle", 18, "洄游鱼玩法充能条设置百分比", [
+            Log_1.Log.Debug("Battle", 17, "洄游鱼玩法充能条设置百分比", [
               "",
               t,
             ])),
-      (this.rNa = t),
+      (this.s3a = t),
       this.SetNormal(t >= NORMAL_PERCENT));
   }
   SetRecoverState(t) {
     var i;
-    this.nNa !== t &&
-      ((this.nNa = t),
+    this.h3a !== t &&
+      ((this.h3a = t),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "洄游鱼玩法充能条不衰减", ["enable", t]),
+        Log_1.Log.Debug("Battle", 17, "洄游鱼玩法充能条不衰减", ["enable", t]),
       (i = this.GetTexture(2)),
       t
-        ? ((this.HFa = 1),
-          this.HOa(),
-          (this.VOa = this.oNa),
-          (this.gii.Yaw = 360 * this.VOa),
+        ? ((this.h5a = 1),
+          this.Wka(),
+          (this.jka = this.a3a),
+          (this.gii.Yaw = 360 * this.jka),
           i.SetUIRelativeRotation(this.gii),
           this.GetTexture(6).SetUIRelativeRotation(this.gii),
           i.SetUIActive(!0))
-        : ((this.HFa = 0), this.jOa(), i.SetUIActive(!1)));
+        : ((this.h5a = 0), this.Qka(), i.SetUIActive(!1)));
   }
   TickRecoverAnim(t) {
     var i, s;
-    this.rNa > this.oNa &&
-      ((this.oNa += t * this.sNa),
-      (this.oNa = Math.min(this.oNa, this.rNa)),
-      this.GetTexture(3).SetFillAmount(this.oNa),
+    this.s3a > this.a3a &&
+      ((this.a3a += t * this.l3a),
+      (this.a3a = Math.min(this.a3a, this.s3a)),
+      this.GetTexture(3).SetFillAmount(this.a3a),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Battle",
-        18,
+        17,
         "洄游鱼玩法充能条设置百分比",
-        ["目标", this.rNa],
-        ["当前", this.oNa],
+        ["目标", this.s3a],
+        ["当前", this.a3a],
       ),
-      1 === this.HFa
-        ? ((i = this.oNa - this.VOa),
+      1 === this.h5a
+        ? ((i = this.a3a - this.jka),
           this.GetTexture(6).SetFillAmount(i),
           this.GetTexture(2).SetFillAmount(i),
-          this.oNa === this.rNa &&
-            ((this.HFa = 2), (this.jFa = RECOVER_STAY_TIME)),
+          this.a3a === this.s3a &&
+            ((this.h5a = 2), (this.l5a = RECOVER_STAY_TIME)),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Battle",
-              18,
+              17,
               "洄游鱼玩法充能条设置高亮进入动画",
-              ["上限", this.oNa],
-              ["下限", this.VOa],
+              ["上限", this.a3a],
+              ["下限", this.jka],
             ))
-        : 2 === this.HFa
-          ? ((this.jFa -= t), this.jFa <= 0 && (this.HFa = 3))
-          : 3 === this.HFa &&
-            ((this.VOa += t * this.sNa),
-            this.VOa >= this.oNa && ((this.VOa = this.oNa), (this.HFa = 0)),
-            (this.gii.Yaw = 360 * this.VOa),
-            (i = this.oNa - this.VOa),
+        : 2 === this.h5a
+          ? ((this.l5a -= t), this.l5a <= 0 && (this.h5a = 3))
+          : 3 === this.h5a &&
+            ((this.jka += t * this.l3a),
+            this.jka >= this.a3a && ((this.jka = this.a3a), (this.h5a = 0)),
+            (this.gii.Yaw = 360 * this.jka),
+            (i = this.a3a - this.jka),
             (t = this.GetTexture(2)),
             (s = this.GetTexture(6)),
             t.SetUIRelativeRotation(this.gii),
@@ -214,10 +214,10 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "Battle",
-              18,
+              17,
               "洄游鱼玩法充能条设置高亮退出",
-              ["上限", this.oNa],
-              ["下限", this.VOa],
+              ["上限", this.a3a],
+              ["下限", this.jka],
             );
   }
   RefreshTargetPosition(t) {
@@ -228,10 +228,10 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
       ((i = this.ActorComponent.ActorLocation),
       HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
         i,
-        this.Nma,
+        this.jma,
       )) &&
-      ((i = this.Nma.X),
-      (s = this.Nma.Y),
+      ((i = this.jma.X),
+      (s = this.jma.Y),
       0 === this.Rii && 0 === this.Uii
         ? ((this.Rii = i),
           (this.Uii = s),
@@ -281,10 +281,10 @@ class MigrationStrengthUnit extends HudUnitBase_1.HudUnitBase {
     this.xii &&
       (TimerSystem_1.TimerSystem.Remove(this.xii), (this.xii = void 0));
   }
-  HOa() {
+  Wka() {
     this.StopTweenAnim(10), this.PlayTweenAnim(9);
   }
-  jOa() {
+  Qka() {
     this.StopTweenAnim(9), this.PlayTweenAnim(10);
   }
 }

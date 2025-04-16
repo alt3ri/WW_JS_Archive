@@ -69,7 +69,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Role",
-              44,
+              43,
               "该角色的好感度配置FavorRoleInfo找不到！！！",
               ["角色Id", e],
             );
@@ -82,7 +82,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Role",
-                44,
+                43,
                 "该角色的好感度配置FavorWord找不到！！！",
                 ["角色Id", e],
               ));
@@ -95,7 +95,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Role",
-                44,
+                43,
                 "该角色的好感度配置Motion找不到！！！",
                 ["角色Id", e],
               ));
@@ -108,7 +108,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Role",
-                44,
+                43,
                 "该角色的好感度配置FavorGoods找不到！！！",
                 ["角色Id", e],
               ));
@@ -159,7 +159,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
     (this.d1o = this.ExtraParams),
       void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleFavorTabView",
           ])

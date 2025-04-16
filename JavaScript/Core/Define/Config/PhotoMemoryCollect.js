@@ -45,6 +45,9 @@ class PhotoMemoryCollect {
   get TraceEntityId() {
     return this.traceentityid();
   }
+  get TrackMapId() {
+    return this.trackmapid();
+  }
   get TraceMarkId() {
     return this.tracemarkid();
   }
@@ -84,32 +87,68 @@ class PhotoMemoryCollect {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   themebg(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   bgresourcem(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   bgresourcef(t) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   title(t) {
-    var s = this.J7.__offset(this.z7, 18);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 18),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   tipsdesc(t) {
-    var s = this.J7.__offset(this.z7, 20);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 20),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   clueid() {
     var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   desc(t) {
-    var s = this.J7.__offset(this.z7, 24);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 24),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   dropid() {
     var t = this.J7.__offset(this.z7, 26);
@@ -119,27 +158,31 @@ class PhotoMemoryCollect {
     var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  tracemarkid() {
+  trackmapid() {
     var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  questid() {
+  tracemarkid() {
     var t = this.J7.__offset(this.z7, 32);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  questid() {
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetQuestidlistAt(t) {
     return this.questidlist(t);
   }
   questidlist(t) {
-    var s = this.J7.__offset(this.z7, 34);
+    var s = this.J7.__offset(this.z7, 36);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   questidlistLength() {
-    var t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   questidlistArray() {
-    var t = this.J7.__offset(this.z7, 34);
+    var t = this.J7.__offset(this.z7, 36);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

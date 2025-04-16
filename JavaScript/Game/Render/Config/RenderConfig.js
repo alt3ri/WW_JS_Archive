@@ -5,6 +5,9 @@ const UE = require("ue"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol");
 exports.INVALID_SECTION_INDEX = 99999;
 class RenderConfig {
+  static GenerateExtraMeshName(e) {
+    return e + "_ExtraMesh";
+  }
   static GetBodyTypeByName(e) {
     return (
       this.Wlr ||
@@ -50,6 +53,7 @@ class RenderConfig {
           [3, RenderConfig.MaterialControlHuluCaseArray],
           [5, RenderConfig.MaterialControlOtherCaseArray],
           [4, RenderConfig.MaterialControlWeaponAndHuluCaseArray],
+          [6, RenderConfig.MaterialControlExtraBodyCaseArray],
         ])),
       this.Qlr.get(e)
     );
@@ -106,7 +110,8 @@ class RenderConfig {
                                       : 17;
   }
 }
-((exports.RenderConfig = RenderConfig).UseCharUnrealCacheObject = !0),
+((exports.RenderConfig = RenderConfig).UseMaterialContainerV2 = !0),
+  (RenderConfig.UseCharUnrealCacheObject = !0),
   (RenderConfig.MaterialControlAllCaseArray = [
     "CharacterMesh0",
     "WeaponCase0",
@@ -120,6 +125,11 @@ class RenderConfig {
     "OtherCase2",
     "OtherCase3",
     "OtherCase4",
+    "GenericCase0",
+    "GenericCase1",
+    "GenericCase2",
+    "GenericCase3",
+    "GenericCase4",
   ]),
   (RenderConfig.MaterialControlBodyCaseArray = ["CharacterMesh0"]),
   (RenderConfig.MaterialControlWeaponCaseArray = [
@@ -145,6 +155,13 @@ class RenderConfig {
     "OtherCase3",
     "OtherCase4",
   ]),
+  (RenderConfig.MaterialControlExtraBodyCaseArray = [
+    "CharacterMesh0_ExtraMesh",
+  ]),
+  (RenderConfig.MeshPartsHeadArray = [0, 1, 2, 3, 4]),
+  (RenderConfig.Wlr = void 0),
+  (RenderConfig.Klr = void 0),
+  (RenderConfig.Qlr = void 0),
   (RenderConfig.CharMaterialContainerDataPath =
     "/Game/Aki/Render/RuntimeBP/Character/MaterialContainer/DA_CharacterMaterialContainerData.DA_CharacterMaterialContainerData"),
   (RenderConfig.HolographicPath =
@@ -186,6 +203,9 @@ class RenderConfig {
   (RenderConfig.EmissionIntensity = new UE.FName("E_Emission_Intensity")),
   (RenderConfig.UseDitherEffect = new UE.FName("E_Dither_UseDither")),
   (RenderConfig.DitherValue = new UE.FName("E_Dither_DitherValue")),
+  (RenderConfig.DitherValueMainPass = new UE.FName(
+    "E_Dither_DitherValue_MainPass",
+  )),
   (RenderConfig.UseDitherEffect2 = new UE.FName("E_Dither_UseDither2")),
   (RenderConfig.DitherValue2 = new UE.FName("E_Dither_DitherValue2")),
   (RenderConfig.CharacterAmbientColor = new UE.FName("CharacterAmbientColor")),
@@ -206,6 +226,7 @@ class RenderConfig {
   (RenderConfig.UIName = new UE.FName("UI")),
   (RenderConfig.GlobalRainIntensity = new UE.FName("GlobalRainIntensity")),
   (RenderConfig.GlobalSnowIntensity = new UE.FName("GlobalSnowIntensity")),
+  (RenderConfig.GlobalWindSpeed = new UE.FName("GlobalWindSpeed")),
   (RenderConfig.GlobalGrassAO = new UE.FName("GlobalGrassAO")),
   (RenderConfig.GlobalMainLightVector = new UE.FName(
     "GlobalSceneMainLightDirection",
@@ -235,8 +256,11 @@ class RenderConfig {
   (RenderConfig.PhysicsActor = new UE.FName("PhysicsActor")),
   (RenderConfig.WaterCollisionProfileName = new UE.FName("水体")),
   (RenderConfig.UIShowBrightness = new UE.FName("Lumin")),
+  (RenderConfig.UIShowSaturation = new UE.FName("Saturation")),
+  (RenderConfig.UIShowContrast = new UE.FName("Contrast")),
   (RenderConfig.GlobalTimeHour = new UE.FName("GlobalTimeHour")),
   (RenderConfig.GlobalTimeMinutes = new UE.FName("GlobalTimeMinutes")),
+  (RenderConfig.GravityDirection = new UE.FName("GravityDirection")),
   (RenderConfig.IdMaterialContainer = 1),
   (RenderConfig.IdMaterialController = 2),
   (RenderConfig.IdDitherEffect = 3),
@@ -248,6 +272,10 @@ class RenderConfig {
   (RenderConfig.IdBodyEffect = 9),
   (RenderConfig.IdDecalShadow = 10),
   (RenderConfig.IdGrassInteraction = 11),
+  (RenderConfig.IdExtraMesh = 12),
+  (RenderConfig.IdMaterialContainerV2 = 13),
+  (RenderConfig.IdMaterialControllerV2 = 14),
+  (RenderConfig.IdEnviInteractionEffect = 15),
   (RenderConfig.EmptyMaterialPath =
     "/Game/Aki/Render/Shaders/Character/MI_Empty"),
   (RenderConfig.E_Action_UseBaseColorScale = new UE.FName(

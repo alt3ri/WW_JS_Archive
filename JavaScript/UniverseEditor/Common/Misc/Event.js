@@ -25,14 +25,14 @@ class Emitter {
     this.Size = 0;
   }
   Dispose() {
-    this.VAa ||
-      ((this.VAa = !0),
+    this.dAa ||
+      ((this.dAa = !0),
       this.Listeners && ((this.Listeners = void 0), (this.Size = 0)));
   }
   get Event() {
     return (
-      (this.HAa ??= (t, i, e) => {
-        if (this.VAa) return LifeCycle_1.Disposable.None;
+      (this.CAa ??= (t, i, e) => {
+        if (this.dAa) return LifeCycle_1.Disposable.None;
         i = i ? t.bind(i) : t;
         const s = new UniqueContainer(i);
         this.Listeners
@@ -42,7 +42,7 @@ class Emitter {
           : (this.Listeners = s),
           this.Size++;
         t = (0, LifeCycle_1.toDisposable)(() => {
-          this.jAa(s);
+          this.gAa(s);
         });
         return (
           e instanceof LifeCycle_1.DisposableStore
@@ -51,10 +51,10 @@ class Emitter {
           t
         );
       }),
-      this.HAa
+      this.CAa
     );
   }
-  jAa(t) {
+  gAa(t) {
     if (this.Listeners)
       if (1 === this.Size) (this.Listeners = void 0), (this.Size = 0);
       else {
@@ -67,14 +67,14 @@ class Emitter {
         i.splice(t, 1);
       }
   }
-  WAa(t, i) {
+  fAa(t, i) {
     t && t.Value(i);
   }
   Fire(t) {
     if (this.Listeners)
       if (this.Listeners instanceof UniqueContainer)
-        this.WAa(this.Listeners, t);
-      else for (const i of this.Listeners) this.WAa(i, t);
+        this.fAa(this.Listeners, t);
+      else for (const i of this.Listeners) this.fAa(i, t);
   }
 }
 exports.Emitter = Emitter;

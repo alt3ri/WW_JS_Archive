@@ -116,10 +116,10 @@ let SceneItemJigsawItemComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Hte = this.Entity.GetComponent(200)),
         (this.CreatureDataComp = this.Entity.GetComponent(0)),
-        (this.fcn = this.Entity.GetComponent(146)),
-        (this.Lie = this.Entity.GetComponent(181)),
+        (this.fcn = this.Entity.GetComponent(157)),
+        (this.Lie = this.Entity.GetComponent(194)),
         this.Lie?.AddTagAddOrRemoveListener(793256493, this.gIe),
         this.Lie?.AddTagAddOrRemoveListener(741712776, this.gIe),
         this.Lie?.AddTagAddOrRemoveListener(1488947861, this.gIe),
@@ -140,7 +140,7 @@ let SceneItemJigsawItemComponent =
     wcn() {
       var t = this.Config.FillCfg;
       if (t.Type === IComponent_1.EFillType.Fixed)
-        if (void 0 !== t.ModelId) {
+        if (t.ModelId) {
           var e = [];
           for (const i of this.Fcn) e.push(i);
           this.fcn.InitGenerateInfo(t.ModelId.toString(), e, (t) =>
@@ -188,7 +188,7 @@ let SceneItemJigsawItemComponent =
             (s = Vector2D_1.Vector2D.Create(t, t).MultiplyEqual(
               Vector2D_1.Vector2D.Create(i, e),
             )),
-            (t = new UE.Vector(s.X, -s.Y, 0)),
+            (t = new UE.VectorDouble(s.X, -s.Y, 0)),
             (i = Vector_1.Vector.Create(0, 0, 0)).FromUeVector(
               this.Hte.ActorTransform.TransformPosition(t),
             ),
@@ -270,7 +270,7 @@ let SceneItemJigsawItemComponent =
   });
 (SceneItemJigsawItemComponent = SceneItemJigsawItemComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(125)],
+    [(0, RegisterComponent_1.RegisterComponent)(136)],
     SceneItemJigsawItemComponent,
   )),
   (exports.SceneItemJigsawItemComponent = SceneItemJigsawItemComponent);

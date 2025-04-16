@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, o) {
     var s,
-      r = arguments.length,
-      h =
-        r < 3
+      h = arguments.length,
+      r =
+        h < 3
           ? e
           : null === o
             ? (o = Object.getOwnPropertyDescriptor(e, i))
             : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      h = Reflect.decorate(t, e, i, o);
+      r = Reflect.decorate(t, e, i, o);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (s = t[n]) && (h = (r < 3 ? s(h) : 3 < r ? s(e, i, h) : s(e, i)) || h);
-    return 3 < r && h && Object.defineProperty(e, i, h), h;
+        (s = t[n]) && (r = (h < 3 ? s(r) : 3 < h ? s(e, i, r) : s(e, i)) || r);
+    return 3 < h && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleLocationSafetyComponent = void 0);
@@ -35,12 +35,12 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   TeleportController_1 = require("../../../../Module/Teleport/TeleportController"),
   WorldController_1 = require("../../../../World/Controller/WorldController"),
-  CharacterController_1 = require("../../CharacterController"),
   CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds"),
   CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  LocomotionUtils_1 = require("../../LocomotionUtils"),
   PROFILE_KEY = "SafetyTrace",
   PLANAR_LIMIT = 32e5,
-  HIGHT_LIMIT = -2e5,
+  HIGHT_LIMIT = -1e6,
   disableTag = [-1446183172],
   TELEPORT_THREHOLD = 1e3,
   TELEPORT_THREHOLD_SQUARED = TELEPORT_THREHOLD * TELEPORT_THREHOLD,
@@ -96,10 +96,10 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       (this.vri = new Array()),
       (this.son = 0),
       (this.sxr = 0),
-      (this.Rya = LOW_FREQ_MAX_NOT_SAFETY_COUNT),
-      (this.Aya = LOW_FREQ_TEST_INTERNAL),
-      (this.Uya = new CachedSafetyLocationRecorder()),
-      (this.xya = new ConfigSafetyLocationRecorder()),
+      (this.Uya = LOW_FREQ_MAX_NOT_SAFETY_COUNT),
+      (this.xya = LOW_FREQ_TEST_INTERNAL),
+      (this.Pya = new CachedSafetyLocationRecorder()),
+      (this.wya = new ConfigSafetyLocationRecorder()),
       (this.lon = 0),
       (this.j3 = void 0),
       (this._ae = Vector_1.Vector.Create()),
@@ -109,11 +109,11 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       (this.uon = 0),
       (this.Qia = Vector_1.Vector.Create()),
       (this.Kia = Rotator_1.Rotator.Create()),
-      (this.Fya = void 0),
-      (this.Vya = void 0),
+      (this.Hya = void 0),
+      (this.jya = void 0),
       (this.I3r = (t) => {
         var e,
-          i = t.GetComponent(88);
+          i = t.GetComponent(95);
         i &&
           (MathUtils_1.MathUtils.IsValidVector(i.Qia)
             ? this.Qia.DeepCopy(i.Qia)
@@ -136,44 +136,44 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
                 ["Rotator", i.Kia],
               ),
           this.Hte.IsRoleAndCtrlByMe) &&
-          (this.xya.SafetyLocationConfigMap.clear(),
-          i.xya.SafetyLocationConfigMap.forEach((t, e) => {
-            this.xya.SafetyLocationConfigMap.set(e, t);
+          (this.wya.SafetyLocationConfigMap.clear(),
+          i.wya.SafetyLocationConfigMap.forEach((t, e) => {
+            this.wya.SafetyLocationConfigMap.set(e, t);
           }),
-          i.xya.SafetyLocationConfigMap.clear(),
-          this.Pya(),
-          (this.Uya.IsSafety = !1),
-          i.Uya.IsSafety) &&
+          i.wya.SafetyLocationConfigMap.clear(),
+          this.Bya(),
+          (this.Pya.IsSafety = !1),
+          i.Pya.IsSafety) &&
           ((t = t.GetComponent(3)).DefaultHalfHeight ===
             this.Hte.DefaultHalfHeight &&
           t.DefaultRadius === this.Hte.DefaultRadius
-            ? ((this.Uya.IsSafety = !0),
-              this.Uya.SafetyLocation.DeepCopy(i.Uya.SafetyLocation))
-            : (((e = Vector_1.Vector.Create(i.Uya.SafetyLocation)).Z +=
+            ? ((this.Pya.IsSafety = !0),
+              this.Pya.SafetyLocation.DeepCopy(i.Pya.SafetyLocation))
+            : (((e = Vector_1.Vector.Create(i.Pya.SafetyLocation)).Z +=
                 this.Hte.DefaultHalfHeight - t.DefaultHalfHeight),
-              (this.Uya.IsSafety = this.con(e)),
-              this.Uya.IsSafety && this.Uya.SafetyLocation.DeepCopy(e)),
+              (this.Pya.IsSafety = this.con(e)),
+              this.Pya.IsSafety && this.Pya.SafetyLocation.DeepCopy(e)),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Movement",
             6,
             "Inherit LastSafety",
-            ["IsSafety", this.Uya.IsSafety],
-            ["OldLocation", i.Uya.SafetyLocation],
-            ["NewLocation", this.Uya.SafetyLocation],
+            ["IsSafety", this.Pya.IsSafety],
+            ["OldLocation", i.Pya.SafetyLocation],
+            ["NewLocation", this.Pya.SafetyLocation],
           );
       }),
       (this.bpr = () => {
         this._on = !0;
       }),
       (this.Ilt = () => {
-        (this._on = !1), (this.Uya.IsSafety = !1), (this.lon = 0);
+        (this._on = !1), (this.Pya.IsSafety = !1), (this.lon = 0);
       }),
-      (this.Oma = () => {
-        (this.Uya.IsSafety = !1), (this.lon = 0);
+      (this.Vma = () => {
+        (this.Pya.IsSafety = !1), (this.lon = 0);
       }),
       (this.mon = () => {
-        (this.Uya.IsSafety = !1), (this.lon = 0);
+        (this.Pya.IsSafety = !1), (this.lon = 0);
       }),
       (this.don = (t, e) => {
         e
@@ -184,7 +184,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
             ++this.son)
           : (--this.son,
             0 === this.son &&
-              ((this.Uya.IsSafety = !1),
+              ((this.Pya.IsSafety = !1),
               this.Enable(
                 this.sxr,
                 "[RoleLocationSafetyComponent.OnDisableTagsChanged] 不含坐下Tag",
@@ -192,11 +192,11 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       });
   }
   static get Dependencies() {
-    return [3, 161];
+    return [3, 173];
   }
   OnStart() {
     (this.Hte = this.Entity.GetComponent(3)),
-      (this.rJo = this.Entity.GetComponent(161)),
+      (this.rJo = this.Entity.GetComponent(173)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.RoleOnStateInherit,
@@ -213,7 +213,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.ElevatorMove,
-        this.Oma,
+        this.Vma,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
@@ -221,7 +221,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
         this.mon,
       ),
       (this.son = 0);
-    var t = this.Entity.GetComponent(190);
+    var t = this.Entity.GetComponent(203);
     if (t)
       for (const e of disableTag)
         t.HasTag(e) && ++this.son,
@@ -269,7 +269,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.ElevatorMove,
-        this.Oma,
+        this.Vma,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
@@ -282,16 +282,16 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
     return !(this.vri.length = 0);
   }
   OnActivate() {
-    this.Uya.SafetyLocation.DeepCopy(this.Hte.ActorLocationProxy),
-      (this.Uya.IsSafety = !1);
+    this.Pya.SafetyLocation.DeepCopy(this.Hte.ActorLocationProxy),
+      (this.Pya.IsSafety = !1);
   }
   OnEnable() {
     return (
       this.Hte &&
-        !this.Uya.IsSafety &&
-        ((this.Uya.IsSafety = this.con(this.Hte.ActorLocationProxy)),
-        this.Uya.IsSafety) &&
-        this.Uya.SafetyLocation.DeepCopy(this.Hte.ActorLocationProxy),
+        !this.Pya.IsSafety &&
+        ((this.Pya.IsSafety = this.con(this.Hte.ActorLocationProxy)),
+        this.Pya.IsSafety) &&
+        this.Pya.SafetyLocation.DeepCopy(this.Hte.ActorLocationProxy),
       !0
     );
   }
@@ -299,7 +299,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
     if (!MathUtils_1.MathUtils.IsValidVector(t))
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Movement", 32, "当前角色坐标包含NaN", [
+          Log_1.Log.Error("Movement", 31, "当前角色坐标包含NaN", [
             "location",
             t,
           ]),
@@ -332,8 +332,8 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
         if (!(o instanceof TsBaseCharacter_1.default))
           return (
             (o = e.HitResult.TimeArray.Get(t)),
-            (this.Fya = e.HitResult?.Actors.Get(t)),
-            (this.Vya = e.HitResult?.Components.Get(t)),
+            (this.Hya = e.HitResult?.Actors.Get(t)),
+            (this.jya = e.HitResult?.Components.Get(t)),
             o > 1 - MathUtils_1.MathUtils.SmallNumber
           );
       }
@@ -342,32 +342,34 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
   }
   OnTick(t) {
     this.uon > Time_1.Time.WorldTime ||
-      ((this.uon = Time_1.Time.WorldTime + this.Aya), !this.Active) ||
-      !this.Valid ||
-      this._on ||
-      (this.Hte.IsRoleAndCtrlByMe &&
+      ((this.uon = Time_1.Time.WorldTime + this.xya),
+      this.Active &&
+        this.Valid &&
+        !this._on &&
+        !ModelManager_1.ModelManager.GameModeModel.Loading &&
+        this.Hte.IsRoleAndCtrlByMe &&
         !ModelManager_1.ModelManager.PlotModel.IsInPlot &&
         this.Hte.IsDefaultCapsule &&
         this.rJo.MoveState !==
           CharacterUnifiedStateTypes_1.ECharMoveState.Swing &&
         this.Entity.Id ===
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Id &&
-        this.kma());
+        this.Hma());
   }
-  kma() {
+  Hma() {
     this.rJo.PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Ground ||
     this.Con(this.Hte.ActorLocationProxy)
       ? this.con(this.Hte.ActorLocationProxy)
-        ? this.Entity.GetComponent(160)?.GetBuffById(
+        ? this.Entity.GetComponent(172)?.GetBuffById(
             CharacterBuffIds_1.buffId.ElevatorBuff,
           ) ||
           (this.rJo.PositionState ===
             CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
-            ((this.Uya.IsSafety = !0),
-            this.Uya.SafetyLocation.DeepCopy(this.Hte.ActorLocationProxy)),
+            ((this.Pya.IsSafety = !0),
+            this.Pya.SafetyLocation.DeepCopy(this.Hte.ActorLocationProxy)),
           (this.lon = 0))
-        : ++this.lon >= this.Rya && ((this.lon = 0), this.BackToSafetyPlace())
+        : ++this.lon >= this.Uya && ((this.lon = 0), this.BackToSafetyPlace())
       : WorldController_1.WorldController.RequestToNearestTeleport();
   }
   OnAfterTick(t) {
@@ -414,46 +416,46 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
       !1)
     );
   }
-  Pya() {
+  Bya() {
     let t = IComponent_1.EDetectionFrequency.Low;
-    for (const e of this.xya.SafetyLocationConfigMap.values())
+    for (const e of this.wya.SafetyLocationConfigMap.values())
       (freqEnumToLevelNum.get(e.DetectionFrequency) ?? 0) >
         (freqEnumToLevelNum.get(t) ?? 0) && (t = e.DetectionFrequency);
     switch (t) {
       case IComponent_1.EDetectionFrequency.Low:
-        (this.Aya = LOW_FREQ_TEST_INTERNAL),
-          (this.Rya = LOW_FREQ_MAX_NOT_SAFETY_COUNT);
+        (this.xya = LOW_FREQ_TEST_INTERNAL),
+          (this.Uya = LOW_FREQ_MAX_NOT_SAFETY_COUNT);
         break;
       case IComponent_1.EDetectionFrequency.Medium:
-        (this.Aya = MID_FREQ_TEST_INTERNAL),
-          (this.Rya = MID_FREQ_MAX_NOT_SAFETY_COUNT);
+        (this.xya = MID_FREQ_TEST_INTERNAL),
+          (this.Uya = MID_FREQ_MAX_NOT_SAFETY_COUNT);
         break;
       case IComponent_1.EDetectionFrequency.High:
-        (this.Aya = HIGH_FREQ_TEST_INTERNAL),
-          (this.Rya = HIGH_FREQ_MAX_NOT_SAFETY_COUNT);
+        (this.xya = HIGH_FREQ_TEST_INTERNAL),
+          (this.Uya = HIGH_FREQ_MAX_NOT_SAFETY_COUNT);
         break;
       case IComponent_1.EDetectionFrequency.SuperHigh:
-        (this.Aya = SUPER_HIGH_FREQ_TEST_INTERNAL),
-          (this.Rya = SUPER_HIGH_FREQ_MAX_NOT_SAFETY_COUNT);
+        (this.xya = SUPER_HIGH_FREQ_TEST_INTERNAL),
+          (this.Uya = SUPER_HIGH_FREQ_MAX_NOT_SAFETY_COUNT);
     }
   }
   AddSafetyLocationConfig(t, e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Role", 40, "场景实体向玩家注册安全位置信息", [
+      Log_1.Log.Info("Role", 39, "场景实体向玩家注册安全位置信息", [
         "SceneItemId",
         t.Id,
       ]),
-      this.xya.SafetyLocationConfigMap.set(t.Id, e),
-      this.Pya();
+      this.wya.SafetyLocationConfigMap.set(t.Id, e),
+      this.Bya();
   }
   RemoveSafetyLocationConfig(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Role", 40, "场景实体向玩家注册安全位置信息", [
+      Log_1.Log.Info("Role", 39, "场景实体向玩家注册安全位置信息", [
         "SceneItemId",
         t.Id,
       ]),
-      this.xya.SafetyLocationConfigMap.delete(t.Id),
-      this.Pya();
+      this.wya.SafetyLocationConfigMap.delete(t.Id),
+      this.Bya();
   }
   BackToSafetyPlace() {
     Log_1.Log.CheckInfo() &&
@@ -462,12 +464,12 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
         6,
         "BackToSafetyPlace",
         ["From", this.Hte.ActorLocationProxy],
-        ["HitActor", this.Fya?.GetName()],
-        ["HitComp", this.Vya?.GetName()],
-        ["Transform", this.Fya?.GetTransform()],
+        ["HitActor", this.Hya?.GetName()],
+        ["HitComp", this.jya?.GetName()],
+        ["Transform", this.Hya?.D_GetTransform()],
       );
     let t = void 0;
-    (t = this.xya.GetSafetyLocation())
+    (t = this.wya.GetSafetyLocation())
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Movement", 6, "BackToSafetyPlace Scene", ["To", t]),
         TeleportController_1.TeleportController.TeleportToPositionNoLoading(
@@ -475,7 +477,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
           void 0,
           "BackToSafetyPlace.Scene",
         ).finally(void 0))
-      : CharacterController_1.CharacterController.FindSpaceForSafety(
+      : LocomotionUtils_1.LocomotionUtils.FindSpaceForSafety(
             this.Hte,
             this.Hte.ScaledHalfHeight,
             this.Hte.ScaledRadius,
@@ -491,7 +493,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
             "BackToSafetyPlace.Space",
             !1,
           ))
-        : (t = this.Uya.GetSafetyLocation()) &&
+        : (t = this.Pya.GetSafetyLocation()) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Movement", 6, "BackToSafetyPlace Last", ["To", t]),
           Vector_1.Vector.DistSquared(this.Hte.ActorLocationProxy, t) >
@@ -509,7 +511,7 @@ let RoleLocationSafetyComponent = class RoleLocationSafetyComponent extends Enti
   }
 };
 (RoleLocationSafetyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(88)],
+  [(0, RegisterComponent_1.RegisterComponent)(95)],
   RoleLocationSafetyComponent,
 )),
   (exports.RoleLocationSafetyComponent = RoleLocationSafetyComponent);

@@ -44,11 +44,21 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
           ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(e);
         this.Ddo(e),
           1 === this.d1o.RoleViewState &&
+            ((e = i.SkillId),
+            (i =
+              0 <
+              (i =
+                ModelManager_1.ModelManager.RoleModel.GetUpgradeSkillIdIfUpgraded(
+                  e,
+                  this.dFe,
+                ))
+                ? i
+                : e),
             RoleController_1.RoleController.SendRoleSkillViewRequest(
               this.dFe,
-              i.SkillId,
+              i,
               this.Rdo,
-            );
+            ));
       }),
       (this.Qco = () => {
         this.UiViewSequence.StopSequenceByKey("MoveLeft"),
@@ -114,7 +124,7 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
     (this.d1o = this.ExtraParams),
       void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleSkillTreeView",
           ])
@@ -215,20 +225,15 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
   }
   Tdo() {
     if (this.Sdo) {
-      var i = this.Sdo.GetRoleId(),
-        t = this.Sdo.GetSkillNodeId();
+      var i = this.Sdo.GetRoleId();
       let e = void 0;
       e = 1 === this.d1o.RoleViewState ? this.Rdo : this.xdo;
-      var s = this.Sdo.GetType();
-      4 === s || 3 === s
+      var t = this.Sdo.GetType();
+      4 === t || 3 === t
         ? e()
-        : ((s =
-            ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(t)),
-          RoleController_1.RoleController.SendRoleSkillViewRequest(
-            i,
-            s.SkillId,
-            e,
-          ));
+        : ((t =
+            0 < (t = this.Sdo.GetUpgradeSkillId()) ? t : this.Sdo.GetSkillId()),
+          RoleController_1.RoleController.SendRoleSkillViewRequest(i, t, e));
     }
   }
   Refresh() {

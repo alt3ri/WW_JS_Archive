@@ -7,13 +7,13 @@ const UE = require("ue"),
   ModelBase_1 = require("../Framework/ModelBase"),
   MathUtils_1 = require("../Utils/MathUtils");
 class AudioBox {
-  constructor(e, t, i) {
-    (this.Priority = e), (this.PbDataId = t), (this.BoxType = i);
+  constructor(e, t, r) {
+    (this.Priority = e), (this.PbDataId = t), (this.BoxType = r);
   }
 }
 (exports.AudioBox = AudioBox).Compare = (e, t) => {
-  let i = t.Priority - e.Priority;
-  return 0 === i && i--, i;
+  let r = t.Priority - e.Priority;
+  return 0 === r && r--, r;
 };
 class AudioModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -24,14 +24,18 @@ class AudioModel extends ModelBase_1.ModelBase {
       AudioModel.Y6 ||
         (AudioModel.Y6 = ActorSystem_1.ActorSystem.Get(
           UE.BP_Wwise_AudioSpectrum_C.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
         )),
       AudioModel.Y6
     );
   }
   static DestroySpectrumActor() {
     AudioModel.Y6 &&
-      (ActorSystem_1.ActorSystem.Put(AudioModel.Y6), (AudioModel.Y6 = void 0));
+      (ActorSystem_1.ActorSystem.Put(
+        "AudioModel.DestroySpectrumActor",
+        AudioModel.Y6,
+      ),
+      (AudioModel.Y6 = void 0));
   }
   OnInit() {
     return (
@@ -44,28 +48,28 @@ class AudioModel extends ModelBase_1.ModelBase {
     return (this.Q6 = void 0), !(this.X6 = void 0);
   }
   UpdateAudioBoxQueue(e, t) {
-    let i = void 0,
-      r = void 0;
+    let r = void 0,
+      i = void 0;
     switch (e.BoxType) {
       case "AudioAMB":
-        this.Q6 && !this.Q6.Empty && (i = this.Q6.Top), (r = this.Q6);
+        this.Q6 && !this.Q6.Empty && (r = this.Q6.Top), (i = this.Q6);
         break;
       case "AudioBGM":
-        this.X6 && !this.X6.Empty && (i = this.X6.Top), (r = this.X6);
+        this.X6 && !this.X6.Empty && (r = this.X6.Top), (i = this.X6);
         break;
       default:
         return;
     }
-    var o = i === e;
+    var o = r === e;
     switch (t) {
       case 0:
-        if ((r.Push(e), r.Top === e)) return r.Top;
+        if ((i.Push(e), i.Top === e)) return i.Top;
         break;
       case 1:
-        if ((r.Remove(e), o && !r.Empty)) return r.Top;
+        if ((i.Remove(e), o && !i.Empty)) return i.Top;
         break;
       case 2:
-        if (o) return r.Top;
+        if (o) return i.Top;
         break;
       default:
         return;

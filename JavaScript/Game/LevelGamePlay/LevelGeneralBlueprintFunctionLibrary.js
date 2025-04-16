@@ -4,6 +4,7 @@ const UE = require("ue"),
   TsInteractionUtils_1 = require("../Module/Interaction/TsInteractionUtils"),
   LevelGeneralCommons_1 = require("./LevelGeneralCommons");
 class LevelGeneralBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static UpdateEntityTag(e, t, n) {
     LevelGeneralCommons_1.LevelGeneralCommons.UpdateEntityTag(e, t, n);
   }

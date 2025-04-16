@@ -103,7 +103,7 @@ class ForgingModel extends ModelBase_1.ModelBase {
   }
   CreateForgingDataList() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Forging", 50, "初始化锻造数据相关数据列表"),
+      Log_1.Log.Debug("Forging", 49, "初始化锻造数据相关数据列表"),
       this.sLi || (this.sLi = new Array()),
       (this.sLi.length = 0);
     for (const o of ConfigManager_1.ConfigManager.ForgingConfig.GetForgeList()) {
@@ -112,7 +112,7 @@ class ForgingModel extends ModelBase_1.ModelBase {
         i = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
           e.ItemId,
         ),
-        e = {
+        i = {
           MainType: 0,
           ItemId: t,
           IsUnlock: 0,
@@ -130,10 +130,11 @@ class ForgingModel extends ModelBase_1.ModelBase {
           ExistEndTime: 0,
           MadeCountInLimitTime: 0,
           TotalMakeCountInLimitTime: 0,
+          SortId: e.SortId,
         };
-      this.sLi.push(e),
-        this.XQs.set(t, e),
-        (e.IsForging = this.CheckCanForging(t) ? 1 : 0);
+      this.sLi.push(i),
+        this.XQs.set(t, i),
+        (i.IsForging = this.CheckCanForging(t) ? 1 : 0);
     }
   }
   YQs(e) {

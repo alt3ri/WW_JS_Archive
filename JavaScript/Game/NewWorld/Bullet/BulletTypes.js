@@ -6,36 +6,41 @@ const UE = require("ue"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
-  CharacterController_1 = require("../Character/CharacterController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   BulletDataMain_1 = require("./BulletConf/BulletDataMain");
 class HitInformation {
-  constructor(t, r, i, e, s, h, o, a, l, n, u, c, C = -1, _ = -1) {
+  constructor(t, i, r, s, e, o, h, a, l, n, u, c = 0, C, _ = -1, H = -1) {
     (this.HitPosition = Vector_1.Vector.Create()),
       (this.HitEffectRotation = Rotator_1.Rotator.Create()),
+      (this.BulletId = 0),
+      (this.IsShaking = !1),
+      (this.BulletEntityId = 0),
       (this.CalculateType = -1),
+      (this.DamageId = 0),
       a ? this.HitPosition.FromUeVector(a) : this.HitPosition.Reset(),
-      s
-        ? this.HitEffectRotation.FromUeRotator(s)
+      e
+        ? this.HitEffectRotation.FromUeRotator(e)
         : this.HitEffectRotation.Reset(),
-      (this.Target = r),
-      (this.HitPart = o),
-      (this.BulletId = e),
+      (this.Target = i),
+      (this.HitPart = h),
+      (this.BulletId = s),
       (this.SkillLevel = l),
       (this.Attacker = t),
-      (this.IsShaking = h),
-      (this.HitEffect = i),
+      (this.IsShaking = o),
+      (this.HitEffect = r),
       (this.ReBulletData = n),
-      (this.BulletDataPreset = c),
-      (this.BulletEntityId = C),
+      (this.BulletDataPreset = C),
+      (this.BulletEntityId = _),
       (this.BulletRowName = u),
-      (this.CalculateType = _);
+      (this.CalculateType = H),
+      (this.DamageId = c);
   }
   static FromUeHitInformation(t) {
     return new HitInformation(
-      CharacterController_1.CharacterController.GetEntityByUeTsBaseCharacter(
+      ControllerHolder_1.ControllerHolder.CharacterController.GetEntityByUeTsBaseCharacter(
         t.攻击者,
       ),
-      CharacterController_1.CharacterController.GetEntityByUeTsBaseCharacter(
+      ControllerHolder_1.ControllerHolder.CharacterController.GetEntityByUeTsBaseCharacter(
         t.受击者,
       ),
       t.被击效果,
@@ -47,6 +52,7 @@ class HitInformation {
       t.技能等级,
       new BulletDataMain_1.BulletDataMain(t.重构子弹数据, ""),
       t.子弹表ID,
+      Number(t.伤害ID),
       t.子弹逻辑预设,
       void 0,
       t.伤害类型,
@@ -54,24 +60,25 @@ class HitInformation {
   }
   ToUeHitInformation() {
     return new UE.SHitInformation(
-      CharacterController_1.CharacterController.GetUeTsBaseCharacterByEntity(
+      ControllerHolder_1.ControllerHolder.CharacterController.GetUeTsBaseCharacterByEntity(
         this.Attacker,
       ),
-      CharacterController_1.CharacterController.GetUeTsBaseCharacterByEntity(
+      ControllerHolder_1.ControllerHolder.CharacterController.GetUeTsBaseCharacterByEntity(
         this.Target,
       ),
       this.HitEffect,
       this.BulletId,
-      this.HitPosition.ToUeVector(),
+      this.HitPosition.ToUeVectorOld(),
       this.HitEffectRotation.ToUeRotator(),
       this.IsShaking,
       this.HitPart,
-      this.HitPosition.ToUeVector(),
+      this.HitPosition.ToUeVectorOld(),
       this.SkillLevel,
       this.ReBulletData.Data,
       this.BulletDataPreset,
       this.BulletRowName,
       this.CalculateType,
+      BigInt(this.DamageId),
     );
   }
 }
@@ -88,21 +95,21 @@ class KuroHitResultCache {
   }
   Append(t) {
     KuroHitResultCache.MHo.Start();
-    var r = t.GetHitCount(),
-      i = ((this.HitCount += r), t.Actors),
-      e = t.BoneNameArray,
-      s = t.Components,
-      h = t.ImpactPointX_Array,
-      o = t.ImpactPointY_Array,
+    var i = t.GetHitCount(),
+      r = ((this.HitCount += i), t.Actors),
+      s = t.BoneNameArray,
+      e = t.Components,
+      o = t.ImpactPointX_Array,
+      h = t.ImpactPointY_Array,
       a = t.ImpactPointZ_Array;
-    for (let t = 0; t < r; t++)
-      this.Actors.push(i.Get(t)),
+    for (let t = 0; t < i; t++)
+      this.Actors.push(r.Get(t)),
         this.BoneNameArray.push(
-          FNameUtil_1.FNameUtil.GetDynamicFName(e.Get(t)),
+          FNameUtil_1.FNameUtil.GetDynamicFName(s.Get(t)),
         ),
-        this.Components.push(s.Get(t)),
-        this.ImpactPointX.push(h.Get(t)),
-        this.ImpactPointY.push(o.Get(t)),
+        this.Components.push(e.Get(t)),
+        this.ImpactPointX.push(o.Get(t)),
+        this.ImpactPointY.push(h.Get(t)),
         this.ImpactPointZ.push(a.Get(t));
     KuroHitResultCache.MHo.Stop();
   }

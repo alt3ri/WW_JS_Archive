@@ -15,6 +15,7 @@ class TsEntityBase extends UE.KuroEffectActor {
   constructor() {
     super(...arguments), (this.Id = 0);
   }
+  Constructor() {}
   EditorInit() {
     super.EditorInit(),
       (this.bSetActorComponentTickEnabledByFocus = !0),

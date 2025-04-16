@@ -225,7 +225,9 @@ class CalabashCollectDetailItem extends UiPanelBase_1.UiPanelBase {
         this.Pe.DevelopRewardData.MonsterId,
       );
     e
-      ? (this.GetButton(15).RootUIComp.SetUIActive(1 < e.length),
+      ? (this.GetButton(15).RootUIComp.SetUIActive(
+          this.Pe.UnlockData && 1 < e.length,
+        ),
         (this.upt = e),
         (this.cpt = 0))
       : this.GetButton(15).RootUIComp.SetUIActive(!1);

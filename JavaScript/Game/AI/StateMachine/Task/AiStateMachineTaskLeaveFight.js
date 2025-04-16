@@ -9,6 +9,7 @@ const UE = require("ue"),
   EffectContext_1 = require("../../../Effect/EffectContext/EffectContext"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   CombatLog_1 = require("../../../Utils/CombatLog"),
   AiStateMachine_1 = require("../AiStateMachine"),
@@ -50,7 +51,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       this.Node.SkillComponent.StopAllSkills(
         "AiStateMachineTaskLeaveFight.OnEnter",
       ),
-        this.Node.AnimationComponent.MainAnimInstance.Montage_Stop(0);
+        this.Node.AnimationComponent.MainAnimInstance?.Montage_Stop(0);
       var e = i.AiWanderInfos?.AiWander;
       e
         ? ((this.Hne = e.ResetMoveState),
@@ -65,11 +66,16 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
           ]);
       const a = i.CharActorComp;
       if (
-        (this.UsePatrolPointPriority &&
-        i.AiPatrol.HasPatrolConfig() &&
-        (s = i.AiPatrol.GetLastPatrolPoint())
-          ? this.qne.DeepCopy(s)
-          : this.qne.DeepCopy(i.CharActorComp.GetInitLocation()),
+        (this.UsePatrolPointPriority && i.AiPatrol.HasPatrolConfig()
+          ? (s = i.AiPatrol.GetLastPatrolPoint())
+            ? this.qne.DeepCopy(s)
+            : this.qne.DeepCopy(i.CharActorComp.GetInitLocation())
+          : (s =
+                ModelManager_1.ModelManager.MonsterGroupPatrolModel.GetMonsterInfoByEntityId(
+                  this.Node.Entity.Id,
+                ))
+            ? this.qne.DeepCopy(s.PauseLocation)
+            : this.qne.DeepCopy(i.CharActorComp.GetInitLocation()),
         e && this.Hne !== BLINK_TYPE)
       ) {
         if (this.Node?.ActorComponent?.IsAutonomousProxy) {
@@ -101,7 +107,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
             },
             h =
               (this.Node.MoveComponent.MoveAlongPath(s),
-              a.Entity.CheckGetComponent(92));
+              a.Entity.CheckGetComponent(99));
           if (h.Valid)
             switch (this.Hne) {
               case 1:
@@ -140,7 +146,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
         Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(
           "BehaviorTree",
-          58,
+          57,
           "AiWander[OnClear]怪物闪烁导致Actor碰撞为True",
           ["Actor:", this.Node.ActorComponent.Actor.GetName()],
         ),
@@ -169,15 +175,15 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       "" !== this.Wne &&
         ((t = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           this.Wne,
           "[AiStateMachineTaskLeaveFight.BlinkMoveBegin] hideEffect",
           new EffectContext_1.EffectContext(i.Entity.Id),
         )),
         (t = EffectSystem_1.EffectSystem.GetEffectActor(t))
-          ? t.K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
+          ? t.D_K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("BehaviorTree", 58, "AiWander瞬移隐藏特效生成失败", [
+            Log_1.Log.Warn("BehaviorTree", 57, "AiWander瞬移隐藏特效生成失败", [
               "Type",
               i.Actor.GetName(),
             ])),
@@ -187,7 +193,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
             UE.PD_CharacterControllerData_C,
             (t) => {
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("BehaviorTree", 58, "脱战隐藏材质加载回调", [
+                Log_1.Log.Info("BehaviorTree", 57, "脱战隐藏材质加载回调", [
                   "Type",
                   i.Actor.GetName(),
                 ]),
@@ -201,7 +207,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
                       Log_1.Log.CheckWarn() &&
                         Log_1.Log.Warn(
                           "BehaviorTree",
-                          58,
+                          57,
                           "AiWander瞬移隐藏材质生成失败",
                           ["Type", i.Actor.GetName()],
                         )));
@@ -234,7 +240,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "BehaviorTree",
-          58,
+          57,
           "AiWander[BlinkMoveTick]怪物闪烁导致Actor碰撞为True",
           ["Actor:", i.Actor.GetName()],
         ),
@@ -242,15 +248,15 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
       "" !== this.jne &&
         ((t = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           this.jne,
           "[AiStateMachineTaskLeaveFight.BlinkMoveTick] showEffect",
           new EffectContext_1.EffectContext(i.Entity.Id),
         )),
         (t = EffectSystem_1.EffectSystem.GetEffectActor(t))
-          ? t.K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
+          ? t.D_K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("BehaviorTree", 58, "AiWander瞬移显示特效生成失败", [
+            Log_1.Log.Warn("BehaviorTree", 57, "AiWander瞬移显示特效生成失败", [
               "Type",
               i.Actor.GetName(),
             ])),
@@ -272,7 +278,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
                     Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "BehaviorTree",
-                        58,
+                        57,
                         "AiWander瞬移显示材质生成失败",
                         ["Type", i.Actor.GetName()],
                       )));
@@ -290,7 +296,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "BehaviorTree",
-            58,
+            57,
             "AiWander[BlinkMoveEnd]怪物闪烁此刻Actor碰撞不应该为False,查看[BlinkMoveTick]是否置为True",
             ["Actor:", t.Actor.GetName()],
           )),

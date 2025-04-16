@@ -14,55 +14,50 @@ const ue_1 = require("ue"),
   GeneralLogicTreeController_1 = require("../../../GeneralLogicTree/GeneralLogicTreeController"),
   QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
   BattleChildView_1 = require("../BattleChildView/BattleChildView"),
-  CombineKeyItem_1 = require("../KeyItem/CombineKeyItem");
+  CombineKeyItem_1 = require("../KeyItem/CombineKeyItem"),
+  MissionViewStepTextUtil_1 = require("./MissionViewStepTextUtil");
 class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
       (this.Qtt = void 0),
-      (this.$ut = void 0),
-      (this.Yut = 0),
-      (this.Jut = 0),
-      (this.zut = !1),
+      (this.Avi = void 0),
       (this.oct = !1),
       (this._xn = !1),
       (this.uxn = !1),
       (this.lct = () => {
-        this.$ut &&
+        var e;
+        this.Avi &&
+          (e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+            this.Avi.QuestId,
+          )) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Quest",
-              19,
+              18,
               "BattleQuestUpdateTipsView:UpdateQuestName",
-              ["QuestName", this.$ut.QuestName],
+              ["QuestName", e.Name],
             ),
-          this.GetText(0).SetText(this.$ut.QuestName));
+          this.GetText(0).SetText(e.Name));
       }),
       (this._ct = () => {
-        if (this.$ut) {
-          var t = this.$ut.TrackTextConfig?.MainTitle;
+        if (this.Avi) {
           let e = "";
-          void 0 !== t
-            ? (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info(
-                  "Quest",
-                  19,
-                  "BattleQuestUpdateTipsView:UpdateNodeDescribe",
-                  ["curMainTitle", t],
-                ),
+          this.Avi.MissionViewShowData.MainStepText
+            ? (e =
+                MissionViewStepTextUtil_1.MissionViewStepTextUtil.GetStepTextByConfig(
+                  this.Avi.MissionViewShowData.Id,
+                  this.Avi.MissionViewShowData.MainStepText,
+                ))
+            : 0 === this.Avi.MissionViewShowData.DataSource &&
               (e =
-                GeneralLogicTreeController_1.GeneralLogicTreeController.GetTitleText(
-                  this.$ut.TreeIncId,
-                  t,
-                )))
-            : (t =
                 GeneralLogicTreeController_1.GeneralLogicTreeController.GetNodeTrackText(
-                  this.$ut.TreeIncId,
-                  this.Jut,
-                )) && (e = t),
+                  this.Avi.MissionViewShowData.Id,
+                  this.Avi.NodeId,
+                )),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Quest",
-                19,
+                18,
                 "BattleQuestUpdateTipsView:UpdateNodeDescribe",
                 ["describe", e],
               ),
@@ -74,8 +69,8 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
       }),
       (this.uct = () => {
         !this.oct &&
-          this.Yut &&
-          this.Jut &&
+          this.Avi &&
+          this.Avi.QuestId &&
           ((this.oct = !0),
           this.uxn ||
             (EventSystem_1.EventSystem.Emit(
@@ -83,7 +78,7 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
             ),
             (this.uxn = !0)),
           QuestController_1.QuestNewController.RequestTrackQuest(
-            this.Yut,
+            this.Avi.QuestId,
             !0,
             1,
             0,
@@ -126,8 +121,6 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
         this.bMe,
       );
   }
-  OnPanelShow() {}
-  OnPanelHide() {}
   OnBeforePlayShowSequence(e) {
     this.UpdateData(e),
       InputDistributeController_1.InputDistributeController.UnBindAction(
@@ -152,62 +145,54 @@ class BattleQuestUpdateTipsView extends BattleChildView_1.BattleChildView {
       this.bMe,
     ),
       (this._xn = !1),
-      this.uxn ||
+      !this.uxn &&
+        this.Avi?.IsNewQuest &&
         QuestController_1.QuestNewController.TryChangeTrackedQuest(
           ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest,
         ),
       (ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest =
         void 0),
-      (this.$ut = void 0),
-      (this.Yut = 0),
-      (this.Jut = 0);
+      (this.Avi = void 0);
   }
   UpdateData(e) {
-    (ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest =
-      e.ShowBridge.TreeConfigId),
-      (this.uxn = !1),
+    (this.uxn = !1),
       this.RefreshUi(e),
-      (this.zut = e.ShowBridge.IsNewQuest),
-      this.cxn();
+      this.cxn(),
+      this.Avi?.IsNewQuest &&
+        (ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest =
+          e.QuestId);
   }
   RefreshUi(e) {
-    (this.Jut = e.NodeId),
-      (this.$ut = e.ShowBridge),
-      (this.Yut = this.$ut.TreeConfigId),
+    (this.Avi = e),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Quest", 19, "BattleQuestUpdateTipsView:RefreshUi", [
-          "TreeConfigId",
-          this.Yut,
+        Log_1.Log.Info("Quest", 18, "BattleQuestUpdateTipsView:界面刷新", [
+          "任务Id",
+          this.Avi.QuestId,
         ]),
       this.Ost(),
       this.lct(),
       this._ct();
   }
   Ost() {
-    var e,
-      t = this.$ut?.TrackIconConfigId;
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Quest", 19, "BattleQuestUpdateTipsView:SetIcon", [
-        "Id",
-        t,
-      ]),
-      t &&
-        ((t = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(t)),
-        (e = this.GetSprite(2)),
-        this.SetSpriteByPath(t, e, !1));
+    var e = this.Avi?.MissionViewShowData.TrackIconConfigId ?? 0,
+      e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(e),
+      t = this.GetSprite(2);
+    this.SetSpriteByPath(e, t, !1);
   }
   cxn() {
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.MissionUpdate,
-      this.$ut,
-    ),
-      this.$ut &&
-        this.zut &&
-        (ConfigManager_1.ConfigManager.QuestNewConfig.GetNewTipsShowTime(
-          this.$ut.QuestType,
-        ) ??
-          0) &&
-        UiManager_1.UiManager.OpenView("NewMissionTips", this.$ut.TreeConfigId);
+    var e;
+    this.Avi &&
+      (EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.MissionUpdate,
+        this.Avi.IsNewQuest,
+      ),
+      this.Avi.IsNewQuest) &&
+      (e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+        this.Avi.QuestId,
+      )?.Type) &&
+      (ConfigManager_1.ConfigManager.QuestNewConfig.GetNewTipsShowTime(e) ??
+        0) &&
+      UiManager_1.UiManager.OpenView("NewMissionTips", this.Avi.QuestId);
   }
   IsClosing() {
     return this._xn;

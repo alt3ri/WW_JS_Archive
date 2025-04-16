@@ -81,14 +81,14 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
         (e =
           n?.EntityHandle === a.CurRoleEntity
             ? n.GameplayTagComponent
-            : a.CurRoleEntity.Entity.GetComponent(190))
+            : a.CurRoleEntity.Entity.GetComponent(203))
       )
         for (const r of disableInputTagIds) e.RemoveTag(r);
       else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "PanelQte",
-            18,
+            17,
             "界面qte结束时，场上角色已经被销毁了",
           );
       (a.CurRoleEntity = void 0), (a.DisableFightInput = !1);
@@ -104,7 +104,11 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static vOi() {
-    return !ModelManager_1.ModelManager.PanelQteModel.IsInQte;
+    return (
+      !ModelManager_1.ModelManager.PanelQteModel.IsInQte &&
+      !!ModelManager_1.ModelManager.GameModeModel.WorldDone &&
+      !!ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()
+    );
   }
   static MOi(e) {
     var t = ModelManager_1.ModelManager.PanelQteModel.GetPanelQteConfig(
@@ -141,7 +145,7 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
         break;
       default:
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("PanelQte", 18, "QTE界面类型没有实现", ["", r]);
+          Log_1.Log.Error("PanelQte", 17, "QTE界面类型没有实现", ["", r]);
     }
     if (t.HideAllBattleUi)
       (a.IsHideAllBattleUi = !0),
@@ -167,9 +171,9 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
       var l = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
       if (l) {
         var _ = l.EntityHandle,
-          s = l.GameplayTagComponent;
-        if (s) {
-          for (const M of disableInputTagIds) s.AddTag(M);
+          M = l.GameplayTagComponent;
+        if (M) {
+          for (const s of disableInputTagIds) M.AddTag(s);
           a.CurRoleEntity = _;
         }
       }

@@ -29,6 +29,7 @@ const UE = require("ue"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
+  UiTimeDilation_1 = require("../Ui/Base/UiTimeDilation"),
   UiLayerType_1 = require("../Ui/Define/UiLayerType"),
   InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController"),
   InputDistributeDefine_1 = require("../Ui/InputDistribute/InputDistributeDefine"),
@@ -39,21 +40,26 @@ class SceneSubCamera {
     (this.Type = 2),
       (this.Camera = void 0),
       (this.FadeIn = -0),
+      (this.FadeInFunc = 0),
+      (this.FadeInExp = 0),
       (this.FadeOut = -0),
+      (this.FadeOutFunc = 0),
+      (this.FadeOutExp = 0),
       (this.IsBinding = !1),
       (this.IsKeepUi = !1);
   }
   Clear() {
     this.Camera?.IsValid() &&
-      (ActorSystem_1.ActorSystem.Put(this.Camera), (this.Camera = void 0));
+      (ActorSystem_1.ActorSystem.Put("SceneSubCamera.Clear", this.Camera),
+      (this.Camera = void 0));
   }
   CopyData(e) {
     e?.Camera?.IsValid() &&
-      (this.Camera.K2_SetActorTransform(
-        new UE.Transform(
+      (this.Camera.D_K2_SetActorTransform(
+        new UE.TransformDouble(
           e.Camera.K2_GetActorRotation(),
-          e.Camera.K2_GetActorLocation(),
-          new UE.Vector(1, 1, 1),
+          e.Camera.D_K2_GetActorLocation(),
+          new UE.VectorDouble(1, 1, 1),
         ),
         !1,
         void 0,
@@ -81,7 +87,7 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Camera",
-                46,
+                45,
                 "SceneCameraDisplayComponent退出Scene相机",
               ),
             CameraController_1.CameraController.ExitCameraMode(
@@ -111,7 +117,10 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
       }),
       (this.uMe = () => {
         this.dxr &&
-          (ActorSystem_1.ActorSystem.Put(this.uxr),
+          (ActorSystem_1.ActorSystem.Put(
+            "SceneCameraDisplayComponent.OnClearWorld",
+            this.uxr,
+          ),
           (this.dxr.Camera = void 0),
           (this.uxr = void 0)),
           (this.Cxr = 0),
@@ -171,7 +180,11 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
   OnClear() {
     return (
       this.uxr &&
-        (ActorSystem_1.ActorSystem.Put(this.uxr), (this.uxr = void 0)),
+        (ActorSystem_1.ActorSystem.Put(
+          "SceneCameraDisplayComponent.OnClear",
+          this.uxr,
+        ),
+        (this.uxr = void 0)),
       this.kre(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
@@ -234,8 +247,8 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
           this.CurSceneSubCamera.Camera,
           "SceneCamera.UpdateViewTarget2",
           this.CurSceneSubCamera.FadeIn,
-          0,
-          void 0,
+          this.CurSceneSubCamera.FadeInFunc,
+          this.CurSceneSubCamera.FadeInExp,
           !0,
           !0,
         );
@@ -259,12 +272,18 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
             ModelManager_1.ModelManager.InputDistributeModel.RemoveInputDistributeTag(
               InputDistributeDefine_1.inputDistributeTagDefine.BlockAllInputTag,
             ),
-            InputDistributeController_1.InputDistributeController.RefreshInputTag())
+            InputDistributeController_1.InputDistributeController.RefreshInputTag(),
+            UiTimeDilation_1.UiTimeDilation.DeleteWaitSetTimeDilationTag(
+              "SceneCameraDisplayComponent.SetUiActive",
+            ))
           : (ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
               2,
             ),
             ModelManager_1.ModelManager.InputDistributeModel.SetInputDistributeTag(
               InputDistributeDefine_1.inputDistributeTagDefine.BlockAllInputTag,
+            ),
+            UiTimeDilation_1.UiTimeDilation.AddWaitSetTimeDilationTag(
+              "SceneCameraDisplayComponent.SetUiActive",
             )));
   }
 };

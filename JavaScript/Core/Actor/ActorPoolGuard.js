@@ -7,7 +7,7 @@ class ActorPoolGuard {
     if (o) o(e);
     else if (e instanceof UE.LevelSequenceActor) this.ClearSequenceActor(e);
     else {
-      e.K2_SetActorTransform(new UE.Transform(), !1, void 0, !0),
+      e.D_K2_SetActorTransform(new UE.TransformDouble(), !1, void 0, !0),
         UE.KuroActorManager.ClearAcquiredComponents(e),
         UE.KuroActorManager.ResetDelegates(e),
         e.K2_DetachFromActor(),
@@ -26,7 +26,6 @@ class ActorPoolGuard {
     );
   }
   static ClearSequenceActor(e) {
-    var o;
     (e.PlaybackSettings = new UE.MovieSceneSequencePlaybackSettings()),
       e.ResetBindings(),
       e.SequencePlayer.OnFinished.Clear(),
@@ -35,10 +34,11 @@ class ActorPoolGuard {
       e.SequencePlayer.OnPause.Clear(),
       e.SequencePlayer.OnPlayReverse.Clear(),
       e.SequencePlayer.OnCameraCut.Clear(),
-      e.bOverrideInstanceData &&
-        (((o = e.DefaultInstanceData).TransformOrigin = new UE.Transform()),
-        (o.TransformOriginActor = void 0),
-        (e.bOverrideInstanceData = !1)),
+      (e.bOverrideInstanceData = !1);
+    var o = e.DefaultInstanceData;
+    o &&
+      ((o.TransformOrigin = new UE.Transform()),
+      (o.TransformOriginActor = void 0)),
       e.SetSequence(UE.KuroActorManager.GetDummySequence());
   }
 }

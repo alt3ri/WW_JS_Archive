@@ -44,9 +44,6 @@ class BaseProperty {
   get CdReduse() {
     return this.cdreduse();
   }
-  get ReactionEfficiency() {
-    return this.reactionefficiency();
-  }
   get DamageChangeNormalSkill() {
     return this.damagechangenormalskill();
   }
@@ -137,51 +134,6 @@ class BaseProperty {
   get DamageReduceElement6() {
     return this.damagereduceelement6();
   }
-  get ReactionChange1() {
-    return this.reactionchange1();
-  }
-  get ReactionChange2() {
-    return this.reactionchange2();
-  }
-  get ReactionChange3() {
-    return this.reactionchange3();
-  }
-  get ReactionChange4() {
-    return this.reactionchange4();
-  }
-  get ReactionChange5() {
-    return this.reactionchange5();
-  }
-  get ReactionChange6() {
-    return this.reactionchange6();
-  }
-  get ReactionChange7() {
-    return this.reactionchange7();
-  }
-  get ReactionChange8() {
-    return this.reactionchange8();
-  }
-  get ReactionChange9() {
-    return this.reactionchange9();
-  }
-  get ReactionChange10() {
-    return this.reactionchange10();
-  }
-  get ReactionChange11() {
-    return this.reactionchange11();
-  }
-  get ReactionChange12() {
-    return this.reactionchange12();
-  }
-  get ReactionChange13() {
-    return this.reactionchange13();
-  }
-  get ReactionChange14() {
-    return this.reactionchange14();
-  }
-  get ReactionChange15() {
-    return this.reactionchange15();
-  }
   get EnergyMax() {
     return this.energymax();
   }
@@ -211,6 +163,12 @@ class BaseProperty {
   }
   get SpecialEnergy4() {
     return this.specialenergy4();
+  }
+  get SpecialEnergy5Max() {
+    return this.specialenergy5max();
+  }
+  get SpecialEnergy5() {
+    return this.specialenergy5();
   }
   get StrengthMax() {
     return this.strengthmax();
@@ -416,6 +374,9 @@ class BaseProperty {
   get ElementEnergy() {
     return this.elementenergy();
   }
+  get ElementEfficiency() {
+    return this.elementefficiency();
+  }
   __init(t, e) {
     return (this.z7 = t), (this.J7 = e), this;
   }
@@ -477,501 +438,449 @@ class BaseProperty {
     var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
-  reactionefficiency() {
+  damagechangenormalskill() {
     var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangenormalskill() {
+  damagechange() {
     var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechange() {
+  damagereduce() {
     var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereduce() {
+  damagechangeauto() {
     var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeauto() {
+  damagechangecast() {
     var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangecast() {
+  damagechangeultra() {
     var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeultra() {
+  damagechangeqte() {
     var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeqte() {
+  damagechangephys() {
     var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangephys() {
+  damagechangeelement1() {
     var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeelement1() {
+  damagechangeelement2() {
     var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeelement2() {
+  damagechangeelement3() {
     var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeelement3() {
+  damagechangeelement4() {
     var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeelement4() {
+  damagechangeelement5() {
     var t = this.J7.__offset(this.z7, 54);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeelement5() {
+  damagechangeelement6() {
     var t = this.J7.__offset(this.z7, 56);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagechangeelement6() {
+  damageresistancephys() {
     var t = this.J7.__offset(this.z7, 58);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damageresistancephys() {
+  damageresistanceelement1() {
     var t = this.J7.__offset(this.z7, 60);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damageresistanceelement1() {
+  damageresistanceelement2() {
     var t = this.J7.__offset(this.z7, 62);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damageresistanceelement2() {
+  damageresistanceelement3() {
     var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damageresistanceelement3() {
+  damageresistanceelement4() {
     var t = this.J7.__offset(this.z7, 66);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damageresistanceelement4() {
+  damageresistanceelement5() {
     var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damageresistanceelement5() {
+  damageresistanceelement6() {
     var t = this.J7.__offset(this.z7, 70);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damageresistanceelement6() {
+  healchange() {
     var t = this.J7.__offset(this.z7, 72);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  healchange() {
+  healedchange() {
     var t = this.J7.__offset(this.z7, 74);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  healedchange() {
+  damagereducephys() {
     var t = this.J7.__offset(this.z7, 76);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereducephys() {
+  damagereduceelement1() {
     var t = this.J7.__offset(this.z7, 78);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereduceelement1() {
+  damagereduceelement2() {
     var t = this.J7.__offset(this.z7, 80);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereduceelement2() {
+  damagereduceelement3() {
     var t = this.J7.__offset(this.z7, 82);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereduceelement3() {
+  damagereduceelement4() {
     var t = this.J7.__offset(this.z7, 84);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereduceelement4() {
+  damagereduceelement5() {
     var t = this.J7.__offset(this.z7, 86);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereduceelement5() {
+  damagereduceelement6() {
     var t = this.J7.__offset(this.z7, 88);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  damagereduceelement6() {
-    var t = this.J7.__offset(this.z7, 90);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange1() {
-    var t = this.J7.__offset(this.z7, 92);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange2() {
-    var t = this.J7.__offset(this.z7, 94);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange3() {
-    var t = this.J7.__offset(this.z7, 96);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange4() {
-    var t = this.J7.__offset(this.z7, 98);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange5() {
-    var t = this.J7.__offset(this.z7, 100);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange6() {
-    var t = this.J7.__offset(this.z7, 102);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange7() {
-    var t = this.J7.__offset(this.z7, 104);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange8() {
-    var t = this.J7.__offset(this.z7, 106);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange9() {
-    var t = this.J7.__offset(this.z7, 108);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange10() {
-    var t = this.J7.__offset(this.z7, 110);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange11() {
-    var t = this.J7.__offset(this.z7, 112);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange12() {
-    var t = this.J7.__offset(this.z7, 114);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange13() {
-    var t = this.J7.__offset(this.z7, 116);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange14() {
-    var t = this.J7.__offset(this.z7, 118);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  reactionchange15() {
-    var t = this.J7.__offset(this.z7, 120);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
   energymax() {
-    var t = this.J7.__offset(this.z7, 122);
+    var t = this.J7.__offset(this.z7, 90);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   energy() {
-    var t = this.J7.__offset(this.z7, 124);
+    var t = this.J7.__offset(this.z7, 92);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   specialenergy1max() {
-    var t = this.J7.__offset(this.z7, 126);
+    var t = this.J7.__offset(this.z7, 94);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   specialenergy1() {
-    var t = this.J7.__offset(this.z7, 128);
+    var t = this.J7.__offset(this.z7, 96);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   specialenergy2max() {
-    var t = this.J7.__offset(this.z7, 130);
+    var t = this.J7.__offset(this.z7, 98);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   specialenergy2() {
-    var t = this.J7.__offset(this.z7, 132);
+    var t = this.J7.__offset(this.z7, 100);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   specialenergy3max() {
-    var t = this.J7.__offset(this.z7, 134);
+    var t = this.J7.__offset(this.z7, 102);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   specialenergy3() {
-    var t = this.J7.__offset(this.z7, 136);
+    var t = this.J7.__offset(this.z7, 104);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   specialenergy4max() {
-    var t = this.J7.__offset(this.z7, 138);
+    var t = this.J7.__offset(this.z7, 106);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   specialenergy4() {
-    var t = this.J7.__offset(this.z7, 140);
+    var t = this.J7.__offset(this.z7, 108);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  specialenergy5max() {
+    var t = this.J7.__offset(this.z7, 110);
+    return t ? this.J7.readInt32(this.z7 + t) : 1e4;
+  }
+  specialenergy5() {
+    var t = this.J7.__offset(this.z7, 112);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   strengthmax() {
-    var t = this.J7.__offset(this.z7, 142);
+    var t = this.J7.__offset(this.z7, 114);
     return t ? this.J7.readInt32(this.z7 + t) : 14e3;
   }
   strength() {
-    var t = this.J7.__offset(this.z7, 144);
+    var t = this.J7.__offset(this.z7, 116);
     return t ? this.J7.readInt32(this.z7 + t) : 14e3;
   }
   strengthrecover() {
-    var t = this.J7.__offset(this.z7, 146);
+    var t = this.J7.__offset(this.z7, 118);
     return t ? this.J7.readInt32(this.z7 + t) : 250;
   }
   strengthpunishtime() {
-    var t = this.J7.__offset(this.z7, 148);
+    var t = this.J7.__offset(this.z7, 120);
     return t ? this.J7.readInt32(this.z7 + t) : 2e3;
   }
   strengthrun() {
-    var t = this.J7.__offset(this.z7, 150);
+    var t = this.J7.__offset(this.z7, 122);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   strengthswim() {
-    var t = this.J7.__offset(this.z7, 152);
+    var t = this.J7.__offset(this.z7, 124);
     return t ? this.J7.readInt32(this.z7 + t) : 26;
   }
   strengthfastswim() {
-    var t = this.J7.__offset(this.z7, 154);
+    var t = this.J7.__offset(this.z7, 126);
     return t ? this.J7.readInt32(this.z7 + t) : 66;
   }
   hardnessmax() {
-    var t = this.J7.__offset(this.z7, 156);
+    var t = this.J7.__offset(this.z7, 128);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   hardness() {
-    var t = this.J7.__offset(this.z7, 158);
+    var t = this.J7.__offset(this.z7, 130);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   hardnessrecover() {
-    var t = this.J7.__offset(this.z7, 160);
+    var t = this.J7.__offset(this.z7, 132);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   hardnesspunishtime() {
-    var t = this.J7.__offset(this.z7, 162);
+    var t = this.J7.__offset(this.z7, 134);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   hardnesschange() {
-    var t = this.J7.__offset(this.z7, 164);
+    var t = this.J7.__offset(this.z7, 136);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   hardnessreduce() {
-    var t = this.J7.__offset(this.z7, 166);
+    var t = this.J7.__offset(this.z7, 138);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ragemax() {
-    var t = this.J7.__offset(this.z7, 168);
+    var t = this.J7.__offset(this.z7, 140);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   rage() {
-    var t = this.J7.__offset(this.z7, 170);
+    var t = this.J7.__offset(this.z7, 142);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ragerecover() {
-    var t = this.J7.__offset(this.z7, 172);
+    var t = this.J7.__offset(this.z7, 144);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ragepunishtime() {
-    var t = this.J7.__offset(this.z7, 174);
+    var t = this.J7.__offset(this.z7, 146);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ragechange() {
-    var t = this.J7.__offset(this.z7, 176);
+    var t = this.J7.__offset(this.z7, 148);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ragereduce() {
-    var t = this.J7.__offset(this.z7, 178);
+    var t = this.J7.__offset(this.z7, 150);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   toughmax() {
-    var t = this.J7.__offset(this.z7, 180);
+    var t = this.J7.__offset(this.z7, 152);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   tough() {
-    var t = this.J7.__offset(this.z7, 182);
+    var t = this.J7.__offset(this.z7, 154);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   toughrecover() {
-    var t = this.J7.__offset(this.z7, 184);
+    var t = this.J7.__offset(this.z7, 156);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   toughchange() {
-    var t = this.J7.__offset(this.z7, 186);
+    var t = this.J7.__offset(this.z7, 158);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   toughreduce() {
-    var t = this.J7.__offset(this.z7, 188);
+    var t = this.J7.__offset(this.z7, 160);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   toughrecoverdelaytime() {
-    var t = this.J7.__offset(this.z7, 190);
+    var t = this.J7.__offset(this.z7, 162);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   elementpower1() {
-    var t = this.J7.__offset(this.z7, 192);
+    var t = this.J7.__offset(this.z7, 164);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   elementpower2() {
-    var t = this.J7.__offset(this.z7, 194);
+    var t = this.J7.__offset(this.z7, 166);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   elementpower3() {
-    var t = this.J7.__offset(this.z7, 196);
+    var t = this.J7.__offset(this.z7, 168);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   elementpower4() {
-    var t = this.J7.__offset(this.z7, 198);
+    var t = this.J7.__offset(this.z7, 170);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   elementpower5() {
-    var t = this.J7.__offset(this.z7, 200);
+    var t = this.J7.__offset(this.z7, 172);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   elementpower6() {
-    var t = this.J7.__offset(this.z7, 202);
+    var t = this.J7.__offset(this.z7, 174);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   specialdamagechange() {
-    var t = this.J7.__offset(this.z7, 204);
+    var t = this.J7.__offset(this.z7, 176);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   strengthfastclimbcost() {
-    var t = this.J7.__offset(this.z7, 206);
+    var t = this.J7.__offset(this.z7, 178);
     return t ? this.J7.readInt32(this.z7 + t) : 242;
   }
   elementpropertytype() {
-    var t = this.J7.__offset(this.z7, 208);
+    var t = this.J7.__offset(this.z7, 180);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   weaktime() {
-    var t = this.J7.__offset(this.z7, 210);
+    var t = this.J7.__offset(this.z7, 182);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredefrate() {
-    var t = this.J7.__offset(this.z7, 212);
+    var t = this.J7.__offset(this.z7, 184);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredamageresistancephys() {
-    var t = this.J7.__offset(this.z7, 214);
+    var t = this.J7.__offset(this.z7, 186);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredamageresistanceelement1() {
-    var t = this.J7.__offset(this.z7, 216);
+    var t = this.J7.__offset(this.z7, 188);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredamageresistanceelement2() {
-    var t = this.J7.__offset(this.z7, 218);
+    var t = this.J7.__offset(this.z7, 190);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredamageresistanceelement3() {
-    var t = this.J7.__offset(this.z7, 220);
+    var t = this.J7.__offset(this.z7, 192);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredamageresistanceelement4() {
-    var t = this.J7.__offset(this.z7, 222);
+    var t = this.J7.__offset(this.z7, 194);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredamageresistanceelement5() {
-    var t = this.J7.__offset(this.z7, 224);
+    var t = this.J7.__offset(this.z7, 196);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   ignoredamageresistanceelement6() {
-    var t = this.J7.__offset(this.z7, 226);
+    var t = this.J7.__offset(this.z7, 198);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skilltoughratio() {
-    var t = this.J7.__offset(this.z7, 228);
+    var t = this.J7.__offset(this.z7, 200);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   strengthclimbjump() {
-    var t = this.J7.__offset(this.z7, 230);
+    var t = this.J7.__offset(this.z7, 202);
     return t ? this.J7.readInt32(this.z7 + t) : 1220;
   }
   strengthgliding() {
-    var t = this.J7.__offset(this.z7, 232);
+    var t = this.J7.__offset(this.z7, 204);
     return t ? this.J7.readInt32(this.z7 + t) : 30;
   }
   mass() {
-    var t = this.J7.__offset(this.z7, 234);
+    var t = this.J7.__offset(this.z7, 206);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   brakingfrictionfactor() {
-    var t = this.J7.__offset(this.z7, 236);
+    var t = this.J7.__offset(this.z7, 208);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   gravityscale() {
-    var t = this.J7.__offset(this.z7, 238);
+    var t = this.J7.__offset(this.z7, 210);
     return t ? this.J7.readInt32(this.z7 + t) : 2e4;
   }
   speedratio() {
-    var t = this.J7.__offset(this.z7, 240);
+    var t = this.J7.__offset(this.z7, 212);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   damagechangephantom() {
-    var t = this.J7.__offset(this.z7, 242);
+    var t = this.J7.__offset(this.z7, 214);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   autoattackspeed() {
-    var t = this.J7.__offset(this.z7, 244);
+    var t = this.J7.__offset(this.z7, 216);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   castattackspeed() {
-    var t = this.J7.__offset(this.z7, 246);
+    var t = this.J7.__offset(this.z7, 218);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   statusbuildup1max() {
-    var t = this.J7.__offset(this.z7, 248);
+    var t = this.J7.__offset(this.z7, 220);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   statusbuildup1() {
-    var t = this.J7.__offset(this.z7, 250);
+    var t = this.J7.__offset(this.z7, 222);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   statusbuildup2max() {
-    var t = this.J7.__offset(this.z7, 252);
+    var t = this.J7.__offset(this.z7, 224);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   statusbuildup2() {
-    var t = this.J7.__offset(this.z7, 254);
+    var t = this.J7.__offset(this.z7, 226);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   statusbuildup3max() {
-    var t = this.J7.__offset(this.z7, 256);
+    var t = this.J7.__offset(this.z7, 228);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   statusbuildup3() {
-    var t = this.J7.__offset(this.z7, 258);
+    var t = this.J7.__offset(this.z7, 230);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   statusbuildup4max() {
-    var t = this.J7.__offset(this.z7, 260);
+    var t = this.J7.__offset(this.z7, 232);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   statusbuildup4() {
-    var t = this.J7.__offset(this.z7, 262);
+    var t = this.J7.__offset(this.z7, 234);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   statusbuildup5max() {
-    var t = this.J7.__offset(this.z7, 264);
+    var t = this.J7.__offset(this.z7, 236);
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   statusbuildup5() {
-    var t = this.J7.__offset(this.z7, 266);
+    var t = this.J7.__offset(this.z7, 238);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   paralysistimemax() {
-    var t = this.J7.__offset(this.z7, 268);
+    var t = this.J7.__offset(this.z7, 240);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   paralysistime() {
-    var t = this.J7.__offset(this.z7, 270);
+    var t = this.J7.__offset(this.z7, 242);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   paralysistimerecover() {
-    var t = this.J7.__offset(this.z7, 272);
+    var t = this.J7.__offset(this.z7, 244);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   elementenergymax() {
-    var t = this.J7.__offset(this.z7, 274);
+    var t = this.J7.__offset(this.z7, 246);
     return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
   elementenergy() {
-    var t = this.J7.__offset(this.z7, 276);
+    var t = this.J7.__offset(this.z7, 248);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  elementefficiency() {
+    var t = this.J7.__offset(this.z7, 250);
+    return t ? this.J7.readInt32(this.z7 + t) : 1e4;
   }
 }
 exports.BaseProperty = BaseProperty;

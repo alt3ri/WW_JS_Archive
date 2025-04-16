@@ -7,6 +7,7 @@ class TsAnimNotifySetCollisionSize extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.Radius = 30), (this.HalfHeight = 100);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     e = e.GetOwner();
     return (
@@ -15,7 +16,7 @@ class TsAnimNotifySetCollisionSize extends UE.KuroAnimNotify {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Character",
-          32,
+          31,
           "TsAnimNotifySetCollisionSize配置了错误的大小。为避免穿墙，必须大于0",
           ["Actor", e.GetName()],
           ["HalfHeight", this.HalfHeight],

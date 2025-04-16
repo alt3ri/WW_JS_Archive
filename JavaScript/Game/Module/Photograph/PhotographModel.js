@@ -1,12 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographModel = void 0);
-const UE = require("ue"),
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
+  GlobalData_1 = require("../../GlobalData"),
   UiCameraPostEffectComponent_1 = require("../UiCamera/UiCameraComponent/UiCameraPostEffectComponent"),
   UiCameraManager_1 = require("../UiCamera/UiCameraManager"),
   UiCameraPhotographerStructure_1 = require("../UiCamera/UiCameraStructure/UiCameraPhotographerStructure"),
+  PhotographController_1 = require("./PhotographController"),
   PhotographDefine_1 = require("./PhotographDefine");
 class PhotographModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -14,15 +18,19 @@ class PhotographModel extends ModelBase_1.ModelBase {
       (this.OWi = void 0),
       (this.PlayMontageEntity = void 0),
       (this.MontageId = 0),
+      (this.FilterId = 0),
       (this.kWi = new Map()),
-      (this.FWi = new UE.Transform()),
+      (this.j2_ = new Map()),
+      (this.H2_ = new Map()),
+      (this.FWi = new UE.TransformDouble()),
       (this.RightValue = 0),
       (this.UpValue = 0),
       (this.VWi = 0),
       (this.HWi = void 0),
       (this.IsOpenPhotograph = !1),
       (this.SavePath = ""),
-      (this.IsSaveButtonVisible = !1);
+      (this.IsSaveButtonVisible = !1),
+      (this.IsFilterToggleOpen = !0);
   }
   OnInit() {
     return (
@@ -100,6 +108,60 @@ class PhotographModel extends ModelBase_1.ModelBase {
       this.HWi.Entity?.Enable(this.VWi, "PhotographModel.ResetEntityEnable"),
       (this.VWi = void 0),
       (this.HWi = void 0);
+  }
+  SetPhotographFilter(t) {
+    this.FilterId = t;
+  }
+  ClearPhotographFilter() {
+    this.ClearSelectedPhotographFilter(),
+      this.H2_.clear(),
+      (this.IsFilterToggleOpen = !0);
+  }
+  ClearSelectedPhotographFilter() {
+    (this.FilterId = 0),
+      PhotographController_1.PhotographController.InitPostProcessVolBlendWeight();
+  }
+  GetPhotographFilter() {
+    return this.FilterId;
+  }
+  InitFilterPostProcessVolume() {
+    var e = UE.NewArray(UE.Actor),
+      t = (0, puerts_1.$ref)(e);
+    if (
+      (UE.GameplayStatics.GetAllActorsOfClassWithTag(
+        GlobalData_1.GlobalData.World,
+        UE.PostProcessVolume.StaticClass(),
+        FNameUtil_1.FNameUtil.GetDynamicFName("Filter"),
+        t,
+      ),
+      (e = (0, puerts_1.$unref)(t)))
+    )
+      for (let t = 0; t < e.Num(); t++) {
+        var r,
+          i = e.Get(t);
+        (i.BlendWeight = 0),
+          i.Tags.Num() < 2 ||
+            ((r = i.Tags.Get(1).toString()), this.j2_.set(r, i));
+      }
+  }
+  GetFilterPostProcessVolumeMap() {
+    return this.j2_;
+  }
+  GetFilterStrengthByFilterId(t) {
+    t = this.H2_.get(t);
+    return void 0 === t
+      ? PhotographDefine_1.FILTER_DEFAULT_STRENGTH /
+          PhotographDefine_1.FILTER_MAX_STREGNTH
+      : t;
+  }
+  SetFilterStrength(t, e) {
+    this.H2_.set(t, e);
+  }
+  SetFilterToggleState(t) {
+    this.IsFilterToggleOpen = t;
+  }
+  GetFilterToggleState() {
+    return this.IsFilterToggleOpen;
   }
 }
 exports.PhotographModel = PhotographModel;

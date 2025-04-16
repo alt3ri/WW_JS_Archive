@@ -8,7 +8,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.UeMovementTickManageComponent =
     exports.UeComponentTickManageComponent =
     exports.UeActorTickManageComponent =
-    exports.SplineMoveComponent =
     exports.PostProcessBridgeComponent =
     exports.PerformanceComponent =
     exports.LevelTagComponent =
@@ -16,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.DurabilityComponent =
     exports.BaseUnifiedStateComponent =
     exports.BaseTagComponent =
+    exports.CharacterSplineMoveComponent =
     exports.CharacterManipulateComponent =
     exports.CharacterLogicStateSyncComponent =
     exports.CharacterLevelShootComponent =
@@ -373,11 +373,19 @@ var AnimalDeathSyncComponent_1 = require("../NewWorld/Character/Animal/Component
       },
     }),
     require("../NewWorld/Character/Common/Component/CharacterManipulateComponent")),
-  BaseTagComponent_1 =
+  CharacterSplineMoveComponent_1 =
     (Object.defineProperty(exports, "CharacterManipulateComponent", {
       enumerable: !0,
       get: function () {
         return CharacterManipulateComponent_1.CharacterManipulateComponent;
+      },
+    }),
+    require("../NewWorld/Character/Common/Component/CharacterSplineMoveComponent")),
+  BaseTagComponent_1 =
+    (Object.defineProperty(exports, "CharacterSplineMoveComponent", {
+      enumerable: !0,
+      get: function () {
+        return CharacterSplineMoveComponent_1.CharacterSplineMoveComponent;
       },
     }),
     require("../NewWorld/Common/Component/BaseTagComponent")),
@@ -429,19 +437,11 @@ var AnimalDeathSyncComponent_1 = require("../NewWorld/Character/Animal/Component
       },
     }),
     require("../NewWorld/Common/Component/PostProcessBridgeComponent")),
-  SplineMoveComponent_1 =
+  UeActorTickManageComponent_1 =
     (Object.defineProperty(exports, "PostProcessBridgeComponent", {
       enumerable: !0,
       get: function () {
         return PostProcessBridgeComponent_1.PostProcessBridgeComponent;
-      },
-    }),
-    require("../NewWorld/Common/Component/SplineMoveComponent")),
-  UeActorTickManageComponent_1 =
-    (Object.defineProperty(exports, "SplineMoveComponent", {
-      enumerable: !0,
-      get: function () {
-        return SplineMoveComponent_1.SplineMoveComponent;
       },
     }),
     require("../NewWorld/Common/Component/UeActorTickManageComponent")),

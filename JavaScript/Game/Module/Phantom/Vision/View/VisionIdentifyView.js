@@ -43,8 +43,11 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
       (this.jHi = () => {
         this.WHi();
       }),
-      (this.SNa = (e) => {
+      (this.I3a = (e) => {
         e === this.qHi && this.Oqe();
+      }),
+      (this.qdi = () => {
+        this.Og();
       }),
       (this.OnClickLockToggle = () => {
         var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
@@ -110,7 +113,11 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
       ),
       (this.NHi = !0);
   }
@@ -127,7 +134,11 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
       ));
   }
   Og() {

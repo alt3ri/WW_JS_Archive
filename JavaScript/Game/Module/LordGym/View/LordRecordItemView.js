@@ -76,7 +76,7 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
           (this.GetText(2)?.SetText(TimeUtil_1.TimeUtil.GetTimeString(o.Qxs)),
           this.tFe.RefreshByData(this.cyi(o))))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("SceneGameplay", 50, "领主挑战缺少对应怪物配置", [
+        Log_1.Log.Error("SceneGameplay", 49, "领主挑战缺少对应怪物配置", [
           "id",
           e.Id,
         ]);
@@ -107,7 +107,8 @@ class RoleItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
     var r,
       o = e.Q6n;
     !o || o < 0
-      ? (this.Apply({ Type: 1 }), this.myi?.SetUIActive(!0))
+      ? (this.ApplyEmptyWithoutAddSmallItemGrid({ Type: 1 }),
+        this.myi?.SetUIActive(!0))
       : (this.myi?.SetUIActive(!1),
         (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o)),
         (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(

@@ -22,7 +22,7 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Forging",
-            50,
+            49,
             "锻造配方获取失败，请检查锻造配方配置表是否正确",
             ["FormulaItemId=", e],
           )),
@@ -36,7 +36,7 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Forging",
-            50,
+            49,
             "锻造配方获取失败，请检查锻造配方配置表是否正确",
             ["Id=", e],
           )),
@@ -50,7 +50,7 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Forging",
-            50,
+            49,
             "获取对应类型锻造数据列表失败，请检查锻造配方配置表是否正确",
           )),
       e
@@ -63,7 +63,7 @@ class ForgingConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Forging",
-            50,
+            49,
             "获取对应类型锻造数据失败，请检查锻造配方配置表是否正确",
             ["TypeId=", e],
           )),

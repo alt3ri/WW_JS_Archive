@@ -15,8 +15,8 @@ class ActivityConditionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.LOe = 0),
-      (this.T4a = void 0),
-      (this.L4a = () => new ActivityConditionItem());
+      (this.o8a = void 0),
+      (this.n8a = () => new ActivityConditionItem());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -27,7 +27,7 @@ class ActivityConditionView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    this.D4a();
+    this.s8a();
     var i = this.OpenParam;
     (this.LOe = i.ActivityId),
       this.LOe &&
@@ -41,24 +41,31 @@ class ActivityConditionView extends UiViewBase_1.UiViewBase {
   OnBeforeShow() {
     var i = ModelManager_1.ModelManager.ActivityModel.GetActivityById(this.LOe);
     i &&
-      (this.A4a(i.LocalConfig.Name, i.ConditionGroupId),
+      (i.HasPreOpenCondition()
+        ? this.a8a(i.LocalConfig.Name, i.PreOpenConditionGroupId, !1)
+        : this.a8a(i.LocalConfig.Name, i.ConditionGroupId, !0),
       (i =
         ModelManager_1.ModelManager.ActivityModel.GetActivityConditionData(i)),
-      this.T4a?.RefreshByData(i));
+      this.o8a?.RefreshByData(i));
   }
-  D4a() {
+  s8a() {
     var i = this.GetLoopScrollViewComponent(2),
       t = this.GetItem(3);
-    this.T4a = new LoopScrollView_1.LoopScrollView(i, t.GetOwner(), this.L4a);
+    this.o8a = new LoopScrollView_1.LoopScrollView(i, t.GetOwner(), this.n8a);
   }
-  A4a(i, t) {
-    (t = ConfigManager_1.ConfigManager.ConditionConfig.GetConditionGroupConfig(
-      t,
-    )?.Relation
-      ? "ActivityNotOpen_Tips02"
-      : "ActivityNotOpen_Tips01"),
-      (i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i));
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t, i);
+  a8a(i, t, e) {
+    t =
+      ConfigManager_1.ConfigManager.ConditionConfig.GetConditionGroupConfig(t);
+    let r = "";
+    r = e
+      ? t?.Relation
+        ? "ActivityNotOpen_Tips02"
+        : "ActivityNotOpen_Tips01"
+      : t?.Relation
+        ? "ActivityNotPreOpen_Tips02"
+        : "ActivityNotPreOpen_Tips01";
+    e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), r, e);
   }
 }
 exports.ActivityConditionView = ActivityConditionView;
@@ -92,20 +99,20 @@ class ActivityConditionItem extends GridProxyAbstract_1.GridProxyAbstract {
     var r = (this.Pe = i).IsFinished,
       s = 7 === i.AccessType,
       o = 16 === i.AccessType,
-      a = 0 === i.AccessId,
-      n = this.GetText(4);
+      n = 0 === i.AccessId,
+      a = this.GetText(4);
     StringUtils_1.StringUtils.IsEmpty(i.ConditionTextId)
-      ? n.SetText("")
-      : n.ShowTextNew(i.ConditionTextId),
-      n.SetChangeColor(r, n.changeColor),
+      ? a.SetText("")
+      : a.ShowTextNew(i.ConditionTextId),
+      a.SetChangeColor(r, a.changeColor),
       this.GetItem(0).SetUIActive(r),
       this.GetItem(1).SetUIActive(!r && s),
       this.GetItem(2).SetUIActive(!r && !s),
       this.GetItem(3).SetUIActive(!r),
       this.GetItem(6).SetUIActive(r),
-      this.GetItem(7).SetUIActive(!r && a),
-      this.GetButton(5).RootUIComp.SetUIActive(!r && !a && !o),
-      this.GetButton(8).RootUIComp.SetUIActive(!r && !a && o);
+      this.GetItem(7).SetUIActive(!r && n),
+      this.GetButton(5).RootUIComp.SetUIActive(!r && !n && !o),
+      this.GetButton(8).RootUIComp.SetUIActive(!r && !n && o);
   }
 }
 //# sourceMappingURL=ActivityConditionView.js.map

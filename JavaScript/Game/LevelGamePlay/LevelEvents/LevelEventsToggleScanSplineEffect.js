@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
-  QuestController_1 = require("../../Module/QuestNew/Controller/QuestController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventToggleScanSplineEffect extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
@@ -12,27 +12,27 @@ class LevelEventToggleScanSplineEffect extends LevelGeneralBase_1.LevelEventBase
       (6 === o.Type &&
         o.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest) ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Event", 32, "该事件仅用于任务行为树内配置"));
+          Log_1.Log.Error("Event", 31, "该事件仅用于任务行为树内配置"));
       var r = o,
-        t = e;
-      switch (t.Type) {
+        l = e;
+      switch (l.Type) {
         case IAction_1.ETraceSplineOptionType.Open:
-          var l = t;
-          QuestController_1.QuestNewController.AddQuestTraceEffect(
+          var t = l;
+          ControllerHolder_1.ControllerHolder.QuestNewController.AddQuestTraceEffect(
             r.TreeConfigId,
-            l.Duration,
-            l.SplineEntityId,
+            t.Duration,
+            t.SplineEntityId,
           );
           break;
         case IAction_1.ETraceSplineOptionType.Close:
-          l = t;
-          QuestController_1.QuestNewController.RemoveQuestTraceEffect(
+          t = l;
+          ControllerHolder_1.ControllerHolder.QuestNewController.RemoveQuestTraceEffect(
             r.TreeConfigId,
-            l.SplineEntityId,
+            t.SplineEntityId,
           );
       }
     } else
-      Log_1.Log.CheckError() && Log_1.Log.Error("Event", 32, "参数配置错误");
+      Log_1.Log.CheckError() && Log_1.Log.Error("Event", 31, "参数配置错误");
   }
 }
 exports.LevelEventToggleScanSplineEffect = LevelEventToggleScanSplineEffect;

@@ -17,29 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configRewardViewFromSourceBySourceId.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configRewardViewFromSourceBySourceId.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configRewardViewFromSourceBySourceId.GetConfig(";
 exports.configRewardViewFromSourceBySourceId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var r = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var r = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       i =
-        (r.Start(),
+        (r?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (e) {
@@ -47,8 +47,8 @@ exports.configRewardViewFromSourceBySourceId = {
         const t = ConfigCommon_1.ConfigCommon.GetConfig(n);
         if (t)
           return (
-            r.Stop(),
-            getConfigStat.Stop(),
+            r?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -81,8 +81,8 @@ exports.configRewardViewFromSourceBySourceId = {
               ((i = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            r.Stop(),
-            getConfigStat.Stop(),
+            r?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -90,8 +90,8 @@ exports.configRewardViewFromSourceBySourceId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    r.Stop(),
-      getConfigStat.Stop(),
+    r?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

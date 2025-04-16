@@ -27,7 +27,7 @@ class BulletActionSummonEntity extends BulletActionBase_1.BulletActionBase {
     }
     (this.BulletInfo.SummonAttackerId = e.Id),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Bullet", 21, "子弹召唤", ["Version", t]),
+        Log_1.Log.Debug("Bullet", 20, "子弹召唤", ["Version", t]),
       (this.BulletInfo.SummonServerEntityId =
         ControllerHolder_1.ControllerHolder.CreatureController.SummonRequest(
           this.BulletInfo.BulletInitParams.SkillId,

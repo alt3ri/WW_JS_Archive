@@ -2,40 +2,41 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipToDyMarkEntity = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
-  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   MapController_1 = require("../../Map/Controller/MapController"),
   MapDefine_1 = require("../../Map/MapDefine"),
-  MapUtil_1 = require("../../Map/MapUtil"),
   WorldMapController_1 = require("../../WorldMap/WorldMapController"),
   SkipTask_1 = require("./SkipTask");
 class SkipToDyMarkEntity extends SkipTask_1.SkipTask {
   OnRun(e, r) {
     var e = Number(e),
       r = Number(r),
-      o = MapUtil_1.MapUtil.GetConfigMarkBelongMapId(e, 7),
-      a = ModelManager_1.ModelManager.CreatureModel.GetEntityData(r, o)
-        ?.Transform?.Pos;
-    a
-      ? ((a = new MapDefine_1.DynamicMarkCreateInfo(
-          Vector_1.Vector.Create(a.X ?? 0, a.Y ?? 0, a.Z ?? 0),
-          e,
-          7,
-          void 0,
-          void 0,
-          !0,
-        )),
-        (e = ModelManager_1.ModelManager.MapModel.CreateMapMark(a)),
-        MapController_1.MapController.RequestTrackMapMark(7, e, !0),
-        (a = { MarkId: e, MarkType: 7 }),
-        WorldMapController_1.WorldMapController.OpenView(2, !1, a))
+      a = ModelManager_1.ModelManager.WorldMapModel.SearchMarkMapConfigId(e);
+    ModelManager_1.ModelManager.CreatureModel.GetEntityData(r, a)?.Transform
+      ?.Pos
+      ? ((e = new MapDefine_1.DynamicMarkCreateInfo({
+          TrackTarget: r,
+          MarkConfigId: e,
+          MarkType: 7,
+          DestroyOnUnTrack: !0,
+          MapAndDungeonInfo: { MapConfigId: a },
+        })),
+        (e = ModelManager_1.ModelManager.MapModel.CreateMapMark(e)),
+        MapController_1.MapController.RequestTrackMapMark({
+          MarkType: 7,
+          MarkId: e,
+          Track: !0,
+          TrackMode: 0,
+        }),
+        (e = { MarkId: e, MarkType: 7 }),
+        WorldMapController_1.WorldMapController.OpenView(2, !1, e))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SkipInterface",
-          44,
+          43,
           "实体或实体位置为空",
           ["entityId", r],
-          ["mapId", o],
+          ["mapId", a],
         ),
       this.Finish();
   }

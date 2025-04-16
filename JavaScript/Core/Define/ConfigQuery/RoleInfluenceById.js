@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configRoleInfluenceById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configRoleInfluenceById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configRoleInfluenceById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configRoleInfluenceById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configRoleInfluenceById.GetConfig(";
 exports.configRoleInfluenceById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (n, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      getConfigStat?.Start();
+    var e = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${n})`),
       i =
-        (e.Start(),
+        (e?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (o) {
@@ -43,8 +47,8 @@ exports.configRoleInfluenceById = {
         const f = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (f)
           return (
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -76,8 +80,8 @@ exports.configRoleInfluenceById = {
               ((i = KEY_PREFIX + `#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -85,8 +89,8 @@ exports.configRoleInfluenceById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    e.Stop(),
-      getConfigStat.Stop(),
+    e?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

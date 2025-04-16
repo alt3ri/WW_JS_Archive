@@ -23,7 +23,6 @@ class AiStateMachineConditionCheckInstState extends AiStateMachineCondition_1.Ai
         this.TagId,
         this.lne,
       )),
-      (this.CheckForClient = !!t.IsClient),
       (this.ResultSelf = this.Node.TagComponent.HasTag(this.TagId)),
       !0
     );

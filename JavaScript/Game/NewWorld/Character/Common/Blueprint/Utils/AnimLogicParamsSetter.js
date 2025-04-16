@@ -51,6 +51,7 @@ class AnimLogicParamsSetter {
       (this.LastActiveSkillTime = 0),
       (this.SitDownDirect = -1),
       (this.StandUpDirect = -1),
+      (this.SitDownType = 0),
       (this.SitDown = !1),
       (this.IsInPerformingPlot = !1),
       (this.IsInSequence = !1),
@@ -58,7 +59,8 @@ class AnimLogicParamsSetter {
       (this.IsInUiCamera = !1),
       (this.LookAt = Vector2D_1.Vector2D.Create()),
       (this.EnableBlendSpaceLookAt = !1),
-      (this.CameraMode = 0);
+      (this.CameraMode = 0),
+      (this.IsOnVehicle = !1);
   }
 }
 exports.AnimLogicParamsSetter = AnimLogicParamsSetter;

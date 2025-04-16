@@ -12,7 +12,7 @@ class Node {
 exports.Node = Node;
 class Graph {
   constructor(t) {
-    (this.pAa = t), (this.fZ = new Map());
+    (this.jDa = t), (this.fZ = new Map());
   }
   Roots() {
     const s = [];
@@ -35,22 +35,22 @@ class Graph {
   InsertEdge(t, s) {
     var e = this.LookupOrInsertNode(t),
       o = this.LookupOrInsertNode(s);
-    e.Outgoing.set(this.pAa(s), o), o.Incoming.set(this.pAa(t), e);
+    e.Outgoing.set(this.jDa(s), o), o.Incoming.set(this.jDa(t), e);
   }
   RemoveNode(t) {
-    const s = this.pAa(t);
+    const s = this.jDa(t);
     this.fZ.delete(s),
       this.fZ.forEach((t) => {
         t.Outgoing.delete(s), t.Incoming.delete(s);
       });
   }
   LookupOrInsertNode(t) {
-    var s = this.pAa(t);
+    var s = this.jDa(t);
     let e = this.fZ.get(s);
     return e || ((e = new Node(s, t)), this.fZ.set(s, e)), e;
   }
   Lookup(t) {
-    return this.fZ.get(this.pAa(t));
+    return this.fZ.get(this.jDa(t));
   }
   IsEmpty() {
     return 0 === this.fZ.size;

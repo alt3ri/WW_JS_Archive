@@ -3,10 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MobileHotPatchProcedure = void 0);
 const cpp_1 = require("cpp"),
   UE = require("ue"),
+  BaseConfigController_1 = require("../BaseConfig/BaseConfigController"),
   DownloadDefine_1 = require("../Download/DownloadDefine"),
   UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
   HotPatchLogReport_1 = require("../HotPatchLogReport"),
   NetworkDefine_1 = require("../NetworkDefine"),
+  LauncherNoticeUtils_1 = require("../Notice/LauncherNoticeUtils"),
   AppUtil_1 = require("../Update/AppUtil"),
   LauncherLog_1 = require("../Util/LauncherLog"),
   LauncherSerialize_1 = require("../Util/LauncherSerialize"),
@@ -40,44 +42,44 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       (this.UpdateSize = 0n),
       (this.XSr = 0n),
       (this.$Sr = 0n);
-    let r = !0;
+    let i = !0;
     for (const h of e) {
-      var i = new HotPatchLogReport_1.HotPatchLog(),
-        i =
-          ((i.s_step_id = "hotpatch_mobile_procedure_check_version"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(i),
+      var r = new HotPatchLogReport_1.HotPatchLog(),
+        r =
+          ((r.s_step_id = "hotpatch_mobile_procedure_check_version"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(r),
           await this.CheckResourceVersion(h));
-      if (i) {
-        i = new HotPatchLogReport_1.HotPatchLog();
+      if (r) {
+        r = new HotPatchLogReport_1.HotPatchLog();
         if (
-          ((i.s_step_id = "hotpatch_mobile_procedure_download_index"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(i),
-          !(r = await this.DownloadIndexFile(h)))
+          ((r.s_step_id = "hotpatch_mobile_procedure_download_index"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(r),
+          !(i = await this.DownloadIndexFile(h)))
         )
           return !1;
-        i = new HotPatchLogReport_1.HotPatchLog();
+        r = new HotPatchLogReport_1.HotPatchLog();
         if (
-          ((i.s_step_id = "hotpatch_mobile_procedure_resolve_index"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(i),
-          !(r = await this.ResolveIndexFile(h)))
+          ((r.s_step_id = "hotpatch_mobile_procedure_resolve_index"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(r),
+          !(i = await this.ResolveIndexFile(h)))
         )
           return !1;
-        i = new HotPatchLogReport_1.HotPatchLog();
+        r = new HotPatchLogReport_1.HotPatchLog();
         if (
-          ((i.s_step_id = "hotpatch_mobile_procedure_check_resource_file"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(i),
-          !(r = await this.CheckResourceFiles(h)))
+          ((r.s_step_id = "hotpatch_mobile_procedure_check_resource_file"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(r),
+          !(i = await this.CheckResourceFiles(h)))
         )
           return !1;
-        i = new HotPatchLogReport_1.HotPatchLog();
-        (i.s_step_id = "hotpatch_mobile_procedure_check_resource_complete"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(i),
+        r = new HotPatchLogReport_1.HotPatchLog();
+        (r.s_step_id = "hotpatch_mobile_procedure_check_resource_complete"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(r),
           (this.UpdateSize += h.GetUpdateSize()),
           (this.$Sr += h.GetNeedSpace());
       } else {
-        i = new HotPatchLogReport_1.HotPatchLog();
-        (i.s_step_id = "hotpatch_mobile_procedure_check_version_continue"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(i);
+        r = new HotPatchLogReport_1.HotPatchLog();
+        (r.s_step_id = "hotpatch_mobile_procedure_check_version_continue"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(r);
       }
     }
     if (0n < this.UpdateSize) {
@@ -85,14 +87,14 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       if (
         ((o.s_step_id = "hotpatch_mobile_procedure_check_space"),
         HotPatchLogReport_1.HotPatchLogReport.Report(o),
-        !(r = await this.DoesSavedDirHaveEnoughSpace(this.$Sr)))
+        !(i = await this.DoesSavedDirHaveEnoughSpace(this.$Sr)))
       )
         return !1;
       o = new HotPatchLogReport_1.HotPatchLog();
       if (
         ((o.s_step_id = "hotpatch_mobile_procedure_download_file"),
         HotPatchLogReport_1.HotPatchLogReport.Report(o),
-        !(r = await this.DownloadFiles(t, ...e)))
+        !(i = await this.DownloadFiles(t, ...e)))
       )
         return !1;
       var a,
@@ -101,7 +103,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
         HotPatchLogReport_1.HotPatchLogReport.Report(o);
       for (const c of e)
         if (!(c.GetUpdateSize() <= 0n))
-          if (!(r = await this.CheckNeedRestartApp(c)))
+          if (!(i = await this.CheckNeedRestartApp(c)))
             return (
               ((a = new HotPatchLogReport_1.HotPatchLog()).s_step_id =
                 "hotpatch_mobile_procedure_check_need_restart_false"),
@@ -116,16 +118,16 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
     return (
       (o.s_step_id = "hotpatch_mobile_procedure_update_res_end"),
       HotPatchLogReport_1.HotPatchLogReport.Report(o),
-      r
+      i
     );
   }
   async DownloadFiles(t, ...e) {
     var o = new HotPatchLogReport_1.HotPatchLog(),
-      r =
+      i =
         ((o.s_step_id = "hotpatch_mobile_procedure_download_file_start"),
         new HotPatchLogReport_1.HotPatchLog()),
       o =
-        ((r.s_step_id = "hotpatch_mobile_procedure_download_file_end"),
+        ((i.s_step_id = "hotpatch_mobile_procedure_download_file_end"),
         HotPatchLogReport_1.HotPatchLogReport.Report(o),
         UE.KuroLauncherLibrary.GetNetworkConnectionType());
     if (
@@ -208,44 +210,44 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
     (t.s_step_id = "hotpatch_mobile_procedure_evaluate"),
       HotPatchLogReport_1.HotPatchLogReport.Report(t);
     const n = new Map();
-    let i = new Array();
+    let r = new Array();
     for (const b of e) {
       var a = b.GetViewInfoList();
       if (a) {
         for (var [h, c] of a) n.set(h, c);
         a = b.GetRequestList();
-        i = i.concat(a);
+        r = r.concat(a);
       }
     }
-    let _ = new Date().getTime(),
-      s = 0,
-      u = 0n,
-      l = -1,
+    let s = new Date().getTime(),
+      _ = 0,
+      l = 0n,
+      u = -1,
       p = 0n;
-    const d = (t, e, o, r, i) => {
+    const d = (t, e, o, i, r) => {
       var a,
         h,
         t = n.get(t);
-      t && (t.SavedSize = i);
+      t && (t.SavedSize = r);
       let c = 0n;
       for ([a, h] of n) c += h.SavedSize;
       p += o;
       (t = new Date().getTime()),
-        (i = t - s),
-        (l -= i) < 0 &&
-          t !== _ &&
-          ((l = 500),
-          (u = (1000n * p) / (BigInt(t) - BigInt(_))),
+        (r = t - _),
+        (u -= r) < 0 &&
+          t !== s &&
+          ((u = 500),
+          (l = (1000n * p) / (BigInt(t) - BigInt(s))),
           (p = 0n),
-          (_ = t)),
-        (s = t),
+          (s = t)),
+        (_ = t),
         (o = (100n * c) / this.UpdateSize),
-        (i = Number(o) / 100);
+        (r = Number(o) / 100);
       this.ViewMgr.UpdatePatchDownProgress(
         !1,
-        i,
+        r,
         e,
-        LauncherTextLib_1.LauncherTextLib.DownloadSpeedFormat(u),
+        LauncherTextLib_1.LauncherTextLib.DownloadSpeedFormat(l),
         LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(c),
         LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(this.UpdateSize),
       ).catch((t) => {
@@ -262,7 +264,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       (o = await this.ryr(
         async () => {
           this.YSr = new UrlPrefixDownload_1.UrlPrefixDownload();
-          var t = await this.YSr.StartEvaluatePrefix(i, !0, d);
+          var t = await this.YSr.StartEvaluatePrefix(r, !0, d);
           return (
             (L = t.Complete),
             (g = t.FileIndex),
@@ -270,9 +272,9 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
               "评估结束",
               ["completeEvaluate", L],
               ["startIndex", g],
-              ["fileCount", i.length],
+              ["fileCount", r.length],
             ),
-            g >= i.length
+            g >= r.length
               ? {
                   Success: (w = !0),
                   DownloadState: DownloadDefine_1.EDownloadState.Success,
@@ -310,7 +312,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
     )
       return (
         this.NetworkListener.NetworkChangeDelegate.Remove(this.iyr),
-        HotPatchLogReport_1.HotPatchLogReport.Report(r),
+        HotPatchLogReport_1.HotPatchLogReport.Report(i),
         !0
       );
     var P,
@@ -322,7 +324,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       H.Add(v);
     const f = UE.NewArray(UE.KuroRequestDownloadInfo);
     let R = 0;
-    for (const x of i)
+    for (const x of r)
       ++R <= g
         ? (this.XSr += x.Size)
         : (((P = new UE.KuroRequestDownloadInfo()).FileName = x.FileName),
@@ -334,26 +336,30 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
     this.JSr = void 0;
     const D = (t, e) => {
       var o,
-        r = i[t]?.FileName;
-      r &&
-        ((r = cpp_1.FKuroUtilityForPuerts.IsBuildShipping()
-          ? i[t]?.HashString
-          : r),
-        (o = (t = new Date().getTime()) - s),
-        (l -= o) < 0 && ((l = 500), (u = BigInt(this.JSr.GetBpsSpeed()))),
-        (s = t),
+        i = r[t]?.FileName;
+      i &&
+        ((i = cpp_1.KuroApplication.IsBuildShipping() ? r[t]?.HashString : i),
+        (o = (t = new Date().getTime()) - _),
+        (u -= o) < 0 && ((u = 500), (l = BigInt(this.JSr.GetBpsSpeed()))),
+        (_ = t),
         (t = (100n * (o = this.XSr + e)) / this.UpdateSize),
         (e = Number(t) / 100),
         this.ViewMgr.UpdatePatchDownProgress(
           !1,
           e,
-          r,
-          LauncherTextLib_1.LauncherTextLib.DownloadSpeedFormat(u),
+          i,
+          LauncherTextLib_1.LauncherTextLib.DownloadSpeedFormat(l),
           LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(o),
           LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(this.UpdateSize),
         ).catch((t) => {
           LauncherLog_1.LauncherLog.ErrorWithStack("ui显示下载进度出现异常", t);
-        }));
+        }),
+        this.UpdateSize ??
+          LauncherNoticeUtils_1.LauncherNoticeUtils
+            .NoticeOpenDownloadSizeThreshold *
+            LauncherTextLib_1.NUMBER_MB <=
+            0n) &&
+        this.ViewMgr.ShowNoticeWindow();
     };
     return (
       (this.tyr = (t) => {
@@ -384,13 +390,13 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
           ),
       )),
       this.NetworkListener.NetworkChangeDelegate.Remove(this.iyr),
-      HotPatchLogReport_1.HotPatchLogReport.Report(r),
+      HotPatchLogReport_1.HotPatchLogReport.Report(i),
       o
     );
   }
   async ryr(o, c) {
     let n = !1,
-      _ = !1;
+      s = !1;
     return (
       await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(
         async () => {
@@ -425,7 +431,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
               );
           }
           this.ZSr = !1;
-          const e = await o(_);
+          const e = await o(s);
           return (n = e.Success), { Success: e.Success, Others: e };
         },
         async (t, e) => {
@@ -439,10 +445,10 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
               ["allowCellDownload", this.oyr],
             );
             var o = new HotPatchLogReport_1.HotPatchLog(),
-              r =
+              i =
                 ((o.s_step_id = "mobile_failed_retry"),
                 { userAnsweredDialog: this.eyr, allowCellDownload: this.oyr });
-            (o.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(r)),
+            (o.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
               HotPatchLogReport_1.HotPatchLogReport.Report(o);
             const h = this.eyr
               ? this.oyr
@@ -453,7 +459,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
                     (this.tyr = t);
                 });
             return h
-              ? ((_ = !0), LauncherLog_1.LauncherLog.Info("重试下载"), e())
+              ? ((s = !0), LauncherLog_1.LauncherLog.Info("重试下载"), e())
               : (LauncherLog_1.LauncherLog.Info("退出应用"),
                 (n = !1),
                 AppUtil_1.AppUtil.QuitGame("Download failed"),
@@ -461,19 +467,19 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
                 { Success: !0 });
           }
           LauncherLog_1.LauncherLog.Info("非网络切换导致的下载失败");
-          let i = DownloadDefine_1.EDownloadState.None,
+          let r = DownloadDefine_1.EDownloadState.None,
             a = 0;
-          t && ((r = t), (i = r.DownloadState || i), (a = r.HttpCode || a));
+          t && ((i = t), (r = i.DownloadState || r), (a = i.HttpCode || a));
           o =
-            i === DownloadDefine_1.EDownloadState.HttpError
-              ? LauncherTextLib_1.LauncherTextLib.DownloadStateFormat(i) +
+            r === DownloadDefine_1.EDownloadState.HttpError
+              ? LauncherTextLib_1.LauncherTextLib.DownloadStateFormat(r) +
                 `(http code: ${a})`
-              : LauncherTextLib_1.LauncherTextLib.DownloadStateFormat(i);
+              : LauncherTextLib_1.LauncherTextLib.DownloadStateFormat(r);
           const h = await c(o).catch((t) => {
             LauncherLog_1.LauncherLog.ErrorWithStack("弹窗提示失败异常", t);
           });
           return h
-            ? ((_ = !0), e())
+            ? ((s = !0), e())
             : ((n = !1),
               AppUtil_1.AppUtil.QuitGame("Download failed"),
               await this.ViewMgr.WaitFrame(),
@@ -483,12 +489,12 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       n
     );
   }
-  async nyr(t, e, r, i, a = !1) {
+  async nyr(t, e, i, r, a = !1) {
     return new Promise((o) => {
       t.ProgressDelegateNew.Clear(),
         t.AllCompleteDelegate.Clear(),
         t.ProgressDelegateNew.Add((t, e) => {
-          i(t, e);
+          r(t, e);
         }),
         t.AllCompleteDelegate.Add((t, e) => {
           o([t, e]);
@@ -499,7 +505,14 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
             ),
             t.Continue())
           : (LauncherLog_1.LauncherLog.Info("-----\x3e> ts start bg download."),
-            t.Start(".download", e, r, 3, 3));
+            t.Start(
+              ".download",
+              e,
+              i,
+              3,
+              3,
+              BaseConfigController_1.BaseConfigController.IsUseNewHttpApi(),
+            ));
     });
   }
 }

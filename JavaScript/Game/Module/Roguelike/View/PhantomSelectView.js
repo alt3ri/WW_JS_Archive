@@ -34,7 +34,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
               1,
             ))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Roguelike", 9, "当前没有选中的声骸");
+            Log_1.Log.Error("Roguelike", 8, "当前没有选中的声骸");
       }),
       (this.RefreshBtnEnableClick = (e) => {
         if (void 0 !== e)
@@ -136,7 +136,8 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
     this.TopPanel.RefreshTitle(RoguelikeDefine_1.ROGUELIKEVIEW_5_TEXT),
       this.TopPanel.RefreshSelectTipsText(
         RoguelikeDefine_1.ROGUELIKEVIEW_6_TEXT,
-      );
+      ),
+      this.TopPanel.RefreshTabBtn();
   }
   RefreshElementPanel() {
     this.ElementPanel.Refresh();
@@ -168,7 +169,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       }
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+        Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
           "configParams",
           e,
         ]);

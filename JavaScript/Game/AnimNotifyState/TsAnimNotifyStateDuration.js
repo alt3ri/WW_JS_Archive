@@ -5,7 +5,8 @@ const UE = require("ue"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem");
 class TsAnimNotifyStateDuration extends UE.KuroAnimNotifyState {
-  K2_NotifyBegin(e, t, n) {
+  Constructor() {}
+  K2_NotifyBegin(e, t, r) {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
@@ -13,7 +14,7 @@ class TsAnimNotifyStateDuration extends UE.KuroAnimNotifyState {
       (EventSystem_1.EventSystem.EmitWithTarget(
         e,
         EventDefine_1.EEventName.CharOnAnimNotifyStateDurationChange,
-        n,
+        r,
       ),
       !0)
     );

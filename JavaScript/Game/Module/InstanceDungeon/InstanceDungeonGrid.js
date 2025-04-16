@@ -128,7 +128,7 @@ class InstanceDungeonGrid extends UiPanelBase_1.UiPanelBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "InstanceDungeon",
-          17,
+          16,
           "副本格子视图刷新失败，instanceId非法",
         );
   }

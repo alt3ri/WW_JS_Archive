@@ -33,6 +33,9 @@ class EntityPhotoBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   OnDestroy() {
     super.OnDestroy();
   }
+  GetDungeonId() {
+    return this.Blackboard?.DungeonId;
+  }
 }
 exports.EntityPhotoBehaviorNode = EntityPhotoBehaviorNode;
 //# sourceMappingURL=EntityPhotoBehaviorNode.js.map

@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configCorniceChallengeById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configCorniceChallengeById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configCorniceChallengeById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configCorniceChallengeById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configCorniceChallengeById.GetConfig(";
 exports.configCorniceChallengeById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (n, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      getConfigStat?.Start();
+    var e = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${n})`),
       i =
-        (e.Start(),
+        (e?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (o) {
@@ -43,8 +47,8 @@ exports.configCorniceChallengeById = {
         const t = ConfigCommon_1.ConfigCommon.GetConfig(C);
         if (t)
           return (
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -77,8 +81,8 @@ exports.configCorniceChallengeById = {
               ((i = KEY_PREFIX + `#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -86,8 +90,8 @@ exports.configCorniceChallengeById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    e.Stop(),
-      getConfigStat.Stop(),
+    e?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

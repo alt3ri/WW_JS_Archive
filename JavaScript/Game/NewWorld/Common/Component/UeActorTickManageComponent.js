@@ -25,7 +25,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   PerformanceController_1 = require("../../../../Core/Performance/PerformanceController"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  ModelManager_1 = require("../../../Manager/ModelManager");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 let UeActorTickManageComponent = class UeActorTickManageComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.Hte = void 0);
@@ -45,9 +45,9 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
       let e =
         `DeltaSeconds: ${this.Entity.GetDeltaSeconds().toFixed(2)}, TickInterval: ${this.Entity.GetTickInterval()}, Distance: ` +
         this.Entity.DistanceWithCamera.toFixed(2);
-      var o = this.Entity.GetComponent(161);
+      var o = this.Entity.GetComponent(173);
       o && ((o = o.IsInFighting), (e += " IsInFight: " + o)),
-        (t = Stats_1.Stat.Create(e));
+        (t = Stats_1.Stat.CreateNoFlameGraph(e));
     }
     t?.Start(),
       this.Hte.Owner.KuroTickActorOutside(
@@ -58,7 +58,9 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
   DisableTickWithLog(e) {
     var t = this.Disable(e);
     return (
-      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+        this.Hte.CreatureData?.GetEntityType(),
+      ) &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
@@ -74,7 +76,9 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
   }
   EnableTickWithLog(e, t) {
     return (
-      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+        this.Hte.CreatureData?.GetEntityType(),
+      ) &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
@@ -93,7 +97,7 @@ let UeActorTickManageComponent = class UeActorTickManageComponent extends Entity
   }
 };
 (UeActorTickManageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(99)],
+  [(0, RegisterComponent_1.RegisterComponent)(109)],
   UeActorTickManageComponent,
 )),
   (exports.UeActorTickManageComponent = UeActorTickManageComponent);

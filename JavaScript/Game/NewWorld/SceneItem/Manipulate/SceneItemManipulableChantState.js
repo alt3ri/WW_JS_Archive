@@ -10,8 +10,7 @@ class SceneItemManipulableChantState extends SceneItemManipulableBaseState_1.Sce
       (this.pYi = void 0),
       (this.Znr = void 0),
       (this.pYi = t),
-      (this.Znr = n),
-      (this.StateType = "Reset");
+      (this.Znr = n);
   }
   OnEnter() {
     this.StartCameraShake(this.pYi),

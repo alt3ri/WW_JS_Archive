@@ -52,20 +52,38 @@ class QuestType {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   questtypename(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   isshowinquestpanel() {
     var t = this.J7.__offset(this.z7, 10);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   typecolor(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   textcolor(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   needreddot() {
     var t = this.J7.__offset(this.z7, 16);

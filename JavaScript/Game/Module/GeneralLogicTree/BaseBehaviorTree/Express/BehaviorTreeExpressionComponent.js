@@ -23,50 +23,51 @@ class BehaviorTreeExpressionComponent {
       (this.IQt = void 0),
       (this.TQt = void 0),
       (this.LQt = void 0),
-      (this.DQt = (e, t, i, s) => {
-        6 === e.Type &&
-          e.TreeIncId === this.Yre.TreeIncId &&
-          (e = this.Yre.GetNode(e.NodeId)) &&
-          (this.yQt.UpdateTrackTextData(e, i),
-          this.TQt.UpdateTrackMarkExpression(this.Yre, e, i),
-          this.IQt.UpdateTrackEffectExpression(e.NodeId, i),
-          (e = this.RQt(e, i, s)),
-          this.yQt.UpdateTextExpress(e));
+      (this.DQt = (e, t, i, r) => {
+        this.Yre.DisableExpression ||
+          (6 === e.Type &&
+            e.TreeIncId === this.Yre.TreeIncId &&
+            (e = this.Yre.GetNode(e.NodeId)) &&
+            (this.yQt.UpdateTrackTextData(e, i),
+            this.TQt.UpdateTrackMarkExpression(this.Yre, e, i),
+            this.IQt.UpdateTrackEffectExpression(e.NodeId, i),
+            (e = this.RQt(e, i, r)),
+            this.yQt.UpdateTextExpress(e)));
       }),
       (this.RSe = (e, t, i) => {
-        if (6 === e.Type && e.TreeIncId === this.Yre.TreeIncId) {
-          var s,
-            r,
-            n = this.Yre.GetNode(e.NodeId);
-          if (n)
-            switch (i) {
-              case Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress:
-                n.ContainTag(0) &&
-                  (s = n.TrackTarget) &&
-                  ((r = this.Yre.IsOccupied),
-                  n instanceof ReachAreaBehaviorNode_1.ReachAreaBehaviorNode &&
-                    n.EffectPathKey &&
-                    this.LQt.OnNodeStart(
-                      e.NodeId,
-                      n.EffectPathKey,
-                      n.GetTargetPosition(),
-                      r,
-                    ),
-                  this.TQt.NodeTrackMarkStart(n.NodeId, this.Yre, s, r),
-                  (r = s.EffectOption)) &&
+        var r, s, n;
+        6 !== e.Type ||
+          this.Yre.DisableExpression ||
+          ((r = this.Yre.GetNode(e.NodeId)) &&
+            "ChildQuest" === r.NodeType &&
+            r.ContainTag(0) &&
+            !r.ContainTag(2) &&
+            (s = r.TrackTarget) &&
+            ((r.ShowTipBeforeEnterActions &&
+              i === Protocol_1.Aki.Protocol.FNs.Proto_CQNS_EnterAction) ||
+            (!r.ShowTipBeforeEnterActions &&
+              i === Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Progress)
+              ? ((n = this.Yre.IsOccupied),
+                r instanceof ReachAreaBehaviorNode_1.ReachAreaBehaviorNode &&
+                  r.EffectPathKey &&
+                  this.LQt.OnNodeStart(
+                    e.NodeId,
+                    r.EffectPathKey,
+                    r.GetTargetPosition(),
+                    n,
+                  ),
+                this.TQt.NodeTrackMarkStart(r.NodeId, this.Yre, s, n),
+                (e = s.EffectOption) &&
                   this.IQt.NodeTrackEffectStart(
-                    n.NodeId,
-                    r,
+                    r.NodeId,
+                    e,
                     this.Yre.IsTracking,
-                  );
-                break;
-              case Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Finished:
-                this.TQt.NodeTrackMarkEnd(n.NodeId),
-                  this.IQt.NodeTrackEffectEnd(n.NodeId),
-                  n instanceof ReachAreaBehaviorNode_1.ReachAreaBehaviorNode &&
-                    this.LQt.OnNodeEnd(n.NodeId);
-            }
-        }
+                  ))
+              : i === Protocol_1.Aki.Protocol.FNs.Proto_CQNS_Finished &&
+                (this.TQt.NodeTrackMarkEnd(r.NodeId),
+                this.IQt.NodeTrackEffectEnd(r.NodeId),
+                r instanceof ReachAreaBehaviorNode_1.ReachAreaBehaviorNode) &&
+                this.LQt.OnNodeEnd(r.NodeId)));
       }),
       (this.UQt = (e, t, i) => {
         this.Yre.TreeIncId === e &&
@@ -94,7 +95,7 @@ class BehaviorTreeExpressionComponent {
               break;
             case "gEs":
               e = [];
-              for (const s of i.gEs.DEs) e.concat(s.PEs);
+              for (const r of i.gEs.DEs) e.concat(r.PEs);
               break;
             case "MEs":
               e = i.MEs.F4n;
@@ -230,6 +231,9 @@ class BehaviorTreeExpressionComponent {
       this.IQt.EnableTrack(e),
       this.LQt.EnableAllEffects(e);
   }
+  RefreshMapMark(e) {
+    this.TQt.EnableTrack(e);
+  }
   StartTextExpress(e = 0) {
     this.yQt.StartTextExpress(e);
   }
@@ -239,8 +243,8 @@ class BehaviorTreeExpressionComponent {
   GetNodeTrackPosition(e) {
     return this.TQt.GetNodeTrackMarkCreator(e)?.GetTrackPosition();
   }
-  GetDungeonId(e) {
-    return this.TQt.GetNodeTrackMarkCreator(e)?.DungeonId;
+  GetTrackAreaInfo(e) {
+    return this.TQt.GetNodeTrackMarkCreator(e)?.GetTrackAreaInfo();
   }
   GetDefaultMark(e) {
     return this.TQt.GetNodeTrackMarkCreator(e)?.GetDefaultMark();
@@ -266,36 +270,36 @@ class BehaviorTreeExpressionComponent {
       0 === i &&
       t === Protocol_1.Aki.Protocol.BNs._5n &&
       this.Yre.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
+      ((i = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()?.Id),
+      this.Yre.TreeConfigId !== i) &&
       !(
         !e.ContainTag(0) ||
         e.ContainTag(3) ||
-        ((i =
+        ((t =
           GeneralLogicTreeController_1.GeneralLogicTreeController.GetNodeTrackText(
             this.Yre.TreeIncId,
             e.NodeId,
           )),
-        StringUtils_1.StringUtils.IsEmpty(i)) ||
+        StringUtils_1.StringUtils.IsEmpty(t)) ||
         (ModelManager_1.ModelManager.GeneralLogicTreeModel.SaveUpdateInfo(
           this.Yre.TreeIncId,
           e.NodeId,
-          this.Yre.CreateShowBridge(),
         ),
-        this.Yre.RemoveTag(8),
         0)
       )
     );
   }
-  CheckCanShow() {
-    var e,
-      t = this.Yre.GetAllNodes();
-    if (!t) return !1;
-    if (0 === t.size) return !1;
-    let i = 0,
-      s = !1;
-    for ([, e] of t)
-      e.IsProcessing && e.ContainTag(2) && (s = !0),
-        e.ContainTag(0) && (i += 1);
-    return 0 !== i || !s;
+  CheckCanShow(e) {
+    if (!this.Yre.DisableExpression) {
+      var t = this.Yre.GetAllNodes();
+      if (t && 0 !== t.size)
+        for (var [, i] of t)
+          if (!i.ContainTag(4) && i.ContainTag(0) && (!e || e(i))) return !0;
+    }
+    return !1;
+  }
+  CheckCanShowTrackExpression() {
+    return this.CheckCanShow((e) => !e.ContainTag(2));
   }
   CreateMapMarks() {
     this.TQt.CreateMapMarks();

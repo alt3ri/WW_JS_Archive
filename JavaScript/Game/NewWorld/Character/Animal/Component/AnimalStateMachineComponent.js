@@ -58,7 +58,7 @@ let AnimalStateMachineComponent =
       var t = this.Entity.GetComponent(0),
         t =
           ((this.Mne = t.GetPbDataId()),
-          (this.oRe = this.Entity.GetComponent(163)),
+          (this.oRe = this.Entity.GetComponent(175)),
           this.oRe?.MainAnimInstance);
       return (
         t &&
@@ -115,7 +115,7 @@ let AnimalStateMachineComponent =
               : Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Animal",
-                  30,
+                  29,
                   "动画蓝图不符合规范，不是ABP_BaseAnimal的实例，不能开启状态机",
                   ["ConfigID", this.Mne],
                   ["ABP", t?.GetName()],
@@ -123,7 +123,7 @@ let AnimalStateMachineComponent =
           : Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Animal",
-              30,
+              29,
               "动画蓝图不符合规范，缺少AnimalEcological接口，不能开启状态机",
               ["ConfigID", this.Mne],
               ["ABP", t?.GetName()],

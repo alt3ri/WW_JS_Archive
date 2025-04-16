@@ -465,7 +465,7 @@ class ForgingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     return (
       !!t ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Compose", 50, "缺少itemData数据"),
+        Log_1.Log.Error("Compose", 49, "缺少itemData数据"),
       !1)
     );
   }

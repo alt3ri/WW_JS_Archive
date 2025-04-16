@@ -67,7 +67,7 @@ class GameBudgetTimeEstimationFramesOffset {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Game",
-            25,
+            24,
             "GameBudgetTimeEstimationFramesOffset.UpdateBudgetTime",
             ["GtAverageOffsetTime", this.FK],
             ["TickBudgetTime", this.TickBudgetTime],

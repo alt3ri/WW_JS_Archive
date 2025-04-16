@@ -61,7 +61,7 @@ class PhysicsAssetLoader {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Character",
-            58,
+            57,
             "该角色未在角色物理资产配置表中配置骨骼名 /Config/j.角色物理资产",
             ["默认值Id", e.Id],
           ),
@@ -73,7 +73,7 @@ class PhysicsAssetLoader {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Character",
-            58,
+            57,
             "该角色未在角色物理资产配置表中骨骼路径配置为空 /Config/j.角色物理资产",
             ["默认值Id", e.Id],
           ),
@@ -85,7 +85,7 @@ class PhysicsAssetLoader {
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Character",
-              58,
+              57,
               "该角色未在角色物理资产配置表中骨骼路径配置加载失败 /Config/j.角色物理资产",
               ["path", i],
             )),
@@ -118,7 +118,7 @@ let CharacterPhysicsAssetComponent =
         (this.Djr = 0),
         (this.Ype = !1),
         (this.I3r = (t) => {
-          t = t.GetComponent(64);
+          t = t.GetComponent(71);
           t.Tjr.ClearAnimState();
         }),
         (this.Rjr = (t, e) => {
@@ -127,7 +127,7 @@ let CharacterPhysicsAssetComponent =
         });
     }
     static get Dependencies() {
-      return [3, 190, 163];
+      return [3, 203, 175];
     }
     OnInitData() {
       return (
@@ -144,8 +144,8 @@ let CharacterPhysicsAssetComponent =
           !this.Hte.IsAutonomousProxy)
       )
         return (this.Ijr = !1), !(this.Hte = void 0);
-      (this.Lie = this.Entity.GetComponent(190)),
-        (this.oRe = this.Entity.GetComponent(163));
+      (this.Lie = this.Entity.GetComponent(203)),
+        (this.oRe = this.Entity.GetComponent(175));
       var t = this.Hte.CreatureData.GetRoleConfig().RoleBody,
         t =
           ConfigManager_1.ConfigManager.EntityPhysicsAssetConfig.GetPhysicsAssetConfigByRoleBody(
@@ -195,7 +195,7 @@ let CharacterPhysicsAssetComponent =
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Character",
-                58,
+                57,
                 "角色物理资产模拟设置CollisionEnable失败",
                 ["Entity", this.Entity.Id],
               )
@@ -205,7 +205,7 @@ let CharacterPhysicsAssetComponent =
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Character",
-                58,
+                57,
                 "角色物理资产模拟设置CollisionObjectType失败",
                 ["Entity", this.Entity.Id],
               )
@@ -219,7 +219,7 @@ let CharacterPhysicsAssetComponent =
             );
           this.Ype &&
             Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Character", 58, "角色开启物理资产模拟", [
+            Log_1.Log.Info("Character", 57, "角色开启物理资产模拟", [
               "Entity",
               this.Entity.Id,
             ]);
@@ -233,7 +233,7 @@ let CharacterPhysicsAssetComponent =
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Character",
-                58,
+                57,
                 "角色物理资产模拟重新设置Collision失败",
                 ["Entity", this.Entity.Id],
               )
@@ -242,7 +242,7 @@ let CharacterPhysicsAssetComponent =
             (this.Hte.Actor.Mesh.bEnableShearAnim = !0),
             this.Ype &&
               Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Character", 58, "角色关闭物理资产模拟", [
+              Log_1.Log.Info("Character", 57, "角色关闭物理资产模拟", [
                 "Entity",
                 this.Entity.Id,
               ]),
@@ -266,13 +266,13 @@ let CharacterPhysicsAssetComponent =
             -------------------------------------------------------------------------
             `),
           Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info("Character", 58, t);
+          Log_1.Log.Info("Character", 57, t);
     }
   });
 (CharacterPhysicsAssetComponent.Ajr = [-648310348]),
   (CharacterPhysicsAssetComponent = CharacterPhysicsAssetComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(64)],
+      [(0, RegisterComponent_1.RegisterComponent)(71)],
       CharacterPhysicsAssetComponent,
     )),
   (exports.CharacterPhysicsAssetComponent = CharacterPhysicsAssetComponent);

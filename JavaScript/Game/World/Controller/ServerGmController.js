@@ -13,14 +13,15 @@ const UE = require("ue"),
 class ServerGmController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(15759, ServerGmController.OnServerCommandNotify), !0
+      Net_1.Net.Register(18142, ServerGmController.OnServerCommandNotify), !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(15759), !0;
+    return Net_1.Net.UnRegister(18142), !0;
   }
 }
 ((exports.ServerGmController = ServerGmController).AnimalDebug = !1),
+  (ServerGmController.MingzhongzhiguiDebug = !1),
   (ServerGmController.OnServerCommandNotify = (e) => {
     e.wra.startsWith("GM ")
       ? EventSystem_1.EventSystem.Emit(
@@ -29,29 +30,31 @@ class ServerGmController extends ControllerBase_1.ControllerBase {
         )
       : (e.wra.startsWith("AnimalDebug")
           ? (ServerGmController.AnimalDebug = !0)
-          : e.wra.startsWith("AnimErrorCheck") &&
-            (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Test", 6, "AnimErrorCheck Begin"),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "a.CheckBoneNan true",
-            ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "a.PrintSkeletalMeshText true",
-            ),
-            TimerSystem_1.TimerSystem.Delay(() => {
+          : e.wra.startsWith("MingzhongzhiguiDebug")
+            ? (ServerGmController.MingzhongzhiguiDebug = !0)
+            : e.wra.startsWith("AnimErrorCheck") &&
+              (Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("Test", 6, "AnimErrorCheck Begin"),
               UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
-                "a.CheckBoneNan false",
+                "a.CheckBoneNan true",
               ),
+              UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "a.PrintSkeletalMeshText true",
+              ),
+              TimerSystem_1.TimerSystem.Delay(() => {
                 UE.KismetSystemLibrary.ExecuteConsoleCommand(
                   GlobalData_1.GlobalData.World,
-                  "a.PrintSkeletalMeshText false",
+                  "a.CheckBoneNan false",
                 ),
-                Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("Test", 6, "AnimErrorCheck End");
-            }, 3e3)),
+                  UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "a.PrintSkeletalMeshText false",
+                  ),
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info("Test", 6, "AnimErrorCheck End");
+              }, 3e3)),
         "DumpLoadingAssets" === e.wra &&
           ResourceSystem_1.ResourceSystem.DebugDumpLoadingAssets());
   });

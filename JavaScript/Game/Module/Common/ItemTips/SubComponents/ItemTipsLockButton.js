@@ -14,7 +14,7 @@ class TipsLockButton extends UiPanelBase_1.UiPanelBase {
       (this._Xe = 0),
       (this.Kvt = void 0),
       (this.gke = () => !this.Kvt || this.Kvt(this._Xe)),
-      (this.yNa = (e) => {
+      (this.L3a = (e) => {
         e === this._Xe && this.Hqe(e);
       }),
       (this.Uxt = () => {
@@ -27,7 +27,7 @@ class TipsLockButton extends UiPanelBase_1.UiPanelBase {
             !e.GetIsLock(),
           );
       }),
-      (this.INa = () => {
+      (this.A3a = () => {
         var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
           this._Xe,
         );
@@ -46,7 +46,7 @@ class TipsLockButton extends UiPanelBase_1.UiPanelBase {
     ]),
       (this.BtnBindInfo = [
         [0, this.Uxt],
-        [1, this.INa],
+        [1, this.A3a],
       ]);
   }
   OnStart() {
@@ -56,13 +56,13 @@ class TipsLockButton extends UiPanelBase_1.UiPanelBase {
   OnBeforeShow() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnItemFuncValueChange,
-      this.yNa,
+      this.L3a,
     );
   }
   OnBeforeHide() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnItemFuncValueChange,
-      this.yNa,
+      this.L3a,
     );
   }
   Refresh(e, t) {

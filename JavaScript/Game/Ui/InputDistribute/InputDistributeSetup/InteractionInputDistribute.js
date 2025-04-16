@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+  LevelPickInteractController_1 = require("../../../LevelGamePlay/LevelPickControl/LevelPickInteractController"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   TsInteractionUtils_1 = require("../../../Module/Interaction/TsInteractionUtils"),
   UiLayerType_1 = require("../../Define/UiLayerType"),
@@ -24,7 +25,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Input",
-                8,
+                10,
                 "[InputDistribute]刷新交互列表输入Tag时,鼠标处于显示状态，并且在键鼠设备",
                 [
                   "IsInteractionTurning",
@@ -48,7 +49,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Input",
-                8,
+                10,
                 "[InputDistribute]刷新交互列表输入Tag时,鼠标处于显示状态，并且不是键鼠设备",
                 [
                   "IsInteractionTurning",
@@ -77,7 +78,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Input",
-            37,
+            36,
             "[InputDistribute]刷新交互列表输入Tag时,处于交互锁定状态",
           ),
         this.SetInputDistributeTags([
@@ -91,13 +92,13 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
       );
     var t =
         ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId,
-      t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(182);
+      t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(195);
     if (t && !t.GetClientCanInteraction())
       return (
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Input",
-            8,
+            10,
             "[InputDistribute]刷新交互列表输入Tag时,当前交互实体在执行交互,禁用热键",
           ),
         this.SetInputDistributeTags([
@@ -110,6 +111,22 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
         ]),
         !0
       );
+    if (LevelPickInteractController_1.LevelPickInteractController.zOa)
+      return (
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Input",
+            36,
+            "[InputDistribute]刷新交互列表输入Tag时,当前处于Pick状态,禁用热键和战斗",
+          ),
+        this.SetInputDistributeTags([
+          InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
+            .MouseInputTag,
+          InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
+            .NavigationTag,
+        ]),
+        !0
+      );
     if (
       UiManager_1.UiManager.IsViewOpen("InteractionHintView") ||
       ModelManager_1.ModelManager.BattleUiModel.ExistBattleInteract()
@@ -118,7 +135,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Input",
-            8,
+            10,
             "[InputDistribute]刷新交互列表输入Tag时,当前通过交互打开了界面",
             [
               "viewName",
@@ -134,7 +151,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
                 ? (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Input",
-                      8,
+                      10,
                       "[InputDistribute]刷新交互列表输入Tag时,探索轮盘界面在打开中，只允许角色输入，界面快捷键，鼠标输入，界面导航输入",
                     ),
                   this.SetInputDistributeTags([
@@ -151,7 +168,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
                   ? (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Input",
-                        8,
+                        10,
                         "[InputDistribute]刷新交互列表输入Tag时,鼠标处于隐藏状态并且在用手柄或手机输入",
                       ),
                     this.SetInputDistributeTags([
@@ -169,7 +186,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
                   : (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Input",
-                        8,
+                        10,
                         "[InputDistribute]刷新交互列表输入Tag时,鼠标处于隐藏状态",
                       ),
                     this.SetInputDistributeTags([
@@ -193,7 +210,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Input",
-              8,
+              10,
               "[InputDistribute]刷新交互列表输入Tag时,鼠标处于显示状态",
             ),
             this.SetInputDistributeTags([
@@ -214,7 +231,7 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Input",
-              8,
+              10,
               "[InputDistribute]刷新交互列表输入Tag时,Hud层没有显示",
             );
       }
@@ -222,8 +239,8 @@ class InteractionInputDistribute extends InputDistributeSetup_1.InputDistributeS
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Input",
-          8,
-          "[InputDistribute]刷新交互列表输入Tag时,没有打开交互界面,也不存在战斗交互",
+          10,
+          "[InputDistribute]刷新交互列表输入Tag时,没有打开交互界面,也不存在战斗交互,也没有开启交互切换探索工具",
         );
     return !1;
   }

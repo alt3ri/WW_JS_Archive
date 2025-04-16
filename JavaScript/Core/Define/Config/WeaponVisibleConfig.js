@@ -68,10 +68,14 @@ class WeaponVisibleConfig {
     return this.visibletags(t);
   }
   visibletags(t, s) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   visibletagsLength() {
     var t = this.J7.__offset(this.z7, 8);
@@ -81,10 +85,14 @@ class WeaponVisibleConfig {
     return this.hiddentags(t);
   }
   hiddentags(t, s) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   hiddentagsLength() {
     var t = this.J7.__offset(this.z7, 10);

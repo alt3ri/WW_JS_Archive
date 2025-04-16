@@ -10,14 +10,14 @@ const UE = require("ue"),
   IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  PublicUtil_1 = require("../../../Common/PublicUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   InputMultiKeyItem_1 = require("../../Common/InputKey/InputMultiKeyItem"),
   ToggleActionItem_1 = require("../../Common/Toggle/ToggleActionItem"),
-  InteractionDefine_1 = require("../InteractionDefine");
+  InteractionDefine_1 = require("../InteractionDefine"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class InteractionHint extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -39,8 +39,26 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       (this.nui = void 0),
       (this.sui = void 0),
       (this.aui = !1),
+      (this.TCc = !1),
+      (this.Yv1 = void 0),
       (this.XBo = () => {
         this.RefreshChangeInteractionAction();
+      }),
+      (this.P5e = () => {
+        var t, e;
+        this.Z_i &&
+          ((t = this.fui()),
+          (e = this.pui()),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Test",
+              36,
+              "[InteractionHint]刷新交互列表项名称",
+              ["interactText", e],
+              ["iconPath", t],
+            ),
+          this.$_i.SetToggleTexture(t),
+          this.$_i.SetToggleText(e));
       }),
       (this.hui = () =>
         !ModelManager_1.ModelManager.InteractionModel.InInteractCd()),
@@ -64,11 +82,9 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    var t = this.GetItem(0),
+    this.$_i = new ToggleActionItem_1.ToggleActionItem();
+    var t = this.GetItem(2),
       e =
-        ((this.$_i = new ToggleActionItem_1.ToggleActionItem()),
-        this.GetItem(2)),
-      i =
         ((this.oui = new InputMultiKeyItem_1.InputMultiKeyItem()),
         this.GetItem(3));
     (this.rui = new InputMultiKeyItem_1.InputMultiKeyItem(
@@ -77,10 +93,21 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       "Hint_" + this.GridIndex,
     )),
       await Promise.all([
-        this.$_i.CreateThenShowByActorAsync(t.GetOwner()),
-        this.oui.CreateByActorAsync(e.GetOwner()),
-        this.rui.CreateThenShowByActorAsync(i.GetOwner()),
+        this.gkc(),
+        this.oui.CreateByActorAsync(t.GetOwner()),
+        this.rui.CreateThenShowByActorAsync(e.GetOwner()),
       ]);
+  }
+  async gkc() {
+    var t;
+    ModelManager_1.ModelManager.DangoAbyssModel.CheckIfInSmallWorldInstance()
+      ? (this.GetItem(0).SetUIActive(!1),
+        await this.$_i.CreateThenShowByResourceIdAsync(
+          "UiItem_TogAction2",
+          this.RootItem,
+        ))
+      : ((t = this.GetItem(0)),
+        await this.$_i.CreateThenShowByActorAsync(t.GetOwner()));
   }
   OnStart() {
     this.mui(),
@@ -107,6 +134,18 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       EventDefine_1.EEventName.InputControllerChange,
       this.XBo,
     ),
+      this.z_i &&
+        this.z_i.Entity &&
+        EventSystem_1.EventSystem.HasWithTarget(
+          this.z_i.Entity,
+          EventDefine_1.EEventName.OnEntityNameChanged,
+          this.P5e,
+        ) &&
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.z_i.Entity,
+          EventDefine_1.EEventName.OnEntityNameChanged,
+          this.P5e,
+        ),
       this.Cui(),
       (this.$_i = void 0),
       this.Z_i.OnSelfLanguageChange.Unbind(),
@@ -121,19 +160,37 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
   }
   Refresh(t, e, i) {
     (this.Y_i = this.GridIndex),
-      (this.J_i = t.GetComponent(106)),
-      (this.z_i = t.GetComponent(105)),
+      (this.J_i = t.GetComponent(116)),
+      (this.z_i = t.GetComponent(115)),
       this.z_i &&
-        ((this.ETt = this.z_i.DropItemId), this.ETt) &&
-        (this.apt =
-          ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-            this.ETt,
-          ));
+        ((this.ETt = this.z_i.DropItemId),
+        this.ETt &&
+          (this.apt =
+            ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+              this.ETt,
+            )),
+        this.Yv1 &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.Yv1,
+            EventDefine_1.EEventName.OnEntityNameChanged,
+            this.P5e,
+          ),
+        (this.Yv1 = this.z_i.Entity),
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.z_i.Entity,
+          EventDefine_1.EEventName.OnEntityNameChanged,
+          this.P5e,
+        ));
     let s = InteractionDefine_1.qualityColorList[0];
     this.apt &&
       0 < (t = this.apt.QualityId) &&
       (s = InteractionDefine_1.qualityColorList[t - 1]),
       (this.nui = UE.Color.FromHex(s)),
+      (this.TCc = ModelManager_1.ModelManager.InteractionModel.GetToggleGray(
+        this.ActorIndex,
+      ));
+    t = this.$_i.GetToggleItem();
+    this.TCc ? t.SetToggleState(2) : t.SetToggleState(0, !1),
       this.P5e(),
       this.dui(),
       this.rIn(),
@@ -193,22 +250,6 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
   gui() {
     return this.z_i?.IsDropItem() ?? !1;
   }
-  P5e() {
-    var t, e;
-    this.Z_i &&
-      ((t = this.fui()),
-      (e = this.pui()),
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Test",
-          8,
-          "[InteractionHint]刷新交互列表项名称",
-          ["interactText", e],
-          ["iconPath", t],
-        ),
-      this.$_i.SetToggleTexture(t),
-      this.$_i.SetToggleText(e));
-  }
   pui() {
     var t = ModelManager_1.ModelManager.InteractionModel.GetOptionNameByIndex(
       this.ActorIndex,
@@ -216,18 +257,18 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     if (t)
       return (
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Test", 8, "[InteractionHint]GetInteractText", [
+          Log_1.Log.Debug("Test", 36, "[InteractionHint]GetInteractText", [
             "optionName",
             t,
           ]),
-        PublicUtil_1.PublicUtil.GetConfigTextByKey(t)
+        t
       );
-    if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 182)) {
+    if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 195)) {
       t = this.J_i.GetInteractController().DefaultShowOption;
       if (t)
         return (
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Test", 8, "[InteractionHint]GetInteractText", [
+            Log_1.Log.Debug("Test", 36, "[InteractionHint]GetInteractText", [
               "showOption",
               t,
             ]),
@@ -241,7 +282,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Test",
-            8,
+            36,
             "[InteractionHint]GetInteractText",
             ["PawnName", e],
             ["count", t],
@@ -254,13 +295,25 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
   }
   fui() {
     let t = "";
-    if (this.gui()) {
-      var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.ETt,
+    if (
+      ModelManager_1.ModelManager.DangoAbyssModel.CheckIfInSmallWorldInstance()
+    )
+      return (t = this.vui("AbyssDialog"));
+    if (this.gui())
+      return (
+        (e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          this.ETt,
+        )),
+        (t = e?.IconMiddle) ?? ""
       );
-      t = e?.IconMiddle;
-    } else if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 182)) {
-      e = this.J_i.GetInteractController().InteractIcon;
+    if (
+      (t = ModelManager_1.ModelManager.InteractionModel.GetConditionIconPath(
+        this.ActorIndex,
+      ))
+    )
+      return t;
+    if ((0, RegisterComponent_1.isComponentInstance)(this.J_i, 195)) {
+      var e = this.J_i.GetInteractController().InteractIcon;
       if ("Collect" === e) {
         var i =
             this.J_i.GetInteractController().CreatureData.GetPbEntityInitData(),
@@ -274,21 +327,29 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
               i.ComponentsData,
               "RewardComponent",
             ));
-        if (s) {
-          (s = i.RewardId),
-            (i =
+        if (s && i) {
+          var n = i.RewardId,
+            n =
               ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
-                s,
-              ).DropPreview);
-          if (0 < i.size)
-            for (const r of i.keys()) {
-              var n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-                Number(r),
+                n,
+              ).DropPreview;
+          if (0 < n.size)
+            for (const o of n.keys()) {
+              var r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
+                Number(o),
               );
-              t = n.IconMiddle;
+              t = r.IconMiddle;
               break;
             }
-        }
+        } else
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "Interaction",
+              36,
+              "[InteractionHint]采集物组件不齐全",
+              ["collectComponent", !!s],
+              ["rewardComponent", !!i],
+            );
       } else
         t =
           "BigTeleporter" === e ||
@@ -301,13 +362,21 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Interaction",
-          37,
+          36,
           "InteractionHit.SetIconAndEffect 旧版交互已经废除",
         );
     return t ?? "";
   }
+  Ckc() {
+    if (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()) {
+      var t = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+        t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t);
+      if (t && 33 === t.InstSubType) return !1;
+    }
+    return this.gui();
+  }
   dui() {
-    this.gui()
+    this.Ckc()
       ? (this.XJs.SetColor(this.nui), this.XJs.SetUIActive(!0))
       : this.XJs.SetUIActive(!1);
   }
@@ -341,10 +410,12 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
   }
   SetSelected(t) {
     (this.aui = t), this.oIn(), this.rIn();
-    var e = this.$_i.GetToggleItem();
-    t
-      ? (e.SetToggleState(0, !1), e.SetToggleState(1, !1))
-      : e.SetToggleState(0, !1);
+    const e = this.$_i.GetToggleItem();
+    if (t) e.SetToggleState(0, !1), e.SetToggleState(1, !1);
+    else if (this.TCc) {
+      const e = this.$_i.GetToggleItem();
+      e.SetToggleState(2);
+    } else e.SetToggleState(0, !1);
   }
   oIn() {
     this.oui?.SetActive(
@@ -373,7 +444,7 @@ class InteractionHint extends UiPanelBase_1.UiPanelBase {
     return this.cui;
   }
   UpdatePriority() {
-    (0, RegisterComponent_1.isComponentInstance)(this.J_i, 182) &&
+    (0, RegisterComponent_1.isComponentInstance)(this.J_i, 195) &&
       (this.cui = this.J_i.GetInteractController().InteractEntity.Priority);
   }
   GetButtonForGuide() {

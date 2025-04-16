@@ -16,14 +16,14 @@ class DamageSequenceHandle {
       (this.n8 = ""),
       (this.GPe = UE.NewArray(UE.Actor));
   }
-  Initialize(t) {
-    this.n8 = t;
+  Initialize(e) {
+    this.n8 = e;
   }
   Destroy() {
     if (this.b2t) {
-      const t = this.b2t;
+      const e = this.b2t;
       TimerSystem_1.TimerSystem.Next(() => {
-        ActorSystem_1.ActorSystem.Put(t);
+        ActorSystem_1.ActorSystem.Put("DamageSequenceHandle.Destroy", e);
       }),
         (this.b2t = void 0),
         (this.$pt = void 0);
@@ -38,43 +38,43 @@ class DamageSequenceHandle {
   Stop() {
     this.$pt?.IsValid() && this.$pt.IsPlaying() && this.$pt.Stop();
   }
-  SetSequenceBindingByTag(t, e) {
+  SetSequenceBindingByTag(e, t) {
     this.b2t?.IsValid() &&
-      e &&
+      t &&
       (this.GPe.Empty(),
-      this.GPe.Add(e),
-      (e = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
-      this.b2t.SetBindingByTag(e, this.GPe, !1));
+      this.GPe.Add(t),
+      (t = FNameUtil_1.FNameUtil.GetDynamicFName(e)),
+      this.b2t.SetBindingByTag(t, this.GPe, !1));
   }
-  AddSequenceBindingByTag(t, e) {
+  AddSequenceBindingByTag(e, t) {
     this.b2t?.IsValid() &&
-      e &&
-      ((t = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
-      this.b2t.AddBindingByTag(t, e));
+      t &&
+      ((e = FNameUtil_1.FNameUtil.GetDynamicFName(e)),
+      this.b2t.AddBindingByTag(e, t));
   }
   ResetSequenceBinding() {
     this.b2t?.IsValid() && this.b2t.ResetBindings();
   }
-  AddOnFinished(t) {
-    this.$pt?.IsValid() && this.$pt.OnFinished.Add(t);
+  AddOnFinished(e) {
+    this.$pt?.IsValid() && this.$pt.OnFinished.Add(e);
   }
-  SpawnSequence(e = void 0) {
+  SpawnSequence(t = void 0) {
     StringUtils_1.StringUtils.IsEmpty(this.n8) ||
       ResourceSystem_1.ResourceSystem.LoadAsync(
         this.n8,
         UE.LevelSequence,
-        (t) => {
-          ObjectUtils_1.ObjectUtils.IsValid(t) &&
+        (e) => {
+          ObjectUtils_1.ObjectUtils.IsValid(e) &&
             ((this.b2t = ActorSystem_1.ActorSystem.Get(
               UE.LevelSequenceActor.StaticClass(),
-              MathUtils_1.MathUtils.DefaultTransform,
+              MathUtils_1.MathUtils.DefaultTransformDouble,
               void 0,
               !1,
             )),
-            this.b2t.SetSequence(t),
+            this.b2t.SetSequence(e),
             (this.$pt = this.b2t.SequencePlayer),
-            e) &&
-            e(this);
+            t) &&
+            t(this);
         },
       );
   }

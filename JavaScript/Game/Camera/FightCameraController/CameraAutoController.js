@@ -47,7 +47,8 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
       (this.CurrentOffsetHeight = 0),
       (this.mle = new Set()),
       (this.ResultPositionRef = (0, puerts_1.$ref)(void 0)),
-      (this.Lz = Vector_1.Vector.Create());
+      (this.Lz = Vector_1.Vector.Create()),
+      (this.Tz = Vector_1.Vector.Create());
   }
   Name() {
     return "AutoController";
@@ -120,43 +121,47 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
     this.Camera.TargetEntity &&
       this.Camera.IsTargetLocationValid &&
       ((i = this.Camera.PlayerLocation),
-      (r = this.Camera.TargetLocation),
-      (s = this.Camera.CameraForward),
-      (h = Vector_1.Vector.Create()),
-      r.Subtraction(i, h),
-      (e = !h.IsNearlyZero() && !s.IsNearlyZero()),
-      (h = h.CosineAngle2D(s)),
-      (s = Vector_1.Vector.Dist(i, r)),
+      (e = this.Camera.TargetLocation),
+      (h = this.Camera.CameraForward),
+      (r = Vector_1.Vector.Create()),
+      e.Subtraction(i, r),
+      (s = !r.IsNearlyZero() && !h.IsNearlyZero()),
+      (r = r.CosineAngle2D(h)),
+      (h = Vector_1.Vector.Dist(i, e)),
+      CameraUtility_1.CameraUtility.GetVectorInGravity(e, this.Lz),
       (this.ule =
         MathUtils_1.MathUtils.Lerp(
           this.ExtraArmLengthMinByDist,
           this.ExtraArmLengthMaxByDist,
           this.ExtraArmLengthCurveByDist.GetCurrentValue(
-            s / this.ExtraArmLengthDist,
+            h / this.ExtraArmLengthDist,
           ),
         ) +
         MathUtils_1.MathUtils.Lerp(
           this.ExtraArmLengthMinByHeight,
           this.ExtraArmLengthMaxByHeight,
           this.ExtraArmLengthCurveByHeight.GetCurrentValue(
-            Math.abs(i.Z - r.Z) / this.ExtraArmLengthHeight,
+            Math.abs(this.Camera.PlayerLocationInGravity.Z - this.Lz.Z) /
+              this.ExtraArmLengthHeight,
           ),
         )),
-      e && h < 0 && (this.ule += this.AutoCameraArmLengthWhenTargetNearer),
-      (e = Vector_1.Vector.Create()),
-      r.Subtraction(i, e),
-      (h = MathUtils_1.MathUtils.Lerp(
+      s && r < 0 && (this.ule += this.AutoCameraArmLengthWhenTargetNearer),
+      (s = Vector_1.Vector.Create()),
+      (r = this.Tz),
+      e.Subtraction(i, s),
+      CameraUtility_1.CameraUtility.GetVectorInGravity(s, r),
+      (e = MathUtils_1.MathUtils.Lerp(
         this.ExtraArmHorizontalMinByDist,
         this.ExtraArmHorizontalMaxByDist,
         this.ExtraArmHorizontalCurveByDist.GetCurrentValue(
-          s / this.ExtraArmHorizontalDist,
+          h / this.ExtraArmHorizontalDist,
         ),
       )),
-      (e.Z = 0),
-      e.IsNearlyZero()
+      (r.Z = 0),
+      r.IsNearlyZero()
         ? this.cle.Reset()
-        : e.Multiply(h / e.Size2D(), this.cle),
-      (s = r.Z - i.Z),
+        : r.Multiply(e / r.Size2D(), this.cle),
+      (s = this.Lz.Z - this.Camera.PlayerLocationInGravity.Z),
       (h = MathUtils_1.MathUtils.Lerp(
         this.ExtraArmVerticalMinByHeight,
         this.ExtraArmVerticalMaxByHeight,
@@ -180,7 +185,9 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
           ? Math.sign(r) * this.AutoCameraArmOffsetSpeedVertical
           : r),
       (h += this.CurrentOffsetHeight),
-      (this.cle.Z = h),
+      this.Camera.IsInNormalGravityMode()
+        ? (this.cle.Z = h)
+        : CameraUtility_1.CameraUtility.SetZnInGravity(this.cle, h, this.cle),
       this.Cle(t, !0));
   }
   UpdateDeactivateInternal(t) {
@@ -210,7 +217,7 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
           this.CurrentAutoCameraArmOffset,
         ),
         (h = Vector_1.Vector.Create(t)).AdditionEqual(this.cle),
-        UE.KismetSystemLibrary.DrawDebugLine(
+        UE.KismetSystemLibrary.D_DrawDebugLine(
           GlobalData_1.GlobalData.World,
           t.ToUeVector(),
           s.ToUeVector(),
@@ -218,7 +225,7 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
           0,
           5,
         ),
-        UE.KismetSystemLibrary.DrawDebugLine(
+        UE.KismetSystemLibrary.D_DrawDebugLine(
           GlobalData_1.GlobalData.World,
           s.ToUeVector(),
           h.ToUeVector(),
@@ -229,7 +236,7 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
         i) &&
         this.Camera.IsTargetLocationValid &&
         ((t = this.Camera.TargetLocation),
-        UE.KismetSystemLibrary.DrawDebugLine(
+        UE.KismetSystemLibrary.D_DrawDebugLine(
           GlobalData_1.GlobalData.World,
           t.ToUeVector(),
           h.ToUeVector(),
@@ -240,7 +247,7 @@ class CameraAutoController extends CameraControllerBase_1.CameraControllerBase {
   }
   dle(t) {
     if (!this.Camera.CharacterController) return 0;
-    UE.GameplayStatics.ProjectWorldToScreen(
+    UE.GameplayStatics.D_ProjectWorldToScreen(
       this.Camera.CharacterController,
       t.ToUeVector(),
       this.ResultPositionRef,

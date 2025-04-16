@@ -17,8 +17,42 @@ class ControllerBase {
   static Clear() {
     return (this.vK = !0), this.OnClear();
   }
-  static Tick(t) {
-    if (!this.vK)
+  static PauseTick() {
+    this.vDe = !1;
+  }
+  static ResumeTick() {
+    this.vDe = !0;
+  }
+  static InitTickOptimize(t = 1, e = 1) {
+    (this.TickInterval = t), (this.TickIntervalInFight = e), (this.Xyl = !1);
+  }
+  static get vDe() {
+    return this.Yyl;
+  }
+  static set vDe(t) {
+    this.Yyl !== t &&
+      ((this.Yyl = t), (this.Xyl = !1), (this.zyl = 0), (this.Jyl = 0));
+  }
+  static CheckTick(t, e) {
+    if (!this.Xyl) {
+      if (!this.vDe) return !1;
+      if (t) {
+        if (this.TickIntervalInFight < 0) return !1;
+        if ((this.zyl++, (this.Jyl += e), this.TickIntervalInFight > this.zyl))
+          return !1;
+      } else {
+        if (this.TickInterval < 0) return !1;
+        if ((this.zyl++, (this.Jyl += e), this.TickInterval > this.zyl))
+          return !1;
+      }
+      this.zyl = 0;
+    }
+    return !0;
+  }
+  static Tick(e) {
+    if (!this.vK) {
+      let t = e;
+      0 !== this.Jyl && ((t = this.Jyl), (this.Jyl = 0));
       try {
         this.OnTick(t);
       } catch (t) {
@@ -41,6 +75,7 @@ class ControllerBase {
               ["error", t],
             );
       }
+    }
   }
   static AfterTick(t) {
     this.vK || this.OnAfterTick(t);
@@ -54,8 +89,8 @@ class ControllerBase {
   static ChangeMode() {
     return this.OnChangeMode();
   }
-  static SetPerformanceStateObject(t, e = "", r = "") {
-    this.PerformanceState = Stats_1.Stat.Create(t, e, r);
+  static SetPerformanceStateObject(t, e = "", i = "") {
+    this.PerformanceState = Stats_1.Stat.CreateNoFlameGraph(t, e, i);
   }
   static GetPerformanceStateObject() {
     return this.OnGetPerformanceStateObject();
@@ -82,5 +117,11 @@ class ControllerBase {
 ((exports.ControllerBase = ControllerBase).Manager = void 0),
   (ControllerBase.PerformanceState = void 0),
   (ControllerBase.IsTickEvenPausedInternal = !1),
-  (ControllerBase.vK = !1);
+  (ControllerBase.vK = !1),
+  (ControllerBase.Xyl = !0),
+  (ControllerBase.Yyl = !0),
+  (ControllerBase.TickIntervalInFight = 1),
+  (ControllerBase.TickInterval = 1),
+  (ControllerBase.zyl = 0),
+  (ControllerBase.Jyl = 0);
 //# sourceMappingURL=ControllerBase.js.map

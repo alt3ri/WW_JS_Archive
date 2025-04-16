@@ -2,20 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuickNavigateItemPanelA = void 0);
 const UE = require("ue"),
+  CountryById_1 = require("../../../../../Core/Define/ConfigQuery/CountryById"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
-  PreloadConfigStatementPart2_1 = require("../../../../Preload/PreloadConfigStatementPart2"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   LguiUtil_1 = require("../../../Util/LguiUtil");
 class QuickNavigateItemPanelA extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.hKa = void 0),
+      (this.RYa = void 0),
       (this.kqe = () => {
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.WorldMapFirstNavigateSelect,
-          this.hKa,
-        );
+        this.Ilh(),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.WorldMapFirstNavigateSelect,
+            this.RYa,
+          );
       });
   }
   OnRegisterComponent() {
@@ -28,16 +29,16 @@ class QuickNavigateItemPanelA extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.kqe]]);
   }
   RefreshByData(e) {
-    var t = (this.hKa = e).CountryId,
-      t = PreloadConfigStatementPart2_1.configCountryById.GetConfig(t),
-      i = this.GetText(1),
-      i = (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t.Title), this.GetTexture(2)),
-      t = (this.SetTextureByPath(t.Logo, i), this.hKa.HasState);
-    4 === this.hKa.RefreshType &&
-      ((i = this.GetExtendToggle(0)),
-      e.IsSelected ? i.SetToggleState(1) : i.SetToggleState(0),
-      (i.bLockStateOnSelect = !t)),
-      this.GetItem(3).SetUIActive(t);
+    var e = (this.RYa = e).CountryId,
+      e = CountryById_1.configCountryById.GetConfig(e),
+      t = this.GetText(1),
+      t = (LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Title), this.GetTexture(2)),
+      e = (this.SetTextureByPath(e.Logo, t), this.RYa.HasState);
+    4 === this.RYa.RefreshType && this.Ilh(), this.GetItem(3).SetUIActive(e);
+  }
+  Ilh() {
+    var e = this.GetExtendToggle(0);
+    this.RYa.IsSelected ? e.SetToggleState(1) : e.SetToggleState(0);
   }
 }
 exports.QuickNavigateItemPanelA = QuickNavigateItemPanelA;

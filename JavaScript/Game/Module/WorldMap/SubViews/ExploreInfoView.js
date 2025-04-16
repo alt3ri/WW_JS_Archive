@@ -70,10 +70,14 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(e) {
     var i =
-      ConfigManager_1.ConfigManager.WorldMapConfig.GetExploreProgressInfoById(
-        e.ExploreProgressId,
-      );
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i.TypeName);
+        ConfigManager_1.ConfigManager.WorldMapConfig.GetExploreProgressInfoById(
+          e.ExploreProgressId,
+        ),
+      i =
+        ConfigManager_1.ConfigManager.ExploreProgressConfig.GetExploreTypeByType(
+          i.ExploreType,
+        );
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i.Name);
     let r = 0;
     e.ExplorePercent && (r = e.ExplorePercent),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "ExplorationDegree", r);

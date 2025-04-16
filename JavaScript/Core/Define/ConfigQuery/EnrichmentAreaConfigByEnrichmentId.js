@@ -17,30 +17,30 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configEnrichmentAreaConfigByEnrichmentId.Init",
   ),
-  getConfigListStat = Stats_1.Stat.Create(
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configEnrichmentAreaConfigByEnrichmentId.GetConfigList",
   ),
   CONFIG_LIST_STAT_PREFIX =
     "configEnrichmentAreaConfigByEnrichmentId.GetConfigList(";
 exports.configEnrichmentAreaConfigByEnrichmentId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (n, i = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${n})`),
+      getConfigListStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_LIST_STAT_PREFIX + `#${n})`),
       t =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (i) {
@@ -48,8 +48,8 @@ exports.configEnrichmentAreaConfigByEnrichmentId = {
         const C = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (C)
           return (
-            o.Stop(),
-            getConfigListStat.Stop(),
+            o?.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -79,8 +79,8 @@ exports.configEnrichmentAreaConfigByEnrichmentId = {
           )
             return (
               ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-              o.Stop(),
-              getConfigListStat.Stop(),
+              o?.Stop(),
+              getConfigListStat?.Stop(),
               void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
           r =
@@ -94,16 +94,16 @@ exports.configEnrichmentAreaConfigByEnrichmentId = {
             ((e = KEY_PREFIX + `#${n})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(e, C, C.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          o.Stop(),
-          getConfigListStat.Stop(),
+          o?.Stop(),
+          getConfigListStat?.Stop(),
           ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           C
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigListStat.Stop(),
+    o?.Stop(),
+      getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -11,16 +11,16 @@ const cpp_1 = require("cpp"),
 class TsPureUiKeyHandle {
   constructor() {
     (this.R$e = void 0),
-      (this.gDa = () => {
+      (this.MDa = () => {
         ModelManager_1.ModelManager.SundryModel.CanOpenGmView &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Input", 8, "按下 】 键显示所有界面"),
+            Log_1.Log.Info("Input", 10, "按下 】 键显示所有界面"),
           UiLayer_1.UiLayer.ForceShowUi());
       }),
-      (this.fDa = () => {
+      (this.SDa = () => {
         ModelManager_1.ModelManager.SundryModel.CanOpenGmView &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Input", 8, "按下 【 键隐藏所有界面"),
+            Log_1.Log.Info("Input", 10, "按下 【 键隐藏所有界面"),
           UiLayer_1.UiLayer.ForceHideUi());
       });
   }
@@ -36,14 +36,14 @@ class TsPureUiKeyHandle {
       1,
       this.R$e,
       this,
-      this.gDa,
+      this.MDa,
     ),
       cpp_1.FKuroInputInterface.RegisterKeyBinding(
         new UE.InputChord(new UE.Key(RIGHT_BARACKET_NAME), !1, !1, !1, !1),
         1,
         this.R$e,
         this,
-        this.fDa,
+        this.SDa,
       );
   }
 }

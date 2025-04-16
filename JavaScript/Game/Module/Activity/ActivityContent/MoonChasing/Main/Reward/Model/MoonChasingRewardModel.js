@@ -40,13 +40,13 @@ class MoonChasingRewardModel extends ModelBase_1.ModelBase {
     t ||
       ((t = new RewardTargetData_1.RewardTargetData(e.s5n)),
       this._On(t),
-      this.hRa(t),
+      this.XAa(t),
       this.NQ.set(e.s5n, t)),
       (t.Current = e.lMs),
       (t.Target = e.j6n),
       (t.Status = e.H6n);
   }
-  hRa(e) {
+  XAa(e) {
     var e = e.GetRewardList(),
       t = ConfigManager_1.ConfigManager.BusinessConfig.GetTokenItemId();
     for (const a of e) a[0].ItemId === t && (this.TargetTotalCount += a[1]);

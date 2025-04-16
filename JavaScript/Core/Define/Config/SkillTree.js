@@ -156,29 +156,51 @@ class SkillTree {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   propertynodetitle(t) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   propertynodedescribe(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetPropertynodeparamAt(t) {
     return this.propertynodeparam(t);
   }
   propertynodeparam(t, i) {
-    var r = this.J7.__offset(this.z7, 24);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var r = this.J7.__offset(this.z7, 24),
+      r = r ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   propertynodeparamLength() {
     var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   propertynodeicon(t) {
-    var i = this.J7.__offset(this.z7, 26);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 26),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetPropertyAt(t, i) {
     return this.property(t);

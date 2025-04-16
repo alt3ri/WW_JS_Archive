@@ -13,11 +13,11 @@ const UE = require("ue"),
 class MowingRiskInstanceView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.e8a = void 0),
-      (this.t8a = () => {
+      (this.G9a = void 0),
+      (this.k9a = () => {
         UiManager_1.UiManager.OpenView("MowingBuffView", 0);
       }),
-      (this.i8a = () => {
+      (this.N9a = () => {
         UiManager_1.UiManager.OpenView(
           "ActivityRewardPopUpView",
           ModelManager_1.ModelManager.MowingRiskModel.BuildActivityRewardViewData(),
@@ -41,12 +41,12 @@ class MowingRiskInstanceView extends UiPanelBase_1.UiPanelBase {
       [8, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [4, this.t8a],
-        [6, this.i8a],
+        [4, this.k9a],
+        [6, this.N9a],
       ]);
   }
   async OnBeforeStartAsync() {
-    await this.r8a(),
+    await this.F9a(),
       RedDotController_1.RedDotController.BindRedDot(
         "RedDotMowingRiskBuffAll",
         this.GetItem(5),
@@ -67,7 +67,7 @@ class MowingRiskInstanceView extends UiPanelBase_1.UiPanelBase {
       );
   }
   OnStart() {
-    this.o8a(),
+    this.V9a(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MowingRiskOnRefreshRewardRedDot,
       );
@@ -76,7 +76,7 @@ class MowingRiskInstanceView extends UiPanelBase_1.UiPanelBase {
     var e = ModelManager_1.ModelManager.MowingRiskModel,
       i = e.BuildInstanceDetailDataByInstanceId(e.CurrentInstanceId),
       i =
-        (await this.e8a.RefreshExternalByDataAsync(i),
+        (await this.G9a.RefreshExternalByDataAsync(i),
         e.BuildInstanceRecommendDataByInstanceId(e.CurrentInstanceId));
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), i.TextId, i.TextArgs),
       this.GetText(8)?.SetText(e.BuildInstanceTotalScore());
@@ -84,14 +84,14 @@ class MowingRiskInstanceView extends UiPanelBase_1.UiPanelBase {
   RefreshOnTick() {
     var e = ModelManager_1.ModelManager.MowingRiskModel,
       e = e.BuildInstanceDetailLockDataByInstanceId(e.CurrentInstanceId);
-    this.e8a.RefreshLockItemExternalByData(e);
+    this.G9a.RefreshLockItemExternalByData(e);
   }
-  async r8a() {
+  async F9a() {
     var e = new MowingRiskInstanceDetailView_1.MowingRiskInstanceDetailView();
     await e.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
-      (this.e8a = e);
+      (this.G9a = e);
   }
-  o8a() {
+  V9a() {
     this.GetItem(1)?.SetUIActive(!1), this.GetItem(2)?.SetUIActive(!0);
   }
 }

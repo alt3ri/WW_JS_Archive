@@ -18,7 +18,7 @@ class GenericPromptModel extends ModelBase_1.ModelBase {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GenericPrompt",
-              11,
+              10,
               "播放队列飘字异常,存在从队列中取出又被放回队列的情况",
             ));
       });

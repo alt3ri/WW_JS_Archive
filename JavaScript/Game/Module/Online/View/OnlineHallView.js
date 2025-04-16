@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -75,17 +76,28 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
           : 1 === e &&
             (this.oli?.PlayAnimation("Start"),
             this.oli.SetMatchingTime(0),
+            this.oli.BindOnStopTimer(
+              () =>
+                1 !==
+                ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
+            ),
             this.oli.StartTimer());
       }),
       (this.YYe = () => {
         this.oli?.PlayAnimation("Start"),
           this.oli.SetMatchingTime(0),
+          this.oli.BindOnStopTimer(
+            () =>
+              1 !==
+              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
+          ),
           this.oli.StartTimer();
       }),
       (this.h9t = () => {
-        "" === this.GetInputText(12).GetText()
-          ? this.a9t.RefreshSprite("SP_Paste")
-          : this.a9t.RefreshSprite("SP_Clear");
+        this.a9t &&
+          ("" === this.GetInputText(12).GetText()
+            ? this.a9t.RefreshSprite("SP_Paste")
+            : this.a9t.RefreshSprite("SP_Clear"));
       }),
       (this.aOi = () => {
         var e,
@@ -154,27 +166,31 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.oli =
-      new InstanceDungeonMatchingCountDown_1.InstanceDungeonMatchingCountDown()),
+    ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel() ||
+      (await OnlineController_1.OnlineController.RefreshWorldList()),
+      (this.oli =
+        new InstanceDungeonMatchingCountDown_1.InstanceDungeonMatchingCountDown()),
       await this.oli.CreateByActorAsync(this.GetItem(11).GetOwner()),
-      this.oli.SetUiActive(!1);
+      this.oli.SetUiActive(!1),
+      this.$Ni();
   }
   OnStart() {
     this.XNi(),
-      this.$Ni(),
       ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
         ? this.QNi(ModelManager_1.ModelManager.OnlineModel.GetTeamList())
-        : OnlineController_1.OnlineController.RefreshWorldList() ||
-          this.kNi(ModelManager_1.ModelManager.OnlineModel.StrangerWorld),
+        : this.kNi(ModelManager_1.ModelManager.OnlineModel.StrangerWorld),
       ModelManager_1.ModelManager.OnlineModel.SetHallShowCanJoin(!1),
       ModelManager_1.ModelManager.OnlineModel.SetHallShowFriend(!1),
       (ModelManager_1.ModelManager.OnlineModel.HallViewIsShowSearching = !1),
       this.jNi(),
-      (ModelManager_1.ModelManager.FriendModel.ShowingView = this.Info.Name),
-      (this.a9t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(
+      (ModelManager_1.ModelManager.FriendModel.ShowingView = this.Info.Name);
+    var e = !Platform_1.Platform.IsPs5Platform();
+    e &&
+      ((this.a9t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(
         this.GetItem(13),
       )),
-      this.a9t.BindCallback(this.aOi),
+      this.a9t.BindCallback(this.aOi)),
+      this.GetItem(13)?.SetUIActive(e),
       this.GetInputText(12).OnTextChange.Bind(this.h9t),
       this.h9t(),
       this.IWs();
@@ -258,13 +274,13 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
     var e;
     ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
       ? (this.GetItem(8).SetUIActive(!1),
-        this.Pza(),
+        this.Lrh(),
         (e = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
         this.GetButton(1)?.RootUIComp.SetUIActive(e))
       : this.GetExtendToggle(2).OnStateChange.Add(this.ONi);
   }
-  async Pza() {
-    var e = await this.wza(
+  async Lrh() {
+    var e = await this.Arh(
         ModelManager_1.ModelManager.OnlineModel.GetTeamList(),
       ),
       t = this.GetItem(9),
@@ -279,11 +295,11 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
       t = this.GetLoopScrollViewComponent(4);
     ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
       ? ((e = this.GetItem(5).GetOwner()),
-        (this.qNi = new LoopScrollView_1.LoopScrollView(t, e, this.NNi)))
+        (this.qNi = new LoopScrollView_1.LoopScrollView(t, e, this.NNi, !0)))
       : ((e = this.GetItem(5).GetOwner()),
-        (this.bNi = new LoopScrollView_1.LoopScrollView(t, e, this.GNi)));
+        (this.bNi = new LoopScrollView_1.LoopScrollView(t, e, this.GNi, !0)));
   }
-  async Pka(e) {
+  async bFa(e) {
     var t = await ModelManager_1.ModelManager.KuroSdkModel.GetSdkBlockUserMap();
     if (e) {
       var i = [];
@@ -292,10 +308,10 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   kNi(e) {
-    this.wka(e);
+    this.qFa(e);
   }
-  async wka(e) {
-    var e = await this.Pka(e),
+  async qFa(e) {
+    var e = await this.bFa(e),
       t = this.GetItem(6),
       i = this.GetLoopScrollViewComponent(4).RootUIComp;
     !e || e.length <= 0
@@ -307,46 +323,48 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
             e,
             !1,
             () => {
-              var e = this.bNi.UnsafeGetGridProxy(0);
-              e &&
-                Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info(
-                  "UiComponent",
-                  5,
-                  "HallLoopScroll_Item_Alpha:" + e.GetRootItem().GetAlpha(),
-                );
+              var e;
+              this.bNi.GetDisplayGridNum() <= 0 ||
+                ((e = this.bNi.UnsafeGetGridProxy(0)) &&
+                  Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
+                    "UiComponent",
+                    5,
+                    "HallLoopScroll_Item_Alpha:" + e.GetRootItem().GetAlpha(),
+                  ));
             },
             !0,
           ));
   }
-  async wza(e) {
+  async Arh(e) {
     var t = await ModelManager_1.ModelManager.KuroSdkModel.GetSdkBlockUserMap(),
       i = [];
     for (const n of e) n.GetIfCanShowInHallList(t) && i.push(n);
     return i;
   }
-  async Bza(e) {
-    e = await this.wza(e);
+  async Drh(e) {
+    e = await this.Arh(e);
     this.GetItem(6).SetUIActive(e.length <= 0),
       this.qNi &&
         this.qNi.RefreshByData(
           e,
           !1,
           () => {
-            var e = this.qNi.UnsafeGetGridProxy(0);
-            e &&
-              Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "UiComponent",
-                5,
-                "TeamLoopScroll_Item_Alpha:" + e.GetRootItem().GetAlpha(),
-              );
+            var e;
+            this.qNi.GetDisplayGridNum() <= 0 ||
+              ((e = this.qNi.UnsafeGetGridProxy(0)) &&
+                Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
+                  "UiComponent",
+                  5,
+                  "TeamLoopScroll_Item_Alpha:" + e.GetRootItem().GetAlpha(),
+                ));
           },
           !0,
         );
   }
   QNi(e) {
-    this.Bza(e);
+    this.Drh(e);
   }
   IWs() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(

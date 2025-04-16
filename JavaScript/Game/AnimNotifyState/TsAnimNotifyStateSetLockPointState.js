@@ -14,19 +14,20 @@ class TsAnimNotifyStateSetLockPointState extends UE.KuroAnimNotifyState {
       (this.OldSoftLockValid = !1),
       (this.OldHardLockValid = !1);
   }
-  K2_NotifyBegin(t, e, a) {
-    var i,
+  Constructor() {}
+  K2_NotifyBegin(t, e, r) {
+    var a,
       t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       (t.CharacterActorComponent.LockOnParts.has(this.BoneName)
-        ? ((i = t.CharacterActorComponent.LockOnParts.get(this.BoneName)),
-          (this.OldSoftLockValid = i.SoftLockValid),
-          (this.OldHardLockValid = i.HardLockValid),
-          (i.SoftLockValid = this.SoftLockValid),
-          (i.HardLockValid = this.HardLockValid),
+        ? ((a = t.CharacterActorComponent.LockOnParts.get(this.BoneName)),
+          (this.OldSoftLockValid = a.SoftLockValid),
+          (this.OldHardLockValid = a.HardLockValid),
+          (a.SoftLockValid = this.SoftLockValid),
+          (a.HardLockValid = this.HardLockValid),
           Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity?.GetComponent(
-            29,
+            32,
           )?.RefreshCurrentLockState(
             ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
               t.CharacterActorComponent.Entity,
@@ -36,27 +37,27 @@ class TsAnimNotifyStateSetLockPointState extends UE.KuroAnimNotifyState {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
-              58,
+              57,
               `[TsAnimNotifyStateSetLockPointState.NotifyBegin]: 角色'${t.GetName()}'未找到锁定点'${this.BoneName}'`,
             ),
           !1))
     );
   }
   K2_NotifyEnd(t, e) {
-    var a,
+    var r,
       t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       (t.CharacterActorComponent.LockOnParts.has(this.BoneName)
-        ? (((a = t.CharacterActorComponent.LockOnParts.get(
+        ? (((r = t.CharacterActorComponent.LockOnParts.get(
             this.BoneName,
           )).SoftLockValid = this.OldSoftLockValid),
-          (a.HardLockValid = this.OldHardLockValid),
+          (r.HardLockValid = this.OldHardLockValid),
           !0)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
-              58,
+              57,
               `[TsAnimNotifyStateSetLockPointState.NotifyEnd]: 角色'${t.GetName()}'未找到锁定点'${this.BoneName}'`,
             ),
           !1))

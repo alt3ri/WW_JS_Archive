@@ -1,20 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
-  ModelManager_1 = require("../Manager/ModelManager"),
-  LevelGamePlayController_1 = require("./LevelGamePlayController");
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class TsLevelGamePlayBridge extends UE.Object {
-  UpdateGamePlayTimerBridge(e, l) {}
+  Constructor() {}
+  UpdateGamePlayTimerBridge(e, r) {}
   GetDragonPoolState(e) {
     return ModelManager_1.ModelManager.MingSuModel.GetTargetDragonPoolActiveById(
       e,
     );
   }
   ApplyScanEffect(e) {
-    LevelGamePlayController_1.LevelGamePlayController.HandleScanResponse(e);
+    ControllerHolder_1.ControllerHolder.LevelGamePlayController.HandleScanResponse(
+      e,
+    );
   }
   ClearAllScanEffects() {
-    LevelGamePlayController_1.LevelGamePlayController.HandleClearAllScanEffect();
+    ControllerHolder_1.ControllerHolder.LevelGamePlayController.HandleClearAllScanEffect();
   }
 }
 exports.default = TsLevelGamePlayBridge;

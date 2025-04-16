@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configAdviceSentenceById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configAdviceSentenceById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configAdviceSentenceById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configAdviceSentenceById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configAdviceSentenceById.GetConfig(";
 exports.configAdviceSentenceById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (e, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${e})`),
+      getConfigStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${e})`),
       i =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (n) {
@@ -43,8 +47,8 @@ exports.configAdviceSentenceById = {
         const C = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (C)
           return (
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -76,8 +80,8 @@ exports.configAdviceSentenceById = {
               ((i = KEY_PREFIX + `#${e})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -85,8 +89,8 @@ exports.configAdviceSentenceById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigStat.Stop(),
+    o?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

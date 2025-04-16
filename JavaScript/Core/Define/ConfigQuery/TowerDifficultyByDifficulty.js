@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configTowerDifficultyByDifficulty.Init"),
-  getConfigStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTowerDifficultyByDifficulty.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configTowerDifficultyByDifficulty.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configTowerDifficultyByDifficulty.GetConfig(";
 exports.configTowerDifficultyByDifficulty = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (i, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${i})`),
+      getConfigStat?.Start();
+    var t = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${i})`),
       f =
-        (t.Start(),
+        (t?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (f) {
       if (o) {
@@ -45,8 +47,8 @@ exports.configTowerDifficultyByDifficulty = {
         const e = ConfigCommon_1.ConfigCommon.GetConfig(n);
         if (e)
           return (
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -78,8 +80,8 @@ exports.configTowerDifficultyByDifficulty = {
               ((f = KEY_PREFIX + `#${i})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(f, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -87,8 +89,8 @@ exports.configTowerDifficultyByDifficulty = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    t.Stop(),
-      getConfigStat.Stop(),
+    t?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

@@ -51,7 +51,7 @@ class FlowActionSetEntityVisible extends FlowActionServerAction_1.FlowActionServ
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Plot",
-                27,
+                26,
                 "剧情中显隐实体过远，请检查配置",
                 ["pbDataId", e],
                 ["flow", this.Context.FormatId],
@@ -67,6 +67,7 @@ class FlowActionSetEntityVisible extends FlowActionServerAction_1.FlowActionServ
                 "Plot",
               );
           this.Task = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
+            "FlowActionSetEntityVisible.OnExecute",
             o.EntityIds,
             this.W$i,
             FlowActionUtils_1.WAIT_ENTITY_TIME,

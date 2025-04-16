@@ -35,7 +35,8 @@ class CostItemGridComponent extends UiPanelBase_1.UiPanelBase {
         t = t.Data;
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           t.ItemId,
-        );
+        ),
+          (ModelManager_1.ModelManager.ComposeModel.ComposeSelectItem = t);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }

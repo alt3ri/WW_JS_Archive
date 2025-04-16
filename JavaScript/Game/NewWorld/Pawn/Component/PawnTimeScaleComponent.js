@@ -32,7 +32,7 @@ const puerts_1 = require("puerts"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   LIMIT_SCALE = 0,
   sourceTypeGroup = new Map([
-    [1, [0, 1, 2, 3, 4, 6, 7, 8, 11]],
+    [1, [0, 1, 2, 3, 4, 6, 7, 8, 11, 12]],
     [2, [9, 10]],
     [3, [5]],
   ]);
@@ -42,7 +42,7 @@ function getSourceGroup(t) {
 }
 exports.getSourceGroup = getSourceGroup;
 class TimeScale {
-  constructor(t, e, i, s, r, h, o, n, a) {
+  constructor(t, e, i, s, r, h, o, n, a, u = !1) {
     (this.StartTime = t),
       (this.EndTime = e),
       (this.Priority = i),
@@ -52,6 +52,7 @@ class TimeScale {
       (this.Id = o),
       (this.SourceType = n),
       (this.SourceTypeGroup = a),
+      (this.NeedAddSceneItemTag = u),
       (this.MarkDelete = !1),
       (this.rrr = void 0),
       (this.nrr = void 0),
@@ -137,7 +138,7 @@ let PawnTimeScaleComponent =
     }
     OnStart() {
       (this.ActorComp = this.Entity.GetComponent(1)),
-        (this.Xln = this.Entity.GetComponent(53));
+        (this.Xln = this.Entity.GetComponent(60));
       var t = this.ActorComp.CreatureData.GetEntityPropertyConfig();
       return (this.Vhn = t.子弹受击顿帧时长比例 / 100), !0;
     }
@@ -145,16 +146,16 @@ let PawnTimeScaleComponent =
       return t.EndTime > e && !t.MarkDelete;
     }
     OnTick(t) {}
-    SetTimeScale(t, e, i, s, r) {
-      var h, o;
+    SetTimeScale(t, e, i, s, r, h = !1) {
+      var o, n;
       return (
         2 === r && (s *= this.Vhn),
         s <= 0
           ? -1
-          : ((h = (o = Time_1.Time.WorldTimeSeconds) + s),
-            (o = new TimeScale(
+          : ((o = (n = Time_1.Time.WorldTimeSeconds) + s),
+            (n = new TimeScale(
+              n,
               o,
-              h,
               t,
               Math.max(e, LIMIT_SCALE),
               i,
@@ -162,10 +163,11 @@ let PawnTimeScaleComponent =
               this.Hhn++,
               r,
               getSourceGroup(r),
+              h,
             )),
-            this.TimeScaleList.Push(o),
-            this.TimeScaleMap.set(o.Id, o),
-            o.Id)
+            this.TimeScaleList.Push(n),
+            this.TimeScaleMap.set(n.Id, n),
+            n.Id)
       );
     }
     RemoveTimeScale(t) {
@@ -185,7 +187,7 @@ let PawnTimeScaleComponent =
     AddPauseLock(t) {
       this.PauseLocks.has(t) && this.RemovePauseLock(t);
       let e = -1;
-      this.Xln.IsImmuneTimeScaleEffect() ||
+      this.Xln?.IsImmuneTimeScaleEffect() ||
         (e = this.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 9)),
         this.PauseLocks.set(t, e);
     }
@@ -206,6 +208,9 @@ let PawnTimeScaleComponent =
         this.PauseLocks.set(e, i);
       });
     }
+    HasPauseLock() {
+      return 0 < this.PauseLocks.size;
+    }
     AddDelayLock(t) {
       this.DelayLocks.has(t) && this.RemoveDelayLock(t);
       var e = this.SetTimeScale(1 / 0, 1, void 0, 1 / 0, 10);
@@ -218,7 +223,7 @@ let PawnTimeScaleComponent =
   });
 (PawnTimeScaleComponent = PawnTimeScaleComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(110)],
+    [(0, RegisterComponent_1.RegisterComponent)(120)],
     PawnTimeScaleComponent,
   )),
   (exports.PawnTimeScaleComponent = PawnTimeScaleComponent);

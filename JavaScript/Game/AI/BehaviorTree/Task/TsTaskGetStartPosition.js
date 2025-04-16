@@ -1,20 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
   START_POSITION_KEY = "StartPosition";
 class TsTaskGetStartPosition extends TsTaskAbortImmediatelyBase_1.default {
-  ReceiveExecuteAI(e, o) {
-    var r, t;
+  Constructor() {
+    super.Constructor();
+  }
+  ReceiveExecuteAI(e, r) {
+    var o, t;
     e instanceof TsAiController_1.default
-      ? ((t = (r = e.AiController.CharActorComp).Entity),
-        r?.Valid
-          ? ((r = r.Entity.Id),
+      ? ((t = (o = e.AiController.CharActorComp).Entity),
+        o?.Valid
+          ? ((o = o.Entity.Id),
             (t = t.GetComponent(0).GetInitLocation()),
-            BlackboardController_1.BlackboardController.SetVectorValueByEntity(
-              r,
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
+              o,
               START_POSITION_KEY,
               t.X,
               t.Y,
@@ -23,7 +26,7 @@ class TsTaskGetStartPosition extends TsTaskAbortImmediatelyBase_1.default {
             this.FinishExecute(!0))
           : this.FinishExecute(!1))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             e.GetClass().GetName(),
           ]),

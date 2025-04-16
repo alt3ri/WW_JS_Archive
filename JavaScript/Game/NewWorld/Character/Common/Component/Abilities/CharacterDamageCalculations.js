@@ -32,13 +32,13 @@ function getAttrFromSnapshots(t, e, r) {
 }
 exports.ENERGY_SHARE_RATE = 3e3;
 const formulas = {
-  1: function (t, e, r, a, A, s, i, _, u, c, T, C, n, h, b, l, y, o, p) {
+  1: function (t, e, r, a, A, s, i, _, u, T, c, C, n, h, b, l, y, o, p) {
     var N = getAttrFromSnapshots.bind(this, t),
       n = N(n, C) * (h * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) + b,
       C =
         N(o, y) * (l * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
         p +
-        N(T, c) * n;
+        N(c, T) * n;
     return 1 === e
       ? ((h =
           t.TargetSnapshot.CurrentValues.Proto_HealedChange *
@@ -46,39 +46,40 @@ const formulas = {
         (b =
           t.AttackerSnapshot.CurrentValues.Proto_HealChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-        Math.max(C * (1 + h + b), 0))
-      : ((o = Calculation.CalculateHurt(
+        (o = C * Math.max(0, 1 + h + b)),
+        Math.max(o, 0))
+      : ((y = Calculation.CalculateHurt(
           t,
           r.Element,
-          r.Type,
-          r.RelatedProperty,
-          AbilityUtils_1.AbilityUtils.GetLevelValue(r.RateLv, a, 0),
+          r.DamageData.Type,
+          r.DamageData.RelatedProperty,
+          AbilityUtils_1.AbilityUtils.GetLevelValue(r.DamageData.RateLv, a, 0),
           A,
           s,
           i,
           C,
         )),
-        Math.max(o, 0));
+        Math.max(y, 0));
   },
-  2: function (t, e, r, a, A, s, i, _, u, c, T, C, n) {
-    T =
-      getAttrFromSnapshots.bind(this, t)(T, c) *
+  2: function (t, e, r, a, A, s, i, _, u, T, c, C, n) {
+    c =
+      getAttrFromSnapshots.bind(this, t)(c, T) *
         (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
       n;
     return 1 === e
-      ? -Math.min(t.TargetSnapshot.CurrentValues.Proto_Life - T, 0)
-      : Math.max(t.TargetSnapshot.CurrentValues.Proto_Life - T, 0);
+      ? -Math.min(t.TargetSnapshot.CurrentValues.Proto_Life - c, 0)
+      : Math.max(t.TargetSnapshot.CurrentValues.Proto_Life - c, 0);
   },
-  3: function (t, e, r, a, A, s, i, _, u, c, T, C, n) {
+  3: function (t, e, r, a, A, s, i, _, u, T, c, C, n) {
     return (
-      getAttrFromSnapshots.bind(this, t)(T, c) *
+      getAttrFromSnapshots.bind(this, t)(c, T) *
         (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
       n
     );
   },
-  4: function (t, e, r, a, A, s, i, _, u, c, T, C, n, h) {
+  4: function (t, e, r, a, A, s, i, _, u, T, c, C, n, h) {
     t =
-      getAttrFromSnapshots.bind(this, t)(T, c) *
+      getAttrFromSnapshots.bind(this, t)(c, T) *
         (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
       n;
     return Math.min(
@@ -86,35 +87,35 @@ const formulas = {
       _ * (h * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
     );
   },
-  5: function (t, e, r, a, A, s, i, _, u, c, T) {
+  5: function (t, e, r, a, A, s, i, _, u, T, c) {
     return (
       (t.TargetSnapshot.CurrentValues.l5n *
-        (c * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND)) /
+        (T * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND)) /
         u +
-      T
+      c
     );
   },
-  6: function (t, e, r, a, A, s, i, _, u, c, T, C, n, h, b) {
+  6: function (t, e, r, a, A, s, i, _, u, T, c, C, n, h, b) {
     (t = getAttrFromSnapshots.bind(this, t)),
-      (T =
-        t(T, c) * (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
+      (c =
+        t(c, T) * (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
         t(h, n) * (b * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND));
-    return Math.max(T, 0);
+    return Math.max(c, 0);
   },
-  7: function (t, e, r, a, A, s, i, _, u, c, T, C, n, h, b) {
-    (T =
-      getAttrFromSnapshots.bind(this, t)(T, c) *
+  7: function (t, e, r, a, A, s, i, _, u, T, c, C, n, h, b) {
+    (c =
+      getAttrFromSnapshots.bind(this, t)(c, T) *
         (C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND) +
       n),
-      (c =
+      (T =
         t.TargetSnapshot.CurrentValues.Proto_Life -
         (t.TargetSnapshot.CurrentValues.l5n *
           h *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
           b));
-    return Math.max(0, Math.min(T, c));
+    return Math.max(0, Math.min(c, T));
   },
-  1001: function (t, e, r, a, A, s, i, _, u, c, T, C, n, h, b) {
+  1001: function (t, e, r, a, A, s, i, _, u, T, c, C, n, h, b) {
     var r = r.Element,
       l = t.AttackerSnapshot,
       t = t.TargetSnapshot,
@@ -151,13 +152,13 @@ const formulas = {
             y,
           )?.Abnormal1005 ?? 0;
         break;
-      case 6:
+      default:
         o =
           AbnormalDamageConfigByLevel_1.configAbnormalDamageConfigByLevel.GetConfig(
             y,
           )?.Abnormal1006 ?? 0;
     }
-    var c = c * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+    var T = T * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       p = Math.min(Calculation.GetElementDamageReduce(t, r), 1),
       N = Calculation.GetElementResistant(t, r),
       r = Calculation.GetElementIgnoreResistance(l, r);
@@ -186,18 +187,18 @@ const formulas = {
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
         -1,
       ));
-    return o * c * N * E * (1 - r) * (1 - p) * (1 + t);
+    return o * T * N * E * (1 - r) * (1 - p) * (1 + t);
   },
 };
 class Calculation {
   static CalculateHurt(t, e, r, a, A, s, i, _, u = 0) {
-    var c = t.AttackerSnapshot,
-      T = t.TargetSnapshot,
+    var T = t.AttackerSnapshot,
+      c = t.TargetSnapshot,
       A = A * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
-      C = this.GetElementDamageBonus(c, e),
-      n = Math.min(this.GetElementDamageReduce(T, e), 1),
-      h = this.GetElementResistant(T, e),
-      b = this.GetElementIgnoreResistance(c, e);
+      C = this.GetElementDamageBonus(T, e),
+      n = Math.min(this.GetElementDamageReduce(c, e), 1),
+      h = this.GetElementResistant(c, e),
+      b = this.GetElementIgnoreResistance(T, e);
     let l = 0;
     l =
       h - b <= 0
@@ -205,36 +206,36 @@ class Calculation {
         : h - b < DAMAGE_CONSTANT5
           ? 1 - (h - b)
           : 1 / (1 + (h - b) * DAMAGE_CONSTANT6);
-    (h = this.GetAttackTypeDamageBonus(c, r)),
+    (h = this.GetAttackTypeDamageBonus(T, r)),
       (b = getAttrFromSnapshots(t, 0, a)),
-      (r = T.CurrentValues.Proto_Def),
+      (r = c.CurrentValues.Proto_Def),
       (t =
-        c.CurrentValues.Proto_IgnoreDefRate *
+        T.CurrentValues.Proto_IgnoreDefRate *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-      (a = c.CurrentValues.Proto_Lv),
+      (a = T.CurrentValues.Proto_Lv),
       (r = Math.min(
         DAMAGE_CONSTANT1,
         1 / ((r * (1 - t)) / (DAMAGE_CONSTANT2 + a * DAMAGE_CONSTANT3) + 1),
       )),
       (t =
         1 +
-        c.CurrentValues.Proto_DamageChange *
+        T.CurrentValues.Proto_DamageChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
         C +
         h),
-      (a = T.CurrentValues.Proto_ElementPropertyType),
+      (a = c.CurrentValues.Proto_ElementPropertyType),
       (C = Math.min(
-        T.CurrentValues.Proto_DamageReduce *
+        c.CurrentValues.Proto_DamageReduce *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
         1,
       )),
       (h =
         1 +
-        c.CurrentValues.Proto_SpecialDamageChange *
+        T.CurrentValues.Proto_SpecialDamageChange *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-      (T = Calculation.CalculateElementMatchUpRate(e, a)),
+      (c = Calculation.CalculateElementMatchUpRate(e, a)),
       (e =
-        c.CurrentValues.Proto_CritDamage *
+        T.CurrentValues.Proto_CritDamage *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
       (a =
         (A * b + i + u) *
@@ -245,7 +246,7 @@ class Calculation {
         (1 - C) *
         (1 - n) *
         h *
-        T *
+        c *
         Math.max(1 + _ * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND, 0));
     return Math.max(0, a);
   }
@@ -460,8 +461,9 @@ class Calculation {
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       t =
         t.AttackerSnapshot.CurrentValues.Proto_HealChange *
-        CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
-    return Math.max(0, (a * r + e) * (A + t + 1));
+        CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      a = (a * r + e) * Math.max(0, A + t + 1);
+    return Math.max(0, a);
   }
   static ToughCalculation(t, e, r) {
     return (
@@ -489,7 +491,7 @@ class Calculation {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
-            29,
+            28,
             "角色跌落伤害",
             ["上一帧速度", t],
             ["这一帧速度", e],
@@ -520,7 +522,7 @@ class Calculation {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
-            29,
+            28,
             "怪物跌落伤害",
             ["height", t],
             ["landing_damage_args_monster", a],
@@ -564,8 +566,8 @@ class Calculation {
       i = i ? a : 1,
       a = A.A * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       u = A.B * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
-      c = A.C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
-      T = A.D * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      T = A.C * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+      c = A.D * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       C = A.E * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       n = A.F * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       A = A.G * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
@@ -585,8 +587,8 @@ class Calculation {
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND *
         (1 + s * a + u * h + C) *
         i *
-        (1 + b * c) *
-        (1 + _ * T) *
+        (1 + b * T) *
+        (1 + _ * c) *
         (1 / (1 + e / (n + h * A))) *
         l;
     return Math.ceil(r);
@@ -612,72 +614,75 @@ class Calculation {
     }
     return 1;
   }
-  static CalculateFormula(t, e, r, a, A, s, i, _, u) {
-    var c = r.FormulaType,
-      T = r.CalculateType;
-    let C = 0;
-    if (c) {
-      if (!(c in formulas))
+  static CalculateFormula(t, e, r, a, A, s) {
+    var i = t.DamageData,
+      _ = t.SkillLevel,
+      u = i.FormulaType,
+      T = i.CalculateType;
+    let c = 0;
+    if (u) {
+      if (!(u in formulas))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              20,
+              19,
               "unexpected formula type",
-              ["damageId", r.Id],
-              ["formula type", c],
+              ["damageId", i.Id],
+              ["formula type", u],
             ),
           0
         );
-      C = formulas[c](
+      c = formulas[u](
         e,
         T,
+        t,
+        _,
         r,
         a,
         A,
-        i,
         t.Accumulation,
-        u,
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam1, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam2, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam3, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam4, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam5, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam6, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam7, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam8, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam9, a, 0),
-        AbilityUtils_1.AbilityUtils.GetLevelValue(r.FormulaParam10, a, 0),
+        s,
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam1, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam2, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam3, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam4, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam5, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam6, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam7, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam8, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam9, _, 0),
+        AbilityUtils_1.AbilityUtils.GetLevelValue(i.FormulaParam10, _, 0),
       );
     } else {
-      (c = r.RelatedProperty),
-        (u = AbilityUtils_1.AbilityUtils.GetLevelValue(r.RateLv, a, 0));
-      C =
+      (u = i.RelatedProperty),
+        (s = AbilityUtils_1.AbilityUtils.GetLevelValue(i.RateLv, _, 0));
+      c =
         0 === T
-          ? this.CalculateHurt(e, r.Element, r.Type, c, u, A, i, _)
-          : ((A = AbilityUtils_1.AbilityUtils.GetLevelValue(
-              r.CureBaseValue,
-              a,
+          ? this.CalculateHurt(e, t.Element, i.Type, u, s, r, a, A)
+          : ((r = AbilityUtils_1.AbilityUtils.GetLevelValue(
+              i.CureBaseValue,
+              _,
               0,
             )),
-            this.yQo(e, A, c, u));
+            this.yQo(e, r, u, s));
     }
-    (i = t.RandomSeed),
-      (t.RandomSeed = RandomSystem_1.default.GetNextRandomSeed(i, 1)),
-      (_ = AbilityUtils_1.AbilityUtils.GetLevelValue(
-        r.FluctuationUpper,
-        a,
+    (a = t.RandomSeed),
+      (t.RandomSeed = RandomSystem_1.default.GetNextRandomSeed(a, 1)),
+      (A = AbilityUtils_1.AbilityUtils.GetLevelValue(
+        i.FluctuationUpper,
+        _,
         CharacterAttributeTypes_1.PER_TEN_THOUSAND,
       )),
       (e = AbilityUtils_1.AbilityUtils.GetLevelValue(
-        r.FluctuationLower,
-        a,
+        i.FluctuationLower,
+        _,
         CharacterAttributeTypes_1.PER_TEN_THOUSAND,
       )),
-      (A =
-        ((_ - e) * (i % CharacterAttributeTypes_1.PER_TEN_THOUSAND) + e) *
+      (r =
+        ((A - e) * (a % CharacterAttributeTypes_1.PER_TEN_THOUSAND) + e) *
         CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND);
-    return (C = Math.ceil(C * s * A)), (C = 1 === T ? -C : C);
+    return (c = Math.ceil(c * t.ExtraRate * r)), (c = 1 === T ? -c : c);
   }
 }
 exports.Calculation = Calculation;

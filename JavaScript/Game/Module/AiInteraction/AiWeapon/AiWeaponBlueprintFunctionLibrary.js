@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager");
 class AiWeaponBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static CharacterRequestPickUpAiWeapon(e, r) {
     ModelManager_1.ModelManager.AiWeaponModel.Net.SendHoldWeaponPush(e, r);
   }

@@ -4,6 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine"),
   TsBasePlayerController_1 = require("./TsBasePlayerController");
 class TsStartupPlayerController extends TsBasePlayerController_1.TsBasePlayerController {
+  Constructor() {
+    super.Constructor();
+  }
   BindActionHandle() {
     super.BindActionHandle(),
       this.AddActionHandle(InputMappingsDefine_1.actionMappings.Ui左键点击),
@@ -56,7 +59,8 @@ class TsStartupPlayerController extends TsBasePlayerController_1.TsBasePlayerCon
       this.AddAxisHandle(InputMappingsDefine_1.axisMappings.Ui右摇杆),
       this.AddAxisHandle(InputMappingsDefine_1.axisMappings.NextGroup),
       this.AddAxisHandle(InputMappingsDefine_1.axisMappings.PrevGroup),
-      this.AddAxisHandle(InputMappingsDefine_1.axisMappings.MouseMove);
+      this.AddAxisHandle(InputMappingsDefine_1.axisMappings.MouseMove),
+      this.AddAxisHandle(InputMappingsDefine_1.axisMappings.UiScroll1);
   }
 }
 (exports.TsStartupPlayerController = TsStartupPlayerController),

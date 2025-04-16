@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackTextExpressController = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
@@ -19,6 +20,7 @@ class TrackTextExpressController {
       (this.vXt = void 0),
       (this.MXt = void 0),
       (this.EXt = !1),
+      (this.aec = void 0),
       (this.Yre = e),
       (this.pXt = new GeneralLogicTreeDefine_1.TreeTrackTextExpressionInfo()),
       (this.fXt = e.UiTrackTextInfo),
@@ -45,11 +47,15 @@ class TrackTextExpressController {
   SXt(e) {
     var t;
     this.EXt ||
-      ((t = this.Yre.CreateShowBridge()),
+      ((t =
+        this.Yre.ContainTag(16) ||
+        "Disabled" !==
+          ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode()),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
-        t,
+        this.Yre.CreateShowData(),
         e,
+        t,
       ),
       (this.EXt = !0));
   }
@@ -58,24 +64,46 @@ class TrackTextExpressController {
       0 === this.vXt.size && this.yXt(e);
   }
   yXt(e) {
+    var t;
     this.EXt &&
-      (EventSystem_1.EventSystem.Emit(
+      ((t =
+        this.Yre.ContainTag(16) ||
+        "Disabled" !==
+          ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode()),
+      EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeEndShowTrackText,
         this.Yre.TreeIncId,
         e,
+        t,
       ),
       GeneralLogicTreeController_1.GeneralLogicTreeController.TryReleaseExpressionOccupation(
         this.Yre.TreeIncId,
       ),
-      (this.EXt = !1));
+      (this.EXt = !1),
+      TimerSystem_1.TimerSystem.Has(this.aec)) &&
+      TimerSystem_1.TimerSystem.Remove(this.aec);
   }
   UpdateTextExpress(e) {
     this.EXt &&
       !e &&
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.GeneralLogicTreeUpdateShowTrackText,
-        this.Yre.CreateShowBridge(),
-      );
+      (TimerSystem_1.TimerSystem.Has(this.aec) &&
+        TimerSystem_1.TimerSystem.Remove(this.aec),
+      (this.aec = this.hec()));
+  }
+  hec() {
+    return TimerSystem_1.TimerSystem.Delay(() => {
+      var e;
+      this.EXt &&
+        ((e =
+          this.Yre.ContainTag(16) ||
+          "Disabled" !==
+            ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode()),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.GeneralLogicTreeUpdateShowTrackText,
+          this.Yre.CreateShowData(),
+          e,
+        ));
+    }, 100);
   }
   UpdateTrackTextData(e, t) {
     if (e instanceof LogicNodeBase_1.LogicNodeBase)
@@ -88,7 +116,7 @@ class TrackTextExpressController {
         case Protocol_1.Aki.Protocol.BNs.Proto_Destroy:
           this.IXt(e.NodeId, void 0);
       }
-    else this.Yre.ContainTag(10) || this.TXt();
+    else this.Yre.ContainTag(11) || this.TXt();
   }
   IXt(i, e) {
     var t = this.MXt.findIndex((e, t) => e.SourceOfAdd === i);
@@ -100,20 +128,17 @@ class TrackTextExpressController {
       if (t < 0) return;
       this.MXt.splice(t, 1);
     }
-    this.Yre.RemoveTag(10), this.Yre.RemoveTag(11);
+    this.Yre.RemoveTag(11), this.Yre.RemoveTag(12);
     let s = void 0;
     0 !== this.MXt.length
-      ? (this.Yre.AddTag(10),
-        (e = this.MXt[0].CustomUiConfig),
+      ? (this.Yre.AddTag(11),
+        (e = this.MXt[this.MXt.length - 1].CustomUiConfig),
         this.pXt.CopyConfig(e),
         (s = e.TrackRadius?.TrackRadius),
         e.UiType === IQuest_1.EQuestScheduleUiType.LevelPlay &&
-          this.Yre.AddTag(11),
+          this.Yre.AddTag(12),
         this.fXt.Clear(),
-        this.fXt.SetMainTitle(this.pXt.MainTitle),
-        this.pXt.SubTitles?.forEach((e) => {
-          this.fXt.AddSubTitle(e);
-        }))
+        this.fXt.CopyConfig(e))
       : this.TXt(),
       ModelManager_1.ModelManager.LevelPlayModel.ChangeLevelPlayTrackRange(
         this.Yre.TreeConfigId,
@@ -121,23 +146,26 @@ class TrackTextExpressController {
       );
   }
   TXt() {
-    var e, t, i;
     this.fXt.Clear();
-    let s = 0;
-    for ([e, t] of this.Yre.GetNodesByGroupId(1))
-      t.ContainTag(0) &&
-        ((i = {
-          TidTitle: t.TrackTextConfig,
-          QuestScheduleType: {
-            Type: IQuest_1.EQuestScheduleType.ChildQuestCompleted,
-            ChildQuestId: e,
-            ShowTracking: !0,
-          },
-        }),
-        this.fXt.SetMainTitle(i),
-        this.fXt.AddSubTitle(i),
-        s++);
-    1 === s ? this.fXt.ClearSubTitle() : this.fXt.SetMainTitle(void 0);
+    var t = this.Yre.GetNodesByGroupId(1);
+    if (t) {
+      let e = 0;
+      for (var [i, s] of t)
+        s.ContainTag(0) &&
+          s.TrackTextConfig &&
+          ((s = {
+            TidTitle: s.TrackTextConfig,
+            QuestScheduleType: {
+              Type: IQuest_1.EQuestScheduleType.ChildQuestCompleted,
+              ChildQuestId: i,
+              ShowTracking: !0,
+            },
+          }),
+          this.fXt.SetMainTitle(s),
+          this.fXt.AddSubTitle(s),
+          e++);
+      1 === e ? this.fXt.ClearSubTitle() : this.fXt.SetMainTitle(void 0);
+    }
   }
   OnBtApplyExpressionOccupation(e) {
     e || this.yXt(3);
@@ -174,12 +202,8 @@ class TrackTextExpressController {
     this.DXt(), 0 !== this.vXt.size && this.SXt(3);
   }
   DXt() {
-    this.Yre.ContainTag(10) &&
-      (this.fXt.Clear(),
-      this.fXt.SetMainTitle(this.pXt.MainTitle),
-      this.pXt.SubTitles?.forEach((e) => {
-        this.fXt.AddSubTitle(e);
-      }));
+    this.Yre.ContainTag(11) &&
+      (this.fXt.Clear(), this.fXt.CopyConfig(this.pXt));
   }
 }
 exports.TrackTextExpressController = TrackTextExpressController;

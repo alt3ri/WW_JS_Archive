@@ -13,29 +13,29 @@ class ExchangeRewardConfig extends ConfigBase_1.ConfigBase {
   GetExchangeShareConfig(e) {
     if (e) return ExchangeSharedById_1.configExchangeSharedById.GetConfig(e);
   }
-  GetExchangeRewardPreviewRewardList(e) {
+  GetExchangeRewardPreviewRewardList(e, n) {
     if (!e) return [];
     var e = this.GetExchangeRewardConfig(e),
       r = [];
     if (e) {
-      var n,
-        t,
-        i = e.PreviewReward,
-        o = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+      var t,
+        i,
+        o = e.PreviewReward,
+        n = n || ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
       let a = void 0;
-      if (i.has(o)) a = i.get(o).MapIntInt;
+      if (o.has(n)) a = o.get(n).MapIntInt;
       else
-        for (let e = o - 1; 0 <= e; e--)
-          if (i.has(e)) {
-            a = i.get(e).MapIntInt;
+        for (let e = n - 1; 0 <= e; e--)
+          if (o.has(e)) {
+            a = o.get(e).MapIntInt;
             break;
           }
       if (!a) {
         var d = e.RewardId;
         let r = 0;
-        if (d.has(o)) r = d.get(o);
+        if (d.has(n)) r = d.get(n);
         else
-          for (let e = o - 1; 0 <= e; e--)
+          for (let e = n - 1; 0 <= e; e--)
             if (d.has(e)) {
               r = d.get(e);
               break;
@@ -44,8 +44,8 @@ class ExchangeRewardConfig extends ConfigBase_1.ConfigBase {
           (e = DropPackageById_1.configDropPackageById.GetConfig(r)) &&
           (a = e.DropPreview);
       }
-      for ([n, t] of a) {
-        var g = [{ IncId: 0, ItemId: n }, t];
+      for ([t, i] of a) {
+        var g = [{ IncId: 0, ItemId: t }, i];
         r.push(g);
       }
     }

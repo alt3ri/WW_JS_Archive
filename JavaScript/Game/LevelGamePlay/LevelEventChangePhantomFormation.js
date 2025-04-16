@@ -14,7 +14,7 @@ class LevelEventChangePhantomFormation extends LevelGeneralBase_1.LevelEventBase
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            49,
+            48,
             "[ChangePhantomFormation] 队伍更新完成",
             ["isPhantom", e],
           ),
@@ -35,14 +35,14 @@ class LevelEventChangePhantomFormation extends LevelGeneralBase_1.LevelEventBase
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            49,
+            48,
             "[ChangePhantomFormation] 当前已是声骸队伍",
           ),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            49,
+            48,
             "[ChangePhantomFormation] 开始等待队伍更新",
           ),
         EventSystem_1.EventSystem.Add(

@@ -6,12 +6,14 @@ const UE = require("ue"),
   CommonCurrencyItemListComponent_1 = require("../../Module/Common/CommonCurrencyItemListComponent"),
   LguiUtil_1 = require("../../Module/Util/LguiUtil"),
   UiPanelBase_1 = require("../Base/UiPanelBase"),
+  PopupCaptionStateItem_1 = require("./PopupCaptionStateItem"),
   PopupCaptionToggleItem_1 = require("./PopupCaptionToggleItem");
 class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.ucr = void 0),
       (this.S1a = void 0),
+      (this.WDc = void 0),
       (this.OnClickCloseBtnCall = () => {}),
       (this.OnClickHelpBtnCall = () => {}),
       (this.Jvt = () => {
@@ -96,6 +98,10 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   GetCurrencyItemList() {
     return this.ucr?.GetCurrencyItemList();
   }
+  SetCurrencyItemBtnFunction(e, t) {
+    var i = this.ucr?.GetCurrencyItemList()?.find((t) => t.ItemId === e);
+    i && i.SetButtonFunction(t);
+  }
   async CreateToggleTab(t) {
     (this.S1a = new PopupCaptionToggleItem_1.PopupCaptionToggleItem()),
       await this.S1a.CreateByResourceIdAsync("TogTabCName", this.GetItem(5)),
@@ -112,6 +118,26 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   }
   GetCostContent() {
     return this.GetItem(4);
+  }
+  async CreateCaptionStateItem(t) {
+    (this.WDc = new PopupCaptionStateItem_1.PopupCaptionStateItem()),
+      await this.WDc.CreateByResourceIdAsync(
+        "PnlCaptionStateA",
+        this.GetItem(5),
+      ),
+      this.WDc.BindClick(t);
+  }
+  SetCaptionStateTip(t) {
+    this.WDc?.SetTipsLocalText(t);
+  }
+  SetCaptionStateActive(t) {
+    this.WDc?.SetActive(t);
+  }
+  SetCaptionChangeColor(t) {
+    this.WDc?.SetCaptionChangeColor(t);
+  }
+  GetToggleRootItem() {
+    return this.GetItem(5);
   }
 }
 exports.PopupCaptionItem = PopupCaptionItem;

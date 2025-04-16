@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.GamepadCheckComponent =
+  (exports.GamepadWheelComponent =
+    exports.GamepadCheckComponent =
     exports.GamepadMoveRightComponent =
     exports.GamepadMoveForwardComponent =
       void 0);
-const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
+const LguiEventSystemManager_1 = require("../../../Ui/LguiEventSystem/LguiEventSystemManager"),
+  UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   HotKeyComponent_1 = require("./HotKeyComponent");
 class GamepadInteractComponentBase extends HotKeyComponent_1.HotKeyComponent {
   OnRefreshSelfHotKeyState(e) {
@@ -15,17 +17,17 @@ class GamepadInteractComponentBase extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 class GamepadMoveForwardComponent extends GamepadInteractComponentBase {
-  OnInputAxis(e, o) {
+  OnInputAxis(e, t) {
     UiNavigationNewController_1.UiNavigationNewController.GamepadControlMouseMoveForward(
-      o,
+      t,
     );
   }
 }
 exports.GamepadMoveForwardComponent = GamepadMoveForwardComponent;
 class GamepadMoveRightComponent extends GamepadInteractComponentBase {
-  OnInputAxis(e, o) {
+  OnInputAxis(e, t) {
     UiNavigationNewController_1.UiNavigationNewController.GamepadControlMouseMoveRight(
-      o,
+      t,
     );
   }
 }
@@ -43,4 +45,19 @@ class GamepadCheckComponent extends GamepadInteractComponentBase {
   }
 }
 exports.GamepadCheckComponent = GamepadCheckComponent;
+const WHEEL_SPEED_SCALE = 0.4;
+class GamepadWheelComponent extends GamepadInteractComponentBase {
+  constructor() {
+    super(...arguments), (this.BQ_ = 0);
+  }
+  OnInputAxis(e, t) {
+    t = -t * WHEEL_SPEED_SCALE;
+    (this.BQ_ === t && 0 == t) ||
+      ((this.BQ_ = t),
+      LguiEventSystemManager_1.LguiEventSystemManager.InputWheelAxisByGamepad(
+        t,
+      ));
+  }
+}
+exports.GamepadWheelComponent = GamepadWheelComponent;
 //# sourceMappingURL=GamepadInteractComponent.js.map

@@ -6,7 +6,8 @@ class TsAnimNotifyIgnoreLookInput extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.bIgnoreLookInput = !1);
   }
-  K2_Notify(e, t) {
+  Constructor() {}
+  K2_Notify(t, e) {
     var o = Global_1.Global.CharacterController;
     return (
       o?.IsValid() &&

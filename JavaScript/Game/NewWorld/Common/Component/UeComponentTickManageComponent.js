@@ -74,7 +74,7 @@ let UeComponentTickManageComponent =
   });
 (UeComponentTickManageComponent = UeComponentTickManageComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(100)],
+    [(0, RegisterComponent_1.RegisterComponent)(110)],
     UeComponentTickManageComponent,
   )),
   (exports.UeComponentTickManageComponent = UeComponentTickManageComponent);

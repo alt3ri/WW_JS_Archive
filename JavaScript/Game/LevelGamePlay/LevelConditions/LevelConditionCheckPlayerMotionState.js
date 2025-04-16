@@ -19,7 +19,7 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
           ),
         !1
       );
-    var r = t.Entity.GetComponent(161);
+    var r = t.Entity.GetComponent(173);
     if (!r)
       return (
         Log_1.Log.CheckWarn() &&
@@ -84,12 +84,24 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
             CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
           r.MoveState === CharacterUnifiedStateTypes_1.ECharMoveState.Other;
         break;
+      case "Soaring":
+        i =
+          r.PositionState ===
+            CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
+          r.MoveState === CharacterUnifiedStateTypes_1.ECharMoveState.Soar;
+        break;
+      case "Gongduola":
+        i =
+          r.PositionState ===
+            CharacterUnifiedStateTypes_1.ECharPositionState.Ride &&
+          r.MoveState === CharacterUnifiedStateTypes_1.ECharMoveState.Gongduola;
+        break;
       default:
         n = !0;
     }
     if (n) {
-      var o = t.Entity.GetComponent(190);
-      if (!o)
+      var s = t.Entity.GetComponent(203);
+      if (!s)
         return (
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -101,13 +113,13 @@ class LevelConditionCheckPlayerMotionState extends LevelGeneralBase_1.LevelCondi
         );
       switch (e.MotionState) {
         case "SwitchSkill":
-          i = o.HasTag(1674960297);
+          i = s.HasTag(1674960297);
           break;
         case "UltimateDodge":
-          i = o.HasTag(-1221493771);
+          i = s.HasTag(-1221493771);
           break;
         case "UltimateSkill":
-          i = o.HasTag(1733479717);
+          i = s.HasTag(1733479717);
       }
     }
     switch (e.Compare) {

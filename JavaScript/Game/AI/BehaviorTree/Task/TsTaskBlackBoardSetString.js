@@ -2,13 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskBlackBoardSetString extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
       (this.StringName = ""),
       (this.StringValue = ""),
+      (this.IsInitTsVariables = !1),
+      (this.TsStringName = ""),
+      (this.TsStringValue = "");
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsStringName = ""),
       (this.TsStringValue = "");
@@ -24,7 +30,7 @@ class TsTaskBlackBoardSetString extends TsTaskAbortImmediatelyBase_1.default {
     s
       ? (this.InitTsVariables(),
         (s = s.CharActorComp.Entity.Id),
-        BlackboardController_1.BlackboardController.SetStringValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.SetStringValueByEntity(
           s,
           this.TsStringName,
           this.TsStringValue,

@@ -17,6 +17,20 @@ class RouletteData {
       (this.State = 1),
       (this.ShowRedDot = !0);
   }
+  DeepCopy() {
+    var t = new RouletteData();
+    return (
+      (t.DataIndex = this.DataIndex),
+      (t.GridIndex = this.GridIndex),
+      (t.GridType = this.GridType),
+      (t.Id = this.Id),
+      (t.Name = this.Name),
+      (t.State = this.State),
+      (t.ShowIndex = this.ShowIndex),
+      (t.ShowRedDot = this.ShowRedDot),
+      t
+    );
+  }
 }
 (exports.RouletteData = RouletteData),
   (exports.rouletteGridGenerator = {

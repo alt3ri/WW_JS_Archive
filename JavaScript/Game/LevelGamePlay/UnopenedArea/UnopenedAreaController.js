@@ -7,7 +7,11 @@ const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   UnopenedAreaPullback_1 = require("./UnopenedAreaPullback");
 class UnopenedAreaController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return (this.tBe = !PublicUtil_1.PublicUtil.GetIsSilentLogin()), !0;
+    return (
+      (this.tBe = !PublicUtil_1.PublicUtil.GetIsSilentLogin()),
+      this.tBe || this.PauseTick(),
+      !0
+    );
   }
   static OnTick(e) {
     this.tBe && this.iBe.Tick(e);
@@ -16,10 +20,10 @@ class UnopenedAreaController extends ControllerBase_1.ControllerBase {
     return this.iBe.Clear(), this.oBe.Clear(), !0;
   }
   static SetCheckUnopenedArea(e) {
-    this.tBe = e;
+    this.tBe !== e && ((this.tBe = e) ? this.ResumeTick() : this.PauseTick());
   }
-  static OnCheckUnopenedArea(e) {
-    return !this.tBe || this.oBe.BinTest(e);
+  static OnCheckUnopenedArea(e, t, n) {
+    return !this.tBe || this.oBe.BinTest(e, t, n);
   }
   static AreaCheckInit(e) {
     this.oBe.AreaInit(e);

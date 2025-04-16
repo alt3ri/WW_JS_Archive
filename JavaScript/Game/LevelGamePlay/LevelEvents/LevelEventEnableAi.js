@@ -13,19 +13,19 @@ class LevelEventEnableAi extends LevelGeneralBase_1.LevelEventBase {
           var o =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
           o
-            ? (o = o.Entity.GetComponent(38)) && o.Valid
+            ? (o = o.Entity.GetComponent(44)) && o.Valid
               ? o.StopMove(!n.IsEnable)
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelEvent",
-                  19,
+                  18,
                   "LevelEventEnableAi行为执行时,实体不存在CharacterMoveComponent",
                   ["实体Id", a],
                 )
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelEvent",
-                19,
+                18,
                 "LevelEventEnableAi行为执行时找不到实体",
                 ["实体Id", a],
               );
@@ -34,7 +34,7 @@ class LevelEventEnableAi extends LevelGeneralBase_1.LevelEventBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelEvent",
-            19,
+            18,
             "LevelEventEnableAi行为执行失败：配置的实体Id列表为空",
           ),
           this.FinishExecute(!1);

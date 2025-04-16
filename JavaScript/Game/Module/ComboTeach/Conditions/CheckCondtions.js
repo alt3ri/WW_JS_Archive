@@ -15,28 +15,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.CheckSkillIdSuccessCondition =
     exports.BaseCheckCondition =
       void 0);
-const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
-  EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
+const EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
   Global_1 = require("../../../Global"),
-  ModelManager_1 = require("../../../Manager/ModelManager");
-var EAttributeId = Protocol_1.Aki.Protocol.Vks;
-const energyAttrIds = [
-  EAttributeId.Proto_Energy,
-  EAttributeId.Proto_SpecialEnergy1,
-  EAttributeId.Proto_SpecialEnergy2,
-  EAttributeId.Proto_SpecialEnergy3,
-  EAttributeId.Proto_SpecialEnergy4,
-];
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  CharacterAttributeTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes");
 class BaseCheckCondition {
-  constructor(t, e) {
+  constructor(e, t) {
     (this.ParamsArray = void 0),
       (this.OriginString = ""),
       (this.Type = 0),
-      (this.OriginString = t) &&
-        (this.ParamsArray = e ? t.slice(1, -1).split(",") : t.split("#"));
+      (this.OriginString = e) &&
+        (this.ParamsArray = t ? e.slice(1, -1).split(",") : e.split("#"));
   }
-  Check(t) {
+  Check(e) {
     return !1;
   }
 }
@@ -45,7 +37,7 @@ class CheckSkillIdSuccessCondition extends (exports.BaseCheckCondition =
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
+  Check(e) {
     return (
       !!this.ParamsArray &&
       ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId ===
@@ -61,7 +53,7 @@ class CheckSkillHitSuccessCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 0);
   }
-  Check(t) {
+  Check(e) {
     return (
       !!this.ParamsArray &&
       ModelManager_1.ModelManager.ComboTeachingModel.HitSkillId ===
@@ -74,16 +66,17 @@ class CheckEnergyCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e;
+  Check(e) {
+    var t;
     return (
       !!this.ParamsArray &&
-      ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-      (e = EntitySystem_1.EntitySystem.Get(e)
-        .GetComponent(159)
-        .GetCurrentValue(energyAttrIds[Number(this.ParamsArray[0])])) >=
-        Number(this.ParamsArray[1])) &&
-      e <= Number(this.ParamsArray[2])
+      ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
+      (t = EntitySystem_1.EntitySystem.Get(t)
+        .GetComponent(171)
+        .GetCurrentValue(
+          CharacterAttributeTypes_1.energyAttrIds[Number(this.ParamsArray[0])],
+        )) >= Number(this.ParamsArray[1])) &&
+      t <= Number(this.ParamsArray[2])
     );
   }
 }
@@ -92,9 +85,9 @@ class CheckIsJumpCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-    return EntitySystem_1.EntitySystem.Get(e)?.GetComponent(164)?.IsJump ?? !1;
+  Check(e) {
+    var t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
+    return EntitySystem_1.EntitySystem.Get(t)?.GetComponent(176)?.IsJump ?? !1;
   }
 }
 exports.CheckIsJumpCondition = CheckIsJumpCondition;
@@ -102,14 +95,14 @@ class CheckBuffAddCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e;
+  Check(e) {
+    var t;
     return (
       !!this.ParamsArray &&
-      ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-      !!EntitySystem_1.EntitySystem.Get(e)
-        ?.GetComponent(160)
-        ?.GetBuffTotalStackById(BigInt(this.ParamsArray[0])))
+      ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
+      !!EntitySystem_1.EntitySystem.Get(t)
+        ?.GetComponent(172)
+        ?.GetBuffTotalStackById(Number(this.ParamsArray[0])))
     );
   }
 }
@@ -118,16 +111,16 @@ class CheckTagAddCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e, o;
+  Check(e) {
+    var t, s;
     return (
       !!this.ParamsArray &&
-      ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-      (e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(190)),
-      (o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+      ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
+      (t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(203)),
+      (s = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
         this.ParamsArray[0],
       )),
-      !!e?.HasTag(o))
+      !!t?.HasTag(s))
     );
   }
 }
@@ -136,14 +129,14 @@ class CheckBuffNotHaveCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e;
+  Check(e) {
+    var t;
     return (
       !!this.ParamsArray &&
-      ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-      !EntitySystem_1.EntitySystem.Get(e)
-        ?.GetComponent(160)
-        ?.GetBuffTotalStackById(BigInt(this.ParamsArray[0])))
+      ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
+      !EntitySystem_1.EntitySystem.Get(t)
+        ?.GetComponent(172)
+        ?.GetBuffTotalStackById(Number(this.ParamsArray[0])))
     );
   }
 }
@@ -152,13 +145,13 @@ class CheckTagNotHaveCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e;
+  Check(e) {
+    var t;
     return (
       !!this.ParamsArray &&
-      ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-      !EntitySystem_1.EntitySystem.Get(e)
-        ?.GetComponent(190)
+      ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
+      !EntitySystem_1.EntitySystem.Get(t)
+        ?.GetComponent(203)
         ?.HasTag(
           GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
             this.ParamsArray[0],
@@ -172,7 +165,7 @@ class CheckSkillEnterNextAttrCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
+  Check(e) {
     return (
       !!this.ParamsArray &&
       !(
@@ -189,7 +182,7 @@ class CheckSkillIdFailCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 0);
   }
-  Check(t) {
+  Check(e) {
     return (
       !!this.ParamsArray &&
       !this.OriginString.includes(
@@ -204,7 +197,7 @@ class CheckSkillExitNextAttrCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
+  Check(e) {
     return !(
       ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId !==
         ModelManager_1.ModelManager.ComboTeachingModel.NextAttrSkillId ||
@@ -218,10 +211,10 @@ class CheckNotInSkillCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-    return !EntitySystem_1.EntitySystem.Get(e)
-      ?.GetComponent(190)
+  Check(e) {
+    var t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
+    return !EntitySystem_1.EntitySystem.Get(t)
+      ?.GetComponent(203)
       ?.HasTag(-1371021686);
   }
 }
@@ -230,12 +223,12 @@ class CheckIsInJumpCondition extends BaseCheckCondition {
   constructor() {
     super(...arguments), (this.Type = 1);
   }
-  Check(t) {
-    var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
-      e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(190),
-      o = 0 < ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime,
-      e = e?.HasTag(-1898186757);
-    return !o && (e ?? !1);
+  Check(e) {
+    var t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
+      t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(203),
+      s = 0 < ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime,
+      t = t?.HasTag(-1898186757);
+    return !s && (t ?? !1);
   }
 }
 exports.CheckIsInJumpCondition = CheckIsInJumpCondition;

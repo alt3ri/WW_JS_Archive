@@ -33,6 +33,8 @@ class GameplayCueUIEffect extends GameplayCueBase_1.GameplayCueBase {
         return EventDefine_1.EEventName.CharOnBuffAddUIPrefab;
       case 5:
         return EventDefine_1.EEventName.CharOnBuffAddUIDamage;
+      case 20:
+        return EventDefine_1.EEventName.CharOnBuffAddRoleSideEnergyBar;
       default:
         return;
     }

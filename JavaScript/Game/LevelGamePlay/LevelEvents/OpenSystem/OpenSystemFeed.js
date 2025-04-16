@@ -5,7 +5,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   FeedingAnimalById_1 = require("../../../../Core/Define/ConfigQuery/FeedingAnimalById"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   ObjectSystem_1 = require("../../../../Core/Object/ObjectSystem"),
-  ItemDeliverController_1 = require("../../../Module/ItemDeliver/ItemDeliverController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   LevelGeneralContextDefine_1 = require("../../LevelGeneralContextDefine"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemFeed extends OpenSystemBase_1.OpenSystemBase {
@@ -26,11 +26,11 @@ class OpenSystemFeed extends OpenSystemBase_1.OpenSystemBase {
           }).ItemIds = i.ItemIds.concat(n.ItemIds)),
           r.push(i),
           (i = ""),
-          (i = o.GetComponent(105)?.PawnName ?? ""),
-          (o = o.GetComponent(157))
+          (i = o.GetComponent(115)?.PawnName ?? ""),
+          (o = o.GetComponent(169))
             ? (o.InitFeedingAnimalConfig(n.ItemIds, n.GameplayTags),
               o.SetUiOpenPerformance(this.GetViewName(e), e.BoardId),
-              ItemDeliverController_1.ItemDeliverController.OpenItemDeliverViewByHandInItem(
+              ControllerHolder_1.ControllerHolder.ItemDeliverController.OpenItemDeliverViewByHandInItem(
                 r,
                 i,
                 void 0,
@@ -40,13 +40,13 @@ class OpenSystemFeed extends OpenSystemBase_1.OpenSystemBase {
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Animal",
-                  51,
+                  50,
                   "动物实体获取AnimalPerformComp失败",
                   ["EntityId", t.EntityId],
                 ),
               !1))
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Animal", 30, "无效的投喂动物对象", [
+            Log_1.Log.Error("Animal", 29, "无效的投喂动物对象", [
               "EntityId",
               t.EntityId,
             ]),

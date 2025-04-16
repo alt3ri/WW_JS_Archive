@@ -15,11 +15,12 @@ class NewSoundTeachItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    var t = this.GetText(0),
+    var e = e.DetectRecordData,
+      t = this.GetText(0),
       t =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Conf.Name),
         this.GetTexture(1));
-    this.SetTextureByPath(e.Conf.BigIcon, t);
+    this.SetTextureShowUntilLoaded(e.Conf.BigIcon, t);
   }
 }
 exports.NewSoundTeachItem = NewSoundTeachItem;

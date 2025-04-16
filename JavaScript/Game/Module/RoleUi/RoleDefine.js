@@ -40,9 +40,17 @@ class ArrayIntInt {
   }
 }
 exports.ArrayIntInt = ArrayIntInt;
-class OneSkillEffect {}
+class OneSkillEffect {
+  constructor() {
+    (this.Id = 0), (this.Desc = []);
+  }
+}
 exports.OneSkillEffect = OneSkillEffect;
-class SkillEffect {}
+class SkillEffect {
+  constructor() {
+    (this.Level = 0), (this.EffectDescList = []);
+  }
+}
 (exports.SkillEffect = SkillEffect),
   (exports.UI_ROLE_CAN_ROTATE_TABVIEW = [
     "RoleAttributeTabView",

@@ -180,6 +180,19 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
   CheckIsFinish() {
     return this.wkt >= this.Bkt;
   }
+  GetLastNotTaken() {
+    let e = 0;
+    var i = Array.from(this.DailyActivityGoalMap.keys());
+    for (let t = i.length - 1; 0 <= t; t--) {
+      var s = i[t],
+        s = this.DailyActivityGoalMap.get(s);
+      if (s && 1 === s.State) {
+        e = t + 1;
+        break;
+      }
+    }
+    return e;
+  }
 }
 exports.DailyActivityModel = DailyActivityModel;
 //# sourceMappingURL=DailyActivityModel.js.map

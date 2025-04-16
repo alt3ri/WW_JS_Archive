@@ -36,7 +36,7 @@ class LevelFuncFlagModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Functional",
-          40,
+          39,
           "关卡功能标记更新",
           ["funcFlagId", e],
           ["enable", n],

@@ -14,6 +14,9 @@ class TrialWeaponInfo {
   get WeaponLevel() {
     return this.weaponlevel();
   }
+  get WeaponSkinId() {
+    return this.weaponskinid();
+  }
   get WeaponResonanceLevel() {
     return this.weaponresonancelevel();
   }
@@ -41,12 +44,16 @@ class TrialWeaponInfo {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  weaponresonancelevel() {
+  weaponskinid() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  fullleveltrialid() {
+  weaponresonancelevel() {
     var t = this.J7.__offset(this.z7, 12);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  fullleveltrialid() {
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

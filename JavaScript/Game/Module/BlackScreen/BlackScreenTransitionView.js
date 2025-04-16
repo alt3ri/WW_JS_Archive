@@ -18,14 +18,14 @@ class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
       (this.f0t = (e) => {
         e === this.R0t
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("BlackScreen", 11, "开始动画结束", [
+              Log_1.Log.Info("BlackScreen", 10, "开始动画结束", [
                 "动画名称",
                 e,
               ]),
             BlackScreenGlobalData_1.BlackScreenGlobalData.FinishShowPromise())
           : e === this.U0t &&
             (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("BlackScreen", 11, "关闭动画结束", [
+              Log_1.Log.Info("BlackScreen", 10, "关闭动画结束", [
                 "动画名称",
                 e,
               ]),
@@ -35,13 +35,13 @@ class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
       }),
       (this.A0t = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("BlackScreen", 11, "开始显示黑屏"),
+          Log_1.Log.Info("BlackScreen", 10, "开始显示黑屏"),
           this.SetUiActive(!0),
           BlackScreenGlobalData_1.BlackScreenGlobalData.FinishShowPromise();
       }),
       (this.p0t = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("BlackScreen", 11, "开始显示黑屏", [
+          Log_1.Log.Info("BlackScreen", 10, "开始显示黑屏", [
             "动画名称",
             this.R0t.toString(),
           ]),
@@ -51,7 +51,7 @@ class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
       (this.P0t = () => {
         this.SPe.StopCurrentSequence(!0, !0),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("BlackScreen", 11, "开始隐藏黑屏"),
+            Log_1.Log.Info("BlackScreen", 10, "开始隐藏黑屏"),
           this.GetTexture(0).SetAlpha(1),
           this.SetUiActive(!1),
           BlackScreenGlobalData_1.BlackScreenGlobalData.FinishHidePromise();
@@ -59,7 +59,7 @@ class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
       (this.M0t = () => {
         this.SPe.StopCurrentSequence(!0, !0),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("BlackScreen", 11, "开始隐藏黑屏", [
+            Log_1.Log.Info("BlackScreen", 10, "开始隐藏黑屏", [
               "动画名称",
               this.U0t.toString(),
             ]),

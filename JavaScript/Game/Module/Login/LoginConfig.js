@@ -5,6 +5,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   InstanceDungeonAll_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonAll"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  ServerLimitById_1 = require("../../../Core/Define/ConfigQuery/ServerLimitById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LoginConfig extends ConfigBase_1.ConfigBase {
   GetAllInstanceDungeon() {
@@ -20,7 +21,7 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
     return (
       0 === e &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Login", 9, "登录失败次数重置参数错误", [
+        Log_1.Log.Error("Login", 8, "登录失败次数重置参数错误", [
           "loginFailResetTime",
           e,
         ]),
@@ -36,7 +37,7 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
     if (0 === r.length || r.length % 2 != 0)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Login", 9, "登录失败重试参数错误, 请检查个数", [
+          Log_1.Log.Error("Login", 8, "登录失败重试参数错误, 请检查个数", [
             "params",
             o,
           ]),
@@ -44,18 +45,18 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
       );
     let i = 0;
     for (let e = 0; e < r.length; e += 2) {
-      var a = Number(r[e]),
-        t = Number(r[e + 1]);
-      if (isNaN(a) || a <= 0 || isNaN(t) || t <= 0)
+      var t = Number(r[e]),
+        a = Number(r[e + 1]);
+      if (isNaN(t) || t <= 0 || isNaN(a) || a <= 0)
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Login", 9, "登录失败重试参数错误, ", [
+            Log_1.Log.Error("Login", 8, "登录失败重试参数错误, ", [
               "params",
               o,
             ]),
           0
         );
-      a <= n && (i = t);
+      t <= n && (i = a);
     }
     return i;
   }
@@ -93,6 +94,9 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
     return CommonParamById_1.configCommonParamById
       .GetStringConfig("LoginViewNoAccountButtonPackageIdList")
       .split(",");
+  }
+  GetServerLimitConfig(e) {
+    return ServerLimitById_1.configServerLimitById.GetConfig(e);
   }
 }
 exports.LoginConfig = LoginConfig;

@@ -20,7 +20,8 @@ var CharacterAnimationComponent_1,
       return 3 < r && o && Object.defineProperty(i, s, o), o;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.CharacterAnimationComponent = void 0);
+  (exports.CharacterAnimationComponent = exports.MIN_BUFFER_TIME_LENGTH =
+    void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../../../../../Core/Common/Info"),
@@ -30,8 +31,9 @@ const puerts_1 = require("puerts"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
-  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  TickProcessSystem_1 = require("../../../../../Core/Tick/TickProcessSystem"),
   FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
+  GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
   MathCommon_1 = require("../../../../../Core/Utils/Math/MathCommon"),
   Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
   Transform_1 = require("../../../../../Core/Utils/Math/Transform"),
@@ -50,8 +52,10 @@ const puerts_1 = require("puerts"),
   PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
   AnimLogicParamsSetter_1 = require("../Blueprint/Utils/AnimLogicParamsSetter"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
+  CharacterBuffIds_1 = require("./Abilities/CharacterBuffIds"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
   BaseAnimationComponent_1 = require("./BaseAnimationComponent"),
+  RotateBonesToTargetManager_1 = require("./MeshHelper/RotateBonesToTargetManager"),
   PERFORMANCE_COUNT = 3,
   ROTATABLE_THREADHOLD = 0.5,
   MIN_SCLOPE_SCALE = 0.5,
@@ -65,8 +69,9 @@ const puerts_1 = require("puerts"),
   SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD = 2e3,
   SQUARE_SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD =
     SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD * SIGHT_TARGET_ITEM_DISTANCE_THREAHOLD,
-  MIN_BUFFER_TIME_LENGTH = 10,
+  MAX_BUFFER_TIME_LENGTH = ((exports.MIN_BUFFER_TIME_LENGTH = 10), 6e4),
   BATLLE_IDLE_TIME = 5e3,
+  REFRESH_PERFORMANCE_PERIOD = 5e3,
   priorityToMaxSquareDistance = [
     [5, 25e4],
     [10, 1e6],
@@ -77,6 +82,17 @@ const puerts_1 = require("puerts"),
   MODEL_BUFFER_SMOOTH_FACTOR = 0.75,
   limitBlendSpaceY = [-30, 30],
   limitBlendSpaceX = [-90, 90];
+class PerformanceConditionParams {
+  constructor(t, i) {
+    (this.AnimComp = t), (this.Config = i), (this.DisableTagIds = new Array());
+    for (let t = 0; t < PERFORMANCE_COUNT; ++t) {
+      var s = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+        i.DisableTag[t],
+      );
+      s ? this.DisableTagIds.push(s) : this.DisableTagIds.push(0);
+    }
+  }
+}
 let CharacterAnimationComponent =
   (CharacterAnimationComponent_1 = class CharacterAnimationComponent extends (
     BaseAnimationComponent_1.BaseAnimationComponent
@@ -88,6 +104,8 @@ let CharacterAnimationComponent =
         (this.bre = void 0),
         (this.Lie = void 0),
         (this.zFr = void 0),
+        (this.$zo = void 0),
+        (this.ph_ = void 0),
         (this.ZFr = void 0),
         (this.e3r = -0),
         (this.SlopeStepPeriodicCurve = void 0),
@@ -121,7 +139,7 @@ let CharacterAnimationComponent =
         (this.d3r = -1),
         (this.C3r = 0),
         (this.g3r = 0),
-        (this.J0a = -1),
+        (this.b0a = -1),
         (this.f3r = !1),
         (this.dFe = 0),
         (this.p3r = -1),
@@ -130,18 +148,24 @@ let CharacterAnimationComponent =
         (this.AnimLogicParamsSetter = void 0),
         (this.vJ = void 0),
         (this.BBn = Vector_1.Vector.Create()),
-        (this.pDa = 0),
-        (this.DNa = void 0),
-        (this.UNa = [!1, !1, !1]),
+        (this.EDa = 0),
+        (this.RotateBonesToTargetMgr = void 0),
+        (this.AGl = void 0),
+        (this.P3a = [!1, !1, !1]),
         (this.MainAnimInstanceRole = void 0),
-        (this.xNa = Vector_1.Vector.Create(-1e8, -1e8, -1e8)),
+        (this.w3a = Vector_1.Vector.Create(-1e8, -1e8, -1e8)),
+        (this.mn_ = 0),
+        (this.pth = !1),
+        (this.XSc = !1),
+        (this.YSc = Vector_1.Vector.Create()),
+        (this.vqc = !1),
         (this.I3r = (t, i) => {
           var s;
           t?.Valid &&
-            (s = t.GetComponent(163))?.Valid &&
+            (s = t.GetComponent(175))?.Valid &&
             (i
               ? this.T3r()
-              : t.GetComponent(190)?.HasTag(715234113) ||
+              : t.GetComponent(203)?.HasTag(715234113) ||
                 ((i = this.Mesh.GetAnimInstance()) !==
                   this.MainAnimInstanceInternal && i.SyncAnimStates(void 0),
                 UE.KuroStaticLibrary.IsObjectClassByName(
@@ -155,26 +179,30 @@ let CharacterAnimationComponent =
                   ? (this.MainAnimInstanceInternal.替换角色时同步动作数据(
                       s.MainAnimInstance,
                     ),
-                    this.hCa(this.MainAnimInstanceInternal))
+                    this.lCa(this.MainAnimInstanceInternal))
                   : this.MainAnimInstanceInternal.SyncAnimStates(void 0),
-                (t = this.Entity.GetComponent(43))?.ClearOrders(),
+                (t = this.Entity.GetComponent(49))?.ClearOrders(),
                 t?.AnimationStateInitPush(),
                 this.T3r()));
         }),
         (this.L3r = () => {
-          this.GetAnimInstanceFromMesh(), this.StartAnimInstance();
+          this.GetAnimInstanceFromMesh(), this.d6_(), this.StartAnimInstance();
         }),
-        (this.bpr = () => {
+        (this.bpr = (t) => {
+          (t && !ModelManager_1.ModelManager.LevelLoadingModel?.IsLoading) ||
+            this.D3r();
+        }),
+        (this.Oul = () => {
           this.D3r();
         }),
         (this.R3r = (t) => {
           t || this.D3r();
         }),
-        (this.kYs = !1),
+        (this.ri_ = 0),
         (this.GYs = (t, i) => {
           t === this.Entity.Id &&
             i &&
-            (this.StartForceDisableAnimOptimization(1), (this.kYs = !0));
+            (this.StartForceDisableAnimOptimization(1), (this.ri_ = 2));
         }),
         (this.U3r = () => {
           this.StopModelBuffer();
@@ -194,6 +222,20 @@ let CharacterAnimationComponent =
         ])),
         (this.P3r = (t, i) => {
           this.A3r.has(i) || (this.C3r = 0);
+        }),
+        (this.B$a = 0),
+        (this.OnPostEndAnimNotify = () => {
+          (this.B$a = 0),
+            this.vJ &&
+              this.vJ.RemoveHoldEntity("CharacterAnimationComponent.OnDisable"),
+            this.Active ||
+              (this.MainAnimInstance?.ClearMontage(),
+              UE.KuroAnimLibrary.EndAnimNotifyStates(
+                this.MainAnimInstanceInternal,
+              ));
+        }),
+        (this.EndAnimNotifyStates = () => {
+          UE.KuroAnimLibrary.EndAnimNotifyStates(this.MainAnimInstanceInternal);
         });
     }
     static get Dependencies() {
@@ -217,31 +259,40 @@ let CharacterAnimationComponent =
     get HasKuroRootMotion() {
       return (
         !!this.MainAnimInstance &&
-        (this.J0a !== Time_1.Time.Frame &&
+        (this.b0a !== Time_1.Time.Frame &&
           ((this.f3r = this.MainAnimInstance.HasKuroRootMotionAnim()),
-          (this.J0a = Time_1.Time.Frame)),
+          (this.b0a = Time_1.Time.Frame)),
         this.f3r)
       );
     }
-    hCa(t) {
+    get vth() {
+      return this.pth;
+    }
+    set vth(t) {
+      this.pth !== t &&
+        ((this.pth = t), this.Mesh) &&
+        (this.Mesh.WeakenKawaiiFollow = t ? 0.3 : 1);
+    }
+    lCa(t) {
       this.AnimLogicParamsSetter
         ? (t = t.LogicParams)
           ? ((this.AnimLogicParamsSetter.SitDown = t.bSitDown),
+            (this.AnimLogicParamsSetter.SitDownType = t.SitDownType),
             (this.AnimLogicParamsSetter.SitDownDirect = t.SitDownDirect),
             (this.AnimLogicParamsSetter.StandUpDirect = t.StandUpDirect))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Character", 37, "状态继承时LogicParams为空")
+            Log_1.Log.Error("Character", 36, "状态继承时LogicParams为空")
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            37,
+            36,
             "状态继承时AnimLogicParamsSetter为空",
           );
     }
     T3r() {
       this.g3r
         ? Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Character", 58, "人物上场隐藏一帧【重复隐藏】", [
+          Log_1.Log.Warn("Character", 57, "人物上场隐藏一帧【重复隐藏】", [
             "Entity:",
             this.Entity.Id,
           ])
@@ -251,7 +302,7 @@ let CharacterAnimationComponent =
           (this.p3r = 1),
           this.MainAnimInstanceInternal.ForceSetCurrentMontageBlendTime(0),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Character", 58, "人物上场隐藏一帧 【隐藏开始】", [
+            Log_1.Log.Info("Character", 57, "人物上场隐藏一帧 【隐藏开始】", [
               "Entity:",
               this.Entity.Id,
             ]));
@@ -262,7 +313,7 @@ let CharacterAnimationComponent =
         : 0 === this.p3r &&
           (this.ActorComp.EnableActor(this.g3r),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Character", 58, "人物上场隐藏一帧 【隐藏结束】", [
+            Log_1.Log.Info("Character", 57, "人物上场隐藏一帧 【隐藏结束】", [
               "Entity:",
               this.Entity.Id,
             ]),
@@ -294,21 +345,21 @@ let CharacterAnimationComponent =
           CharacterNameDefines_1.CharacterNameDefines.ABP_BASEROLE,
         ) &&
           (t = this.MainAnimInstanceInternal.LogicParams) &&
-          (this.StopMontage(),
+          (this.MontageManager.StopMontage({ Method: 0, BlendOutTime: 0 }),
           this.MainAnimInstanceInternal.SyncAnimStates(void 0),
           (i = UE.KuroStaticLibrary.GetDefaultObject(t.GetClass())),
           (t.AccelerationRef = Vector_1.Vector.Create(
             i.AccelerationRef,
-          ).ToUeVector()),
+          ).ToUeVectorOld()),
           (t.AcceptedNewBeHitRef = i.AcceptedNewBeHitRef),
           (t.BattleIdleTimeRef = i.BattleIdleTimeRef),
           (t.BeHitAnimRef = i.BeHitAnimRef),
           (t.BeHitDirectRef = Vector_1.Vector.Create(
             i.BeHitDirectRef,
-          ).ToUeVector()),
+          ).ToUeVectorOld()),
           (t.BeHitLocationRef = Vector_1.Vector.Create(
             i.BeHitLocationRef,
-          ).ToUeVector()),
+          ).ToUeVectorOld()),
           (t.BeHitSocketNameRef = FNameUtil_1.FNameUtil.EMPTY),
           (t.CharCameraStateRef = i.CharCameraStateRef),
           (t.CharMoveStateRef = i.CharMoveStateRef),
@@ -323,7 +374,7 @@ let CharacterAnimationComponent =
           (t.HasMoveInputRef = i.HasMoveInputRef),
           (t.InputDirectRef = Vector_1.Vector.Create(
             i.InputDirectRef,
-          ).ToUeVector()),
+          ).ToUeVectorOld()),
           (t.InputRotatorRef = i.InputRotatorRef),
           (t.IsFallingIntoWaterRef = i.IsFallingIntoWaterRef),
           (t.IsJumpRef = i.IsJumpRef),
@@ -332,10 +383,10 @@ let CharacterAnimationComponent =
           (t.RagQuitStateRef = i.RagQuitStateRef),
           (t.SightDirectRef = Vector_1.Vector.Create(
             i.SightDirectRef,
-          ).ToUeVector()),
+          ).ToUeVectorOld()),
           (t.SlideForwardRef = Vector_1.Vector.Create(
             i.SlideForwardRef,
-          ).ToUeVector()),
+          ).ToUeVectorOld()),
           (t.SlideStandModeRef = i.SlideStandModeRef),
           (t.SlideSwitchThisFrameRef = i.SlideSwitchThisFrameRef),
           (t.SpeedRef = i.SpeedRef),
@@ -394,11 +445,16 @@ let CharacterAnimationComponent =
         if (
           ((this.Actor = this.ActorComp.Actor),
           (this.Mesh = this.Actor.Mesh),
-          (this.Gce = this.Entity.GetComponent(38)),
-          (this.bre = this.Entity.GetComponent(40)),
-          (this.Lie = this.Entity.GetComponent(190)),
-          (this.zFr = this.Entity.GetComponent(72)),
-          (this.pDa = this.Mesh?.KuroAnimInstanceLod ?? 0),
+          (this.Gce = this.Entity.GetComponent(44)),
+          (this.bre = this.Entity.GetComponent(46)),
+          (this.Lie = this.Entity.GetComponent(203)),
+          (this.zFr = this.Entity.GetComponent(79)),
+          (this.$zo = this.Entity.GetComponent(172)),
+          (this.ph_ = this.Entity.GetComponent(45)),
+          (this.EDa = this.Mesh?.KuroAnimInstanceLod ?? 0),
+          this.Mesh &&
+            (this.Mesh.KuroLodMask =
+              ModelManager_1.ModelManager.CreatureModel.KuroLodMask),
           Info_1.Info.EnableForceTick ||
             ((this.ZFr = this.Actor.GetComponentByClass(
               UE.KuroCharacterAnimationComponent.StaticClass(),
@@ -434,7 +490,7 @@ let CharacterAnimationComponent =
           )
             ? ((this.v3r = 0),
               this.M3r.FromUeVector(
-                this.Mesh.GetSocketTransform(
+                this.Mesh.D_GetSocketTransform(
                   CharacterAnimationComponent_1.CameraPosition,
                   1,
                 ).GetLocation(),
@@ -444,23 +500,37 @@ let CharacterAnimationComponent =
               : (this.v3r = 2),
           this.ActorComp.IsRoleAndCtrlByMe)
         ) {
-          var t = this.ActorComp.CreatureData,
-            t = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(
-              t.GetRoleId(),
+          var i,
+            s = this.ActorComp.CreatureData.GetRoleId();
+          let t =
+            PerformanceConditionByIdWithZero_1.configPerformanceConditionByIdWithZero.GetConfig(
+              s,
+              s,
+              s,
             );
           if (
-            ((this.DNa =
-              PerformanceConditionByIdWithZero_1.configPerformanceConditionByIdWithZero.GetConfig(
-                t,
-                t,
-                t,
-              )),
-            !this.DNa)
+            ((t && 0 !== t.Id) ||
+              ((i =
+                ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(s)) !==
+                s &&
+                (t =
+                  PerformanceConditionByIdWithZero_1.configPerformanceConditionByIdWithZero.GetConfig(
+                    i,
+                    i,
+                    i,
+                  ))),
+            (this.AGl = t ? new PerformanceConditionParams(this, t) : void 0),
+            !t)
           )
             for (let t = 0; t < PERFORMANCE_COUNT; ++t)
-              (this.UNa[t] = !0),
+              (this.P3a[t] = !0),
                 this.MainAnimInstanceRole?.ValidPerformanceIndexes.Add(t);
         }
+        (this.RotateBonesToTargetMgr =
+          new RotateBonesToTargetManager_1.RotateBonesToTargetManager(
+            this.ActorComp,
+          )),
+          (this.XSc = this.Actor.GetName().includes("DengDengDoll"));
       }
       return !0;
     }
@@ -468,8 +538,10 @@ let CharacterAnimationComponent =
       (this.e3r = 1), (this.u3r = 0), (this.t3r = 0), (this.IkMeshOffset = 0);
       var t = this.Mesh,
         t =
-          (this.BufferOriginTransform.FromUeTransform(t.GetRelativeTransform()),
-          this.BufferShowTransform.FromUeTransform(t.GetRelativeTransform()),
+          (this.BufferOriginTransform.FromUeTransform(
+            t.D_GetRelativeTransform(),
+          ),
+          this.BufferShowTransform.FromUeTransform(t.D_GetRelativeTransform()),
           this.ActorComp.CreatureData.GetEntityType());
       (this.dFe = this.ActorComp.CreatureData.GetRoleId()),
         this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
@@ -485,24 +557,26 @@ let CharacterAnimationComponent =
           (this.MainAnimInstanceRole = this.MainAnimInstanceInternal);
     }
     Ore() {
-      this.IsPlayer &&
-        this.ActorComp.IsAutonomousProxy &&
-        (EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CharUseSkill,
-          this.ero,
-        ),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CharBeHitLocal,
-          this.gne,
-        ),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-          this.P3r,
-        ),
-        (this.c3r = !0)),
+      this.vqc ||
+        ((this.vqc = !0),
+        this.IsPlayer &&
+          this.ActorComp.IsAutonomousProxy &&
+          (EventSystem_1.EventSystem.AddWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharUseSkill,
+            this.ero,
+          ),
+          EventSystem_1.EventSystem.AddWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharBeHitLocal,
+            this.gne,
+          ),
+          EventSystem_1.EventSystem.AddWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
+            this.P3r,
+          ),
+          (this.c3r = !0)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.RoleOnStateInherit,
@@ -520,6 +594,11 @@ let CharacterAnimationComponent =
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
+          EventDefine_1.EEventName.TeleportOpenLoadingEnd,
+          this.Oul,
+        ),
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.Entity,
           EventDefine_1.EEventName.CharOnRoleDrown,
           this.R3r,
         ),
@@ -532,25 +611,27 @@ let CharacterAnimationComponent =
           this.vJ,
           EventDefine_1.EEventName.OnSetActorHidden,
           this.GYs,
-        );
+        ));
     }
     kre() {
-      this.c3r &&
-        (EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CharUseSkill,
-          this.ero,
-        ),
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CharBeHitLocal,
-          this.gne,
-        ),
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-          this.P3r,
-        )),
+      this.vqc &&
+        ((this.vqc = !1),
+        this.c3r &&
+          (EventSystem_1.EventSystem.RemoveWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharUseSkill,
+            this.ero,
+          ),
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharBeHitLocal,
+            this.gne,
+          ),
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
+            this.P3r,
+          )),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.RoleOnStateInherit,
@@ -568,6 +649,11 @@ let CharacterAnimationComponent =
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
+          EventDefine_1.EEventName.TeleportOpenLoadingEnd,
+          this.Oul,
+        ),
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Entity,
           EventDefine_1.EEventName.CharOnRoleDrown,
           this.R3r,
         ),
@@ -580,12 +666,12 @@ let CharacterAnimationComponent =
           this.vJ,
           EventDefine_1.EEventName.OnSetActorHidden,
           this.GYs,
-        );
+        ));
     }
     OnEnd() {
       return (
-        this.kYs &&
-          ((this.kYs = !1), this.CancelForceDisableAnimOptimization(1)),
+        0 < this.ri_ &&
+          ((this.ri_ = 0), this.CancelForceDisableAnimOptimization(1)),
         AnimController_1.AnimController.UnregisterUpdateAnimInfoEntity(
           this.Entity.Id,
         ),
@@ -601,8 +687,39 @@ let CharacterAnimationComponent =
         );
     }
     OnTick(t) {
-      this.kYs && ((this.kYs = !1), this.CancelForceDisableAnimOptimization(1)),
-        this.vDa(),
+      this.XSc &&
+        (this.ActorComp?.ActorScaleProxy.Equals(
+          Vector_1.Vector.OneVectorProxy,
+        ) ||
+          (Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("Test", 6, "DengDengDoll Log1", [
+              "Scale",
+              this.ActorComp?.ActorScaleProxy,
+            ])),
+        this.h3r.FromUeVector(
+          this.Mesh.GetSocketTransform(
+            CharacterNameDefines_1.CharacterNameDefines.ROOT,
+          ).GetScale3D(),
+        ),
+        this.h3r.Equals(Vector_1.Vector.OneVectorProxy) ||
+          (Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("Test", 6, "DengDengDoll Log2", ["Root", this.h3r])),
+        this.h3r.FromUeVector(
+          this.Mesh.GetSocketTransform(
+            CharacterAnimationComponent_1.zSc,
+          ).GetScale3D(),
+        ),
+        this.h3r.Equals(this.YSc) ||
+          (this.YSc.DeepCopy(this.h3r),
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("Test", 6, "DengDengDoll Log3", [
+              "DD_Bip001Pelvis",
+              this.h3r,
+            ]))),
+        0 < this.ri_ &&
+          ((this.ri_ = this.ri_ - 1), this.ri_ <= 0) &&
+          this.CancelForceDisableAnimOptimization(1),
+        this.yDa(),
         this.x3r(),
         this.b3r(t),
         this.IsPlayer &&
@@ -613,7 +730,11 @@ let CharacterAnimationComponent =
             (this.C3r = 0),
           this.q3r(),
           this.UpdateWalkRunMix(t),
-          this.RefreshPerformance());
+          this.RefreshPerformance(),
+          this.IsPlayer) &&
+          (this.vth =
+            void 0 !==
+            this.$zo?.GetBuffById(CharacterBuffIds_1.buffId.ElevatorBuff));
     }
     OnForceAfterTick(t) {
       this.UpdateModelBuffer(t);
@@ -623,35 +744,30 @@ let CharacterAnimationComponent =
         (this.ActorComp.EnableActor(this.g3r), Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(
           "Character",
-          58,
+          57,
           "人物上场隐藏一帧 【组件Disable 隐藏结束】",
           ["Entity:", this.Entity.Id],
         ),
         (this.p3r = -1),
-        this.Lie?.HasTag(1144073280) ||
-          this.Entity.GetComponent(172)?.AnyIdleLoopMontagePlaying ||
+        this.Entity.GetComponent(185)?.AnyIdleLoopMontagePlaying ||
           (this.MainAnimInstanceInternal?.IsValid() &&
-            (this.StopMontage(),
+            (this.MainAnimInstanceInternal.Montage_Stop(0),
             this.vJ.AddHoldEntity("CharacterAnimationComponent.OnDisable"),
-            TimerSystem_1.TimerSystem.Next(() => {
-              this.vJ &&
-                this.vJ.RemoveHoldEntity(
-                  "CharacterAnimationComponent.OnDisable",
-                ),
-                this.Active ||
-                  (this.MainAnimInstance?.ClearMontage(),
-                  UE.KuroAnimLibrary.EndAnimNotifyStates(
-                    this.MainAnimInstanceInternal,
-                  ));
-            })),
+            0 === this.B$a) &&
+            (this.B$a =
+              TickProcessSystem_1.TickProcessSystem.RegisterOnceTickProcess(
+                5,
+                !0,
+                this.OnPostEndAnimNotify,
+              )),
           this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
           this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy));
     }
-    vDa() {
+    yDa() {
       var t = Info_1.Info.IsPcPlatform() ? 3e3 : 1500;
-      0 === this.pDa && this.Entity?.DistanceWithCamera >= t
+      0 === this.EDa && this.Entity?.DistanceWithCamera >= t
         ? (this.Mesh.KuroAnimInstanceLod = 1)
-        : 1 === this.pDa &&
+        : 1 === this.EDa &&
           this.Entity?.DistanceWithCamera < t &&
           (this.Mesh.KuroAnimInstanceLod = 0);
     }
@@ -669,8 +785,8 @@ let CharacterAnimationComponent =
           limitBlendSpaceY[1],
         ));
     }
-    EnterBattleIdle() {
-      this.C3r = BATLLE_IDLE_TIME;
+    EnterBattleIdle(t) {
+      this.C3r = t ?? BATLLE_IDLE_TIME;
     }
     OnJump() {
       var t;
@@ -717,7 +833,7 @@ let CharacterAnimationComponent =
             (t.RotateVector(this.BufferShowTransform.GetLocation(), this.h3r),
             this.BufferShowTransform.SetLocation(this.h3r)),
           this.BufferNowTime < this.BufferTimeLength ||
-            this.Mesh.K2_SetRelativeTransform(
+            this.Mesh.D_K2_SetRelativeTransform(
               this.BufferShowTransform.ToUeTransform(),
               !1,
               void 0,
@@ -731,13 +847,13 @@ let CharacterAnimationComponent =
           t.Addition(this.BufferShowTransform.GetLocation(), this.h3r),
           this.BufferShowTransform.SetLocation(this.h3r),
           this.BufferNowTime < this.BufferTimeLength ||
-            this.Mesh.K2_SetRelativeTransform(
+            this.Mesh.D_K2_SetRelativeTransform(
               this.BufferShowTransform.ToUeTransform(),
               !1,
               void 0,
               !1,
             ))
-        : this.ZFr.AddModelLocation(t.ToUeVector());
+        : this.ZFr.AddModelLocation(t.ToUeVectorOld());
     }
     ResetModelQuat() {
       Info_1.Info.EnableForceTick
@@ -750,7 +866,7 @@ let CharacterAnimationComponent =
             this.BufferOriginTransform.GetRotation(),
           ),
           this.BufferNowTime < this.BufferTimeLength ||
-            this.Mesh.K2_SetRelativeTransform(
+            this.Mesh.D_K2_SetRelativeTransform(
               this.BufferShowTransform.ToUeTransform(),
               !1,
               void 0,
@@ -765,7 +881,7 @@ let CharacterAnimationComponent =
             this.BufferOriginTransform.GetLocation(),
           ),
           this.BufferNowTime < this.BufferTimeLength ||
-            this.Mesh.K2_SetRelativeTransform(
+            this.Mesh.D_K2_SetRelativeTransform(
               this.BufferShowTransform.ToUeTransform(),
               !1,
               void 0,
@@ -785,116 +901,157 @@ let CharacterAnimationComponent =
           i.ActorQuatProxy.Inverse(this.KJ),
           this.KJ.Multiply(this.az, this.az),
           s.SetRotation(this.az))
-        : (this.ZFr.GetTransformOffsetInWorld(t, i.ActorTransform),
+        : (this.ZFr.D_GetTransformOffsetInWorld(t, i.ActorTransform),
           s.SetLocation(this.BufferShowTransform.GetLocation()),
           s.SetRotation(this.BufferShowTransform.GetRotation()),
           s.SetScale3D(this.BufferShowTransform.GetScale3D()));
     }
     SetTransformWithModelBuffer(t, i, s = void 0, h = !0) {
-      i < MIN_BUFFER_TIME_LENGTH
-        ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Test",
-              6,
-              "ModelBuffer Time is Too Short",
-              ["Actor", this.ActorComp?.Actor.GetName()],
-              ["timeLength", i],
+      var e;
+      this.Mesh
+        ? i < exports.MIN_BUFFER_TIME_LENGTH
+          ? (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Test",
+                6,
+                "ModelBuffer Time is Too Short",
+                ["Actor", this.ActorComp?.Actor.GetName()],
+                ["timeLength", i],
+              ),
+            this.ActorComp.SetActorTransform(
+              t,
+              "移动表现优化，Mesh缓动.没有缓动",
+              !0,
+              s,
             ),
-          this.ActorComp.SetActorTransform(
-            t,
-            "移动表现优化，Mesh缓动.没有缓动",
-            !0,
-            s,
-          ),
-          this.StopModelBuffer())
-        : (Info_1.Info.EnableForceTick
-            ? ((this.BufferNowTime = 0), (this.BufferTimeLength = i))
-            : ((this.ZFr.BufferNowTime = 0),
-              (this.ZFr.BufferTimeLength = i / 1e3),
-              this.ZFr?.SetComponentTickEnabled(!0)),
-          (i = this.Mesh.K2_GetComponentToWorld()),
-          this.ActorComp.SetActorTransformExceptMesh(
-            t,
-            "移动表现优化，Mesh缓动",
-            h,
-            s,
-          ),
-          this.G3r(i, this.ActorComp, this.BufferModelTransform),
-          (this.BufferLocation =
-            !this.BufferModelTransform.GetLocation().Equals(
-              this.BufferShowTransform.GetLocation(),
-              10,
-            )));
+            this.StopModelBuffer())
+          : Math.abs(i) < MAX_BUFFER_TIME_LENGTH
+            ? (Info_1.Info.EnableForceTick
+                ? ((this.BufferNowTime = 0), (this.BufferTimeLength = i))
+                : ((this.ZFr.BufferNowTime = 0),
+                  (this.ZFr.BufferTimeLength = i / 1e3),
+                  this.ZFr?.SetComponentTickEnabled(!0)),
+              (e = this.Mesh.D_K2_GetComponentToWorld()),
+              this.ActorComp.SetActorTransformExceptMesh(
+                t,
+                "移动表现优化，Mesh缓动",
+                h,
+                s,
+              ),
+              this.G3r(e, this.ActorComp, this.BufferModelTransform),
+              (this.BufferLocation =
+                !this.BufferModelTransform.GetLocation().Equals(
+                  this.BufferShowTransform.GetLocation(),
+                  10,
+                )))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Test",
+                6,
+                "ModelBuffer Time is Too Long",
+                ["Actor", this.ActorComp?.Actor.GetName()],
+                ["timeLength", i],
+              )
+        : this.ActorComp.SetActorTransform(t, "移动表现优化，Mesh缓动", h, s);
     }
     SetLocationAndRotatorWithModelBuffer(t, i, s, h, e = 2, r = !0) {
-      s < MIN_BUFFER_TIME_LENGTH
-        ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Test",
-              6,
-              "ModelBuffer Time is Too Short",
-              ["Actor", this.ActorComp?.Actor.GetName()],
-              ["timeLength", s],
+      var o;
+      this.Mesh
+        ? s < exports.MIN_BUFFER_TIME_LENGTH
+          ? (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Test",
+                6,
+                "ModelBuffer Time is Too Short",
+                ["Actor", this.ActorComp?.Actor.GetName()],
+                ["timeLength", s],
+              ),
+            this.ActorComp.SetActorLocationAndRotation(
+              t,
+              i,
+              h + ".移动表现优化.Mesh缓动.没有缓动",
+              r,
+              e,
             ),
-          this.ActorComp.SetActorLocationAndRotation(
-            t,
-            i,
-            h + ".移动表现优化.Mesh缓动.没有缓动",
-            r,
-            e,
-          ),
-          this.StopModelBuffer())
-        : (Info_1.Info.EnableForceTick
-            ? ((this.BufferNowTime = 0), (this.BufferTimeLength = s))
-            : ((this.ZFr.BufferNowTime = 0),
-              (this.ZFr.BufferTimeLength = s / 1e3),
-              this.ZFr?.SetComponentTickEnabled(!0)),
-          (s = this.Mesh.K2_GetComponentToWorld()),
-          this.ActorComp.SetActorLocationAndRotationExceptMesh(
+            this.StopModelBuffer())
+          : Math.abs(s) < MAX_BUFFER_TIME_LENGTH
+            ? (Info_1.Info.EnableForceTick
+                ? ((this.BufferNowTime = 0), (this.BufferTimeLength = s))
+                : this.ZFr &&
+                  ((this.ZFr.BufferNowTime = 0),
+                  (this.ZFr.BufferTimeLength = s / 1e3),
+                  this.ZFr.SetComponentTickEnabled(!0)),
+              (o = this.Mesh.D_K2_GetComponentToWorld()),
+              this.ActorComp.SetActorLocationAndRotationExceptMesh(
+                t,
+                i,
+                h + "移动表现优化，Mesh缓动",
+                r,
+                e,
+              ),
+              this.G3r(o, this.ActorComp, this.BufferModelTransform),
+              (this.BufferLocation =
+                !this.BufferModelTransform.GetLocation().Equals(
+                  this.BufferShowTransform.GetLocation(),
+                  10,
+                )))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Test",
+                6,
+                "ModelBuffer Time is Too Long",
+                ["Actor", this.ActorComp?.Actor.GetName()],
+                ["timeLength", s],
+              )
+        : this.ActorComp.SetActorLocationAndRotation(
             t,
             i,
             h + "移动表现优化，Mesh缓动",
             r,
             e,
-          ),
-          this.G3r(s, this.ActorComp, this.BufferModelTransform),
-          (this.BufferLocation =
-            !this.BufferModelTransform.GetLocation().Equals(
-              this.BufferShowTransform.GetLocation(),
-              10,
-            )));
+          );
     }
     SetModelBuffer(t, i) {
-      i < MIN_BUFFER_TIME_LENGTH
-        ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Test",
-              6,
-              "ModelBuffer Time is Too Short",
-              ["Actor", this.ActorComp?.Actor.GetName()],
-              ["timeLength", i],
-            ),
-          this.StopModelBuffer())
-        : (Info_1.Info.EnableForceTick
-            ? ((this.BufferNowTime = 0), (this.BufferTimeLength = i))
-            : (this.LastRemainBufferFrame !== Time_1.Time.Frame &&
-                ((this.RemainBufferTime =
-                  this.ZFr.BufferTimeLength - this.ZFr.BufferNowTime),
-                (this.LastRemainBufferFrame = Time_1.Time.Frame)),
-              (this.ZFr.BufferNowTime = 0),
-              (this.ZFr.BufferTimeLength = i / 1e3),
-              0 < this.RemainBufferTime &&
-                (this.ZFr.BufferTimeLength +=
-                  this.RemainBufferTime * MODEL_BUFFER_SMOOTH_FACTOR),
-              this.ZFr?.SetComponentTickEnabled(!0)),
-          this.Mesh.K2_SetWorldTransform(t, !1, void 0, !0),
-          this.Mesh.KuroRefreshCacheLocalTransform(),
-          this.G3r(t, this.ActorComp, this.BufferModelTransform),
-          (this.BufferLocation =
-            !this.BufferModelTransform.GetLocation().Equals(
-              this.BufferShowTransform.GetLocation(),
-              10,
-            )));
+      this.Mesh &&
+        (i < exports.MIN_BUFFER_TIME_LENGTH
+          ? (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Test",
+                6,
+                "ModelBuffer Time is Too Short",
+                ["Actor", this.ActorComp?.Actor.GetName()],
+                ["timeLength", i],
+              ),
+            this.StopModelBuffer())
+          : Math.abs(i) < MAX_BUFFER_TIME_LENGTH
+            ? (Info_1.Info.EnableForceTick
+                ? ((this.BufferNowTime = 0), (this.BufferTimeLength = i))
+                : (this.LastRemainBufferFrame !== Time_1.Time.Frame &&
+                    ((this.RemainBufferTime =
+                      this.ZFr.BufferTimeLength - this.ZFr.BufferNowTime),
+                    (this.LastRemainBufferFrame = Time_1.Time.Frame)),
+                  (this.ZFr.BufferNowTime = 0),
+                  (this.ZFr.BufferTimeLength = i / 1e3),
+                  0 < this.RemainBufferTime &&
+                    (this.ZFr.BufferTimeLength +=
+                      this.RemainBufferTime * MODEL_BUFFER_SMOOTH_FACTOR),
+                  this.ZFr?.SetComponentTickEnabled(!0)),
+              this.Mesh.D_K2_SetWorldTransform(t, !1, void 0, !0),
+              this.Mesh.KuroRefreshCacheLocalTransform(),
+              this.G3r(t, this.ActorComp, this.BufferModelTransform),
+              (this.BufferLocation =
+                !this.BufferModelTransform.GetLocation().Equals(
+                  this.BufferShowTransform.GetLocation(),
+                  10,
+                )))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Test",
+                6,
+                "ModelBuffer Time is Too Long",
+                ["Actor", this.ActorComp?.Actor.GetName()],
+                ["timeLength", i],
+              ));
     }
     UpdateModelBuffer(t) {
       (this.BufferNowTime < this.BufferTimeLength &&
@@ -923,7 +1080,7 @@ let CharacterAnimationComponent =
         ),
         Quat_1.Quat.Slerp(this.az, this.a3r.GetRotation(), t, this.KJ),
         this.Z_e.SetRotation(this.KJ),
-        this.Mesh.K2_SetWorldTransform(
+        this.Mesh.D_K2_SetWorldTransform(
           this.Z_e.ToUeTransform(),
           !1,
           void 0,
@@ -939,7 +1096,7 @@ let CharacterAnimationComponent =
       Info_1.Info.EnableForceTick
         ? 0 < this.BufferTimeLength &&
           ((this.BufferTimeLength = 0),
-          this.Mesh.K2_SetRelativeTransform(
+          this.Mesh.D_K2_SetRelativeTransform(
             this.BufferShowTransform.ToUeTransform(),
             !1,
             void 0,
@@ -984,7 +1141,7 @@ let CharacterAnimationComponent =
     q3r() {
       var t = this.Gce.CharacterMovement.MovementMode;
       if (1 !== t && 2 !== t)
-        (this.t3r = 0), this.o3r.FromUeVector(Vector_1.Vector.UpVectorProxy);
+        (this.t3r = 0), this.o3r.FromUeVector(this.Gce.GravityUp);
       else {
         var i = this.ActorComp.ActorLocationProxy,
           s = this.ActorComp.ActorForwardProxy;
@@ -992,8 +1149,7 @@ let CharacterAnimationComponent =
           t = this.Gce.CharacterMovement.CurrentFloor;
           if (!t.bBlockingHit)
             return (
-              (this.t3r = 0),
-              void this.o3r.FromUeVector(Vector_1.Vector.UpVectorProxy)
+              (this.t3r = 0), void this.o3r.FromUeVector(this.Gce.GravityUp)
             );
           t = t.HitResult.ImpactNormal;
           (this.t3r =
@@ -1005,16 +1161,15 @@ let CharacterAnimationComponent =
           if (Time_1.Time.Frame - this.d3r != 1)
             return (
               (this.t3r = 0),
-              this.o3r.FromUeVector(Vector_1.Vector.UpVectorProxy),
+              this.o3r.FromUeVector(this.Gce.GravityUp),
               (this.d3r = Time_1.Time.Frame),
               void this.Wnr.FromUeVector(i)
             );
           i.Subtraction(this.Wnr, this.h3r),
             Math.abs(this.h3r.X) < MathUtils_1.MathUtils.SmallNumber &&
             Math.abs(this.h3r.Y) < MathUtils_1.MathUtils.SmallNumber
-              ? ((this.t3r = 0),
-                this.o3r.FromUeVector(Vector_1.Vector.UpVectorProxy))
-              : (Vector_1.Vector.UpVectorProxy.CrossProduct(this.h3r, this.l3r),
+              ? ((this.t3r = 0), this.o3r.FromUeVector(this.Gce.GravityUp))
+              : (this.Gce.GravityUp.CrossProduct(this.h3r, this.l3r),
                 this.h3r.CrossProduct(this.l3r, this._3r),
                 this._3r.Normalize(),
                 (this.t3r =
@@ -1032,57 +1187,64 @@ let CharacterAnimationComponent =
           ? this.ActorComp.IsAutonomousProxy
             ? this.N3r(t) && this.O3r(t)
             : (this.k3r(this.n3r), this.O3r(t))
-          : ((this.GetSightTargetItem() ?? this.SightTargetPoint)
-              ? this.F3r(this.n3r)
-              : this.V3r(this.n3r),
+          : (!this.ph_?.IsInPlot &&
+            ModelManager_1.ModelManager.PerformModel.HasSightTarget(
+              this.Entity.Id,
+            )
+              ? this.eX_(this.n3r)
+              : this.GetSightTargetItem() || this.SightTargetPoint
+                ? this.F3r(this.n3r)
+                : this.V3r(this.n3r),
             this.O3r(t)));
     }
     N3r(t) {
-      if (
-        !InputDistributeController_1.InputDistributeController.IsAllowHeadRotation()
-      )
-        return (
-          this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
-          this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy),
-          !(this.SightDirectIsEqual = !0)
-        );
-      if (PhotographController_1.PhotographController.IsOpenPhotograph())
-        PhotographController_1.PhotographController.IsPlayerLookAtCamera()
-          ? this.UpdateStaticRotation(this.n3r)
-          : ((this.u3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME),
-            this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy));
-      else if (ModelManager_1.ModelManager.PlotModel.IsInTemplate())
+      if (ModelManager_1.ModelManager.PlotModel.IsInTemplate())
         (this.GetSightTargetItem() ?? this.SightTargetPoint)
           ? this.F3r(this.n3r)
           : this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy);
       else {
-        if (this.Lie?.Valid) {
-          if (this.Lie.HasTag(1733479717))
-            return (
-              this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
-              this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy),
-              !(this.SightDirectIsEqual = !0)
-            );
-          if (
-            this.Lie.HasTag(-1371021686) ||
-            this.Lie.HasTag(504239013) ||
-            !this.Lie.HasTag(-1462404775)
-          )
-            return this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy), !0;
+        if (
+          !InputDistributeController_1.InputDistributeController.IsAllowHeadRotation()
+        )
+          return (
+            this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
+            this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy),
+            !(this.SightDirectIsEqual = !0)
+          );
+        if (PhotographController_1.PhotographController.IsOpenPhotograph())
+          PhotographController_1.PhotographController.IsPlayerLookAtCamera()
+            ? this.UpdateStaticRotation(this.n3r)
+            : ((this.u3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME),
+              this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy));
+        else {
+          if (this.Lie?.Valid) {
+            if (this.Lie.HasTag(1733479717))
+              return (
+                this.SightDirect.DeepCopy(Vector_1.Vector.RightVectorProxy),
+                this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy),
+                !(this.SightDirectIsEqual = !0)
+              );
+            if (
+              this.Lie.HasTag(-1371021686) ||
+              this.Lie.HasTag(504239013) ||
+              !this.Lie.HasTag(-1462404775)
+            )
+              return this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy), !0;
+          }
+          0 < this.C3r || !this.Gce.CanResponseInput()
+            ? ((this.u3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME_2),
+              this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy))
+            : (this.H3r(),
+              this.GetSightTargetItem()
+                ? this.F3r(this.n3r)
+                : (!this.Lie?.Valid ||
+                      this.Lie.HasTag(-1898186757) ||
+                      this.Lie.HasTag(855966206)) &&
+                    this.Gce.HasMoveInput
+                  ? ((this.u3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME),
+                    this.k3r(this.n3r))
+                  : this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy));
         }
-        0 < this.C3r || !this.Gce.CanResponseInput()
-          ? ((this.u3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME_2),
-            this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy))
-          : (this.H3r(),
-            this.GetSightTargetItem()
-              ? this.F3r(this.n3r)
-              : (!this.Lie?.Valid ||
-                    this.Lie.HasTag(-1898186757) ||
-                    this.Lie.HasTag(855966206)) &&
-                  this.Gce.HasMoveInput
-                ? ((this.u3r = Time_1.Time.WorldTime + WATCH_CAMERA_TIME),
-                  this.k3r(this.n3r))
-                : this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy));
       }
       return !0;
     }
@@ -1162,6 +1324,16 @@ let CharacterAnimationComponent =
         ? t.DeepCopy(this.ActorComp.ActorForwardProxy)
         : (t.DeepCopy(this.h3r), this.j3r(t));
     }
+    eX_(t) {
+      var i = ModelManager_1.ModelManager.PerformModel.GetSightTarget(
+        this.Entity.Id,
+      );
+      !i ||
+      (i.Subtraction(this.ActorComp.GetWatchedPoint(), this.h3r),
+      this.h3r.IsNearlyZero())
+        ? t.DeepCopy(this.ActorComp.ActorForwardProxy)
+        : (t.DeepCopy(this.h3r), this.j3r(t));
+    }
     F3r(t) {
       var i = this.GetSightTargetItem();
       (this.SightTargetPoint ?? i.ActorLocationProxy).Subtraction(
@@ -1222,13 +1394,13 @@ let CharacterAnimationComponent =
     UpdateStaticRotation(t) {
       if (this.u3r < Time_1.Time.WorldTime) {
         var i = Global_1.Global.CharacterCameraManager,
-          s = i.GetCameraLocation(),
+          s = i.D_GetCameraLocation(),
           h = this.K3r(s);
         if (1 === h)
           return (
             this.Kxr.FromUeVector(s),
             this.m3r.FromUeVector(
-              this.Mesh.GetSocketLocation(
+              this.Mesh.D_GetSocketLocation(
                 CharacterNameDefines_1.CharacterNameDefines.BIP_001_HEAD,
               ),
             ),
@@ -1261,7 +1433,7 @@ let CharacterAnimationComponent =
       return t > CAMERA_INFEED_ME ? 1 : t < -CAMERA_INFEED_ME ? 2 : 0;
     }
     GetMeshTransform() {
-      return this.Actor.Mesh.K2_GetComponentToWorld();
+      return this.Actor.Mesh.D_K2_GetComponentToWorld();
     }
     GetRandomStandActionIndex() {
       var t, i, s;
@@ -1299,11 +1471,11 @@ let CharacterAnimationComponent =
           ModelManager_1.ModelManager.GameModeModel.IsMulti) &&
           this.ActorComp.IsAutonomousProxy &&
           s &&
-          (((s = Protocol_1.Aki.Protocol.t4n.create()).nWn =
+          (((s = Protocol_1.Aki.Protocol.Me_.create()).nWn =
             Protocol_1.Aki.Protocol.nWn.create()),
           (s.nWn.sWn = t.toString()),
           (s.nWn.aWn = !i),
-          CombatMessage_1.CombatNet.Call(16305, this.Entity, s, () => {}));
+          CombatMessage_1.CombatNet.Send(15399, this.Entity, s));
     }
     static BoneVisibleChangeNotify(t, i) {}
     w3r(t = !0) {
@@ -1332,15 +1504,15 @@ let CharacterAnimationComponent =
           UE.SkeletalMeshComponent.StaticClass(),
         );
       for (let t = 0; t < o.Num(); t++) o.Get(t).SetAnimUpdateRateParameters(r);
-      (0, puerts_1.$unref)(r);
-      var t = this.ActorComp.CreatureData.GetEntityType(),
-        i = this.Entity.GetComponent(0).GetSummonerId(),
-        a = void 0 !== i && 0 !== i;
-      switch (t) {
+      switch (
+        ((0, puerts_1.$unref)(r), this.ActorComp.CreatureData.GetEntityType())
+      ) {
         case Protocol_1.Aki.Protocol.kks.Proto_Player:
           this.DefaultVisibilityBasedAnimTickOption = 0;
           break;
         case Protocol_1.Aki.Protocol.kks.Proto_Monster:
+          var a = this.Entity.GetComponent(219),
+            a = this.Entity.GetComponent(0).GetSummonerId() || a?.Valid;
           this.DefaultVisibilityBasedAnimTickOption = a ? 1 : 3;
           break;
         case Protocol_1.Aki.Protocol.kks.Proto_Vision:
@@ -1363,7 +1535,9 @@ let CharacterAnimationComponent =
           break;
         case 1:
           t.FromUeVector(
-            this.Mesh.GetSocketLocation(CharacterAnimationComponent_1.HitCase),
+            this.Mesh.D_GetSocketLocation(
+              CharacterAnimationComponent_1.HitCase,
+            ),
           );
           break;
         default:
@@ -1377,12 +1551,12 @@ let CharacterAnimationComponent =
     GetCameraTransform() {
       switch (this.v3r) {
         case 0:
-          return this.Mesh.GetSocketTransform(
+          return this.Mesh.D_GetSocketTransform(
             CharacterAnimationComponent_1.CameraPosition,
             0,
           );
         case 1:
-          return this.Mesh.GetSocketTransform(
+          return this.Mesh.D_GetSocketTransform(
             CharacterAnimationComponent_1.HitCase,
             0,
           );
@@ -1400,41 +1574,61 @@ let CharacterAnimationComponent =
     RefreshPerformance() {
       if (
         this.ActorComp?.IsRoleAndCtrlByMe &&
-        this.DNa &&
+        this.AGl &&
         this.MainAnimInstanceRole &&
         this.Lie?.HasTag(248240472) &&
-        !this.xNa.Equals(this.ActorComp.ActorLocationProxy)
+        !(
+          this.mn_ > Time_1.Time.Now &&
+          this.w3a.Equals(this.ActorComp.ActorLocationProxy)
+        )
       ) {
-        this.xNa.DeepCopy(this.ActorComp.ActorLocationProxy);
+        this.w3a.DeepCopy(this.ActorComp.ActorLocationProxy);
         var s =
             this.Gce.CharacterMovement.CurrentFloor.HitResult.ImpactNormal.Z,
-          h = this.Entity.GetComponent(69).WaterHeightAboveMe;
+          h = this.Entity.GetComponent(76).WaterHeightAboveMe;
         let i = !1;
         for (let t = 0; t < PERFORMANCE_COUNT; ++t) {
           var e =
-            this.DNa.StandingNormalZ[t] < s && this.DNa.WaterHeight[t] > h;
-          e !== this.UNa[t] && ((this.UNa[t] = e), (i = !0));
+            this.AGl.Config.StandingNormalZ[t] < s &&
+            this.AGl.Config.WaterHeight[t] > h &&
+            (0 === this.AGl.DisableTagIds[t] ||
+              !this.Lie.HasTag(this.AGl.DisableTagIds[t]));
+          e !== this.P3a[t] && ((this.P3a[t] = e), (i = !0));
         }
         if (i) {
           this.MainAnimInstanceRole.ValidPerformanceIndexes.Empty();
           for (let t = 0; t < PERFORMANCE_COUNT; ++t)
-            this.UNa[t] &&
+            this.P3a[t] &&
               this.MainAnimInstanceRole.ValidPerformanceIndexes.Add(t);
         }
+        this.mn_ = Time_1.Time.Now + REFRESH_PERFORMANCE_PERIOD;
       }
+    }
+    d6_() {
+      var t;
+      this.AnimLogicParamsSetter &&
+        (t = this.MainAnimInstanceRole?.LogicParams) &&
+        ((t.InputDirectRef =
+          this.AnimLogicParamsSetter.InputDirect.ToUeVectorOld()),
+        (t.InputRotatorRef =
+          this.AnimLogicParamsSetter.InputRotator.ToUeRotator()),
+        (t.IsMovingRef = this.AnimLogicParamsSetter.IsMoving),
+        (t.HasMoveInputRef = this.AnimLogicParamsSetter.HasMoveInput),
+        (t.SpeedRef = this.AnimLogicParamsSetter.Speed));
     }
   });
 (CharacterAnimationComponent.CameraPosition = new UE.FName("CameraPosition")),
   (CharacterAnimationComponent.HitCase = new UE.FName("HitCase")),
+  (CharacterAnimationComponent.zSc = new UE.FName("DD_Bip001Pelvis")),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("YFn")],
+    [CombatMessage_1.CombatNet.Listen("YFn", !0)],
     CharacterAnimationComponent,
     "BoneVisibleChangeNotify",
     null,
   ),
   (CharacterAnimationComponent = CharacterAnimationComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(163)],
+      [(0, RegisterComponent_1.RegisterComponent)(175)],
       CharacterAnimationComponent,
     )),
   (exports.CharacterAnimationComponent = CharacterAnimationComponent);

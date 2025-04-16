@@ -71,6 +71,10 @@ class FriendController extends ControllerBase_1.ControllerBase {
         FriendController.w6t,
       ),
       EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.ScenePlayerChanged,
+        FriendController.Qze,
+      ),
+      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LoadTestFriendsByGm,
         FriendController.B6t,
       );
@@ -93,26 +97,30 @@ class FriendController extends ControllerBase_1.ControllerBase {
         FriendController.w6t,
       ),
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.ScenePlayerChanged,
+        FriendController.Qze,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LoadTestFriendsByGm,
         FriendController.B6t,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(24325, FriendController.b6t),
-      Net_1.Net.Register(24513, FriendController.q6t),
-      Net_1.Net.Register(18962, FriendController.G6t),
-      Net_1.Net.Register(26276, FriendController.N6t);
+    Net_1.Net.Register(18181, FriendController.b6t),
+      Net_1.Net.Register(26842, FriendController.q6t),
+      Net_1.Net.Register(22583, FriendController.G6t),
+      Net_1.Net.Register(22920, FriendController.N6t);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(24325),
-      Net_1.Net.UnRegister(24513),
-      Net_1.Net.UnRegister(18962),
-      Net_1.Net.UnRegister(26276);
+    Net_1.Net.UnRegister(18181),
+      Net_1.Net.UnRegister(26842),
+      Net_1.Net.UnRegister(22583),
+      Net_1.Net.UnRegister(22920);
   }
-  static async Gxa(e) {
+  static async Fxa(e) {
     if (void 0 === e)
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Friend", 28, "RequestAllFriend Null", [
+        Log_1.Log.Warn("Friend", 27, "RequestAllFriend Null", [
           "当前登录状态",
           ModelManager_1.ModelManager.LoginModel.GetLoginStatus(),
         ]);
@@ -120,7 +128,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
       var r =
         await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkBlockingUser();
       r && ModelManager_1.ModelManager.KuroSdkModel.OnGetSdkBlockUserMap(r);
-      const o = ModelManager_1.ModelManager.FriendModel.SelectedPlayerId;
+      const n = ModelManager_1.ModelManager.FriendModel.SelectedPlayerId;
       ModelManager_1.ModelManager.FriendModel.SelectedPlayerId = void 0;
       (r = e.xUs.map(async (e) => {
         if (ModelManager_1.ModelManager.FriendModel.HasFriend(e.YVn.W5n))
@@ -131,8 +139,8 @@ class FriendController extends ControllerBase_1.ControllerBase {
           const r = new FriendData_1.FriendData();
           return r.SetFriendDataAttribute(e).then(() => {
             ModelManager_1.ModelManager.FriendModel.AddFriend(r),
-              o &&
-                o === r.PlayerId &&
+              n &&
+                n === r.PlayerId &&
                 (ModelManager_1.ModelManager.FriendModel.SelectedPlayerId =
                   r.PlayerId);
           });
@@ -160,7 +168,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
         ModelManager_1.ModelManager.FriendModel.LoadLocalFriendApplication();
     }
   }
-  static async Oxa(e) {
+  static async Vxa(e) {
     var r;
     ModelManager_1.ModelManager.FriendModel.HasFriend(e.YVn.YVn.W5n)
       ? await ModelManager_1.ModelManager.FriendModel.GetFriendById(
@@ -172,7 +180,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
         ModelManager_1.ModelManager.FriendModel.AddFriend(r)),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.FriendAdded);
   }
-  static async kxa(e) {
+  static async Hxa(e) {
     var r;
     ModelManager_1.ModelManager.FriendModel.HasFriendApplication(e.BUs.YVn.W5n)
       ? await ModelManager_1.ModelManager.FriendModel.GetFriendDataInApplicationById(
@@ -196,10 +204,10 @@ class FriendController extends ControllerBase_1.ControllerBase {
     )
       return;
     this.O6t = Time_1.Time.Now;
-    const o = new Protocol_1.Aki.Protocol.xrs();
-    (o.s5n = e),
-      (o.XVn = r),
-      Net_1.Net.Call(17885, o, (e) => {
+    const n = new Protocol_1.Aki.Protocol.xrs();
+    (n.s5n = e),
+      (n.XVn = r),
+      Net_1.Net.Call(21288, n, (e) => {
         if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs) {
           if (
             e.Q4n ===
@@ -211,14 +219,14 @@ class FriendController extends ControllerBase_1.ControllerBase {
           if (e.Q4n === Protocol_1.Aki.Protocol.Q4n.Proto_ErrFriendApplySended)
             return (
               ModelManager_1.ModelManager.FriendModel.AddPlayerToApplyFriendList(
-                o.s5n,
+                n.s5n,
               ),
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "FriendApplicationSent",
               ),
               void EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.ApplicationSent,
-                o.s5n,
+                n.s5n,
               )
             );
           if (
@@ -251,18 +259,18 @@ class FriendController extends ControllerBase_1.ControllerBase {
             );
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            16784,
+            28256,
           );
         }
         ModelManager_1.ModelManager.FriendModel.AddPlayerToApplyFriendList(
-          o.s5n,
+          n.s5n,
         ),
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "FriendApplicationSent",
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ApplicationSent,
-            o.s5n,
+            n.s5n,
           );
       });
   }
@@ -277,10 +285,10 @@ class FriendController extends ControllerBase_1.ControllerBase {
         ))
       : ((v.BVn = d),
         (v.$Vn = s),
-        Net_1.Net.Call(24614, v, (e) => {
+        Net_1.Net.Call(16252, v, (e) => {
           let r = FriendController.k6t(e.Q4n);
-          var o = 1 < v.BVn.length;
-          let n = 0;
+          var n = 1 < v.BVn.length;
+          let o = 0;
           if (v.$Vn === Protocol_1.Aki.Protocol.A6s.Proto_Approve)
             for (const a of Object.keys(e.qUs)) {
               var t,
@@ -295,7 +303,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
           for (const _ of Object.keys(e.qUs)) {
             var i = e.qUs[_];
             i === Protocol_1.Aki.Protocol.Q4n.KRs
-              ? (n++,
+              ? (o++,
                 ModelManager_1.ModelManager.FriendModel.DeleteFriendApplication(
                   Number(_),
                 ),
@@ -310,7 +318,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
               : "" === r && (r = FriendController.k6t(i));
           }
           "" === r ||
-            (o && 0 !== n) ||
+            (n && 0 !== o) ||
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               r,
             ),
@@ -355,7 +363,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
   static RequestFriendDelete(r) {
     var e = new Protocol_1.Aki.Protocol.krs();
     (e.s5n = r),
-      Net_1.Net.Call(20126, e, (e) => {
+      Net_1.Net.Call(18433, e, (e) => {
         if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
           return e.Q4n === Protocol_1.Aki.Protocol.Q4n.Proto_ErrNotOnFriendList
             ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -366,7 +374,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
               ))
             : void ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                19310,
+                17936,
               );
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "FriendDeleteSuccess",
@@ -377,7 +385,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
           );
       });
   }
-  static async Nxa(e) {
+  static async jxa(e) {
     e = e.hLs.map(async (e) => {
       if (ModelManager_1.ModelManager.FriendModel.HasBlockedPlayer(e.W5n))
         return ModelManager_1.ModelManager.FriendModel.GetBlockedPlayerById(
@@ -395,7 +403,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.UpdateBlackListShow,
       );
   }
-  static async Fxa(e, r) {
+  static async Wxa(e, r) {
     ModelManager_1.ModelManager.FriendModel.IsMyFriend(e) &&
       ModelManager_1.ModelManager.FriendModel.DeleteFriend(e),
       ModelManager_1.ModelManager.FriendModel.HasFriendApplication(e) &&
@@ -412,9 +420,9 @@ class FriendController extends ControllerBase_1.ControllerBase {
       );
   }
   static RequestSearchPlayerBasicInfoBySdkId(e) {
-    var r = new Protocol_1.Aki.Protocol.Aeh();
-    (r.Vxa = e),
-      Net_1.Net.Call(22978, r, (e) => {
+    var r = new Protocol_1.Aki.Protocol.Rm_();
+    (r.Qxa = e),
+      Net_1.Net.Call(20094, r, (e) => {
         if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
           return e.Q4n === Protocol_1.Aki.Protocol.Q4n.Proto_InvalidUserId
             ? void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -427,15 +435,15 @@ class FriendController extends ControllerBase_1.ControllerBase {
                 )
               : void ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.Q4n,
-                  17841,
+                  29259,
                 );
-        FriendController.Hxa(e.YVn);
+        FriendController.Kxa(e.YVn);
       });
   }
   static RequestSearchPlayerBasicInfo(e) {
     var r = new Protocol_1.Aki.Protocol.pYn();
     (r.s5n = e),
-      Net_1.Net.Call(26379, r, (e) => {
+      Net_1.Net.Call(26011, r, (e) => {
         if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
           return e.Q4n === Protocol_1.Aki.Protocol.Q4n.Proto_InvalidUserId
             ? void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -448,12 +456,12 @@ class FriendController extends ControllerBase_1.ControllerBase {
                 )
               : void ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.Q4n,
-                  18676,
+                  16751,
                 );
-        FriendController.Hxa(e.YVn);
+        FriendController.Kxa(e.YVn);
       });
   }
-  static async Hxa(e) {
+  static async Kxa(e) {
     var r = new FriendData_1.FriendData(),
       e =
         (await r.SetPlayerBasicInfo(e),
@@ -468,48 +476,48 @@ class FriendController extends ControllerBase_1.ControllerBase {
   static GetOfflineSection(e) {
     e = TimeUtil_1.TimeUtil.CalculateDayTimeStampGapBetweenNow(e, !1);
     let r = 0,
-      o = "FriendOfflineToday";
+      n = "FriendOfflineToday";
     return (
       e <= 1
-        ? ((r = 0), (o = "FriendOfflineToday"))
+        ? ((r = 0), (n = "FriendOfflineToday"))
         : 1 < e && e <= CommonDefine_1.DAY_PER_WEEK
-          ? ((r = 1), (o = "FriendOfflineInWeek"))
+          ? ((r = 1), (n = "FriendOfflineInWeek"))
           : 1 < e && e <= CommonDefine_1.DAY_PER_MONTH
-            ? ((r = 2), (o = "FriendOfflineInMonth"))
+            ? ((r = 2), (n = "FriendOfflineInMonth"))
             : e > CommonDefine_1.DAY_PER_MONTH &&
-              ((r = 3), (o = "FriendOfflineOverMonth")),
-      [o, r]
+              ((r = 3), (n = "FriendOfflineOverMonth")),
+      [n, r]
     );
   }
   static CheckRemarkIsValid(e) {
     return void 0 !== e && "" !== e;
   }
   static CreateFriendItemSt(e, r) {
-    var o = new Array();
+    var n = new Array();
     for (const t of e) {
-      var n = new FriendItemSt();
-      (n.Id = t), (n.OperationType = r), o.push(n);
+      var o = new FriendItemSt();
+      (o.Id = t), (o.OperationType = r), n.push(o);
     }
-    return o;
+    return n;
   }
   static CheckHasAnyApplied(e) {
     var r = ModelManager_1.ModelManager.FriendModel;
-    for (const o of e) if (r.HasFriendApplication(o)) return !0;
+    for (const n of e) if (r.HasFriendApplication(n)) return !0;
     return !1;
   }
   static GetSortedFriendListByRules(r, e) {
-    var o = new Array();
-    for (let e = r.length - 1; 0 <= e; e--) o.push(r[e]);
-    return o.sort(e), o;
+    var n = new Array();
+    for (let e = r.length - 1; 0 <= e; e--) n.push(r[e]);
+    return n.sort(e), n;
   }
   static GetSortedBlackOrApplyList(r) {
-    var o = new Array();
-    for (let e = r.length - 1; 0 <= e; e--) o.push(r[e]);
-    return o;
+    var n = new Array();
+    for (let e = r.length - 1; 0 <= e; e--) n.push(r[e]);
+    return n;
   }
   static RequestFriendRecentlyTeam() {
     var e = Protocol_1.Aki.Protocol.Frs.create();
-    Net_1.Net.Call(21073, e, (e) => {
+    Net_1.Net.Call(29016, e, (e) => {
       e &&
         (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
           ? ModelManager_1.ModelManager.FriendModel.InitRecentlyTeamDataByResponse(
@@ -517,7 +525,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
             )
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              17769,
+              23571,
             ));
     });
   }
@@ -539,12 +547,15 @@ class FriendController extends ControllerBase_1.ControllerBase {
   (FriendController.x6t = () => {
     _a.RequestAllFriend();
   }),
+  (FriendController.Qze = () => {
+    FriendController.RequestAllFriend(!0);
+  }),
   (FriendController.nye = () => {
     FriendController.U6t
       ? (FriendController.A6t !==
           ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Friend", 28, "好友模式改变"),
+            Log_1.Log.Debug("Friend", 27, "好友模式改变"),
           FriendController.RequestAllFriend(!0, () => {
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnGetFriendInitData,
@@ -570,30 +581,30 @@ class FriendController extends ControllerBase_1.ControllerBase {
   (FriendController.F6t = 0),
   (FriendController.V6t = 0),
   (FriendController.RequestAllFriend = (e = !1, r = void 0) => {
-    var o;
+    var n;
     ((TimeUtil_1.TimeUtil.GetServerTime() <= FriendController.F6t ||
       !ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
         LoginDefine_1.ELoginStatus.EnterGameRet,
       )) &&
       !e) ||
-      ((o = SERVERREQUESTCD / 1e3),
-      e && TimeUtil_1.TimeUtil.GetServerTime() - FriendController.V6t < o
+      ((n = SERVERREQUESTCD / 1e3),
+      e && TimeUtil_1.TimeUtil.GetServerTime() - FriendController.V6t < n
         ? TimerSystem_1.TimerSystem.Delay(() => {
             _a.RequestAllFriend(e, r);
           }, SERVERREQUESTCD)
-        : ((o = new Protocol_1.Aki.Protocol.Rrs()),
+        : ((n = new Protocol_1.Aki.Protocol.Rrs()),
           (FriendController.F6t =
             TimeUtil_1.TimeUtil.GetServerTime() +
             FriendDefine_1.FRIEND_ALL_UPDATE_INTERVAL_MINUTES *
               CommonDefine_1.SECOND_PER_MINUTE),
           (FriendController.V6t = TimeUtil_1.TimeUtil.GetServerTime()),
           Net_1.Net.IsServerConnected() &&
-            Net_1.Net.Call(25534, o, (e) => {
-              r?.(), FriendController.Gxa(e);
+            Net_1.Net.Call(16980, n, (e) => {
+              r?.(), FriendController.Fxa(e);
             })));
   }),
   (FriendController.b6t = (e) => {
-    FriendController.Oxa(e);
+    FriendController.Vxa(e);
   }),
   (FriendController.q6t = (e) => {
     e = e.s5n;
@@ -601,21 +612,21 @@ class FriendController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.FriendModel.DeleteFriend(e);
   }),
   (FriendController.G6t = (e) => {
-    _a.kxa(e);
+    _a.Hxa(e);
   }),
   (FriendController.N6t = (e) => {
     ModelManager_1.ModelManager.FriendModel.DeleteFriendApplication(e.s5n);
   }),
   (FriendController.RequestFriendRemarkChange = async (e, r) => {
-    var o;
+    var n;
     return e
-      ? (((o = new Protocol_1.Aki.Protocol.Grs()).s5n = e),
-        (o.JVn = r),
-        (e = await Net_1.Net.CallAsync(28398, o)).Q4n !==
+      ? (((n = new Protocol_1.Aki.Protocol.Grs()).s5n = e),
+        (n.JVn = r),
+        (e = await Net_1.Net.CallAsync(21085, n)).Q4n !==
         Protocol_1.Aki.Protocol.Q4n.KRs
           ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              16784,
+              28256,
             ),
             e.Q4n ===
             Protocol_1.Aki.Protocol.Q4n.Proto_ErrFriendRemarkLengthLimit
@@ -626,33 +637,33 @@ class FriendController extends ControllerBase_1.ControllerBase {
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.FriendRemarkContainsDirtyWord,
                 ))
-          : (ModelManager_1.ModelManager.FriendModel.IsMyFriend(o.s5n) &&
+          : (ModelManager_1.ModelManager.FriendModel.IsMyFriend(n.s5n) &&
               (ModelManager_1.ModelManager.FriendModel.GetFriendById(
-                o.s5n,
-              ).FriendRemark = o.JVn),
+                n.s5n,
+              ).FriendRemark = n.JVn),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.UpdateFriendViewShow,
             )),
         e.Q4n)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Friend", 28, "RequestFriendRemarkChange id is null"),
+          Log_1.Log.Error("Friend", 27, "RequestFriendRemarkChange id is null"),
         Protocol_1.Aki.Protocol.Q4n.Proto_ErrFriendApplyNotExists);
   }),
   (FriendController.RequestBlackList = () => {
     var e = new Protocol_1.Aki.Protocol.HJn();
-    Net_1.Net.Call(17680, e, (e) => {
+    Net_1.Net.Call(18148, e, (e) => {
       e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            26602,
+            18832,
           )
-        : FriendController.Nxa(e);
+        : FriendController.jxa(e);
     });
   }),
   (FriendController.RequestBlockPlayer = (r) => {
     var e = new Protocol_1.Aki.Protocol.WJn();
     (e.s5n = r),
-      Net_1.Net.Call(22575, e, (e) => {
+      Net_1.Net.Call(16182, e, (e) => {
         if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
           return e.Q4n === Protocol_1.Aki.Protocol.Q4n.Proto_ErrIsBlockedPlayer
             ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -670,15 +681,15 @@ class FriendController extends ControllerBase_1.ControllerBase {
                 ))
               : void ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.Q4n,
-                  21078,
+                  19814,
                 );
-        FriendController.Fxa(r, e);
+        FriendController.Wxa(r, e);
       });
   }),
   (FriendController.RequestUnBlockPlayer = (r) => {
     var e = new Protocol_1.Aki.Protocol.QJn();
     (e.s5n = r),
-      Net_1.Net.Call(16529, e, (e) => {
+      Net_1.Net.Call(16616, e, (e) => {
         if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
           return e.Q4n ===
             Protocol_1.Aki.Protocol.Q4n.Proto_ErrIsNotBlockedPlayer
@@ -690,7 +701,7 @@ class FriendController extends ControllerBase_1.ControllerBase {
               ))
             : void ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                19896,
+                24698,
               );
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "RemoveFromBlackListSucceeded",
@@ -728,27 +739,27 @@ class FriendController extends ControllerBase_1.ControllerBase {
   (FriendController.B6t = (r) => {
     ModelManager_1.ModelManager.FriendModel.ClearTestFriendData();
     for (let e = 0; e < r; ++e) {
-      var o = new FriendData_1.FriendData(),
-        n =
-          ((o.PlayerId = e + 1),
-          (o.PlayerName = "测试员" + (e + 1)),
-          (o.FriendRemark = "仅供展示使用" + (e + 1)),
-          (o.PlayerLevel = 1),
-          (o.PlayerIsOnline = !0),
-          (o.PlayerLastOfflineTime =
+      var n = new FriendData_1.FriendData(),
+        o =
+          ((n.PlayerId = e + 1),
+          (n.PlayerName = "测试员" + (e + 1)),
+          (n.FriendRemark = "仅供展示使用" + (e + 1)),
+          (n.PlayerLevel = 1),
+          (n.PlayerIsOnline = !0),
+          (n.PlayerLastOfflineTime =
             Date.parse(new Date().toString()) /
             CommonDefine_1.MILLIONSECOND_PER_SECOND),
-          (o.Debug = !0),
+          (n.Debug = !0),
           new FriendData_1.FriendApplyData()),
         t = new FriendData_1.FriendBlackListData();
-      (n.ApplyPlayerData = o),
-        (n.ApplyCreatedTime = o.PlayerLastOfflineTime + e),
-        (n.Fresh = !1),
-        (t.GetBlockedPlayerData = o),
-        ModelManager_1.ModelManager.FriendModel.AddFriend(o),
-        ModelManager_1.ModelManager.FriendModel.AddFriendApplication(n),
+      (o.ApplyPlayerData = n),
+        (o.ApplyCreatedTime = n.PlayerLastOfflineTime + e),
+        (o.Fresh = !1),
+        (t.GetBlockedPlayerData = n),
+        ModelManager_1.ModelManager.FriendModel.AddFriend(n),
+        ModelManager_1.ModelManager.FriendModel.AddFriendApplication(o),
         ModelManager_1.ModelManager.FriendModel.AddToBlackList(t),
-        ModelManager_1.ModelManager.FriendModel.AddFriendSearchResults(o);
+        ModelManager_1.ModelManager.FriendModel.AddFriendSearchResults(n);
     }
     return (
       EventSystem_1.EventSystem.Emit(

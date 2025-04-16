@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionIdentifyAttribute = void 0);
 const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   PhantomDataBase_1 = require("../../../Phantom/PhantomBattle/Data/PhantomDataBase"),
   VisionIdentifyItem_1 = require("../../../Phantom/Vision/View/VisionIdentifyItem"),
@@ -24,16 +26,36 @@ class RoleVisionIdentifyAttribute extends UiPanelBase_1.UiPanelBase {
       this.sGe,
     );
   }
-  Refresh(e, i) {
-    const n = new Array();
+  Refresh(e, a, i) {
+    const n =
+        ModelManager_1.ModelManager.VisionRecommendModel.GetRoleCostAttrRecommendInfo(
+          i.RoleId,
+          i.Cost,
+        ),
+      r = n?.GetSubAttrRecommendInfo(),
+      o = r ? r.length : 0,
+      s = new Array();
     e.forEach((e) => {
-      var t = new PhantomDataBase_1.VisionSubPropViewData();
-      (t.Data = e),
-        (t.SourceView = "VisionEquipmentView"),
-        (t.CurrentVisionData = i),
-        n.push(t);
+      var i = new PhantomDataBase_1.VisionSubPropViewData();
+      if (
+        ((i.Data = e),
+        (i.SourceView = "VisionEquipmentView"),
+        (i.CurrentVisionData = a),
+        e.PhantomSubProp)
+      ) {
+        var t =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
+            e.PhantomSubProp.Yws,
+          );
+        if (n)
+          for (let e = 0; e < o; e++)
+            t.AddType === r[e].GetAddType() &&
+              t.PropId === r[e].GetAttrId() &&
+              (i.NeedHighLight = !0);
+      }
+      s.push(i);
     }),
-      this.AttributeScroller.RefreshByData(n);
+      this.AttributeScroller.RefreshByData(s);
   }
 }
 exports.RoleVisionIdentifyAttribute = RoleVisionIdentifyAttribute;

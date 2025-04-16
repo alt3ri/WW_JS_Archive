@@ -2,21 +2,21 @@
 var BaseUnifiedStateComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (e, t, i, a) {
-      var n,
+    function (e, t, i, n) {
+      var a,
         s = arguments.length,
         o =
           s < 3
             ? t
-            : null === a
-              ? (a = Object.getOwnPropertyDescriptor(t, i))
-              : a;
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(t, i))
+              : n;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        o = Reflect.decorate(e, t, i, a);
+        o = Reflect.decorate(e, t, i, n);
       else
         for (var r = e.length - 1; 0 <= r; r--)
-          (n = e[r]) &&
-            (o = (s < 3 ? n(o) : 3 < s ? n(t, i, o) : n(t, i)) || o);
+          (a = e[r]) &&
+            (o = (s < 3 ? a(o) : 3 < s ? a(t, i, o) : a(t, i)) || o);
       return 3 < s && o && Object.defineProperty(t, i, o), o;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -43,7 +43,7 @@ let BaseUnifiedStateComponent =
         (this.CachedDirectionState =
           CharacterUnifiedStateTypes_1.ECharDirectionState.FaceDirection),
         (this.IsInFighting = !1),
-        (this.Xrn = (e, t, i, a, n) => {
+        (this.Xrn = (e, t, i, n, a) => {
           switch (i) {
             case 0:
               this.SetPositionState(
@@ -82,7 +82,7 @@ let BaseUnifiedStateComponent =
                   );
               break;
             case 6:
-              switch (n) {
+              switch (a) {
                 case CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_CLIMB:
                   this.SetPositionState(
                     CharacterUnifiedStateTypes_1.ECharPositionState.Climb,
@@ -111,6 +111,11 @@ let BaseUnifiedStateComponent =
                     CharacterUnifiedStateTypes_1.ECharPositionState.Ski,
                   );
                   break;
+                case CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_RIDE:
+                  this.SetPositionState(
+                    CharacterUnifiedStateTypes_1.ECharPositionState.Ride,
+                  );
+                  break;
                 default:
                   this.SetPositionState(
                     CharacterUnifiedStateTypes_1.ECharPositionState.Air,
@@ -123,7 +128,7 @@ let BaseUnifiedStateComponent =
     OnStart() {
       return (
         (this.ActorComponent = this.Entity.GetComponent(1)),
-        (this.TagComponent = this.Entity.GetComponent(190)),
+        (this.TagComponent = this.Entity.GetComponent(203)),
         (this.IsInGameInternal = !1),
         this.InitCharState(),
         EventSystem_1.EventSystem.AddWithTarget(
@@ -165,14 +170,16 @@ let BaseUnifiedStateComponent =
     static Load() {
       if (this.BaseNeedLoad) {
         (this.PositionTagIdList = [
-          -1898186757, 504239013, 40422668, 855966206,
+          -1898186757, 504239013, 40422668, 855966206, 485336017,
         ]),
           (this.MoveTagIdList = [
             -1867662364, 248240472, 498191540, -1625986130, 874657114,
             316338736, 1781274524, -1756660346, 1453491643, -1515012024,
             -846247571, -1989694637, -1654460638, 2060652336, 2111364199,
             756800494, 262865373, 31862857, -1973127492, -1504358738,
-            -652371212, -648310348, -1159105522,
+            -652371212, -648310348, 457513750, -1220068999, 84868970,
+            1785019708, 1502279607, 389944200, -2027866845, -959917199,
+            1552667325, 427266238, -1013665181,
           ]),
           (this.DirectionTagIdList = [
             -1150819426, 428837378, -1462404775, 1260125908,
@@ -246,37 +253,29 @@ let BaseUnifiedStateComponent =
       return this.CachedPositionState;
     }
     OnPositionStateChange(e, t) {
-      switch (
-        (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Character",
-            6,
-            "UnifiedState PositionStateChange",
-            ["EntityId", this.Entity.Id],
-            ["Name", this.ActorComponent?.Owner?.GetName()],
-            ["From", CharacterUnifiedStateTypes_1.ECharPositionState[e]],
-            ["To", CharacterUnifiedStateTypes_1.ECharPositionState[t]],
-          ),
-        t)
-      ) {
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
-          this.OnLand();
-          break;
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Air:
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Water:
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Climb:
-          this.DirectionState ===
-            CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection &&
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Character",
+          6,
+          "UnifiedState PositionStateChange",
+          ["EntityId", this.Entity.Id],
+          ["Name", this.ActorComponent?.Owner?.GetName()],
+          ["From", CharacterUnifiedStateTypes_1.ECharPositionState[e]],
+          ["To", CharacterUnifiedStateTypes_1.ECharPositionState[t]],
+        ),
+        t === CharacterUnifiedStateTypes_1.ECharPositionState.Ground
+          ? this.OnLand()
+          : this.DirectionState ===
+              CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection &&
             this.SetDirectionState(
               CharacterUnifiedStateTypes_1.ECharDirectionState.FaceDirection,
-            );
-      }
-      EventSystem_1.EventSystem.EmitWithTarget(
-        this.Entity,
-        EventDefine_1.EEventName.CharOnPositionStateChanged,
-        e,
-        t,
-      );
+            ),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharOnPositionStateChanged,
+          e,
+          t,
+        );
     }
     OnLand() {
       this.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Other);
@@ -386,7 +385,7 @@ let BaseUnifiedStateComponent =
   (BaseUnifiedStateComponent.BaseNeedLoad = !0),
   (BaseUnifiedStateComponent = BaseUnifiedStateComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(92)],
+      [(0, RegisterComponent_1.RegisterComponent)(99)],
       BaseUnifiedStateComponent,
     )),
   (exports.BaseUnifiedStateComponent = BaseUnifiedStateComponent);

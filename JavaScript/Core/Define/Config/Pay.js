@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Pay = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class Pay {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -26,11 +27,11 @@ class Pay {
   get CurrencyType() {
     return this.currencytype();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, s) {
+    return (this.z7 = t), (this.J7 = s), this;
   }
-  static getRootAsPay(t, r) {
-    return (r || new Pay()).__init(t.readInt32(t.position()) + t.position(), t);
+  static getRootAsPay(t, s) {
+    return (s || new Pay()).__init(t.readInt32(t.position()) + t.position(), t);
   }
   id() {
     var t = this.J7.__offset(this.z7, 4);
@@ -41,8 +42,14 @@ class Pay {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   region(t) {
-    var r = this.J7.__offset(this.z7, 8);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   amount() {
     var t = this.J7.__offset(this.z7, 10);
@@ -53,12 +60,24 @@ class Pay {
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   productid(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   currencytype(t) {
-    var r = this.J7.__offset(this.z7, 16);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.Pay = Pay;

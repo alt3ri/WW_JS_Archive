@@ -13,21 +13,23 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
       (this.CaughtIds = void 0),
-      (this.DetectionRadius = 500),
-      (this.SkillId = 0);
+      (this.DetectionRadius = 500);
   }
+  Constructor() {}
   K2_NotifyBegin(e, t, i) {
     var r,
       e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       !!(e = e.CharacterActorComponent.Entity) &&
-      ((r = e.GetComponent(34)),
-      (this.SkillId = r?.CurrentSkill?.SkillId ?? 0),
-      r?.SetCurAnInfo(this.exportIndex, t.GetName()),
-      !!(r = e.GetComponent(45))) &&
-      (0 < this.DetectionRadius && this.CheckPosition(r),
-      r.BeginCaught(this.CaughtIds, this.SkillId),
+      ((t = e
+        .GetComponent(207)
+        ?.CreateAnimNotifyContent(t.GetName(), this.exportIndex)),
+      (r = e.GetComponent(39)),
+      !!(e = e.GetComponent(51))) &&
+      (0 < this.DetectionRadius && this.CheckPosition(e),
+      e.SetCaughtBindingAnsInfo(t),
+      e.BeginCaught(this.CaughtIds, r?.CurrentSkill?.SkillId ?? 0),
       !0)
     );
   }
@@ -38,14 +40,14 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
         r = i.PendingCaughtList.get(r);
       if (!r) return;
       TsAnimNotifyStateCaughtBinding.InitTrace();
-      var s = o?.ActorLocationProxy,
+      var n = o?.ActorLocationProxy,
         a = TsAnimNotifyStateCaughtBinding.SphereTrace,
-        n =
-          (TraceElementCommon_1.TraceElementCommon.SetStartLocation(a, s),
-          TraceElementCommon_1.TraceElementCommon.SetEndLocation(a, s),
+        s =
+          (TraceElementCommon_1.TraceElementCommon.SetStartLocation(a, n),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(a, n),
           (a.Radius = this.DetectionRadius),
           TraceElementCommon_1.TraceElementCommon.SphereTrace(a, PROFILE_KEY));
-      if (!n) return;
+      if (!s) return;
       let t = !1;
       for (let e = 0; e < a.HitResult.GetHitCount(); e++)
         if (
@@ -59,18 +61,18 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
         }
       if (!t) return;
       var c,
-        n = r[0].GetComponent(0);
-      n?.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
-        ((n = Vector_1.Vector.Create(n?.GetInitLocation())),
-        (s = Vector_1.Vector.Create(s)),
+        s = r[0].GetComponent(0);
+      s?.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Monster &&
+        ((s = Vector_1.Vector.Create(s?.GetInitLocation())),
+        (n = Vector_1.Vector.Create(n)),
         (c = Vector_1.Vector.Create()),
-        n.Subtraction(s, c),
+        s.Subtraction(n, c),
         c.Normalize(),
         c.Multiply(this.DetectionRadius, c),
-        (n = Vector_1.Vector.Create(o?.ActorLocation).AdditionEqual(c)),
-        o?.SetActorLocation(n.ToUeVector(), "ExecutionAdjustMove", !1),
-        (s = r[0].GetComponent(3)),
-        (o = Vector_1.Vector.Create(s?.ActorLocation).AdditionEqual(c)),
+        (s = Vector_1.Vector.Create(o?.ActorLocation).AdditionEqual(c)),
+        o?.SetActorLocation(s.ToUeVector(), "ExecutionAdjustMove", !1),
+        (n = r[0].GetComponent(3)),
+        (o = Vector_1.Vector.Create(n?.ActorLocation).AdditionEqual(c)),
         r[0]
           .GetComponent(3)
           ?.SetActorLocation(o.ToUeVector(), "ExecutionAdjustMove", !1));
@@ -90,17 +92,14 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
       (this.SphereTrace.WorldContextObject = GlobalData_1.GlobalData.World);
   }
   K2_NotifyEnd(e, t) {
-    var i,
-      e = e.GetOwner();
+    var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       !(
         !e.CharacterActorComponent ||
         !(e = e.CharacterActorComponent.Entity) ||
-        ((i = e.GetComponent(45)),
-        e.GetComponent(34)?.SetCurAnInfo(this.exportIndex, t.GetName()),
-        !i) ||
-        (i.EndCaught(), 0)
+        !(e = e.GetComponent(51)) ||
+        (e.EndCaught(), 0)
       )
     );
   }

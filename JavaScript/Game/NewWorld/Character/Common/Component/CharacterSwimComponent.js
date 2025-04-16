@@ -14,8 +14,8 @@ var CharacterSwimComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         _ = Reflect.decorate(t, i, s, e);
       else
-        for (var o = t.length - 1; 0 <= o; o--)
-          (h = t[o]) &&
+        for (var a = t.length - 1; 0 <= a; a--)
+          (h = t[a]) &&
             (_ = (r < 3 ? h(_) : 3 < r ? h(i, s, _) : h(i, s)) || _);
       return 3 < r && _ && Object.defineProperty(i, s, _), _;
     };
@@ -66,8 +66,10 @@ const puerts_1 = require("puerts"),
   SWIMMING_ACCELERATOR = 200,
   EIGHTY = ((exports.SWIMMING_DECELERATION = 0.06), 80),
   COS_EIGHTY = 0.173,
-  MIN_DEPTH = -99999,
-  waterAreaDetectExtent = new UE.Vector(500, 500, 1e3);
+  MIN_DEPTH = -Number.MAX_SAFE_INTEGER,
+  waterAreaDetectExtent = new UE.VectorDouble(500, 500, 1e3),
+  VEHICLE_ADDITIONAL_HEIGHT = 600,
+  VEHICLE_ADDITIONAL_DEPTH = 250;
 class CharacterSwimUtils {}
 (CharacterSwimUtils.AfterTransformLocationOffset = new UE.Vector(EIGHTY, 0, 0)),
   (CharacterSwimUtils.DebugColor1 = new UE.LinearColor(
@@ -95,7 +97,7 @@ let CharacterSwimComponent =
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Movement",
-              58,
+              57,
               "[游泳组件]设置游泳盒子保底入水检测",
             ),
             (this.aWr = !0);
@@ -103,7 +105,7 @@ let CharacterSwimComponent =
         (this.hWr = (t, i) => {
           this.Lie.RemoveTag(-104158548),
             this.EnterSwimFromAirBuffIndex &&
-              (this.Entity.GetComponent(160)?.RemoveBuffByHandle(
+              (this.Entity.GetComponent(172)?.RemoveBuffByHandle(
                 this.EnterSwimFromAirBuffIndex,
                 -1,
                 "空中入水结束",
@@ -162,7 +164,7 @@ let CharacterSwimComponent =
           );
         }),
         (this.fWr = void 0),
-        (this.pWr = void 0),
+        (this.yV_ = void 0),
         (this.vWr = 0),
         (this.MWr = void 0),
         (this.EWr = 0),
@@ -195,7 +197,7 @@ let CharacterSwimComponent =
         (this.SprintSwimOffsetLerpSpeed = 0),
         (this.mie = -0),
         (this.xWr = void 0),
-        (this.wWr = BigInt(0)),
+        (this.wWr = 0),
         (this.EnterSwimFromAirBuffIndex = 0),
         (this.lWr = !1),
         (this.CWr = 1),
@@ -203,16 +205,17 @@ let CharacterSwimComponent =
         (this.Mao = void 0),
         (this.InSwimTriggerCount = 0),
         (this.IsRole = !1),
-        (this.iOa = 0),
-        (this.rOa = !1),
+        (this.ika = 0),
+        (this.rka = !1),
         (this.WaterHeightAboveMe = 0),
         (this.aWr = !1),
+        (this.rk_ = 0),
         (this.Nkr = (t) => {
           this.MWr.DeepCopy(this.Hte.ActorLocation);
         });
     }
     static get Dependencies() {
-      return [3, 164, 190];
+      return [3, 176, 203];
     }
     get BuffIndex() {
       return this.wWr;
@@ -226,34 +229,67 @@ let CharacterSwimComponent =
           this.wWr,
         ));
     }
+    get WaterType() {
+      return this.rk_;
+    }
+    set WaterType(t) {
+      this.rk_ !== t &&
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Movement",
+            42,
+            "当前游泳WaterType改变:",
+            ["EntityId", this.Entity.Id],
+            ["Actor", this.Hte?.Actor?.GetName()],
+            ["NewType", t],
+            ["LastType", this.rk_],
+          ),
+        (this.rk_ = t),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.OnInteractionWaterTypeChange,
+          t,
+        ));
+    }
     bWr() {
+      var t;
       this.Hte.IsBoss ||
         (this.cBe.StopAllSkills("CharacterSwimComponent.EnterSwimmingState"),
         this.IsDebug &&
           Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Movement", 58, "[游泳组件]触发入水,打断0组技能")),
+          Log_1.Log.Info("Movement", 57, "[游泳组件]触发入水,打断0组技能")),
         this.Gce.FallingIntoWater ||
           (this.cz.DeepCopy(this.Gce.CharacterMovement.LastUpdateVelocity),
-          (this.cz.Z = MathUtils_1.MathUtils.Clamp(
-            this.cz.Z,
+          (t = GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+            this.Hte,
+            this.cz,
+          )),
+          (t = MathUtils_1.MathUtils.Clamp(
+            t,
             -MAX_SPEED_INTO_WATER,
             MAX_SPEED_INTO_WATER,
           )),
+          GravityUtils_1.GravityUtils.SetZnInGravityForActor(
+            this.Hte,
+            this.cz,
+            t,
+          ),
           (this.Gce.CharacterMovement.LastUpdateVelocity =
-            this.cz.ToUeVector()),
+            this.cz.ToUeVectorOld()),
           this.Gce.SetForceSpeed(this.cz),
           this.IsDebug &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Movement",
-              58,
+              57,
               "[游泳组件]触发入水,入水速度过大，限制到",
               ["入水速度", this.cz],
             )),
-        this.Gce.CharacterMovement.SetMovementMode(
-          6,
-          CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM,
-        );
+        this.Hte?.Actor.KuroSetMovementMode({
+          Mode: 6,
+          CustomMode: CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM,
+          Context: "[CharacterSwimComponent.EnterSwimmingState]",
+        });
     }
     OnStart() {
       (this.Depth = 0),
@@ -323,7 +359,8 @@ let CharacterSwimComponent =
         (this.Mao.Radius = 1),
         (this.Mao.bIgnoreSelf = !0),
         (this.Mao.bIsSingle = !1),
-        this.Mao.SetDrawDebugTrace(this.IsDebug ? 1 : 0),
+        this.Mao.SetDrawDebugTrace(this.IsDebug ? 2 : 0),
+        (this.Mao.DrawTime = 0.1),
         this.Mao.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.Water),
         TraceElementCommon_1.TraceElementCommon.SetTraceColor(
           this.Mao,
@@ -337,13 +374,14 @@ let CharacterSwimComponent =
     kWr() {
       this.Mao && (this.Mao.Dispose(), (this.Mao = void 0));
     }
-    oOa() {
-      if (
-        CharacterSwimComponent_1.UseSwimTrigger ||
-        !this.Gce?.IsStandardGravity
-      )
-        (this.rOa = 0 < this.InSwimTriggerCount),
-          (this.iOa = FIVE_HUNDRED_TO_FIND_SURFACE),
+    oka() {
+      if (this.Gce && !this.Gce.IsStandardGravity)
+        (this.rka = !0),
+          (this.ika = FIVE_HUNDRED_TO_FIND_SURFACE),
+          (this.WaterHeightAboveMe = 0);
+      else if (CharacterSwimComponent_1.UseSwimTrigger)
+        (this.rka = 0 < this.InSwimTriggerCount),
+          (this.ika = FIVE_HUNDRED_TO_FIND_SURFACE),
           (this.WaterHeightAboveMe = 0);
       else {
         var i,
@@ -357,11 +395,18 @@ let CharacterSwimComponent =
             ? (this.Hte.ActorVelocityProxy.Multiply(this.mie, this.cz),
               (i = Math.min(
                 0,
-                GravityUtils_1.GravityUtils.GetZnInGravity(this.Hte, this.cz),
+                GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+                  this.Hte,
+                  this.cz,
+                ),
               )),
               this.cz.DeepCopy(waterAreaDetectExtent),
-              GravityUtils_1.GravityUtils.AddZnInGravity(this.Hte, this.cz, i),
-              UE.NavigationSystemV1.NavigationGetWaterDeep(
+              GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+                this.Hte,
+                this.cz,
+                i,
+              ),
+              UE.NavigationSystemV1.D_NavigationGetWaterDeep(
                 this.Hte.Actor,
                 this.Hte.ActorLocation,
                 this.cz?.ToUeVector(),
@@ -370,7 +415,7 @@ let CharacterSwimComponent =
                 this.Hte.Actor,
                 void 0,
               ))
-            : UE.NavigationSystemV1.NavigationGetWaterDeep(
+            : UE.NavigationSystemV1.D_NavigationGetWaterDeep(
                 this.Hte.Actor,
                 this.Hte.ActorLocation,
                 waterAreaDetectExtent,
@@ -379,80 +424,110 @@ let CharacterSwimComponent =
                 this.Hte.Actor,
                 void 0,
               )),
-          (this.rOa = t)
+          (this.rka = t)
             ? ((i = (0, puerts_1.$unref)(s)),
               (this.WaterHeightAboveMe = i - this.Hte.FloorLocation.Z),
-              (this.iOa =
+              (this.ika =
                 i -
                 this.Hte.ActorLocationProxy.Z +
                 ONE_HUNDRED_TO_FIND_SURFACE))
-            : (this.iOa = 0);
+            : (this.ika = 0);
       }
     }
     uDn() {
-      return this.rOa;
+      return this.rka;
     }
     OnTick(t) {
       this.FWr(),
-        !this.Hte.IsAutonomousProxy ||
-          this.Lie.HasTag(464607714) ||
-          this.Lie.HasTag(-1523054094) ||
-          (this.oOa(),
-          this.IsRole
-            ? (6 === this.Gce.CharacterMovement.MovementMode &&
-                this.Gce.CharacterMovement.CustomMovementMode ===
-                  CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM) ||
-              this.uDn() ||
-              this.aWr
-              ? ((this.mie = t * MathUtils_1.MathUtils.MillisecondToSecond),
-                this.fWr.DeepCopy(this.Hte.ActorLocation),
-                this.oRe && (this.fWr.Z += this.oRe.IkMeshOffset),
-                this.pWr.DeepCopy(this.Hte.ActorUpProxy),
-                Vector_1.Vector.DistSquared(this.MWr, this.fWr) >
-                  MAX_LAST_TICK_OFFSET_SQUARE &&
-                  (this.IsDebug &&
-                    Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info(
-                      "Movement",
-                      58,
-                      "[游泳组件]与上一帧位置差巨大,重新设置这一帧位置",
-                      ["LastTickLocation", this.MWr],
-                      ["PlayerLocation", this.fWr],
+        this.Hte.IsAutonomousProxy &&
+          (this.Lie.HasTag(464607714) || this.Lie.HasTag(-1523054094)
+            ? this.Entity.Id ===
+                ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity
+                  ?.Id &&
+              (this.fWr.DeepCopy(this.Hte.ActorLocation),
+              this.oRe &&
+                GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+                  this.Hte,
+                  this.fWr,
+                  this.oRe.IkMeshOffset,
+                ),
+              this.yV_.DeepCopy(
+                GravityUtils_1.GravityUtils.GetGravityUpForActor(this.Hte),
+              ),
+              this.jWr(!0),
+              this.MWr.DeepCopy(this.Hte.ActorLocation))
+            : (this.oka(),
+              this.IsRole
+                ? (6 === this.Gce.CharacterMovement.MovementMode &&
+                    this.Gce.CharacterMovement.CustomMovementMode ===
+                      CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM) ||
+                  this.uDn() ||
+                  this.aWr
+                  ? ((this.mie = t * MathUtils_1.MathUtils.MillisecondToSecond),
+                    this.fWr.DeepCopy(this.Hte.ActorLocation),
+                    this.oRe &&
+                      GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+                        this.Hte,
+                        this.fWr,
+                        this.oRe.IkMeshOffset,
+                      ),
+                    this.yV_.DeepCopy(
+                      GravityUtils_1.GravityUtils.GetGravityUpForActor(
+                        this.Hte,
+                      ),
                     ),
-                  this.MWr.DeepCopy(this.Hte.ActorLocation)),
-                this.VWr(this.HWr())
-                  ? ((this.Depth = 1),
+                    Vector_1.Vector.DistSquared(this.MWr, this.fWr) >
+                      MAX_LAST_TICK_OFFSET_SQUARE &&
+                      (this.IsDebug &&
+                        Log_1.Log.CheckInfo() &&
+                        Log_1.Log.Info(
+                          "Movement",
+                          57,
+                          "[游泳组件]与上一帧位置差巨大,重新设置这一帧位置",
+                          ["LastTickLocation", this.MWr],
+                          ["PlayerLocation", this.fWr],
+                        ),
+                      this.MWr.DeepCopy(this.Hte.ActorLocation)),
+                    this.VWr(this.HWr())
+                      ? ((this.Depth = 1),
+                        this.MWr.DeepCopy(this.Hte.ActorLocation))
+                      : (this.jWr(),
+                        this.WWr(this.mie),
+                        (this.EWr = this.KWr()),
+                        this.QWr(),
+                        this.MWr.DeepCopy(this.Hte.ActorLocation),
+                        (this.aWr = !1)))
+                  : (this.Gce.FallingIntoWater &&
+                      Time_1.Time.Now > this.BWr &&
+                      ((this.Gce.FallingIntoWater = !1),
+                      this.Lie.RemoveTag(-104158548),
+                      this.EnterSwimFromAirBuffIndex) &&
+                      (this.Entity.GetComponent(172)?.RemoveBuffByHandle(
+                        this.EnterSwimFromAirBuffIndex,
+                        -1,
+                        "空中入水结束",
+                      ),
+                      (this.EnterSwimFromAirBuffIndex = 0)),
                     this.MWr.DeepCopy(this.Hte.ActorLocation))
-                  : (this.jWr(),
-                    this.WWr(this.mie),
-                    (this.EWr = this.KWr()),
-                    this.QWr(),
-                    this.MWr.DeepCopy(this.Hte.ActorLocation),
-                    (this.aWr = !1)))
-              : (this.Gce.FallingIntoWater &&
-                  Time_1.Time.Now > this.BWr &&
-                  ((this.Gce.FallingIntoWater = !1),
-                  this.Lie.RemoveTag(-104158548),
-                  this.EnterSwimFromAirBuffIndex) &&
-                  (this.Entity.GetComponent(160)?.RemoveBuffByHandle(
-                    this.EnterSwimFromAirBuffIndex,
-                    -1,
-                    "空中入水结束",
-                  ),
-                  (this.EnterSwimFromAirBuffIndex = 0)),
-                this.MWr.DeepCopy(this.Hte.ActorLocation))
-            : (this.uDn()
-                ? this.Hte?.ActorLocationProxy.Equals(
-                    this.Hte.LastActorLocation,
-                  ) ||
-                  TickScoreController_1.TickScoreController.SwimTickScore.AddScore(
-                    this,
-                  )
-                : 6 === this.Gce.CharacterMovement.MovementMode &&
-                  this.Gce.CharacterMovement.CustomMovementMode ===
-                    CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM &&
-                  this.Gce.CharacterMovement.SetMovementMode(3, 0),
-              Vector_1.Vector.VectorCopy(this.Hte.ActorLocation, this.MWr)));
+                : (this.uDn()
+                    ? this.Hte?.ActorLocationProxy.Equals(
+                        this.Hte.LastActorLocation,
+                      ) ||
+                      TickScoreController_1.TickScoreController.SwimTickScore.AddScore(
+                        this,
+                      )
+                    : 6 === this.Gce.CharacterMovement.MovementMode &&
+                      this.Gce.CharacterMovement.CustomMovementMode ===
+                        CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM &&
+                      this.Hte?.Actor.KuroSetMovementMode({
+                        Mode: 3,
+                        CustomMode: 0,
+                        Context: "[CharacterSwimComponent.OnTick]",
+                      }),
+                  Vector_1.Vector.VectorCopy(
+                    this.Hte.ActorLocation,
+                    this.MWr,
+                  ))));
     }
     ScoreUpdate() {
       this.Active &&
@@ -509,7 +584,7 @@ let CharacterSwimComponent =
         (this.xWr = Vector_1.Vector.Create(0, 0, 0)),
         (this.MWr = Vector_1.Vector.Create(0, 0, 0)),
         (this.fWr = Vector_1.Vector.Create(0, 0, 0)),
-        (this.pWr = Vector_1.Vector.Create(0, 0, 0)),
+        (this.yV_ = Vector_1.Vector.Create(0, 0, 1)),
         (this.SWr = Vector_1.Vector.Create(0, 0, MIN_DEPTH)),
         (this.yWr = Vector_1.Vector.Create(0, 0, MIN_DEPTH)),
         (this.IWr = Vector_1.Vector.Create(0, 0, 0));
@@ -523,7 +598,7 @@ let CharacterSwimComponent =
         (this.xWr = void 0),
         (this.MWr = void 0),
         (this.fWr = void 0),
-        (this.pWr = void 0),
+        (this.yV_ = void 0),
         (this.SWr = void 0),
         (this.yWr = void 0),
         (this.IWr = void 0);
@@ -533,14 +608,14 @@ let CharacterSwimComponent =
       var t = this.Hte.ActorLocationProxy,
         t =
           (Vector_1.Vector.VectorCopy(t, this.fWr),
-          this.Entity.GetComponent(190));
+          this.Entity.GetComponent(203));
       if (!t?.Valid) return !1;
       (this.Lie = t),
-        (this.I5r = this.Entity.GetComponent(161)),
-        (this.oRe = this.Entity.GetComponent(163)),
-        (this.cBe = this.Entity.GetComponent(34)),
-        (this.RWr = this.Entity.GetComponent(31));
-      t = this.Entity.GetComponent(164);
+        (this.I5r = this.Entity.GetComponent(173)),
+        (this.oRe = this.Entity.GetComponent(175)),
+        (this.cBe = this.Entity.GetComponent(39)),
+        (this.RWr = this.Entity.GetComponent(34));
+      t = this.Entity.GetComponent(176);
       return (
         !!t?.Valid &&
         ((this.Gce = t),
@@ -581,7 +656,7 @@ let CharacterSwimComponent =
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Movement",
-            58,
+            57,
             "游泳配置曲线加载失败，曲线为/Game/Aki/Character/Role/Common/Data/Curves/CT_SwimAcceleratorStrength.CT_SwimAcceleratorStrength或者/Game/Aki/Character/Role/Common/Data/Curves/CT_SwimRotateSpeed.CT_SwimRotateSpeed",
           ),
         !1)
@@ -600,53 +675,73 @@ let CharacterSwimComponent =
       var t;
       return this.Gce.HasSwimmingBlock
         ? ((t = (0, puerts_1.$ref)(void 0)),
-          this.Gce.CharacterMovement.K2_FindFloor(this.fWr.ToUeVector(), t),
+          this.Gce.CharacterMovement.D_K2_FindFloor(this.fWr.ToUeVector(), t),
           (t = (0, puerts_1.$unref)(t)),
           this.Gce?.CharacterMovement?.IsWalkable(t.HitResult) ? 1 : 2)
         : 0;
     }
-    jWr() {
-      var t, i, s;
-      this.Lie.HasTag(855966206) &&
-        ((t = this.cz),
-        this.pWr.Multiply(2 * this.vWr, t),
-        (i = this.UWr),
-        this.fWr.Addition(t, i),
-        this.pWr.Multiply(this.vWr, t),
+    jWr(t = !1) {
+      var i, s;
+      (this.Lie.HasTag(855966206) || t) &&
+        ((t = this.Lie.HasTag(401464757) ? VEHICLE_ADDITIONAL_HEIGHT : 0),
+        (s = this.Lie.HasTag(401464757) ? VEHICLE_ADDITIONAL_DEPTH : 0),
+        (i = this.cz),
+        this.yV_.Multiply(2 * this.vWr + t, i),
+        (t = this.UWr),
+        this.fWr.Addition(i, t),
+        this.yV_.Multiply(this.vWr + s, i),
         (s = this.AWr),
-        this.fWr.Subtraction(t, s),
-        (this.Depth = this.YWr(i, s)),
+        this.fWr.Subtraction(i, s),
+        (this.Depth = this.YWr(t, s)),
         (this.LWr = this.Mao.HitResult.bBlockingHit),
         this.JWr(this.IWr));
     }
     zWr(i) {
       let s = !1,
-        e = !1;
-      this.yWr.Reset(),
-        this.IWr.Reset(),
-        this.SWr.Reset(),
-        (this.yWr.Z = MIN_DEPTH),
-        (this.SWr.Z = MIN_DEPTH);
-      var h = i.GetHitCount();
-      for (let t = 0; t < h; ++t) {
-        var r = i.Actors.Get(t);
-        r?.IsValid() &&
-          (r.ActorHasTag(CharacterSwimComponent_1.ZWr)
+        e = !1,
+        h =
+          (this.yWr.Reset(),
+          this.IWr.Reset(),
+          this.SWr.Reset(),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.Hte,
+            this.yWr,
+            MIN_DEPTH,
+          ),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.Hte,
+            this.SWr,
+            MIN_DEPTH,
+          ),
+          MIN_DEPTH),
+        r = MIN_DEPTH;
+      var _ = i.GetHitCount();
+      for (let t = 0; t < _; ++t) {
+        var a = i.Actors.Get(t);
+        a?.IsValid() &&
+          (a.ActorHasTag(CharacterSwimComponent_1.ZWr)
             ? ((e = !0),
               TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
                 i,
                 t,
                 this.cz,
               ),
-              this.cz.Z > this.SWr.Z && this.SWr.DeepCopy(this.cz))
+              (a = GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+                this.Hte,
+                this.cz,
+              )) > r && ((r = a), this.SWr.DeepCopy(this.cz)))
             : ((s = !0),
               TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
                 i,
                 t,
                 this.cz,
               ),
-              this.cz.Z > this.yWr.Z &&
-                (TraceElementCommon_1.TraceElementCommon.GetImpactNormal(
+              (a = GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+                this.Hte,
+                this.cz,
+              )) > h &&
+                ((h = a),
+                TraceElementCommon_1.TraceElementCommon.GetImpactNormal(
                   i,
                   t,
                   this.IWr,
@@ -689,27 +784,78 @@ let CharacterSwimComponent =
         PROFILE_DETECT_WATER_DEPTH,
       );
       return (
-        (s = s && this.zWr(this.Mao.HitResult)) &&
-        this.Mao.HitResult.bBlockingHit
+        (s = s && this.zWr(this.Mao.HitResult)),
+        this.Mao.HitResult.bBlockingHit && this.ok_(),
+        s && this.Mao.HitResult.bBlockingHit
       );
+    }
+    ok_() {
+      var s = this.Mao.HitResult.PhysMaterials,
+        t = this.Mao.HitResult.GetHitCount();
+      for (let i = 0; i < t; ++i) {
+        var e = this.Mao.HitResult.Components.Get(i);
+        let t = void 0;
+        if (
+          (t =
+            (t =
+              e instanceof UE.LandscapeHeightfieldCollisionComponent
+                ? s.Get(i)
+                : e.BodyInstance.PhysMaterialOverride) ||
+            UE.KuroRenderingRuntimeBPPluginBPLibrary.GetComponentPhysicalMaterial(
+              e,
+            ))
+        ) {
+          switch (t.GetName()) {
+            case "CloudSeaLand":
+              this.WaterType = 1;
+              break;
+            case "GoldWater":
+              this.WaterType = 2;
+              break;
+            default:
+              this.WaterType = 0;
+          }
+          return;
+        }
+      }
     }
     XWr() {
       var t = this.UWr,
         i = this.AWr;
       if (this.Lie.HasTag(855966206) && this.Lie.HasTag(-1714966381))
-        t.Set(
-          this.fWr.X,
-          this.fWr.Y,
-          this.fWr.Z + (1 - ENTER_SWIM_BIGGER_THAN_THIS) * this.vWr * 2,
-        ),
-          i.Set(this.fWr.X, this.fWr.Y, this.fWr.Z + this.iOa),
+        t.DeepCopy(this.fWr),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.Hte,
+            t,
+            (1 - ENTER_SWIM_BIGGER_THAN_THIS) * this.vWr * 2,
+          ),
+          i.DeepCopy(this.fWr),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.Hte,
+            i,
+            this.ika,
+          ),
           this.tKr(t, i)
             ? (this.Depth = SWIMMING_MAX_DEPTH)
-            : (this.Gce.CharacterMovement.SetMovementMode(3, 0),
+            : (this.Hte?.Actor.KuroSetMovementMode({
+                Mode: 3,
+                CustomMode: 0,
+                Context: "[CharacterSwimComponent.SimpleCheckInWater]",
+              }),
               (this.Depth = 0));
       else if (
-        (t.Set(this.MWr.X, this.MWr.Y, this.MWr.Z + 2 * this.vWr),
-        i.Set(this.fWr.X, this.fWr.Y, this.fWr.Z - this.vWr),
+        (t.DeepCopy(this.MWr),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.Hte,
+          t,
+          2 * this.vWr,
+        ),
+        i.DeepCopy(this.fWr),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.Hte,
+          i,
+          -this.vWr,
+        ),
         (this.Depth = this.YWr(t, i)),
         this.Depth > ENTER_SWIM_BIGGER_THAN_THIS)
       )
@@ -720,14 +866,17 @@ let CharacterSwimComponent =
       var s = this.pz,
         t =
           (s.FromUeVector(t),
-          (s.Z += i),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(this.Hte, s, i),
           this.xWr.DeepCopy(s),
           this.Hte.SetActorLocation(
             this.xWr.ToUeVector(),
             "游泳.游泳入水播放位置设置",
             !0,
           ),
-          this.Hte.Actor.CharacterMovement.SetMovementMode(3),
+          this.Hte?.Actor.KuroSetMovementMode({
+            Mode: 3,
+            Context: "[CharacterSwimComponent.SetDetectFallIntoWaterPosition]",
+          }),
           this.cz);
       t.Reset(),
         this.Gce.SetForceSpeed(t),
@@ -735,7 +884,7 @@ let CharacterSwimComponent =
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Movement",
-              58,
+              57,
               "[游泳组件]游泳触发入水机制,游泳入水设置位置",
               ["坐标：", this.xWr],
               ["强制速度：", t],
@@ -743,7 +892,15 @@ let CharacterSwimComponent =
           this.oKr(CharacterSwimUtils.DebugColor1));
     }
     DetectEnterWaterFromAir() {
-      if (!(0 < this.Hte.ActorVelocityProxy.Z || this.Gce.FallingIntoWater)) {
+      if (
+        !(
+          0 <
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+              this.Hte,
+              this.Hte.ActorVelocityProxy,
+            ) || this.Gce.FallingIntoWater
+        )
+      ) {
         var i = this.cz,
           s = this.fz,
           s =
@@ -756,7 +913,16 @@ let CharacterSwimComponent =
           var e = this.vWr;
           if (!t) {
             var h = this.fz;
-            if ((h.FromUeVector(i), (h.Z -= e), (s = this.eKr(i, h)))) return;
+            if (
+              (h.FromUeVector(i),
+              GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+                this.Hte,
+                h,
+                -e,
+              ),
+              (s = this.eKr(i, h)))
+            )
+              return;
             t = this.tKr(i, h);
           }
           t &&
@@ -764,14 +930,18 @@ let CharacterSwimComponent =
             !this.rKr(this.IWr) ||
               ((s = this.UWr).DeepCopy(this.yWr),
               (i = this.AWr).FromUeVector(s),
-              (i.Z -= this.vWr * ENTER_SWIM_BIGGER_THAN_THIS * 2),
+              GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+                this.Hte,
+                i,
+                -this.vWr * ENTER_SWIM_BIGGER_THAN_THIS * 2,
+              ),
               this.eKr(s, i)) ||
               (this.cBe.StopAllSkills(
                 "CharacterSwimComponent.DetectEnterWaterFromAir",
               ),
               this.iKr(s, e),
               this.Lie.AddTag(-104158548),
-              (h = this.Entity.GetComponent(160)) &&
+              (h = this.Entity.GetComponent(172)) &&
                 (this.EnterSwimFromAirBuffIndex = h.AddBuffLocal(
                   CharacterBuffIds_1.buffId.FallImmune,
                   {
@@ -786,14 +956,25 @@ let CharacterSwimComponent =
       }
     }
     JWr(t) {
-      t.Z = Math.abs(t.Z);
+      var i = GravityUtils_1.GravityUtils.GetZnInGravityForActor(this.Hte, t);
+      i < 0 &&
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(this.Hte, t, 2 * -i);
     }
     nKr(t, i, s) {
-      return !(
-        t.Z < i.Z ||
-        0 === this.YWr(t, i) ||
-        this.yWr.Z < s ||
-        (this.JWr(this.IWr), !this.rKr(this.IWr))
+      return (
+        t.Subtraction(i, this.cz),
+        !(
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.cz,
+          ) < 0 ||
+          0 === this.YWr(t, i) ||
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.yWr,
+          ) < s ||
+          (this.JWr(this.IWr), !this.rKr(this.IWr))
+        )
       );
     }
     sKr() {
@@ -802,13 +983,40 @@ let CharacterSwimComponent =
         i = this.AWr;
       return (
         t.DeepCopy(this.fWr),
-        (t.Z = this.MWr.Z + this.vWr),
-        i.Set(this.fWr.X, this.fWr.Y, this.fWr.Z - this.vWr),
-        !!this.nKr(t, i, this.fWr.Z) &&
-          ((i.Z -= this.vWr * ENTER_SWIM_BIGGER_THAN_THIS * 2),
+        GravityUtils_1.GravityUtils.SetZnInGravityForActor(
+          this.Hte,
+          t,
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.MWr,
+          ) + this.vWr,
+        ),
+        i.DeepCopy(this.fWr),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.Hte,
+          i,
+          -this.vWr,
+        ),
+        !!this.nKr(
+          t,
+          i,
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.fWr,
+          ),
+        ) &&
+          (GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.Hte,
+            i,
+            -this.vWr * ENTER_SWIM_BIGGER_THAN_THIS * 2,
+          ),
           !this.eKr(t, i, 1)) &&
           (this.bWr(),
-          this.fWr.Z - this.yWr.Z < -this.vWr &&
+          this.fWr.Subtraction(this.yWr, this.cz),
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.cz,
+          ) < -this.vWr &&
             this.Hte.SetActorLocation(
               this.yWr.ToUeVector(),
               "游泳.入水位置修正",
@@ -816,64 +1024,104 @@ let CharacterSwimComponent =
             ),
           this.IsDebug &&
             (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Movement", 58, "[游泳组件]触发空中入水"),
+              Log_1.Log.Info("Movement", 57, "[游泳组件]触发空中入水"),
             this.oKr(CharacterSwimUtils.DebugColor2)),
           !0)
       );
     }
     aKr() {
       var t = this.UWr,
-        i = this.AWr,
-        s =
-          (t.FromUeVector(this.fWr),
-          (t.Z = this.MWr.Z + this.vWr),
-          i.Set(this.fWr.X, this.fWr.Y, this.fWr.Z - this.vWr),
-          this.fWr.Z + (1 - ENTER_SWIM_BIGGER_THAN_THIS) * this.vWr * 2);
+        i = this.AWr;
       return (
-        !!this.nKr(t, i, s) &&
-        (this.bWr(),
-        this.IsDebug &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Movement", 58, "[游泳组件]触发地面入水"),
-          this.oKr(CharacterSwimUtils.DebugColor2)),
-        !0)
+        t.DeepCopy(this.fWr),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.Hte,
+          t,
+          this.vWr,
+        ),
+        i.DeepCopy(this.fWr),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.Hte,
+          i,
+          -this.vWr,
+        ),
+        !!this.nKr(
+          t,
+          i,
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.fWr,
+          ) +
+            (1 - ENTER_SWIM_BIGGER_THAN_THIS) * this.vWr * 2,
+        ) &&
+          (this.bWr(),
+          this.IsDebug &&
+            (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Movement", 57, "[游泳组件]触发地面入水"),
+            this.oKr(CharacterSwimUtils.DebugColor2)),
+          !0)
       );
     }
     lKr() {
       var t;
       return (
         3 !== this.RWr.GetTsClimbState().攀爬状态 &&
-        ((t = this.cz).FromUeVector(this.pWr),
+        ((t = this.cz).DeepCopy(this.yV_),
         t.Multiply(this.vWr, t),
-        t.Addition(this.MWr, this.UWr),
-        this.AWr.Set(this.fWr.X, this.fWr.Y, this.fWr.Z - this.vWr),
-        (t = this.fWr.Z + CLIMB_CHECK_ENTER_WATER_RATE * this.vWr),
-        !!this.nKr(this.UWr, this.AWr, t)) &&
+        this.MWr.Addition(t, this.UWr),
+        this.fWr.Subtraction(t, this.AWr),
+        !!this.nKr(
+          this.UWr,
+          this.AWr,
+          GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.fWr,
+          ) +
+            CLIMB_CHECK_ENTER_WATER_RATE * this.vWr,
+        )) &&
         !this.eKr(this.UWr, this.AWr, 1) &&
         (this.bWr(),
         this.IsDebug &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Movement", 58, "[游泳组件]触发攀爬入水"),
+            Log_1.Log.Info("Movement", 57, "[游泳组件]触发攀爬入水"),
           this.oKr(CharacterSwimUtils.DebugColor2)),
         !0)
       );
     }
     _Kr() {
       var t = this.UWr,
-        i = (this.pWr.Multiply(this.iOa, t), t.Addition(this.fWr, t), this.AWr),
+        i = (this.yV_.Multiply(this.ika, t), t.Addition(this.fWr, t), this.AWr),
         t =
-          (this.pWr.Multiply(this.vWr, i),
+          (this.yV_.Multiply(this.vWr, i),
           i.Addition(this.fWr, i),
-          this.nKr(t, i, i.Z));
-      if (t) {
-        i = this.eKr(i, this.yWr);
-        if (i)
-          if (
-            ModelManager_1.ModelManager.TraceElementModel.GetActorTrace().HitResult.ImpactPointZ_Array.Get(
+          this.nKr(
+            t,
+            i,
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(this.Hte, i),
+          ));
+      if (t && this.eKr(i, this.yWr)) {
+        var i = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace(),
+          i =
+            (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
+              i.HitResult,
               0,
-            ) < this.Mao.HitResult.ImpactPointZ_Array.Get(0)
-          )
-            return this.FWr(), !1;
+              this.cz,
+            ),
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+              this.Hte,
+              this.cz,
+            )),
+          s =
+            (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
+              this.Mao.HitResult,
+              0,
+              this.cz,
+            ),
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+              this.Hte,
+              this.cz,
+            ));
+        if (i < s) return this.FWr(), !1;
       }
       return t;
     }
@@ -883,7 +1131,7 @@ let CharacterSwimComponent =
         t &&
           (this.bWr(), this.IsDebug) &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Movement", 58, "[游泳组件]触发保底的向上探测入水"),
+            Log_1.Log.Info("Movement", 57, "[游泳组件]触发保底的向上探测入水"),
           this.oKr(CharacterSwimUtils.DebugColor2)),
         t
       );
@@ -894,7 +1142,7 @@ let CharacterSwimComponent =
         ((this.Gce.FallingIntoWater = !1),
         this.Lie.RemoveTag(-104158548),
         this.EnterSwimFromAirBuffIndex) &&
-        (this.Entity.GetComponent(160)?.RemoveBuffByHandle(
+        (this.Entity.GetComponent(172)?.RemoveBuffByHandle(
           this.EnterSwimFromAirBuffIndex,
           -1,
           "空中入水结束",
@@ -929,22 +1177,25 @@ let CharacterSwimComponent =
     }
     rKr(t) {
       return (
-        MathUtils_1.MathUtils.DotProduct(t, Vector_1.Vector.ZAxisVector) >
-        COS_EIGHTY
+        MathUtils_1.MathUtils.DotProduct(t, this.Gce.GravityUp) > COS_EIGHTY
       );
     }
     uWr() {
-      (this.BuffIndex = BigInt(0)), (this.SprintSwimOffset = 0);
+      (this.BuffIndex = 0), (this.SprintSwimOffset = 0);
     }
     QWr() {
       this.Lie.HasTag(855966206) &&
         (this.LWr && !this.rKr(this.IWr)
-          ? (this.Gce.CharacterMovement.SetMovementMode(3, 0),
+          ? (this.Hte?.Actor.KuroSetMovementMode({
+              Mode: 3,
+              CustomMode: 0,
+              Context: "[CharacterSwimComponent.CheckSwimState] 1",
+            }),
             this.IsDebug &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Movement",
-                  58,
+                  57,
                   "[游泳组件]触发水面角度不够游泳支持触发出水",
                   ["水面法线:", this.IWr],
                 ),
@@ -952,12 +1203,16 @@ let CharacterSwimComponent =
           : this.LWr || this.Gce.FallingIntoWater
             ? this.Depth <= LEAVE_SWIM_LESS_THAN_THIS &&
               (1 === this.EWr
-                ? (this.Gce.CharacterMovement.SetMovementMode(1, 0),
+                ? (this.Hte?.Actor.KuroSetMovementMode({
+                    Mode: 1,
+                    CustomMode: 0,
+                    Context: "[CharacterSwimComponent.CheckSwimState] 3",
+                  }),
                   this.IsDebug &&
                     (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Movement",
-                        58,
+                        57,
                         "[游泳组件]触发碰撞并且游泳深度不够触发出水",
                         ["当前深度:", this.Depth],
                         ["出水深度:", LEAVE_SWIM_LESS_THAN_THIS],
@@ -971,13 +1226,17 @@ let CharacterSwimComponent =
                   ))
             : this._Kr()
               ? (this.Depth = SWIMMING_MAX_DEPTH)
-              : (this.Gce.CharacterMovement.SetMovementMode(1, 0),
+              : (this.Hte?.Actor.KuroSetMovementMode({
+                  Mode: 1,
+                  CustomMode: 0,
+                  Context: "[CharacterSwimComponent.CheckSwimState] 2",
+                }),
                 this.uWr(),
                 this.IsDebug &&
                   (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Movement",
-                      58,
+                      57,
                       "[游泳组件]游泳向上探测出水未有水面触发出水",
                     ),
                   this.oKr(CharacterSwimUtils.DebugColor3))));
@@ -992,7 +1251,13 @@ let CharacterSwimComponent =
       return this.tKr(t, i)
         ? (this.IsDebug &&
             this.cKr(this.yWr.ToUeVector(), CharacterSwimUtils.DebugColor2),
-          ((t.Z - i.Z) * (1 - this.TWr)) / (2 * this.vWr))
+          t.Subtraction(i, this.pz),
+          (GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            this.Hte,
+            this.pz,
+          ) *
+            (1 - this.TWr)) /
+            (2 * this.vWr))
         : 0;
     }
     _Wr() {
@@ -1006,12 +1271,24 @@ let CharacterSwimComponent =
             this.lWr,
           )),
           (this.BuffIndex = t))
-        : (this.BuffIndex = BigInt(0));
+        : (this.BuffIndex = 0);
     }
     FWr() {
-      this.yWr && (this.yWr.Reset(), (this.yWr.Z = MIN_DEPTH)),
-        this.IWr && this.IWr.Reset(),
-        this.SWr && (this.SWr.Reset(), (this.SWr.Z = MIN_DEPTH));
+      this.yWr && this.yWr.Reset(),
+        this.IWr &&
+          (this.IWr.Reset(),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.Hte,
+            this.IWr,
+            MIN_DEPTH,
+          )),
+        this.SWr &&
+          (this.SWr.Reset(),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.Hte,
+            this.SWr,
+            MIN_DEPTH,
+          ));
     }
     GetWaterLocation() {
       return this.SWr.ToUeVector();
@@ -1039,7 +1316,7 @@ let CharacterSwimComponent =
           this.JWr(this.IWr),
           (i = Vector_1.Vector.Create(this.IWr)),
           (s = Vector_1.Vector.Create()).FromUeVector(
-            this.Hte.SkeletalMesh.K2_GetComponentLocation(),
+            this.Hte.SkeletalMesh.D_K2_GetComponentLocation(),
           ),
           (e = Vector_1.Vector.Create(this.Hte.ActorVelocityProxy)),
           {
@@ -1052,9 +1329,9 @@ let CharacterSwimComponent =
         );
     }
     oKr(t) {
-      UE.KismetSystemLibrary.DrawDebugCapsule(
+      UE.KismetSystemLibrary.D_DrawDebugCapsule(
         this.Hte.Actor,
-        this.Hte.Actor.K2_GetActorLocation(),
+        this.Hte.Actor.D_K2_GetActorLocation(),
         this.Hte.Actor.CapsuleComponent.CapsuleHalfHeight,
         this.Hte.Actor.CapsuleComponent.CapsuleRadius,
         this.Hte.Actor.K2_GetActorRotation(),
@@ -1064,7 +1341,7 @@ let CharacterSwimComponent =
       );
     }
     cKr(t, i) {
-      UE.KismetSystemLibrary.DrawDebugSphere(
+      UE.KismetSystemLibrary.D_DrawDebugSphere(
         this.Hte.Actor,
         t,
         this.Hte.Actor.CapsuleComponent.CapsuleHalfHeight,
@@ -1075,14 +1352,14 @@ let CharacterSwimComponent =
       );
     }
     SetDebug(t) {
-      (this.IsDebug = t), this.Mao.SetDrawDebugTrace(this.IsDebug ? 1 : 0);
+      (this.IsDebug = t), this.Mao.SetDrawDebugTrace(this.IsDebug ? 2 : 0);
     }
     LogSwimTriggerCount() {
       this.IsDebug &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Movement",
-          58,
+          57,
           "[游泳组件] 当前进入游泳盒子数量:",
           ["actor", this.Hte?.Actor?.GetName()],
           ["count", this.InSwimTriggerCount],
@@ -1093,7 +1370,7 @@ let CharacterSwimComponent =
   (CharacterSwimComponent.UseSwimTrigger = !1),
   (CharacterSwimComponent = CharacterSwimComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(69)],
+      [(0, RegisterComponent_1.RegisterComponent)(76)],
       CharacterSwimComponent,
     )),
   (exports.CharacterSwimComponent = CharacterSwimComponent);

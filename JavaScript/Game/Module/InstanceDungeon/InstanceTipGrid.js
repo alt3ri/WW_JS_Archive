@@ -12,6 +12,7 @@ class InstanceTipGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.NUe = 0),
+      (this.dT1 = !1),
       (this.sOe = void 0),
       (this.s_i = !0),
       (this.a_i = !1),
@@ -34,7 +35,11 @@ class InstanceTipGrid extends GridProxyAbstract_1.GridProxyAbstract {
     this.h_i.length = 0;
   }
   Refresh(t) {
-    t && (this.NUe = t), this.Yli(), this.l_i(), this.__i();
+    t && (this.NUe = t.InstanceId),
+      (this.dT1 = t?.IsDouble ?? !1),
+      this.Yli(),
+      this.l_i(),
+      this.__i();
   }
   ClearGrid() {
     for (const t of this.h_i) t.Destroy();
@@ -49,7 +54,7 @@ class InstanceTipGrid extends GridProxyAbstract_1.GridProxyAbstract {
           t.CustomTypes,
         ),
       t =
-        (this.GetItem(4).SetUIActive(void 0 !== t),
+        (this.GetItem(4).SetUIActive(void 0 !== t || this.dT1),
         ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetInstanceRewardId(
           this.NUe,
         )),

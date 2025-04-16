@@ -6,7 +6,8 @@ const AudioController_1 = require("../../../Core/Audio/AudioController"),
   IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  LevelGeneralBase_1 = require("../LevelGeneralBase");
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  LevelGeneralCommons_1 = require("../LevelGeneralCommons");
 class LevelEventCollect extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     let r = void 0;
@@ -23,24 +24,28 @@ class LevelEventCollect extends LevelGeneralBase_1.LevelEventBase {
     var n;
     r &&
       ((n = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(r))
-        ? (n = n.Entity?.GetComponent(0)) &&
-          (n = n.GetPbEntityInitData()) &&
-          (n = (0, IComponent_1.getComponent)(
-            n.ComponentsData,
-            "InteractAudioComponent",
-          )) &&
-          n.InteractEventConfig &&
-          (n = n.InteractEventConfig.CollectAkEvent) &&
-          ((n =
-            ConfigManager_1.ConfigManager.AudioConfig?.GetAudioPath(n)?.Path)
-            ? AudioController_1.AudioController.PostEvent(n, void 0)
-            : Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "Audio",
-                7,
-                "[Audio][LevelEventCollect]collect 未找到资源",
-                ["eventPath", n],
-              ))
+        ? (o?.IsClientPrePerform &&
+            LevelGeneralCommons_1.LevelGeneralCommons.ChangeToDestroyState(
+              ModelManager_1.ModelManager.CreatureModel.GetPbDataIdByEntity(n),
+            ),
+          (n = n.Entity?.GetComponent(0)) &&
+            (n = n.GetPbEntityInitData()) &&
+            (n = (0, IComponent_1.getComponent)(
+              n.ComponentsData,
+              "InteractAudioComponent",
+            )) &&
+            n.InteractEventConfig &&
+            (n = n.InteractEventConfig.CollectAkEvent) &&
+            ((n =
+              ConfigManager_1.ConfigManager.AudioConfig?.GetAudioPath(n)?.Path)
+              ? AudioController_1.AudioController.PostEvent(n, void 0)
+              : Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Audio",
+                  7,
+                  "[Audio][LevelEventCollect]collect 未找到资源",
+                  ["eventPath", n],
+                )))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelEvent",

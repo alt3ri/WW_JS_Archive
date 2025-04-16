@@ -31,6 +31,12 @@ class TreasureBoxDetectorMark {
   get Scale() {
     return this.scale();
   }
+  get TrackHudEnable() {
+    return this.trackhudenable();
+  }
+  get TrackAutoCancelDistance() {
+    return this.trackautocanceldistance();
+  }
   __init(t, r) {
     return (this.z7 = t), (this.J7 = r), this;
   }
@@ -45,16 +51,34 @@ class TreasureBoxDetectorMark {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markpic(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 6),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   marktitle(t) {
-    var r = this.J7.__offset(this.z7, 8);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 8),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   markdesc(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 10),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   showpriority() {
     var t = this.J7.__offset(this.z7, 12);
@@ -84,6 +108,14 @@ class TreasureBoxDetectorMark {
   scale() {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
+  }
+  trackhudenable() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  trackautocanceldistance() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.readFloat32(this.z7 + t) : -1;
   }
 }
 exports.TreasureBoxDetectorMark = TreasureBoxDetectorMark;

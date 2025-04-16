@@ -7,7 +7,6 @@ const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   LordGymById_1 = require("../../../Core/Define/ConfigQuery/LordGymById"),
   LordGymEntranceAll_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceAll"),
   LordGymEntranceById_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceById"),
-  LordGymEntranceByMarkId_1 = require("../../../Core/Define/ConfigQuery/LordGymEntranceByMarkId"),
   LordGymFilterTypeAll_1 = require("../../../Core/Define/ConfigQuery/LordGymFilterTypeAll"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class LordGymConfig extends ConfigBase_1.ConfigBase {
@@ -25,9 +24,6 @@ class LordGymConfig extends ConfigBase_1.ConfigBase {
   }
   GetLordGymEntranceConfig(r) {
     return LordGymEntranceById_1.configLordGymEntranceById.GetConfig(r);
-  }
-  GetLordGymEntranceConfigByMarkId(r) {
-    return LordGymEntranceByMarkId_1.configLordGymEntranceByMarkId.GetConfig(r);
   }
   GetLordGymEntranceLordList(r) {
     return LordGymEntranceById_1.configLordGymEntranceById.GetConfig(r)

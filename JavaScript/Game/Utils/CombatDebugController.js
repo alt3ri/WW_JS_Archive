@@ -19,41 +19,27 @@ const cpp_1 = require("cpp"),
   game = {},
   REFRESH_SERVER_INFO_PERIOD = 300;
 class CombatDebugController extends ControllerBase_1.ControllerBase {
-  static CombatInfo(t, e, o, ...r) {
-    CombatLog_1.CombatLog.Info(t, e, o, ...r);
+  static CombatInfoMessage(e, t, r) {
+    CombatLog_1.CombatLog.DebugCombatInfo.has(e) &&
+      this.lgr.get(t) &&
+      (r
+        ? ((r = `[Message][${e}][${t}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(r.F4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(r.Y8n)}]`),
+          Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 14, r))
+        : ((r = `[Message][${e}][${t}]`),
+          Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 14, r)));
   }
-  static CombatDebug(t, e, o) {}
-  static CombatDebugEx(t, e, o) {}
-  static CombatWarn(t, e, o, ...r) {
-    CombatLog_1.CombatLog.Warn(t, e, o, ...r);
-  }
-  static CombatError(t, e, o, ...r) {
-    CombatLog_1.CombatLog.Error(t, e, o, ...r);
-  }
-  static CombatErrorWithStack(t, e, o, r, ...a) {
-    CombatLog_1.CombatLog.ErrorWithStack(t, e, o, r, ...a);
-  }
-  static CombatInfoMessage(t, e, o) {
-    CombatLog_1.CombatLog.DebugCombatInfo &&
-      this.lgr.get(e) &&
-      (o
-        ? ((o = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.F4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.Y8n)}]`),
-          Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, o))
-        : ((o = `[Message][${t}][${e}]`),
-          Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, o)));
-  }
-  static CombatContextInfoMessage(t, e, o) {
-    CombatLog_1.CombatLog.DebugCombatInfo &&
-      this.lgr.get(e) &&
-      (o = o.K8n) &&
-      ((t = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.F4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.Y8n)}][MessageId:${MathUtils_1.MathUtils.LongToBigInt(o.$8n)}][PreMessageId:${MathUtils_1.MathUtils.LongToBigInt(o.X8n)}]`),
+  static CombatContextInfoMessage(e, t, r) {
+    CombatLog_1.CombatLog.DebugCombatInfo.has("Message") &&
+      this.lgr.get(t) &&
+      (r = r.K8n) &&
+      ((e = `[Message][${e}][${t}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(r.F4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(r.Y8n)}][MessageId:${MathUtils_1.MathUtils.LongToBigInt(r.$8n)}][PreMessageId:${MathUtils_1.MathUtils.LongToBigInt(r.X8n)}]`),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("CombatInfo", 51, t);
+      Log_1.Log.Info("CombatInfo", 50, e);
   }
-  static FilterCmd(t) {
+  static FilterCmd(e) {
     return (
       CombatDebugController.ScriptHelper.Init(),
-      CombatDebugController.ScriptHelper.FilterCmd(t)
+      CombatDebugController.ScriptHelper.FilterCmd(e)
     );
   }
   static EvalScript(script) {
@@ -76,14 +62,14 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
         ret =
           (game,
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Character", 20, "脚本执行...", [
+            Log_1.Log.Info("Character", 19, "脚本执行...", [
               "代码",
               filteredScript,
             ]),
           String(eval(preProcess + filteredScript)));
       return (
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Character", 20, "脚本执行执行完成", ["返回值", ret]),
+          Log_1.Log.Info("Character", 19, "脚本执行执行完成", ["返回值", ret]),
         ret
       );
     } catch (error) {
@@ -91,7 +77,7 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "Editor",
-              20,
+              19,
               "脚本执行异常",
               error,
               ["err", error.name],
@@ -100,7 +86,7 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
           `${error.name}:${error.message}
 ` + error.stack)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("LocalStorage", 20, "脚本执行异常", [
+            Log_1.Log.Error("LocalStorage", 19, "脚本执行异常", [
               "error",
               error,
             ]),
@@ -108,9 +94,9 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
     }
   }
   static _gr() {
-    var t;
+    var e;
     UE.ThinkingAnalytics.HasInstanceInitialized(9) ||
-      ((t = new UE.CreateInstanceParam(
+      ((e = new UE.CreateInstanceParam(
         9,
         this.ugr,
         this.cgr,
@@ -132,22 +118,36 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
         !0,
         ThinkDataLaunchReporter_1.CALIBRATE_INTERVAL,
         ThinkDataLaunchReporter_1.CALIBRATE_STOP_TIMER,
+        !0,
       )),
-      UE.ThinkingAnalytics.CreateSimpleInstance(t));
+      UE.ThinkingAnalytics.CreateSimpleInstance(e));
   }
-  static DataReport(t, e) {
+  static DataReport(e, t) {
     ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS &&
       Info_1.Info.IsBuildDevelopmentOrDebug &&
-      (this._gr(), cpp_1.FThinkingAnalyticsForPuerts.Track(t, e, 9));
+      (this._gr(), cpp_1.FThinkingAnalyticsForPuerts.Track(e, t, 9));
+  }
+  static ui1() {
+    var e;
+    this.DebugEntityId &&
+      (e = EntitySystem_1.EntitySystem.Get(this.DebugEntityId)?.GetComponent(
+        188,
+      )) &&
+      e
+        .GetFormationBuffComp()
+        ?.Entity.GetComponent(22)
+        ?.ServerDebugInfoRequest();
   }
   static RefreshServerDebugInfo() {
-    var t;
+    var e;
     !this.DebugEntityId ||
-      !(t = EntitySystem_1.EntitySystem.Get(this.DebugEntityId)?.GetComponent(
-        20,
+      !(e = EntitySystem_1.EntitySystem.Get(this.DebugEntityId)?.GetComponent(
+        22,
       )) ||
       Time_1.Time.Now - this.c4t < REFRESH_SERVER_INFO_PERIOD ||
-      ((this.c4t = Time_1.Time.Now), t?.ServerDebugInfoRequest());
+      ((this.c4t = Time_1.Time.Now),
+      e?.ServerDebugInfoRequest(),
+      CombatDebugController.ui1());
   }
 }
 (exports.CombatDebugController = CombatDebugController),
@@ -188,5 +188,5 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
   (CombatDebugController.cgr = "773a58b321b8462e8431e0b3010bb3d3"),
   (CombatDebugController.ugr = "https://ali-sh-datareceiver.kurogame.xyz"),
   (CombatDebugController.c4t = 0),
-  (CombatDebugController.RYa = new Map());
+  (CombatDebugController.yeh = new Map());
 //# sourceMappingURL=CombatDebugController.js.map

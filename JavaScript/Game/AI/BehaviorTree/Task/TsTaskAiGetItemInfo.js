@@ -5,7 +5,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskAiGetItemInfo extends TsTaskAbortImmediatelyBase_1.default {
@@ -22,6 +22,15 @@ class TsTaskAiGetItemInfo extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsItemLocationBlackboardKey = ""),
       (this.TsUseNavigation = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.VectorArray = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsItemBlackboardKey = ""),
+      (this.TsItemDistanceBlackboardKey = ""),
+      (this.TsItemLocationBlackboardKey = ""),
+      (this.TsUseNavigation = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -31,53 +40,54 @@ class TsTaskAiGetItemInfo extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsUseNavigation = this.UseNavigation));
   }
   ReceiveExecuteAI(e, r) {
-    var o = e.AiController;
-    if (o) {
+    var i = e.AiController;
+    if (i) {
       this.InitTsVariables();
-      var o = o.CharActorComp,
-        i = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-          o.Entity.Id,
-          this.TsItemBlackboardKey,
-        ),
-        i = EntitySystem_1.EntitySystem.Get(i),
-        s = i.GetComponent(0);
-      if (s)
+      var i = i.CharActorComp,
+        s =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
+            i.Entity.Id,
+            this.TsItemBlackboardKey,
+          ),
+        s = EntitySystem_1.EntitySystem.Get(s),
+        o = s.GetComponent(0);
+      if (o)
         if (
-          void 0 === i ||
-          s.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_SceneItem
+          void 0 === s ||
+          o.GetEntityType() !== Protocol_1.Aki.Protocol.kks.Proto_SceneItem
         )
           this.FinishExecute(!1);
         else {
-          (s = i.GetComponent(187).ActorLocation),
-            (i =
+          (o = s.GetComponent(200).ActorLocation),
+            (s =
               (void 0 === this.VectorArray && (this.VectorArray = new Array()),
-              r.K2_GetActorLocation()));
+              r.D_K2_GetActorLocation()));
           let t = 0;
           (t = this.TsUseNavigation
             ? (AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
                 e,
-                i,
                 s,
+                o,
                 this.VectorArray,
               ),
               AiContollerLibrary_1.AiControllerLibrary.GetPathLength(
-                i,
+                s,
                 this.VectorArray,
               ))
-            : ((r = Vector_1.Vector.Create(s)),
-              (i = Vector_1.Vector.Create(i)),
-              r.SubtractionEqual(i).Size())),
-            BlackboardController_1.BlackboardController.SetFloatValueByEntity(
-              o.Entity.Id,
+            : ((r = Vector_1.Vector.Create(o)),
+              (s = Vector_1.Vector.Create(s)),
+              r.SubtractionEqual(s).Size())),
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetFloatValueByEntity(
+              i.Entity.Id,
               this.TsItemDistanceBlackboardKey,
               t,
             ),
-            BlackboardController_1.BlackboardController.SetVectorValueByEntity(
-              o.Entity.Id,
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
+              i.Entity.Id,
               this.TsItemLocationBlackboardKey,
-              s.X,
-              s.Y,
-              s.Z,
+              o.X,
+              o.Y,
+              o.Z,
             ),
             this.FinishExecute(!0);
         }

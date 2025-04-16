@@ -31,8 +31,8 @@ class FilterSortEntrance extends UiPanelBase_1.UiPanelBase {
         this.UpdateList,
       ));
   }
-  UpdateData(e, t) {
-    this.vpt.UpdateData(e, t), this.Mpt.UpdateData(e, t);
+  UpdateData(e, t, ...r) {
+    this.vpt.UpdateData(e, t, ...r), this.Mpt.UpdateData(e, t, ...r);
   }
   UpdateDataWithConfig(e, t, r) {
     this.vpt.UpdateData(e, r), this.Mpt.UpdateDataWithConfig(e, t, r);

@@ -1,20 +1,20 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, i, h) {
-    var s,
+  function (t, e, i, s) {
+    var h,
       r = arguments.length,
       a =
         r < 3
           ? e
-          : null === h
-            ? (h = Object.getOwnPropertyDescriptor(e, i))
-            : h;
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      a = Reflect.decorate(t, e, i, h);
+      a = Reflect.decorate(t, e, i, s);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (s = t[n]) && (a = (r < 3 ? s(a) : 3 < r ? s(e, i, a) : s(e, i)) || a);
+        (h = t[n]) && (a = (r < 3 ? h(a) : 3 < r ? h(e, i, a) : h(e, i)) || a);
     return 3 < r && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -35,18 +35,18 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
       (this.CurrentHandle = 0);
   }
   OnStart() {
-    return (this.rJo = this.Entity.GetComponent(161)), !0;
+    return (this.rJo = this.Entity.GetComponent(173)), !0;
   }
   PreSwitchRemoteFightState(t) {
     var e = t >> 8,
       t = 255 & t,
-      i = this.g5r(e, t, !1);
+      i = this.CheckSwitchState(e, t, !1);
     return (
       i ||
         CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
-          `预算切换状态失败，目标[[${e}][${t}]，当前[${this.CurrentState}][${this.SubStatePriority}]`,
+          `预切换状态失败，${this.IF_(e, t)}，` + this.TF_(),
         ),
       i
     );
@@ -55,63 +55,91 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
     if (7 === t) return this.TrySwitchState(4, 0, e);
     if (
       e &&
-      this.rJo.MoveState ===
-        CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp &&
       this.rJo.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Air
     )
       return this.TrySwitchState(2, 2, e);
     switch (t) {
       case 4:
-        return this.TrySwitchState(2, 2, e);
       case 5:
+        return this.TrySwitchState(2, 2, e);
+      case 6:
         return this.TrySwitchState(2, 1, e);
     }
     return this.TrySwitchState(2, 0, e);
   }
-  TrySwitchSkillState(t, e = !1) {
-    let i = t.InterruptLevel;
+  TrySwitchSkillState(t, e, i = !1) {
+    let s = t;
     return (
-      255 < i && (i = 255),
-      1 === t.OverrideType
-        ? this.TrySwitchState(3, i, e)
-        : 2 === t.OverrideType
-          ? this.TrySwitchState(5, i, e)
-          : 3 === t.OverrideType
-            ? this.TrySwitchState(7, i, e)
-            : this.TrySwitchState(1, i, e)
+      255 < s && (s = 255),
+      1 === e.OverrideType
+        ? this.TrySwitchState(3, s, i)
+        : 2 === e.OverrideType
+          ? this.TrySwitchState(5, s, i)
+          : 3 === e.OverrideType
+            ? this.TrySwitchState(7, s, i)
+            : this.TrySwitchState(1, s, i)
     );
   }
-  g5r(t, e, i = !1) {
+  CheckSwitchHitState(t, e = !1) {
+    if (7 === t) return this.CheckSwitchState(4, 0, e);
+    if (
+      e &&
+      this.rJo.PositionState ===
+        CharacterUnifiedStateTypes_1.ECharPositionState.Air
+    )
+      return this.CheckSwitchState(2, 2, e);
+    switch (t) {
+      case 4:
+      case 5:
+        return this.CheckSwitchState(2, 2, e);
+      case 6:
+        return this.CheckSwitchState(2, 1, e);
+    }
+    return this.CheckSwitchState(2, 0, e);
+  }
+  SwitchHitState(t, e = !1) {
+    if (7 === t) return this.p5r(4, 0, e);
+    if (
+      e &&
+      this.rJo.PositionState ===
+        CharacterUnifiedStateTypes_1.ECharPositionState.Air
+    )
+      return this.p5r(2, 2, e);
+    switch (t) {
+      case 4:
+      case 5:
+        return this.p5r(2, 2, e);
+      case 6:
+        return this.p5r(2, 1, e);
+    }
+    return this.p5r(2, 0, e);
+  }
+  CheckSwitchState(t, e, i = !1) {
     return i
       ? this.f5r(this.CurrentState, this.SubStatePriority, t, e)
       : !this.WaitConfirm ||
           !this.f5r(t, e, this.CurrentState, this.SubStatePriority);
   }
-  f5r(t, e, i, h) {
+  f5r(t, e, i, s) {
     if (i !== t) return t < i;
-    if (h === e)
+    if (s === e)
       switch (i) {
         case 1:
         case 2:
         case 7:
           return !0;
       }
-    return e < h;
+    return e < s;
   }
   TrySwitchState(t, e, i = !1) {
-    return this.g5r(t, e, i)
-      ? (this.p5r(t, e, i),
-        CombatLog_1.CombatLog.Info(
-          "FightState",
-          this.Entity,
-          `切换主状态成功[handle:${this.CurrentHandle}][${t}][${e}][local:${i}]`,
-        ),
-        this.CurrentHandle)
+    return this.CheckSwitchState(t, e, i)
+      ? (this.p5r(t, e, i), this.CurrentHandle)
       : (CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
-          `切换主状态失败，目标[[${t}][${e}][local:${i}]，当前[${this.CurrentState}][${this.SubStatePriority}][local:${this.IsLocal}]`,
+          `切换${i ? "本地" : "远端"}主状态失败，${this.IF_(t, e)}，` +
+            this.TF_(),
         ),
         0);
   }
@@ -122,6 +150,11 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
       (this.IsLocal = i),
       (this.WaitConfirm = i),
       (this.CurrentHandle = ++this._Xe),
+      CombatLog_1.CombatLog.Info(
+        "FightState",
+        this.Entity,
+        `切换${i ? "本地" : "远端"}主状态成功，` + this.TF_(),
+      ),
       this.CurrentHandle
     );
   }
@@ -151,7 +184,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
       ? (CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
-          `退出主状态[handle:${t}][${this.CurrentState}]`,
+          "退出主状态，" + this.TF_(),
         ),
         (this.CurrentState = 0),
         (this.SubStatePriority = 0),
@@ -161,7 +194,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
       : CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
-          `退出主状态失败[handle:${t}][${this.CurrentState}]，当前[handle:${this.CurrentHandle}]`,
+          `退出主状态失败，[handle:${t}]，` + this.TF_(),
         );
   }
   GetFightState() {
@@ -169,9 +202,44 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
       ? (this.CurrentState << 8) | this.SubStatePriority
       : 0;
   }
+  TF_() {
+    return `[当前状态(${this.CurrentHandle}):${this.bF_(this.CurrentState, this.SubStatePriority)}]`;
+  }
+  IF_(t, e) {
+    return `[目标状态：${this.bF_(t, e)}]`;
+  }
+  bF_(t, e) {
+    let i = "";
+    switch (t) {
+      case 1:
+        i = `普通技能(${t}|${e})`;
+        break;
+      case 2:
+        i = `普通受击(${t}|${e})`;
+        break;
+      case 3:
+        i = `覆盖受击技能(${t}|${e})`;
+        break;
+      case 4:
+        i = `被弹反受击(${t}|${e})`;
+        break;
+      case 5:
+        i = `覆盖被弹反技能(${t}|${e})`;
+        break;
+      case 6:
+        i = `抓取(${t}|${e})`;
+        break;
+      case 7:
+        i = `特殊技能(${t}|${e})`;
+        break;
+      case 8:
+        i = `状态机主状态(${t}|${e})`;
+    }
+    return i;
+  }
 };
 (CharacterFightStateComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(48)],
+  [(0, RegisterComponent_1.RegisterComponent)(54)],
   CharacterFightStateComponent,
 )),
   (exports.CharacterFightStateComponent = CharacterFightStateComponent);

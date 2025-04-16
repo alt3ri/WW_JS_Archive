@@ -18,6 +18,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
           LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
           LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
           LocalStorageDefine_1.ELocalStoragePlayerKey.ForgingLevelKey,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.FlySkinRedDot,
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryAttributeItem,
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItem,
           LocalStorageDefine_1.ELocalStoragePlayerKey
@@ -28,10 +29,17 @@ class NewFlagModel extends ModelBase_1.ModelBase {
             .MoonChasingShopItemChecked,
           LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingRoleUnlock,
           LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingQuestUnlock,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.PersonalDataItem,
           LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
           LocalStorageDefine_1.ELocalStoragePlayerKey
             .RouletteAssemblyItemRedDot,
           LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.WeaponSkinRedDot,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.RoleSkinRedDot,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.DockyardListItemRead,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.PayShopTabItemChecked,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.FishingHandBookItemRecord,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.FishingShipSkinRecord,
         ]) {
           var e = LocalStorage_1.LocalStorage.GetPlayer(t),
             e = new Set(e || void 0);
@@ -76,7 +84,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
     if (!t)
       return (
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("NewFlag", 8, "该系统当前没有需要保存的New标签", [
+          Log_1.Log.Debug("NewFlag", 37, "该系统当前没有需要保存的New标签", [
             "System",
             e,
           ]),
@@ -85,7 +93,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
     if (!this.xta.get(e)) return !1;
     this.RGi.length = t.size;
     let o = 0;
-    for (const n of t) this.RGi[o++] = n;
+    for (const a of t) this.RGi[o++] = a;
     return (
       this.xta.set(e, !1), LocalStorage_1.LocalStorage.SetPlayer(e, this.RGi)
     );
@@ -97,7 +105,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "NewFlag",
-            8,
+            37,
             "该系统当前没有Set缓存,无法添加, 请检查是否初始化",
             ["System", e],
           ),
@@ -110,7 +118,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "NewFlag",
-            8,
+            37,
             "该系统当前没有Set缓存,无法删除, 请检查是否初始化",
             ["System", e],
           ),

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemLordGym = void 0);
-const LordGymController_1 = require("../../../Module/LordGym/LordGymController"),
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemLordGym extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, r) {
@@ -14,7 +14,7 @@ class OpenSystemLordGym extends OpenSystemBase_1.OpenSystemBase {
       case 1:
         t = r.EntityId;
     }
-    return LordGymController_1.LordGymController.OpenLordGymEntrance(
+    return ControllerHolder_1.ControllerHolder.LordGymController.OpenLordGymEntrance(
       e.BoardId,
       t,
     );

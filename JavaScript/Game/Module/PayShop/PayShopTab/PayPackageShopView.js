@@ -46,8 +46,9 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
       );
   }
   RefreshLoopScroll(e) {
-    (this.PayShopGoodsList =
-      ModelManager_1.ModelManager.PayShopModel.GetPayShopTabData(3, e)),
+    this.IsDestroyOrDestroying ||
+      ((this.PayShopGoodsList =
+        ModelManager_1.ModelManager.PayShopModel.GetPayShopTabData(3, e)),
       this.LoopScrollView.ReloadProxyData(
         this.GetProxyData,
         this.PayShopGoodsList.length,
@@ -59,14 +60,14 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
       this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0),
       this.CheckIfNeedShowPlayStationStoreIcon(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Shop", 11, "PayPackageShopView Reload");
+        Log_1.Log.Info("Shop", 10, "PayPackageShopView Reload"));
   }
   UpdateTabs(t) {
     const r = ModelManager_1.ModelManager.PayGiftModel.GetTabList();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Shop",
-        11,
+        10,
         "PayShop:TabView 页签数据",
         ["ViewName", this.GetViewName()],
         ["Data", r],
@@ -81,7 +82,7 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
       this.TabGroup.SelectToggleByIndex(t, !0);
     }),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Shop", 11, "PayShop:TabView 选择页签", [
+        Log_1.Log.Info("Shop", 10, "PayShop:TabView 选择页签", [
           "ViewName",
           this.GetViewName(),
         ]);
@@ -95,7 +96,7 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Shop",
-          11,
+          10,
           "PayPackageShopView ifNeedQueryProductInfoForce",
         ),
       await Promise.all([

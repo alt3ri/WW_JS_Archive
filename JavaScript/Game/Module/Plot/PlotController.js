@@ -36,7 +36,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
           e
             ? (ModelManager_1.ModelManager.PlotModel.GoBattleMaterial = e)
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Plot", 27, "剧情切人效果资产加载失败", [
+              Log_1.Log.Error("Plot", 26, "剧情切人效果资产加载失败", [
                 "path",
                 ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                   .PlotGoBattleMaterialPath,
@@ -82,6 +82,10 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.OnUpdateSceneTeam,
         PlotController.dLe,
       ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.GeneralLogicTreePrepareRollback,
+        PlotController.hpc,
+      ),
       this.PlotViewManager.RegisterEvent();
   }
   static OnRemoveEvents() {
@@ -113,6 +117,10 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.OnUpdateSceneTeam,
         PlotController.dLe,
       ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.GeneralLogicTreePrepareRollback,
+        PlotController.hpc,
+      ),
       this.PlotViewManager.UnRegisterEvent();
   }
   static OnClear() {
@@ -127,8 +135,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   static OnStartPlotNetwork(e) {
     PerfSightController_1.PerfSightController.IsEnable &&
       (cpp_1.FKuroPerfSightHelper.BeginExtTag("Plot"),
-      (this.Mwa = `Plot_${e.FlowListName}_` + e.FlowId),
-      cpp_1.FKuroPerfSightHelper.BeginExtTag(this.Mwa)),
+      (this.qwa = `Plot_${e.FlowListName}_` + e.FlowId),
+      cpp_1.FKuroPerfSightHelper.BeginExtTag(this.qwa)),
       (ModelManager_1.ModelManager.PlotModel.IsInPlot = !0),
       (ModelManager_1.ModelManager.PlotModel.PlotStartFrame =
         Time_1.Time.Frame),
@@ -145,10 +153,6 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       (ModelManager_1.ModelManager.PlotModel.PlotResult.FlowIncId =
         e.FlowIncId),
       e.IsBackground ||
-        "LevelD" === e.PlotLevel ||
-        "Prompt" === e.PlotLevel ||
-        this.PlotViewManager.ProtectPlotView(),
-      e.IsBackground ||
         ("LevelA" !== e.PlotLevel && "LevelB" !== e.PlotLevel) ||
         ModelManager_1.ModelManager.PlotModel.SetInPlotGameBudget(!0),
       EventSystem_1.EventSystem.Emit(
@@ -159,8 +163,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   static OnEndPlotNetwork() {
     PerfSightController_1.PerfSightController.IsEnable &&
       (cpp_1.FKuroPerfSightHelper.EndExtTag("Plot"),
-      cpp_1.FKuroPerfSightHelper.EndExtTag(this.Mwa),
-      (this.Mwa = "")),
+      cpp_1.FKuroPerfSightHelper.EndExtTag(this.qwa),
+      (this.qwa = "")),
       (ModelManager_1.ModelManager.PlotModel.KeepBgAudio = !1),
       ModelManager_1.ModelManager.PlotModel.ResetAudioState(),
       (ModelManager_1.ModelManager.PlotModel.IsInPlot = !1),
@@ -211,12 +215,6 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   static OpenPlotView(e, t, o) {
     this.PlotViewManager.OpenPlotView(e, t, o);
   }
-  static ProtectPlotView() {
-    this.PlotViewManager.ProtectPlotView();
-  }
-  static UnProtectPlotView() {
-    this.PlotViewManager.UnProtectPlotView();
-  }
   static OpenCurrentPlotView(e, t) {
     let o = void 0;
     switch (ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel) {
@@ -239,17 +237,23 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     this.PlotViewManager.RemoveCallback(e);
   }
   static HandleShowCenterText(e) {
-    e = e ? "PlotTransitionViewPop" : "PlotTransitionView";
-    UiManager_1.UiManager.IsViewShow(e)
+    var t = e ? "PlotTransitionViewPop" : "PlotTransitionView";
+    UiManager_1.UiManager.IsViewShow(t)
       ? EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.UpdatePlotCenterText,
         )
-      : UiManager_1.UiManager.IsViewOpen(e) ||
-        UiManager_1.UiManager.OpenView(e, void 0, () => {
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.UpdatePlotCenterText,
-          );
-        });
+      : UiManager_1.UiManager.IsViewOpen(t) ||
+        (e
+          ? UiManager_1.UiManager.OpenView(t, void 0, () => {
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.UpdatePlotCenterText,
+              );
+            })
+          : UiManager_1.UiManager.OpenViewByPlot(t, void 0, () => {
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.UpdatePlotCenterText,
+              );
+            }));
   }
   static ShowTipsView(e, t) {
     return (
@@ -260,17 +264,42 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       !0)
     );
   }
-  static ShowSystemOption(e, t) {
-    if ("RogueRandomEvent" === e.OptionConfig.Type) {
-      const o = e.OptionConfig;
-      e = {
-        BindId: o.EventId,
-        SelectCallback: (e) => {
-          t(e, o.SystemOptions[e].Actions);
-        },
-      };
-      UiManager_1.UiManager.OpenView("RoguelikeRandomEventView", e);
-    }
+  static ShowSystemOption(e, o) {
+    const r = e;
+    "RogueRandomEvent" === r.OptionConfig.Type
+      ? ((e = {
+          BindId: r.OptionConfig.EventId,
+          SelectCallback: (t) => {
+            o(
+              r.Options.findIndex((e) => e.TypeParams.OptionId === t),
+              r.Options.find((e) => e.TypeParams.OptionId === t).Actions,
+            );
+          },
+        }),
+        UiManager_1.UiManager.OpenView("RoguelikeRandomEventView", e))
+      : "GravityControl" === r.OptionConfig.Type
+        ? UiManager_1.UiManager.IsViewOpen("GravityFlipView")
+          ? EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.OnGravityFlipAnimFinish,
+            )
+          : ((e = {
+              SelectCallback: (e) => {
+                o(e, []);
+              },
+            }),
+            UiManager_1.UiManager.OpenView("GravityFlipView", e))
+        : "PermanentRogueRandomEvent" === r.OptionConfig.Type &&
+          (e = r.OptionConfig) &&
+          ((e = {
+            BindId: e.EventId,
+            SelectCallback: (t) => {
+              o(
+                r.Options.findIndex((e) => e.TypeParams.OptionId === t),
+                r.Options.find((e) => e.TypeParams.OptionId === t).Actions,
+              );
+            },
+          }),
+          UiManager_1.UiManager.OpenView("RoguelikeRandomEventView", e));
   }
   static HandleSeqPlayerInput(e, t) {
     var o, r;
@@ -299,8 +328,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     t &&
       !this.TYi.has(t.Id) &&
       (this.TYi.add(t.Id),
-      (e = t?.Entity?.GetComponent(160)),
-      (t = t?.Entity?.GetComponent(190)) &&
+      (e = t?.Entity?.GetComponent(172)),
+      (t = t?.Entity?.GetComponent(203)) &&
         (t.HasTag(this.LYi) || t.AddTag(this.LYi),
         t.HasTag(this.DYi) || t.AddTag(this.DYi)),
       e?.AddBuff(CharacterBuffIds_1.buffId.StoryInvincibleCommon, {
@@ -316,8 +345,8 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     this.TYi.clear();
   }
   static RYi(e, t) {
-    var o = e?.GetComponent(160),
-      e = e?.GetComponent(190);
+    var o = e?.GetComponent(172),
+      e = e?.GetComponent(203);
     t && (e?.RemoveTag(this.LYi), e?.RemoveTag(this.DYi)),
       o?.RemoveBuff(
         CharacterBuffIds_1.buffId.StoryInvincibleCommon,
@@ -363,12 +392,12 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     if (e) {
       var o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
       if (!o) return this.EndInteraction(), !1;
-      var r = o.Entity.GetComponent(182);
+      var r = o.Entity.GetComponent(195);
       if (!r) return this.EndInteraction(), !1;
       if (!r.IsPawnInteractive()) return this.EndInteraction(), !1;
       (ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity = o),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Interaction", 37, "设置当前交互目标", [
+          Log_1.Log.Debug("Interaction", 36, "设置当前交互目标", [
             "EntityId",
             e,
           ]),
@@ -378,7 +407,6 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         );
       const l = r.GetInteractController();
       (ModelManager_1.ModelManager.PlotModel.InteractController = l),
-        this.ProtectPlotView(),
         this.OpenPlotView("PlotView", (e) => {
           t &&
             e &&
@@ -395,7 +423,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         });
     } else
       this.EndInteraction(),
-        Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 18, "交互目标为空");
+        Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 17, "交互目标为空");
     return !0;
   }
   static EndInteractionByInteractController(e) {
@@ -410,7 +438,6 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         ? this.ClearUi()
         : (ModelManager_1.ModelManager.PlotModel.ResetAudioState(),
           CameraController_1.CameraController.ExitDialogMode(),
-          this.UnProtectPlotView(),
           this.CloseAllUi(),
           InputDistributeController_1.InputDistributeController.RefreshInputTag(),
           this.TogglePlotProtect(!1)),
@@ -420,14 +447,14 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
             EventDefine_1.EEventName.OnInteractPlotEnd,
           ),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Interaction", 37, "清空当前交互目标", [
+            Log_1.Log.Debug("Interaction", 36, "清空当前交互目标", [
               "EntityId",
               ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity.Id,
             ]),
           (ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity =
             void 0))
         : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Interaction", 37, "当前交互目标为空"));
+          Log_1.Log.Warn("Interaction", 36, "当前交互目标为空"));
   }
   static SetBackInteractionAfterFlow() {
     ModelManager_1.ModelManager.PlotModel.IsBackInteractionAfterFlow = !0;
@@ -476,7 +503,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            46,
+            45,
             "[PlotController.StartPlotNetwork] 无法找到对应剧情的ShowCenterText行为",
             ["FlowListName", e.FlowListName],
             ["FlowId", e.FlowId],
@@ -486,7 +513,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            46,
+            45,
             "[PlotController.StartPlotNetwork] 无法找到对应剧情的状态",
             ["FlowListName", e.FlowListName],
             ["FlowId", e.FlowId],
@@ -508,7 +535,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            46,
+            45,
             "[PlotController.StartPlotNetwork] 无法找到对应剧情的ShowCenterText行为",
             ["FlowListName", e.FlowListName],
             ["FlowId", e.FlowId],
@@ -518,7 +545,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            46,
+            45,
             "[PlotController.StartPlotNetwork] 无法找到对应剧情的状态",
             ["FlowListName", e.FlowListName],
             ["FlowId", e.FlowId],
@@ -553,6 +580,22 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         e,
       );
   }
+  static HideSummonedEntity() {
+    ModelManager_1.ModelManager.SceneTeamModel?.GetTeamEntities().forEach(
+      (e) => {
+        if (e?.Valid)
+          for (const o of e.Entity.GetComponent(0).CustomServerEntityIds) {
+            var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
+            t?.Valid &&
+              ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
+                t.Entity,
+                !1,
+                "剧情隐藏伴生物",
+              );
+          }
+      },
+    );
+  }
   static TestOpenTick(e) {
     this.TestId = this.AddTick(e);
   }
@@ -574,13 +617,64 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Event",
-              27,
+              26,
               "PlotModel Tick 异常",
               ["name", t],
               ["error", e],
             );
         }
       });
+  }
+  static RequestChangeRole() {
+    let e = -1;
+    for (const o of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(
+      !0,
+    )) {
+      var t = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(
+        o.GetConfigId,
+      );
+      if (t)
+        if (ModelManager_1.ModelManager.RoleModel.IsMainRole(t)) {
+          if (!o.IsDead()) {
+            e = o.GetCreatureDataId();
+            break;
+          }
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Plot", 45, "RequestChangeRole:主角角色已死亡", [
+              "id",
+              o.GetCreatureDataId(),
+            ]);
+        } else
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Plot", 45, "RequestChangeRole:非主角角色", [
+              "id",
+              o.GetCreatureDataId(),
+            ]);
+    }
+    -1 === e
+      ? Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Plot", 45, "RequestChangeRole:主角ID不存在", ["id", e])
+      : ControllerHolder_1.ControllerHolder.SceneTeamController.RequestChangeRole(
+          e,
+          {
+            GoBattleInvincible: !0,
+            OpenClientAuthorityCheck: !0,
+            CanUseGoBattleSkill: !1,
+          },
+        );
+  }
+  static RestoreChangeRole() {
+    var e = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+      e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerData(e)
+        ?.GetGroup(1)
+        ?.GetCurrentRole();
+    e
+      ? ControllerHolder_1.ControllerHolder.SceneTeamController.RequestChangeRole(
+          e.CreatureDataId,
+          { GoBattleInvincible: !0, CanUseGoBattleSkill: !1 },
+        )
+      : Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Plot", 45, "RestoreChangeRole: 找不到切回角色");
   }
 }
 ((exports.PlotController = PlotController).PlotViewManager =
@@ -593,7 +687,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   (PlotController.UYi = 0),
   (PlotController.PYi = new Map()),
   (PlotController.AYi = 0),
-  (PlotController.Mwa = ""),
+  (PlotController.qwa = ""),
   (PlotController.SYi = () => {
     ModelManager_1.ModelManager.PlotModel.IsInPlot &&
       ((ModelManager_1.ModelManager.PlotModel.PlotResult.ResultCode = 1),
@@ -635,6 +729,14 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   (PlotController.dLe = () => {
     3 === ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType &&
       PlotController.ProtectCurrentRole();
+  }),
+  (PlotController.hpc = (e) => {
+    ModelManager_1.ModelManager.PlotModel.IsInPlot &&
+      6 === ModelManager_1.ModelManager.PlotModel.CurContext?.Type &&
+      ModelManager_1.ModelManager.PlotModel.CurContext.TreeConfigId === e &&
+      ControllerHolder_1.ControllerHolder.FlowController.FinishFlow(
+        "任务树回退打断剧情",
+      );
   }),
   (PlotController.TestId = 0);
 //# sourceMappingURL=PlotController.js.map

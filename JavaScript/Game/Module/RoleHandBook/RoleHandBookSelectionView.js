@@ -124,7 +124,7 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
       (this.Nlo = EffectUtil_1.EffectUtil.SpawnUiEffect(
         "RoleSystemFloorEffect",
         "[RoleHandBookSelectionView.LoadFloorEffect]",
-        e.GetTransform(),
+        e.D_GetTransform(),
         new EffectContext_1.EffectContext(void 0, e),
       ));
   }

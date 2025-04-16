@@ -99,10 +99,30 @@ class GuideModel extends ModelBase_1.ModelBase {
           UiManager_1.UiManager.OpenView("GuideTutorialTipsView", this.NJt))
         : (this.TryPauseTimer(), this.TryShowGuideTutorialView());
   }
-  TryShowGuideTutorialView() {
-    UiManager_1.UiManager.OpenView("GuideTutorialView", this.NJt, (i) => {
-      this.OJt = !i && !UiManager_1.UiManager.IsViewOpen("GuideTutorialView");
-    });
+  async M8_() {
+    var i =
+      void 0 !== (await UiManager_1.UiManager.OpenViewAsync("TutorialView"));
+    (this.OJt = !i && !UiManager_1.UiManager.IsViewOpen("TutorialView")),
+      i && ((this.qJt.length = 0), (this.NJt = void 0), this.TryPauseTimer());
+  }
+  TryShowGuideTutorialView(i = !1) {
+    i && this.AreMultipleTutorialsQueued()
+      ? this.M8_()
+      : this.NJt?.IsOverrideGuideTutorialView
+        ? UiManager_1.UiManager.OpenView(
+            "TutorialView",
+            this.NJt.GuideId,
+            (i) => {
+              this.OJt =
+                !i && !UiManager_1.UiManager.IsViewOpen("TutorialView");
+              i = UiManager_1.UiManager.GetViewByName("TutorialView");
+              i && (i.IsOpenedByGuide = !0);
+            },
+          )
+        : UiManager_1.UiManager.OpenView("GuideTutorialView", this.NJt, (i) => {
+            this.OJt =
+              !i && !UiManager_1.UiManager.IsViewOpen("GuideTutorialView");
+          });
   }
   ShowFailedOpenTutorialView() {
     this.OJt && this.TryShowGuideTutorialView();
@@ -118,6 +138,9 @@ class GuideModel extends ModelBase_1.ModelBase {
   }
   HaveCurrentTutorial() {
     return void 0 !== this.NJt;
+  }
+  AreMultipleTutorialsQueued() {
+    return 1 < (this.qJt?.length ?? 0);
   }
   TryPauseTimer() {
     this.GJt &&
@@ -154,28 +177,25 @@ class GuideModel extends ModelBase_1.ModelBase {
   EnsureCurrentDungeonId() {
     const e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
     for (var [i, t] of this.CurrentGroupMap)
-      ConfigManager_1.ConfigManager.GuideConfig.GetGroup(i)?.DungeonId.find(
-        (i) => i === e,
-      ) ||
+      GuideModel.Vv1(i).find((i) => i === e) ||
         (t.Reset(),
         this.CurrentGroupMap.delete(i),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             "进入副本时清除不属于当前副本的引导数据",
             ["groupId", i],
           ));
     for (const r of this.BJt)
-      ConfigManager_1.ConfigManager.GuideConfig.GetGroup(r)?.DungeonId.find(
-        (i) => i === e,
-      ) && GuideController_1.GuideController.ResetFinishedGuide(r);
+      GuideModel.Vv1(r).find((i) => i === e) &&
+        GuideController_1.GuideController.ResetFinishedGuide(r);
   }
   GmResetAllGuideGroup() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Guide",
-        17,
+        16,
         "通过GM命令清除了本地缓存的所有已完成引导数据, 同时所有执行中引导状态被重置, 重登后恢复",
       ),
       this.bJt.clear(),
@@ -216,15 +236,36 @@ class GuideModel extends ModelBase_1.ModelBase {
     if (this.CheckGuideInfoExist(i)) return this.CurrentGroupMap.get(i);
     if (GuideModel.IsLocked())
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Guide", 17, "引导当前处于屏蔽状态, 无法创建");
+        Log_1.Log.Warn("Guide", 16, "引导当前处于屏蔽状态, 无法创建");
     else {
       var e = ConfigManager_1.ConfigManager.GuideConfig.GetGroup(i);
       if (e)
         if (this.CanGroupInvoke(i)) {
-          var t = e.OnlineMode;
-          if (GuideController_1.GuideController.CheckAvailableWhenOnline(t)) {
-            var r,
-              s = e.OpenLimitCondition;
+          for (var [t] of this.CurrentGroupMap) {
+            var r = ConfigManager_1.ConfigManager.GuideConfig.GetGroup(t);
+            if (void 0 === r)
+              return void (
+                Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Guide", 64, "当前引导组缓存不存在客户端配置", [
+                  "组Id",
+                  t,
+                ])
+              );
+            if (r.Priority > e.Priority)
+              return void (
+                Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Guide",
+                  16,
+                  "引导组当前缓存中存在更高优先级的引导, 不能触发新引导",
+                  ["当前组Id", i],
+                  ["高优先级组Id", t],
+                )
+              );
+          }
+          var o = e.OnlineMode;
+          if (GuideController_1.GuideController.CheckAvailableWhenOnline(o)) {
+            var s = e.OpenLimitCondition;
             if (
               !s ||
               this.IsGmInvoke ||
@@ -233,33 +274,35 @@ class GuideModel extends ModelBase_1.ModelBase {
                 void 0,
               )
             ) {
-              const o =
+              const a =
                 ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-              if (e.DungeonId.find((i) => i === o))
+              var h,
+                u = GuideModel.Vv1(i);
+              if (u.find((i) => i === a))
                 return (
-                  (r = new GuideGroupInfo_1.GuideGroupInfo(i)),
-                  this.CurrentGroupMap.set(r.Id, r),
+                  (h = new GuideGroupInfo_1.GuideGroupInfo(i)),
+                  this.CurrentGroupMap.set(h.Id, h),
                   Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug("Guide", 17, "创建引导组数据成功", [
+                    Log_1.Log.Debug("Guide", 16, "创建引导组数据成功", [
                       "组Id",
                       i,
                     ]),
-                  r
+                  h
                 );
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Guide",
-                  17,
+                  16,
                   "引导组的副本Id与当前所在副本不匹配",
                   ["组Id", i],
-                  ["当前所在副本Id", o],
-                  ["配置副本Id", e.DungeonId],
+                  ["当前所在副本Id", a],
+                  ["配置副本Id", u],
                 );
             } else
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Guide",
-                  17,
+                  16,
                   "引导组的入队条件组不通过",
                   ["组Id", i],
                   ["conditionGroupId", s],
@@ -268,10 +311,10 @@ class GuideModel extends ModelBase_1.ModelBase {
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                65,
+                64,
                 "引导组用于是否联机的情况不匹配",
                 ["组Id", i],
-                ["OnlineMode", t],
+                ["OnlineMode", o],
                 [
                   "是否处于联机",
                   ModelManager_1.ModelManager.GameModeModel.IsMulti,
@@ -281,13 +324,13 @@ class GuideModel extends ModelBase_1.ModelBase {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "引导组服务端已记录完成且未配置为可重复完成, 不能重复执行",
               ["组Id", i],
             );
       else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Guide", 17, "引导组的客户端配置不存在, 无法创建", [
+          Log_1.Log.Error("Guide", 16, "引导组的客户端配置不存在, 无法创建", [
             "组Id",
             i,
           ]);
@@ -298,7 +341,7 @@ class GuideModel extends ModelBase_1.ModelBase {
     t
       ? t.SwitchState(e)
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 17, "引导组数据未创建", ["组Id", i]);
+        Log_1.Log.Error("Guide", 16, "引导组数据未创建", ["组Id", i]);
   }
   CheckGroupStatus(i, e, t) {
     if (!this.bJt)
@@ -306,7 +349,7 @@ class GuideModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "无法判定引导组状态, 引导数据尚未初始化",
             ["groupId", i],
             ["status", e],
@@ -319,7 +362,7 @@ class GuideModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "不存在ID的引导组数据, 请策划检查配置是否有误！",
             ["组Id", i],
           ),
@@ -369,6 +412,17 @@ class GuideModel extends ModelBase_1.ModelBase {
       t = [];
     for ([i, e] of this.CurrentGroupMap) e.CheckIsGuideRunning() && t.push(i);
     return t;
+  }
+  static Vv1(i) {
+    i = ConfigManager_1.ConfigManager.GuideConfig?.GetGroup(i);
+    if (!i) return [];
+    if (!i.DungeonSets || 0 === i.DungeonSets.length) return i.DungeonId;
+    var e = new Set();
+    for (const r of i.DungeonSets) {
+      var t = ConfigManager_1.ConfigManager.GuideConfig?.GetGuideDungeonSet(r);
+      if (t) for (const o of t.DungeonIdList) e.add(o);
+    }
+    return Array.from(e);
   }
 }
 ((exports.GuideModel = GuideModel).IsLock = !1), (GuideModel.IsGmLock = !1);

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreRewardDisplay = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class ExploreRewardDisplay {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -58,20 +59,44 @@ class ExploreRewardDisplay {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   titlehexcolor(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   titleiconpath(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   titleiconhexcolor(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   isrecordvisible() {
     var t = this.J7.__offset(this.z7, 14);
@@ -86,24 +111,42 @@ class ExploreRewardDisplay {
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   explorebartipstextid(t) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   isdescription() {
     var t = this.J7.__offset(this.z7, 22);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   description(t) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   issuccess() {
     var t = this.J7.__offset(this.z7, 26);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   audioid(t) {
-    var i = this.J7.__offset(this.z7, 28);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 28),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.ExploreRewardDisplay = ExploreRewardDisplay;

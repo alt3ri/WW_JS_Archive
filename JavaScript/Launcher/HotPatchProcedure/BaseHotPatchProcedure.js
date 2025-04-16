@@ -8,6 +8,8 @@ const puerts_1 = require("puerts"),
   UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
   UrlPrefixHttpRequest_1 = require("../Download/UrlPrefixHttpRequest"),
   HotPatchLogReport_1 = require("../HotPatchLogReport"),
+  LauncherNoticeUtils_1 = require("../Notice/LauncherNoticeUtils"),
+  Platform_1 = require("../Platform/Platform"),
   RemoteConfig_1 = require("../RemoteConfig"),
   AppUtil_1 = require("../Update/AppUtil"),
   LauncherLog_1 = require("../Util/LauncherLog"),
@@ -369,7 +371,11 @@ class BaseHotPatchProcedure {
         LauncherTextLib_1.LauncherTextLib.DownloadSpeedFormat(t),
         LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(o),
         LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(a),
-      );
+      ),
+        a >=
+          LauncherNoticeUtils_1.LauncherNoticeUtils
+            .NoticeOpenDownloadSizeThreshold *
+            LauncherTextLib_1.NUMBER_MB && this.ViewMgr.ShowNoticeWindow();
     };
     var n = async (e, t) => {
       let o = DownloadDefine_1.EDownloadState.None,
@@ -463,26 +469,31 @@ class BaseHotPatchProcedure {
         for (const a of o) {
           var r = a.SavePath + ".pak";
           UE.KuroPakMountStatic.MountPak(r, a.MountOrder),
-            UE.KuroPakMountStatic.AddSha1Check(r, a.PakSha1);
+            Platform_1.Platform.IsCloudGame() ||
+              UE.KuroPakMountStatic.AddSha1Check(r, a.PakSha1);
         }
     }
-    return UE.KuroPakMountStatic.StartSha1Check(), !0;
+    return (
+      Platform_1.Platform.IsCloudGame() ||
+        UE.KuroPakMountStatic.StartSha1Check(),
+      !0
+    );
   }
   PreComplete() {
     RemoteConfig_1.RemoteInfo?.Config?.LauncherVersion &&
-      LauncherStorageLib_1.LauncherStorageLib.SetGlobal(
-        LauncherStorageLib_1.ELauncherStorageGlobalKey.LauncherPatchVersion,
+      LauncherStorageLib_1.LauncherStorageLib.SetDeviceSaved(
+        LauncherStorageLib_1.ELauncherStorageDeviceKey.LauncherPatchVersion,
         RemoteConfig_1.RemoteInfo?.Config?.LauncherVersion,
       ),
       RemoteConfig_1.RemoteInfo?.Config?.ResourceVersion &&
-        LauncherStorageLib_1.LauncherStorageLib.SetGlobal(
-          LauncherStorageLib_1.ELauncherStorageGlobalKey.PatchVersion,
+        LauncherStorageLib_1.LauncherStorageLib.SetDeviceSaved(
+          LauncherStorageLib_1.ELauncherStorageDeviceKey.PatchVersion,
           RemoteConfig_1.RemoteInfo?.Config?.ResourceVersion,
         ),
       RemoteConfig_1.RemoteInfo?.Config?.ChangeList &&
         0 < RemoteConfig_1.RemoteInfo?.Config?.ChangeList.length &&
-        LauncherStorageLib_1.LauncherStorageLib.SetGlobal(
-          LauncherStorageLib_1.ELauncherStorageGlobalKey.PatchP4Version,
+        LauncherStorageLib_1.LauncherStorageLib.SetDeviceSaved(
+          LauncherStorageLib_1.ELauncherStorageDeviceKey.PatchP4Version,
           RemoteConfig_1.RemoteInfo?.Config?.ChangeList,
         );
   }
@@ -495,7 +506,7 @@ class BaseHotPatchProcedure {
       !0
     );
   }
-  async zKa(e, t, o) {
+  async yza(e, t, o) {
     let r = void 0;
     var i = new HotPatchLogReport_1.HotPatchLog();
     i.s_step_id = "check_remote_config";
@@ -550,7 +561,7 @@ class BaseHotPatchProcedure {
     }
     return r;
   }
-  JKa(e, t, o, r) {
+  Eza(e, t, o, r) {
     var i = new HotPatchLogReport_1.HotPatchLog(),
       a = { success: !0 },
       c =
@@ -578,6 +589,8 @@ class BaseHotPatchProcedure {
           ]),
           (c.s_url_prefix = _),
           (c.s_step_result = "out date"),
+          (c.i_latest_time = s),
+          (c.i_out_date_time = h.UpdateTime),
           HotPatchLogReport_1.HotPatchLogReport.Report(c),
           u++);
     if (!n) {
@@ -631,8 +644,8 @@ class BaseHotPatchProcedure {
       (RemoteConfig_1.RemoteInfo.Config = n),
       !r &&
         RemoteConfig_1.RemoteInfo.Config.UpdateTime > e &&
-        LauncherStorageLib_1.LauncherStorageLib.SetGlobal(
-          LauncherStorageLib_1.ELauncherStorageGlobalKey.RemoteVersionUpdate,
+        LauncherStorageLib_1.LauncherStorageLib.SetDeviceSaved(
+          LauncherStorageLib_1.ELauncherStorageDeviceKey.RemoteVersionUpdate,
           RemoteConfig_1.RemoteInfo.Config.UpdateTime,
         ),
       4
@@ -664,8 +677,8 @@ class BaseHotPatchProcedure {
         ((o = new HotPatchLogReport_1.HotPatchLog()).s_step_id =
           "end_download_remote_config"),
         void 0 ===
-        (t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
-          LauncherStorageLib_1.ELauncherStorageGlobalKey.RemoteVersionUpdate,
+        (t = LauncherStorageLib_1.LauncherStorageLib.GetDeviceSaved(
+          LauncherStorageLib_1.ELauncherStorageDeviceKey.RemoteVersionUpdate,
           0,
         ))
           ? (LauncherLog_1.LauncherLog.Info(
@@ -678,8 +691,8 @@ class BaseHotPatchProcedure {
             HotPatchLogReport_1.HotPatchLogReport.Report(o),
             1)
           : ((a = new Map()),
-            (o = await this.zKa(i, r, a)),
-            this.JKa(t, o, a, e)));
+            (o = await this.yza(i, r, a)),
+            this.Eza(t, o, a, e)));
   }
 }
 exports.BaseHotPatchProcedure = BaseHotPatchProcedure;

@@ -28,7 +28,7 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
       (this.wNe = (e) => {
         e === this.ActivityBaseData.Id && (this.iOe(), this.jqe());
       }),
-      (this.cwa = () => {
+      (this.Dwa = () => {
         var e;
         this.DailyAdventureData.CheckIfInShowTime() &&
           ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(184)),
@@ -91,7 +91,7 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActivityCrossDayRefresh,
-        this.cwa,
+        this.Dwa,
       );
   }
   OnRemoveEventListener() {
@@ -101,7 +101,7 @@ class ActivitySubViewDailyAdventure extends ActivitySubViewBase_1.ActivitySubVie
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActivityCrossDayRefresh,
-        this.cwa,
+        this.Dwa,
       );
   }
   OnRefreshView() {

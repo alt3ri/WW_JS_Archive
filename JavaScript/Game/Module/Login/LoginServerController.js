@@ -6,7 +6,6 @@ const puerts_1 = require("puerts"),
   Json_1 = require("../../../Core/Common/Json"),
   Log_1 = require("../../../Core/Common/Log"),
   Http_1 = require("../../../Core/Http/Http"),
-  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
@@ -56,7 +55,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
       ((e =
-        BaseConfigController_1.BaseConfigController.GetLoginServers()).forEach(
+        ModelManager_1.ModelManager.LoginServerModel.GetLoginServersByClientRegion()).forEach(
         (e) => {
           ModelManager_1.ModelManager.LoginServerModel.AddRegionPingValue(
             e,
@@ -66,7 +65,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
       ),
       e.forEach((e) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "尝试ping", ["ipAddress", e.PingUrl]),
+          Log_1.Log.Debug("KuroSdk", 27, "尝试ping", ["ipAddress", e.PingUrl]),
           UE.KuroStaticLibrary.IcmpPing(
             e.PingUrl,
             ICMP_TIME_OUT,
@@ -76,14 +75,14 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
   }
   static GetLoginPlayerInfo(e, r, o, n, t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("KuroSdk", 28, "获得GetLoginPlayerInfo");
+      Log_1.Log.Info("KuroSdk", 27, "获得GetLoginPlayerInfo");
     e = PublicUtil_1.PublicUtil.GetGARUrl(e, r, o, n, t);
     e
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Login", 9, "获得登录玩家数据", ["http", e]),
+          Log_1.Log.Debug("Login", 8, "获得登录玩家数据", ["http", e]),
         Http_1.Http.Get(e, void 0, this.LEi))
       : Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("KuroSdk", 28, "没有GetLoginPlayerInfo");
+        Log_1.Log.Info("KuroSdk", 27, "没有GetLoginPlayerInfo");
   }
   static OnClear() {
     return (
@@ -127,7 +126,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "KuroSdk",
-          28,
+          27,
           "IcmpCallBack",
           ["ipAddress", e],
           ["time", r],
@@ -135,12 +134,12 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
   }),
   (LoginServerController.LEi = (e, r, o) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Login", 28, "获取SetLoginPlayerInfoData", ["data", o]),
+      Log_1.Log.Debug("Login", 27, "获取SetLoginPlayerInfoData", ["data", o]),
       200 === r &&
         (r = Json_1.Json.Parse(o)) &&
         (0 !== r.Code
           ? Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Login", 28, "SetLoginPlayerInfoData Code失败", [
+            Log_1.Log.Debug("Login", 27, "SetLoginPlayerInfoData Code失败", [
               "Code id",
               r.Code,
             ])
@@ -148,7 +147,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Login",
-                28,
+                27,
                 "SetLoginPlayerInfoData SdkLoginCode失败",
                 ["SdkLoginCode id", r.SdkLoginCode],
               )

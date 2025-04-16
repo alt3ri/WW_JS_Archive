@@ -9,14 +9,17 @@ const cpp_1 = require("cpp"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   GlobalData_1 = require("../GlobalData"),
+  UiCameraAnimationController_1 = require("../Module/UiCameraAnimation/UiCameraAnimationController"),
   UiCameraAnimationManager_1 = require("../Module/UiCameraAnimation/UiCameraAnimationManager"),
   UiSceneManager_1 = require("../Module/UiComponent/UiSceneManager"),
   NavigationRegisterCenter_1 = require("../Module/UiNavigation/New/NavigationRegisterCenter"),
   UiNavigationViewManager_1 = require("../Module/UiNavigation/New/UiNavigationViewManager"),
   LguiUtil_1 = require("../Module/Util/LguiUtil"),
   UiPopFrameView_1 = require("./Base/UiPopFrameView"),
+  UiTimeDilation_1 = require("./Base/UiTimeDilation"),
   UiViewFloatContainer_1 = require("./Container/Float/UiViewFloatContainer"),
   UiViewListContainer_1 = require("./Container/UiViewListContainer"),
+  UiViewPlotStackContainer_1 = require("./Container/UiViewPlotStackContainer"),
   UiViewSetContainer_1 = require("./Container/UiViewSetContainer"),
   UiViewStackContainer_1 = require("./Container/UiViewStackContainer"),
   UiConfig_1 = require("./Define/UiConfig"),
@@ -30,27 +33,27 @@ class UiManager {
   static get IsInited() {
     return 2 === UiManager.Ife;
   }
-  static OpenView(i, e = void 0, a) {
+  static pF_(i, e = void 0, a, r) {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OpenViewBegined, i),
-      UiManager.OpenViewAsync(i, e).then(
+      UiManager.OpenViewAsync(i, e, a).then(
         (e) => {
           void 0 !== e
-            ? (a?.(!0, e),
+            ? (r?.(!0, e),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "UiCore",
-                  17,
+                  16,
                   "[OpenView]流程执行成功",
                   ["ViewName", i],
                   ["ViewId", e],
                 ))
-            : (a?.(!1, 0),
+            : (r?.(!1, 0),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OpenViewFail,
                 i,
               ),
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("UiCore", 17, "[OpenView]流程执行失败", [
+                Log_1.Log.Info("UiCore", 16, "[OpenView]流程执行失败", [
                   "ViewName",
                   i,
                 ]));
@@ -60,7 +63,7 @@ class UiManager {
             ? Log_1.Log.CheckError() &&
               Log_1.Log.ErrorWithStack(
                 "UiCore",
-                17,
+                16,
                 "[OpenView]流程执行异常",
                 e,
                 ["error", e.message],
@@ -69,12 +72,12 @@ class UiManager {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiCore",
-                17,
+                16,
                 "[OpenView]流程执行异常",
                 ["ViewName", i],
                 ["error", e],
               ),
-            a?.(!1, 0),
+            r?.(!1, 0),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OpenViewFail,
               i,
@@ -82,39 +85,52 @@ class UiManager {
         },
       );
   }
-  static async OpenViewAsync(e, i = void 0) {
+  static OpenView(e, i = void 0, a) {
+    UiManager.pF_(e, i, void 0, a);
+  }
+  static OpenViewWithLayer(e, i, a = void 0, r) {
+    UiManager.pF_(e, a, i, r);
+  }
+  static OpenViewByPlot(e, i = void 0, a) {
+    0 <
+    (UiConfig_1.UiConfig.TryGetViewInfo(e).Type &
+      UiLayerType_1.NORMAL_PLOT_CONTAINER_TYPE)
+      ? UiManager.OpenViewWithLayer(e, UiLayerType_1.ELayerType.Plot, i, a)
+      : UiManager.OpenView(e, i, a);
+  }
+  static async OpenViewAsync(e, i = void 0, a) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "[OpenViewAsync]请求打开界面", [
+      Log_1.Log.Info("UiCore", 16, "[OpenViewAsync]请求打开界面", [
         "界面名称",
         e,
       ]);
-    var a = !!i && i?.IsMultipleView;
-    if (UiManager.iVe(e, a, i)) {
-      a = UiManager.BCr(e);
-      if (a) {
-        (a.OpenParam = i),
-          (a.OpenPromise = new CustomPromise_1.CustomPromise());
-        i = await Promise.all([
-          UiManager.bCr.get(a.Info.Type).OpenViewAsync(a),
-          a.OpenPromise.Promise,
+    var r = !!i && i?.IsMultipleView;
+    if (UiManager.iVe(e, r, i)) {
+      r = UiManager.BCr(e, a);
+      if (r) {
+        (r.OpenParam = i),
+          (r.OpenPromise = new CustomPromise_1.CustomPromise());
+        a = await Promise.all([
+          UiManager.bCr.get(r.Info.GetContainerLayerType()).OpenViewAsync(r),
+          r.OpenPromise.Promise,
         ]);
-        if (((a.OpenPromise = void 0), i[1]))
+        if (((r.OpenPromise = void 0), a[1]))
           return (
-            a.TryEmitInterruptOpExitView(),
-            !0 === a.Info?.IsFullScreen
+            r.TryEmitInterruptOpExitView(),
+            !0 === r.Info?.IsFullScreen
               ? cpp_1.FKuroPerfSightHelper.BeginExtTag(
-                  `UiViewInFullScreen[${a.Info.Name}]`,
+                  `UiViewInFullScreen[${r.Info.Name}]`,
                 )
-              : !1 === a.Info?.IsFullScreen &&
+              : !1 === r.Info?.IsFullScreen &&
                 cpp_1.FKuroPerfSightHelper.BeginExtTag(
-                  `UiViewInWindow[${a.Info.Name}]`,
+                  `UiViewInWindow[${r.Info.Name}]`,
                 ),
-            a.GetViewId()
+            r.GetViewId()
           );
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "[OpenViewAsync]打开界面失败, 界面在缓存队列中被清理",
             ["name", e],
           );
@@ -122,7 +138,7 @@ class UiManager {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCore",
-            17,
+            16,
             "[OpenViewAsync]打开界面失败, 注册界面失败",
             ["name", e],
           );
@@ -130,7 +146,7 @@ class UiManager {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCore",
-          17,
+          16,
           "[OpenViewAsync]打开界面失败, 不满足界面打开条件",
           ["界面名称", e],
         );
@@ -139,7 +155,7 @@ class UiManager {
     UiManager.CloseViewAsync(i).then(
       () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "[CloseView]流程执行成功", [
+          Log_1.Log.Info("UiCore", 16, "[CloseView]流程执行成功", [
             "ViewName",
             i,
           ]),
@@ -150,7 +166,7 @@ class UiManager {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[CloseView]流程执行异常",
               e,
               ["error", e.message],
@@ -159,7 +175,7 @@ class UiManager {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[CloseView]流程执行异常",
               ["ViewName", i],
               ["error", e],
@@ -175,7 +191,7 @@ class UiManager {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            17,
+            16,
             "[CloseViewAsync]关闭界面失败, 界面不存在",
             ["界面名称", e],
           ),
@@ -191,7 +207,7 @@ class UiManager {
     UiManager.CloseViewByIdAsync(i).then(
       () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "[CloseViewById]流程执行成功", [
+          Log_1.Log.Info("UiCore", 16, "[CloseViewById]流程执行成功", [
             "viewId",
             i,
           ]),
@@ -202,7 +218,7 @@ class UiManager {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[CloseViewById]流程执行异常",
               e,
               ["error", e.message],
@@ -211,7 +227,7 @@ class UiManager {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[CloseViewById]流程执行异常",
               ["viewId", i],
               ["error", e],
@@ -227,7 +243,7 @@ class UiManager {
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            17,
+            16,
             "[CloseViewByIdAsync]关闭界面失败, 界面不存在",
             ["viewId", e],
           ),
@@ -239,20 +255,20 @@ class UiManager {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCore",
-          17,
+          16,
           "[CloseViewAsync]请求关闭界面",
           ["界面名称", i.Name],
           ["ViewId", e.GetViewId()],
         ),
       e.OpenPromise && e.OpenPromise.SetResult(!0),
       e.ClosePromise || (e.ClosePromise = new CustomPromise_1.CustomPromise()),
-      await UiManager.bCr.get(i.Type).CloseViewAsync(e),
+      await UiManager.bCr.get(e.Info.GetContainerLayerType()).CloseViewAsync(e),
       await e.ClosePromise?.Promise,
       (e.ClosePromise = void 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCore",
-          17,
+          16,
           "[CloseViewAsync]关闭界面成功",
           ["界面名称", i.Name],
           ["ViewId", e.GetViewId()],
@@ -278,7 +294,7 @@ class UiManager {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[CloseAndOpenView]流程执行异常",
               e,
               ["error", e.message],
@@ -288,13 +304,12 @@ class UiManager {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[CloseAndOpenView]流程执行异常",
               ["closeViewName", i],
               ["openViewName", a],
               ["error", e],
             ),
-          r?.(!1),
           r?.(!1);
       },
     );
@@ -306,7 +321,7 @@ class UiManager {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCore",
-            17,
+            16,
             "[CloseAndOpenViewAsync]非栈容器的界面不允许使用该接口",
           ),
         !1)
@@ -320,7 +335,7 @@ class UiManager {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "UiCore",
-                  17,
+                  16,
                   "[CloseAndOpenView]流程执行成功",
                   ["closeViewName", e],
                   ["openViewName", i],
@@ -329,7 +344,7 @@ class UiManager {
             : (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "UiCore",
-                  17,
+                  16,
                   "[CloseAndOpenView]流程执行失败, 不满足界面打开条件",
                   ["closeViewName", e],
                   ["openViewName", i],
@@ -338,7 +353,7 @@ class UiManager {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[CloseAndOpenViewAsync]未找到待关闭界面",
               ["closeViewName", e],
             ),
@@ -346,7 +361,7 @@ class UiManager {
   }
   static async PreOpenViewAsync(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "[OpenViewAsync]请求预打开界面", [
+      Log_1.Log.Info("UiCore", 16, "[OpenViewAsync]请求预打开界面", [
         "界面名称",
         e,
       ]);
@@ -355,13 +370,15 @@ class UiManager {
       return (
         i.OnPreOpen(),
         UiManager.NCr.set(i.GetViewId(), i),
-        await UiManager.bCr.get(i.Info.Type).PreOpenViewAsync(i),
+        await UiManager.bCr
+          .get(i.Info.GetContainerLayerType())
+          .PreOpenViewAsync(i),
         i.GetViewId()
       );
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "UiCore",
-        17,
+        16,
         "[OpenViewAsync]打开界面失败, 注册界面失败",
         ["name", e],
       );
@@ -376,7 +393,7 @@ class UiManager {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCore",
-          17,
+          16,
           "[OpenViewAfterPreOpenedAsync](已预打开过)请求打开界面",
           ["界面名称", a],
         ),
@@ -386,14 +403,16 @@ class UiManager {
           (n.OpenPromise = new CustomPromise_1.CustomPromise()),
           UiManager.RemovePreOpenView(e),
           await Promise.all([
-            UiManager.bCr.get(n.Info.Type).OpenViewAfterPreOpenedAsync(n),
+            UiManager.bCr
+              .get(n.Info.GetContainerLayerType())
+              .OpenViewAfterPreOpenedAsync(n),
             n.OpenPromise.Promise,
           ]),
           (n.OpenPromise = void 0))
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiCore",
-              17,
+              16,
               "[OpenViewAfterPreOpenedAsync](已预打开过)打开界面失败, 不满足界面打开条件",
               ["界面名称", a],
             ),
@@ -409,7 +428,7 @@ class UiManager {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            11,
+            10,
             "[Clear] 尝试执行销毁的界面",
             ["Name", e.constructor.name],
             ["ComponentId", e.ComponentId],
@@ -421,7 +440,7 @@ class UiManager {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              11,
+              10,
               "界面同步关闭异常,业务变量可能未初始化完成,需要关注",
               e,
               ["error", e.message],
@@ -429,7 +448,7 @@ class UiManager {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              11,
+              10,
               "界面同步关闭异常,业务变量可能未初始化完成,需要关注",
               ["error", e],
             );
@@ -481,6 +500,12 @@ class UiManager {
     );
     UiManager.bCr.set(UiLayerType_1.ELayerType.Normal, e),
       UiManager.bCr.set(UiLayerType_1.ELayerType.CG, e),
+      UiManager.bCr.set(
+        UiLayerType_1.ELayerType.Plot,
+        new UiViewPlotStackContainer_1.UiViewPlotContainer(
+          UiModel_1.UiModel.PlotNormalStack,
+        ),
+      ),
       UiManager.bCr.set(
         UiLayerType_1.ELayerType.Pop,
         new UiViewListContainer_1.UiViewListContainer(
@@ -547,7 +572,7 @@ class UiManager {
     UiManager.NormalResetToViewAsync(i).then(
       () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "[NormalResetToView]流程执行成功", [
+          Log_1.Log.Info("UiCore", 16, "[NormalResetToView]流程执行成功", [
             "ViewName",
             i,
           ]),
@@ -558,7 +583,7 @@ class UiManager {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[NormalResetToView]流程执行异常",
               e,
               ["error", e.message],
@@ -567,7 +592,7 @@ class UiManager {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[NormalResetToView]流程执行异常",
               ["ViewName", i],
               ["error", e],
@@ -581,19 +606,19 @@ class UiManager {
       a = UiManager.GCr(e);
     a
       ? (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "[NormalResetToView]重置到界面", [
+          Log_1.Log.Info("UiCore", 16, "[NormalResetToView]重置到界面", [
             "viewName",
             e,
           ]),
         await i.ResetToViewAsync(a))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("UiCore", 17, "未找到待重置界面", ["viewName", e]);
+        Log_1.Log.Warn("UiCore", 16, "未找到待重置界面", ["viewName", e]);
   }
   static CloseHistoryRingView(i, a) {
     UiManager.CloseHistoryRingViewAsync(i).then(
       () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "[CloseHistoryRingView]流程执行成功", [
+          Log_1.Log.Info("UiCore", 16, "[CloseHistoryRingView]流程执行成功", [
             "ViewName",
             i,
           ]),
@@ -604,7 +629,7 @@ class UiManager {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[CloseHistoryRingView]流程执行异常",
               e,
               ["error", e.message],
@@ -613,7 +638,7 @@ class UiManager {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[CloseHistoryRingView]流程执行异常",
               ["ViewName", i],
               ["error", e],
@@ -628,7 +653,7 @@ class UiManager {
   }
   static AddTickView(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "[AddTickView] 添加界面Tick", [
+      Log_1.Log.Info("UiCore", 16, "[AddTickView] 添加界面Tick", [
         "name",
         e.constructor.name,
       ]),
@@ -636,18 +661,20 @@ class UiManager {
   }
   static RemoveTickView(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "[RemoveTickView] 移除界面Tick", [
+      Log_1.Log.Info("UiCore", 16, "[RemoveTickView] 移除界面Tick", [
         "name",
         e.constructor.name,
       ]),
       UiManager.jCr.delete(e);
   }
-  static BCr(e) {
-    var i,
-      a = UiConfig_1.UiConfig.TryGetViewInfo(e);
+  static BCr(e, i) {
+    var a = UiConfig_1.UiConfig.TryGetViewInfo(e);
     if (a)
       return (
-        (i = new a.Ctor(a)).InitRootActorLoadInfo(),
+        a.SetContainerLayerType(i),
+        (i = new a.Ctor(a)),
+        UiConfig_1.UiConfig.RewritePath(a, i),
+        i.InitRootActorLoadInfo(),
         0 < a.CommonPopBg &&
           ((a = new UiPopFrameView_1.UiPopFrameView(a)),
           (i.ChildPopView = a),
@@ -660,7 +687,7 @@ class UiManager {
         i
       );
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiCore", 17, "界面信息viewInfo获取失败", ["name", e]);
+      Log_1.Log.Error("UiCore", 16, "界面信息viewInfo获取失败", ["name", e]);
   }
   static KCr() {
     UiManager.bCr.get(UiLayerType_1.ELayerType.Float).StartWaitingNormalView();
@@ -674,7 +701,7 @@ class UiManager {
       ? 0 === UiManager.Ife &&
         ((UiManager.Ife = 1),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "[Initialize]初始化UiManager"),
+          Log_1.Log.Info("UiCore", 16, "[Initialize]初始化UiManager"),
         NavigationRegisterCenter_1.NavigationRegisterCenter.Init(),
         await Promise.all([
           UiLayer_1.UiLayer.Initialize(),
@@ -688,62 +715,98 @@ class UiManager {
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.UiManagerInit),
         (UiManager.Ife = 2))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCore", 17, "游戏世界不存在");
+        Log_1.Log.Error("UiCore", 16, "游戏世界不存在");
   }
   static LockOpen() {
     LguiUtil_1.LguiUtil.SetActorIsPermanent(UiLayer_1.UiLayer.UiRoot, !0, !0),
       (UiManager.QCr = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCore", 17, "[UIManager.UnLockOpen] 禁止打开界面");
+        Log_1.Log.Info("UiCore", 16, "[UIManager.UnLockOpen] 禁止打开界面");
   }
   static UnLockOpen() {
     (UiManager.QCr = !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCore", 17, "[UIManager.UnLockOpen] 恢复打开界面");
+        Log_1.Log.Info("UiCore", 16, "[UIManager.UnLockOpen] 恢复打开界面");
   }
   static get IsLockOpen() {
     return UiManager.QCr;
   }
-  static async ClearAsync(e) {
+  static async J$_(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "[UIManager.ClearAsync] 清理UIManager 开始");
+      Log_1.Log.Info(
+        "UiCore",
+        10,
+        "[UIManager.ClearAsync] ClearNonNormalAndPlotContainerView",
+      );
     for (var [i, a] of UiManager.bCr)
-      0 < (i & UiLayerType_1.NORMAL_CONTAINER_TYPE) || a.ClearContainer(e);
+      0 < (i & UiLayerType_1.NORMAL_PLOT_CONTAINER_TYPE) || a.ClearContainer(e);
     var r = [];
-    for (const t of UiManager.qCr.values())
-      t.Info?.IsPermanent ||
-        0 < (t.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) ||
+    for (const n of UiManager.qCr.values())
+      n.Info?.IsPermanent ||
+        0 < (n.Info.Type & UiLayerType_1.NORMAL_PLOT_CONTAINER_TYPE) ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            11,
-            "[UIManager.ClearAsync] 需要等待销毁的界面-非stack容器",
-            ["Name", t.constructor.name],
-            ["ComponentId", t.ComponentId],
+            10,
+            "[UIManager.ClearAsync] 需要等待销毁的界面-非stack plot容器",
+            ["Name", n.constructor.name],
+            ["ComponentId", n.ComponentId],
           ),
-        r.push(t.DeadPromise?.Promise));
-    await Promise.all(r), UiManager.hPn();
-    var n = UiManager.bCr.get(UiLayerType_1.ELayerType.Normal),
-      o = (await n.BeforeClearContainerAsync(), n.ClearContainer(e), []);
-    for (const g of UiManager.qCr.values())
-      g.Info.IsPermanent ||
-        (g.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) <= 0 ||
-        (e && UiModel_1.UiModel.SeamlessStackWhileList.has(g.Info.Name)) ||
+        r.push(n.DeadPromise?.Promise));
+    await Promise.all(r);
+  }
+  static async Z$_(e) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "UiCore",
+        10,
+        "[UIManager.ClearAsync] ClearNormalAndPlotContainerView",
+      );
+    var i = UiManager.bCr.get(UiLayerType_1.ELayerType.Normal);
+    0 < UiModel_1.UiModel.PlotNormalStack.Size &&
+      UiManager.ResumeNormalContainerInClear(),
+      UiManager.hPn(),
+      await i.BeforeClearContainerAsync(e);
+    UiManager.bCr.get(UiLayerType_1.ELayerType.Plot).ClearContainer(e),
+      i.ClearContainer(e);
+    var a = [];
+    for (const r of UiManager.qCr.values())
+      r.Info.IsPermanent ||
+        (r.Info.Type & UiLayerType_1.NORMAL_PLOT_CONTAINER_TYPE) <= 0 ||
+        (e && UiModel_1.UiModel.SeamlessStackWhileList.has(r.Info.Name)) ||
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            11,
-            "[UIManager.ClearAsync] 需要等待销毁的界面-stack容器",
-            ["Name", g.constructor.name],
-            ["ComponentId", g.ComponentId],
+            10,
+            "[UIManager.ClearAsync] 需要等待销毁的界面-Stack和Plot容器",
+            ["Name", r.constructor.name],
+            ["ComponentId", r.ComponentId],
           ),
-        o.push(g.DeadPromise?.Promise));
-    await Promise.all(o),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnUiManagerClearAsync,
-      ),
-      UiActorPool_1.UiActorPool.ClearPool(),
-      UiSceneManager_1.UiSceneManager.Clear();
+        a.push(r.DeadPromise?.Promise));
+    await Promise.all(a);
+  }
+  static async eW_(e) {
+    e &&
+      (e = UiModel_1.UiModel.NormalStack.Peek()) &&
+      e.IsHideOrHiding &&
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiCore",
+          10,
+          "[UIManager.ClearAsync] ResumeNormalViewInClear",
+          ["ViewName", e.Info?.Name],
+        ),
+      await UiManager.bCr
+        .get(UiLayerType_1.ELayerType.Normal)
+        .ShowViewByPlot());
+  }
+  static tW_() {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "UiCore",
+        10,
+        "[UIManager.ClearAsync] ClearUiCameraAnimation",
+      );
     try {
       UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay();
     } catch (e) {
@@ -764,8 +827,25 @@ class UiManager {
             ["error", e],
           );
     }
+  }
+  static async ClearAsync(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "[UIManager.ClearAsync] 清理UIManager 完成");
+      Log_1.Log.Info("UiCore", 16, "[UIManager.ClearAsync] 清理UIManager 开始"),
+      await this.J$_(e),
+      await this.Z$_(e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnUiManagerClearAsync,
+      ),
+      UiActorPool_1.UiActorPool.ClearPool(),
+      UiSceneManager_1.UiSceneManager.Clear(),
+      this.tW_(),
+      UiManager.eW_(e),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiCore",
+          16,
+          "[UIManager.ClearAsync] 清理UIManager 完成",
+        );
   }
   static Tick(e) {
     UiManager.fbo.Start();
@@ -784,7 +864,7 @@ class UiManager {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            17,
+            16,
             "[CanOpenView] 退出场景清理时不允许打开UI界面",
             ["ViewName", e],
           ),
@@ -795,7 +875,7 @@ class UiManager {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            17,
+            16,
             "[CanOpenView] 无缝加载期间不允许打开UI界面",
             ["ViewName", e],
           ),
@@ -805,7 +885,7 @@ class UiManager {
     if (!r)
       return (
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("UiCore", 17, "[CanOpenView] 界面配置不存在", [
+          Log_1.Log.Warn("UiCore", 16, "[CanOpenView] 界面配置不存在", [
             "ViewName",
             e,
           ]),
@@ -815,7 +895,7 @@ class UiManager {
     if (!n && !i && UiManager.IsViewOpen(e))
       return (
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("UiCore", 17, "[CanOpenView] 界面重复打开", [
+          Log_1.Log.Warn("UiCore", 16, "[CanOpenView] 界面重复打开", [
             "ViewName",
             e,
           ]),
@@ -826,7 +906,7 @@ class UiManager {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            17,
+            16,
             "[CanOpenView] ScenePointTag不允许配置",
             ["ViewName", e],
           ),
@@ -839,7 +919,7 @@ class UiManager {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "UiCore",
-                17,
+                16,
                 "[CanOpenView] 检测到表格配置了界面互斥",
                 ["ViewName", e],
                 ["ViewOpenCheck", o],
@@ -851,7 +931,7 @@ class UiManager {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiCore",
-              17,
+              16,
               "[CanOpenView] 外部注册的全局界面OpenView检查函数不通过",
               ["viewName", e],
             ),
@@ -859,7 +939,7 @@ class UiManager {
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "[CanOpenView] 外部注册的单个界面OpenView检查函数不通过",
             ["viewName", e],
           ),
@@ -882,7 +962,7 @@ class UiManager {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "UiCore",
-                17,
+                16,
                 "外部注册的OpenView检查函数不通过",
                 ["viewName", e],
                 ["reason", n],
@@ -912,8 +992,74 @@ class UiManager {
       (i = UiManager.Ncr.get(e))) &&
       (i.delete(a), i.size || UiManager.Ncr.delete(e));
   }
+  static RefreshByPureModeChanged() {
+    var e = UiManager.bCr.get(UiLayerType_1.ELayerType.Float);
+    e && e.RefreshByPureModeChanged();
+  }
   static GmClearFloatContainer() {
     UiManager.bCr.get(UiLayerType_1.ELayerType.Float).ClearContainer();
+  }
+  static async PauseNormalContainer(e, i) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "UiCore",
+        10,
+        "[OpenView]指定Plot层级打开界面,暂停Normal层级的表现",
+      );
+    var a = UiManager.bCr.get(UiLayerType_1.ELayerType.Normal),
+      e =
+        (await a.WaitSwitchToPlotPending(),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("UiCore", 10, "[OpenView]指定Plot层级创建界面"),
+        await e(),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("UiCore", 10, "[OpenView]指定pop,normal层级隐藏界面"),
+        UiManager.bCr.get(UiLayerType_1.ELayerType.Pop));
+    await Promise.all([e.HideView(), a.HideViewByPlot()]),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("UiCore", 10, "[OpenView]指定Plot层级显示界面"),
+      UiTimeDilation_1.UiTimeDilation.TemporarySaveData(),
+      await i(),
+      UiCameraAnimationController_1.UiCameraAnimationController.ExitUiCameraMode(),
+      UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.Normal, !1);
+  }
+  static async ResumeNormalContainer(e) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "UiCore",
+        10,
+        "[CloseView]指定Plot层级关闭界面,恢复Normal层级的表现",
+      ),
+      UiTimeDilation_1.UiTimeDilation.RestoreSaveData(),
+      UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.Normal, !0);
+    var i = UiManager.bCr.get(UiLayerType_1.ELayerType.Normal);
+    UiCameraAnimationController_1.UiCameraAnimationController.EnterUiCameraMode(),
+      await i.ShowViewByPlot(e),
+      UiManager.bCr.get(UiLayerType_1.ELayerType.Pop).ShowView();
+  }
+  static ResumeNormalContainerInClear() {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "UiCore",
+        10,
+        "[UIManager.ClearAsync]ResumeNormalContainerInClear",
+      ),
+      UiTimeDilation_1.UiTimeDilation.RestoreSaveData(),
+      UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.Normal, !0),
+      UiManager.bCr.get(UiLayerType_1.ELayerType.Normal).TryUnlock();
+  }
+  static CheckIfCanShowPlotView() {
+    var e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal);
+    return (
+      !!e &&
+      ((e = e.Info.Name), UiModel_1.UiModel.CanShowPlotViewWhiteList.has(e)) &&
+      this.IsViewShow(e)
+    );
+  }
+  static IsNormalContainerEmpty() {
+    return UiManager.bCr
+      .get(UiLayerType_1.ELayerType.Normal)
+      .IsViewPendingListEmpty();
   }
 }
 ((exports.UiManager = UiManager).Ife = 0),
@@ -925,13 +1071,13 @@ class UiManager {
   (UiManager.jCr = new Set()),
   (UiManager.NCr = new Map()),
   (UiManager.kCr = () => {
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("UiCore", 17, "重置回到主界面"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("UiCore", 16, "重置回到主界面"),
       UiManager.bCr.get(UiLayerType_1.ELayerType.Pop).CloseAllView(),
       UiManager.NormalResetToView("BattleView");
   }),
   (UiManager.FCr = () => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "退出队列状态,重置回到主界面"),
+      Log_1.Log.Info("UiCore", 16, "退出队列状态,重置回到主界面"),
       UiManager.KCr();
   }),
   (UiManager.VCr = () => {

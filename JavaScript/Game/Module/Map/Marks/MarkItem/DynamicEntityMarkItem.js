@@ -8,15 +8,16 @@ class DynamicEntityMarkItem extends DynamicConfigMarkItem_1.DynamicConfigMarkIte
   constructor(e, t, i, r, a, n) {
     super(e, t, i, a, n, 1), (this.TrackTarget = r);
   }
-  Initialize() {
+  OnInitialize() {
     this.MarkConfig.Scale && this.SetConfigScale(this.MarkConfig.Scale),
       this.InitShowCondition(),
-      this.UpdateTrackState();
+      this.UpdateVisibleRelativeState();
   }
-  OnCreateView() {
-    this.InnerView = new DynamicEntityMarkItemView_1.DynamicEntityMarkItemView(
-      this,
-    );
+  GetMarkItemViewType() {
+    return 6;
+  }
+  CreateView() {
+    return new DynamicEntityMarkItemView_1.DynamicEntityMarkItemView(this);
   }
   CheckCanShowView() {
     return (

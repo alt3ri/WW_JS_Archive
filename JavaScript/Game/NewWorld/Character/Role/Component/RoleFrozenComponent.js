@@ -26,8 +26,8 @@ const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponen
   BaseFrozenComponent_1 = require("../../Common/Component/Abilities/BaseFrozenComponent"),
   GameplayCueController_1 = require("../../Common/Component/Abilities/GameplayCueSFX/Controller/GameplayCueController"),
   CustomMovementDefine_1 = require("../../Common/Component/Move/CustomMovementDefine"),
-  frozenCueId = 1003n,
-  cancelFrozenCueId = 100302n;
+  FROZEN_CUE_ID = 1003,
+  CANCEL_FROZEN_CUE_ID = 100302;
 let RoleFrozenComponent =
   (RoleFrozenComponent_1 = class RoleFrozenComponent extends (
     BaseFrozenComponent_1.BaseFrozenComponent
@@ -47,13 +47,13 @@ let RoleFrozenComponent =
     SetFrozen(e) {
       if (this.IsFrozenInternal !== e) {
         this.IsFrozenInternal = e;
-        var o = this.Entity.GetComponent(164),
-          t = this.Entity.GetComponent(102),
-          n = this.Entity.GetComponent(17),
-          i = this.Entity.GetComponent(34);
-        const s = this.Entity.GetComponent(19);
-        var r = this.Entity.GetComponent(190)?.TagContainer;
-        (this.Entity.GetComponent(101).Frozen = e)
+        var o = this.Entity.GetComponent(176),
+          t = this.Entity.GetComponent(112),
+          n = this.Entity.GetComponent(18),
+          i = this.Entity.GetComponent(39);
+        const s = this.Entity.GetComponent(21);
+        var r = this.Entity.GetComponent(203)?.TagContainer;
+        (this.Entity.GetComponent(111).Frozen = e)
           ? ((this.MoveForbidHandle =
               this.MoveForbidHandle ?? o?.Disable("RoleFrozen")),
             (this.AnimForbidHandle =
@@ -64,7 +64,7 @@ let RoleFrozenComponent =
               this.SkillForbidHandle ?? i?.Disable("RoleFrozen")),
             this.FrozenCueHandle ===
               GameplayCueController_1.INVALID_CUE_HANDLE &&
-              (this.FrozenCueHandle = s.CreateGameplayCue(frozenCueId)),
+              (this.FrozenCueHandle = s.AddCue(FROZEN_CUE_ID)),
             r &&
               (r.AddExactTag(6, -752177221),
               r.AddExactTag(6, 1098729489),
@@ -106,10 +106,10 @@ let RoleFrozenComponent =
                 "[RoleFrozenComponent.SetFrozen] this.SkillForbidHandle !== undefined",
               ),
               (this.SkillForbidHandle = void 0)),
-            s.DestroyGameplayCueByHandle(this.FrozenCueHandle),
-            (this.FrozenCueHandle = s.CreateGameplayCue(cancelFrozenCueId, {
+            s.RemoveCueByHandle(this.FrozenCueHandle),
+            (this.FrozenCueHandle = s.AddCue(CANCEL_FROZEN_CUE_ID, {
               EndCallback: () => {
-                s.DestroyGameplayCueByHandle(this.FrozenCueHandle),
+                s.RemoveCueByHandle(this.FrozenCueHandle),
                   (this.FrozenCueHandle =
                     GameplayCueController_1.INVALID_CUE_HANDLE);
               },
@@ -123,7 +123,7 @@ let RoleFrozenComponent =
               r.RemoveTag(6, 1448371427),
               r.RemoveTag(6, 930178923),
               r.RemoveTag(6, -291592299)),
-            (e = this.Entity.GetComponent(163)) &&
+            (e = this.Entity.GetComponent(175)) &&
               e.MainAnimInstance.冰冻结束事件());
       }
     }
@@ -135,13 +135,16 @@ let RoleFrozenComponent =
         1 === o ||
           3 === o ||
           (6 === o && t === CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SWIM) ||
-          e.CharacterMovement.SetMovementMode(3));
+          e.ActorComp?.Actor.KuroSetMovementMode({
+            Mode: 3,
+            Context: "[RoleFrozenComponent.ChangeMovementModeInFrozen]",
+          }));
     }
   });
 (RoleFrozenComponent.TmpVector = Vector_1.Vector.Create()),
   (RoleFrozenComponent = RoleFrozenComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(177)],
+      [(0, RegisterComponent_1.RegisterComponent)(190)],
       RoleFrozenComponent,
     )),
   (exports.RoleFrozenComponent = RoleFrozenComponent);

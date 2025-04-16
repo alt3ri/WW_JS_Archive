@@ -19,7 +19,7 @@ class RoleTagMediumIconItem extends GridProxyAbstract_1.GridProxyAbstract {
       o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleTagConfig(e);
     void 0 === o
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 59, "RoleTagMediumIconItem无效tagId", [
+        Log_1.Log.Error("Role", 58, "RoleTagMediumIconItem无效tagId", [
           "TagId",
           e,
         ])

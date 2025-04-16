@@ -4,20 +4,20 @@ var SceneItemDamageComponent_1,
     (this && this.__decorate) ||
     function (e, t, i, n) {
       var o,
-        r = arguments.length,
-        s =
-          r < 3
+        s = arguments.length,
+        r =
+          s < 3
             ? t
             : null === n
               ? (n = Object.getOwnPropertyDescriptor(t, i))
               : n;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        s = Reflect.decorate(e, t, i, n);
+        r = Reflect.decorate(e, t, i, n);
       else
         for (var h = e.length - 1; 0 <= h; h--)
           (o = e[h]) &&
-            (s = (r < 3 ? o(s) : 3 < r ? o(t, i, s) : o(t, i)) || s);
-      return 3 < r && s && Object.defineProperty(t, i, s), s;
+            (r = (s < 3 ? o(r) : 3 < s ? o(t, i, r) : o(t, i)) || r);
+      return 3 < s && r && Object.defineProperty(t, i, r), r;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemDamageComponent = void 0);
@@ -25,7 +25,6 @@ const Log_1 = require("../../../Core/Common/Log"),
   EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
-  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
@@ -65,7 +64,7 @@ let SceneItemDamageComponent =
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Entity",
-            18,
+            17,
             "初始化破坏组件完成",
             ["最大耐久度", this.Qdn],
             ["当前耐久度", this.Xdn],
@@ -76,7 +75,7 @@ let SceneItemDamageComponent =
     }
     OnStart() {
       return (
-        (this.Xln = this.Entity.GetComponent(141)),
+        (this.Xln = this.Entity.GetComponent(152)),
         this.Xln.RegisterComponent(this, this.Lo),
         (this.$dn = (e) => {
           this.Zln(e);
@@ -127,16 +126,15 @@ let SceneItemDamageComponent =
       } else if (ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam)
         return;
       var t = e.Attacker.GetComponent(3),
-        i = SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchPlayerAttack(
-          { Type: IComponent_1.EHitBulletType.PlayerAttack },
-          e,
-          this.Entity,
-        );
+        i =
+          SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchPlayerAttack(
+            e,
+          );
       t?.Valid &&
         i &&
         (this.Xdn <= 0 ||
-          (e.ReBulletData.Base.DamageId &&
-            0 < this.Xdn &&
+          e.DamageId <= 0 ||
+          (0 < this.Xdn &&
             ((t =
               this.Entity.GetComponent(0).GetBaseInfo()?.Category
                 ?.ControlMatchType) &&
@@ -144,13 +142,13 @@ let SceneItemDamageComponent =
               Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "SceneItem",
-                32,
+                31,
                 "[爆裂鸣晶] ThrowDamageChangeRequest",
                 ["Entity.Valid", this.Entity.Valid],
               ),
             LevelGamePlayController_1.LevelGamePlayController.ThrowDamageChangeRequest(
               this.Entity.Id,
-              e.ReBulletData.Base.DamageId,
+              e.DamageId,
             ))));
     }
     GetHitPoint() {
@@ -174,7 +172,7 @@ let SceneItemDamageComponent =
   });
 (SceneItemDamageComponent = SceneItemDamageComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(135)],
+    [(0, RegisterComponent_1.RegisterComponent)(146)],
     SceneItemDamageComponent,
   )),
   (exports.SceneItemDamageComponent = SceneItemDamageComponent);

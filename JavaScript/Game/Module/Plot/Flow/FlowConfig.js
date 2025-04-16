@@ -34,7 +34,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Plot",
-        19,
+        18,
         "找不到剧情配置",
         ["flowListName", t],
         ["flowId", e],
@@ -62,7 +62,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
     return (
       e ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Level", 19, "无法找到对应剧情配置", [
+          Log_1.Log.Error("Level", 18, "无法找到对应剧情配置", [
             "stateKey",
             t,
           ])),
@@ -80,7 +80,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Plot",
-              19,
+              18,
               "找不到剧情配置",
               ["flowListName", t],
               ["flowId", e],
@@ -94,7 +94,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Plot",
-          19,
+          18,
           "剧情状态为空",
           ["flowListName", t],
           ["flowId", e],
@@ -103,7 +103,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Level",
-          30,
+          29,
           "找不到剧情配置",
           ["flowListName", t],
           ["flowId", e],
@@ -117,7 +117,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Level",
-              19,
+              18,
               "[StartFlow] 无法找到对应剧情的状态",
               ["FlowId", e],
               ["StateId", o],
@@ -135,7 +135,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            30,
+            29,
             "FlowListName配置错误",
             ["Value", t],
             ["Name", e],
@@ -164,7 +164,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
   }
   lte() {
     if (GlobalData_1.GlobalData.IsPlayInEditor) {
-      Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 27, "加载音频资源表");
+      Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 26, "加载音频资源表");
       var t = UE.BlueprintPathsLibrary.ProjectContentDir() + "../../..",
         t = UE.MyFileHelper.GetAbsolutePath(
           t + "/Source/Config/Raw/BaseTables/j.剧情语音.xlsx",
@@ -186,7 +186,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
       }
       e.Dispose(),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 27, "检索到条音频", [
+          Log_1.Log.Info("Plot", 26, "检索到条音频", [
             "FlowListData.AudioCache!.size",
             FlowListData.AudioCache.size,
           ]);

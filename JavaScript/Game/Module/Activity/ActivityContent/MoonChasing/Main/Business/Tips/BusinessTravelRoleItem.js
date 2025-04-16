@@ -14,14 +14,14 @@ class BusinessTravelRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.RoleId = 0),
       (this.SequencePlayer = void 0),
-      (this.Yva = (i) => {
+      (this.kva = (i) => {
         "Action03" === i &&
-          (this.Jva(),
-          this.zva(!1),
-          this.Zva(!1),
-          this.eTa(!1),
-          this.eMa(),
-          this.ffa(!1));
+          (this.Nva(),
+          this.Fva(!1),
+          this.Vva(!1),
+          this.iTa(!1),
+          this.Hva(),
+          this.dfa(!1));
       });
   }
   OnRegisterComponent() {
@@ -42,7 +42,7 @@ class BusinessTravelRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.SequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.RootItem,
     )),
-      this.SequencePlayer.BindSequenceCloseEvent(this.Yva),
+      this.SequencePlayer.BindSequenceCloseEvent(this.kva),
       this.GetItem(3)?.SetUIActive(!1),
       this.GetItem(9)?.SetUIActive(!1),
       this.GetItem(4)?.SetUIActive(!1),
@@ -60,19 +60,19 @@ class BusinessTravelRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(1)?.SetUIActive(!0),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i);
   }
-  Jva() {
+  Nva() {
     this.GetItem(1)?.SetUIActive(!1);
   }
-  zva(i) {
+  Fva(i) {
     this.GetItem(3)?.SetUIActive(i);
   }
-  Zva(i) {
+  Vva(i) {
     this.GetItem(4)?.SetUIActive(i);
   }
-  eTa(i) {
+  iTa(i) {
     this.GetItem(5)?.SetUIActive(i);
   }
-  tMa(i) {
+  jva(i) {
     var t =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetEditTeamDataById(
         this.RoleId,
@@ -82,10 +82,10 @@ class BusinessTravelRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetText(7)?.SetText(i.toString()),
       this.GetText(8)?.SetText(t.Level.toString()));
   }
-  eMa() {
+  Hva() {
     this.GetItem(6)?.SetUIActive(!1);
   }
-  ffa(i) {
+  dfa(i) {
     this.GetItem(9)?.SetUIActive(i);
   }
   Refresh(i) {
@@ -106,7 +106,7 @@ class BusinessTravelRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     AudioSystem_1.AudioSystem.PostEvent("play_ui_zuiyuejie_loading"),
       this.SequencePlayer.PlayLevelSequenceByName("Action01"),
       this.VAn("working", 0.1),
-      this.ffa(!0);
+      this.dfa(!0);
   }
   PlayRunFinishAction(i, t) {
     AudioSystem_1.AudioSystem.ExecuteAction("play_ui_zuiyuejie_loading", 0),
@@ -114,20 +114,20 @@ class BusinessTravelRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
     var e = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
       this.RoleId,
     );
-    i === Protocol_1.Aki.Protocol.voh.qGs
+    i === Protocol_1.Aki.Protocol.oA_.qGs
       ? (AudioSystem_1.AudioSystem.PostEvent("play_ui_zhuiyuejie_positive"),
         this.FAn(e.SuccessDialog),
         this.VAn("happy", 0),
-        this.zva(!0))
-      : i === Protocol_1.Aki.Protocol.voh.Proto_Bad
+        this.Fva(!0))
+      : i === Protocol_1.Aki.Protocol.oA_.Proto_Bad
         ? (AudioSystem_1.AudioSystem.PostEvent("play_ui_zhuiyuejie_passive"),
           this.FAn(e.FailDialog),
           this.VAn("fail", 0),
-          this.Zva(!0))
+          this.Vva(!0))
         : (AudioSystem_1.AudioSystem.PostEvent("play_ui_haoping"),
           this.VAn("idle", 0),
-          this.eTa(!0)),
-      this.tMa(t);
+          this.iTa(!0)),
+      this.jva(t);
   }
   PlayEndAction() {
     this.SequencePlayer.PlayLevelSequenceByName("Action03");

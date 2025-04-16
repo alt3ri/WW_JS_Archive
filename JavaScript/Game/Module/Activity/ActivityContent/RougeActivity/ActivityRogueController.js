@@ -48,7 +48,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     return (
       ActivityRogueController.MFe(),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Activity", 38, "初始化肉鸽活动"),
+        Log_1.Log.Debug("Activity", 37, "初始化肉鸽活动"),
       !0
     );
   }
@@ -90,7 +90,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Activity",
-          38,
+          37,
           "肉鸽活动功能触发",
           ["Type", e.FunctionType],
           ["Params", r],
@@ -120,7 +120,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
       return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
         "FunctionDisable",
       );
-    t = { MarkId: e ? Number(e[0]) : void 0, MarkType: 0, OpenAreaId: 0 };
+    t = { MarkId: e ? Number(e[0]) : void 0, MarkType: 0, OpenFogId: 0 };
     WorldMapController_1.WorldMapController.OpenView(2, !1, t);
   }),
   (ActivityRogueController.IFe = (e) => {

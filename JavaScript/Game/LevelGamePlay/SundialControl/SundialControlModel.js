@@ -7,12 +7,11 @@ const UE = require("ue"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
   MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
-  CameraController_1 = require("../../Camera/CameraController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
-  SundialControlController_1 = require("./SundialControlController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   finalSocket = [5, 2],
   SUNDIAL_MODEL_CONFIG_ID = "518056",
   RING_ONE = "Ring_1",
@@ -68,11 +67,13 @@ class SundialControlModel extends ModelBase_1.ModelBase {
     this.xxe ||
       ((this.xxe = !0),
       (t =
-        CameraController_1.CameraController.WidgetCamera.DisplayComponent
-          .CineCamera),
-      (this.wxe = t.K2_GetActorLocation()),
+        ControllerHolder_1.ControllerHolder.CameraController.WidgetCamera
+          .DisplayComponent.CineCamera),
+      (this.wxe = t.D_K2_GetActorLocation()),
       (this.Bxe = t.K2_GetActorRotation()),
-      (t = this.Bxe.Vector()).Normalize(MathCommon_1.MathCommon.SmallNumber),
+      (t = this.Bxe.VectorDouble()).Normalize(
+        MathCommon_1.MathCommon.SmallNumber,
+      ),
       (this.wxe = this.wxe.op_Addition(t.op_Multiply(200))));
   }
   InitRingActors(t) {
@@ -113,20 +114,20 @@ class SundialControlModel extends ModelBase_1.ModelBase {
     t &&
       AudioController_1.AudioController.PostEvent(
         t,
-        SundialControlController_1.SundialControlController.GetMainActor(),
+        ControllerHolder_1.ControllerHolder.SundialControlController.GetMainActor(),
       );
   }
   RotateCurrentRing(i) {
     var r = this.bxe[this.qxe],
-      n = r.RingActor.RootComponent;
-    if (n) {
-      var o = r.RotateSpeed;
-      let t = i * TimeUtil_1.TimeUtil.Millisecond * o,
+      o = r.RingActor.RootComponent;
+    if (o) {
+      var n = r.RotateSpeed;
+      let t = i * TimeUtil_1.TimeUtil.Millisecond * n,
         e = ((this.Gxe += t), !1);
       if (
         (this.Gxe > r.SimpleRotateAngle &&
           ((t -= this.Gxe - r.SimpleRotateAngle), (e = !0)),
-        n.K2_AddRelativeRotation(new UE.Rotator(0, t, 0), !1, void 0, !1),
+        o.K2_AddRelativeRotation(new UE.Rotator(0, t, 0), !1, void 0, !1),
         e)
       )
         return (
@@ -135,7 +136,7 @@ class SundialControlModel extends ModelBase_1.ModelBase {
           )?.Path) &&
             AudioController_1.AudioController.PostEvent(
               i,
-              SundialControlController_1.SundialControlController.GetMainActor(),
+              ControllerHolder_1.ControllerHolder.SundialControlController.GetMainActor(),
             ),
           (this.Gxe = 0),
           this.Oxe(),
@@ -186,7 +187,7 @@ class SundialControlModel extends ModelBase_1.ModelBase {
             )?.Path)) &&
           AudioController_1.AudioController.PostEvent(
             e,
-            SundialControlController_1.SundialControlController.GetMainActor(),
+            ControllerHolder_1.ControllerHolder.SundialControlController.GetMainActor(),
           )
         : this.bxe[t].CurSocket === finalSocket[t] &&
           ((this.bxe[t].IsShine = !0),
@@ -201,7 +202,7 @@ class SundialControlModel extends ModelBase_1.ModelBase {
             )?.Path)) &&
           AudioController_1.AudioController.PostEvent(
             e,
-            SundialControlController_1.SundialControlController.GetMainActor(),
+            ControllerHolder_1.ControllerHolder.SundialControlController.GetMainActor(),
           );
     }
   }
@@ -213,9 +214,9 @@ class SundialControlModel extends ModelBase_1.ModelBase {
     t &&
       AudioController_1.AudioController.PostEvent(
         t,
-        SundialControlController_1.SundialControlController.GetMainActor(),
+        ControllerHolder_1.ControllerHolder.SundialControlController.GetMainActor(),
       ),
-      SundialControlController_1.SundialControlController.PlayFinishAnimation();
+      ControllerHolder_1.ControllerHolder.SundialControlController.PlayFinishAnimation();
   }
   UpdateTips() {
     EventSystem_1.EventSystem.Emit(

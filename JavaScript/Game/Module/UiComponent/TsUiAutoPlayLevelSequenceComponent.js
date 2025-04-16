@@ -9,6 +9,11 @@ class TsUiAutoPlayLevelSequenceComponent extends UE.LGUIBehaviour {
       (this.AutoPlayList = void 0),
       (this.PlayState = void 0);
   }
+  Constructor() {
+    (this.LevelSequencePlayer = void 0),
+      (this.AutoPlayList = void 0),
+      (this.PlayState = void 0);
+  }
   AwakeBP() {
     (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.RootUIComp,
@@ -16,12 +21,15 @@ class TsUiAutoPlayLevelSequenceComponent extends UE.LGUIBehaviour {
       (this.PlayState = 0);
   }
   OnUIActiveInHierarchyBP(e) {
-    this.PlayState = e ? 1 : 2;
+    (this.PlayState = e ? 1 : 2), 2 === this.PlayState && this.TryRefresh();
   }
   OnDestroyBP() {
     this.LevelSequencePlayer?.Clear(), (this.LevelSequencePlayer = void 0);
   }
   UpdateBP(e) {
+    this.TryRefresh();
+  }
+  TryRefresh() {
     0 !== this.PlayState &&
       (1 === this.PlayState
         ? (this.TryPlay(), (this.PlayState = 0))
@@ -31,20 +39,22 @@ class TsUiAutoPlayLevelSequenceComponent extends UE.LGUIBehaviour {
     var e = this.GetOwner();
     if (e) {
       var t = e.GetUIItem().LevelSequences,
-        s = ((this.AutoPlayList = new Array()), t.Num());
-      for (let e = 0; e < s; ++e) {
-        var i = t.GetKey(e);
-        t.Get(i).PlaySetting.bAutoPlay &&
-          (this.LevelSequencePlayer.PlaySequencePurely(i),
-          this.AutoPlayList.push(i));
+        i = ((this.AutoPlayList = new Array()), t.Num());
+      for (let e = 0; e < i; ++e) {
+        var s = t.GetKey(e);
+        t.Get(s).PlaySetting.bAutoPlay &&
+          (this.LevelSequencePlayer.PlaySequencePurely(s),
+          this.AutoPlayList.push(s));
       }
     }
   }
   TryStop() {
-    var e = this.GetOwner();
-    if (e) {
-      for (const t of this.AutoPlayList) e.StopSequenceByKey(t);
-      this.AutoPlayList = void 0;
+    if (this.AutoPlayList) {
+      var e = this.GetOwner();
+      if (e) {
+        for (const t of this.AutoPlayList) e.StopSequenceByKey(t);
+        this.AutoPlayList = void 0;
+      }
     }
   }
 }

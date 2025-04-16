@@ -13,6 +13,7 @@ class BulletMoveInfo {
       (this.BulletSpeedRatio = -0),
       (this.BulletSpeed = -0),
       (this.GravityMoveRotator = Rotator_1.Rotator.Create()),
+      (this.GravityMoveForward = Vector_1.Vector.Create()),
       (this.BulletSpeedZ = -0),
       (this.BulletSpeed2D = -0),
       (this.Gravity = -0),
@@ -35,7 +36,8 @@ class BulletMoveInfo {
       (this.ObstaclesOffset = Vector_1.Vector.Create()),
       (this.LastFramePosition = Vector_1.Vector.Create()),
       (this.AimedLineTraceElement = void 0),
-      (this.ActorRotateParabola = !1);
+      (this.ActorRotateParabola = !1),
+      (this.AroundAngle = 0);
   }
   Clear() {
     this.SocketTransform.Reset(),
@@ -44,6 +46,7 @@ class BulletMoveInfo {
       (this.BulletSpeedRatio = 0),
       (this.BulletSpeed = 0),
       this.GravityMoveRotator.Reset(),
+      this.GravityMoveForward.Reset(),
       (this.BulletSpeedZ = 0),
       (this.BulletSpeed2D = 0),
       (this.Gravity = 0),
@@ -69,10 +72,13 @@ class BulletMoveInfo {
         this.AimedLineTraceElement,
       ),
       (this.AimedLineTraceElement = void 0),
-      (this.ActorRotateParabola = !1);
+      (this.ActorRotateParabola = !1),
+      (this.AroundAngle = 0);
   }
 }
 ((exports.BulletMoveInfo = BulletMoveInfo).TempTransform1 =
   Transform_1.Transform.Create()),
-  (BulletMoveInfo.StickGroundLineTrace = void 0);
+  (BulletMoveInfo.StickGroundLineTrace = void 0),
+  (BulletMoveInfo.StickWaterLineTrace = void 0),
+  (BulletMoveInfo.StickWaterSphereTrace = void 0);
 //# sourceMappingURL=BulletMoveInfo.js.map

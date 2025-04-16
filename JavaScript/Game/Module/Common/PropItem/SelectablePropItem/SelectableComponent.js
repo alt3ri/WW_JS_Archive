@@ -88,7 +88,11 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
             ((i.SelectedCount = s.SelectedCount),
             e.RefreshCostCount(),
             { IsVisible: 0 < i.SelectedCount, LongPressConfigId: 1 });
-        return e.SetReduceButton(s), e.SetSelected(0 < i.SelectedCount, !0), !0;
+        return (
+          this.Data?.IsNumSelectable && e.SetReduceButton(s),
+          e.SetSelected(0 < i.SelectedCount, !0),
+          !0
+        );
       }),
       (this.ReduceFunction = (t, e, i) => {
         this.SetPrevPropItemSelectedState(i);
@@ -103,9 +107,9 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
           this.dBt();
         (s = e),
           s.RefreshCostCount(),
-          s.SetSelected(0 < r),
+          s.SetSelected(0 < r, !0),
           (e = { IsVisible: 0 < i.SelectedCount, LongPressConfigId: 1 });
-        return s.SetReduceButton(e), !0;
+        return this.Data?.IsNumSelectable && s.SetReduceButton(e), !0;
       });
   }
   InitLoopScroller(t, e, i) {
@@ -132,6 +136,9 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   }
   RefreshPartByIndex(t) {
     this.LoopScrollView.RefreshGridProxy(t);
+  }
+  RefreshAllByDisplay() {
+    this.LoopScrollView.RefreshAllGridProxies();
   }
   gBt(t) {
     (this.SelectedDataList = t || []),
@@ -167,7 +174,10 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
     void 0 === this.LastSelectedPropData ||
       this.fBt(t) ||
       !this.LastAddData ||
-      (t = this.pBt(this.LastAddData)) < 0 ||
+      (t = this.GetLoopScrollViewIndex(
+        this.LastAddData.IncId,
+        this.LastAddData.ItemId,
+      )) < 0 ||
       (this.LoopScrollView.IsGridDisplaying(t) &&
         this.LoopScrollView.UnsafeGetGridProxy(t).OnDeselected(!1));
   }
@@ -188,7 +198,9 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
         : !(
             ((i = this.GetSelectedData(t))?.SelectedCount &&
               i.SelectedCount === t.Count) ||
-            (!i && this.SelectedDataList.length >= this.MaxSize
+            (!i &&
+            this.SelectedDataList.length >= this.MaxSize &&
+            !this.Data.IsSingleSelected
               ? (e &&
                   ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                     "WeaponFullMaterialText",
@@ -212,9 +224,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
         : this.LastAddData.ItemId === t.ItemId)
     );
   }
-  pBt(t) {
-    var i = t.IncId,
-      s = t.ItemId;
+  GetLoopScrollViewIndex(i, s) {
     if (0 < i || 0 < s)
       for (let t = 0, e = this.ItemDataList.length; t < e; ++t) {
         var r = this.ItemDataList[t];
@@ -229,9 +239,12 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   }
   CBt(t) {
     var e;
-    t && (0 < (e = t.IncId) ? this.vBt(e) : this.MBt(t.ItemId));
+    t &&
+      (0 < (e = t.IncId)
+        ? this.RemoveSelectedDataByIncId(e)
+        : this.MBt(t.ItemId));
   }
-  vBt(e) {
+  RemoveSelectedDataByIncId(e) {
     for (let t = 0; t < this.SelectedDataList.length; t++) {
       var i = this.SelectedDataList[t];
       if (i.IncId === e)
@@ -248,7 +261,10 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   CancelPropItemSelected(t) {
     void 0 === this.LastAddData ||
       this.fBt(t) ||
-      (t = this.pBt(this.LastAddData)) < 0 ||
+      (t = this.GetLoopScrollViewIndex(
+        this.LastAddData.IncId,
+        this.LastAddData.ItemId,
+      )) < 0 ||
       (this.LoopScrollView.IsGridDisplaying(t) &&
         ((t = this.LoopScrollView.UnsafeGetGridProxy(t)).Clear(),
         t.SetSelected(!1, !0),
@@ -297,6 +313,9 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   }
   dBt() {
     this.UpdateChangeItemSelectList();
+  }
+  GetGridByDisplayIndex(t) {
+    return this.LoopScrollView?.GetGridByDisplayIndex(t);
   }
 }
 exports.SelectableComponent = SelectableComponent;

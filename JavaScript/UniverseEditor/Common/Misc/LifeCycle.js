@@ -80,17 +80,17 @@ function combinedDisposable(...s) {
   (exports.combinedDisposable = combinedDisposable);
 class DisposableStore {
   constructor() {
-    (this.QAa = new Set()), (this.KAa = !1), trackDisposable(this);
+    (this.pAa = new Set()), (this.vAa = !1), trackDisposable(this);
   }
   Dispose() {
-    this.KAa || (markAsDisposed(this), (this.KAa = !0), this.Clear());
+    this.vAa || (markAsDisposed(this), (this.vAa = !0), this.Clear());
   }
   Clear() {
-    if (0 !== this.QAa.size)
+    if (0 !== this.pAa.size)
       try {
-        dispose(this.QAa);
+        dispose(this.pAa);
       } finally {
-        this.QAa.clear();
+        this.pAa.clear();
       }
   }
   Add(s) {
@@ -98,14 +98,14 @@ class DisposableStore {
       if (s === this)
         throw new Error("Cannot register a disposable on itself!");
       setParentOfDisposable(s, this),
-        this.KAa
+        this.vAa
           ? DisposableStore.DisableDisposedWarning ||
             (0, Log_1.warn)(
               new Error(
                 "Trying to add a disposable to a DisposableStore that has already been disposed of. The added object will be leaked!",
               ).stack ?? "",
             )
-          : this.QAa.add(s);
+          : this.pAa.add(s);
     }
     return s;
   }
@@ -113,16 +113,16 @@ class DisposableStore {
 (exports.DisposableStore = DisposableStore).DisableDisposedWarning = !1;
 class Disposable {
   constructor() {
-    (this.$Aa = new DisposableStore()),
+    (this.MAa = new DisposableStore()),
       trackDisposable(this),
-      setParentOfDisposable(this.$Aa, this);
+      setParentOfDisposable(this.MAa, this);
   }
   Dispose() {
-    markAsDisposed(this), this.$Aa.Dispose();
+    markAsDisposed(this), this.MAa.Dispose();
   }
   Register(s) {
     if (s === this) throw new Error("Cannot register a disposable on itself!");
-    return this.$Aa.Add(s);
+    return this.MAa.Add(s);
   }
 }
 (exports.Disposable = Disposable).None = Object.freeze({ Dispose() {} });

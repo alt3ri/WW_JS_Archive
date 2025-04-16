@@ -33,14 +33,14 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
       (ObjectSystem_1.ObjectSystem.IsValid(this.Jh)
         ? this.GetEntityId() !== t.Id
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 8, "在休眠时，休眠实体不是当前实体")
+            Log_1.Log.Error("Battle", 17, "在休眠时，休眠实体不是当前实体")
           : (this.RemoveEntityEvents(t),
             this.OnDeactivate(),
             (this.Jh = void 0))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Battle",
-            8,
+            17,
             "在休眠时，当前实体不存在，请先调用Activate",
           ));
   }
@@ -60,19 +60,19 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
     return ObjectSystem_1.ObjectSystem.IsValid(this.Jh);
   }
   ListenForAttributeChanged(t, e, i) {
-    t = t.GetComponent(159);
+    t = t.GetComponent(171);
     t && (t.AddListener(e, i), this.GYe.set(e, i));
   }
   RemoveListenAttributeChanged(t, e, i) {
-    t = t.GetComponent(159);
+    t = t.GetComponent(171);
     t && (t.RemoveListener(e, i), this.GYe.delete(e));
   }
   kYe(t) {
-    var e = t.GetComponent(159);
+    var e = t.GetComponent(171);
     if (e) for (var [i, s] of this.GYe) e.RemoveListener(i, s);
   }
   ListenForTagCountChanged(e, i, s) {
-    e = e.GetComponent(190);
+    e = e.GetComponent(203);
     if (e) {
       let t = void 0;
       "number" == typeof i
@@ -90,7 +90,7 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
     }
   }
   ListenForTagSignificantChanged(t, e, i) {
-    var t = t.GetComponent(190);
+    var t = t.GetComponent(203);
     t && ((t = t.ListenForTagAddOrRemove(e, i)), this.i$e.push(t));
   }
   ListenForTagAddNewOrRemovedWithTag(t, e, i, s) {

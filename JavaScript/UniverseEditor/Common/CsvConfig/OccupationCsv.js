@@ -9,13 +9,15 @@ const immer_1 = require("immer"),
       CnName: "Id",
       Filter: "1",
       Condition: "notEmpty && unique",
+      ExportType: "CS",
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "OccupationType",
       CnName: "占用类型",
       Filter: "1",
       Condition: "notEmpty",
-      RenderType: 26,
+      RenderType: 27,
+      ExportType: "CS",
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "NameStringKey",
@@ -33,7 +35,8 @@ const immer_1 = require("immer"),
     (0, CsvLoader_1.createCsvField)({
       Name: "OccupationData",
       CnName: "数据",
-      RenderType: 27,
+      RenderType: 28,
+      ExportType: "CS",
     }),
   ];
 class OccupationCsvLoader extends CsvLoader_1.CsvLoader {
@@ -50,11 +53,11 @@ class OccupationCsvLoader extends CsvLoader_1.CsvLoader {
   }
   Save(e, o) {
     var a = [];
-    for (const t of e) {
-      var s = (0, immer_1.default)(t, (e) => {
+    for (const r of e) {
+      var t = (0, immer_1.default)(r, (e) => {
         this.re(e);
       });
-      a.push(s);
+      a.push(t);
     }
     super.Save(a, o);
   }

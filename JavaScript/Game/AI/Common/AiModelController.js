@@ -7,30 +7,32 @@ class AiModelController extends ControllerBase_1.ControllerBase {
   static get Model() {
     return ModelManager_1.ModelManager.AiModel;
   }
-  static AddAiToTeam(e, o) {
-    (e.AiTeam = this.Model.GetAiTeam(o)), e.AiTeam.AddMember(e);
+  static AddAiToTeam(o, r) {
+    (o.AiTeam = this.Model.GetAiTeam(r)), o.AiTeam.AddMember(o);
   }
-  static RemoveAiFromTeam(e) {
-    var o = e.AiTeam;
-    o && (o.RemoveMember(e), (e.AiTeam = void 0));
+  static RemoveAiFromTeam(o) {
+    var r = o.AiTeam;
+    r && (r.RemoveMember(o), (o.AiTeam = void 0));
   }
-  static OnTick(e) {
+  static OnTick(o) {
     this.Model.AiScoreManager.Update();
-    for (var [, o] of this.Model.ActiveAiTeams)
-      0 < o.TeamMemberToGroup.size && o.Tick();
+    for (var [, r] of this.Model.ActiveAiTeams)
+      0 < r.TeamMemberToGroup.size && r.Tick();
     this.Dte();
   }
   static Dte() {
-    for (var [, e] of this.Model.HatredGroups)
-      for (const t of e)
-        (t.CharAiDesignComp?.Valid && t.CharAiDesignComp.Entity.Valid) ||
-          e.delete(t);
     for (var [, o] of this.Model.HatredGroups)
-      for (const a of o)
-        if (a.AiHateList.IsCurrentTargetInMaxArea) {
-          var r = a.AiHateList.GetCurrentTarget().Id;
-          for (const s of o) a !== s && s.AiHateList.SharedHatredTarget(r);
-        }
+      for (var [, r] of o)
+        for (const s of r)
+          (s.CharAiDesignComp?.Valid && s.CharAiDesignComp.Entity.Valid) ||
+            r.delete(s);
+    for (var [, e] of this.Model.HatredGroups)
+      for (var [, t] of e)
+        for (const i of t)
+          if (i.AiHateList.IsCurrentTargetInMaxArea) {
+            var a = i.AiHateList.GetCurrentTarget().Id;
+            for (const l of t) i !== l && l.AiHateList.SharedHatredTarget(a);
+          }
   }
 }
 exports.AiModelController = AiModelController;

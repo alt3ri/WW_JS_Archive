@@ -3,9 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventEnterOrbitalCamera = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
-  CameraController_1 = require("../../Camera/CameraController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventEnterOrbitalCamera extends LevelGeneralBase_1.LevelEventBase {
@@ -26,7 +26,7 @@ class LevelEventEnterOrbitalCamera extends LevelGeneralBase_1.LevelEventBase {
               e.EndEntity,
             )?.Transform?.Pos)
               ? (this.fDe.Set(t.X, t.Y, t.Z),
-                CameraController_1.CameraController.OrbitalCamera.PlayerComponent.PlayCameraOrbitalPath(
+                ControllerHolder_1.ControllerHolder.CameraController.OrbitalCamera.PlayerComponent.PlayCameraOrbitalPath(
                   e.LevelSequence,
                   this.gDe,
                   this.fDe,

@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestViewChildStep = void 0);
 const ue_1 = require("ue"),
-  TreeStepWithStatus_1 = require("../../GeneralLogicTree/View/TreeStep/TreeStepWithStatus");
-class QuestViewChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
+  StepWithStatusItem_1 = require("../../BattleUi/Views/MissionView/TreeStep/StepWithStatusItem");
+class QuestViewChildStep extends StepWithStatusItem_1.StepWithStatusItem {
   OnRegisterComponent() {
     super.OnRegisterComponent(),
       this.ComponentRegisterInfos.push([5, ue_1.UISprite]);
@@ -12,10 +12,12 @@ class QuestViewChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
     super.OnStart();
   }
   UpdateStepInfo() {
-    var e = super.UpdateStepInfo();
-    return this.GetSprite(5)?.SetUIActive(!e), e;
+    super.UpdateStepInfo(),
+      this.GetSprite(5)?.SetUIActive(
+        !this.IsDescribeTextVisible || !this.StatusNodeVisible,
+      );
   }
-  IsShowNodeStatus() {
+  CheckCanShowStatusRoot() {
     return !0;
   }
 }

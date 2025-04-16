@@ -10,6 +10,11 @@ class TsTaskChangeInteractionState extends TsTaskAbortImmediatelyBase_1.default 
       (this.IsInitTsVariables = !1),
       (this.TsInteractionState = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsInteractionState = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -17,28 +22,28 @@ class TsTaskChangeInteractionState extends TsTaskAbortImmediatelyBase_1.default 
   }
   ReceiveExecuteAI(e, t) {
     this.InitTsVariables();
-    var a,
-      s = e.AiController;
-    s
-      ? ((a = s.CharActorComp.Entity.GetComponent(182))
-          ? a.SetInteractionState(
+    var s,
+      a = e.AiController;
+    a
+      ? ((s = a.CharActorComp.Entity.GetComponent(195))
+          ? s.SetInteractionState(
               this.TsInteractionState,
               "TsTaskChangeInteractionState ReceiveExecuteAI",
             )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "BehaviorTree",
-              30,
+              29,
               "实体交互组件无效",
               [
                 "CreatureDataId",
-                s.CharActorComp.CreatureData.GetCreatureDataId(),
+                a.CharActorComp.CreatureData.GetCreatureDataId(),
               ],
-              ["PbDataId", s.CharActorComp.CreatureData.GetPbDataId()],
+              ["PbDataId", a.CharActorComp.CreatureData.GetPbDataId()],
             ),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             e.GetClass().GetName(),
           ]),

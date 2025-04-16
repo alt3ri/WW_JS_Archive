@@ -16,20 +16,20 @@ class Tree {
     var e = t.Element;
     this.ChildMap.has(e)
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RedDot", 17, "重复添加子节点！", ["element", e])
+        Log_1.Log.Error("RedDot", 16, "重复添加子节点！", ["element", e])
       : (t.Parent = this).ChildMap.set(e, t);
   }
   AddChildElement(t) {
     var e;
     this.ChildMap.has(t)
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RedDot", 17, "重复添加子节点！", ["element", t])
+        Log_1.Log.Error("RedDot", 16, "重复添加子节点！", ["element", t])
       : ((e = new Tree(t, this)).Parent = this).ChildMap.set(t, e);
   }
   AddParent(t) {
     void 0 !== this.Parent
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RedDot", 17, "该节点已存在父节点！", [
+        Log_1.Log.Error("RedDot", 16, "该节点已存在父节点！", [
           "element",
           this.Element,
         ])
@@ -38,7 +38,7 @@ class Tree {
   AddParentElement(t) {
     void 0 !== this.Parent
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RedDot", 17, "该节点已存在父节点！", [
+        Log_1.Log.Error("RedDot", 16, "该节点已存在父节点！", [
           "element",
           this.Element,
         ])

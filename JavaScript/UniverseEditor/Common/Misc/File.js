@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.copyFile =
+  (exports.isAssetRedirector =
+    exports.copyFile =
     exports.copyDir =
     exports.checkFileIsInUse =
     exports.convertExcelToCsv =
@@ -215,9 +216,13 @@ function copyDir(t, e, r) {
 function copyFile(t, e) {
   existFile(t) && (0, Platform_1.getPlatform)().CopyFile(t, e);
 }
+function isAssetRedirector(t) {
+  return (0, Platform_1.getPlatform)().IsAssetRedirector(t);
+}
 (exports.getJsRoot = getJsRoot),
   (exports.convertExcelToCsv = convertExcelToCsv),
   (exports.checkFileIsInUse = checkFileIsInUse),
   (exports.copyDir = copyDir),
-  (exports.copyFile = copyFile);
+  (exports.copyFile = copyFile),
+  (exports.isAssetRedirector = isAssetRedirector);
 //# sourceMappingURL=File.js.map

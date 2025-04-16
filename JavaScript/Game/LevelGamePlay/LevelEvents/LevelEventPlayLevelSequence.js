@@ -6,17 +6,20 @@ const Log_1 = require("../../../Core/Common/Log"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPlayLevelSequence extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
-    var o;
+    var n, o;
     e
       ? e.LevelSequencePath
-        ? (o = t)
-          ? (o = EntitySystem_1.EntitySystem.Get(o.EntityId))?.Valid
-            ? o.GetComponent(187)?.Owner
-              ? (o = o.GetComponent(150)) && o.HandleSequence(e)
+        ? (n = t)
+          ? (o = EntitySystem_1.EntitySystem.Get(n.EntityId))?.Valid
+            ? o.GetComponent(200)?.Owner
+              ? (o = o.GetComponent(161)) && o.HandleSequence(e)
               : Log_1.Log.CheckError() &&
-                Log_1.Log.Error("LevelEvent", 34, "状态控制actor不存在")
+                Log_1.Log.Error("LevelEvent", 33, "状态控制actor不存在")
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("LevelEvent", 34, "状态控制entity不存在")
+              Log_1.Log.Error("LevelEvent", 33, "状态控制entity不存在", [
+                "EntityId",
+                n.EntityId,
+              ])
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelEvent",

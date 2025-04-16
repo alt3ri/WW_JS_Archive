@@ -12,27 +12,27 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class ActivityBlackCoastData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
-      (this.B9a = new Map()),
+      (this.bja = new Map()),
       (this.ROe = new Map()),
-      (this.b9a = 0),
-      (this.q9a = 0),
+      (this.qja = 0),
+      (this.Oja = 0),
       (this.y7s = (t, e) => t.Goal - e.Goal);
   }
   OnInit(t) {
-    this.InitProgressReward(), this.O9a();
+    this.InitProgressReward(), this.Gja();
   }
   PhraseEx(t) {
-    t = t.Cih;
+    t = t.VS_;
     if (t) {
       this.StageUpdate(t.gMs);
-      for (const r of t.Mih) {
+      for (const r of t.rM_) {
         var e = this.GetProgressRewardDataById(r);
         e
           ? (e.Achieved = !0)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Activity",
-              38,
+              37,
               "[BlackCoastActivity] 奖励Id不存在",
               ["RewardId", r],
             );
@@ -54,23 +54,23 @@ class ActivityBlackCoastData extends ActivityData_1.ActivityBaseData {
   }
   GetProgressItemCount() {
     return ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-      this.b9a,
+      this.qja,
     );
   }
   GetProgressItemTotal() {
-    return this.q9a;
+    return this.Oja;
   }
   get GetProgressItemId() {
-    return this.b9a;
+    return this.qja;
   }
   InitProgressReward() {
-    this.B9a.clear();
+    this.bja.clear();
     var t =
         ConfigManager_1.ConfigManager.ActivityBlackCoastConfig.GetActivityConfig(
           this.Id,
         ),
       t =
-        ((this.b9a = t.ItemId),
+        ((this.qja = t.ItemId),
         ConfigManager_1.ConfigManager.ActivityBlackCoastConfig.GetAllRewardConfigByActivityId(
           this.Id,
         ));
@@ -80,15 +80,15 @@ class ActivityBlackCoastData extends ActivityData_1.ActivityBaseData {
         (e.Goal = r.Active),
         (e.DropId = r.DropId),
         (e.GetCurrentGoal = () => this.GetProgressItemCount()),
-        (this.q9a = Math.max(this.q9a, e.Goal)),
-        this.B9a.set(r.Id, e);
+        (this.Oja = Math.max(this.Oja, e.Goal)),
+        this.bja.set(r.Id, e);
     }
   }
   GetProgressRewardDataById(t) {
-    return this.B9a.get(t);
+    return this.bja.get(t);
   }
   GetAllProgressRewardData() {
-    return Array.from(this.B9a.values()).sort(this.y7s);
+    return Array.from(this.bja.values()).sort(this.y7s);
   }
   GetAllAvailableProgressRewardIds() {
     var t = [];
@@ -107,7 +107,7 @@ class ActivityBlackCoastData extends ActivityData_1.ActivityBaseData {
     );
   }
   HasProgressRewardRedDot() {
-    for (const t of this.B9a.values()) if (0 === t.GetState()) return !0;
+    for (const t of this.bja.values()) if (0 === t.GetState()) return !0;
     return !1;
   }
   SetTaskRewardGot(t, e) {
@@ -117,7 +117,7 @@ class ActivityBlackCoastData extends ActivityData_1.ActivityBaseData {
         this.Id,
       );
   }
-  O9a() {
+  Gja() {
     this.ROe.clear();
     var e =
       ConfigManager_1.ConfigManager.ActivityBlackCoastConfig.GetAllStageConfigByActivityId(
@@ -146,7 +146,7 @@ class ActivityBlackCoastData extends ActivityData_1.ActivityBaseData {
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Activity",
-            38,
+            37,
             "[BlackCoastActivity] 活动Stage不存在",
             ["Id", r.s5n],
           );

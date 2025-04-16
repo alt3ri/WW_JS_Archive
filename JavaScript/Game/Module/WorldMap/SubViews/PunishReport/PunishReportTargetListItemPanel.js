@@ -2,17 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PunishReportTargetListItemPanel = void 0);
 const UE = require("ue"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   LguiUtil_1 = require("../../../Util/LguiUtil");
 class PunishReportTargetListItemPanel extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UIText],
-      [1, UE.UIItem],
+      [1, UE.UITexture],
       [2, UE.UIItem],
-      [3, UE.UIItem],
-      [4, UE.UIItem],
-      [5, UE.UIText],
+      [3, UE.UIText],
     ];
   }
   SetDescLocalNewTxt(e) {
@@ -23,16 +22,22 @@ class PunishReportTargetListItemPanel extends UiPanelBase_1.UiPanelBase {
     this.GetText(0).SetText(e);
   }
   SetNumTxt(e) {
-    this.GetText(5).SetText(e);
+    this.GetText(3).SetText(e);
   }
-  SetLockActive(e) {
-    this.GetItem(1).SetUIActive(e);
-  }
-  SetToggleEmptyActive(e) {
-    this.GetItem(2).SetUIActive(e);
-  }
-  SetToggleSelectedActive(e) {
-    this.GetItem(3).SetUIActive(e);
+  SetState(e) {
+    let t = "";
+    switch (e) {
+      case 0:
+        t = "T_MapDifficultyLock";
+        break;
+      case 1:
+        t = "T_MapDifficultyEmpty";
+        break;
+      case 2:
+        t = "T_MapDifficultyTick";
+    }
+    e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t);
+    this.SetTextureByPath(e, this.GetTexture(1));
   }
 }
 exports.PunishReportTargetListItemPanel = PunishReportTargetListItemPanel;

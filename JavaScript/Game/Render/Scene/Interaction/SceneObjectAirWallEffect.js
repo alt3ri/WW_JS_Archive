@@ -50,7 +50,7 @@ class SceneObjectAirWallEffect {
       (this.bsr = e);
   }
   GetActorLocation() {
-    this.wKs.FromUeVector(this.ActorToAttach.K2_GetComponentLocation());
+    this.wKs.FromUeVector(this.ActorToAttach.D_K2_GetComponentLocation());
   }
   Start(e) {
     e && ((this.ActorToAttach = e), (this.IsReady = !0), this.koe());

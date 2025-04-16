@@ -24,32 +24,48 @@ class ThinkDataLaunchReporter {
   static InitializeInstance() {
     var e;
     exports.ENABLE_THINKING_ANALYTICS &&
+      !BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTipWithSkip() &&
       ((e = BaseConfigModel_1.BaseConfigModel.EntryJson?.TDCfg)
         ? (ThinkDataLaunchReporter.lyr(e?.URL, e?.AppID),
-          ThinkDataLaunchReporter.CalibrateInstanceTime())
+          ThinkDataLaunchReporter.CalibrateInstanceTime(),
+          LauncherLog_1.LauncherLog.Info(
+            "[数数] 启动创建数数实例",
+            ["Url", e?.URL],
+            ["AppID", e?.AppID],
+            ["Index", 0],
+          ))
         : LauncherLog_1.LauncherLog.Error(
-            "CDN下发数据未配置数数上报相关配置，创建上报实例失败！",
+            "[数数] CDN下发数据未配置数数上报相关配置，创建上报实例失败！",
           ));
   }
-  static lyr(r, t) {
-    if (UE.ThinkingAnalytics.HasInstanceInitialized(0)) {
-      let e = !1;
-      r && UE.ThinkingAnalytics.GetServerUrl(0) !== r && (e = !0),
-        (e = t && UE.ThinkingAnalytics.GetAppId(0) !== t ? !0 : e) &&
-          UE.ThinkingAnalytics.DestroyInstance(0, !1);
-    }
-    r && t
-      ? UE.ThinkingAnalytics.InitializeDefaultInsWithURL_Appid(
-          r,
-          t,
-          exports.EXIT_WAIT_TIME,
-          exports.MAX_PENDING_LOG,
-          exports.SEND_HTTP_TIMEOUT,
-          !0,
-          exports.CALIBRATE_INTERVAL,
-          exports.CALIBRATE_STOP_TIMER,
-        )
-      : UE.ThinkingAnalytics.Initialize(),
+  static lyr(e, r) {
+    let t = !1,
+      o = void 0,
+      a = void 0;
+    UE.ThinkingAnalytics.HasInstanceInitialized(0) &&
+      (e && (o = UE.ThinkingAnalytics.GetServerUrl(0)) !== e && (t = !0),
+      (t = !(!r || (a = UE.ThinkingAnalytics.GetAppId(0)) === r) || t)) &&
+      UE.ThinkingAnalytics.DestroyInstance(0, !1),
+      LauncherLog_1.LauncherLog.Info(
+        "[数数] InitializeDefaultInstanceWithUrlAppId",
+        ["needRemoveInstance", t],
+        ["oldServerUrl", o],
+        ["oldAppId", a],
+        ["serverUrl", e],
+        ["AppId", r],
+      ),
+      e && r
+        ? UE.ThinkingAnalytics.InitializeDefaultInsWithURL_Appid(
+            e,
+            r,
+            exports.EXIT_WAIT_TIME,
+            exports.MAX_PENDING_LOG,
+            exports.SEND_HTTP_TIMEOUT,
+            !0,
+            exports.CALIBRATE_INTERVAL,
+            exports.CALIBRATE_STOP_TIMER,
+          )
+        : UE.ThinkingAnalytics.Initialize(),
       (this.ClientVersion =
         BaseConfigController_1.BaseConfigController.GetVersionString()),
       UE.ThinkingAnalytics.Logout();
@@ -68,7 +84,7 @@ class ThinkDataLaunchReporter {
   (ThinkDataLaunchReporter.uyr = (e) => {
     UE.ThinkingAnalytics.HasInstanceTimeCalibrated(e) ||
       LauncherLog_1.LauncherLog.Info(
-        "数数上报时间校准失败，可以因为以下问题导致：1.CDN数数上报配置错误；2.网络原因连接不上。",
+        "[数数] 数数上报时间校准失败，可以因为以下问题导致：1.CDN数数上报配置错误；2.网络原因连接不上。",
       );
   });
 //# sourceMappingURL=ThinkDataLaunchReporter.js.map

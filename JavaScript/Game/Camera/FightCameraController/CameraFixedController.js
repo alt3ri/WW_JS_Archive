@@ -9,8 +9,8 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  CameraController_1 = require("../CameraController"),
   CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraFixedController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
@@ -29,7 +29,7 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
           (this.IsChangingCamera = !1);
       }),
       (this.J1e = () => {
-        CameraController_1.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
+        ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
           this,
         ),
           this.X1e?.K2_DestroyActor(),
@@ -46,7 +46,7 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
           ModelManager_1.ModelManager.CameraModel.CurrentCameraActor !==
             this.X1e &&
           this.IsLockedCamera &&
-          (CameraController_1.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
+          (ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
             this,
           ),
           this.z1e(),
@@ -54,7 +54,7 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
       }),
       (this.OnFixedCameraRestored = () => {
         this.IsLockedCamera && this.FixedCameraResetViewTarget(),
-          CameraController_1.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
+          ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
             !0,
           );
       });
@@ -68,13 +68,13 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
       ModelManager_1.ModelManager.CameraModel.CurrentCameraActor ===
         this.X1e) ||
       ((this.$1e = this.X1e),
-      (this.X1e = UE.KuroActorManager.SpawnActor(
+      (this.X1e = UE.KuroActorManager.D_SpawnActor(
         GlobalData_1.GlobalData.World,
         UE.CameraActor.StaticClass(),
-        new UE.Transform(
+        new UE.TransformDouble(
           t.ToUeRotator(),
           e.ToUeVector(),
-          new UE.Vector(1, 1, 1),
+          new UE.VectorDouble(1, 1, 1),
         ),
       )),
       this.X1e &&
@@ -120,15 +120,15 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
       TimerSystem_1.TimerSystem.Remove(this.Q1e);
   }
   o_e() {
-    CameraController_1.CameraController.SetViewTarget(
+    ControllerHolder_1.ControllerHolder.CameraController.SetViewTarget(
       this.X1e,
       "FixedCameraSetViewTarget",
       this.j1e,
     ),
-      CameraController_1.CameraController.FightCamera.LogicComponent.CameraInputController.Lock(
+      ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraInputController.Lock(
         this,
       ),
-      CameraController_1.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
+      ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
         !1,
       ),
       (this.IsLockedCamera = !0),
@@ -140,14 +140,14 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
     return (
       this.$1e !== this.X1e &&
       !!(e =
-        CameraController_1.CameraController.FightCamera.LogicComponent
-          .DesiredCamera) &&
+        ControllerHolder_1.ControllerHolder.CameraController.FightCamera
+          .LogicComponent.DesiredCamera) &&
       ((t = e.ArmRotation),
       (i = this.X1e?.K2_GetActorRotation()),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Camera",
-          46,
+          45,
           "fightCameraRotation:Before",
           ["Pitch", t.Pitch],
           ["Yaw", t.Yaw],
@@ -157,19 +157,20 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Camera",
-          46,
+          45,
           "fightCameraRotation:After",
           ["Pitch", e.ArmRotation.Pitch],
           ["Yaw", e.ArmRotation.Yaw],
           ["Roll", e.ArmRotation.Roll],
         ),
-      CameraController_1.CameraController.SetViewTarget(
-        CameraController_1.CameraController.FightCamera.GetComponent(4)
-          ?.CameraActor,
+      ControllerHolder_1.ControllerHolder.CameraController.SetViewTarget(
+        ControllerHolder_1.ControllerHolder.CameraController.FightCamera.GetComponent(
+          4,
+        )?.CameraActor,
         "FixedCameraResetViewTarget",
         this.W1e,
       ),
-      CameraController_1.CameraController.FightCamera.LogicComponent.CameraInputController.Lock(
+      ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraInputController.Lock(
         this,
       ),
       (this.IsChangingCamera = !0),
@@ -214,14 +215,14 @@ class CameraFixedController extends CameraControllerBase_1.CameraControllerBase 
         );
   }
   t_e(e) {
-    var t = this.X1e?.K2_GetActorLocation();
+    var t = this.X1e?.D_K2_GetActorLocation();
     return (
       t.X === e.ToUeVector().X &&
-      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Camera", 46, "X==X"),
+      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Camera", 45, "X==X"),
       t.Y === e.ToUeVector().Y) &&
-      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Camera", 46, "Y==Y"),
+      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Camera", 45, "Y==Y"),
       t.Z === e.ToUeVector().Z) &&
-      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Camera", 46, "Z==Z"), !0)
+      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Camera", 45, "Z==Z"), !0)
     );
   }
 }

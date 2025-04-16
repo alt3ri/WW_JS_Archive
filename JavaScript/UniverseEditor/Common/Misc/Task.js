@@ -8,15 +8,15 @@ class IdleCallbackService {
     (this.Interval = e),
       (this.IYt = Date.now()),
       (this.xe = 0),
-      (this.YAa = !1),
+      (this.EAa = !1),
       (this.mp = new CircularQueue_1.CircularQueue(100)),
-      (this.JAa = new Map()),
+      (this.yAa = new Map()),
       (this.LDe = setInterval(() => {
-        this.zAa();
+        this.IAa();
       }, 0));
   }
   SetBusy(e) {
-    this.YAa = e;
+    this.EAa = e;
   }
   Dispose() {
     for (
@@ -28,8 +28,8 @@ class IdleCallbackService {
       e.Handle && clearTimeout(e.Handle);
     }
   }
-  zAa() {
-    if (!this.YAa) {
+  IAa() {
+    if (!this.EAa) {
       const t = this.IYt + this.Interval;
       for (; Date.now() < t; ) {
         var e = this.mp.DeQueue();
@@ -50,12 +50,12 @@ class IdleCallbackService {
   }
   qp(e, t) {
     e = { Id: this.xe++, Callback: e };
-    return this.mp.EnQueue(e), this.JAa.set(e.Id, e), e;
+    return this.mp.EnQueue(e), this.yAa.set(e.Id, e), e;
   }
   jp(e) {
-    var t = this.JAa.get(e);
+    var t = this.yAa.get(e);
     t &&
-      ((t.IsCanceled = !0), this.JAa.delete(e), t.Handle) &&
+      ((t.IsCanceled = !0), this.yAa.delete(e), t.Handle) &&
       clearTimeout(t.Handle);
   }
   Call(e, t) {

@@ -78,7 +78,7 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "ItemExchange",
-          9,
+          8,
           "登录状态错误, 无法请求物品兑换数据",
           ["loginStatus", e],
         )
@@ -86,9 +86,9 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
   }),
   (ItemExchangeController.Igi = () => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("ItemExchange", 9, "请求物品兑换数据");
+      Log_1.Log.Debug("ItemExchange", 8, "请求物品兑换数据");
     var e = Protocol_1.Aki.Protocol.Fns.create();
-    Net_1.Net.Call(28765, e, (e) => {
+    Net_1.Net.Call(22210, e, (e) => {
       ModelManager_1.ModelManager.ItemExchangeModel.InitItemExchangeTimeInfo(
         e.Ixs,
       );
@@ -100,13 +100,13 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
       ((_a.Lgi = e),
       ((e = Protocol_1.Aki.Protocol.$ns.create()).L8n = n),
       (e.j9n = t),
-      Net_1.Net.Call(29011, e, (e) => {
+      Net_1.Net.Call(22363, e, (e) => {
         (_a.Lgi = !0),
           e &&
             (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.Q4n,
-                  20145,
+                  23017,
                 )
               : (ModelManager_1.ModelManager.ItemExchangeModel.AddExchangeTime(
                   n,

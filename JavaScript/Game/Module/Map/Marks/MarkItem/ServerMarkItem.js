@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   MapDefine_1 = require("../../MapDefine"),
   ServerMarkItemView_1 = require("../MarkItemView/ServerMarkItemView"),
   MarkItem_1 = require("./MarkItem");
@@ -13,8 +14,9 @@ class ServerMarkItem extends MarkItem_1.MarkItem {
       (this.MinShowScale = 0),
       (this.MaxShowScale = 0),
       (this.ServerMarkInfo = void 0),
+      (this.MultiMapIdInternal = void 0),
       (this.ServerMarkInfo = e),
-      MapDefine_1.serverMakIngoreReadConfigSet.has(e.MarkType)
+      MapDefine_1.serverMarkIgnoreReadConfigSet.has(e.MarkType)
         ? (this.ShowPriority = 0)
         : ((t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(
             e.MarkConfigId,
@@ -25,7 +27,7 @@ class ServerMarkItem extends MarkItem_1.MarkItem {
     return this.ServerMarkInfo?.MarkId;
   }
   get MarkType() {
-    return 0;
+    return this.ServerMarkInfo?.MarkType ?? 0;
   }
   get ConfigId() {
     return this.ServerMarkInfo.MarkConfigId;
@@ -39,14 +41,56 @@ class ServerMarkItem extends MarkItem_1.MarkItem {
   get EntityConfigId() {
     return this.ServerMarkInfo.EntityConfigId;
   }
+  get RawInstanceDungeonId() {
+    return this.ServerMarkInfo.InstanceDungeonId;
+  }
+  IsMultiMap() {
+    return 0 !== this.GetMultiMapId();
+  }
+  get TrackAreaId() {
+    return void 0 === this.EntityConfigId || 0 === this.EntityConfigId
+      ? 0
+      : ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
+          this.EntityConfigId,
+          this.MapId,
+        );
+  }
+  GetMultiMapId() {
+    return void 0 === this.EntityConfigId || 0 === this.EntityConfigId
+      ? 0
+      : this.GetMultiMapIdSub();
+  }
+  GetMultiMapIdSub() {
+    if (void 0 === this.MultiMapIdInternal) {
+      var e = this.TrackAreaId,
+        t = ConfigManager_1.ConfigManager.AreaConfig.GetLevelOneAreaId(e);
+      for (const r of ConfigManager_1.ConfigManager.MapConfig.GetAllSubMapConfig())
+        if (r.Area.includes(t) || r.Area.includes(e)) {
+          this.MultiMapIdInternal = r.Id;
+          break;
+        }
+      void 0 === this.MultiMapIdInternal && (this.MultiMapIdInternal = 0);
+    }
+    return this.MultiMapIdInternal;
+  }
   get IsServerDisable() {
     return this.ServerMarkInfo.IsServerDisable;
   }
-  OnCreateView() {
-    this.InnerView = new ServerMarkItemView_1.ServerMarkItemView(this);
+  get MapId() {
+    return this.ServerMarkInfo.MapId;
+  }
+  get InstanceDungeonId() {
+    return this.ServerMarkInfo.InstanceDungeonId;
+  }
+  GetMarkItemViewType() {
+    return 21;
+  }
+  CreateView() {
+    return new ServerMarkItemView_1.ServerMarkItemView(this);
   }
   CheckInShowRange(e) {
     return (
+      2 !== this.MapType ||
       !!this.IsIgnoreScaleShow ||
       this.MinShowScale === this.MaxShowScale ||
       (this.MinShowScale < e && this.MaxShowScale > e)
@@ -72,7 +116,6 @@ class ServerMarkItem extends MarkItem_1.MarkItem {
       e
     );
   }
-  Initialize() {}
 }
 exports.ServerMarkItem = ServerMarkItem;
 //# sourceMappingURL=ServerMarkItem.js.map

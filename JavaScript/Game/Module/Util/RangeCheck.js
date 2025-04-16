@@ -117,7 +117,7 @@ class RangeCheck {
     return (
       this.RangeMap.set(e, i),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Controller", 46, "EntityRange创建成功", [
+        Log_1.Log.Debug("Controller", 45, "EntityRange创建成功", [
           "entityData",
           t,
         ]),
@@ -125,10 +125,10 @@ class RangeCheck {
     );
   }
   MapCheckReached() {
-    let r = void 0;
+    const r = new Array();
     return (
       this.RangeMap?.forEach((e, t) => {
-        this.CheckReached(t) && (r = t);
+        this.CheckReached(t) && r.push(t);
       }),
       r
     );
@@ -198,7 +198,7 @@ class RangeCheck {
           (s = Vector_1.Vector.Distance(t, i.TargetPosition) < i.Radius);
         break;
       case "Box":
-        s = this.kOa(i, t);
+        s = this.Fka(i, t);
         break;
       case "Cylinder":
         !i.TargetPosition ||
@@ -208,7 +208,7 @@ class RangeCheck {
     }
     return s;
   }
-  kOa(e, t) {
+  Fka(e, t) {
     var r, i, s;
     return (
       !!e &&

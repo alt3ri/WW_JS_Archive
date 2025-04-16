@@ -10,14 +10,14 @@ class BusinessSkipItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.aOn = void 0),
-      (this.nRa = void 0),
+      (this.xAa = void 0),
       (this.fsa = () => {
-        1 === this.nRa[0]
+        1 === this.xAa[0]
           ? this.aOn?.SkipToBuild()
-          : 0 === this.nRa[0] &&
+          : 0 === this.xAa[0] &&
             ControllerHolder_1.ControllerHolder.MoonChasingController.OpenTaskView(
               2,
-              this.nRa[1],
+              this.xAa[1],
             );
       });
   }
@@ -36,7 +36,7 @@ class BusinessSkipItem extends UiPanelBase_1.UiPanelBase {
     var i = ModelManager_1.ModelManager.MoonChasingModel.GetFirstUnlockData();
     if (i) {
       let e = "";
-      1 === (this.nRa = i)[0]
+      1 === (this.xAa = i)[0]
         ? (e = "Moonfiesta_PartnerTip2")
         : 0 === i[0] && (e = "Moonfiesta_PartnerTip1"),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e);

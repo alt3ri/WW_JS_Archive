@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Builder = void 0;
 const byte_buffer_js_1 = require("./byte-buffer");
 const constants_js_1 = require("./constants");
+require("./../text-encoding/encoding"); // Kuro add：用于 import TextEncoder， 由于在./byte-buffer.js中删掉了，所以这里需要重新引入
 class Builder {
   /**
    * Create a FlatBufferBuilder.

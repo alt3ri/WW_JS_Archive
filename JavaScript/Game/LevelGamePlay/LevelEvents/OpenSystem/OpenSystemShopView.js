@@ -2,16 +2,19 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemShopView = void 0);
 const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
-  ShopController_1 = require("../../../Module/Shop/ShopController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemShopView extends OpenSystemBase_1.OpenSystemBase {
-  async ExecuteOpenView(e, o) {
+  async ExecuteOpenView(e, r) {
     if (!e.BoardId) return !1;
-    const r = new CustomPromise_1.CustomPromise();
+    const o = new CustomPromise_1.CustomPromise();
     return (
-      !!ShopController_1.ShopController.OpenShop(e.BoardId, (e) => {
-        r.SetResult(e);
-      }) && r.Promise
+      !!ControllerHolder_1.ControllerHolder.ShopController.OpenShop(
+        e.BoardId,
+        (e) => {
+          o.SetResult(e);
+        },
+      ) && o.Promise
     );
   }
   GetViewName(e) {

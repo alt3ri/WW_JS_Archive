@@ -26,8 +26,7 @@ const cpp_1 = require("cpp"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
-  Net_1 = require("../../../../../Core/Net/Net"),
-  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+  JsModelManager_1 = require("../../../../../Core/Model/JsModelManager"),
   CameraController_1 = require("../../../../Camera/CameraController"),
   TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
@@ -77,7 +76,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
               ),
               this.SetCamp(t),
               (t.SimpleNpcActorComponent = this),
-              (t.EntityId = this.Entity.Id),
+              t.SetEntityId(this.Entity.Id),
               t.CharacterMovement.SetDefaultMovementMode(),
               (this.ActorInternal = t),
               this.ActorInternal.OnDestroyed.Add(this.v9e),
@@ -111,6 +110,10 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
                       t,
                     )
                   : this.Entity.RegisterToGameBudgetController(t)),
+              JsModelManager_1.JsModelManager.UpdateEntityActor(
+                this.Entity.Id,
+                this.ActorInternal,
+              ),
               !0)
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -156,7 +159,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
     var t,
       e = this.Actor;
     return (
-      (this.DebugMovementComp = this.Entity.GetComponent(27)),
+      (this.DebugMovementComp = this.Entity.GetComponent(30)),
       e
         ? (GlobalData_1.GlobalData.BpFightManager.添加Debug的对象(this.Actor),
           e.SetPrimitiveEntityType(
@@ -206,11 +209,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
         this.Actor.CharacterMovement.MovementMode,
         0,
         0,
-      );
-    var t = Protocol_1.Aki.Protocol.pms.create(),
-      e = this.Entity.GetComponent(0).GetCreatureDataId();
-    t.PSs.push(MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(21772, t, (t) => {}),
+      ),
       this.CFr();
   }
   OnTick(t) {
@@ -244,7 +243,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
     this.OnSetActorActive(!1, t);
   }
   OnChangeTimeDilation(t) {
-    var e = this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1;
+    var e = this.Entity.GetComponent(120)?.CurrentTimeScale ?? 1;
     this.ActorInternal.CustomTimeDilation = t * e;
   }
   OnSetActorActive(e, t) {
@@ -276,7 +275,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
   }
 };
 (SimpleNpcActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(179)],
+  [(0, RegisterComponent_1.RegisterComponent)(192)],
   SimpleNpcActorComponent,
 )),
   (exports.SimpleNpcActorComponent = SimpleNpcActorComponent);

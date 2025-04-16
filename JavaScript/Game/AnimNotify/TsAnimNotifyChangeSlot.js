@@ -9,14 +9,15 @@ class TsAnimNotifyChangeSlot extends UE.KuroAnimNotify {
       (this.SwitchToSlotName = void 0),
       (this.SlotTransform = void 0);
   }
-  K2_Notify(e, t) {
-    e = e.GetOwner();
-    if (!(e instanceof TsBaseCharacter_1.default)) return !1;
-    var r = e.CharacterActorComponent;
+  Constructor() {}
+  K2_Notify(t, e) {
+    t = t.GetOwner();
+    if (!(t instanceof TsBaseCharacter_1.default)) return !1;
+    var r = t.CharacterActorComponent;
     if (!r) return !1;
     var s = r.SkeletalMesh?.GetNumChildrenComponents();
-    for (let e = 0; e < s; e++) {
-      var i = r.SkeletalMesh?.GetChildComponent(e);
+    for (let t = 0; t < s; t++) {
+      var i = r.SkeletalMesh?.GetChildComponent(t);
       if (
         i &&
         i.GetName() === this.ComponentName &&

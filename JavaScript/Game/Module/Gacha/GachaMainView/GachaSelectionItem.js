@@ -56,6 +56,9 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
               (this.TDe = TimerSystem_1.RealTimeTimerSystem.Delay(
                 this.RefreshLeftTime,
                 1e3 * i,
+                void 0,
+                void 0,
+                !1,
               ))));
       });
   }

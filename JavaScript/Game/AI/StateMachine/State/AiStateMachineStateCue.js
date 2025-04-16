@@ -15,7 +15,7 @@ class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
   }
   OnInit(t) {
     (this.Ine = t.BindCue.HideOnLoading), (this.Vre = []);
-    for (const i of t.BindCue.CueIds) this.Vre.push(BigInt(i));
+    for (const i of t.BindCue.CueIds) this.Vre.push(i);
     return !0;
   }
   OnActivate() {
@@ -27,7 +27,7 @@ class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
         (this.Rne =
           this.Node.ActorComponent.DisableActor("状态机加载特效或材质"));
     for (const i of this.Vre) {
-      var t = this.Node.GameplayCueComponent.CreateGameplayCue(i, {
+      var t = this.Node.GameplayCueComponent.AddCue(i, {
         BeginCallback: () => {
           this.Une(i);
         },
@@ -40,7 +40,7 @@ class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
       this.Dne &&
       (this.Node.ActorComponent.EnableActor(this.Rne), (this.Rne = void 0));
     for (const t of this.Tne)
-      this.Node.GameplayCueComponent.DestroyGameplayCueByHandle(t);
+      this.Node.GameplayCueComponent.RemoveCueByHandle(t);
     this.Tne.length = 0;
   }
   Une(t) {
@@ -54,7 +54,7 @@ class AiStateMachineStateCue extends AiStateMachineState_1.AiStateMachineState {
   OnClear() {
     if (this.Tne && 0 < this.Tne.length) {
       for (const t of this.Tne)
-        this.Node.GameplayCueComponent.DestroyGameplayCueByHandle(t);
+        this.Node.GameplayCueComponent.RemoveCueByHandle(t);
       this.Tne.length = 0;
     }
   }

@@ -79,7 +79,7 @@ let SceneItemLevitateMagnetComponent =
                       { ParamType: 1 },
                     );
                   if (t && !t.IsMyRole()) return;
-                  if (e.Attacker.GetComponent(1).IsAutonomousProxy) break;
+                  if (e.Attacker.GetComponent(3).IsAutonomousProxy) break;
                   return;
               }
             var i,
@@ -103,7 +103,7 @@ let SceneItemLevitateMagnetComponent =
                 this.Kfn(o));
           }
         }),
-        (this.b$a = (e, t) => {
+        (this.wJa = (e, t) => {
           t &&
             (EventSystem_1.EventSystem.RemoveWithTarget(
               this,
@@ -145,7 +145,7 @@ let SceneItemLevitateMagnetComponent =
           for (let e = 0; e < t.Num(); e++)
             this.xEr.ActorsToIgnore.Add(t.Get(e));
           this.jfn =
-            this.Wfn.K2_GetActorLocation().Z - this.Hte.ActorLocationProxy.Z;
+            this.Wfn.D_K2_GetActorLocation().Z - this.Hte.ActorLocationProxy.Z;
           var e = Vector_1.Vector.Create(),
             e =
               (this.Hte?.ActorUpProxy.Multiply(this.jfn, e),
@@ -153,7 +153,7 @@ let SceneItemLevitateMagnetComponent =
               this.Nnr.AdditionEqual(e),
               this.Hte.ActorRotation);
           this.Hte.SetActorRotation(Rotator_1.Rotator.ZeroRotator),
-            this.Wfn.GetActorBounds(!1, void 0, this.Hme),
+            this.Wfn.D_GetActorBounds(!1, void 0, this.Hme),
             TraceElementCommon_1.TraceElementCommon.SetBoxHalfSize(
               this.xEr,
               (0, puerts_1.$unref)(this.Hme),
@@ -177,14 +177,14 @@ let SceneItemLevitateMagnetComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
-        (this.Gce = this.Entity.GetComponent(116)),
-        (this.Xln = this.Entity.GetComponent(141)),
+        (this.Hte = this.Entity.GetComponent(200)),
+        (this.Gce = this.Entity.GetComponent(126)),
+        (this.Xln = this.Entity.GetComponent(152)),
         this.Xln.RegisterComponent(this),
-        (this.Ffn = this.Entity.GetComponent(125)),
-        (this.Lie = this.Entity.GetComponent(181)),
+        (this.Ffn = this.Entity.GetComponent(136)),
+        (this.Lie = this.Entity.GetComponent(194)),
         this.Lie.AddTag(-1063846162),
-        this.Lie.AddTagAddOrRemoveListener(-709838471, this.b$a),
+        this.Lie.AddTagAddOrRemoveListener(-709838471, this.wJa),
         this.Lie.ContainsTag(
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-709838471),
         ) ||
@@ -209,7 +209,7 @@ let SceneItemLevitateMagnetComponent =
     }
     OnEnd() {
       return (
-        this.Lie.RemoveTagAddOrRemoveListener(-709838471, this.b$a),
+        this.Lie.RemoveTagAddOrRemoveListener(-709838471, this.wJa),
         EventSystem_1.EventSystem.HasWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
@@ -296,7 +296,7 @@ let SceneItemLevitateMagnetComponent =
         e?.AdditionEqual(t),
         (t = Rotator_1.Rotator.Create(this.Hte.ActorRotation)),
         this.Hte.SetActorRotation(Rotator_1.Rotator.ZeroRotator),
-        i.GetActorBounds(!1, void 0, this.Hme),
+        i.D_GetActorBounds(!1, void 0, this.Hme),
         TraceElementCommon_1.TraceElementCommon.SetBoxHalfSize(
           this.xEr,
           (0, puerts_1.$unref)(this.Hme),
@@ -304,7 +304,7 @@ let SceneItemLevitateMagnetComponent =
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.xEr, e),
         TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(this.xEr, t),
         this.Hte.SetActorRotation(t.ToUeRotator()),
-        (this.Nnr = Vector_1.Vector.Create(this.Wfn.K2_GetActorLocation())));
+        (this.Nnr = Vector_1.Vector.Create(this.Wfn.D_K2_GetActorLocation())));
     }
     StartBoxTrace(e) {
       if (!this.xEr) return !1;
@@ -331,7 +331,7 @@ let SceneItemLevitateMagnetComponent =
 (SceneItemLevitateMagnetComponent.TraceDebug = !1),
   (SceneItemLevitateMagnetComponent = SceneItemLevitateMagnetComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(142)],
+      [(0, RegisterComponent_1.RegisterComponent)(153)],
       SceneItemLevitateMagnetComponent,
     )),
   (exports.SceneItemLevitateMagnetComponent = SceneItemLevitateMagnetComponent);

@@ -29,6 +29,10 @@ class ActivityCorniceMeetingTabItem extends UiPanelBase_1.UiPanelBase {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnClickActivityCorniceMeetingTab,
             this.LevelPlayId,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+            this.LevelPlayId,
           );
       });
   }
@@ -150,7 +154,11 @@ class ActivityCorniceMeetingTabItem extends UiPanelBase_1.UiPanelBase {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCorniceMeetingRedDot,
         this.LevelPlayId,
-      ));
+      )),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        this.LevelPlayId,
+      );
   }
   OnDeselected(t) {
     this.GetExtendToggle(0).SetToggleState(0, t);

@@ -54,7 +54,10 @@ class MarqueeData {
       (this.ShowInFight = 0),
       (this.ShowInPhotograph = 0),
       (this.Platform = void 0),
-      (this.Channel = void 0);
+      (this.Channel = void 0),
+      (this.IsClientMarquee = !1),
+      (this.LocalTextKey = ""),
+      (this.UseLocalTextKey = !1);
   }
   RefreshContent() {
     if (this.Contents) {
@@ -119,7 +122,8 @@ class MarqueeModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.$Ai = void 0),
       (this.YAi = new Array()),
-      (this.JAi = new Map());
+      (this.$Rl = new Map()),
+      (this.XRl = new Map());
   }
   static get TimerId() {
     return MarqueeModel.zAi;
@@ -139,7 +143,8 @@ class MarqueeModel extends ModelBase_1.ModelBase {
   OnClear() {
     return (
       this.RemoveAllMarqueeData(),
-      this.JAi.clear(),
+      this.$Rl.clear(),
+      this.XRl.clear(),
       void 0 !== MarqueeModel.TimerId &&
         (TimerSystem_1.TimerSystem.Remove(MarqueeModel.TimerId),
         (MarqueeModel.TimerId = void 0)),
@@ -147,13 +152,13 @@ class MarqueeModel extends ModelBase_1.ModelBase {
     );
   }
   InitMarqueeStorageDataMap() {
-    this.JAi =
+    this.$Rl =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.MarqueeScrollingMap,
       ) ?? new Map();
   }
   AddOrUpdateMarqueeDate(r) {
-    if (r.CheckPlatformAndChannelIfShow()) {
+    if (r.IsClientMarquee || r.CheckPlatformAndChannelIfShow()) {
       var e = TimeUtil_1.TimeUtil.GetServerTime();
       if (!(r.EndTime <= e)) {
         var t = this.GetScrollingTime(r);
@@ -174,9 +179,14 @@ class MarqueeModel extends ModelBase_1.ModelBase {
   CleanMarqueeStorageDataMap(e) {
     var t,
       r,
-      i = new Array();
-    for ([t, r] of this.JAi) r.EndTime <= e && i.push(t);
-    for (const s of i) this.JAi.delete(s);
+      i,
+      s,
+      a = new Array();
+    for ([t, r] of this.$Rl) r.EndTime <= e && a.push(t);
+    for (const o of a) this.$Rl.delete(o);
+    a.length = 0;
+    for ([i, s] of this.XRl) s.EndTime <= e && a.push(i);
+    for (const h of a) this.XRl.delete(h);
   }
   UpdateMarqueeStorageDataByDate(e) {
     let t = this.GetMarqueeStorageData(e);
@@ -186,21 +196,22 @@ class MarqueeModel extends ModelBase_1.ModelBase {
     return this.GetMarqueeStorageData(e)?.ScrollingTime ?? 0;
   }
   GetMarqueeStorageData(e) {
-    return this.JAi.get(e.Id);
+    return (e.IsClientMarquee ? this.XRl : this.$Rl).get(e.Id);
   }
   ZAi(e) {
     let t = this.GetMarqueeStorageData(e);
     return (
       t
         ? (t.EndTime = e.EndTime)
-        : ((t = new MarqueeStorageData(e.EndTime)), this.JAi.set(e.Id, t)),
+        : ((t = new MarqueeStorageData(e.EndTime)),
+          (e.IsClientMarquee ? this.XRl : this.$Rl).set(e.Id, t)),
       t
     );
   }
   ePi() {
     LocalStorage_1.LocalStorage.SetPlayer(
       LocalStorageDefine_1.ELocalStoragePlayerKey.MarqueeScrollingMap,
-      this.JAi,
+      this.$Rl,
     );
   }
   PeekMarqueeData() {
@@ -217,6 +228,11 @@ class MarqueeModel extends ModelBase_1.ModelBase {
   }
   RemoveAllMarqueeData() {
     (this.$Ai = void 0), (this.YAi = new Array());
+  }
+  RemoveServerMarqueeData() {
+    this.$Ai = void 0;
+    var e = this.YAi.filter((e) => e.IsClientMarquee);
+    this.YAi = e;
   }
   SortMarqueeQueue() {
     this.YAi?.sort((e, t) => e.BeginTime - t.BeginTime);

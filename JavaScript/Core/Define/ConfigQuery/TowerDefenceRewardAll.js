@@ -17,25 +17,27 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configTowerDefenceRewardAll.Init"),
-  getConfigListStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTowerDefenceRewardAll.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configTowerDefenceRewardAll.GetConfigList",
   );
 exports.configTowerDefenceRewardAll = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (e = !0) => {
     var o;
     if (
       (ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start(),
+      getConfigListStat?.Start(),
       (o = ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair)))
     ) {
       if (e) {
@@ -43,7 +45,7 @@ exports.configTowerDefenceRewardAll = {
         const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
         if (i)
           return (
-            getConfigListStat.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -63,7 +65,7 @@ exports.configTowerDefenceRewardAll = {
         )
           return (
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            getConfigListStat.Stop(),
+            getConfigListStat?.Stop(),
             void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
           );
         t = TowerDefenceReward_1.TowerDefenceReward.getRootAsTowerDefenceReward(
@@ -76,12 +78,12 @@ exports.configTowerDefenceRewardAll = {
           ((n = KEY_PREFIX + ")"),
           ConfigCommon_1.ConfigCommon.SaveConfig(n, i, i.length)),
         ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-        getConfigListStat.Stop(),
+        getConfigListStat?.Stop(),
         ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         i
       );
     }
-    getConfigListStat.Stop(),
+    getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

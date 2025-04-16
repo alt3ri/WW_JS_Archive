@@ -4,59 +4,59 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../Common/Log");
 class ImmutableArray extends Array {
   constructor() {
-    super(...arguments), (this.D$a = void 0);
+    super(...arguments), (this.cJa = void 0);
   }
-  get PKa() {
-    return this.D$a || (this.D$a = Array.from(this)), this.D$a;
+  get JYa() {
+    return this.cJa || (this.cJa = Array.from(this)), this.cJa;
   }
   push() {
-    return this.wKa("push"), NaN;
+    return this.ZYa("push"), NaN;
   }
   pop() {
-    this.wKa("pop");
+    this.ZYa("pop");
   }
   shift() {
-    this.wKa("shift");
+    this.ZYa("shift");
   }
   unshift() {
-    return this.wKa("unshift"), NaN;
+    return this.ZYa("unshift"), NaN;
   }
   splice(t, r) {
-    return this.wKa("splice"), new Array();
+    return this.ZYa("splice"), new Array();
   }
   sort(t) {
-    return this.wKa("sort"), this;
+    return this.ZYa("sort"), this;
   }
   reverse() {
-    return this.wKa("reverse"), this;
+    return this.ZYa("reverse"), this;
   }
   fill(t, r, e) {
-    return this.wKa("fill"), this;
+    return this.ZYa("fill"), this;
   }
   copyWithin(t, r, e) {
-    return this.wKa("copyWithin"), this;
+    return this.ZYa("copyWithin"), this;
   }
   set length(t) {
-    this.wKa("set length");
+    this.ZYa("set length");
   }
   get length() {
     return super.length;
   }
   concat(...t) {
-    return this.PKa.concat(...t);
+    return this.JYa.concat(...t);
   }
   map(t, r) {
-    return this.PKa.map(t, r);
+    return this.JYa.map(t, r);
   }
   slice(t, r) {
-    return this.PKa.slice(t, r);
+    return this.JYa.slice(t, r);
   }
   filter(t, r) {
-    return this.PKa.filter(t, r);
+    return this.JYa.filter(t, r);
   }
-  wKa(t) {
+  ZYa(t) {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Core", 63, "ImmutableArray 不允许修改", ["函数名", t]);
+      Log_1.Log.Error("Core", 62, "ImmutableArray 不允许修改", ["函数名", t]);
   }
 }
 exports.ImmutableArray = ImmutableArray;

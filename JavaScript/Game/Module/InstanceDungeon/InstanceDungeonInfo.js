@@ -21,8 +21,9 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
       (this.v1i = 0),
       (this.M1i = void 0),
       (this.E1i = void 0),
-      (this.lCa = void 0),
+      (this._Ca = void 0),
       (this.S1i = 0),
+      (this.Bpi = "Local"),
       (this.u1i = e);
   }
   get Id() {
@@ -59,10 +60,13 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
     return this.E1i;
   }
   get FinishEscAction() {
-    return this.lCa;
+    return this._Ca;
   }
   get SubType() {
     return this.S1i;
+  }
+  get OnlineType() {
+    return this.Bpi;
   }
   InitConfig() {
     var e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
@@ -80,7 +84,8 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
           (this.c1i = PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TidName)),
           (this.g1i = e.LevelPlayTrack),
           (this.E1i = e.LevelPlayOpenActions),
-          (this.lCa = e.EscActionsAfterDungeonCompletion),
+          (this._Ca = e.EscActionsAfterDungeonCompletion),
+          (this.Bpi = e.OnlineType),
           (this.S1i = t.InstSubType),
           e.LevelPlayRewardConfig.Type)
         ) {
@@ -96,14 +101,14 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "InstanceDungeon",
-            19,
+            18,
             "创建副本时找不到副本配置",
             ["副本id", this.d1i],
             ["玩法id", this.u1i],
           );
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("SceneGameplay", 19, "创建玩法时找不到玩法配置", [
+        Log_1.Log.Error("SceneGameplay", 18, "创建玩法时找不到玩法配置", [
           "玩法id",
           this.u1i,
         ]);

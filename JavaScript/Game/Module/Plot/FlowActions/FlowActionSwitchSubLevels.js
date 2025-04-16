@@ -9,12 +9,6 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   FlowActionServerAction_1 = require("./FlowActionServerAction");
 class FlowActionSwitchSubLevels extends FlowActionServerAction_1.FlowActionServerAction {
-  constructor() {
-    super(...arguments),
-      (this.WRe = (e) => {
-        e && this.FinishExecute(!0);
-      });
-  }
   OnExecute() {
     var e = this.ActionInfo.Params;
     if (e)
@@ -30,7 +24,7 @@ class FlowActionSwitchSubLevels extends FlowActionServerAction_1.FlowActionServe
         }
   }
   QRe(e) {
-    ControllerHolder_1.ControllerHolder.GameModeController.PreloadSubLevel(
+    ControllerHolder_1.ControllerHolder.SubLevelController.PreloadSubLevel(
       e.PreloadLevels,
     ),
       this.FinishExecute(!0);
@@ -38,7 +32,7 @@ class FlowActionSwitchSubLevels extends FlowActionServerAction_1.FlowActionServe
   KRe(e) {
     let r = void 0,
       o = void 0;
-    if (e.TeleportEntityId) {
+    if ((this.RequestServerAction(), e.TeleportEntityId)) {
       var t = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
         e.TeleportEntityId,
       );
@@ -58,14 +52,14 @@ class FlowActionSwitchSubLevels extends FlowActionServerAction_1.FlowActionServe
           t.Transform.Rot);
       i && (o = Rotator_1.Rotator.Create(i.Y ?? 0, i.Z ?? 0, i.X ?? 0));
     }
-    ControllerHolder_1.ControllerHolder.GameModeController.ChangeSubLevel(
+    ControllerHolder_1.ControllerHolder.SubLevelController.ChangeSubLevel(
       e.UnloadLevels,
       e.LoadLevels,
       0,
       r,
       o,
-      this.WRe,
-    );
+    ),
+      this.FinishExecute(!0);
   }
   OnBackgroundExecute() {
     this.OnExecute();

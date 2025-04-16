@@ -1,10 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameplayAbilityVisionSummon = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../../../../../Core/Common/Log"),
+const Log_1 = require("../../../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
   PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
@@ -26,9 +26,21 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
       (this.MAr = void 0),
       (this.kQo = 0),
       (this.ota = void 0),
+      (this.pAr = !1),
       (this.FZo = (i) => {
         i.BulletEntityId === this.ser &&
           this.EAr(i.MoveInfo.LastFramePosition.ToUeVector());
+      }),
+      (this.b9_ = (i, t) => {
+        this.pAr &&
+          this.MZo?.Valid &&
+          i === this.MZo.Id &&
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Battle", 28, "技能被全部打断，结束召唤幻象技能", [
+              "reason",
+              t,
+            ]),
+          this.SAr());
       });
   }
   OnCreate() {
@@ -36,7 +48,15 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
       this.Entity,
       EventDefine_1.EEventName.BulletDestroy,
       this.FZo,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CharStopAllSkills,
+        this.b9_,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CharStopGroup1Skill,
+        this.b9_,
+      );
   }
   OnDestroy() {
     EventSystem_1.EventSystem.RemoveWithTarget(
@@ -44,33 +64,49 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
       EventDefine_1.EEventName.BulletDestroy,
       this.FZo,
     ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.CharStopAllSkills,
+        this.b9_,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.CharStopGroup1Skill,
+        this.b9_,
+      ),
       this.eer();
   }
   OnActivateAbility() {
     if (!this.HZo()) return !1;
     this.her() ||
-      this.BuffComponent.AddBuff(GameplayAbilityVisionMisc_1.roleSummonBuffId, {
-        InstigatorId: this.BuffComponent.CreatureDataId,
-        Reason: "幻象召唤时触发子弹、镜头和特效",
-      });
-    let i = void 0;
-    var t = this.Entity.GetComponent(34);
-    if (t?.Valid)
-      for (const s of t.GetAllActivatedSkill())
-        if (9 === s.SkillInfo?.SkillGenre) {
-          i = s.CombatMessageId;
+      this.BuffComponent.AddBuff(
+        GameplayAbilityVisionMisc_1.ROLE_SUMMON_BUFF_ID,
+        {
+          InstigatorId: this.BuffComponent.CreatureDataId,
+          Reason: "幻象召唤时触发子弹、镜头和特效",
+        },
+      );
+    let t = void 0;
+    var i = this.Entity.GetComponent(39);
+    if (i?.Valid)
+      for (const e of i.GetAllActivatedSkill())
+        if (9 === e.SkillInfo?.SkillGenre) {
+          t = e.LFc;
           break;
         }
-    return (
-      (this.ser = BulletController_1.BulletController.CreateBulletCustomTarget(
-        this.Entity,
-        this.oMt.葫芦轨迹子弹,
-        this.ActorComponent.ActorTransform,
-        {},
-        i,
-      ).Id),
-      !0
-    );
+    for (let i = 0; i < this.oMt.葫芦轨迹子弹列表.Num(); ++i) {
+      var s = this.oMt.葫芦轨迹子弹列表.Get(i),
+        s = BulletController_1.BulletController.CreateBulletCustomTarget(
+          this.Entity,
+          s.toString(),
+          this.ActorComponent.ActorTransform,
+          {},
+          t,
+        );
+      if (s) {
+        this.ser = s.Id;
+        break;
+      }
+    }
+    return !0;
   }
   HZo() {
     return (
@@ -84,10 +120,10 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
           this.VisionComponent.GetVisionId(),
         )),
         (this.OZo = this.MZo.Entity.GetComponent(3)),
-        (this.kZo = this.MZo.Entity.GetComponent(34)),
-        (this.aer = this.MZo.Entity.GetComponent(190)),
-        (this.KZo = this.MZo.Entity.GetComponent(160)),
-        (this.fAr = this.MZo.Entity.GetComponent(19)),
+        (this.kZo = this.MZo.Entity.GetComponent(39)),
+        (this.aer = this.MZo.Entity.GetComponent(203)),
+        (this.KZo = this.MZo.Entity.GetComponent(172)),
+        (this.fAr = this.MZo.Entity.GetComponent(21)),
         !0)
     );
   }
@@ -95,43 +131,43 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
     return this.oMt.空中能否释放 && this.GameplayTagComponent.HasTag(40422668);
   }
   EAr(i) {
-    var t = new UE.Vector(0, 0, this.OZo.ScaledHalfHeight);
-    this.OZo.SetActorLocationAndRotation(
-      i.op_Addition(t),
-      this.ActorComponent.ActorRotation,
-      "召唤幻象生成位置",
-    ),
-      PhantomUtil_1.PhantomUtil.SetVisionEnable(
-        this.VisionComponent.Entity,
-        !0,
-      ),
-      this.GameplayTagComponent.AddTag(GameplayAbilityVisionMisc_1.summonTag),
-      this.MAr ||
-        (this.MAr = this.GameplayTagComponent.ListenForTagAddOrRemove(
-          GameplayAbilityVisionMisc_1.summonTag,
-          (i, t) => {
-            t || this.SAr();
-          },
-        )),
-      this.aer.AddTag(-993206571),
-      this.KZo.AddBuff(GameplayAbilityVisionMisc_1.visionSummonBuffId, {
-        InstigatorId: this.KZo.CreatureDataId,
-        Reason: "召唤系幻象的出生特效",
-      }),
-      this.kZo.SetSkillAcceptInput(!0);
-    let s = this.oMt.技能ID;
-    for (let i = 0; i < this.oMt.条件技能ID.Num(); ++i) {
-      var e = this.oMt.条件技能ID.GetKey(i);
-      if (this.GameplayTagComponent.HasTag(e.TagId)) {
-        s = this.oMt.条件技能ID.Get(e);
-        break;
-      }
-    }
-    0 < s &&
-      this.kZo.BeginSkill(s, {
+    var t = MathUtils_1.MathUtils.CommonTempVector,
+      i =
+        (this.MoveComponent.GravityUp.Multiply(this.OZo.ScaledHalfHeight, t),
+        this.OZo.SetActorLocationAndRotation(
+          i.op_Addition(t.ToUeVector()),
+          this.ActorComponent.ActorRotation,
+          "召唤幻象生成位置",
+        ),
+        (this.pAr = !0),
+        PhantomUtil_1.PhantomUtil.SetVisionEnable(
+          this.VisionComponent.Entity,
+          !0,
+          "GameplayAbilityVisionSummon.SetVisionEnable",
+        ),
+        this.GameplayTagComponent.AddTag(GameplayAbilityVisionMisc_1.summonTag),
+        this.MAr ||
+          (this.MAr = this.GameplayTagComponent.ListenForTagAddOrRemove(
+            GameplayAbilityVisionMisc_1.summonTag,
+            (i, t) => {
+              t ||
+                (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info("Battle", 28, "召唤幻象正常结束"),
+                this.SAr());
+            },
+          )),
+        this.aer.AddTag(-993206571),
+        this.KZo.AddBuff(GameplayAbilityVisionMisc_1.VISION_SUMMON_BUFF_ID, {
+          InstigatorId: this.KZo.CreatureDataId,
+          Reason: "召唤系幻象的出生特效",
+        }),
+        this.kZo.SetSkillAcceptInput(!0),
+        this.oMt.技能ID);
+    0 < i &&
+      this.kZo.BeginSkill(i, {
         Target: this.SkillComponent.SkillTarget?.Entity,
         SocketName: this.SkillComponent.SkillTargetSocket,
-        Context: "GameplayAbilityVisionSummon.PostSummon",
+        Reason: "GameplayAbilityVisionSummon.BeginSkill",
       }),
       RoleAudioController_1.RoleAudioController.PlayRoleAudio(
         this.Entity,
@@ -146,37 +182,37 @@ class GameplayAbilityVisionSummon extends GameplayAbilityVisionBase_1.GameplayAb
   }
   NZo() {
     (this.ota = TimerSystem_1.TimerSystem.Delay(() => {
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 29, "幻象消失材质没有正常结束，被保底"),
-        this.NBa();
+      Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("Battle", 28, "幻象消失材质没有正常结束，被保底"),
+        this.iba();
     }, GameplayAbilityVisionMisc_1.VISION_HIDDEN_DELAY)),
-      this.fAr?.CreateGameplayCue(
-        GameplayAbilityVisionMisc_1.summonParticleCueId,
-        { Sync: !0, Instant: !0 },
-      ),
-      (this.kQo = this.fAr.CreateGameplayCue(
-        GameplayAbilityVisionMisc_1.materialCueId,
-        {
-          EndCallback: () => {
-            TimerSystem_1.TimerSystem.Has(this.ota) &&
-              (TimerSystem_1.TimerSystem.Remove(this.ota), this.NBa());
-          },
-          Sync: !0,
+      this.fAr?.AddCue(GameplayAbilityVisionMisc_1.SUMMON_PARTICLE_CUE_ID, {
+        Sync: !0,
+        Instant: !0,
+      }),
+      (this.kQo = this.fAr.AddCue(GameplayAbilityVisionMisc_1.MATERIAL_CUE_ID, {
+        EndCallback: () => {
+          TimerSystem_1.TimerSystem.Has(this.ota) &&
+            (TimerSystem_1.TimerSystem.Remove(this.ota), this.iba());
         },
-      ));
+        Sync: !0,
+      }));
   }
-  NBa() {
+  iba() {
     (this.ota = void 0),
-      BulletController_1.BulletController.CreateBulletCustomTarget(
-        this.MZo.Entity,
-        GameplayAbilityVisionMisc_1.VISION_END_BULLET,
-        void 0,
-      ),
-      PhantomUtil_1.PhantomUtil.SetVisionEnable(
-        this.VisionComponent.Entity,
-        !1,
-      ),
-      this.fAr?.DestroyGameplayCueByHandle(this.kQo);
+      this.MZo?.Valid &&
+        (BulletController_1.BulletController.CreateBulletCustomTarget(
+          this.MZo.Entity,
+          GameplayAbilityVisionMisc_1.VISION_END_BULLET,
+          void 0,
+        ),
+        (this.pAr = !1),
+        PhantomUtil_1.PhantomUtil.SetVisionEnable(
+          this.VisionComponent.Entity,
+          !1,
+          "GameplayAbilityVisionSummon.SetVisionEnable",
+        ),
+        this.fAr?.RemoveCueByHandle(this.kQo));
   }
 }
 exports.GameplayAbilityVisionSummon = GameplayAbilityVisionSummon;

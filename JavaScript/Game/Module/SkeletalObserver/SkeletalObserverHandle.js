@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkeletalObserverHandle = void 0);
 const UE = require("ue"),
-  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
-  GlobalData_1 = require("../../GlobalData"),
+  ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
   UiSceneManager_1 = require("../UiComponent/UiSceneManager");
 class SkeletalObserverHandle {
   constructor() {
@@ -13,24 +12,19 @@ class SkeletalObserverHandle {
     return this.uSo?.Model;
   }
   CreateSkeletalObserverHandle(e) {
-    var t = UE.GameplayStatics.BeginDeferredActorSpawnFromClass(
-      GlobalData_1.GlobalData.World,
+    (this.uSo = ActorSystem_1.ActorSystem.Get(
       UE.TsSkeletalObserver_C.StaticClass(),
-      MathUtils_1.MathUtils.DefaultTransform,
-      1,
-    );
-    UE.GameplayStatics.FinishSpawningActor(
-      t,
-      MathUtils_1.MathUtils.DefaultTransform,
-    ),
-      (this.uSo = t).Init(e);
+      new UE.TransformDouble(),
+      void 0,
+    )),
+      this.uSo.Init(e);
   }
   ResetSkeletalObserverHandle() {
     this.uSo?.Destroy();
   }
   AddUiShowRoomShowActor(e) {
-    var t = this.uSo;
-    UiSceneManager_1.UiSceneManager.AddUiShowRoomShowActor(t, e);
+    var r = this.uSo;
+    UiSceneManager_1.UiSceneManager.AddUiShowRoomShowActor(r, e);
   }
 }
 exports.SkeletalObserverHandle = SkeletalObserverHandle;

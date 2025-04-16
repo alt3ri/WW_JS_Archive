@@ -1,47 +1,45 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, i, r) {
-    var o,
+  function (e, t, i, o) {
+    var r,
       n = arguments.length,
       s =
         n < 3
           ? t
-          : null === r
-            ? (r = Object.getOwnPropertyDescriptor(t, i))
-            : r;
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, i))
+            : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(e, t, i, r);
+      s = Reflect.decorate(e, t, i, o);
     else
       for (var l = e.length - 1; 0 <= l; l--)
-        (o = e[l]) && (s = (n < 3 ? o(s) : 3 < n ? o(t, i, s) : o(t, i)) || s);
+        (r = e[l]) && (s = (n < 3 ? r(s) : 3 < n ? r(t, i, s) : r(t, i)) || s);
     return 3 < n && s && Object.defineProperty(t, i, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleGrowComponent = void 0);
 const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   RoleSkillData_1 = require("../../../../Module/RoleUi/RoleData/Module/RoleSkillData"),
-  CharacterAttributeTypes_1 = require("../../Common/Component/Abilities/CharacterAttributeTypes"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+  CharacterAttributeTypes_1 = require("../../Common/Component/Abilities/CharacterAttributeTypes");
 let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
       (this.$te = void 0),
       (this.Xte = void 0),
-      (this.m1t = void 0),
       (this.aCo = void 0),
       (this.ion = 0),
       (this.RefreshAttributeGrowHandle = (e, t) => {
-        this.RefreshGrowAttribute(t), this.oon(e);
+        this.oon(e);
       });
   }
   OnStart() {
-    (this.$te = this.Entity.CheckGetComponent(159)),
-      (this.Xte = this.Entity.CheckGetComponent(190)),
-      (this.m1t = this.Entity.CheckGetComponent(160)),
+    (this.$te = this.Entity.CheckGetComponent(171)),
+      (this.Xte = this.Entity.CheckGetComponent(203)),
       this.ron();
     var e = this.Entity.CheckGetComponent(0),
       t = e.GetPlayerId(),
@@ -79,9 +77,6 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
       t.has(e) && ((i = t.get(e)), this.$te.SetBaseValue(e, i));
     }
   }
-  RefreshGrowAttribute(e) {
-    this.m1t.UpdateSysGrowBuff(e);
-  }
   GetWeaponType() {
     return this.ion || 0;
   }
@@ -117,7 +112,7 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
   }
 };
 (RoleGrowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(86)],
+  [(0, RegisterComponent_1.RegisterComponent)(93)],
   RoleGrowComponent,
 )),
   (exports.RoleGrowComponent = RoleGrowComponent);

@@ -30,6 +30,7 @@ class SeqBaseAssistant extends ControllerAssistantBase_1.ControllerAssistantBase
   async AllStopPromise() {
     return this.Promise.Promise;
   }
+  LoadNecessaryData(s) {}
   OnDestroy() {}
 }
 exports.SeqBaseAssistant = SeqBaseAssistant;

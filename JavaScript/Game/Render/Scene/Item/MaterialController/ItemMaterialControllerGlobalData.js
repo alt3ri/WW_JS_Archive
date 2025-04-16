@@ -22,6 +22,7 @@ class ItemMaterialControllerGlobalData extends UE.PrimaryDataAsset {
       (this.ScanningOutlineTexScaleOffset = void 0),
       (this.ScanningBrokenTexScaleOffset = void 0);
   }
+  Constructor() {}
 }
 exports.default = ItemMaterialControllerGlobalData;
 //# sourceMappingURL=ItemMaterialControllerGlobalData.js.map

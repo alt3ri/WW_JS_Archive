@@ -33,9 +33,8 @@ class SceneItemManipulableLevitateCastState extends SceneItemManipulableCastStat
       (this.Psr = Vector_1.Vector.Create()),
       (this.xsr = Vector_1.Vector.Create()),
       (this.BVs = (t, e) => {
-        this.SceneItem.CurrentState = this.SceneItem.ResetState;
+        this.SceneItem?.SetState(1, "LevitateCastState OnHit");
       }),
-      (this.StateType = "BeCastingFree"),
       (this.xVs = this.SceneItem.Config.ThrowCfg.MotionConfig),
       (this.Anr = this.xVs.Velocity),
       (this.XWe = Vector_1.Vector.Create());
@@ -72,11 +71,11 @@ class SceneItemManipulableLevitateCastState extends SceneItemManipulableCastStat
     (t.F4n = MathUtils_1.MathUtils.NumberToLong(
       this.SceneItem.ActorComp.CreatureData.GetCreatureDataId(),
     )),
-      Net_1.Net.Call(27482, t, (t) => {
+      Net_1.Net.Call(23679, t, (t) => {
         t?.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             t.Q4n,
-            19547,
+            26735,
           );
       });
   }
@@ -96,10 +95,10 @@ class SceneItemManipulableLevitateCastState extends SceneItemManipulableCastStat
       ),
       (this.Gnr = t).Equals(this.Psr) &&
         this.SceneItem.CurrentState === this &&
-        (this.SceneItem.CurrentState = this.SceneItem.ResetState),
+        this.SceneItem?.SetState(1, "LevitateCastState Finish"),
       this.Bnr >= this.bnr) &&
       this.SceneItem.CurrentState === this &&
-      (this.SceneItem.CurrentState = this.SceneItem.ResetState);
+      this.SceneItem?.SetState(1, "LevitateCastState OverTime");
   }
   wVs(t, e) {
     let i = Vector_1.Vector.Create();
@@ -151,7 +150,7 @@ class SceneItemManipulableLevitateCastState extends SceneItemManipulableCastStat
         (SceneItemManipulableLevitateCastState.bsr.SetObjectTypesQuery(t),
         this.SceneItem?.Config?.ThrowCfg.MotionConfig);
     (SceneItemManipulableLevitateCastState.bsr.Radius =
-      t?.RayRadius ?? SPHERE_TRACE_RADIUS),
+      t?.RayRadius || SPHERE_TRACE_RADIUS),
       (SceneItemManipulableLevitateCastState.bsr.DrawTime = 5);
   }
   bVs() {
@@ -190,6 +189,9 @@ class SceneItemManipulableLevitateCastState extends SceneItemManipulableCastStat
       (this.xsr = Vector_1.Vector.Create(this.Psr)),
       this.xsr.SubtractionEqual(this.Asr),
       this.xsr.Normalize();
+  }
+  IsNoLockCasting() {
+    return !0;
   }
 }
 (exports.SceneItemManipulableLevitateCastState =

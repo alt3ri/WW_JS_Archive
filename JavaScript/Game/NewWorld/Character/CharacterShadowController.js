@@ -29,6 +29,10 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AddEntity,
         this.GUe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.RemoveEntity,
+        this.zpe,
       );
   }
   static OnRemoveEvents() {
@@ -39,6 +43,10 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AddEntity,
         this.GUe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.RemoveEntity,
+        this.zpe,
       );
   }
   static EKo() {
@@ -61,25 +69,25 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
       cpp_1.KuroCharacterShadowLibrary.Set(t),
       ((e = new Protocol_1.Aki.Protocol.CombatMessage.Vfs()).s5n =
         t.ToString()),
-      (t = await Net_1.Net.CallAsync(24130, e))) &&
+      (t = await Net_1.Net.CallAsync(15675, e))) &&
       cpp_1.KuroCharacterShadowLibrary.SetR(t.YLs);
   }
   static OnTick(e) {
     if (
       (Net_1.Net.IsFinishLogin() && this.xqn(),
-      !(TickSystem_1.TickSystem.IsPaused || Time_1.Time.Frame - this.MDa < 15))
+      !(TickSystem_1.TickSystem.IsPaused || Time_1.Time.Frame - this.IDa < 15))
     ) {
       if (
         (this.RKo &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            55,
+            54,
             "[CharacterShadowController]UpdateFrame",
             ["Time.Frame", Time_1.Time.Frame],
-            ["this.LastUpdateFrame", this.MDa],
+            ["this.LastUpdateFrame", this.IDa],
           ),
-        (this.MDa = Time_1.Time.Frame),
+        (this.IDa = Time_1.Time.Frame),
         !ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() &&
           0 < this.TKo)
       ) {
@@ -89,25 +97,25 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
           this.DKo,
         );
         let e = 0;
-        this.dya.clear(), this.Cya.clear();
+        this.gya.clear(), this.fya.clear();
         for (const o of this.DKo) {
           var t;
           o.Valid &&
             (t = o.Entity.GetComponent(2)) &&
-            t.Actor &&
+            t.Actor.IsValid() &&
             t.Owner?.WasRecentlyRenderedOnScreen &&
             (0 < this.IKo &&
             e < this.IKo &&
             o.Entity.DistanceWithCamera < this.yKo
               ? (t.Actor.CharRenderingComponent?.SetDecalShadowEnabled(!1),
                 t.Actor.CharRenderingComponent?.SetRealtimeShadowEnabled(!0),
-                this.dya.add(o),
+                this.gya.add(o),
                 e++,
                 this.RKo &&
                   Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Character",
-                    25,
+                    24,
                     "[CharacterShadowController] Enable Character Real Shadow",
                     ["EnableRealShadowDistance:", this.yKo],
                     ["EnableRealShadowNum:", this.IKo],
@@ -118,12 +126,12 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
               : (e >= this.IKo &&
                   (t.Actor.CharRenderingComponent?.SetDecalShadowEnabled(!0),
                   t.Actor.CharRenderingComponent?.SetRealtimeShadowEnabled(!1),
-                  this.Cya.add(o)),
+                  this.fya.add(o)),
                 this.RKo &&
                   Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Character",
-                    25,
+                    24,
                     "[CharacterShadowController] Enable Decal Shadow",
                     ["MaxDecalShadowDistance:", this.TKo],
                     ["Distance:", o.Entity.DistanceWithCamera],
@@ -131,39 +139,39 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
                     ["i", e],
                   )));
         }
-        for (const i of this.gya) {
-          var r;
+        for (const i of this.pya) {
+          var a;
           !i.Valid ||
-            this.dya.has(i) ||
-            this.Cya.has(i) ||
-            ((r = i.Entity.GetComponent(2)) &&
-              r.Actor &&
-              r.Actor.CharRenderingComponent?.DisableAllShadowByDecalShadowComponent());
+            this.gya.has(i) ||
+            this.fya.has(i) ||
+            ((a = i.Entity.GetComponent(2)) &&
+              a.Actor.IsValid() &&
+              a.Actor.CharRenderingComponent?.DisableAllShadowByDecalShadowComponent());
         }
       }
-      this.gya = this.Cya;
+      this.pya = this.fya;
       for (const n of this.AKo) {
-        var a;
+        var r;
         n.Valid &&
-          (a = n.Entity.GetComponent(2)) &&
-          a.Actor &&
+          (r = n.Entity.GetComponent(2)) &&
+          r.Actor.IsValid() &&
           (n.Entity?.Active
             ? this.LKo
-              ? (a.Actor.CharRenderingComponent?.SetDecalShadowEnabled(!1),
-                a.Actor.CharRenderingComponent?.SetRealtimeShadowEnabled(!0))
-              : (a.Actor.CharRenderingComponent?.SetDecalShadowEnabled(!0),
-                a.Actor.CharRenderingComponent?.SetRealtimeShadowEnabled(!1))
-            : a.Actor.CharRenderingComponent?.DisableAllShadowByDecalShadowComponent(),
+              ? (r.Actor.CharRenderingComponent?.SetDecalShadowEnabled(!1),
+                r.Actor.CharRenderingComponent?.SetRealtimeShadowEnabled(!0))
+              : (r.Actor.CharRenderingComponent?.SetDecalShadowEnabled(!0),
+                r.Actor.CharRenderingComponent?.SetRealtimeShadowEnabled(!1))
+            : r.Actor.CharRenderingComponent?.DisableAllShadowByDecalShadowComponent(),
           this.RKo) &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            25,
+            24,
             "[CharacterShadowController] Set Role Shadow",
             ["Active", n.Entity?.Active],
             ["IsMainPlayerUseRealRoleShadow", this.LKo],
-            ["ActorLabel", a.Actor.ActorLabel],
-            ["type", a.Actor.CharRenderingComponent?.RenderType],
+            ["ActorLabel", r.Actor.ActorLabel],
+            ["type", r.Actor.CharRenderingComponent?.RenderType],
           );
       }
     }
@@ -174,27 +182,45 @@ class CharacterShadowController extends ControllerBase_1.ControllerBase {
   (CharacterShadowController.yKo = 0),
   (CharacterShadowController.IKo = 0),
   (CharacterShadowController.TKo = 0),
-  (CharacterShadowController.MDa = 0),
+  (CharacterShadowController.IDa = 0),
   (CharacterShadowController.LKo = !1),
   (CharacterShadowController.AKo = new Set()),
   (CharacterShadowController.DKo = []),
-  (CharacterShadowController.Cya = new Set()),
-  (CharacterShadowController.dya = new Set()),
+  (CharacterShadowController.fya = new Set()),
   (CharacterShadowController.gya = new Set()),
+  (CharacterShadowController.pya = new Set()),
   (CharacterShadowController.RKo = !1),
   (CharacterShadowController.Uqn = void 0),
   (CharacterShadowController.SKo = () => {
-    _a.EKo();
+    _a.EKo(),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "GameSettings",
+          64,
+          "OnSetImageQuality",
+          [
+            "GameSettingsDeviceRender.GameQualitySettingLevel",
+            GameSettingsDeviceRender_1.GameSettingsDeviceRender
+              .GameQualitySettingLevel,
+          ],
+          ["this.EnableRealShadowDistance", _a.yKo],
+          ["this.EnableRealShadowNum", _a.IKo],
+          ["this.MaxDecalShadowDistance", _a.TKo],
+          ["this.IsMainPlayerUseRealRoleShadow", _a.LKo],
+        );
   }),
-  (CharacterShadowController.GUe = (e, t, r) => {
-    var a = t.Entity?.GetComponent(0);
-    a &&
-      a.IsCharacter() &&
-      (a.IsRole() || 0 !== a.GetSummonerPlayerId() || a.IsVision()
+  (CharacterShadowController.GUe = (e, t, a) => {
+    var r = t.Entity?.GetComponent(0);
+    r &&
+      r.IsCharacter() &&
+      (r.IsRole() || 0 !== r.GetSummonerPlayerId() || r.IsVision()
         ? _a.AKo.add(t)
-        : (a = t.Entity.GetComponent(2)) &&
-          a.Actor &&
+        : (r = t.Entity.GetComponent(2)) &&
+          r.Actor.IsValid() &&
           0 === _a.IKo &&
-          a.Actor.CharRenderingComponent?.DisableAllShadowByDecalShadowComponent());
+          r.Actor.CharRenderingComponent?.DisableAllShadowByDecalShadowComponent());
+  }),
+  (CharacterShadowController.zpe = (e, t) => {
+    _a.AKo.delete(t);
   });
 //# sourceMappingURL=CharacterShadowController.js.map

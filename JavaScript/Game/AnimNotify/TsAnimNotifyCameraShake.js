@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
-  CameraController_1 = require("../Camera/CameraController"),
   CameraUtility_1 = require("../Camera/CameraUtility"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  ModelManager_1 = require("../Manager/ModelManager");
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CharacterUtils_1 = require("../NewWorld/Character/CharacterUtils");
 class TsAnimNotifyCameraShake extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -12,28 +13,35 @@ class TsAnimNotifyCameraShake extends UE.KuroAnimNotify {
       (this.bForSelf = !1),
       (this.Radius = -0);
   }
-  K2_Notify(e, r) {
-    var a = e.GetOwner();
+  Constructor() {}
+  K2_Notify(r, e) {
+    var t = r.GetOwner();
     return (
-      a instanceof TsBaseCharacter_1.default &&
+      t instanceof TsBaseCharacter_1.default &&
+      !!(t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
+        t.EntityId,
+      ))?.Valid &&
       !(
-        !(a = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
-          a.EntityId,
-        ))?.Valid ||
-        !CameraUtility_1.CameraUtility.CheckCameraShakeCondition(a) ||
-        0 !== CameraController_1.CameraController.Model.CameraMode ||
-        !CameraController_1.CameraController.GetPlayerCameraManager()?.IsValid() ||
+        !CharacterUtils_1.CharacterUtils.CanCharacterMonsterOrSummonedDisplayEffect(
+          t,
+        ) ||
+        !CameraUtility_1.CameraUtility.CheckCameraShakeCondition(t) ||
+        0 !==
+          ControllerHolder_1.ControllerHolder.CameraController.Model
+            .CameraMode ||
+        !ControllerHolder_1.ControllerHolder.CameraController.GetPlayerCameraManager()?.IsValid() ||
         (this.bForSelf
-          ? CameraController_1.CameraController.PlayCameraShake(
+          ? ControllerHolder_1.ControllerHolder.CameraController.PlayCameraShake(
               this.震动配置,
-              CameraController_1.CameraController.Model.ShakeModify,
+              ControllerHolder_1.ControllerHolder.CameraController.Model
+                .ShakeModify,
               0,
               void 0,
               !0,
             )
-          : CameraController_1.CameraController.PlayWorldCameraShake(
+          : ControllerHolder_1.ControllerHolder.CameraController.PlayWorldCameraShake(
               this.震动配置,
-              e?.GetOwner()?.K2_GetActorLocation(),
+              r?.GetOwner()?.D_K2_GetActorLocation(),
               this.Radius,
               this.Radius,
               1,

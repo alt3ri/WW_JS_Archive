@@ -9,6 +9,7 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../../../../Ui/Common/PopupCaptionItem"),
   TabViewComponent_1 = require("../../../../../Common/TabComponent/TabViewComponent"),
+  PayShopController_1 = require("../../../../../PayShop/PayShopController"),
   ActivityMoonChasingController_1 = require("../../Activity/ActivityMoonChasingController"),
   RewardGrandItem_1 = require("./RewardGrandItem"),
   RewardInstanceController_1 = require("./RewardInstanceController"),
@@ -21,7 +22,7 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
       (this.GrandItem = void 0),
       (this.TabItemList = []),
       (this.TabViewComponent = void 0),
-      (this.txa = !0),
+      (this.nxa = !0),
       (this.dOn = (e) => {
         e ===
         ModelManager_1.ModelManager.MoonChasingRewardModel.GetSpecialTaskData()
@@ -29,7 +30,7 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
           ? this.fua()
           : this.jFi();
       }),
-      (this.oMa = () => {
+      (this.Kva = () => {
         this.jFi();
       }),
       (this.m2e = () => {
@@ -49,9 +50,12 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.txa = this.OpenParam ?? !0),
+    (this.nxa = this.OpenParam ?? !0),
       this.mOn.RegisterMainView(this),
-      await this.mOn.InitMainView(),
+      await Promise.all([
+        PayShopController_1.PayShopController.SendRequestPayShopInfo(!0),
+        this.mOn.InitMainView(),
+      ]),
       this.mOn.RefreshTabList();
   }
   OnBeforeShow() {
@@ -64,7 +68,7 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MoonChasingRefreshRewardRedDot,
-        this.oMa,
+        this.Kva,
       );
   }
   OnRemoveEventListener() {
@@ -74,7 +78,7 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MoonChasingRefreshRewardRedDot,
-        this.oMa,
+        this.Kva,
       );
   }
   async InitCaption() {
@@ -135,7 +139,7 @@ class RewardMainView extends UiViewBase_1.UiViewBase {
           e,
           i,
           this.TabItemList[t],
-          this.txa,
+          this.nxa,
         ),
         this.TabItemList[0].GetRootItem()),
       i = this.TabItemList[1].GetRootItem(),

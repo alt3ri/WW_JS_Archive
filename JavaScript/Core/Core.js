@@ -3,6 +3,7 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Core = void 0);
 const cpp_1 = require("cpp"),
+  Stats_1 = require("../Core/Common/Stats"),
   ActorSystem_1 = require("./Actor/ActorSystem"),
   Application_1 = require("./Application/Application"),
   Info_1 = require("./Common/Info"),
@@ -29,17 +30,34 @@ class Core {
       Log_1.Log.SetLevel(
         Info_1.Info.IsBuildShipping || Info_1.Info.IsBuildTest ? 2 : 3,
       ),
+      (Stats_1.Stat.EnableCreateWithStack =
+        Info_1.Info.IsBuildDevelopmentOrDebug),
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.InitializeEnvironment(
         e.GetWorld(),
       ),
+      cpp_1.FKuroCycleCounter.InitializeEnvironment(),
       PerfSight_1.PerfSight.Initialize(),
       Time_1.Time.Initialize(),
       Net_1.Net.Initialize(),
+      TickSystem_1.TickSystem.Add(
+        this.TickPriority2,
+        "CorePriority2",
+        0,
+        !0,
+        2,
+      ),
+      TickSystem_1.TickSystem.Add(
+        this.TickPriority1,
+        "CorePriority1",
+        0,
+        !0,
+        1,
+      ),
       TickSystem_1.TickSystem.Add(this.Tick, "Core", 0, !0),
       TickSystem_1.TickSystem.Add(this.AfterTick, "Core", 4, !0),
-      yield this.bqa(),
+      yield this.c2a(),
       ConfigStatement_1.ConfigStatement.Init(),
-      yield this.bqa(),
+      yield this.c2a(),
       ObjectSystem_1.ObjectSystem.Initialize(),
       EntitySystem_1.EntitySystem.Initialize(),
       EntityComponentSystem_1.EntityComponentSystem.Initialize(),
@@ -68,7 +86,7 @@ class Core {
           "[Core.UnRegisterPreTick] 未注册的PreTickfunc",
         );
   }
-  static async bqa() {
+  static async c2a() {
     return new Promise((e) => {
       TimerSystem_1.TimerSystem.Next(() => {
         e();
@@ -79,18 +97,26 @@ class Core {
 (exports.Core = Core),
   ((_a = Core).Y7 = new Set()),
   (Core.QQs = 0),
+  (Core.DT1 = 2),
+  (Core.ForbiddenTickPriority = !1),
+  (Core.TickPriority2 = (e) => {
+    _a.ForbiddenTickPriority || ((_a.DT1 = 1), Time_1.Time.Tick(e));
+  }),
+  (Core.TickPriority1 = (e) => {
+    1 === _a.DT1 ? (_a.DT1 = 0) : (_a.ForbiddenTickPriority = !0);
+  }),
   (Core.Tick = (e) => {
-    if (
-      (CycleCounter_1.CycleCounter.RefreshState(),
-      !TickSystem_1.TickSystem.IsPaused)
-    )
+    0 !== _a.DT1 && (Time_1.Time.Tick(e), (_a.ForbiddenTickPriority = !0)),
+      (_a.DT1 = -1),
+      CycleCounter_1.CycleCounter.RefreshState();
+    var t = e / 1e3;
+    if ((Net_1.Net.Tick(t), !TickSystem_1.TickSystem.IsPaused))
       for (const o of _a.Y7) o(e);
-    var t = e / 1e3,
-      r =
-        (Net_1.Net.Tick(t),
-        Time_1.Time.Tick(e),
-        TimerSystem_1.TimerSystem.Tick(e),
-        Time_1.Time.ServerTimeStamp),
+    TimerSystem_1.TimerSystem.Tick(e),
+      TimerSystem_1.FlowTimeTimerSystem.Tick(
+        e * Time_1.Time.TimeDilation * Time_1.Time.FlowTimeDilation,
+      );
+    var r = Time_1.Time.ServerTimeStamp,
       i = r - _a.QQs;
     (_a.QQs = r),
       TimerSystem_1.RealTimeTimerSystem.Tick(i),
@@ -104,9 +130,11 @@ class Core {
       TickSystem_1.TickSystem.IsPaused || EntitySystem_1.EntitySystem.Tick(e);
   }),
   (Core.AfterTick = (e) => {
-    TickSystem_1.TickSystem.IsPaused ||
-      (Info_1.Info.EnableForceTick &&
-        EntitySystem_1.EntitySystem.ForceAfterTick(e)),
+    (_a.DT1 = 2),
+      (_a.ForbiddenTickPriority = !1),
+      TickSystem_1.TickSystem.IsPaused ||
+        (Info_1.Info.EnableForceTick &&
+          EntitySystem_1.EntitySystem.ForceAfterTick(e)),
       cpp_1.FKuroGameBudgetAllocatorInterface.AfterTickOutside(e / 1e3),
       TickSystem_1.TickSystem.IsPaused ||
         EntitySystem_1.EntitySystem.AfterTick(e);

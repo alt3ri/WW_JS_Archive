@@ -27,7 +27,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "RenderBattle",
-                39,
+                38,
                 "进入Idle2Fighting的过度状态时没有Sequence资源，开始资源加载。",
                 ["WuYinQuBattleActor", this.Owner?.GetName()],
               ),
@@ -42,7 +42,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
                     : Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "RenderBattle",
-                        39,
+                        38,
                         "进入Idle2Fighting的过度状态时没有Sequence资源，资源加载失败。",
                         ["WuYinQuBattleActor", this.Owner?.GetName()],
                       );
@@ -51,17 +51,17 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderBattle",
-          39,
+          38,
           "进入Idle2Fighting的过度状态时没有SequencePlayer",
           ["WuYinQuBattleActor", this.Owner?.GetName()],
         );
   }
   Zar() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderBattle", 12, "进入Idle2Fighting的过度状态"),
+      Log_1.Log.Info("RenderBattle", 11, "进入Idle2Fighting的过度状态"),
       (this.Owner.当前状态 = "静止状态到战斗阶段1");
     var e = this.Owner.WuYinQuFightingData,
-      t = this.Owner.K2_GetActorLocation(),
+      t = this.Owner.D_K2_GetActorLocation(),
       i =
         (RenderModuleController_1.RenderModuleController.AddBattleReference(t),
         this.Owner.GetKuroLevelSequenceActor());
@@ -127,7 +127,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
             e,
           )),
         (i = this.Owner.WuYinQuFightingData.GlobalMPC) &&
-          ((s = this.Owner.K2_GetActorLocation()),
+          ((s = this.Owner.D_K2_GetActorLocation()),
           UE.KismetMaterialLibrary.SetVectorParameterValue(
             this.Owner.GetWorld(),
             i,
@@ -158,7 +158,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
   }
   OnExit(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderBattle", 12, "退出Idle2Fighting的过度状态"),
+      Log_1.Log.Info("RenderBattle", 11, "退出Idle2Fighting的过度状态"),
       (this.Jar = void 0),
       this.zar !== ResourceSystem_1.ResourceSystem.InvalidId &&
         (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.zar),
@@ -166,7 +166,7 @@ class WuYinQuBattleStateIdleToFighting extends WuYinQuBattleStateBase_1.default 
         Log_1.Log.CheckError()) &&
         Log_1.Log.Error(
           "RenderBattle",
-          39,
+          38,
           "退出Idle2Fighting的过度状态时还在加载资源，取消资源加载",
         );
   }

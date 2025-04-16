@@ -28,7 +28,7 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ShowTypeChange,
-        this.aEa,
+        this.lEa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEntity,
@@ -87,6 +87,14 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         this.dDn,
       ),
       EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnEnterVehicle,
+        this.M6l,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnLeaveVehicle,
+        this.E6l,
+      ),
+      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenView,
         this.FQe,
       ),
@@ -97,6 +105,10 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.组合主键,
         this.RZe,
+      ),
+      InputDistributeController_1.InputDistributeController.BindActionIgnoreLimit(
+        InputMappingsDefine_1.actionMappings.通用交互,
+        this.qah,
       );
   }
   static OnRemoveEvents() {
@@ -110,7 +122,7 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ShowTypeChange,
-        this.aEa,
+        this.lEa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
@@ -169,6 +181,14 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         this.dDn,
       ),
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnEnterVehicle,
+        this.M6l,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnLeaveVehicle,
+        this.E6l,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenView,
         this.FQe,
       ),
@@ -179,6 +199,10 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.组合主键,
         this.RZe,
+      ),
+      InputDistributeController_1.InputDistributeController.UnBindActionIgnoreLimit(
+        InputMappingsDefine_1.actionMappings.通用交互,
+        this.qah,
       );
   }
   static wyo(e, t = 4) {
@@ -219,9 +243,11 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       SkillButtonUiController.kQe.Stop();
   }),
   (SkillButtonUiController.kpe = () => {
-    ModelManager_1.ModelManager.SkillButtonUiModel.CreateAllSkillButtonEntityData();
+    ModelManager_1.ModelManager.SkillButtonUiModel.CheckAndRemoveInvalidEntityData(),
+      ModelManager_1.ModelManager.SkillButtonUiModel.CreateAllSkillButtonEntityData();
   }),
-  (SkillButtonUiController.aEa = () => {
+  (SkillButtonUiController.lEa = () => {
+    ModelManager_1.ModelManager.SkillButtonUiModel.RefreshSkillButtonIndexOnOperationTypeChanged();
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e && SkillButtonUiController.wyo(e);
   }),
@@ -264,6 +290,18 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
   (SkillButtonUiController.dDn = () => {
     ModelManager_1.ModelManager.SkillButtonUiModel.ClearSkillButtonFollowerEntityData();
   }),
+  (SkillButtonUiController.M6l = (e) => {
+    e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
+      e.VehicleEntity?.Id ?? 0,
+    );
+    e?.Valid &&
+      ModelManager_1.ModelManager.SkillButtonUiModel.CreateSkillButtonVehicleEntityData(
+        e,
+      );
+  }),
+  (SkillButtonUiController.E6l = (e) => {
+    ModelManager_1.ModelManager.SkillButtonUiModel.ClearSkillButtonVehicleEntityData();
+  }),
   (SkillButtonUiController.FQe = (e) => {
     "MenuView" === e &&
       ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.AddChangeKeyReason(
@@ -272,9 +310,10 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
   }),
   (SkillButtonUiController.$Ge = (e) => {
     "MenuView" === e &&
-      ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RemoveChangeKeyReason(
+      (ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RemoveChangeKeyReason(
         0,
-      );
+      ),
+      ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RefreshSwitchInteractOpen());
   }),
   (SkillButtonUiController.RZe = (e, t) => {
     t = 0 === t;
@@ -285,5 +324,11 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.BattleUiPressCombineButtonChanged,
         t,
       );
+  }),
+  (SkillButtonUiController.qah = (e, t) => {
+    t = 0 === t;
+    ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.SwitchInteractData.InputInteractButton(
+      t,
+    );
   });
 //# sourceMappingURL=SkillButtonUiController.js.map

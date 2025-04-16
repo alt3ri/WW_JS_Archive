@@ -3,25 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HeadStateViewBase = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   CameraController_1 = require("../../../../Camera/CameraController"),
   Global_1 = require("../../../../Global"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GameBudgetAllocatorConfigCreator_1 = require("../../../../World/Define/GameBudgetAllocatorConfigCreator"),
   BattleUiControl_1 = require("../../BattleUiControl"),
   BattleVisibleChildView_1 = require("../BattleChildView/BattleVisibleChildView"),
   HpBufferStateMachine_1 = require("./HpBufferStateMachine");
 var EAttributeId = Protocol_1.Aki.Protocol.Vks;
-const Info_1 = require("../../../../../Core/Common/Info"),
-  Log_1 = require("../../../../../Core/Common/Log"),
-  GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
-  GameBudgetAllocatorConfigCreator_1 = require("../../../../World/Define/GameBudgetAllocatorConfigCreator"),
-  UPDATE_TOLERATION = 0.1,
+const UPDATE_TOLERATION = 0.1,
   PERCENT_TOLERATION = 0.01,
   SCALE_TOLERATION = 0.004;
 class HeadStateViewNode {
@@ -29,10 +29,10 @@ class HeadStateViewNode {
     (this.OQt = void 0),
       (this.Vge = !0),
       (this.xC = !0),
-      (this.cOa = 0),
-      (this.mOa = 0),
-      (this.dOa = 0),
-      (this.COa = !1),
+      (this.cka = 0),
+      (this.mka = 0),
+      (this.dka = 0),
+      (this.Cka = !1),
       (this.yW = void 0),
       (this.ScheduledAfterTick = void 0),
       (this.LocationProxyFunction = void 0);
@@ -43,7 +43,7 @@ class HeadStateViewNode {
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Battle",
-            67,
+            66,
             "HeadStateViewNode RegisterTick: 重复注册Tick",
             ["HeadStateViewNode", this.constructor.name],
           ),
@@ -66,16 +66,16 @@ class HeadStateViewNode {
       ),
       (this.yW = void 0));
   }
-  CacheRefreshInfo(t, i, e) {
-    (this.cOa = t), (this.mOa = i), (this.dOa = e), (this.COa = !0);
+  CacheRefreshInfo(t, e, i) {
+    (this.cka = t), (this.mka = e), (this.dka = i), (this.Cka = !0);
   }
-  ScheduledTick(t, i, e) {
-    this.COa &&
+  ScheduledTick(t, e, i) {
+    this.Cka &&
       this.Vge &&
       this.xC &&
-      (this.OQt.OnRefresh(this.cOa, this.mOa, this.dOa), (this.COa = !1));
+      (this.OQt.OnRefresh(this.cka, this.mka, this.dka), (this.Cka = !1));
   }
-  OnEnabledChange(t, i) {
+  OnEnabledChange(t, e) {
     this.Vge = t;
   }
   OnWasRecentlyRenderedOnScreenChange(t) {
@@ -97,26 +97,16 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       (this.StateViewDisplayMaxDistance = 0),
       (this.StateViewDisplayMinDistance = 0),
       (this.X1t = Vector_1.Vector.Create(0, 0, -1)),
+      (this.Gue = Rotator_1.Rotator.Create()),
       (this.$1t = Rotator_1.Rotator.Create()),
       (this.Distance = 0),
       (this.HardnessAttributeId = EAttributeId.Proto_EAttributeType_None),
       (this.MaxHardnessAttributeId = EAttributeId.Proto_EAttributeType_None),
       (this.Y1t = Vector_1.Vector.Create()),
+      (this.yB_ = Vector_1.Vector.Create()),
       (this.J1t = void 0),
       (this.z1t = void 0),
       (this.Z1t = new HpBufferStateMachine_1.HpBufferStateMachine()),
-      (this.Ult = Stats_1.Stat.Create("[HeadState]HeadState-Tick")),
-      (this.e_t = Stats_1.Stat.Create("[HeadState]HeadState-Lerp")),
-      (this.t_t = Stats_1.Stat.Create("[HeadState]HeadState-Activate")),
-      (this.i_t = Stats_1.Stat.Create("[HeadState]HeadState-Activate1")),
-      (this.o_t = Stats_1.Stat.Create("[HeadState]HeadState-Activate2")),
-      (this.r_t = Stats_1.Stat.Create("[HeadState]HeadState-Activate3")),
-      (this.n_t = Stats_1.Stat.Create("[HeadState]HeadState-Activate4")),
-      (this.s_t = Stats_1.Stat.Create("[HeadState]HeadState-Activate5")),
-      (this.a_t = Stats_1.Stat.Create("[HeadState]HeadState-Activate6")),
-      (this.h_t = Stats_1.Stat.Create("[HeadState]HeadState-RefreshScale")),
-      (this.l_t = Stats_1.Stat.Create("[HeadState]HeadState-RefreshLocation")),
-      (this.__t = Stats_1.Stat.Create("[HeadState]HeadState-RefreshRotation")),
       (this.u_t = Stats_1.Stat.Create("[HeadState]HeadState-Destroy")),
       (this.Bst = -0),
       (this.c_t = !1),
@@ -127,14 +117,14 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       (this.C_t = Vector_1.Vector.Create()),
       (this.g_t = Vector_1.Vector.Create()),
       (this.f_t = Vector_1.Vector.Create()),
-      (this.gOa = new HeadStateViewNode()),
+      (this.gka = new HeadStateViewNode()),
       (this.p_t = () => {
         this.J1t &&
           (this.J1t(this.HeadStateData.GetEntity()), (this.z1t = void 0));
       }),
       (this.OnFallDownVisibleChange = () => {}),
-      (this.OnAddOrRemoveBuff = (t, i, e, s) => {}),
-      (this.OnRoleLevelChange = (t, i, e) => {}),
+      (this.OnAddOrRemoveBuff = (t, e, i, s) => {}),
+      (this.OnRoleLevelChange = (t, e, i) => {}),
       (this.OnChangeTeam = () => {}),
       (this.OnShieldChanged = (t) => {}),
       (this.OnHardnessHideChanged = (t) => {}),
@@ -144,30 +134,52 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       (this.ent = (t) => {
         this.OnHardnessAttributeChanged();
       }),
-      (this.OnHardnessChanged = (t, i, e) => {}),
+      (this.OnHardnessChanged = (t, e, i) => {}),
       (this.VulnerabilityActivated = (t) => {}),
-      (this.OnLevelChanged = (t, i, e) => {});
+      (this.OnLevelChanged = (t, e, i) => {}),
+      (this.OnLifeChanged = (t, e, i) => {
+        this.OnHealthChanged();
+      }),
+      (this.OnCampChanged = () => {
+        this.RefreshOnCampChanged();
+      });
   }
-  async InitializeHeadState(t, i, e, s, h, a, r) {
+  async InitializeHeadState(t, e, i, s, h, a, r) {
     var o = this.GetResourceId();
     StringUtils_1.StringUtils.IsEmpty(o) ||
-      ((this.Q1t = i),
+      ((this.Q1t = e),
       (this.DetailHeadStateRangeInternal = s),
       (this.StateViewDisplayMaxDistance = h),
       (this.StateViewDisplayMinDistance = a),
-      this.Z1t.UpdateParams(i),
+      this.Z1t.UpdateParams(e),
       (s = BattleUiControl_1.BattleUiControl.Pool.GetHeadStateView(o))
-        ? (this.CreateThenShowByActor(s),
-          this.ActiveBattleHeadState(r),
-          (this.c_t = !0))
+        ? (this.CreateByActor(s),
+          (this.c_t = !0),
+          r &&
+            (this.ShowCompatible(),
+            this.ActiveBattleHeadState(r),
+            this.gka.RegisterTick(this)))
         : ((h =
             ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(o)),
-          await this.CreateThenShowByPathAsync(h, t, !0),
-          this.RootActor && this.ActiveBattleHeadState(r)),
-      this.gOa.RegisterTick(this));
+          await this.CreateByPathAsync(h, t, !0),
+          r &&
+            (await this.ShowAsync(),
+            this.RootActor && this.ActiveBattleHeadState(r),
+            this.gka.RegisterTick(this))));
+  }
+  async ActiveBattleHeadStatePreload(t) {
+    await this.ShowAsync(),
+      this.ActiveBattleHeadState(t),
+      this.gka.RegisterTick(this);
   }
   GetResourceId() {
     return "UiItem_LittleMonsterState_Prefab";
+  }
+  Recycle() {
+    this.ResetBattleHeadState(),
+      (this.HeadStateData = void 0),
+      this.gka.UnregisterTick(),
+      this.Hide();
   }
   OnBeforeDestroyImplementImplement() {
     this.RootActor && this.ResetBattleHeadState();
@@ -175,7 +187,7 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
   DestroyOverride() {
     var t;
     return (
-      this.gOa.UnregisterTick(),
+      this.gka.UnregisterTick(),
       !(
         !this.c_t ||
         !this.RootActor ||
@@ -189,37 +201,26 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
     );
   }
   ActiveBattleHeadState(t) {
-    this.t_t.Start(),
-      this.i_t.Start(),
-      (this.HeadStateData = t),
-      this.i_t.Stop(),
-      this.o_t.Start();
+    HeadStateViewBase.t_t.Start(), (this.HeadStateData = t);
     var t = this.GetHp(),
-      i = this.GetMaxHp();
-    (this.CurrentBarPercent = t && i ? t / i : 0),
-      this.o_t.Stop(),
-      this.r_t.Start(),
+      e = this.GetMaxHp();
+    (this.CurrentBarPercent = t && e ? t / e : 0),
       this.BindCallback(),
-      this.r_t.Stop(),
       this.v_t(0),
-      this.n_t.Start(),
       this.RefreshHardnessAttributeId(),
-      this.n_t.Stop(),
-      this.s_t.Start(),
       this.M_t(),
-      this.s_t.Stop(),
-      this.a_t.Start(),
       this.InitChildType(14),
+      HeadStateViewBase.hT1.Start(),
       this.ShowBattleVisibleChildView(),
-      this.a_t.Stop(),
+      HeadStateViewBase.hT1.Stop(),
       (this.NeedCorrectionOutside = !1),
       (this.jht = !0),
-      this.t_t.Stop();
+      HeadStateViewBase.t_t.Stop();
   }
-  ActivateHideTimeDown(t, i = void 0) {
+  ActivateHideTimeDown(t, e = void 0) {
     this.E_t(),
       t
-        ? ((this.J1t = i),
+        ? ((this.J1t = e),
           (this.z1t = TimerSystem_1.TimerSystem.Delay(this.p_t, t)))
         : this.p_t();
   }
@@ -228,73 +229,80 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       (TimerSystem_1.TimerSystem.Remove(this.z1t), (this.z1t = void 0));
   }
   SetHeadStateScale(t) {
-    this.h_t.Start(),
-      Math.abs(this.X1t.Z - t) > this.ScaleToleration &&
-        ((this.X1t.X = t),
-        (this.X1t.Y = t),
-        (this.X1t.Z = t),
-        this.RootItem.SetUIRelativeScale3D(this.X1t.ToUeVector(!0))),
-      this.h_t.Stop();
+    Math.abs(this.X1t.Z - t) > this.ScaleToleration &&
+      ((this.X1t.X = t),
+      (this.X1t.Y = t),
+      (this.X1t.Z = t),
+      this.RootItem.SetUIRelativeScale3D(this.X1t.ToUeVectorOld(!0)));
   }
-  OnCacheRefresh(t, i, e) {
-    this.jht && this.gOa.CacheRefreshInfo(t, i, e);
+  OnCacheRefresh(t, e, i) {
+    this.jht && this.gka.CacheRefreshInfo(t, e, i);
   }
-  OnRefresh(t, i, e) {
+  OnRefresh(t, e, i) {
     this.jht &&
-      (this.Ult.Start(),
+      (HeadStateViewBase.Ult.Start(),
       (this.Distance = t),
-      this.v_t(i),
-      this.LerpBarPercent(e),
-      this.Ult.Stop());
+      this.v_t(e),
+      this.LerpBarPercent(i),
+      HeadStateViewBase.Ult.Stop());
   }
   v_t(t) {
-    this.SetHeadStateScale(t), this.S_t(), this.RefreshHeadStateRotation();
+    HeadStateViewBase.lT1.Start(),
+      this.SetHeadStateScale(t),
+      this.S_t(),
+      this.RefreshHeadStateRotation(),
+      HeadStateViewBase.lT1.Stop();
   }
   RefreshHeadStateRotation() {
-    this.__t.Start();
     var t = CameraController_1.CameraController.CameraRotator,
-      i = t.Yaw + 90,
-      t = t.Pitch - 90;
-    (Math.abs(i - this.$1t.Yaw) <= UPDATE_TOLERATION &&
-      Math.abs(t - this.$1t.Roll) <= UPDATE_TOLERATION) ||
-      ((this.$1t.Yaw = i),
-      (this.$1t.Pitch = 0),
-      (this.$1t.Roll = t),
-      this.RootItem.SetUIRelativeRotation(this.$1t.ToUeRotator())),
-      this.__t.Stop();
+      e =
+        this.HeadStateData?.ActorComponent?.ActorGravityDirectProxy ??
+        Vector_1.Vector.DownVectorProxy;
+    0 === e.SizeSquared2D()
+      ? (e.Z <= 0
+          ? ((this.Gue.Yaw = t.Yaw + 90), (this.Gue.Roll = t.Pitch - 90))
+          : ((this.Gue.Yaw = t.Yaw - 90), (this.Gue.Roll = 90 - t.Pitch)),
+        (this.Gue.Pitch = 0))
+      : MathUtils_1.MathUtils.ComposeRotator(
+          HeadStateViewBase.aAc,
+          t,
+          this.Gue,
+        ),
+      (Math.abs(this.Gue.Yaw - this.$1t.Yaw) <= UPDATE_TOLERATION &&
+        Math.abs(this.Gue.Roll - this.$1t.Roll) <= UPDATE_TOLERATION &&
+        Math.abs(this.Gue.Pitch - this.$1t.Pitch) <= UPDATE_TOLERATION) ||
+        (this.$1t.FromUeRotator(this.Gue),
+        this.RootItem.SetUIRelativeRotation(this.$1t.ToUeRotator()));
   }
   S_t() {
-    this.l_t.Start();
-    var t = this.HeadStateData.GetWorldLocation();
+    this.yB_.FromUeVector(this.HeadStateData.GetWorldLocation());
+    var t = this.yB_;
     this.NeedCorrectionOutside && this.CheckAndCorrectionOutside(t),
       this.Y1t.Equals(t, UPDATE_TOLERATION) ||
-        (this.RootItem.SetUIRelativeLocation(t.ToUeVector()),
-        this.Y1t.Set(t.X, t.Y, t.Z)),
-      this.l_t.Stop();
+        (this.RootItem.SetUIRelativeLocation(t.ToUeVectorOld()),
+        this.Y1t.Set(t.X, t.Y, t.Z));
   }
   CheckAndCorrectionOutside(t) {
-    var i,
-      e,
+    var e,
+      i,
       s,
       h,
       a = t.ToUeVector(),
       r = Global_1.Global.CharacterController;
-    UE.GameplayStatics.ProjectWorldToScreen(r, a, this.S$e) &&
-      ((i = (a = (0, puerts_1.$unref)(this.S$e)).X),
+    UE.GameplayStatics.D_ProjectWorldToScreen(r, a, this.S$e) &&
+      ((e = (a = (0, puerts_1.$unref)(this.S$e)).X),
       (h = a.Y),
-      Info_1.Info.IsInTouch() ||
-        ModelManager_1.ModelManager.BattleUiModel.UpdateViewPortSize(),
-      i <
-        -(e =
+      e <
+        -(i =
           (s = ModelManager_1.ModelManager.BattleUiModel.ViewportSize).X *
           this.HeadStateData.CommonParam.OutHorizontalMargin) ||
-        i > s.X + e ||
-        (i = s.Y * this.HeadStateData.CommonParam.OutTopMargin) < h ||
-        ((a.Y = i),
+        e > s.X + i ||
+        (e = s.Y * this.HeadStateData.CommonParam.OutTopMargin) < h ||
+        ((a.Y = e),
         UE.GameplayStatics.DeprojectScreenToWorld(r, a, this.m_t, this.d_t),
-        (e = (0, puerts_1.$unref)(this.m_t)),
+        (i = (0, puerts_1.$unref)(this.m_t)),
         (s = (0, puerts_1.$unref)(this.d_t)),
-        this.C_t.FromUeVector(e),
+        this.C_t.FromUeVector(i),
         this.g_t.FromUeVector(s),
         t.Subtraction(this.C_t, this.f_t),
         (h = (this.f_t.Size2D() * this.g_t.Size()) / this.g_t.Size2D()),
@@ -304,6 +312,7 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
   }
   ResetBattleHeadState() {
     this.u_t.Start(),
+      this.ClearChildViewData(),
       this.UnBindCallback(),
       this.StopBarLerpAnimation(),
       this.E_t(),
@@ -311,13 +320,13 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       this.u_t.Stop();
   }
   LerpBarPercent(t) {
-    var i;
+    var e;
     -1 === this.K1t ||
-      (this.e_t.Start(),
-      (i = this.Z1t.UpdatePercent(t)) < 0
+      (HeadStateViewBase.e_t.Start(),
+      (e = this.Z1t.UpdatePercent(t)) < 0
         ? this.StopBarLerpAnimation()
-        : this.M_t(i),
-      this.e_t.Stop(),
+        : this.M_t(e),
+      HeadStateViewBase.e_t.Stop(),
       this.j1t >= this.W1t) ||
       (this.K1t = this.K1t + t);
   }
@@ -330,17 +339,17 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
   }
   OnLerpBarBufferPercent(t) {}
   PlayBarAnimation(t) {
-    var i,
-      e = t,
+    var e,
+      i = t,
       s = this.CurrentBarPercent;
-    s <= e ||
-      ((i = this.Z1t.IsOriginState()),
-      this.Z1t.GetHit(e, s),
-      (this.j1t = e),
+    s <= i ||
+      ((e = this.Z1t.IsOriginState()),
+      this.Z1t.GetHit(i, s),
+      (this.j1t = i),
       (this.W1t = s),
       (this.CurrentBarPercent = t),
       (this.K1t = 0),
-      i && !this.Z1t.IsOriginState() && this.OnBeginBarAnimation(s));
+      e && !this.Z1t.IsOriginState() && this.OnBeginBarAnimation(s));
   }
   OnBeginBarAnimation(t) {}
   StopBarLerpAnimation() {
@@ -361,10 +370,12 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       this.HeadStateData.BindOnVulnerabilityActivated(
         this.VulnerabilityActivated,
       ),
-      this.HeadStateData.BindOnLevelChanged(this.OnLevelChanged);
+      this.HeadStateData.BindOnLevelChanged(this.OnLevelChanged),
+      this.HeadStateData.BindOnLifeChanged(this.OnLifeChanged),
+      this.HeadStateData.BindOnCampChanged(this.OnCampChanged);
   }
   UnBindCallback() {
-    this.HeadStateData.UnBindAllCallback();
+    this.HeadStateData?.UnBindAllCallback();
   }
   RefreshHardnessAttributeId() {
     this.HeadStateData.ContainsTagById(-1838149281)
@@ -375,11 +386,11 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
       this.OnEliteStateChange();
   }
   OnEliteStateChange() {}
-  AddOrRemoveBuff(t, i, e, s) {
-    this.OnAddOrRemoveBuff(t, i, e, s);
+  AddOrRemoveBuff(t, e, i, s) {
+    this.OnAddOrRemoveBuff(t, e, i, s);
   }
-  RoleLevelChange(t, i, e) {
-    this.OnRoleLevelChange(t, i, e);
+  RoleLevelChange(t, e, i) {
+    this.OnRoleLevelChange(t, e, i);
   }
   ChangeTeam() {
     this.OnChangeTeam();
@@ -387,7 +398,8 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
   OnHardnessAttributeChanged() {
     this.RefreshHardnessAttributeId();
   }
-  OnHealthChanged(t) {}
+  OnHealthChanged() {}
+  RefreshOnCampChanged() {}
   GetHpAndShieldPercent() {
     return this.HeadStateData.GetHpAndShieldPercent();
   }
@@ -429,5 +441,18 @@ class HeadStateViewBase extends BattleVisibleChildView_1.BattleVisibleChildView 
     return this.HeadStateData.GetHpColor();
   }
 }
-exports.HeadStateViewBase = HeadStateViewBase;
+((exports.HeadStateViewBase = HeadStateViewBase).aAc = Rotator_1.Rotator.Create(
+  0,
+  90,
+  -90,
+)),
+  (HeadStateViewBase.Ult = Stats_1.Stat.Create("[HeadState]HeadState-Tick")),
+  (HeadStateViewBase.e_t = Stats_1.Stat.Create("[HeadState]HeadState-Lerp")),
+  (HeadStateViewBase.t_t = Stats_1.Stat.Create(
+    "[HeadState]HeadState-Activate",
+  )),
+  (HeadStateViewBase.lT1 = Stats_1.Stat.Create(
+    "[HeadState]HeadState-RefreshTransform",
+  )),
+  (HeadStateViewBase.hT1 = Stats_1.Stat.Create("[HeadState]HeadState-Show"));
 //# sourceMappingURL=HeadStateViewBase.js.map

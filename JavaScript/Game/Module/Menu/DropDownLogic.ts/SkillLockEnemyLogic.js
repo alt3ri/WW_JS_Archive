@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillLockEnemyLogic = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+const GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
+  GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   MenuController_1 = require("../MenuController"),
@@ -12,14 +14,14 @@ class SkillLockEnemyLogic extends DropDownLogicBase_1.DropDownLogicBase {
     var r = [],
       e =
         ConfigManager_1.ConfigManager.MenuBaseConfig.GetMenuConfigByFunctionId(
-          133,
+          GameSettingsDefine_1.EFunction.SkillLockEnemyMode,
         );
     if (e) {
-      var o = e.OptionsName;
-      for (let e = 0; e < o.length; e++) {
-        var n = o[e],
-          n = new SkillLockEnemyDropDownData_1.SkillLockEnemyDropDownData(e, n);
-        r.push(n);
+      var n = e.OptionsName;
+      for (let e = 0; e < n.length; e++) {
+        var a = n[e],
+          a = new SkillLockEnemyDropDownData_1.SkillLockEnemyDropDownData(e, a);
+        r.push(a);
       }
     }
     return r;
@@ -28,11 +30,14 @@ class SkillLockEnemyLogic extends DropDownLogicBase_1.DropDownLogicBase {
     return new LguiUtil_1.TableTextArgNew(e.TextId);
   }
   TriggerSelectChange(e, r) {
-    var o = MenuController_1.MenuController.GetTargetConfig(r.FunctionId),
+    var n = MenuController_1.MenuController.GetTargetConfig(r.FunctionId),
       e = e.Index;
-    o !== e &&
-      (MenuController_1.MenuController.SetApplySave(r, e),
-      MenuController_1.MenuController.NoticeChange(r.FunctionId),
+    n !== e &&
+      (GameSettingsManager_1.GameSettingsManager.HandleValueChange(
+        r.FunctionId,
+        e,
+        1,
+      ),
       (ModelManager_1.ModelManager.MenuModel.IsEdited = !0));
   }
   GetDefaultIndex(e) {

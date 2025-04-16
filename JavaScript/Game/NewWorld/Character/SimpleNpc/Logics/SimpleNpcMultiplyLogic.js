@@ -62,43 +62,41 @@ class SimpleNpcMultiplyLogic {
   }
   Ror() {
     (!this.Eor || this.Eor.length < this.aor.FlowList.Num()) &&
-      this.FilterFlowWorldState(
-        ModelManager_1.ModelManager.WorldModel.WorldStateMap,
-      );
+      this.FilterFlowWorldState();
   }
-  FilterFlowWorldState(i) {
-    var e = this.aor.FlowList.Num();
-    for (this.Eor || (this.Eor = new Array()); this.Eor.length < e; )
+  FilterFlowWorldState() {
+    var i = this.aor.FlowList.Num();
+    for (this.Eor || (this.Eor = new Array()); this.Eor.length < i; )
       this.Eor.push(!0);
-    var s = new Map();
-    for (let t = 0; t < e; t++) {
-      var r = this.aor.FlowList.Get(t);
-      1 === r.WorldState.WorldStateMap.Num() &&
-        void 0 !== (r = r.WorldState.WorldStateMap.GetKey(0)) &&
-        (s.get(r) || s.set(r, new Array()), s.get(r).push(t));
+    var e = new Map();
+    for (let t = 0; t < i; t++) {
+      var s = this.aor.FlowList.Get(t);
+      1 === s.WorldState.WorldStateMap.Num() &&
+        void 0 !== (s = s.WorldState.WorldStateMap.GetKey(0)) &&
+        (e.get(s) || e.set(s, new Array()), e.get(s).push(t));
     }
-    var h = new Array();
-    for (let t = 0; t < e; t++) h.push(this.Por(t, i));
-    var o = new Map();
-    for (const _ of s) {
-      var t = _[0],
-        l = (o.set(t, -1), o.get(t));
-      for (const c of _[1]) 0 <= h[c] && (l < 0 || l > h[c]) && o.set(t, h[c]);
+    var r = new Array();
+    for (let t = 0; t < i; t++) r.push(this.Por(t));
+    var h = new Map();
+    for (const n of e) {
+      var t = n[0],
+        o = (h.set(t, -1), h.get(t));
+      for (const _ of n[1]) 0 <= r[_] && (o < 0 || o > r[_]) && h.set(t, r[_]);
     }
-    for (let t = 0; t < e; t++) {
-      var a,
-        n = this.aor.FlowList.Get(t);
-      0 === n.WorldState.WorldStateMap.Num()
+    for (let t = 0; t < i; t++) {
+      var l,
+        a = this.aor.FlowList.Get(t);
+      0 === a.WorldState.WorldStateMap.Num()
         ? (this.Eor[t] = !0)
-        : 1 === n.WorldState.WorldStateMap.Num()
-          ? ((n = n.WorldState.WorldStateMap.GetKey(0)),
-            (n = o.get(n)),
-            (a = h[t]),
-            (this.Eor[t] = void 0 !== n && 0 <= n && a === n))
-          : (this.Eor[t] = 0 === h[t]);
+        : 1 === a.WorldState.WorldStateMap.Num()
+          ? ((a = a.WorldState.WorldStateMap.GetKey(0)),
+            (a = h.get(a)),
+            (l = r[t]),
+            (this.Eor[t] = void 0 !== a && 0 <= a && l === a))
+          : (this.Eor[t] = 0 === r[t]);
     }
   }
-  Por(t, s) {
+  Por(t) {
     var i = this.aor.FlowList.Get(t);
     if (0 === i.WorldState.WorldStateMap.Num()) return 0;
     if (1 === i.WorldState.WorldStateMap.Num()) {
@@ -106,20 +104,22 @@ class SimpleNpcMultiplyLogic {
       var e = this.GetWorldStateEnum(t);
       return void 0 === e
         ? -1
-        : void 0 === (e = s.get(e))
+        : void 0 ===
+            (e = ModelManager_1.ModelManager.WorldModel.GetWorldState(e))
           ? -1
           : e - i.WorldState.WorldStateMap.Get(t);
     }
-    const r = i.WorldState.MeetAllConditions;
-    let h = !!r;
+    const s = i.WorldState.MeetAllConditions;
+    let r = !!s;
     return (
       MapUtils_1.MapUtils.ForEach(i.WorldState.WorldStateMap, (t, i) => {
         t = this.GetWorldStateEnum(t);
         let e = void 0;
-        void 0 !== t && (e = s.get(t)),
-          (h = void 0 !== e ? (r ? h && e >= i : h || e >= i) : !r && h);
+        void 0 !== t &&
+          (e = ModelManager_1.ModelManager.WorldModel.GetWorldState(t)),
+          (r = void 0 !== e ? (s ? r && e >= i : r || e >= i) : !s && r);
       }),
-      h ? 0 : -1
+      r ? 0 : -1
     );
   }
   Aor(t) {
@@ -155,7 +155,7 @@ class SimpleNpcMultiplyLogic {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Level",
-                30,
+                29,
                 "请选择指定的演出目标ID",
                 ["Id", e.WhoId],
                 ["Name", this.aor.GetOwner().GetName()],
@@ -165,7 +165,7 @@ class SimpleNpcMultiplyLogic {
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Level",
-                  30,
+                  29,
                   "找不到演出目标",
                   ["Index", t],
                   ["Name", this.aor.GetOwner().GetName()],

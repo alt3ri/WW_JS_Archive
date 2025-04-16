@@ -5,9 +5,6 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   RedDotBase_1 = require("../../RedDotBase");
 class RedDotRoleSystemRoleList extends RedDotBase_1.RedDotBase {
-  OnGetParentName() {
-    return "FunctionRole";
-  }
   IsMultiple() {
     return !0;
   }
@@ -23,17 +20,27 @@ class RedDotRoleSystemRoleList extends RedDotBase_1.RedDotBase {
       EventDefine_1.EEventName.RedDotCreateRole,
       EventDefine_1.EEventName.RoleSystemChangeRole,
       EventDefine_1.EEventName.RoleSystemDeleteRole,
+      EventDefine_1.EEventName.PhantomEquip,
+      EventDefine_1.EEventName.RoleSkinRedDotRefresh,
     ];
   }
   OnCheck(e) {
-    return !(
-      !ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e) ||
-      (!ModelManager_1.ModelManager.RoleModel.RedDotRoleSystemRoleListCondition(
-        e,
-      ) &&
-        !ModelManager_1.ModelManager.RoleModel.RedDotAttributeTabBreakUpCondition(
+    return !!(
+      ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e) &&
+      (ModelManager_1.ModelManager.RoleSkinModel.HasRoleSkinRedDotByRoleId(e) ||
+        ModelManager_1.ModelManager.RoleModel.RedDotResonanceTabCondition(e) ||
+        (ModelManager_1.ModelManager.EditFormationModel.IsRoleInCurrentFormation(
           e,
-        ))
+        ) &&
+          (ModelManager_1.ModelManager.RoleModel.RedDotAttributeTabBreakUpCondition(
+            e,
+          ) ||
+            ModelManager_1.ModelManager.WeaponModel.RedDotWeaponBreachCondition(
+              e,
+            ) ||
+            ModelManager_1.ModelManager.VisionRecommendModel.CheckVisionOneKeyEquipRedDot(
+              e,
+            ))))
     );
   }
 }

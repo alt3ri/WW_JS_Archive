@@ -20,7 +20,6 @@ class BehaviorButtonData {
       (this.VisibleTagId = 0),
       (this.HiddenTagIds = []);
   }
-  static Init() {}
   Refresh(t, s, i, e) {
     (this.ButtonType = t),
       (this.ActionName = InputEnums_1.EInputAction[s]),

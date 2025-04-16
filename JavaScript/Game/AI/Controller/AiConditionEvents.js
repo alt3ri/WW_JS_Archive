@@ -118,13 +118,13 @@ class ConditionEventPair {
     this.Clear(),
       (this.Qte = new AiConditions(t)),
       (this.EventBinder = i),
-      (this.Xte = s.Entity.GetComponent(190)),
-      (this.$te = s.Entity.GetComponent(159)),
+      (this.Xte = s.Entity.GetComponent(203)),
+      (this.$te = s.Entity.GetComponent(171)),
       (this.eie =
         this.Qte.Tags.size +
         this.Qte.Attributes.size +
         this.Qte.AttributeRates.length);
-    var h = s.Entity.GetComponent(190);
+    var h = s.Entity.GetComponent(203);
     if (h)
       for (var [e] of this.Qte.Tags) {
         e = h.ListenForTagAnyCountChanged(e, this.hie(e));

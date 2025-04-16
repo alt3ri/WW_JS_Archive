@@ -34,6 +34,7 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   Global_1 = require("../../../../Global"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GameAudioController_1 = require("../../../../Module/Audio/GameAudioController"),
   ColorUtils_1 = require("../../../../Utils/ColorUtils"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   AkComponentDynamicConditionProxy_1 = require("./Audio/AkComponentDynamicConditionProxy"),
@@ -124,7 +125,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
       !(
         !this.Ovr ||
         ((this.Hte = this.Entity.GetComponent(3)), !this.Hte?.Actor) ||
-        ((this.Gce = this.Entity.GetComponent(38)), !this.Gce) ||
+        ((this.Gce = this.Entity.GetComponent(44)), !this.Gce) ||
         ((this.jFr = !1),
         (this.VFr = !0),
         AkComponentStatic.Load(),
@@ -149,10 +150,10 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
         (this.Ovr?.IsConcomitantEntity &&
           ((t = this.Ovr.GetSummonerId()),
           (t = ModelManager_1.ModelManager.CreatureModel?.GetEntityId(t))) &&
-          EntitySystem_1.EntitySystem.GetComponent(t, 42)?.IsP1)) &&
+          EntitySystem_1.EntitySystem.GetComponent(t, 48)?.IsP1)) &&
         (this.IsP1 = !0),
       this.IsRole &&
-        ((this.Lie = this.Entity.GetComponent(190)), this.IsP1) &&
+        ((this.Lie = this.Entity.GetComponent(203)), this.IsP1) &&
         ((this.WFr = new FoleySynthController_1.FoleySynthController(
           this.Hte,
           this,
@@ -163,17 +164,10 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
   }
   YFr() {
     this.Hte?.Valid &&
-      (this.IsP1
-        ? AudioSystem_1.AudioSystem.SetSwitch(
-            "char_p1orp3",
-            "p1",
-            this.Hte.Actor,
-          )
-        : AudioSystem_1.AudioSystem.SetSwitch(
-            "char_p1orp3",
-            "p3",
-            this.Hte.Actor,
-          ));
+      GameAudioController_1.GameAudioController.SetRolePriority(
+        this.IsP1 ? 0 : 2,
+        this.Hte.Actor,
+      );
   }
   XFr() {
     if ("normal" === AkComponentStatic.AkMoveState) {
@@ -209,7 +203,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Audio",
-              56,
+              55,
               "实体类型设置音量控制: 无法获取角色Actor",
             ))
         );
@@ -223,7 +217,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Audio",
-          56,
+          55,
           "实体类型设置音量控制: SOLO此类型，静音其他类型",
           ["actor", i.ActorLabel],
           ["entityType", e],
@@ -254,16 +248,16 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
                 this.XZt,
               ),
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("UiCore", 22, "事件播放指定音效", [
+                Log_1.Log.Debug("UiCore", 21, "事件播放指定音效", [
                   "audioEventPath",
                   e,
                 ]))
             : Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("UiCore", 22, "没有事件播放指定音效")))
+              Log_1.Log.Debug("UiCore", 21, "没有事件播放指定音效")))
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "UiCore",
-          22,
+          21,
           "没有配置目标角色动作音效,到角色动画音效表中配置",
           ["角色Id", o.toString()],
           ["角色动作", t],
@@ -277,7 +271,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Audio",
-            58,
+            57,
             "[PostAkEvent] switchData配置无效",
             ["ActorName:", this.Hte.Actor.GetName()],
             ["switchArray:", e],
@@ -292,7 +286,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Audio",
-            58,
+            57,
             "[PostAkEvent] switchData配置无效",
             ["ActorName:", this.Hte.Actor.GetName()],
             ["switchArray:", i],
@@ -305,7 +299,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
         this.DynamicConditionProxy.Do(this.Hte),
         r
           ? t.PostAkEvent(o, 0, void 0, o.GetName())
-          : UE.AkGameplayStatics.PostEventAtLocation(
+          : UE.AkGameplayStatics.D_PostEventAtLocation(
               o,
               this.Hte.ActorLocation,
               Rotator_1.Rotator.ZeroRotator,
@@ -313,7 +307,7 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
               this.Hte.Actor,
             ))
       : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Audio", 58, "[PostAkEvent] eventPtr无效", [
+          Log_1.Log.Warn("Audio", 57, "[PostAkEvent] eventPtr无效", [
             "ActorName:",
             this.Hte.Actor?.GetName(),
           ]),
@@ -332,11 +326,11 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Audio",
-        58,
+        57,
         "---------------------------------------------",
       ),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Audio", 58, "CharacterAkComponent Tick Debug;", [
+        Log_1.Log.Info("Audio", 57, "CharacterAkComponent Tick Debug;", [
           "Actor:",
           t,
         ]);
@@ -344,8 +338,8 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
       var i,
         r = e.Get(t);
       r instanceof UE.AkComponent &&
-        ((i = r.K2_GetComponentLocation()),
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        ((i = r.D_K2_GetComponentLocation()),
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           o,
           i,
           DEBUG_RADIUS,
@@ -356,14 +350,14 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
         Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(
           "Audio",
-          58,
+          57,
           "-----------AkComponent信息:",
           ["Comp:", r.GetName()],
           ["AttachSocketName:", r.AttachSocketName],
         );
     }
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Audio", 58, "-----------AkStatic信息:", [
+      Log_1.Log.Info("Audio", 57, "-----------AkStatic信息:", [
         "State:",
         AkComponentStatic.AkMoveState,
       ]);
@@ -413,13 +407,13 @@ let CharacterAkComponent = class CharacterAkComponent extends EntityComponent_1.
     Global_1.Global.BaseCharacter &&
       (e =
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
-          42,
+          48,
         )) &&
       (0 < o?.length ? e.SetFoleySynthFileDebug(t, o) : e.SetDebug(t));
   }
 };
 (CharacterAkComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(42)],
+  [(0, RegisterComponent_1.RegisterComponent)(48)],
   CharacterAkComponent,
 )),
   (exports.CharacterAkComponent = CharacterAkComponent);

@@ -11,6 +11,7 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.ToughModifierId = "");
   }
+  Constructor() {}
   K2_NotifyBegin(e, o, r) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
@@ -22,7 +23,7 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              20,
+              19,
               "在修改被削韧倍率中配置了不合法的id",
               ["id", t],
               ["animationName", o?.GetName()],
@@ -31,25 +32,27 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
         );
       }
       var e = e.CharacterActorComponent?.Entity,
-        a = e?.CheckGetComponent(18),
+        a = e?.CheckGetComponent(19),
         i = ToughCalcRatioById_1.configToughCalcRatioById.GetConfig(t);
       void 0 === i
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            20,
+            19,
             "韧性系数计算表对应id非法",
             ["id", t],
             ["animationName", o?.GetName()],
           )
-        : a?.Valid &&
+        : e &&
+          a &&
+          a?.Valid &&
           (a.AddToughModifier("ToughRate", i.RatioNormal),
           a.AddToughModifier("ToughRateOnCounter", i.RatioSpecial),
           a.ActorComponent.IsAutonomousProxy) &&
-          CombatMessage_1.CombatNet.Call(
-            21500,
+          CombatMessage_1.CombatNet.Send(
+            18466,
             e,
-            Protocol_1.Aki.Protocol.z3n.create({
+            Protocol_1.Aki.Protocol.ve_.create({
               s5n: MathUtils_1.MathUtils.BigIntToLong(t),
               n5n: r,
             }),
@@ -66,11 +69,11 @@ class TsAnimNotifyStateModifyTough extends UE.KuroAnimNotifyState {
       } catch (e) {
         return !0;
       }
-      var t = t.CharacterActorComponent?.Entity?.CheckGetComponent(18),
+      var t = t.CharacterActorComponent?.Entity?.CheckGetComponent(19),
         o = ToughCalcRatioById_1.configToughCalcRatioById.GetConfig(e);
       void 0 === o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Character", 20, "韧性系数计算表对应id非法", [
+          Log_1.Log.Error("Character", 19, "韧性系数计算表对应id非法", [
             "id",
             e,
           ])

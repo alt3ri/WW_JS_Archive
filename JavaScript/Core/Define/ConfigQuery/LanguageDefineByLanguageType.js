@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configLanguageDefineByLanguageType.Init"),
-  getConfigStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configLanguageDefineByLanguageType.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configLanguageDefineByLanguageType.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configLanguageDefineByLanguageType.GetConfig(";
 exports.configLanguageDefineByLanguageType = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (n, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      getConfigStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${n})`),
       g =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (g) {
       if (e) {
@@ -45,8 +47,8 @@ exports.configLanguageDefineByLanguageType = {
         const i = ConfigCommon_1.ConfigCommon.GetConfig(a);
         if (i)
           return (
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -78,8 +80,8 @@ exports.configLanguageDefineByLanguageType = {
               ((g = KEY_PREFIX + `#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(g, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -87,8 +89,8 @@ exports.configLanguageDefineByLanguageType = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigStat.Stop(),
+    o?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

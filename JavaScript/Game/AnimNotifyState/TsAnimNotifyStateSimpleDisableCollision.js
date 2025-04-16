@@ -5,6 +5,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../Manager/ModelManager"),
   collisionDisableHandleMap = new Map();
 class TsAnimNotifyStateSimpleDisableCollision extends UE.KuroAnimNotifyState {
+  Constructor() {}
   K2_NotifyBegin(a, e, i) {
     var s = a.GetOwner();
     if (s instanceof TsBaseCharacter_1.default) {

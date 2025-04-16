@@ -16,6 +16,11 @@ class TsDecoratorLevelPlayStateCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsLevelPlayId = 0),
       (this.TsStateId = ICondition_1.ELevelPlayState.Close);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.TsCheckType = 0),
+      (this.TsLevelPlayId = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),

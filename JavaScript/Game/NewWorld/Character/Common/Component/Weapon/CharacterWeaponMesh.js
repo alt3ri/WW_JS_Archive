@@ -1,14 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.CharacterWeaponMesh = exports.CharacterWeapon = void 0);
-const UE = require("ue"),
-  FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
+  (exports.CharacterWeaponMesh =
+    exports.CharacterWeapon =
+    exports.WEAPON_HIDDEN_EFFECT =
+      void 0);
+const FNameUtil_1 = require("../../../../../../Core/Utils/FNameUtil"),
   SkeletalMeshEffectContext_1 = require("../../../../../Effect/EffectContext/SkeletalMeshEffectContext"),
   EffectSystem_1 = require("../../../../../Effect/EffectSystem"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager"),
   SkeletalMeshComponentPool_1 = require("../MeshHelper/SkeletalMeshComponentPool"),
-  WeaponMeshVisibleHelper_1 = require("./WeaponMeshVisibleHelper"),
-  WEAPON_HIDDEN_EFFECT =
-    "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_WeaponEnd.DA_Fx_Group_WeaponEnd";
+  WeaponMeshVisibleHelper_1 = require("./WeaponMeshVisibleHelper");
+exports.WEAPON_HIDDEN_EFFECT =
+  "/Game/Aki/Effect/EffectGroup/Common/DA_Fx_Group_WeaponEnd.DA_Fx_Group_WeaponEnd";
 class CharacterWeapon {
   constructor(e, t, s, i = void 0) {
     (this.Index = e),
@@ -23,11 +26,16 @@ class CharacterWeapon {
       (this.WeaponHidden = !1),
       (this.WeaponHideEffect = 0),
       (this.WeaponBuffEffects = new Set()),
+      (this.SceneInteractId = 0),
       (this.VisibleHelper =
         new WeaponMeshVisibleHelper_1.WeaponMeshVisibleHelper(this));
   }
   Destroy() {
-    this.ReleaseHideEffect();
+    this.ReleaseHideEffect(),
+      0 !== this.SceneInteractId &&
+        ModelManager_1.ModelManager.SceneBattleInteractModel.DestroySceneBattleInteract(
+          this.SceneInteractId,
+        );
   }
   ReleaseHideEffect() {
     EffectSystem_1.EffectSystem.IsValid(this.WeaponHideEffect) &&
@@ -38,22 +46,23 @@ class CharacterWeapon {
       ),
       (this.WeaponHideEffect = 0));
   }
-  ShowHideEffect() {
-    var e,
-      t = this.Mesh.GetSocketTransform(FNameUtil_1.FNameUtil.EMPTY, 0);
+  ShowHideEffect(e = void 0) {
+    var t,
+      s = this.Mesh.D_GetSocketTransform(FNameUtil_1.FNameUtil.EMPTY, 0);
     EffectSystem_1.EffectSystem.IsValid(this.WeaponHideEffect) ||
-      (((e = new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(
+      (((t = new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(
         this.EntityId,
       )).SkeletalMeshComp = this.Mesh),
       (this.WeaponHideEffect = EffectSystem_1.EffectSystem.SpawnEffect(
         this.Mesh,
-        t,
-        WEAPON_HIDDEN_EFFECT,
+        s,
+        e ?? exports.WEAPON_HIDDEN_EFFECT,
         "[CharacterWeapon.ShowHideEffect]",
-        e,
+        t,
       ))),
       EffectSystem_1.EffectSystem.IsValid(this.WeaponHideEffect)
-        ? ((e = EffectSystem_1.EffectSystem.GetEffectActor(
+        ? e ||
+          ((t = EffectSystem_1.EffectSystem.GetEffectActor(
             this.WeaponHideEffect,
           )).K2_AttachToComponent(
             this.Mesh,
@@ -63,16 +72,14 @@ class CharacterWeapon {
             0,
             !1,
           ),
-          e.K2_SetActorTransform(t, !1, void 0, !0))
+          t.D_K2_SetActorTransform(s, !1, void 0, !0))
         : (this.WeaponHideEffect = 0);
   }
   SetBuffEffectsHiddenInGame(e) {
     for (const s of this.WeaponBuffEffects) {
       var t;
       EffectSystem_1.EffectSystem.IsValid(s)
-        ? (t = EffectSystem_1.EffectSystem.GetEffectActor(s)) instanceof
-            UE.Actor &&
-          t?.IsValid() &&
+        ? (t = EffectSystem_1.EffectSystem.GetSureEffectActor(s))?.IsValid() &&
           t.bHidden !== e &&
           EffectSystem_1.EffectSystem.SetEffectHidden(s, e)
         : this.WeaponBuffEffects.delete(s);
@@ -86,6 +93,35 @@ class CharacterWeapon {
   }
   RemoveBuffEffect(e) {
     this.WeaponBuffEffects.delete(e);
+  }
+  UpdateSceneInteractEnable(e) {
+    var t;
+    if (ModelManager_1.ModelManager.SceneBattleInteractModel?.Open)
+      return (
+        (e = e && !this.WeaponHidden),
+        0 === this.SceneInteractId
+          ? e
+            ? void (
+                (t =
+                  ModelManager_1.ModelManager.SceneBattleInteractModel.GetDefaultWeaponInteractConfig()) &&
+                (t =
+                  ModelManager_1.ModelManager.SceneBattleInteractModel.CreateSceneBattleInteract(
+                    t,
+                  )) &&
+                ((this.SceneInteractId = t.Id),
+                t.SetUpdateLocationSocket(
+                  this.Mesh,
+                  FNameUtil_1.FNameUtil.EMPTY,
+                ),
+                t.SetEnable(!0))
+              )
+            : void 0
+          : void ModelManager_1.ModelManager.SceneBattleInteractModel.SetSceneBattleInteractEnable(
+              this.SceneInteractId,
+              e,
+            )
+      );
+    this.SceneInteractId = 0;
   }
 }
 exports.CharacterWeapon = CharacterWeapon;

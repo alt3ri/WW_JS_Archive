@@ -44,7 +44,7 @@ class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
     var e = this.OpenParam;
     void 0 === e
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Phantom", 59, "PhantomBattleFettersView无效输入")
+        Log_1.Log.Error("Phantom", 58, "PhantomBattleFettersView无效输入")
       : ((this._Dt = e[0]),
         (this.dFe = e[1]),
         (this.kvt =
@@ -58,7 +58,7 @@ class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
         }));
   }
   OnBeforeShow() {
-    0 < this._Dt && this.kvt.SelectByFetterId(this._Dt);
+    0 < this._Dt && (this.kvt.SelectByFetterId(this._Dt), (this._Dt = 0));
   }
   async OnPlayingStartSequenceAsync() {
     await this.kvt?.PlayStartSequence();

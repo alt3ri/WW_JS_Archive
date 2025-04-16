@@ -26,7 +26,7 @@ class ItemMaterialParameterCollectionController {
         );
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Render", 33, "缺失交互物着色器参数文件");
+        Log_1.Log.Error("Render", 32, "缺失交互物着色器参数文件");
   }
 }
 exports.ItemMaterialParameterCollectionController =

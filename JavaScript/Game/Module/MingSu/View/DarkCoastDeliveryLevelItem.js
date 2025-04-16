@@ -9,10 +9,10 @@ class DarkCoastDeliveryLevelItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.LevelData = void 0),
       (this.UiLevelSequence = void 0),
-      (this.MHa = void 0),
+      (this.yQa = void 0),
       (this.UOt = !0),
       (this.OnClickToggleCallback = () => {
-        this.MHa && this.MHa(this.LevelData, this);
+        this.yQa && this.yQa(this.LevelData, this);
       }),
       (this.LevelData = e);
   }
@@ -76,7 +76,7 @@ class DarkCoastDeliveryLevelItem extends UiPanelBase_1.UiPanelBase {
       ((i = i.Animation.LevelSequence), e.GetOwner().SequenceJumpToEnd(i));
   }
   SetClickToggleCallback(e) {
-    this.MHa = e;
+    this.yQa = e;
   }
 }
 exports.DarkCoastDeliveryLevelItem = DarkCoastDeliveryLevelItem;

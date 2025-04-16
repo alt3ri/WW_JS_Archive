@@ -17,12 +17,12 @@ const puerts_1 = require("puerts"),
   Info_1 = require("../../../Core/Common/Info"),
   Json_1 = require("../../../Core/Common/Json"),
   Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
   PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -32,6 +32,7 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   ThirdPartySdkManager_1 = require("../../Manager/ThirdPartySdkManager"),
   LoginDefine_1 = require("./Data/LoginDefine"),
   Heartbeat_1 = require("./Heartbeat"),
@@ -158,8 +159,9 @@ class LoginModel extends ModelBase_1.ModelBase {
       (this.B9e = ""),
       (this.eEi = void 0),
       (this.tEi = !1),
-      (this.oeh = !1),
+      (this.T1h = !1),
       (this.SmokeTestReady = !1),
+      (this.CurrentIdStr = ""),
       (this.SdkAccountChangeNeedExitFlag = !1),
       (this.PlayStationGameAutoLoginId = "-1"),
       (this.iEi = 0),
@@ -171,14 +173,17 @@ class LoginModel extends ModelBase_1.ModelBase {
       (this.yX = void 0),
       (this.rFn = void 0),
       (this.oFn = "0"),
-      (this._Pa = void 0),
+      (this.dPa = void 0),
       (this.SdkAccessToken = ""),
-      (this.SdkAccessTokenTimer = void 0),
+      (this.SdkAccessTokenRunTime = 0),
+      (this.SdkAccessTokenCountingState = !1),
       (this.hEi = 0),
       (this.LoginNotice = void 0),
       (this.lEi = 0),
-      (this.JIa = void 0),
+      (this.ZIa = void 0),
       (this.IsCopyAccount = !1),
+      (this.LoginTimeStamp = -0),
+      (this.HealthTipTime = -0),
       (this._Ei = 0),
       (this.uEi = 0),
       (this.Coa = void 0),
@@ -191,15 +196,15 @@ class LoginModel extends ModelBase_1.ModelBase {
       (this.gEi = void 0),
       (this.fEi = void 0),
       (this.AutoLoginTimerIdInternal = void 0),
-      (this.zPa = void 0),
-      (this.JPa = void 0),
-      (this.d$a = void 0),
+      (this.twa = void 0),
+      (this.iwa = void 0),
+      (this.kza = void 0),
       (this.Mla = void 0),
       (this.Sla = 0),
       (this.TryBackToGameMaxCount = 5);
   }
   get IsNewAccount() {
-    return this.oeh;
+    return this.T1h;
   }
   get pEi() {
     return LocalStorage_1.LocalStorage.GetGlobal(
@@ -274,17 +279,18 @@ class LoginModel extends ModelBase_1.ModelBase {
     this.foa = t;
   }
   OnInit() {
-    return (
-      (this.BornMode = 1),
+    (this.BornMode = 1),
       (this.BornLocation = new Protocol_1.Aki.Protocol.Gks()),
       (this.XK = LoginDefine_1.ELoginStatus.Init),
       (this.hEi = 0),
-      (this.zPa = UE.KuroStaticLibrary.GetDeviceCPU()),
-      (this.JPa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDeviceName()),
-      (this.d$a = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDriverDate()),
-      this.d$a?.length || (this.d$a = "Unknown"),
-      !0
-    );
+      (this.twa = UE.KuroStaticLibrary.GetDeviceCPU()),
+      (this.iwa = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDeviceName()),
+      (this.kza = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDriverDate()),
+      this.kza?.length || (this.kza = "Unknown");
+    var t =
+      CommonParamById_1.configCommonParamById.GetIntConfig("HealthTipTime") ??
+      0;
+    return (this.HealthTipTime = t), !0;
   }
   OnClear() {
     return (
@@ -305,9 +311,9 @@ class LoginModel extends ModelBase_1.ModelBase {
       (this.uEi = 0),
       (this.Coa = void 0),
       (this.goa = void 0),
-      (this.zPa = void 0),
-      (this.JPa = void 0),
-      (this.d$a = void 0),
+      (this.twa = void 0),
+      (this.iwa = void 0),
+      (this.kza = void 0),
       (this.iEi = 0),
       this.oEi.clear(),
       !0
@@ -332,18 +338,19 @@ class LoginModel extends ModelBase_1.ModelBase {
   }
   AddServerInfoByCdn() {
     if (this.$Mi) {
-      var t = BaseConfigController_1.BaseConfigController.GetLoginServers();
+      var t =
+        ModelManager_1.ModelManager.LoginServerModel.GetLoginServersByClientRegion();
       if (t) {
         t.length <= 0 &&
           Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Login", 11, "CDN的服务器数据列表为空");
+          Log_1.Log.Info("Login", 10, "CDN的服务器数据列表为空");
         for (const i of t) {
           var e = new ServerConfig(i.ip, LoginDefine_1.DEFAULTPORT, i.name, 0);
           this.$Mi.push(e), this.YMi.push(new ServerData(e));
         }
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Login", 11, "拿不到CDN返回的服务器数据");
+          Log_1.Log.Error("Login", 10, "拿不到CDN返回的服务器数据");
     }
   }
   AddExtraServer() {
@@ -398,13 +405,13 @@ class LoginModel extends ModelBase_1.ModelBase {
     return this.yX;
   }
   GetSourcePlayerAccount() {
-    return this.JIa;
+    return this.ZIa;
   }
   SetServerIp(t, e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Login",
-        9,
+        8,
         "保存服务器IP",
         ["serverIp", t],
         ["reason", e],
@@ -415,7 +422,7 @@ class LoginModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Login",
-        9,
+        8,
         "自定义服务器Port",
         ["port", t],
         ["reason", e],
@@ -445,7 +452,7 @@ class LoginModel extends ModelBase_1.ModelBase {
   SetServerName(t) {
     (this.rFn = t),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Login", 28, "当前选择服务器Name", ["serverId", t]);
+        Log_1.Log.Info("Login", 27, "当前选择服务器Name", ["serverId", t]);
   }
   GetServerId() {
     return this.oFn;
@@ -456,7 +463,7 @@ class LoginModel extends ModelBase_1.ModelBase {
         EventDefine_1.EEventName.OnSetLoginServerId,
       ),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Login", 28, "当前选择服务器Id", ["serverId", t]);
+        Log_1.Log.Info("Login", 27, "当前选择服务器Id", ["serverId", t]);
   }
   GetSingleMapId() {
     var t = LocalStorage_1.LocalStorage.GetGlobal(
@@ -467,7 +474,7 @@ class LoginModel extends ModelBase_1.ModelBase {
   }
   SetSingleMapId(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Login", 9, "保存单人副本id", ["singleMapId", t]),
+      Log_1.Log.Info("Login", 8, "保存单人副本id", ["singleMapId", t]),
       LocalStorage_1.LocalStorage.SetGlobal(
         LocalStorageDefine_1.ELocalStorageGlobalKey.SingleMapId,
         t,
@@ -482,7 +489,7 @@ class LoginModel extends ModelBase_1.ModelBase {
   }
   SetMultiMapId(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Login", 9, "保存多人副本id", ["multiMapId", t]),
+      Log_1.Log.Info("Login", 8, "保存多人副本id", ["multiMapId", t]),
       LocalStorage_1.LocalStorage.SetGlobal(
         LocalStorageDefine_1.ELocalStorageGlobalKey.MultiMapId,
         t,
@@ -503,7 +510,7 @@ class LoginModel extends ModelBase_1.ModelBase {
       ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfo(t);
   }
   SetSourceAccount(t) {
-    (this.JIa = t),
+    (this.ZIa = t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Login", 5, "设置复制账号", ["目标账号:", t]);
   }
@@ -538,14 +545,15 @@ class LoginModel extends ModelBase_1.ModelBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Login",
-          9,
-          "登录状态变化",
+          8,
+          "LoginProcedure-登录状态变化",
           ["Before", LoginDefine_1.ELoginStatus[this.XK]],
           ["After", LoginDefine_1.ELoginStatus[t]],
         ),
       this.XK !== LoginDefine_1.ELoginStatus.Init &&
       t === LoginDefine_1.ELoginStatus.Init
-        ? (Log_1.Log.CheckError() && Log_1.Log.Error("Login", 22, "登录失败"),
+        ? (Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Login", 21, "LoginProcedure-登录失败"),
           Heartbeat_1.Heartbeat.StopHeartBeat(
             HeartbeatDefine_1.EStopHeartbeat.LoginStatusInit,
           ),
@@ -563,13 +571,13 @@ class LoginModel extends ModelBase_1.ModelBase {
     0 === (this.hEi = t) && (this.PlayStationGameAutoLoginId = "-1");
   }
   SetSdkLoginInfo(t, e, i) {
-    this._Pa || (this._Pa = new SdkLoginInfo()),
-      (this._Pa.LoginCode = t),
-      (this._Pa.Uid = e),
-      (this._Pa.UserName = i);
+    this.dPa || (this.dPa = new SdkLoginInfo()),
+      (this.dPa.LoginCode = t),
+      (this.dPa.Uid = e),
+      (this.dPa.UserName = i);
   }
   GetSdkLoginInfo() {
-    return this._Pa;
+    return this.dPa;
   }
   IsSdkLoggedIn() {
     return 1 === this.hEi;
@@ -639,7 +647,7 @@ class LoginModel extends ModelBase_1.ModelBase {
     this.tEi = t;
   }
   SetIsNewAccount(t) {
-    this.oeh = t;
+    this.T1h = t;
   }
   CleanCreateData() {
     (this.tEi = !1), (this.B9e = ""), (this.eEi = void 0);
@@ -649,7 +657,7 @@ class LoginModel extends ModelBase_1.ModelBase {
     e = TimerSystem_1.TimerSystem.Delay(() => {
       this.IsLoginStatus(LoginDefine_1.ELoginStatus.LoginHttp) &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Login", 9, "http请求超时", ["rpcId", i]),
+          Log_1.Log.Debug("Login", 8, "http请求超时", ["rpcId", i]),
         this.oEi.delete(i),
         t());
     }, e);
@@ -688,7 +696,7 @@ class LoginModel extends ModelBase_1.ModelBase {
       e <= t ||
       ((t = new Date(1e3 * e)),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Login", 9, "下次可登录的时间戳", [
+        Log_1.Log.Debug("Login", 8, "下次可登录的时间戳", [
           "NextLoginTime",
           TimeUtil_1.TimeUtil.DateFormat(t),
         ]),
@@ -697,7 +705,7 @@ class LoginModel extends ModelBase_1.ModelBase {
   }
   CleanLoginFailCount(t) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Login", 9, "清空登录失败信息", [
+      Log_1.Log.Debug("Login", 8, "清空登录失败信息", [
         "way",
         LoginDefine_1.ECleanFailCountWay[t],
       ]),
@@ -709,7 +717,7 @@ class LoginModel extends ModelBase_1.ModelBase {
     (this.pEi = t),
       e &&
         Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Login", 9, "登录失败次数增加", [
+        Log_1.Log.Debug("Login", 8, "登录失败次数增加", [
           "LoginFailCount",
           this.pEi,
         ]);
@@ -718,7 +726,7 @@ class LoginModel extends ModelBase_1.ModelBase {
     (this.vEi = 0.001 * Date.now()),
       e &&
         ((e = new Date(1e3 * (this.vEi + t))), Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("Login", 9, "设置下次可登录时间", [
+        Log_1.Log.Debug("Login", 8, "设置下次可登录时间", [
           "NextLoginTime",
           TimeUtil_1.TimeUtil.DateFormat(e),
         ]);
@@ -727,7 +735,7 @@ class LoginModel extends ModelBase_1.ModelBase {
     (this.MEi = 0.001 * Date.now()),
       e &&
         ((e = new Date(1e3 * (this.MEi + t))), Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("Login", 9, "设置下次重置登录失败时间", [
+        Log_1.Log.Debug("Login", 8, "设置下次重置登录失败时间", [
           "ResetLoginFailCountTime",
           TimeUtil_1.TimeUtil.DateFormat(e),
         ]);
@@ -751,7 +759,7 @@ class LoginModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Login",
-            28,
+            27,
             "设置SDK登录配置",
             ["uId", t],
             ["userName", e],
@@ -879,14 +887,18 @@ class LoginModel extends ModelBase_1.ModelBase {
       (TimerSystem_1.TimerSystem.Remove(this.AutoLoginTimerId),
       (this.AutoLoginTimerId = void 0));
   }
+  GetWaterMarkPath() {
+    var t = UE.KuroLauncherLibrary.GameSavedDir() + "Logs/TmpData";
+    return Info_1.Info.IsPs5Platform() ? t.toLowerCase() : t;
+  }
   CpuInfo() {
-    return this.zPa;
+    return this.twa;
   }
   DeviceInfo() {
-    return this.JPa;
+    return this.iwa;
   }
   DriverDate() {
-    return this.d$a;
+    return this.kza;
   }
   HasBackToGameData() {
     return (
@@ -900,8 +912,8 @@ class LoginModel extends ModelBase_1.ModelBase {
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Login",
-          28,
-          "SetStringValue失败",
+          27,
+          "[BackToGame] SetStringValue失败",
           ["key", t],
           ["jsonData", e],
         ),
@@ -912,27 +924,46 @@ class LoginModel extends ModelBase_1.ModelBase {
     return e?.IsValid()
       ? !!UE.KuroVariableFunctionLibrary.SetObject(t, e) ||
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Login", 28, "SetObject失败", ["key", t]),
+            Log_1.Log.Error("Login", 27, "[BackToGame] SetObject失败", [
+              "key",
+              t,
+            ]),
           !1)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Login", 28, "SaveKuroVariableObject Object无效", [
-            "key",
-            t,
-          ]),
+          Log_1.Log.Error(
+            "Login",
+            27,
+            "[BackToGame] SaveKuroVariableObject Object无效",
+            ["key", t],
+          ),
         !1);
   }
-  SaveBackToGameData(t) {
-    var e = JSON.stringify(t, (t, e) => {
-        if ("LoadingWidget" !== t) return e;
-      }),
-      i = t.LoadingWidget;
-    return i?.IsValid()
-      ? this.SaveKuroVariableObject(LOADING_WIDGET_KEY, i)
-        ? this.SaveKuroVariableStringValue(BACK_TO_GAME_KEY, e)
+  SaveBackToGameData(t, e = !1) {
+    var i = JSON.stringify(t, (t, e) => {
+      if ("LoadingWidget" !== t) return e;
+    });
+    return (
+      e &&
+        (UE.KuroVariableFunctionLibrary.HasStringValue(BACK_TO_GAME_KEY) &&
+          UE.KuroVariableFunctionLibrary.RemoveStringValue(BACK_TO_GAME_KEY),
+        UE.KuroVariableFunctionLibrary.HasObject(LOADING_WIDGET_KEY)) &&
+        UE.KuroVariableFunctionLibrary.RemoveObject(LOADING_WIDGET_KEY),
+      t.LoadingWidget?.IsValid() &&
+      !this.SaveKuroVariableObject(LOADING_WIDGET_KEY, t.LoadingWidget)
+        ? (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Login",
+              3,
+              "[BackToGame] SetObject重复设置参数",
+              ["backToGame", i],
+              ["key", LOADING_WIDGET_KEY],
+            ),
+          !1)
+        : this.SaveKuroVariableStringValue(BACK_TO_GAME_KEY, i)
           ? (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Login", 28, "保存BackToGameData", [
+              Log_1.Log.Debug("Login", 27, "[BackToGame] 保存BackToGameData", [
                 "backToGame",
-                e,
+                i,
               ]),
             (this.Mla = t),
             !0)
@@ -940,39 +971,22 @@ class LoginModel extends ModelBase_1.ModelBase {
               Log_1.Log.Error(
                 "Login",
                 3,
-                "SetStringValue重复设置参数",
-                ["backToGame", e],
+                "[BackToGame] SetStringValue重复设置参数",
+                ["backToGame", i],
                 ["key", BACK_TO_GAME_KEY],
               ),
             !1)
-        : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Login",
-              3,
-              "SetObject重复设置参数",
-              ["backToGame", e],
-              ["key", LOADING_WIDGET_KEY],
-            ),
-          !1)
-      : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Login", 3, "loadingWidget无效", ["backToGame", e]),
-        !1);
+    );
   }
   RemoveBackToGameData() {
     if (this.Mla) {
-      if (!UE.KuroVariableFunctionLibrary.RemoveObject(LOADING_WIDGET_KEY))
+      if (
+        (UE.KuroVariableFunctionLibrary.RemoveObject(LOADING_WIDGET_KEY),
+        !UE.KuroVariableFunctionLibrary.RemoveStringValue(BACK_TO_GAME_KEY))
+      )
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Login", 3, "RemoveObject失败", [
-              "key",
-              LOADING_WIDGET_KEY,
-            ]),
-          !1
-        );
-      if (!UE.KuroVariableFunctionLibrary.RemoveStringValue(BACK_TO_GAME_KEY))
-        return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Login", 3, "RemoveStringValue失败", [
+            Log_1.Log.Error("Login", 3, "[BackToGame] RemoveStringValue失败", [
               "key",
               BACK_TO_GAME_KEY,
             ]),
@@ -1003,6 +1017,9 @@ class LoginModel extends ModelBase_1.ModelBase {
         (this.Mla = e),
         this.Mla
       );
+  }
+  BackToGameFailCount() {
+    return this.Sla;
   }
   CheckBackToGameFailCount() {
     return ++this.Sla, this.Sla <= this.TryBackToGameMaxCount;

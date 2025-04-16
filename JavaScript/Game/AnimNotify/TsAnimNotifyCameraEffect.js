@@ -6,6 +6,7 @@ class TsAnimNotifyCameraEffect extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.EffectData = void 0);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     return (
       this.EffectData &&

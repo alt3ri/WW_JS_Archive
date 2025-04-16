@@ -15,6 +15,11 @@ class TsDecoratorEntityStateCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsStatusEntityId = 0),
       (this.TsState = "");
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.TsCheckType = 0),
+      (this.TsStatusEntityId = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -38,7 +43,7 @@ class TsDecoratorEntityStateCheck extends UE.BTDecorator_BlueprintBase {
       this.TsStatusEntityId,
     );
     if (!t?.Valid) return !1;
-    t = t.Entity.GetComponent(181);
+    t = t.Entity.GetComponent(194);
     if (!t) return !1;
     var r = t.ContainsTagByName(this.TsState);
     switch (this.TsCheckType) {

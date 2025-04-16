@@ -94,6 +94,18 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
   static UnBindActions(e, t) {
     ModelManager_1.ModelManager.InputDistributeModel?.UnBindActions(e, t);
   }
+  static BindActionIgnoreLimit(e, t) {
+    ModelManager_1.ModelManager.InputDistributeModel?.BindActionIgnoreLimit(
+      e,
+      t,
+    );
+  }
+  static UnBindActionIgnoreLimit(e, t) {
+    ModelManager_1.ModelManager.InputDistributeModel?.UnBindActionIgnoreLimit(
+      e,
+      t,
+    );
+  }
   static BindAxis(e, t) {
     ModelManager_1.ModelManager.InputDistributeModel?.BindAxis(e, t);
   }
@@ -124,10 +136,10 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
   static UnBindKey(e, t) {
     ModelManager_1.ModelManager.InputDistributeModel?.UnBindKey(e, t);
   }
-  static InputAxis(e, t) {
+  static InputAxis(e, t, n = !1) {
     Math.abs(t) <= InputDistributeDefine_1.AXIS_TOLERANCE
-      ? ModelManager_1.ModelManager.InputDistributeModel?.InputAxis(e, 0)
-      : ModelManager_1.ModelManager.InputDistributeModel?.InputAxis(e, t);
+      ? ModelManager_1.ModelManager.InputDistributeModel?.InputAxis(e, 0, n)
+      : ModelManager_1.ModelManager.InputDistributeModel?.InputAxis(e, t, n);
   }
   static InputAction(e, t) {
     return (
@@ -171,14 +183,14 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
 }),
   (InputDistributeController.nye = () => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Input", 8, "当世界加载完成时，清理所有输入分发Tag"),
+      Log_1.Log.Info("Input", 10, "当世界加载完成时，清理所有输入分发Tag"),
       InputDistributeController.kmr();
   }),
   (InputDistributeController.OAo = () => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Input",
-        8,
+        10,
         "[InputDistribute]当回到主界面时，清理所有输入分发Tag",
       ),
       InputDistributeController.kmr();
@@ -190,7 +202,7 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]当打开界面时, 记录不允许输入的界面",
           ["viewName", e],
         ),
@@ -208,7 +220,7 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]当关闭界面时, 删除不允许输入的界面",
           ["viewName", e],
         ),
@@ -226,7 +238,7 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]当打开界面开始时, 将界面添加至“不允许战斗输入”Set中",
           ["viewName", e],
         ),
@@ -244,7 +256,7 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]当打开界面结束时, 清理“不允许战斗输入”Set",
           ["viewName", e],
         ),

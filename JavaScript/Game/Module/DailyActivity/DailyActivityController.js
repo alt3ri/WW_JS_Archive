@@ -13,14 +13,14 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(29281, DailyActivityController.Ukt),
-      Net_1.Net.Register(22820, DailyActivityController.Akt),
-      Net_1.Net.Register(21130, DailyActivityController.Pkt);
+    Net_1.Net.Register(15628, DailyActivityController.Ukt),
+      Net_1.Net.Register(20027, DailyActivityController.Akt),
+      Net_1.Net.Register(23479, DailyActivityController.Pkt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(29281),
-      Net_1.Net.UnRegister(22820),
-      Net_1.Net.UnRegister(21130);
+    Net_1.Net.UnRegister(15628),
+      Net_1.Net.UnRegister(20027),
+      Net_1.Net.UnRegister(23479);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -44,7 +44,7 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
   }
   static async RequestDailyActivityData() {
     var e = Protocol_1.Aki.Protocol.tss.create(),
-      e = await Net_1.Net.CallAsync(19636, e);
+      e = await Net_1.Net.CallAsync(19153, e);
     return (
       !!e &&
       (ModelManager_1.ModelManager.DailyActivityModel.RefreshDailyActivityData(
@@ -56,19 +56,19 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
   static RequestDailyActivityTaskReward(e) {
     var t = Protocol_1.Aki.Protocol.sss.create();
     (t.B6n = e),
-      Net_1.Net.Call(22393, t, (e) => {
+      Net_1.Net.Call(18904, t, (e) => {
         e &&
           e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            23894,
+            23128,
           );
       });
   }
   static RequestDailyActivityReward(e) {
     var t = Protocol_1.Aki.Protocol.hss.create();
     (t.BVn = e),
-      Net_1.Net.Call(24381, t, (e) => {
+      Net_1.Net.Call(29406, t, (e) => {
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? ModelManager_1.ModelManager.DailyActivityModel.RefreshActivityInfo(
@@ -76,7 +76,7 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
               )
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                24166,
+                28680,
               ));
       });
   }

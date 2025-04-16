@@ -42,7 +42,7 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
       (this.Ckt = (e) => {
         e
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 11, "创角界面请求创角成功"),
+              Log_1.Log.Info("Login", 10, "创角界面请求创角成功"),
             ModelManager_1.ModelManager.LoginModel.CreateLoginPromise(),
             LoginController_1.LoginController.HandleLoginGame(!1, e).then(
               (e) => {
@@ -57,14 +57,14 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
                       UiLoginSceneManager_1.UiLoginSceneManager.LoadSequenceAsync(
                         this.fkt(),
                         () => {
-                          this.CloseMe();
+                          ModelManager_1.ModelManager.RecommendQualityModel.CheckOpenRecommendQuality();
                         },
                       ))
                     : LoginController_1.LoginController.CreateCharacterViewToLoginView();
               },
             ))
           : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 11, "创角界面请求创角失败"),
+              Log_1.Log.Info("Login", 10, "创角界面请求创角失败"),
             this.akt.ClearText(),
             this.GetItem(3).SetUIActive(!0));
       });

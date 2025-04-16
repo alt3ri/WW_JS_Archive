@@ -49,14 +49,14 @@ class TowerDefenseInBattleTips extends UiTickViewBase_1.UiTickViewBase {
         : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.DescTextId);
   }
   OnAfterPlayStartSequence() {
-    this.lSa().finally(() => {
+    this.ZMa().finally(() => {
       TowerDefenceController_1.TowerDefenseController.ResetCurrentPhantomLevelUpFlag(
         this.ioa,
       ),
         this.CloseMe();
     });
   }
-  async lSa() {
+  async ZMa() {
     await TimerSystem_1.TimerSystem.Wait(WAITING_TO_CLOSE);
   }
 }

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.AbnormalDark =
+  (exports.ConvertAbnormalLight =
+    exports.AbnormalDark =
     exports.AbnormalLight =
     exports.AbnormalWind =
     exports.AbnormalFire =
@@ -9,7 +10,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs"),
   CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
-  ExtraEffectBase_1 = require("./ExtraEffectBase");
+  ExtraEffectBase_1 = require("./ExtraEffectBase"),
+  ExtraExecutionEffect_1 = require("./ExtraExecutionEffect");
 class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
@@ -18,15 +20,15 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
       (this.FQo = new Array()),
       (this.VQo = new Map());
   }
-  InitParameters(e) {
-    if (((this.FQo.length = 0), e.ExtraEffectParameters)) {
-      for (const s of e.ExtraEffectParameters[0]?.split("|") ?? []) {
-        var t = s.trim().split("#");
-        this.FQo.push(t.map((e) => Number(e.trim())));
+  InitParameters(t) {
+    if (((this.FQo.length = 0), t.ExtraEffectParameters)) {
+      for (const s of t.ExtraEffectParameters[0]?.split("|") ?? []) {
+        var e = s.trim().split("#");
+        this.FQo.push(e.map((t) => Number(t.trim())));
       }
-      for (const i of e.ExtraEffectParameters[1]?.split("|") ?? []) {
+      for (const i of t.ExtraEffectParameters[1]?.split("|") ?? []) {
         var r = i.trim().split("#");
-        this.VQo.set(Number(r[0].trim()), BigInt(r[1].trim()));
+        this.VQo.set(Number(r[0].trim()), Number(r[1].trim()));
       }
     }
   }
@@ -39,42 +41,42 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
   OnRemoved() {
     this.ClearModifier(), this.ClearCue();
   }
-  OnStackIncreased(e, t, r) {
-    this.RefreshModifier(e), this.RefreshCue(e);
+  OnStackIncreased(t, e, r) {
+    this.RefreshModifier(t), this.RefreshCue(t);
   }
-  OnStackDecreased(e, t, r) {
-    this.RefreshModifier(e), this.RefreshCue(e);
+  OnStackDecreased(t, e, r) {
+    this.RefreshModifier(t), this.RefreshCue(t);
   }
   ClearModifier() {
-    var e = this.ExactOwnerEntity?.GetComponent(158);
+    var t = this.ExactOwnerEntity?.GetComponent(170);
     this.OQo &&
-      (e?.RemoveModifier(
+      (t?.RemoveModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_Atk,
         this.OQo,
       ),
       (this.OQo = 0));
   }
   ClearCue() {
-    var e = this.ExactOwnerEntity?.GetComponent(194);
-    this.kQo && (e?.RemoveBuffByHandle(this.kQo), (this.kQo = 0));
+    var t = this.ExactOwnerEntity?.GetComponent(207);
+    this.kQo && (t?.RemoveBuffByHandle(this.kQo), (this.kQo = 0));
   }
   RefreshModifier(r) {
     this.ClearModifier();
-    var e = this.ExactOwnerEntity?.GetComponent(158);
-    if (e) {
-      let t = 0;
-      for (let e = this.FQo.length - 1; 0 <= e; e--) {
-        var [s, i] = this.FQo[e];
+    var t = this.ExactOwnerEntity?.GetComponent(170);
+    if (t) {
+      let e = 0;
+      for (let t = this.FQo.length - 1; 0 <= t; t--) {
+        var [s, i] = this.FQo[t];
         if (s <= r) {
-          t = i;
+          e = i;
           break;
         }
       }
-      this.OQo = e.AddModifier(
+      this.OQo = t.AddModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_Atk,
         {
           Type: 2,
-          Value1: t,
+          Value1: e,
           Value2: 0,
           SourceAttributeId: CharacterAttributeTypes_1.EAttributeId.vVn,
           SourceCalculationType: 0,
@@ -84,18 +86,18 @@ class AbnormalThunder extends ExtraEffectBase_1.BuffEffect {
       );
     }
   }
-  RefreshCue(t) {
+  RefreshCue(e) {
     this.ClearCue();
-    var r = this.ExactOwnerEntity?.GetComponent(194);
+    var r = this.ExactOwnerEntity?.GetComponent(207);
     if (r) {
-      let e = void 0;
+      let t = void 0;
       for (var [s, i] of this.VQo)
-        if (t >= s) {
-          e = i;
+        if (e >= s) {
+          t = i;
           break;
         }
-      void 0 !== e &&
-        (this.kQo = r.AddGameplayCue([e], -1, "AddByAbnormalThunder"));
+      void 0 !== t &&
+        (this.kQo = r.AddGameplayCue([t], -1, "AddByAbnormalThunder"));
     }
   }
 }
@@ -104,11 +106,11 @@ class AbnormalIce extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments), (this.OQo = 0), (this.HQo = new Array());
   }
-  InitParameters(e) {
-    if (((this.HQo.length = 0), e.ExtraEffectParameters))
-      for (const r of e.ExtraEffectParameters[0]?.split("|") ?? []) {
-        var t = r.trim().split("#");
-        this.HQo.push(t.map((e) => Number(e.trim())));
+  InitParameters(t) {
+    if (((this.HQo.length = 0), t.ExtraEffectParameters))
+      for (const r of t.ExtraEffectParameters[0]?.split("|") ?? []) {
+        var e = r.trim().split("#");
+        this.HQo.push(e.map((t) => Number(t.trim())));
       }
   }
   OnExecute() {}
@@ -118,33 +120,33 @@ class AbnormalIce extends ExtraEffectBase_1.BuffEffect {
   OnRemoved() {
     this.ClearModifier();
   }
-  OnStackIncreased(e, t, r) {
-    this.RefreshModifier(e);
+  OnStackIncreased(t, e, r) {
+    this.RefreshModifier(t);
   }
-  OnStackDecreased(e, t, r) {
-    this.RefreshModifier(e);
+  OnStackDecreased(t, e, r) {
+    this.RefreshModifier(t);
   }
   ClearModifier() {
-    var e = this.ExactOwnerEntity?.GetComponent(158);
+    var t = this.ExactOwnerEntity?.GetComponent(170);
     this.OQo &&
-      (e?.RemoveModifier(CharacterAttributeTypes_1.EAttributeId.vVn, this.OQo),
+      (t?.RemoveModifier(CharacterAttributeTypes_1.EAttributeId.vVn, this.OQo),
       (this.OQo = 0));
   }
   RefreshModifier(r) {
     this.ClearModifier();
-    var e = this.ExactOwnerEntity?.GetComponent(158);
-    if (e) {
-      let t = 0;
-      for (let e = this.HQo.length - 1; 0 <= e; e--) {
-        var [s, i] = this.HQo[e];
+    var t = this.ExactOwnerEntity?.GetComponent(170);
+    if (t) {
+      let e = 0;
+      for (let t = this.HQo.length - 1; 0 <= t; t--) {
+        var [s, i] = this.HQo[t];
         if (s <= r) {
-          t = i;
+          e = i;
           break;
         }
       }
-      this.OQo = e.AddModifier(CharacterAttributeTypes_1.EAttributeId.vVn, {
+      this.OQo = t.AddModifier(CharacterAttributeTypes_1.EAttributeId.vVn, {
         Type: 2,
-        Value1: t - CharacterAttributeTypes_1.PER_TEN_THOUSAND,
+        Value1: e - CharacterAttributeTypes_1.PER_TEN_THOUSAND,
         Value2: 0,
         SourceAttributeId: CharacterAttributeTypes_1.EAttributeId.vVn,
         SourceCalculationType: 0,
@@ -175,4 +177,30 @@ class AbnormalDark extends ExtraEffectBase_1.BuffEffect {
   OnPeriodCallback() {}
 }
 exports.AbnormalDark = AbnormalDark;
+class ConvertAbnormalLight extends ExtraExecutionEffect_1.PeriodExecution {
+  constructor() {
+    super(...arguments), (this.Id_ = new Array());
+  }
+  OnExecute() {
+    var t = this.OwnerBuffComponent;
+    if (t) {
+      var r =
+        t.GetBuffTotalStackById(ConvertAbnormalLight.Td_) +
+        t.GetBuffTotalStackById(ConvertAbnormalLight.bd_);
+      t.RemoveBuff(ConvertAbnormalLight.Td_, -1, "光躁转换"),
+        t.RemoveBuff(ConvertAbnormalLight.bd_, -1, "光躁转换");
+      let e = 0;
+      for (let t = this.Id_.length - 1; 0 <= t; t--) {
+        var [s, i] = this.Id_[t];
+        if (s <= r) {
+          e = i;
+          break;
+        }
+      }
+      0 < e && t.AddIterativeBuff(e, this.Buff, void 0, !0, "光躁转换");
+    }
+  }
+}
+((exports.ConvertAbnormalLight = ConvertAbnormalLight).Td_ = 1005e4),
+  (ConvertAbnormalLight.bd_ = 10051e3);
 //# sourceMappingURL=ExtraEffectAbnormal.js.map

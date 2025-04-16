@@ -19,7 +19,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           '鼠标移出button表现参数找不到, 请检测c.参数字段"highlight_when_mouse_moveout"',
         ),
       e
@@ -33,7 +33,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           '移动端是否显示按钮高亮参数找不到, 请检测c.参数字段"mobile_highlight"',
         ),
       e
@@ -46,7 +46,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           'PC端是否显示按钮按下参数找不到, 请检测c.参数字段"pc_press"',
         ),
       e
@@ -62,7 +62,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           '导航组同向误差找不到, 请检测c.参数字段"navigate_tolerance"',
         ),
       e
@@ -73,7 +73,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("UiNavigation", 11, "热键界面配置找不到", ["id", e])),
+          Log_1.Log.Error("UiNavigation", 10, "热键界面配置找不到", ["id", e])),
       o
     );
   }
@@ -84,7 +84,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
         (o = HotKeyMapById_1.configHotKeyMapById.GetConfig(e)) ||
           -1 === e ||
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("UiNavigation", 11, "热键映射配置找不到", [
+            Log_1.Log.Error("UiNavigation", 10, "热键映射配置找不到", [
               "id",
               e,
             ])),
@@ -99,7 +99,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     return (
       i ||
         (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("UiNavigation", 11, "快捷键图标配置找不到", [
+          Log_1.Log.Warn("UiNavigation", 10, "快捷键图标配置找不到", [
             "keyName",
             e,
           ])),
@@ -111,7 +111,7 @@ class UiNavigationConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("UiNavigation", 11, "快捷键文本配置找不到", [
+          Log_1.Log.Error("UiNavigation", 10, "快捷键文本配置找不到", [
             "TextId",
             e,
           ])),

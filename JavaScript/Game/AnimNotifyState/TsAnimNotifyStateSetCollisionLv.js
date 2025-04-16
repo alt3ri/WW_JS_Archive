@@ -6,19 +6,20 @@ class TsAnimNotifyStateSetCollisionLv extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.HitPriority = 0);
   }
-  K2_NotifyBegin(e, t, s) {
-    e = e.GetOwner();
+  Constructor() {}
+  K2_NotifyBegin(t, e, s) {
+    t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-      ((e.CharacterMovement.HitPriority = this.HitPriority),
+      t instanceof TsBaseCharacter_1.default &&
+      ((t.CharacterMovement.HitPriority = this.HitPriority),
       !(this.HitPriority = 0))
     );
   }
-  K2_NotifyEnd(e, t) {
-    e = e.GetOwner();
+  K2_NotifyEnd(t, e) {
+    t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-      ((e.CharacterMovement.HitPriority = this.HitPriority), !0)
+      t instanceof TsBaseCharacter_1.default &&
+      ((t.CharacterMovement.HitPriority = this.HitPriority), !0)
     );
   }
 }

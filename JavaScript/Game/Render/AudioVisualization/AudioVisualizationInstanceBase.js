@@ -9,6 +9,9 @@ class AudioVisualizationInstanceBase extends UE.Actor {
       (this.Identifier = ""),
       (this.ActorEndPlayCallback = void 0);
   }
+  Constructor() {
+    this.ActorEndPlayCallback = void 0;
+  }
   ReceiveEndPlay() {
     this.ActorEndPlayCallback && this.ActorEndPlayCallback(this);
   }
@@ -16,7 +19,7 @@ class AudioVisualizationInstanceBase extends UE.Actor {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Audio",
-        26,
+        25,
         "音频可视化实例开始",
         ["名称", this.GetName()],
         ["标识符", this.Identifier],
@@ -27,7 +30,7 @@ class AudioVisualizationInstanceBase extends UE.Actor {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Audio",
-        26,
+        25,
         "音频可视化实例结束",
         ["名称", this.GetName()],
         ["标识符", this.Identifier],

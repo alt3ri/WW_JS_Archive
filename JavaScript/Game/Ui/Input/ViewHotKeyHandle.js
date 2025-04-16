@@ -24,16 +24,16 @@ class ViewHotKeyHandle {
       (this.IsPressClose = !1),
       (this.IsReleaseClose = !1),
       (this.uti = void 0),
-      (this.Kya = void 0),
+      (this.Xya = void 0),
       (this.Smr = void 0),
-      (this.P$a = void 0),
-      (this.$ya = void 0),
-      (this.Xya = 0),
+      (this.gJa = void 0),
+      (this.Yya = void 0),
+      (this.Jya = 0),
       (this.OnInputAction = (i, t) => {
-        this.Yya() && (0 === t ? this.Press() : 1 === t && this.Release());
+        this.zya() && (0 === t ? this.Press() : 1 === t && this.Release());
       }),
-      (this.Jya = () => {
-        this.zya(), this.xmr();
+      (this.Zya = () => {
+        this.eIa(), this.xmr();
       }),
       (this.ActionName = i.ActionName),
       (this.InputControllerType = i.InputControllerType),
@@ -47,17 +47,17 @@ class ViewHotKeyHandle {
       (this.IsPressClose = i.IsPressClose),
       (this.IsReleaseClose = i.IsReleaseClose),
       (this.uti = i.OpenViewCallback),
-      (this.Kya = i.CloseViewCallback),
+      (this.Xya = i.CloseViewCallback),
       (this.Smr = i.IsAllowOpenViewByShortcutKey),
-      (this.P$a = i.IsAllowCloseViewByShortcutKey);
+      (this.gJa = i.IsAllowCloseViewByShortcutKey);
   }
   Destroy() {
     this.UnBind(),
-      this.zya(),
+      this.eIa(),
       (this.uti = void 0),
-      (this.Kya = void 0),
+      (this.Xya = void 0),
       (this.Smr = void 0),
-      (this.P$a = void 0);
+      (this.gJa = void 0);
   }
   Bind() {
     InputDistributeController_1.InputDistributeController.BindAction(
@@ -71,7 +71,7 @@ class ViewHotKeyHandle {
       this.OnInputAction,
     );
   }
-  Yya() {
+  zya() {
     switch (this.InputControllerType) {
       case 0:
         return !0;
@@ -87,64 +87,64 @@ class ViewHotKeyHandle {
     this.uti = i;
   }
   BindCloseViewCallback(i) {
-    this.Kya = i;
+    this.Xya = i;
   }
   Press() {
     !this.ViewName ||
       StringUtils_1.StringUtils.IsBlank(this.ViewName) ||
-      ((this.Xya = Time_1.Time.WorldTime),
-      this.IsPressTrigger && this.Zya(),
+      ((this.Jya = Time_1.Time.WorldTime),
+      this.IsPressTrigger && this.tIa(),
       this.IsPressClose && this.wmr());
   }
   Release() {
     var i;
-    this.zya(),
+    this.eIa(),
       this.IsReleaseTrigger &&
         ((i = Time_1.Time.WorldTime),
         this.ReleaseInvalidTime <= 0 ||
-          i - this.Xya <= this.ReleaseInvalidTime) &&
+          i - this.Jya <= this.ReleaseInvalidTime) &&
         this.xmr(),
       this.IsReleaseClose && this.wmr();
   }
-  Zya() {
+  tIa() {
     return this.PressTriggerTime <= 0
       ? this.xmr()
-      : (this.zya(),
-        (this.$ya = TimerSystem_1.TimerSystem.Delay(
-          this.Jya,
+      : (this.eIa(),
+        (this.Yya = TimerSystem_1.TimerSystem.Delay(
+          this.Zya,
           this.PressTriggerTime,
         )),
         !1);
   }
-  zya() {
-    this.$ya &&
-      TimerSystem_1.TimerSystem.Has(this.$ya) &&
-      TimerSystem_1.TimerSystem.Remove(this.$ya),
-      (this.$ya = void 0);
+  eIa() {
+    this.Yya &&
+      TimerSystem_1.TimerSystem.Has(this.Yya) &&
+      TimerSystem_1.TimerSystem.Remove(this.Yya),
+      (this.Yya = void 0);
   }
   xmr() {
-    return !(
-      UiManager_1.UiManager.IsViewOpen(this.ViewName) ||
-      ModelManager_1.ModelManager.LoadingModel.IsLoading ||
-      this.CheckHasInputLimit() ||
-      (void 0 !== this.Smr && !this.Smr()) ||
-      (this.SpecialConditionCheck()
-        ? this.YHt()
-        : Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "InputManager",
-            28,
-            "特殊情况，不处理分发，在别的模块处理",
-          ),
-      0)
-    );
+    if (UiManager_1.UiManager.IsViewOpen(this.ViewName)) return !1;
+    if (ModelManager_1.ModelManager.LoadingModel.IsLoading) return !1;
+    if (this.CheckHasInputLimit()) return !1;
+    if (void 0 !== this.Smr && !this.Smr()) return !1;
+    if (this.SpecialConditionCheck()) {
+      if (!this.sUl()) return !1;
+      this.YHt();
+    } else
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "InputManager",
+          27,
+          "特殊情况，不处理分发，在别的模块处理",
+        );
+    return !0;
   }
   wmr() {
     return !(
       !UiManager_1.UiManager.IsViewOpen(this.ViewName) ||
       !UiManager_1.UiManager.IsViewShow(this.ViewName) ||
       ModelManager_1.ModelManager.LoadingModel.IsLoading ||
-      (void 0 !== this.P$a && !this.P$a()) ||
+      (void 0 !== this.gJa && !this.gJa()) ||
       (this.$Oe(), 0)
     );
   }
@@ -161,7 +161,12 @@ class ViewHotKeyHandle {
   $Oe() {
     !this.ViewName ||
       StringUtils_1.StringUtils.IsBlank(this.ViewName) ||
-      (this.Kya ? this.Kya() : UiManager_1.UiManager.CloseView(this.ViewName));
+      (this.Xya ? this.Xya() : UiManager_1.UiManager.CloseView(this.ViewName));
+  }
+  sUl() {
+    var i =
+      ModelManager_1.ModelManager.InputDistributeModel?.GetNotAllowFightInputViewNameSet();
+    return !i || 0 === i.size || !!i.has(this.ViewName);
   }
   CheckHasInputLimit() {
     return LevelEventLockInputState_1.LevelEventLockInputState.InputLimitView.includes(

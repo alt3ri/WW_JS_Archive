@@ -47,7 +47,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       (this.p3r = -1);
   }
   static get Dependencies() {
-    return [179, 0];
+    return [192, 0];
   }
   x3r() {
     0 < this.p3r
@@ -55,7 +55,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       : 0 === this.p3r &&
         (this.ActorComp.EnableActor(this.g3r),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Character", 58, "人物上场隐藏一帧 【隐藏结束】", [
+          Log_1.Log.Info("Character", 57, "人物上场隐藏一帧 【隐藏结束】", [
             "Entity:",
             this.Entity.Id,
           ]),
@@ -97,7 +97,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
   }
   OnStart() {
     return (
-      (this.ActorComp = this.Entity.CheckGetComponent(179)),
+      (this.ActorComp = this.Entity.CheckGetComponent(192)),
       this.ActorComp.Actor?.Mesh
         ? ((this.Actor = this.ActorComp.Actor),
           (this.Mesh = this.Actor.Mesh),
@@ -130,14 +130,14 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       (this.ActorComp.EnableActor(this.g3r), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Character",
-        58,
+        57,
         "人物上场隐藏一帧 【组件Disable 隐藏结束】",
         ["Entity:", this.Entity.Id],
       ),
       (this.p3r = -1),
-      this.Entity.GetComponent(172)?.AnyIdleLoopMontagePlaying ||
+      this.Entity.GetComponent(185)?.AnyIdleLoopMontagePlaying ||
         (this.MainAnimInstanceInternal?.IsValid() &&
-          (this.StopMontage(),
+          (this.MontageManager.StopMontage({ Method: 0, BlendOutTime: 0 }),
           UE.KuroAnimLibrary.EndAnimNotifyStates(
             this.MainAnimInstanceInternal,
           )));
@@ -243,7 +243,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
   }
 };
 (SimpleNpcAnimationComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(180)],
+  [(0, RegisterComponent_1.RegisterComponent)(193)],
   SimpleNpcAnimationComponent,
 )),
   (exports.SimpleNpcAnimationComponent = SimpleNpcAnimationComponent);

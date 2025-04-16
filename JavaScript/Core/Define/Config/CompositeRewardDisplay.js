@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CompositeRewardDisplay = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class CompositeRewardDisplay {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -49,24 +50,48 @@ class CompositeRewardDisplay {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   continuetext(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   titleiconpath(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   isprogressvisible() {
     var t = this.J7.__offset(this.z7, 12);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   progressbartitle(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   progressbaranimationtime() {
     var t = this.J7.__offset(this.z7, 16);
@@ -81,8 +106,14 @@ class CompositeRewardDisplay {
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   audioid(t) {
-    var s = this.J7.__offset(this.z7, 22);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 22),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.CompositeRewardDisplay = CompositeRewardDisplay;

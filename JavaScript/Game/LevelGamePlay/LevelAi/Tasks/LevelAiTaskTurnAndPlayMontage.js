@@ -5,7 +5,6 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   AiContollerLibrary_1 = require("../../../AI/Controller/AiContollerLibrary"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BasePerformComponent_1 = require("../../../NewWorld/Character/Common/Component/BasePerformComponent"),
   GravityUtils_1 = require("../../../Utils/GravityUtils"),
   LevelAiTask_1 = require("../LevelAiTask"),
   TURN_SPEED = 200,
@@ -16,11 +15,8 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
       (this.Tae = void 0),
       (this.WTe = 0),
       (this.bTe = 0),
-      (this.qTe = !1),
-      (this.GTe = !1),
       (this.NTe = 0),
       (this.OTe = 0),
-      (this.kTe = !1),
       (this.KTe = 0);
   }
   ExecuteTask() {
@@ -35,7 +31,7 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
         GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(
           this.Tae,
         ) < TOLERANCE &&
-          ((this.Tae.Entity.GetComponent(38).CharacterMovement.MovementMode =
+          ((this.Tae.Entity.GetComponent(44).CharacterMovement.MovementMode =
             this.WTe),
           (this.KTe = 3));
         break;
@@ -48,7 +44,7 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelAi",
-            51,
+            50,
             "[TurnToAndPlayMontage] 阶段切换出错",
             ["CurPhase", this.KTe],
           );
@@ -58,10 +54,9 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
     return (
       this.KTe < 3
         ? this.Tae?.ClearInput()
-        : ((this.kTe = !0),
-          this.CreatureDataComponent.Entity.GetComponent(
-            39,
-          ).ClearAndStopMontage(this.bTe)),
+        : this.CreatureDataComponent.Entity.GetComponent(
+            45,
+          ).VolatileMontageStopByLoad(3, this.bTe, 0),
       2
     );
   }
@@ -70,19 +65,19 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
   }
   QTe() {
     var t,
-      i = this.Params;
-    i
+      e = this.Params;
+    e
       ? (t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-          i.EntityId,
+          e.EntityId,
         ))
         ? ((this.Tae = t.Entity.GetComponent(3)),
-          (t = t.Entity.GetComponent(38)?.CharacterMovement)?.IsValid()
+          (t = t.Entity.GetComponent(44)?.CharacterMovement)?.IsValid()
             ? ((this.WTe = t.MovementMode),
               (t.MovementMode = 1),
               (t = Vector_1.Vector.Create(
-                i.Pos.X ?? 0,
-                i.Pos.Y ?? 0,
-                i.Pos.Z ?? 0,
+                e.Pos.X ?? 0,
+                e.Pos.Y ?? 0,
+                e.Pos.Z ?? 0,
               )),
               AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
                 this.Tae,
@@ -91,41 +86,33 @@ class LevelAiTaskTurnAndPlayMontage extends LevelAiTask_1.LevelAiTask {
               ))
             : this.FinishLatentTask(1))
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("LevelAi", 30, "执行转向动作时实体不存在:", [
+            Log_1.Log.Error("LevelAi", 29, "执行转向动作时实体不存在:", [
               "PbDataId",
-              i.EntityId,
+              e.EntityId,
             ]),
           this.FinishLatentTask(1))
       : this.FinishLatentTask(1);
   }
   XTe() {
     var t,
-      i,
       e = this.Params;
     e
       ? ((this.NTe = e.LoopDuration ?? 0),
         (this.OTe = e.RepeatTimes ?? 0),
-        (this.qTe = void 0 !== this.NTe && 0 !== this.NTe),
-        (this.GTe = -1 === this.NTe || -1 === this.OTe),
-        (t = this.CreatureDataComponent.Entity.GetComponent(39)),
-        (i = new BasePerformComponent_1.PlayMontageConfig(
-          this.OTe,
-          this.NTe,
-          this.qTe,
-          this.GTe,
-        )),
+        (t = this.CreatureDataComponent.Entity.GetComponent(45)),
         (e = { IsAbp: e.IsAbpMontage, MontageId: e.MontageId }),
-        (this.kTe = !1),
-        (this.bTe = t.LoadAndPlayMontageById(
-          e,
-          i,
-          void 0,
-          () => {
-            this.kTe || this.FinishLatentTask(0);
-          },
-          () => !this.kTe,
-        )),
-        this.bTe < 0 && this.FinishLatentTask(0))
+        (e = t.GetMontagePath(e))
+          ? (this.bTe = t.VolatileMontagePlayByLoad(
+              3,
+              e,
+              void 0,
+              (t) => {
+                this.FinishLatentTask(0);
+              },
+              this.NTe,
+              this.OTe,
+            ))
+          : this.FinishLatentTask(0))
       : this.FinishLatentTask(1);
   }
 }

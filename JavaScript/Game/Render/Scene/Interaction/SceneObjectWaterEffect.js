@@ -63,7 +63,10 @@ class SceneObjectWaterEffect {
       ((this.Config = t),
       (this.ActorToAttach = e),
       (this.Radius = this.Config.Radius),
-      (this.Transform = this.Config.Transform),
+      (t = UE.KismetMathLibrary.Conv_TransformToTransformDouble(
+        this.Config.Transform,
+      )),
+      (this.Transform = t),
       (this.Effect = this.Config.Effect.ToAssetPathName()),
       (this.TriggerOnce = this.Config.TriggerOnce),
       (this.EnableSurfaceEffect = this.Config.EnableSurfaceEffect),
@@ -81,10 +84,12 @@ class SceneObjectWaterEffect {
       (this.IsReady = !0),
       this.koe(),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("RenderEffect", 26, "SceneObjectWaterEffect Start");
+      Log_1.Log.Info("RenderEffect", 25, "SceneObjectWaterEffect Start");
   }
   GetActorLocation() {
-    this.TempVector.FromUeVector(this.ActorToAttach.K2_GetComponentLocation());
+    this.TempVector.FromUeVector(
+      this.ActorToAttach.D_K2_GetComponentLocation(),
+    );
   }
   AfterRegistered() {
     this.IsReady &&
@@ -145,7 +150,7 @@ class SceneObjectWaterEffect {
               ),
               EffectSystem_1.EffectSystem.GetEffectActor(
                 this.SurfaceHandle,
-              ).K2_SetActorLocation(
+              ).D_K2_SetActorLocation(
                 this.TempPosition.ToUeVector(!0),
                 !1,
                 void 0,
@@ -187,7 +192,7 @@ class SceneObjectWaterEffect {
   SpawnFallEffect(t, e) {
     this.Handle = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
       GlobalData_1.GlobalData.World,
-      new UE.Transform(e.ToUeVector()),
+      new UE.TransformDouble(e.ToUeVector()),
       t,
       "[SceneObjectWaterEffect.SpawnFallEffect]",
     );

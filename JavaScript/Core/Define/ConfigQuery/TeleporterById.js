@@ -17,25 +17,27 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configTeleporterById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configTeleporterById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph("configTeleporterById.Init"),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTeleporterById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configTeleporterById.GetConfig(";
 exports.configTeleporterById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var t = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var t = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       n =
-        (t.Start(),
+        (t?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (n) {
       if (e) {
@@ -43,8 +45,8 @@ exports.configTeleporterById = {
         const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (r)
           return (
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
@@ -76,8 +78,8 @@ exports.configTeleporterById = {
               ((n = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(n, r)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            t.Stop(),
-            getConfigStat.Stop(),
+            t?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
@@ -85,8 +87,8 @@ exports.configTeleporterById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    t.Stop(),
-      getConfigStat.Stop(),
+    t?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

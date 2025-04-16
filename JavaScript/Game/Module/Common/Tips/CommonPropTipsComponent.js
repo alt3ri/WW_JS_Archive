@@ -136,7 +136,10 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
     (this.DoubleButtonItemList = []),
       LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.zbt),
       this.Ybt &&
-        (ActorSystem_1.ActorSystem.Put(this.Ybt.GetOwner()),
+        (ActorSystem_1.ActorSystem.Put(
+          "CommonPropTipsComponent.OnBeforeDestroy",
+          this.Ybt.GetOwner(),
+        ),
         (this.Ybt = void 0));
   }
   UpdateComponent(t, e = !1) {

@@ -35,7 +35,7 @@ let CharacterThrowComponent = class CharacterThrowComponent extends EntityCompon
     return (
       (this.mKr = ActorSystem_1.ActorSystem.Get(
         UE.BP_KuroProjectilePathTracer_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
       )),
       !0
     );
@@ -48,7 +48,7 @@ let CharacterThrowComponent = class CharacterThrowComponent extends EntityCompon
   }
 };
 (CharacterThrowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(70)],
+  [(0, RegisterComponent_1.RegisterComponent)(77)],
   CharacterThrowComponent,
 )),
   (exports.CharacterThrowComponent = CharacterThrowComponent);

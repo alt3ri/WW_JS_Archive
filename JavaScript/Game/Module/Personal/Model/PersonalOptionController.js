@@ -11,6 +11,7 @@ const UE = require("ue"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   FriendController_1 = require("../../Friend/FriendController"),
   ReportController_1 = require("../../Report/ReportController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   PersonalDefine_1 = require("./PersonalDefine");
 class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
   static InitOptionMap() {
@@ -26,7 +27,8 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
       this.v5i.set(9, this.T5i),
       this.v5i.set(10, this.L5i),
       this.v5i.set(12, this.D5i),
-      this.v5i.set(13, this.R5i);
+      this.v5i.set(13, this.R5i),
+      this.v5i.set(14, this.Y0c);
   }
   static GetOptionFunc(e) {
     return 0 === this.v5i.size && this.InitOptionMap(), this.v5i.get(e);
@@ -50,6 +52,9 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
           (e.PlayerId = r.PlayerId),
           (e.Level = r.PlayerLevel),
           (e.WorldLevel = r.WorldLevel),
+          (e.CurPlayerTitleId = r.PlayerTitleId),
+          (e.CurPlayerTitleLevel = r.PlayerTitleStarLevel),
+          (e.Sex = r.PlayerSex),
           (e.PsnUserId = r.GetSdkUserId()),
           (e.PsnOnlineId = r.GetSdkOnlineId()))
         : ((r =
@@ -69,8 +74,11 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
           (e.PlayerId = r.W5n ?? 0),
           (e.Level = r.F6n ?? 0),
           (e.WorldLevel = r.cSs ?? 0),
-          (e.PsnUserId = r.$xa ?? void 0),
-          (e.PsnOnlineId = r.Vxa ?? void 0)),
+          (e.PsnUserId = r.Jxa ?? void 0),
+          (e.PsnOnlineId = r.Qxa ?? void 0),
+          (e.CurPlayerTitleId = r.gsc ?? void 0),
+          (e.CurPlayerTitleLevel = r.Csc ?? 0),
+          (e.Sex = r.v7n ?? 0)),
       e
     );
   }
@@ -140,6 +148,9 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
   (PersonalOptionController.I5i = () => {
     UiManager_1.UiManager.OpenView("PersonalEditView", 1);
   }),
+  (PersonalOptionController.Y0c = () => {
+    UiManager_1.UiManager.OpenView("PersonalEditView", 2);
+  }),
   (PersonalOptionController.W0 = () => {
     CommonInputViewController_1.CommonInputViewController.OpenSetRoleNameInputView();
   }),
@@ -147,7 +158,11 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
     CommonInputViewController_1.CommonInputViewController.OpenPersonalSignInputView();
   }),
   (PersonalOptionController.L5i = () => {
-    UiManager_1.UiManager.OpenView("PersonalBirthView");
+    ModelManager_1.ModelManager.FunctionModel.IsOpen(10084)
+      ? UiManager_1.UiManager.OpenView("PersonalBirthView")
+      : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+          "BirthdaySet_OpenCondition_Tips",
+        );
   }),
   (PersonalOptionController.D5i = () => {
     const e = PersonalOptionController.GetPersonalData();

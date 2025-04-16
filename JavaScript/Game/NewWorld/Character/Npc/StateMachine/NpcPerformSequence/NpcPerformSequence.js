@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformSequence = void 0);
-const UE = require("ue"),
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
   ActorSystem_1 = require("../../../../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   ResourceSystem_1 = require("../../../../../../Core/Resource/ResourceSystem"),
@@ -25,7 +26,7 @@ class NpcPerformSequence {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
-            8,
+            36,
             "[CollectionItemDisplay]Npc表现Sequence播放完成",
             ["SequenceName", this.SPe?.Sequence?.GetName()],
           ),
@@ -37,7 +38,7 @@ class NpcPerformSequence {
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
-            8,
+            36,
             "[CollectionItemDisplay]开始销毁Npc表现Sequence时，Sequence仍在播放，等播放完成后销毁",
           ),
         this.SPe.OnFinished.Clear(),
@@ -45,7 +46,7 @@ class NpcPerformSequence {
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
-            8,
+            36,
             "[CollectionItemDisplay]开始销毁Npc表现Sequence",
           ),
         this._Gn());
@@ -61,7 +62,7 @@ class NpcPerformSequence {
     ) {
       const e = this.Ntr;
       TimerSystem_1.TimerSystem.Next(() => {
-        ActorSystem_1.ActorSystem.Put(e);
+        ActorSystem_1.ActorSystem.Put("NpcPerformSequence.DestroyInternal", e);
       }),
         (this.Ntr = void 0);
     }
@@ -97,7 +98,7 @@ class NpcPerformSequence {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
-              8,
+              36,
               "[CollectionItemDisplay]尝试播放Npc表现Sequence时，Sequence正在播放中,停止后重新播放",
             ),
           this.Oot()),
@@ -113,7 +114,7 @@ class NpcPerformSequence {
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "NPC",
-          8,
+          36,
           "[CollectionItemDisplay]尝试播放Npc表现Sequence时，LevelSequencePlayer为空或不可用",
         );
   }
@@ -123,19 +124,25 @@ class NpcPerformSequence {
   Ftr(e) {
     (this.Ntr = ActorSystem_1.ActorSystem.Get(
       UE.LevelSequenceActor.StaticClass(),
-      new UE.Transform(),
+      new UE.TransformDouble(),
       void 0,
       !1,
     )),
       this.Ntr.SetSequence(e),
       (this.SPe = this.Ntr.SequencePlayer),
-      (this.PUo = this.Ntr.DefaultInstanceData);
+      (this.PUo = this.Ntr.DefaultInstanceData),
+      (this.Ntr.bOverrideInstanceData = !0);
+    var t = new UE.Vector(0),
+      t = (0, puerts_1.$ref)(t);
+    e.GetCenterOffset(t)
+      ? (this.PUo.TransformOrigin = new UE.Transform((0, puerts_1.$unref)(t)))
+      : (this.PUo.TransformOrigin = new UE.Transform());
   }
   Vtr(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "NPC",
-        8,
+        36,
         "[CollectionItemDisplay]开始播放Npc表现Sequence",
         ["SequenceName", this.SPe?.Sequence?.GetName()],
       ),
@@ -145,7 +152,7 @@ class NpcPerformSequence {
   }
   Stop() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("NPC", 8, "[CollectionItemDisplay]Npc表现Sequence被停止"),
+      Log_1.Log.Info("NPC", 36, "[CollectionItemDisplay]Npc表现Sequence被停止"),
       this.Oot();
   }
   Oot() {

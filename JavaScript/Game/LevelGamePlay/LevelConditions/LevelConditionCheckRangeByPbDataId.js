@@ -13,7 +13,7 @@ class LevelConditionCheckRangeByPbDataId extends LevelGeneralBase_1.LevelConditi
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              54,
+              53,
               "配置错误！条件的参数不应该为空",
               ["inConditionInfo.Id", e.Id],
             ),

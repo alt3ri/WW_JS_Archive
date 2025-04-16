@@ -8,12 +8,14 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
   Vector2D_1 = require("../../../Core/Utils/Math/Vector2D"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   GlobalData_1 = require("../../GlobalData"),
   InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
   PC_KEY_ID = "PcKeyId=",
   GAMEPAD_KEY_ID = "GamepadKeyId=",
   ACTION_ID_KEY = "ActionId=",
@@ -58,190 +60,198 @@ const puerts_1 = require("puerts"),
   phantomIdFormatRegex = new RegExp("" + PHANTOM_ID_MATCH, "g"),
   iconIdFormatRegex = new RegExp("" + ICON_ID_MATCH, "g");
 class TableTextArgNew {
-  constructor(e, ...t) {
-    (this.TextKey = e), (this.Params = t);
+  constructor(t, ...e) {
+    (this.TextKey = t), (this.Params = e);
   }
 }
 exports.TableTextArgNew = TableTextArgNew;
 class LguiUtil {
   static async LoadPrefabByResourceIdAsync(
-    e,
     t,
+    e,
     r = GlobalData_1.GlobalData.World,
   ) {
-    e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
-    return LguiUtil.LoadPrefabByAsync(e, t, r);
+    t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t);
+    return LguiUtil.LoadPrefabByAsync(t, e, r);
   }
-  static async LoadPrefabByAsync(e, r, o = GlobalData_1.GlobalData.World) {
+  static async LoadPrefabByAsync(t, r, o = GlobalData_1.GlobalData.World) {
     const i = new CustomPromise_1.CustomPromise();
     return (
-      ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.PrefabAsset, (e, t) => {
-        e = UE.LGUIBPLibrary.LoadPrefabWithAsset(o, e, r);
-        i.SetResult(e);
+      ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.PrefabAsset, (t, e) => {
+        t = UE.LGUIBPLibrary.LoadPrefabWithAsset(o, t, r);
+        i.SetResult(t);
       }),
       i.Promise
     );
   }
-  static CopyItem(e, t) {
-    return this.DuplicateActor(e.GetOwner(), t).GetComponentByClass(
+  static CopyItem(t, e) {
+    return this.DuplicateActor(t.GetOwner(), e).GetComponentByClass(
       UE.UIItem.StaticClass(),
     );
   }
-  static DuplicateActor(e, t) {
+  static DuplicateActor(t, e) {
     var r, o;
     return Stats_1.Stat.Enable
-      ? ((r = Stats_1.Stat.Create(
-          "LGUI DuplicateActor " + LguiUtil.GetActorFullPath(e),
+      ? ((r = Stats_1.Stat.CreateNoFlameGraph(
+          "LGUI DuplicateActor " + LguiUtil.GetActorFullPath(t),
         )).Start(),
-        (o = UE.LGUIBPLibrary.DuplicateActor(e, t)),
+        (o = UE.LGUIBPLibrary.DuplicateActor(t, e)),
         r.Stop(),
         o)
-      : UE.LGUIBPLibrary.DuplicateActor(e, t);
+      : UE.LGUIBPLibrary.DuplicateActor(t, e);
   }
-  static SetLocalText(e, t, ...r) {
-    t = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(t);
-    this.SetLocalTextNew(e, t, ...r);
+  static SetLocalText(t, e, ...r) {
+    e = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(e);
+    this.SetLocalTextNew(t, e, ...r);
   }
-  static SetLocalTextNew(t, e, ...r) {
-    t &&
-      (t.Clear(),
-      r.forEach((e) => {
-        "number" == typeof e
-          ? Number.isInteger(e)
-            ? t.AddIntArgs(e)
-            : t.AddFloatArgs(e)
-          : e instanceof TableTextArgNew
-            ? t.AddFormatTableInfoNew(e.TextKey)
-            : t.AddStringArgs(e);
+  static SetLocalTextNew(e, t, ...r) {
+    e &&
+      (e.Clear(),
+      r.forEach((t) => {
+        "number" == typeof t
+          ? Number.isInteger(t)
+            ? e.AddIntArgs(t)
+            : e.AddFloatArgs(t)
+          : t instanceof TableTextArgNew
+            ? e.AddFormatTableInfoNew(t.TextKey)
+            : e.AddStringArgs(t);
       }),
-      t.ShowTextNew(e));
+      e.ShowTextNew(t));
   }
-  static ReplaceWildCard(e) {
-    var t;
-    e?.IsValid()
-      ? e.GetRichText()
-        ? ((t = e.GetText()),
-          (t = LguiUtil.ConvertToPcKeyIconRichText(t)),
-          (t = LguiUtil.ConvertToGamepadKeyIconRichText(t)),
-          (t = LguiUtil.ConvertToActionIconRichText(t)),
-          (t = LguiUtil.ConvertToDataTableSkillIconRichText(t)),
-          (t = LguiUtil.ConvertToSkillIconRichText(t)),
-          (t = LguiUtil.ConvertToToExploreIconRichText(t)),
-          (t = LguiUtil.ConvertToToPhantomIconRichText(t)),
-          (t = LguiUtil.ConvertToToPlatformIconRichText(t)),
-          e.SetText(t))
+  static TrySetLocalTextNew(t, e, ...r) {
+    StringUtils_1.StringUtils.IsEmpty(e)
+      ? t?.SetUIActive(!1)
+      : (t?.SetUIActive(!0), this.SetLocalTextNew(t, e, ...r));
+  }
+  static ReplaceWildCard(t) {
+    var e;
+    t?.IsValid()
+      ? t.GetRichText()
+        ? ((e = t.GetText()),
+          (e = LguiUtil.ConvertToPcKeyIconRichText(e)),
+          (e = LguiUtil.ConvertToGamepadKeyIconRichText(e)),
+          (e = LguiUtil.ConvertToActionIconRichText(e)),
+          (e = LguiUtil.ConvertToDataTableSkillIconRichText(e)),
+          (e = LguiUtil.ConvertToSkillIconRichText(e)),
+          (e = LguiUtil.ConvertToToExploreIconRichText(e)),
+          (e = LguiUtil.ConvertToToPhantomIconRichText(e)),
+          (e = LguiUtil.ConvertToToPlatformIconRichText(e)),
+          t.SetText(e))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "LguiUtil",
-            8,
+            10,
             "替换富文本图标失败，因为此文本不是富文本",
-            ["uiText", e.GetText()],
+            ["uiText", t.GetText()],
           )
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "替换富文本时，UiText已经失效");
+        Log_1.Log.Warn("LguiUtil", 10, "替换富文本时，UiText已经失效");
   }
-  static ConvertToPcKeyIconRichText(e) {
-    var t = e.match(pcKeyFormatRegex);
-    if (!t) return e;
-    let r = e;
-    for (const i of t) {
+  static ConvertToPcKeyIconRichText(t) {
+    var e = t.match(pcKeyFormatRegex);
+    if (!e) return t;
+    let r = t;
+    for (const i of e) {
       var o = this.qGo(i, pcKeyIdFormatRegex);
       r = this.GGo(r, i, o);
     }
     return r;
   }
-  static ConvertToGamepadKeyIconRichText(e) {
-    var t = e.match(gamepadFormatRegex);
-    if (!t) return e;
-    let r = e;
-    for (const i of t) {
+  static ConvertToGamepadKeyIconRichText(t) {
+    var e = t.match(gamepadFormatRegex);
+    if (!e) return t;
+    let r = t;
+    for (const i of e) {
       var o = this.qGo(i, gamepadIdFormatRegex);
-      r = this.NGo(e, i, o);
+      r = this.NGo(t, i, o);
     }
     return r;
   }
-  static ConvertToActionIconRichText(e) {
-    var t = e.match(actionFormatRegex);
-    if (!t) return e;
-    let r = e;
-    for (const a of t) {
+  static ConvertToActionIconRichText(t) {
+    var e = t.match(actionFormatRegex);
+    if (!e) return t;
+    let r = t;
+    for (const a of e) {
       var o = this.qGo(a, actionIdFormatRegex),
         i = `{<${ACTION_ID_KEY}${o}>}`;
       r = this.OGo(r, i, o);
     }
     return r;
   }
-  static ConvertToDataTableSkillIconRichText(e) {
-    var t = e.match(dtSkillFormatRegex);
-    if (!t) return e;
+  static ConvertToDataTableSkillIconRichText(t) {
+    var e = t.match(dtSkillFormatRegex);
+    if (!e) return t;
     var r = Info_1.Info.IsInTouch();
-    let o = e;
-    for (const a of t) {
+    let o = t;
+    for (const a of e) {
       var i = this.qGo(a, actionIdFormatRegex);
       r || (o = this.OGo(o, a, i));
     }
     return o;
   }
-  static ConvertToSkillIconRichText(e) {
-    var t = e.match(skillFormatRegex);
-    if (!t) return e;
+  static ConvertToSkillIconRichText(t) {
+    var e = t.match(skillFormatRegex);
+    if (!e) return t;
     var r = Info_1.Info.IsInTouch();
-    let o = e;
-    for (const _ of t) {
+    let o = t;
+    for (const _ of e) {
       var i = this.qGo(_, actionIdFormatRegex),
         a = this.qGo(_, skillIdFormatRegex);
       o = r ? this.kGo(o, _, a) : this.OGo(o, _, i);
     }
     return o;
   }
-  static ConvertToToExploreIconRichText(e) {
-    var t = e.match(exploreFormatRegex);
-    if (!t) return e;
+  static ConvertToToExploreIconRichText(t) {
+    var e = t.match(exploreFormatRegex);
+    if (!e) return t;
     var r = Info_1.Info.IsInTouch();
-    let o = e;
-    for (const _ of t) {
+    let o = t;
+    for (const _ of e) {
       var i = this.qGo(_, actionIdFormatRegex),
         a = this.qGo(_, exploreIdFormatRegex);
       o = r ? this.FGo(o, _, a) : this.OGo(o, _, i);
     }
     return o;
   }
-  static ConvertToToPhantomIconRichText(e) {
-    var t = e.match(phantomFormatRegex);
-    if (!t) return e;
+  static ConvertToToPhantomIconRichText(t) {
+    var e = t.match(phantomFormatRegex);
+    if (!e) return t;
     var r = Info_1.Info.IsInTouch();
-    let o = e;
-    for (const _ of t) {
+    let o = t;
+    for (const _ of e) {
       var i = this.qGo(_, actionIdFormatRegex),
         a = this.qGo(_, phantomIdFormatRegex);
       o = r ? this.VGo(o, _, a) : this.OGo(o, _, i);
     }
     return o;
   }
-  static ConvertToToPlatformIconRichText(e) {
-    var t = e.match(iconFormatRegex);
-    if (!t) return e;
-    let r = e;
-    for (const i of t) {
+  static ConvertToToPlatformIconRichText(t) {
+    var e = t.match(iconFormatRegex);
+    if (!e) return t;
+    let r = t;
+    for (const i of e) {
       var o = this.qGo(i, iconIdFormatRegex);
       r = this.HGo(r, i, o);
     }
     return r;
   }
-  static GGo(e, t, r) {
+  static GGo(t, e, r) {
     var o =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetPcKeyConfigById(r);
     if (o) {
       o = o.KeyIconPath;
       if (!StringUtils_1.StringUtils.IsEmpty(o))
-        return e.replace(t, `<texture=${o}>`);
+        return t.replace(e, `<texture=${o}>`);
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "按键配置了空的图标路径", ["pcKeyId", r]);
+        Log_1.Log.Warn("LguiUtil", 10, "按键配置了空的图标路径", [
+          "pcKeyId",
+          r,
+        ]);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "找不到对应Pc按键配置", ["pcKeyId", r]);
+        Log_1.Log.Warn("LguiUtil", 10, "找不到对应Pc按键配置", ["pcKeyId", r]);
   }
-  static NGo(e, t, r) {
+  static NGo(t, e, r) {
     var o =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetGamepadKeyConfigById(
         r,
@@ -249,32 +259,35 @@ class LguiUtil {
     if (o) {
       o = o.KeyIconPath;
       if (!StringUtils_1.StringUtils.IsEmpty(o))
-        return e.replace(t, `<texture=${o}>`);
+        return t.replace(e, `<texture=${o}>`);
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "按键配置了空的图标路径", [
+        Log_1.Log.Warn("LguiUtil", 10, "按键配置了空的图标路径", [
           "gamepadKeyId",
           r,
         ]);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "找不到对应Gamepad按键配置", [
+        Log_1.Log.Warn("LguiUtil", 10, "找不到对应Gamepad按键配置", [
           "pcKeyId",
           r,
         ]);
   }
-  static kGo(e, t, r) {
+  static kGo(t, e, r) {
     var o = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(r);
     if (o) {
       var o = o.Icon,
         i = `<texture=${o}>`;
-      if (!StringUtils_1.StringUtils.IsEmpty(o)) return e.replace(t, i);
+      if (!StringUtils_1.StringUtils.IsEmpty(o)) return t.replace(e, i);
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "技能配置了空的图标路径", ["skillId", r]);
+        Log_1.Log.Warn("LguiUtil", 10, "技能配置了空的图标路径", [
+          "skillId",
+          r,
+        ]);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "找不到对应技能", ["skillId", r]);
+        Log_1.Log.Warn("LguiUtil", 10, "找不到对应技能", ["skillId", r]);
   }
-  static OGo(e, t, r) {
+  static OGo(t, e, r) {
     var o =
       InputSettingsManager_1.InputSettingsManager.GetActionBindingByConfigId(r);
     if (o) {
@@ -283,33 +296,36 @@ class LguiUtil {
           o,
         );
       if (!StringUtils_1.StringUtils.IsEmpty(o))
-        return e.replace(t, `<texture=${o}>`);
+        return t.replace(e, `<texture=${o}>`);
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "Action配置了空的图标路径", [
+        Log_1.Log.Warn("LguiUtil", 10, "Action配置了空的图标路径", [
           "actionId",
           r,
         ]);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "找不到对应ActionBinding", [
+        Log_1.Log.Warn("LguiUtil", 10, "找不到对应ActionBinding", [
           "actionId",
           r,
         ]);
   }
-  static FGo(e, t, r) {
+  static FGo(t, e, r) {
     var o =
       ModelManager_1.ModelManager.RouletteModel.GetExploreDataBySkillId(r);
     if (o) {
       o = o.BattleViewIcon;
       if (!StringUtils_1.StringUtils.IsEmpty(o))
-        return e.replace(t, `<texture=${o}>`);
+        return t.replace(e, `<texture=${o}>`);
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "探索幻象图标路径为空", ["phantomId", r]);
+        Log_1.Log.Warn("LguiUtil", 10, "探索幻象图标路径为空", [
+          "phantomId",
+          r,
+        ]);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "找不到对应探索幻象", ["phantomId", r]);
+        Log_1.Log.Warn("LguiUtil", 10, "找不到对应探索幻象", ["phantomId", r]);
   }
-  static VGo(e, t, r) {
+  static VGo(t, e, r) {
     var o =
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
         r,
@@ -319,79 +335,79 @@ class LguiUtil {
       if (o) {
         o = o.BattleViewIcon;
         if (!StringUtils_1.StringUtils.IsEmpty(o))
-          return e.replace(t, `<texture=${o}>`);
+          return t.replace(e, `<texture=${o}>`);
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("LguiUtil", 8, "战斗幻象图标路径为空", [
+          Log_1.Log.Warn("LguiUtil", 10, "战斗幻象图标路径为空", [
             "phantomId",
             r,
           ]);
       } else
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("LguiUtil", 8, "找不到对应战斗幻象技能", [
+          Log_1.Log.Warn("LguiUtil", 10, "找不到对应战斗幻象技能", [
             "phantomId",
             r,
           ]);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "找不到对应战斗幻象", ["phantomId", r]);
+        Log_1.Log.Warn("LguiUtil", 10, "找不到对应战斗幻象", ["phantomId", r]);
   }
-  static HGo(t, r, o) {
+  static HGo(e, r, o) {
     var i =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetPlatformIconConfig(
         o,
       );
     if (i) {
-      let e = i.IconPath;
+      let t = i.IconPath;
       if (
-        (Info_1.Info.IsInTouch() && (e = i.MobileIconPath),
-        !StringUtils_1.StringUtils.IsEmpty(e))
+        (Info_1.Info.IsInTouch() && (t = i.MobileIconPath),
+        !StringUtils_1.StringUtils.IsEmpty(t))
       )
-        return (i = `<texture=${e}>`), t.replace(r, i);
+        return (i = `<texture=${t}>`), e.replace(r, i);
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "多端图标路径为空", ["iconId", o]);
+        Log_1.Log.Warn("LguiUtil", 10, "多端图标路径为空", ["iconId", o]);
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 8, "找不到对应多端平台图标配置", [
+        Log_1.Log.Warn("LguiUtil", 10, "找不到对应多端平台图标配置", [
           "iconId",
           o,
         ]);
   }
-  static qGo(e, t) {
-    e = e.match(t)[0];
-    if (e) return (t = e.split("=")[1]), Number(t);
+  static qGo(t, e) {
+    t = t.match(e)[0];
+    if (t) return (e = t.split("=")[1]), Number(e);
   }
-  static GetActorFullPath(e) {
-    var t = (0, puerts_1.$ref)("");
+  static GetActorFullPath(t) {
+    var e = (0, puerts_1.$ref)("");
     return (
-      UE.LGUIBPLibrary.GetFullPathOfActor(GlobalData_1.GlobalData.World, e, t),
-      (0, puerts_1.$unref)(t)
+      UE.LGUIBPLibrary.GetFullPathOfActor(GlobalData_1.GlobalData.World, t, e),
+      (0, puerts_1.$unref)(e)
     );
   }
-  static ScreenShot(e, t) {
-    return UE.BlueprintPathsLibrary.ProjectUserDir() + e;
+  static ScreenShot(t, e) {
+    return UE.BlueprintPathsLibrary.ProjectUserDir() + t;
   }
   static ResetShot() {}
-  static ClearAttachChildren(t) {
-    for (let e = t.AttachChildren.Num() - 1; 0 <= e; e--)
-      UE.LGUIBPLibrary.DeleteActor(t.AttachChildren.Get(e).GetOwner());
+  static ClearAttachChildren(e) {
+    for (let t = e.AttachChildren.Num() - 1; 0 <= t; t--)
+      UE.LGUIBPLibrary.DeleteActor(e.AttachChildren.Get(t).GetOwner());
   }
   static LoadAndSetText(o, i, a, _) {
     LguiUtil.ClearAttachChildren(o);
     const n = new Array(a.length),
       g = new Array(a.length);
     let s = 0;
-    a.forEach((e, r) => {
-      ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.PrefabAsset, (e, t) => {
-        (g[r] = e),
+    a.forEach((t, r) => {
+      ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.PrefabAsset, (t, e) => {
+        (g[r] = t),
           (++s >= a.length || s >= a.length) &&
-            (g.forEach((e, t) => {
-              var e = UE.LGUIBPLibrary.LoadPrefabWithAsset(
+            (g.forEach((t, e) => {
+              var t = UE.LGUIBPLibrary.LoadPrefabWithAsset(
                   GlobalData_1.GlobalData.World,
-                  e,
+                  t,
                   o,
                 ),
-                r = e.GetComponentByClass(UE.UIItem.StaticClass());
-              r && (r.SetPivot(Vector2D_1.Vector2D.ZeroVector), (n[t] = e));
+                r = t.GetComponentByClass(UE.UIItem.StaticClass());
+              r && (r.SetPivot(Vector2D_1.Vector2D.ZeroVector), (n[e] = t));
             }),
             o.SetText(i),
             _) &&
@@ -399,21 +415,49 @@ class LguiUtil {
       });
     });
   }
-  static SetActorIsPermanent(e, t, r) {
-    e
-      ? e.IsValid()
-        ? UE.KuroStaticLibrary.SetActorPermanent(e, t, r)
+  static SetActorIsPermanent(t, e, r) {
+    t
+      ? t.IsValid()
+        ? UE.KuroStaticLibrary.SetActorPermanent(t, e, r)
         : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("LguiUtil", 11, "无缝切换传入Actor异常,Actor IsValid")
+          Log_1.Log.Warn("LguiUtil", 10, "无缝切换传入Actor异常,Actor IsValid")
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("LguiUtil", 11, "无缝切换传入Actor异常,Actor为空");
+        Log_1.Log.Warn("LguiUtil", 10, "无缝切换传入Actor异常,Actor为空");
   }
-  static GetChildActorByHierarchyIndex(e, t = 0) {
-    e = e.GetUIItem();
-    if (e) return e.GetAttachUIChild(t)?.GetOwner();
+  static GetChildActorByHierarchyIndex(t, e = 0) {
+    t = t.GetUIItem();
+    if (t) return t.GetAttachUIChild(e)?.GetOwner();
   }
-  static GetComponentsRegistry(e) {
-    return e?.GetComponentByClass(UE.LGUIComponentsRegistry.StaticClass());
+  static GetComponentsRegistry(t) {
+    return t?.GetComponentByClass(UE.LGUIComponentsRegistry.StaticClass());
+  }
+  static ConvertPointerPositionToLguiCenterPosition(t, e) {
+    var r,
+      o,
+      i = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler();
+    i &&
+      ((r = UiLayer_1.UiLayer.UiRootItem.GetWidth()),
+      (o = UiLayer_1.UiLayer.UiRootItem.GetHeight()),
+      e.Set(t.X, t.Y),
+      (t = i.ConvertPositionFromViewportToLGUICanvas(e.ToUeVector2D())),
+      e.FromUeVector2D(t),
+      (e.X = MathCommon_1.MathCommon.Clamp(e.X, 0, r)),
+      (e.Y = MathCommon_1.MathCommon.Clamp(e.Y, 0, o)),
+      (e.X -= r / 2),
+      (e.Y -= o / 2));
+  }
+  static ConvertPointerPositionToLguiPosition(t, e) {
+    var r,
+      o,
+      i = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler();
+    i &&
+      ((r = UiLayer_1.UiLayer.UiRootItem.GetWidth()),
+      (o = UiLayer_1.UiLayer.UiRootItem.GetHeight()),
+      e.Set(t.X, t.Y),
+      (t = i.ConvertPositionFromViewportToLGUICanvas(e.ToUeVector2D())),
+      e.FromUeVector2D(t),
+      (e.X = MathCommon_1.MathCommon.Clamp(e.X, 0, r)),
+      (e.Y = MathCommon_1.MathCommon.Clamp(e.Y, 0, o)));
   }
 }
 exports.LguiUtil = LguiUtil;

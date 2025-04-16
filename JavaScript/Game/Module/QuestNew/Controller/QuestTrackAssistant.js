@@ -53,10 +53,10 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
   }
   OnDestroy() {}
   OnRegisterNetEvent() {
-    Net_1.Net.Register(17169, this.Hro);
+    Net_1.Net.Register(20936, this.Hro);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(17169);
+    Net_1.Net.UnRegister(20936);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -81,7 +81,8 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
   RefreshCurTrackQuest() {
     var e = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest(),
       e =
-        (e?.SetTrack(!1),
+        (ModelManager_1.ModelManager.QuestNewModel.RefreshResidentQuestMapMark(),
+        e?.SetTrack(!1),
         e?.SetTrack(!0),
         ModelManager_1.ModelManager.QuestNewModel.CurShowUpdateTipsQuest);
     e && this.TryChangeTrackedQuest(e);
@@ -102,23 +103,25 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
       fHn: r ? 1 : 2,
       gHn: t,
     });
-    Net_1.Net.Call(22531, i, (e) => {
+    Net_1.Net.Call(23842, i, (e) => {
       e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
           e.BEs,
-          20619,
+          17932,
         );
     });
   }
   TryChangeTrackedQuest(e) {
     var r = ModelManager_1.ModelManager.QuestNewModel,
-      t = r.GetCurTrackedQuest();
-    return (
-      !t?.AutoTrack &&
-      !!((r = r.GetQuest(e)) && r.IsProgressing && r.AutoTrack) &&
-      t?.Id !== e &&
-      (this.RequestTrackQuest(e, !0, 2), !0)
-    );
+      t = r.GetQuest(e);
+    if (!t || !t.IsProgressing) return !1;
+    r = r.GetCurTrackedQuest();
+    if (r?.Id === e) return !1;
+    if (!t.AutoCoverCurTrack) {
+      if (r?.AutoTrack) return !1;
+      if (!t.AutoTrack) return !1;
+    }
+    return this.RequestTrackQuest(e, !0, 2), !0;
   }
   TryChangeTrackedQuest2(e) {
     var r = ModelManager_1.ModelManager.QuestNewModel,

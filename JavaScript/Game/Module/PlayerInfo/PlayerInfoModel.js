@@ -15,8 +15,8 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.tMi = void 0),
-      (this.GNa = void 0),
-      (this.ONa = void 0),
+      (this.N3a = void 0),
+      (this.F3a = void 0),
       (this.RandomSeed = 0);
   }
   GetId() {
@@ -29,7 +29,7 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
         e,
       ),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Log", 38, "设置当前UID", ["UID", e]),
+        Log_1.Log.Info("Log", 37, "设置当前UID", ["UID", e]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ChangePlayerInfoId,
         e,
@@ -74,6 +74,9 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
   GetNumberPropById(e) {
     if (void 0 !== this.vXi) return this.vXi.get(e);
   }
+  SetNumberPropById(e, t) {
+    void 0 !== this.vXi && this.vXi.set(e, t);
+  }
   GetPlayerGender() {
     var e = this.GetNumberPropById(9);
     return void 0 === e ? 2 : e;
@@ -108,7 +111,7 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     if (this.MXi)
       return !e ||
         ConfigManager_1.ConfigManager.PlayerInfoConfig.GetIsUseAccountName()
-        ? this.MXi.get(7)
+        ? ModelManager_1.ModelManager.FunctionModel.GetPlayerName()
         : ((e = this.GetPlayerRoleId()),
           ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
             e,
@@ -138,6 +141,14 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     }
     return "";
   }
+  GetPlayerHeadIconCircle() {
+    var e = this.GetNumberPropById(4);
+    if (e) {
+      e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
+      if (e) return e.RoleHeadIconCircle;
+    }
+    return "";
+  }
   GetHeadIconId() {
     var e = this.GetNumberPropById(4);
     return e || 0;
@@ -163,16 +174,16 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
     );
   }
   InitThirdPartyId(e, t, r) {
-    (this.tMi = e), (this.GNa = t), (this.ONa = r);
+    (this.tMi = e), (this.N3a = t), (this.F3a = r);
   }
   GetThirdPartyUserId() {
     return this.tMi;
   }
   GetThirdPartyOnlineId() {
-    return this.GNa;
+    return this.N3a;
   }
   GetThirdPartyAccountId() {
-    return this.ONa;
+    return this.F3a;
   }
 }
 exports.PlayerInfoModel = PlayerInfoModel;

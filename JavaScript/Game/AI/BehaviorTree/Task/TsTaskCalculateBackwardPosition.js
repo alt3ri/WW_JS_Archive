@@ -3,13 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskCalculateBackwardPosition extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments),
       (this.Distance = 0),
       (this.BlackboardKey = ""),
+      (this.IsInitTsVariables = !1),
+      (this.TsDistance = 0),
+      (this.TsBlackboardKey = "");
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsDistance = 0),
       (this.TsBlackboardKey = "");
@@ -25,30 +31,30 @@ class TsTaskCalculateBackwardPosition extends TsTaskAbortImmediatelyBase_1.defau
     if (r) {
       this.InitTsVariables();
       var r = r.CharActorComp,
-        o = r.ActorLocationProxy;
+        s = r.ActorLocationProxy;
       let e = r.ActorForwardProxy;
-      var a =
-          BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+      var o =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
             r.Entity.Id,
             "InputDirect",
           ),
-        a =
-          (a &&
-            ((e = Vector_1.Vector.Create(a)).IsNearlyZero() &&
+        o =
+          (o &&
+            ((e = Vector_1.Vector.Create(o)).IsNearlyZero() &&
               (e = r.ActorForwardProxy),
-            BlackboardController_1.BlackboardController.RemoveValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
               r.Entity.Id,
               "InputDirect",
             )),
           Vector_1.Vector.Create(e));
-      a.MultiplyEqual(-this.TsDistance),
-        a.AdditionEqual(o),
-        BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+      o.MultiplyEqual(-this.TsDistance),
+        o.AdditionEqual(s),
+        ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
           r.Entity.Id,
           this.TsBlackboardKey,
-          a.X,
-          a.Y,
-          a.Z,
+          o.X,
+          o.Y,
+          o.Z,
         ),
         this.FinishExecute(!0);
     } else

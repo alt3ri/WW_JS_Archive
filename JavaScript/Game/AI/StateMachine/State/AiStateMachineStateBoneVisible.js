@@ -19,7 +19,8 @@ class AiStateMachineStateBoneVisible extends AiStateMachineState_1.AiStateMachin
     this.Node.AnimationComponent.HideBone(this.Sne, !this.yne, !1);
   }
   OnDeactivate() {
-    this.Node.AnimationComponent.HideBone(this.Sne, this.yne, !1);
+    this.Node.TagComponent.HasTag(1008164187) ||
+      this.Node.AnimationComponent.HideBone(this.Sne, this.yne, !1);
   }
   ToString(t, e = 0) {
     (0, AiStateMachine_1.appendDepthSpace)(t, e);

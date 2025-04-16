@@ -102,32 +102,74 @@ class DamageText {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   commonicon(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   criticon(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   critniagarapath(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   textcolor(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   strokecolor(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   crittextcolor(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   critstrokecolor(t) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   mindeviationx() {
     var t = this.J7.__offset(this.z7, 20);
@@ -146,24 +188,54 @@ class DamageText {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   owndamagesequence(t) {
-    var i = this.J7.__offset(this.z7, 28);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 28),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   owncriticaldamagesequence(t) {
-    var i = this.J7.__offset(this.z7, 30);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 30),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   monsterdamagesequence(t) {
-    var i = this.J7.__offset(this.z7, 32);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 32),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   monstercriticaldamagesequence(t) {
-    var i = this.J7.__offset(this.z7, 34);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 34),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   damagetextsequence(t) {
-    var i = this.J7.__offset(this.z7, 36);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 36),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   ispreload() {
     var t = this.J7.__offset(this.z7, 38);
@@ -173,10 +245,14 @@ class DamageText {
     return this.owncommondamagecurvepath(t);
   }
   owncommondamagecurvepath(t, i) {
-    var e = this.J7.__offset(this.z7, 40);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
-      : null;
+    var e = this.J7.__offset(this.z7, 40),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   owncommondamagecurvepathLength() {
     var t = this.J7.__offset(this.z7, 40);
@@ -186,10 +262,14 @@ class DamageText {
     return this.owncriticaldamagecurvepath(t);
   }
   owncriticaldamagecurvepath(t, i) {
-    var e = this.J7.__offset(this.z7, 42);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
-      : null;
+    var e = this.J7.__offset(this.z7, 42),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   owncriticaldamagecurvepathLength() {
     var t = this.J7.__offset(this.z7, 42);
@@ -199,10 +279,14 @@ class DamageText {
     return this.monstercommondamagecurvepath(t);
   }
   monstercommondamagecurvepath(t, i) {
-    var e = this.J7.__offset(this.z7, 44);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
-      : null;
+    var e = this.J7.__offset(this.z7, 44),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   monstercommondamagecurvepathLength() {
     var t = this.J7.__offset(this.z7, 44);
@@ -212,10 +296,14 @@ class DamageText {
     return this.monstercriticaldamagecurvepath(t);
   }
   monstercriticaldamagecurvepath(t, i) {
-    var e = this.J7.__offset(this.z7, 46);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
-      : null;
+    var e = this.J7.__offset(this.z7, 46),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   monstercriticaldamagecurvepathLength() {
     var t = this.J7.__offset(this.z7, 46);

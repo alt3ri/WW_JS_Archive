@@ -11,7 +11,7 @@ class TopBuffItem extends UiPanelBase_1.UiPanelBase {
   SetActive(e) {
     this.GetVisible() !== e
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 18, "不要直接调用SetActive, 请调用SetVisible")
+        Log_1.Log.Error("Battle", 17, "不要直接调用SetActive, 请调用SetVisible")
       : super.SetActive(e);
   }
   SetVisible(e, t) {

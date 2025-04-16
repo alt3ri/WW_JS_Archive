@@ -69,12 +69,12 @@ class LauncherLog {
       r.getMilliseconds()
     );
   }
-  static BVa(r) {
-    return JSON.stringify(r, this.bVa).replace(/"/g, "");
+  static DHa(r) {
+    return JSON.stringify(r, this.RHa).replace(/"/g, "");
   }
   static O8(r) {
     try {
-      return this.BVa(r);
+      return this.DHa(r);
     } catch (r) {
       r instanceof Error
         ? LauncherLog.ErrorWithStack("Log 序列化异常", r, ["error", r.message])
@@ -160,7 +160,7 @@ class LauncherLog {
   (LauncherLog.k8 = !0),
   (LauncherLog.o6 = 0),
   (LauncherLog.U8 = ""),
-  (LauncherLog.bVa = (r, t) => {
+  (LauncherLog.RHa = (r, t) => {
     if (void 0 === t) return "undefined";
     if (null === t) return "null";
     var e = typeof t;
@@ -170,14 +170,14 @@ class LauncherLog {
     if (t instanceof Set) {
       let r = "";
       for (const n of t)
-        0 === r.length ? (r += "Set(") : (r += ","), (r += _a.BVa(n));
+        0 === r.length ? (r += "Set(") : (r += ","), (r += _a.DHa(n));
       return (r += ")");
     }
     if (t instanceof Map) {
       let r = "";
       for (const o of t)
         0 === r.length ? (r += "Map(") : (r += ","),
-          (r += `[${_a.BVa(o[0])}, ${_a.BVa(o[1])}]`);
+          (r += `[${_a.DHa(o[0])}, ${_a.DHa(o[1])}]`);
       return (r += ")");
     }
     if (t instanceof UE.TMap) {
@@ -185,7 +185,7 @@ class LauncherLog {
       for (let r = 0; r < t.Num(); r++) {
         0 === e.length ? (e += "TMap(") : (e += ",");
         var a = t.GetKey(r);
-        e += `[${_a.BVa(a)}, ${_a.BVa(t.Get(a))}]`;
+        e += `[${_a.DHa(a)}, ${_a.DHa(t.Get(a))}]`;
       }
       return (e += ")");
     }
@@ -193,14 +193,14 @@ class LauncherLog {
       let e = "";
       for (let r = 0; r < t.Num(); r++)
         0 === e.length ? (e += "TArray(") : (e += ","),
-          (e += `[${_a.BVa(t.Get(r))}]`);
+          (e += `[${_a.DHa(t.Get(r))}]`);
       return (e += ")");
     }
     if (t instanceof UE.TSet) {
       let e = "";
       for (let r = 0; r < t.Num(); r++)
         0 === e.length ? (e += "TSet(") : (e += ","),
-          (e += `[${_a.BVa(t.Get(r))}]`);
+          (e += `[${_a.DHa(t.Get(r))}]`);
       return (e += ")");
     }
     return t;

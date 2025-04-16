@@ -123,7 +123,7 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
     ) {
       const s = this.DHt;
       TimerSystem_1.TimerSystem.Next(() => {
-        ActorSystem_1.ActorSystem.Put(s);
+        ActorSystem_1.ActorSystem.Put("RoleHandBookItem.UpdateComponent", s);
       }),
         (this.DHt = void 0);
     }
@@ -143,7 +143,7 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
             !0),
           (this.DHt = ActorSystem_1.ActorSystem.Get(
             UE.LevelSequenceActor.StaticClass(),
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
             void 0,
             !1,
           )),
@@ -200,7 +200,7 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
     ) {
       const e = this.DHt;
       TimerSystem_1.TimerSystem.Next(() => {
-        ActorSystem_1.ActorSystem.Put(e);
+        ActorSystem_1.ActorSystem.Put("RoleHandBookItem.OnBeforeDestroy", e);
       }),
         (this.DHt = void 0);
     }

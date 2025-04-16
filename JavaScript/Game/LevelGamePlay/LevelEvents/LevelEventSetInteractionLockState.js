@@ -14,11 +14,11 @@ class LevelEventSetInteractionLockState extends LevelGeneralBase_1.LevelEventBas
             ? Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
-                37,
+                36,
                 "当前申请交互锁定的实体与记录的正在交互的实体不一致，可能是因为服务器重发，交互锁定行为不响应服务器重发",
               )
             : (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("LevelEvent", 37, "设置交互锁定状态", [
+                Log_1.Log.Info("LevelEvent", 36, "设置交互锁定状态", [
                   "IsLock",
                   e.IsLock,
                 ]),
@@ -30,12 +30,12 @@ class LevelEventSetInteractionLockState extends LevelGeneralBase_1.LevelEventBas
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelEvent",
-              37,
+              36,
               "此LevelEvent只能接受以EntityContext为上下文",
             )
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelEvent", 37, "参数类型错误")
-      : Log_1.Log.CheckError() && Log_1.Log.Error("LevelEvent", 37, "参数为空");
+          Log_1.Log.Error("LevelEvent", 36, "参数类型错误")
+      : Log_1.Log.CheckError() && Log_1.Log.Error("LevelEvent", 36, "参数为空");
   }
 }
 exports.LevelEventSetInteractionLockState = LevelEventSetInteractionLockState;

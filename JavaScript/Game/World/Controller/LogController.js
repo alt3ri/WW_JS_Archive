@@ -41,10 +41,10 @@ class SkillButtonDebugInfo extends Json_1.JsonObjBase {
 }
 class LogController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return Net_1.Net.Register(16061, this.SLn), !0;
+    return Net_1.Net.Register(18866, this.SLn), !0;
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(16061), !0;
+    return Net_1.Net.UnRegister(18866), !0;
   }
   static qfr(o) {
     LogController.Gfr === TickSystem_1.TickSystem.InvalidId &&
@@ -58,25 +58,25 @@ class LogController extends ControllerBase_1.ControllerBase {
   static LogBattleStartPush(o, t = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 29, "日志上报-开始战斗日志", ["内容", o]),
+      Log_1.Log.Debug("Battle", 28, "日志上报-开始战斗日志", ["内容", o]),
       t ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogBattleEndPush(o, t = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 29, "日志上报-战斗结算日志", ["内容", o]),
+      Log_1.Log.Debug("Battle", 28, "日志上报-战斗结算日志", ["内容", o]),
       t ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogSingleCharacterStatusPush(o, t = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 29, "日志上报-单个角色日志", ["内容", o]),
+      Log_1.Log.Debug("Battle", 28, "日志上报-单个角色日志", ["内容", o]),
       t ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogSingleMonsterStatusPush(o, t = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 29, "日志上报-单个怪物日志", ["内容", o]),
+      Log_1.Log.Debug("Battle", 28, "日志上报-单个怪物日志", ["内容", o]),
       t ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogCharacterDeathPush(o, t, e = !1) {
@@ -85,7 +85,7 @@ class LogController extends ControllerBase_1.ControllerBase {
     (l.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
       (l.i_area_level = ModelManager_1.ModelManager.AreaModel.AreaInfo.Level),
       Global_1.Global.BaseCharacter
-        ? ((r = Global_1.Global.BaseCharacter.K2_GetActorLocation()),
+        ? ((r = Global_1.Global.BaseCharacter.D_K2_GetActorLocation()),
           (l.f_x = r.X),
           (l.f_y = r.Y),
           (l.f_z = r.Z),
@@ -93,7 +93,7 @@ class LogController extends ControllerBase_1.ControllerBase {
           (l.i_death_role_id = o),
           LOG_SWITCH &&
             Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Battle", 29, "日志上报-单机大世界死亡", [
+            Log_1.Log.Debug("Battle", 28, "日志上报-单机大世界死亡", [
               "内容",
               l,
             ]),
@@ -112,7 +112,7 @@ class LogController extends ControllerBase_1.ControllerBase {
     (o.s_reports = Json_1.Json.Stringify(t)),
       LOG_SWITCH &&
         Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 29, "日志上报-角色技能日志", [
+        Log_1.Log.Debug("Battle", 28, "日志上报-角色技能日志", [
           "内容",
           o.s_reports,
         ]),
@@ -122,7 +122,7 @@ class LogController extends ControllerBase_1.ControllerBase {
     (o.s_reports = Json_1.Json.Stringify(t)),
       LOG_SWITCH &&
         Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 29, "日志上报-怪物技能日志", [
+        Log_1.Log.Debug("Battle", 28, "日志上报-怪物技能日志", [
           "内容",
           o.s_reports,
         ]),
@@ -132,7 +132,7 @@ class LogController extends ControllerBase_1.ControllerBase {
     (o.s_reports = Json_1.Json.Stringify(Array.from(t.values()))),
       LOG_SWITCH &&
         Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 29, "日志上报-协奏作用日志", ["内容", o]),
+        Log_1.Log.Debug("Battle", 28, "日志上报-协奏作用日志", ["内容", o]),
       e ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogTriggerBuffDamagePush(o) {
@@ -146,7 +146,7 @@ class LogController extends ControllerBase_1.ControllerBase {
       (t.i_damage = o.Damage.toString()),
       LOG_SWITCH &&
         Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 36, "日志上报-地形机关buff伤害日志", [
+        Log_1.Log.Debug("Battle", 35, "日志上报-地形机关buff伤害日志", [
           "内容",
           t,
         ]),
@@ -155,19 +155,19 @@ class LogController extends ControllerBase_1.ControllerBase {
   static LogElevatorUsedPush(o) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 36, "日志上报-电梯使用日志", ["内容", o]),
+      Log_1.Log.Debug("Battle", 35, "日志上报-电梯使用日志", ["内容", o]),
       LogReportController_1.LogReportController.LogReport(o);
   }
   static LogInstFightStartPush(o) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 29, "日志上报-副本开始日志", ["内容", o]),
+      Log_1.Log.Debug("Battle", 28, "日志上报-副本开始日志", ["内容", o]),
       LogReportController_1.LogReportController.LogReport(o);
   }
   static LogInstFightEndPush(o) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 29, "日志上报-副本结束日志", ["内容", o]),
+      Log_1.Log.Debug("Battle", 28, "日志上报-副本结束日志", ["内容", o]),
       LogReportController_1.LogReportController.LogReport(o);
   }
   static GetSkillButtonDebugInfo() {
@@ -214,7 +214,7 @@ class LogController extends ControllerBase_1.ControllerBase {
       FormationDataController_1.FormationDataController.GetPlayerEntity(
         ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
       )
-        .GetComponent(184)
+        .GetComponent(197)
         .GetAllBuffs()
         .map((o) => String(o.Id)),
       CharacterGasDebugComponent_1.CharacterGasDebugComponent.GetFormationAttributeDebugStrings()
@@ -229,25 +229,37 @@ class LogController extends ControllerBase_1.ControllerBase {
       })),
       this.GetSkillButtonDebugInfo(),
     );
-    let n = Json_1.Json.Stringify(o);
+    let g = Json_1.Json.Stringify(o);
     return (
       ModelManager_1.ModelManager.CreatureModel.GetAllEntities().forEach(
         (o) => {
           var t,
             e,
             r,
-            l = o.Entity?.GetComponent(3),
-            a = o.Entity?.GetComponent(194);
+            l = o.Entity,
+            a = l?.GetComponent(3),
+            n = l?.GetComponent(207);
           l &&
             a &&
-            ((t = o.Entity?.GetComponent(0)),
-            (e = o.Entity?.GetComponent(190)),
-            (r = o.Entity?.GetComponent(92)),
-            (n +=
+            n &&
+            ((t = l.GetComponent(0)),
+            (e = l.GetComponent(203)),
+            (r = l.GetComponent(170)),
+            (l = l.GetComponent(99)),
+            (g +=
               `
 ***********
-实体信息: EntityHandleId: ${o.Id}, CreatureDataId: ${t?.GetCreatureDataId()}, PbDataId: ${t?.GetPbDataId()}, Type: ${t?.GetEntityType()}, 位置: ${[l?.ActorLocationProxy.X.toFixed(2), l?.ActorLocationProxy.Y.toFixed(2), l?.ActorLocationProxy.Z.toFixed(2)]}, IsInFighting: ${r?.IsInFighting}
-Buff信息: ${a?.GetAllBuffs().map((o) => o.Id)}
+实体信息: EntityHandleId: ${o.Id}, CreatureDataId: ${t?.GetCreatureDataId()}, PbDataId: ${t?.GetPbDataId()}, Type: ${t?.GetEntityType()}, 位置: ${[a?.ActorLocationProxy.X.toFixed(2), a?.ActorLocationProxy.Y.toFixed(2), a?.ActorLocationProxy.Z.toFixed(2)]}, IsInFighting: ${l?.IsInFighting}
+Buff信息: ${n
+                ?.GetAllBuffs()
+                .map(
+                  (o) =>
+                    `${o.Id} ${o.Handle} ` +
+                    o.StackCount +
+                    (o.IsActive() ? "" : "(非激活)"),
+                )
+                .join("|")}
+属性信息: ${r?.GetDebugString()}
 Tag信息: ` +
               e?.TagContainer.GetExactTagsDebugString()
                 .replace(/\n/g, ",")
@@ -257,20 +269,20 @@ Tag信息: ` +
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          29,
+          28,
           `本地打印关键信息快照:
-` + n,
+` + g,
         ),
-      n
+      g
     );
   }
   static RequestOutputDebugInfo() {
     var o = new Protocol_1.Aki.Protocol.Debug.FZn();
     (o.GKn = LogController.OutputDebugInfo()),
-      Net_1.Net.Call(17862, o, (o) => {
+      Net_1.Net.Call(16296, o, (o) => {
         o &&
           Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Log", 38, "[Debug]服务器端战斗状态信息打印");
+          Log_1.Log.Info("Log", 37, "[Debug]服务器端战斗状态信息打印");
       });
   }
 }

@@ -10,10 +10,10 @@ const UE = require("ue"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
   IEntity_1 = require("../../../../../UniverseEditor/Interface/IEntity"),
   GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
   ColorUtils_1 = require("../../../../Utils/ColorUtils"),
-  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
   TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
   DISTANCE_FROM_WATER_SURFACE = 200,
   SAFE_RANGE = 20,
@@ -26,6 +26,25 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
       (this.InnerDiameter = 0),
       (this.OuterDiameter = 0),
       (this.DebugMode = !1),
+      (this.IsInitTsVariables = !1),
+      (this.TsAngle = 0),
+      (this.TsInnerDiameter = 0),
+      (this.TsOuterDiameter = 0),
+      (this.TsDebugMode = !1),
+      (this.HaveRangeConfig = !1),
+      (this.RangeInited = !1),
+      (this.Center = void 0),
+      (this.Size = void 0),
+      (this.Rotator = void 0),
+      (this.VectorCache2 = void 0),
+      (this.TargetVector = void 0),
+      (this.VectorCache = void 0),
+      (this.TraceElement = void 0),
+      (this.ShallowTraceElement = void 0),
+      (this.InitZ = -0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsAngle = 0),
       (this.TsInnerDiameter = 0),
@@ -63,12 +82,12 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
     var s = t.AiController;
     if (s) {
       this.InitTsVariables(), this.InitTraceElement();
-      var e,
+      var h,
         s = s.CharActorComp;
-      const h = s.CreatureData;
-      if (((this.HaveRangeConfig = this.InitRange(h)), !this.InitZ)) {
-        const h = s.CreatureData;
-        this.InitZ = h.GetInitLocation().Z ?? s.ActorLocationProxy.Z;
+      const e = s.CreatureData;
+      if (((this.HaveRangeConfig = this.InitRange(e)), !this.InitZ)) {
+        const e = s.CreatureData;
+        this.InitZ = e.GetInitLocation().Z ?? s.ActorLocationProxy.Z;
       }
       this.ShallowTraceElement.SetBoxHalfSize(
         s.Radius + SAFE_RANGE,
@@ -76,21 +95,21 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
         s.HalfHeight + SAFE_RANGE,
       ),
         this.HaveRangeConfig
-          ? ((e = TsTaskQuerySwimLocation.RandomPointInBoxRange2D(
+          ? ((h = TsTaskQuerySwimLocation.RandomPointInBoxRange2D(
               this.Size.X,
               this.Size.Y,
               this.Rotator.Yaw,
             )),
-            (this.TargetVector.X = this.Center.X + e.X),
-            (this.TargetVector.Y = this.Center.Y + e.Y))
-          : ((e = TsTaskQuerySwimLocation.RandomPointInFanRing(
+            (this.TargetVector.X = this.Center.X + h.X),
+            (this.TargetVector.Y = this.Center.Y + h.Y))
+          : ((h = TsTaskQuerySwimLocation.RandomPointInFanRing(
               this.TsInnerDiameter,
               this.TsOuterDiameter,
               ((s.ActorRotationProxy.Yaw - this.TsAngle / 2) / 180) * Math.PI,
               ((s.ActorRotationProxy.Yaw + this.TsAngle / 2) / 180) * Math.PI,
             )),
-            (this.TargetVector.X = s.ActorLocationProxy.X + e.X),
-            (this.TargetVector.Y = s.ActorLocationProxy.Y + e.Y)),
+            (this.TargetVector.X = s.ActorLocationProxy.X + h.X),
+            (this.TargetVector.Y = s.ActorLocationProxy.Y + h.Y)),
         (this.TargetVector.Z = this.InitZ),
         !this.CheckInWater(this.TargetVector) ||
         !this.CheckReachable(s.ActorLocationProxy, this.TargetVector) ||
@@ -105,7 +124,7 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
               this.TargetVector,
               ColorUtils_1.ColorUtils.LinearGreen,
             ),
-            BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
               s.Entity.Id,
               BLACKBOARD_KEY_SWIM_LOCATION,
               this.TargetVector.X,
@@ -115,7 +134,7 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
             this.Finish(!0));
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+        Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
           "Type",
           t.GetClass().GetName(),
         ]),
@@ -144,7 +163,7 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
         this.InitRotator(i, s),
         (0 === this.Rotator.Pitch && 0 === this.Rotator.Roll) ||
           (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("BehaviorTree", 30, "池塘范围不支持Roll和Pitch", [
+            Log_1.Log.Warn("BehaviorTree", 29, "池塘范围不支持Roll和Pitch", [
               "EntityConfigId",
               t.GetPbDataId(),
             ]),
@@ -185,15 +204,15 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
     var t = MathUtils_1.MathUtils.GetRandomRange(-t, t),
       i = MathUtils_1.MathUtils.GetRandomRange(-i, i),
       s = s * MathUtils_1.MathUtils.DegToRad,
-      e = Math.cos(s),
+      h = Math.cos(s),
       s = Math.sin(s);
-    return { X: t * e - i * s, Y: t * s + i * e };
+    return { X: t * h - i * s, Y: t * s + i * h };
   }
-  static RandomPointInFanRing(t, i, s, e) {
-    return e < s || i < t || t < 0
+  static RandomPointInFanRing(t, i, s, h) {
+    return h < s || i < t || t < 0
       ? { X: 0, Y: 0 }
       : ((t = MathUtils_1.MathUtils.GetRandomRange(t * t, i * i)),
-        (i = MathUtils_1.MathUtils.GetRandomRange(s, e)),
+        (i = MathUtils_1.MathUtils.GetRandomRange(s, h)),
         { X: (s = Math.sqrt(t)) * Math.cos(i), Y: s * Math.sin(i) });
   }
   IsInBoxRange2D(t) {
@@ -202,11 +221,11 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
     var t = this.VectorCache2.X,
       i = this.VectorCache2.Y,
       s = -this.Rotator.Yaw * MathUtils_1.MathUtils.DegToRad,
-      e = Math.cos(s),
+      h = Math.cos(s),
       s = Math.sin(s);
     return (
-      (this.VectorCache2.X = e * t - s * i),
-      (this.VectorCache2.Y = s * t + e * i),
+      (this.VectorCache2.X = h * t - s * i),
+      (this.VectorCache2.Y = s * t + h * i),
       this.VectorCache2.X > -this.Size.X &&
         this.VectorCache2.X < +this.Size.X &&
         this.VectorCache2.Y > -this.Size.Y &&
@@ -285,12 +304,12 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
           PROFILE_KEY,
         ));
     if (t && this.ShallowTraceElement.HitResult.bBlockingHit) {
-      var e = this.ShallowTraceElement.HitResult.Actors,
-        h = this.ShallowTraceElement.HitResult.Components;
-      for (let t = 0; t < e.Num(); t++) {
-        var o = e.Get(t);
+      var h = this.ShallowTraceElement.HitResult.Actors,
+        e = this.ShallowTraceElement.HitResult.Components;
+      for (let t = 0; t < h.Num(); t++) {
+        var o = h.Get(t);
         if (void 0 !== o) {
-          o = h.Get(t);
+          o = e.Get(t);
           if (o && !s.op_Equality(o.GetCollisionProfileName())) return !1;
         }
       }
@@ -300,7 +319,7 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
   DebugDraw(t, i) {
     GlobalData_1.GlobalData.IsPlayInEditor &&
       this.TsDebugMode &&
-      UE.KismetSystemLibrary.DrawDebugSphere(
+      UE.KismetSystemLibrary.D_DrawDebugSphere(
         this,
         t.ToUeVector(),
         30,
@@ -313,7 +332,7 @@ class TsTaskQuerySwimLocation extends TsTaskAbortImmediatelyBase_1.default {
     GlobalData_1.GlobalData.IsPlayInEditor &&
       this.TsDebugMode &&
       this.HaveRangeConfig &&
-      UE.KismetSystemLibrary.DrawDebugBox(
+      UE.KismetSystemLibrary.D_DrawDebugBox(
         this,
         this.Center.ToUeVector(),
         this.Size.ToUeVector(),

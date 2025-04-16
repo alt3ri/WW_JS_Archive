@@ -18,7 +18,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   }
   static OnInit() {
     return (
-      Net_1.Net.Register(24494, FormationDataController.kVa),
+      Net_1.Net.Register(27731, FormationDataController.BHa),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.InputControllerChange,
         this.lqt,
@@ -28,7 +28,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   }
   static OnClear() {
     return (
-      Net_1.Net.UnRegister(24494),
+      Net_1.Net.UnRegister(27731),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.InputControllerChange,
         this.lqt,
@@ -40,6 +40,9 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
     this.ZBe(), this.Model?.RefreshOnLandPosition();
   }
   static OnLeaveLevel() {
+    return this.NotifyInFight(!1), !0;
+  }
+  static OnChangeMode() {
     return this.NotifyInFight(!1), !0;
   }
   static get GlobalIsInFight() {
@@ -76,7 +79,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
       this.tbe = !1;
       var t =
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-          161,
+          173,
         )?.GetAggroSet();
       const a = this.Model.PlayerAggroSet;
       (this.ibe.length = 0),
@@ -110,7 +113,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
   }
   static NotifyInFight(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Battle", 25, "NotifyInFight: " + t),
+      Log_1.Log.Info("Battle", 24, "NotifyInFight: " + t),
       t &&
         ResourceSystem_1.ResourceSystem.ResetLoadMode(
           GlobalData_1.GlobalData.World,
@@ -124,42 +127,42 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
         ));
   }
   static AddPlayerTag(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(185);
+    var a = this.GetPlayerEntity(t)?.GetComponent(198);
     a
       ? a?.AddTag(e)
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 20, "找不到对应的PlayerTag组件", [
+        Log_1.Log.Error("Battle", 19, "找不到对应的PlayerTag组件", [
           "PlayerId",
           t,
         ]);
   }
   static RemovePlayerTag(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(185);
+    var a = this.GetPlayerEntity(t)?.GetComponent(198);
     a
       ? a?.RemoveTag(e)
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 20, "找不到对应的PlayerTag组件", [
+        Log_1.Log.Error("Battle", 19, "找不到对应的PlayerTag组件", [
           "PlayerId",
           t,
         ]);
   }
   static GetPlayerTagCount(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(185);
+    var a = this.GetPlayerEntity(t)?.GetComponent(198);
     return a
       ? (a?.GetTagCount(e) ?? 0)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 20, "找不到对应的PlayerTag组件", [
+          Log_1.Log.Error("Battle", 19, "找不到对应的PlayerTag组件", [
             "PlayerId",
             t,
           ]),
         0);
   }
   static HasPlayerTag(t, e) {
-    var a = this.GetPlayerEntity(t)?.GetComponent(185);
+    var a = this.GetPlayerEntity(t)?.GetComponent(198);
     return a
       ? (a?.HasTag(e) ?? !1)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 20, "找不到对应的PlayerTag组件", [
+          Log_1.Log.Error("Battle", 19, "找不到对应的PlayerTag组件", [
             "PlayerId",
             t,
           ]),
@@ -182,7 +185,7 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
       var r = -2091266968;
       switch (
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Character", 8, "刷新索敌模式Tag", [
+          Log_1.Log.Info("Character", 17, "刷新索敌模式Tag", [
             "lockEnemyMode",
             t,
           ]),
@@ -202,13 +205,13 @@ class FormationDataController extends ControllerBase_1.ControllerBase {
     _a.Wea();
   }),
   (FormationDataController.ebe = new Map()),
-  (FormationDataController.kVa = (t) => {
+  (FormationDataController.BHa = (t) => {
     var e = t.W5n,
-      a = _a.GetPlayerEntity(e)?.GetComponent(206);
+      a = _a.GetPlayerEntity(e)?.GetComponent(221);
     a
-      ? a.UpdateFollowers(t.Yih)
+      ? a.UpdateFollowers(t.OI_)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Battle", 49, "找不到对应的PlayerFollower组件", [
+        Log_1.Log.Warn("Battle", 48, "找不到对应的PlayerFollower组件", [
           "PlayerId",
           e,
         ]);

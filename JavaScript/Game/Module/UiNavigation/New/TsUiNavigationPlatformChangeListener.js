@@ -9,6 +9,9 @@ class TsUiNavigationPlatformChangeListener extends UE.LGUIBehaviour {
   constructor() {
     super(...arguments), (this.IsChangeAlpha = !1);
   }
+  Constructor() {
+    this.IsChangeAlpha = !1;
+  }
   AwakeBP() {
     GlobalData_1.GlobalData.GameInstance &&
       (this.ChangeAlpha(),

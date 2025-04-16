@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhotographConfig = void 0);
-const PhotoMontageById_1 = require("../../../Core/Define/ConfigQuery/PhotoMontageById"),
+const PhotoFilterAll_1 = require("../../../Core/Define/ConfigQuery/PhotoFilterAll"),
+  PhotoFilterById_1 = require("../../../Core/Define/ConfigQuery/PhotoFilterById"),
+  PhotoMontageById_1 = require("../../../Core/Define/ConfigQuery/PhotoMontageById"),
   PhotoMontageByRoleId_1 = require("../../../Core/Define/ConfigQuery/PhotoMontageByRoleId"),
   PhotoSetupAll_1 = require("../../../Core/Define/ConfigQuery/PhotoSetupAll"),
   PhotoSetupByValueType_1 = require("../../../Core/Define/ConfigQuery/PhotoSetupByValueType"),
@@ -27,6 +29,12 @@ class PhotographConfig extends ConfigBase_1.ConfigBase {
   GetDepthOfFieldRadiusDefaultValue() {
     var e = this.GetPhotoSetupConfig(5);
     return e ? e.ValueRange[2] : PhotographDefine_1.DEFAULT_APERTURE;
+  }
+  GetAllPhotoFilterConfig() {
+    return PhotoFilterAll_1.configPhotoFilterAll.GetConfigList();
+  }
+  GetPhotoFilterConfigById(e) {
+    return PhotoFilterById_1.configPhotoFilterById.GetConfig(e);
   }
 }
 exports.PhotographConfig = PhotographConfig;

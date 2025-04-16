@@ -79,6 +79,9 @@ class SilentAreaDetection {
   get BeginTimeStamp() {
     return this.begintimestamp();
   }
+  get PreOpenId() {
+    return this.preopenid();
+  }
   get MarkId() {
     return this.markid();
   }
@@ -98,6 +101,12 @@ class SilentAreaDetection {
   get AdditionalId() {
     return this.additionalid();
   }
+  get SortId() {
+    return this.sortid();
+  }
+  get NewContent() {
+    return this.newcontent();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -112,8 +121,14 @@ class SilentAreaDetection {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   guideid() {
     var t = this.J7.__offset(this.z7, 8);
@@ -141,8 +156,14 @@ class SilentAreaDetection {
       : null;
   }
   instancesubtypedescription(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   dangertype() {
     var t = this.J7.__offset(this.z7, 14);
@@ -161,32 +182,74 @@ class SilentAreaDetection {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   attributesdescriptionlock(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   attributesdescriptionunlock(t) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   bigicon(t) {
-    var i = this.J7.__offset(this.z7, 26);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 26),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   icon(t) {
-    var i = this.J7.__offset(this.z7, 28);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 28),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   lockbigicon(t) {
-    var i = this.J7.__offset(this.z7, 30);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 30),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   temporaryiconunlock(t) {
-    var i = this.J7.__offset(this.z7, 32);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 32),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   temporaryiconlock(t) {
-    var i = this.J7.__offset(this.z7, 34);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 34),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   showreward() {
     var t = this.J7.__offset(this.z7, 36);
@@ -196,10 +259,10 @@ class SilentAreaDetection {
     return this.showrewardmap(t);
   }
   showrewardmap(t, i) {
-    var r = this.J7.__offset(this.z7, 38);
-    return r
+    var s = this.J7.__offset(this.z7, 38);
+    return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
@@ -212,27 +275,31 @@ class SilentAreaDetection {
     var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  markid() {
+  preopenid() {
     var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  lockcon() {
+  markid() {
     var t = this.J7.__offset(this.z7, 44);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  lockcon() {
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetPhantomidAt(t) {
     return this.phantomid(t);
   }
   phantomid(t) {
-    var i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 48);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   phantomidLength() {
-    var t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   phantomidArray() {
-    var t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 48);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -242,12 +309,26 @@ class SilentAreaDetection {
       : null;
   }
   firstdropid() {
-    var t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   additionalid() {
-    var t = this.J7.__offset(this.z7, 50);
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  sortid() {
+    var t = this.J7.__offset(this.z7, 54);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  newcontent(t) {
+    var i = this.J7.__offset(this.z7, 56),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.SilentAreaDetection = SilentAreaDetection;

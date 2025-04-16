@@ -51,12 +51,24 @@ class DailyAdventureTask {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   tasktitle(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   taskdescription(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetTaskrewardAt(t, s) {
     return this.taskreward(t);
@@ -78,10 +90,14 @@ class DailyAdventureTask {
     return this.taskfunc(t);
   }
   taskfunc(t, s) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   taskfuncLength() {
     var t = this.J7.__offset(this.z7, 12);

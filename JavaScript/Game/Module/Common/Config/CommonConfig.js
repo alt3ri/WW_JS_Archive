@@ -126,6 +126,34 @@ class CommonConfig extends ConfigBase_1.ConfigBase {
       "OpenReviewDelay",
     );
   }
+  GetPlayPointTrackRange() {
+    return (
+      CommonParamById_1.configCommonParamById.GetFloatConfig(
+        "PlayPointTrackExtraRadius",
+      ) ?? 0
+    );
+  }
+  GetDiceItemId() {
+    return (
+      CommonParamById_1.configCommonParamById.GetIntConfig(
+        "DangoMonopolyDiceItemId",
+      ) ?? 0
+    );
+  }
+  GetDangoMonopolyRangeSpeed() {
+    return (
+      CommonParamById_1.configCommonParamById.GetFloatArrayConfig(
+        "DangoMonopolySpeed",
+      ) ?? [1, 2]
+    );
+  }
+  GetAutoOpenNoticePatchSize() {
+    return (
+      CommonParamById_1.configCommonParamById.GetIntConfig(
+        "AutoOpenNotifyPatchSize",
+      ) ?? 0
+    );
+  }
 }
 exports.CommonConfig = CommonConfig;
 //# sourceMappingURL=CommonConfig.js.map

@@ -110,13 +110,16 @@ class CookRootView extends UiViewBase_1.UiViewBase {
             this.MNt.UpdateData(27, this.LNt()));
       }),
       (this.HNt = (e = !0) => {
-        this.jNt(), this.pNt.RefreshTipsWithSavedData(), this.WNt(e);
+        this.jNt(() => {
+          this.WNt(e);
+        }),
+          this.pNt.RefreshTipsWithSavedData();
       }),
-      (this.jNt = () => {
+      (this.jNt = (e) => {
         this.gNt.DeselectCurrentGridProxy(),
           0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-            ? this.gNt.RefreshByData(this.fNt)
-            : this.gNt.RefreshByData(this.Zqt);
+            ? this.gNt.RefreshByData(this.fNt, !1, e)
+            : this.gNt.RefreshByData(this.Zqt, !1, e);
       }),
       (this.KNt = () => {
         this.ChildPopView?.PlaySequenceAsync(
@@ -130,6 +133,12 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       }),
       (this.XNt = () => {
         this.ChildPopView?.PopItem.SetUiActive(!1);
+      }),
+      (this.QNt = () => {
+        CookController_1.CookController.TryRequestChangeEntityStateByEvent(
+          "finishcook",
+          this,
+        );
       }),
       (this.$Ge = (e) => {
         "CompositeRewardView" === e &&
@@ -242,7 +251,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Cook",
-            8,
+            64,
             "[LevelEventOpenSystem] 打开烹饪界面时找不到交互对象，直接关闭界面",
           ),
         this.CloseMe()),
@@ -252,6 +261,10 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
       (e.CurrentCookListType = 0),
       this.yNt(),
+      CookController_1.CookController.TryRequestChangeEntityStateByEvent(
+        "opencook",
+        this,
+      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnExecuteUiCameraSequenceEvent,
         this.jwe,
@@ -357,6 +370,10 @@ class CookRootView extends UiViewBase_1.UiViewBase {
         this.XNt,
       ),
       EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayCookSuccessDisplayFinished,
+        this.QNt,
+      ),
+      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       ),
@@ -410,6 +427,10 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBeginPlayCookFailDisplay,
         this.XNt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayCookSuccessDisplayFinished,
+        this.QNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -476,12 +497,12 @@ class CookRootView extends UiViewBase_1.UiViewBase {
             TimeUtil_1.TimeUtil.IsInTimeSpan(e.ExistStartTime, e.ExistEndTime),
         )))
       : (this.Zqt = e),
-      this.jNt(),
+      this.jNt(() => {
+        0 < e.length && this.WNt(!0);
+      }),
       0 === e.length
         ? (this.GetItem(8).SetUIActive(!0), this.pNt.SetUiActive(!1))
-        : (this.GetItem(8).SetUIActive(!1),
-          this.pNt.SetUiActive(!0),
-          this.WNt(!0));
+        : (this.GetItem(8).SetUIActive(!1), this.pNt.SetUiActive(!0));
   }
   DNt() {
     switch (
@@ -517,7 +538,10 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       ? ((t = this.mNt), this.pNt.RefreshTips(this.fNt[t]))
       : ((t = this.dNt), this.pNt.RefreshTips(this.Zqt[t])),
       this.gNt.DeselectCurrentGridProxy(),
-      e && this.gNt.ScrollToGridIndex(t),
+      e &&
+        TimerSystem_1.TimerSystem.Wait(TimerSystem_1.MIN_TIME).finally(() => {
+          this.gNt.ScrollToGridIndex(t);
+        }),
       this.gNt.SelectGridProxy(t);
   }
   OnBeforeDestroy() {
@@ -528,6 +552,10 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseCookRole,
         this._la,
+      ),
+      CookController_1.CookController.TryRequestChangeEntityStateByEvent(
+        "endcook",
+        this,
       ),
       CookController_1.CookController.ClearCookDisplay(),
       this.DisableRedDot(),
@@ -556,7 +584,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
         if (t) return [t, t];
       }
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 17, "烹饪界面聚焦引导的额外参数配置错误", [
+        Log_1.Log.Error("Guide", 16, "烹饪界面聚焦引导的额外参数配置错误", [
           "configParams",
           e,
         ]);

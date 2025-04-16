@@ -32,8 +32,6 @@ class PlotInfo {
       (this.UiParam = void 0),
       (this.CanBeAbandoned = !1),
       (this.FadeBegin = void 0),
-      (this.FadeBeginDone = !1),
-      (this.WaitUiTime = 0),
       (this.Pos = void 0),
       (this.KeepMainRolePose = !1);
   }
@@ -126,8 +124,6 @@ class PlotInfo {
       (this.UiParam = void 0),
       (this.CanBeAbandoned = !1),
       (this.FadeBegin = void 0),
-      (this.FadeBeginDone = !1),
-      (this.WaitUiTime = 0),
       (this.Pos = void 0);
   }
   static Create() {

@@ -10,68 +10,91 @@ const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   GlobalData_1 = require("../GlobalData"),
-  BlackboardController_1 = require("../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  GravityUtils_1 = require("../Utils/GravityUtils"),
   INVALID_LAST_LOCATION_THRESHOLD_SQUARED = 4e6;
 class PositionBranchTargetParams {
   constructor() {
     (this.CharActorComp = void 0),
       (this.CharUnifiedComp = void 0),
       (this.CharSkillComp = void 0),
-      (this.TargetActorComp = void 0),
+      (this.TargetBaseActorComp = void 0),
       (this.TargetCharActorComp = void 0),
+      (this.TargetPos = void 0),
       (this.NowTime = -0),
       (this.TotalTime = -0),
       (this.SocketName = ""),
       (this.LastLocation = Vector_1.Vector.Create());
   }
-  RefreshTarget(i) {
+  RefreshTarget(i, t) {
     if (
-      (this.TargetActorComp?.Entity?.Valid ||
-        ((this.TargetActorComp = void 0), (this.TargetCharActorComp = void 0)),
+      (this.TargetBaseActorComp?.Entity?.Valid ||
+        ((this.TargetBaseActorComp = void 0),
+        (this.TargetCharActorComp = void 0)),
       i)
-    ) {
-      let t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-        this.CharActorComp.Entity.Id,
-        i,
-      );
+    )
+      switch (t) {
+        case 0: {
+          let t =
+            ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
+              this.CharActorComp.Entity.Id,
+              i,
+            );
+          if (
+            !t &&
+            !(t =
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+                this.CharActorComp.Entity.Id,
+                i,
+              ))
+          )
+            return;
+          var s = EntitySystem_1.EntitySystem.Get(t);
+          if (!s?.Valid) return;
+          if (
+            this.TargetBaseActorComp?.Entity?.Valid &&
+            this.TargetBaseActorComp.Entity.Id === s.Id
+          )
+            return;
+          (this.TargetBaseActorComp = s.GetComponent(1)),
+            (this.TargetCharActorComp = void 0),
+            (this.SocketName = "");
+          break;
+        }
+        case 1:
+          s =
+            ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
+              this.CharActorComp.Entity.Id,
+              i,
+            );
+          if (!s) return;
+          this.TargetPos = Vector_1.Vector.Create(s);
+          break;
+        default:
+          return;
+      }
+    else {
+      t = this.CharSkillComp?.GetSkillTargetForAns();
+      if (!t) return;
       if (
-        !t &&
-        !(t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-          this.CharActorComp.Entity.Id,
-          i,
-        ))
+        this.TargetBaseActorComp?.Entity?.Valid &&
+        t.Id === this.TargetBaseActorComp.Entity.Id
       )
-        return !1;
-      i = EntitySystem_1.EntitySystem.Get(t);
-      if (!i?.Valid) return !1;
-      if (
-        this.TargetActorComp?.Entity?.Valid &&
-        this.TargetActorComp.Entity.Id === i.Id
-      )
-        return !1;
-      (this.TargetActorComp = i.GetComponent(1)),
-        (this.TargetCharActorComp = void 0),
-        (this.SocketName = "");
-    } else {
-      i = this.CharSkillComp?.GetSkillTargetForAns();
-      if (!i) return !1;
-      if (
-        this.TargetActorComp?.Entity?.Valid &&
-        i.Id === this.TargetActorComp.Entity.Id
-      )
-        return !1;
-      (this.TargetActorComp = i.Entity.GetComponent(1)),
-        (this.TargetCharActorComp = i.Entity.GetComponent(3)),
+        return;
+      (this.TargetBaseActorComp = t.Entity.GetComponent(1)),
+        (this.TargetCharActorComp = t.Entity.GetComponent(3)),
         (this.SocketName = this.CharSkillComp.SkillTargetSocket);
     }
-    return this.LastLocation.DeepCopy(this.CharActorComp.LastActorLocation), !0;
+    this.LastLocation.DeepCopy(this.CharActorComp.LastActorLocation);
   }
   Clear() {
     (this.CharActorComp = void 0),
       (this.CharUnifiedComp = void 0),
       (this.CharSkillComp = void 0),
-      (this.TargetActorComp = void 0),
+      (this.TargetBaseActorComp = void 0),
       (this.TargetCharActorComp = void 0),
+      (this.TargetPos = void 0),
       (this.SocketName = "");
   }
 }
@@ -90,9 +113,11 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
       (this.IsShareTarget = !1),
       (this.TargetOffset = void 0),
       (this.TargetRotation = void 0),
+      (this.MinHeightFromTargetFloor = 0),
       (this["允许反向移动"] = !1),
       (this["允许正向移动"] = !0),
       (this["黑板值"] = ""),
+      (this["黑板类型"] = 0),
       (this.IsInitialize = !1),
       (this.TsMoveCurve = void 0),
       (this.TsDistance = -0),
@@ -102,15 +127,39 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
       (this.TsAlwaysMoveZ = !1),
       (this.TsIgnoreRadius = !1),
       (this.TsIsShareTarget = !1),
-      (this.TsTargetOffset = void 0),
-      (this.TargetPos = void 0),
-      (this.TmpVector = void 0),
-      (this.TmpVector2 = void 0),
-      (this.TmpRotator = void 0),
-      (this.TmpQuat = void 0),
+      (this.TsTargetOffset = Vector_1.Vector.Create()),
+      (this.TsMinHeightFromTargetFloor = 0),
+      (this.TargetPos = Vector_1.Vector.Create()),
+      (this.TmpVector = Vector_1.Vector.Create()),
+      (this.TmpVector2 = Vector_1.Vector.Create()),
+      (this.TmpRotator = Rotator_1.Rotator.Create()),
+      (this.TmpQuat = Quat_1.Quat.Create()),
       (this.TsAllowReverseMovement = !1),
       (this.TsAllowForwardMovement = !0),
-      (this.TsBlackboardKey = "");
+      (this.TsBlackboardKey = ""),
+      (this.TsBlackboardType = 0);
+  }
+  Constructor() {
+    (this.IsInitialize = !1),
+      (this.TsMoveCurve = void 0),
+      (this.TsDistance = -0),
+      (this.TsMaxSpeed = -0),
+      (this.TsLookAtTarget = !1),
+      (this.TsIgnoreZ = !1),
+      (this.TsAlwaysMoveZ = !1),
+      (this.TsIgnoreRadius = !1),
+      (this.TsIsShareTarget = !1),
+      (this.TsTargetOffset = Vector_1.Vector.Create()),
+      (this.TsMinHeightFromTargetFloor = 0),
+      (this.TargetPos = Vector_1.Vector.Create()),
+      (this.TmpVector = Vector_1.Vector.Create()),
+      (this.TmpVector2 = Vector_1.Vector.Create()),
+      (this.TmpRotator = Rotator_1.Rotator.Create()),
+      (this.TmpQuat = Quat_1.Quat.Create()),
+      (this.TsAllowReverseMovement = !1),
+      (this.TsAllowForwardMovement = !0),
+      (this.TsBlackboardKey = ""),
+      (this.TsBlackboardType = 0);
   }
   Initialize() {
     (this.IsInitialize && !GlobalData_1.GlobalData.IsPlayInEditor) ||
@@ -126,11 +175,13 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
       (this.TsAllowReverseMovement = this.允许反向移动),
       (this.TsAllowForwardMovement = this.允许正向移动),
       (this.TsBlackboardKey = this.黑板值),
+      (this.TsBlackboardType = this.黑板类型),
       (this.TsTargetOffset = Vector_1.Vector.Create(this.TargetOffset)),
       (this.TmpRotator = Rotator_1.Rotator.Create(this.TargetRotation)),
       (this.TmpQuat = Quat_1.Quat.Create()),
       this.TmpRotator.Quaternion(this.TmpQuat),
       this.TmpQuat.RotateVector(this.TsTargetOffset, this.TsTargetOffset),
+      (this.TsMinHeightFromTargetFloor = this.MinHeightFromTargetFloor),
       (this.TargetPos = Vector_1.Vector.Create()),
       (this.TmpVector = Vector_1.Vector.Create()),
       (this.TmpVector2 = Vector_1.Vector.Create()));
@@ -142,13 +193,16 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
     t = t.CharacterActorComponent;
     if (!t) return !1;
     var h,
-      r = t.Entity.GetComponent(34);
+      r = t.Entity.GetComponent(39);
     let e = void 0;
     if (
       !(e =
         (this.TsIsShareTarget &&
-          ((h = t.Entity.GetComponent(49)),
-          (e = EntitySystem_1.EntitySystem.Get(h.RoleId)?.GetComponent(34)))) ||
+          ((h = t.Entity.GetComponent(0)),
+          (h = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+            h.GetSummonerId(),
+          )?.Entity),
+          (e = h?.GetComponent(39)))) ||
         r)
     )
       return (
@@ -166,15 +220,15 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
         (paramPool.length
           ? paramPool.pop()
           : new PositionBranchTargetParams())).CharActorComp = t),
-      (a.CharUnifiedComp = t.Entity.GetComponent(161)),
+      (a.CharUnifiedComp = t.Entity.GetComponent(173)),
       (a.CharSkillComp = e),
-      a.RefreshTarget(this.TsBlackboardKey),
+      a.RefreshTarget(this.TsBlackboardKey, this.TsBlackboardType),
       (a.NowTime = 0),
       (a.TotalTime = s),
-      a.TargetActorComp
+      this.HasTargetActorOrPosition(a)
         ? paramMap.set(t.Entity.Id, a)
-        : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Movement", 6, "BranchTarget No Target"),
+        : Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Movement", 6, "BranchTarget No Target"),
       !0
     );
   }
@@ -183,8 +237,8 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
       !(s < MathUtils_1.MathUtils.KindaSmallNumber) &&
       (t = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
       ((t = t.CharacterActorComponent), !!(t = paramMap.get(t.Entity.Id))) &&
-      (t.RefreshTarget(this.TsBlackboardKey),
-      t.TargetActorComp &&
+      (t.RefreshTarget(this.TsBlackboardKey, this.TsBlackboardType),
+      this.HasTargetActorOrPosition(t) &&
         (this.MoveToTarget(s, t),
         t.LastLocation.DeepCopy(t.CharActorComp.ActorLocationProxy)),
       (t.NowTime += s),
@@ -201,18 +255,36 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
     );
   }
   GetTargetPos(t, i) {
-    t.SocketName && t.TargetCharActorComp?.Actor
-      ? i.FromUeVector(
-          t.TargetCharActorComp.Actor.Mesh.GetSocketLocation(
-            FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName),
-          ),
-        )
-      : i.DeepCopy(t.TargetActorComp.ActorLocationProxy),
-      t.TargetActorComp.ActorQuatProxy.RotateVector(
-        this.TsTargetOffset,
-        this.TmpVector,
-      ),
-      i.AdditionEqual(this.TmpVector);
+    var s, h;
+    t.TargetPos
+      ? i.DeepCopy(t.TargetPos)
+      : (t.SocketName && t.TargetCharActorComp?.Actor
+          ? i.FromUeVector(
+              t.TargetCharActorComp.Actor.Mesh.D_GetSocketLocation(
+                FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName),
+              ),
+            )
+          : i.DeepCopy(t.TargetBaseActorComp.ActorLocationProxy),
+        t.TargetBaseActorComp.ActorQuatProxy.RotateVector(
+          this.TsTargetOffset,
+          this.TmpVector,
+        ),
+        i.AdditionEqual(this.TmpVector),
+        t.TargetCharActorComp &&
+          ((s =
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+              t.TargetBaseActorComp,
+              t.TargetCharActorComp.FloorLocation,
+            ) + this.TsMinHeightFromTargetFloor),
+          (h = GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+            t.TargetBaseActorComp,
+            i,
+          )) < s) &&
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            t.TargetBaseActorComp,
+            i,
+            s - h,
+          ));
   }
   GetTowardVector(t, i) {
     this.GetTargetPos(t, this.TargetPos),
@@ -221,11 +293,23 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
         this.TmpVector,
       ),
       this.TargetPos.Subtraction(t.LastLocation, this.TmpVector2);
-    t = this.TmpVector.DotProduct(this.TmpVector2);
+    var s = this.TmpVector.DotProduct(this.TmpVector2);
     return (
       i.DeepCopy(this.TmpVector),
-      this.TsIgnoreZ && (i.Z = 0),
-      t < 0 ? -1 : i.Size2D()
+      this.TsIgnoreZ
+        ? (GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+            t.CharActorComp,
+            i,
+          ),
+          s < 0 ? -1 : i.Size())
+        : s < 0
+          ? -1
+          : Math.sqrt(
+              GravityUtils_1.GravityUtils.GetPlanarSizeSquared2dForActor(
+                t.CharActorComp,
+                i,
+              ),
+            )
     );
   }
   GetRate(t, i) {
@@ -275,12 +359,27 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
       ),
         this.TsAlwaysMoveZ && !this.TsIgnoreZ
           ? ((s = this.GetRate(t, i)),
-            (this.TmpVector.Z = MathUtils_1.MathUtils.Clamp(
-              (this.TargetPos.Z - i.CharActorComp.ActorLocationProxy.Z) * s,
+            this.TargetPos.Subtraction(
+              i.CharActorComp.ActorLocationProxy,
+              this.TmpVector2,
+            ),
+            (r = MathUtils_1.MathUtils.Clamp(
+              GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+                i.CharActorComp,
+                this.TmpVector2,
+              ) * s,
               -this.TsMaxSpeed * t,
               this.TsMaxSpeed * t,
-            )))
-          : (this.TmpVector.Z = 0),
+            )),
+            GravityUtils_1.GravityUtils.SetZnInGravityForActor(
+              i.CharActorComp,
+              this.TmpVector,
+              r,
+            ))
+          : GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+              i.CharActorComp,
+              this.TmpVector,
+            ),
         this.TmpVector.SizeSquared() >
           INVALID_LAST_LOCATION_THRESHOLD_SQUARED &&
           (this.TmpVector.Reset(), Log_1.Log.CheckWarn()) &&
@@ -303,9 +402,12 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
           i.CharActorComp.ActorLocationProxy,
           this.TmpVector,
         ),
+        (s = i.CharActorComp.MoveComp
+          ? i.CharActorComp.MoveComp.GravityUp
+          : Vector_1.Vector.UpVectorProxy),
         MathUtils_1.MathUtils.LookRotationUpFirst(
           this.TmpVector,
-          Vector_1.Vector.UpVectorProxy,
+          s,
           this.TmpQuat,
         ),
         this.TmpQuat.Rotator(this.TmpRotator),
@@ -314,6 +416,9 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
           "TsAnimNotifyStatePositionBranchTarget",
           !1,
         ));
+  }
+  HasTargetActorOrPosition(t) {
+    return !!t.TargetBaseActorComp || !!t.TargetPos;
   }
   GetNotifyName() {
     return "位移吸附到目标位置";

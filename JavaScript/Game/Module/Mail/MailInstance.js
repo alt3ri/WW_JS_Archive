@@ -5,7 +5,7 @@ const UE = require("ue"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
-  TimeUtil_1 = require("../../Common/TimeUtil"),
+  PublicUtil_1 = require("../../Common/PublicUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ScrollViewDataBase_1 = require("../Util/ScrollView/ScrollViewDataBase");
@@ -20,8 +20,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       (this.Title = ""),
       (this.Content = ""),
       (this.Sender = ""),
-      (this.ValidTime = 0),
-      (this.FinishValidTime = 0),
+      (this.ExpiryTime = 0),
       (this.AttachmentInfos = []),
       (this.ReadTime = 0),
       (this.pyi = 0),
@@ -39,7 +38,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       (this.Ayi = !1),
       (this.Pyi = ""),
       (this.vjs = !0),
-      (this.xja = !1);
+      (this.WKa = !1);
   }
   GetAttachmentStatus() {
     return this.pyi;
@@ -49,7 +48,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件详情：设置附件领取状态",
           ["MailId", this.Id],
           ["attachmentStatus", t],
@@ -63,7 +62,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件详情：设置阅读状态",
           ["MailId", this.Id],
           ["scanned", t],
@@ -120,7 +119,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
                                   "landscape" ===
                                   e[t].replace("is_orientation=", ""))
                               : e[t].includes("needPlayerInfo")
-                                ? (this.xja = !0)
+                                ? (this.WKa = !0)
                                 : (this.Eyi = this.Eyi.concat(e[t]));
   }
   GetIfLandscape() {
@@ -174,30 +173,9 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
   }
   GetSubUrl() {
     let t = this.Dyi;
-    var e, i, s, r, a, n, h;
-    return (
-      this.xja &&
-        ((h =
-          CommonParamById_1.configCommonParamById.GetStringConfig(
-            "mail_question_key",
-          )),
-        (e = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
-        (i = ModelManager_1.ModelManager.FunctionModel.GetPlayerName()),
-        (s = ModelManager_1.ModelManager.LoginModel.GetServerId()),
-        (n =
-          (r = ModelManager_1.ModelManager.LoginModel?.GetSdkLoginConfig())
-            ?.Token ?? ""),
-        (r = r?.Uid ?? ""),
-        (a = TimeUtil_1.TimeUtil.GetServerTime()),
-        (h =
-          e + `;${s};${(n = UE.KuroStaticLibrary.Base64Encode(n))};${a};` + h),
-        (h = UE.KuroStaticLibrary.HashStringWithSHA1(h)),
-        (t =
-          t +
-          `?playerId=${e}&playerName=${i}&serverId=${s}&token=${n}&timestamp=${a}&sign=${h}&playerUid=` +
-          r)),
-      t
-    );
+    return (t = this.WKa
+      ? (PublicUtil_1.PublicUtil.GetExternalUrl(t, 0) ?? t)
+      : t);
   }
   GetSubTitle() {
     return this.Lyi;
@@ -211,13 +189,8 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
   GetAttachmentInfo() {
     return this.AttachmentInfos;
   }
-  GetOriginalDeadlineTimeStamp() {
-    return this.GetReceiveTime() + this.ValidTime;
-  }
-  GetFinishedDeadlineTimeStamp() {
-    return 0 < this.ReadTime
-      ? this.ReadTime + this.FinishValidTime
-      : this.GetOriginalDeadlineTimeStamp();
+  GetExpiryTime() {
+    return this.ExpiryTime;
   }
 }
 exports.MailData = MailData;

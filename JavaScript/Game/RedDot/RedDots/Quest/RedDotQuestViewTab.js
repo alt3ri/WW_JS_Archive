@@ -28,7 +28,7 @@ class RedDotQuestViewTab extends RedDotBase_1.RedDotBase {
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Quest",
-                    19,
+                    18,
                     "RedDotQuestViewTab：任务红点显示",
                     ["mainTypeId", e],
                     ["questId", o.Id],

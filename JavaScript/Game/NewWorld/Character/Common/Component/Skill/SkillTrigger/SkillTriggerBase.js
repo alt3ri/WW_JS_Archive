@@ -8,6 +8,7 @@ class SkillTriggerBase extends UE.KuroBpDataAsset {
       (this.TriggerConditionGroup = void 0),
       (this.TriggerConditionFormula = "");
   }
+  Constructor() {}
 }
 exports.default = SkillTriggerBase;
 class SkillTriggerBaseHandle {

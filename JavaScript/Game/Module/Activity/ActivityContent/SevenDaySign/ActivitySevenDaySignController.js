@@ -20,7 +20,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Activity",
-            38,
+            37,
             "[ActivitySevenDaySign][OnNotify]收到签到状态通知",
             ["ActivityId", e.w6n],
             ["SignIndex", e.c5n],
@@ -40,10 +40,10 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(22089, this.w3e);
+    Net_1.Net.Register(23897, this.w3e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(22089);
+    Net_1.Net.UnRegister(23897);
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
@@ -60,7 +60,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
       default:
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Activity", 38, "签到活动类型配置错误", [
+            Log_1.Log.Error("Activity", 37, "签到活动类型配置错误", [
               "Type",
               t.Type,
             ]),
@@ -76,7 +76,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
     if (!t)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Activity", 38, "签到活动未查到对应配置", [
+          Log_1.Log.Error("Activity", 37, "签到活动未查到对应配置", [
             "Id",
             e.Id,
           ]),
@@ -90,7 +90,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
       default:
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Activity", 38, "签到活动类型配置错误", [
+            Log_1.Log.Error("Activity", 37, "签到活动类型配置错误", [
               "Type",
               t.Type,
             ]),
@@ -108,11 +108,11 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
     var e = Protocol_1.Aki.Protocol.I$n.create();
     (e.w6n = t),
       (e.c5n = i),
-      Net_1.Net.Call(20045, e, (e) => {
+      Net_1.Net.Call(16657, e, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              29228,
+              20828,
             )
           : (ModelManager_1.ModelManager.ActivityModel.GetActivityById(
               t,

@@ -16,7 +16,7 @@ class SwitchRef {
         ((this.Cbo = t),
         AudioSystem_1.AudioSystem.SetSwitch(this.hs, this.State, this.OC))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Audio", 57, "[Core.SwitchRef] 绑定对象无效", [
+        Log_1.Log.Error("Audio", 56, "[Core.SwitchRef] 绑定对象无效", [
           "Group",
           this.hs,
         ]);

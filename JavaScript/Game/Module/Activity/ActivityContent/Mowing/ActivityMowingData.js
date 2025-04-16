@@ -215,6 +215,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
           TabTips: t,
         },
       ],
+      Source: "Mowing",
     };
   }
   SetLevelRewardStateToGot(t) {
@@ -264,7 +265,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
           ((i = this.M2e.get(r.s5n)).RewardState = e.RewardState),
           (i.RewardButtonText = e.RewardButtonText))
         : Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Activity", 50, "后端推了一个不存在的割草副本数据", [
+          Log_1.Log.Debug("Activity", 49, "后端推了一个不存在的割草副本数据", [
             "id",
             r.s5n.toString(),
           ]);
@@ -279,7 +280,7 @@ class ActivityMowingData extends ActivityData_1.ActivityBaseData {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Activity",
-            50,
+            49,
             "当前[击杀积分|KillMonstersScores]没有割草活动副本数据",
           ),
         0);

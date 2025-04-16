@@ -7,18 +7,21 @@ class MapComponent {
   constructor(t) {
     (this.Parent = t),
       (this.PropertyMap = new PropertyMap_1.PropertyMap()),
-      (this.KQa = 0);
+      (this.mYa = 0);
   }
   static GenComponentId() {
     return (MapComponent._Xe = MapComponent._Xe + 1), MapComponent._Xe;
   }
   get ComponentId() {
     return (
-      0 === this.KQa && (this.KQa = MapComponent.GenComponentId()), this.KQa
+      0 === this.mYa && (this.mYa = MapComponent.GenComponentId()), this.mYa
     );
   }
   set ComponentId(t) {
-    this.KQa = t;
+    this.mYa = t;
+  }
+  get ParentEntity() {
+    return this.Parent;
   }
   get Enable() {
     return this.PropertyMap.tryGet("Enable", !1);
@@ -27,19 +30,19 @@ class MapComponent {
     this.PropertyMap.set("Enable", t),
       this.PropertyMap.isDirty("Enable") &&
         (t
-          ? (this.$Qa && ((this.$Qa = !1), this.OnStart()), this.OnEnable())
+          ? (this.dYa && ((this.dYa = !1), this.OnStart()), this.OnEnable())
           : this.OnDisable());
   }
-  get $Qa() {
+  get dYa() {
     return this.PropertyMap.tryGet("FirstEnable", !0);
   }
-  set $Qa(t) {
+  set dYa(t) {
     this.PropertyMap.set("FirstEnable", t);
   }
-  get XQa() {
+  get CYa() {
     return this.PropertyMap.tryGet("EnableTick", !1);
   }
-  set XQa(t) {
+  set CYa(t) {
     this.PropertyMap.set("EnableTick", t);
   }
   Remove() {
@@ -53,8 +56,12 @@ class MapComponent {
   OnEnable() {}
   OnStart() {}
   OnDisable() {}
+  Init() {
+    this.OnInit();
+  }
+  OnInit() {}
   Tick(t) {
-    this.Enable && this.XQa && this.OnTick(t);
+    this.Enable && this.CYa && this.OnTick(t);
   }
   OnTick(t) {}
   Update() {

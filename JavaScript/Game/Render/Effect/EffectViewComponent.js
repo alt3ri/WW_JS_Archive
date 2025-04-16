@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue");
 class EffectViewComponent extends UE.SceneComponent {
+  Constructor() {}
   EditorTick(e) {}
   SetAutoPlay(e) {}
   Play() {}

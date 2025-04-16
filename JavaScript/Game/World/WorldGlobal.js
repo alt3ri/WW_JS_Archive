@@ -73,10 +73,14 @@ class WorldGlobal {
   static OpenLevel(o) {
     (ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel &&
       SeamlessTravelController_1.SeamlessTravelController.StartTravel(o)) ||
-      WorldGlobal.PlayerClientTravel(
-        Global_1.Global.CharacterController,
-        ModelManager_1.ModelManager.GameModeModel.MapConfig.MapPath,
-      );
+      (ModelManager_1.ModelManager.GameModeModel.LastMapPath === o
+        ? (ModelManager_1.ModelManager.GameModeModel.FlushTempDataLayers(),
+          WorldGlobal.JEr(o),
+          WorldGlobal.zEr(o))
+        : WorldGlobal.PlayerClientTravel(
+            Global_1.Global.CharacterController,
+            o,
+          ));
   }
   static PlayerClientTravel(o, a) {
     o.ClientTravel(a, 2, !0, void 0);
@@ -112,8 +116,13 @@ class WorldGlobal {
     var a = Protocol_1.Aki.Protocol.Gks.create();
     return (a.X = o.X), (a.Y = o.Y), (a.Z = o.Z), a;
   }
-  static ToUeVector(o) {
+  static ToUeVectorOld(o) {
     return o ? new UE.Vector(o.X, o.Y, o.Z) : Vector_1.Vector.ZeroVector;
+  }
+  static ToUeVector(o) {
+    return o
+      ? new UE.VectorDouble(o.X, o.Y, o.Z)
+      : Vector_1.Vector.ZeroVectorDouble;
   }
   static ToTsRotator(o) {
     var a = Protocol_1.Aki.Protocol.D2s.create();
@@ -136,7 +145,7 @@ class WorldGlobal {
 ((exports.WorldGlobal = WorldGlobal).OnStatStart = () => {
   GlobalData_1.GlobalData.World &&
     !Info_1.Info.IsBuildShipping &&
-    (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Stat", 34, "STAT统计开启"),
+    (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Stat", 33, "STAT统计开启"),
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
       GlobalData_1.GlobalData.World,
       "STAT STARTFILE",
@@ -150,13 +159,13 @@ class WorldGlobal {
         "STAT STOPFILE",
       ),
       Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Stat", 34, "STAT统计结束");
+      Log_1.Log.Debug("Stat", 33, "STAT统计结束");
   }),
   (WorldGlobal.ResetLoadTime = () => {
     GlobalData_1.GlobalData.World &&
       !Info_1.Info.IsBuildShipping &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Stat", 34, "重置LoadTime时长"),
+        Log_1.Log.Debug("Stat", 33, "重置LoadTime时长"),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "LoadTimes.TestTime 0",
@@ -173,7 +182,7 @@ class WorldGlobal {
     GlobalData_1.GlobalData.World &&
       !Info_1.Info.IsBuildShipping &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Stat", 34, "LoadTime统计开启：", ["groupName", o]),
+        Log_1.Log.Debug("Stat", 33, "LoadTime统计开启：", ["groupName", o]),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "LoadTimes.TestSwitch 1",
@@ -195,7 +204,7 @@ class WorldGlobal {
         "LoadTimes.TestSwitch 0",
       ),
       Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Stat", 34, "LoadTime统计结束");
+      Log_1.Log.Debug("Stat", 33, "LoadTime统计结束");
   }),
   (WorldGlobal.YEr = (o) => {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.BeforeTravelMap);
@@ -233,7 +242,7 @@ class WorldGlobal {
         a.toString(),
       ]),
       GlobalData_1.GlobalData.World?.IsValid() &&
-        ControllerHolder_1.ControllerHolder.GameModeController.OnLoadSubLevel(
+        ControllerHolder_1.ControllerHolder.SubLevelController.OnLoadSubLevel(
           o,
           a.toString(),
           e,
@@ -249,7 +258,7 @@ class WorldGlobal {
         ["LevelName", a.toString()],
       ),
       GlobalData_1.GlobalData.World?.IsValid() &&
-        ControllerHolder_1.ControllerHolder.GameModeController.OnUnLoadSubLevel(
+        ControllerHolder_1.ControllerHolder.SubLevelController.OnUnLoadSubLevel(
           o,
           a.toString(),
         );

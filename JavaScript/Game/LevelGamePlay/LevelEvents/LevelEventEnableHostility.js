@@ -16,19 +16,19 @@ class LevelEventEnableHostility extends LevelGeneralBase_1.LevelEventBase {
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
         s?.Valid
           ? this.vq
-            ? (s.Entity.GetComponent(40)?.SetAiHateConfig(""),
-              s.Entity.GetComponent(40)?.SetAiTickLock(!1))
-            : (s.Entity.GetComponent(40)?.SetAiTickLock(!0),
-              s.Entity.GetComponent(40)?.SetAiHateConfig("10"))
+            ? (s.Entity.GetComponent(46)?.SetAiHateConfig(""),
+              s.Entity.GetComponent(46)?.SetAiTickLock(!1))
+            : (s.Entity.GetComponent(46)?.SetAiTickLock(!0),
+              s.Entity.GetComponent(46)?.SetAiHateConfig("10"))
           : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("LevelEvent", 34, "实体不存在 可能已被销毁", [
+            Log_1.Log.Info("LevelEvent", 33, "实体不存在 可能已被销毁", [
               "entityId",
               o,
             ]);
       }
       this.FinishExecute(!0);
     } else
-      Log_1.Log.CheckError() && Log_1.Log.Error("LevelEvent", 34, "参数不合法"),
+      Log_1.Log.CheckError() && Log_1.Log.Error("LevelEvent", 33, "参数不合法"),
         this.FinishExecute(!1);
   }
 }

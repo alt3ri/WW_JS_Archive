@@ -49,6 +49,7 @@ class ItemHintView extends UiTickViewBase_1.UiTickViewBase {
           this.HDe,
           0,
         )),
+        this.e0i.SetDynamicLoadResourceId("UiItem_ItemListB"),
         this.e0i.DisEnableParentLayout(),
         (this.t0i = new ListSliderControl_1.ListSliderControl(
           ItemPriorHintItem_1.ItemPriorHintItem,
@@ -59,9 +60,10 @@ class ItemHintView extends UiTickViewBase_1.UiTickViewBase {
           this.HDe,
           0,
         )),
+        this.t0i.SetDynamicLoadResourceId("UiItem_ItemListA"),
         this.t0i.DisEnableParentLayout())
       : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("ItemHint", 9, "进包列表为空, 但打开了界面!"),
+          Log_1.Log.Warn("ItemHint", 8, "进包列表为空, 但打开了界面!"),
         this.CloseMe());
   }
   OnTick(i) {

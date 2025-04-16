@@ -5,6 +5,7 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
   BasePropertyById_1 = require("../../../Core/Define/ConfigQuery/BasePropertyById"),
   ElementInfoById_1 = require("../../../Core/Define/ConfigQuery/ElementInfoById"),
   GamepadKeyByKeyName_1 = require("../../../Core/Define/ConfigQuery/GamepadKeyByKeyName"),
+  HeadIconEnergyBarAll_1 = require("../../../Core/Define/ConfigQuery/HeadIconEnergyBarAll"),
   PcKeyByKeyName_1 = require("../../../Core/Define/ConfigQuery/PcKeyByKeyName"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   ModelManager_1 = require("../../Manager/ModelManager");
@@ -60,6 +61,9 @@ class BattleUiConfig extends ConfigBase_1.ConfigBase {
         : r < a && n <= r
           ? ModelManager_1.ModelManager.BattleUiModel.ThreatLevelColor2
           : ModelManager_1.ModelManager.BattleUiModel.ThreatLevelColor1);
+  }
+  GetAllHeadIconEnergyBarConfig() {
+    return HeadIconEnergyBarAll_1.configHeadIconEnergyBarAll.GetConfigList();
   }
 }
 exports.BattleUiConfig = BattleUiConfig;

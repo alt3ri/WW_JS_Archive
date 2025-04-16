@@ -55,6 +55,24 @@ class ItemConfig {
         break;
       case 8:
         this.Emi(i);
+        break;
+      case 9:
+        this.t8c(i);
+        break;
+      case 11:
+        this.eMl(i);
+        break;
+      case 10:
+        this.Ktl(i);
+        break;
+      case 14:
+        this.GBc(i);
+        break;
+      case 12:
+        this.u3l(i);
+        break;
+      case 13:
+        this.bCc(i);
     }
   }
   Cmi(i) {
@@ -119,6 +137,24 @@ class ItemConfig {
       (this.ShowInBag = i.ShowInBag),
       (this.ObtainedShowDescription = i.ObtainedShowDescription);
   }
+  t8c(i) {
+    (this.ItemDataType = 9),
+      (this.QualityId = i.QualityId),
+      (this.ItemType = 15),
+      (this.MainTypeId = 1),
+      (this.TypeDescription = i.TypeDescription),
+      (this.BgDescription = i.BgDescription),
+      (this.IconMiddle = i.IconMiddle),
+      (this.IconSmall = i.IconSmall),
+      (this.ItemAccess = i.ItemAccess),
+      this.Parameters.clear(),
+      (this.SortIndex = i.SortIndex),
+      (this.RedDotDisableRule = i.RedDotDisableRule),
+      (this.ItemBuffType = 0),
+      (this.Name = i.Title),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
+  }
   fmi(i) {
     (this.ItemDataType = 2),
       (this.ItemType = 2),
@@ -136,6 +172,94 @@ class ItemConfig {
       (this.ItemBuffType = 0),
       (this.ShowInBag = i.ShowInBag),
       (this.ObtainedShowDescription = i.ObtainedShowDescription);
+  }
+  GBc(i) {
+    (this.ItemDataType = 14),
+      (this.QualityId = i.QualityId),
+      (this.ItemType = 24),
+      (this.MainTypeId = 1),
+      (this.Name = i.Name),
+      (this.TypeDescription = i.TypeDescription),
+      (this.BgDescription = i.BgDescription),
+      (this.IconMiddle = i.IconMiddle),
+      (this.IconSmall = i.IconSmall),
+      (this.Mesh = i.Mesh),
+      (this.ItemAccess = i.ItemAccess),
+      this.Parameters.clear(),
+      (this.SortIndex = i.SortIndex),
+      (this.RedDotDisableRule = i.RedDotDisableRule),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
+  }
+  Ktl(i) {
+    (this.ItemDataType = 10),
+      (this.ItemType = 18),
+      (this.MainTypeId = 1),
+      (this.Name = i.Name),
+      (this.TypeDescription = i.TypeDescription),
+      (this.BgDescription = i.BgDescription),
+      (this.IconMiddle = i.IconMiddle),
+      (this.IconSmall = i.IconSmall),
+      (this.Mesh = i.Mesh),
+      (this.ItemAccess = i.ItemAccess),
+      this.Parameters.clear(),
+      (this.SortIndex = i.SortIndex),
+      (this.RedDotDisableRule = i.RedDotDisableRule),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
+  }
+  u3l(i) {
+    (this.ItemDataType = 12),
+      (this.ItemType = 21),
+      (this.MainTypeId = 1),
+      (this.Name = i.Name),
+      (this.TypeDescription = i.TypeDescription),
+      (this.BgDescription = i.BgDescription),
+      (this.IconMiddle = i.IconMiddle),
+      (this.IconSmall = i.IconSmall),
+      (this.ItemAccess = i.ItemAccess),
+      this.Parameters.clear(),
+      (this.SortIndex = i.SortIndex),
+      (this.RedDotDisableRule = i.RedDotDisableRule),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
+  }
+  eMl(i) {
+    (this.ItemDataType = 11),
+      (this.ItemType = 19),
+      (this.MainTypeId = 1),
+      (this.Name = i.Name),
+      (this.TypeDescription = i.TypeDescription),
+      (this.BgDescription = i.BgDescription),
+      (this.IconMiddle = i.IconMiddle),
+      (this.IconSmall = i.IconSmall),
+      (this.ItemAccess = i.ItemAccess),
+      this.Parameters.clear(),
+      (this.SortIndex = i.SortIndex),
+      (this.RedDotDisableRule = i.RedDotDisableRule),
+      (this.ShowInBag = i.ShowInBag),
+      (this.ObtainedShowDescription = i.ObtainedShowDescription);
+  }
+  bCc(i) {
+    (this.ItemDataType = 13),
+      (this.ItemType = 60006),
+      (this.MainTypeId = 1),
+      (this.Name = i.Name),
+      (this.TypeDescription = i.TypeDescription),
+      (this.BgDescription = i.BgDescription),
+      (this.IconMiddle = i.IconMiddle),
+      (this.IconSmall = i.IconSmall),
+      (this.ItemAccess = void 0),
+      this.Parameters.clear(),
+      (this.SortIndex = 0),
+      (this.RedDotDisableRule = 0),
+      (this.ShowInBag = !0),
+      (this.ObtainedShowDescription = ""),
+      (this.AttributesDescription = i.AttributesDescription);
+    i = ConfigManager_1.ConfigManager.DangoAbyssConfig.GetAbyssQualityById(
+      i.QualityId,
+    );
+    this.Mesh = i?.Mesh ?? "";
   }
   pmi(i) {
     var s = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId);

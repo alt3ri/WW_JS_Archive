@@ -18,14 +18,14 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
       (this.rxi = (i) => {
         1 === i && this.uPi && this.SPi && this.SPi(this.uPi, this);
       }),
-      (this.L7a = () => {
+      (this.AWa = () => {
         !this.uPi ||
           this.uPi.IsBothAction() ||
           (0 === this.uPi.OpenViewType &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "InputSettings",
-                8,
+                10,
                 "按下清空按键按钮，清空此输入按键",
                 ["ActionOrAxisName", this.uPi.GetActionOrAxisName()],
               ),
@@ -49,7 +49,7 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
     ]),
       (this.BtnBindInfo = [
         [1, this.rxi],
-        [9, this.L7a],
+        [9, this.AWa],
       ]);
   }
   OnStart() {
@@ -76,7 +76,7 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
       this.sxi(),
       this.Rxt(),
       this.MOt(),
-      this.A7a());
+      this.DWa());
   }
   Nft() {
     var i = this.GetText(0),
@@ -114,7 +114,7 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "InputSettings",
-              8,
+              10,
               "刷新按键设置项时，按键名称为空",
               ["ActionOrAxisName", this.uPi.GetActionOrAxisName()],
               ["IsActionOrAxis", this.uPi.IsActionOrAxis],
@@ -151,7 +151,7 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
         ? i.SetUIActive(!1)
         : i.SetUIActive(!0));
   }
-  A7a() {
+  DWa() {
     this.uPi
       ? this.SetDetailItemVisible(this.uPi.IsExpandDetail)
       : this.SetDetailItemVisible(!1);

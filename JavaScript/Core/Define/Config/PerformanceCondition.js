@@ -23,6 +23,13 @@ class PerformanceCondition {
       this,
     );
   }
+  get DisableTag() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.disabletagLength(),
+      this.disabletag,
+      this,
+    );
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -77,6 +84,23 @@ class PerformanceCondition {
           this.J7.__vector_len(this.z7 + t),
         )
       : null;
+  }
+  GetDisabletagAt(t) {
+    return this.disabletag(t);
+  }
+  disabletag(t, i) {
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
+  }
+  disabletagLength() {
+    var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.PerformanceCondition = PerformanceCondition;

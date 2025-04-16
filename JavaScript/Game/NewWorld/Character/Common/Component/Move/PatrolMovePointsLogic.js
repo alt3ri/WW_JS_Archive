@@ -42,7 +42,7 @@ class PatrolMovePointsLogic {
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "AI",
-            43,
+            42,
             "移动路径变更",
             ["实体ID", this.Hte.CreatureData.GetPbDataId()],
             ["PreviousIndex", this.XJo],
@@ -63,7 +63,7 @@ class PatrolMovePointsLogic {
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "AI",
-              51,
+              50,
               "使用起始点移动",
               ["实体ID", this.Hte.CreatureData.GetPbDataId()],
               ["初始点Index", t.StartIndex],
@@ -79,7 +79,7 @@ class PatrolMovePointsLogic {
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "AI",
-                43,
+                42,
                 "使用上次的移动点",
                 ["实体ID", this.Hte.CreatureData.GetPbDataId()],
                 ["PreviousIndex", this.XJo],
@@ -90,7 +90,7 @@ class PatrolMovePointsLogic {
             : this.lzo(0);
   }
   ChangeToNextPoint() {
-    this.uzo(this.GetNextPoint());
+    return this.uzo(this.GetNextPoint());
   }
   GetNextPoint() {
     let t = 0;
@@ -104,7 +104,7 @@ class PatrolMovePointsLogic {
               ? ((this.ooe = !1),
                 (t = 0),
                 Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("AI", 51, "往返式巡逻：回到起点", [
+                  Log_1.Log.Info("AI", 50, "往返式巡逻：回到起点", [
                     "PbDataID",
                     this.Hte.CreatureData.GetPbDataId(),
                   ]),
@@ -113,13 +113,13 @@ class PatrolMovePointsLogic {
                     this.Hte.CreatureData.GetCreatureDataId(),
                   )),
                 (i.V4n = !0),
-                Net_1.Net.Call(17259, i, () => {}))
+                Net_1.Net.Call(21855, i, () => {}))
               : (t = this.TargetIndex - 1)
             : this.TargetIndex === this.MovePoint.length - 1
               ? ((this.ooe = !0),
                 (t = this.MovePoint.length - 2),
                 Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("AI", 51, "往返式巡逻：走到终点", [
+                  Log_1.Log.Info("AI", 50, "往返式巡逻：走到终点", [
                     "PbDataID",
                     this.Hte.CreatureData.GetPbDataId(),
                   ]),
@@ -128,7 +128,7 @@ class PatrolMovePointsLogic {
                     this.Hte.CreatureData.GetCreatureDataId(),
                   )),
                 (i.V4n = !1),
-                Net_1.Net.Call(17259, i, () => {}))
+                Net_1.Net.Call(21855, i, () => {}))
               : (t = this.TargetIndex + 1)
         : (t = this.TargetIndex + 1),
       t
@@ -150,7 +150,7 @@ class PatrolMovePointsLogic {
   czo(t) {
     this.Hte.SkeletalMesh?.SetVisibility(!t.IsHide);
     var i,
-      e = this.Hte.Entity.GetComponent(190);
+      e = this.Hte.Entity.GetComponent(203);
     e &&
       ((i = -841499802),
       t.IsHide ? e.HasTag(i) || e.AddTag(i) : e.HasTag(i) && e.RemoveTag(i));
@@ -185,7 +185,7 @@ class PatrolMovePointsLogic {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "更新移动路径经过点下标",
           ["实体ID", this.Hte.CreatureData.GetPbDataId()],
           ["PreviousIndex", this.XJo],
@@ -200,7 +200,7 @@ class PatrolMovePointsLogic {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "更新移动路径目标点下标",
           ["实体ID", this.Hte.CreatureData.GetPbDataId()],
           ["TargetIndex", t],
@@ -217,7 +217,7 @@ class PatrolMovePointsLogic {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "使用最近的移动点",
           ["实体ID", this.Hte.CreatureData.GetPbDataId()],
           ["当前最近的点Index", t],

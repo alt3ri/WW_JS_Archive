@@ -66,7 +66,7 @@ class AchievementDataItem extends GridProxyAbstract_1.GridProxyAbstract {
     var t, i, s, r, h, n, o;
     void 0 === e
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Achievement", 59, "AchievementDataItem Data为空")
+        Log_1.Log.Error("Achievement", 58, "AchievementDataItem Data为空")
       : ((t = (this.iqe = e).GetCurrentProgress()),
         (i = e.GetMaxProgress()),
         (s = e.GetFinishState()),

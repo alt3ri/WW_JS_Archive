@@ -76,7 +76,7 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
             this.uPe[t].Color === this.CurrentColor,
           ))
         : Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "Linking Fail", ["index", t]);
+          Log_1.Log.Debug("Temp", 35, "Linking Fail", ["index", t]);
   }
   NeighboringType(t, e) {
     var i = t - e;
@@ -144,7 +144,7 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
         var t = Protocol_1.Aki.Protocol.wJn.create();
         (t.a5n = "0"),
           (t.h5n = Protocol_1.Aki.Protocol.h3s.Proto_SignalDevice),
-          Net_1.Net.Call(28002, t, (t) => {
+          Net_1.Net.Call(28624, t, (t) => {
             t.BEs === Protocol_1.Aki.Protocol.Q4n.KRs &&
               (this.gPe(),
               SignalDeviceController_1.SignalDeviceController.CallFinishCallback());

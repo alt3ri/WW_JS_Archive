@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NewSoundNormalItem = void 0);
 const UE = require("ue"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -19,6 +20,8 @@ class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UITexture],
       [2, UE.UIText],
       [3, UE.UIVerticalLayout],
+      [4, UE.UIItem],
+      [5, UE.UIItem],
     ];
   }
   OnStart() {
@@ -28,28 +31,36 @@ class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   Update(e) {
-    var t = this.GetText(0),
-      t =
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Conf.Name),
+    var t = e.DetectRecordData,
+      i = this.GetText(0),
+      i =
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t.Conf.Name),
         this.GetTexture(1)),
-      i = this.GetText(2);
-    e.IsLock
-      ? (this.SetTextureByPath(e.Conf.LockBigIcon, t),
+      r = this.GetText(2),
+      e =
+        (this.Co_(e),
+        ModelManager_1.ModelManager.AdventureGuideModel.IsDetectionPreOpen(t));
+    t.IsLock && !e
+      ? (this.SetTextureShowUntilLoaded(t.Conf.LockBigIcon, i),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
-          i,
-          e.Conf.AttributesDescriptionUnlock,
+          r,
+          t.Conf.AttributesDescriptionUnlock,
         ),
         this.B8e?.SetActive(!1))
-      : (this.SetTextureByPath(e.Conf.BigIcon, t),
+      : (this.SetTextureShowUntilLoaded(t.Conf.BigIcon, i),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
-          i,
-          e.Conf.InstanceSubTypeDescription,
+          r,
+          t.Conf.InstanceSubTypeDescription,
         ),
-        22 === e.Conf.Secondary &&
-        e.Conf.PhantomId &&
-        0 !== e.Conf.PhantomId.length
-          ? (this.B8e?.SetActive(!0), this.B8e?.RefreshByData(e.Conf.PhantomId))
+        22 === t.Conf.Secondary &&
+        t.Conf.PhantomId &&
+        0 !== t.Conf.PhantomId.length
+          ? (this.B8e?.SetActive(!0), this.B8e?.RefreshByData(t.Conf.PhantomId))
           : this.B8e?.SetActive(!1));
+  }
+  Co_(e) {
+    e = e.TracingList?.includes(e.DetectRecordData.Conf.Id) ?? !1;
+    this.GetItem(5)?.SetUIActive(e);
   }
 }
 exports.NewSoundNormalItem = NewSoundNormalItem;

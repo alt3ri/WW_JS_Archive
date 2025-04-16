@@ -44,6 +44,9 @@ class BattlePassReward {
   get IsMilestone() {
     return this.ismilestone();
   }
+  get IsRemind() {
+    return this.isremind();
+  }
   __init(t, e) {
     return (this.z7 = t), (this.J7 = e), this;
   }
@@ -95,6 +98,10 @@ class BattlePassReward {
   }
   ismilestone() {
     var t = this.J7.__offset(this.z7, 12);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  isremind() {
+    var t = this.J7.__offset(this.z7, 14);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }

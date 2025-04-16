@@ -34,7 +34,7 @@ class MoveTriggerController extends ControllerBase_1.ControllerBase {
     MoveTriggerController.ClearController(),
       (MoveTriggerController.Mqi = ActorSystem_1.ActorSystem.Get(
         UE.KuroMoveTriggerController.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
       )),
       MoveTriggerController.Mqi &&
         (UE.KuroMoveTriggerController.RegisterController(
@@ -42,15 +42,15 @@ class MoveTriggerController extends ControllerBase_1.ControllerBase {
         ),
         MoveTriggerController.Mqi.Callback.Add((r) => {
           for (let e = 0; e < r.Num(); ++e) {
-            var t = r.Get(e);
+            var o = r.Get(e);
             if (
-              t.Actor instanceof TsBaseCharacter_1.default &&
-              t.Actor?.IsValid()
+              o.Actor instanceof TsBaseCharacter_1.default &&
+              o.Actor?.IsValid()
             ) {
-              var o = t.Actor?.CharacterActorComponent?.Entity;
-              if (o?.Valid && 0 === t.Area) {
-                const l = o.GetComponent(69);
-                t.EnterOverlap
+              var t = o.Actor?.CharacterActorComponent?.Entity;
+              if (t?.Valid && 0 === o.Area) {
+                const l = t.GetComponent(76);
+                o.EnterOverlap
                   ? l?.Valid &&
                     (l.InSwimTriggerCount++, l.LogSwimTriggerCount())
                   : l?.Valid &&
@@ -73,7 +73,10 @@ class MoveTriggerController extends ControllerBase_1.ControllerBase {
   }
   static ClearController() {
     MoveTriggerController.Mqi &&
-      ActorSystem_1.ActorSystem.Put(MoveTriggerController.Mqi),
+      ActorSystem_1.ActorSystem.Put(
+        "MoveTriggerController.ClearController",
+        MoveTriggerController.Mqi,
+      ),
       UE.KuroMoveTriggerController.UnRegisterController(),
       (MoveTriggerController.Mqi = void 0);
   }

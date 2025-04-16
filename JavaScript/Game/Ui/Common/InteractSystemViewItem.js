@@ -21,7 +21,7 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
       }),
       (this.Vgt = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Test", 8, "[CloseCookRootView]当点击关闭按钮时", [
+          Log_1.Log.Info("Test", 36, "[CloseCookRootView]当点击关闭按钮时", [
             "viewName",
             this.ViewInfo.Name,
           ]),
@@ -80,7 +80,7 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Test",
-          8,
+          36,
           "u.Ui表现表中配置了通用背景面板(CommonPopBg)为5，但是t.通用背景-Npc系统界面通用背景中没有配置对应界面",
           ["ViewName", a],
         );

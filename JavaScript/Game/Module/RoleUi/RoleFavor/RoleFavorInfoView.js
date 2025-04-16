@@ -10,6 +10,7 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
   GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -279,7 +280,9 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[0, this.I5t]]);
   }
   OnStart() {
-    (this.V_o = this.OpenParam), this.bl();
+    (this.V_o = this.OpenParam),
+      UiSceneManager_1.UiSceneManager.SetSceneFloorReflection(!0, !0),
+      this.bl();
   }
   OnHandleLoadScene() {
     UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()
@@ -289,16 +292,12 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
   OnBeforeShow() {
     this.V_o &&
       3 === this.V_o.FavorTabType &&
-      UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()?.SetActorHiddenInGame(
-        !0,
-      );
+      UiSceneManager_1.UiSceneManager.HideRoleSystemRoleActor();
   }
   OnAfterHide() {
     this.V_o &&
       3 === this.V_o.FavorTabType &&
-      UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()?.SetActorHiddenInGame(
-        !1,
-      );
+      UiSceneManager_1.UiSceneManager.ShowRoleSystemRoleActor();
   }
   ClearVerticalLayout() {
     this.k_o && (this.k_o.ClearChildren(), (this.k_o = void 0));
@@ -532,15 +531,19 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
     if (0 === i.GetCurVoiceState())
       this.ClearAudio(i),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Role", 44, "关闭当前选项正在播放的语音");
+          Log_1.Log.Debug("Role", 43, "关闭当前选项正在播放的语音");
     else {
       this.j_o &&
         0 === this.j_o.GetCurVoiceState() &&
         (this.ClearAudio(this.j_o), Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("Role", 44, "关闭上个选项播放的语音");
-      var e = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(1),
-        t = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(2);
-      if (0 === e || 0 === t)
+        Log_1.Log.Debug("Role", 43, "关闭上个选项播放的语音");
+      var e = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+          GameSettingsDefine_1.EFunction.MASTERVOLUMEFUNCTION,
+        ),
+        t = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+          GameSettingsDefine_1.EFunction.VOICEVOLUMEFUNCTION,
+        );
+      if (void 0 === e || 0 === e || void 0 === t || 0 === t)
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "FavorVolume",
         );
@@ -549,14 +552,14 @@ class RoleFavorInfoView extends UiViewBase_1.UiViewBase {
         if (
           ((this.W_o = e.Voice),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Role", 44, "播放当前点击的语音", [
+            Log_1.Log.Debug("Role", 43, "播放当前点击的语音", [
               "this.VoicePath",
               this.W_o,
             ]),
           "" === this.W_o)
         )
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Role", 44, "配置的语音路径为空", [
+            Log_1.Log.Error("Role", 43, "配置的语音路径为空", [
               "this.VoicePath",
               this.W_o,
             ]);

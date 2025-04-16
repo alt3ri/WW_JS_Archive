@@ -13,7 +13,6 @@ const UE = require("ue"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer"),
   ConfirmBoxDefine_1 = require("../../Module/ConfirmBox/ConfirmBoxDefine"),
-  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
   LguiUtil_1 = require("../../Module/Util/LguiUtil"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../Ui/UiManager"),
@@ -53,15 +52,15 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
       (this.DPe = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(105);
         e.FunctionMap.set(2, () => {
-          LevelLoadingController_1.LevelLoadingController.OpenLoading(
-            14,
+          ControllerHolder_1.ControllerHolder.LevelLoadingController.OpenLoading(
+            13,
             3,
             () => {
               SignalDeviceController_1.SignalDeviceController.ResetAll(),
                 this.GetButton(0).SetSelfInteractive(!1),
                 (this.TPe = !1),
-                LevelLoadingController_1.LevelLoadingController.CloseLoading(
-                  14,
+                ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
+                  13,
                 );
             },
           );
@@ -73,14 +72,14 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
       (this.RPe = () => {
         UiManager_1.UiManager.OpenView("SignalDeviceGuideView");
       }),
-      (this.FAe = (e, i, t, n, o) => {
-        var s, r;
-        this.UPe(e, i, t, n, o),
+      (this.FAe = (e, i, t, n, s) => {
+        var o, r;
+        this.UPe(e, i, t, n, s),
           e
             ? (this.Lo[n].Color === IAction_1.EPieceColorType.White &&
                 ((e = (t ? this.EPe : this.pPe).GetRootItem()),
                 (e = LguiUtil_1.LguiUtil.CopyItem(e, this.yPe[n])),
-                (s = t
+                (o = t
                   ? SignalLineItem_1.LinkingLineItem.Create(4)
                   : SignalLineItem_1.LinkingLineItem.Create(3)),
                 (r =
@@ -88,36 +87,36 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
                     i,
                     n,
                   )),
-                this.IPe[n].SetLineData(e, s, r, i, t)),
+                this.IPe[n].SetLineData(e, o, r, i, t)),
               this.Lo[i].Color === IAction_1.EPieceColorType.White &&
                 ((e = this.IPe[i].FromIndex),
-                (s = this.IPe[i].IsFromDot),
+                (o = this.IPe[i].IsFromDot),
                 Math.abs(e - n) === 2 * SignalDeviceModel_1.ROWNUM ||
                 2 === Math.abs(e - n)
-                  ? ((r = (s || o ? this.EPe : this.pPe).GetRootItem()),
+                  ? ((r = (o || s ? this.EPe : this.pPe).GetRootItem()),
                     (t = LguiUtil_1.LguiUtil.CopyItem(r, this.yPe[i])),
                     (r = SignalLineItem_1.LinkingLineItem.Create(4)),
                     this.IPe[i].ResetStraightLineData(t, r, n))
                   : Math.abs(e - n) === SignalDeviceModel_1.ROWNUM - 1 ||
                       Math.abs(e - n) === SignalDeviceModel_1.ROWNUM + 1
                     ? ((r = (
-                        (t = s || o)
-                          ? this.APe(e, s, i, n, o)
+                        (t = o || s)
+                          ? this.APe(e, o, i, n, s)
                             ? this.vPe
                             : this.MPe
                           : this.fPe
                       ).GetRootItem()),
                       (r = LguiUtil_1.LguiUtil.CopyItem(r, this.yPe[i])),
                       (t = t
-                        ? this.APe(e, s, i, n, o)
+                        ? this.APe(e, o, i, n, s)
                           ? SignalLineItem_1.LinkingLineItem.Create(0)
                           : SignalLineItem_1.LinkingLineItem.Create(1)
                         : SignalLineItem_1.LinkingLineItem.Create(2)),
-                      this.IPe[i].ResetCornerLineData(r, t, i, n, o))
+                      this.IPe[i].ResetCornerLineData(r, t, i, n, s))
                     : Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "Temp",
-                        36,
+                        35,
                         "OnSignalDeviceLinking From Error",
                         ["from", i],
                         ["beforeIndex", e],
@@ -127,7 +126,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
               this.Lo[n].Color === IAction_1.EPieceColorType.White &&
                 this.IPe[n].SetLineHalf());
       }),
-      (this.UPe = (e, i, t, n, o) => {
+      (this.UPe = (e, i, t, n, s) => {
         e
           ? (t &&
               ((e =
@@ -136,14 +135,14 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
                   i,
                 )),
               this.IPe[i].SetDotRay(!0, e)),
-            o &&
+            s &&
               ((e =
                 ModelManager_1.ModelManager.SignalDeviceModel.NeighboringType(
                   i,
                   n,
                 )),
               this.IPe[n].SetDotRay(!0, e)))
-          : (t && this.IPe[i].SetDotRay(!1), o && this.IPe[n].SetDotRay(!1));
+          : (t && this.IPe[i].SetDotRay(!1), s && this.IPe[n].SetDotRay(!1));
       }),
       (this.JAe = (e, i) => {
         e &&
@@ -210,10 +209,10 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
       n = this.GetExtendToggle(5).RootUIComp;
     this.yPe.push(n);
     for (let e = 1; e < GRIDNUM; e++) {
-      var o = LguiUtil_1.LguiUtil.CopyItem(n, t);
-      this.yPe.push(o);
+      var s = LguiUtil_1.LguiUtil.CopyItem(n, t);
+      this.yPe.push(s);
       const i = new LinkingEmptyToggle_1.LinkingEmptyToggle();
-      i.CreateThenShowByActor(o.GetOwner()), i.InitData(e), this.IPe.push(i);
+      i.CreateThenShowByActor(s.GetOwner()), i.InitData(e), this.IPe.push(i);
     }
     i.InitData(0),
       this.GetButton(0).SetSelfInteractive(!1),
@@ -260,7 +259,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
           ) ?? "???",
         );
     } else
-      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Temp", 36, "配置格子数不对");
+      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Temp", 35, "配置格子数不对");
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
@@ -284,25 +283,25 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
     var t = LguiUtil_1.LguiUtil.CopyItem(this.WAe.GetRootItem(), this.yPe[e]);
     t.SetHierarchyIndex(0), this.IPe[e].SetDotData(t, i);
   }
-  APe(e, i, t, n, o) {
+  APe(e, i, t, n, s) {
     return i
       ? Math.abs(t - e) === SignalDeviceModel_1.ROWNUM
         ? (t - e) * (n - t) == -SignalDeviceModel_1.ROWNUM
         : 1 === Math.abs(t - e)
           ? (t - e) * (n - t) === SignalDeviceModel_1.ROWNUM
           : (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Temp", 36, "IsCornerLeftOrRight Error"),
+              Log_1.Log.Warn("Temp", 35, "IsCornerLeftOrRight Error"),
             !1)
-      : o
+      : s
         ? 1 === Math.abs(t - e)
           ? (t - e) * (n - t) == -SignalDeviceModel_1.ROWNUM
           : Math.abs(t - e) === SignalDeviceModel_1.ROWNUM
             ? (t - e) * (n - t) === SignalDeviceModel_1.ROWNUM
             : (Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("Temp", 36, "IsCornerLeftOrRight Error"),
+                Log_1.Log.Warn("Temp", 35, "IsCornerLeftOrRight Error"),
               !1)
         : (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Temp", 36, "IsCornerLeftOrRight no dot"),
+            Log_1.Log.Warn("Temp", 35, "IsCornerLeftOrRight no dot"),
           !1);
   }
   async xPe(e) {

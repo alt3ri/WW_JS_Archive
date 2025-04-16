@@ -8,6 +8,7 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -182,7 +183,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
       }),
       (this.PickAllAccessibleAttachment = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Mail", 28, "邮件界面：一键领取");
+          Log_1.Log.Info("Mail", 27, "邮件界面：一键领取");
         var i = ModelManager_1.ModelManager.MailModel.GetMailList(),
           t = [],
           e = 2 === this.zyi ? 2 : 1;
@@ -203,7 +204,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
               );
           }
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Mail", 28, "邮件界面：没有可领取的附件");
+            Log_1.Log.Debug("Mail", 27, "邮件界面：没有可领取的附件");
         }
       }),
       (this.GSi = (i) => new MailDropDownTitle_1.MailDropDownTitle(i)),
@@ -215,12 +216,12 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.MailModel.SetCurrentSelectMailId(t),
           this.SelectedMailData && this.LIi(this.SelectedMailData),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Mail", 28, "邮件界面：选择邮件", ["mailId", t]);
+            Log_1.Log.Info("Mail", 27, "邮件界面：选择邮件", ["mailId", t]);
       }),
       (this.nIi = (i) => {
         var t;
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Mail", 28, "邮件界面：CallBackPickMailView领取附件"),
+          Log_1.Log.Info("Mail", 27, "邮件界面：CallBackPickMailView领取附件"),
           this.SelectedMailData &&
             (t = this.BSi.GetDropDownItemObject(this.BSi.GetSelectedIndex())) &&
             (this.sIi(t),
@@ -229,7 +230,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
             Log_1.Log.CheckInfo()) &&
             Log_1.Log.Info(
               "Mail",
-              28,
+              27,
               "邮件界面：CallBackPickMailView领取附件Finish",
             );
       }),
@@ -238,7 +239,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Mail",
-            28,
+            27,
             "邮件界面：CallBackDeleteMailView删除邮件",
           ),
           this.SelectedMailData
@@ -254,13 +255,13 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
                 Log_1.Log.CheckInfo()) &&
                 Log_1.Log.Info(
                   "Mail",
-                  28,
+                  27,
                   "邮件界面：CallBackDeleteMailView删除邮件结束",
                 ))
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Mail",
-                28,
+                27,
                 "邮件界面：CallBackDeleteMailView没有选择邮件,没有选择邮件的时候但是却删除了邮件",
               );
       }),
@@ -269,7 +270,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Mail",
-            28,
+            27,
             "邮件界面：CallBackPassivelyDeleteMailView被动删除邮件",
           ),
           this.SelectedMailData
@@ -284,13 +285,13 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
                 Log_1.Log.CheckInfo()) &&
                 Log_1.Log.Info(
                   "Mail",
-                  28,
+                  27,
                   "邮件界面：CallBackPassivelyDeleteMailView被动删除邮件结束",
                 ))
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Mail",
-                28,
+                27,
                 "邮件界面：CallBackPassivelyDeleteMailView没有选择邮件",
               );
       }),
@@ -298,7 +299,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Mail",
-            28,
+            27,
             "邮件界面：CallBackAddMailView,添加新邮件",
           );
         var i = this.BSi.GetDropDownItemObject(this.BSi.GetSelectedIndex());
@@ -309,7 +310,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Mail",
-            28,
+            27,
             "邮件界面：CallBackAddMailView,添加新邮件结束",
             ["CurrentMailDataList", this.Jyi],
           );
@@ -351,7 +352,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Mail",
-              28,
+              27,
               "邮件界面：选择下拉item OnSelectDropItem",
               ["index", i],
               ["this.CurrentMailDataList.length", this.Jyi?.length],
@@ -445,7 +446,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
     var i = ConfigManager_1.ConfigManager.MailConfig.GetFilterTypeList();
     this.BSi.InitScroll(i, this.oIi),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Mail", 28, "邮件界面：OnStartFinish");
+        Log_1.Log.Info("Mail", 27, "邮件界面：OnStartFinish");
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -554,7 +555,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件界面：刷新列表 RefreshMailScrollList",
           ["selectedIndex", t],
           ["mailList长度", i?.length],
@@ -583,34 +584,28 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
     var t, e;
     2 === i.GetMailLevel()
       ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(11), "ForeverValid")
-      : ((e = i.GetOriginalDeadlineTimeStamp()),
-        (i = i.GetFinishedDeadlineTimeStamp()),
-        (e =
-          TimeUtil_1.TimeUtil.CalculateMinuteGapBetweenNow(e, !0) <
-          TimeUtil_1.TimeUtil.CalculateMinuteGapBetweenNow(i, !0)
-            ? e
-            : i),
-        (i = TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(e, !0)),
-        (t = TimeUtil_1.TimeUtil.CalculateMinuteGapBetweenNow(e, !0)),
-        i >= CommonDefine_1.HOUR_PER_DAY
-          ? ((e = TimeUtil_1.TimeUtil.CalculateDayGapBetweenNow(e, !0)),
+      : ((i = i.GetExpiryTime()),
+        (t = TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(i, !0)),
+        (e = TimeUtil_1.TimeUtil.CalculateMinuteGapBetweenNow(i, !0)),
+        t >= CommonDefine_1.HOUR_PER_DAY
+          ? ((i = TimeUtil_1.TimeUtil.CalculateDayGapBetweenNow(i, !0)),
             LguiUtil_1.LguiUtil.SetLocalText(
               this.GetText(11),
               "AfterDayAutoDelete",
-              e.toFixed(0),
+              i.toFixed(0),
             ))
-          : 1 < i
+          : 1 < t
             ? LguiUtil_1.LguiUtil.SetLocalText(
                 this.GetText(11),
                 "AfterTimeAutoDelete",
-                i.toFixed(0),
+                t.toFixed(0),
               )
             : (LguiUtil_1.LguiUtil.SetLocalText(
                 this.GetText(11),
                 "AfterMinAutoDelete",
-                t.toFixed(0),
+                e.toFixed(0),
               ),
-              t < 1 &&
+              e < 1 &&
                 LguiUtil_1.LguiUtil.SetLocalText(
                   this.GetText(11),
                   "AutoDeleteInOneMinute",
@@ -664,21 +659,26 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Mail",
-        28,
+        27,
         "邮件界面：OpenUrl",
         ["link", i],
         ["title", t],
         ["forceUseDefaultBrowser", e],
         ["ifLandscape", s],
       ),
-      !e && ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-        ? ControllerHolder_1.ControllerHolder.KuroSdkController.SdkOpenUrlWnd(
-            t,
-            i,
-            s,
-            !1,
-          )
-        : ModelManager_1.ModelManager.MailModel.OpenWebBrowser(i);
+      e
+        ? ((e = PublicUtil_1.PublicUtil.GetExtendExternalUrl(i, e)),
+          ModelManager_1.ModelManager.MailModel.OpenWebBrowser(e))
+        : ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
+          ? ((e = PublicUtil_1.PublicUtil.GetExtendExternalUrl(i, !0)),
+            ControllerHolder_1.ControllerHolder.KuroSdkController.SdkOpenUrlWnd(
+              t,
+              e,
+              s,
+              !1,
+            ))
+          : ((t = PublicUtil_1.PublicUtil.GetExtendExternalUrl(i, !1)),
+            ModelManager_1.ModelManager.MailModel.OpenWebBrowser(t));
   }
 }
 exports.MailBoxView = MailBoxView;

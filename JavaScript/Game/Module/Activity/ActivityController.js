@@ -28,7 +28,7 @@ class ActivityController extends ControllerBase_1.ControllerBase {
         "CommonActivityView",
         ActivityController.y4e,
       ),
-      !0
+      !(ActivityController.A1h = !1)
     );
   }
   static OnClear() {
@@ -38,7 +38,7 @@ class ActivityController extends ControllerBase_1.ControllerBase {
       ActivityManager_1.ActivityManager.Clear(),
       this.R6t(),
       this.OnRemoveOpenViewCheckFunction(),
-      !0
+      !(ActivityController.A1h = !1)
     );
   }
   static OnAddOpenViewCheckFunction() {
@@ -55,22 +55,22 @@ class ActivityController extends ControllerBase_1.ControllerBase {
     );
   }
   static ShowActivityRefreshAndBackToBattleView() {
-    var e = () => {
+    var t = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ResetToBattleView,
         );
       },
-      t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(115);
-    t.FunctionMap.set(1, e),
-      t.FunctionMap.set(0, e),
+      e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(115);
+    e.FunctionMap.set(1, t),
+      e.FunctionMap.set(0, t),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-        t,
+        e,
       );
   }
-  static PQa() {
-    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(224);
+  static rYa() {
+    var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(224);
     ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-      e,
+      t,
     );
   }
   static OnAddEvents() {
@@ -78,6 +78,10 @@ class ActivityController extends ControllerBase_1.ControllerBase {
       EventDefine_1.EEventName.OnLoadingNetDataDone,
       ActivityController.Q5e,
     ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.WorldDone,
+        ActivityController.nye,
+      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LocalStorageInitPlayerId,
         ActivityController.I4e,
@@ -101,6 +105,10 @@ class ActivityController extends ControllerBase_1.ControllerBase {
       ActivityController.Q5e,
     ),
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.WorldDone,
+        ActivityController.nye,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LocalStorageInitPlayerId,
         ActivityController.I4e,
       ),
@@ -117,13 +125,13 @@ class ActivityController extends ControllerBase_1.ControllerBase {
         ActivityController._Mo,
       );
   }
-  static InitActivity(e) {}
+  static InitActivity(t) {}
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(15124, ActivityController.T4e),
-      Net_1.Net.Register(22819, ActivityController.L4e);
+    Net_1.Net.Register(26498, ActivityController.T4e),
+      Net_1.Net.Register(25939, ActivityController.L4e);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(15124), Net_1.Net.UnRegister(22819);
+    Net_1.Net.UnRegister(26498), Net_1.Net.UnRegister(25939);
   }
   static R6t() {
     void 0 !== this.zaa &&
@@ -140,73 +148,84 @@ class ActivityController extends ControllerBase_1.ControllerBase {
         !1,
       ));
   }
-  static OpenActivityById(e = 0, t = 4, i) {
+  static OpenActivityById(t = 0, e = 4, i) {
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10053)
       ? 0 ===
         ModelManager_1.ModelManager.ActivityModel.GetCurrentShowingActivities()
           .length
-        ? (ControllerHolder_1.ControllerHolder.ActivityController.PQa(), !1)
-        : !!(e =
-            ModelManager_1.ModelManager.ActivityModel.GetCurrentOpenActivityData(
-              e,
-            )) &&
-          (ModelManager_1.ModelManager.ActivityModel.SetCurrentSelectActivityId(
-            e.Id,
-          ),
-          e.NeedSelfControlFirstRedPoint() || this.RequestReadActivity(e),
-          UiManager_1.UiManager.IsViewOpen("CommonActivityView")
+        ? (ControllerHolder_1.ControllerHolder.ActivityController.rYa(), !1)
+        : (UiManager_1.UiManager.IsViewOpen("CommonActivityView")
             ? EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.ActivityViewChange,
+                t,
               )
-            : UiManager_1.UiManager.OpenView("CommonActivityView", t, i),
+            : UiManager_1.UiManager.OpenView("CommonActivityView", [e, t], i),
           !0)
       : (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "FunctionDisable",
         ),
         !1);
   }
-  static OpenActivityContentView(e) {
-    var t = ActivityManager_1.ActivityManager.GetActivityController(e.Type);
-    ModelManager_1.ModelManager.ActivityModel.SetCurrentSelectActivityId(e.Id),
-      t.OpenView(e);
+  static OpenActivityContentView(t) {
+    ActivityManager_1.ActivityManager.GetActivityController(t.Type).OpenView(t);
   }
-  static RequestReadActivity(t) {
-    var e;
-    t?.GetIfFirstOpen() &&
-      (((e = new Protocol_1.Aki.Protocol.M$n()).w6n = t.Id),
-      Net_1.Net.Call(24348, e, (e) => {
-        e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+  static RequestReadActivity(e) {
+    var t;
+    e?.GetIfFirstOpen() &&
+      (((t = new Protocol_1.Aki.Protocol.M$n()).w6n = e.Id),
+      Net_1.Net.Call(26925, t, (t) => {
+        t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.Q4n,
-            18758,
+            t.Q4n,
+            25947,
           ),
-          ModelManager_1.ModelManager.ActivityModel.OnReceiveActivityRead(t.Id);
+          ModelManager_1.ModelManager.ActivityModel.OnReceiveActivityRead(e.Id);
       })),
-      ModelManager_1.ModelManager.ActivityModel.OnReceiveActivityRead(t.Id);
+      ModelManager_1.ModelManager.ActivityModel.OnReceiveActivityRead(e.Id);
   }
-  static CreateActivityData(e) {
+  static RequestPreOpenActivity(e, i) {
+    var t;
+    e?.CanPreOpen() &&
+      (((t = new Protocol_1.Aki.Protocol.ak_()).w6n = e.Id),
+      Net_1.Net.Call(20302, t, (t) => {
+        t
+          ? t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+            ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                t.Q4n,
+                15087,
+              ),
+              i?.(!1))
+            : (EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.OnActivityPreOpen,
+                e.Id,
+              ),
+              i?.(!0))
+          : i?.(!1);
+      }));
+  }
+  static CreateActivityData(t) {
     return ActivityManager_1.ActivityManager.GetActivityController(
-      e.h5n,
-    ).CreateActivityData(e);
+      t.h5n,
+    ).CreateActivityData(t);
   }
-  static IsOpeningActivityRelativeView(e) {
-    e = ActivityManager_1.ActivityManager.GetActivityController(e);
-    return !!e && e.GetIsOpeningActivityRelativeView();
+  static IsOpeningActivityRelativeView(t) {
+    t = ActivityManager_1.ActivityManager.GetActivityController(t);
+    return !!t && t.GetIsOpeningActivityRelativeView();
   }
-  static OpenActivityConditionView(e) {
-    e &&
-      ((e = new ActivityCommonDefine_1.ActivityConditionGroupData(e)),
-      UiManager_1.UiManager.OpenView("ActivityConditionView", e));
+  static OpenActivityConditionView(t) {
+    t &&
+      ((t = new ActivityCommonDefine_1.ActivityConditionGroupData(t)),
+      UiManager_1.UiManager.OpenView("ActivityConditionView", t));
   }
-  static CheckIsActivityClose(e, t) {
-    if (t)
+  static CheckIsActivityClose(t, e) {
+    if (e)
       ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-        t,
+        e,
       )?.CheckIfClose() &&
         ControllerHolder_1.ControllerHolder.ActivityController.ShowActivityRefreshAndBackToBattleView();
-    else if (e)
+    else if (t)
       for (const i of ModelManager_1.ModelManager.ActivityModel.GetActivitiesByType(
-        e,
+        t,
       ))
         if (i.CheckIfClose())
           return void ControllerHolder_1.ControllerHolder.ActivityController.ShowActivityRefreshAndBackToBattleView();
@@ -214,6 +233,7 @@ class ActivityController extends ControllerBase_1.ControllerBase {
 }
 (exports.ActivityController = ActivityController),
   ((_a = ActivityController).zaa = void 0),
+  (ActivityController.A1h = !1),
   (ActivityController.y4e = () => {
     ActivityController.OpenActivityById(0, 3);
   }),
@@ -230,29 +250,33 @@ class ActivityController extends ControllerBase_1.ControllerBase {
   (ActivityController.D4e = () => {
     ModelManager_1.ModelManager.ActivityModel.RefreshShowingActivities();
   }),
-  (ActivityController.AFe = (e, t) => {
-    ActivityController.InitActivity(e);
+  (ActivityController.AFe = (t, e) => {
+    ActivityController.InitActivity(t);
   }),
   (ActivityController.I4e = () => {
     ModelManager_1.ModelManager.ActivityModel.InitCache();
   }),
   (ActivityController.Q5e = () => {
-    _a.RequestActivityData(), _a.P3e();
+    _a.P3e();
   }),
-  (ActivityController.g3e = (e) => {
-    for (const i of e) {
-      var t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(i);
-      if (t && ActivityController.IsOpeningActivityRelativeView(t.Type))
+  (ActivityController.nye = () => {
+    ActivityController.A1h ||
+      ((ActivityController.A1h = !0), _a.RequestActivityData());
+  }),
+  (ActivityController.g3e = (t) => {
+    for (const i of t) {
+      var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(i);
+      if (e && ActivityController.IsOpeningActivityRelativeView(e.Type))
         return void _a.ShowActivityRefreshAndBackToBattleView();
     }
   }),
   (ActivityController._Mo = () => {
-    _a.RequestActivityData().then((e) => {
-      e &&
+    _a.RequestActivityData().then((t) => {
+      t &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Activity",
-            38,
+            37,
             "[CrossDay][Activity] 跨天活动数据刷新完成",
           ),
         EventSystem_1.EventSystem.Emit(
@@ -266,32 +290,32 @@ class ActivityController extends ControllerBase_1.ControllerBase {
   (ActivityController.RequestActivityData = async () => {
     return (
       !!ModelManager_1.ModelManager.FunctionModel.IsOpen(10053) &&
-      new Promise((t) => {
-        var e = new Protocol_1.Aki.Protocol.v$n();
-        Net_1.Net.Call(29259, e, (e) => {
-          e
-            ? e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+      new Promise((e) => {
+        var t = new Protocol_1.Aki.Protocol.v$n();
+        Net_1.Net.Call(28575, t, (t) => {
+          t
+            ? t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.Q4n,
-                  28236,
+                  t.Q4n,
+                  21437,
                 ),
-                t(!1))
+                e(!1))
               : (ModelManager_1.ModelManager.ActivityModel.OnReceiveMessageData(
-                  e.Yps,
+                  t.Yps,
                 ),
                 ModelManager_1.ModelManager.ActivityModel.InitCache(),
-                t(!0))
-            : t(!1);
+                e(!0))
+            : e(!1);
         });
       })
     );
   }),
-  (ActivityController.T4e = (e) => {
-    ModelManager_1.ModelManager.ActivityModel.OnActivityUpdate(e.Yps),
+  (ActivityController.T4e = (t) => {
+    ModelManager_1.ModelManager.ActivityModel.OnActivityUpdate(t.Yps),
       ActivityController.D4e();
   }),
-  (ActivityController.L4e = (e) => {
-    ModelManager_1.ModelManager.ActivityModel.OnDisableActivity(e.Jps),
+  (ActivityController.L4e = (t) => {
+    ModelManager_1.ModelManager.ActivityModel.OnDisableActivity(t.Jps),
       ActivityController.D4e();
   });
 //# sourceMappingURL=ActivityController.js.map

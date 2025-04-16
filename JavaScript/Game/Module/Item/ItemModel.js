@@ -9,13 +9,14 @@ class ItemModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.LastCloseTimeStamp = 0),
       (this.XCi = new Array()),
+      (this.foh = new Array()),
       (this.$Ci = []);
   }
   OnInit() {
-    return !(this.LastCloseTimeStamp = 0);
+    return (this.LastCloseTimeStamp = 0), (this.foh = []), !0;
   }
   OnClear() {
-    return (this.XCi.length = 0), !(this.$Ci.length = 0);
+    return (this.XCi.length = 0), (this.$Ci.length = 0), !(this.foh.length = 0);
   }
   LoadGetItemConfigIdList() {
     this.$Ci =
@@ -43,6 +44,15 @@ class ItemModel extends ModelBase_1.ModelBase {
   }
   ShiftWaitItemList() {
     return this.XCi.shift();
+  }
+  IsWaitPhantomListEmpty() {
+    return 0 === this.foh.length;
+  }
+  PushWaitPhantomItem(t) {
+    this.foh.push(t);
+  }
+  ShiftWaitPhantomList() {
+    return this.foh.shift();
   }
   GmClearWaitItemList() {
     this.XCi = [];

@@ -4,28 +4,28 @@ var __decorate =
   function (t, i, e, o) {
     var s,
       r = arguments.length,
-      n =
+      h =
         r < 3
           ? i
           : null === o
             ? (o = Object.getOwnPropertyDescriptor(i, e))
             : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(t, i, e, o);
+      h = Reflect.decorate(t, i, e, o);
     else
-      for (var h = t.length - 1; 0 <= h; h--)
-        (s = t[h]) && (n = (r < 3 ? s(n) : 3 < r ? s(i, e, n) : s(i, e)) || n);
-    return 3 < r && n && Object.defineProperty(i, e, n), n;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (s = t[n]) && (h = (r < 3 ? s(h) : 3 < r ? s(i, e, h) : s(i, e)) || h);
+    return 3 < r && h && Object.defineProperty(i, e, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFlowComponent =
     exports.DEFAULT_BUBBLE_LEAVE_RANGE =
     exports.DEFAULT_BUBBLE_ENTER_RANGE =
       void 0);
-const Time_1 = require("../../../../../../Core/Common/Time"),
-  EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+const EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
   Global_1 = require("../../../../../Global"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
@@ -37,6 +37,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
   constructor() {
     super(...arguments),
       (this.ActorComp = void 0),
+      (this.HeadInfoComp = void 0),
       (this.FlowLogic = void 0),
       (this.IsInit = !1),
       (this.MinRangeSquared = 0),
@@ -46,7 +47,8 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
       (this.IsPlayDynamicFlow = !1);
   }
   OnStart() {
-    this.ActorComp = this.Entity.GetComponent(1);
+    (this.ActorComp = this.Entity.GetComponent(1)),
+      (this.HeadInfoComp = this.Entity.GetComponent(80));
     var t = this.ActorComp?.CreatureData.GetPbEntityInitData();
     if (t) {
       (this.FlowData = (0, IComponent_1.getComponent)(
@@ -132,7 +134,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
         !this.ActorComp?.Owner?.IsValid() ||
         !Global_1.Global.BaseCharacter ||
         ((this.ActorComp.Owner.bHidden ||
-          !this.FlowLogic.GetUiRootItemState()) &&
+          !this.HeadInfoComp?.CanShowHeadItem()) &&
           (this.ForceStopFlow(), 1))
       )
     );
@@ -155,10 +157,10 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
         : i < this.MaxRangeSquared
           ? ((this.IsEnter = !1), (this.FlowLogic.IsPause = !0))
           : this.ForceStopFlow(),
-      this.FlowLogic.Tick(Time_1.Time.DeltaTimeSeconds));
+      this.FlowLogic.Tick(t * MathUtils_1.MathUtils.MillisecondToSecond));
   }
   RemoveFlowActions() {
-    this.Entity.GetComponent(73).HideDialogueText();
+    this.FlowLogic?.HideDialogueText();
   }
   ResetFlowPlayCoolDownTime() {
     this.FlowLogic && this.FlowLogic.ResetWaitTime();
@@ -189,7 +191,7 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
   }
 };
 (CharacterFlowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(28)],
+  [(0, RegisterComponent_1.RegisterComponent)(31)],
   CharacterFlowComponent,
 )),
   (exports.CharacterFlowComponent = CharacterFlowComponent);

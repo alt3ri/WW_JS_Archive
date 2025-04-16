@@ -35,16 +35,16 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",
-          18,
+          17,
           "调用播放镜头特效接口",
           ["handleId", s],
           ["path", e],
         ),
-      1 === t.HandleIds.size && (t.LoadResId = this.lTa(e)),
+      1 === t.HandleIds.size && (t.LoadResId = this.uTa(e)),
       s
     );
   }
-  lTa(s) {
+  uTa(s) {
     return ResourceSystem_1.ResourceSystem.LoadAsync(
       s,
       UE.EffectScreenPlayData_C,
@@ -55,7 +55,7 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
           ((t.EffectData = e),
           this.FightRootInited
             ? (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("RenderEffect", 18, "开始播放镜头特效", [
+                Log_1.Log.Debug("RenderEffect", 17, "开始播放镜头特效", [
                   "path",
                   s,
                 ]),
@@ -68,7 +68,7 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
   }
   EndScreenEffect(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("RenderEffect", 18, "调用停止镜头特效接口", [
+      Log_1.Log.Debug("RenderEffect", 17, "调用停止镜头特效接口", [
         "handleId",
         e,
       ]);
@@ -76,20 +76,20 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
     t &&
       t.HandleIds.has(e) &&
       (t.HandleIds.delete(e), 0 === t.HandleIds.size) &&
-      (this.PathToHandleMap.delete(t.Path), this._Ta(t));
+      (this.PathToHandleMap.delete(t.Path), this.cTa(t));
   }
   OnClear() {
-    return (this.HandleIdGenerator = 0), this.uTa(), !0;
+    return (this.HandleIdGenerator = 0), this.mTa(), !0;
   }
-  uTa() {
-    for (const e of this.PathToHandleMap.values()) this._Ta(e);
+  mTa() {
+    for (const e of this.PathToHandleMap.values()) this.cTa(e);
     this.PathToHandleMap.clear(), this.HandleMap.clear();
   }
-  _Ta(e) {
+  cTa(e) {
     e.HandleIds.clear(),
       e.EffectData &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("RenderEffect", 18, "停止镜头特效", ["path", e.Path]),
+          Log_1.Log.Debug("RenderEffect", 17, "停止镜头特效", ["path", e.Path]),
         ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().EndScreenEffect(
           e.EffectData,
         ),
@@ -104,7 +104,7 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
   SetFightRootInited(e) {
     if (
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("RenderEffect", 18, "设置战斗镜头特效根节点", [
+        Log_1.Log.Debug("RenderEffect", 17, "设置战斗镜头特效根节点", [
           "isInit",
           e,
         ]),
@@ -114,7 +114,7 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
         t.WaitingFightRootInit &&
           ((t.WaitingFightRootInit = !1), t.EffectData) &&
           (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("RenderEffect", 18, "开始播放镜头特效", [
+            Log_1.Log.Debug("RenderEffect", 17, "开始播放镜头特效", [
               "path",
               t.Path,
             ]),
@@ -129,7 +129,7 @@ class ScreenEffectModel extends ModelBase_1.ModelBase {
   ReleaseHandle(e) {
     this.HandlePool.includes(e)
       ? Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("RenderEffect", 18, "镜头特效Handel重复入池")
+        Log_1.Log.Warn("RenderEffect", 17, "镜头特效Handel重复入池")
       : this.HandlePool.push(e);
   }
 }

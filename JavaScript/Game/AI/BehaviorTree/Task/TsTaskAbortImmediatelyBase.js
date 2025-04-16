@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue");
 class TsTaskAbortImmediatelyBase extends UE.BTTask_BlueprintBase {
+  Constructor() {}
   ReceiveAbortAI(e, s) {
     this.FinishAbort(), this.OnAbort(), this.OnClear();
   }

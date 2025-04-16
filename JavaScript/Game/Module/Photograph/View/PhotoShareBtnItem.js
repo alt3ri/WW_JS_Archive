@@ -16,16 +16,17 @@ class PhotoShareBtnItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.NTt = void 0),
       (this.aTn = 1),
       (this.FWt = () => {
-        var t = TimeUtil_1.TimeUtil.GetServerTime();
-        t - this.L6e < this.aTn
+        var t,
+          i = TimeUtil_1.TimeUtil.GetServerTime();
+        i - this.L6e < this.aTn
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "CannotShare",
             )
-          : ((this.L6e = t),
-            this.NTt?.(
-              SharePlatformById_1.configSharePlatformById.GetConfig(this.pKi)
-                .ShareId,
-            ));
+          : ((this.L6e = i),
+            (i = this.pKi),
+            (t =
+              SharePlatformById_1.configSharePlatformById.GetConfig(i).ShareId),
+            this.NTt?.(t, i));
       });
   }
   OnRegisterComponent() {

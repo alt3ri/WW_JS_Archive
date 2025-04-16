@@ -11,25 +11,28 @@ class TsAnimNotifyStateVisionMove extends UE.KuroAnimNotifyState {
       (this.Velocity = void 0),
       (this.TmpVector = void 0);
   }
-  K2_NotifyBegin(e, t, i) {
+  Constructor() {
+    (this.Velocity = void 0), (this.TmpVector = void 0);
+  }
+  K2_NotifyBegin(t, e, i) {
     this.Init();
-    e = e.GetOwner();
+    t = t.GetOwner();
     return (
       !!UE.KuroStaticLibrary.IsObjectClassByName(
-        e,
+        t,
         CharacterNameDefines_1.CharacterNameDefines.BP_BASEVISION,
       ) && (this.Velocity.FromUeVector(this.移动速度), !0)
     );
   }
-  K2_NotifyTick(e, t, i) {
-    var e = e.GetOwner();
+  K2_NotifyTick(t, e, i) {
+    var t = t.GetOwner();
     return (
       !!UE.KuroStaticLibrary.IsObjectClassByName(
-        e,
+        t,
         CharacterNameDefines_1.CharacterNameDefines.BP_BASEVISION,
       ) &&
-      !!(e = EntitySystem_1.EntitySystem.GetComponent(e.EntityId, 3))?.Valid &&
-      (e.AddActorLocalOffset(
+      !!(t = EntitySystem_1.EntitySystem.GetComponent(t.EntityId, 3))?.Valid &&
+      (t.AddActorLocalOffset(
         this.Velocity.Multiply(i, this.TmpVector).ToUeVector(),
         "TsAnimNotifyStateVisionMove",
         !0,

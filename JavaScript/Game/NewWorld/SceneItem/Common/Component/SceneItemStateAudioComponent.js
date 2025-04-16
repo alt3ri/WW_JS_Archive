@@ -31,7 +31,6 @@ const UE = require("ue"),
   GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
   Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
-  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -45,7 +44,6 @@ let SceneItemStateAudioComponent =
       super(...arguments),
         (this.EIe = void 0),
         (this.cen = void 0),
-        (this.jnn = void 0),
         (this.Men = void 0),
         (this.b1n = !1),
         (this.q1n = void 0),
@@ -53,7 +51,7 @@ let SceneItemStateAudioComponent =
         (this.N1n = void 0),
         (this.O1n = void 0),
         (this.k1n = void 0),
-        (this.F1n = void 0),
+        (this.eu1 = void 0),
         (this.V1n = void 0),
         (this.H1n = void 0),
         (this.j1n = void 0),
@@ -71,7 +69,7 @@ let SceneItemStateAudioComponent =
                 this.N1n.Type !== IComponent_1.EAkEventType.Box ||
                   t ||
                   this.X1n(void 0, 1),
-                this.F1n.get(this.W1n)));
+                this.eu1.get(this.W1n)));
             i && this.$1n(i);
           }
           this.b1n = t;
@@ -79,7 +77,7 @@ let SceneItemStateAudioComponent =
         (this.Usi = (t, i) => {
           if (this.W1n !== t) {
             var e = this.O1n.get(t),
-              o = this.F1n.get(this.W1n);
+              o = this.eu1.get(this.W1n);
             if ((o && this.$1n(o), (this.W1n = t), e))
               switch (this.G1n) {
                 case IComponent_1.EAudioRangeType.AOI:
@@ -96,7 +94,7 @@ let SceneItemStateAudioComponent =
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Audio",
-                40,
+                39,
                 "[StateAudioComp] [疑难杂症] AkEvent回调",
                 ["PbDataId", this.EIe?.GetPbDataId()],
                 ["CallbackType", i],
@@ -108,7 +106,7 @@ let SceneItemStateAudioComponent =
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Audio",
-                  40,
+                  39,
                   "[StateAudioComp] [疑难杂症] 解析AkEvent回调",
                   ["PbDataId", this.EIe?.GetPbDataId()],
                   ["Label", i.Label],
@@ -116,12 +114,12 @@ let SceneItemStateAudioComponent =
               let t = void 0;
               try {
                 t = JSON.parse(i.Label);
-              } catch (t) {
+              } catch {
                 return void (
                   Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Audio",
-                    40,
+                    39,
                     "[StateAudioComp] [疑难杂症] AkEvent回调解析失败",
                     ["PbDataId", this.EIe?.GetPbDataId()],
                     ["Label", i.Label],
@@ -140,7 +138,7 @@ let SceneItemStateAudioComponent =
         });
     }
     static get Dependencies() {
-      return [187, 0];
+      return [200, 0];
     }
     OnInitData(t) {
       var t = t.GetParam(SceneItemStateAudioComponent_1)[0];
@@ -152,17 +150,17 @@ let SceneItemStateAudioComponent =
         !(!this.G1n || !this.N1n) ||
           ((t = this.EIe.GetPbDataId()),
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Entity", 40, "组件配置参数缺失", ["entityId", t]),
+            Log_1.Log.Error("Entity", 39, "组件配置参数缺失", ["entityId", t]),
           !1)
       );
     }
     OnStart() {
       var t;
-      if (((this.cen = this.Entity.GetComponent(120)), !this.cen))
+      if (((this.cen = this.Entity.GetComponent(131)), !this.cen))
         return (
           (t = this.EIe.GetPbDataId()),
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Entity", 40, "StateComponent不存在", [
+            Log_1.Log.Error("Entity", 39, "StateComponent不存在", [
               "entityId",
               t,
             ]),
@@ -175,29 +173,28 @@ let SceneItemStateAudioComponent =
         this.G1n)
       ) {
         case IComponent_1.EAudioRangeType.RangeComp:
-          if (((this.jnn = this.Entity.GetComponent(77)), !this.jnn))
-            return (
-              Log_1.Log.CheckError() &&
-                Log_1.Log.Error(
-                  "Entity",
-                  40,
-                  "SceneItemReferenceComponent不存在",
-                  ["entityConfigId", this.EIe.GetPbDataId()],
-                ),
-              !1
+          EventSystem_1.EventSystem.HasWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
+            this.Q1n,
+          ) ||
+            EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+              this,
+              this.Entity,
+              EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
+              this.Q1n,
             );
-          this.jnn.AddOnPlayerOverlapCallback(this.Q1n);
           break;
         case IComponent_1.EAudioRangeType.AOI:
           this.Z1n(!0);
           break;
         case IComponent_1.EAudioRangeType.SceneActorRefComp:
-          if (((this.Men = this.Entity.GetComponent(150)), !this.Men))
+          if (((this.Men = this.Entity.GetComponent(161)), !this.Men))
             return (
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Entity",
-                  40,
+                  39,
                   "SceneItemReferenceComponent不存在",
                   ["entityConfigId", this.EIe.GetPbDataId()],
                 ),
@@ -229,9 +226,17 @@ let SceneItemStateAudioComponent =
         this.G1n)
       ) {
         case IComponent_1.EAudioRangeType.RangeComp:
-          this.jnn &&
-            (this.jnn.RemoveOnPlayerOverlapCallback(this.Q1n),
-            (this.jnn = void 0)),
+          EventSystem_1.EventSystem.HasWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
+            this.Q1n,
+          ) &&
+            EventSystem_1.EventSystem.RemoveWithTargetUseKey(
+              this,
+              this.Entity,
+              EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
+              this.Q1n,
+            ),
             this.b1n && this.Q1n(!1);
           break;
         case IComponent_1.EAudioRangeType.AOI:
@@ -249,31 +254,26 @@ let SceneItemStateAudioComponent =
       return !0;
     }
     z1n() {
-      (this.O1n = new Map()), (this.k1n = new Map()), (this.F1n = new Map());
+      (this.O1n = new Map()), (this.k1n = new Map()), (this.eu1 = new Map());
       for (const i of this.q1n.Config ?? []) {
         var t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i.State);
         t &&
           (i.AkEvent && this.O1n.set(t, i.AkEvent),
           i.LeaveAkEvent && this.k1n.set(t, i.LeaveAkEvent),
           i.AudioFade) &&
-          this.F1n.set(t, i.AudioFade);
+          this.eu1.set(t, i.AudioFade);
       }
     }
     e_n() {
       var t;
       this.V1n?.IsValid() ||
-        ((t = this.Entity?.GetComponent(187)?.Owner)?.IsValid()
-          ? (this.V1n = t.AddComponentByClass(
-              UE.AkComponent.StaticClass(),
-              !1,
-              MathUtils_1.MathUtils.DefaultTransform,
-              !1,
-            ))
+        ((t = this.Entity?.GetComponent(1)?.Owner)?.IsValid()
+          ? (this.V1n = AudioSystem_1.AudioSystem.GetAkComponent(t))
           : (this.V1n = void 0));
     }
     X1n(t, i) {
       if (this.N1n.Type === IComponent_1.EAkEventType.Point)
-        this.N1n.PointIds?.length ? this.t_n(t) : this.i_n(t);
+        this.N1n.PointIds?.length ? this.t_n(t, i) : this.i_n(t, i);
       else if (this.N1n.Type === IComponent_1.EAkEventType.Box) {
         switch (i) {
           case 0:
@@ -292,9 +292,10 @@ let SceneItemStateAudioComponent =
     o_n(t, i) {
       var e;
       this.N1n.Type === IComponent_1.EAkEventType.Default && t
-        ? (e = this.Entity?.GetComponent(187)?.Owner)?.IsValid()
+        ? (e = this.Entity?.GetComponent(200)?.Owner)?.IsValid()
           ? ((t = (0, AudioSystem_1.parseAudioEventPath)(t)),
-            (this.K1n = AudioSystem_1.AudioSystem.PostEvent(t, e)))
+            (t = AudioSystem_1.AudioSystem.PostEvent(t, e)),
+            1 !== i && (this.K1n = t))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneItem",
@@ -308,78 +309,94 @@ let SceneItemStateAudioComponent =
             this.EIe?.GetPbDataId(),
           ]);
     }
-    i_n(t) {
-      var i = this.N1n;
-      this.N1n.Type !== IComponent_1.EAkEventType.Point ||
-        i.PointIds?.length ||
-        ((i = this.Entity?.GetComponent(187)?.Owner)?.IsValid() &&
-          ((t = (0, AudioSystem_1.parseAudioEventPath)(t)),
-          (this.K1n = AudioSystem_1.AudioSystem.PostEvent(t, i, {
-            StopWhenOwnerDestroyed: !0,
-            CallbackMask: 4,
-            CallbackHandler: this.Y1n,
-          }))));
-    }
-    t_n(t) {
-      var i = this.N1n;
+    i_n(t, i) {
+      var e = this.N1n;
       if (
         this.N1n.Type === IComponent_1.EAkEventType.Point &&
-        i.PointIds?.length
+        !e.PointIds?.length
       ) {
         if (!this.V1n?.IsValid())
           if ((this.e_n(), !this.V1n?.IsValid()))
             return (
-              (h = this.EIe.GetPbDataId()),
+              (o = this.EIe.GetPbDataId()),
               void (
                 Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Entity", 40, "AkComponent创建失败", [
+                Log_1.Log.Error("Entity", 39, "AkComponent创建失败", [
                   "entityId",
-                  h,
+                  o,
                 ])
               )
             );
-        var e = UE.NewArray(UE.Transform);
-        for (const r of i.PointIds) {
-          var o =
-            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r);
-          let t = void 0;
-          if (o)
-            t =
-              o.Entity.GetComponent(1)?.ActorTransform ??
-              o.Entity.GetComponent(0)?.GetTransform();
-          else {
-            o = ModelManager_1.ModelManager.CreatureModel.GetEntityData(r);
-            if (!o)
-              return void (
+        this.V1n.bEnableOcclusion = !!e.EnableOcclusion;
+        var o = (0, AudioSystem_1.parseAudioEventPath)(t),
+          e = AudioSystem_1.AudioSystem.PostEvent(o, this.V1n, {
+            StopWhenOwnerDestroyed: !0,
+            CallbackMask: 4,
+            CallbackHandler: this.Y1n,
+          });
+        1 !== i && (this.K1n = e);
+      }
+    }
+    t_n(t, i) {
+      var e = this.N1n;
+      if (
+        this.N1n.Type === IComponent_1.EAkEventType.Point &&
+        e.PointIds?.length
+      ) {
+        if (!this.V1n?.IsValid())
+          if ((this.e_n(), !this.V1n?.IsValid()))
+            return (
+              (r = this.EIe.GetPbDataId()),
+              void (
                 Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Audio", 40, "多点音源位置实体不存在", [
+                Log_1.Log.Error("Entity", 39, "AkComponent创建失败", [
                   "entityId",
                   r,
                 ])
+              )
+            );
+        var o = UE.NewArray(UE.TransformDouble);
+        for (const a of e.PointIds) {
+          var s =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
+          let t = void 0;
+          if (s)
+            t =
+              s.Entity.GetComponent(1)?.ActorTransform ??
+              s.Entity.GetComponent(0)?.D_GetTransform();
+          else {
+            s = ModelManager_1.ModelManager.CreatureModel.GetEntityData(a);
+            if (!s)
+              return void (
+                Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Audio", 39, "多点音源位置实体不存在", [
+                  "entityId",
+                  a,
+                ])
               );
-            var s,
-              n,
-              o = o.Transform;
-            o &&
-              ((s = Vector_1.Vector.Create(
-                o.Pos?.X ?? 0,
-                o.Pos?.Y ?? 0,
-                o.Pos?.Z ?? 0,
+            var n,
+              h,
+              s = s.Transform;
+            s &&
+              ((n = Vector_1.Vector.Create(
+                s.Pos?.X ?? 0,
+                s.Pos?.Y ?? 0,
+                s.Pos?.Z ?? 0,
               )),
-              (n = Rotator_1.Rotator.Create(
-                o.Rot?.X ?? 0,
-                o.Rot?.Y ?? 0,
-                o.Rot?.Z ?? 0,
+              (h = Rotator_1.Rotator.Create(
+                s.Rot?.X ?? 0,
+                s.Rot?.Y ?? 0,
+                s.Rot?.Z ?? 0,
               )),
-              (o = Vector_1.Vector.Create(
-                o.Scale?.X ?? 0,
-                o.Scale?.Y ?? 0,
-                o.Scale?.Z ?? 0,
+              (s = Vector_1.Vector.Create(
+                s.Scale?.X ?? 0,
+                s.Scale?.Y ?? 0,
+                s.Scale?.Z ?? 0,
               )),
-              (t = new UE.Transform(
-                n.ToUeRotator(),
+              (t = new UE.TransformDouble(
+                h.ToUeRotator(),
+                n.ToUeVector(),
                 s.ToUeVector(),
-                o.ToUeVector(),
               )));
           }
           if (!t?.IsValid())
@@ -387,17 +404,19 @@ let SceneItemStateAudioComponent =
               Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Audio",
-                34,
+                33,
                 "未能获取到多点音源位置实体的有效Transform",
-                ["entityId", r],
+                ["entityId", a],
               )
             );
-          e.Add(t);
+          o.Add(t);
         }
-        this.V1n.SetStopWhenOwnerDestroyed(!0),
-          AudioController_1.AudioController.SetMultiplePositions(this.V1n, e);
-        var h = (0, AudioSystem_1.parseAudioEventPath)(t);
-        this.K1n = AudioSystem_1.AudioSystem.PostEvent(h, this.V1n);
+        (this.V1n.bEnableOcclusion = !!e.EnableOcclusion),
+          this.V1n.SetStopWhenOwnerDestroyed(!0),
+          AudioController_1.AudioController.SetMultiplePositions(this.V1n, o);
+        var r = (0, AudioSystem_1.parseAudioEventPath)(t),
+          e = AudioSystem_1.AudioSystem.PostEvent(r, this.V1n);
+        1 !== i && (this.K1n = e);
       }
     }
     Z1n(i) {
@@ -412,20 +431,19 @@ let SceneItemStateAudioComponent =
             this.N1n.Type !== IComponent_1.EAkEventType.Box ||
               t ||
               this.X1n(void 0, 1),
-            this.F1n.get(this.W1n)));
+            this.eu1.get(this.W1n)));
         i && this.$1n(i);
       }
     }
     $1n(t) {
       var i;
       this.K1n &&
-        t.FadeCurve &&
-        t.FadeDuration &&
         ((i = t.FadeCurve),
         AudioSystem_1.AudioSystem.ExecuteAction(this.K1n, 0, {
           TransitionDuration: t.FadeDuration,
           TransitionFadeCurve: i,
-        }));
+        }),
+        (this.K1n = 0));
     }
     J1n(t) {
       var i = t.Priority;
@@ -453,7 +471,7 @@ let SceneItemStateAudioComponent =
         ? (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Audio",
-              40,
+              39,
               "[AudioBox] 播放音频盒子",
               ["PbDataId", this.EIe?.GetPbDataId()],
               ["AkEventPath", this.j1n],
@@ -470,7 +488,7 @@ let SceneItemStateAudioComponent =
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Audio",
-            40,
+            39,
             "[AudioBox] 播放音频盒子失败, 缺少对应的AkEventPath配置",
             ["PbDataId", this.EIe?.GetPbDataId()],
           );
@@ -478,7 +496,7 @@ let SceneItemStateAudioComponent =
   });
 (SceneItemStateAudioComponent = SceneItemStateAudioComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(119)],
+    [(0, RegisterComponent_1.RegisterComponent)(129)],
     SceneItemStateAudioComponent,
   )),
   (exports.SceneItemStateAudioComponent = SceneItemStateAudioComponent);

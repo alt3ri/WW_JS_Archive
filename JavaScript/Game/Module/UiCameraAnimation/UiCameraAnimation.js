@@ -24,6 +24,7 @@ class UiCameraAnimation {
       (this.sAo = void 0),
       (this.aAo = void 0),
       (this.hAo = -0),
+      (this.fwl = -0),
       (this.lAo = void 0),
       (this._Ao = new Map()),
       (this.uAo = -0),
@@ -54,7 +55,7 @@ class UiCameraAnimation {
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "CameraAnimation",
-                8,
+                58,
                 "播放界面摄像机动画------开始",
                 ["fromHandleName", i.ToString()],
                 ["toHandleName", t.ToString()],
@@ -63,14 +64,14 @@ class UiCameraAnimation {
               ),
             this.eAo.Deactivate(),
             UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.SetCameraActorRelativeLocation(
-              Vector_1.Vector.ZeroVector,
+              Vector_1.Vector.ZeroVectorDouble,
             ),
             this.eAo.SetWidgetCameraAttachToAnimationActor(),
             this.uAo <= 0
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "CameraAnimation",
-                    8,
+                    58,
                     "播放界面摄像机动画时间<=0，会立马结束动画",
                     ["timeLength", this.uAo],
                   ),
@@ -84,7 +85,7 @@ class UiCameraAnimation {
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "CameraAnimation",
-              8,
+              58,
               "刷新动画数据失败",
               ["fromHandleName", i.ToString()],
               ["toHandleName", t.ToString()],
@@ -93,7 +94,7 @@ class UiCameraAnimation {
         : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
-            8,
+            58,
             "无法播放镜头动画：原因是找不到对应插槽或骨骼模型为空",
             ["toHandleData", t.ToString()],
           );
@@ -130,12 +131,12 @@ class UiCameraAnimation {
         !0)
     );
   }
-  IAo(i, t, s, e, a, h, r, o, n, m) {
+  IAo(i, t, s, a, e, h, r, o, n, m) {
     (this.I1e = i),
       (this.oAo = t),
       (this.qae = s),
-      (this.rAo = e),
-      (this.nAo = a),
+      (this.rAo = a),
+      (this.nAo = e),
       (this.sAo = h),
       (this.aAo = r),
       (this.hAo = o),
@@ -148,7 +149,7 @@ class UiCameraAnimation {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "CameraAnimation",
-          8,
+          58,
           "播放界面摄像机动画------停止",
           ["fromHandleName", this.mAo?.ToString()],
           ["toHandleName", this.dAo?.ToString()],
@@ -169,7 +170,7 @@ class UiCameraAnimation {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",
-        8,
+        58,
         "播放界面摄像机动画------完成",
         ["fromHandleName", this.mAo.ToString()],
         ["toHandleName", this.dAo?.ToString()],
@@ -204,15 +205,15 @@ class UiCameraAnimation {
       this._Ao.clear();
   }
   yAo(i, t, s) {
-    var e;
+    var a;
     UE.KismetSystemLibrary.IsValidSoftObjectReference(i) &&
       (this.fAo(!0, 1),
-      (e =
+      (a =
         UiCameraAnimationManager_1.UiCameraAnimationManager
           .UiCameraSequenceComponent).AddUiCameraSequenceFinishedCallback(
         this.gAo,
       ),
-      e.LoadAndPlayUiCameraSequence(i, t, s));
+      a.LoadAndPlayUiCameraSequence(i, t, s));
   }
   fAo(i = !0, t = 0) {
     UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSequenceComponent?.DestroyUiCameraSequence(
@@ -236,6 +237,7 @@ class UiCameraAnimation {
           this.AAo(this.dAo.GetTargetFieldOfView()),
           this.PAo(this.dAo.GetTargetFocalDistance()),
           this.xAo(this.dAo.GetTargetAperture()),
+          this.vwl(this.dAo.GetTargetFocalRegion()),
           this.wAo(this.dAo.GetTargetPostProcessBlendWeight())));
   }
   IsPlaying() {
@@ -252,7 +254,7 @@ class UiCameraAnimation {
   BAo(i, t) {
     var s = this.qAo(1);
     void 0 !== s &&
-      ((i = UE.KismetMathLibrary.VLerp(this.I1e, i, s)),
+      ((i = UE.KismetMathLibrary.D_VLerp(this.I1e, i, s)),
       t
         ? this.eAo.SetUiCameraAnimationRelativeLocation(i)
         : this.eAo.SetUiCameraAnimationLocation(i));
@@ -272,7 +274,7 @@ class UiCameraAnimation {
   RAo(i) {
     var t = this.qAo(4);
     t &&
-      ((i = UE.KismetMathLibrary.VLerp(this.rAo, i, t)),
+      ((i = UE.KismetMathLibrary.D_VLerp(this.rAo, i, t)),
       this.eAo.SetSpringArmRelativeLocation(i));
   }
   UAo(i) {
@@ -299,6 +301,12 @@ class UiCameraAnimation {
       ((i = MathUtils_1.MathUtils.Lerp(this.hAo, i, t)),
       this.eAo.SetCameraAperture(i));
   }
+  vwl(i) {
+    var t = this.qAo(10);
+    t &&
+      ((i = MathUtils_1.MathUtils.Lerp(this.fwl, i, t)),
+      this.eAo.SetCameraFocalRegion(i));
+  }
   wAo(i) {
     var t = this.qAo(8);
     t &&
@@ -324,13 +332,13 @@ class UiCameraAnimation {
       var t = this.tAo?.CurveMap,
         s = t.GetMaxIndex();
       for (let i = 0; i < s; i++) {
-        const a = t.GetKey(i).valueOf();
-        var e = t.Get(a);
-        UE.KismetSystemLibrary.IsValidSoftObjectReference(e) &&
-          ((e = e.ToAssetPathName()),
-          StringUtils_1.StringUtils.IsEmpty(e) ||
-            ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.CurveFloat, (i) => {
-              this._Ao.set(a, i);
+        const e = t.GetKey(i).valueOf();
+        var a = t.Get(e);
+        UE.KismetSystemLibrary.IsValidSoftObjectReference(a) &&
+          ((a = a.ToAssetPathName()),
+          StringUtils_1.StringUtils.IsEmpty(a) ||
+            ResourceSystem_1.ResourceSystem.LoadAsync(a, UE.CurveFloat, (i) => {
+              this._Ao.set(e, i);
             }));
       }
     }

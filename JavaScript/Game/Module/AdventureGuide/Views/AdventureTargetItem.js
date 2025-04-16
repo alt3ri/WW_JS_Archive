@@ -27,7 +27,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.qOe = () => {
         this.JVe ||
           ((this.JVe = !0),
-          this.Pe.Status === Protocol_1.Aki.Protocol.Aks.Proto_Finish &&
+          this.Pe.Status === Protocol_1.Aki.Protocol.Aks.a3_ &&
             ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForAdventureReward(
               this.AdventureId,
             ).finally(() => {
@@ -133,7 +133,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   t6e(e) {
     this.GetButton(9).RootUIComp.SetUIActive(
-      e === Protocol_1.Aki.Protocol.Aks.Proto_Finish,
+      e === Protocol_1.Aki.Protocol.Aks.a3_,
     );
   }
   i6e(e, t) {
@@ -142,7 +142,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   o6e(e) {
-    this.GetItem(4).SetUIActive(e === Protocol_1.Aki.Protocol.Aks.Proto_Finish);
+    this.GetItem(4).SetUIActive(e === Protocol_1.Aki.Protocol.Aks.a3_);
   }
   Ju() {
     if (this.Pe?.AdventureTaskBase.JumpTo) {
@@ -162,7 +162,7 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
               ? ((o = {
                   MarkType: o.ObjectType,
                   MarkId: o.MarkId,
-                  OpenAreaId: 0,
+                  OpenFogId: 0,
                 }),
                 WorldMapController_1.WorldMapController.OpenView(1, !1, o))
               : Log_1.Log.CheckError() &&

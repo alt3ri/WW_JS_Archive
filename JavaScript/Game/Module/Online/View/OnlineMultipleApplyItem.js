@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   OnlineController_1 = require("../OnlineController");
@@ -52,12 +51,13 @@ class OnlineMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {
     this.pNi = this.GetSprite(3);
   }
-  Refresh(e, t, r) {
+  Refresh(e, t, i) {
     this.iOi = e;
-    var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+    var r = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(
       e.HeadId,
-    )?.Card;
-    i && this.SetTextureByPath(i, this.GetTexture(1)),
+      !1,
+    );
+    r && this.SetTextureByPath(r.GetRoleHeadIconCircle(), this.GetTexture(1)),
       this.GetText(0).SetText(e.Name),
       this.GetText(2).SetText(e.Level.toString());
   }

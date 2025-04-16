@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelGhostSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
   EffectSpec_1 = require("./EffectSpec");
@@ -39,11 +40,11 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "RenderEffect",
-              26,
+              25,
               "残影EffectContext缺少SkeletalMesh组件",
             )
         : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("RenderEffect", 26, "残影EffectContext类型错误");
+          Log_1.Log.Warn("RenderEffect", 25, "残影EffectContext类型错误");
   }
   static GetComponentName(e) {
     switch (e) {
@@ -71,7 +72,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
         return EffectModelGhostSpec.OtherCase3Name;
       case 11:
         return EffectModelGhostSpec.OtherCase4Name;
-      case 12:
+      case 24:
         return;
     }
   }
@@ -80,34 +81,34 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
     if (e) {
       var s = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
         o = s.Num(),
-        c = new Map();
+        h = new Map();
       for (let e = 0; e < o; e++) {
-        var f = s.Get(e);
-        f && f !== t && c.set(f.GetName(), f);
+        var c = s.Get(e);
+        c && c !== t && h.set(c.GetName(), c);
       }
-      var h = this.EffectModel.MeshComponentsToUse.Num();
-      for (let e = 0; e < h; ++e) {
-        var r,
-          i = this.EffectModel.MeshComponentsToUse.Get(e);
-        0 === i
-          ? this.a0e.set(t, EffectModelGhostSpec.GetComponentName(i))
-          : ((i = EffectModelGhostSpec.GetComponentName(i)),
-            (r = c.get(i))
-              ? this.a0e.set(r, i)
+      var i = this.EffectModel.MeshComponentsToUse.Num();
+      for (let e = 0; e < i; ++e) {
+        var f,
+          r = this.EffectModel.MeshComponentsToUse.Get(e);
+        0 === r
+          ? this.a0e.set(t, EffectModelGhostSpec.GetComponentName(r))
+          : ((r = EffectModelGhostSpec.GetComponentName(r)),
+            (f = h.get(r))
+              ? this.a0e.set(f, r)
               : Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("RenderEffect", 26, "残影获取Skeletal失败", [
+                Log_1.Log.Warn("RenderEffect", 25, "残影获取Skeletal失败", [
                   "name",
-                  i,
+                  r,
                 ]));
       }
       var a = this.EffectModel.CustomComponentNames.Num();
       for (let e = 0; e < a; ++e) {
         var n = this.EffectModel.CustomComponentNames.Get(e).toString(),
-          l = c.get(n);
+          l = h.get(n);
         l
           ? this.a0e.set(l, n)
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("RenderEffect", 26, "残影获取Skeletal失败", [
+            Log_1.Log.Warn("RenderEffect", 25, "残影获取Skeletal失败", [
               "name",
               n,
             ]);
@@ -115,7 +116,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
       for (const p of this.a0e.values()) this.s0e.set(p, []);
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderEffect", 26, "残影获取Actor失败");
+        Log_1.Log.Error("RenderEffect", 25, "残影获取Actor失败");
   }
   OnTick(e) {
     var t;
@@ -126,7 +127,9 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
         (this.LifeTime.TotalPassTime - this.l0e >= t && this.m0e());
   }
   OnCanStop() {
-    return !this.n0e || 0 === this.n0e.length;
+    return this.HasInitTickOptimize && this.Handle
+      ? cpp_1.FKuroEffectSystemInterface.GetGhostEffectCanStop(this.Handle.Id)
+      : !this.n0e || 0 === this.n0e.length;
   }
   XAr() {
     for (const e of this.n0e)
@@ -142,9 +145,9 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
   }
   m0e() {
     var e = [];
-    for (const h of this.a0e.keys())
-      if (h && h.IsVisible() && !h.bHiddenInGame) {
-        var s = this.a0e.get(h);
+    for (const i of this.a0e.keys())
+      if (i && i.IsVisible() && !i.bHiddenInGame) {
+        var s = this.a0e.get(i);
         let t = void 0;
         var o = this.s0e.get(s);
         if (o.length)
@@ -159,20 +162,20 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
             void 0,
             !1,
             this.EffectModel,
-          )).SetSkeletalMesh(h.SkeletalMesh, !1),
+          )).SetSkeletalMesh(i.SkeletalMesh, !1),
             t.SetLODBias(3);
-          var c = this.u0e;
-          for (let e = 0; e < t.GetNumMaterials(); e++) t.SetMaterial(e, c);
+          var h = this.u0e;
+          for (let e = 0; e < t.GetNumMaterials(); e++) t.SetMaterial(e, h);
         }
-        o = h.K2_GetComponentToWorld();
-        t.K2_SetWorldTransform(o, !1, void 0, !0),
-          t.CopyPoseFromSkeletalComponent(h),
+        o = i.D_K2_GetComponentToWorld();
+        t.D_K2_SetWorldTransform(o, !1, void 0, !0),
+          t.CopyPoseFromSkeletalComponent(i),
           t.SetCustomPrimitiveDataFloat(0, 1),
           e.push(new GhostElement(s, t));
       }
     var t = this.h0e.GhostLifeTime,
-      f = this.LifeTime.TotalPassTime;
-    this.n0e.push([e, f + t]), (this.l0e = f);
+      c = this.LifeTime.TotalPassTime;
+    this.n0e.push([e, c + t]), (this.l0e = c);
   }
   c0e() {
     let e = 0;
@@ -184,17 +187,37 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
             this.EffectModel.AlphaCurve,
             t,
           );
-        for (const c of o[0]) c.PoseComponent.SetCustomPrimitiveDataFloat(0, s);
+        for (const h of o[0]) h.PoseComponent.SetCustomPrimitiveDataFloat(0, s);
       } else {
-        for (const f of o[0])
-          f.PoseComponent.Deactivate(),
-            f.PoseComponent.SetVisibility(!1),
-            f.PoseComponent.SetComponentTickEnabled(!1),
-            this.s0e.get(f.Name).push(f.PoseComponent);
+        for (const c of o[0])
+          c.PoseComponent.Deactivate(),
+            c.PoseComponent.SetVisibility(!1),
+            c.PoseComponent.SetComponentTickEnabled(!1),
+            this.s0e.get(c.Name).push(c.PoseComponent);
         e++;
       }
     }
     0 < e && this.n0e.splice(0, e);
+  }
+  IsOverrideTick() {
+    return !0;
+  }
+  RegisterToKuroEffectSystem() {
+    var e;
+    this.Handle &&
+      this.h0e?.SkeletalMeshComp &&
+      this.EffectModel &&
+      (e = this.Handle.GetSureEffectActor()) &&
+      ((this.HasInitTickOptimize = !0),
+      cpp_1.FKuroEffectSystemInterface.RegisterEffectGhostHandle(
+        this.Handle.Id,
+        this.Handle.Parent?.Id ?? 0,
+        this.EffectModel,
+        e,
+        this.h0e.SkeletalMeshComp,
+        this.h0e.GhostLifeTime,
+        this._0e,
+      ));
   }
 }
 ((exports.EffectModelGhostSpec = EffectModelGhostSpec).BodyName = "Body"),

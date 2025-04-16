@@ -29,12 +29,31 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       (this.DirectIndex = 4),
       (this.EndTime = -0),
       (this.NextPickDirectTime = -0),
-      (this.TmpVector = void 0),
-      (this.TmpOffset = void 0),
-      (this.TmpDirection = void 0),
-      (this.TmpVector2 = void 0),
-      (this.LastDestination = void 0),
-      (this.TmpQuat = void 0),
+      (this.TmpVector = Vector_1.Vector.Create()),
+      (this.TmpOffset = Vector_1.Vector.Create()),
+      (this.TmpDirection = Vector_1.Vector.Create()),
+      (this.TmpVector2 = Vector_1.Vector.Create()),
+      (this.LastDestination = Vector_1.Vector.Create()),
+      (this.TmpQuat = Quat_1.Quat.Create()),
+      (this.NextTriggerTime = -0),
+      (this.NavigationInterval = 0);
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsMoveState = 0),
+      (this.TsAllyDetect = 0),
+      (this.TsWalkOff = !1),
+      (this.DistanceIndex = 0),
+      (this.DirectIndex = 4),
+      (this.EndTime = -0),
+      (this.NextPickDirectTime = -0),
+      (this.TmpVector = Vector_1.Vector.Create()),
+      (this.TmpOffset = Vector_1.Vector.Create()),
+      (this.TmpDirection = Vector_1.Vector.Create()),
+      (this.TmpVector2 = Vector_1.Vector.Create()),
+      (this.LastDestination = Vector_1.Vector.Create()),
+      (this.TmpQuat = Quat_1.Quat.Create()),
       (this.NextTriggerTime = -0),
       (this.NavigationInterval = 0);
   }
@@ -58,7 +77,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       t instanceof TsAiController_1.default &&
         ((t = t.AiController),
         this.TsWalkOff ||
-          t.CharActorComp.Entity.GetComponent(164)?.SetWalkOffLedgeRecord(!1),
+          t.CharActorComp.Entity.GetComponent(176)?.SetWalkOffLedgeRecord(!1),
         t.AiWanderInfos?.AiBattleWanderGroups?.length
           ? ((this.EndTime =
               Time_1.Time.WorldTime +
@@ -94,7 +113,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
                       h.ActorLocationProxy,
                       this.TmpOffset,
                     ),
-                    GravityUtils_1.GravityUtils.ConvertToPlanarVector(
+                    GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
                       h,
                       this.TmpOffset,
                     ),
@@ -134,7 +153,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          38,
+          44,
         ))?.MoveController.StopMoveToLocation(),
       this.LastDestination?.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
@@ -150,13 +169,16 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     s = s.Entity.GetComponent(3);
     if (!s) return !1;
     s.ActorLocationProxy.Subtraction(e.ActorLocationProxy, this.TmpOffset),
-      (this.TmpOffset.Z = 0);
-    var e = this.TmpOffset.Size2D() - e.ScaledRadius - s.ScaledRadius,
+      GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+        e,
+        this.TmpOffset,
+      );
+    var e = this.TmpOffset.Size() - e.ScaledRadius - s.ScaledRadius,
       h =
         ((this.DistanceIndex = this.FindDistanceIndexByDistance(i, e)),
         this.FindDirectByWeights(i),
         this.CheckNavigationAndAllyBlock(t, this.TmpOffset, e),
-        t.CharAiDesignComp.Entity.GetComponent(161));
+        t.CharAiDesignComp.Entity.GetComponent(173));
     if (h.Valid)
       switch (this.TsMoveState) {
         case 1:
@@ -211,7 +233,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
         this.DirectIndex,
       )
         ? (this.DirectIndex = 4)
-        : GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravity(
+        : GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravityForActor(
             t.CharActorComp,
             this.TmpVector,
             this.DirectIndex,
@@ -220,7 +242,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
   SetInputParams(t, i, s) {
     i.ActorLocationProxy.Subtraction(t.ActorLocationProxy, this.TmpOffset),
       this.TmpDirection.DeepCopy(this.TmpOffset),
-      GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravity(
+      GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravityForActor(
         t,
         this.TmpOffset,
         this.DirectIndex,
@@ -234,7 +256,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       )
         return;
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("AI", 43, "BattleWander 寻路失败", [
+        Log_1.Log.Debug("AI", 42, "BattleWander 寻路失败", [
           "EntityId",
           t.Entity.Id,
         ]),
@@ -248,9 +270,9 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       this.DirectIndex,
     )
       ? ((this.DirectIndex = 4), t.ClearInput())
-      : ((i = t.Entity.GetComponent(38)) &&
+      : ((i = t.Entity.GetComponent(44)) &&
           i.MoveController.IsMovingToLocation()) ||
-        (t.Entity.GetComponent(92)?.MoveState !==
+        (t.Entity.GetComponent(99)?.MoveState !==
         CharacterUnifiedStateTypes_1.ECharMoveState.Walk
           ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               t,
@@ -269,16 +291,16 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
             ));
   }
   StopMoveToLocation(t) {
-    t = t.Entity.GetComponent(38);
+    t = t.Entity.GetComponent(44);
     t &&
       t.MoveController.IsMovingToLocation() &&
       t?.MoveController.StopMoveToLocation(),
-      this.LastDestination?.Reset();
+      this.LastDestination.Reset();
   }
   SetMoveToLocation(t, i, s, e) {
     this.TmpVector2.DeepCopy(t),
       this.TmpVector2.AdditionEqual(i.ActorLocationProxy);
-    t = i.Entity.GetComponent(38);
+    t = i.Entity.GetComponent(44);
     if (!t) return !1;
     if (
       (!this.LastDestination.IsNearlyZero() ||

@@ -23,6 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseAttributeComponent = exports.AttributeSnapshot = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../../Core/Common/Stats"),
+  Time_1 = require("../../../../../../Core/Common/Time"),
   CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
   EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
@@ -49,25 +50,34 @@ let BaseAttributeComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.BaseValues = new Array()),
-        (this.CurrentValues = new Array()),
-        (this.ModifierLists = new Array()),
+        (this.BaseValues = new Array(
+          CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX,
+        )),
+        (this.CurrentValues = new Array(
+          CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX,
+        )),
+        (this.ModifierLists = new Array(
+          CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX,
+        )),
         (this.BoundsLockerMap = new Map()),
+        (this.CreatureDataComponent = void 0),
+        (this.BuffComponent = void 0),
         (this.CurrentValueListenerMap = new Map()),
         (this.AnyCurrentValueListenerSet = new Set());
     }
+    OnInit() {
+      return (
+        super.OnInit(),
+        (this.CreatureDataComponent = this.Entity.CheckGetComponent(0)),
+        (this.BuffComponent = this.Entity.GetComponent(207)),
+        !0
+      );
+    }
     OnCreate() {
-      this.BaseValues = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
       for (let t = 0; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; ++t)
         this.BaseValues[t] = 0;
-      this.CurrentValues = new Array(
-        CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX,
-      );
       for (let t = 0; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; ++t)
         this.CurrentValues[t] = 0;
-      this.ModifierLists = new Array(
-        CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX,
-      );
       for (let t = 0; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; ++t)
         this.ModifierLists[t] = new Map();
       return !0;
@@ -75,52 +85,82 @@ let BaseAttributeComponent =
     OnTick(t) {
       this.AutoRecoverAttr(t);
     }
-    SetBaseValue(t, e) {
-      t = this.n2a(t);
-      let r = e;
-      var i,
-        e = this.mbr(t),
-        e =
-          (void 0 !== e && (r = this.dbr(t, r, e)),
-          CharacterAttributeTypes_1.attrsNotClampZero.includes(t) ||
-            (r = Math.max(r, 0)),
-          (r = Math.floor(r)),
-          this.BaseValues[t]);
-      e !== r &&
-        ((this.BaseValues[t] = r),
-        (e = this.CurrentValues[t]),
-        this.UpdateCurrentValue(t),
-        (i = this.CurrentValues[t]),
-        this.DispatchCurrentValueEvent(t, i, e));
+    IsWritableAttribute(t) {
+      if (
+        CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.has(t) ||
+        CharacterAttributeTypes_1.attrsAutoRecoverMaxMap.has(t)
+      )
+        return !0;
+      switch (t) {
+        case CharacterAttributeTypes_1.EAttributeId.Proto_Tough:
+        case CharacterAttributeTypes_1.EAttributeId.Proto_Jump:
+          return !0;
+        default:
+          return CharacterAttributeTypes_1.specialEnergyIds.includes(t)
+            ? !this.BuffComponent || this.BuffComponent.HasBuffAuthority()
+            : !1;
+      }
+      return !1;
+    }
+    IsLocalAttribute(t) {
+      return (
+        t === CharacterAttributeTypes_1.EAttributeId.Proto_Jump ||
+        (!!CharacterAttributeTypes_1.specialEnergyIds.includes(t) &&
+          (!this.BuffComponent || this.BuffComponent.HasBuffAuthority()))
+      );
+    }
+    SetBaseValue(e, r) {
+      if (this.IsWritableAttribute(e)) {
+        let t = r;
+        var i,
+          r = this.mbr(e),
+          r =
+            (void 0 !== r && (t = this.dbr(e, t, r)),
+            CharacterAttributeTypes_1.attrsNotClampZero.includes(e) ||
+              (t = Math.max(t, 0)),
+            (t = Math.floor(t)),
+            this.BaseValues[e]);
+        r !== t &&
+          ((this.BaseValues[e] = t),
+          (r = this.CurrentValues[e]),
+          this.UpdateCurrentValue(e),
+          (i = this.CurrentValues[e]),
+          this.DispatchCurrentValueEvent(e, i, r));
+      }
     }
     AddBaseValue(t, e) {
-      (t = this.n2a(t)), this.SetBaseValue(t, this.BaseValues[t] + e);
+      this.SetBaseValue(t, this.BaseValues[t] + e);
     }
     GetBaseValue(t) {
-      return (t = this.n2a(t)), this.BaseValues[t];
+      return this.BaseValues[t];
     }
     GetCurrentValue(t) {
-      return (t = this.n2a(t)), this.CurrentValues[t];
+      return this.CurrentValues[t];
     }
     mbr(t) {
       t = CharacterAttributeTypes_1.attributeIdsWithMax.get(t);
       if (t) return this.GetCurrentValue(t);
     }
     SyncValueFromServer(t, e, r) {
-      this.BaseValues[t] !== e && (this.BaseValues[t] = e);
-      e = this.CurrentValues[t];
-      (this.CurrentValues[t] = r), this.DispatchCurrentValueEvent(t, r, e);
+      !this.IsLocalAttribute(t) &&
+        (this.BaseValues[t] !== e && (this.BaseValues[t] = e),
+        (e = this.CurrentValues[t]),
+        (this.CurrentValues[t] = r),
+        this.DispatchCurrentValueEvent(t, r, e),
+        (r = CharacterAttributeTypes_1.attributeIdsMaxToAttrId.get(t))) &&
+        this.SetBaseValue(r, this.BaseValues[r]);
     }
-    UpdateCurrentValue(t) {
-      t = this.n2a(t);
-      let e = this.Cbr(t);
-      var r = CharacterAttributeTypes_1.attrsCurrentValueClamp.get(t),
-        r =
-          (r && (e = Math.min(e, r)),
-          CharacterAttributeTypes_1.attrsNotClampZero.includes(t) ||
-            (e = Math.max(e, 0)),
-          this.CurrentValues[t]);
-      r !== e && (this.CurrentValues[t] = e);
+    UpdateCurrentValue(e) {
+      if ((BaseAttributeComponent_1.s__.Start(), this.IsWritableAttribute(e))) {
+        let t = this.Cbr(e);
+        var r = CharacterAttributeTypes_1.attrsCurrentValueClamp.get(e),
+          r;
+        r && (t = Math.min(t, r)),
+          CharacterAttributeTypes_1.attrsNotClampZero.includes(e) ||
+            (t = Math.max(t, 0)),
+          (r = this.CurrentValues[e]) !== t && (this.CurrentValues[e] = t);
+      }
+      BaseAttributeComponent_1.s__.Stop();
     }
     TakeSnapshot() {
       var e = new AttributeSnapshot();
@@ -134,35 +174,41 @@ let BaseAttributeComponent =
     }
     AddModifier(t, e) {
       var r, i;
-      return (t = this.n2a(t)) <=
-        CharacterAttributeTypes_1.EAttributeId.Proto_EAttributeType_None ||
+      return (
+        BaseAttributeComponent_1.a__.Start(),
+        !this.IsWritableAttribute(t) ||
+        t <= CharacterAttributeTypes_1.EAttributeId.Proto_EAttributeType_None ||
         t >= CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX
-        ? -1
-        : ((r = BaseAttributeComponent_1.ModifierHandleGenerator++),
-          (this.ModifierLists[t] = this.ModifierLists[t] ?? new Map()),
-          this.ModifierLists[t].set(r, e),
-          (e = this.CurrentValues[t]),
-          this.UpdateCurrentValue(t),
-          (i = this.CurrentValues[t]),
-          this.DispatchCurrentValueEvent(t, i, e),
-          r);
+          ? (BaseAttributeComponent_1.a__.Stop(), -1)
+          : ((r = BaseAttributeComponent_1.ModifierHandleGenerator++),
+            (this.ModifierLists[t] = this.ModifierLists[t] ?? new Map()),
+            this.ModifierLists[t].set(r, e),
+            (e = this.CurrentValues[t]),
+            this.UpdateCurrentValue(t),
+            (i = this.CurrentValues[t]),
+            this.DispatchCurrentValueEvent(t, i, e),
+            BaseAttributeComponent_1.a__.Stop(),
+            r)
+      );
     }
     RemoveModifier(t, e) {
       var r;
-      (t = this.n2a(t)),
+      BaseAttributeComponent_1.h__.Start(),
         this.ModifierLists[t]?.delete(e) &&
           ((e = this.CurrentValues[t]),
           this.UpdateCurrentValue(t),
           (r = this.CurrentValues[t]),
-          this.DispatchCurrentValueEvent(t, r, e));
+          this.DispatchCurrentValueEvent(t, r, e)),
+        BaseAttributeComponent_1.h__.Stop();
     }
     *GetAllModifiers(t) {
-      if (((t = this.n2a(t)), this.ModifierLists[t]))
+      if (this.ModifierLists[t])
         for (const e of this.ModifierLists[t].values()) yield e;
     }
     Cbr(t) {
+      BaseAttributeComponent_1.l__.Start();
       var e = this.BaseValues[t];
-      if (!this.ModifierLists[t]) return e;
+      if (!this.ModifierLists[t]) return BaseAttributeComponent_1.l__.Stop(), e;
       let r = 0,
         i = 0,
         s = 1;
@@ -177,7 +223,8 @@ let BaseAttributeComponent =
             i += n.Value1;
             break;
           case 2:
-          case 4: {
+          case 4:
+          case 9: {
             let t = n.SnapshotSource;
             void 0 === t &&
               (t = AbilityUtils_1.AbilityUtils.GetAttrValue(
@@ -185,27 +232,28 @@ let BaseAttributeComponent =
                   ? this
                   : ModelManager_1.ModelManager.CreatureModel.GetEntity(
                       n.SourceEntity,
-                    )?.Entity?.GetComponent(159),
+                    )?.Entity?.GetComponent(171),
                 n.SourceAttributeId,
                 n.SourceCalculationType,
               ));
             var o = n.Min;
             if (o && (t -= o) <= 0) break;
-            (o = n.Ratio),
-              (o =
-                (o && (t /= o),
-                (e =
-                  t *
-                    n.Value1 *
-                    CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
-                  n.Value2),
-                n.Max));
+            o = n.Ratio;
+            if ((o && (t /= o), 9 === n.Type)) {
+              i +=
+                t * n.Value1 * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
+              break;
+            }
+            e =
+              t * n.Value1 * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
+              n.Value2;
+            o = n.Max;
             if ((o && e > o && (e = o), 4 === n.Type)) return e;
             break;
           }
           case 3:
             return n.Value1;
-          case 9:
+          case -1:
             s *= n.Value1 * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
         }
         0 !== e &&
@@ -213,9 +261,10 @@ let BaseAttributeComponent =
             ? (s *= e * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND + 1)
             : (r += e));
       }
-      return Math.floor(
+      t = Math.floor(
         (e * (i * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND + 1) + r) * s,
       );
+      return BaseAttributeComponent_1.l__.Stop(), t;
     }
     SyncRecoverPropFromServer(t, e, r, i, s) {
       var a = CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.get(t),
@@ -226,20 +275,27 @@ let BaseAttributeComponent =
           (a = e + i * s * CommonDefine_1.SECOND_PER_MILLIONSECOND),
           this.SyncValueFromServer(t, a, a))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 36, "自动属性未注册", ["属性", t]);
+          Log_1.Log.Error("Battle", 35, "自动属性未注册", ["属性", t]);
     }
     AutoRecoverAttr(t) {
-      for (var [
+      BaseAttributeComponent_1.___.Start();
+      var e,
+        r,
+        i =
+          t *
+          Time_1.Time.FlowTimeDilation *
+          CommonDefine_1.SECOND_PER_MILLIONSECOND;
+      for ([
         e,
         r,
       ] of CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.entries()) {
-        r = this.GetCurrentValue(r);
-        0 !== r &&
-          this.AddBaseValue(e, r * t * CommonDefine_1.SECOND_PER_MILLIONSECOND);
+        var s = this.GetCurrentValue(r);
+        0 !== s && this.AddBaseValue(e, s * i);
       }
+      BaseAttributeComponent_1.___.Stop();
     }
     AddBoundsLocker(t, e, r) {
-      t = this.n2a(t);
+      if (!this.IsWritableAttribute(t)) return -1;
       let i = this.BoundsLockerMap.get(t);
       return (
         i || this.BoundsLockerMap.set(t, (i = new Map())),
@@ -247,7 +303,7 @@ let BaseAttributeComponent =
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              23,
+              22,
               "重复添加属性BoundsLock",
               ["attrId", t],
               ["handle", r],
@@ -257,19 +313,16 @@ let BaseAttributeComponent =
       );
     }
     RemoveBoundsLocker(t, e) {
-      t = this.n2a(t);
       var r = this.BoundsLockerMap.get(t);
       return (
         !!r && !!r.delete(e) && (this.SetBaseValue(t, this.BaseValues[t]), !0)
       );
     }
     *GetAllBoundsLocker(t) {
-      t = this.n2a(t);
       t = this.BoundsLockerMap.get(t);
       if (t) for (const e of t.values()) yield e;
     }
     dbr(t, e, r) {
-      t = this.n2a(t);
       let i = e,
         s = void 0,
         a = r;
@@ -324,7 +377,6 @@ let BaseAttributeComponent =
       this.RemoveBoundsLocker(e, t);
     }
     AddListener(t, e, r) {
-      t = this.n2a(t);
       var i = this.CurrentValueListenerMap.get(t);
       i
         ? i.add(e)
@@ -336,7 +388,6 @@ let BaseAttributeComponent =
       });
     }
     RemoveListener(t, e) {
-      t = this.n2a(t);
       t = this.CurrentValueListenerMap.get(t);
       return !!t && (t.delete(e), !0);
     }
@@ -352,14 +403,14 @@ let BaseAttributeComponent =
       this.AnyCurrentValueListenerSet.delete(t);
     }
     DispatchCurrentValueEvent(e, r, i) {
-      if (i !== r) {
+      if ((BaseAttributeComponent_1.c__.Start(), i !== r)) {
         var s = this.CurrentValueListenerMap.get(e);
         if (s) {
           let t = BaseAttributeComponent_1.pbr.get(e);
           t ||
             BaseAttributeComponent_1.pbr.set(
               e,
-              (t = Stats_1.Stat.Create(
+              (t = Stats_1.Stat.CreateNoFlameGraph(
                 `CurrentAttr#${e} event`,
                 StatDefine_1.BATTLESTAT_GROUP,
               )),
@@ -396,6 +447,7 @@ let BaseAttributeComponent =
           BaseAttributeComponent_1.vbr.Stop();
         }
       }
+      BaseAttributeComponent_1.c__.Stop();
     }
     CheckIfNeedAdvanceMultiply(t) {
       switch (t) {
@@ -409,6 +461,15 @@ let BaseAttributeComponent =
         default:
           return !1;
       }
+    }
+    GetDebugString() {
+      var e = [];
+      for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; ++t) {
+        var r = t;
+        (0 === this.BaseValues[r] && 0 === this.CurrentValues[r]) ||
+          e.push(`${r} ${this.BaseValues[r]} ` + this.CurrentValues[r]);
+      }
+      return e.join("|");
     }
     GetLockDebugString() {
       let i = "";
@@ -426,13 +487,32 @@ let BaseAttributeComponent =
         i
       );
     }
-    n2a(t) {
-      return (
-        CharacterAttributeTypes_1.elementPowerToElementEnergyIds.get(t) ?? t
-      );
-    }
   });
 (BaseAttributeComponent.ModifierHandleGenerator = 100),
+  (BaseAttributeComponent.s__ = Stats_1.Stat.Create(
+    "BaseAttributeComponent.UpdateCurrentValue",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
+  (BaseAttributeComponent.a__ = Stats_1.Stat.Create(
+    "BaseAttributeComponent.AddModifier",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
+  (BaseAttributeComponent.h__ = Stats_1.Stat.Create(
+    "BaseAttributeComponent.RemoveModifier",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
+  (BaseAttributeComponent.l__ = Stats_1.Stat.Create(
+    "BaseAttributeComponent.EvaluateModifiers",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
+  (BaseAttributeComponent.___ = Stats_1.Stat.Create(
+    "BaseAttributeComponent.AutoRecoverAttr",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
+  (BaseAttributeComponent.c__ = Stats_1.Stat.Create(
+    "BaseAttributeComponent.DispatchCurrentValueEvent",
+    StatDefine_1.BATTLESTAT_GROUP,
+  )),
   (BaseAttributeComponent.pbr = new Map()),
   (BaseAttributeComponent.vbr = Stats_1.Stat.Create(
     "AnyCurrentAttr event",
@@ -440,7 +520,7 @@ let BaseAttributeComponent =
   )),
   (BaseAttributeComponent = BaseAttributeComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(158)],
+      [(0, RegisterComponent_1.RegisterComponent)(170)],
       BaseAttributeComponent,
     )),
   (exports.BaseAttributeComponent = BaseAttributeComponent);

@@ -42,36 +42,77 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
         ItemController.QCi,
       );
   }
-  static OpenItemTipsByItemId(e, t = void 0) {
-    var i = new ItemDefine_1.ItemTipsData();
-    (i.ItemId = e), UiManager_1.UiManager.OpenView("ItemTipsView", i, t);
-  }
-  static OpenItemTipsByItemUid(e, t, i = void 0) {
-    var n = new ItemDefine_1.ItemTipsData();
-    (n.ItemUid = e),
-      (n.ItemId = t),
+  static OpenItemTipsByItemId(e, t = !0, i = void 0) {
+    var n = new ItemDefine_1.ItemTipsParam();
+    (n.ItemId = e),
+      (n.CanSkip = t),
       UiManager_1.UiManager.OpenView("ItemTipsView", n, i);
+  }
+  static OpenItemTipsByItemUid(e, t, i = !0, n = void 0) {
+    var r = new ItemDefine_1.ItemTipsParam();
+    (r.ItemUid = e),
+      (r.ItemId = t),
+      (r.CanSkip = i),
+      UiManager_1.UiManager.OpenView("ItemTipsView", r, n);
+  }
+  static OpenItemTipsByExtraParam(e, t, i, n = !0, r = void 0) {
+    var o = new ItemDefine_1.ItemTipsParam();
+    (o.ItemUid = e),
+      (o.ItemId = t),
+      (o.ExtraParam = i),
+      (o.CanSkip = n),
+      UiManager_1.UiManager.OpenView("ItemTipsView", o, r);
   }
   static AddNewItemTip(e) {
     ModelManager_1.ModelManager.ItemModel.PushWaitItemList(e);
   }
   static CheckNewItemTips() {
     var e;
-    ModelManager_1.ModelManager.ItemModel.IsWaitItemListEmpty()
+    ModelManager_1.ModelManager.ItemModel.IsWaitItemListEmpty() &&
+    ModelManager_1.ModelManager.ItemModel.IsWaitPhantomListEmpty()
       ? this.IsPrintNoRewardReason &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ItemHint",
-          8,
+          37,
           "[NoRewardReason][CheckNewItemTips]当前状态不允许显示入包列表:ItemHint的入包列表为空",
         )
-      : UiManager_1.UiManager.IsViewOpen("NewItemTipsView") ||
-          !UiManager_1.UiManager.IsViewShow("BattleView")
-        ? this.IsPrintNoRewardReason &&
+      : !UiManager_1.UiManager.IsViewOpen("NewItemTipsView") &&
+          !UiManager_1.UiManager.IsViewOpen("PhantomTipsView") &&
+          UiManager_1.UiManager.IsViewShow("BattleView")
+        ? ModelManager_1.ModelManager.SundryModel.IsBlockTips
+          ? this.IsPrintNoRewardReason &&
+            Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "ItemHint",
+              37,
+              "[NoRewardReason][CheckNewItemTips]当前状态不允许显示入包列表:已经屏蔽弹窗",
+            )
+          : ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
+              "next_new_item_show_time",
+            )),
+            TimeUtil_1.TimeUtil.GetServerTimeStamp() <
+              ModelManager_1.ModelManager.ItemModel.LastCloseTimeStamp + e ||
+              (ModelManager_1.ModelManager.ItemModel.IsWaitItemListEmpty()
+                ? ModelManager_1.ModelManager.ItemModel.IsWaitPhantomListEmpty() ||
+                  ((e =
+                    ModelManager_1.ModelManager.ItemModel.ShiftWaitPhantomList()),
+                  UiManager_1.UiManager.OpenView("PhantomTipsView", e))
+                : ((e =
+                    ModelManager_1.ModelManager.ItemModel.ShiftWaitItemList()),
+                  UiManager_1.UiManager.OpenView("NewItemTipsView", e)),
+              AudioSystem_1.AudioSystem.PostEvent(
+                "play_ui_item_hint_get_item_first_time",
+              ),
+              (ItemController.LastItemHintAudioPlayedTime = Time_1.Time.Now),
+              (ItemController.LastItemHintAudioLevel = 3),
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("Audio", 55, "[Item] 播放新物品提示音效")))
+        : this.IsPrintNoRewardReason &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "ItemHint",
-            8,
+            37,
             "[NoRewardReason][CheckNewItemTips]当前状态不允许显示入包列表:NewItemTipsView在打开中，或BattleView不在显示中",
             [
               "IsNewItemTipsViewOpen",
@@ -81,28 +122,7 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
               "IsBattleViewShow",
               UiManager_1.UiManager.IsViewShow("BattleView"),
             ],
-          )
-        : ModelManager_1.ModelManager.SundryModel.IsBlockTips
-          ? this.IsPrintNoRewardReason &&
-            Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug(
-              "ItemHint",
-              8,
-              "[NoRewardReason][CheckNewItemTips]当前状态不允许显示入包列表:已经屏蔽弹窗",
-            )
-          : ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
-              "next_new_item_show_time",
-            )),
-            TimeUtil_1.TimeUtil.GetServerTimeStamp() >=
-              ModelManager_1.ModelManager.ItemModel.LastCloseTimeStamp + e &&
-              (UiManager_1.UiManager.OpenView("NewItemTipsView"),
-              AudioSystem_1.AudioSystem.PostEvent(
-                "play_ui_item_hint_get_item_first_time",
-              ),
-              (ItemController.LastItemHintAudioPlayedTime = Time_1.Time.Now),
-              (ItemController.LastItemHintAudioLevel = 3),
-              Log_1.Log.CheckInfo()) &&
-              Log_1.Log.Info("Audio", 56, "[Item] 播放新物品提示音效"));
+          );
   }
 }
 ((exports.ItemController = ItemController).LastItemHintAudioPlayedTime =

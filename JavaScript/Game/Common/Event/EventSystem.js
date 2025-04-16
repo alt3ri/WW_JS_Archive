@@ -10,6 +10,9 @@ class EventSystem {
   static Has(e, t) {
     return EventSystem.Me.Has(e, t);
   }
+  static RemoveTargetEvents(e) {
+    EventSystem._de.get(e) && EventSystem._de.delete(e);
+  }
   static HasWithTarget(e, t, r) {
     e = EventSystem.hde(e);
     return !!e && e.Has(t, r);
@@ -20,9 +23,9 @@ class EventSystem {
   static AddWithTargetUseHoldKey(e, t, r, n) {
     var s = EventSystem.lde(t);
     if (!s.Add(r, n)) return !1;
-    let v = EventSystem.OJa.get(e);
+    let v = EventSystem.Cnh.get(e);
     return (
-      v || ((v = new Array()), EventSystem.OJa.set(e, v)),
+      v || ((v = new Array()), EventSystem.Cnh.set(e, v)),
       s.AddHoldKeyHandle(r, e, n),
       v.push({ Key: e, Handle: n, Target: t, EventName: r }),
       !0
@@ -47,11 +50,11 @@ class EventSystem {
         var s = n.GetHoldKeyByHandle(t, r);
         if (s)
           return (
-            EventSystem.GJa(s, e, t, r),
+            EventSystem.gnh(s, e, t, r),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Event",
-                67,
+                66,
                 "事件系统调用错误,请使用[RemoveWithTargetUseKey]",
                 ["target", e],
               ),
@@ -62,9 +65,9 @@ class EventSystem {
     }
     return !1;
   }
-  static GJa(t, r, n, s) {
-    EventSystem.kJa.Start();
-    var v = EventSystem.OJa.get(t);
+  static gnh(t, r, n, s) {
+    EventSystem.fnh.Start();
+    var v = EventSystem.Cnh.get(t);
     if (v) {
       var a = v.length;
       for (let e = 0; e < a; ++e) {
@@ -74,19 +77,19 @@ class EventSystem {
             v.splice(e, 1),
             (i = EventSystem.hde(r)) &&
               (i.Remove(n, s), i.RemoveHoldKeyHandle(n, s)),
-            0 === v.length && EventSystem.OJa.delete(t),
-            EventSystem.kJa.Stop(),
+            0 === v.length && EventSystem.Cnh.delete(t),
+            EventSystem.fnh.Stop(),
             !0
           );
       }
     }
-    return EventSystem.kJa.Stop(), !1;
+    return EventSystem.fnh.Stop(), !1;
   }
   static RemoveWithTargetUseKey(e, t, r, n) {
-    return EventSystem.GJa(e, t, r, n);
+    return EventSystem.gnh(e, t, r, n);
   }
   static RemoveAllTargetUseKey(e) {
-    var t = EventSystem.OJa.get(e);
+    var t = EventSystem.Cnh.get(e);
     if (!t) return !1;
     var r = t.length;
     for (let e = 0; e < r; ++e) {
@@ -96,7 +99,7 @@ class EventSystem {
         (s.Remove(n.EventName, n.Handle),
         s.RemoveHoldKeyHandle(n.EventName, n.Handle));
     }
-    return EventSystem.OJa.delete(e), !0;
+    return EventSystem.Cnh.delete(e), !0;
   }
   static Emit(e, ...t) {
     return EventSystem.Me.Emit(e, ...t);
@@ -120,7 +123,7 @@ class EventSystem {
     let t = EventSystem.hde(e);
     return (
       t ||
-        ((t = new Event_1.Event(EventDefine_1.EEventName)),
+        ((t = new Event_1.Event(EventDefine_1.EEventName, 0)),
         EventSystem._de.set(e, t)),
       t
     );
@@ -130,6 +133,6 @@ class EventSystem {
   EventDefine_1.EEventName,
 )),
   (EventSystem._de = new WeakMap()),
-  (EventSystem.OJa = new WeakMap()),
-  (EventSystem.kJa = Stats_1.Stat.Create("EventSystem.RemoveWithTargetUseKey"));
+  (EventSystem.Cnh = new WeakMap()),
+  (EventSystem.fnh = Stats_1.Stat.Create("EventSystem.RemoveWithTargetUseKey"));
 //# sourceMappingURL=EventSystem.js.map

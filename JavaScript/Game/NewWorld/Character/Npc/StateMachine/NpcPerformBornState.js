@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformBornState = void 0);
 const TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
-  StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
+  NpcPerformBaseState_1 = require("./NpcPerformBaseState"),
   BORN_TIME = 100;
-class NpcPerformBornState extends StateBase_1.StateBase {
+class NpcPerformBornState extends NpcPerformBaseState_1.NpcPerformBaseState {
   OnStart() {
     TimerSystem_1.TimerSystem.Delay(() => {
       0 === this.StateMachine.CurrentState && this.StateMachine.Switch(1);

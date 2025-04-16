@@ -13,6 +13,9 @@ class TsDecoratorWeatherStateCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsWeatherStateId = 0),
       (this.TsCheckType = 0);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1), (this.TsWeatherStateId = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),

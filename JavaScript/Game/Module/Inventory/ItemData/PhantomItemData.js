@@ -7,10 +7,10 @@ const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLa
   AttributeItemData_1 = require("./AttributeItemData");
 class PhantomItemData extends AttributeItemData_1.AttributeItemData {
   constructor() {
-    super(...arguments), (this.XVa = 0);
+    super(...arguments), (this.HHa = 0);
   }
   SetFetterGroupId(e) {
-    this.XVa = e;
+    this.HHa = e;
   }
   GetConfig() {
     return ConfigManager_1.ConfigManager.InventoryConfig.GetPhantomItemConfig(
@@ -53,9 +53,9 @@ class PhantomItemData extends AttributeItemData_1.AttributeItemData {
   }
   GetFetterGroupConfig() {
     var e;
-    return 0 !== this.XVa
+    return 0 !== this.HHa
       ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
-          this.XVa,
+          this.HHa,
         )
       : void 0 !==
           (e =

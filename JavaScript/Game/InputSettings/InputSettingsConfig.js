@@ -49,6 +49,10 @@ class InputSettingsConfig extends ConfigBase_1.ConfigBase {
       e,
     );
   }
+  GetCombinationActionConfigByActionNameInList(e) {
+    var i = this.GetAllCombinationActionConfig();
+    if (i) for (const n of i) if (n.ActionName === e) return n;
+  }
   GetCombinationActionConfigByActionType(e) {
     return CombinationActionByActionType_1.configCombinationActionByActionType.GetConfigList(
       e,

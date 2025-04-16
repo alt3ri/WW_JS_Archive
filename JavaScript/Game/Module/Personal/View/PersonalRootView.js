@@ -7,7 +7,9 @@ const UE = require("ue"),
   Time_1 = require("../../../../Core/Common/Time"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   CameraController_1 = require("../../../Camera/CameraController"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
@@ -21,6 +23,7 @@ const UE = require("ue"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
   UiManager_1 = require("../../../Ui/UiManager"),
   CommonInputViewController_1 = require("../../Common/InputView/Controller/CommonInputViewController"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   GachaScanView_1 = require("../../Gacha/GachaResultView/GachaScanView"),
   QuickRoleSelectView_1 = require("../../RoleSelect/QuickRoleSelectView"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
@@ -42,11 +45,13 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       (this.cVi = new Map()),
       (this.Vha = new Map()),
       (this.p5i = void 0),
-      (this.Vma = void 0),
-      (this.Hma = void 0),
+      (this.Qma = void 0),
+      (this.Kma = void 0),
       (this.gKt = void 0),
       (this.Hha = void 0),
       (this.L6e = 0),
+      (this.C4_ = !1),
+      (this.gLt = void 0),
       (this.nFe = () => {
         var e =
           new PersonalRoleDisplayMediumItem_1.PersonalRoleDisplayMediumItem();
@@ -81,6 +86,9 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       }),
       (this.OnCardChange = () => {
         this.RefreshCard();
+      }),
+      (this.OnPlayerTitleChange = () => {
+        this.RefreshPlayerTitle();
       }),
       (this.OnClickDetailButton = () => {
         this.p5i.IsOtherData ||
@@ -117,20 +125,25 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       (this.OnClickExchangePreviewRoleButton = () => {
         var e;
         UiManager_1.UiManager.IsViewOpen("QuickRoleSelectView") ||
-          ((e = ModelManager_1.ModelManager.RoleModel.GetRoleList()),
+          (ModelManager_1.ModelManager.PersonalModel.SetPersonalTipState(!1),
+          this.BNe(),
+          (e = ModelManager_1.ModelManager.RoleModel.GetRoleList()),
           ((e = new QuickRoleSelectView_1.QuickRoleSelectViewData(
             5,
             this._Vi,
             e,
           )).OnWaitLoadingConfirm = this.OnWaitLoadingConfirmCallBack),
           (e.OnRoleSelectFull = this.OnRoleSelectFull),
-          (e.HideGrayIcon = !0),
-          UiManager_1.UiManager.OpenView("QuickRoleSelectView", e));
+          (e.OnBack = this.y5t),
+          UiManager_1.UiManager.OpenView("PersonalQuickRoleSelectView", e));
       }),
       (this.OnWaitLoadingConfirmCallBack = async (e) => {
         (await PersonalController_1.PersonalController.SendRoleShowListUpdateRequestAsync(
           e,
-        )) && (await this.Wha(e), this.RefreshRoleShowList(e, !1));
+        )) && (await this.Wha(e), this.RefreshRoleShowList(e, !1), this.BNe());
+      }),
+      (this.y5t = () => {
+        this.BNe();
       }),
       (this.OnRoleItemClick = (t) => {
         var e;
@@ -173,6 +186,12 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       [20, UE.UIItem],
       [21, UE.UIItem],
       [22, UE.UIText],
+      [23, UE.UIItem],
+      [24, UE.UISprite],
+      [25, UE.UISprite],
+      [26, UE.UIItem],
+      [27, UE.UITexture],
+      [28, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [0, this.jha],
@@ -214,6 +233,10 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CurWorldLevelChange,
         this.OnWorldLevelChange,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayerTitleChange,
+        this.OnPlayerTitleChange,
       );
   }
   OnRemoveEventListener() {
@@ -244,13 +267,28 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CurWorldLevelChange,
         this.OnWorldLevelChange,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayerTitleChange,
+        this.OnPlayerTitleChange,
       );
   }
   async OnBeforeStartAsync() {
-    this.p5i = this.OpenParam;
+    (this.C4_ =
+      0 ===
+      UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+        "r.SkyBlending.AllowSettingLerpPerFrame",
+      )),
+      this.C4_ &&
+        UE.KuroSequencePerformanceManager.SimpleExecuteCommand(
+          "r.SkyBlending.AllowSettingLerpPerFrame 1",
+        ),
+      (this.p5i = this.OpenParam);
     var e = [];
     for (const t of this.p5i.RoleShowList) e.push(t.Q6n);
-    await this.Wha(e);
+    await this.Wha(e),
+      (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(26).GetOwner());
   }
   async Wha(e) {
     var t = [];
@@ -271,6 +309,10 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       this.GetHorizontalLayout(10),
       this.nFe,
     )),
+      Platform_1.Platform.IsPs5Platform() &&
+        (this.GetButton(0)?.SetSelfInteractive(!1),
+        this.GetSprite(24)?.SetUIActive(!1),
+        this.GetSprite(25)?.SetUIActive(!1)),
       this.SVi(),
       this.yVi(),
       this.IVi(),
@@ -279,19 +321,21 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       this.pVi(),
       this.MVi(),
       this.RefreshCard(),
-      this.qxa(),
+      this.RefreshPlayerTitle(),
+      this.Nxa(),
       this.RefreshButtonState(),
+      this.BNe(),
       this.GetExtendToggle(16).CanExecuteChange.Bind(
         this.OnCanShowToggleExecuteChange,
       );
   }
   OnHandleLoadScene() {
     (this.gKt = CameraController_1.CameraController.Model.CurrentCameraActor),
-      (this.Vma = UE.KuroCollectActorComponent.GetActorWithTag(
+      (this.Qma = UE.KuroCollectActorComponent.GetActorWithTag(
         FNameUtil_1.FNameUtil.GetDynamicFName("SceneCamera1"),
         0,
       )),
-      (this.Hma = UE.KuroCollectActorComponent.GetActorWithTag(
+      (this.Kma = UE.KuroCollectActorComponent.GetActorWithTag(
         FNameUtil_1.FNameUtil.GetDynamicFName("personal"),
         0,
       )),
@@ -314,20 +358,27 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
     this._Vi = [];
     for (let e = 0; e < r; e++)
       e < t.length ? ((i = t[e]), this._Vi.push(i)) : this._Vi.push(-1);
-    this.hVi.RefreshByData(this._Vi, () => {
+    var s = [];
+    for (const n of this._Vi) {
+      var o =
+        new PersonalRoleDisplayMediumItem_1.PersonalRoleDisplayContentData();
+      (o.RoleId = n), (o.IfOtherData = this.p5i.IsOtherData), s.push(o);
+    }
+    this.hVi.RefreshByData(s, () => {
       0 < this._Vi.length && 0 < this._Vi[0]
         ? ((this.nVi = this._Vi[0]),
           this.hVi.SelectGridProxy(0),
           this.gVi(this.nVi, e),
           this.GetItem(15).SetUIActive(!1))
         : (this.lVi &&
-            (this.lVi.GoToEndAndStop(1),
+            (this.lVi.Pause(),
+            this.lVi.GoToEndAndStop(0),
             AudioSystem_1.AudioSystem.PostEvent(
               PersonalDefine_1.STOP_AUDIO_EVENT_NAME,
             )),
           this.Hha?.UpdateGachaShowItem(3, 4),
           CameraController_1.CameraController.SetViewTarget(
-            this.Hma,
+            this.Kma,
             "RoleNewJoinView.SceneEmptyCamera",
           ),
           this.GetItem(15).SetUIActive(!0));
@@ -338,7 +389,8 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     this.lVi &&
-      (this.lVi.GoToEndAndStop(1),
+      (this.lVi.Pause(),
+      this.lVi.GoToEndAndStop(0),
       AudioSystem_1.AudioSystem.PostEvent(
         PersonalDefine_1.STOP_AUDIO_EVENT_NAME,
       )),
@@ -353,7 +405,13 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
         t,
       );
-    this.Vha.clear();
+    this.Vha.clear(),
+      UE.KuroSequencePerformanceManager.CloseKuroPerformanceMode(),
+      this.C4_ &&
+        UE.KuroSequencePerformanceManager.SimpleExecuteCommand(
+          "r.SkyBlending.AllowSettingLerpPerFrame 0",
+        ),
+      this.gLt?.Destroy();
   }
   gVi(t, e) {
     if (t && !(t <= 0)) {
@@ -368,58 +426,72 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
                 CallbackMask: 1,
                 CallbackHandler: (e) => {
                   0 === e &&
-                    (this.lVi?.GoToEndAndStop(1),
-                    this.xba(t, i),
-                    UiLayer_1.UiLayer.SetShowMaskLayer("RoleRootView", !1));
+                    (this.lVi?.Pause(),
+                    this.lVi?.GoToEndAndStop(0),
+                    TimerSystem_1.TimerSystem.Next(() => {
+                      this.Kba(t, i),
+                        UiLayer_1.UiLayer.SetShowMaskLayer("RoleRootView", !1);
+                    }));
                 },
               },
             ))
-          : this.xba(t, i)
+          : this.Kba(t, i)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Personal",
-            59,
+            58,
             "PersonalRootView 未找到SequenceActor",
             ["roleId", t.toString()],
           );
     }
   }
-  xba(e, t) {
-    var i,
-      r = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
-    r &&
-      (CameraController_1.CameraController.SetViewTarget(
-        this.Vma,
-        "RoleNewJoinView.SceneSequenceCamera",
-      ),
-      (t.bOverrideInstanceData = !0),
-      t.SetTickableWhenPaused(
-        !ModelManager_1.ModelManager.GameModeModel.IsMulti,
-      ),
-      t.AddBindingByTag(GachaScanView_1.SCENE_CAMERA_TAG, this.Vma, !1, !0),
-      ((i = t.DefaultInstanceData).TransformOrigin =
-        RenderModuleController_1.RenderModuleController.GetKuroCurrentUiSceneTransform()),
-      0 < r.BindPoint?.length
-        ? (i.TransformOriginActor =
-            UE.KuroCollectActorComponent.GetActorWithTag(
-              FNameUtil_1.FNameUtil.GetDynamicFName(r.BindPoint),
-              1,
-            ))
-        : ((r = UE.KuroCollectActorComponent.GetActorWithTag(
-            FNameUtil_1.FNameUtil.GetDynamicFName("KuroUiSceneRoot"),
-            1,
-          )),
-          (i.TransformOrigin = r.GetTransform())),
+  Kba(e, t) {
+    var i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
+    if (i) {
+      var r = t.GetSequence(),
+        r =
+          (UE.KuroSequencePerformanceManager.CloseKuroPerformanceMode(),
+          UE.KuroSequencePerformanceManager.OpenKuroPerformanceMode(r),
+          CameraController_1.CameraController.SetViewTarget(
+            this.Qma,
+            "RoleNewJoinView.SceneSequenceCamera",
+          ),
+          (t.bOverrideInstanceData = !0),
+          t.SetTickableWhenPaused(
+            !ModelManager_1.ModelManager.GameModeModel.IsMulti,
+          ),
+          t.AddBindingByTag(GachaScanView_1.SCENE_CAMERA_TAG, this.Qma, !1, !0),
+          t.DefaultInstanceData);
+      const s = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(
+        RenderModuleController_1.RenderModuleController.GetKuroCurrentUiSceneTransform(),
+      );
+      if (((r.TransformOrigin = s), 0 < i.BindPoint?.length))
+        r.TransformOriginActor = UE.KuroCollectActorComponent.GetActorWithTag(
+          FNameUtil_1.FNameUtil.GetDynamicFName(i.BindPoint),
+          1,
+        );
+      else {
+        i = UE.KuroCollectActorComponent.GetActorWithTag(
+          FNameUtil_1.FNameUtil.GetDynamicFName("KuroUiSceneRoot"),
+          1,
+        );
+        const s = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(
+          i.D_GetTransform(),
+        );
+        r.TransformOrigin = s;
+      }
       (i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(e)),
-      this.Hha?.UpdateGachaShowItem(e, i.QualityId),
-      (this.lVi = t.SequencePlayer),
-      (r = this.lVi.GetStartTime().Time),
+        (r =
+          (this.Hha?.UpdateGachaShowItem(e, i.QualityId),
+          (this.lVi = t.SequencePlayer),
+          this.lVi.GetStartTime().Time));
       this.lVi.SetPlaybackPosition(
         new UE.MovieSceneSequencePlaybackParams(r, 0, "", 0, 1),
       ),
-      this.lVi.PlayTo(
-        new UE.MovieSceneSequencePlaybackParams(r, 0, "A", 2, 0),
-      ));
+        this.lVi.PlayTo(
+          new UE.MovieSceneSequencePlaybackParams(r, 0, "A", 2, 0),
+        );
+    }
   }
   yVi() {
     var e = this.p5i.IsOtherData
@@ -458,7 +530,14 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       : LguiUtil_1.LguiUtil.SetLocalText(i, "ClickToSetSign");
   }
   MVi() {
-    this.SetRoleIcon("", this.GetTexture(4), this.p5i.HeadPhotoId);
+    var e = this.GetTexture(4),
+      t = this.p5i.HeadPhotoId,
+      i = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(t, !1);
+    i
+      ? (this.SetTextureByPath(i.GetRoleHeadIconCircle(), e), e.SetUIActive(!0))
+      : 0 < t &&
+        ((i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(t)),
+        this.SetRoleIcon(i, e, t));
   }
   SVi() {
     LguiUtil_1.LguiUtil.SetLocalText(
@@ -476,7 +555,7 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       (e = BackgroundCardById_1.configBackgroundCardById.GetConfig(e)) &&
       this.SetTextureByPath(e.FunctionViewCardPath, this.GetTexture(3));
   }
-  qxa() {
+  Nxa() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e =
@@ -485,12 +564,16 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
             ? this.p5i?.PsnUserId
             : ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyUserId())),
         this.GetItem(21)?.SetUIActive(e),
+        this.GetTexture(27)?.SetUIActive(e),
+        this.GetItem(28)?.SetUIActive(!e),
         e &&
           ((e = this.p5i.IsOtherData
             ? (this.p5i?.PsnOnlineId ?? "")
             : ModelManager_1.ModelManager.PlayerInfoModel.GetThirdPartyOnlineId()),
           this.GetText(22)?.SetText(e)))
-      : this.GetItem(21)?.SetUIActive(!1);
+      : (this.GetItem(21)?.SetUIActive(!1),
+        this.GetTexture(27)?.SetUIActive(!1),
+        this.GetItem(28)?.SetUIActive(!1));
   }
   RefreshButtonState() {
     var e = !this.p5i.IsOtherData;
@@ -499,6 +582,12 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       this.GetButton(12).RootUIComp.SetUIActive(e),
       this.GetButton(14).RootUIComp.SetUIActive(e),
       this.GetButton(18).RootUIComp.SetUIActive(e);
+  }
+  BNe() {
+    var e =
+      ModelManager_1.ModelManager.PersonalModel.CheckCanShowPersonalTip() &&
+      !this.p5i.IsOtherData;
+    this.GetItem(23).SetUIActive(e);
   }
   K8e() {
     this.p5i.IsOtherData ||
@@ -519,6 +608,12 @@ class PersonalRootView extends UiViewBase_1.UiViewBase {
       "IndividualizationRoleSwitchIntervalTime",
     );
     return Time_1.Time.Now - this.L6e >= e;
+  }
+  RefreshPlayerTitle() {
+    var e = this.p5i.CurPlayerTitleId,
+      t = this.p5i.CurPlayerTitleLevel,
+      i = this.p5i.Sex;
+    this.gLt?.Refresh(e, t, i);
   }
 }
 exports.PersonalRootView = PersonalRootView;

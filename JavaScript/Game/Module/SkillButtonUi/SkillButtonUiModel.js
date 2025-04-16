@@ -6,7 +6,6 @@ const Info_1 = require("../../../Core/Common/Info"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   SkillButtonTextAll_1 = require("../../../Core/Define/ConfigQuery/SkillButtonTextAll"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
-  GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -14,7 +13,9 @@ const Info_1 = require("../../../Core/Common/Info"),
   SkillButtonEntityData_1 = require("./SkillButtonEntityData"),
   SkillButtonFollowerEntityData_1 = require("./SkillButtonFollowerEntityData"),
   SkillButtonFormationData_1 = require("./SkillButtonFormationData"),
+  SkillButtonIndexData_1 = require("./SkillButtonIndexData"),
   SkillButtonUiGamepadData_1 = require("./SkillButtonUiGamepadData"),
+  SkillButtonVehicleEntityData_1 = require("./SkillButtonVehicleEntityData"),
   behaviorIconResMap = new Map([
     [101, ["SP_IconAim", "SP_IconAimPre"]],
     [102, ["SP_IconLock", "SP_IconLockPre"]],
@@ -23,27 +24,30 @@ const Info_1 = require("../../../Core/Common/Info"),
 class SkillButtonUiModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
+      (this.SkillPriorityButtonConfigMap = new Map()),
       (this.BehaviorIconPathMap = new Map()),
       (this._Io = new Map()),
       (this.uIo = void 0),
       (this.SkillButtonFormationData = void 0),
-      (this.wxa = void 0),
-      (this.cIo = []),
-      (this.IsNormalButtonTypeList = !1),
+      (this.Gxa = void 0),
+      (this.m3_ = void 0),
+      (this.DefaultSkillButtonIndexData = void 0),
+      (this.OtherSkillButtonIndexData = void 0),
+      (this.CurSkillButtonIndexData = void 0),
       (this.SkillButtonRotationRate = 0),
-      (this.$Ya = void 0),
+      (this.Feh = void 0),
       (this.mIo = void 0),
       (this.gU = !1);
   }
   get GamepadData() {
     return (
-      this.$Ya ||
+      this.Feh ||
         (this.gU &&
           !Info_1.Info.IsInTouch() &&
-          ((this.$Ya =
+          ((this.Feh =
             new SkillButtonUiGamepadData_1.SkillButtonUiGamepadData()),
-          this.$Ya.Init())),
-      this.$Ya
+          this.Feh.Init())),
+      this.Feh
     );
   }
   OnInit() {
@@ -54,19 +58,31 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
       (this.SkillButtonFormationData =
         new SkillButtonFormationData_1.SkillButtonFormationData()),
       this.SkillButtonFormationData.Init(),
-      this.BehaviorIconPathMap.clear();
+      this.SkillPriorityButtonConfigMap.clear();
+    for (const s of ConfigManager_1.ConfigManager.SkillButtonConfig.GetAllSkillPriorityButtonConfig())
+      this.SkillPriorityButtonConfigMap.set(s.ButtonType, s);
+    this.BehaviorIconPathMap.clear();
     for (var [t, i] of behaviorIconResMap) {
       var e = [];
-      for (const o of i)
+      for (const a of i)
         e.push(
-          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(o),
+          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(a),
         );
       this.BehaviorIconPathMap.set(t, e);
     }
+    Info_1.Info.IsInTouch() ||
+      ((this.Feh = new SkillButtonUiGamepadData_1.SkillButtonUiGamepadData()),
+      this.Feh.Init());
+    var n = 2 === Info_1.Info.OperationType,
+      o =
+        ConfigManager_1.ConfigManager.SkillButtonConfig.GetSkillIndexConfig(0);
     return (
-      Info_1.Info.IsInTouch() ||
-        ((this.$Ya = new SkillButtonUiGamepadData_1.SkillButtonUiGamepadData()),
-        this.$Ya.Init()),
+      (this.DefaultSkillButtonIndexData =
+        new SkillButtonIndexData_1.SkillButtonIndexData()),
+      this.DefaultSkillButtonIndexData.UpdateSkillButtonIndexConfig(o, n),
+      (this.OtherSkillButtonIndexData =
+        new SkillButtonIndexData_1.SkillButtonIndexData()),
+      (this.CurSkillButtonIndexData = this.DefaultSkillButtonIndexData),
       (this.gU = !0)
     );
   }
@@ -76,9 +92,9 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
       (this.SkillButtonFormationData = void 0),
       this.ClearAllSkillButtonEntityData(),
       this.ClearSkillButtonFollowerEntityData(),
-      (this.cIo.length = 0),
-      this.$Ya?.Clear(),
-      (this.$Ya = void 0),
+      this.ClearSkillButtonVehicleEntityData(),
+      this.Feh?.Clear(),
+      (this.Feh = void 0),
       (this.gU = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnSkillButtonDataClear,
@@ -92,6 +108,17 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   GetSkillButtonEntityData(t) {
     return this._Io.get(t);
   }
+  CheckAndRemoveInvalidEntityData() {
+    for (const t of this._Io.values())
+      t.EntityHandle &&
+        !t.EntityHandle.Valid &&
+        (Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("Battle", 17, "技能按钮数据有非法的实体, 执行清理", [
+            "EntityHandleId",
+            t.EntityHandle?.Id,
+          ]),
+        this.OnRemoveEntity(t.EntityHandle));
+  }
   CreateAllSkillButtonEntityData() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     for (const i of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities())
@@ -101,13 +128,13 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   }
   CreateSkillButtonEntityData(t, i) {
     var e = t.Entity.Id;
-    let o = this._Io.get(e);
+    let n = this._Io.get(e);
     return (
-      o
-        ? o.IsCurEntity !== i && o.OnChangeRole(i)
-        : ((o = new SkillButtonEntityData_1.SkillButtonEntityData()).Init(t, i),
-          this._Io.set(e, o)),
-      o
+      n
+        ? n.IsCurEntity !== i && n.OnChangeRole(i)
+        : ((n = new SkillButtonEntityData_1.SkillButtonEntityData()).Init(t, i),
+          this._Io.set(e, n)),
+      n
     );
   }
   ClearAllSkillButtonEntityData() {
@@ -118,20 +145,29 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     var i =
       ModelManager_1.ModelManager.BattleUiModel?.FormationData?.GetFollowerEnable() ??
       !1;
-    if (this.wxa) {
-      if (this.wxa.EntityHandle === t)
-        return void (this.wxa.IsEnable !== i && this.wxa.SetEnable(i));
-      this.wxa.Clear(), (this.wxa = void 0);
+    if (this.Gxa) {
+      if (this.Gxa.EntityHandle === t)
+        return void (this.Gxa.IsEnable !== i && this.Gxa.SetEnable(i));
+      this.Gxa.Clear(), (this.Gxa = void 0);
     }
-    (this.wxa =
+    (this.Gxa =
       new SkillButtonFollowerEntityData_1.SkillButtonFollowerEntityData()),
-      this.wxa.Init(t, i);
+      this.Gxa.Init(t, i);
   }
   ClearSkillButtonFollowerEntityData() {
-    this.wxa &&
-      (this.wxa.IsEnable && this.wxa.SetEnable(!1),
-      this.wxa.Clear(),
-      (this.wxa = void 0));
+    this.Gxa &&
+      (this.Gxa.IsEnable && this.Gxa.SetEnable(!1),
+      this.Gxa.Clear(),
+      (this.Gxa = void 0));
+  }
+  CreateSkillButtonVehicleEntityData(t) {
+    this.ClearSkillButtonVehicleEntityData(),
+      (this.m3_ =
+        new SkillButtonVehicleEntityData_1.SkillButtonVehicleEntityData()),
+      this.m3_.Init(t);
+  }
+  ClearSkillButtonVehicleEntityData() {
+    this.m3_ && (this.m3_.Clear(), (this.m3_ = void 0));
   }
   OnRemoveEntity(t) {
     var i = this._Io.get(t.Id);
@@ -139,7 +175,7 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
       (this._Io.delete(t.Id), i.Clear(), i === this.uIo) &&
       (this.uIo = void 0),
       this.uIo === i && (this.uIo = void 0),
-      this.wxa?.EntityHandle === t && this.ClearSkillButtonFollowerEntityData();
+      this.Gxa?.EntityHandle === t && this.ClearSkillButtonFollowerEntityData();
   }
   RefreshSkillButtonData(i, t, e) {
     if (
@@ -155,45 +191,46 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
           : o.OnChangeRole(!1);
       t || (this.uIo = this.CreateSkillButtonEntityData(i, !0));
     }
-    this.RefreshSkillButtonIndex(this.uIo.SkillButtonIndexConfig, i, t),
-      this.$Ya?.RefreshSkillButtonData(e),
+    var n = this.uIo.SkillButtonIndexConfig;
+    n &&
+      (0 === n.Id
+        ? (this.CurSkillButtonIndexData = this.DefaultSkillButtonIndexData)
+        : (this.OtherSkillButtonIndexData.UpdateSkillButtonIndexConfig(n, t),
+          (this.CurSkillButtonIndexData = this.OtherSkillButtonIndexData))),
+      this.CurSkillButtonIndexData.RefreshSkillButtonIndex(i),
+      this.Feh?.RefreshSkillButtonData(e),
       this.uIo.RefreshSkillButtonData(e);
   }
   RefreshSkillButtonExplorePhantomSkillId(t) {
     for (const i of this._Io.values())
       i.RefreshSkillButtonExplorePhantomSkillId(t);
+    this.m3_?.RefreshSkillButtonExplorePhantomSkillId(t);
   }
   GetSkillButtonIndexByButton(t) {
-    return this.cIo.indexOf(t);
+    return this.GetButtonTypeList().indexOf(t);
   }
   GetButtonTypeList() {
-    return this.cIo;
+    return this.CurSkillButtonIndexData?.ButtonTypeList ?? [];
   }
-  RefreshSkillButtonIndex(t, i, e) {
-    if (((this.IsNormalButtonTypeList = !1), t)) {
-      var o,
-        n,
-        s = i.Entity.GetComponent(190);
-      for ([o, n] of e ? t.DesktopButtonTypeMap : t.PadButtonTypeMap)
-        if (s.HasTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o)))
-          return void (this.cIo = n.ArrayInt);
-      (this.cIo = e ? t.DesktopButtonTypeList : t.PadButtonTypeList),
-        (this.IsNormalButtonTypeList = !0);
-    } else
-      Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Battle", 18, "刷新技能按钮索引时缺少配置"),
-        (this.cIo = []);
+  RefreshSkillButtonIndexByTag(t, i, e, n) {
+    t.Id === this.CurSkillButtonIndexData?.ButtonIndexConfigId &&
+      (n &&
+      this.CurSkillButtonIndexData.IsNormalButtonTypeList &&
+      !this.CurSkillButtonIndexData.ButtonIndexTagIdSet.has(e)
+        ? this.CurSkillButtonIndexData.RefreshSkillButtonIndexByTag(i, e)
+        : this.CurSkillButtonIndexData.RefreshSkillButtonIndex(i));
   }
-  RefreshSkillButtonIndexByTag(t, i, e) {
-    (this.IsNormalButtonTypeList = !1),
-      t
-        ? (i = (e ? t.DesktopButtonTypeMap : t.PadButtonTypeMap).get(i))
-          ? (this.cIo = i.ArrayInt)
-          : ((this.cIo = e ? t.DesktopButtonTypeList : t.PadButtonTypeList),
-            (this.IsNormalButtonTypeList = !0))
-        : (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Battle", 18, "刷新技能按钮索引时缺少配置"),
-          (this.cIo = []));
+  RefreshSkillButtonIndexOnOperationTypeChanged() {
+    var t = 2 === Info_1.Info.OperationType;
+    this.CurSkillButtonIndexData.UpdateSkillButtonIndexConfig(
+      this.CurSkillButtonIndexData.ButtonIndexConfig,
+      t,
+    ),
+      this.DefaultSkillButtonIndexData !== this.uIo &&
+        this.DefaultSkillButtonIndexData.UpdateSkillButtonIndexConfig(
+          this.DefaultSkillButtonIndexData.ButtonIndexConfig,
+          t,
+        );
   }
   ExecuteMultiSkillIdChanged(t, i, e) {
     this._Io.get(t)?.ExecuteMultiSkillIdChanged(i, e);
@@ -202,10 +239,15 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     this._Io.get(t)?.ExecuteMultiSkillEnable(i, e);
   }
   OnSkillCdChanged(t) {
-    for (const e of t.EntityIds) {
-      var i = this._Io.get(e);
-      if (i) for (const o of t.SkillCdInfoMap.keys()) i.RefreshSkillCd(o);
-    }
+    for (const e of t.EntityIds)
+      if (e === this.m3_?.EntityHandle?.Id)
+        for (const n of t.SkillCdInfoMap.keys()) this.m3_.RefreshSkillCd(n);
+      else if (e === this.Gxa?.EntityHandle?.Id)
+        for (const o of t.SkillCdInfoMap.keys()) this.Gxa.RefreshSkillCd(o);
+      else {
+        var i = this._Io.get(e);
+        if (i) for (const s of t.SkillCdInfoMap.keys()) i.RefreshSkillCd(s);
+      }
   }
   OnAimStateChanged() {
     this.GamepadData?.RefreshAimState() && this.uIo?.RefreshSkillButtonData(3);
@@ -215,15 +257,23 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   }
   OnInputEnableChanged(t, i) {
     for (const e of this._Io.values()) e.RefreshEnableByInputEvent(t, i);
+    this.Gxa?.RefreshEnableByInputEvent(t, i),
+      this.m3_?.RefreshEnableByInputEvent(t, i);
   }
   OnInputVisibleChanged(t, i) {
     for (const e of this._Io.values()) e.RefreshVisibleByInputEvent(t, i);
+    this.Gxa?.RefreshVisibleByInputEvent(t, i),
+      this.m3_?.RefreshVisibleByInputEvent(t, i);
   }
   RefreshEnableByButtonType(t) {
     for (const i of this._Io.values()) i.RefreshEnableByButtonType(t);
+    this.Gxa?.RefreshEnableByButtonType(t),
+      this.m3_?.RefreshEnableByButtonType(t);
   }
   RefreshVisibleByButtonType(t) {
     for (const i of this._Io.values()) i.RefreshVisibleByButtonType(t);
+    this.Gxa?.RefreshVisibleByButtonType(t),
+      this.m3_?.RefreshVisibleByButtonType(t);
   }
   GetCurSkillButtonEntityData() {
     return this.uIo;
@@ -232,8 +282,12 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     return this._Io.values();
   }
   GetSkillButtonDataByButton(t) {
-    if (this.wxa?.IsEnable) {
-      var i = this.wxa.GetSkillButtonDataByButton(t);
+    if (this.Gxa?.IsEnable) {
+      var i = this.Gxa.GetSkillButtonDataByButton(t);
+      if (i?.IsOccupy()) return i;
+    }
+    if (this.m3_) {
+      i = this.m3_.GetSkillButtonDataByButton(t);
       if (i) return i;
     }
     return this.uIo?.GetSkillButtonDataByButton(t);
@@ -255,7 +309,7 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     }
   }
   GetCurSkillButtonFollowerEntityData() {
-    return this.wxa;
+    return this.Gxa;
   }
 }
 exports.SkillButtonUiModel = SkillButtonUiModel;

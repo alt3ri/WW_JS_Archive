@@ -6,6 +6,7 @@ class TsAnimNotifySendGamePlayEvent extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.事件Tag = void 0);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {

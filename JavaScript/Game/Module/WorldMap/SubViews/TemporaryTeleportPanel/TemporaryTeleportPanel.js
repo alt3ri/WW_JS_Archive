@@ -2,28 +2,30 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TemporaryTeleportPanel = void 0);
 const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
-  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  ButtonAndTextItem_1 = require("../../../Common/Button/ButtonAndTextItem"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
   MapController_1 = require("../../../Map/Controller/MapController"),
-  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
-  WorldMapDefine_1 = require("../../WorldMapDefine");
-class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
+  WorldMapSecondaryUiLayoutB_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutB");
+class TemporaryTeleportPanel extends WorldMapSecondaryUiLayoutB_1.WorldMapSecondaryUiLayoutB {
   constructor() {
     super(...arguments),
       (this.u2o = void 0),
-      (this.wAt = void 0),
-      (this.mFo = void 0),
-      (this.dFo = () => {
+      (this.OnMiddleCenterBtnClick = () => {
         MapController_1.MapController.RequestTeleportToTargetByTemporaryTeleport(
           this.u2o.TeleportId,
         ),
           this.Close();
       }),
-      (this.CFo = () => {
-        MapController_1.MapController.RequestRemoveDynamicMapMark(
+      (this.OnDelBtnClick = () => {
+        this.ySc();
+      }),
+      (this.SSc = () => {
+        ControllerHolder_1.ControllerHolder.MapExploreToolController.RemoveTemporaryTeleportRequest(
+          this.u2o.TeleportId,
           this.u2o.MarkId,
         ),
           this.Close();
@@ -32,16 +34,8 @@ class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   GetResourceId() {
     return "UiItem_TemporaryTeleportPanel_Prefab";
   }
-  OnRegisterComponent() {
-    this.ComponentRegisterInfos =
-      WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoB;
-  }
   OnStart() {
-    this.RootItem.SetRaycastTarget(!1),
-      (this.wAt = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(8))),
-      this.wAt.BindCallback(this.dFo),
-      (this.mFo = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(7))),
-      this.mFo.BindCallback(this.CFo);
+    this.RootItem.SetRaycastTarget(!1), super.OnStart();
   }
   OnShowWorldMapSecondaryUi(e) {
     (this.u2o = e),
@@ -57,29 +51,42 @@ class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             .toString(),
         ),
       ),
+      this.RightConfirmBtn.SetUiActive(!1),
+      this.LeftConfirmBtn.SetUiActive(!1),
+      this.MiddleCenterBtn.SetUiActive(!0),
+      this.SetDelBtnActive(!0),
       this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       this.GetText(2).SetText(this.u2o.GetDescText()),
       this.GetText(3).SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1),
-      this.l_i();
+      this.l_i(),
+      this.MSc();
+  }
+  ySc() {
+    var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(263);
+    e.FunctionMap.set(2, this.SSc),
+      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+        e,
+      );
   }
   l_i() {
-    this.mFo.SetText(
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        "Text_TeleportDelete_Text",
-      ),
-    );
-    var e =
-      ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-        "TeleportFastMove",
-      );
-    this.wAt.SetText(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
+    this.MiddleCenterBtn.SetLocalText("TeleportFastMove"),
       ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
-        ? this.mFo.SetActive(
+        ? this.SetDelBtnActive(
             ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam(),
           )
-        : this.mFo.SetActive(!0),
-      this.wAt.RefreshEnable(!this.u2o.IsServerDisable);
+        : this.SetDelBtnActive(!0),
+      this.MiddleCenterBtn.SetEnableClick(!this.u2o.IsServerDisable);
+  }
+  MSc() {
+    var e = this.u2o.ShowSecondaryUiMultiMapIcon(),
+      e =
+        (this.GetSprite(11).SetUIActive(!0),
+        e
+          ? WorldMapDefine_1.MULTI_MAP_SELECT_ICON_PATH
+          : WorldMapDefine_1.TEMPORARY_TELEPORT_NORMAL_ICON_PATH),
+      e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
+    this.SetSpriteByPath(e, this.GetSprite(11), !1);
   }
 }
 exports.TemporaryTeleportPanel = TemporaryTeleportPanel;

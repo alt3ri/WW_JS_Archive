@@ -16,7 +16,7 @@ class ItemConfig extends ConfigBase_1.ConfigBase {
     var i = ItemInfoById_1.configItemInfoById.GetConfig(e);
     if (i) return i;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Item", 17, "获取物品配置错误", ["itemConfigId", e]);
+      Log_1.Log.Error("Item", 16, "获取物品配置错误", ["itemConfigId", e]);
   }
   GetConfigListByItemType(e) {
     return ItemInfoByItemType_1.configItemInfoByItemType.GetConfigList(e);
@@ -25,19 +25,19 @@ class ItemConfig extends ConfigBase_1.ConfigBase {
     var i = SpecialItemById_1.configSpecialItemById.GetConfig(e);
     if (i) return i;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Item", 8, "获取特殊物品配置错误", ["specialItemId", e]);
+      Log_1.Log.Error("Item", 37, "获取特殊物品配置错误", ["specialItemId", e]);
   }
   GetMainTypeConfig(e) {
     var i = ItemMainTypeById_1.configItemMainTypeById.GetConfig(e);
     if (i) return i;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Item", 17, "获取物品主类型配置错误", ["mainType", e]);
+      Log_1.Log.Error("Item", 16, "获取物品主类型配置错误", ["mainType", e]);
   }
   GetQualityConfig(e) {
     var i = QualityInfoById_1.configQualityInfoById.GetConfig(e);
     if (i) return i;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Item", 17, "获取获取物品品质配置错误", ["qualityId", e]);
+      Log_1.Log.Error("Item", 16, "获取获取物品品质配置错误", ["qualityId", e]);
   }
   GetItemListMaxSize() {
     var e =
@@ -49,7 +49,7 @@ class ItemConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Reward",
-            9,
+            8,
             '外入包列表最大数量无法找到, 请检测c.参数字段"item_list_max_size"',
           )),
       e

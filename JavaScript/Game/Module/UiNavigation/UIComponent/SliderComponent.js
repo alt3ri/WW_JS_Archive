@@ -8,7 +8,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   HotKeyComponent_1 = require("./HotKeyComponent"),
-  INTERVAL = 0.05;
+  INTERVAL = 0.05,
+  DEAD_AREA = 0.4;
 class SliderComponent extends HotKeyComponent_1.HotKeyComponent {
   SetValue(e) {
     UiNavigationNewController_1.UiNavigationNewController.SliderComponentSetValue(
@@ -23,7 +24,7 @@ class SliderIncreaseComponent extends (exports.SliderComponent =
     this.SetValue(INTERVAL);
   }
   OnInputAxis(e, n) {
-    n <= 0 || this.SetValue(n * INTERVAL);
+    n <= DEAD_AREA || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderIncreaseComponent = SliderIncreaseComponent;
@@ -32,7 +33,7 @@ class SliderReduceComponent extends SliderComponent {
     this.SetValue(-INTERVAL);
   }
   OnInputAxis(e, n) {
-    0 <= n || this.SetValue(n * INTERVAL);
+    n >= -DEAD_AREA || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderReduceComponent = SliderReduceComponent;
@@ -41,7 +42,7 @@ class SliderIncreaseReverseComponent extends SliderComponent {
     this.SetValue(INTERVAL);
   }
   OnInputAxis(e, n) {
-    0 <= n || this.SetValue(-n * INTERVAL);
+    n >= -DEAD_AREA || this.SetValue(-n * INTERVAL);
   }
 }
 exports.SliderIncreaseReverseComponent = SliderIncreaseReverseComponent;
@@ -50,7 +51,7 @@ class SliderReduceReverseComponent extends SliderComponent {
     this.SetValue(-INTERVAL);
   }
   OnInputAxis(e, n) {
-    n <= 0 || this.SetValue(-n * INTERVAL);
+    n <= DEAD_AREA || this.SetValue(-n * INTERVAL);
   }
 }
 exports.SliderReduceReverseComponent = SliderReduceReverseComponent;

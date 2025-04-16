@@ -31,6 +31,7 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
       [9, UE.UISprite],
       [10, UE.UISprite],
       [11, UE.UISprite],
+      [12, UE.UIItem],
     ];
   }
   OnStart() {
@@ -134,6 +135,9 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
       this.GetSprite(7).SetAlpha(t ? 0 : 1),
       this.GetSprite(8).SetAlpha(t ? 1 : 0),
       this.GetSprite(9).SetAlpha(t ? 1 : 0);
+  }
+  SetArrowLineVisible(t) {
+    this.GetItem(12)?.SetUIActive(t);
   }
 }
 ((exports.AimUnit = AimUnit).kti = new UE.Color(

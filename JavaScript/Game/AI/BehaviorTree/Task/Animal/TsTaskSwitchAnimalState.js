@@ -12,6 +12,9 @@ class TsTaskSwitchAnimalState extends TsTaskAbortImmediatelyBase_1.default {
       (this.ReceiveExecuteTime = -0),
       (this.WaitTime = -0);
   }
+  Constructor() {
+    super.Constructor(), (this.ReceiveExecuteTime = -0), (this.WaitTime = -0);
+  }
   ReceiveExecuteAI(e, t) {
     var r = e.AiController;
     r
@@ -36,7 +39,7 @@ class TsTaskSwitchAnimalState extends TsTaskAbortImmediatelyBase_1.default {
             (this.WaitTime = r.GetWaitTime()),
             (this.ReceiveExecuteTime = Time_1.Time.WorldTimeSeconds)))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             e.GetClass().GetName(),
           ]),
@@ -63,7 +66,7 @@ class TsTaskSwitchAnimalState extends TsTaskAbortImmediatelyBase_1.default {
           ),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             e.GetClass().GetName(),
           ]),

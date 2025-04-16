@@ -14,6 +14,7 @@ const UE = require("ue"),
   SharePlatformById_1 = require("../../../Core/Define/ConfigQuery/SharePlatformById"),
   ShareRewardById_1 = require("../../../Core/Define/ConfigQuery/ShareRewardById"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  PlatformSdkConfig_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkConfig"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   KuroSdkReport_1 = require("../../KuroSdk/KuroSdkReport"),
@@ -32,13 +33,14 @@ class ChannelModel extends ModelBase_1.ModelBase {
       (this.vEt = void 0),
       (this.fIn = !1),
       (this.SharingActionId = 1),
+      (this.SharingConfigId = 0),
       (this.MEt = () => {
         if (
           ((this.gEt = []),
           (this.fEt = []),
           (this.pEt = []),
           (this.fIn = !1),
-          ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk())
+          ControllerHolder_1.ControllerHolder.LoginController.IsSdkLoginMode())
         ) {
           var e =
               ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk(),
@@ -51,7 +53,7 @@ class ChannelModel extends ModelBase_1.ModelBase {
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "KuroSdk",
-                  54,
+                  53,
                   "当前包体信息",
                   ["是否海外", e],
                   ["当前语言码", r],
@@ -65,7 +67,7 @@ class ChannelModel extends ModelBase_1.ModelBase {
             ))
               this.EEt(r, n.Language) &&
                 this.SEt(t, n.Channel) &&
-                this.G4a(o, n.PackageId) &&
+                this.S8a(o, n.PackageId) &&
                 !i.Check() &&
                 this.gEt.push(n.Id);
           (this.gEt = this.gEt.sort((e, r) => {
@@ -74,7 +76,7 @@ class ChannelModel extends ModelBase_1.ModelBase {
             return t && o && t.Sort !== o.Sort ? t.Sort - o.Sort : e - r;
           })),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("KuroSdk", 28, "开启分享渠道id ", [
+              Log_1.Log.Info("KuroSdk", 27, "开启分享渠道id ", [
                 "OpenShareChannel",
                 this.gEt,
               ]);
@@ -83,40 +85,41 @@ class ChannelModel extends ModelBase_1.ModelBase {
           ))
             this.EEt(r, s.Language) &&
               this.SEt(t, s.Channel) &&
-              this.G4a(o, s.PackageId) &&
+              this.S8a(o, s.PackageId) &&
               !i.Check() &&
               this.fEt.push(s.Id);
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("KuroSdk", 28, "开启库街区id ", [
+            Log_1.Log.Info("KuroSdk", 27, "开启库街区id ", [
               "OpenKuroStreetId",
               this.fEt,
             ]);
-          for (const h of SetAccountAll_1.configSetAccountAll.GetConfigList(
+          for (const l of SetAccountAll_1.configSetAccountAll.GetConfigList(
             e ? 0 : 1,
           ))
-            this.EEt(r, h.Language) &&
-              this.SEt(t, h.Channel) &&
-              this.G4a(o, h.PackageId) &&
-              this.pEt.push(h.Id);
+            this.EEt(r, l.Language) &&
+              this.SEt(t, l.Channel) &&
+              this.S8a(o, l.PackageId) &&
+              (!i.Check() || (1 !== l.Id && 9 !== l.Id)) &&
+              this.pEt.push(l.Id);
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("KuroSdk", 28, "开启账号中心id ", [
+            Log_1.Log.Info("KuroSdk", 27, "开启账号中心id ", [
               "OpenAccountSetting",
               this.pEt,
             ]);
-          for (const u of CustomerServiceAll_1.configCustomerServiceAll.GetConfigList(
+          for (const a of CustomerServiceAll_1.configCustomerServiceAll.GetConfigList(
             e ? 0 : 1,
           ))
-            this.EEt(r, u.Language) &&
-              this.SEt(t, u.Channel) &&
-              this.G4a(o, u.PackageId) &&
+            this.EEt(r, a.Language) &&
+              this.SEt(t, a.Channel) &&
+              this.S8a(o, a.PackageId) &&
               (this.fIn = !0);
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("KuroSdk", 11, "客服开启", ["state", this.fIn]),
+            Log_1.Log.Info("KuroSdk", 10, "客服开启", ["state", this.fIn]),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChannelReset,
             );
         } else
-          Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 54, "不可使用SDK");
+          Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 53, "不可使用SDK");
       });
   }
   OnInit() {
@@ -147,7 +150,7 @@ class ChannelModel extends ModelBase_1.ModelBase {
   SEt(e, r) {
     return r.includes(CHANNEL_ALL) || r.includes(e);
   }
-  G4a(e, r) {
+  S8a(e, r) {
     return !!e && (r.includes(PACKAGE_ID_ALL) || r.includes(e));
   }
   CheckShareChannelOpen(e) {
@@ -163,7 +166,7 @@ class ChannelModel extends ModelBase_1.ModelBase {
     return (
       this.yEt(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("KuroSdk", 11, "客服是否开启", [
+        Log_1.Log.Info("KuroSdk", 10, "客服是否开启", [
           "IsCustomerServiceOpen",
           this.fIn,
         ]),
@@ -189,23 +192,34 @@ class ChannelModel extends ModelBase_1.ModelBase {
   yEt() {
     0 === this.pEt.length && this.MEt();
   }
-  ProcessAccountSetting(e) {
-    1 === e || 9 === e
-      ? ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
-          13,
-        )
-      : 8 === e
-        ? (ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
-            15,
-          ),
-          ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
-            12,
-          ))
-        : ((2 !== e && 3 !== e && 4 !== e && 6 !== e && 7 !== e) ||
-            KuroSdkReport_1.KuroSdkReport.Report(
-              new KuroSdkReport_1.SdkReportOpenPrivacy(void 0),
-            ),
-          this.IEt(SetAccountById_1.configSetAccountById.GetConfig(e)?.Adress));
+  ProcessAccountSetting(r) {
+    if (1 === r || 9 === r)
+      ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
+        13,
+      );
+    else if (8 === r)
+      ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
+        15,
+      ),
+        ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
+          12,
+        );
+    else {
+      let e = SetAccountById_1.configSetAccountById.GetConfig(r).Adress;
+      var t = 7 === Info_1.Info.PlatformType || 8 === Info_1.Info.PlatformType;
+      (2 !== r && 3 !== r && 4 !== r && 6 !== r && 7 !== r) ||
+        KuroSdkReport_1.KuroSdkReport.Report(
+          new KuroSdkReport_1.SdkReportOpenPrivacy(void 0),
+        ),
+        t &&
+          (3 === r || 7 === r
+            ? (e = PlatformSdkConfig_1.PlatformSdkConfig.GetPrivacyPolicy())
+            : 6 === r || 2 === r
+              ? (e = PlatformSdkConfig_1.PlatformSdkConfig.GetTermsOfService())
+              : 4 === r &&
+                (e = PlatformSdkConfig_1.PlatformSdkConfig.GetChildPolicy())),
+        this.IEt(e);
+    }
   }
   GetOpenedShareIds() {
     return this.yEt(), this.gEt;
@@ -222,8 +236,8 @@ class ChannelModel extends ModelBase_1.ModelBase {
     e &&
       ((e = e.replace("{0}", LanguageSystem_1.LanguageSystem.PackageLanguage)),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 54, "根据渠道打开链接 ", ["formatUrl", e]),
-      UE.KismetSystemLibrary.LaunchURL(e));
+        Log_1.Log.Debug("KuroSdk", 27, "根据渠道打开链接 ", ["formatUrl", e]),
+      ControllerHolder_1.ControllerHolder.KuroSdkController.OpenExternalUrl(e));
   }
   GmOpenShareId(e) {
     0 === this.pEt.length && this.pEt.push(5), this.gEt?.push(e);

@@ -31,7 +31,7 @@ class ScrollViewDelegate {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ScrollViewGrid",
-          25,
+          43,
           `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
             this.INo.length,
         )
@@ -42,25 +42,63 @@ class ScrollViewDelegate {
         this.RefreshGridProxy(i, t));
   }
   RefreshGridProxy(i, t) {
-    var s, e, h;
+    var s, e, r;
     i >= this.RKe || t >= this.INo.length
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "ScrollViewGrid",
-          25,
+          43,
           `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
             this.INo.length,
         )
       : (s = this.GetGridProxy(t))
-        ? ((e = -1 !== i && i === this.RNo) && !this.UNo && (this.UNo = s),
-          (h = this.ANo(i, t)),
-          (s.GridIndex = i),
-          (s.DisplayIndex = t),
-          s.Refresh(h, e, i))
+        ? s.Refresh
+          ? ((e = -1 !== i && i === this.RNo) && !this.UNo && (this.UNo = s),
+            (r = this.ANo(i, t)),
+            (s.GridIndex = i),
+            (s.DisplayIndex = t),
+            s.Refresh(r, e, i))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "ScrollViewGrid",
+              43,
+              "Proxy没有实现同步刷新方法Refresh",
+            )
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ScrollViewGrid",
-            25,
+            43,
+            `Proxy获取异常 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
+              this.INo.length,
+          );
+  }
+  async RefreshGridProxyAsync(i, t) {
+    var s, e, r;
+    i >= this.RKe || t >= this.INo.length
+      ? Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "ScrollViewGrid",
+          43,
+          `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
+            this.INo.length,
+        )
+      : (s = this.GetGridProxy(t))
+        ? s.RefreshAsync
+          ? ((e = -1 !== i && i === this.RNo) && !this.UNo && (this.UNo = s),
+            (r = this.ANo(i, t)),
+            (s.GridIndex = i),
+            (s.DisplayIndex = t),
+            await s.RefreshAsync(r, e, i))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "ScrollViewGrid",
+              43,
+              "Proxy没有实现异步刷新方法RefreshAsync",
+            )
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "ScrollViewGrid",
+            43,
             `Proxy获取异常 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
               this.INo.length,
           );
@@ -82,14 +120,14 @@ class ScrollViewDelegate {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "ScrollViewGrid",
-        44,
+        43,
         `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.INo.length,
       );
     var s = this.INo[i];
     return (
       s
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("ScrollViewGrid", 25, "Proxy已经存在", [
+          Log_1.Log.Error("ScrollViewGrid", 43, "Proxy已经存在", [
             "DisplayIndex",
             i,
           ])
@@ -104,7 +142,7 @@ class ScrollViewDelegate {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "ScrollViewGrid",
-        44,
+        43,
         `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.INo.length,
       );
     var s = this.INo[i];
@@ -113,7 +151,7 @@ class ScrollViewDelegate {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ScrollViewGrid",
-            44,
+            43,
             "Proxy已经存在 displayIndex: ",
             ["displayIndex", i],
           )
@@ -129,14 +167,14 @@ class ScrollViewDelegate {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ScrollViewGrid",
-          25,
+          43,
           "获取Proxy非法，请检查初始动画是否尚未播放完成。displayIndex: " + i,
         );
     else {
       var t = this.INo[i];
       if (t) return t;
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("ScrollViewGrid", 25, "无法获取Proxy", [
+        Log_1.Log.Error("ScrollViewGrid", 43, "无法获取Proxy", [
           "DisplayIndex",
           i,
         ]);

@@ -86,9 +86,12 @@ class HotPatchLogReport {
         : "Other";
   }
   static Report(t) {
+    var o;
     t &&
-      ((t.device_id = HotPatchLogReport.FSr),
-      (t.event_time = Math.round(new Date().getTime() / 1e3).toString()),
+      ((o = new Date()),
+      (t.device_id = HotPatchLogReport.FSr),
+      (t.event_time = Math.round(o.getTime() / 1e3).toString()),
+      (t.l_trigger_time = o.getTime()),
       (t.s_version = HotPatchLogReport.Qre),
       (t.net_status = HotPatchLogReport.VSr()),
       (t.client_platform = HotPatchLogReport.rwi),

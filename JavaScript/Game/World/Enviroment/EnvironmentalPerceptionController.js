@@ -6,6 +6,7 @@ const cpp_1 = require("cpp"),
   UE = require("ue"),
   Stats_1 = require("../../../Core/Common/Stats"),
   Pool_1 = require("../../../Core/Container/Pool"),
+  EntityHelper_1 = require("../../../Core/Entity/EntityHelper"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -84,7 +85,7 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
       e++
     )
       t.Add(
-        new UE.FName(CreatureModel_1.globalEntityTypeQueryName[e]),
+        new UE.FName(EntityHelper_1.globalEntityTypeQueryName[e]),
         CreatureModel_1.globalEntityTypePerceptionType[e],
       );
     t.Add(new UE.FName("CustomStabilizeLow"), 2),
@@ -113,8 +114,8 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
   (EnvironmentalPerceptionController.Jvr = void 0),
   (EnvironmentalPerceptionController.xie = (e, t) => {
     _a.Lie && _a.Lie.RemoveTagAddOrRemoveListener(1996802261, _a.v7e),
-      (_a.Gce = EntitySystem_1.EntitySystem.GetComponent(e.Id, 164)),
-      (_a.Lie = EntitySystem_1.EntitySystem.GetComponent(e.Id, 190)),
+      (_a.Gce = EntitySystem_1.EntitySystem.GetComponent(e.Id, 176)),
+      (_a.Lie = EntitySystem_1.EntitySystem.GetComponent(e.Id, 203)),
       _a.Lie?.AddTagAddOrRemoveListener(1996802261, _a.v7e);
   }),
   (EnvironmentalPerceptionController.Zvr = !1),

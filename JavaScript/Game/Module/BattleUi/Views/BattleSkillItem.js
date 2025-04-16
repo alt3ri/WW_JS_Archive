@@ -8,6 +8,7 @@ const UE = require("ue"),
   Time_1 = require("../../../../Core/Common/Time"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -19,12 +20,15 @@ const UE = require("ue"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
+  BattleLinkDefine_1 = require("../../Battle/Link/BattleLinkDefine"),
   SkillCdController_1 = require("../../Battle/SkillCdController"),
   InputMultiKeyItem_1 = require("../../Common/InputKey/InputMultiKeyItem"),
   ControlScreenController_1 = require("../../ControlScreen/ControlScreenController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   BattleUiDefine_1 = require("../BattleUiDefine"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView"),
+  BattleSkillConfigLongPressItem_1 = require("./BattleSkillConfigLongPressItem"),
+  BattleSkillLongPressItem_1 = require("./BattleSkillLongPressItem"),
   BattleSkillNumItem_1 = require("./BattleSkillNumItem"),
   BattleSkillSwitchComponent_1 = require("./BattleSkillSwitchComponent"),
   BattleSkillUltraItem_1 = require("./BattleSkillUltraItem"),
@@ -52,6 +56,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (this.pit = ""),
       (this.jtt = void 0),
       (this.vit = 0),
+      (this.zQ_ = void 0),
       (this.Wtt = void 0),
       (this.Mit = void 0),
       (this.Eit = 0),
@@ -75,16 +80,32 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (this.xit = !1),
       (this.wit = !1),
       (this.Bit = !1),
-      (this.bit = !1),
+      (this.HideCdText = !1),
       (this.CdFixedPoint = 1),
       (this.IsHideNumComp = !1),
       (this.qit = 1),
       (this.Git = 1),
-      (this.Nit = void 0),
+      (this.SkillNameText = void 0),
       (this.UltraComponent = void 0),
       (this.NumComponent = void 0),
       (this.SwitchComponent = void 0),
+      (this.LongPressComponent = void 0),
+      (this.ConfigLongPressComponent = void 0),
       (this.AlphaTweenComp = void 0),
+      (this.OnBattleLinkStatusChanged = (t) => {
+        var i;
+        !this.SkillButtonData ||
+          ((i = this.SkillButtonData.GetActionType()) !==
+            InputEnums_1.EInputAction.大招 &&
+            i !== InputEnums_1.EInputAction.技能1 &&
+            i !== InputEnums_1.EInputAction.攻击 &&
+            i !== InputEnums_1.EInputAction.幻象2) ||
+          (i === InputEnums_1.EInputAction.大招 &&
+            this.GetUltraComponent.SetUiActive(4 !== t),
+          4 === t
+            ? this.GetUiNiagara(12).SetNiagaraUIActive(!0, !0)
+            : this.GetUiNiagara(12).SetNiagaraUIActive(!1, !0));
+      }),
       (this.OnTouch = (t, i) => {
         var s;
         this.IsLongPress &&
@@ -107,7 +128,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         (this.cit -= BattleUiDefine_1.SKILL_COOLDOWN_LOOP_INTERVAL),
           (this.cit = Math.round(10 * this.cit) / 10),
           0 < this.cit
-            ? this.bit ||
+            ? this.HideCdText ||
               this.CoolDownUiText.SetText(this.cit.toFixed(this.CdFixedPoint))
             : this.FinishSkillCoolDown();
       });
@@ -147,6 +168,34 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       this.SwitchComponent
     );
   }
+  get GetLongPressComponent() {
+    var t;
+    return (
+      this.LongPressComponent ||
+        ((t = this.GetItem(8)),
+        (this.LongPressComponent =
+          new BattleSkillLongPressItem_1.BattleSkillLongPressItem()),
+        this.LongPressComponent.CreateByResourceIdAsync(
+          "UiItem_BattleSkillLongPressItem",
+          t,
+        )),
+      this.LongPressComponent
+    );
+  }
+  get GetConfigLongPressComponent() {
+    var t;
+    return (
+      this.ConfigLongPressComponent ||
+        ((t = this.GetItem(8)),
+        (this.ConfigLongPressComponent =
+          new BattleSkillConfigLongPressItem_1.BattleSkillConfigLongPressItem()),
+        this.ConfigLongPressComponent.CreateByResourceIdAsync(
+          "UiItem_BattleSkillLongPressItem",
+          t,
+        )),
+      this.ConfigLongPressComponent
+    );
+  }
   GetExtraContainer() {
     return this.GetItem(8);
   }
@@ -167,10 +216,11 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       [9, UE.UIItem],
       [10, UE.UINiagara],
       [11, UE.UIText],
+      [12, UE.UINiagara],
     ]),
       Info_1.Info.IsInTouch() ||
-        (this.ComponentRegisterInfos.push([12, UE.UISprite]),
-        this.ComponentRegisterInfos.push([13, UE.UIItem]));
+        (this.ComponentRegisterInfos.push([13, UE.UISprite]),
+        this.ComponentRegisterInfos.push([14, UE.UIItem]));
   }
   Initialize(t) {
     super.Initialize(),
@@ -191,7 +241,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (this.Pit = this.Dit.GetSprite()),
       (this.xit = !0),
       (this.wit = !0),
-      (this.Nit = this.GetText(11)),
+      (this.SkillNameText = this.GetText(11)),
       (this.ClickEffect = new BattleUiNiagaraItem_1.BattleUiNiagaraItem(
         this.GetUiNiagara(10),
       )),
@@ -202,8 +252,8 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   async InitializeAsync() {
     var t;
     Info_1.Info.IsInTouch() ||
-      ((this.CombinePressTipSprite = this.GetSprite(12)),
-      (t = this.GetItem(13)),
+      ((this.CombinePressTipSprite = this.GetSprite(13)),
+      (t = this.GetItem(14)),
       (this.KeyItem = new InputMultiKeyItem_1.InputMultiKeyItem()),
       (this.sit = this.RootItem.GetParentAsUIItem()),
       await this.KeyItem.CreateByActorAsync(t.GetOwner()));
@@ -212,6 +262,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
     this.SkillButtonData !== t && this.TryReleaseButton(),
       t &&
         ((this.SkillButtonData = t),
+        this.InitVehicleHandle(),
         this.RefreshVisible(),
         this.RefreshSkillIcon(),
         this.RefreshSkillName(),
@@ -222,8 +273,9 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         this.RefreshSkillCoolDown(),
         this.RefreshLimitCount(!0),
         this.RefreshAttribute(!1),
-        this.Fit()) &&
-        this.RefreshEquipExplore();
+        this.Fit() && this.RefreshEquipExplore(),
+        this.RefreshSkillButtonLongPress(),
+        this.RefreshConfigLongPress());
   }
   Deactivate() {
     this.TryReleaseButton(),
@@ -241,15 +293,21 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       this.ClickEffect.Stop(),
       this.CancelLoadDynamicEffectNiagara(),
       this.CancelLoadCdCompletedNiagara(),
-      this.HideAndClearSkillSprite(),
+      this.HideAndClearSkillSprite("休眠技能按钮"),
       this.HideAndClearSkillTexture(),
       (this.Mit = void 0),
+      (0 === this.vit && void 0 === this.zQ_) ||
+        (this.GetUiNiagara(7)?.ResetOverrideParameters(),
+        (this.vit = 0),
+        (this.zQ_ = void 0)),
       this.UltraComponent &&
         (this.UltraComponent.Destroy(), (this.UltraComponent = void 0)),
       this.NumComponent &&
         (this.NumComponent.Destroy(), (this.NumComponent = void 0)),
       this.SwitchComponent &&
         (this.SwitchComponent.Destroy(), (this.SwitchComponent = void 0)),
+      this.LongPressComponent &&
+        (this.LongPressComponent.Destroy(), (this.LongPressComponent = void 0)),
       this.OnRefreshVisible(!1);
   }
   OnShowBattleChildView() {
@@ -281,7 +339,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       super.Reset();
   }
   Tick(t) {
-    this.Wit(t);
+    this.Wit(t), this.ConfigLongPressComponent?.Tick(t);
   }
   AddEvents() {
     this.fit ||
@@ -312,6 +370,10 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         ],
         this.OnTouch,
       ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnBattleLinkStatusChanged,
+        this.OnBattleLinkStatusChanged,
+      ),
       (this.fit = !0));
   }
   RemoveEvents() {
@@ -335,6 +397,10 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         ],
         this.OnTouch,
       ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnBattleLinkStatusChanged,
+        this.OnBattleLinkStatusChanged,
+      ),
       (this.fit = !1));
   }
   OnSkillButtonPressed() {
@@ -345,7 +411,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         0 !== this.qit &&
         ((i = t = this.SkillButtonData.GetActionType()),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "[SkillButton]当技能按钮按下时", [
+          Log_1.Log.Debug("Battle", 17, "[SkillButton]当技能按钮按下时", [
             "inputActionType",
             t,
           ]),
@@ -362,7 +428,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       let t = this.SkillButtonData.GetLongPressTime();
       t <= 0 &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "重新获取技能按钮长按时长", [
+          Log_1.Log.Debug("Battle", 17, "重新获取技能按钮长按时长", [
             "inputActionType",
             this.SkillButtonData.GetActionType(),
           ]),
@@ -385,7 +451,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         ((t = this.SkillButtonData.GetActionType()),
         this.PressActionType === t
           ? (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Battle", 18, "[SkillButton]当技能按钮抬起时", [
+              Log_1.Log.Debug("Battle", 17, "[SkillButton]当技能按钮抬起时", [
                 "inputActionType",
                 t,
               ]),
@@ -398,7 +464,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Battle",
-                18,
+                17,
                 "[SkillButton]当技能按钮抬起时,技能按钮对应的ActionType已经变化，会执行按下时候的Action抬起",
                 ["inputActionType", t],
                 ["PressActionType", this.PressActionType],
@@ -420,7 +486,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
-        18,
+        17,
         "[SkillButton]当技能按钮取消时,执行抬起流程",
         ["inputActionType", this.SkillButtonData?.GetActionType()],
       ),
@@ -441,24 +507,64 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       const s = this.Lit,
         e = this.Dit;
       (this.Mit = i),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Battle",
+            17,
+            "技能图标加载开始",
+            ["", this.Eit],
+            ["", i],
+          ),
         this.CheckSkillIconIsTexture(i)
-          ? (e && this.HideAndClearSkillSprite(),
+          ? (e && this.HideAndClearSkillSprite("资源类型是Texture"),
             (this.SetTextureHandleId =
               ResourceSystem_1.ResourceSystem.LoadAsync(
                 i,
                 UE.Texture,
                 (t) => {
                   (this.Bit = !1),
-                    s &&
-                      this.Mit === i &&
-                      (t
-                        ? this.ShowAndSetSkillTexture(t)
-                        : this.HideAndClearSkillTexture());
+                    s && this.Mit === i
+                      ? t
+                        ? (Log_1.Log.CheckDebug() &&
+                            Log_1.Log.Debug(
+                              "Battle",
+                              17,
+                              "技能图标加载成功",
+                              ["", this.Eit],
+                              ["", i],
+                            ),
+                          this.ShowAndSetSkillTexture(t))
+                        : (Log_1.Log.CheckDebug() &&
+                            Log_1.Log.Debug(
+                              "Battle",
+                              17,
+                              "技能图标加载完成，但是资源为空",
+                              ["", this.Eit],
+                              ["", i],
+                            ),
+                          this.HideAndClearSkillTexture())
+                      : Log_1.Log.CheckDebug() &&
+                        Log_1.Log.Debug(
+                          "Battle",
+                          17,
+                          "技能图标加载完成, 但是已过期",
+                          ["", this.Eit],
+                          ["", i],
+                        );
                 },
                 103,
               )),
             (this.Mit = i),
-            this.Bit && s.SetUIActive(!1))
+            this.Bit &&
+              (Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug(
+                  "Battle",
+                  17,
+                  "技能图标加载中，隐藏图片",
+                  ["", this.Eit],
+                  ["", i],
+                ),
+              s.SetUIActive(!1)))
           : (this.HideAndClearSkillTexture(),
             (this.SetTextureHandleId =
               ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -466,15 +572,47 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
                 UE.LGUISpriteData_BaseObject,
                 (t) => {
                   (this.Bit = !1),
-                    e &&
-                      this.Mit === i &&
-                      (t
-                        ? this.ShowAndSetSkillSprite(t)
-                        : this.HideAndClearSkillSprite());
+                    e && this.Mit === i
+                      ? t
+                        ? (Log_1.Log.CheckDebug() &&
+                            Log_1.Log.Debug(
+                              "Battle",
+                              17,
+                              "技能图标加载成功",
+                              ["", this.Eit],
+                              ["", i],
+                            ),
+                          this.ShowAndSetSkillSprite(t))
+                        : (Log_1.Log.CheckDebug() &&
+                            Log_1.Log.Debug(
+                              "Battle",
+                              17,
+                              "技能图标加载完成，但是资源为空",
+                              ["", this.Eit],
+                              ["", i],
+                            ),
+                          this.HideAndClearSkillSprite("技能图标加载资源失败"))
+                      : Log_1.Log.CheckDebug() &&
+                        Log_1.Log.Debug(
+                          "Battle",
+                          17,
+                          "技能图标加载完成, 但是已过期",
+                          ["", this.Eit],
+                          ["", i],
+                        );
                 },
                 103,
               )),
-            this.Bit && e.SetUIActive(!1));
+            this.Bit &&
+              (Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug(
+                  "Battle",
+                  17,
+                  "技能图标隐藏Sprite, 加载中",
+                  ["", this.Eit],
+                  ["", i],
+                ),
+              e.SetUIActive(!1)));
     }
   }
   CheckSkillIconIsTexture(t) {
@@ -494,19 +632,36 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (this.xit = !1),
       this.Lit.SetUIActive(!0);
   }
-  HideAndClearSkillSprite() {
+  HideAndClearSkillSprite(t) {
     this.Dit &&
       (this.wit ||
         (this.Dit.SetSprite(this.Pit),
         this.Uit?.SetAllTransitionSprite(this.Pit),
         (this.wit = !0)),
-      this.Dit.SetUIActive(!1));
+      this.Dit.SetUIActive(!1),
+      Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug(
+        "Battle",
+        17,
+        "技能图标隐藏Sprite",
+        ["", this.Eit],
+        ["", t],
+        ["", this.Mit],
+      );
   }
   ShowAndSetSkillSprite(t) {
     this.Dit.SetSprite(t),
       this.Uit?.SetAllTransitionSprite(t),
       (this.wit = !1),
-      this.Dit.SetUIActive(!0);
+      this.Dit.SetUIActive(!0),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Battle",
+          17,
+          "技能图标显示Sprite",
+          ["", this.Eit],
+          ["", this.Mit],
+        );
   }
   RefreshSkillIcon() {
     if (this.SkillButtonData)
@@ -528,12 +683,12 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
               ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillNameBySkillId(
                 i,
               ))
-            ? (LguiUtil_1.LguiUtil.SetLocalTextNew(this.Nit, i),
-              this.Nit.SetUIActive(!0))
-            : this.Nit.SetUIActive(!1)
-          : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.Nit, t),
-            this.Nit.SetUIActive(!0)))
-      : this.Nit.SetUIActive(!1);
+            ? (LguiUtil_1.LguiUtil.SetLocalTextNew(this.SkillNameText, i),
+              this.SkillNameText.SetUIActive(!0))
+            : this.SkillNameText.SetUIActive(!1)
+          : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.SkillNameText, t),
+            this.SkillNameText.SetUIActive(!0)))
+      : this.SkillNameText.SetUIActive(!1);
   }
   SetSkillItemEnable(t, i = !1) {
     this.ait &&
@@ -549,13 +704,13 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         ? Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Battle",
-            18,
+            17,
             "[KeyItem]刷新技能按钮按键图标时，平台和行为名称与上一次刷新一致，因此不刷新",
             ["actionName", t],
             ["operationType", i],
           )
         : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Battle", 18, "[KeyItem]刷新技能按钮按键图标", [
+            Log_1.Log.Debug("Battle", 17, "[KeyItem]刷新技能按钮按键图标", [
               "actionName",
               t,
             ]),
@@ -586,11 +741,20 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   }
   RefreshSkillCoolDown() {
     this.SkillButtonData &&
-      ((this.Kit() && this.Qit()) ||
-        (this.Xit() && this.$it()) ||
-        (this.SkillButtonData.IsMultiStageSkill() &&
-          this.TryRefreshMultiSkillCoolDown()) ||
-        (this.RefreshLimitCount(), this.Yit()),
+      (0 < this.SkillButtonData.TotalCoolDownCustom
+        ? (this.RefreshLimitCount(!0),
+          this.Jit(
+            this.SkillButtonData.GetRemainingCoolDownCustom(),
+            this.SkillButtonData.TotalCoolDownCustom,
+            this.SkillButtonData.HideCoolDownTextCustom,
+          ))
+        : (this.Kit() && this.Qit()) ||
+          (this.Xit() && this.$it()) ||
+          (this.SkillButtonData.IsMultiStageSkill() &&
+            this.TryRefreshMultiSkillCoolDown()) ||
+          (this.V6l() && this.j6l()
+            ? this.RefreshLimitCount()
+            : (this.RefreshLimitCount(), this.Yit())),
       this.RefreshEnable());
   }
   TryRefreshMultiSkillCoolDown() {
@@ -619,7 +783,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   }
   Jit(t, i, s = !1) {
     BattleSkillItem.zit.Start(),
-      (this.bit = s),
+      (this.HideCdText = s),
       0 < t && 0 < i
         ? this.SkillButtonData.IsCdVisible()
           ? this.Zit(t, i)
@@ -630,7 +794,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   Zit(t, i, s) {
     const e = this.SkillButtonData?.GetSkillId();
     this.HasListenAttribute() && this.tot(!0, void 0, !0),
-      this.iot(t, i, () => {
+      this.PlaySkillTimeDown(t, i, () => {
         this.SkillButtonData.IsMultiStageSkill() &&
           this.TryRefreshMultiSkillCoolDown();
         var t = e === this.SkillButtonData?.GetSkillId();
@@ -638,6 +802,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
           this.HasListenAttribute()
             ? (this.oot(!1), this.tot(t, void 0, !1))
             : t && this.rot(),
+          this.SkillButtonData.IsVehicleSkillInCd() && this.j6l(),
           s?.();
       });
   }
@@ -656,7 +821,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         ((t = this.GetUiNiagara(6)).bIsUIActive || t.SetUIActive(!0),
         t.ActivateSystem(!0)));
   }
-  iot(t, i, s) {
+  PlaySkillTimeDown(t, i, s) {
     this.sot(),
       t <= (this.cit = 0)
         ? this.lit.SetUIActive(!1)
@@ -664,7 +829,7 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
           (this.mit = i),
           (this.dit = Time_1.Time.WorldTimeSeconds - (i - t)),
           (this.OnCoolDownFinishedCallback = s),
-          this.bit
+          this.HideCdText
             ? this.CoolDownUiText.SetText("")
             : this.CoolDownUiText.SetText(this.cit.toFixed(this.CdFixedPoint)),
           (this.hit = TimerSystem_1.TimerSystem.Forever(
@@ -672,7 +837,9 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
             BattleUiDefine_1.SKILL_COOLDOWN_INTERVAL,
           )),
           this.not(this.hit),
-          this.lit.SetUIActive(!0));
+          this.lit.SetUIActive(!0),
+          SkillCdController_1.SkillCdController.IsPause() &&
+            this.uit?.SetFillAmount((i - t) / i));
   }
   FinishSkillCoolDown() {
     var t;
@@ -696,11 +863,10 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
     this.lit.SetUIActive(!1), this.sot(), (this.cit = 0);
   }
   sot() {
-    this.SkillButtonData &&
-      (TimerSystem_1.TimerSystem.Has(this.hit) &&
-        TimerSystem_1.TimerSystem.Remove(this.hit),
-      TimerSystem_1.TimerSystem.Has(this.yit)) &&
-      TimerSystem_1.TimerSystem.Remove(this.yit);
+    TimerSystem_1.TimerSystem.Has(this.hit) &&
+      TimerSystem_1.TimerSystem.Remove(this.hit),
+      TimerSystem_1.TimerSystem.Has(this.yit) &&
+        TimerSystem_1.TimerSystem.Remove(this.yit);
   }
   RefreshEnable(t = !1) {
     var i;
@@ -722,7 +888,15 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       : this.IsHideOrHiding || (this.TryReleaseButton(), this.Hide());
   }
   GetGuideItem() {
-    if (!this.IsCreateOrCreating) return [this.RootItem, this.GetTexture(4)];
+    if (!this.IsCreateOrCreating) {
+      let t = this.GetTexture(4);
+      return void 0 === t
+        ? void 0
+        : (ObjectUtils_1.ObjectUtils.IsValid(t) && t.IsUIActiveInHierarchy()) ||
+            void 0 !== (t = this.GetSprite(3))
+          ? [this.RootItem, t]
+          : void 0;
+    }
   }
   RefreshCdCompletedEffect() {
     var t;
@@ -759,50 +933,57 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   CancelLoadDynamicEffectNiagara() {
     this.Ktt &&
       (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Ktt),
-      (this.Ktt = void 0));
+      (this.Ktt = void 0),
+      (this.Wtt = void 0));
   }
   RefreshDynamicEffect() {
     var t = this.GetDynamicEffectConfig();
-    let i = void 0,
-      s = 0;
-    t && ((i = this.GetDynamicEffectPath(t)), (s = t.ElementId)),
+    let i = void 0;
+    t && (i = this.GetDynamicEffectPath(t)),
       this.jtt === i
-        ? this.vit !== s &&
-          ((this.vit = s), 0 < this.vit) &&
-          ((t = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(
-            this.vit,
-          )),
-          (t = new UE.LinearColor(UE.Color.FromHex(t.SkillEffectColor))),
-          this.GetUiNiagara(7).SetNiagaraVarLinearColor("Color", t))
-        : ((this.jtt = i),
+        ? this.Wtt || this.JQ_(t, !0)
+        : (this.CancelLoadDynamicEffectNiagara(),
+          (this.jtt = i),
           this.jtt
-            ? this.jtt === this.Wtt && this.vit === s
-              ? this.SetDynamicEffectVisible(!0)
-              : ((this.Wtt = this.jtt),
-                (this.vit = s),
-                this.CancelLoadDynamicEffectNiagara(),
-                (this.Ktt = ResourceSystem_1.ResourceSystem.LoadAsync(
-                  this.Wtt,
-                  UE.NiagaraSystem,
-                  (t) => {
-                    var i;
+            ? ((this.Wtt = this.jtt),
+              (this.Ktt = ResourceSystem_1.ResourceSystem.LoadAsync(
+                this.Wtt,
+                UE.NiagaraSystem,
+                (t) => {
+                  var i;
+                  (this.Wtt = void 0),
                     t?.IsValid() &&
                       (i = this.GetUiNiagara(7)) &&
                       (i.SetNiagaraSystem(t),
-                      0 < this.vit &&
-                        ((t =
-                          ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(
-                            this.vit,
-                          )),
-                        (t = new UE.LinearColor(
-                          UE.Color.FromHex(t.SkillEffectColor),
-                        )),
-                        i.SetNiagaraVarLinearColor("Color", t)),
-                      this.Wtt === this.jtt) &&
-                      this.SetDynamicEffectVisible(!0);
-                  },
-                )))
+                      (i = this.GetDynamicEffectConfig()),
+                      this.JQ_(i),
+                      this.SetDynamicEffectVisible(!0));
+                },
+              )))
             : this.SetDynamicEffectVisible(!1));
+  }
+  JQ_(i, s = !1) {
+    if (i && (i.ElementId !== this.vit || i.Color !== this.zQ_)) {
+      let t = void 0;
+      (this.zQ_ = i.Color),
+        StringUtils_1.StringUtils.IsEmpty(this.zQ_)
+          ? ((this.vit = i.ElementId),
+            0 < this.vit &&
+              ((i =
+                ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(
+                  this.vit,
+                )),
+              (t = new UE.LinearColor(UE.Color.FromHex(i.SkillEffectColor)))))
+          : ((this.vit = 0),
+            (t = new UE.LinearColor(UE.Color.FromHex(this.zQ_))));
+      i = this.GetUiNiagara(7);
+      t
+        ? i.SetNiagaraVarLinearColor("Color", t)
+        : (i.ResetOverrideParameters(),
+          s &&
+            i.NiagaraComponent &&
+            i.NiagaraComponent.ResetOverrideParametersAndActivate());
+    }
   }
   SetDynamicEffectVisible(t) {
     var i = this.GetUiNiagara(7);
@@ -848,7 +1029,9 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       (TimerSystem_1.TimerSystem.Remove(this.git), (this.git = void 0));
   }
   Fit() {
-    var t = 7 === this.SkillButtonData?.GetButtonType();
+    var t =
+      7 === this.SkillButtonData?.GetButtonType() &&
+      !this.SkillButtonData.ConfigFollower;
     return (
       (this.SwitchComponent || t) &&
         this.GetSwitchComponent.SetComponentActive(t),
@@ -930,8 +1113,25 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
       !0)
     );
   }
+  V6l() {
+    return (
+      5 === this.SkillButtonData?.GetButtonType() &&
+      this.SkillButtonData.IsVehicleSkillInCd()
+    );
+  }
+  j6l() {
+    var [t, i] = this.SkillButtonData.GetVehicleSkillCd();
+    return (
+      0 < t &&
+      (this.Zit(t, i, () => {
+        this.RefreshEnable();
+      }),
+      !0)
+    );
+  }
   RefreshEquipExplore() {
     const t = this.GetItem(9);
+    var i, s, e;
     t.IsUIActiveSelf() && t.SetUIActive(!1),
       this.SkillButtonData.GetExploreSkillChange() &&
         (t.SetUIActive(!0),
@@ -940,24 +1140,27 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         (this.Iit = TimerSystem_1.TimerSystem.Delay(() => {
           (this.Iit = void 0), t.SetUIActive(!1);
         }, EQUIP_EFFECT_TIME))),
-      this.GetSwitchComponent.RefreshSwitch();
-    var i,
-      s = ModelManager_1.ModelManager.RouletteModel.IsExploreSkillHasNum(),
-      e =
-        (s
-          ? ((e =
-              ModelManager_1.ModelManager.RouletteModel.GetExploreSkillShowNum()),
-            this.GetSwitchComponent.UpdateNumPanel(s, e))
-          : this.GetSwitchComponent.UpdateNumPanel(s),
-        ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId),
-      s = ModelManager_1.ModelManager.RouletteModel.IsExploreSkillHasSetNum(e);
-    s
-      ? (([e, i] =
-          ModelManager_1.ModelManager.RouletteModel.GetExploreSkillShowSetNumById(
-            e,
-          )),
-        this.GetSwitchComponent.UpdatePointPanel(s, i, e))
-      : this.GetSwitchComponent.UpdatePointPanel(s);
+      this.GetSwitchComponent.RefreshSwitch(),
+      this.SkillButtonData?.IsExploreAsFight
+        ? (this.GetSwitchComponent.UpdateNumPanel(!1),
+          this.GetSwitchComponent.UpdatePointPanel(!1))
+        : ((i =
+            ModelManager_1.ModelManager.RouletteModel.IsExploreSkillHasNum())
+            ? ((s =
+                ModelManager_1.ModelManager.RouletteModel.GetExploreSkillShowNum()),
+              this.GetSwitchComponent.UpdateNumPanel(i, s))
+            : this.GetSwitchComponent.UpdateNumPanel(i),
+          (s = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId),
+          (i =
+            ModelManager_1.ModelManager.RouletteModel.IsExploreSkillHasSetNum(
+              s,
+            ))
+            ? (([s, e] =
+                ModelManager_1.ModelManager.RouletteModel.GetExploreSkillShowSetNumById(
+                  s,
+                )),
+              this.GetSwitchComponent.UpdatePointPanel(i, e, s))
+            : this.GetSwitchComponent.UpdatePointPanel(i));
   }
   jit() {
     this.Iit &&
@@ -991,7 +1194,12 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
         this.GetUltraComponent.RefreshUltraEffect(
           t,
           this.SkillButtonData.GetMaxAttributeColor(),
-        ));
+        ),
+      ModelManager_1.ModelManager.BattleLinkModel?.CheckInDreamLink()
+        ? this.GetUltraComponent.RefreshUltraDynamicEffect(
+            BattleLinkDefine_1.SKILL_BUTTON_EFFECT_PATH,
+          )
+        : this.GetUltraComponent.StopUltraDynamicEffect());
   }
   mot() {
     var t;
@@ -1005,17 +1213,46 @@ class BattleSkillItem extends BattleChildView_1.BattleChildView {
   SetLimitUseSkillCount(t) {
     this.GetNumComponent?.SetRemainingCount(t);
   }
-  RefreshLimitCount(t = !1) {
-    var i, s;
+  RefreshLimitCount(s = !1) {
+    if (this.SkillButtonData) {
+      let t = !1,
+        i = 0;
+      this.SkillButtonData.IsLimitCountCustom
+        ? ((t = !0), (i = this.SkillButtonData.RemainingCountCustom))
+        : this.SkillButtonData.IsLimitCountVehicleSkill
+          ? ((t = !0), (i = this.SkillButtonData.RemainingCountVehicleSkill))
+          : ((e = this.SkillButtonData.GetGroupSkillCdInfo()),
+            (t = void 0 !== e && 1 < e.LimitCount) && (i = e.RemainingCount));
+      var e = this.NumComponent?.TargetActive ?? !1;
+      (e === t && !s) ||
+        (!this.NumComponent && !t) ||
+        this.GetNumComponent?.SetComponentActive(t),
+        t && this.SetLimitUseSkillCount(i);
+    }
+  }
+  RefreshSkillButtonLongPress() {
+    var t, i;
     this.SkillButtonData &&
-      ((s =
-        void 0 !== (i = this.SkillButtonData.GetGroupSkillCdInfo()) &&
-        1 < i.LimitCount),
-      ((this.NumComponent?.TargetActive ?? !1) === s && !t) ||
-        (!this.NumComponent && !s) ||
-        this.GetNumComponent?.SetComponentActive(s),
-      s) &&
-      this.SetLimitUseSkillCount(i.RemainingCount);
+      (1 === this.SkillButtonData.GetButtonType() &&
+      (t = this.SkillButtonData.IsShowLongPress())
+        ? ((i = this.GetLongPressComponent).SetComponentActive(t),
+          i.SetAction(this.SkillButtonData.GetActionType()),
+          this.SkillButtonData.RefreshLongPressDuration(),
+          i.SetDuration(this.SkillButtonData.GetLongPressDuration()),
+          this.SkillButtonData.GetIsLongPressing() && i.StartProgress())
+        : this.LongPressComponent?.SetComponentActive(!1));
+  }
+  InitVehicleHandle() {
+    this.SkillButtonData?.InitVehicleHandle();
+  }
+  RefreshConfigLongPress() {
+    var t;
+    this.SkillButtonData &&
+      (this.SkillButtonData.GetIsConfigShowLongPress()
+        ? ((t = this.GetConfigLongPressComponent).SetComponentActive(!0),
+          t.SetAction(this.SkillButtonData.GetActionType()),
+          t.SetDuration(this.SkillButtonData.GetLongPressTime()))
+        : this.ConfigLongPressComponent?.SetComponentActive(!1));
   }
   aot() {
     return !!this.SkillButtonData && this.SkillButtonData.IsEnable();

@@ -10,7 +10,7 @@ class InteractionConfig extends ConfigBase_1.ConfigBase {
     return (
       t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Interaction", 43, "找不到交互配置", [
+          Log_1.Log.Error("Interaction", 42, "找不到交互配置", [
             "Interact GUID",
             e,
           ])),

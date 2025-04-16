@@ -13,7 +13,7 @@ class LevelConditionCheckEnemyTag extends LevelGeneralBase_1.LevelConditionBase 
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           );
@@ -23,7 +23,7 @@ class LevelConditionCheckEnemyTag extends LevelGeneralBase_1.LevelConditionBase 
           for (const o of n[0])
             if (
               EntitySystem_1.EntitySystem.Get(o)
-                ?.GetComponent(190)
+                ?.GetComponent(203)
                 ?.HasTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t))
             )
               return !0;
@@ -31,7 +31,7 @@ class LevelConditionCheckEnemyTag extends LevelGeneralBase_1.LevelConditionBase 
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的tag参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.CheckEnemyTag}的定义`,
             );
       }

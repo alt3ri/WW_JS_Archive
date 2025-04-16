@@ -12,7 +12,7 @@ class SignalDecodeConfig extends ConfigBase_1.ConfigBase {
     return (
       i ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("GeneralLogicTree", 19, "无法找到捕捉信号的配置", [
+          Log_1.Log.Error("GeneralLogicTree", 18, "无法找到捕捉信号的配置", [
             "id",
             e,
           ])),
@@ -27,7 +27,7 @@ class SignalDecodeConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "GeneralLogicTree",
-            19,
+            18,
             "无法找到捕捉信号难度的配置",
             ["id", e],
           )),

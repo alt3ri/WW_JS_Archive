@@ -36,7 +36,10 @@ class AiStateMachineStateMeshVisible extends AiStateMachineState_1.AiStateMachin
         e.SetHiddenInGame(!this.Visible, this.PropagateToChildren);
   }
   OnDeactivate(t, i) {
-    if ((this.xne(), this.MeshComponentsCache))
+    if (
+      !this.Node.TagComponent.HasTag(1008164187) &&
+      (this.xne(), this.MeshComponentsCache)
+    )
       for (const e of this.MeshComponentsCache)
         e.SetHiddenInGame(this.Visible, this.PropagateToChildren);
   }

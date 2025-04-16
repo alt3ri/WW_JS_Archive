@@ -73,13 +73,16 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
   }
   gJt() {
     var i;
-    this.Data.PromptId &&
-      ((i = ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
-        this.Data.PromptId,
-      )),
-      (this.TickDuration = i.Duration)),
-      0 === this.TickDuration && (this.TickDuration = this.CJt.Duration),
-      0 === this.TickDuration && (this.TickTime = CommonDefine_1.INVALID_VALUE);
+    this.Data.Duration && 0 < this.Data.Duration
+      ? (this.TickDuration = this.Data.Duration)
+      : (this.Data.PromptId &&
+          ((i = ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
+            this.Data.PromptId,
+          )),
+          (this.TickDuration = i.Duration)),
+        0 === this.TickDuration && (this.TickDuration = this.CJt.Duration),
+        0 === this.TickDuration &&
+          (this.TickTime = CommonDefine_1.INVALID_VALUE));
   }
   nJt() {
     var i;

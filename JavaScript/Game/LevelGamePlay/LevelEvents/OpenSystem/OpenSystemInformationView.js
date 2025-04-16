@@ -9,17 +9,17 @@ class OpenSystemInformationView extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     if (!e.BoardId) return !1;
     const n = new CustomPromise_1.CustomPromise();
-    var r = {},
-      o =
-        (9 === o?.Type && (r.CanOpenInPlot = !0),
-        InfoDisplayController_1.InfoDisplayController.OpenInfoDisplay(
-          e.BoardId,
-          (e) => {
-            n.SetResult(e);
-          },
-          r,
-        ));
-    return !!o && n.Promise;
+    var r = { FadeBeforeHide: e.FadeInScreenWhenClose ?? !1 };
+    return (
+      !!InfoDisplayController_1.InfoDisplayController.OpenInfoDisplay(
+        e.BoardId,
+        (e) => {
+          n.SetResult(e);
+        },
+        r,
+        9 === o?.Type,
+      ) && n.Promise
+    );
   }
   GetViewName(e) {
     let o = void 0;
@@ -34,7 +34,7 @@ class OpenSystemInformationView extends OpenSystemBase_1.OpenSystemBase {
           ? (o = "InfoDisplayTypeTwoView")
           : 3 === e
             ? (o = "InfoDisplayTypeThreeView")
-            : 4 === e && (o = "InfoDisplayTypeFourView"),
+            : 4 === e && (o = "InfoDisplayTypeFourNewView"),
       o
     );
   }

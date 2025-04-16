@@ -25,7 +25,7 @@ class ToughCalcRatio {
   }
   id() {
     var t = this.J7.__offset(this.z7, 4);
-    return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
+    return t ? this.J7.readFloat64(this.z7 + t) : 0;
   }
   rationormal() {
     var t = this.J7.__offset(this.z7, 6);

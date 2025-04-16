@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ScanTrackedMarks = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
@@ -11,6 +12,7 @@ const puerts_1 = require("puerts"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
@@ -20,6 +22,10 @@ const puerts_1 = require("puerts"),
   PROFILE_KEY = "ScanTrackedMarks_CreateTrackEffect",
   CENTER_Y = 62.5,
   center = new UE.Vector2D(0, CENTER_Y),
+  MAX_A = 1176,
+  MARGIN_A = 1008,
+  MAX_B = 712.5,
+  MARGIN_B = 495,
   OFFSET_Z = 1e3,
   MIN_SHOW_DISTANCE = 3,
   MARK_CASE_NAME = new UE.FName("MarkCase"),
@@ -38,7 +44,7 @@ const puerts_1 = require("puerts"),
     "D1D1D1FF",
   ];
 class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
-  constructor(e, t, i, s, r, a, h, _, o) {
+  constructor(e, t, i, s, r, a, h, _, o, n) {
     super(),
       (this.M$e = void 0),
       (this.E$e = void 0),
@@ -52,12 +58,15 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
       (this.yB = void 0),
       (this.B8 = 0),
       (this.Imt = !1),
+      (this.fi1 = !1),
       (this.Tmt = 0),
       (this.Lmt = 0),
       (this.Dmt = void 0),
       (this.tat = ""),
       (this.Wse = Vector_1.Vector.Create()),
       (this.SPe = void 0),
+      (this.y$e = 0),
+      (this.I$e = 0),
       (this.Mxe = (e) => {
         "Start" === e
           ? this.SPe.PlaySequencePurely("Loop")
@@ -71,9 +80,13 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
         (this.Smt = i),
         (this.B8 = _),
         (this.Imt = o ?? !1),
+        (this.fi1 = n ?? !1),
         this.CreateThenShowByResourceIdAsync("UiItem_Scanning_Prefab", e),
-        (this.M$e = r || new UE.Vector()),
-        (this.E$e = a));
+        (this.M$e = r || new UE.VectorDouble()),
+        (this.E$e = a),
+        (t = UiLayer_1.UiLayer.UiRootItem),
+        (this.y$e = Math.min(MAX_A, ((t?.GetWidth() ?? 0) - MARGIN_A) / 2)),
+        (this.I$e = Math.min(MAX_B, ((t?.GetHeight() ?? 0) - MARGIN_B) / 2)));
   }
   get Umt() {
     if (this.E$e?.IsValid()) {
@@ -84,14 +97,14 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
         var s = this.E$e.Mesh.GetAllSocketNames(),
           r = s.Num();
         for (let e = 0; e < r; e++)
-          if (s.Get(e) === MARK_CASE_NAME) {
+          if (s.Get(e).op_Equality(MARK_CASE_NAME)) {
             t = !0;
             break;
           }
         t
-          ? i.FromUeVector(this.E$e.Mesh.GetSocketLocation(MARK_CASE_NAME))
-          : i.FromUeVector(this.E$e.K2_GetActorLocation());
-      } else i.FromUeVector(this.E$e.K2_GetActorLocation());
+          ? i.FromUeVector(this.E$e.Mesh.D_GetSocketLocation(MARK_CASE_NAME))
+          : i.FromUeVector(this.E$e.Mesh.D_K2_GetComponentLocation());
+      } else i.FromUeVector(this.E$e.D_K2_GetActorLocation());
       return i.Addition(this.yB, e), e.ToUeVector();
     }
     return this.M$e;
@@ -105,10 +118,12 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
   Amt(e) {
     var t = this.GetSprite(0),
       i = this.GetSprite(1),
-      s = this.GetSprite(2);
+      s = this.GetSprite(2),
+      r = this.GetSprite(4);
     t.SetColor(UE.Color.FromHex(spriteColors[2 * this.B8])),
       i.SetColor(UE.Color.FromHex(spriteColors[2 * this.B8 + 1])),
-      s.SetSprite(e);
+      s.SetSprite(e),
+      r.SetUIActive(!1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -116,6 +131,7 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
       [1, UE.UISprite],
       [2, UE.UISprite],
       [3, UE.UIText],
+      [4, UE.UISprite],
     ];
   }
   OnStart() {
@@ -134,52 +150,76 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
     if (GlobalData_1.GlobalData.World && this.RootItem && this.E$e?.IsValid()) {
       var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation(),
         t =
-          UE.KismetMathLibrary.Vector_Distance(t.ToUeVector(), this.Umt) *
+          UE.KismetMathLibrary.D_Vector_Distance(t.ToUeVector(), this.Umt) *
           MapDefine_1.FLOAT_0_01;
       if (t <= this.Smt) this.RootItem.SetUIActive(!1), this.xmt(!0);
       else {
         var i = Global_1.Global.CharacterController,
-          s = UE.GameplayStatics.ProjectWorldToScreen(i, this.Umt, this.S$e);
-        if (s) {
-          let e = (0, puerts_1.$unref)(this.S$e);
-          i.GetViewportSize(this.RYe, this.UYe);
-          var i = (0, puerts_1.$unref)(this.RYe),
-            r = UiLayer_1.UiLayer.UiRootItem;
-          r &&
-            ((this.PYe.X = r.GetWidth()),
-            (this.PYe.Y = r.GetHeight()),
-            (e = e
-              .op_Multiply(r.GetWidth() / i)
-              .op_Subtraction(this.PYe.op_Multiply(0.5))
-              .op_Multiply(this.A$e)),
-            (r = !1),
-            ([e, r] = this.H$e(e, s)),
-            r
-              ? ((i = e.op_Addition(center)),
-                this.RootItem.SetAnchorOffset(i),
-                this.Imt &&
-                  ((s = Math.round(t)),
-                  (r = this.GetText(3)),
-                  (i =
-                    !Number.isNaN(s) &&
-                    Number.isFinite(s) &&
-                    s >= MIN_SHOW_DISTANCE) &&
-                    LguiUtil_1.LguiUtil.SetLocalText(r, "Meter", s),
-                  r.IsUIActiveSelf() !== i) &&
-                  r.SetUIActive(i),
-                this.RootItem.SetUIActive(!0),
-                this.xmt(!1))
-              : (this.RootItem.SetUIActive(!1), this.xmt(!0)));
-        } else this.RootItem.SetUIActive(!1), this.xmt(!0);
+          s = UE.GameplayStatics.D_ProjectWorldToScreen(i, this.Umt, this.S$e);
+        if (!s) {
+          if (!this.fi1)
+            return this.RootItem.SetUIActive(!1), void this.xmt(!0);
+          var r = ModelManager_1.ModelManager.CameraModel.CameraTransform,
+            a = r.InverseTransformPositionNoScale(this.Umt),
+            r = ((a.X = -a.X), r.TransformPositionNoScale(a));
+          UE.GameplayStatics.D_ProjectWorldToScreen(i, r, this.S$e);
+        }
+        let e = (0, puerts_1.$unref)(this.S$e);
+        i.GetViewportSize(this.RYe, this.UYe);
+        var a = (0, puerts_1.$unref)(this.RYe),
+          r = UiLayer_1.UiLayer.UiRootItem;
+        r &&
+          ((this.PYe.X = r.GetWidth()),
+          (this.PYe.Y = r.GetHeight()),
+          (e = e
+            .op_Multiply(r.GetWidth() / a)
+            .op_Subtraction(this.PYe.op_Multiply(0.5))
+            .op_Multiply(this.A$e)),
+          (i = !1),
+          ([e, i] = this.H$e(e, s, this.fi1)),
+          i || this.fi1
+            ? ((r = e.op_Addition(center)),
+              this.RootItem.SetAnchorOffset(r),
+              this.fi1 &&
+                ((a = this.GetSprite(4)),
+                i
+                  ? a.SetUIActive(!1)
+                  : ((s = Rotator_1.Rotator.Create(
+                      0,
+                      Math.atan2(e.Y, e.X) * (180 / Math.PI),
+                      0,
+                    )),
+                    a.SetUIRelativeRotation(s.ToUeRotator()),
+                    a.SetUIActive(!0))),
+              this.Imt &&
+                ((r = Math.round(t)),
+                (i = this.GetText(3)),
+                (s =
+                  !Number.isNaN(r) &&
+                  Number.isFinite(r) &&
+                  r >= MIN_SHOW_DISTANCE) &&
+                  LguiUtil_1.LguiUtil.SetLocalText(i, "Meter", r),
+                i.IsUIActiveSelf() !== s) &&
+                i.SetUIActive(s),
+              this.RootItem.SetUIActive(!0),
+              this.xmt(!1))
+            : (this.RootItem.SetUIActive(!1), this.xmt(!0)));
       }
     }
   }
-  H$e(e, t) {
-    var i = e.X,
-      s = e.Y,
-      r = this.Tmt + 10,
-      a = this.Lmt + 10;
-    return i < -r || r < i || s < -a || a < s ? [e, !1] : [e, !0];
+  H$e(e, t, i) {
+    var s = e.X,
+      r = e.Y,
+      a = this.y$e,
+      h = this.I$e;
+    return i
+      ? t && (s * s) / (a * a) + (r * r) / (h * h) <= 1
+        ? [e, !0]
+        : ((i = (a * h) / Math.sqrt(h * h * s * s + a * a * r * r)),
+          [new UE.Vector2D(s * i, r * i), !1])
+      : ((t = this.Tmt + 10),
+        (h = this.Lmt + 10),
+        s < -t || t < s || r < -h || h < r ? [e, !1] : [e, !0]);
   }
   Pmt(e) {
     var t = ScanTrackedMarks.uoe,
@@ -194,14 +234,14 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
         (this.Wse.Z -= 5),
         EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          new UE.Transform(),
+          new UE.TransformDouble(),
           e,
           "[ScanTrackedMarks.CreateTrackEffect]",
         ));
     return (
       EffectSystem_1.EffectSystem.IsValid(i) &&
         (t = EffectSystem_1.EffectSystem.GetEffectActor(i))?.IsValid() &&
-        t.K2_SetActorLocationAndRotation(
+        t.D_K2_SetActorLocationAndRotation(
           this.Wse.ToUeVector(),
           Rotator_1.Rotator.ZeroRotator,
           !1,
@@ -215,9 +255,16 @@ class ScanTrackedMarks extends UiPanelBase_1.UiPanelBase {
     EffectSystem_1.EffectSystem.SetEffectHidden(this.ymt, e);
   }
   ToClose() {
-    this.RootItem.bIsUIActive &&
-      (this.SPe.StopCurrentSequence(),
-      this.SPe.PlayLevelSequenceByName("Close"));
+    this.RootItem
+      ? this.RootItem.bIsUIActive &&
+        (this.SPe.StopCurrentSequence(),
+        this.SPe.PlayLevelSequenceByName("Close"))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "LevelPlay",
+          31,
+          "[ScanTrackedMarks.ToClose] RootItem is null",
+        );
   }
   OnBeforeDestroy() {
     this.ymt &&

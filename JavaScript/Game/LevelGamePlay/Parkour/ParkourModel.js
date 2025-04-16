@@ -95,7 +95,11 @@ class ParkourConfig {
             var r = t.Point;
             !t.IsRecycled &&
               r?.IsValid() &&
-              (r.ReceiveEndPlay(0), ActorSystem_1.ActorSystem.Put(r));
+              (r.ReceiveEndPlay(0),
+              ActorSystem_1.ActorSystem.Put(
+                "ParkourConfig.ClearParkourActorList",
+                r,
+              ));
           }
       this.DAe.length = 0;
     }

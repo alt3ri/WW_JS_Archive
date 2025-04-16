@@ -14,7 +14,7 @@ class MowingBuffNewBuffTipsView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.rcr = void 0),
-      (this.L6a = void 0),
+      (this._9a = void 0),
       (this.lRe = void 0);
   }
   RefreshMainTypeIconTexture() {
@@ -22,31 +22,31 @@ class MowingBuffNewBuffTipsView extends UiTickViewBase_1.UiTickViewBase {
   }
   RefreshItemNameText() {
     this.GetText(1)?.SetColor(this.lRe),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), this.L6a.NameTextId);
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), this._9a.NameTextId);
   }
   RefreshItemIconTexture() {
-    this.SetTextureByPath(this.L6a.IconPath, this.GetTexture(2));
+    this.SetTextureByPath(this._9a.IconPath, this.GetTexture(2));
   }
   RefreshItemDescribeText() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(3),
-      this.L6a.DescriptionTextId,
-      ...this.L6a.DescriptionArgs,
+      this._9a.DescriptionTextId,
+      ...this._9a.DescriptionArgs,
     );
   }
   RefreshQualityTexture() {
-    this.SetTextureByPath(this.L6a.QualityTexPath, this.GetTexture(4));
+    this.SetTextureByPath(this._9a.QualityTexPath, this.GetTexture(4));
   }
   RefreshQualityNiagara() {
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      this.L6a.IsGolden ? "NS_Fx_LGUI_Item_Golden" : "NS_Fx_LGUI_Item_Other",
+      this._9a.IsGolden ? "NS_Fx_LGUI_Item_Golden" : "NS_Fx_LGUI_Item_Other",
     );
     ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.NiagaraSystem, (e) => {
       var i;
       e &&
         UiManager_1.UiManager.IsViewOpen("NewItemTipsView") &&
         this.RootItem &&
-        ((i = this.GetUiNiagara(5)).SetNiagaraSystem(e), !this.L6a.IsGolden) &&
+        ((i = this.GetUiNiagara(5)).SetNiagaraSystem(e), !this._9a.IsGolden) &&
         this.lRe &&
         (i.ColorParameter.Get("Color").Constant = UE.LinearColor.FromSRGBColor(
           this.lRe,
@@ -66,8 +66,8 @@ class MowingBuffNewBuffTipsView extends UiTickViewBase_1.UiTickViewBase {
   OnStart() {
     void 0 === this.OpenParam
       ? this.CloseMe()
-      : ((this.L6a = this.OpenParam),
-        (this.lRe = UE.Color.FromHex(this.L6a.NameHexColor)),
+      : ((this._9a = this.OpenParam),
+        (this.lRe = UE.Color.FromHex(this._9a.NameHexColor)),
         this.RefreshMainTypeIconTexture(),
         this.RefreshItemNameText(),
         this.RefreshItemIconTexture(),
@@ -82,15 +82,15 @@ class MowingBuffNewBuffTipsView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   OnAfterShow() {
-    this.Fja();
+    this.n$a();
   }
   OnAfterDestroy() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.MowingRiskOnBuffTipsAfterDestroy,
     );
   }
-  async Fja() {
-    await this.rcr.LitePlayAsync(this.L6a.IsGolden ? "Golden" : "Start01"),
+  async n$a() {
+    await this.rcr.LitePlayAsync(this._9a.IsGolden ? "Golden" : "Start01"),
       this.CloseMe();
   }
 }

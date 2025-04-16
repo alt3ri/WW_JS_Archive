@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomRoleConfig = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class PhantomRoleConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -58,12 +59,24 @@ class PhantomRoleConfig {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   gedesc(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   name(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   meshid() {
     var t = this.J7.__offset(this.z7, 10);
@@ -90,8 +103,14 @@ class PhantomRoleConfig {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   roleheadicon(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   cameraid() {
     var t = this.J7.__offset(this.z7, 24);

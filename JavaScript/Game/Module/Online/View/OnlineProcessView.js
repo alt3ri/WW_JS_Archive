@@ -11,8 +11,10 @@ const UE = require("ue"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ChatController_1 = require("../../Chat/ChatController"),
   PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   PersonalOptionItem_1 = require("../../Personal/View/PersonalOptionItem"),
-  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
+  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class OnlineProcessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -25,6 +27,7 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
       (this.$8t = void 0),
       (this.Y8t = void 0),
       (this.g8t = void 0),
+      (this.gLt = void 0),
       (this.J8t = (e, t, i) => {
         t = new PersonalOptionItem_1.PersonalOptionItem(t);
         return (
@@ -78,16 +81,28 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
       [8, UE.UIItem],
       [9, UE.UIGridLayout],
       [11, UE.UIText],
+      [10, UE.UIText],
       [12, UE.UIItem],
       [13, UE.UIText],
+      [14, UE.UIItem],
+      [15, UE.UITexture],
+      [16, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[6, this.Z8t]]);
+  }
+  async OnBeforeStartAsync() {
+    (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(14).GetOwner());
   }
   OnStart() {
     (this.g8t = new PlayerHeadItem_1.PlayerHeadItem(
       this.GetItem(0).GetOwner(),
     )),
       this.GetText(4).SetText(""),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(10),
+        "OnlineProcessTitle",
+      ),
       this.i9t(),
       this.t9t();
   }
@@ -168,27 +183,36 @@ class OnlineProcessView extends UiViewBase_1.UiViewBase {
       t = this.GetText(11);
     e && "" !== e ? t.SetText(e) : t.SetText("");
   }
-  qxa() {
+  Nxa() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e =
           "" !==
           ModelManager_1.ModelManager.OnlineModel.CachePlayerData?.PlayerDetails
-            .$xa),
+            .Jxa),
         this.GetItem(12)?.SetUIActive(e),
+        this.GetTexture(15)?.SetUIActive(e),
+        this.GetItem(16)?.SetUIActive(!e),
         e &&
           ((e =
             ModelManager_1.ModelManager.OnlineModel.CachePlayerData
-              .PlayerDetails.Vxa),
+              .PlayerDetails.Qxa),
           this.GetText(13)?.SetText(e)))
-      : this.GetItem(12)?.SetUIActive(!1);
+      : (this.GetItem(12)?.SetUIActive(!1),
+        this.GetTexture(15)?.SetUIActive(!1),
+        this.GetItem(16)?.SetUIActive(!1));
+  }
+  Hmc() {
+    var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData;
+    this.gLt?.Refresh(e?.PlayerTitleId, e?.PlayerTitleStarLevel, e?.Sex);
   }
   w8t() {
     var e = ModelManager_1.ModelManager.OnlineModel.CachePlayerData,
       e =
         (this.P5e(),
         this.r9t(),
-        this.qxa(),
+        this.Nxa(),
+        this.Hmc(),
         ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId));
     this.Y8t.GetRootItem().SetUIActive(e),
       this.W8t.GetRootItem().SetUIActive(!1),

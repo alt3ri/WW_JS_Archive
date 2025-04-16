@@ -7,6 +7,7 @@ const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
   LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
   PlotController_1 = require("../PlotController");
 class FlowShowTalk {
@@ -23,26 +24,26 @@ class FlowShowTalk {
       (this.gjs = !1),
       (this.fjs = !1),
       (this.F$i = (t) => {
-        var i;
+        var e;
         t &&
           ("SystemOption" ===
           (t = this.CurShowTalk.TalkItems[this.CurTalkItemIndex]).Type
             ? ((this.fjs = !0),
               ControllerHolder_1.ControllerHolder.PlotController.ShowSystemOption(
                 t,
-                (t, i) => {
-                  this.SelectOption(t, i);
+                (t, e) => {
+                  this.SelectOption(t, e);
                 },
               ))
             : t.Options && 0 < t.Options.length
               ? ((this.Context.CurOptionId = -1),
                 (this.fjs = !0),
                 this.Context.IsBackground
-                  ? ((i =
+                  ? ((e =
                       ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
                         t,
                       )),
-                    this.HandleShowTalkItemOption(i, t.Options[i].Actions))
+                    this.HandleShowTalkItemOption(e, t.Options[e].Actions))
                   : EventSystem_1.EventSystem.Emit(
                       EventDefine_1.EEventName.ShowPlotSubtitleOptions,
                     ))
@@ -77,15 +78,17 @@ class FlowShowTalk {
       (this.dbn = !1),
       PlotController_1.PlotController.ClearUi(),
       ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PlotEndShowTalk),
       ControllerHolder_1.ControllerHolder.FlowController.RunNextAction();
   }
-  Start(t, i) {
+  Start(t, e) {
     (this.CurShowTalk = t),
-      (this.Context = i),
+      (this.Context = e),
       (this.CurTalkItemIndex = -1),
       (this.B8 = ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel),
       "LevelC" !== this.B8 ||
         t?.TalkItems[0]?.BackgroundConfig?.Type ||
+        "CenterText" === t?.TalkItems[0]?.Type ||
         LevelLoadingController_1.LevelLoadingController.CloseLoading(
           0,
           void 0,
@@ -117,17 +120,17 @@ class FlowShowTalk {
           "当前不在ShowTalk节点",
         );
   }
-  SwitchTalkItem(i) {
-    var e = this.CurShowTalk.TalkItems.length;
-    for (let t = 0; t < e; t++) {
+  SwitchTalkItem(e) {
+    var i = this.CurShowTalk.TalkItems.length;
+    for (let t = 0; t < i; t++) {
       var s = this.CurShowTalk.TalkItems[t];
-      if (s.Id === i) return (this.CurTalkItemIndex = t), void this.j$i(s);
+      if (s.Id === e) return (this.CurTalkItemIndex = t), void this.j$i(s);
     }
     this.FinishShowTalk();
   }
   async j$i(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Plot", 27, "[FlowShowTalk][Subtitle] 字幕显示", [
+      Log_1.Log.Info("Plot", 26, "[FlowShowTalk][Subtitle] 字幕显示", [
         "id",
         t.Id,
       ]),
@@ -151,7 +154,7 @@ class FlowShowTalk {
       !this.gjs &&
       ((t = t ?? this.S$i),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[FlowShowTalk][Subtitle] 字幕完成", [
+        Log_1.Log.Debug("Plot", 26, "[FlowShowTalk][Subtitle] 字幕完成", [
           "id",
           t.Id,
         ]),
@@ -163,13 +166,13 @@ class FlowShowTalk {
         this.F$i,
       ));
   }
-  HandleShowTalkItemOption(t, i) {
+  HandleShowTalkItemOption(t, e) {
     this.Context?.CurShowTalk &&
       -1 === this.Context.CurOptionId &&
       this.fjs &&
       ((this.O$i = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Plot", 27, "[FlowShowTalk][Subtitle] 选择选项", [
+        Log_1.Log.Info("Plot", 26, "[FlowShowTalk][Subtitle] 选择选项", [
           "index",
           t,
         ]),
@@ -180,22 +183,22 @@ class FlowShowTalk {
         t,
       ),
       ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
-        i,
+        e,
         this.OnOptionActionCompleted,
       ));
   }
   Skip() {
-    var t, i;
+    var t, e;
     -1 === this.CurTalkItemIndex
       ? this.V$i()
       : this.CurTalkItemIndex < this.CurShowTalk.TalkItems.length
         ? this.fjs
           ? ((t = this.CurShowTalk.TalkItems[this.CurTalkItemIndex]),
-            (i =
+            (e =
               ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
                 t,
               )),
-            this.HandleShowTalkItemOption(i, t.Options[i].Actions))
+            this.HandleShowTalkItemOption(e, t.Options[e].Actions))
           : !this.gjs &&
             this.dbn &&
             this.mbn(this.CurShowTalk.TalkItems[this.CurTalkItemIndex])
@@ -220,11 +223,12 @@ class FlowShowTalk {
       ModelManager_1.ModelManager.PlotModel.HandlePlayMontage(this.S$i.Montage);
   }
   async Cbn() {
-    var t = this.S$i?.BackgroundConfig;
-    if (t && "LevelC" === this.B8 && !this.Context.IsBackground) {
-      const s = new CustomPromise_1.CustomPromise();
+    var t = this.S$i?.BackgroundConfig,
+      e = UiManager_1.UiManager.GetViewByName("PlotView");
+    if (t && "LevelC" === this.B8 && !this.Context.IsBackground && e) {
+      const o = new CustomPromise_1.CustomPromise();
       var i = () => {
-        s.SetResult();
+        o.SetResult();
       };
       switch (t.Type) {
         case "Clean":
@@ -234,37 +238,60 @@ class FlowShowTalk {
             !0,
             void 0,
             i,
-          );
+          ),
+            o.IsFulfilled() || (await o.Promise),
+            await e.CloseChildView();
           break;
         case "Image":
-          var e = t;
+          var s = t;
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.PlotViewBgFadePhoto,
             !0,
             !0,
-            e?.ImageAsset,
+            s?.ImageAsset,
             i,
-          );
+          ),
+            o.IsFulfilled() || (await o.Promise);
           break;
         case "Icon":
-          e = t;
+          s = t;
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.PlotViewBgFadePhoto,
             !0,
             !1,
-            e?.ImageAsset,
+            s?.ImageAsset,
             i,
-          );
+          ),
+            o.IsFulfilled() || (await o.Promise);
           break;
-        default:
-          i();
+        case "ImageByMcGender":
+          1 === ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender()
+            ? EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.PlotViewBgFadePhoto,
+                !0,
+                !0,
+                t.ImageAssetMale,
+                i,
+              )
+            : 0 ===
+                ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender() &&
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.PlotViewBgFadePhoto,
+                !0,
+                !0,
+                t.ImageAssetFemale,
+                i,
+              ),
+            o.IsFulfilled() || (await o.Promise);
+          break;
+        case "SpineImage":
+          await e.OpenChildView(t.Id, t.IsLoop ?? !1);
       }
-      await s.Promise,
-        LevelLoadingController_1.LevelLoadingController.CloseLoading(
-          0,
-          void 0,
-          1,
-        );
+      LevelLoadingController_1.LevelLoadingController.CloseLoading(
+        0,
+        void 0,
+        1,
+      );
     }
   }
   async gbn(t) {
@@ -276,10 +303,10 @@ class FlowShowTalk {
   async fbn() {
     if ("LevelC" === this.B8 && !this.Context.IsBackground) {
       const t = new CustomPromise_1.CustomPromise(),
-        i = "CenterText" === this.S$i.Type;
+        e = "CenterText" === this.S$i.Type;
       ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
-        ModelManager_1.ModelManager.PlotModel.CenterTextTransition(i, () => {
-          i ||
+        ModelManager_1.ModelManager.PlotModel.CenterTextTransition(e, () => {
+          e ||
             ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!0),
             t.SetResult();
         }),
@@ -303,10 +330,10 @@ class FlowShowTalk {
             this.S$i,
           ));
   }
-  SelectOption(t, i) {
+  SelectOption(t, e) {
     this.Context &&
       !this.Context.IsBackground &&
-      this.HandleShowTalkItemOption(t, i);
+      this.HandleShowTalkItemOption(t, e);
   }
 }
 exports.FlowShowTalk = FlowShowTalk;

@@ -7,7 +7,8 @@ const UE = require("ue"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../Manager/ModelManager");
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ERRORTOLERANCE = 1e-4;
 class UiNavigationModeModule {
   constructor(i) {
     (this.Nxo = void 0),
@@ -37,6 +38,9 @@ class UiNavigationModeModule {
       t - i >= MathUtils_1.MathUtils.KindaSmallNumber
     );
   }
+  sRc(i, t) {
+    return 4 === t && this.Nxo.ScrollView !== i.ScrollView;
+  }
   bBo(e, i, a, o) {
     var r = this.qBo(this.Nxo);
     let s = 0,
@@ -45,17 +49,21 @@ class UiNavigationModeModule {
       M = !1,
       v = void 0,
       d = 0,
-      l = Number.MIN_VALUE,
-      u = void 0;
-    var _ = Vector_1.Vector.Create(),
+      l = Number.MAX_VALUE,
+      u = Number.MIN_VALUE,
+      _ = void 0;
+    var U = Vector_1.Vector.Create(),
       g = Vector_1.Vector.Create();
     for (let i = 0, t = e.length; i < t; ++i) {
-      var U = e[i];
-      if (U.GetNavigationComponent().CheckFindOpposite(this.Nxo)) {
-        this.qBo(U).Subtraction(r, _);
-        var N = _.Size(),
+      var N = e[i];
+      if (
+        N.GetNavigationComponent().CheckFindOpposite(this.Nxo) &&
+        !this.sRc(N, a)
+      ) {
+        this.qBo(N).Subtraction(r, U);
+        var c = U.Size(),
           f =
-            (g.DeepCopy(_),
+            (g.DeepCopy(U),
             g.Normalize(),
             Vector_1.Vector.DotProduct(UiNavigationModeModule.BBo, g));
         if (
@@ -64,67 +72,104 @@ class UiNavigationModeModule {
             0,
             MathUtils_1.MathUtils.KindaSmallNumber,
           )
-        )
+        ) {
+          var p,
+            R,
+            C = o ? Math.abs(U.Z) : Math.abs(U.X);
           if (0 < f) {
-            var c = o ? Math.abs(_.Z) : Math.abs(_.X),
-              p = MathUtils_1.MathUtils.IsNearlyEqual(f, 1, this.PBo),
-              m = MathUtils_1.MathUtils.IsNearlyEqual(s, 1, this.PBo);
+            var m = MathUtils_1.MathUtils.IsNearlyEqual(f, 1, this.PBo),
+              E = MathUtils_1.MathUtils.IsNearlyEqual(s, 1, this.PBo);
             let i = !1,
               t = !1;
             switch (a) {
               case 1:
-                p && N < n && (i = !0);
+                m && c < n && (i = !0);
                 break;
               case 0:
-                (t = this.xBo(_, o, U)) && M
-                  ? MathUtils_1.MathUtils.IsNearlyEqual(c, h, 1)
-                    ? this.wBo(N, n) && (i = !0)
-                    : c < h && (i = !0)
-                  : this.wBo(N, n) && (i = !0);
+              case 4:
+                (t = this.xBo(U, o, N)) && M
+                  ? MathUtils_1.MathUtils.IsNearlyEqual(C, h, 1)
+                    ? this.wBo(c, n) && (i = !0)
+                    : C < h && (i = !0)
+                  : this.wBo(c, n) && (i = !0);
                 break;
               case 2:
-                p ? (!m || N < n) && (i = !0) : !m && N < n && (i = !0);
+                m ? (!E || c < n) && (i = !0) : !E && c < n && (i = !0);
+                break;
+              case 3:
+                m && (!E || f > s) && (i = !0);
             }
-            i && ((s = f), (n = N), (v = U), (h = c), (M = t));
+            i && ((s = f), (n = c), (v = N), (h = C), (M = t));
           } else {
-            var C = MathUtils_1.MathUtils.IsNearlyEqual(
-                f,
-                -1,
-                MathUtils_1.MathUtils.KindaSmallNumber,
-              ),
-              V = MathUtils_1.MathUtils.IsNearlyEqual(
-                d,
-                -1,
-                MathUtils_1.MathUtils.KindaSmallNumber,
-              );
-            C
-              ? (!V || N > l) && ((d = f), (l = N), (u = U))
-              : !V &&
-                ((!(C = MathUtils_1.MathUtils.IsNearlyEqual(f, d)) && f < d) ||
-                  (C && N > l)) &&
-                ((d = f), (l = N), (u = U));
+            let i = !1;
+            4 === a
+              ? MathUtils_1.MathUtils.IsNearlyEqual(C, u, 1)
+                ? c < l && (i = !0)
+                : C > u && (i = !0)
+              : ((R = MathUtils_1.MathUtils.IsNearlyEqual(
+                  f,
+                  -1,
+                  MathUtils_1.MathUtils.KindaSmallNumber,
+                )),
+                (p = MathUtils_1.MathUtils.IsNearlyEqual(
+                  d,
+                  -1,
+                  MathUtils_1.MathUtils.KindaSmallNumber,
+                )),
+                R
+                  ? (!p || c > l) && (i = !0)
+                  : !p &&
+                    ((!(R = MathUtils_1.MathUtils.IsNearlyEqual(f, d)) &&
+                      f < d) ||
+                      (R && c > l)) &&
+                    (i = !0)),
+              i && ((d = f), (u = C), (l = c), (_ = N));
           }
+        }
       }
     }
     return MathUtils_1.MathUtils.IsNearlyEqual(s, 0)
-      ? !this.Nxo.HasDynamicScrollView() && 1 === i
-        ? u?.GetSelectableComponent()
+      ? !this.Nxo.HasDynamicScrollView() && 1 === i && this.fSc(_)
+        ? _?.GetSelectableComponent()
         : void 0
       : v?.GetSelectableComponent();
   }
+  fSc(i) {
+    var t, e, a;
+    return !(
+      i?.ScrollView &&
+      this.Nxo?.ScrollView &&
+      (i = this.Nxo.GetNavigationGroup()) &&
+      !(t = this.Nxo.ScrollView).CheckContentUnderSize() &&
+      (t.Horizontal &&
+      t.HorizontalScrollbarComp &&
+      0 !== UiNavigationModeModule.BBo.X
+        ? ((e = t.HorizontalScrollbarComp.Value),
+          (a = 0 < UiNavigationModeModule.BBo.X),
+          (e < 1 - ERRORTOLERANCE && a && i?.SlideToRightOrDown) ||
+            (e > ERRORTOLERANCE && !a && i?.SlideToLeftOrTop))
+        : t.Vertical &&
+          t.VerticalScrollbarComp &&
+          0 !== UiNavigationModeModule.BBo.Z &&
+          ((e = t.VerticalScrollbarComp.Value),
+          (a = UiNavigationModeModule.BBo.Z < 0),
+          (e < 1 - ERRORTOLERANCE && a && i?.SlideToRightOrDown) ||
+            (e > ERRORTOLERANCE && !a && i?.SlideToLeftOrTop)))
+    );
+  }
   GBo(i, t, e) {
-    let a = void 0;
+    let a =
+      this.Nxo.GetNavigationComponent().FindLoopScrollViewNavigationComponent(
+        UiNavigationModeModule.BBo.ToUeVectorOld(),
+        i,
+      );
     var o;
     return (
-      (a = this.Nxo.HasLoopScrollView()
-        ? this.Nxo.ScrollView.FindNavigationComponent(
-            this.Nxo.GetSelectableComponent(),
-            UiNavigationModeModule.BBo.ToUeVector(),
-            i,
-          )
-        : a) ||
-        ((o = this.Nxo.GetNavigationGroup()),
-        (a = this.bBo(o.ListenerList, i, t, e))),
+      a ||
+        ((o = this.Nxo.GetNavigationGroup().GetOppositeListenerListByListener(
+          this.Nxo,
+        )),
+        (a = this.bBo(o, i, t, e))),
       !a && this.Nxo.HasDynamicScrollView() && this.nNn(this.Nxo, e),
       a
     );
@@ -142,7 +187,7 @@ class UiNavigationModeModule {
       UiNavigationModeModule.BBo.Set(1, 0, 0);
       var i = this.Nxo.ScrollView.FindNavigationComponent(
         this.Nxo.GetSelectableComponent(),
-        UiNavigationModeModule.BBo.ToUeVector(),
+        UiNavigationModeModule.BBo.ToUeVectorOld(),
         2,
       );
       if (i) return i;
@@ -168,7 +213,7 @@ class UiNavigationModeModule {
       UiNavigationModeModule.BBo.Set(-1, 0, 0);
       var t = this.Nxo.ScrollView.FindNavigationComponent(
         this.Nxo.GetSelectableComponent(),
-        UiNavigationModeModule.BBo.ToUeVector(),
+        UiNavigationModeModule.BBo.ToUeVectorOld(),
         2,
       );
       if (t) return t;
@@ -253,16 +298,16 @@ class UiNavigationModeModule {
   HBo(i) {
     var t;
     3 === i &&
-      ((t = this.Nxo.GetRootComponent().GetRightVector()),
+      ((t = this.Nxo.GetRootComponent().D_GetRightVector()),
       UiNavigationModeModule.BBo.Set(t.X, t.Y, t.Z)),
       4 === i &&
-        ((t = this.Nxo.GetRootComponent().GetRightVector()),
+        ((t = this.Nxo.GetRootComponent().D_GetRightVector()),
         UiNavigationModeModule.BBo.Set(-t.X, -t.Y, -t.Z)),
       1 === i &&
-        ((t = this.Nxo.GetRootComponent().GetForwardVector()),
+        ((t = this.Nxo.GetRootComponent().D_GetForwardVector()),
         UiNavigationModeModule.BBo.Set(-t.X, -t.Y, -t.Z)),
       2 === i &&
-        ((t = this.Nxo.GetRootComponent().GetForwardVector()),
+        ((t = this.Nxo.GetRootComponent().D_GetForwardVector()),
         UiNavigationModeModule.BBo.Set(t.X, t.Y, t.Z));
   }
   jBo() {
@@ -306,7 +351,7 @@ class UiNavigationModeModule {
       t = Vector_1.Vector.Create(t.X, t.Y, 0);
     return (
       Transform_1.Transform.Create(
-        i.GetRootSceneComponent().K2_GetComponentToWorld(),
+        i.GetRootSceneComponent().D_K2_GetComponentToWorld(),
       ).TransformPosition(t, t),
       t
     );
@@ -321,7 +366,7 @@ class UiNavigationModeModule {
               Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiNavigation",
-                11,
+                10,
                 "当前选中的导航监听组件按钮不可视",
                 ["DisplayName", e.displayName],
               )

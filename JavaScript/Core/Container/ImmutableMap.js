@@ -4,17 +4,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../Common/Log");
 class ImmutableMap extends Map {
   set(e, t) {
-    return this.wKa("set"), this;
+    return this.ZYa("set"), this;
   }
   delete(e) {
-    return this.wKa("delete"), !1;
+    return this.ZYa("delete"), !1;
   }
   clear() {
-    this.wKa("clear");
+    this.ZYa("clear");
   }
-  wKa(e) {
+  ZYa(e) {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Core", 63, "ImmutableMap 不允许修改", ["函数名", e]);
+      Log_1.Log.Error("Core", 62, "ImmutableMap 不允许修改", ["函数名", e]);
   }
 }
 exports.ImmutableMap = ImmutableMap;

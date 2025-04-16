@@ -33,9 +33,6 @@ class BaseDefine {
     );
   }
 }
-function isNan(t) {
-  return t != t;
-}
 exports.BaseDefine = BaseDefine;
 class VersionInfo {
   constructor(t, e, s) {
@@ -55,17 +52,21 @@ class VersionInfo {
   get Patch() {
     return this.sSr;
   }
-  ToString() {
-    return `${this.rSr}.${this.nSr}.` + this.sSr;
+  ToString(t = 3) {
+    return 1 === t
+      ? "" + this.rSr
+      : 2 === t
+        ? this.rSr + "." + this.nSr
+        : `${this.rSr}.${this.nSr}.` + this.sSr;
   }
   static TryParse(t) {
     var e, s;
     return !t ||
       t.length <= 0 ||
       (t = t.split(".")).length < 3 ||
-      ((e = Number(t[0])), (s = Number(t[1])), (t = Number(t[2])), isNan(e)) ||
-      isNan(s) ||
-      isNan(t)
+      ((e = Number(t[0])), (s = Number(t[1])), (t = Number(t[2])), isNaN(e)) ||
+      isNaN(s) ||
+      isNaN(t)
       ? [!1, void 0]
       : [!0, new VersionInfo(e, s, t)];
   }
@@ -74,6 +75,13 @@ class VersionInfo {
   }
   static Equals(t, e) {
     return t && e && t.rSr === e.rSr && t.nSr === e.nSr && t.sSr === e.sSr;
+  }
+  static LessThanOrEqual(t, e) {
+    return (
+      t.rSr < e.rSr ||
+      (!(t.rSr > e.rSr) &&
+        (t.nSr < e.nSr || (!(t.nSr > e.nSr) && t.sSr <= e.sSr)))
+    );
   }
 }
 exports.VersionInfo = VersionInfo;

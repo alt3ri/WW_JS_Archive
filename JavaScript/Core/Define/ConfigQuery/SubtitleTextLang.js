@@ -17,24 +17,28 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = Stats_1.Stat.Create("configSubtitleTextLang.Init"),
-  getLocalTextStat = Stats_1.Stat.Create("configSubtitleTextLang.GetLocalText"),
+  initStat = Stats_1.Stat.CreateNoFlameGraph("configSubtitleTextLang.Init"),
+  getLocalTextStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configSubtitleTextLang.GetLocalText",
+  ),
   LOCAL_TEXT_STAT_PREFIX = "configSubtitleTextLang.GetLocalText(";
 exports.configSubtitleTextLang = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetLocalText: (t, e = void 0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getLocalTextStat.Start();
-    var o = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + t + `, ${e})`);
-    if ((o.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
+      getLocalTextStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(
+      "" + LOCAL_TEXT_STAT_PREFIX + t + `, ${e})`,
+    );
+    if ((o?.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
       return (
         (i = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(e)),
-        o.Stop(),
-        getLocalTextStat.Stop(),
+        o?.Stop(),
+        getLocalTextStat?.Stop(),
         ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         TABLE + `|${t}|` + i
       );
@@ -44,8 +48,8 @@ exports.configSubtitleTextLang = {
     let a = n.get(i);
     if (a)
       return (
-        o.Stop(),
-        getLocalTextStat.Stop(),
+        o?.Stop(),
+        getLocalTextStat?.Stop(),
         ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         a
       );
@@ -94,8 +98,8 @@ exports.configSubtitleTextLang = {
           return (
             (a = m.Value),
             ConfigCommon_1.ConfigCommon.Reset(g),
-            o.Stop(),
-            getLocalTextStat.Stop(),
+            o?.Stop(),
+            getLocalTextStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             StringUtils_1.StringUtils.IsEmpty(a) &&
               e !== CommonDefine_1.CHS &&
@@ -112,8 +116,8 @@ exports.configSubtitleTextLang = {
       }
     }
     ConfigCommon_1.ConfigCommon.Reset(g),
-      o.Stop(),
-      getLocalTextStat.Stop(),
+      o?.Stop(),
+      getLocalTextStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

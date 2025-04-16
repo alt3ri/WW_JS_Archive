@@ -2,10 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityMowingRiskSubView = void 0);
 const UE = require("ue"),
+  RiskHarvestActivityInfoByActivityId_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestActivityInfoByActivityId"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   RedDotController_1 = require("../../../../../RedDot/RedDotController"),
+  UiAsyncTask_1 = require("../../../../../Ui/Base/UiAsyncTask"),
   UiManager_1 = require("../../../../../Ui/UiManager"),
   CommonItemSmallItemGrid_1 = require("../../../../Common/ItemGrid/CommonItemSmallItemGrid"),
   ScrollingTipsController_1 = require("../../../../ScrollingTips/ScrollingTipsController"),
@@ -21,28 +24,32 @@ class ActivityMowingRiskSubView extends ActivitySubViewBase_1.ActivitySubViewBas
       (this.ANe = void 0),
       (this.JGe = () =>
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
+      (this.RefreshRewardCountText = () => {
+        var e = ModelManager_1.ModelManager.MowingRiskModel.GetRewardCount();
+        this.GetText(16)?.SetText(e[0] + "/" + e[1]);
+      }),
       (this.R2e = () => {
         var e = ModelManager_1.ModelManager.MowingRiskModel;
         UiManager_1.UiManager.OpenView(
           "ActivityRewardPopUpView",
           e.BuildActivityRewardViewData(),
+          (e, i) => {
+            e &&
+              UiManager_1.UiManager.IsViewOpen("CommonActivityView") &&
+              UiManager_1.UiManager.GetViewByName(
+                "CommonActivityView",
+              )?.AddChildViewById(i);
+          },
         );
       }),
       (this.U2e = () => {
-        var e,
-          i = ModelManager_1.ModelManager.MowingRiskModel;
-        i.IsPreQuestFinished
-          ? ((e = {
-              MarkId: i.MapMarkId,
-              MarkType: i.MapMarkType,
-              OpenAreaId: 0,
-            }),
-            WorldMapController_1.WorldMapController.OpenView(2, !1, e),
-            i.SetCurrentInstancesOld())
-          : UiManager_1.UiManager.OpenView(
-              "QuestView",
-              i.UnFinishPreGuideQuestId,
-            );
+        var e = new UiAsyncTask_1.UiAsyncTask(
+          "ActivityMowingRiskSubView.OnClickBtnEnterAsync",
+          async () => {
+            await this.XN_();
+          },
+        );
+        this.RunAsyncTask(e);
       });
   }
   OnRegisterComponent() {
@@ -55,7 +62,7 @@ class ActivityMowingRiskSubView extends ActivitySubViewBase_1.ActivitySubViewBas
       [5, UE.UIScrollViewWithScrollbarComponent],
       [6, UE.UIItem],
       [7, UE.UIItem],
-      [8, UE.UIButtonComponent],
+      [8, UE.UIItem],
       [9, UE.UIButtonComponent],
       [10, UE.UIText],
       [11, UE.UIItem],
@@ -63,11 +70,9 @@ class ActivityMowingRiskSubView extends ActivitySubViewBase_1.ActivitySubViewBas
       [13, UE.UIText],
       [14, UE.UIText],
       [15, UE.UIButtonComponent],
+      [16, UE.UIText],
     ]),
-      (this.BtnBindInfo = [
-        [8, this.R2e],
-        [15, this.R2e],
-      ]);
+      (this.BtnBindInfo = [[15, this.R2e]]);
   }
   async OnBeforeStartAsync() {
     var e = this.GetItem(6);
@@ -93,12 +98,27 @@ class ActivityMowingRiskSubView extends ActivitySubViewBase_1.ActivitySubViewBas
       this.ANe.FunctionButton.SetFunction(this.U2e);
   }
   OnSetData() {}
-  OnAddEventListener() {}
-  OnRemoveEventListener() {}
-  OnRefreshView() {
-    this.T2e(), this.A2e(), this._Oe(), this.BNe(), this.I6a();
+  OnAddEventListener() {
+    EventSystem_1.EventSystem.Add(
+      EventDefine_1.EEventName.MowingRiskOnGetReward,
+      this.RefreshRewardCountText,
+    );
   }
-  I6a() {
+  OnRemoveEventListener() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.MowingRiskOnGetReward,
+      this.RefreshRewardCountText,
+    );
+  }
+  OnRefreshView() {
+    this.T2e(),
+      this.A2e(),
+      this._Oe(),
+      this.BNe(),
+      this.h9a(),
+      this.RefreshRewardCountText();
+  }
+  h9a() {
     var e = ModelManager_1.ModelManager.MowingRiskModel;
     e.IsNewInstanceOpen &&
       e.IsPreQuestFinished &&
@@ -139,15 +159,41 @@ class ActivityMowingRiskSubView extends ActivitySubViewBase_1.ActivitySubViewBas
   BNe() {
     var e = ModelManager_1.ModelManager.MowingRiskModel;
     this.ANe.SetRewardRedDotVisible(e.HasAnyReward),
-      this.ANe.FunctionButton.SetRedDotVisible(
-        e.IsNewInstanceOpen && e.IsPreQuestFinished,
-      ),
+      this.ANe.FunctionButton.SetRedDotVisible(e.IsNewInstanceOpen),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MowingRiskOnRefreshRewardRedDot,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.ActivityBaseData.Id,
+      );
+  }
+  async XN_() {
+    var e = ModelManager_1.ModelManager.MowingRiskModel,
+      i =
+        RiskHarvestActivityInfoByActivityId_1.configRiskHarvestActivityInfoByActivityId.GetConfig(
+          this.ActivityBaseData.Id,
+        );
+    if (i)
+      ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(i.QuestId)
+        ? ((t = { MarkId: i.MarkId, MarkType: 0, OpenFogId: 0 }),
+          WorldMapController_1.WorldMapController.OpenView(2, !1, t))
+        : await ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.EnterEntrance(
+            i.EntranceId,
+          );
+    else {
+      if (!e.IsPreQuestFinished)
+        return void UiManager_1.UiManager.OpenView(
+          "QuestView",
+          e.UnFinishPreGuideQuestId,
+        );
+      var t = { MarkId: e.MapMarkId, MarkType: e.MapMarkType, OpenFogId: 0 };
+      WorldMapController_1.WorldMapController.OpenView(2, !1, t);
+    }
+    e.SetCurrentInstancesOld(),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        e.ActivityData.Id,
       );
   }
 }

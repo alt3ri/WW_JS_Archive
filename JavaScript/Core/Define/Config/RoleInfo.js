@@ -54,6 +54,9 @@ class RoleInfo {
   get ElementId() {
     return this.elementid();
   }
+  get SkinId() {
+    return this.skinid();
+  }
   get RoleHeadIconCircle() {
     return this.roleheadiconcircle();
   }
@@ -263,16 +266,34 @@ class RoleInfo {
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   name(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   nickname(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   introduction(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetTagAt(t) {
     return this.tag(t);
@@ -332,211 +353,323 @@ class RoleInfo {
     var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  skinid() {
+    var t = this.J7.__offset(this.z7, 30);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   roleheadiconcircle(t) {
-    var i = this.J7.__offset(this.z7, 30);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 32),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roleheadiconlarge(t) {
-    var i = this.J7.__offset(this.z7, 32);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 34),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roleheadiconbig(t) {
-    var i = this.J7.__offset(this.z7, 34);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 36),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   card(t) {
-    var i = this.J7.__offset(this.z7, 36);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 38),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roleheadicon(t) {
-    var i = this.J7.__offset(this.z7, 38);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 40),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   formationrolecard(t) {
-    var i = this.J7.__offset(this.z7, 40);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 42),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   rolestand(t) {
-    var i = this.J7.__offset(this.z7, 42);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 44),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roleportrait(t) {
-    var i = this.J7.__offset(this.z7, 44);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 46),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetSpilloveritemAt(t, i) {
     return this.spilloveritem(t);
   }
   spilloveritem(t, i) {
-    var r = this.J7.__offset(this.z7, 46);
-    return r
+    var s = this.J7.__offset(this.z7, 48);
+    return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
   }
   spilloveritemLength() {
-    var t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   meshid() {
-    var t = this.J7.__offset(this.z7, 48);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  uimeshid() {
     var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  rolebody(t) {
-    var i = this.J7.__offset(this.z7, 52);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
-  }
-  breachmodel() {
-    var t = this.J7.__offset(this.z7, 54);
+  uimeshid() {
+    var t = this.J7.__offset(this.z7, 52);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  specialenergybarid() {
+  rolebody(t) {
+    var i = this.J7.__offset(this.z7, 54),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  breachmodel() {
     var t = this.J7.__offset(this.z7, 56);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  specialenergybarid() {
+    var t = this.J7.__offset(this.z7, 58);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   cameraconfig(t) {
-    var i = this.J7.__offset(this.z7, 58);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 60),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   camerafloatheight() {
-    var t = this.J7.__offset(this.z7, 60);
+    var t = this.J7.__offset(this.z7, 62);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   entityproperty() {
-    var t = this.J7.__offset(this.z7, 62);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  maxlevel() {
     var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  levelconsumeid() {
+  maxlevel() {
     var t = this.J7.__offset(this.z7, 66);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  breachid() {
+  levelconsumeid() {
     var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  skillid() {
+  breachid() {
     var t = this.J7.__offset(this.z7, 70);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  skilltreegroupid() {
+  skillid() {
     var t = this.J7.__offset(this.z7, 72);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  resonanceid() {
+  skilltreegroupid() {
     var t = this.J7.__offset(this.z7, 74);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  resonantchaingroupid() {
+  resonanceid() {
     var t = this.J7.__offset(this.z7, 76);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  isshow() {
+  resonantchaingroupid() {
     var t = this.J7.__offset(this.z7, 78);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  isshow() {
+    var t = this.J7.__offset(this.z7, 80);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   GetExchangeconsumeAt(t, i) {
     return this.exchangeconsume(t);
   }
   exchangeconsume(t, i) {
-    var r = this.J7.__offset(this.z7, 80);
-    return r
+    var s = this.J7.__offset(this.z7, 82);
+    return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
   }
   exchangeconsumeLength() {
-    var t = this.J7.__offset(this.z7, 80);
+    var t = this.J7.__offset(this.z7, 82);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   initweaponitemid() {
-    var t = this.J7.__offset(this.z7, 82);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  weapontype() {
     var t = this.J7.__offset(this.z7, 84);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  skilldapath(t) {
-    var i = this.J7.__offset(this.z7, 86);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
-  }
-  skilllockdapath(t) {
-    var i = this.J7.__offset(this.z7, 88);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
-  }
-  uisceneperformanceabp(t) {
-    var i = this.J7.__offset(this.z7, 90);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
-  }
-  lockondefaultid() {
-    var t = this.J7.__offset(this.z7, 92);
+  weapontype() {
+    var t = this.J7.__offset(this.z7, 86);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  lockonlookonid() {
+  skilldapath(t) {
+    var i = this.J7.__offset(this.z7, 88),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  skilllockdapath(t) {
+    var i = this.J7.__offset(this.z7, 90),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  uisceneperformanceabp(t) {
+    var i = this.J7.__offset(this.z7, 92),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  lockondefaultid() {
     var t = this.J7.__offset(this.z7, 94);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  lockonlookonid() {
+    var t = this.J7.__offset(this.z7, 96);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   skilleffectda(t) {
-    var i = this.J7.__offset(this.z7, 96);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 98),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   footstepstate(t) {
-    var i = this.J7.__offset(this.z7, 98);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 100),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   partyid() {
-    var t = this.J7.__offset(this.z7, 100);
+    var t = this.J7.__offset(this.z7, 102);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   attributesdescription(t) {
-    var i = this.J7.__offset(this.z7, 102);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 104),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   icon(t) {
-    var i = this.J7.__offset(this.z7, 104);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 106),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   itemqualityid() {
-    var t = this.J7.__offset(this.z7, 106);
+    var t = this.J7.__offset(this.z7, 108);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   obtainedshowdescription(t) {
-    var i = this.J7.__offset(this.z7, 108);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 110),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   numlimit() {
-    var t = this.J7.__offset(this.z7, 110);
+    var t = this.J7.__offset(this.z7, 112);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showinbag() {
-    var t = this.J7.__offset(this.z7, 112);
+    var t = this.J7.__offset(this.z7, 114);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   GetWeaponscaleAt(t) {
     return this.weaponscale(t);
   }
   weaponscale(t) {
-    var i = this.J7.__offset(this.z7, 114);
+    var i = this.J7.__offset(this.z7, 116);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   weaponscaleLength() {
-    var t = this.J7.__offset(this.z7, 114);
+    var t = this.J7.__offset(this.z7, 116);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   weaponscaleArray() {
-    var t = this.J7.__offset(this.z7, 114);
+    var t = this.J7.__offset(this.z7, 116);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -546,44 +679,54 @@ class RoleInfo {
       : null;
   }
   intervene() {
-    var t = this.J7.__offset(this.z7, 116);
+    var t = this.J7.__offset(this.z7, 118);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   charactervoice(t) {
-    var i = this.J7.__offset(this.z7, 118);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 120),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   trialrole() {
-    var t = this.J7.__offset(this.z7, 120);
+    var t = this.J7.__offset(this.z7, 122);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   isaim() {
-    var t = this.J7.__offset(this.z7, 122);
+    var t = this.J7.__offset(this.z7, 124);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   roleguide() {
-    var t = this.J7.__offset(this.z7, 124);
+    var t = this.J7.__offset(this.z7, 126);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   reddotdisablerule() {
-    var t = this.J7.__offset(this.z7, 126);
+    var t = this.J7.__offset(this.z7, 128);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetSkindamageAt(t) {
     return this.skindamage(t);
   }
   skindamage(t, i) {
-    var r = this.J7.__offset(this.z7, 128);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 130),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   skindamageLength() {
-    var t = this.J7.__offset(this.z7, 128);
+    var t = this.J7.__offset(this.z7, 130);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   hidehulu() {
-    var t = this.J7.__offset(this.z7, 130);
+    var t = this.J7.__offset(this.z7, 132);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }

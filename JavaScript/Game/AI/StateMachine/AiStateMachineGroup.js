@@ -11,13 +11,15 @@ const Time_1 = require("../../../Core/Common/Time"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
   PreloadDefine_1 = require("../../Preload/PreloadDefine"),
   CombatLog_1 = require("../../Utils/CombatLog"),
   FrequencyMonitor_1 = require("../../Utils/FrequencyMonitor"),
   AiStateMachine_1 = require("./AiStateMachine"),
   AiStateMachineTaskSkill_1 = require("./Task/AiStateMachineTaskSkill"),
-  MAX_SWITCH_STATE_COUNT = 3;
+  MAX_SWITCH_STATE_COUNT = 5,
+  COMMON_ROLE_STATE_MACHINE = "SM_RoleBeHit";
 class AiStateMachineGroup {
   constructor(t) {
     (this.Kre = 0),
@@ -37,16 +39,32 @@ class AiStateMachineGroup {
       (this.StateMachines = void 0),
       (this.StateMachineMap = void 0),
       (this.SwitchStateFrequencyMonitor = void 0),
+      (this.LastActivatedStates = void 0),
       (this.Inited = !1),
       (this.StateMachinesActivated = !1),
       (this.AnyChange = !1),
       (this.zre = void 0),
       (this.ErrorMessage = void 0),
       (this.OnDeath = () => {
-        if (this.StateMachinesActivated) {
-          for (const t of this.StateMachines) t.Activated && t.Exit();
+        var t = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
+          this.Entity,
+        );
+        if (
+          t?.EntityType !== Protocol_1.Aki.Protocol.kks.Proto_Player &&
+          this.StateMachinesActivated
+        ) {
+          for (const i of this.StateMachines) i.Activated && i.Exit();
           this.StateMachinesActivated = !1;
         }
+      }),
+      (this.OnTeleport = (t) => {
+        this.xd_();
+      }),
+      (this.OnBeforeAttachVehicle = () => {
+        this.xd_();
+      }),
+      (this.OnRoleGoDown = (t) => {
+        this.Entity.Id === t && this.xd_();
       }),
       (this.Zre = (t, i) => {
         if (0 < this.zre.size)
@@ -72,6 +90,7 @@ class AiStateMachineGroup {
           for (const e of this.StateMachines)
             e.CurrentLeafNode.OnCharSkillEnd(i);
       }),
+      (this.EF_ = new Set()),
       (this.tne = 0),
       (this.zre = new Set()),
       t &&
@@ -98,6 +117,20 @@ class AiStateMachineGroup {
           this.Entity,
           EventDefine_1.EEventName.CharUseSkill,
           this.Zre,
+        ),
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.TeleportStartEntity,
+          this.OnTeleport,
+        ),
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.OnBeforeAttachVehicle,
+          this.OnBeforeAttachVehicle,
+        ),
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.OnRoleGoDown,
+          this.OnRoleGoDown,
         ));
   }
   SetCurrentTaskNode(t) {
@@ -146,37 +179,49 @@ class AiStateMachineGroup {
   }
   RegisterNode(t) {
     var i;
-    this.NodeMap.set(t.Uuid, t),
-      t.IsReferenceNode ||
-        (this.NodeMapByName.set(t.Name, t),
-        t.IsOverrideNode &&
-          ((i = t.OverrideNodeUuid),
-          (i = this.NodeDataMap.get(i)),
-          this.NodeMapByName.set(i.Name, t)));
+    t.IsAnyStateNode ||
+      (this.NodeMap.set(t.Uuid, t), t.IsReferenceNode) ||
+      (this.NodeMapByName.set(t.Name, t),
+      t.IsOverrideNode &&
+        ((i = t.OverrideNodeUuid),
+        (i = this.NodeDataMap.get(i)),
+        this.NodeMapByName.set(i.Name, t)));
   }
   InitFsmJson() {
-    var t = this.Entity?.GetComponent(0).GetPbEntityInitData();
-    let i = 0;
-    var e,
-      s,
-      t = (i =
-        t?.ComponentsData &&
-        (t = (0, IComponent_1.getComponent)(t.ComponentsData, "AiComponent"))
+    let i = void 0;
+    var t = ModelManager_1.ModelManager.CharacterModel.GetHandleByEntity(
+      this.Entity,
+    );
+    if (
+      [
+        Protocol_1.Aki.Protocol.kks.Proto_Monster,
+        Protocol_1.Aki.Protocol.kks.Proto_Vision,
+      ].includes(t.EntityType)
+    ) {
+      var e = this.Entity?.GetComponent(0).GetPbEntityInitData();
+      let t = 0;
+      var e = (t =
+        e?.ComponentsData &&
+        (e = (0, IComponent_1.getComponent)(e.ComponentsData, "AiComponent"))
           ?.AiId &&
-        !t.Disabled
-          ? t.AiId
-          : i)
-        ? AiBaseById_1.configAiBaseById.GetConfig(i)
+        !e.Disabled
+          ? e.AiId
+          : t)
+        ? AiBaseById_1.configAiBaseById.GetConfig(t)
         : void 0;
+      i = e?.StateMachine;
+    } else
+      t?.EntityType === Protocol_1.Aki.Protocol.kks.Proto_Player &&
+        (i = COMMON_ROLE_STATE_MACHINE);
     return (
-      t?.StateMachine &&
+      i &&
         (e =
           AiStateMachineConfigById_1.configAiStateMachineConfigById.GetConfig(
-            t.StateMachine,
+            i,
           ))?.StateMachineJson &&
-        ((e = JSON.parse(e.StateMachineJson)),
-        ((s = this.Entity.GetComponent(68)).StateMachineName = t.StateMachine),
-        (s.StateMachineJsonObject = e)),
+        ((t = JSON.parse(e.StateMachineJson)),
+        ((e = this.Entity.GetComponent(75)).StateMachineName = i),
+        (e.StateMachineJsonObject = t)),
       !0
     );
   }
@@ -189,7 +234,8 @@ class AiStateMachineGroup {
         (this.Qre = t.Version),
         (this.NodeDataMap = new Map()),
         (this.NodeReferenceMap = new Map()),
-        (this.NodeOverrideMap = new Map());
+        (this.NodeOverrideMap = new Map()),
+        (this.LastActivatedStates = new Set());
       for (const s of i.Nodes)
         this.NodeDataMap.set(s.Uuid, s),
           s.ReferenceUuid && this.NodeReferenceMap.set(s.Uuid, s.ReferenceUuid);
@@ -204,20 +250,20 @@ class AiStateMachineGroup {
         (this.StateMachineMap = new Map()),
         (this.Yre = new Map()),
         (this.Jre = new Map());
-      for (const a of t.StateMachines) {
-        let t = this.GetNodeData(a);
+      for (const n of t.StateMachines) {
+        let t = this.GetNodeData(n);
         if (!(t = t.ReferenceUuid ? this.GetNodeData(t.ReferenceUuid) : t))
           return void CombatLog_1.CombatLog.Error(
             "StateMachineNew",
             this.Entity,
             "状态机初始化失败，不存在状态机",
-            ["stateMachineId", a],
+            ["stateMachineId", n],
           );
         var e = new AiStateMachine_1.AiStateMachineBase(this, void 0, t);
         e.IsReferenceNode || this.StateMachines.push(e);
       }
-      for (const n of this.NodeReferenceMap.values()) {
-        const r = this.NodeMap.get(n);
+      for (const a of this.NodeReferenceMap.values()) {
+        const r = this.NodeMap.get(a);
         this.StateMachines.find((t) => t === r) || this.StateMachines.push(r);
       }
       CombatLog_1.CombatLog.Info(
@@ -276,6 +322,10 @@ class AiStateMachineGroup {
         "状态机初始化失败，服务器实体没有相关初始状态",
       );
   }
+  xd_() {
+    for (const t of this.StateMachines)
+      t.IsAnimStateMachine && t.Switch(t.FirstState, !0, !0, !0);
+  }
   HandleBlackboard(t) {
     if (
       (CombatLog_1.CombatLog.Info(
@@ -331,6 +381,20 @@ class AiStateMachineGroup {
         EventDefine_1.EEventName.CharUseSkill,
         this.Zre,
       ),
+      EventSystem_1.EventSystem.RemoveWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.TeleportStartEntity,
+        this.OnTeleport,
+      ),
+      EventSystem_1.EventSystem.RemoveWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.OnBeforeAttachVehicle,
+        this.OnBeforeAttachVehicle,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnRoleGoDown,
+        this.OnRoleGoDown,
+      ),
       (this.SwitchStateFrequencyMonitor = void 0),
       (this.StateMachinesActivated = !1),
       (this.Entity = void 0),
@@ -345,25 +409,46 @@ class AiStateMachineGroup {
       (this.StateMachines = void 0),
       (this.StateMachineMap = void 0),
       (this.ErrorMessage = void 0),
-      (this.zre = void 0);
+      (this.zre = void 0),
+      (this.LastActivatedStates = void 0);
+  }
+  RegisterBeHitEvent(t) {
+    this.EF_.has(t) &&
+      CombatLog_1.CombatLog.Error(
+        "StateMachineNew",
+        this.Entity,
+        "状态机重复监听受击",
+      ),
+      this.EF_.add(t);
+  }
+  UnregisterBeHitEvent(t) {
+    this.EF_.delete(t);
+  }
+  TickBeHitStateMachine(t, i, e) {
+    let s = !1;
+    for (const o of this.EF_) o(t, i, e), (s = !0);
+    s && this.OnTick(0);
   }
   OnTick(t) {
-    if (this.StateMachinesActivated)
-      for (const s of this.StateMachines)
-        if (s.Activated) {
-          s.Tick(t);
-          let i = !1,
-            e = !1;
-          for (let t = 0; t < MAX_SWITCH_STATE_COUNT && (!(0 < t) || e); t++)
+    if (this.StateMachinesActivated) {
+      for (const e of this.StateMachines)
+        if (e.Activated) {
+          e.Tick(t);
+          let i = !1;
+          for (let t = 0; t < MAX_SWITCH_STATE_COUNT && (!(0 < t) || i); t++)
             t,
               (this.AnyChange = !1),
-              s.TickTransition(),
-              (e =
+              e.TickTransition(),
+              (i =
                 this.AnyChange &&
-                (s.IsAnimStateMachine || s.CurrentLeafNode.IsConduitNode)),
-              (i = this.AnyChange || i);
-          i && (s.WaitSwitchState = !0);
+                (e.IsAnimStateMachine || e.CurrentLeafNode.IsConduitNode));
         }
+      this.LastActivatedStates.clear();
+      for (const i of this.StateMachines) {
+        let t = i;
+        for (; this.LastActivatedStates.add(t.Name), (t = t.CurrentNode); );
+      }
+    }
   }
   GetNodeByUuid(t) {
     var i;
@@ -375,10 +460,24 @@ class AiStateMachineGroup {
   GetNodeByName(t) {
     if (this.NodeMapByName) return this.NodeMapByName.get(t);
   }
+  CheckLastActivatedNode(t) {
+    return this.LastActivatedStates.has(t);
+  }
+  CheckAnyMontageTaskRunning(t) {
+    for (var i of this.StateMachines)
+      if (i !== t)
+        for (; i; ) {
+          var e = i.Task;
+          if (e && (102 === e.Type || 3 === e.Type || 105 === e.Type))
+            return !0;
+          i = i.CurrentNode;
+        }
+    return !1;
+  }
   RequestServerDebugInfo() {
     Time_1.Time.NowSeconds < this.tne + 1 ||
       (Net_1.Net.Call(
-        27206,
+        25124,
         Protocol_1.Aki.Protocol.tes.create({
           F4n: this.ActorComp.CreatureData.GetCreatureDataId(),
         }),
@@ -464,9 +563,9 @@ ${this.ErrorMessage.ToString()}
         ),
         s.Start(!1, e),
         this.ActorComp.IsAutonomousProxy &&
-          (((s = Protocol_1.Aki.Protocol.l4n.create()).$4n = t),
+          (((s = Protocol_1.Aki.Protocol.xe_.create()).$4n = t),
           (s.Y4n = i),
-          CombatMessage_1.CombatNet.Call(22140, this.Entity, s)))
+          CombatMessage_1.CombatNet.Send(16532, this.Entity, s)))
       : CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
@@ -477,32 +576,34 @@ ${this.ErrorMessage.ToString()}
     var o = this.GetNodeByUuid(t),
       h = this.GetNodeByUuid(e);
     h
-      ? o.WaitSwitchState
-        ? ((o.RemoteSwitchPending = e),
-          (o.RemoteSwitchMessageId = s),
-          CombatLog_1.CombatLog.Warn(
-            "StateMachineNew",
-            this.Entity,
-            `远端切换状态，目前处于等待切换结果状态，[${h.Name}|${h.Uuid}]`,
-          ))
-        : h.Activated
-          ? CombatLog_1.CombatLog.Warn(
+      ? o.IsAnimStateMachine
+        ? this.ActorComp.IsMoveAutonomousProxy || h.ForceActive()
+        : o.WaitSwitchState
+          ? ((o.RemoteSwitchPending = e),
+            (o.RemoteSwitchMessageId = s),
+            CombatLog_1.CombatLog.Warn(
               "StateMachineNew",
               this.Entity,
-              `远端切换状态，状态已激活 [${h.Name}|${h.Uuid}]`,
-            )
-          : (CombatLog_1.CombatLog.Warn(
-              "StateMachineNew",
-              this.Entity,
-              `远端切换状态，root[${o.Name}|${o.Uuid}] 激活节点[${h.Name}|${h.Uuid}]`,
-            ),
-            (o.CurrentMessageIdCache = s),
-            h.ForceActive(),
-            (o.CurrentMessageIdCache = void 0),
-            this.ActorComp.IsAutonomousProxy &&
-              (((s = Protocol_1.Aki.Protocol.l4n.create()).$4n = t),
-              (s.Y4n = e),
-              CombatMessage_1.CombatNet.Call(22140, this.Entity, s)))
+              `远端切换状态，目前处于等待切换结果状态，[${h.Name}|${h.Uuid}]`,
+            ))
+          : h.Activated
+            ? CombatLog_1.CombatLog.Warn(
+                "StateMachineNew",
+                this.Entity,
+                `远端切换状态，状态已激活 [${h.Name}|${h.Uuid}]`,
+              )
+            : (CombatLog_1.CombatLog.Warn(
+                "StateMachineNew",
+                this.Entity,
+                `远端切换状态，root[${o.Name}|${o.Uuid}] 激活节点[${h.Name}|${h.Uuid}]`,
+              ),
+              (o.CurrentMessageIdCache = s),
+              h.ForceActive(),
+              (o.CurrentMessageIdCache = void 0),
+              this.ActorComp.IsAutonomousProxy &&
+                (((s = Protocol_1.Aki.Protocol.xe_.create()).$4n = t),
+                (s.Y4n = e),
+                CombatMessage_1.CombatNet.Send(16532, this.Entity, s)))
       : CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,

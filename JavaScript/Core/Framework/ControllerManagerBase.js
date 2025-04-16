@@ -44,7 +44,8 @@ class ControllerManagerBase {
   static Tick(r) {
     for (const t of this.TickControllers) {
       var o;
-      (TickSystem_1.TickSystem.IsPaused && !t.IsTickEvenPaused) ||
+      !t.CheckTick(this.IsInFight, r) ||
+        (TickSystem_1.TickSystem.IsPaused && !t.IsTickEvenPaused) ||
         ((o = t.GetPerformanceStateObject()) && o.Start(),
         t.Tick(r),
         o && o.Stop());
@@ -198,5 +199,6 @@ class ControllerManagerBase {
 }
 ((exports.ControllerManagerBase = ControllerManagerBase).Controllers =
   new Map()),
-  (ControllerManagerBase.TickControllers = new Array());
+  (ControllerManagerBase.TickControllers = new Array()),
+  (ControllerManagerBase.IsInFight = !1);
 //# sourceMappingURL=ControllerManagerBase.js.map

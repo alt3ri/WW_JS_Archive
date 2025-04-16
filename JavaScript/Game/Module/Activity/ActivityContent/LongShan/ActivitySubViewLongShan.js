@@ -7,6 +7,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   UiManager_1 = require("../../../../Ui/UiManager"),
+  UiNavigationNewController_1 = require("../../../UiNavigation/New/UiNavigationNewController"),
   ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
   ActivitySubViewGeneralInfo_1 = require("../../View/SubView/ActivitySubViewGeneralInfo"),
   ActivityLongShanController_1 = require("./ActivityLongShanController"),
@@ -40,10 +41,10 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
       (this.POe = () => {
         if (this.ActivityBaseData && this.ActivityBaseData.StageIds) {
           let t = void 0;
-          for (const i of this.ActivityBaseData.StageIds)
-            if (!this.ActivityBaseData?.GetStageInfoById(i)) {
-              var e = LongShanStageById_1.configLongShanStageById.GetConfig(i);
-              t = e?.QuestionId;
+          for (const e of this.ActivityBaseData.StageIds)
+            if (!this.ActivityBaseData?.GetStageInfoById(e)) {
+              var i = LongShanStageById_1.configLongShanStageById.GetConfig(e);
+              t = i?.QuestionId;
               break;
             }
           UiManager_1.UiManager.OpenView("QuestView", t);
@@ -83,16 +84,16 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
       this.CommonInfoPanel.OnlyCreateByActorAsync(this.GetItem(2).GetOwner()),
     ];
     this.StageItems = [];
-    for (const i of this.ActivityBaseData.StageIds) {
-      var e = new LongShanStageItem_1.LongShanStageItem(i);
-      (e.OnClickStageDetail = this.wOe),
-        this.AddChild(e),
+    for (const e of this.ActivityBaseData.StageIds) {
+      var i = new LongShanStageItem_1.LongShanStageItem(e);
+      (i.OnClickStageDetail = this.wOe),
+        this.AddChild(i),
         t.push(
-          e.OnlyCreateByActorAsync(
+          i.OnlyCreateByActorAsync(
             this.GetItem(4 + this.StageItems.length).GetOwner(),
           ),
         ),
-        this.StageItems.push(e);
+        this.StageItems.push(i);
     }
     await Promise.all(t);
   }
@@ -141,15 +142,20 @@ class ActivitySubViewLongShan extends ActivitySubViewBase_1.ActivitySubViewBase 
   OnSequenceStart(t) {
     "Start" === t || "SwitchOut" === t
       ? this.vBn(!1)
-      : "SwitchIn" === t && this.vBn(!0);
+      : "SwitchIn" === t &&
+        (this.vBn(!0), this.StageItems) &&
+        UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForView(
+          this.StageItems[0].GetLongShanButton(),
+          !0,
+        );
   }
   vBn(t) {
     if ((this.GetButton(3)?.SetSelfInteractive(t), this.StageItems))
-      for (const e of this.StageItems) e.SetButtonInteractive(t);
+      for (const i of this.StageItems) i.SetButtonInteractive(t);
   }
   FNe() {
-    var [t, e] = this.GetTimeVisibleAndRemainTime();
-    this.GetText(1).SetUIActive(t), t && this.GetText(1).SetText(e);
+    var [t, i] = this.GetTimeVisibleAndRemainTime();
+    this.GetText(1).SetUIActive(t), t && this.GetText(1).SetText(i);
   }
   BNe() {
     var t =

@@ -118,6 +118,18 @@ class RoleSort extends CommonSort_1.CommonSort {
               : ((s = e.GetRoleId()),
                 (r = t.GetRoleId()) < s ? -1 : s < r ? 1 : 0);
       }),
+      (this.GQ_ = (e, t, i) => {
+        e = ModelManager_1.ModelManager.WeeklyRogueModel.CheckIsRecommendRole(
+          e.GetRoleId(),
+        );
+        if (
+          e !==
+          ModelManager_1.ModelManager.WeeklyRogueModel.CheckIsRecommendRole(
+            t.GetRoleId(),
+          )
+        )
+          return e ? -1 : 1;
+      }),
       (this.oUt = (e, t, i) => {
         (e = e.GetAttributeData()),
           (t = t.GetAttributeData()),
@@ -174,7 +186,8 @@ class RoleSort extends CommonSort_1.CommonSort {
       this.SortMap.set(14, this.rUt),
       this.SortMap.set(15, this.nUt),
       this.SortMap.set(16, this.sUt),
-      this.SortMap.set(17, this.bua);
+      this.SortMap.set(17, this.bua),
+      this.SortMap.set(18, this.GQ_);
   }
 }
 exports.RoleSort = RoleSort;

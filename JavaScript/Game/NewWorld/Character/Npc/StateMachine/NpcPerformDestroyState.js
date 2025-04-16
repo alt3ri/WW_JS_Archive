@@ -1,33 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformDestroyState = void 0);
-const Log_1 = require("../../../../../Core/Common/Log"),
+const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
-  StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
-  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  NpcPerformComponent_1 = require("../Component/NpcPerformComponent");
-class NpcPerformDestroyState extends StateBase_1.StateBase {
+  NpcPerformComponent_1 = require("../Component/NpcPerformComponent"),
+  NpcPerformBaseState_1 = require("./NpcPerformBaseState");
+class NpcPerformDestroyState extends NpcPerformBaseState_1.NpcPerformBaseState {
   constructor() {
     super(...arguments),
-      (this.ActorComp = void 0),
-      (this.PerformComp = void 0),
       (this.mra = void 0),
-      (this.Sca = !1),
+      (this.ral = void 0),
+      (this.oal = !1),
+      (this.nal = void 0),
+      (this.sal = void 0),
+      (this.aal = !1),
+      (this.Tca = !1),
       (this.wCe = 0);
   }
-  OnCreate(e) {
-    e?.DeathInteract && (this.mra = e.DeathInteract.Montage);
-    e = this.Owner.Entity.GetComponent(0)?.GetPbEntityInitData();
-    e &&
-      (0, IComponent_1.getComponent)(e.ComponentsData, "EntityVisibleComponent")
-        ?.UseFadeEffect &&
-      ((this.Sca = !0), (this.wCe = NpcPerformComponent_1.DEFUALT_DITHER_TIME));
+  OnCreate(t) {
+    super.OnCreate(t),
+      (this.mra = t?.DeathInteract?.Montage),
+      (this.nal = t?.DeathInteract?.MaterialDa);
+    var t = this.Owner.Entity.GetComponent(0)?.GetPbEntityInitData();
+    t &&
+      ((t = (0, IComponent_1.getComponent)(
+        t.ComponentsData,
+        "EntityVisibleComponent",
+      )),
+      (this.Tca = !!t?.UseFadeEffect));
   }
-  OnEnter(e) {
+  OnEnter(t) {
     this.gra();
   }
   gra() {
@@ -36,18 +44,24 @@ class NpcPerformDestroyState extends StateBase_1.StateBase {
       : this.pra();
   }
   vra() {
-    var e = MathUtils_1.MathUtils.SecondToMillisecond / this.wCe;
-    this.ActorComp.Actor.DitherEffectController?.EnterDisappearEffect(e, 1, !0),
+    this.ActorComp.Actor.DitherEffectController?.EnterDisappearEffect(
+      MathUtils_1.MathUtils.SecondToMillisecond /
+        NpcPerformComponent_1.DEFUALT_DITHER_TIME,
+      1,
+      !0,
+    ),
       TimerSystem_1.TimerSystem.Delay(() => {
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.DelayRemoveEntityFinished,
-          this.Owner.Entity,
+        ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
+          this.Owner?.Entity,
         );
       }, NpcPerformComponent_1.DEFUALT_DITHER_TIME);
   }
   pra() {
-    let e = void 0;
-    (e = this.mra
+    this.lal(), this.hal();
+  }
+  lal() {
+    let t = void 0;
+    (t = this.mra
       ? this.mra.IsAbp
         ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(
             this.mra.MontageId,
@@ -55,45 +69,86 @@ class NpcPerformDestroyState extends StateBase_1.StateBase {
         : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(
             this.mra.MontageId,
           )
-      : e)
-      ? this.PerformComp.LoadAsync(e.ActionMontage, (e, t) => {
-          this?.ActorComp?.Actor?.IsValid &&
-            e?.IsValid() &&
-            (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug(
-                "NPC",
-                51,
-                "播放销毁Montage",
-                ["PbDataId", this.ActorComp.CreatureData.GetPbDataId()],
-                ["Path", t],
-              ),
-            this.PerformComp?.PlayOnce(e),
-            (this.wCe =
-              e.SequenceLength * MathUtils_1.MathUtils.SecondToMillisecond)),
-            this.Eca();
-        })
-      : this.Eca();
+      : t)
+      ? ResourceSystem_1.ResourceSystem.LoadAsync(
+          t.ActionMontage,
+          UE.AnimMontage,
+          (t, e) => {
+            (this.oal = !0), (this.ral = t), this._al();
+          },
+        )
+      : ((this.oal = !0), this._al());
   }
-  Eca() {
-    var e;
+  hal() {
+    this.nal && "" !== this.nal
+      ? ResourceSystem_1.ResourceSystem.LoadAsync(
+          this.nal,
+          UE.PD_HolographicEffect_C,
+          (t, e) => {
+            (this.aal = !0), (this.sal = t), this._al();
+          },
+        )
+      : ((this.aal = !0), this._al());
+  }
+  _al() {
+    var t;
+    this?.ActorComp?.Actor?.IsValid() &&
+      this.oal &&
+      this.aal &&
+      (this.sal?.IsValid() &&
+        ((t = this.sal),
+        (this.wCe =
+          (t.Start + t.Loop) * MathUtils_1.MathUtils.SecondToMillisecond),
+        this.PerformComp?.MaterialController?.ApplySimpleMaterialEffectByAsset(
+          this.sal,
+        ),
+        Log_1.Log.CheckDebug()) &&
+        Log_1.Log.Debug(
+          "NPC",
+          50,
+          "播放销毁材质表现",
+          ["PbDataId", this.ActorComp.CreatureData.GetPbDataId()],
+          ["Path", this.nal],
+          ["Time", this.wCe],
+        ),
+      this.ral?.IsValid() &&
+        ((t =
+          this.ral.SequenceLength * MathUtils_1.MathUtils.SecondToMillisecond),
+        0 === this.wCe && (this.wCe = t),
+        this.PerformComp?.ClearAction(),
+        this.PerformComp?.PlayPerformMontage(3, {
+          MontageAsset: this.ral,
+          IsLoop: !1,
+        }),
+        Log_1.Log.CheckDebug()) &&
+        Log_1.Log.Debug(
+          "NPC",
+          50,
+          "播放销毁Montage",
+          ["PbDataId", this.ActorComp.CreatureData.GetPbDataId()],
+          ["Montage", this.ral.GetName()],
+          ["Time", t],
+        ),
+      this.Tca &&
+        (0 === this.wCe &&
+          (this.wCe = NpcPerformComponent_1.DEFUALT_DITHER_TIME),
+        this.ActorComp.Actor.DitherEffectController?.EnterDisappearEffect(
+          MathUtils_1.MathUtils.SecondToMillisecond / this.wCe,
+          1,
+          !1,
+        )),
+      this.ual());
+  }
+  ual() {
     0 === this.wCe
-      ? EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.DelayRemoveEntityFinished,
+      ? ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
           this.Owner.Entity,
         )
-      : (this.Sca &&
-          ((e = MathUtils_1.MathUtils.SecondToMillisecond / this.wCe),
-          this.ActorComp.Actor.DitherEffectController?.EnterDisappearEffect(
-            e,
-            1,
-            !1,
-          )),
-        TimerSystem_1.TimerSystem.Delay(() => {
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DelayRemoveEntityFinished,
-            this.Owner.Entity,
+      : TimerSystem_1.TimerSystem.Delay(() => {
+          ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
+            this.Owner?.Entity,
           );
-        }, this.wCe));
+        }, this.wCe);
   }
 }
 exports.NpcPerformDestroyState = NpcPerformDestroyState;

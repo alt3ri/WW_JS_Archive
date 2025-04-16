@@ -72,7 +72,9 @@ class ActivitySubViewTurntableLock extends ActivitySubViewBase_1.ActivitySubView
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(t),
-      this.ANe.FunctionButton.SetFunction(this.DFe));
+      this.ANe.FunctionButton.SetFunction(this.DFe),
+      this.ActivityTurntableData.IsUnLock()) &&
+      this.ActivityTurntableData.SaveUnlockRedDot();
   }
   OnRefreshView() {
     this.FNe(), this._Fe(), this.BNe();

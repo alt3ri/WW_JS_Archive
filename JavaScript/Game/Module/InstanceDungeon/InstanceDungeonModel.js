@@ -15,6 +15,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.NUe = 0),
+      (this.$Dc = !1),
       (this.R1i = void 0),
       (this.U1i = new Map()),
       (this.A1i = new Array()),
@@ -26,16 +27,19 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
       (this.B1i = void 0),
       (this.b1i = void 0),
       (this.q1i = void 0),
-      (this.CurrentInstanceIsFinish = !1);
-  }
-  OnClear() {
-    return !(this.B1i = void 0);
+      (this.CurrentInstanceIsFinish = !1),
+      (this.HidePowerLackConfirmBox = !1),
+      (this.InstanceEnterContentText = new Protocol_1.Aki.Protocol.$ah()),
+      (this.TrialRoleDungeonWhiteList = []),
+      (this.$y1 = new Set());
   }
   OnLeaveLevel() {
     return (
       this.B1i?.SetTrack(!1),
       (this.InstanceFinishSuccess = 0),
-      !(this.InstanceRewardHaveTake = !1)
+      (this.InstanceRewardHaveTake = !1),
+      this.ClearInstanceDungeonInfo(),
+      !0
     );
   }
   GetInstanceId() {
@@ -43,6 +47,12 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   }
   SetInstanceId(t) {
     this.NUe = t;
+  }
+  get InstanceContinue() {
+    return this.$Dc;
+  }
+  set InstanceContinue(t) {
+    this.$Dc = t;
   }
   SetMatchTeamInfo(t) {
     this.R1i = t;
@@ -65,7 +75,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
       ]);
   }
   GetMatchTeamOnlineId(t) {
-    for (const e of this.R1i.TRs) if (e.W5n === t) return e.Vxa;
+    for (const e of this.R1i.TRs) if (e.W5n === t) return e.Qxa;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 5, "获取匹配副本队伍队员信息失败", [
         "队员Id",
@@ -154,7 +164,7 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     return t || !1;
   }
   Kzs(t, e) {
-    t.SetLevel(e.Ebs), t.SetConfigId(e.Q6n);
+    t.SetLevel(e.Ebs), t.SetConfigId(e.Q6n), t.SetSkinId(e.eI_);
   }
   SetPrewarFormationDataList() {
     this.ClearPrewarData();
@@ -235,8 +245,8 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     let a = 0;
     for (let t = 0; t < r; t++) {
       var n,
-        o = this.A1i[t];
-      e.W5n === o.GetPlayerId() && ((n = e.J6n[a++]), this.Kzs(o, n));
+        i = this.A1i[t];
+      e.W5n === i.GetPlayerId() && ((n = e.J6n[a++]), this.Kzs(i, n));
     }
   }
   F1i(t) {
@@ -246,8 +256,8 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
       var n = this.A1i[e];
       if (n.GetPlayerId() === r) {
         let t = !1;
-        for (const o of a)
-          if (o.Q6n === n.GetConfigId()) {
+        for (const i of a)
+          if (i.Q6n === n.GetConfigId()) {
             t = !0;
             break;
           }
@@ -340,11 +350,8 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   ClearInstanceDungeonInfo() {
     var t;
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("InstanceDungeon", 28, "尝试清除副本行为树"),
-      this.B1i
-        ? ((t = this.B1i), (this.B1i = void 0), t.Destroy())
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("InstanceDungeon", 5, "销毁副本树时，副本树不存在");
+      Log_1.Log.Debug("InstanceDungeon", 27, "尝试清除副本行为树"),
+      this.B1i && ((t = this.B1i), (this.B1i = void 0), t.Destroy());
   }
   GetInstanceDungeonInfo() {
     return this.B1i;
@@ -373,6 +380,75 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
         this.SetInstanceDungeonName(
           ModelManager_1.ModelManager.TowerModel.GetCurrentFloorName(),
         );
+  }
+  ClearInstanceEnterContentText() {
+    (this.InstanceEnterContentText.Vah = void 0),
+      (this.InstanceEnterContentText.Hah = void 0),
+      (this.InstanceEnterContentText.jah = void 0),
+      (this.InstanceEnterContentText.RLl = void 0),
+      (this.InstanceEnterContentText.Wah = void 0),
+      (this.InstanceEnterContentText.Qah = void 0),
+      (this.InstanceEnterContentText.y7l = void 0),
+      (this.InstanceEnterContentText.Yn_ = void 0),
+      (this.InstanceEnterContentText.Wsc = void 0),
+      (this.InstanceEnterContentText.iY_ = void 0),
+      (this.InstanceEnterContentText.Qsc = void 0),
+      (this.InstanceEnterContentText.JDc = void 0);
+  }
+  ParseExitDungeonConfirmData(t) {
+    t = t.ExitDungeonConfirmId;
+    return {
+      ParseRuleType: 0 < t.length ? t[0] : 0,
+      UnfinishedBoxId: 1 < t.length ? t[1] : void 0,
+      FinishBoxId: 2 < t.length ? t[2] : void 0,
+      UnfinishedTelBoxId: 3 < t.length ? t[3] : void 0,
+      FinishTelBoxId: 4 < t.length ? t[4] : void 0,
+    };
+  }
+  GetCurrentDungeonExitConfirmData() {
+    var t = this.ParseExitDungeonConfirmData(
+        ModelManager_1.ModelManager.GameModeModel.InstanceDungeon,
+      ),
+      e = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.Id,
+      r = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.InstSubType;
+    return (
+      0 !== t.ParseRuleType ||
+        (1 !== r && 2 !== r && 16 !== r) ||
+        (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsDungeonSupportArchive(
+          e,
+        )
+          ? (t.UnfinishedBoxId || (t.UnfinishedBoxId = 284),
+            t.UnfinishedTelBoxId || (t.UnfinishedTelBoxId = 284))
+          : (t.UnfinishedBoxId || (t.UnfinishedBoxId = 285),
+            t.UnfinishedTelBoxId || (t.UnfinishedTelBoxId = 285)),
+        t.FinishBoxId || (t.FinishBoxId = 290),
+        t.FinishTelBoxId) ||
+        (t.FinishTelBoxId = 290),
+      t
+    );
+  }
+  GetCurrentDungeonExitConfirmId() {
+    var t = this.GetCurrentDungeonExitConfirmData();
+    return ModelManager_1.ModelManager.InstanceDungeonModel
+      .InstanceFinishSuccess
+      ? t.FinishBoxId
+      : t.UnfinishedBoxId;
+  }
+  GetCurrentDungeonTelExitConfirmId() {
+    var t = this.GetCurrentDungeonExitConfirmData();
+    return ModelManager_1.ModelManager.InstanceDungeonModel
+      .InstanceFinishSuccess
+      ? t.FinishTelBoxId
+      : t.UnfinishedTelBoxId;
+  }
+  ClearInstanceIdsWithSaveData() {
+    this.$y1.clear();
+  }
+  AddInstanceIdsWithSaveData(...t) {
+    for (const e of t) this.$y1.add(e);
+  }
+  GetIfInstanceHasSaveData(t) {
+    return this.$y1.has(t);
   }
 }
 exports.InstanceDungeonModel = InstanceDungeonModel;

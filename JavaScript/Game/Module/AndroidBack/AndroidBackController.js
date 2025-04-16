@@ -17,7 +17,8 @@ const puerts_1 = require("puerts"),
   LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager"),
   UiLayer_1 = require("../../Ui/UiLayer"),
   UiManager_1 = require("../../Ui/UiManager"),
-  LguiUtil_1 = require("../Util/LguiUtil");
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  ANDROID_BACK_POINT_ID = 1;
 class AndroidBackController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return Info_1.Info.IsMobilePlatform() && (this.IsLogOpen = !0), !0;
@@ -38,29 +39,30 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.IsViewOpen("LoginView")
       ? (AndroidBackController.IsLogOpen &&
           Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("AndroidBack", 11, "在登录界面"),
+          Log_1.Log.Info("AndroidBack", 10, "在登录界面"),
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowExitGameConfirmBox())
       : UiManager_1.UiManager.IsViewOpen("BattleView")
         ? ModelManager_1.ModelManager.LoadingModel.IsLoading
           ? AndroidBackController.IsLogOpen &&
             Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("AndroidBack", 11, "loading界面打开")
+            Log_1.Log.Info("AndroidBack", 10, "loading界面打开")
           : (AndroidBackController.IsLogOpen &&
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "AndroidBack",
-                11,
+                10,
                 "当前处于主界面并且不在loading界面",
               ),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowReturnLoginConfirmBox())
         : AndroidBackController.IsLogOpen &&
           Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("AndroidBack", 11, "不在主界面");
+          Log_1.Log.Info("AndroidBack", 10, "不在主界面");
   }
   static Dje(e) {
     var r =
       LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
-    r && r.SimulateClickButton(0, e.RootUIComp, e.ClickPivot);
+    r &&
+      r.SimulateClickButton(ANDROID_BACK_POINT_ID, e.RootUIComp, e.ClickPivot);
   }
   static OnClear() {
     return UE.UIAndroidBackComponent.ClearAndroidBackComponent(), !0;
@@ -89,7 +91,7 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
         )) && this.Rje.K2_DestroyComponent(r),
         e.OnClickCallBack.Bind(() => {
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("AndroidBack", 11, "安卓返回点击"),
+            Log_1.Log.Info("AndroidBack", 10, "安卓返回点击"),
             InputDistributeController_1.InputDistributeController.InputKey(
               InputMappingsDefine_1.keyMappings.AndroidBack,
               !0,
@@ -116,7 +118,7 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
     0 !== r &&
       (AndroidBackController.IsLogOpen &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("AndroidBack", 11, "安卓返回键触发"),
+        Log_1.Log.Info("AndroidBack", 10, "安卓返回键触发"),
       UE.UIAndroidBackComponent.GetActiveAndroidBackComponentSize() <= 0
         ? _a.Lje()
         : ((r = UE.UIAndroidBackComponent.GetTopActiveAndroidBack()),
@@ -128,7 +130,7 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
               i,
             ),
             Log_1.Log.CheckInfo()) &&
-            Log_1.Log.Info("AndroidBack", 11, "触发了关闭按钮", [
+            Log_1.Log.Info("AndroidBack", 10, "触发了关闭按钮", [
               "按钮的节点路径",
               (0, puerts_1.$unref)(i),
             ]),

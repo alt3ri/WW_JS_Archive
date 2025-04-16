@@ -20,7 +20,7 @@ class PartStatePanel {
               : this.DestroyPartStateFromRole(r));
         else if (r) {
           var i,
-            s = r.GetComponent(61).Parts;
+            s = r.GetComponent(68).Parts;
           if (!(s.length <= 0))
             for (const o of s)
               o.BoneName.op_Equality(e) &&
@@ -50,7 +50,7 @@ class PartStatePanel {
   }
   OnCreateEntity(t) {
     if (t) {
-      var e = t.GetComponent(61);
+      var e = t.GetComponent(68);
       if (e) {
         e = e.Parts;
         if (e && 0 !== e.length) {
@@ -64,7 +64,7 @@ class PartStatePanel {
                 : Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Battle",
-                    8,
+                    17,
                     "[BattleView]激活部位血条时找不到部位插槽:",
                     ["SocketName", a],
                   ));
@@ -74,7 +74,7 @@ class PartStatePanel {
   }
   ActivatePartStateByRole(t) {
     if (t) {
-      var e = t.GetComponent(61).Parts;
+      var e = t.GetComponent(68).Parts;
       if (0 !== e.length) for (const a of e) this.ActivatePartState(t, a);
     }
   }

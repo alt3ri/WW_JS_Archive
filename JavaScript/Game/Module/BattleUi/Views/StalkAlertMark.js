@@ -16,6 +16,7 @@ const puerts_1 = require("puerts"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
   ActorUtils_1 = require("../../../Utils/ActorUtils"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
   EntityHeadIconItem_1 = require("./EntityHeadIconItem"),
@@ -92,8 +93,17 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
       r = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     r &&
       ((e = Global_1.Global.CharacterController),
-      this.oCt.DeepCopy(this.E$e.K2_GetActorLocation()),
-      (t = UE.GameplayStatics.ProjectWorldToScreen(
+      this.bre?.AiController.CharActorComp?.SkeletalMesh
+        ? (this.oCt.DeepCopy(
+            this.bre.AiController.CharActorComp.SkeletalMesh.D_K2_GetComponentLocation(),
+          ),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+            this.bre.AiController.CharActorComp,
+            this.oCt,
+            this.bre.AiController.CharActorComp.HalfHeight,
+          ))
+        : this.oCt.DeepCopy(this.E$e.D_K2_GetActorLocation()),
+      (t = UE.GameplayStatics.D_ProjectWorldToScreen(
         e,
         this.oCt.ToUeVector(),
         this.S$e,
@@ -101,14 +111,14 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
         (this.oCt.Subtraction(r, this.rCt),
         (i = Global_1.Global.CharacterCameraManager),
         Rotator_1.Rotator.Create(i.GetCameraRotation()).Vector(this.nCt),
-        (i = UE.KismetMathLibrary.ProjectVectorOnToVector(
+        (i = UE.KismetMathLibrary.D_ProjectVectorOnToVector(
           this.rCt.ToUeVector(),
           this.nCt.ToUeVector(),
         ).op_Multiply(2)),
         this.DYe.Set(i.X, i.Y, i.Z),
         this.rCt.SubtractionEqual(this.DYe),
         r.Addition(this.rCt, this.oCt),
-        UE.GameplayStatics.ProjectWorldToScreen(
+        UE.GameplayStatics.D_ProjectWorldToScreen(
           e,
           this.oCt.ToUeVector(),
           this.S$e,
@@ -193,7 +203,7 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
         !t && this.GetActive() && this.SetActive(!1),
         t)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("AI", 43, "警戒NPC不能正常获取AiComponent"),
+          Log_1.Log.Error("AI", 42, "警戒NPC不能正常获取AiComponent"),
         !1);
   }
   get AiComponent() {
@@ -201,7 +211,7 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
     return (
       this.bre ||
         ((t = ActorUtils_1.ActorUtils.GetEntityByActor(this.E$e)),
-        (this.bre = t.Entity.GetComponent(40))),
+        (this.bre = t.Entity.GetComponent(46))),
       this.bre
     );
   }

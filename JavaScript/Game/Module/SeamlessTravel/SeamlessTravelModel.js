@@ -35,7 +35,7 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
   set IsSeamlessTravel(e) {
     this.InSeamlessTraveling &&
       Log_1.Log.CheckError() &&
-      Log_1.Log.Error("SeamlessTravel", 30, "无缝加载中，禁止修改是否无缝加载"),
+      Log_1.Log.Error("SeamlessTravel", 29, "无缝加载中，禁止修改是否无缝加载"),
       (this.svo = e);
   }
   OnClear() {
@@ -49,7 +49,7 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SeamlessTravel",
-            30,
+            29,
             "[AddSeamlessTravelActor] Actor Invalid",
           ),
         !1);
@@ -63,7 +63,7 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SeamlessTravel",
-            30,
+            29,
             "[RemoveSeamlessTravelActor] Actor Invalid",
           ),
         !1);
@@ -74,14 +74,14 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SeamlessTravel",
-            30,
+            29,
             "[IsSeamlessTravelActor] Actor Invalid",
           ),
         !1);
   }
   GetSeamlessTravelRoleEntityHandle(e) {
     for (const s of this.SeamlessTravelPlayerTeamHandles)
-      if (s.Entity.GetComponent(0).GetRoleId() === e) return s;
+      if (s.Entity.GetComponent(0).GetCreatureDataId() === e) return s;
   }
   CreatePromise() {
     (this.MeshAssetLoadedPromise = new GameModePromise_1.GameModePromise()),

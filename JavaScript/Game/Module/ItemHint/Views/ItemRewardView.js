@@ -100,7 +100,7 @@ class ItemRewardView extends UiTickViewBase_1.UiTickViewBase {
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "ItemHint",
-        9,
+        8,
         "ItemRewardView ShowTime 小于100",
         ["DropGroupId", this.iGe.Id],
         ["ShowTime", e],

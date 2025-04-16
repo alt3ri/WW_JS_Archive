@@ -52,7 +52,7 @@ class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
   }
   GetAttachParent() {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiCommon", 28, "子类没有重写获取父物体方法");
+      Log_1.Log.Error("UiCommon", 27, "子类没有重写获取父物体方法");
   }
   GetCostParent() {}
   SetViewInfo(t) {
@@ -100,7 +100,7 @@ class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
             )),
         await this.ucr.SetCurrencyItemList(t))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCommon", 28, "找不到CostParent");
+        Log_1.Log.Error("UiCommon", 27, "找不到CostParent");
   }
   GetCurrencyComponent() {
     return this.ucr;

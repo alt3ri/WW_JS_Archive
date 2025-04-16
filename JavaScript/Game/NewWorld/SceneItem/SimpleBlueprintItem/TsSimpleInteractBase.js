@@ -31,6 +31,22 @@ class TsSimpleInteractBase extends UE.KuroEffectActor {
       (this.TmpVector4 = void 0),
       (this.LineTrace = void 0);
   }
+  Constructor() {
+    (this.CheckDrawTime = -0),
+      (this.LastCheckDrawResult = !1),
+      (this.IsLegal = !1),
+      (this.SelfTransform = void 0),
+      (this.SelfLocation = void 0),
+      (this.TmpResult = void 0),
+      (this.ActorLocation = void 0),
+      (this.SelfToActor = void 0),
+      (this.MoveOffset = void 0),
+      (this.TmpVector1 = void 0),
+      (this.TmpVector2 = void 0),
+      (this.TmpVector3 = void 0),
+      (this.TmpVector4 = void 0),
+      (this.LineTrace = void 0);
+  }
   ReceiveBeginPlay() {
     this.OnBeginPlay();
   }
@@ -52,7 +68,7 @@ class TsSimpleInteractBase extends UE.KuroEffectActor {
       this.UpdateData();
   }
   UpdateData() {
-    this.SelfTransform.FromUeTransform(this.GetTransform()),
+    this.SelfTransform.FromUeTransform(this.D_GetTransform()),
       this.SelfLocation.DeepCopy(this.SelfTransform.GetLocation());
   }
   InitTraceInfo() {
@@ -72,10 +88,10 @@ class TsSimpleInteractBase extends UE.KuroEffectActor {
   EditorTick(t) {
     this.CheckDraw(t) && this.OnDraw();
   }
-  GetBestTransform(t, i, e, s) {
-    return this.OnGetBestTransform(t, i, e, s);
+  GetBestTransform(t, i, s, e) {
+    return this.OnGetBestTransform(t, i, s, e);
   }
-  OnGetBestTransform(t, i, e, s) {
+  OnGetBestTransform(t, i, s, e) {
     return (this.TmpResult.Success = !1), this.TmpResult;
   }
   CheckDraw(t) {
@@ -91,7 +107,7 @@ class TsSimpleInteractBase extends UE.KuroEffectActor {
           t,
           void 0,
         ),
-        (i = this.K2_GetActorLocation()),
+        (i = this.D_K2_GetActorLocation()),
         ((t = (0, puerts_1.$unref)(t)).X -= i.X),
         (t.Y -= i.Y),
         (t.Z -= i.Z),

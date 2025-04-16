@@ -10,7 +10,7 @@ class MailImportantDropDownItem extends MailDropDownItem_1.MailDropDownItem {
     var e = ModelManager_1.ModelManager.MailModel.GetImportantMails();
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Mail", 28, "邮件界面：获取重要邮件", [
+        Log_1.Log.Info("Mail", 27, "邮件界面：获取重要邮件", [
           "length",
           e?.length,
         ]),

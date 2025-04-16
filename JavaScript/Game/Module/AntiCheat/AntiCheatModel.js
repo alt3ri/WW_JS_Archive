@@ -5,9 +5,9 @@ const UE = require("ue"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   LocalStorage_1 = require("../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   AntiCheatData_1 = require("./AntiCheatData"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   BUNDLE_DATA_EVENT_ID = "8",
   HEARTBEAT_DATA_EVENT_ID = "9";
 class AntiCheatModel extends ModelBase_1.ModelBase {
@@ -23,8 +23,8 @@ class AntiCheatModel extends ModelBase_1.ModelBase {
   OnInit() {
     var e = UE.KuroLauncherLibrary.GetAppVersion();
     return (
-      (this.Qre = LocalStorage_1.LocalStorage.GetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.PatchVersion,
+      (this.Qre = LocalStorage_1.LocalStorage.GetDeviceSaved(
+        LocalStorageDefine_1.ELocalStorageDeviceKey.PatchVersion,
         e,
       )),
       (this.qje = UE.KismetSystemLibrary.GetGameBundleId()),

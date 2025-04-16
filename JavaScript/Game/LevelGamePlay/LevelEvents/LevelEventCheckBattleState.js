@@ -30,10 +30,10 @@ class LevelEventCheckBattleState extends LevelGeneralBase_1.LevelEventBase {
             ? ((this.lDe = this.aDe.TagOption),
               this.CreateWaitEntityTask(this.aDe.EntityId))
             : (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("LevelEvent", 34, "StateOption不合法"),
+                Log_1.Log.Error("LevelEvent", 33, "StateOption不合法"),
               this.FinishExecute(!1)))
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("LevelEvent", 34, "参数不合法"),
+            Log_1.Log.Error("LevelEvent", 33, "参数不合法"),
           this.FinishExecute(!1));
   }
   ExecuteWhenEntitiesReady() {
@@ -56,13 +56,13 @@ class LevelEventCheckBattleState extends LevelGeneralBase_1.LevelEventBase {
     var e;
     return this.sDe?.Valid
       ? ((e = this.lDe.Type),
-        this.sDe.Entity.GetComponent(190)?.HasTag(
+        this.sDe.Entity.GetComponent(203)?.HasTag(
           GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
         ))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            34,
+            33,
             "目标实体不存在，action视为执行成功",
             ["EntityId", this.aDe.EntityId],
           ),

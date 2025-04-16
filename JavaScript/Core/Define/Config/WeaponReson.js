@@ -60,21 +60,35 @@ class WeaponReson {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetEffectAt(t) {
     return this.effect(t);
   }
   effect(t) {
     var s = this.J7.__offset(this.z7, 12);
-    return s
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + s) + 8 * t)
-      : BigInt(0);
+    return s ? this.J7.readFloat64(this.J7.__vector(this.z7 + s) + 8 * t) : 0;
   }
   effectLength() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  effectArray() {
+    var t = this.J7.__offset(this.z7, 12);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   consume() {
     var t = this.J7.__offset(this.z7, 14);

@@ -16,7 +16,7 @@ class BattleUiEnvironmentKeyData {
   }
   Init() {
     (this.jQe = 0), (this.WQe.length = 0), this.WQe.push(!0);
-    for (let e = 1; e < 6; e++) this.WQe.push(!1);
+    for (let e = 1; e < 7; e++) this.WQe.push(!1);
   }
   SetEnvironmentKeyVisible(t, e) {
     if (this.WQe[t] !== e)
@@ -27,7 +27,7 @@ class BattleUiEnvironmentKeyData {
   }
   QQe() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "环境特性快捷键类型改变", [
+      Log_1.Log.Debug("Battle", 17, "环境特性快捷键类型改变", [
         "type",
         this.jQe,
       ]),
@@ -37,7 +37,7 @@ class BattleUiEnvironmentKeyData {
   }
   OnLeaveLevel() {
     this.jQe = 0;
-    for (let e = 1; e < 6; e++) this.WQe[e] = !1;
+    for (let e = 1; e < 7; e++) this.WQe[e] = !1;
   }
   Clear() {}
 }
@@ -48,5 +48,6 @@ class BattleUiEnvironmentKeyData {
   "HotKeyText_SilentAreaTips_Name",
   "HotKeyText_RogueInfoTips_Name",
   "HotKeyText_VisionLevelTips_Name",
+  "HotKeyText_TowerTokenTips_Name",
 ];
 //# sourceMappingURL=BattleUiEnvironmentKeyData.js.map

@@ -2,17 +2,41 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSpecialEnergyBar = void 0);
 const ModelManager_1 = require("../../../../Manager/ModelManager"),
+  SpecialEnergyBarBuLanTe_1 = require("./Role/SpecialEnergyBarBuLanTe"),
   SpecialEnergyBarChiXia_1 = require("./Role/SpecialEnergyBarChiXia"),
+  SpecialEnergyBarChun_1 = require("./Role/SpecialEnergyBarChun"),
+  SpecialEnergyBarDengDeng_1 = require("./Role/SpecialEnergyBarDengDeng"),
+  SpecialEnergyBarFeibi_1 = require("./Role/SpecialEnergyBarFeibi"),
   SpecialEnergyBarJianXin_1 = require("./Role/SpecialEnergyBarJianXin"),
   SpecialEnergyBarJinXi_1 = require("./Role/SpecialEnergyBarJinXi"),
+  SpecialEnergyBarKanTeLeiLa_1 = require("./Role/SpecialEnergyBarKanTeLeiLa"),
+  SpecialEnergyBarKeLaiTa_1 = require("./Role/SpecialEnergyBarKeLaiTa"),
+  SpecialEnergyBarKeLaiTaUltra_1 = require("./Role/SpecialEnergyBarKeLaiTaUltra"),
+  SpecialEnergyBarLuoKeKe_1 = require("./Role/SpecialEnergyBarLuoKeKe"),
   SpecialEnergyBarSanHua_1 = require("./Role/SpecialEnergyBarSanHua"),
+  SpecialEnergyBarWind_1 = require("./Role/SpecialEnergyBarWind"),
+  SpecialEnergyBarXiaKong_1 = require("./Role/SpecialEnergyBarXiaKong"),
   SpecialEnergyBarXiangLiYao_1 = require("./Role/SpecialEnergyBarXiangLiYao"),
+  SpecialEnergyBarZanni_1 = require("./Role/SpecialEnergyBarZanni"),
   SpecialEnergyBarZheZhi_1 = require("./Role/SpecialEnergyBarZheZhi"),
   SpecialEnergyBarMorph_1 = require("./SpecialEnergyBarMorph"),
   SpecialEnergyBarMorphCountDown_1 = require("./SpecialEnergyBarMorphCountDown"),
   SpecialEnergyBarPoint_1 = require("./SpecialEnergyBarPoint"),
   SpecialEnergyBarPointGraduate_1 = require("./SpecialEnergyBarPointGraduate"),
   SpecialEnergyBarSlot_1 = require("./SpecialEnergyBarSlot"),
+  specialEnergyBarClassMap = new Map([
+    [11, SpecialEnergyBarChun_1.SpecialEnergyBarChun],
+    [150402, SpecialEnergyBarDengDeng_1.SpecialEnergyBarDengDeng],
+    [110701, SpecialEnergyBarKeLaiTa_1.SpecialEnergyBarKeLaiTa],
+    [110702, SpecialEnergyBarKeLaiTaUltra_1.SpecialEnergyBarKeLaiTaUltra],
+    [160600, SpecialEnergyBarLuoKeKe_1.SpecialEnergyBarLuoKeKe],
+    [120600, SpecialEnergyBarBuLanTe_1.SpecialEnergyBarBuLanTe],
+    [150601, SpecialEnergyBarFeibi_1.SpecialEnergyBarFeibi],
+    [160700, SpecialEnergyBarKanTeLeiLa_1.SpecialEnergyBarKanTeLeiLa],
+    [140600, SpecialEnergyBarWind_1.SpecialEnergyBarWind],
+    [140700, SpecialEnergyBarXiaKong_1.SpecialEnergyBarXiaKong],
+    [150700, SpecialEnergyBarZanni_1.SpecialEnergyBarZanni],
+  ]),
   specialEnergyBarClassList = [
     SpecialEnergyBarPoint_1.SpecialEnergyBarPoint,
     SpecialEnergyBarSlot_1.SpecialEnergyBarSlot,
@@ -33,29 +57,29 @@ class RoleSpecialEnergyBar {
     (this.Wst = void 0),
       (this.hdt = new Map()),
       (this.ldt = []),
-      (this.lne = (e, r) => {
+      (this.lne = (e, a) => {
         this._dt(!0);
       });
   }
-  async InitAsync(e, r) {
-    this.Wst = r;
-    var a = this.udt(r);
-    if (a) {
+  async InitAsync(e, a) {
+    this.Wst = a;
+    var r = this.udt(a);
+    if (r) {
       var i = [];
-      if ((i.push(this.cdt(e, r, 0, a)), a.TagEnergyBarIdMap))
-        for (var [n, o] of a.TagEnergyBarIdMap) {
+      if ((i.push(this.cdt(e, a, 0, r)), r.TagEnergyBarIdMap))
+        for (var [n, l] of r.TagEnergyBarIdMap) {
           this.mdt(n, this.lne);
-          o =
+          l =
             ModelManager_1.ModelManager.BattleUiModel.SpecialEnergyBarData.GetSpecialEnergyBarInfo(
-              o,
+              l,
             );
-          o && i.push(this.cdt(e, r, n, o));
+          l && i.push(this.cdt(e, a, n, l));
         }
       this._dt(), await Promise.all(i);
     }
   }
   SetVisible(e) {
-    for (const r of this.hdt.values()) r.SetVisible(e, 0);
+    for (const a of this.hdt.values()) a.SetVisible(e, 0);
   }
   Destroy() {
     this.FYe();
@@ -63,7 +87,7 @@ class RoleSpecialEnergyBar {
     this.hdt.clear();
   }
   Tick(e) {
-    for (const r of this.hdt.values()) r.Tick(e);
+    for (const a of this.hdt.values()) a.Tick(e);
   }
   udt(e) {
     if (e?.EntityHandle?.Valid) {
@@ -77,33 +101,34 @@ class RoleSpecialEnergyBar {
       }
     }
   }
-  async cdt(e, r, a, i) {
-    var n = new specialEnergyBarClassList[i.PrefabType]();
-    n.InitData(r, i),
-      this.hdt.set(a, n),
-      await n.InitByPathAsync(e, i.PrefabPath);
+  async cdt(e, a, r, i) {
+    let n = specialEnergyBarClassMap.get(i.ExtraType);
+    var l = new (n = n || specialEnergyBarClassList[i.PrefabType])();
+    l.InitData(a, i),
+      this.hdt.set(r, l),
+      await l.InitByPathAsync(e, i.PrefabPath);
   }
-  _dt(r = !1) {
+  _dt(a = !1) {
     if (this.hdt.size <= 1) this.hdt.get(0)?.SetVisible(!0, 1);
     else {
-      var a,
+      var r,
         i,
         n = this.Wst?.GameplayTagComponent;
       let e = 0;
-      for (const t of this.hdt.keys())
-        if (0 !== t && n?.HasTag(t)) {
-          e = t;
+      for (const g of this.hdt.keys())
+        if (0 !== g && n?.HasTag(g)) {
+          e = g;
           break;
         }
-      for ([a, i] of this.hdt) {
-        var o = a === e;
-        i.SetVisible(o, 1), r && i.OnChangeVisibleByTagChange(o);
+      for ([r, i] of this.hdt) {
+        var l = r === e;
+        i.SetVisible(l, 1), a && i.OnChangeVisibleByTagChange(l);
       }
     }
   }
-  mdt(e, r) {
-    var a = this.Wst?.GameplayTagComponent;
-    a && ((a = a.ListenForTagAddOrRemove(e, r)), this.ldt.push(a));
+  mdt(e, a) {
+    var r = this.Wst?.GameplayTagComponent;
+    r && ((r = r.ListenForTagAddOrRemove(e, a)), this.ldt.push(r));
   }
   FYe() {
     if (this.ldt) {

@@ -9,13 +9,16 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.Tag = void 0), (this.UiTagAnsContext = void 0);
   }
+  Constructor() {
+    this.UiTagAnsContext = void 0;
+  }
   K2_NotifyBegin(e, t, o) {
     var e = e.GetOwner(),
       i = this.Tag?.TagId;
     if (e instanceof TsBaseCharacter_1.default && i) {
       var s = e.CharacterActorComponent?.Entity;
       if (s) {
-        s = s.GetComponent(190);
+        s = s.GetComponent(203);
         if (s) return s.TagContainer.UpdateExactTag(4, i, 1), !0;
       } else
         Log_1.Log.CheckWarn() &&
@@ -24,7 +27,7 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
             6,
             "No Entity for TsBaseCharacter",
             ["Name", e.GetName()],
-            ["location", e.K2_GetActorLocation()],
+            ["location", e.D_K2_GetActorLocation()],
           );
     } else
       i &&
@@ -42,7 +45,7 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
     if (e instanceof TsBaseCharacter_1.default && o) {
       var i = e.CharacterActorComponent?.Entity;
       if (i) {
-        i = i.GetComponent(190);
+        i = i.GetComponent(203);
         if (i) return i.TagContainer.UpdateExactTag(4, o, -1), !0;
       } else
         Log_1.Log.CheckWarn() &&
@@ -51,7 +54,7 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
             6,
             "No Entity for TsBaseCharacter",
             ["Name", e.GetName()],
-            ["location", e.K2_GetActorLocation()],
+            ["location", e.D_K2_GetActorLocation()],
           );
     } else
       this.UiTagAnsContext &&

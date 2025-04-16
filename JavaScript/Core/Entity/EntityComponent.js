@@ -10,8 +10,8 @@ class EntityComponent {
     (this.UnResetPropertySet = void 0),
       (this.PW = void 0),
       (this.vW = 0),
-      (this.PFa = new Map()),
-      (this.wFa = new Map()),
+      (this.$4a = new Map()),
+      (this.X4a = new Map()),
       (this.m6 = void 0),
       (this._W = void 0),
       (this.uW = void 0),
@@ -47,16 +47,16 @@ class EntityComponent {
     EntityComponent.UW.has(t)
       ? (i = EntityComponent.UW.get(t))
       : ((i = [
-          Stats_1.Stat.Create(t + ".Create"),
-          Stats_1.Stat.Create(t + ".Init"),
-          Stats_1.Stat.Create(t + ".Clear"),
-          Stats_1.Stat.Create(t + ".Start"),
-          Stats_1.Stat.Create(t + ".End"),
-          Stats_1.Stat.Create(t + ".Activate"),
-          Stats_1.Stat.Create(t + ".Tick"),
-          Stats_1.Stat.Create(t + ".ForceTick"),
-          Stats_1.Stat.Create(t + ".AfterTick"),
-          Stats_1.Stat.Create(t + ".ForceAfterTick"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Create"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Init"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Clear"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Start"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".End"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Activate"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Tick"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".ForceTick"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".AfterTick"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".ForceAfterTick"),
         ]),
         EntityComponent.UW.set(t, i)),
       ([
@@ -77,13 +77,13 @@ class EntityComponent {
     return !!this.Entity && this.Entity.IsCreate && !this.Entity.IsClear;
   }
   AW() {
-    this.PFa.clear(), (this.vW = 0), (this.PW = void 0);
+    this.$4a.clear(), (this.vW = 0), (this.PW = void 0);
   }
   get Entity() {
     return this.PW;
   }
   get Active() {
-    return this.qzo;
+    return (this.PW?.Active ?? !1) && this.qzo;
   }
   get NeedTick() {
     return this.oW;
@@ -148,9 +148,9 @@ class EntityComponent {
     return !0;
   }
   VW(t, i, s) {
-    i.Start();
+    i?.Start();
     t = this.FW(t, s);
-    return i.Stop(), t;
+    return i?.Stop(), t;
   }
   Create(t, i) {
     return (
@@ -202,6 +202,14 @@ class EntityComponent {
     this.OnActivate !== EntityComponent.prototype.OnActivate &&
       this.VW(() => (this.OnActivate(), !0), this.dW, this.OnActivate.name);
   }
+  PostActivate() {
+    this.OnPostActivate !== EntityComponent.prototype.OnPostActivate &&
+      this.VW(
+        () => (this.OnPostActivate(), !0),
+        this.dW,
+        this.OnPostActivate.name,
+      );
+  }
   End() {
     return (
       this.OnEnd === EntityComponent.prototype.OnEnd ||
@@ -210,7 +218,7 @@ class EntityComponent {
   }
   RefreshEnable(i) {
     var t = this.qzo;
-    (this.qzo = 0 === this.PFa.size && 0 === this.wFa.size),
+    (this.qzo = 0 === this.$4a.size && 0 === this.X4a.size),
       this.PW && (this.qzo = this.qzo && this.PW.Active),
       this.qzo !== t &&
         (this.qzo
@@ -223,7 +231,7 @@ class EntityComponent {
             }, this.OnDisable.name));
   }
   Enable(t, i) {
-    return t && this.PFa.delete(t)
+    return t && this.$4a.delete(t)
       ? (this.RefreshEnable(i), !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -255,18 +263,18 @@ class EntityComponent {
           this.constructor.name,
         ]);
     var i = ++this.vW;
-    return this.PFa.set(i, t), this.RefreshEnable(t), i;
+    return this.$4a.set(i, t), this.RefreshEnable(t), i;
   }
   EnableByKey(t, i = !0) {
-    var s = this.wFa.get(t);
+    var s = this.X4a.get(t);
     !s || s <= 0
-      ? void 0 !== s && this.wFa.delete(t)
-      : (!i && 1 < s ? this.wFa.set(t, s - 1) : this.wFa.delete(t),
+      ? void 0 !== s && this.X4a.delete(t)
+      : (!i && 1 < s ? this.X4a.set(t, s - 1) : this.X4a.delete(t),
         this.RefreshEnable(t));
   }
   DisableByKey(t, i = !0) {
-    var s = Math.max(0, this.wFa.get(t) ?? 0);
-    (i && 0 < s) || (this.wFa.set(t, s + 1), this.RefreshEnable(t));
+    var s = Math.max(0, this.X4a.get(t) ?? 0);
+    (i && 0 < s) || (this.X4a.set(t, s + 1), this.RefreshEnable(t));
   }
   Tick(t) {
     if (this.Active) {
@@ -423,6 +431,7 @@ class EntityComponent {
     return !0;
   }
   OnActivate() {}
+  OnPostActivate() {}
   OnEnd() {
     return !0;
   }
@@ -441,7 +450,7 @@ class EntityComponent {
       i,
       s = new Array();
     let n = "";
-    for ([t, i] of this.PFa)
+    for ([t, i] of this.$4a)
       s.push(
         `${n}{Component:${this.constructor.name},Handle:${t},Reason:${i}}`,
       ),

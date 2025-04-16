@@ -1,0 +1,73 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.CheckCertainFishingItemCount = void 0);
+const flatbuffers = require("../../../../RunTimeLibs/FlatBuffers/flatbuffers");
+class CheckCertainFishingItemCount {
+  constructor() {
+    (this.bb = void 0), (this.bb_pos = 0);
+  }
+  __init(t, i) {
+    return (this.bb_pos = t), (this.bb = i), this;
+  }
+  static getRootAsCheckCertainFishingItemCount(t, i) {
+    return (i || new CheckCertainFishingItemCount()).__init(
+      t.readInt32(t.position()) + t.position(),
+      t,
+    );
+  }
+  static getSizePrefixedRootAsCheckCertainFishingItemCount(t, i) {
+    return (
+      t.setPosition(t.position() + flatbuffers.SIZE_PREFIX_LENGTH),
+      (i || new CheckCertainFishingItemCount()).__init(
+        t.readInt32(t.position()) + t.position(),
+        t,
+      )
+    );
+  }
+  type(t) {
+    var i = this.bb.__offset(this.bb_pos, 4);
+    return i ? this.bb.__string(this.bb_pos + i, t) : void 0;
+  }
+  id() {
+    var t = this.bb.__offset(this.bb_pos, 6);
+    return t ? this.bb.readInt32(this.bb_pos + t) : 0;
+  }
+  compare(t) {
+    var i = this.bb.__offset(this.bb_pos, 8);
+    return i ? this.bb.__string(this.bb_pos + i, t) : void 0;
+  }
+  count() {
+    var t = this.bb.__offset(this.bb_pos, 10);
+    return t ? this.bb.readInt32(this.bb_pos + t) : 0;
+  }
+  static startCheckCertainFishingItemCount(t) {
+    t.startObject(4);
+  }
+  static addType(t, i) {
+    t.addFieldOffset(0, i, 0);
+  }
+  static addId(t, i) {
+    t.addFieldInt32(1, i, 0);
+  }
+  static addCompare(t, i) {
+    t.addFieldOffset(2, i, 0);
+  }
+  static addCount(t, i) {
+    t.addFieldInt32(3, i, 0);
+  }
+  static endCheckCertainFishingItemCount(t) {
+    return t.endObject();
+  }
+  static createCheckCertainFishingItemCount(t, i, e, n, s) {
+    return (
+      CheckCertainFishingItemCount.startCheckCertainFishingItemCount(t),
+      CheckCertainFishingItemCount.addType(t, i),
+      CheckCertainFishingItemCount.addId(t, e),
+      CheckCertainFishingItemCount.addCompare(t, n),
+      CheckCertainFishingItemCount.addCount(t, s),
+      CheckCertainFishingItemCount.endCheckCertainFishingItemCount(t)
+    );
+  }
+}
+exports.CheckCertainFishingItemCount = CheckCertainFishingItemCount;
+//# sourceMappingURL=check-certain-fishing-item-count.js.map

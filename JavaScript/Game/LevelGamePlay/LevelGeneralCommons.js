@@ -10,8 +10,7 @@ const Log_1 = require("../../Core/Common/Log"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../Manager/ControllerHolder"),
-  ModelManager_1 = require("../Manager/ModelManager"),
-  CharacterController_1 = require("../NewWorld/Character/CharacterController");
+  ModelManager_1 = require("../Manager/ModelManager");
 class LevelGeneralCommons {
   static Init() {
     (this.IUe = new Array()), (this.TUe = new Array());
@@ -43,7 +42,9 @@ class LevelGeneralCommons {
       ),
       this.TUe && this.TUe.length)
     )
-      return CharacterController_1.CharacterController.GetActor(this.TUe[0]);
+      return ControllerHolder_1.ControllerHolder.CharacterController.GetActor(
+        this.TUe[0],
+      );
   }
   static FindTargetsWithTag(e, t) {
     if (
@@ -51,33 +52,38 @@ class LevelGeneralCommons {
       ModelManager_1.ModelManager.CreatureModel.GetEntitiesWithTag(e, this.TUe),
       this.TUe && this.TUe.length)
     )
-      for (const r of this.TUe)
-        CharacterController_1.CharacterController.GetActor(r) &&
-          t.push(CharacterController_1.CharacterController.GetActor(r));
+      for (const o of this.TUe)
+        ControllerHolder_1.ControllerHolder.CharacterController.GetActor(o) &&
+          t.push(
+            ControllerHolder_1.ControllerHolder.CharacterController.GetActor(o),
+          );
   }
-  static UpdateEntityTag(e, t, r) {
-    var a,
-      o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
-    o
-      ? ((o = CharacterController_1.CharacterController.GetActor(o)) ||
+  static UpdateEntityTag(e, t, o) {
+    var r,
+      a = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
+    a
+      ? ((a =
+          ControllerHolder_1.ControllerHolder.CharacterController.GetActor(
+            a,
+          )) ||
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Level",
               7,
-              "[LevelGeneralController.UpdateEntityTag] 无法找到对应表现Actor 修改tag",
+              "[ControllerHolder.LevelGeneralController.UpdateEntityTag] 无法找到对应表现Actor 修改tag",
               ["EntityId", e],
               ["Tag", t],
             )),
-        (a = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
-        r
-          ? (o.Tags.Add(a), this.AddPublicTag(t, o))
-          : -1 !== (r = o.Tags.FindIndex(a)) &&
-            (o.Tags.RemoveAt(r), this.RemovePublicTag(t, o)))
+        (r = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
+        o
+          ? (a.Tags.Add(r), this.AddPublicTag(t, a))
+          : -1 !== (o = a.Tags.FindIndex(r)) &&
+            (a.Tags.RemoveAt(o), this.RemovePublicTag(t, a)))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Level",
           7,
-          "[LevelGeneralController.UpdateEntityTag] 无法找到对应entity 修改tag",
+          "[ControllerHolder.LevelGeneralController.UpdateEntityTag] 无法找到对应entity 修改tag",
           ["EntityId", e],
           ["Tag", t],
         );
@@ -86,72 +92,82 @@ class LevelGeneralCommons {
     e = ConditionGroupById_1.configConditionGroupById.GetConfig(e);
     if (e) return e.HintText;
   }
-  static PrechangeStateTag(e, t, r) {
+  static PrechangeStateTag(e, t, o) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Entity",
-        32,
+        31,
         "尝试通过ChangePerformanceTag方法更改服务器Tag",
-        ["原因", r],
+        ["原因", o],
       );
-    r = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
-    r
-      ? r.IsInit
-        ? this.LUe(e, r, t)
+    o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
+    o
+      ? o.IsInit
+        ? this.LUe(e, o, t)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            32,
+            31,
             "[ChangePerformanceTag] 对应的Entity并未初始化完成",
             ["pbDataId", e],
           )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Level",
-          32,
+          31,
           "[ChangePerformanceTag] 找不到对应的Entity",
           ["pbDataId", e],
         );
   }
-  static LUe(e, t, r) {
-    var a = t?.Entity?.GetComponent(181);
-    if (a) {
-      var o = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(r),
+  static LUe(e, t, o) {
+    var r = t?.Entity?.GetComponent(194);
+    if (r) {
+      var a = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(o),
         n = t.Entity.GetComponent(0)?.GetPbEntityInitData(),
         i = (0, IComponent_1.getComponent)(
           n.ComponentsData,
           "EntityStateComponent",
         );
-      if ((0, IAction_1.isStateTypeContainsState)(i.Type, o)) {
+      if ((0, IAction_1.isStateTypeContainsState)(i.Type, a)) {
         for (const g of (0, IAction_1.getStatesByType)(i.Type)) {
           var l = (0, IAction_1.getEntityStateTag)(i.Type, g),
             l = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(l);
-          a.RemoveServerTagByIdLocal(l, "ChangePerformanceTag");
+          r.RemoveServerTagByIdLocal(l, "ChangePerformanceTag");
         }
-        a.AddServerTagByIdLocal(r, "ChangePerformanceTag"),
+        r.AddServerTagByIdLocal(o, "ChangePerformanceTag"),
           EventSystem_1.EventSystem.EmitWithTarget(
             t.Entity,
-            EventDefine_1.EEventName.OnSceneItemStatePrechangeInSequence,
-            r,
+            EventDefine_1.EEventName.OnSceneItemStatePreChangeInSequence,
+            o,
           );
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            32,
+            31,
             "[ChangePerformanceTag] 传入的Tag与Entity设定的状态类型不匹配",
             ["configComp", i.Type],
-            ["TagName", o],
+            ["TagName", a],
             ["pbDataId", e],
           );
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Level",
-          32,
+          31,
           "[ChangePerformanceTag] 找不到对应的LevelTagComponent",
           ["pbDataId", e],
         );
+  }
+  static ChangeToDestroyState(e) {
+    var t,
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
+    e &&
+      e.IsInit &&
+      ((t = e.Entity.GetComponent(194)),
+      (e = e.Entity.GetComponent(131))?.StateTagId &&
+        t?.RemoveServerTagByIdLocal(e?.StateTagId, "ChangeToDestroyState"),
+      t?.AddServerTagByIdLocal(-1278190765, "ChangeToDestroyState"));
   }
 }
 ((exports.LevelGeneralCommons = LevelGeneralCommons).IUe = void 0),

@@ -1,0 +1,38 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: !0 }),
+  (exports.FbCheckSystemFunction = void 0);
+class FbCheckSystemFunction {
+  constructor(t) {
+    (this.FbDataInternal = t),
+      (this.u_h = !1),
+      (this.f8o = void 0),
+      (this.Czh = !1),
+      (this.gzh = 0),
+      (this._ch = !1),
+      (this.cch = void 0);
+  }
+  static Create(t) {
+    if (t) return new FbCheckSystemFunction(t);
+  }
+  get Type() {
+    return (
+      this.u_h || ((this.u_h = !0), (this.f8o = this.FbDataInternal.type())),
+      this.f8o
+    );
+  }
+  get SystemId() {
+    return (
+      this.Czh ||
+        ((this.Czh = !0), (this.gzh = this.FbDataInternal.systemId())),
+      this.gzh
+    );
+  }
+  get Compare() {
+    return (
+      this._ch || ((this._ch = !0), (this.cch = this.FbDataInternal.compare())),
+      this.cch
+    );
+  }
+}
+exports.FbCheckSystemFunction = FbCheckSystemFunction;
+//# sourceMappingURL=FbCheckSystemFunction.js.map

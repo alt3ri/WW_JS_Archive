@@ -9,7 +9,7 @@ class DarkCoastDeliveryTipPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.OHa = () => {
+      (this.kQa = () => {
         SkipTaskManager_1.SkipTaskManager.RunByConfigId(this.Pe.Config.JumpId);
       });
   }
@@ -25,7 +25,7 @@ class DarkCoastDeliveryTipPanel extends UiPanelBase_1.UiPanelBase {
       [7, UE.UIItem],
       [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.OHa]]);
+      (this.BtnBindInfo = [[4, this.kQa]]);
   }
   RefreshUi(i) {
     (this.Pe = i),
@@ -36,7 +36,11 @@ class DarkCoastDeliveryTipPanel extends UiPanelBase_1.UiPanelBase {
         this.GetText(6),
         i.Config.UnlockCondition,
       ),
-      this.GetText(3).SetText("X" + i.Config.RewardCount);
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(3),
+        "DarkShoreRewardNumber",
+        i.Config.RewardCount,
+      );
     i = i.GetDarkCoastDeliveryGuardState();
     this.GetItem(5).SetUIActive(0 === i),
       this.GetButton(4).RootUIComp.SetUIActive(0 !== i),

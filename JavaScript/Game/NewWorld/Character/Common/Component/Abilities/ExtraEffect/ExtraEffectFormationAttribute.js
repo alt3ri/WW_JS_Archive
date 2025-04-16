@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.FormationLockLowerBound =
+  (exports.ModifyFormationAttributeMax =
+    exports.FormationLockLowerBound =
     exports.FormationLockUpperBound =
     exports.ModifyFormationAttributeDecreaseRate =
     exports.ModifyFormationAttributeIncreaseRate =
@@ -26,7 +27,7 @@ class SetFormationAttributeRate extends ExtraEffectBase_1.BuffEffect {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Battle",
-          20,
+          19,
           "SetFormationAttributeRate参数错误，没有合法的队伍属性id",
           ["buffId", this.BuffId],
         )
@@ -41,7 +42,7 @@ class SetFormationAttributeRate extends ExtraEffectBase_1.BuffEffect {
   OnCreated() {
     void 0 !== this.AttributeId &&
       this.CheckExecutable() &&
-      FormationAttributeController_1.FormationAttributeController.AddModifier(
+      FormationAttributeController_1.FormationAttributeController.AddSpeedModifier(
         this.ModifierHandle,
         this.AttributeId,
         0,
@@ -52,7 +53,7 @@ class SetFormationAttributeRate extends ExtraEffectBase_1.BuffEffect {
   OnRemoved(t) {
     void 0 !== this.AttributeId &&
       this.CheckExecutable() &&
-      FormationAttributeController_1.FormationAttributeController.RemoveModifier(
+      FormationAttributeController_1.FormationAttributeController.RemoveSpeedModifier(
         this.ModifierHandle,
         this.AttributeId,
       );
@@ -74,7 +75,7 @@ class ModifyFormationAttributeIncreaseRate extends ExtraEffectBase_1.BuffEffect 
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Battle",
-          20,
+          19,
           "SetFormationAttributeRate参数错误，没有合法的队伍属性id",
           ["buffId", this.BuffId],
         )
@@ -89,7 +90,7 @@ class ModifyFormationAttributeIncreaseRate extends ExtraEffectBase_1.BuffEffect 
   OnCreated() {
     void 0 !== this.AttributeId &&
       this.CheckExecutable() &&
-      FormationAttributeController_1.FormationAttributeController.AddModifier(
+      FormationAttributeController_1.FormationAttributeController.AddSpeedModifier(
         this.ModifierHandle,
         this.AttributeId,
         1,
@@ -100,7 +101,7 @@ class ModifyFormationAttributeIncreaseRate extends ExtraEffectBase_1.BuffEffect 
   OnRemoved(t) {
     void 0 !== this.AttributeId &&
       this.CheckExecutable() &&
-      FormationAttributeController_1.FormationAttributeController.RemoveModifier(
+      FormationAttributeController_1.FormationAttributeController.RemoveSpeedModifier(
         this.ModifierHandle,
         this.AttributeId,
       );
@@ -123,7 +124,7 @@ class ModifyFormationAttributeDecreaseRate extends ExtraEffectBase_1.BuffEffect 
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Battle",
-          20,
+          19,
           "SetFormationAttributeRate参数错误，没有合法的队伍属性id",
           ["buffId", this.BuffId],
         )
@@ -138,7 +139,7 @@ class ModifyFormationAttributeDecreaseRate extends ExtraEffectBase_1.BuffEffect 
   OnCreated() {
     void 0 !== this.AttributeId &&
       this.CheckExecutable() &&
-      FormationAttributeController_1.FormationAttributeController.AddModifier(
+      FormationAttributeController_1.FormationAttributeController.AddSpeedModifier(
         this.ModifierHandle,
         this.AttributeId,
         2,
@@ -149,7 +150,7 @@ class ModifyFormationAttributeDecreaseRate extends ExtraEffectBase_1.BuffEffect 
   OnRemoved(t) {
     void 0 !== this.AttributeId &&
       this.CheckExecutable() &&
-      FormationAttributeController_1.FormationAttributeController.RemoveModifier(
+      FormationAttributeController_1.FormationAttributeController.RemoveSpeedModifier(
         this.ModifierHandle,
         this.AttributeId,
       );
@@ -257,4 +258,47 @@ class FormationLockLowerBound extends ExtraEffectBase_1.BuffEffect {
   }
 }
 exports.FormationLockLowerBound = FormationLockLowerBound;
+class ModifyFormationAttributeMax extends ExtraEffectBase_1.BuffEffect {
+  constructor() {
+    super(...arguments),
+      (this.AttributeId = -1),
+      (this.Offset = 0),
+      (this.Percent = 0),
+      (this.ModifierKey = void 0);
+  }
+  InitParameters(t) {
+    (this.AttributeId = Number(t.ExtraEffectParameters[0])),
+      (this.Percent = AbilityUtils_1.AbilityUtils.GetLevelValue(
+        t.ExtraEffectGrowParameters1,
+        this.Level,
+        0,
+      )),
+      (this.Offset = AbilityUtils_1.AbilityUtils.GetLevelValue(
+        t.ExtraEffectGrowParameters2,
+        this.Level,
+        0,
+      )),
+      (this.ModifierKey = "buff" + this.ActiveHandleId);
+  }
+  OnCreated() {
+    -1 !== this.AttributeId &&
+      this.OwnerBuffComponent?.HasBuffAuthority() &&
+      FormationAttributeController_1.FormationAttributeController.AddMaxModifier(
+        this.ModifierKey,
+        this.AttributeId,
+        this.Percent,
+        this.Offset,
+      );
+  }
+  OnExecute() {}
+  OnRemoved() {
+    -1 !== this.AttributeId &&
+      this.OwnerBuffComponent?.HasBuffAuthority() &&
+      FormationAttributeController_1.FormationAttributeController.RemoveMaxModifier(
+        this.ModifierKey,
+        this.AttributeId,
+      );
+  }
+}
+exports.ModifyFormationAttributeMax = ModifyFormationAttributeMax;
 //# sourceMappingURL=ExtraEffectFormationAttribute.js.map

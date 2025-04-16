@@ -14,6 +14,9 @@ class AnimNotifyStateGhost extends UE.KuroAnimNotifyState {
       (this.GhostLifeTime = -0),
       (this.EffectHandleMap = void 0);
   }
+  Constructor() {
+    this.EffectHandleMap = void 0;
+  }
   GetNotifyName() {
     return "角色残影";
   }
@@ -23,35 +26,37 @@ class AnimNotifyStateGhost extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(t, e, s) {
     this.EffectHandleMap || (this.EffectHandleMap = new Map()),
       EffectSystem_1.EffectSystem.InitializeWithPreview(!1);
-    var f = t.GetOwner(),
-      i = new EffectRuntimeGhostEffectContext_1.EffectRuntimeGhostEffectContext(
+    var i = t.GetOwner(),
+      f = new EffectRuntimeGhostEffectContext_1.EffectRuntimeGhostEffectContext(
         void 0,
       );
-    f instanceof TsBaseCharacter_1.default &&
-      f.CharacterActorComponent?.Entity &&
-      (i.EntityId = f.CharacterActorComponent?.Entity.Id),
-      (i.SkeletalMeshComp = t),
-      (i.SpawnRate = this.SpawnRate),
-      (i.UseSpawnRate = this.UseSpawnRate),
-      (i.SpawnInterval = this.SpawnInterval),
-      (i.GhostLifeTime = this.GhostLifeTime),
-      (i.SourceObject = f);
+    let r = this.EffectDataAssetRef.ToAssetPathName();
+    i instanceof TsBaseCharacter_1.default &&
+      i.CharacterActorComponent?.Entity &&
+      ((f.EntityId = i.CharacterActorComponent?.Entity.Id),
+      (r = i.CharacterActorComponent?.GetReplaceEffect(r) ?? r)),
+      (f.SkeletalMeshComp = t),
+      (f.SpawnRate = this.SpawnRate),
+      (f.UseSpawnRate = this.UseSpawnRate),
+      (f.SpawnInterval = this.SpawnInterval),
+      (f.GhostLifeTime = this.GhostLifeTime),
+      (f.SourceObject = i);
     return (
-      (f = EffectSystem_1.EffectSystem.SpawnEffect(
-        f,
-        new UE.Transform(
-          new UE.Rotator(),
-          f.K2_GetActorLocation(),
-          new UE.Vector(1, 1, 1),
-        ),
-        this.EffectDataAssetRef.ToAssetPathName(),
-        "[AnimNotifyStateGhost.K2_NotifyBegin]",
+      (i = EffectSystem_1.EffectSystem.SpawnEffect(
         i,
+        new UE.TransformDouble(
+          new UE.Rotator(),
+          i.D_K2_GetActorLocation(),
+          new UE.VectorDouble(1, 1, 1),
+        ),
+        r,
+        "[AnimNotifyStateGhost.K2_NotifyBegin]",
+        f,
         0,
       )) &&
-        EffectSystem_1.EffectSystem.IsValid(f) &&
-        (EffectSystem_1.EffectSystem.SetEffectNotRecord(f, !0),
-        this.EffectHandleMap.set(t, f)),
+        EffectSystem_1.EffectSystem.IsValid(i) &&
+        (EffectSystem_1.EffectSystem.SetEffectNotRecord(i, !0),
+        this.EffectHandleMap.set(t, i)),
       !1
     );
   }

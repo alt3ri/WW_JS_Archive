@@ -36,8 +36,13 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
         var e = this.GetExtendToggle(0);
         e && 1 === e.GetToggleState() && e.SetToggleState(0, !0);
       }),
+      (this.MOc = () => {
+        this.GetVisible() && this.IZs();
+      }),
       (this.IZs = () => {
-        this.TZs(), this.EZs?.Refresh(), this.jea();
+        0 !==
+          ModelManager_1.ModelManager.TowerDefenseModel.PhantomMessageCache
+            .Id && (this.TZs(), this.EZs?.Refresh(), this.jea());
       });
   }
   OnRegisterComponent() {
@@ -103,6 +108,10 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
         this.yZs,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.TowerDefenseDataInit,
+        this.MOc,
       );
   }
   DZs() {
@@ -117,6 +126,10 @@ class TowerDefenseInBattleView extends BattleVisibleChildView_1.BattleVisibleChi
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
         this.yZs,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TowerDefenseDataInit,
+        this.MOc,
       );
   }
   TZs() {
@@ -164,10 +177,10 @@ class TowerDefenseInBattleInfoItem extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UIText],
-      [4, UE.UIText],
       [1, UE.UIItem],
       [2, UE.UIVerticalLayout],
       [3, UE.UIItem],
+      [4, UE.UIText],
     ];
   }
   async OnBeforeStartAsync() {
@@ -188,25 +201,23 @@ class TowerDefenseInBattleInfoItem extends UiPanelBase_1.UiPanelBase {
         TowerDefenceController_1.TowerDefenseController.BuildPhantomSkillInBattleLayoutData()),
       e =
         (this.AZs.RefreshByData(e),
-        TowerDefenceController_1.TowerDefenseController.GetExpDataInBattle());
-    void 0 === e
-      ? this.GetText(0)?.SetUIActive(!1)
-      : (this.GetText(0)?.SetUIActive(!0),
-        LguiUtil_1.LguiUtil.SetLocalTextNew(
-          this.GetText(0),
-          "TowerDefence_LV",
-          e.Exp,
-          0 === e.Threshold ? e.Exp : e.Threshold,
-        )),
-      this.GetText(4)?.SetUIActive(!0),
+        TowerDefenceController_1.TowerDefenseController.GetExpDataInBattle()),
+      t = this.GetText(0),
+      t =
+        (t.SetUIActive(void 0 !== e),
+        e &&
+          LguiUtil_1.LguiUtil.SetLocalTextNew(
+            t,
+            "TowerDefence_LV",
+            e?.Exp,
+            0 === e?.Threshold ? e?.Exp : e?.Threshold,
+          ),
+        ModelManager_1.ModelManager.TowerDefenseModel?.GetCurrentActivityConfig());
+    t &&
+      1 === t.ActivityType &&
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(4),
         TowerDefenceController_1.TowerDefenseController.BuildCurrentPhantomNameTextIdInBattle(),
-      ),
-      this.GetText(0)?.SetUIActive(!0),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(0),
-        "PrefabTextItem_992018199_Text",
       );
   }
 }
@@ -217,20 +228,35 @@ class TowerDefensePhantomSkillInBattleItem extends GridProxyAbstract_1.GridProxy
       [1, UE.UIText],
       [2, UE.UIText],
       [3, UE.UISprite],
+      [4, UE.UIItem],
     ];
   }
+  OnStart() {
+    this.GetItem(4)?.SetUIActive(!1);
+  }
   Refresh(e, t, i) {
-    var s = UE.Color.FromHex(e.IsUnlock ? "adfb5aff" : "adadadff");
-    this.GetText(1)?.SetColor(s),
-      this.GetSprite(0).SetUIActive(e.IsUnlock),
-      this.GetSprite(3).SetUIActive(!e.IsUnlock),
-      e.DescriptionArgs
+    var s = UE.Color.FromHex(e.IsUnlock ? "adfb5aff" : "adadadff"),
+      s =
+        (this.GetText(1)?.SetColor(s),
+        this.GetSprite(0).SetUIActive(e.IsUnlock),
+        this.GetSprite(3).SetUIActive(!e.IsUnlock),
+        ModelManager_1.ModelManager.TowerDefenseModel.GetCurrentActivityConfig()),
+      r = this.GetText(2);
+    1 === s.ActivityType
+      ? e.DescriptionArgs
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(2),
+            r,
             e.Description,
             ...e.DescriptionArgs,
           )
-        : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Description);
+        : LguiUtil_1.LguiUtil.SetLocalTextNew(r, e.Description)
+      : 2 === s.ActivityType &&
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Skill),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(r, e.Description)),
+      r.SetChangeColor(
+        ModelManager_1.ModelManager.TowerDefenseModel.CheckCurrentActivityShowDifferent(),
+        r.changeColor,
+      );
   }
 }
 exports.TowerDefensePhantomSkillInBattleItem =

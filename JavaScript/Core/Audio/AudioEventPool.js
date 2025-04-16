@@ -6,15 +6,21 @@ const UE = require("ue"),
   Time_1 = require("../Common/Time"),
   ResourceSystem_1 = require("../Resource/ResourceSystem");
 class AudioEventPoolItem {
-  constructor() {
-    (this.AudioEvent = void 0), (this.LastActiveTime = 0);
+  constructor(e, i) {
+    (this.AudioEvent = void 0),
+      (this.LastActiveTime = 0),
+      (this.AudioEvent = e),
+      (this.LastActiveTime = i ?? Time_1.Time.Now);
+  }
+  UpdateEvent(e) {
+    e && (this.AudioEvent = e), (this.LastActiveTime = Time_1.Time.Now);
   }
   Destroy() {
     this.AudioEvent &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Audio",
-          57,
+          56,
           "[Core.AudioSystem] 卸载 AudioEvent",
           ["Event", this.AudioEvent.GetName()],
           ["InactiveTime", Time_1.Time.Now - this.LastActiveTime],
@@ -28,62 +34,96 @@ class AudioEventPool {
       (this.j6 = 1e4),
       (this.W6 = 6e4),
       (this.K6 = new Map()),
+      (this.ctl = new Map()),
       (this.Fta = []),
       (this.Vta = !1),
       (this.Hta = 0);
   }
-  async GetAudioEvent(o) {
-    return new Promise((t, i) => {
-      const s = this.K6.get(o);
-      var e;
-      s?.AudioEvent?.IsValid()
-        ? ((s.LastActiveTime = Time_1.Time.Now), t(s.AudioEvent))
-        : ((e = `/Game/Aki/WwiseAudio/Events/${o}.` + o),
-          ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.AkAudioEvent, (i) => {
-            var e;
-            i?.IsValid()
+  PreloadAudioEvent(i) {
+    var e;
+    this.ctl.has(i) ||
+      ((e = `/Game/Aki/WwiseAudio/Events/${i}.` + i),
+      ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.AkAudioEvent, (e) => {
+        e?.IsValid()
+          ? this.ctl.has(i) ||
+            (this.ctl.set(i, e),
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Audio",
+                42,
+                "[Core.AudioEventPool] 预加载 AudioEvent",
+                ["Event", i],
+              ))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Audio",
+              42,
+              "[Core.AudioEventPool] AudioEvent 加载失败",
+              ["Event", i],
+            );
+      }));
+  }
+  ReleaseAudioEvent(e) {
+    this.ctl.has(e) &&
+      (this.ctl.delete(e), Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug(
+        "Audio",
+        42,
+        "[Core.AudioEventPool] 预加载内容卸载 AudioEvent",
+        ["Event", e],
+      );
+  }
+  async GetAudioEvent(s) {
+    return new Promise((t, e) => {
+      const o = this.K6.get(s);
+      var i;
+      o?.AudioEvent?.IsValid()
+        ? ((o.LastActiveTime = Time_1.Time.Now), t(o.AudioEvent))
+        : ((i = `/Game/Aki/WwiseAudio/Events/${s}.` + s),
+          ResourceSystem_1.ResourceSystem.LoadAsync(i, UE.AkAudioEvent, (e) => {
+            var i;
+            e?.IsValid()
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Audio",
-                    57,
+                    56,
                     "[Core.AudioSystem] 加载 AudioEvent",
-                    ["Event", o],
+                    ["Event", s],
                   ),
-                s
-                  ? ((s.AudioEvent = i), (s.LastActiveTime = Time_1.Time.Now))
-                  : (((e = new AudioEventPoolItem()).AudioEvent = i),
-                    (e.LastActiveTime = Time_1.Time.Now),
-                    this.K6.set(o, e),
-                    this.Fta.push(o)),
-                t(i))
+                o
+                  ? o.UpdateEvent(e)
+                  : ((i = new AudioEventPoolItem(e)),
+                    this.K6.set(s, i),
+                    this.Fta.push(s)),
+                t(e))
               : (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Audio",
-                    57,
+                    56,
                     "[Core.AudioSystem] AudioEvent 加载失败",
-                    ["Event", o],
+                    ["Event", s],
                   ),
                 t(void 0));
           }));
     });
   }
-  Tick(i) {
+  Tick(e) {
     if (this.Vta) {
-      let i = this.Hta;
-      for (; 0 <= i && i > this.Hta - 5; ) {
-        var e = this.Fta[i],
-          t = this.K6.get(e);
+      let e = this.Hta;
+      for (; 0 <= e && e > this.Hta - 5; ) {
+        var i = this.Fta[e],
+          t = this.K6.get(i);
         t?.AudioEvent?.IsValid()
           ? UE.AkGameplayStatics.IsAudioEventActive(t.AudioEvent)
             ? (t.LastActiveTime = Time_1.Time.Now)
             : Time_1.Time.Now - t.LastActiveTime >= this.W6 &&
-              (t.Destroy(), this.K6.delete(e), this.Fta.splice(i, 1))
-          : (this.K6.delete(e), this.Fta.splice(i, 1)),
-          i--;
+              (t.Destroy(), this.K6.delete(i), this.Fta.splice(e, 1))
+          : (this.K6.delete(i), this.Fta.splice(e, 1)),
+          e--;
       }
-      i < 0 ? (this.Vta = !1) : (this.Hta = i);
+      e < 0 ? (this.Vta = !1) : (this.Hta = e);
     } else
-      (this.H6 += i),
+      (this.H6 += e),
         this.H6 > this.j6 &&
           ((this.Vta = !0), (this.Hta = this.Fta.length - 1), (this.H6 = 0));
   }

@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats");
 class ScoreUpdateManager {
-  constructor(t = 1, e = 10) {
+  constructor(t = 0.5, e = 5) {
     (this.Rte = t),
       (this.Ute = e),
       (this.Ate = new Array()),

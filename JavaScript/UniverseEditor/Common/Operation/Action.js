@@ -45,6 +45,7 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["quest", "levelPlay"],
     Env: ["aki", "ue5"],
     ImplementType: "Client",
+    IsTest: !0,
   },
   ShowMessage: {
     Context: ["entity", "quest", "levelPlay"],
@@ -59,7 +60,7 @@ function isBanInDynamicPrefabAction(e) {
   Wait: {
     Context: ["entity", "flow", "quest", "levelPlay"],
     Env: ["aki", "ue5"],
-    ImplementType: "Client",
+    ImplementType: "Server",
   },
   SetVar: {
     Context: ["entity", "flow", "quest", "levelPlay"],
@@ -81,9 +82,19 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     ImplementType: "Client",
   },
+  CharacterLookAt: {
+    Context: ["quest", "entity", "levelPlay"],
+    Env: ["aki", "ue5"],
+    ImplementType: "Server",
+  },
   CameraLookAt: {
     Context: ["entity", "flow", "quest", "levelPlay"],
     Env: ["aki", "ue5"],
+    ImplementType: "Client",
+  },
+  StopCameraLookAt: {
+    Context: ["entity", "flow", "quest", "levelPlay"],
+    Env: ["aki"],
     ImplementType: "Client",
   },
   AwakeEntity: {
@@ -112,7 +123,7 @@ function isBanInDynamicPrefabAction(e) {
   AddFlowInteractOption: {
     Context: ["quest", "levelPlay"],
     Env: ["aki", "ue5"],
-    ImplementType: "Client",
+    ImplementType: "Server",
   },
   SetTime: {
     Context: ["quest", "levelPlay", "flow"],
@@ -141,18 +152,13 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     Context: [],
     ImplementType: "Client",
-    IsAbandoned: !0,
   },
   ChangeState: {
     Env: ["aki", "ue5"],
     Context: ["flow"],
     ImplementType: "Server",
   },
-  CompleteChildQuest: {
-    Env: ["aki"],
-    ImplementType: "Client",
-    IsAbandoned: !0,
-  },
+  CompleteChildQuest: { Env: ["aki"], ImplementType: "Client" },
   Destroy: { Env: ["ue5"], Context: ["flow"], ImplementType: "Client" },
   DestroyAllChild: { Env: ["ue5"], ImplementType: "Client" },
   DoCalculate: { Env: ["ue5"], ImplementType: "Client" },
@@ -179,6 +185,18 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     ImplementType: "Server",
   },
+  NewMoveWithSpline: {
+    Context: ["entity", "quest", "levelPlay"],
+    Env: ["aki"],
+    ImplementType: "Server",
+    IsTest: !0,
+  },
+  StopNewMoveWithSpline: {
+    Context: ["entity", "quest", "levelPlay"],
+    Env: ["aki"],
+    ImplementType: "Server",
+    IsTest: !0,
+  },
   CharacterMoveToPoint: {
     Env: ["aki"],
     Context: ["entity", "levelPlay", "quest"],
@@ -199,7 +217,7 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     ImplementType: "Client",
   },
-  PlayCustomSequence: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  PlayCustomSequence: { Env: [], ImplementType: "Client" },
   PlayMovie: {
     Env: ["aki", "ue5"],
     Context: ["flow"],
@@ -225,7 +243,7 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["flow"],
     ImplementType: "Client",
   },
-  SetCameraMode: { Env: ["aki"], ImplementType: "Client", IsAbandoned: !0 },
+  SetCameraMode: { Env: ["aki"], ImplementType: "Client" },
   SetHeadIconVisible: {
     Env: ["aki", "ue5"],
     Context: ["flow"],
@@ -243,6 +261,7 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki"],
     ImplementType: "Client",
+    IsTest: !0,
   },
   ShowCenterText: {
     Env: ["aki", "ue5"],
@@ -273,10 +292,15 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki"],
     ImplementType: "Server",
   },
+  AddBuffToFollowShooter: {
+    Context: ["entity", "quest", "levelPlay"],
+    Env: ["aki"],
+    ImplementType: "Server",
+  },
   GuideTrigger: {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki", "ue5"],
-    ImplementType: "Server",
+    ImplementType: "Client",
   },
   CompleteGuide: {
     Context: ["entity", "quest", "levelPlay"],
@@ -313,11 +337,7 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     ImplementType: "Server",
   },
-  SetPlayerMoveControl: {
-    Env: ["aki"],
-    ImplementType: "Client",
-    IsAbandoned: !0,
-  },
+  SetPlayerMoveControl: { Env: ["aki"], ImplementType: "Client" },
   UnlockTeleportTrigger: {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki"],
@@ -343,7 +363,13 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki"],
     ImplementType: "Client",
   },
+  SetEntityClientVisibleSave: { Env: ["aki"], ImplementType: "Server" },
   PlayEffect: {
+    Context: ["entity", "quest", "levelPlay"],
+    Env: ["aki"],
+    ImplementType: "Client",
+  },
+  PlayEffect2: {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki"],
     ImplementType: "Client",
@@ -387,6 +413,7 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki"],
     ImplementType: "Server",
+    IsTest: !0,
   },
   FireBullet: { Context: ["entity"], Env: ["aki"], ImplementType: "Client" },
   FireBulletEffect: {
@@ -399,14 +426,19 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     ImplementType: "Server",
   },
+  ClientSetPlayerPos: { Env: ["aki"], ImplementType: "Client" },
+  ClientPreEnableSubLevels: {
+    Env: ["aki"],
+    ImplementType: "Client",
+    Context: ["entity", "quest", "levelPlay"],
+  },
   InterludeActions: {
     Context: ["quest", "levelPlay"],
     Env: [],
     ImplementType: "Client",
-    IsAbandoned: !0,
   },
   SendAiEvent: { Context: ["entity"], Env: ["aki"], ImplementType: "Client" },
-  ClaimDungeonReward: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  ClaimDungeonReward: { Env: [], ImplementType: "Client" },
   SettlementDungeon: {
     Context: ["entity", "levelPlay"],
     Env: ["aki"],
@@ -427,7 +459,7 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki"],
     ImplementType: "Server",
   },
-  UnlockDungeonEntry: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  UnlockDungeonEntry: { Env: [], ImplementType: "Client" },
   SetBattleState: {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki", "ue5"],
@@ -458,6 +490,11 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     ImplementType: "Client",
   },
+  CommonTip2: {
+    Context: ["entity", "quest", "levelPlay"],
+    Env: ["aki", "ue5"],
+    ImplementType: "Client",
+  },
   EnableNearbyTracking: {
     Context: ["entity", "levelPlay", "quest"],
     Env: ["aki", "ue5"],
@@ -472,54 +509,53 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["entity", "levelPlay", "quest"],
     Env: ["aki"],
     ImplementType: "Server",
+    IsTest: !0,
   },
   AddTrialCharacter: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
-    ContextForTest: ["flow"],
     ImplementType: "Server",
   },
   RemoveTrialCharacter: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
-    ContextForTest: ["flow"],
+    ImplementType: "Server",
+  },
+  AddGuestCharacter: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ImplementType: "Server",
+  },
+  RemoveGuestCharacter: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
     ImplementType: "Server",
   },
   AddTrialFollowShooter: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
-    ContextForTest: ["flow"],
     ImplementType: "Server",
   },
   RemoveTrialFollowShooter: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
-    ContextForTest: ["flow"],
     ImplementType: "Server",
   },
-  LimitPlayerOperation: {
-    Env: ["aki"],
-    ImplementType: "Client",
-    IsAbandoned: !0,
-  },
-  UnLimitPlayerOperation: {
-    Env: ["aki"],
-    ImplementType: "Client",
-    IsAbandoned: !0,
-  },
-  StartFlowTemplate: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  LimitPlayerOperation: { Env: ["aki"], ImplementType: "Client" },
+  UnLimitPlayerOperation: { Env: ["aki"], ImplementType: "Client" },
+  StartFlowTemplate: { Env: [], ImplementType: "Client" },
   BeginFlowTemplate: {
     Env: ["aki", "ue5"],
     Context: ["flow"],
     ImplementType: "Client",
   },
-  ChangeFlowTemplate: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  ChangeFlowTemplate: { Env: [], ImplementType: "Client" },
   SetFlowTemplate: {
     Env: ["aki", "ue5"],
     Context: ["flow"],
     ImplementType: "Client",
   },
-  EndFlowTemplate: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  EndFlowTemplate: { Env: [], ImplementType: "Client" },
   CloseFlowTemplate: {
     Env: ["aki", "ue5"],
     Context: ["flow"],
@@ -537,7 +573,7 @@ function isBanInDynamicPrefabAction(e) {
   },
   LeisureInteract: {
     Env: ["aki"],
-    Context: ["entity", "levelPlay"],
+    Context: ["entity", "quest", "levelPlay", "flow"],
     ImplementType: "Client",
   },
   PostAkEvent: {
@@ -568,21 +604,21 @@ function isBanInDynamicPrefabAction(e) {
   StopSceneItemMove: {
     Env: ["aki"],
     Context: ["entity", "quest", "levelPlay"],
-    ImplementType: "Client",
+    ImplementType: "Server",
   },
   DetectTrigger: { Env: [], Context: ["entity"], ImplementType: "Client" },
   SetWeather: {
-    Context: ["quest", "flow"],
+    Context: ["quest", "flow", "levelPlay"],
     Env: ["aki"],
     ImplementType: "Server",
   },
   SetTimeLockState: {
-    Context: ["quest", "flow"],
+    Context: ["quest", "flow", "levelPlay"],
     Env: ["aki"],
     ImplementType: "Server",
   },
   SetWeatherLockState: {
-    Context: ["flow"],
+    Context: ["flow", "levelPlay"],
     Env: ["aki"],
     ImplementType: "Server",
   },
@@ -591,9 +627,10 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["quest"],
     ImplementType: "Server",
   },
+  ForceOccupations: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
   EnableSplineMoveModel: {
     Env: ["aki"],
-    Context: ["entity", "levelPlay"],
+    Context: ["entity", "quest", "levelPlay"],
     ImplementType: "Client",
   },
   DestroyQuestItem: {
@@ -624,13 +661,11 @@ function isBanInDynamicPrefabAction(e) {
   ChangePhantomFormation: {
     Env: ["aki"],
     Context: ["levelPlay"],
-    ContextForTest: ["flow"],
     ImplementType: "Server",
   },
   RestorePhantomFormation: {
     Env: ["aki"],
     Context: ["levelPlay"],
-    ContextForTest: ["flow"],
     ImplementType: "Server",
   },
   SetSportsState: {
@@ -647,16 +682,18 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki"],
     Context: ["entity"],
     ImplementType: "Client",
+    IsTest: !0,
   },
   EnableActor: { Env: ["aki"], ImplementType: "Client" },
   ModifyActorMaterial: { Env: ["aki"], ImplementType: "Client" },
   PlayLevelSequence: { Env: ["aki"], ImplementType: "Client" },
-  ChangePhantom: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
-  RestorePhantom: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  ChangePhantom: { Env: [], ImplementType: "Client" },
+  RestorePhantom: { Env: [], ImplementType: "Client" },
   TakePlotPhoto: {
     Env: ["aki"],
     Context: ["entity", "quest", "flow"],
     ImplementType: "Client",
+    IsTest: !0,
   },
   SwitchSubLevels: {
     Env: ["aki"],
@@ -679,6 +716,11 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki"],
     ImplementType: "Client",
   },
+  ResetPlayerCameraFocus: {
+    Context: ["entity", "quest", "levelPlay", "flow"],
+    Env: ["aki"],
+    ImplementType: "Client",
+  },
   EnterOrbitalCamera: {
     Env: ["aki"],
     Context: ["levelPlay"],
@@ -694,22 +736,28 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["quest", "levelPlay"],
     ImplementType: "Server",
   },
-  SpawnEntity: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
+  ToggleTimerPauseState: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ImplementType: "Server",
+  },
+  SpawnEntity: { Env: [], ImplementType: "Client" },
   AddBuffToTriggeredEntity: { Env: ["aki"], ImplementType: "Server" },
   RemoveBuffToTriggeredEntity: { Env: ["aki"], ImplementType: "Server" },
-  ItemFoundationMatch: {
-    Env: ["aki", "ue5"],
-    ImplementType: "Client",
-    IsAbandoned: !0,
-  },
+  ItemFoundationMatch: { Env: ["aki", "ue5"], ImplementType: "Client" },
   DestroyQuest: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
     ImplementType: "Server",
   },
-  SetCameraAnim: { Env: ["aki"], Context: ["flow"], ImplementType: "Client" },
-  RotatorEntity: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
-  TraceSpline: { Env: ["aki"], Context: ["quest"], ImplementType: "Client" },
+  SetCameraAnim: { Env: [], ImplementType: "Client" },
+  RotatorEntity: { Env: [], ImplementType: "Client" },
+  TraceSpline: {
+    Env: ["aki"],
+    Context: ["quest"],
+    ImplementType: "Client",
+    IsTest: !0,
+  },
   ToggleScanSplineEffect: {
     Env: ["aki"],
     Context: ["quest"],
@@ -741,9 +789,14 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["levelPlay"],
     ImplementType: "Server",
   },
+  RogueReceiveReward: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
   SwitchDataLayers: {
     Env: ["aki"],
-    Context: ["quest"],
+    Context: ["quest", "levelPlay"],
     RestrictedMapContext: "WpOnly",
     ImplementType: "Server",
   },
@@ -767,31 +820,34 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["entity"],
     ImplementType: "Client",
   },
-  ModifyEntityPerformanceAttribute: {
+  ModifySceneItemAttributeTag: {
     Env: ["aki"],
-    Context: ["entity"],
-    ImplementType: "Client",
-    IsTest: !0,
+    Context: ["entity", "quest", "levelPlay"],
+    ImplementType: "Server",
   },
   HideTargetRange: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
     ImplementType: "Server",
+    IsTest: !0,
   },
   ShowTargetRange: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
     ImplementType: "Server",
+    IsTest: !0,
   },
   HideSpecificEntities: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
     ImplementType: "Server",
+    IsTest: !0,
   },
   ShowSpecificEntities: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
     ImplementType: "Server",
+    IsTest: !0,
   },
   PlayRegisteredMontage: {
     Env: ["aki"],
@@ -802,6 +858,7 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki"],
     Context: ["entity", "quest", "levelPlay"],
     ImplementType: "Server",
+    IsTest: !0,
   },
   RandomVar: {
     Context: ["entity", "flow", "quest", "levelPlay"],
@@ -819,6 +876,7 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["entity", "quest", "levelPlay"],
     ImplementType: "Server",
   },
+  FocusOnMapMark: { Env: ["aki"], Context: ["quest"], ImplementType: "Client" },
   SetJigsawItem: {
     Env: ["aki"],
     Context: ["entity", "quest", "levelPlay"],
@@ -854,53 +912,18 @@ function isBanInDynamicPrefabAction(e) {
     Context: ["quest", "levelPlay"],
     ImplementType: "Client",
   },
-  FinishCondition: {
-    Env: ["aki"],
-    Context: ["entity", "quest", "levelPlay"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
-  ClearEntityVisibleTag: {
-    Env: ["aki"],
-    Context: ["entity", "quest", "levelPlay"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
-  SetEntityPos: {
-    Env: ["aki"],
-    Context: ["entity", "quest", "levelPlay"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
-  ResetEntityPos: {
-    Env: ["aki"],
-    Context: ["entity", "quest", "levelPlay"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
-  ServerSetPlayerPos: {
-    Env: ["aki"],
-    Context: ["entity", "quest", "levelPlay"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
+  FinishCondition: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
+  ClearEntityVisibleTag: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
+  SetEntityPos: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
+  ResetEntityPos: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
+  ServerSetPlayerPos: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
   SetInteractionLockState: {
     Env: ["aki"],
     Context: ["entity"],
     ImplementType: "Client",
   },
-  FixTeleControllerPos: {
-    Env: ["aki"],
-    Context: ["entity"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
-  FixFoundationRelation: {
-    Env: ["aki"],
-    Context: ["entity"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
+  FixTeleControllerPos: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
+  FixFoundationRelation: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
   SetAudioState: {
     Env: ["aki"],
     Context: ["quest", "levelPlay", "flow"],
@@ -912,13 +935,18 @@ function isBanInDynamicPrefabAction(e) {
     ImplementType: "Server",
   },
   PerformerAiSplineMove: { Env: ["aki"], Context: [], ImplementType: "Client" },
-  EntityTurnTo: { Env: ["aki"], Context: [], ImplementType: "Client" },
-  CustomJson: {
+  PerformerAiMoveTo: {
     Env: ["aki"],
-    Context: ["entity", "quest", "levelPlay"],
+    Context: [],
+    ImplementType: "Client",
     IsTest: !0,
-    ImplementType: "Server",
   },
+  EntityTurnTo: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Client",
+  },
+  CustomJson: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
   ExecResurrection: {
     Env: ["aki"],
     Context: ["levelPlay"],
@@ -929,24 +957,202 @@ function isBanInDynamicPrefabAction(e) {
     Env: ["aki", "ue5"],
     ImplementType: "Server",
   },
-  FixShowTargetRange: {
-    Env: ["aki"],
-    Context: ["entity", "quest", "levelPlay"],
-    IsTest: !0,
-    ImplementType: "Server",
-  },
+  FixShowTargetRange: { Env: ["aki"], IsTest: !0, ImplementType: "Server" },
   SetTeleControl: {
     Env: ["aki"],
     Context: ["entity", "quest", "levelPlay"],
-    ImplementType: "Client",
+    ImplementType: "Server",
   },
-  ExecVehicleAction: {
+  ActiveAntiGravitySafePoint: {
     Env: ["aki"],
     Context: ["entity"],
     ImplementType: "Server",
   },
+  VehicleEnter: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Server",
+    IsBanOnline: !0,
+  },
+  VehicleEnterNpc: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Client",
+    IsBanOnline: !0,
+  },
+  VehicleExitPlayer: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Server",
+  },
+  VehicleExitNpc: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Server",
+    IsBanOnline: !0,
+  },
+  VehicleTeleport: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Server",
+  },
+  VehiclePlayPassengerVoice: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Client",
+  },
+  VehicleWaterfallClimbing: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
+  VehicleMoveWithPathLine: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Client",
+    IsBanOnline: !0,
+  },
+  VehicleSprint: { Env: ["aki"], Context: ["entity"], ImplementType: "Client" },
   EnableFunction: { Env: ["aki"], Context: ["quest"], ImplementType: "Server" },
-  OpenQte: { Env: ["aki"], Context: ["entity"], ImplementType: "Client" },
+  OpenQte: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Server",
+  },
+  PlayerInput: { Env: ["aki"], ImplementType: "Client" },
+  Preload: {
+    Context: ["quest", "levelPlay", "entity"],
+    Env: ["aki", "ue5"],
+    ImplementType: "Server",
+  },
+  RemovePreloadResource: {
+    Context: ["quest", "levelPlay", "entity"],
+    Env: ["aki", "ue5"],
+    ImplementType: "Server",
+  },
+  ExecAlertSystemAction: {
+    Context: ["entity", "levelPlay", "quest"],
+    Env: ["aki"],
+    ImplementType: "Server",
+  },
+  HideGroup: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ImplementType: "Server",
+  },
+  ShowHidedGroup: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ImplementType: "Server",
+  },
+  MowingTowerGotoNextFloor: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
+  ServerForceEnableLevelPlay: {
+    Env: ["aki"],
+    ImplementType: "Server",
+    IsTest: !0,
+  },
+  ClearFishingCabinInSaleItems: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay"],
+    ImplementType: "Server",
+  },
+  AcceptFishingEntrust: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ImplementType: "Server",
+  },
+  DestroyFishingBoat: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ImplementType: "Server",
+  },
+  SetSpineAnimation: {
+    Env: ["aki"],
+    Context: ["flow"],
+    ImplementType: "Client",
+  },
+  ChangeEntityCamp: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Server",
+  },
+  SlashAndTowerGotoNextFloor: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
+  RecordDungeonEvent: {
+    Env: ["aki"],
+    Context: ["levelPlay"],
+    ImplementType: "Server",
+  },
+  TeleportToAndEnterVehicle: {
+    Env: ["aki"],
+    Context: ["levelPlay", "quest"],
+    ImplementType: "Server",
+  },
+  TeleportDungeonPos: {
+    Env: ["aki"],
+    Context: ["entity", "levelPlay", "quest"],
+    ImplementType: "Server",
+  },
+  ResetLevelPlay: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
+  SummonEntity: { Env: ["aki"], Context: ["entity"], ImplementType: "Server" },
+  DangoAbyssGotoNextFloor: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
+  DangoAbyssActivatePortal: {
+    Env: ["aki"],
+    Context: ["levelPlay"],
+    ImplementType: "Server",
+  },
+  DangoAbyssCreateRewardTreasureBox: {
+    Env: ["aki"],
+    Context: ["levelPlay"],
+    ImplementType: "Server",
+  },
+  DangoAbyssReceiveReward: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
+  SetAreaTimeState: {
+    Env: ["aki"],
+    Context: ["quest"],
+    ImplementType: "Server",
+  },
+  GetRewardByInteract: { Env: ["aki"], ImplementType: "Server" },
+  GuestOperateUiAnimation: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ImplementType: "Client",
+  },
+  SlideRailStart: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Client",
+  },
+  SetTimeScale: {
+    Env: ["aki"],
+    Context: ["entity", "quest", "levelPlay"],
+    ImplementType: "Client",
+  },
+  BvbSendSystemEvent: {
+    Env: ["aki"],
+    Context: ["levelPlay"],
+    ImplementType: "Server",
+  },
+  SetupMoraleSystem: { Env: ["aki"], Context: [], ImplementType: "Server" },
 }),
   (exports.isTestAction = isTestAction),
   (exports.isActionImplementType = isActionImplementType),
@@ -961,12 +1167,12 @@ function getActions(e, t, n) {
   if (!i) {
     i = [];
     for (const l in exports.actionConfig) {
-      var o = l,
-        a = exports.actionConfig[o];
-      !(a.Context?.includes(t) || (n && a.ContextForTest?.includes(t))) ||
-        !a.Env?.includes(e) ||
-        (!n && a.IsTest) ||
-        i.push(o);
+      var a = l,
+        o = exports.actionConfig[a];
+      !(o.Context?.includes(t) || (n && o.ContextForTest?.includes(t))) ||
+        !o.Env?.includes(e) ||
+        (!n && o.IsTest) ||
+        i.push(a);
     }
     i.sort(), getActionsCache.set(l, i);
   }

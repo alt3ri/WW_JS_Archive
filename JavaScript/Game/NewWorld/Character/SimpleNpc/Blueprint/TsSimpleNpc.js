@@ -12,6 +12,7 @@ const puerts_1 = require("puerts"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
   TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
+  GameSettingsDeviceRender_1 = require("../../../../GameSettings/GameSettingsDeviceRender"),
   Global_1 = require("../../../../Global"),
   GlobalData_1 = require("../../../../GlobalData"),
   CombineMeshTool_1 = require("../../Common/Blueprint/Utils/CombineMeshTool"),
@@ -20,7 +21,6 @@ const puerts_1 = require("puerts"),
   SimpleNpcController_1 = require("../Logics/SimpleNpcController"),
   SimpleNpcFlowLogic_1 = require("../Logics/SimpleNpcFlowLogic"),
   SimpleNpcLoadController_1 = require("../Logics/SimpleNpcLoadController"),
-  GameSettingsDeviceRender_1 = require("../../../../GameSettings/GameSettingsDeviceRender"),
   PROFILE_KEY = "SimpleNpc_FindFloor",
   DEFAULT_HALF_HEIGHT = 85,
   DEFAULT_RADIUS = 25,
@@ -65,6 +65,30 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       (this.IsTickEnabled = void 0),
       (this.CachedComponents = void 0);
   }
+  Constructor() {
+    (this.TempDistanceSquared = -0),
+      (this.CurDither = -0),
+      (this.IsNotUnload = !1),
+      (this.FlowLogic = void 0),
+      (this.TempLocation = void 0),
+      (this.CachedLocation = void 0),
+      (this.TempAnimInstance = void 0),
+      (this.TempAnimAsset = void 0),
+      (this.TempDaPath = void 0),
+      (this.NeedResetCollision = !1),
+      (this.IsDirty = !1),
+      (this.StartLocation = void 0),
+      (this.StartLocationProxy = void 0),
+      (this.InstanceId = 0),
+      (this.DitherEffectControllerInternal = void 0),
+      (this.IsInLogicRangeInternal = void 0),
+      (this.RegisterLoopTimerId = void 0),
+      (this.LastGameSeconds = -0),
+      (this.IsModelLoadedInternal = !1),
+      (this.IsShowShadow = void 0),
+      (this.IsTickEnabled = void 0),
+      (this.CachedComponents = void 0);
+  }
   get DitherEffectController() {
     return (
       this.DitherEffectControllerInternal ||
@@ -81,7 +105,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       (this.bEditorTickBySelected = !0),
       (this.CachedLocation = Vector_1.Vector.Create()),
       (this.TempLocation = Vector_1.Vector.Create()),
-      this.CachedLocation.FromUeVector(this.K2_GetActorLocation()),
+      this.CachedLocation.FromUeVector(this.D_K2_GetActorLocation()),
       this.Mesh &&
         ((this.TempAnimInstance = this.Mesh.AnimScriptInstance),
         (this.TempAnimAsset = this.Mesh.AnimationData.AnimToPlay)),
@@ -97,7 +121,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
   EditorTick(i) {
     if (this.TempLocation)
       if (
-        (this.TempLocation.FromUeVector(this.K2_GetActorLocation()),
+        (this.TempLocation.FromUeVector(this.D_K2_GetActorLocation()),
         Vector_1.Vector.DistSquared(this.CachedLocation, this.TempLocation) >
           MIN_EDITOR_MOVE_CHANGED)
       )
@@ -163,7 +187,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
   }
   InitBaseInfo() {
     (this.FlowLogic = new SimpleNpcFlowLogic_1.SimpleNpcFlowLogic(this)),
-      (this.StartLocation = this.K2_GetActorLocation()),
+      (this.StartLocation = this.D_K2_GetActorLocation()),
       (this.StartLocationProxy = Vector_1.Vector.Create(this.StartLocation)),
       (this.IsInLogicRangeInternal = !1),
       (this.RegisterLoopTimerId = void 0);
@@ -177,7 +201,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       (this.InstanceId = ++TsSimpleNpc.InstanceCount),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("World", 30, "创建SimpleNpc", ["Id", this.InstanceId]);
+        Log_1.Log.Info("World", 29, "创建SimpleNpc", ["Id", this.InstanceId]);
   }
   InitRenderInfo() {
     this.CharRenderingComponent.Init(3),
@@ -206,7 +230,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "World",
-          30,
+          29,
           "销毁SimpleNpc",
           ["Id", this.InstanceId],
           ["DeleteCount", ++TsSimpleNpc.DeleteCount],
@@ -243,11 +267,11 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       (this.CapsuleCollision.CapsuleRadius = DEFAULT_RADIUS);
   }
   ResetMeshLocation() {
-    this.Mesh.K2_SetRelativeTransform(
-      new UE.Transform(
+    this.Mesh.D_K2_SetRelativeTransform(
+      new UE.TransformDouble(
         new UE.Rotator(0, DEFAULT_MESH_YAW, 0),
-        new UE.Vector(0, 0, -this.CapsuleCollision.CapsuleHalfHeight),
-        Vector_1.Vector.OneVector,
+        new UE.VectorDouble(0, 0, -this.CapsuleCollision.CapsuleHalfHeight),
+        Vector_1.Vector.OneVectorDouble,
       ),
       !1,
       void 0,
@@ -258,8 +282,8 @@ class TsSimpleNpc extends UE.KuroEffectActor {
     this.FindComponents();
     var i = this.CapsuleCollision.GetScaledCapsuleHalfHeight(),
       t = this.CapsuleCollision.GetScaledCapsuleRadius(),
-      e = this.K2_GetActorLocation(),
-      s = new UE.Vector(e.X, e.Y, e.Z - FIND_FLOOR_RAY_LENGTH - (i - t)),
+      s = this.D_K2_GetActorLocation(),
+      e = new UE.Vector(s.X, s.Y, s.Z - FIND_FLOOR_RAY_LENGTH - (i - t)),
       h =
         (TsSimpleNpc.SphereTrace ||
           ((TsSimpleNpc.SphereTrace = UE.NewObject(
@@ -271,19 +295,19 @@ class TsSimpleNpc extends UE.KuroEffectActor {
             QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
           )),
         TsSimpleNpc.SphereTrace),
-      e =
+      s =
         ((h.WorldContextObject = this),
         (h.Radius = t),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(h, e),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(h, s),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(h, s),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(h, e),
         TraceElementCommon_1.TraceElementCommon.SphereTrace(h, PROFILE_KEY)),
-      s = h.HitResult;
-    e &&
-      s.bBlockingHit &&
-      ((h = new UE.Vector()),
-      TraceElementCommon_1.TraceElementCommon.GetHitLocation(s, 0, h),
+      e = h.HitResult;
+    s &&
+      e.bBlockingHit &&
+      ((h = new UE.VectorDouble()),
+      TraceElementCommon_1.TraceElementCommon.GetHitLocation(e, 0, h),
       (h.Z += i - t),
-      this.K2_SetActorLocation(h, !1, void 0, !1));
+      this.D_K2_SetActorLocation(h, !1, void 0, !1));
   }
   LoadModelByDA() {
     var i;
@@ -326,7 +350,7 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Character",
-          30,
+          29,
           "[TsSimpleNpc.HandleLoadedDaConfig] DA资源类型错误",
         );
   }
@@ -351,8 +375,8 @@ class TsSimpleNpc extends UE.KuroEffectActor {
   StopMontage() {
     this.FlowLogic && this.FlowLogic.StopMontage();
   }
-  FilterFlowWorldState(i) {
-    this.FlowLogic?.FilterFlowWorldState(i);
+  FilterFlowWorldState() {
+    this.FlowLogic?.FilterFlowWorldState();
   }
   get IsHiding() {
     return !this.IsNotUnload;
@@ -402,65 +426,65 @@ class TsSimpleNpc extends UE.KuroEffectActor {
       UE.ActorComponent.StaticClass(),
     );
   }
-  SetTickEnabled(e) {
-    if (e !== this.IsTickEnabled) {
-      this.IsTickEnabled = e;
-      var s =
+  SetTickEnabled(s) {
+    if (s !== this.IsTickEnabled) {
+      this.IsTickEnabled = s;
+      var e =
         this.CachedComponents ||
         this.K2_GetComponentsByClass(UE.ActorComponent.StaticClass());
-      for (let i = 0, t = s.Num(); i < t; i++) {
-        var h = s.Get(i);
-        h && h.SetComponentTickEnabled(e);
+      for (let i = 0, t = e.Num(); i < t; i++) {
+        var h = e.Get(i);
+        h && h.SetComponentTickEnabled(s);
       }
     }
   }
   CloseSkeletalMeshShadow() {
     if (this.CachedComponents)
       for (let i = 0, t = this.CachedComponents.Num(); i < t; i++) {
-        var e = this.CachedComponents.Get(i);
-        e && e instanceof UE.SkeletalMeshComponent && e.SetCastShadow(!1);
+        var s = this.CachedComponents.Get(i);
+        s && s instanceof UE.SkeletalMeshComponent && s.SetCastShadow(!1);
       }
     else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "NPC",
-          25,
+          24,
           "You must call CloseSkeletalMeshShadow after CacheComponents",
         );
   }
-  SetMainShadowEnabled(e) {
-    if (e === this.IsShowShadow)
+  SetMainShadowEnabled(s) {
+    if (s === this.IsShowShadow)
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
-          25,
+          24,
           "SetShadowEnabled, value === this.IsShowShadow",
-          ["Value", e],
+          ["Value", s],
           ["IsShowShadow", this.IsShowShadow],
         );
     else {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
-          25,
+          24,
           "SetShadowEnabled, value !== this.IsShowShadow",
-          ["Value", e],
+          ["Value", s],
           ["IsShowShadow", this.IsShowShadow],
         ),
-        (this.IsShowShadow = e);
-      var s =
+        (this.IsShowShadow = s);
+      var e =
         this.CachedComponents ||
         this.K2_GetComponentsByClass(UE.ActorComponent.StaticClass());
-      if (s)
-        for (let i = 0, t = s.Num(); i < t; i++) {
-          var h = s.Get(i);
+      if (e)
+        for (let i = 0, t = e.Num(); i < t; i++) {
+          var h = e.Get(i);
           h &&
             h instanceof UE.SkinnedMeshComponent &&
             !(h instanceof UE.SkeletalMeshComponent) &&
-            (h.SetCastShadow(e), Log_1.Log.CheckInfo()) &&
-            Log_1.Log.Info("Entity", 25, "SetShadowEnabled, SetCastShadow", [
+            (h.SetCastShadow(s), Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info("Entity", 24, "SetShadowEnabled, SetCastShadow", [
               "Value",
-              e,
+              s,
             ]);
         }
     }
@@ -474,19 +498,19 @@ class TsSimpleNpc extends UE.KuroEffectActor {
   }
   SetAnimUROParams() {
     var t = new UE.AnimUpdateRateParameters(),
-      e = ((t.bShouldUseLodMap = !0), this.Mesh.LODInfo.Num());
+      s = ((t.bShouldUseLodMap = !0), this.Mesh.LODInfo.Num());
     t.LODToFrameSkipMap.Empty();
-    for (let i = 0; i < e; i++) t.LODToFrameSkipMap.Add(i, i < 2 ? 0 : i - 1);
-    (t.BaseNonRenderedUpdateRate = 8), (t.MaxEvalRateForInterpolation = e);
-    var s = (0, puerts_1.$ref)(t),
+    for (let i = 0; i < s; i++) t.LODToFrameSkipMap.Add(i, i < 2 ? 0 : i - 1);
+    (t.BaseNonRenderedUpdateRate = 8), (t.MaxEvalRateForInterpolation = s);
+    var e = (0, puerts_1.$ref)(t),
       h = this.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
     for (let i = 0; i < h.Num(); i++) {
       var o = h.Get(i);
       (o.bEnableUpdateRateOptimizations = !0),
-        o.SetAnimUpdateRateParameters(s),
+        o.SetAnimUpdateRateParameters(e),
         (o.VisibilityBasedAnimTickOption = 3);
     }
-    (0, puerts_1.$unref)(s);
+    (0, puerts_1.$unref)(e);
   }
 }
 (TsSimpleNpc.InstanceCount = 0),

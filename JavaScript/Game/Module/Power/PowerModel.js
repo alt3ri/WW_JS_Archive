@@ -21,6 +21,7 @@ class PowerModel extends ModelBase_1.ModelBase {
       )),
       (this.HXs = new Map()),
       (this.roo = void 0),
+      (this.v_l = !0),
       (this.InnerConfirmBoxData = void 0);
   }
   get PowerItemInfoList() {
@@ -32,9 +33,9 @@ class PowerModel extends ModelBase_1.ModelBase {
         var t = ItemInfoById_1.configItemInfoById.GetConfig(f);
         t && r.push(t);
       }
-      for (const I of r) {
-        var o = new PowerDefines_1.PowerItemInfo(I.Id);
-        (o.ItemName = I.Name),
+      for (const h of r) {
+        var o = new PowerDefines_1.PowerItemInfo(h.Id);
+        (o.ItemName = h.Name),
           (o.IsHideWhenZero = Boolean(e.get(o.ItemId))),
           this.roo.push(o);
       }
@@ -43,38 +44,38 @@ class PowerModel extends ModelBase_1.ModelBase {
         return a.indexOf(e.ItemId) - a.indexOf(r.ItemId);
       });
     }
-    for (const h of this.roo) {
+    for (const I of this.roo) {
       var n,
         i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          h.ItemId,
+          I.ItemId,
         ),
-        i = ((h.StackValue = i || 0), this.Eoo(h.ShopId)),
+        i = ((I.StackValue = i || 0), this.Eoo(I.ShopId)),
         s =
           (-1 ===
-            i.findIndex((e, r, t) => !e.IsSoldOut() && e.Price.has(h.ItemId)) &&
+            i.findIndex((e, r, t) => !e.IsSoldOut() && e.Price.has(I.ItemId)) &&
             ((n = i[i.length - 1]),
-            (h.RenewValue =
-              h.ItemId === ItemDefines_1.EItemId.OverPower
+            (I.RenewValue =
+              I.ItemId === ItemDefines_1.EItemId.OverPower
                 ? 0
                 : (n.StackSize ?? 0)),
-            (h.CostValue = n.GetPrice(h.ItemId)),
-            (h.GoodsId = n.Id),
-            (h.RemainCount =
-              h.ItemId === ItemDefines_1.EItemId.OverPower ? h.StackValue : 0)),
+            (I.CostValue = n.GetPrice(I.ItemId)),
+            (I.GoodsId = n.Id),
+            (I.RemainCount =
+              I.ItemId === ItemDefines_1.EItemId.OverPower ? I.StackValue : 0)),
           (n = i.findIndex(
             (e, r, t) =>
-              e.IsUnlocked() && !e.IsSoldOut() && e.Price.has(h.ItemId),
+              e.IsUnlocked() && !e.IsSoldOut() && e.Price.has(I.ItemId),
           )),
           i[n]);
       s &&
-        ((h.RenewValue =
-          h.ItemId === ItemDefines_1.EItemId.OverPower
+        ((I.RenewValue =
+          I.ItemId === ItemDefines_1.EItemId.OverPower
             ? 0
             : (s.StackSize ?? 0)),
-        (h.CostValue = s.GetPrice(h.ItemId)),
-        (h.GoodsId = s.Id),
+        (I.CostValue = s.GetPrice(I.ItemId)),
+        (I.GoodsId = s.Id),
         (s = s.BuyLimit < 0 ? s.BuyLimit : i.length - n),
-        (h.RemainCount = s));
+        (I.RemainCount = s));
     }
     return this.roo;
   }
@@ -99,11 +100,11 @@ class PowerModel extends ModelBase_1.ModelBase {
         ItemDefines_1.EItemId.OverPower,
         ItemDefines_1.EItemId.OverPower,
       ),
-      !0
+      (this.v_l = !0)
     );
   }
   OnClear() {
-    return !0;
+    return !(this.v_l = !1);
   }
   UpdatePowerRenewTimer() {
     for (var [, e] of this.HXs) e.CheckPowerUpdate();
@@ -111,7 +112,7 @@ class PowerModel extends ModelBase_1.ModelBase {
   UpdatePowerData(e) {
     if (e) {
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("PowerModule", 28, "当前体力数据", ["data", e]);
+        Log_1.Log.Info("PowerModule", 27, "当前体力数据", ["data", e]);
       for (const r of e) this.RefreshPowerInfos(r);
     }
   }
@@ -144,7 +145,7 @@ class PowerModel extends ModelBase_1.ModelBase {
     return e && 0 !== e.length
       ? (e.sort((e, r) => e.Id - r.Id), e)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("PowerModule", 50, "体力系统获取商店数据失败"),
+          Log_1.Log.Error("PowerModule", 49, "体力系统获取商店数据失败"),
         []);
   }
   IsPowerEnough(e) {
@@ -161,6 +162,12 @@ class PowerModel extends ModelBase_1.ModelBase {
   }
   ClearConfirmBoxData() {
     this.InnerConfirmBoxData = void 0;
+  }
+  GetCanShowPowerTip() {
+    return this.v_l;
+  }
+  SetCanShowPowerTip(e) {
+    this.v_l = e;
   }
 }
 exports.PowerModel = PowerModel;

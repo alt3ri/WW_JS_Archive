@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, o, i) {
+  function (t, e, i, o) {
     var r,
       s = arguments.length,
       n =
         s < 3
           ? e
-          : null === i
-            ? (i = Object.getOwnPropertyDescriptor(e, o))
-            : i;
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(t, e, o, i);
+      n = Reflect.decorate(t, e, i, o);
     else
-      for (var a = t.length - 1; 0 <= a; a--)
-        (r = t[a]) && (n = (s < 3 ? r(n) : 3 < s ? r(e, o, n) : r(e, o)) || n);
-    return 3 < s && n && Object.defineProperty(e, o, n), n;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (r = t[h]) && (n = (s < 3 ? r(n) : 3 < s ? r(e, i, n) : r(e, i)) || n);
+    return 3 < s && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPasserbyComponent = void 0);
@@ -33,26 +33,30 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   NPC_PB = "Gys",
   END_DISTANCE = 30,
   ENTITY_REMOVE_DELAY = 3,
-  DEFUALT_MOVE_SPEED = 100;
+  DEFAULT_MOVE_SPEED = 100,
+  DEFAULT_EXCEPTION_COUNTER_TIME = 5e3,
+  MIN_MOVE_SPEED = 20;
 let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.Htn = 0),
-      (this.jtn = 0),
       (this.Hte = void 0),
       (this.Gce = void 0),
-      (this.Wtn = !1),
+      (this.Htn = 0),
+      (this.jtn = 0),
       (this.szo = !1),
       (this.tu = void 0),
       (this.jnr = void 0),
       (this.JLe = void 0),
-      (this.Ktn = Vector_1.Vector.Create());
+      (this.Nd1 = !1),
+      (this.Ktn = Vector_1.Vector.Create()),
+      (this.Vd1 = DEFAULT_EXCEPTION_COUNTER_TIME),
+      (this.jd1 = !1);
   }
   OnCreate(t) {
     return (
-      (this.Wtn = !1),
+      (this.Nd1 = !1),
       (this.Hte = this.Entity.CheckGetComponent(2)),
-      (this.Gce = this.Entity.GetComponent(38)),
+      (this.Gce = this.Entity.GetComponent(44)),
       !(!this.Hte || !this.Gce)
     );
   }
@@ -62,7 +66,7 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
     if (!e)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("NPC", 43, "特效NPC没有NpcPb相关配置数据", [
+          Log_1.Log.Error("NPC", 42, "特效NPC没有NpcPb相关配置数据", [
             "PbDataId",
             t.GetPbDataId(),
           ]),
@@ -75,34 +79,34 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
     if (!e)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("NPC", 51, "特效NPC没有行人生成器相关配置数据", [
+          Log_1.Log.Error("NPC", 50, "特效NPC没有行人生成器相关配置数据", [
             "GeneratorEntityId",
             this.jtn,
           ]),
         !1
       );
-    var o = (0, IComponent_1.getComponent)(
+    var i = (0, IComponent_1.getComponent)(
       e.ComponentsData,
       "PasserbyNpcSpawnComponent",
     );
-    if (!o)
+    if (!i)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "NPC",
-            51,
+            50,
             "获取行人NPC生成器配置失败",
             ["PbDataId", t.GetPbDataId()],
             ["GeneratorId", e?.Id],
           ),
         !1
       );
-    for (const i of o.MoveConfig.Routes)
-      if (this.Htn === i.SplineEntityId) {
-        (this.szo = !!i.IsLoop),
-          i.MoveState &&
-            ((this.tu = i.MoveState.MoveState),
-            (this.jnr = i.MoveState.MoveSpeed));
+    for (const o of i.MoveConfig.Routes)
+      if (this.Htn === o.SplineEntityId) {
+        (this.szo = !!o.IsLoop),
+          o.MoveState &&
+            ((this.tu = o.MoveState.MoveState),
+            (this.jnr = o.MoveState.MoveSpeed));
         break;
       }
     t = this.Hte.Actor.CharacterMovement;
@@ -112,6 +116,19 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
       !0
     );
   }
+  OnActivate() {
+    this.HC(this.Htn) && this.JLe && this.Gce.MoveAlongPath(this.JLe);
+  }
+  OnTick(t) {
+    var e;
+    !this.szo &&
+      this.Nd1 &&
+      ((e = Vector_1.Vector.Dist(this.Ktn, this.Hte.ActorLocationProxy)) <
+        this.Gce.Speed * ENTITY_REMOVE_DELAY ||
+        e <= END_DISTANCE) &&
+      this.SendMessage(),
+      this.CheckMoveException(t) && this.Vd1 <= 0 && this.SendMessage();
+  }
   HC(t) {
     var e = new GameSplineComponent_1.GameSplineComponent(t);
     if (!e.InitializeWithSubPoints(this.Hte.CreatureData.GetPbDataId()))
@@ -119,53 +136,53 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "NPC",
-            43,
+            42,
             "特效NPC找不到对应的样条实体或实体上没有样条组件",
             ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
             ["SplineId", t],
           ),
         !1
       );
-    var o = e.PathPoint;
-    if (o.length < 2)
+    var i = e.PathPoint;
+    if (i.length < 2)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "NPC",
-            43,
+            42,
             "特效NPC样条点数量小于2",
             ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
             ["SplineId", t],
           ),
         !1
       );
-    var i = [],
+    var o = [],
       r = e.GetNumberOfSplinePoints();
     let s = 0;
-    for (const a of o) {
+    for (const h of i) {
       var n = {
-        Index: a.IsMain ? s : -1,
-        Position: a.Point,
+        Index: h.IsMain ? s : -1,
+        Position: h.Point,
         MoveState: this.tu ?? IComponent_1.EPatrolMoveState.Walk,
         MoveSpeed:
           this.jnr ??
           this.Gce?.CurrentMovementSettings?.WalkSpeed ??
-          DEFUALT_MOVE_SPEED,
+          DEFAULT_MOVE_SPEED,
       };
-      a.IsMain &&
+      h.IsMain &&
         (this.szo ||
           s !== r - 2 ||
           (n.Callback = () => {
-            this.Wtn = !0;
+            this.Nd1 = !0;
           }),
         s++),
-        i.push(n);
+        o.push(n);
     }
-    t = i[i.length - 1].Position;
+    t = o[o.length - 1].Position;
     return (
       this.Ktn.Set(t.X, t.Y, t.Z),
       (this.JLe = {
-        Points: i,
+        Points: o,
         Navigation: !1,
         IsFly: !1,
         DebugMode: !0,
@@ -177,41 +194,43 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
       }),
       this.szo ||
         (this.JLe.Callback = (t) => {
-          this.Wtn && this.Qtn();
+          this.Nd1 && this.SendMessage();
         }),
       !0
     );
   }
-  OnActivate() {
-    this.HC(this.Htn) && this.JLe && this.Gce.MoveAlongPath(this.JLe);
+  CheckMoveException(t) {
+    return this.Hte
+      ? Vector_1.Vector.Dist(
+          this.Hte.ActorLocationProxy,
+          this.Hte.LastActorLocation,
+        ) <
+        MIN_MOVE_SPEED * t * MathUtils_1.MathUtils.MillisecondToSecond
+        ? ((this.Vd1 -= t), !0)
+        : ((this.Vd1 = DEFAULT_EXCEPTION_COUNTER_TIME), !1)
+      : !(this.Vd1 = 0);
   }
-  OnTick(t) {
-    var e;
-    !this.szo &&
-      this.Wtn &&
-      ((e = Vector_1.Vector.Dist(this.Ktn, this.Hte.ActorLocationProxy)) <
-        this.Gce.Speed * ENTITY_REMOVE_DELAY ||
-        e <= END_DISTANCE) &&
-      this.Qtn();
-  }
-  Qtn() {
-    this.Wtn = !1;
-    var t = Protocol_1.Aki.Protocol.Zes.create();
-    (t.F4n = MathUtils_1.MathUtils.NumberToLong(
-      this.Hte.CreatureData.GetCreatureDataId(),
-    )),
-      Net_1.Net.Call(15661, t, (t) => {
-        t &&
-          t.Cvs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
-          ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            t.Cvs,
-            27078,
-          );
-      });
+  SendMessage() {
+    var t;
+    (this.Nd1 = !1),
+      this.jd1 ||
+        ((this.jd1 = !0),
+        ((t = Protocol_1.Aki.Protocol.Zes.create()).F4n =
+          MathUtils_1.MathUtils.NumberToLong(
+            this.Hte.CreatureData.GetCreatureDataId(),
+          )),
+        Net_1.Net.Call(21831, t, (t) => {
+          t &&
+            t.Cvs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+            ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+              t.Cvs,
+              15464,
+            );
+        }));
   }
 };
 (NpcPasserbyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(81)],
+  [(0, RegisterComponent_1.RegisterComponent)(88)],
   NpcPasserbyComponent,
 )),
   (exports.NpcPasserbyComponent = NpcPasserbyComponent);

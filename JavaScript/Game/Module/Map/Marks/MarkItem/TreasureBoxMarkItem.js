@@ -15,17 +15,18 @@ class TreasureBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   get IsNewCustomMarkItem() {
     return this.NDi;
   }
-  Initialize() {
-    super.Initialize();
+  OnInitialize() {
+    super.OnInitialize();
     var e = this.ServerMarkInfo;
     this.SetTrackData(e.TrackTarget),
       this.SetConfigId(this.ConfigId),
-      this.UpdateTrackState();
+      this.UpdateVisibleRelativeState();
   }
-  OnCreateView() {
-    this.InnerView = new TreasureBoxMarkItemView_1.TreasureBoxMarkItemView(
-      this,
-    );
+  GetMarkItemViewType() {
+    return 27;
+  }
+  CreateView() {
+    return new TreasureBoxMarkItemView_1.TreasureBoxMarkItemView(this);
   }
   SetConfigId(e) {
     (this.ServerMarkInfo.MarkConfigId = e), this.OnSetConfigId(e);

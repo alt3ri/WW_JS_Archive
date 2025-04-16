@@ -1,9 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventAddBuffToTriggeredEntity = void 0);
-const LevelGeneralBase_1 = require("../LevelGeneralBase");
-class LevelEventAddBuffToTriggeredEntity extends LevelGeneralBase_1.LevelEventBase {
-  ExecuteNew(e, t) {}
+const LevelEventAddBuffClientPrePerformance_1 = require("./LevelEventAddBuffClientPrePerformance");
+class LevelEventAddBuffToTriggeredEntity extends LevelEventAddBuffClientPrePerformance_1.LevelEventAddBuffClientPrePerformance {
+  GetTargetEntity(e) {
+    return this.GetOtherEntity(e);
+  }
+  GetBuffIds(e) {
+    return e.BuffIds;
+  }
 }
 exports.LevelEventAddBuffToTriggeredEntity = LevelEventAddBuffToTriggeredEntity;
 //# sourceMappingURL=LevelEventAddBuffToTriggeredEntity.js.map

@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityHandle = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
-  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class EntityHandle {
   constructor(t) {
@@ -14,7 +14,8 @@ class EntityHandle {
       (this.EntityType = 0),
       (this.Index = 0),
       (this.Priority = 100),
-      (this.MultiMapIdInternal = void 0),
+      (this.PendingRemoving = !1),
+      (this.HasSendingRequest = !1),
       (this.HoldEntityMap = new Map()),
       (this.Id = t.Id),
       (this.Index = t.Index);
@@ -23,7 +24,9 @@ class EntityHandle {
     let e = this.HoldEntityMap.get(t);
     return (
       e ? e++ : (e = 1),
-      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+        this.EntityType,
+      ) &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Engine",
@@ -52,7 +55,9 @@ class EntityHandle {
           ),
         !1)
       : (--e ? this.HoldEntityMap.set(t, e) : this.HoldEntityMap.delete(t),
-        ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+          this.EntityType,
+        ) &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Engine",
@@ -65,7 +70,9 @@ class EntityHandle {
         !0);
   }
   ClearHoldEntity() {
-    ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+    ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+      this.EntityType,
+    ) &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Engine",
@@ -81,23 +88,6 @@ class EntityHandle {
   }
   get IsInit() {
     return !!this.Valid && this.Entity.IsInit;
-  }
-  get IsMultiMap() {
-    return void 0 !== this.MultiMapId;
-  }
-  get MultiMapId() {
-    if (void 0 === this.MultiMapIdInternal) {
-      var t = ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
-          this.Id,
-        ),
-        e = ConfigManager_1.ConfigManager.AreaConfig.GetLevelOneAreaId(t);
-      for (const i of ConfigManager_1.ConfigManager.MapConfig.GetAllSubMapConfig())
-        if (i.Area.includes(e)) {
-          this.MultiMapIdInternal = i.Id;
-          break;
-        }
-    }
-    return this.MultiMapIdInternal;
   }
   get AllowDestroy() {
     return 0 === this.HoldEntityMap.size;

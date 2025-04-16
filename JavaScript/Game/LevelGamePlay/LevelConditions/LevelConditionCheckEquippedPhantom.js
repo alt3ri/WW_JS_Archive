@@ -13,7 +13,7 @@ class LevelConditionCheckEquippedPhantom extends LevelGeneralBase_1.LevelConditi
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -24,7 +24,7 @@ class LevelConditionCheckEquippedPhantom extends LevelGeneralBase_1.LevelConditi
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelCondition",
-                17,
+                16,
                 `配置错误！条件${e.Id}的声骸位置值的范围是[1-${PhantomBattleDefine_1.MAX_EQUIP_COUNT}]`,
               ),
             !1)
@@ -32,7 +32,7 @@ class LevelConditionCheckEquippedPhantom extends LevelGeneralBase_1.LevelConditi
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelCondition",
-                  17,
+                  16,
                   `配置错误！条件${e.Id}的是否装备应该是0或1`,
                 ),
               !1)

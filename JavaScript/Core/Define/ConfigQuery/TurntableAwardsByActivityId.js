@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configTurntableAwardsByActivityId.Init"),
-  getConfigListStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTurntableAwardsByActivityId.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configTurntableAwardsByActivityId.GetConfigList",
   ),
   CONFIG_LIST_STAT_PREFIX = "configTurntableAwardsByActivityId.GetConfigList(";
 exports.configTurntableAwardsByActivityId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (t, i = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${t})`),
+      getConfigListStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_LIST_STAT_PREFIX + `#${t})`),
       n =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (n) {
       if (i) {
@@ -45,8 +47,8 @@ exports.configTurntableAwardsByActivityId = {
         const r = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (r)
           return (
-            o.Stop(),
-            getConfigListStat.Stop(),
+            o?.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
@@ -76,8 +78,8 @@ exports.configTurntableAwardsByActivityId = {
           )
             return (
               ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-              o.Stop(),
-              getConfigListStat.Stop(),
+              o?.Stop(),
+              getConfigListStat?.Stop(),
               void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
           a = TurntableAwards_1.TurntableAwards.getRootAsTurntableAwards(
@@ -90,16 +92,16 @@ exports.configTurntableAwardsByActivityId = {
             ((e = KEY_PREFIX + `#${t})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(e, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          o.Stop(),
-          getConfigListStat.Stop(),
+          o?.Stop(),
+          getConfigListStat?.Stop(),
           ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigListStat.Stop(),
+    o?.Stop(),
+      getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

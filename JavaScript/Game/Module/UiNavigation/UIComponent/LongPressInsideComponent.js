@@ -18,7 +18,7 @@ class LongPressInsideComponent extends HotKeyComponent_1.HotKeyComponent {
   OnRefreshSelfHotKeyState(e) {
     var t = this.GetBindButtonTag();
     StringUtils_1.StringUtils.IsEmpty(t) ||
-      ((e = e.GetFocusListener())
+      ((e = e.GetFocusListener()) && this.IsLinkListener(e.GetOwner())
         ? ((e = e.GetChildListenerByTag(t)),
           this.SetVisibleMode(2, e?.IsListenerActive() ?? !1))
         : this.SetVisibleMode(2, !1));

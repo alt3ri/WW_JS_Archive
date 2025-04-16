@@ -6,6 +6,7 @@ const UE = require("ue"),
   CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   PublicUtil_1 = require("../../../../Common/PublicUtil"),
   GlobalData_1 = require("../../../../GlobalData"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
@@ -26,7 +27,8 @@ const rgbSplitProgress = new UE.FName("RGBSplit_Progress"),
   CLOSE_VIEW_ANIM_TIME = 167,
   TOUGH_ANIM_TIME = 250,
   fallDownAttributeId = EAttributeId.Proto_ParalysisTime,
-  fallDownMaxAttributeId = EAttributeId.Proto_ParalysisTimeMax;
+  fallDownMaxAttributeId = EAttributeId.Proto_ParalysisTimeMax,
+  MAX_BUFF_ITEM_COUNT = 12;
 class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   constructor() {
     super(...arguments),
@@ -78,18 +80,18 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       }),
       (this.wnt = (t) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "狂暴条刷新", ["visible", t]),
+          Log_1.Log.Debug("Battle", 17, "狂暴条刷新", ["visible", t]),
           this.GetItem(11).SetUIActive(t),
           t && this.GetItem(11).SetAlpha(1);
       }),
       (this.Bnt = (t) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "播放狂暴条动画", ["visible", t]),
+          Log_1.Log.Debug("Battle", 17, "播放狂暴条动画", ["visible", t]),
           t ? this.bnt(27) : this.bnt(30);
       }),
       (this.qnt = (t) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "停止狂暴条动画", ["visible", t]),
+          Log_1.Log.Debug("Battle", 17, "停止狂暴条动画", ["visible", t]),
           t ? this.Gnt(27) : this.Gnt(30);
       }),
       (this.Nnt = (t, i, s) => {
@@ -179,7 +181,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.ont.InitVisible(!1),
       (this.rnt = new VisibleAnimMachine_1.VisibleAnimMachine()),
       this.rnt.InitCallback(this.wnt, this.Bnt, this.qnt),
-      this.mkn.Init(this.GetItem(13));
+      this.mkn.Init(this.GetItem(13), MAX_BUFF_ITEM_COUNT);
   }
   OnBeforeDestroy() {
     this.SPe.Clear(),
@@ -187,15 +189,21 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.ont.Reset(),
       (this.ont = void 0),
       this.rnt.Reset(),
-      (this.rnt = void 0);
+      (this.rnt = void 0),
+      0 <= this.gnt &&
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Battle", 17, "[boss血条]销毁时重置受击shader特效"),
+        this.hst(0));
   }
   OnActivate() {
     super.OnActivate(),
       (this.Ent = this.HasFallDownTag),
       (this.Mnt = this.GetItem(11).bIsUIActive),
-      (this.Tnt = this.GetItem(2).bIsUIActive),
+      (this.Tnt = this.GetSprite(4).bIsUIActive),
       (this.Snt = this.GetSprite(18).bIsUIActive),
       this.rnt.InitVisible(this.Mnt),
+      this.GetItem(11).SetAlpha(1),
+      this.GetItem(11).SetUIItemScale(Vector_1.Vector.OneVector),
       this.xnt(),
       this.Xnt(),
       this.$nt(),
@@ -218,7 +226,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       this.ost(),
       this.mkn.ClearAll(),
       (this.Ent = !1),
-      this.rnt?.Reset();
+      this.rnt?.Deactivate();
   }
   Initialize(t) {
     super.Initialize(t);
@@ -243,11 +251,11 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   }
   OnFallDownVisibleChanged(t) {
     t
-      ? (Log_1.Log.CheckInfo() && Log_1.Log.Info("Battle", 18, "进入倒地状态"),
+      ? (Log_1.Log.CheckInfo() && Log_1.Log.Info("Battle", 17, "进入倒地状态"),
         this.dnt.GetHit(0, this.ant),
         this.nst(),
         this.sst(!0))
-      : (Log_1.Log.CheckInfo() && Log_1.Log.Info("Battle", 18, "退入倒地状态"),
+      : (Log_1.Log.CheckInfo() && Log_1.Log.Info("Battle", 17, "退入倒地状态"),
         this.sst(!1));
   }
   OnBossHardnessChanged(t) {
@@ -292,12 +300,14 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   }
   hst(t) {
     this.Cnt &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Battle", 17, "[boss血条]播放受击shader特效", ["", t]),
       UE.KismetMaterialLibrary.SetScalarParameterValue(
         GlobalData_1.GlobalData.GameInstance.GetWorld(),
         this.Cnt,
         rgbSplitProgress,
         t,
-      );
+      ));
   }
   ist() {
     this.GetItem(8).SetUIActive(!1), this.cnt.Reset(), (this.Ant = !1);
@@ -350,11 +360,14 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       t.SetColor(i),
       this.GetText(1).SetColor(i));
   }
+  HideBossName(t) {
+    this.GetText(0).SetUIActive(t), this.GetText(1).SetUIActive(t);
+  }
   Xnt() {
     var t, i, s;
     this.IsValid() &&
       ((t = PublicUtil_1.PublicUtil.GetConfigTextByKey(
-        this.GetBaseInfo().TidName,
+        this.GetCreatureDataComp().GetEntityTidName(),
       )),
       (i = PublicUtil_1.PublicUtil.GetConfigTextByKey(
         this.GetMonsterConfig().TidBossSubTitle,

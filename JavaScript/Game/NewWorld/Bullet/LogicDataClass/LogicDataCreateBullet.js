@@ -11,6 +11,9 @@ class LogicDataCreateBullet extends LogicDataBase_1.default {
       (this.AttachToBoneName = "None"),
       (this.FlashBulletRowName = "None");
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataCreateBullet;
 //# sourceMappingURL=LogicDataCreateBullet.js.map

@@ -66,7 +66,7 @@ class FilterView extends UiViewBase_1.UiViewBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Filter",
-          11,
+          10,
           "动态加载筛选格子失败",
           ["配置项id", this.C0t.ConfigId],
           ["路径", e],

@@ -4,9 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
-  LguiUtil_1 = require("../../Util/LguiUtil");
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  InventoryGiftCellItem_1 = require("./InventoryGiftCellItem");
 class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -19,19 +19,20 @@ class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.sft = void 0),
       (this.$mi = void 0),
       (this.Ymi = void 0),
+      (this.vIl = void 0),
       (this.Jmi = () => {
         this.H5e.SetToggleState(0, !1),
           this.Xmi.RootUIComp.SetUIActive(!1),
           this.Ymi && this.Ymi(this.fGt);
       }),
-      (this.Yai = (i) => {
-        i = 1 === i;
-        this.Xmi && this.Xmi.RootUIComp.SetUIActive(i),
-          this.$mi && this.$mi(this.H5e, this.Xmi, i, this.fGt);
+      (this.Yai = (t) => {
+        t = 1 === t;
+        this.Xmi && this.Xmi.RootUIComp.SetUIActive(t),
+          this.$mi && this.$mi(this.H5e, this.Xmi, t, this.fGt);
       });
   }
-  Initialize(i) {
-    i && this.CreateThenShowByActor(i.GetOwner());
+  Initialize(t) {
+    t && this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -62,27 +63,36 @@ class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.H5e.OnStateChange.Add(this.Yai),
       (this.Xmi = this.GetButton(3)),
       this.Xmi.RootUIComp.SetUIActive(!1),
-      (this.sft = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
+      (this.sft = new InventoryGiftCellItem_1.InventoryGiftCellItem()),
       this.sft.Initialize(this.GetItem(0).GetOwner());
   }
-  Refresh(i, t, s) {
-    (this.fGt = i), this.RefreshItem(this.fGt[0], this.fGt[1]);
+  Refresh(t, i, s) {
+    (this.fGt = t), this.RefreshItem(t), this.vIl && this.Oei(this.vIl(t));
   }
-  RefreshItem(i, t = 0) {
-    this.qTt = i.ItemId;
-    var s = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+  OnSelected(t) {
+    this.vIl && this.fGt && this.Oei(this.vIl(this.fGt));
+  }
+  RefreshItem(t) {
+    this.qTt = t.ItemId;
+    var i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
         this.qTt,
       ),
-      s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s.Name) ?? "";
-    this.OGe.SetText(s),
-      LguiUtil_1.LguiUtil.SetLocalText(this.Qmi, "Quantity", t),
-      this.sft.RefreshByConfigId(i.ItemId);
+      i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Name) ?? "";
+    this.OGe.SetText(i),
+      LguiUtil_1.LguiUtil.SetLocalText(this.Qmi, "Quantity", t.ItemCount),
+      this.sft.RefreshByConfigId(t);
   }
-  SetOnToggleStateChangeFunction(i) {
-    this.$mi = i;
+  Oei(t, i = !1) {
+    this.H5e.SetToggleState(t ? 1 : 0, i), this.Xmi.RootUIComp.SetUIActive(t);
   }
-  SetOnReduceFunction(i) {
-    this.Ymi = i;
+  SetOnToggleStateChangeFunction(t) {
+    this.$mi = t;
+  }
+  SetOnReduceFunction(t) {
+    this.Ymi = t;
+  }
+  SetIsSelectOn(t) {
+    this.vIl = t;
   }
 }
 exports.InventoryGiftItem = InventoryGiftItem;

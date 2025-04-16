@@ -8,7 +8,7 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
       (this.kbt = void 0),
-      (this.l4e = void 0),
+      (this.RedDotName = void 0),
       (this.Bke = (t) => {
         1 === t && this.SelectedCallBack(this.GridIndex);
       }),
@@ -39,7 +39,7 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   OnBeforeDestroy() {
     this.UnBindRedDot();
   }
-  OnRefresh(t, e, s) {
+  OnRefresh(t, e, i) {
     this.UpdateTabIcon(t.Data?.GetIcon() ?? ""),
       this.UnBindRedDot(),
       t.RedDotName && this.BindRedDot(t.RedDotName, t.RedDotUid);
@@ -70,8 +70,8 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
     return this.GetExtendToggle(1);
   }
   BindRedDot(t, e = 0) {
-    (this.l4e = t),
-      this.l4e &&
+    (this.RedDotName = t),
+      this.RedDotName &&
         RedDotController_1.RedDotController.BindRedDot(
           t,
           this.GetItem(2),
@@ -80,9 +80,21 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
         );
   }
   UnBindRedDot() {
-    this.l4e &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
-      (this.l4e = void 0));
+    this.RedDotName &&
+      (RedDotController_1.RedDotController.UnBindRedDot(this.RedDotName),
+      (this.RedDotName = void 0));
+  }
+  UnBindGivenUid(t = 0) {
+    this.RedDotName &&
+      (RedDotController_1.RedDotController.UnBindGivenUi(
+        this.RedDotName,
+        this.GetItem(2),
+        t,
+      ),
+      (this.RedDotName = void 0));
+  }
+  SetRedDotState(t) {
+    this.GetItem(2)?.SetUIActive(t);
   }
   GetIconSprite() {
     return this.GetSprite(0);

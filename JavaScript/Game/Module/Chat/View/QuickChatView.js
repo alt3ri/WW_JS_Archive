@@ -113,7 +113,7 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
                         o,
                       )
                   : Log_1.Log.CheckWarn() &&
-                    Log_1.Log.Warn("Chat", 8, "私聊对象玩家Id不存在", [
+                    Log_1.Log.Warn("Chat", 5, "私聊对象玩家Id不存在", [
                       "targetPlayerId",
                       o,
                     ])
@@ -130,7 +130,7 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
                       Protocol_1.Aki.Protocol.BFs.Proto_WorldTeam,
                     ))
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");
+            Log_1.Log.Warn("Chat", 5, "当前没有加入任何一个聊天室");
   }
   OnBeforeDestroy() {
     this.Uyt();

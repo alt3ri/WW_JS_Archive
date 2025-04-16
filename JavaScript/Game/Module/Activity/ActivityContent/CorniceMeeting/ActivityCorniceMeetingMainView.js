@@ -14,7 +14,6 @@ const UE = require("ue"),
   PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem"),
   ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
   HelpController_1 = require("../../../Help/HelpController"),
-  TimeOfDayDefine_1 = require("../../../TimeOfDay/TimeOfDayDefine"),
   GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
@@ -27,20 +26,24 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.lqe = void 0),
       (this.m3e = void 0),
-      (this.h4a = void 0),
+      (this.F6a = void 0),
       (this.H3e = void 0),
       (this.GOe = void 0),
-      (this.PVa = []),
-      (this.l4a = () => {
+      (this.LHa = []),
+      (this.V6a = () => {
         var e =
           ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData();
         e.GetIsShow(e.CurrentSelectLevelPlayId) &&
           (e = e.GetLevelEntryData(e.CurrentSelectLevelPlayId)) &&
-          ((e = { MarkId: e.GetMarkId(), MarkType: 24, OpenAreaId: 0 }),
+          ((e = { MarkId: e.GetMarkId(), MarkType: 24, OpenFogId: 0 }),
           WorldMapController_1.WorldMapController.OpenView(2, !1, e));
       }),
+      (this.VKi = () => {
+        var e = this.F6a.GetSelectedGridIndex();
+        this.F6a.RefreshGridProxy(e);
+      }),
       (this.g3e = (e) => {
-        var i;
+        var t;
         e.has(
           ActivityCorniceMeetingController_1.ActivityCorniceMeetingController
             .ActivityId,
@@ -48,30 +51,30 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
           ((e = () => {
             this.CloseMe();
           }),
-          (i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(115)).FunctionMap.set(
+          (t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(115)).FunctionMap.set(
             1,
             e,
           ),
-          i.FunctionMap.set(0, e),
+          t.FunctionMap.set(0, e),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-            i,
+            t,
           ));
       }),
-      (this._4a = (e) => {
-        var i =
+      (this.H6a = (e) => {
+        var t =
           ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData();
-        (i.CurrentSelectLevelPlayId = e),
-          (this.m3e = i.GetLevelEntryData(e)),
-          this.u4a(),
+        (t.CurrentSelectLevelPlayId = e),
+          (this.m3e = t.GetLevelEntryData(e)),
+          this.j6a(),
           this.S3e(),
-          this.c4a(),
+          this.W6a(),
           this.y3e(),
           this.PlaySequenceAsync("Switch", !0);
       }),
       (this.f3e = () => {
         var e =
           new ActivityCorniceMeetingTabItem_1.ActivityCorniceMeetingTabItem();
-        return this.PVa.push(e), e;
+        return this.LHa.push(e), e;
       }),
       (this.VOe = () => {
         return new ActivityCorniceMeetingRewardItem_1.ActivityCorniceMeetingRewardItem();
@@ -88,16 +91,16 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
       (this.kOe = () => {
         this.y3e();
         var e,
-          i =
+          t =
             ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData();
-        i &&
-          ((i = i.GetIsShow(i.CurrentSelectLevelPlayId)) &&
-            this.R3e !== i &&
-            ((e = this.h4a.GetSelectedGridIndex()),
-            this.h4a.RefreshGridProxy(e),
-            this.c4a(),
+        t &&
+          ((t = t.GetIsShow(t.CurrentSelectLevelPlayId)) &&
+            this.R3e !== t &&
+            ((e = this.F6a.GetSelectedGridIndex()),
+            this.F6a.RefreshGridProxy(e),
+            this.W6a(),
             this.S3e()),
-          (this.R3e = i));
+          (this.R3e = t));
       });
   }
   OnRegisterComponent() {
@@ -116,7 +119,7 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
       [11, UE.UIItem],
       [12, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[7, this.l4a]]);
+      (this.BtnBindInfo = [[7, this.V6a]]);
   }
   OnStart() {
     var e =
@@ -126,7 +129,7 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
         this.GetVerticalLayout(4),
         this.VOe,
       )),
-      (this.h4a = new LoopScrollView_1.LoopScrollView(
+      (this.F6a = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(1),
         this.GetItem(2).GetOwner(),
         this.f3e,
@@ -134,34 +137,54 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
       this.U3e(),
       (this.GOe = TimerSystem_1.TimerSystem.Forever(this.kOe, 1e3));
   }
+  OnBeforeHide() {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+      ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData()
+        .Id,
+    );
+  }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickActivityCorniceMeetingTab,
-      this._4a,
+      this.H6a,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActivityClose,
         this.g3e,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.RefreshCorniceMeetingRedDot,
+        this.VKi,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickActivityCorniceMeetingTab,
-      this._4a,
+      this.H6a,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActivityClose,
         this.g3e,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.RefreshCorniceMeetingRedDot,
+        this.VKi,
       );
   }
   OnBeforeShow() {
-    this.Eua(), this.u4a(), this.S3e(), this.c4a();
+    this.Eua(), this.j6a(), this.S3e(), this.W6a();
   }
   OnBeforeDestroy() {
     void 0 !== this.GOe &&
       (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0)),
       RedDotController_1.RedDotController.UnBindRedDot(
         "ActivityCorniceMeeting",
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData()
+          .Id,
       );
   }
   U3e() {
@@ -180,43 +203,41 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
       (e = this.x3e(e.UnlockTime / 1e3, "ActiveToOpenTime")),
       this.GetText(8).SetText(e));
   }
-  x3e(e, i) {
-    var t = TimeUtil_1.TimeUtil.GetServerTime();
-    let r = Number(e) - t,
-      o = (r <= 10 && (r = 10), TimeUtil_1.TimeUtil.GetCountDownData(r));
-    r >= TimeOfDayDefine_1.TOD_SECOND_PER_DAY &&
-      (o = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(r));
-    e = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(i);
-    let n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
-    return (n = n.replace("{0}", o.CountDownText));
+  x3e(e, t) {
+    var i = TimeUtil_1.TimeUtil.GetServerTime(),
+      e = Number(e) - i,
+      i = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(e),
+      e = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(t);
+    let r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
+    return (r = r.replace("{0}", i.CountDownText));
   }
-  u4a() {
+  j6a() {
     var e = this.m3e.GetRewardList();
     this.H3e.RefreshByData(e);
   }
   Eua() {
     const e =
       ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData();
-    var i = e.GetLevelPlayIdList();
-    this.h4a.BindOnScrollValueChanged((e) => {
-      let i = !1,
-        t = !1;
-      for (let e = 0; e < this.PVa.length; e++) {
-        var r = this.PVa[e];
+    var t = e.GetLevelPlayIdList();
+    this.F6a.BindOnScrollValueChanged((e) => {
+      let t = !1,
+        i = !1;
+      for (let e = 0; e < this.LHa.length; e++) {
+        var r = this.LHa[e];
         r &&
           (r =
             ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData().GetLevelEntryData(
               r.LevelPlayId,
             )) &&
-          (r.GetRedDot() && e < this.h4a.GetDisplayGridStartIndex() && (i = !0),
+          (r.GetRedDot() && e < this.F6a.GetDisplayGridStartIndex() && (t = !0),
           r.GetRedDot()) &&
-          e > this.h4a.GetDisplayGridEndIndex() &&
-          (t = !0);
+          e > this.F6a.GetDisplayGridEndIndex() &&
+          (i = !0);
       }
-      this.GetItem(10).SetUIActive(i), this.GetItem(11).SetUIActive(t);
+      this.GetItem(10).SetUIActive(t), this.GetItem(11).SetUIActive(i);
     }),
-      this.h4a.RefreshByData(i, !1, () => {
-        this.h4a?.SelectGridProxy(e.GetSelectLevelPlayIdIndex());
+      this.F6a.RefreshByData(t, !1, () => {
+        this.F6a?.SelectGridProxy(e.GetSelectLevelPlayIdIndex());
       });
   }
   S3e() {
@@ -227,25 +248,29 @@ class ActivityCorniceMeetingMainView extends UiViewBase_1.UiViewBase {
       this.GetItem(3).SetUIActive(!e),
       this.GetButton(7)?.RootUIComp.SetUIActive(e);
   }
-  c4a() {
-    var e =
+  W6a() {
+    var e,
+      t,
+      i =
         ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData(),
-      e = e.GetLevelEntryData(e.CurrentSelectLevelPlayId),
-      i = TimeUtil_1.TimeUtil.GetTimeString(e.RemainTime);
-    0 === e?.MaxScore
+      i = i.GetLevelEntryData(i.CurrentSelectLevelPlayId),
+      r = TimeUtil_1.TimeUtil.GetTimeString(i.RemainTime);
+    0 === i?.MaxScore
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(5),
           "ActivityCorniceMeetingScoreNoRecord",
         )
-      : LguiUtil_1.LguiUtil.SetLocalTextNew(
+      : ((e = i.MaxScore),
+        (t = i?.GetMaxScoreConfig() ?? 0),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(5),
           "Text_ItemCost_Text",
-          e.MaxScore.toString(),
-          e?.GetMaxScoreConfig(),
-        ),
-      this.GetItem(9).SetUIActive(e.IsAllFinished()),
-      this.GetText(6).SetText(i),
-      this.GetItem(12).SetUIActive(e.IsUnlock());
+          (t < e ? t : e).toString(),
+          t,
+        )),
+      this.GetItem(9).SetUIActive(i.IsAllFinished()),
+      this.GetText(6).SetText(r),
+      this.GetItem(12).SetUIActive(i.IsUnlock());
   }
 }
 exports.ActivityCorniceMeetingMainView = ActivityCorniceMeetingMainView;

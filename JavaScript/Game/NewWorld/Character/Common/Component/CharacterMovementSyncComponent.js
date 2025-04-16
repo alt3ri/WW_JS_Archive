@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    var r,
-      h = arguments.length,
+    var h,
+      r = arguments.length,
       o =
-        h < 3
+        r < 3
           ? e
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(e, i))
@@ -13,15 +13,14 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       o = Reflect.decorate(t, e, i, s);
     else
-      for (var n = t.length - 1; 0 <= n; n--)
-        (r = t[n]) && (o = (h < 3 ? r(o) : 3 < h ? r(e, i, o) : r(e, i)) || o);
-    return 3 < h && o && Object.defineProperty(e, i, o), o;
+      for (var a = t.length - 1; 0 <= a; a--)
+        (h = t[a]) && (o = (r < 3 ? h(o) : 3 < r ? h(e, i, o) : h(e, i)) || o);
+    return 3 < r && o && Object.defineProperty(e, i, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterMovementSyncComponent = void 0);
 const Cpp = require("cpp"),
   puerts_1 = require("puerts"),
-  UE = require("ue"),
   Time_1 = require("../../../../../Core/Common/Time"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
@@ -30,14 +29,12 @@ const Cpp = require("cpp"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   CameraController_1 = require("../../../../Camera/CameraController"),
-  TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   InputEnums_1 = require("../../../../Input/InputEnums"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
   CombatLog_1 = require("../../../../Utils/CombatLog"),
-  TsBaseItem_1 = require("../../../SceneItem/BaseItem/TsBaseItem"),
+  BasePlatform_1 = require("../../../Common/BasePlatform"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
   BaseMovementSyncComponent_1 = require("./BaseMovementSyncComponent");
 class FastMoveSample {
@@ -79,6 +76,7 @@ let CharacterMovementSyncComponent = class CharacterMovementSyncComponent extend
       (this.Nce = void 0),
       (this.MHr = void 0),
       (this.rJo = void 0),
+      (this.uwl = void 0),
       (this.QHr = new FastMoveSample()),
       (this.XHr = new ReadOnlyFastMoveSample()),
       (this.$Hr = this.XHr),
@@ -121,8 +119,30 @@ let CharacterMovementSyncComponent = class CharacterMovementSyncComponent extend
   GetSecondaryImportantMove() {
     return 0 < this.Kha ?? this.LastMoveSample?.DWn !== this.rJo.MoveState;
   }
-  CustomAfterTick(t) {
+  CustomAfterTickInternal(t) {
     this.YHr(t);
+    var e = this.uwl && 0 <= this.uwl.Seat;
+    this.CacheBaseEntityHandle &&
+      this.TransformFromRelativeMove(
+        this.CacheBaseEntityHandle,
+        this.CacheRelativeLocation,
+        this.CacheRelativeRotator,
+        this.CacheFinalLocation,
+        this.CacheFinalRotator,
+      ) &&
+      !this.ActorComp?.IsMoveAutonomousProxy &&
+      !e &&
+      (this.ActorComp.SetActorLocationAndRotation(
+        this.CacheFinalLocation.ToUeVector(),
+        this.CacheFinalRotator.ToUeRotator(),
+        "角色移动同步.添加简单位移(帧末修正相对位置)",
+        !1,
+      ),
+      (this.LastRelativeMove = !0)),
+      super.CustomAfterTickInternal(t);
+  }
+  TickReplaySamples() {
+    (this.uwl && 0 <= this.uwl.Seat) || super.TickReplaySamples();
   }
   YHr(t) {
     this.isn?.IsActorMoveInfoCache
@@ -146,9 +166,10 @@ let CharacterMovementSyncComponent = class CharacterMovementSyncComponent extend
   OnStart() {
     return (
       !!super.OnStart() &&
-      ((this.Nce = this.Entity.GetComponent(54)),
-      (this.MHr = this.Entity.GetComponent(32)),
-      (this.rJo = this.Entity.GetComponent(92)),
+      ((this.Nce = this.Entity.GetComponent(61)),
+      (this.MHr = this.Entity.GetComponent(35)),
+      (this.rJo = this.Entity.GetComponent(99)),
+      (this.uwl = this.Entity.GetComponent(226)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnSkillEnd,
@@ -212,21 +233,15 @@ let CharacterMovementSyncComponent = class CharacterMovementSyncComponent extend
         0 === t.P5n.X &&
         0 === t.P5n.Y &&
         0 === t.P5n.Z &&
-        CombatLog_1.CombatLog.Error(
-          "Move",
-          this.Entity,
-          "移动坐标点为0",
-          ["Component", !this.isn],
-          ["Actor", !this.isn?.Actor],
-          ["Location", t.P5n],
-          ["LinearVelocity", t.f8n],
-          ["Rotation", t.g8n],
-        ),
-      0 === t.KVn &&
         CombatLog_1.CombatLog.Warn(
           "Move",
           this.Entity,
-          "获取当前的MovementMode为0",
+          "移动坐标点为0",
+          ["Component", !!this.isn],
+          ["Actor", !!this.isn?.Actor],
+          ["Location", t.P5n],
+          ["LinearVelocity", t.f8n],
+          ["Rotation", t.g8n],
         ),
       (t.DWn = this.rJo?.MoveState ?? 0),
       (t.GWn = Time_1.Time.CombatServerTime),
@@ -240,10 +255,10 @@ let CharacterMovementSyncComponent = class CharacterMovementSyncComponent extend
         this.Entity.TimeDilation * (this.TimeScaleComp?.CurrentTimeScale ?? 1)),
       this.MHr &&
         ((e = this.MHr.SlideForward), (t.PWn = { X: e.X, Y: e.Y, Z: e.Z })),
-      this.MoveComp?.HasBaseMovement && this.MoveComp?.BasePlatform
+      this.MoveComp?.BasePlatform
         ? (t.kWn = this.GetRelativeMoveSample(this.MoveComp.BasePlatform))
         : this.LastHasBaseMovement &&
-          (this.LastBasePlatform?.IsValid()
+          (this.LastBasePlatform
             ? (t.kWn = this.GetRelativeMoveSample(this.LastBasePlatform, !0))
             : (this.LastHasBaseMovement = !1)),
       (t.r5n = this.Kha),
@@ -253,61 +268,25 @@ let CharacterMovementSyncComponent = class CharacterMovementSyncComponent extend
       t
     );
   }
-  GetRelativeMoveSample(s, r = !1) {
-    if (s?.IsValid()) {
-      var h = s.RootComponent.AttachParent?.GetOwner();
-      if (h?.IsValid()) {
-        let t = !1;
-        if (!(h instanceof TsBaseCharacter_1.default)) {
-          if (!(h instanceof TsBaseItem_1.default)) return;
-          t = !0;
-        }
-        let e = void 0,
-          i = new UE.Transform();
-        if (t) {
-          var o = h,
-            o = ActorUtils_1.ActorUtils.GetEntityByActor(o);
-          if (!o?.Valid) return;
-          (e = o.Entity.GetComponent(0).GetCreatureDataId()),
-            (i = o.Entity.GetComponent(187).ActorTransform);
-        } else {
-          o = h;
-          if (
-            0 ===
-            (e = o.GetEntityNoBlueprint()?.GetComponent(0)?.GetCreatureDataId())
-          )
-            return;
-          i = o.Mesh.GetSocketTransform(s.RootComponent.AttachSocketName);
-        }
-        if (r) {
-          (h = UE.KismetMathLibrary.TransformLocation(i, s.LeaveSphereCenter)),
-            (o =
-              (this.CacheLocation.DeepCopy(h),
-              Vector_1.Vector.DistSquared(
-                this.$Hr.Location,
-                this.CacheLocation,
-              )));
-          if (o > s.LeaveSphereRadius * s.LeaveSphereRadius)
-            return (
-              (this.LastHasBaseMovement = !1),
-              void (this.LastBasePlatform = void 0)
-            );
-        }
-        (r = this.isn.Actor.CapsuleComponent.GetScaledCapsuleHalfHeight()),
-          (h = this.isn.Actor.K2_GetActorLocation()),
-          (o =
-            ((h.Z -= r), UE.KismetMathLibrary.InverseTransformLocation(i, h))),
-          (s = this.ActorComp.ActorRotation),
-          (r = UE.KismetMathLibrary.InverseTransformRotation(i, s)),
-          (h = Protocol_1.Aki.Protocol.kWn.create());
-        return (
-          (h.FWn = MathUtils_1.MathUtils.NumberToLong(e)),
-          (h.HWn = { X: o.X, Y: o.Y, Z: o.Z }),
-          (h.VWn = { Pitch: r.Pitch, Roll: r.Roll, Yaw: r.Yaw }),
-          h
-        );
-      }
-    }
+  GetRelativeMoveSample(t, e = !1) {
+    var i, s, h;
+    if (!e || !t.CheckLeave(this.$Hr.Location))
+      return (
+        (e = this.ActorComp.ActorRotation),
+        (h = this.isn.ScaledHalfHeight),
+        ((s = this.isn.Actor.D_K2_GetActorLocation()).Z -= h),
+        (h = (0, puerts_1.$ref)(void 0)),
+        (i = (0, puerts_1.$ref)(void 0)),
+        t.TransformToRelativeSpace(s, e, h, i),
+        (s = (0, puerts_1.$unref)(h)),
+        (e = (0, puerts_1.$unref)(i)),
+        ((h = Protocol_1.Aki.Protocol.kWn.create()).FWn =
+          MathUtils_1.MathUtils.NumberToLong(t.EntityHandle.CreatureDataId)),
+        (h.HWn = { X: s.X, Y: s.Y, Z: s.Z }),
+        (h.VWn = { Pitch: e.Pitch, Roll: e.Roll, Yaw: e.Yaw }),
+        h
+      );
+    (this.LastHasBaseMovement = !1), (this.LastBasePlatform = void 0);
   }
   RecordLastData(t = !1) {
     (this.LastMovementMode = this.$Hr.MovementMode),
@@ -322,86 +301,111 @@ let CharacterMovementSyncComponent = class CharacterMovementSyncComponent extend
     t = this.Entity.TimeDilation * (this.TimeScaleComp?.CurrentTimeScale ?? 1);
     this.LastTimeScale = t;
   }
-  CalcRelativeMove(t, e, i, s, r, h) {
-    if (((0, puerts_1.$set)(h, !1), !t.wWn || !e.wWn)) return !1;
-    let o = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+  CalcRelativeMove(t, e, i, s, h) {
+    if (!t.wWn || !e.wWn) return !1;
+    let r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       t.wWn.BaseMovementEntityId,
     );
     if (
-      !(o =
-        o ||
+      !(r =
+        r ||
         ModelManager_1.ModelManager.CreatureModel.GetEntityWithDelayRemoveContainer(
           t.wWn.BaseMovementEntityId,
         ))
     )
       return !1;
-    let n = !1,
-      a = void 0;
-    if (o.Entity.GetComponent(187)) {
-      n = !0;
-      var c = o.Entity.GetComponent(187),
-        u =
-          ((0, puerts_1.$set)(h, c.IsMoveAutonomousProxy),
-          c.GetInteractionMainActor());
-      if (!(a = u.BasePlatform)?.IsValid()) return !1;
-      this.TmpLocation.DeepCopy(a.K2_GetActorLocation()),
-        this.TmpRotation.DeepCopy(a.K2_GetActorRotation()),
-        this.MoveComp?.CharacterMovement.AddTickPrerequisiteComponent(
-          c.GetPrimitiveComponent(),
-        );
-    } else {
-      (u = o.Entity.GetComponent(3)), (c = u.Actor);
-      if (
-        ((0, puerts_1.$set)(h, u.IsMoveAutonomousProxy),
-        !(a = c.BasePlatform)?.IsValid())
-      )
-        return !1;
-      o.Entity.GetComponent(102)?.SetTakeOverTick(!0),
-        this.TmpLocation.DeepCopy(a.K2_GetActorLocation()),
-        this.TmpRotation.DeepCopy(a.K2_GetActorRotation()),
-        this.MoveComp?.CharacterMovement.AddTickPrerequisiteComponent(c.Mesh);
-    }
-    Vector_1.Vector.Lerp(t.wWn.RelativeLocation, e.wWn.RelativeLocation, i, s),
+    var o = BasePlatform_1.BasePlatformController.GetBasePlatformByEntity(r);
+    if (!o) return !1;
+    o.OnCharacterEnter(this.MoveComp.CharacterMovement),
+      Vector_1.Vector.Lerp(
+        t.wWn.RelativeLocation,
+        e.wWn.RelativeLocation,
+        i,
+        s,
+      ),
       Rotator_1.Rotator.Lerp(
         t.wWn.RelativeRotation,
         e.wWn.RelativeRotation,
         i,
-        r,
+        h,
       );
-    let _ = new UE.Transform();
-    _ = n
-      ? o.Entity.GetComponent(187).ActorTransform
-      : o.Entity.GetComponent(3).Actor.Mesh.GetSocketTransform(
-          a.RootComponent.AttachSocketName,
-        );
-    (h = UE.KismetMathLibrary.TransformLocation(_, s.ToUeVector())),
-      s.DeepCopy(h),
-      (u = this.isn.Actor.CapsuleComponent.GetScaledCapsuleHalfHeight()),
-      (s.Z += u),
-      (c = UE.KismetMathLibrary.TransformRotation(_, r.ToUeRotator()));
-    return r.DeepCopy(c), !0;
+    (t = (0, puerts_1.$ref)(void 0)),
+      (e = (0, puerts_1.$ref)(void 0)),
+      o.TransformFromRelativeSpace(s.ToUeVector(), h.ToUeRotator(), t, e),
+      s.DeepCopy((0, puerts_1.$unref)(t)),
+      (i = this.isn.ScaledHalfHeight);
+    return (s.Z += i), h.DeepCopy((0, puerts_1.$unref)(e)), !0;
   }
-  ApplyMoveSample(t, e, i, s, r, h, o, n, a, c, u) {
-    super.ApplyMoveSample(t, e, i, s, r, h, o, n, a, c, u),
+  CheckRelativeMove(e, i, s, h, r) {
+    if (e.wWn && i.wWn) {
+      let t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+        e.wWn.BaseMovementEntityId,
+      );
+      if (
+        (t =
+          t ||
+          ModelManager_1.ModelManager.CreatureModel.GetEntityWithDelayRemoveContainer(
+            e.wWn.BaseMovementEntityId,
+          ))
+      ) {
+        var o =
+          BasePlatform_1.BasePlatformController.GetBasePlatformByEntity(t);
+        if (o)
+          return (
+            o.OnCharacterEnter(this.MoveComp.CharacterMovement),
+            Vector_1.Vector.Lerp(
+              e.wWn.RelativeLocation,
+              i.wWn.RelativeLocation,
+              s,
+              h,
+            ),
+            Rotator_1.Rotator.Lerp(
+              e.wWn.RelativeRotation,
+              i.wWn.RelativeRotation,
+              s,
+              r,
+            ),
+            t
+          );
+      }
+    }
+  }
+  TransformFromRelativeMove(t, e, i, s, h) {
+    t = BasePlatform_1.BasePlatformController.GetBasePlatformByEntity(t);
+    if (!t) return !1;
+    t.OnCharacterEnter(this.MoveComp.CharacterMovement);
+    var r = (0, puerts_1.$ref)(void 0),
+      o = (0, puerts_1.$ref)(void 0),
+      t =
+        (t.TransformFromRelativeSpace(e.ToUeVector(), i.ToUeRotator(), r, o),
+        s.DeepCopy((0, puerts_1.$unref)(r)),
+        this.isn.ScaledHalfHeight);
+    return (s.Z += t), h.DeepCopy((0, puerts_1.$unref)(o)), !0;
+  }
+  ApplyMoveSample(t, e, i, s, h, r, o, a, n, _, p) {
+    super.ApplyMoveSample(t, e, i, s, h, r, o, a, n, _, p),
       this.MoveComp?.SetForceSpeed(s),
-      (this.ControllerPlayerId = h),
-      this.MHr?.SlideForward.DeepCopy(r),
-      this.MoveComp.CharacterMovement.SetMovementMode(t),
+      (this.ControllerPlayerId = r),
+      this.MHr?.SlideForward.DeepCopy(h),
+      this.isn?.Actor.KuroSetMovementMode({
+        Mode: t,
+        Context: "[CharacterMovementSyncComponent.ApplyMoveSample]",
+      }),
       this.ApplyInput(o, i),
-      this.CacheRotator.Reset(),
-      (this.CacheRotator.Pitch = n),
+      this.CacheFinalRotator.Reset(),
+      (this.CacheFinalRotator.Pitch = a),
       this.isn.Actor.Controller?.SetControlRotation(
-        this.CacheRotator.ToUeRotator(),
+        this.CacheFinalRotator.ToUeRotator(),
       ),
-      this.TimeScaleComp?.SetMoveSyncTimeScale(a);
-    let _ = 0;
+      this.TimeScaleComp?.SetMoveSyncTimeScale(n);
+    let u = 0;
     this.LastReceiveMoveSample &&
-      (_ = 1e3 * (this.LastReceiveMoveSample.J8n - Time_1.Time.NowSeconds)),
-      this.ReportMoveDataApplyInfo(Time_1.Time.CombatServerTime - c, _, u);
+      (u = 1e3 * (this.LastReceiveMoveSample.J8n - Time_1.Time.NowSeconds)),
+      this.ReportMoveDataApplyInfo(Time_1.Time.CombatServerTime - _, u, p);
   }
 };
 (CharacterMovementSyncComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(60)],
+  [(0, RegisterComponent_1.RegisterComponent)(67)],
   CharacterMovementSyncComponent,
 )),
   (exports.CharacterMovementSyncComponent = CharacterMovementSyncComponent);

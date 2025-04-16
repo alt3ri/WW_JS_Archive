@@ -9,7 +9,8 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  UiManager_1 = require("../../Ui/UiManager");
+  UiManager_1 = require("../../Ui/UiManager"),
+  FragmentMemoryActivityData_1 = require("./FragmentMemoryActivityData");
 exports.INFO_FRAGMENTMEMORYITEM = 70140004;
 class FragmentMemoryController extends ControllerBase_1.ControllerBase {
   static OnInit() {
@@ -55,10 +56,10 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(24591, this.ewn), Net_1.Net.Register(22347, this.twn);
+    Net_1.Net.Register(20889, this.ewn), Net_1.Net.Register(21788, this.twn);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(24591), Net_1.Net.UnRegister(22347);
+    Net_1.Net.UnRegister(20889), Net_1.Net.UnRegister(21788);
   }
   static t6i() {
     0 !==
@@ -76,18 +77,18 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       ));
   }
   static RequestPhotoMemory() {
-    Net_1.Net.Call(28396, Protocol_1.Aki.Protocol.Afs.create(), (e) => {
+    Net_1.Net.Call(22416, Protocol_1.Aki.Protocol.Afs.create(), (e) => {
       ModelManager_1.ModelManager.FragmentMemoryModel.OnPhotoMemoryResponse(e);
     });
   }
   static RequestMemoryReward(e) {
     var t = Protocol_1.Aki.Protocol.xfs.create();
     (t.QVn = e),
-      Net_1.Net.Call(24793, t, (e) => {
+      Net_1.Net.Call(27837, t, (e) => {
         e.fMs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.fMs,
-            26527,
+            25104,
           );
       });
   }
@@ -110,6 +111,12 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId =
         e[0]),
       _a.t6i();
+    for (const r of ModelManager_1.ModelManager.ActivityModel.GetAllActivityMap().values())
+      r instanceof FragmentMemoryActivityData_1.FragmentMemoryActivityData &&
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+          r.Id,
+        );
   }),
   (FragmentMemoryController.JDe = () => {
     _a.t6i();

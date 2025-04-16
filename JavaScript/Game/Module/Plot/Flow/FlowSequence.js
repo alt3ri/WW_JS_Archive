@@ -13,7 +13,8 @@ const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   TeleportController_1 = require("../../Teleport/TeleportController"),
   PlotController_1 = require("../PlotController"),
-  SequenceController_1 = require("../Sequence/SequenceController");
+  SequenceController_1 = require("../Sequence/SequenceController"),
+  FlowNetworks_1 = require("./FlowNetworks");
 (exports.FINISH_INDEX = -1), (exports.INVALID_INDEX = -2);
 class FlowSequence {
   constructor() {
@@ -34,11 +35,13 @@ class FlowSequence {
       (this.Ajs = new Map()),
       (this.SubtitleActionPromise = void 0),
       (this.OptionActionPromise = void 0),
+      (this.fkl = new Map()),
+      (this.L9_ = new Map()),
       (this.U$i = -1),
       (this.A$i = !1),
       (this.owt = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "[FlowSequence] Seq开始播放允许跳过"),
+          Log_1.Log.Debug("Plot", 26, "[FlowSequence] Seq开始播放允许跳过"),
           ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!0);
       }),
       (this.P$i = () => {
@@ -57,7 +60,10 @@ class FlowSequence {
           ),
           this.Clear(),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "[FlowSequence] 停止"),
+            Log_1.Log.Debug("Plot", 26, "[FlowSequence] 停止"),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.PlotEndShowTalk,
+          ),
           ControllerHolder_1.ControllerHolder.FlowController.RunNextAction();
       }),
       (this.x$i = (t) => {
@@ -97,7 +103,7 @@ class FlowSequence {
       (this.OnSequenceStop = () => {
         this.b$i(),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "[FlowSequence] Seq播放完毕"),
+            Log_1.Log.Debug("Plot", 26, "[FlowSequence] Seq播放完毕"),
           (this.p$i = !1),
           this.Stop();
       });
@@ -126,8 +132,10 @@ class FlowSequence {
       this.Ajs.clear(),
       (this.U$i = -1),
       (this.A$i = !1),
+      this.fkl.clear(),
+      this.L9_.clear(),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 39, "清理引用数据-FlowSequence");
+        Log_1.Log.Debug("Plot", 38, "清理引用数据-FlowSequence");
   }
   Init(t, e) {
     this.Clear(),
@@ -161,7 +169,7 @@ class FlowSequence {
     if (this.IsInit && !this.IsPlaying) {
       (this.p$i = !0),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "[FlowSequence] 开始"),
+          Log_1.Log.Debug("Plot", 26, "[FlowSequence] 开始"),
         "LevelA" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
           ? (ModelManager_1.ModelManager.SequenceModel.Type = 0)
           : "LevelB" ===
@@ -184,12 +192,12 @@ class FlowSequence {
                     ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.get(
                       t.Position.TalkItemId,
                     )) &&
-                  (e.push(t.FrameEvent.EventKey),
+                  (e.add(t.FrameEvent.EventKey),
                   ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.set(
                     t.Position.TalkItemId,
                     e,
                   ))
-                : ((e = new Array()).push(t.FrameEvent.EventKey),
+                : ((e = new Set()).add(t.FrameEvent.EventKey),
                   ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.set(
                     t.Position.TalkItemId,
                     e,
@@ -200,19 +208,30 @@ class FlowSequence {
         this.v$i.TalkItems?.forEach((t) => {
           t.TidTalk && t.PlayVoice && e.push(t.TidTalk);
         }),
-        SequenceController_1.SequenceController.Play(
-          {
-            Path: this.v$i.SequenceDataAsset,
-            ResetCamera: this.v$i.ResetCamera,
-            FrameEvents: i,
-          },
-          e,
-          this.OnSequenceStop,
-          !0,
-          !0,
-          this.nx.IsWaitRenderData,
-          1,
-        );
+        this.nx.IsBackground
+          ? SequenceController_1.SequenceController.LoadData(
+              {
+                Path: this.v$i.SequenceDataAsset,
+                ResetCamera: this.v$i.ResetCamera,
+                FrameEvents: i,
+              },
+              () => {
+                this.Skip();
+              },
+            )
+          : SequenceController_1.SequenceController.Play(
+              {
+                Path: this.v$i.SequenceDataAsset,
+                ResetCamera: this.v$i.ResetCamera,
+                FrameEvents: i,
+              },
+              e,
+              this.OnSequenceStop,
+              !0,
+              !0,
+              this.nx.IsWaitRenderData,
+              1,
+            );
     }
   }
   Stop(t = 0) {
@@ -226,6 +245,7 @@ class FlowSequence {
     var t;
     await PlotController_1.PlotController.CheckFormation(),
       this.T$i &&
+        !ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode() &&
         (0 <= (t = this.S$i ? this.M$i.get(this.S$i.Id) : 0) &&
           t < this.R$i.length &&
           this.R$i[t] &&
@@ -233,58 +253,72 @@ class FlowSequence {
         this.D$i) &&
         ((t = t < this.D$i.length ? this.D$i[t] : void 0)
           ? (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Plot", 27, "SaveFinalPos", ["transform", t]),
+              Log_1.Log.Debug("Plot", 26, "SaveFinalPos", ["transform", t]),
             await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
               t.GetLocation().ToUeVector(),
               t.GetRotation().Rotator().ToUeRotator(),
               "FlowSequence.Stop",
+              !1,
+            ),
+            FlowNetworks_1.FlowNetworks.RequestSeqEndPosition(
+              this.nx,
+              t.GetLocation(),
+              t.GetRotation().Rotator(),
             ))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
-              27,
+              26,
               "剧情SeqDA的FinalPos未配置，跳过时最终位置将不准确，联系策划修改",
             ));
   }
   Skip() {
-    var t;
-    this.IsInit &&
-      this.IsPlaying &&
-      !this.T$i &&
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[FlowSequence] 执行跳过"),
-      (this.T$i = !0),
-      0 !== ModelManager_1.ModelManager.SequenceModel.CurFinalPos?.length &&
-        (this.D$i = Object.assign(
-          [],
-          ModelManager_1.ModelManager.SequenceModel.CurFinalPos,
-        )),
-      ModelManager_1.ModelManager.SequenceModel.IsFadeEnd.forEach((t) => {
-        this.R$i.push(t);
-      }),
-      ModelManager_1.ModelManager.SequenceModel.FrameEvents.forEach((t, e) => {
-        this.Ajs.set(e, t);
-      }),
-      ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.forEach(
-        (t, e) => {
-          this.Djs.set(e, t);
-        },
-      ),
-      SequenceController_1.SequenceController.ManualFinish(),
-      (this.p$i = !1),
+    if (this.IsInit && this.IsPlaying && !this.T$i) {
+      if (
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Plot", 26, "[FlowSequence] 执行跳过"),
+        (this.T$i = !0),
+        0 !== ModelManager_1.ModelManager.SequenceModel.CurFinalPos?.length &&
+          (this.D$i = Object.assign(
+            [],
+            ModelManager_1.ModelManager.SequenceModel.CurFinalPos,
+          )),
+        ModelManager_1.ModelManager.SequenceModel.IsFadeEnd.forEach((t) => {
+          this.R$i.push(t);
+        }),
+        ModelManager_1.ModelManager.SequenceModel.FrameEvents.forEach(
+          (t, e) => {
+            this.Ajs.set(e, t);
+          },
+        ),
+        ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.forEach(
+          (t, e) => {
+            this.Djs.set(e, t);
+          },
+        ),
+        SequenceController_1.SequenceController.ManualFinish(),
+        (this.p$i = !1),
+        0 < this.fkl.size)
+      )
+        for (const e of this.fkl.keys()) this.OnQteEnd(e);
+      var t;
       this.y$i
         ? this.OnSubtitleEnd(this.S$i.Id)
         : this.w$i() && !this.I$i
-          ? this.OnSelectOption(
+          ? (this.RunSequenceFrameEventsWhenSkip(this.S$i?.Id),
+            this.OnSelectOption(
               ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
                 this.S$i,
               ),
-            )
+            ))
           : this.L$i >= this.v$i.TalkItems.length
-            ? this.OnSequenceStop()
-            : ((t = this.v$i.TalkItems[this.L$i].Id),
+            ? (this.RunSequenceFrameEventsWhenSkip(this.S$i?.Id),
+              this.OnSequenceStop())
+            : (this.RunSequenceFrameEventsWhenSkip(this.S$i?.Id),
+              (t = this.v$i.TalkItems[this.L$i].Id),
               this.OnSubtitleStart(t),
-              this.OnSubtitleEnd(t)));
+              this.OnSubtitleEnd(t));
+    }
   }
   w$i() {
     return !!this.S$i?.Options && 0 < this.S$i?.Options?.length;
@@ -304,7 +338,7 @@ class FlowSequence {
       ((this.E$i = this.M$i.get(e) ?? exports.FINISH_INDEX),
       SequenceController_1.SequenceController.SetNextSequenceIndex(this.E$i),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[FlowSequence] JumpTalk设置下个分支Seq", [
+        Log_1.Log.Debug("Plot", 26, "[FlowSequence] JumpTalk设置下个分支Seq", [
           "NextIndex",
           this.E$i,
         ]),
@@ -317,7 +351,7 @@ class FlowSequence {
       ((this.E$i = exports.FINISH_INDEX),
       SequenceController_1.SequenceController.SetNextSequenceIndex(this.E$i),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[FlowSequence] FinishTalk设置结束"),
+        Log_1.Log.Debug("Plot", 26, "[FlowSequence] FinishTalk设置结束"),
       this.T$i) &&
       this.OnSequenceStop();
   }
@@ -325,12 +359,12 @@ class FlowSequence {
     var t;
     this.IsInit &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Plot", 27, "[FlowSequence][Subtitle] 字幕显示", [
+        Log_1.Log.Info("Plot", 26, "[FlowSequence][Subtitle] 字幕显示", [
           "talkId",
           e,
         ]),
       (t = this.v$i.TalkItems.find((t) => t.Id === e)),
-      this.v$i.TalkItems[this.L$i].Id !== e &&
+      this.GetNextTalkItem().Id !== e &&
         (ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "[FlowSequence][Subtitle] Seq字幕顺序与编辑器对不上",
           ["talkId", e],
@@ -349,55 +383,130 @@ class FlowSequence {
       (this.nx.CurOptionId = -1),
       (this.S$i = t),
       this.b$i(),
-      (this.I$i = !1),
-      this.T$i) &&
-      this.RunSequenceFrameEventsWhenSkip(e);
+      (this.I$i = !1));
   }
   OnSubtitleEnd(t) {
-    return !(
-      !this.IsInit ||
-      !this.y$i ||
-      (void 0 !== t && this.S$i.Id !== t
-        ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
-            "[FlowSequence] 结束对话Id错误",
-            ["id", t],
-            ["cur", this.S$i.Id],
-          ),
-          1)
-        : ((this.y$i = !1),
-          (this.SubtitleActionPromise = new CustomPromise_1.CustomPromise()),
-          Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "[FlowSequence][Subtitle] 字幕关闭"),
-          this.G$i(this.S$i.Actions, this.x$i),
-          0))
+    return (
+      this.T$i && this.RunSequenceFrameEventsWhenSkip(t),
+      !(
+        !this.IsInit ||
+        !this.y$i ||
+        (void 0 !== t && this.S$i.Id !== t
+          ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
+              "[FlowSequence] 结束对话Id错误",
+              ["id", t],
+              ["cur", this.S$i.Id],
+            ),
+            1)
+          : ((this.y$i = !1),
+            (this.SubtitleActionPromise = new CustomPromise_1.CustomPromise()),
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Plot", 26, "[FlowSequence][Subtitle] 字幕关闭"),
+            this.G$i(this.S$i.Actions, this.x$i),
+            0))
+      )
     );
+  }
+  OnQteStart(e) {
+    var t = this.v$i.TalkItems.find((t) => t.Id === e);
+    this.GetNextTalkItem().Id !== e &&
+      (ControllerHolder_1.ControllerHolder.FlowController.LogError(
+        "[FlowSequence][Subtitle] Qte在Seq中顺序与编辑器不符合",
+        ["id", e],
+        ["SeqIndex", ModelManager_1.ModelManager.SequenceModel.SubSeqIndex],
+        ["index in seq", this.L$i],
+      ),
+      (this.L$i = this.v$i.TalkItems.indexOf(t))),
+      this.L$i++;
+    return (
+      this.fkl.set(e, t),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Plot", 26, "[FlowSequence][Subtitle] Qte开启", [
+          "id",
+          e,
+        ]),
+      t.QteId
+    );
+  }
+  OnQteExecute(e, i) {
+    var s = this.fkl.get(e);
+    if (s && s.Options) {
+      this.L9_.set(e, -1);
+      for (let t = 0; t < s.Options.length; t++) {
+        var o = s.Options[t];
+        if (o.TypeParams)
+          switch (o.TypeParams.Type) {
+            case "QteSucceed":
+              i &&
+                (this.w9_(s, t), Log_1.Log.CheckInfo()) &&
+                Log_1.Log.Info(
+                  "Plot",
+                  26,
+                  "[FlowSequence][Subtitle] Qte成功执行",
+                  ["id", e],
+                  ["optionIndex", t],
+                );
+              break;
+            case "QteFailed":
+              i ||
+                (this.w9_(s, t),
+                Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
+                    "Plot",
+                    26,
+                    "[FlowSequence][Subtitle] Qte失败执行",
+                    ["id", e],
+                    ["optionIndex", t],
+                  ));
+              break;
+            case "QteSucceedDelayExec":
+              i && this.L9_.set(e, t);
+              break;
+            case "QteFailedDelayExec":
+              i || this.L9_.set(e, t);
+          }
+      }
+    }
+  }
+  OnQteEnd(t) {
+    if (this.fkl.has(t)) {
+      if (!this.L9_.has(t)) {
+        if (!this.T$i) return;
+        this.OnQteExecute(t, !1);
+      }
+      var e = this.fkl.get(t),
+        i = this.L9_.get(t);
+      this.L9_.delete(t),
+        this.fkl.delete(t),
+        -1 !== i &&
+          (this.w9_(e, i), Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info(
+            "Plot",
+            26,
+            "[FlowSequence][Subtitle] Qte关闭",
+            ["id", t],
+            ["delay option index", i],
+          );
+    }
   }
   OnSelectOption(t) {
     if (!this.IsInit) return !1;
     if (-1 !== this.nx.CurOptionId || this.I$i) return !1;
-    (this.I$i = !0),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Plot", 27, "[FlowSequence] 选择选项", ["index", t]);
-    let e = 0,
-      i = void 0;
-    var s;
+    this.I$i = !0;
+    var e,
+      i,
+      s = this.S$i;
     return (
-      (i =
-        "SystemOption" === this.S$i.Type
-          ? ((s = this.S$i),
-            t < (e = s.OptionConfig.SystemOptions.length)
-              ? s.OptionConfig.SystemOptions[t].Actions
-              : void 0)
-          : t < (e = this.S$i.Options?.length ?? 0)
-            ? this.S$i.Options[t].Actions
-            : void 0),
-      t >= e
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Plot", 26, "[FlowSequence] 选择选项", ["index", t]),
+      (i = t < (e = s.Options?.length ?? 0) ? s.Options[t].Actions : void 0),
+      e <= t
         ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
             "[FlowSequence] 选项超出下标",
           ),
           !1)
         : (ControllerHolder_1.ControllerHolder.FlowController.SelectOption(
-            this.S$i.Id,
+            s.Id,
             t,
           ),
           (this.OptionActionPromise = new CustomPromise_1.CustomPromise()),
@@ -405,12 +514,17 @@ class FlowSequence {
           !0)
     );
   }
-  G$i(t, e) {
+  w9_(t, e) {
+    ControllerHolder_1.ControllerHolder.FlowController.SelectOption(t.Id, e),
+      this.G$i(t.Options[e].Actions, void 0, !0);
+  }
+  G$i(t, e, i = !1) {
     ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
       t,
       (t) => {
         e?.(t);
       },
+      i,
     );
   }
   CreateSubtitleFromTalkItem(e) {
@@ -434,25 +548,38 @@ class FlowSequence {
       : void 0;
   }
   RunSequenceFrameEventsWhenSkip(i) {
-    let t = void 0;
-    (t = this.Djs.has(i) ? this.Djs.get(i) : t) &&
-      t.forEach((t) => {
-        var e = this.Ajs.get(t);
-        e &&
-          0 !== e.length &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Plot",
-              46,
-              "RunSequenceFrameEventsWhenSkip",
-              ["id", i],
-              ["key", t],
-            ),
-          ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
-            e,
-            () => {},
-          ));
-      });
+    if (i) {
+      let t = void 0;
+      (t = this.Djs.has(i) ? this.Djs.get(i) : t) &&
+        t.forEach((t) => {
+          var e = this.Ajs.get(t);
+          e &&
+            0 !== e.length &&
+            (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Plot",
+                45,
+                "RunSequenceFrameEventsWhenSkip",
+                ["id", i],
+                ["key", t],
+              ),
+            ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
+              e,
+              () => {},
+            ));
+        });
+    } else
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Plot", 45, "RunSequenceFrameEventsWhenSkip 但id为空");
+  }
+  GetAllQte() {
+    const e = new Array();
+    return (
+      this.v$i?.TalkItems.forEach((t) => {
+        "QTE" === t.Type && e.push(t.QteId);
+      }),
+      e
+    );
   }
 }
 exports.FlowSequence = FlowSequence;

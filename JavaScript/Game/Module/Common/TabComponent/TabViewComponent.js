@@ -34,7 +34,7 @@ class TabViewComponent {
     e &&
       (e.IsCreateOrCreating || e.IsStarting
         ? Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiTabModule", 11, "异步加载中,不执行页签隐藏", [
+          Log_1.Log.Info("UiTabModule", 10, "异步加载中,不执行页签隐藏", [
             "TabViewName",
             this.N6e,
           ])
@@ -44,16 +44,17 @@ class TabViewComponent {
     void 0 !== this.N6e && this.Xbt(), (this.N6e = t);
     let r = this.jbt.get(t);
     var o;
-    r ||
-      ((o = UiTabViewStorage_1.UiTabViewStorage.GetUiTabViewBase(t)),
-      (r = new o.CreateUiTabView()).SetTabViewName(t),
-      this.Kbt(i, r),
-      this.jbt.set(t, r),
-      r.CreateByResourceIdAsync(o.ResourceId, this.Hbt).then(() => {
-        this.N6e === t ? r?.ShowUiTabViewFromToggle() : r?.HideUiTabView(!0);
-      })),
-      r.SetParams(e),
-      r.SetExtraParams(s),
+    r
+      ? (r.SetParams(e), r.SetExtraParams(s))
+      : ((o = UiTabViewStorage_1.UiTabViewStorage.GetUiTabViewBase(t)),
+        (r = new o.CreateUiTabView()).SetTabViewName(t),
+        r.SetParams(e),
+        r.SetExtraParams(s),
+        this.Kbt(i, r),
+        this.jbt.set(t, r),
+        r.CreateByResourceIdAsync(o.ResourceId, this.Hbt).then(() => {
+          this.N6e === t ? r?.ShowUiTabViewFromToggle() : r?.HideUiTabView(!0);
+        })),
       r.IsCreateOrCreating || r.IsStarting || r.ShowUiTabViewFromToggle();
   }
   GetCurrentTabViewName() {

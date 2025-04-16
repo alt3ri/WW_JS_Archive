@@ -4,8 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  PlotModel_1 = require("../../Module/Plot/PlotModel"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventFadeOutScreen extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
@@ -14,7 +15,7 @@ class LevelEventFadeOutScreen extends LevelGeneralBase_1.LevelEventBase {
         this.FinishExecute(!0);
       });
   }
-  ExecuteNew(e, n) {
+  ExecuteNew(e, r) {
     e &&
       ((e = e),
       (ModelManager_1.ModelManager.PlotModel.IsFadeIn = !1),
@@ -26,17 +27,21 @@ class LevelEventFadeOutScreen extends LevelGeneralBase_1.LevelEventBase {
             this.yDe,
           )
         : ((Global_1.Global.CharacterCameraManager.FadeAmount = 0),
-          LevelLoadingController_1.LevelLoadingController.CloseLoading(
+          ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
             0,
             () => {
               this.FinishExecute(!0),
-                (ModelManager_1.ModelManager.LoadingModel.ScreenEffect = 0);
+                (ModelManager_1.ModelManager.LoadingModel.ScreenEffect = 0),
+                (ModelManager_1.ModelManager.PlotModel.LastPlotAspect =
+                  PlotModel_1.INVALID_NUM),
+                (ModelManager_1.ModelManager.PlotModel.LastPlotColor =
+                  PlotModel_1.INVALID_NUM);
             },
             e?.Ease?.Duration,
           )));
   }
-  ExecuteInGm(e, n) {
-    LevelLoadingController_1.LevelLoadingController.CloseLoading(
+  ExecuteInGm(e, r) {
+    ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
       0,
       () => {
         this.FinishExecute(!0),

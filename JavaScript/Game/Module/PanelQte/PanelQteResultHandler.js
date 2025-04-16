@@ -3,128 +3,121 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteResultHandler = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Global_1 = require("../../Global"),
-  InputController_1 = require("../../Input/InputController"),
-  InputEnums_1 = require("../../Input/InputEnums"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  SceneTeamController_1 = require("../SceneTeam/SceneTeamController");
+  CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  CooperationController_1 = require("../Battle/Cooperation/CooperationController"),
+  RUSH_SKILL_ID = 100001,
+  HOOK_SKILL_ID = 100020;
 class PanelQteResultHandler {
   Handle(r) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "PanelQte",
-        18,
+        17,
         "通用界面QTE结算",
         ["qteId", r.QteId],
         ["success", r.Success],
       );
-    var t = r.Success ? r.Config.SuccessActions : r.Config.FailActions,
-      n = t.Num();
-    for (let e = 0; e < n; e++) {
-      var a = t.Get(e);
-      this.kUe(a, r);
+    var a = r.Success ? r.Config.SuccessActions : r.Config.FailActions,
+      t = a.Num();
+    for (let e = 0; e < t; e++) {
+      var o = a.Get(e);
+      this.kUe(o, r);
     }
   }
-  kUe(e, n) {
-    let a = void 0;
-    if ((a = 0 === e.Target ? n.GetSourceEntity() : this.TOi())) {
+  kUe(e, t) {
+    let o = void 0;
+    if ((o = 0 === e.Target ? t.GetSourceEntity() : this.TOi())) {
       let r = void 0,
-        t = void 0;
-      var o = e.AddTags,
-        l = o.Num();
-      for (let e = 0; e < l; e++) {
-        var s = o.Get(e);
-        (r = r ?? a.GetComponent(190)).AddTag(s.TagId);
+        a = void 0;
+      var l = e.AddTags,
+        i = l.Num();
+      for (let e = 0; e < i; e++) {
+        var n = l.Get(e);
+        (r = r ?? o.GetComponent(203)).AddTag(n.TagId);
       }
-      var u = e.RemoveTags,
-        _ = u.Num();
+      var s = e.RemoveTags,
+        _ = s.Num();
       for (let e = 0; e < _; e++) {
-        var i = u.Get(e);
-        (r = r ?? a.GetComponent(190)).RemoveTag(i.TagId);
+        var d = s.Get(e);
+        (r = r ?? o.GetComponent(203)).RemoveTag(d.TagId);
       }
       var v = e.AddBuffs,
-        p = v.Num();
-      if (0 < p) {
-        var I = n.GetSourceEntity()?.GetComponent(0).GetCreatureDataId(),
-          d = n.PreMessageId;
-        if (I)
-          if (0 <= n.BuffIndex) {
-            var c = v.Get(n.BuffIndex);
-            (t = t ?? a.GetComponent(160)).AddBuff(c, {
-              InstigatorId: I,
+        u = v.Num();
+      if (0 < u) {
+        var c = t.GetSourceEntity()?.GetComponent(0).GetCreatureDataId(),
+          f = t.PreMessageId;
+        if (c)
+          if (0 <= t.BuffIndex) {
+            var C = Number(v.Get(t.BuffIndex));
+            (a = a ?? o.GetComponent(172)).AddBuff(C, {
+              InstigatorId: c,
               Reason: "界面QTE结算时添加",
-              PreMessageId: d,
+              PreMessageId: f,
             });
           } else
-            for (let e = 0; e < p; e++) {
-              var f = v.Get(e);
-              (t = t ?? a.GetComponent(160)).AddBuff(f, {
-                InstigatorId: I,
+            for (let e = 0; e < u; e++) {
+              var p = Number(v.Get(e));
+              (a = a ?? o.GetComponent(172)).AddBuff(p, {
+                InstigatorId: c,
                 Reason: "界面QTE结算时添加",
-                PreMessageId: d,
+                PreMessageId: f,
               });
             }
       }
-      var m = e.CustomActions,
-        C = m.Num();
-      for (let e = 0; e < C; e++) {
-        var g = m.Get(e);
-        this.LOi(g, n, a);
+      var I = e.CustomActions,
+        g = I.Num();
+      for (let e = 0; e < g; e++) {
+        var h = I.Get(e);
+        this.LOi(h, t, o);
       }
     }
   }
-  LOi(e, r, t) {
+  LOi(e, r, a) {
     switch (e) {
       case 0:
-        var n = t.GetComponent(160);
-        n && n.RemoveBuffByEffectType(36, "界面QTE解除冰冻buff");
+        var t = a.GetComponent(172);
+        t && t.RemoveBuffByEffectType(36, "界面QTE解除冰冻buff");
         break;
       case 1:
         this.DOi();
         break;
-      case 2:
-        InputController_1.InputController.InputAction(
-          InputEnums_1.EInputAction.闪避,
-          1,
-        ),
-          InputController_1.InputController.InputAction(
-            InputEnums_1.EInputAction.闪避,
-            2,
-          );
+      case 2: {
+        const a = this.TOi();
+        a?.GetComponent(173)?.PositionState ===
+        CharacterUnifiedStateTypes_1.ECharPositionState.Climb
+          ? (t = a?.GetComponent(175))?.Valid && t.ClimbDash()
+          : a
+              ?.GetComponent(39)
+              ?.BeginSkill(RUSH_SKILL_ID, {
+                Reason: "PanelQteResultHandler.HandleCustomAction.Rush",
+              });
         break;
+      }
       case 3:
-        InputController_1.InputController.InputAction(
-          InputEnums_1.EInputAction.幻象1,
-          1,
-        ),
-          InputController_1.InputController.InputAction(
-            InputEnums_1.EInputAction.幻象1,
-            2,
-          );
+        this.TOi()
+          ?.GetComponent(39)
+          ?.BeginSkill(HOOK_SKILL_ID, {
+            Reason: "PanelQteResultHandler.HandleCustomAction.Hook",
+          });
         break;
       case 4:
-        InputController_1.InputController.InputAction(
-          InputEnums_1.EInputAction.跳跃,
-          1,
-        ),
-          InputController_1.InputController.InputAction(
-            InputEnums_1.EInputAction.跳跃,
-            2,
-          );
+        this.TOi()?.GetComponent(176)?.TryJumpInFreeRunning();
     }
   }
   DOi() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
-    if (0 === e?.CanGoDown(!0)) {
-      var t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(),
-        n = t.length,
-        a = t.indexOf(e);
-      for (let r = 1; r < n; r++) {
-        let e = a + r;
-        e >= n && (e -= n);
-        var o = t[e];
-        if (0 === o?.CanGoBattle())
-          return void SceneTeamController_1.SceneTeamController.TryChangeRoleOrQte(
-            o.GetCreatureDataId(),
+    if (!e?.EntityHandle?.Entity?.GetComponent(203)?.HasTag(-1697149502)) {
+      var a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(),
+        t = a.length,
+        o = a.indexOf(e);
+      for (let r = 1; r < t; r++) {
+        let e = o + r;
+        e >= t && (e -= t);
+        var l = a[e];
+        if (0 === l?.CanGoBattle())
+          return void CooperationController_1.CooperationController.TryCooperate(
+            l.GetCreatureDataId(),
           );
       }
     }

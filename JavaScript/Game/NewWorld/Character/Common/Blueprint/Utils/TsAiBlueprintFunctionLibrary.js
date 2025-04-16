@@ -6,115 +6,156 @@ const puerts_1 = require("puerts"),
   EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
   Global_1 = require("../../../../../Global"),
+  LevelGamePlayUtils_1 = require("../../../../../LevelGamePlay/LevelGamePlayUtils"),
+  LevelGeneralContextDefine_1 = require("../../../../../LevelGamePlay/LevelGeneralContextDefine"),
   ModelManager_1 = require("../../../../../Manager/ModelManager");
 class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
-  static GetQuestState(t, e) {
-    e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
-    return e ? e.Status : 4;
+  Constructor() {}
+  static GetQuestState(e, t) {
+    t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(t);
+    return t ? t.Status : 4;
   }
-  static GetDistanceByPlayer(t) {
-    var e = Global_1.Global.BaseCharacter;
-    return e && (t = EntitySystem_1.EntitySystem.GetComponent(t, 3))?.Valid
-      ? ((t = t.ActorLocationProxy),
-        (e = e.CharacterActorComponent.ActorLocationProxy),
-        Vector_1.Vector.Dist(t, e))
+  static GetDistanceByPlayer(e) {
+    var t = Global_1.Global.BaseCharacter;
+    return t && (e = EntitySystem_1.EntitySystem.GetComponent(e, 3))?.Valid
+      ? ((e = e.ActorLocationProxy),
+        (t = t.CharacterActorComponent.ActorLocationProxy),
+        Vector_1.Vector.Dist(e, t))
       : Number.MAX_VALUE;
   }
-  static CheckPlayerGameplayTag(t, e) {
-    var r = Global_1.Global.BaseCharacter;
+  static CheckPlayerGameplayTag(e, t) {
+    var a = Global_1.Global.BaseCharacter;
     return (
-      !!r &&
-      !!(r = r.CharacterActorComponent.Entity.GetComponent(190)) &&
-      r.HasTag(e?.TagId)
+      !!a &&
+      !!(a = a.CharacterActorComponent.Entity.GetComponent(203)) &&
+      a.HasTag(t?.TagId)
     );
   }
-  static RestartBehaviorTree(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 40);
-    t && t.RestartBehaviorTree();
+  static RestartBehaviorTree(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 46);
+    e && e.RestartBehaviorTree();
   }
-  static SetAiEnabled(t, e, r) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 40);
-    t && ((r = "EcologicalBridge_" + r), e ? t.EnableAi(r) : t.DisableAi(r));
+  static SetAiEnabled(e, t, a) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 46);
+    e && ((a = "EcologicalBridge_" + a), t ? e.EnableAi(a) : e.DisableAi(a));
   }
-  static NeedCheckPlayerImpact(t) {
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 40);
+  static NeedCheckPlayerImpact(e) {
+    var e = EntitySystem_1.EntitySystem.GetComponent(e, 46);
     return (
-      !!t &&
-      !!(t = t.TsAiController.AiController.NpcDecision) &&
-      t.CheckPlayerImpact
+      !!e &&
+      !!(e = e.TsAiController.AiController.NpcDecision) &&
+      e.CheckPlayerImpact
     );
   }
-  static NeedCheckPlayerAttack(t) {
-    return TsAiBlueprintFunctionLibrary.NeedCheckPlayerAttackNoBlueprint(t);
+  static NeedCheckPlayerAttack(e) {
+    return TsAiBlueprintFunctionLibrary.NeedCheckPlayerAttackNoBlueprint(e);
   }
-  static NeedCheckPlayerAttackNoBlueprint(t) {
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 40);
+  static NeedCheckPlayerAttackNoBlueprint(e) {
+    var e = EntitySystem_1.EntitySystem.GetComponent(e, 46);
     return (
-      !!t &&
-      !!(t = t.TsAiController.AiController.NpcDecision) &&
-      t.CheckPlayerAttack
+      !!e &&
+      !!(e = e.TsAiController.AiController.NpcDecision) &&
+      e.CheckPlayerAttack
     );
   }
-  static UpdateInteractionComponent(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 106);
-    t && t.ForceUpdate();
+  static UpdateInteractionComponent(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 116);
+    e && e.ForceUpdate();
   }
-  static OnPlayerAttack(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 171);
-    t && t.OnPlayerAttack();
+  static OnPlayerAttack(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 184);
+    e && e.OnPlayerAttack();
   }
-  static OnPlayerImpact(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 171);
-    t && t.OnPlayerImpact();
+  static OnPlayerImpact(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 184);
+    e && e.OnPlayerImpact();
   }
-  static OnPlayerAttackBegin(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 171);
-    t && t.OnPlayerAttackBegin();
+  static OnPlayerAttackBegin(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 184);
+    e && e.OnPlayerAttackBegin();
   }
-  static OnPlayerImpactBegin(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 171);
-    t && t.OnPlayerImpactBegin();
+  static OnPlayerImpactBegin(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 184);
+    e && e.OnPlayerImpactBegin();
   }
-  static OnPlayerAttackEnd(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 171);
-    t && t.OnPlayerAttackEnd();
+  static OnPlayerAttackEnd(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 184);
+    e && e.OnPlayerAttackEnd();
   }
-  static OnPlayerImpactEnd(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 171);
-    t && t.OnPlayerImpactEnd();
+  static OnPlayerImpactEnd(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 184);
+    e && e.OnPlayerImpactEnd();
   }
-  static UpdateNpcPerformData(t, e, r, a, i) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 171);
-    t &&
-      ((0, puerts_1.$set)(e, t.IsBeingAttacked),
-      (0, puerts_1.$set)(r, t.IsBeingImpacted),
-      (0, puerts_1.$set)(a, t.CollisionDirection),
-      (0, puerts_1.$set)(i, t.CollisionStrength));
+  static UpdateNpcPerformData(e, t, a, r, i) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 184);
+    e &&
+      ((0, puerts_1.$set)(t, e.IsBeingAttacked),
+      (0, puerts_1.$set)(a, e.IsBeingImpacted),
+      (0, puerts_1.$set)(r, e.CollisionDirection),
+      (0, puerts_1.$set)(i, e.CollisionStrength));
   }
-  static IsAiDriver(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 40);
-    return !!t && t.IsAiDriver;
+  static IsAiDriver(e) {
+    e = EntitySystem_1.EntitySystem.GetComponent(e, 46);
+    return !!e && e.IsAiDriver;
   }
-  static GetRoleActor(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 49)?.GetRoleActor();
+  static GetRoleActor(e) {
+    return EntitySystem_1.EntitySystem.GetComponent(e, 55)?.GetRoleActor();
   }
-  static SetFollowData(t, e, r) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 49)?.SetFollowData(e, r);
+  static SetFollowData(e, t, a) {}
+  static GetFollowActor(e) {
+    return EntitySystem_1.EntitySystem.GetComponent(e, 55)?.GetFollowActor();
   }
-  static GetFollowActor(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 49)?.GetFollowActor();
+  static Reset(e, t) {
+    EntitySystem_1.EntitySystem.GetComponent(e, 55)?.Reset(t);
   }
-  static Reset(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 49)?.Reset(e);
+  static GetToRoleDistance(e) {
+    return EntitySystem_1.EntitySystem.GetComponent(e, 55)?.GetToRoleDistance();
   }
-  static GetToRoleDistance(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 49)?.GetToRoleDistance();
+  static GetSummonType(e) {
+    return 0;
   }
-  static GetSummonType(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 49)?.SummonType;
+  static TsLogInfo(e) {
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("AI", 6, e);
   }
-  static TsLogInfo(t) {
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("AI", 6, t);
+  static GetLevelBoolVar(e) {
+    var t = LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
+      e = LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarRefFormAiLevelVar(e);
+    return (
+      (e.Type = "Boolean"),
+      LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarValue(e, t)
+    );
+  }
+  static GetLevelIntVar(e) {
+    var t = LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
+      e = LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarRefFormAiLevelVar(e);
+    return (
+      (e.Type = "Int"),
+      LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarValue(e, t)
+    );
+  }
+  static GetLevelStringVar(e) {
+    var t = LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
+      e = LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarRefFormAiLevelVar(e);
+    return (
+      (e.Type = "String"),
+      LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarValue(e, t)
+    );
+  }
+  static GetLevelFloatVar(e) {
+    var t = LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
+      e = LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarRefFormAiLevelVar(e);
+    return (
+      (e.Type = "Float"),
+      LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarValue(e, t)
+    );
+  }
+  static GetLevelPosVar(e) {
+    var t = LevelGeneralContextDefine_1.EntityContext.Create(e.Id),
+      e = LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarRefFormAiLevelVar(e),
+      e =
+        ((e.Type = "Transform"),
+        LevelGamePlayUtils_1.LevelGamePlayUtils.GetVarValue(e, t));
+    return new UE.Vector(e.X ?? 0, e.Y ?? 0, e.Z ?? 0);
   }
 }
 exports.default = TsAiBlueprintFunctionLibrary;

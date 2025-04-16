@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DARK_COAST_HELP_ID =
+    exports.PUPU_VILLAGE_POOL_CONFIG_ID =
     exports.DARK_COAST_POOL_CONFIG_ID =
     exports.CHENG_XIAO_SHAN_POOL_CONFIG_ID =
     exports.MING_SU_POOL_CONFIG_ID =
@@ -12,5 +13,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MING_SU_POOL_CONFIG_ID = 1),
   (exports.CHENG_XIAO_SHAN_POOL_CONFIG_ID = 2),
   (exports.DARK_COAST_POOL_CONFIG_ID = 3),
+  (exports.PUPU_VILLAGE_POOL_CONFIG_ID = 4),
   (exports.DARK_COAST_HELP_ID = 113);
 //# sourceMappingURL=MingSuDefine.js.map

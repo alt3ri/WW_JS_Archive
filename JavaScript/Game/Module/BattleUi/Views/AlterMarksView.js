@@ -142,7 +142,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
                   this.pYe,
                 ));
             for (const s of this.rYe.Entity.CheckGetComponent(
-              161,
+              173,
             ).GetAggroSet()) {
               var i =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityById(
@@ -238,7 +238,7 @@ class AlterMarksView extends BattleChildView_1.BattleChildView {
           AlterMarksView.SYe,
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCommon", 32, "获取当前角色BaseTagComponent失败");
+        Log_1.Log.Error("UiCommon", 31, "获取当前角色BaseTagComponent失败");
   }
   Reset() {
     super.Reset(),

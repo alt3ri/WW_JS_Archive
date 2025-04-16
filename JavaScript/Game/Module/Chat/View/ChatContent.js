@@ -13,15 +13,17 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   ChatContentBase_1 = require("./ChatContentBase");
 class ChatContent extends ChatContentBase_1.ChatContentBase {
   constructor() {
     super(...arguments),
       (this.oSt = void 0),
+      (this.gLt = void 0),
       (this.SPe = void 0),
       (this.rSt = () => {
-        this.nSt(), this.K7e(), this.LOn();
+        this.nSt(), this.jmc(), this.LOn();
       });
   }
   OnRegisterComponent() {
@@ -33,10 +35,17 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
       [4, UE.UITexture],
       [5, UE.UIItem],
       [6, UE.UIText],
+      [8, UE.UIItem],
+      [9, UE.UITexture],
+      [10, UE.UIText],
       [7, UE.UIItem],
-      [8, UE.UITexture],
-      [9, UE.UIText],
+      [11, UE.UIItem],
     ];
+  }
+  async OnBeforeStartAsync() {
+    (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      (this.gLt.SkipDestroyActor = !0),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(7).GetOwner());
   }
   OnStart() {
     var e = this.GetItem(0);
@@ -46,7 +55,7 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
       this.Ore();
   }
   OnBeforeDestroy() {
-    (this.oSt = void 0), this.kre();
+    (this.oSt = void 0), this.gLt?.Destroy(), this.kre();
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
@@ -61,7 +70,7 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
     );
   }
   bl() {
-    this.nSt(), this.Dke(), this.K7e(), this.sSt(), this.LOn(), this.qxa();
+    this.nSt(), this.Dke(), this.jmc(), this.sSt(), this.LOn(), this.Nxa();
   }
   nSt() {
     var e = ModelManager_1.ModelManager.PersonalModel,
@@ -70,7 +79,9 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
     i && i.PlayerId === t
       ? this.oSt.RefreshByRoleIdUseCard(e.GetHeadPhotoId())
       : (i = ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(t)) &&
-        ((e = i?.GetPlayerIcon())
+        ((e = ModelManager_1.ModelManager.FriendModel.GetFriendById(t)) &&
+          this.oSt?.SetIsGray(!e.PlayerIsOnline),
+        (e = i?.GetPlayerIcon())
           ? this.oSt.RefreshByRoleIdUseCard(e)
           : this.oSt.RefreshByPlayerId(t, !0));
   }
@@ -97,7 +108,7 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
             }),
             r)
           : (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Chat", 8, "表情表找不到对应的Id", [
+              Log_1.Log.Warn("Chat", 5, "表情表找不到对应的Id", [
                 "expressionId",
                 t,
               ]),
@@ -105,7 +116,7 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
             s)
         ).SetUIActive(!1));
   }
-  qxa() {
+  Nxa() {
     if (
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
     ) {
@@ -118,38 +129,55 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
         ? (t = i.GetPsnUserId())
         : (s = ModelManager_1.ModelManager.FriendModel.GetFriendById(r)) &&
           ((t = s.GetSdkUserId()), (e = s.GetSdkOnlineId()));
-      i = "" !== t || (void 0 !== e && "" !== e);
-      this.GetTexture(8)?.SetUIActive(i),
-        this.GetItem(7)?.SetUIActive(i),
-        this.GetText(9)?.SetUIActive(i),
-        i && this.GetText(9)?.SetText(e);
+      i = "" !== (t ?? "") || "" !== (e ?? "");
+      this.GetTexture(9)?.SetUIActive(i),
+        this.GetItem(8)?.SetUIActive(i),
+        this.GetText(10)?.SetUIActive(i),
+        this.GetItem(11)?.SetUIActive(!i),
+        i && this.GetText(10)?.SetText(e);
     } else
-      this.GetTexture(8)?.SetUIActive(!1),
-        this.GetText(9)?.SetUIActive(!1),
-        this.GetItem(7)?.SetUIActive(!1);
+      this.GetTexture(9)?.SetUIActive(!1),
+        this.GetText(10)?.SetUIActive(!1),
+        this.GetItem(8)?.SetUIActive(!1),
+        this.GetItem(11)?.SetUIActive(!1);
   }
-  K7e() {
+  jmc() {
     var e = this.ChatContentData.SenderPlayerId,
       t = this.GetText(6),
       i = this.ChatContentData.ChatRoomType;
     if (2 === i || 3 === i) {
       i = ModelManager_1.ModelManager.PersonalModel.GetPersonalInfoData();
-      if (i && i.PlayerId === e) t.SetText(i.Name);
+      if (i && i.PlayerId === e)
+        t.SetText(i.Name),
+          this.gLt?.Refresh(i.CurPlayerTitleId, i.CurPlayerTitleLevel, i.Sex);
       else {
         i = ModelManager_1.ModelManager.FriendModel.GetFriendById(e);
         if (i) {
           var r = i.FriendRemark;
           StringUtils_1.StringUtils.IsEmpty(r)
             ? t.SetText(i.PlayerName)
-            : t.SetText(r);
+            : t.SetText(r),
+            this.gLt?.Refresh(
+              i.PlayerTitleId,
+              i.PlayerTitleStarLevel,
+              i.PlayerSex,
+            );
         } else {
-          i = ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(e);
-          if (!i) return void t.SetUIActive(!1);
-          t.SetText(i.GetPlayerName());
+          r = ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(e);
+          if (!r)
+            return (
+              t.SetUIActive(!1), void this.gLt?.GetRootItem().SetUIActive(!1)
+            );
+          t.SetText(r.GetPlayerName()),
+            this.gLt?.Refresh(
+              r.GetPlayerTitleId(),
+              r.GetPlayerTitleStarLevel(),
+              r.GetSex(),
+            );
         }
       }
       t.SetUIActive(!0);
-    } else t.SetUIActive(!1);
+    } else t.SetUIActive(!1), this.gLt?.GetRootItem().SetUIActive(!1);
   }
   sSt() {
     var e = this.GetText(2),

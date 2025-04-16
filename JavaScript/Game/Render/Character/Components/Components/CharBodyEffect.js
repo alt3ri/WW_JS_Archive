@@ -1,10 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharBodyEffect = void 0);
-const MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+const Log_1 = require("../../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  EffectSystem_1 = require("../../../../Effect/EffectSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   RenderConfig_1 = require("../../../Config/RenderConfig"),
   CharRenderBase_1 = require("../../Manager/CharRenderBase");
@@ -13,32 +16,83 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
     super(...arguments),
       (this.Entity = void 0),
       (this.vJ = void 0),
-      (this.Visible = !1),
-      (this.Opacity = 0),
+      (this.CastShadow = !0),
+      (this.Visible = !0),
+      (this.Opacity = 1),
+      (this.PendingCastShadow = !0),
+      (this.PendingVisible = !0),
+      (this.PendingOpacity = 1),
       (this.EffectHandles = []),
       (this.NeedUpdate = !1),
-      (this.gfn = (e) => {
-        var t,
-          s = this.EffectHandles.findIndex((t) => t.Id === e);
-        s < 0 ||
-          ((t = this.EffectHandles[s]),
-          this.EffectHandles.splice(s, 1),
-          t.RemoveFinishCallback(this.gfn));
+      (this.gfn = (t) => {
+        var e = this.EffectHandles.indexOf(t);
+        e < 0 ||
+          (this.EffectHandles.splice(e, 1),
+          EffectSystem_1.EffectSystem.RemoveFinishCallback(t, this.gfn));
       }),
       (this.OnSetActorVisible = (t, e) => {
-        (this.Entity && t !== this.Entity.Id) || this.ehr(e);
+        (this.Entity && t !== this.Entity.Id) ||
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Render",
+              25,
+              "BodyEffect OnSetActorVisible",
+              ["Actor", this.GetRenderingComponent()?.GetCachedOwnerName()],
+              ["Entity", this.Entity],
+              ["visible", e],
+            ),
+          this.ehr(e));
       }),
       (this.yvi = () => {
         for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
           if (t.IsControl() && t.EntityHandle?.Entity === this.Entity)
-            return void this.ehr(!0);
-        this.ehr(!1);
+            return (
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug(
+                  "Render",
+                  25,
+                  "BodyEffect OnChangeTeam",
+                  ["Actor", this.GetRenderingComponent()?.GetCachedOwnerName()],
+                  ["Entity", this.Entity],
+                  ["visible", !0],
+                ),
+              void this.ehr(!0)
+            );
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Render",
+            25,
+            "BodyEffect OnChangeTeam",
+            ["Actor", this.GetRenderingComponent()?.GetCachedOwnerName()],
+            ["Entity", this.Entity],
+            ["visible", !1],
+          ),
+          this.ehr(!1);
       }),
       (this.xie = (t, e) => {
-        t.Entity === this.Entity && this.ehr(!0);
+        t.Entity === this.Entity &&
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Render",
+              25,
+              "BodyEffect OnChangeRole",
+              ["Actor", this.GetRenderingComponent()?.GetCachedOwnerName()],
+              ["Entity", this.Entity],
+              ["visible", !0],
+            ),
+          this.ehr(!0));
       }),
       (this.M9s = () => {
-        this.ehr(!1);
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Render",
+            25,
+            "BodyEffect OnGoDownFinish",
+            ["Actor", this.GetRenderingComponent()?.GetCachedOwnerName()],
+            ["Entity", this.Entity],
+            ["visible", !1],
+          ),
+          this.ehr(!1);
       });
   }
   GetStatName() {
@@ -51,15 +105,29 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
     super.Awake(t);
   }
   RegisterEffect(t) {
-    this.EffectHandles.push(t),
-      (1 === this.Opacity && this.Visible) ||
-        t.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible),
-      t.AddFinishCallback(this.gfn);
+    0 <= this.EffectHandles.indexOf(t)
+      ? EffectSystem_1.EffectSystem.UpdateBodyEffect(
+          t,
+          this.Opacity,
+          this.Visible,
+          this.CastShadow,
+        )
+      : (this.EffectHandles.push(t),
+        (1 === this.Opacity && this.Visible && this.CastShadow) ||
+          EffectSystem_1.EffectSystem.UpdateBodyEffect(
+            t,
+            this.Opacity,
+            this.Visible,
+            this.CastShadow,
+          ),
+        EffectSystem_1.EffectSystem.AddFinishCallback(t, this.gfn));
   }
   UnregisterEffect(t) {
     var e = this.EffectHandles.indexOf(t);
     e < 0 ||
-      (this.EffectHandles.splice(e, 1), t.RemoveFinishCallback(this.gfn));
+      (EffectSystem_1.EffectSystem.UpdateBodyEffect(t, 1, !0, !0),
+      this.EffectHandles.splice(e, 1),
+      EffectSystem_1.EffectSystem.RemoveFinishCallback(t, this.gfn));
   }
   Start() {
     this.Opacity = 1;
@@ -92,9 +160,27 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
   }
   Update() {
     if (this.NeedUpdate) {
+      (this.Visible = this.PendingVisible),
+        (this.Opacity = this.PendingOpacity),
+        (this.CastShadow = this.PendingCastShadow);
       for (const t of this.EffectHandles)
-        t.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible);
-      this.NeedUpdate = !1;
+        EffectSystem_1.EffectSystem.UpdateBodyEffect(
+          t,
+          this.Opacity,
+          this.Visible,
+          this.CastShadow,
+        );
+      (this.NeedUpdate = !1),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Render",
+            25,
+            "BodyEffectUpdate",
+            ["Actor", this.GetRenderingComponent()?.GetCachedOwnerName()],
+            ["Opacity", this.Opacity],
+            ["Visible", this.Visible],
+            ["CastShadow", this.CastShadow],
+          );
     }
   }
   LateUpdate() {}
@@ -120,11 +206,29 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       ));
   }
   SetOpacity(t) {
-    MathUtils_1.MathUtils.IsNearlyEqual(this.Opacity, t) ||
-      ((this.Opacity = t), (this.NeedUpdate = !0));
+    (!this.NeedUpdate &&
+      MathUtils_1.MathUtils.IsNearlyEqual(this.Opacity, t)) ||
+      ((this.PendingOpacity = t),
+      (this.NeedUpdate = !0),
+      TimerSystem_1.TimerSystem.Next(() => {
+        this.Update();
+      }));
   }
   ehr(t) {
-    this.Visible !== t && ((this.Visible = t), (this.NeedUpdate = !0));
+    (!this.NeedUpdate && this.Visible === t) ||
+      ((this.PendingVisible = t),
+      (this.NeedUpdate = !0),
+      TimerSystem_1.TimerSystem.Next(() => {
+        this.Update();
+      }));
+  }
+  SetCastShadow(t) {
+    (!this.NeedUpdate && this.CastShadow === t) ||
+      ((this.PendingCastShadow = t),
+      (this.NeedUpdate = !0),
+      TimerSystem_1.TimerSystem.Next(() => {
+        this.Update();
+      }));
   }
 }
 exports.CharBodyEffect = CharBodyEffect;

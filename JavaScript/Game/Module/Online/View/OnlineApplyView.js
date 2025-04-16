@@ -7,7 +7,6 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
-  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
@@ -70,8 +69,8 @@ class OnlineApplyView extends UiTickViewBase_1.UiTickViewBase {
     (this.XFt = this.GetText(5)),
       (this.pNi = this.GetSprite(6)),
       this.RefreshView(),
-      this.iPa(),
-      this.qxa();
+      this.sPa(),
+      this.Nxa();
   }
   OnTick(e) {
     var i = ModelManager_1.ModelManager.OnlineModel.CurrentApply;
@@ -119,12 +118,14 @@ class OnlineApplyView extends UiTickViewBase_1.UiTickViewBase {
       this.pNi.SetFillAmount(
         i.ApplyTimeLeftTime / ModelManager_1.ModelManager.OnlineModel.ApplyCd,
       ),
-      (t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+      (t = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(
         i.HeadId,
-      )?.Card) && this.SetTextureByPath(t, this.GetTexture(0)),
+        !1,
+      )) &&
+        this.SetTextureByPath(t.GetRoleHeadIconCircle(), this.GetTexture(0)),
       this.GetButton(8)?.RootUIComp.SetUIActive(!0));
   }
-  iPa() {
+  sPa() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e =
@@ -134,7 +135,7 @@ class OnlineApplyView extends UiTickViewBase_1.UiTickViewBase {
         this.GetItem(15)?.SetUIActive(!e))
       : this.GetItem(15)?.SetUIActive(!1);
   }
-  qxa() {
+  Nxa() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e =

@@ -6,33 +6,33 @@ const UE = require("ue"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   PopupTypeRightItem_1 = require("../../../Ui/Common/PopupTypeRightItem"),
-  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  MapHelper_1 = require("../../Map/MapHelper");
 class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.InnerPointerIsInView = !1),
       (this.UiBgItem = void 0),
       (this.a3o = void 0),
-      (this.YVa = 0),
+      (this.jHa = 0),
       (this.Map = void 0),
       (this.h3o = void 0),
       (this.K3t = (e) => {
-        "Close" === e && this.m2e();
+        "Close" === e && this.Gh_();
       }),
       (this.Close = (e, t = !0) => {
         (this.h3o = e),
-          (this.YVa = 1),
-          t ? this.SPe.PlayLevelSequenceByName("Close") : this.m2e();
+          (this.jHa = 1),
+          t ? this.SPe.PlayLevelSequenceByName("Close") : this.Gh_();
       });
   }
   get IsUiOpen() {
-    return 0 === this.YVa;
+    return 0 === this.jHa;
   }
   get IsUiCloseComplete() {
-    return 2 === this.YVa;
+    return 2 === this.jHa;
   }
   get IsUiClose() {
-    return 1 === this.YVa;
+    return 1 === this.jHa;
   }
   get SPe() {
     var e;
@@ -72,29 +72,42 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
       this.UiBgItem.OverrideBackBtnCallBack(this.Close),
       this.AddChild(this.UiBgItem));
   }
+  Gh_() {
+    this.SetActive(!1), this.m2e();
+  }
   m2e() {
-    this.SetActive(!1),
-      this.OnCloseWorldMapSecondaryUi(),
-      (this.YVa = 2),
+    this.OnCloseWorldMapSecondaryUi(),
+      (this.jHa = 2),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.WorldMapSecondaryUiClosed,
       ),
       this.h3o && this.h3o();
   }
-  get PointerIsInView() {
-    return this.InnerPointerIsInView;
+  OnBeforeHide() {
+    this.SPe.IsPlayingSequence("Close") &&
+      (this.SPe.StopCurrentSequence(), this.m2e());
   }
-  ShowPanel(e, ...t) {
-    (this.Map = e),
-      (this.YVa = 0),
+  MarkForOpen() {
+    this.jHa = 0;
+  }
+  async ShowPanel(e, ...t) {
+    this.IsUiOpen &&
+      ((this.Map = e),
+      this.SetupWorldMapSecondaryUiLayout(),
+      await this.OnBeforeShowWorldMapSecondaryUiAsync(...t),
       this.RootItem.SetAlpha(1),
       this.SetActive(!0),
       this.OnShowWorldMapSecondaryUi(...t),
       this.SPe.PlayLevelSequenceByName("Start"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.WorldMapSecondaryUiOpened,
-      );
+      ));
   }
+  UpdateMap(e) {
+    this.Map = e;
+  }
+  async OnBeforeShowWorldMapSecondaryUiAsync() {}
+  SetupWorldMapSecondaryUiLayout() {}
   OnShowWorldMapSecondaryUi() {}
   OnCloseWorldMapSecondaryUi() {}
   GetResourceId() {
@@ -103,6 +116,15 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
   GetGuideFocusUiItem() {}
   GetNeedBgItem() {
     return !0;
+  }
+  CheckAndShowCrossMapTips(e) {
+    e.IsTracked ||
+      MapHelper_1.MapHelper.CheckAndShowCrossMapTips(
+        e.MarkId,
+        e.MarkType,
+        e.TrackAreaId,
+        e.WorldPosition,
+      );
   }
 }
 exports.WorldMapSecondaryUi = WorldMapSecondaryUi;

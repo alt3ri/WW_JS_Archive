@@ -72,7 +72,7 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
             this.GetText(8).ShowTextNew(e.Dec))
           : this.GetItem(6).SetUIActive(!1))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 38, "属性表中找不到对应的属性ID配置数据");
+        Log_1.Log.Error("Role", 37, "属性表中找不到对应的属性ID配置数据");
   }
   SetAttrValue(e) {
     let i = void 0,

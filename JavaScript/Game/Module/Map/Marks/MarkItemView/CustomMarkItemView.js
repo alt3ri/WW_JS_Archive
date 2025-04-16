@@ -6,9 +6,6 @@ class CustomMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
     super(e);
   }
-  OnInitialize() {
-    super.OnInitialize(), this.OnIconPathChanged(this.Holder.IconPath);
-  }
   GetInteractiveFlag() {
     return !this.Holder.IsNewCustomMarkItem && super.GetInteractiveFlag();
   }

@@ -72,7 +72,7 @@ class TodTimeAdjustingAnimation {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "TimeOfDay",
-        17,
+        16,
         "TodTimeAdjustingAnimation",
         ["this.MaxV", this.hLo],
         ["this.A", this.RJ],

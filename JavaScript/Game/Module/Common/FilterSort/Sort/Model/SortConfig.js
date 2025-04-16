@@ -19,6 +19,10 @@ class SortConfig extends ConfigBase_1.ConfigBase {
     return SortRuleByIdAndDataId_1.configSortRuleByIdAndDataId.GetConfig(e, r)
       .Icon;
   }
+  GetSortRuleAddType(e, r) {
+    return SortRuleByIdAndDataId_1.configSortRuleByIdAndDataId.GetConfig(e, r)
+      .AddType;
+  }
   GetSortRuleAttributeId(e, r) {
     return SortRuleByIdAndDataId_1.configSortRuleByIdAndDataId.GetConfig(e, r)
       .AttributeId;

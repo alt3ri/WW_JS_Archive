@@ -113,24 +113,32 @@ function getCreatorById(e) {
   (exports.getCreatorById = getCreatorById);
 let localSegmentRow = void 0;
 function getLocalSegmentRow() {
-  var e = getSegmentMap(),
-    e = Array.from(e.values());
-  if (
-    !(localSegmentRow =
-      !localSegmentRow && Config_1.Config.Instance.VirtualMacAddress
-        ? e.find(
-            (e) =>
-              Config_1.Config.Instance.VirtualMacAddress === e.MacAddress ||
-              Config_1.Config.Instance.VirtualMacAddress === e.NetworkAddress,
-          )
-        : localSegmentRow)
-  ) {
-    const t = Config_1.Config.Instance.NetworkAddress;
-    localSegmentRow = e.find((e) => e.NetworkAddress === t);
-  }
   if (!localSegmentRow) {
-    const n = Config_1.Config.Instance.MacAddress;
-    localSegmentRow = e.find((e) => e.MacAddress === n);
+    var e = getSegmentMap(),
+      e = Array.from(e.values());
+    if (
+      !(localSegmentRow =
+        !localSegmentRow && Config_1.Config.Instance.VirtualMacAddress
+          ? e.find(
+              (e) =>
+                Config_1.Config.Instance.VirtualMacAddress === e.MacAddress ||
+                Config_1.Config.Instance.VirtualMacAddress === e.NetworkAddress,
+            )
+          : localSegmentRow)
+    ) {
+      const t = Config_1.Config.Instance.NetworkAddress;
+      localSegmentRow = e.find((e) => e.NetworkAddress === t);
+    }
+    if (!localSegmentRow) {
+      const n = Config_1.Config.Instance.MacAddress;
+      localSegmentRow = e.find((e) => e.MacAddress === n);
+    }
+    (0, Log_1.log)(
+      "get localSegmentRow: " +
+        (localSegmentRow
+          ? (0, Util_1.stringify)(localSegmentRow, !1)
+          : "undefined"),
+    );
   }
   return localSegmentRow;
 }

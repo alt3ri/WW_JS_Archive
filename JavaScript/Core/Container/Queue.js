@@ -53,13 +53,13 @@ class Queue {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Container",
-          15,
+          14,
           "下标越界",
           ["index", t],
           ["size", this.n6],
         );
     } else
-      Log_1.Log.CheckError() && Log_1.Log.Error("Container", 15, "队列为空");
+      Log_1.Log.CheckError() && Log_1.Log.Error("Container", 14, "队列为空");
   }
   n7(t) {
     if (0 === this.n6) (this.r7.length = t), (this.t7 = 0), (this.i7 = 0);

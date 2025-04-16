@@ -2,20 +2,23 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemTrialRoleDescription = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
-  JoinTeamController_1 = require("../../../Module/JoinTeam/JoinTeamController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemTrialRoleDescription extends OpenSystemBase_1.OpenSystemBase {
-  async ExecuteOpenView(e, o) {
+  async ExecuteOpenView(e, r) {
     return e.BoardId
-      ? JoinTeamController_1.JoinTeamController.OpenJoinTeamView(e.BoardId, !0)
+      ? ControllerHolder_1.ControllerHolder.JoinTeamController.OpenJoinTeamView(
+          e.BoardId,
+          !0,
+        )
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 36, "角色入队界面参数有误", [
+          Log_1.Log.Error("Quest", 35, "角色入队界面参数有误", [
             "BoardId",
             e.BoardId,
           ]),
         !1);
   }
-  GetViewName(e, o) {
+  GetViewName(e, r) {
     return "JoinTeamView";
   }
 }

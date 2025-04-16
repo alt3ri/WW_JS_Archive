@@ -10,10 +10,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
 class ExploreLevelController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(18717, ExploreLevelController.lVt);
+    Net_1.Net.Register(15784, ExploreLevelController.lVt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(18717);
+    Net_1.Net.UnRegister(15784);
   }
   static ExploreScoreRewardRequest(e, o) {
     var r = new Protocol_1.Aki.Protocol.ats();
@@ -22,11 +22,11 @@ class ExploreLevelController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "ExploreLevel",
-          8,
+          63,
           "客户端请求请求探索进度评分奖励 ExploreScoreRewardRequest",
           ["request", r],
         ),
-      Net_1.Net.Call(22350, r, this._Vt);
+      Net_1.Net.Call(24897, r, this._Vt);
   }
   static CountryExploreScoreInfoRequest(l, s) {
     var e = new Protocol_1.Aki.Protocol.lts();
@@ -34,15 +34,15 @@ class ExploreLevelController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "ExploreLevel",
-          8,
+          63,
           "客户端请求国家探索评分信息 CountryExploreScoreInfoRequest",
           ["request", e],
         );
-    Net_1.Net.Call(29718, e, (e) => {
+    Net_1.Net.Call(21358, e, (e) => {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "ExploreLevel",
-          8,
+          63,
           "服务端返回国家探索评分信息 CountryExploreScoreInfoResponse",
           ["response", e],
         ),
@@ -65,16 +65,16 @@ class ExploreLevelController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "ExploreLevel",
-            8,
+            63,
             "客户端请求国家探索评分信息 CountryExploreScoreInfoRequest",
             ["request", o],
           ),
-        await Net_1.Net.CallAsync(29718, o));
+        await Net_1.Net.CallAsync(21358, o));
     if (o) {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "ExploreLevel",
-          8,
+          63,
           "服务端返回国家探索评分信息 CountryExploreScoreInfoResponse",
           ["response", o],
         );
@@ -92,10 +92,12 @@ class ExploreLevelController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.ExploreLevelController = ExploreLevelController).lVt = (e) => {
   Log_1.Log.CheckInfo() &&
-    Log_1.Log.Info("ExploreLevel", 8, "服务端通知探索等级 ExploreLevelNotify", [
-      "notify",
-      e,
-    ]);
+    Log_1.Log.Info(
+      "ExploreLevel",
+      63,
+      "服务端通知探索等级 ExploreLevelNotify",
+      ["notify", e],
+    );
   var o = ModelManager_1.ModelManager.ExploreLevelModel;
   for (const r of e.FPs) o.SetCountryExploreLevel(r.jVn, r.NPs);
   EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnExploreLevelNotify);
@@ -104,7 +106,7 @@ class ExploreLevelController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "ExploreLevel",
-        8,
+        63,
         "服务端返回探索评分奖励 ExploreScoreRewardResponse",
         ["response", e],
       ),

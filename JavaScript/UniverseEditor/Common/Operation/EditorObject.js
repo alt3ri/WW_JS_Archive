@@ -11,8 +11,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getEditorObjUid =
     exports.genFlowUid =
     exports.genEntityUid =
+    exports.getPrefabEntityUid =
     exports.genPrefabUid =
+    exports.genQuestUidWithNode =
     exports.genQuestUid =
+    exports.genLevelPlayUidWithoutLevelId =
+    exports.genLevelPlayUidWithNode =
     exports.genLevelPlayUid =
     exports.genEntityTemplateUid =
       void 0);
@@ -25,11 +29,23 @@ function genEntityTemplateUid(e) {
 function genLevelPlayUid(e, t) {
   return `l_${e}_` + t;
 }
+function genLevelPlayUidWithNode(e, t, r) {
+  return `l_${e}_${t}_` + r;
+}
+function genLevelPlayUidWithoutLevelId(e) {
+  return "l_" + e;
+}
 function genQuestUid(e) {
   return "q_" + e;
 }
+function genQuestUidWithNode(e, t) {
+  return `q_${e}_` + t;
+}
 function genPrefabUid(e) {
   return "p_" + e;
+}
+function getPrefabEntityUid(e, t) {
+  return `p_${e}_` + t;
 }
 function genEntityUid(e, t) {
   return `e_${e}_` + t;
@@ -142,8 +158,12 @@ async function setEntityTemplateOwner(e, t) {
 }
 (exports.genEntityTemplateUid = genEntityTemplateUid),
   (exports.genLevelPlayUid = genLevelPlayUid),
+  (exports.genLevelPlayUidWithNode = genLevelPlayUidWithNode),
+  (exports.genLevelPlayUidWithoutLevelId = genLevelPlayUidWithoutLevelId),
   (exports.genQuestUid = genQuestUid),
+  (exports.genQuestUidWithNode = genQuestUidWithNode),
   (exports.genPrefabUid = genPrefabUid),
+  (exports.getPrefabEntityUid = getPrefabEntityUid),
   (exports.genEntityUid = genEntityUid),
   (exports.genFlowUid = genFlowUid),
   (exports.getEditorObjUid = getEditorObjUid),

@@ -7,11 +7,17 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   CameraModel_1 = require("../Camera/CameraModel"),
   InputModel_1 = require("../Input/InputModel"),
   KuroSdkModel_1 = require("../KuroSdk/KuroSdkModel"),
+  AlertAreaModel_1 = require("../LevelGamePlay/AlertArea/AlertAreaModel"),
+  BigStuffedDollModel_1 = require("../LevelGamePlay/BigStuffedDoll/BigStuffedDollModel"),
   CipherModel_1 = require("../LevelGamePlay/Cipher/CipherModel"),
   GameSplineModel_1 = require("../LevelGamePlay/Common/GameSplineModel"),
   DigitalScreenModel_1 = require("../LevelGamePlay/DigitalScreen/DigitalScreenModel"),
+  FishingQteModel_1 = require("../LevelGamePlay/FishingQte/FishingQteModel"),
+  GongduolaSummonModel_1 = require("../LevelGamePlay/GongduolaSummon/GongduolaSummonModel"),
+  GravityFlipModel_1 = require("../LevelGamePlay/GravityFlip/GravityFlipModel"),
   LevelGamePlayModel_1 = require("../LevelGamePlay/LevelGamePlayModel"),
   LevelGeneralModel_1 = require("../LevelGamePlay/LevelGeneralModel"),
+  LifePointModel_1 = require("../LevelGamePlay/LifePoint/LifePointModel"),
   ParkourModel_1 = require("../LevelGamePlay/Parkour/ParkourModel"),
   SignalDeviceModel_1 = require("../LevelGamePlay/SignalDeviceControl/SignalDeviceModel"),
   StaticSceneModel_1 = require("../LevelGamePlay/StaticScene/StaticSceneModel"),
@@ -21,15 +27,28 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   FormationAttributeModel_1 = require("../Module/Abilities/FormationAttributeModel"),
   FormationDataModel_1 = require("../Module/Abilities/FormationDataModel"),
   AchievementModel_1 = require("../Module/Achievement/AchievementModel"),
+  AvignonModel_1 = require("../Module/Activity/ActivityContent/Avignon/AvignonModel"),
+  BabelTowerModel_1 = require("../Module/Activity/ActivityContent/BabelTower/BabelTowerModel"),
   BossRushModel_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushModel"),
+  ChessModel_1 = require("../Module/Activity/ActivityContent/ChessGameplay/ChessModel"),
+  ActivityDirectTrainModel_1 = require("../Module/Activity/ActivityContent/DirectTrain/ActivityDirectTrainModel"),
+  DockyardModel_1 = require("../Module/Activity/ActivityContent/Fishing/Dockyard/DockyardModel"),
+  FishingModel_1 = require("../Module/Activity/ActivityContent/Fishing/FishingModel"),
+  FishingQuestModel_1 = require("../Module/Activity/ActivityContent/Fishing/FishingQuest/FishingQuestModel"),
+  InviteNewbieModel_1 = require("../Module/Activity/ActivityContent/InviteNewbie/Model/InviteNewbieModel"),
   MoonChasingBuildingModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Build/Model/MoonChasingBuildingModel"),
   MoonChasingBusinessModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Business/Model/MoonChasingBusinessModel"),
   MoonChasingModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Model/MoonChasingModel"),
   MoonChasingRewardModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Reward/Model/MoonChasingRewardModel"),
   MoonChasingTaskModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Task/Model/MoonChasingTaskModel"),
   MowingRiskModel_1 = require("../Module/Activity/ActivityContent/MowingRisk/Model/MowingRiskModel"),
-  ActivityRecallModel_1 = require("../Module/Activity/ActivityContent/Recall/ActivityRecallModel"),
+  MowingTowerModel_1 = require("../Module/Activity/ActivityContent/MowingTower/MowingTowerModel"),
+  ActivityRegressModel_1 = require("../Module/Activity/ActivityContent/Regress/ActivityRegressModel"),
   ActivityRunModel_1 = require("../Module/Activity/ActivityContent/Run/ActivityRunModel"),
+  ActivityScratchTicketModel_1 = require("../Module/Activity/ActivityContent/ScratchTicket/ActivityScratchTicketModel"),
+  SolarSpeedModel_1 = require("../Module/Activity/ActivityContent/SolarisSpeed/Model/SolarSpeedModel"),
+  Spring25Model_1 = require("../Module/Activity/ActivityContent/Spring25/Model/Spring25Model"),
+  VersionPreheatModel_1 = require("../Module/Activity/ActivityContent/VersionPreheat/Model/VersionPreheatModel"),
   ActivityModel_1 = require("../Module/Activity/ActivityModel"),
   AdventureGuideModel_1 = require("../Module/AdventureGuide/AdventureGuideModel"),
   AdviceModel_1 = require("../Module/Advice/AdviceModel"),
@@ -37,17 +56,22 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   AntiCheatModel_1 = require("../Module/AntiCheat/AntiCheatModel"),
   AreaModel_1 = require("../Module/Area/AreaModel"),
   AttributeModel_1 = require("../Module/Attribute/AttributeModel"),
+  GameAudioModel_1 = require("../Module/Audio/GameAudioModel"),
   AutoRunModel_1 = require("../Module/AutoRunMode/AutoRunModel"),
+  CooperationModel_1 = require("../Module/Battle/Cooperation/CooperationModel"),
   BattleInputModel_1 = require("../Module/Battle/Input/BattleInputModel"),
+  BattleLinkModel_1 = require("../Module/Battle/Link/BattleLinkModel"),
   BattleScoreModel_1 = require("../Module/Battle/Score/BattleScoreModel"),
   SkillCdModel_1 = require("../Module/Battle/SkillCdModel"),
   BattleUiModel_1 = require("../Module/BattleUi/BattleUiModel"),
   AlertMarksModel_1 = require("../Module/BattleUi/Views/AlertMarksModel"),
   BattleUiSetModel_1 = require("../Module/BattleUiSet/BattleUiSetModel"),
+  BirthdayModel_1 = require("../Module/Birthday/BirthdayModel"),
   BuffItemModel_1 = require("../Module/BuffItem/BuffItemModel"),
   CalabashModel_1 = require("../Module/Calabash/CalabashModel"),
   ChannelModel_1 = require("../Module/Channel/ChannelModel"),
   ChatModel_1 = require("../Module/Chat/ChatModel"),
+  CiacconaGalModel_1 = require("../Module/CiacconaGal/CiacconaGalModel"),
   CombatMessageModel_1 = require("../Module/CombatMessage/CombatMessageModel"),
   ComboTeachingModel_1 = require("../Module/ComboTeach/ComboTeachingModel"),
   FilterModel_1 = require("../Module/Common/FilterSort/Filter/Model/FilterModel"),
@@ -58,6 +82,8 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   ControlScreenModel_1 = require("../Module/ControlScreen/ControlScreenModel"),
   CookModel_1 = require("../Module/Cook/CookModel"),
   DailyActivityModel_1 = require("../Module/DailyActivity/DailyActivityModel"),
+  DangoAbyssModel_1 = require("../Module/Dango/DangoAbyss/DangoAbyssModel"),
+  DangoGlobalModel_1 = require("../Module/Dango/DangoGlobal/DangoGlobalModel"),
   DeadReviveModel_1 = require("../Module/DeadRevive/DeadReviveModel"),
   EditBattleTeamModel_1 = require("../Module/EditBattleTeam/EditBattleTeamModel"),
   EditFormationModel_1 = require("../Module/EditFormation/EditFormationModel"),
@@ -66,6 +92,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   ExploreResultModel_1 = require("../Module/ExploreUi/ExploreResultModel"),
   FragmentMemoryModel_1 = require("../Module/FragmentMemory/FragmentMemoryModel"),
   FriendModel_1 = require("../Module/Friend/FriendModel"),
+  ExploreSkillFlagModel_1 = require("../Module/Functional/ExploreSkillFlag/ExploreSkillFlagModel"),
   FunctionModel_1 = require("../Module/Functional/FunctionModel"),
   LevelFuncFlagModel_1 = require("../Module/Functional/LevelFuncFlag/LevelFuncFlagModel"),
   GachaModel_1 = require("../Module/Gacha/GachaModel"),
@@ -81,6 +108,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   InstanceDungeonEntranceModel_1 = require("../Module/InstanceDungeon/InstanceDungeonEntranceModel"),
   InstanceDungeonGuideModel_1 = require("../Module/InstanceDungeon/InstanceDungeonGuideModel"),
   InstanceDungeonModel_1 = require("../Module/InstanceDungeon/InstanceDungeonModel"),
+  InstanceGameplayModeModel_1 = require("../Module/InstanceGameplayMode/InstanceGameplayModeModel"),
   InteractionModel_1 = require("../Module/Interaction/InteractionModel"),
   InventoryModel_1 = require("../Module/Inventory/InventoryModel"),
   ItemModel_1 = require("../Module/Item/ItemModel"),
@@ -92,6 +120,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   JoinTeamModel_1 = require("../Module/JoinTeam/JoinTeamModel"),
   LevelLoadingModel_1 = require("../Module/LevelLoading/LevelLoadingModel"),
   LevelPlayModel_1 = require("../Module/LevelPlay/LevelPlayModel"),
+  LevelPlayReportModel_1 = require("../Module/LevelPlayReport/LevelPlayReportModel"),
   LevelUpModel_1 = require("../Module/LevelUp/LevelUpModel"),
   LoadingModel_1 = require("../Module/Loading/LoadingModel"),
   LoginModel_1 = require("../Module/Login/LoginModel"),
@@ -99,14 +128,19 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   LogReportModel_1 = require("../Module/LogReport/LogReportModel"),
   LordGymModel_1 = require("../Module/LordGym/LordGymModel"),
   MailModel_1 = require("../Module/Mail/MailModel"),
+  MailBindModel_1 = require("../Module/MailBind/MailBindModel"),
   ComposeModel_1 = require("../Module/Manufacture/Compose/ComposeModel"),
   ForgingModel_1 = require("../Module/Manufacture/Forging/ForgingModel"),
   MapModel_1 = require("../Module/Map/MapModel"),
   MapExploreToolModel_1 = require("../Module/MapExploreTool/MapExploreToolModel"),
+  MapRogueModel_1 = require("../Module/MapRogue/MapRogueModel"),
   MarqueeModel_1 = require("../Module/Marquee/MarqueeModel"),
   MenuModel_1 = require("../Module/Menu/MenuModel"),
   MingSuModel_1 = require("../Module/MingSu/MingSuModel"),
+  PreDownloadModel_1 = require("../Module/MobilePredownload/PreDownloadModel"),
+  MonsterGroupPatrolModel_1 = require("../Module/MonsterGroup/MonsterGroupPatrolModel"),
   MotionModel_1 = require("../Module/Motion/MotionModel"),
+  NetworkDetectionModel_1 = require("../Module/NetworkDetection/NetworkDetectionModel"),
   NewFlagModel_1 = require("../Module/NewFlag/NewFlagModel"),
   OnlineModel_1 = require("../Module/Online/OnlineModel"),
   PanelQteModel_1 = require("../Module/PanelQte/PanelQteModel"),
@@ -115,31 +149,50 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   MonthCardModel_1 = require("../Module/PayShop/MonthCard/MonthCardModel"),
   PayGiftModel_1 = require("../Module/PayShop/PayGiftModel"),
   PayShopModel_1 = require("../Module/PayShop/PayShopModel"),
+  ActivityPermanentRogueModel_1 = require("../Module/PermanentRogue/ActivityPermanentRogueModel"),
   PersonalModel_1 = require("../Module/Personal/Model/PersonalModel"),
   PhantomBattleModel_1 = require("../Module/Phantom/PhantomBattle/PhantomBattleModel"),
+  VisionEquipGroupModel_1 = require("../Module/Phantom/PhantomBattle/VisionEquipGroupModel"),
+  VisionRecommendModel_1 = require("../Module/Phantom/PhantomBattle/VisionRecommendModel"),
+  PhonographModel_1 = require("../Module/Phonograph/PhonographModel"),
   PhotographModel_1 = require("../Module/Photograph/PhotographModel"),
   PlatformModel_1 = require("../Module/Platform/PlatformModel"),
   PlayerInfoModel_1 = require("../Module/PlayerInfo/PlayerInfoModel"),
   PlotModel_1 = require("../Module/Plot/PlotModel"),
   SequenceModel_1 = require("../Module/Plot/Sequence/SequenceModel"),
   PowerModel_1 = require("../Module/Power/PowerModel"),
+  BattleQteModel_1 = require("../Module/Qte/BattleQte/BattleQteModel"),
+  CommonQteModel_1 = require("../Module/Qte/CommonQte/CommonQteModel"),
   DailyTaskModel_1 = require("../Module/QuestNew/Model/DailyTaskModel"),
   QuestModel_1 = require("../Module/QuestNew/Model/QuestModel"),
+  QuestResourceModel_1 = require("../Module/QuestResource/Model/QuestResourceModel"),
+  RacingBetsModel_1 = require("../Module/RacingBets/RacingBetsModel"),
   RechargeModel_1 = require("../Module/Recharge/RechargeModel"),
+  RecommendQualityModel_1 = require("../Module/RecommendQuality/RecommendQualityModel"),
   ReConnectModel_1 = require("../Module/ReConnect/ReConnectModel"),
+  ResDownLoadModel_1 = require("../Module/ResDownLoad/ResDownLoadModel"),
   RewardModel_1 = require("../Module/Reward/RewardModel"),
+  RogueBattleModel_1 = require("../Module/RogueBattle/RogueBattleModel"),
   RoguelikeModel_1 = require("../Module/Roguelike/RoguelikeModel"),
   RoleSelectModel_1 = require("../Module/RoleSelect/RoleSelectModel"),
+  MainRoleModel_1 = require("../Module/RoleUi/MainRoleModel"),
   RoleFavorConditionModel_1 = require("../Module/RoleUi/RoleFavorConditionModel"),
   RoleModel_1 = require("../Module/RoleUi/RoleModel"),
   RouletteModel_1 = require("../Module/Roulette/RouletteModel"),
+  SceneBattleInteractModel_1 = require("../Module/SceneBattleInteract/SceneBattleInteractModel"),
   SceneTeamModel_1 = require("../Module/SceneTeam/SceneTeamModel"),
   ScoreModel_1 = require("../Module/Score/ScoreModel"),
   SeamlessTravelModel_1 = require("../Module/SeamlessTravel/SeamlessTravelModel"),
+  ShipTogetherModel_1 = require("../Module/Ship/ShipTogetherModel"),
+  ShipTowerModel_1 = require("../Module/ShipTower/ShipTowerModel"),
   ShopModel_1 = require("../Module/Shop/ShopModel"),
   SignalDecodeModel_1 = require("../Module/SignalDecode/SignalDecodeModel"),
   SkillButtonUiModel_1 = require("../Module/SkillButtonUi/SkillButtonUiModel"),
+  RoleSkinModel_1 = require("../Module/Skin/Model/RoleSkinModel"),
+  FlySkinModel_1 = require("../Module/Skin/Tab/Fly/FlySkinModel"),
+  WeaponSkinModel_1 = require("../Module/Skin/Tab/Weapon/WeaponSkinModel"),
   SkipInterfaceModel_1 = require("../Module/SkipInterface/SkipInterfaceModel"),
+  SoundAreaPlayTipsModel_1 = require("../Module/SoundArea/SoundAreaPlayTipsModel"),
   SubLevelLoadingModel_1 = require("../Module/SubLevelLoading/SubLevelLoadingModel"),
   SundryModel_1 = require("../Module/Sundry/SundryModel"),
   TeleportModel_1 = require("../Module/Teleport/TeleportModel"),
@@ -149,19 +202,23 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   TowerModel_1 = require("../Module/TowerDetailUi/TowerModel"),
   TrackModel_1 = require("../Module/Track/TrackModel"),
   TrainingDegreeModel_1 = require("../Module/TrainingDegree/TrainingDegreeModel"),
+  TreasureHuntModel_1 = require("../Module/TreasureHunt/TreasureHuntModel"),
   TutorialModel_1 = require("../Module/Tutorial/TutorialModel"),
   UiNavigationModel_1 = require("../Module/UiNavigation/UiNavigationModel"),
   WaitEntityTaskModel_1 = require("../Module/WaitEntityTask/WaitEntityTaskModel"),
   WeaponModel_1 = require("../Module/Weapon/WeaponModel"),
   WeatherModel_1 = require("../Module/Weather/WeatherModel"),
+  WeeklyRogueModel_1 = require("../Module/WeeklyRogue/WeeklyRogueModel"),
   WorldLevelModel_1 = require("../Module/WorldLevel/WorldLevelModel"),
   WorldMapModel_1 = require("../Module/WorldMap/WorldMapModel"),
   WuYinAreaModel_1 = require("../Module/WuYinArea/WuYinAreaModel"),
   BulletModel_1 = require("../NewWorld/Bullet/Model/BulletModel"),
   CharacterModel_1 = require("../NewWorld/Character/CharacterModel"),
   CharacterBuffModel_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffModel"),
+  CharacterExploreModel_1 = require("../NewWorld/Character/Common/Component/CharacterExploreModel"),
   CharacterManipulateInteractModel_1 = require("../NewWorld/Character/Common/Component/CharacterManipulateInteractModel"),
   CharacterManipulaterModel_1 = require("../NewWorld/Character/Common/Component/CharacterManipulaterModel"),
+  PerformModel_1 = require("../NewWorld/Character/Common/Component/Performance/PerformModel"),
   NpcConfigModel_1 = require("../NewWorld/Character/Npc/Datas/NpcConfigModel"),
   ConnectGamePlayModel_1 = require("../NewWorld/SceneItem/Model/ConnectGamePlayModel"),
   PortalModel_1 = require("../NewWorld/SceneItem/Model/PortalModel"),
@@ -171,6 +228,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   ShootTargetModel_1 = require("../NewWorld/SceneItem/Model/ShootTargetModel"),
   VisionCaptureModel_1 = require("../NewWorld/SceneItem/Model/VisionCaptureModel"),
   TriggerVolumeModel_1 = require("../NewWorld/TriggerItems/Model/TriggerVolumeModel"),
+  VehicleModel_1 = require("../NewWorld/Vehicle/Model/VehicleModel"),
   RedDotModel_1 = require("../RedDot/RedDotModel"),
   ScreenEffectModel_1 = require("../Render/Effect/ScreenEffectSystem/ScreenEffectModel"),
   RenderModuleModel_1 = require("../Render/Manager/RenderModuleModel"),
@@ -179,9 +237,11 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   AttachToActorModel_1 = require("../World/Model/AttachToActorModel"),
   BlackboardModel_1 = require("../World/Model/BlackboardModel"),
   CreatureModel_1 = require("../World/Model/CreatureModel"),
+  DamageModel_1 = require("../World/Model/DamageModel"),
   GameModeModel_1 = require("../World/Model/GameModeModel"),
   PreloadModel_1 = require("../World/Model/PreloadModel"),
   PreloadModelNew_1 = require("../World/Model/PreloadModelNew"),
+  SubLevelModel_1 = require("../World/Model/SubLevelModel"),
   TraceElementModel_1 = require("../World/Model/TraceElementModel"),
   WorldDebugModel_1 = require("../World/Model/WorldDebugModel"),
   WorldModel_1 = require("../World/Model/WorldModel"),
@@ -243,6 +303,11 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.AreaModel),
       (ModelManager_1.ModelManager.MailModel = new MailModel_1.MailModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.MailModel),
+      (ModelManager_1.ModelManager.MailBindModel =
+        new MailBindModel_1.MailBindModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MailBindModel,
+      ),
       (ModelManager_1.ModelManager.LoginModel = new LoginModel_1.LoginModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.LoginModel),
       (ModelManager_1.ModelManager.LogReportModel =
@@ -287,6 +352,11 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.ReConnectModel,
       ),
+      (ModelManager_1.ModelManager.CooperationModel =
+        new CooperationModel_1.CooperationModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.CooperationModel,
+      ),
       (ModelManager_1.ModelManager.SceneTeamModel =
         new SceneTeamModel_1.SceneTeamModel()),
       ModelManager_1.ModelManager.Add(
@@ -318,6 +388,11 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.BattleScoreModel,
       ),
+      (ModelManager_1.ModelManager.BattleLinkModel =
+        new BattleLinkModel_1.BattleLinkModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.BattleLinkModel,
+      ),
       (ModelManager_1.ModelManager.MingSuModel =
         new MingSuModel_1.MingSuModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.MingSuModel),
@@ -342,6 +417,11 @@ class ModelManagerCreator {
         new QuestModel_1.QuestNewModel()),
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.QuestNewModel,
+      ),
+      (ModelManager_1.ModelManager.QuestResourceModel =
+        new QuestResourceModel_1.QuestResourceModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.QuestResourceModel,
       ),
       (ModelManager_1.ModelManager.ItemHintModel =
         new ItemHintModel_1.ItemHintModel()),
@@ -374,6 +454,11 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.LevelFuncFlagModel,
       ),
+      (ModelManager_1.ModelManager.ExploreSkillFlagModel =
+        new ExploreSkillFlagModel_1.ExploreSkillFlagModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ExploreSkillFlagModel,
+      ),
       (ModelManager_1.ModelManager.LevelGeneralModel =
         new LevelGeneralModel_1.LevelGeneralModel()),
       ModelManager_1.ModelManager.Add(
@@ -405,6 +490,9 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.PreloadModelNew,
       ),
+      (ModelManager_1.ModelManager.DamageModel =
+        new DamageModel_1.DamageModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.DamageModel),
       (ModelManager_1.ModelManager.TimeOfDayModel =
         new TimeOfDayModel_1.TimeOfDayModel()),
       ModelManager_1.ModelManager.Add(
@@ -558,6 +646,9 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.NpcConfigModel,
       ),
+      (ModelManager_1.ModelManager.PerformModel =
+        new PerformModel_1.PerformModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.PerformModel),
       (ModelManager_1.ModelManager.GachaModel = new GachaModel_1.GachaModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.GachaModel),
       (ModelManager_1.ModelManager.ItemExchangeModel =
@@ -622,6 +713,9 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.ManipulateInteractModel,
       ),
+      (ModelManager_1.ModelManager.ExploreModel =
+        new CharacterExploreModel_1.CharacterExploreModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.ExploreModel),
       (ModelManager_1.ModelManager.SceneItemBuffModel =
         new SceneItemBuffModel_1.SceneItemBuffModel()),
       ModelManager_1.ModelManager.Add(
@@ -631,6 +725,11 @@ class ModelManagerCreator {
         new InfluenceReputationModel_1.InfluenceReputationModel()),
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.InfluenceReputationModel,
+      ),
+      (ModelManager_1.ModelManager.MainRoleModel =
+        new MainRoleModel_1.MainRoleModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MainRoleModel,
       ),
       (ModelManager_1.ModelManager.RoleFavorConditionModel =
         new RoleFavorConditionModel_1.RoleFavorConditionModel()),
@@ -751,6 +850,11 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.ActivityRunModel,
       ),
+      (ModelManager_1.ModelManager.WeeklyRogueModel =
+        new WeeklyRogueModel_1.WeeklyRogueModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.WeeklyRogueModel,
+      ),
       (ModelManager_1.ModelManager.SkillCdModel =
         new SkillCdModel_1.SkillCdModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.SkillCdModel),
@@ -768,6 +872,11 @@ class ModelManagerCreator {
         new RoguelikeModel_1.RoguelikeModel()),
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.RoguelikeModel,
+      ),
+      (ModelManager_1.ModelManager.RogueBattleModel =
+        new RogueBattleModel_1.RogueBattleModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.RogueBattleModel,
       ),
       (ModelManager_1.ModelManager.ItemRewardModel =
         new ItemRewardModel_1.ItemRewardModel()),
@@ -855,6 +964,16 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.PanelQteModel,
       ),
+      (ModelManager_1.ModelManager.CommonQteModel =
+        new CommonQteModel_1.CommonQteModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.CommonQteModel,
+      ),
+      (ModelManager_1.ModelManager.BattleQteModel =
+        new BattleQteModel_1.BattleQteModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.BattleQteModel,
+      ),
       (ModelManager_1.ModelManager.TowerModel = new TowerModel_1.TowerModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.TowerModel),
       (ModelManager_1.ModelManager.LordGymModel =
@@ -919,6 +1038,11 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.PayGiftModel =
         new PayGiftModel_1.PayGiftModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.PayGiftModel),
+      (ModelManager_1.ModelManager.PhonographModel =
+        new PhonographModel_1.PhonographModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.PhonographModel,
+      ),
       (ModelManager_1.ModelManager.BossRushModel =
         new BossRushModel_1.BossRushModel()),
       ModelManager_1.ModelManager.Add(
@@ -959,15 +1083,40 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.MowingRiskModel,
       ),
+      (ModelManager_1.ModelManager.VersionPreheatModel =
+        new VersionPreheatModel_1.VersionPreheatModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.VersionPreheatModel,
+      ),
+      (ModelManager_1.ModelManager.Spring25Model =
+        new Spring25Model_1.Spring25Model()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.Spring25Model,
+      ),
+      (ModelManager_1.ModelManager.SolarSpeedModel =
+        new SolarSpeedModel_1.SolarSpeedModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.SolarSpeedModel,
+      ),
       (ModelManager_1.ModelManager.AlertMarkModel =
         new AlertMarksModel_1.AlertMarkModel()),
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.AlertMarkModel,
       ),
-      (ModelManager_1.ModelManager.ActivityRecallModel =
-        new ActivityRecallModel_1.ActivityRecallModel()),
+      (ModelManager_1.ModelManager.ActivityRegressModel =
+        new ActivityRegressModel_1.ActivityRegressModel()),
       ModelManager_1.ModelManager.Add(
-        ModelManager_1.ModelManager.ActivityRecallModel,
+        ModelManager_1.ModelManager.ActivityRegressModel,
+      ),
+      (ModelManager_1.ModelManager.ActivityScratchTicketModel =
+        new ActivityScratchTicketModel_1.ActivityScratchTicketModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ActivityScratchTicketModel,
+      ),
+      (ModelManager_1.ModelManager.RacingBetsModel =
+        new RacingBetsModel_1.RacingBetsModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.RacingBetsModel,
       ),
       (ModelManager_1.ModelManager.ConnectGamePlayModel =
         new ConnectGamePlayModel_1.ConnectGamePlayModel()),
@@ -983,6 +1132,200 @@ class ModelManagerCreator {
         new ScreenEffectModel_1.ScreenEffectModel()),
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.ScreenEffectModel,
+      ),
+      (ModelManager_1.ModelManager.GameAudioModel =
+        new GameAudioModel_1.GameAudioModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.GameAudioModel,
+      ),
+      (ModelManager_1.ModelManager.WeaponSkinModel =
+        new WeaponSkinModel_1.WeaponSkinModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.WeaponSkinModel,
+      ),
+      (ModelManager_1.ModelManager.FlySkinModel =
+        new FlySkinModel_1.FlySkinModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.FlySkinModel),
+      (ModelManager_1.ModelManager.RecommendQualityModel =
+        new RecommendQualityModel_1.RecommendQualityModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.RecommendQualityModel,
+      ),
+      (ModelManager_1.ModelManager.MowingTowerModel =
+        new MowingTowerModel_1.MowingTowerModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MowingTowerModel,
+      ),
+      (ModelManager_1.ModelManager.VehicleModel =
+        new VehicleModel_1.VehicleModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.VehicleModel),
+      (ModelManager_1.ModelManager.MonsterGroupPatrolModel =
+        new MonsterGroupPatrolModel_1.MonsterGroupPatrolModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MonsterGroupPatrolModel,
+      ),
+      (ModelManager_1.ModelManager.AlertAreaModel =
+        new AlertAreaModel_1.AlertAreaModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.AlertAreaModel,
+      ),
+      (ModelManager_1.ModelManager.BigStuffedDollModel =
+        new BigStuffedDollModel_1.BigStuffedDollModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.BigStuffedDollModel,
+      ),
+      (ModelManager_1.ModelManager.RoleSkinModel =
+        new RoleSkinModel_1.RoleSkinModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.RoleSkinModel,
+      ),
+      (ModelManager_1.ModelManager.LevelPlayReportModel =
+        new LevelPlayReportModel_1.LevelPlayReportModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.LevelPlayReportModel,
+      ),
+      (ModelManager_1.ModelManager.LifePointModel =
+        new LifePointModel_1.LifePointModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.LifePointModel,
+      ),
+      (ModelManager_1.ModelManager.FishingModel =
+        new FishingModel_1.FishingModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.FishingModel),
+      (ModelManager_1.ModelManager.DockyardModel =
+        new DockyardModel_1.DockyardModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.DockyardModel,
+      ),
+      (ModelManager_1.ModelManager.ActivityDirectTrainModel =
+        new ActivityDirectTrainModel_1.ActivityDirectTrainModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ActivityDirectTrainModel,
+      ),
+      (ModelManager_1.ModelManager.ShipTogetherModel =
+        new ShipTogetherModel_1.ShipTogetherModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ShipTogetherModel,
+      ),
+      (ModelManager_1.ModelManager.TreasureHuntModel =
+        new TreasureHuntModel_1.TreasureHuntModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.TreasureHuntModel,
+      ),
+      (ModelManager_1.ModelManager.FishingQteModel =
+        new FishingQteModel_1.FishingQteModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.FishingQteModel,
+      ),
+      (ModelManager_1.ModelManager.FishingQuestModel =
+        new FishingQuestModel_1.FishingQuestModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.FishingQuestModel,
+      ),
+      (ModelManager_1.ModelManager.VisionRecommendModel =
+        new VisionRecommendModel_1.VisionRecommendModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.VisionRecommendModel,
+      ),
+      (ModelManager_1.ModelManager.VisionEquipGroupModel =
+        new VisionEquipGroupModel_1.VisionEquipGroupModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.VisionEquipGroupModel,
+      ),
+      (ModelManager_1.ModelManager.ShipTowerModel =
+        new ShipTowerModel_1.ShipTowerModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ShipTowerModel,
+      ),
+      (ModelManager_1.ModelManager.MapRogueModel =
+        new MapRogueModel_1.MapRogueModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MapRogueModel,
+      ),
+      (ModelManager_1.ModelManager.SoundAreaPlayTipsModel =
+        new SoundAreaPlayTipsModel_1.SoundAreaPlayTipsModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.SoundAreaPlayTipsModel,
+      ),
+      (ModelManager_1.ModelManager.SubLevelModel =
+        new SubLevelModel_1.SubLevelModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.SubLevelModel,
+      ),
+      (ModelManager_1.ModelManager.GravityFlipModel =
+        new GravityFlipModel_1.GravityFlipModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.GravityFlipModel,
+      ),
+      (ModelManager_1.ModelManager.BabelTowerModel =
+        new BabelTowerModel_1.BabelTowerModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.BabelTowerModel,
+      ),
+      (ModelManager_1.ModelManager.NetworkDetectionModel =
+        new NetworkDetectionModel_1.NetworkDetectionModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.NetworkDetectionModel,
+      ),
+      (ModelManager_1.ModelManager.AvignonModel =
+        new AvignonModel_1.AvignonModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.AvignonModel),
+      (ModelManager_1.ModelManager.PreDownloadModel =
+        new PreDownloadModel_1.PreDownloadModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.PreDownloadModel,
+      ),
+      (ModelManager_1.ModelManager.BirthdayModel =
+        new BirthdayModel_1.BirthdayModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.BirthdayModel,
+      ),
+      (ModelManager_1.ModelManager.GongduolaSummonModel =
+        new GongduolaSummonModel_1.GongduolaSummonModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.GongduolaSummonModel,
+      ),
+      (ModelManager_1.ModelManager.ChessModel = new ChessModel_1.ChessModel()),
+      ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.ChessModel),
+      (ModelManager_1.ModelManager.DangoAbyssModel =
+        new DangoAbyssModel_1.DangoAbyssModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.DangoAbyssModel,
+      ),
+      (ModelManager_1.ModelManager.CiacconaGalModel =
+        new CiacconaGalModel_1.CiacconaGalModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.CiacconaGalModel,
+      ),
+      (ModelManager_1.ModelManager.ActivityPermanentRogueModel =
+        new ActivityPermanentRogueModel_1.ActivityPermanentRogueModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ActivityPermanentRogueModel,
+      ),
+      (ModelManager_1.ModelManager.InviteNewbieModel =
+        new InviteNewbieModel_1.InviteNewbieModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.InviteNewbieModel,
+      ),
+      (ModelManager_1.ModelManager.SceneBattleInteractModel =
+        new SceneBattleInteractModel_1.SceneBattleInteractModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.SceneBattleInteractModel,
+      ),
+      (ModelManager_1.ModelManager.InstanceGameplayModeModel =
+        new InstanceGameplayModeModel_1.InstanceGameplayModeModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.InstanceGameplayModeModel,
+      ),
+      (ModelManager_1.ModelManager.DangoGlobalModel =
+        new DangoGlobalModel_1.DangoGlobalModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.DangoGlobalModel,
+      ),
+      (ModelManager_1.ModelManager.ResDownLoadModel =
+        new ResDownLoadModel_1.ResDownLoadModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ResDownLoadModel,
       ),
       ModelManager_1.ModelManager.Init(),
       !0
@@ -1015,8 +1358,12 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.SkillCdModel = void 0),
       (ModelManager_1.ModelManager.BattleInputModel = void 0),
       (ModelManager_1.ModelManager.BattleUiModel = void 0),
+      (ModelManager_1.ModelManager.BattleScoreModel = void 0),
+      (ModelManager_1.ModelManager.BattleLinkModel = void 0),
       (ModelManager_1.ModelManager.InventoryModel = void 0),
       (ModelManager_1.ModelManager.ReConnectModel = void 0),
+      (ModelManager_1.ModelManager.PhonographModel = void 0),
+      (ModelManager_1.ModelManager.CooperationModel = void 0),
       (ModelManager_1.ModelManager.SceneTeamModel = void 0),
       (ModelManager_1.ModelManager.ChannelModel = void 0),
       (ModelManager_1.ModelManager.MingSuModel = void 0),
@@ -1105,6 +1452,7 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.NewFlagModel = void 0),
       (ModelManager_1.ModelManager.WaitEntityTaskModel = void 0),
       (ModelManager_1.ModelManager.QuestNewModel = void 0),
+      (ModelManager_1.ModelManager.QuestResourceModel = void 0),
       (ModelManager_1.ModelManager.ComboTeachingModel = void 0),
       (ModelManager_1.ModelManager.PersonalModel = void 0),
       (ModelManager_1.ModelManager.ActivityModel = void 0),
@@ -1143,8 +1491,23 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.BossRushModel = void 0),
       (ModelManager_1.ModelManager.TowerDefenseModel = void 0),
       (ModelManager_1.ModelManager.AlertMarkModel = void 0),
-      (ModelManager_1.ModelManager.ActivityRecallModel = void 0),
-      !(ModelManager_1.ModelManager.ScreenEffectModel = void 0)
+      (ModelManager_1.ModelManager.ActivityRegressModel = void 0),
+      (ModelManager_1.ModelManager.ScreenEffectModel = void 0),
+      (ModelManager_1.ModelManager.WeaponSkinModel = void 0),
+      (ModelManager_1.ModelManager.MonsterGroupPatrolModel = void 0),
+      (ModelManager_1.ModelManager.LevelPlayReportModel = void 0),
+      (ModelManager_1.ModelManager.ActivityDirectTrainModel = void 0),
+      (ModelManager_1.ModelManager.VisionRecommendModel = void 0),
+      (ModelManager_1.ModelManager.FishingQteModel = void 0),
+      (ModelManager_1.ModelManager.ShipTowerModel = void 0),
+      (ModelManager_1.ModelManager.VisionEquipGroupModel = void 0),
+      (ModelManager_1.ModelManager.SoundAreaPlayTipsModel = void 0),
+      (ModelManager_1.ModelManager.GravityFlipModel = void 0),
+      (ModelManager_1.ModelManager.BabelTowerModel = void 0),
+      (ModelManager_1.ModelManager.PreDownloadModel = void 0),
+      (ModelManager_1.ModelManager.DangoAbyssModel = void 0),
+      (ModelManager_1.ModelManager.CiacconaGalModel = void 0),
+      !(ModelManager_1.ModelManager.SceneBattleInteractModel = void 0)
     );
   }
 }

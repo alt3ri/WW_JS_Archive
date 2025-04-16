@@ -56,11 +56,13 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
       i,
       e = this.ActivityBaseData.LocalConfig;
     e &&
-      ((i = e.DescTheme),
-      (t = !StringUtils_1.StringUtils.IsEmpty(i)),
+      ((t = e.DescTheme),
+      (i = !StringUtils_1.StringUtils.IsEmpty(t)),
       this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      this.LNe.SetSubTitleVisible(t),
-      t && this.LNe.SetSubTitleByTextId(i),
+      this.LNe.SetSubTitleVisible(i),
+      i &&
+        ((i = e.DescThemeIcon), this.LNe.SetSubTitleByTextId(t), i) &&
+        this.LNe?.SetSubTitleIconByPath(i),
       (t = e.Desc),
       this.DNe.SetContentByTextId(t),
       (i = this.ActivityBaseData.GetPreviewReward()),
@@ -99,6 +101,15 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
   }
   SetFunctionRedDotVisible(t) {
     this.ANe?.SetFunctionRedDotVisible(t);
+  }
+  SetRewardButtonFunction(t) {
+    this.ANe?.SetRewardButtonFunction(t);
+  }
+  SetSubTitleTextById(t) {
+    this.LNe.SetSubTitleVisible(!0), this.LNe.SetSubTitleByTextId(t);
+  }
+  GetFunctional() {
+    return this.ANe;
   }
 }
 exports.ActivitySubViewGeneralInfo = ActivitySubViewGeneralInfo;

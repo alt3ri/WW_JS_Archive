@@ -14,7 +14,7 @@ class BulletActionBase {
       (this.gW = void 0),
       (this.Type = t),
       BulletConstant_1.BulletConstant.OpenAllActionStat &&
-        (this.gW = Stats_1.Stat.Create("BulletActionTick" + t));
+        (this.gW = Stats_1.Stat.CreateNoFlameGraph("BulletActionTick" + t));
   }
   Execute(t, e) {
     (this.BulletInfo = t), (this.ActionInfo = e), this.OnExecute();
@@ -37,7 +37,7 @@ class BulletActionBase {
 class BulletActionTest extends (exports.BulletActionBase = BulletActionBase) {
   OnExecute() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Bullet", 18, "BulletActionTest", [
+      Log_1.Log.Debug("Bullet", 17, "BulletActionTest", [
         "BulletId",
         this.BulletInfo.BulletRowName,
       ]);

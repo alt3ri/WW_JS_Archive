@@ -10,8 +10,8 @@ const UE = require("ue"),
 class NounHandBookItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.V4a = void 0),
-      (this.H4a = void 0),
+      (this.L8a = void 0),
+      (this.A8a = void 0),
       (this.GZt = void 0),
       (this.FZt = void 0);
   }
@@ -19,19 +19,19 @@ class NounHandBookItem extends UiPanelBase_1.UiPanelBase {
     await super.CreateByActorAsync(t.GetOwner(), void 0, !0), await this.WZt();
   }
   async WZt() {
-    (this.V4a = new HandBookNounToggleItem()),
-      this.AddChild(this.V4a),
-      (this.H4a = new HandBookNounDesItem()),
-      this.AddChild(this.H4a);
+    (this.L8a = new HandBookNounToggleItem()),
+      this.AddChild(this.L8a),
+      (this.A8a = new HandBookNounDesItem()),
+      this.AddChild(this.A8a);
     var t = this.GetItem(0),
       i = (t.SetUIActive(!1), this.GetItem(1));
     i.SetUIActive(!1),
       await Promise.all([
-        this.V4a.CreateByActorAsync(t.GetOwner()),
-        this.H4a.CreateByActorAsync(i.GetOwner()),
+        this.L8a.CreateByActorAsync(t.GetOwner()),
+        this.A8a.CreateByActorAsync(i.GetOwner()),
       ]),
-      this.V4a.BindToggleCallback(this.GZt),
-      this.H4a.BindChildToggleCallback(this.FZt);
+      this.L8a.BindToggleCallback(this.GZt),
+      this.A8a.BindChildToggleCallback(this.FZt);
   }
   GetUsingItem(t) {
     return (
@@ -48,17 +48,17 @@ class NounHandBookItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(t, i) {
-    this.H4a?.SetUiActive(!1),
-      this.V4a?.SetUiActive(!1),
+    this.A8a?.SetUiActive(!1),
+      this.L8a?.SetUiActive(!1),
       t.HandBookNounConfigId
-        ? (this.H4a?.SetUiActive(!0),
-          this.H4a?.Refresh(t.HandBookNounConfigId, t.IsShowContent))
+        ? (this.A8a?.SetUiActive(!0),
+          this.A8a?.Refresh(t.HandBookNounConfigId, t.IsShowContent))
         : t.HandBookCommonItemData &&
-          (this.V4a?.SetUiActive(!0),
-          this.V4a?.Refresh(t.HandBookCommonItemData, t.IsShowContent));
+          (this.L8a?.SetUiActive(!0),
+          this.L8a?.Refresh(t.HandBookCommonItemData, t.IsShowContent));
   }
   RefreshNewState() {
-    this.V4a?.RefreshNewState(), this.H4a?.RefreshNewState();
+    this.L8a?.RefreshNewState(), this.A8a?.RefreshNewState();
   }
   BindChildToggleCallback(t) {
     this.FZt = t;
@@ -175,11 +175,11 @@ class HandBookNounDesItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.FZt = void 0),
-      (this.j4a = void 0),
+      (this.D8a = void 0),
       (this.Rjt = !1),
       (this.H5e = void 0),
       (this.OZt = (t) => {
-        this.FZt && 1 === t && this.FZt(this.j4a, this.H5e);
+        this.FZt && 1 === t && this.FZt(this.D8a, this.H5e);
       });
   }
   OnRegisterComponent() {
@@ -200,7 +200,7 @@ class HandBookNounDesItem extends UiPanelBase_1.UiPanelBase {
     var t =
         ConfigManager_1.ConfigManager.HandBookConfig.GetNounHandBookConfig(t),
       s =
-        ((this.j4a = t),
+        ((this.D8a = t),
         ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(11, t.Id)),
       t =
         ((this.Rjt = void 0 === s),
@@ -221,19 +221,21 @@ class HandBookNounDesItem extends UiPanelBase_1.UiPanelBase {
       s = void 0 !== s && !s.IsRead;
     e.SetUIActive(this.Rjt),
       this.Rjt ? t.SetUIActive(!1) : t.SetUIActive(s),
-      i && this.H5e?.SetToggleState(1, !0);
+      i
+        ? this.H5e?.SetToggleStateForce(1, !0, !0)
+        : this.H5e?.SetToggleStateForce(0, !0, !0);
   }
   BindChildToggleCallback(t) {
     this.FZt = t;
   }
   RefreshNewState() {
     var t;
-    this.j4a &&
+    this.D8a &&
       ((t =
         void 0 !==
           (t = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
             11,
-            this.j4a.Id,
+            this.D8a.Id,
           )) && !t.IsRead),
       this.GetItem(4).SetUIActive(t));
   }

@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkChildIconComponent = void 0);
 const UE = require("ue"),
   StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
-  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase");
-class MarkChildIconComponent extends UiPanelBase_1.UiPanelBase {
+  MarkPanelBase_1 = require("../MarkPanelBase");
+class MarkChildIconComponent extends MarkPanelBase_1.MarkPanelBase {
   constructor() {
     super(...arguments), (this.n8 = void 0);
   }
@@ -12,14 +12,17 @@ class MarkChildIconComponent extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UISprite]];
   }
   OnStart() {
-    this.GetSprite(0).SetUIActive(!1);
+    this.GetSprite(0).SetUIActive(!1), this.ehi();
+  }
+  ehi() {
+    StringUtils_1.StringUtils.IsEmpty(this.n8)
+      ? this.GetSprite(0).SetUIActive(!1)
+      : this.SetSpriteByPath(this.n8, this.GetSprite(0), !1, void 0, () => {
+          this.GetSprite(0).SetUIActive(!0);
+        });
   }
   set Icon(t) {
-    !t || StringUtils_1.StringUtils.IsEmpty(t)
-      ? this.GetSprite(0).SetUIActive(!1)
-      : (this.GetSprite(0).SetUIActive(!0),
-        (this.n8 = t),
-        this.SetSpriteByPath(t, this.GetSprite(0), !1));
+    (this.n8 = t), this.GetSprite(0) && this.ehi();
   }
   get Icon() {
     return this.n8;

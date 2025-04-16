@@ -68,13 +68,13 @@ let CharacterAiComponent =
         (this.jht = !1),
         (this.RFr = !1),
         (this.Mne = 0),
-        (this.lRa = !1),
+        (this.mRa = !1),
         (this.bJe = () => {
           this.MFr?.OnSkillEnd();
         }),
         (this.UFr = void 0),
-        (this.C$a = (t, e) => {
-          if (this.g$a(t, e))
+        (this.Nza = (t, e) => {
+          if (this.Fza(t, e))
             switch ((0, IVar_1.getVarTypeByIndex)(e.iTs)) {
               case "Boolean":
                 BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
@@ -116,14 +116,12 @@ let CharacterAiComponent =
       return this.MFr;
     }
     OnInitData() {
-      return (
-        (this.MFr = new AiController_1.AiController()),
+      (this.MFr = new AiController_1.AiController()),
         (this.DisableAiHandle = new BaseActorComponent_1.DisableEntityHandle(
           "SetAiDisableInGame",
-        )),
-        this.Entity.GetComponent(0).IsRole() && this.DisableAi("玩家主控权"),
-        !0
-      );
+        ));
+      var t = this.Entity.GetComponent(0);
+      return t.IsRole() && !t.IsAutoRole() && this.DisableAi("玩家主控权"), !0;
     }
     CheckAndInitTsAiController() {
       var t,
@@ -136,14 +134,14 @@ let CharacterAiComponent =
     OnInit() {
       (this.Mne = this.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.SFr = this.Entity.GetComponent(68));
+        (this.SFr = this.Entity.GetComponent(75));
       var t = this.Hte.Actor.GetController();
       return (
         t &&
           (t.SetActorTickEnabled(!1), Log_1.Log.CheckWarn()) &&
           Log_1.Log.Warn(
             "AI",
-            30,
+            29,
             "AIC配置在AI基础表，请清理BP自带的AIC配置信息",
             ["ConfigId", this.Mne],
             ["Actor", this.Hte.Actor?.GetName()],
@@ -165,6 +163,10 @@ let CharacterAiComponent =
           EventDefine_1.EEventName.ChangeMode,
           this.AiController.OnChangeMode,
         ),
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.EntityCampModify,
+          this.AiController.OnEntityCampModified,
+        ),
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           ((t =
             this.Entity.GetComponent(0).GetEntityType() ===
@@ -174,7 +176,7 @@ let CharacterAiComponent =
         !0
       );
     }
-    OnActivate() {
+    OnPostActivate() {
       (this.jht = !0),
         this.wFr(),
         this.TsAiController && this.BFr(),
@@ -204,15 +206,19 @@ let CharacterAiComponent =
           EventDefine_1.EEventName.ChangeMode,
           this.AiController.OnChangeMode,
         ),
+        EventSystem_1.EventSystem.Remove(
+          EventDefine_1.EEventName.EntityCampModify,
+          this.AiController.OnEntityCampModified,
+        ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.EntityVarUpdate,
-          this.C$a,
+          this.Nza,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.EntityVarUpdate,
-            this.C$a,
+            this.Nza,
           ),
         this.DisableAi("CharacterAiComponent OnEnd"),
         this.RemoveTsAiController(),
@@ -228,18 +234,22 @@ let CharacterAiComponent =
     }
     xFr() {
       let t = 0;
-      var e = this.Hte.CreatureData.GetPbEntityInitData();
-      (t =
-        e?.ComponentsData &&
-        (e = (0, IComponent_1.getComponent)(e.ComponentsData, "AiComponent"))
-          ?.AiId &&
-        !e.Disabled
-          ? e.AiId
-          : t)
-        ? this.LoadAiConfigs(t)
-        : this.bFr()
-          ? (this.Mca(), this.qFr())
-          : this.DisableAi("Ai Config");
+      var e,
+        i = this.Hte.CreatureData,
+        o = i.GetPbEntityInitData();
+      i.IsAutoRole()
+        ? ((e = i.GetAutoRoleConfig()), (t = e ? e.AiId : 0))
+        : o?.ComponentsData &&
+          (e = (0, IComponent_1.getComponent)(o.ComponentsData, "AiComponent"))
+            ?.AiId &&
+          !e.Disabled &&
+          ((t = e.AiId), e.InitBlackBoard) &&
+          i.SetBlackboardsByConfig(e.InitBlackBoard),
+        t
+          ? this.LoadAiConfigs(t)
+          : this.bFr()
+            ? (this.Ica(), this.qFr())
+            : this.DisableAi("Ai Config");
     }
     OnTick(t) {
       if (
@@ -251,7 +261,7 @@ let CharacterAiComponent =
         this.MFr && this.MFr.Tick(t);
         var e = t * MathUtils_1.MathUtils.MillisecondToSecond;
         GlobalData_1.GlobalData.IsPlayInEditor &&
-          this.lRa &&
+          this.mRa &&
           this.vFr.DrawDebugLines(e),
           this.RFr && this.TFr && this.TFr.KuroTickComponentOutside(e);
         for (const i of this.LFr) i.KuroTickComponentOutside(e);
@@ -312,7 +322,7 @@ let CharacterAiComponent =
                 Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "AI",
-                    30,
+                    29,
                     "配置的AI控制器不是TsAiController",
                     ["Path", i.AiController],
                   );
@@ -344,6 +354,7 @@ let CharacterAiComponent =
             CharacterAiComponent_1.NFr.Start(),
             this.AiController?.AiConditionEvents.Clear(),
             this.AiController?.AiPerceptionEvents.Clear(!0),
+            this.AiController?.AiLevelVarEvents.Clear(),
             this.RemoveTsAiController(),
             (this.vFr = t),
             this.vFr.InitAiController(this),
@@ -359,40 +370,32 @@ let CharacterAiComponent =
             );
     }
     bFr() {
-      var t;
-      return (
-        !!BehaviorTreeDefines_1.BehaviorTreeDefines.UseLevelAiBehaviorTree &&
-        !!(t = this.Hte.CreatureData.GetPbEntityInitData())?.ComponentsData &&
-        !!(0, IComponent_1.getComponent)(t.ComponentsData, "LevelAiComponent")
-          ?.BtTreeAsset
+      return BehaviorTreeDefines_1.BehaviorTreeDefines.CanUseLevelAiBehaviorTree(
+        this.Entity,
       );
     }
     BFr() {
-      if (
-        (CombatLog_1.CombatLog.Info(
-          "Ai",
+      CombatLog_1.CombatLog.Info(
+        "Ai",
+        this.Entity,
+        "CharacterAiComponent.StartUeController",
+      );
+      var t =
+        BehaviorTreeDefines_1.BehaviorTreeDefines.GetLevelAiBehaviorTreeAssetPath(
           this.Entity,
-          "CharacterAiComponent.StartUeController",
-        ),
-        this.bFr())
-      ) {
-        var e = this.Hte.CreatureData.GetPbEntityInitData();
-        if (e) {
-          e = (0, IComponent_1.getComponent)(
-            e.ComponentsData,
-            "LevelAiComponent",
-          )?.BtTreeAsset;
-          if (e && "" !== e) {
-            let t = e.lastIndexOf(".");
-            -1 === t && (t = e.length);
-            var i = e.lastIndexOf("/", t - 1),
-              o = e.substring(i + 1, t),
-              e = e.substring(0, i + 1) + (o + ".") + o;
-            this.OFr(e);
-          }
-        }
-      } else this.MFr.AiBase && this.OFr(this.MFr.AiBase.BehaviorTree);
-      CharacterAiComponent_1.kFr.Start(),
+        );
+      t
+        ? (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "NPC",
+              50,
+              "开始加载LevelAi行为树",
+              ["PbDataId", this.Mne],
+              ["CreatureId", this.Hte?.CreatureData?.GetCreatureDataId()],
+            ),
+          this.OFr(t))
+        : this.MFr.AiBase && this.OFr(this.MFr.AiBase.BehaviorTree),
+        CharacterAiComponent_1.kFr.Start(),
         this.vFr.OnStart(),
         ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? this.UFr && this.FFr(this.UFr)
@@ -423,6 +426,7 @@ let CharacterAiComponent =
                 this.Entity,
                 "CharacterAiComponent.SetEnable",
                 ["enabled", !0],
+                ["key", t],
               ),
               this.Enable(this.sxr, "CharacterAiComponent.EnableAi"),
               (this.sxr = void 0),
@@ -431,7 +435,7 @@ let CharacterAiComponent =
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "AI",
-              30,
+              29,
               "[CharacterAiComponent] 开启Ai使用了未定义的Key",
               ["entity", this.Entity.constructor.name],
               ["PbDataId", this.Mne],
@@ -445,7 +449,7 @@ let CharacterAiComponent =
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "AI",
-            30,
+            29,
             "[CharacterAiComponent] 重复使用关闭Ai的Key",
             ["entity", this.Entity.constructor.name],
             ["PbDataId", this.Mne],
@@ -455,8 +459,8 @@ let CharacterAiComponent =
           this.EFr.set(t, e),
           this.IsEnabled() &&
             (this.IsAiDriver &&
-              (t = this.TsAiController.BrainComponent) &&
-              (t.StopLogic("PauseAI"),
+              (e = this.TsAiController.BrainComponent) &&
+              (e.StopLogic("PauseAI"),
               EventSystem_1.EventSystem.EmitWithTarget(
                 this.Entity,
                 EventDefine_1.EEventName.OnAiDisable,
@@ -466,6 +470,7 @@ let CharacterAiComponent =
               this.Entity,
               "CharacterAiComponent.SetEnable",
               ["enabled", !1],
+              ["key", t],
             ),
             (this.sxr = this.Disable("[CharacterAiComponent.DisableAi]")),
             this.MFr?.SetEnable(!1)));
@@ -511,14 +516,14 @@ let CharacterAiComponent =
       );
     }
     SetDebugDraw(t) {
-      this.lRa = t;
+      this.mRa = t;
     }
     OFr(i) {
       i &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "AI",
-            30,
+            29,
             "准备加载行为树AI",
             ["Id", this.MFr?.CharActorComp?.CreatureData.GetPbDataId()],
             ["Path", i],
@@ -531,7 +536,7 @@ let CharacterAiComponent =
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "AI",
-                    30,
+                    29,
                     "开始运行行为树AI",
                     ["Id", this.MFr.CharActorComp.CreatureData.GetPbDataId()],
                     ["TreeName", t.GetName()],
@@ -551,7 +556,7 @@ let CharacterAiComponent =
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "AI",
-                  51,
+                  50,
                   "加载行为树AI资源失败",
                   [
                     "PbDataId",
@@ -602,11 +607,10 @@ let CharacterAiComponent =
       var r = this.Entity.GetComponent(3);
       if (r.IsAutonomousProxy !== i) {
         let t = i;
-        var s = this.Entity.GetComponent(48);
-        s &&
-          s.IsLocal &&
-          (2 === s.CurrentState || 4 === s.CurrentState) &&
-          (t = !0),
+        var s = this.Entity.GetComponent(54);
+        !s ||
+          (2 !== s.CurrentState && 4 !== s.CurrentState) ||
+          (t = r.IsMoveAutonomousProxy),
           r.SetAutonomous(i, t),
           i && this.TsAiController?.获取控制权时(),
           this.MFr.OnSwitchControl(i, e.W5n),
@@ -632,7 +636,7 @@ let CharacterAiComponent =
         );
     }
     static AiHateNotify(t, e) {
-      var i = t.GetComponent(40).MFr.AiHateList;
+      var i = t.GetComponent(46).MFr.AiHateList;
       for (const r of e.ISs) {
         var o = MathUtils_1.MathUtils.LongToNumber(r.F4n),
           o = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
@@ -674,20 +678,20 @@ let CharacterAiComponent =
                   2,
                   !1,
                 ),
-                  this.PFr(t, "测试加载LevelAi行为树"),
+                  this.PFr(t, "加载LevelAi行为树"),
                   this.EFr.has("Ai Config") && this.EnableAi("Ai Config");
               } else
                 Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "AI",
-                    30,
+                    29,
                     "配置的AI控制器不是TsAiController",
                     ["Path", DEFAULT_LEVELAI_AIC_PATH],
                   );
         },
       );
     }
-    Mca() {
+    Ica() {
       var t = this.Entity.GetComponent(0)?.GetPbEntityInitData();
       if (t) {
         t = (0, IComponent_1.getComponent)(t.ComponentsData, "VarComponent");
@@ -726,12 +730,12 @@ let CharacterAiComponent =
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.EntityVarUpdate,
-            this.C$a,
+            this.Nza,
           );
         }
       }
     }
-    g$a(t, e) {
+    Fza(t, e) {
       var i = this.Entity?.GetComponent(0);
       if (i?.IsNpc() || i?.IsAnimal()) {
         i = i.GetPbEntityInitData();
@@ -750,14 +754,14 @@ let CharacterAiComponent =
 (CharacterAiComponent.NFr = Stats_1.Stat.Create("SetUeController")),
   (CharacterAiComponent.kFr = Stats_1.Stat.Create("StartUeController")),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("a3n")],
+    [CombatMessage_1.CombatNet.Listen("a3n", !0)],
     CharacterAiComponent,
     "AiHateNotify",
     null,
   ),
   (CharacterAiComponent = CharacterAiComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(40)],
+      [(0, RegisterComponent_1.RegisterComponent)(46)],
       CharacterAiComponent,
     )),
   (exports.CharacterAiComponent = CharacterAiComponent);

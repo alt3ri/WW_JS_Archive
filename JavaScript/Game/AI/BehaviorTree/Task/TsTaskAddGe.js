@@ -11,6 +11,9 @@ class TsTaskAddGe extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsInitTsVariables = !1),
       (this.TsGeId = void 0);
   }
+  Constructor() {
+    super.Constructor(), (this.IsInitTsVariables = !1), (this.TsGeId = void 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0), (this.TsGeId = this.GeId));
@@ -20,9 +23,9 @@ class TsTaskAddGe extends TsTaskAbortImmediatelyBase_1.default {
     var a,
       i = s.AiController;
     i
-      ? ((a = i.CharActorComp.Entity.CheckGetComponent(160)).AddBuffFromAi(
+      ? ((a = i.CharActorComp.Entity.CheckGetComponent(172)).AddBuffFromAi(
           i.AiCombatMessageId,
-          this.TsGeId,
+          Number(this.TsGeId),
           { InstigatorId: a.CreatureDataId, Reason: "行为树TsTaskAddGe节点" },
         ),
         this.FinishExecute(!0))

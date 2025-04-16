@@ -49,6 +49,18 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
       (this.FightingPhase3PostProcessTrigger = void 0),
       (this.StringKey = "");
   }
+  Constructor() {
+    (this.CurrentBattleState = 4),
+      (this.LastBattleState = 4),
+      (this.IsInit = !1),
+      (this.StateMachine = void 0),
+      (this.IdleInnerPostProcessTrigger = void 0),
+      (this.IdleOuterPostProcessTrigger = void 0),
+      (this.FightingPhase1PostProcessTrigger = void 0),
+      (this.FightingPhase2PostProcessTrigger = void 0),
+      (this.FightingPhase3PostProcessTrigger = void 0),
+      (this.StringKey = "");
+  }
   手动初始化() {
     RenderModuleController_1.RenderModuleController.AddWuYinQuBattleActor(this);
   }
@@ -105,7 +117,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "RenderBattle",
-            12,
+            11,
             "BOSS战切换状态 from:",
             [" fromState:", this.LastBattleState],
             [" toState:", this.CurrentBattleState],
@@ -115,7 +127,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "RenderBattle",
-                12,
+                11,
                 "切换Fighting to Idle:",
                 ["Key:", this.Key],
                 ["Instant:", i],
@@ -125,7 +137,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "RenderBattle",
-                  12,
+                  11,
                   "切换Idle To Fighting1:",
                   ["Key:", this.Key],
                   ["Instant:", i],
@@ -135,7 +147,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "RenderBattle",
-                    12,
+                    11,
                     "切换Fighting1 to Fighting2:",
                     ["Key:", this.Key],
                     ["Instant:", i],
@@ -145,13 +157,13 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
                 Log_1.Log.CheckInfo()) &&
                 Log_1.Log.Info(
                   "RenderBattle",
-                  12,
+                  11,
                   "切换Fighting2 to Fighting3:",
                   ["Key:", this.Key],
                   ["Instant:", i],
                 ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderBattle", 12, "没有初始化WuYinQuBattle:", [
+        Log_1.Log.Error("RenderBattle", 11, "没有初始化WuYinQuBattle:", [
           "key:",
           this.Key,
         ]);
@@ -167,7 +179,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
   }
   ReceiveEndPlay() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderBattle", 12, "Receive End Play Battle Actor:", [
+      Log_1.Log.Info("RenderBattle", 11, "Receive End Play Battle Actor:", [
         "Key:",
         this.Key,
       ]),
@@ -224,7 +236,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
   Init() {
     return this.IsInit
       ? (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderBattle", 12, "已经初始化过了 handleId:", [
+          Log_1.Log.Error("RenderBattle", 11, "已经初始化过了 handleId:", [
             "Key:",
             this.Key,
           ]),
@@ -254,7 +266,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
           (this.IsInit = !0),
           (this.是否已经初始化 = "已经初始化"),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("RenderBattle", 12, "初始化无音区状态成功:", [
+            Log_1.Log.Info("RenderBattle", 11, "初始化无音区状态成功:", [
               "Key:",
               this.GetKey(),
             ]),
@@ -262,7 +274,7 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderBattle",
-              12,
+              11,
               "无音区战斗数据无效 handleId:",
               ["Key:", this.Key],
             ),
@@ -285,13 +297,13 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
           this.WuYinQuFightingData.WuYinQuIdleData.AtmosInnerData),
         this.IdleInnerPostProcess.WeatherDataAsset?.IsValid() &&
           ((t = this.WuYinQuFightingData.TriggerInnerSize),
-          (i = new UE.Vector(
+          (i = new UE.VectorDouble(
             t + WuYinQuBattleConfig_1.default.TriggerThreshold.X,
             t + WuYinQuBattleConfig_1.default.TriggerThreshold.Y,
             t + WuYinQuBattleConfig_1.default.TriggerThreshold.Z,
           )),
-          this.IdleInnerBox1.SetRelativeScale3D(new UE.Vector(t, t, t)),
-          this.IdleInnerBox2.SetRelativeScale3D(i),
+          this.IdleInnerBox1.D_SetRelativeScale3D(new UE.VectorDouble(t, t, t)),
+          this.IdleInnerBox2.D_SetRelativeScale3D(i),
           (this.IdleInnerPostProcessTrigger =
             new PostProcessTrigger_1.default()),
           this.IdleInnerPostProcessTrigger.Init(
@@ -306,13 +318,13 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
           this.WuYinQuFightingData.WuYinQuIdleData.AtmosOuterData),
         this.IdleOuterPostProcess.WeatherDataAsset?.IsValid()) &&
         ((t = this.WuYinQuFightingData.TriggerOuterSize),
-        (i = new UE.Vector(
+        (i = new UE.VectorDouble(
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.X,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Y,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Z,
         )),
-        this.IdleOuterBox1.SetRelativeScale3D(new UE.Vector(t, t, t)),
-        this.IdleOuterBox2.SetRelativeScale3D(i),
+        this.IdleOuterBox1.D_SetRelativeScale3D(new UE.VectorDouble(t, t, t)),
+        this.IdleOuterBox2.D_SetRelativeScale3D(i),
         (this.IdleOuterPostProcessTrigger = new PostProcessTrigger_1.default()),
         this.IdleOuterPostProcessTrigger.Init(
           this.IdleOuterBox1,
@@ -327,13 +339,15 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
           this.WuYinQuFightingData.WuYinQuFightingData1.AtmosFightingData),
         this.FightingPhase1PostProcess.WeatherDataAsset?.IsValid()) &&
         ((t = this.WuYinQuFightingData.TriggerOuterSize),
-        (i = new UE.Vector(
+        (i = new UE.VectorDouble(
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.X,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Y,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Z,
         )),
-        this.FightingPhase1Box1.SetRelativeScale3D(new UE.Vector(t, t, t)),
-        this.FightingPhase1Box2.SetRelativeScale3D(i),
+        this.FightingPhase1Box1.D_SetRelativeScale3D(
+          new UE.VectorDouble(t, t, t),
+        ),
+        this.FightingPhase1Box2.D_SetRelativeScale3D(i),
         (this.FightingPhase1PostProcessTrigger =
           new PostProcessTrigger_1.default()),
         this.FightingPhase1PostProcessTrigger.Init(
@@ -349,13 +363,15 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
           this.WuYinQuFightingData.WuYinQuFightingData2.AtmosFightingData),
         this.FightingPhase2PostProcess.WeatherDataAsset?.IsValid()) &&
         ((t = this.WuYinQuFightingData.TriggerOuterSize),
-        (i = new UE.Vector(
+        (i = new UE.VectorDouble(
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.X,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Y,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Z,
         )),
-        this.FightingPhase2Box1.SetRelativeScale3D(new UE.Vector(t, t, t)),
-        this.FightingPhase2Box2.SetRelativeScale3D(i),
+        this.FightingPhase2Box1.D_SetRelativeScale3D(
+          new UE.VectorDouble(t, t, t),
+        ),
+        this.FightingPhase2Box2.D_SetRelativeScale3D(i),
         (this.FightingPhase2PostProcessTrigger =
           new PostProcessTrigger_1.default()),
         this.FightingPhase2PostProcessTrigger.Init(
@@ -371,13 +387,15 @@ class WuYinQuBattleActor extends UE.KuroWuYinQuActorBase {
           this.WuYinQuFightingData.WuYinQuFightingData3.AtmosFightingData),
         this.FightingPhase3PostProcess.WeatherDataAsset?.IsValid()) &&
         ((t = this.WuYinQuFightingData.TriggerOuterSize),
-        (i = new UE.Vector(
+        (i = new UE.VectorDouble(
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.X,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Y,
           t + WuYinQuBattleConfig_1.default.TriggerThreshold.Z,
         )),
-        this.FightingPhase3Box1.SetRelativeScale3D(new UE.Vector(t, t, t)),
-        this.FightingPhase3Box2.SetRelativeScale3D(i),
+        this.FightingPhase3Box1.D_SetRelativeScale3D(
+          new UE.VectorDouble(t, t, t),
+        ),
+        this.FightingPhase3Box2.D_SetRelativeScale3D(i),
         (this.FightingPhase3PostProcessTrigger =
           new PostProcessTrigger_1.default()),
         this.FightingPhase3PostProcessTrigger.Init(

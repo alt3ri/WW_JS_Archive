@@ -23,15 +23,17 @@ class DynamicMaskButton extends UiPanelBase_1.UiPanelBase {
   OnAfterShow() {
     var i, t;
     this.nPr?.IsValid() &&
-      ((t = this.RootItem.K2_GetComponentToWorld().Inverse()),
-      (i = this.nPr.RelativeLocation),
+      ((t = this.RootItem.D_K2_GetComponentToWorld().Inverse()),
+      (i = UE.KismetMathLibrary.Conv_VectorToVectorDouble(
+        this.nPr.RelativeLocation,
+      )),
       (i = this.nPr
         .GetParentAsUIItem()
-        .K2_GetComponentToWorld()
+        .D_K2_GetComponentToWorld()
         .TransformPosition(i)),
       (t = t.TransformPosition(i)),
       this.nPr.SetUIParent(this.RootItem, !0),
-      this.nPr.SetUIRelativeLocation(t));
+      this.nPr.K2_SetRelativeLocation(t.op_ToVector(), !1, void 0, !1));
   }
   SetButtonFunction(i) {
     this.Gke = i;
@@ -45,13 +47,13 @@ class DynamicMaskButton extends UiPanelBase_1.UiPanelBase {
   SetAttachChildItem(i) {
     (this.nPr = i),
       (this.Bxo = i.GetParentAsUIItem()),
-      (this.sPr = i.GetRelativeTransform());
+      (this.sPr = i.D_GetRelativeTransform());
   }
   ResetItemParent() {
     this.nPr &&
       this.Bxo &&
       (this.nPr.SetUIParent(this.Bxo),
-      this.nPr.K2_SetRelativeTransform(this.sPr, !1, void 0, !1));
+      this.nPr.D_K2_SetRelativeTransform(this.sPr, !1, void 0, !1));
   }
 }
 exports.DynamicMaskButton = DynamicMaskButton;

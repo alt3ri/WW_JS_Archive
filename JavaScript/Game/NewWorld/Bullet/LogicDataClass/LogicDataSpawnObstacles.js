@@ -12,6 +12,9 @@ class LogicDataSpawnObstacles extends LogicDataBase_1.default {
       (this.NeedAttach = !1),
       (this.CanStandOn = !1);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataSpawnObstacles;
 //# sourceMappingURL=LogicDataSpawnObstacles.js.map

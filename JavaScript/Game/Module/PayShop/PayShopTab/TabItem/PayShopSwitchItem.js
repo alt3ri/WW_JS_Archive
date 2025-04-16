@@ -52,6 +52,9 @@ class PayShopSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
     e = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTabConfig(e, t);
     this.GetText(0).ShowTextNew(e.Name), this.RootItem.SetUIActive(e.Enable);
   }
+  UpdateTitle(e) {
+    this.GetText(0).ShowTextNew(e);
+  }
   BindRedDot(e, t = 0) {
     this.UnBindRedDot();
     var i = this.GetItem(2);

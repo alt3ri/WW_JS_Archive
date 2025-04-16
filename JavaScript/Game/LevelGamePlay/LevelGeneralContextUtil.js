@@ -73,6 +73,9 @@ class LevelGeneralContextUtil {
         case Protocol_1.Aki.Protocol.TOs.Ovs:
           e = LevelGeneralContextUtil.AUe(t.fvs, t.Ovs.ups);
           break;
+        case Protocol_1.Aki.Protocol.TOs.$vs:
+          e = LevelGeneralContextUtil.AUe(t.fvs, t.$vs.ups);
+          break;
         case Protocol_1.Aki.Protocol.TOs.Nvs:
           e = LevelGeneralContextUtil.AUe(t.fvs, t.Nvs.ups);
           break;
@@ -88,7 +91,7 @@ class LevelGeneralContextUtil {
   static AUe(e, t) {
     var o = MathUtils_1.MathUtils.LongToBigInt(t.w5n);
     return LevelGeneralContextDefine_1.GeneralLogicTreeContext.Create(
-      Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest,
+      t.hps,
       o,
       t.lps,
       t.b5n,

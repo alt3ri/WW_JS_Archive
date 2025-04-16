@@ -1,14 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableDropState = void 0);
-const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
   SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableDropState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
-  constructor(e) {
-    super(e), (this.StateType = "BeDropping");
-  }
   SetEnterCallback(e) {
     this.EnterCallback = e;
   }
@@ -18,11 +16,11 @@ class SceneItemManipulableDropState extends SceneItemManipulableBaseState_1.Scen
       t = Vector_1.Vector.Create(e.GetPhysicsLinearVelocity());
     (t.X *= 0.1),
       (t.Y *= 0.1),
-      e.SetPhysicsLinearVelocity(t.ToUeVector()),
+      e.SetPhysicsLinearVelocity(t.ToUeVectorOld()),
       (this.SceneItem.NeedRemoveControllerId = !0),
       LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
         this.SceneItem.Entity.Id,
-        !0,
+        Protocol_1.Aki.Protocol.Zw_.Proto_EControlStateLetGo,
       ),
       FNameUtil_1.FNameUtil.IsNothing(
         this.SceneItem.ManipulateBaseConfig.待机状态碰撞预设,

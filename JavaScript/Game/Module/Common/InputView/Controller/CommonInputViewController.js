@@ -14,12 +14,12 @@ const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTex
 class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
   static OpenSetRoleNameInputView() {
     var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
-      n =
+      t =
         ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
           "SetName",
         ),
-      n = {
-        TitleTextArgs: new LguiUtil_1.TableTextArgNew(n),
+      t = {
+        TitleTextArgs: new LguiUtil_1.TableTextArgNew(t),
         ConfirmFunc: PersonalController_1.PersonalController.RequestModifyName,
         InputText: e,
         DefaultText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -27,8 +27,10 @@ class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
         ),
         IsCheckNone: !0,
         NeedFunctionButton: !1,
+        BottomTipsText: "",
+        NeedCheckBlank: !0,
       };
-    UiManager_1.UiManager.OpenView("CommonModifyNameInputView", n);
+    UiManager_1.UiManager.OpenView("CommonModifyNameInputView", t);
   }
   static OpenSetPlayerRemarkNameInputView() {
     let e =
@@ -38,12 +40,12 @@ class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
       (e =
         ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance()
           ?.PlayerName);
-    var n =
+    var t =
         ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
           "SetRemark",
         ),
-      n = {
-        TitleTextArgs: new LguiUtil_1.TableTextArgNew(n),
+      t = {
+        TitleTextArgs: new LguiUtil_1.TableTextArgNew(t),
         ConfirmFunc: async (e) =>
           FriendController_1.FriendController.RequestFriendRemarkChange(
             ModelManager_1.ModelManager.FriendModel.GetCurrentOperationPlayerId(),
@@ -55,17 +57,19 @@ class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
         ),
         IsCheckNone: !1,
         NeedFunctionButton: !1,
+        BottomTipsText: "",
+        NeedCheckBlank: !0,
       };
-    UiManager_1.UiManager.OpenView("CommonSingleInputView", n);
+    UiManager_1.UiManager.OpenView("CommonSingleInputView", t);
   }
   static OpenPersonalSignInputView() {
     var e = ModelManager_1.ModelManager.PersonalModel.GetSignature(),
-      n =
+      t =
         ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
           "SetSign",
         ),
-      n = {
-        TitleTextArgs: new LguiUtil_1.TableTextArgNew(n),
+      t = {
+        TitleTextArgs: new LguiUtil_1.TableTextArgNew(t),
         ConfirmFunc:
           PersonalController_1.PersonalController.RequestModifySignature,
         DefaultText: ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -74,8 +78,10 @@ class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
         InputText: e,
         IsCheckNone: !1,
         NeedFunctionButton: !1,
+        BottomTipsText: "",
+        NeedCheckBlank: !0,
       };
-    UiManager_1.UiManager.OpenView("CommonMultiInputView", n);
+    UiManager_1.UiManager.OpenView("CommonMultiInputView", t);
   }
   static OpenCdKeyInputView() {
     var e = {
@@ -90,8 +96,47 @@ class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
       InputText: "",
       IsCheckNone: !0,
       NeedFunctionButton: !0,
+      BottomTipsText: "",
+      NeedCheckBlank: !0,
     };
     UiManager_1.UiManager.OpenView("CdKeyInputView", e);
+  }
+  static OpenSetVisionEquipGroupName(e, t, n = "") {
+    n = {
+      TitleTextArgs: new LguiUtil_1.TableTextArgNew("VisionAssembleSaveTips"),
+      ConfirmFunc: async (e) => {
+        return await t(e);
+      },
+      InputText: n,
+      DefaultText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+        "VisionAssembleInputTips",
+      ),
+      IsCheckNone: !0,
+      NeedFunctionButton: !1,
+      BottomTipsText: e,
+      BottomTipsColor: "000000",
+      NeedCheckBlank: !0,
+    };
+    UiManager_1.UiManager.OpenView("VisionAssembleInputView", n);
+  }
+  static OpenChangeVisionEquipGroupName(e, t) {
+    e = {
+      TitleTextArgs: new LguiUtil_1.TableTextArgNew(
+        "VisionAssembleChangeNameTips",
+      ),
+      ConfirmFunc: async (e) => {
+        return await t(e);
+      },
+      InputText: "",
+      DefaultText: MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+        "VisionAssembleInputTips",
+      ),
+      IsCheckNone: !1,
+      NeedFunctionButton: !1,
+      BottomTipsText: e,
+      BottomTipsColor: "000000",
+    };
+    UiManager_1.UiManager.OpenView("CommonSingleInputView", e);
   }
 }
 exports.CommonInputViewController = CommonInputViewController;

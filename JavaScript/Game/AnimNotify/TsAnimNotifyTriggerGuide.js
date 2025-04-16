@@ -10,6 +10,7 @@ class TsAnimNotifyTriggerGuide extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.EventGroupId = 0);
   }
+  Constructor() {}
   K2_Notify(e, r) {
     var o = this.ParseEventGroupId2GuideGroupId(this.EventGroupId),
       t = [
@@ -29,7 +30,7 @@ class TsAnimNotifyTriggerGuide extends UE.KuroAnimNotify {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Guide",
-          65,
+          64,
           "由蒙太奇触发的引导",
           ["EventGroupId", this.EventGroupId],
           ["GuideGroupId", o],

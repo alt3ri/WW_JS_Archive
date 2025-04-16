@@ -5,7 +5,7 @@ const UE = require("ue"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ServerGmController_1 = require("../../../World/Controller/ServerGmController");
 class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
   constructor() {
@@ -13,6 +13,11 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
       (this.BlackboardKey = ""),
       (this.CompareValue = !0),
       (this.IsInitTsVariables = !1),
+      (this.TsBlackboardKey = ""),
+      (this.TsCompareValue = !1);
+  }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
       (this.TsBlackboardKey = ""),
       (this.TsCompareValue = !1);
   }
@@ -52,10 +57,11 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
     r = e.CharAiDesignComp;
     if (!r) return !1;
     if ((this.InitTsVariables(), this.TsBlackboardKey)) {
-      e = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-        r.Entity.Id,
-        this.TsBlackboardKey,
-      );
+      e =
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+          r.Entity.Id,
+          this.TsBlackboardKey,
+        );
       if (
         (o &&
           (Log_1.Log.CheckInfo() &&
@@ -78,7 +84,7 @@ class TsDecoratorBlackboardHasEntity extends UE.BTDecorator_BlueprintBase {
             [
               "MainAnims",
               r.Entity.GetComponent(
-                163,
+                175,
               )?.MainAnimInstance?.GetMainAnimsDebugText(),
             ],
           ),

@@ -2,23 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemTipsWithButtonComponent = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
-  GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
-  ButtonItem_1 = require("../Button/ButtonItem"),
-  ItemTipsComponent_1 = require("./ItemTipsComponent");
+  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
+  LayoutButtonItem_1 = require("../Button/LayoutButtonItem"),
+  ItemTipsComponent_1 = require("./ItemTipsComponent"),
+  ItemTipsLockState_1 = require("./SubComponents/ItemTipsLockState");
 class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.GXs = void 0),
       (this.Mxt = void 0),
-      (this.Sxt = (t, e, i) => {
-        e = new ButtonItem_1.ButtonItem(e);
-        return (
-          e.SetFunction(t.Function),
-          e.SetShowText(t.Text),
-          t.RedDotName && e.BindRedDot(t.RedDotName, t.RedDotId),
-          { Key: t.Index, Value: e }
-        );
+      (this.au_ = void 0),
+      (this.Dxt = void 0),
+      (this.W2e = () => {
+        return new LayoutButtonItem_1.LayoutButtonItem();
       });
   }
   OnRegisterComponent() {
@@ -26,16 +24,20 @@ class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIItem],
       [1, UE.UIHorizontalLayout],
       [2, UE.UIItem],
+      [3, UE.UIItem],
     ];
   }
   async OnBeforeStartAsync() {
     (this.GXs = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
-      await this.GXs.CreateByActorAsync(this.GetItem(0).GetOwner());
+      await this.GXs.CreateByActorAsync(this.GetItem(0).GetOwner()),
+      (this.Dxt = new ItemTipsLockState_1.ItemTipsLockState()),
+      await this.Dxt.Init(this.GetItem(3)),
+      this.Dxt.SetActive(!1);
   }
   OnStart() {
-    this.Mxt = new GenericLayoutNew_1.GenericLayoutNew(
+    this.Mxt = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(1),
-      this.Sxt,
+      this.W2e,
     );
   }
   OnBeforeDestroy() {
@@ -45,28 +47,49 @@ class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
     this.GXs.Refresh(t);
   }
   RefreshButton(t) {
-    this.Mxt.RebuildLayoutByDataNew(t);
+    this.au_ = new CustomPromise_1.CustomPromise();
+    var e = new Array();
+    for (const s of t) {
+      var i = new LayoutButtonItem_1.ButtonItemData();
+      (i.OnClickCallback = s.Function),
+        (i.ButtonText = s.Text),
+        (i.RedDotName = s.RedDotName),
+        (i.Index = s.Index),
+        e.push(i);
+    }
+    this.Mxt.RefreshByData(e, () => {
+      this.au_.IsFulfilled() || this.au_?.SetResult();
+    });
   }
   ClearButtonList() {
-    this.Mxt.RebuildLayoutByDataNew([]);
+    this.Mxt.RefreshByData([]);
   }
-  SetButtonTextByIndex(t, e, i) {
-    this.Mxt.GetLayoutItemMap().get(t)?.SetLocalText(e, i);
+  async SetButtonTextByIndex(t, e, i) {
+    this.au_ && (await this.au_.Promise),
+      this.Mxt.GetLayoutItemMap().get(t)?.SetLocalText(e, i);
   }
-  SetButtonEnableByIndex(t, e) {
-    this.Mxt.GetLayoutItemMap().get(t)?.SetEnableClick(e);
+  async SetButtonEnableByIndex(t, e) {
+    this.au_ && (await this.au_.Promise),
+      this.Mxt.GetLayoutItemMap().get(t)?.SetEnableClick(e);
   }
   SetButtonPanelVisible(t) {
     this.GetHorizontalLayout(1).RootUIComp.SetUIActive(t);
   }
-  SetButtonRedDotVisible(t, e) {
-    this.Mxt.GetLayoutItemMap().get(t)?.SetRedDotVisible(e);
+  async SetButtonRedDotVisible(t, e) {
+    this.au_ && (await this.au_.Promise),
+      this.Mxt.GetLayoutItemMap().get(t)?.SetRedDotVisible(e);
   }
   SetVisible(t) {
     this.SetActive(t);
   }
   SetTipsComponentLockButton(t) {
     this.GXs.SetTipsComponentLockButton(t);
+  }
+  SetLockStateData(t) {
+    this.Dxt.UpdateData(t);
+  }
+  SetLockStateVisible(t = !1) {
+    this.Dxt.SetActive(t);
   }
 }
 exports.ItemTipsWithButtonComponent = ItemTipsWithButtonComponent;

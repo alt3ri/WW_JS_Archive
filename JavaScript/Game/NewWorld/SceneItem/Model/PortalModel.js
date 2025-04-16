@@ -6,7 +6,7 @@ const UE = require("ue"),
   ModelBase_1 = require("../../../../Core/Framework/ModelBase");
 class PortalModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Osr = void 0), (this.I4a = void 0);
+    super(...arguments), (this.Osr = void 0), (this.r8a = void 0);
   }
   OnInit() {
     return (this.Osr = new Map()), !0;
@@ -25,27 +25,29 @@ class PortalModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      (this.Osr = void 0) !== this.I4a &&
-        (ActorSystem_1.ActorSystem.Put(this.I4a), (this.I4a = void 0)),
+      (this.Osr = void 0) !== this.r8a &&
+        (ActorSystem_1.ActorSystem.Put("PortalModel.OnClear", this.r8a),
+        (this.r8a = void 0)),
       !0
     );
   }
   OnLeaveLevel() {
     return (
-      void 0 !== this.I4a &&
-        (ActorSystem_1.ActorSystem.Put(this.I4a), (this.I4a = void 0)),
+      void 0 !== this.r8a &&
+        (ActorSystem_1.ActorSystem.Put("PortalModel.OnLeaveLevel", this.r8a),
+        (this.r8a = void 0)),
       !0
     );
   }
   GetBpPortalActor() {
     return (
-      void 0 === this.I4a &&
-        (this.I4a = ActorSystem_1.ActorSystem.Spawn(
+      void 0 === this.r8a &&
+        (this.r8a = ActorSystem_1.ActorSystem.Spawn(
           UE.BP_Portal_C.StaticClass(),
           void 0,
           void 0,
         )),
-      this.I4a
+      this.r8a
     );
   }
 }

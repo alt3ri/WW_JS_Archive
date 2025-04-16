@@ -9,7 +9,7 @@ class MonthCardConfig extends ConfigBase_1.ConfigBase {
     var e = MonthCardContentById_1.configMonthCardContentById.GetConfig(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Temp", 11, "获取物品配置错误", ["MonthCardConfig", o]);
+      Log_1.Log.Error("Temp", 10, "获取物品配置错误", ["MonthCardConfig", o]);
   }
 }
 exports.MonthCardConfig = MonthCardConfig;

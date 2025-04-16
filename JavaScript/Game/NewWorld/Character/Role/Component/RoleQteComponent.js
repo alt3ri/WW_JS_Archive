@@ -1,24 +1,27 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, i, r) {
+  function (t, e, i, r) {
     var o,
       s = arguments.length,
-      n =
+      a =
         s < 3
-          ? t
+          ? e
           : null === r
-            ? (r = Object.getOwnPropertyDescriptor(t, i))
+            ? (r = Object.getOwnPropertyDescriptor(e, i))
             : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(e, t, i, r);
+      a = Reflect.decorate(t, e, i, r);
     else
-      for (var a = e.length - 1; 0 <= a; a--)
-        (o = e[a]) && (n = (s < 3 ? o(n) : 3 < s ? o(t, i, n) : o(t, i)) || n);
-    return 3 < s && n && Object.defineProperty(t, i, n), n;
+      for (var n = t.length - 1; 0 <= n; n--)
+        (o = t[n]) && (a = (s < 3 ? o(a) : 3 < s ? o(e, i, a) : o(e, i)) || a);
+    return 3 < s && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.RoleQteComponent = exports.MAX_MULTI_QTE_DISTANCE = void 0);
+  (exports.RoleQteComponent =
+    exports.MAX_MULTI_QTE_DISTANCE =
+    exports.isMultiQte =
+      void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
@@ -34,16 +37,26 @@ const UE = require("ue"),
   Global_1 = require("../../../../Global"),
   GlobalData_1 = require("../../../../GlobalData"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
+  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
   CharacterBuffIds_1 = require("../../Common/Component/Abilities/CharacterBuffIds"),
   PROFILE_KEY = "RoleQteComponent_SetQtePosition",
   DEFAULT_ADD_HEIGHT = -1e3,
   SUB_SIZE = 5,
   QTE_LOCKON_CONFIG_ID = 4,
   normalQteTag = -658311908;
-exports.MAX_MULTI_QTE_DISTANCE = 5e3;
+function isMultiQte() {
+  return (
+    1 <
+    (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+      ? ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerSize()
+      : ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer().length)
+  );
+}
+(exports.isMultiQte = isMultiQte), (exports.MAX_MULTI_QTE_DISTANCE = 5e3);
 let RoleQteComponent = class RoleQteComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -62,58 +75,59 @@ let RoleQteComponent = class RoleQteComponent extends EntityComponent_1.EntityCo
       (this.Zqn = []),
       (this.eGn = new Map()),
       (this.tGn = ""),
-      (this.Son = (e, t) => {
+      (this.GoBattleActor = void 0),
+      (this.Son = (t, e) => {
         EventSystem_1.EventSystem.Emit(
-          t
+          e
             ? EventDefine_1.EEventName.CharQteActive
             : EventDefine_1.EEventName.CharQteConsume,
           this.Entity.Id,
         );
       }),
-      (this.yon = (e) => {
-        this.Entity.Id !== e && this.Eon.delete(e);
+      (this.yon = (t) => {
+        this.Entity.Id !== t && this.Eon.delete(t);
       }),
       (this.pze = () => {
         this.Eon.clear();
       }),
-      (this.Ion = (e, t) => {
-        t
+      (this.Ion = (t, e) => {
+        e
           ? (this.IsInQte = !0)
           : ((this.IsInQte = !1),
             this.m1t.RemoveBuffByTag(-52094810, "QTE结束移除"),
             ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
               this.Entity.Id,
               { ParamType: 1 },
-            )?.IsControl() || this.gon.SetRoleDisableWithEffect()),
+            )?.IsControl() || this.gon.DisableRoleWithEffect()),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.CharInQteChanged,
             this.Entity.Id,
             this.IsInQte,
           );
       }),
-      (this.iGn = (e, t) => {
-        t
+      (this.iGn = (t, e) => {
+        e
           ? (this.eGn.set(
-              e,
+              t,
               ConfigManager_1.ConfigManager.WorldConfig.GetQteTagDataMap().get(
-                e,
+                t,
               ),
             ),
             this.rGn())
-          : ((t = this.eGn.get(e)),
-            this.eGn.delete(e),
-            this.tGn === t && this.rGn());
+          : ((e = this.eGn.get(t)),
+            this.eGn.delete(t),
+            this.tGn === e && this.rGn());
       });
   }
   OnStart() {
     return (
       (this.n$t = this.Entity.GetComponent(3)),
-      (this.bkr = this.Entity.CheckGetComponent(17)),
-      (this.Xte = this.Entity.CheckGetComponent(190)),
-      (this.m1t = this.Entity.CheckGetComponent(160)),
-      (this.gon = this.Entity.CheckGetComponent(84)),
-      (this.tRr = this.Entity.CheckGetComponent(34)),
-      (this.gFe = this.Entity.CheckGetComponent(82)),
+      (this.bkr = this.Entity.CheckGetComponent(18)),
+      (this.Xte = this.Entity.CheckGetComponent(203)),
+      (this.m1t = this.Entity.CheckGetComponent(172)),
+      (this.gon = this.Entity.CheckGetComponent(91)),
+      (this.tRr = this.Entity.CheckGetComponent(39)),
+      (this.gFe = this.Entity.CheckGetComponent(89)),
       this.Zqn.push(this.Xte.ListenForTagAddOrRemove(166024319, this.Son)),
       this.Zqn.push(this.Xte.ListenForTagAddOrRemove(1674960297, this.Ion)),
       EventSystem_1.EventSystem.Add(
@@ -129,7 +143,7 @@ let RoleQteComponent = class RoleQteComponent extends EntityComponent_1.EntityCo
     );
   }
   OnEnd() {
-    for (const e of this.Zqn) e.EndTask();
+    for (const t of this.Zqn) t.EndTask();
     return (
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEnterOnlineWorld,
@@ -144,105 +158,106 @@ let RoleQteComponent = class RoleQteComponent extends EntityComponent_1.EntityCo
   }
   oGn() {
     this.Xte.AddTag(normalQteTag);
-    var e =
+    var t =
         ConfigManager_1.ConfigManager.WorldConfig.GetQteTagDataMap().values(),
-      t = ConfigManager_1.ConfigManager.WorldConfig.GetQteTagDataTable();
-    for (const r of e) {
-      var i = DataTableUtil_1.DataTableUtil.GetDataTableRow(t, r).QteTag.TagId;
+      e = ConfigManager_1.ConfigManager.WorldConfig.GetQteTagDataTable();
+    for (const r of t) {
+      var i = DataTableUtil_1.DataTableUtil.GetDataTableRow(e, r).QteTag.TagId;
       this.Zqn.push(this.Xte.ListenForTagAddOrRemove(i, this.iGn)),
         this.Xte.HasTag(i) && this.eGn.set(i, r);
     }
     this.rGn();
   }
-  IsQteReady(t) {
+  IsQteReady(e) {
     if (this.IsInQte) return !1;
     if (!FormationDataController_1.FormationDataController.GlobalIsInFight)
       return !1;
     if (this.Xte.HasTag(1008164187)) return !1;
-    var e = this.GetQteTagData();
-    if (!e) return !1;
-    if (this.Xte.HasTag(e.NoTag.TagId)) return !1;
-    e = t.Entity.GetComponent(190);
-    if (!e.HasTag(166024319) || e.HasTag(1008164187)) return !1;
-    if (!e.HasTag(2014048239) && this.Eon.has(t.Id)) return !1;
-    e = t.Entity.GetComponent(3);
-    if (
-      1 < ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer().length
-    ) {
-      if (e.IsAutonomousProxy) return !1;
+    if (this.Xte.HasTag(-373980873)) return !1;
+    var t = this.GetQteTagData();
+    if (!t) return !1;
+    if (this.Xte.HasTag(t.NoTag.TagId)) return !1;
+    t = e.Entity.GetComponent(203);
+    if (!t.HasTag(166024319) || t.HasTag(1008164187)) return !1;
+    if (!t.HasTag(2014048239) && this.Eon.has(e.Id)) return !1;
+    t = e.Entity.GetComponent(3);
+    if (isMultiQte()) {
+      if (t.IsAutonomousProxy) return !1;
       if (
         !ModelManager_1.ModelManager.SceneTeamModel.GetTeamItemsInRange(
           this.n$t.ActorLocationProxy,
           exports.MAX_MULTI_QTE_DISTANCE,
-        ).some((e) => e.EntityHandle === t)
+        ).some((t) => t.EntityHandle === e)
       )
         return !1;
     }
     return !0;
   }
-  UseExitSkill(e) {
-    var t,
-      i = e.Entity.GetComponent(89).GetQteTagData();
-    i &&
-      "None" !== i.ExitSkillTrigger.TagName &&
-      (((t = new UE.GameplayEventData()).Instigator = this.n$t.Actor),
-      (t.Target = e.Entity.GetComponent(3).Actor),
-      this.bkr.SendGameplayEventToActor(i.ExitSkillTrigger, t));
+  UseExitSkill(t) {
+    var e = t.Entity.GetComponent(96).GetQteTagData();
+    e &&
+      "None" !== e.ExitSkillTrigger.TagName &&
+      ((this.GoBattleActor = t.Entity.GetComponent(3).Actor),
+      ((t = new UE.GameplayEventData()).Instigator = this.n$t.Actor),
+      (t.Target = this.GoBattleActor),
+      this.bkr.SendGameplayEventToActor(e.ExitSkillTrigger, t),
+      (this.GoBattleActor = void 0));
   }
-  ExecuteQte(e) {
-    var t = this.GetQteTagData();
-    if (!t || "None" === t.QteTrigger.TagName) return !1;
-    var i = this.H8a(e);
-    this.QZr(e),
+  ExecuteQte(t) {
+    var e = this.GetQteTagData();
+    if (!e || "None" === e.QteTrigger.TagName) return !1;
+    var i = this.R7a(t);
+    this.QZr(t),
       this.gon.InterruptDisableWithEffect(),
       this.gon.SetTeamTag(0),
       this.Entity.EnableByKey(1, !0),
-      this.bkr.SendGameplayEventToActor(t.QteTrigger);
-    for (let e = 0; e < t.QteBuffs.Num(); e++)
-      this.m1t.AddBuff(t.QteBuffs.Get(e), {
+      this.bkr.SendGameplayEventToActor(e.QteTrigger);
+    for (let t = 0; t < e.QteBuffs.Num(); t++)
+      this.m1t.AddBuff(Number(e.QteBuffs.Get(t)), {
         InstigatorId: this.m1t.CreatureDataId,
         PreMessageId: i,
         Reason: "ExecuteQte",
       });
-    var r = e.Entity.GetComponent(82),
-      o = e.Entity.GetComponent(190);
-    if ((r.ActivateFusion(this.Entity), !o.HasTag(2014048239)))
-      for (let e = 0; e < t.ConsumeBuffs.Num(); e++)
-        r.ClearElementEnergy(this.Entity, t.ConsumeBuffs.Get(e));
+    var r = t.Entity.GetComponent(89),
+      o = t.Entity.GetComponent(203);
+    if ((r.TriggerEvents(this.Entity), !o.HasTag(2014048239)))
+      for (let t = 0; t < e.ConsumeBuffs.Num(); t++)
+        r.ClearElementEnergy(this.Entity, Number(e.ConsumeBuffs.Get(t)));
     return (
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.CharExecuteQte,
         this.Entity.Id,
-        e.Id,
+        t.Id,
       ),
       !0
     );
   }
-  ExecuteMultiQte(e) {
-    var t = this.GetQteTagData();
-    if (!t || "None" === t.QteTrigger.TagName) return !1;
-    var i = this.H8a(e);
-    this.bkr.SendGameplayEventToActor(t.QteTrigger);
-    for (let e = 0; e < t.QteBuffs.Num(); e++)
-      this.m1t.AddBuff(t.QteBuffs.Get(e), {
+  ExecuteMultiQte(t) {
+    var e = this.GetQteTagData();
+    if (!e || "None" === e.QteTrigger.TagName) return !1;
+    var i = this.R7a(t);
+    this.bkr.SendGameplayEventToActor(e.QteTrigger);
+    for (let t = 0; t < e.QteBuffs.Num(); t++)
+      this.m1t.AddBuff(Number(e.QteBuffs.Get(t)), {
         InstigatorId: this.m1t.CreatureDataId,
         PreMessageId: i,
         Reason: "ExecuteQte",
       });
-    var r = e.Entity.GetComponent(82);
-    if (!e.Entity.GetComponent(190).HasTag(2014048239)) {
+    var r = t.Entity.GetComponent(89),
+      o = t.Entity.GetComponent(203);
+    if ((r.TriggerEvents(this.Entity), !o.HasTag(2014048239))) {
       if (2 < ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerSize())
         r.ClearElementEnergy(this.Entity, CharacterBuffIds_1.buffId.ConsumeQte);
       else
-        for (let e = 0; e < t.ConsumeBuffs.Num(); e++)
-          r.ClearElementEnergy(this.Entity, t.ConsumeBuffs.Get(e));
-      this.Eon.add(e.Id);
+        for (let t = 0; t < e.ConsumeBuffs.Num(); t++)
+          r.ClearElementEnergy(this.Entity, Number(e.ConsumeBuffs.Get(t)));
+      this.Eon.add(t.Id);
     }
     return (
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.CharExecuteMultiQte,
         this.Entity.Id,
-        e.Id,
+        t.Id,
       ),
       !0
     );
@@ -271,151 +286,161 @@ let RoleQteComponent = class RoleQteComponent extends EntityComponent_1.EntityCo
         QueryTypeDefine_1.KuroObjectTypeQuery.WorldStaticIgnoreBullet,
       ));
   }
-  Uon(t, e, i) {
-    t.HitResult?.Clear(),
-      t.ActorsToIgnore.Empty(),
-      t.ActorsToIgnore.Add(e.Owner),
-      t.ActorsToIgnore.Add(i.Actor);
-    var r = i.Entity.GetComponent(49)?.GetFollowActor();
-    if (r) for (let e = 0; e < r.Num(); e++) t.ActorsToIgnore.Add(r.Get(e));
+  Uon(e, t, i) {
+    e.HitResult?.Clear(),
+      e.ActorsToIgnore.Empty(),
+      e.ActorsToIgnore.Add(t.Owner),
+      e.ActorsToIgnore.Add(i.Actor);
+    var r = i.Entity.GetComponent(55)?.GetFollowActor();
+    if (r) for (let t = 0; t < r.Num(); t++) e.ActorsToIgnore.Add(r.Get(t));
   }
   SetQtePosition(s) {
-    var n = Global_1.Global.BaseCharacter?.CharacterActorComponent;
-    if (n) {
-      let e = n;
-      var a = Vector_1.Vector.Create();
-      a.DeepCopy(e.ActorLocationProxy),
+    var a = Global_1.Global.BaseCharacter?.CharacterActorComponent;
+    if (a) {
+      let t = a;
+      var n = Vector_1.Vector.Create();
+      n.DeepCopy(t.ActorLocationProxy),
         s.ReferenceTarget &&
-          (h = this.tRr.SkillTarget)?.Valid &&
-          ((e = h.Entity.GetComponent(1)),
-          (h = this.tRr.GetTargetTransform()),
-          a.DeepCopy(h.GetLocation())),
+          (_ = this.tRr.SkillTarget)?.Valid &&
+          ((t = _.Entity.GetComponent(1)),
+          (_ = this.tRr.GetTargetTransform()),
+          n.DeepCopy(_.GetLocation())),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Character",
-            49,
+            48,
             "Qte设置位置开始",
-            ["targetName", e.Owner?.GetName()],
+            ["targetName", t.Owner?.GetName()],
             ["currentLocation", this.n$t.ActorLocationProxy],
-            ["targetLocation", a],
+            ["targetLocation", n],
           ),
         this.Don(),
-        this.Uon(this.von, e, n),
+        this.Uon(this.von, t, a),
         this.Ron(),
-        this.Uon(this.Mon, e, n);
-      let t = 0,
+        this.Uon(this.Mon, t, a);
+      let e = 0,
         i = 0;
-      (0, RegisterComponent_1.isComponentInstance)(e, 3)
-        ? ((t = e.ScaledRadius), (i = e.HalfHeight))
-        : (0, RegisterComponent_1.isComponentInstance)(e, 187) &&
-          ((h = e.GetRadius()), (t = h), (i = h));
-      var h = { Location: a, Radius: t, HalfHeight: i };
+      (0, RegisterComponent_1.isComponentInstance)(t, 3)
+        ? ((e = t.ScaledRadius), (i = t.HalfHeight))
+        : (0, RegisterComponent_1.isComponentInstance)(t, 200) &&
+          ((_ = t.GetRadius()), (e = _), (i = _));
+      var _ = { Location: n, Radius: e, HalfHeight: i };
       let r = void 0,
         o = void 0;
       o =
         1 === s.QteType
-          ? ((r = this.Aon(n, s, h)), "Qte.设置空中位置")
-          : ((r = this.Pon(n, s, h)), "Qte.设置地面位置");
-      var a = this.n$t,
-        s = a.ActorLocationProxy,
-        h = this.Mon,
-        n =
+          ? ((r = this.Aon(a, s, _)), "Qte.设置空中位置")
+          : ((r = this.Pon(a, s, _)), "Qte.设置地面位置");
+      var n = this.n$t,
+        s = n.ActorLocationProxy,
+        _ = this.Mon,
+        a =
           (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-            h,
-            n.ActorLocationProxy,
+            _,
+            a.ActorLocationProxy,
           ),
-          TraceElementCommon_1.TraceElementCommon.SetEndLocation(h, r),
-          TraceElementCommon_1.TraceElementCommon.LineTrace(h, PROFILE_KEY)),
-        h = h.HitResult,
-        h =
-          (n &&
-            h.bBlockingHit &&
-            (TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, 0, r),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(_, r),
+          TraceElementCommon_1.TraceElementCommon.LineTrace(_, PROFILE_KEY)),
+        _ = _.HitResult,
+        _ =
+          (a &&
+            _.bBlockingHit &&
+            (TraceElementCommon_1.TraceElementCommon.GetHitLocation(_, 0, r),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Character",
-                49,
+                48,
                 "Qte设置位置，与目标位置间有障碍",
                 ["碰撞位置", r],
               ),
-            (n = this.cz),
-            r.Subtraction(s, n),
-            n.Normalize(),
-            n.Multiply(a.ScaledRadius, n),
-            r.Subtraction(n, r)),
-          a.ScaledHalfHeight),
-        s = Vector_1.Vector.Create(r.X, r.Y, r.Z + h),
-        n = Vector_1.Vector.Create(r.X, r.Y, r.Z - h),
+            (a = this.cz),
+            r.Subtraction(s, a),
+            a.Normalize(),
+            a.Multiply(n.ScaledRadius, a),
+            r.Subtraction(a, r)),
+          n.ScaledHalfHeight),
+        s = Vector_1.Vector.Create(r),
+        a = Vector_1.Vector.Create(r),
         s =
-          ((this.von.Radius = a.ScaledRadius),
+          (GravityUtils_1.GravityUtils.AddZnInGravityForActor(n, s, _),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(n, a, -_),
+          (this.von.Radius = n.ScaledRadius),
           TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.von, s),
-          TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.von, n),
+          TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.von, a),
           TraceElementCommon_1.TraceElementCommon.SphereTrace(
             this.von,
             PROFILE_KEY,
           )),
-        n = this.von.HitResult;
-      s && n.bBlockingHit
+        a = this.von.HitResult;
+      s && a.bBlockingHit
         ? ((s =
             ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation),
-          TraceElementCommon_1.TraceElementCommon.GetHitLocation(n, 0, s),
-          (s.Z += h),
+          TraceElementCommon_1.TraceElementCommon.GetHitLocation(a, 0, s),
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(n, s, _),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Character", 49, "Qte设置位置，地面检测修正位置", [
+            Log_1.Log.Info("Character", 48, "Qte设置位置，地面检测修正位置", [
               "fixedLocation",
               s,
             ]),
-          a.SetActorLocation(s.ToUeVector(), "Qte.修正位置", !1))
+          n.SetActorLocation(s.ToUeVector(), "Qte.修正位置", !1))
         : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Character", 49, "Qte设置位置", ["location", r]),
-          a.SetActorLocation(r.ToUeVector(), o, !1));
+            Log_1.Log.Info("Character", 48, "Qte设置位置", ["location", r]),
+          n.SetActorLocation(r.ToUeVector(), o, !1));
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Character",
-          23,
+          22,
           "GetQtePosition error, currentRole not found",
         );
   }
-  Aon(e, t, i) {
-    let r = t.Length;
+  Aon(t, e, i) {
+    let r = e.Length;
     var o = Vector_1.Vector.Create(),
       s =
-        (e.ActorLocationProxy.Subtraction(i.Location, o),
-        o.IsNearlyZero() ? o.DeepCopy(e.ActorForwardProxy) : (r += i.Radius),
-        (o.Z = 0),
-        o.RotateAngleAxis(t.Rotate, Vector_1.Vector.UpVectorProxy, o),
+        (t.ActorLocationProxy.Subtraction(i.Location, o),
+        o.IsNearlyZero() ? o.DeepCopy(t.ActorForwardProxy) : (r += i.Radius),
+        GravityUtils_1.GravityUtils.SetZnInGravityForActor(t, o, 0),
+        o.RotateAngleAxis(e.Rotate, t.MoveComp.GravityUp, o),
         o.Normalize(),
         o.Multiply(r, o),
         Vector_1.Vector.Create()),
       o =
         (s.DeepCopy(i.Location),
         s.Addition(o, s),
-        (s.Z += t.Height),
-        e.ActorLocationProxy),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(t, s, e.Height),
+        t.ActorLocationProxy),
       o =
         (TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.von, o),
-        (s.Z += i.HalfHeight / 2),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          t,
+          s,
+          i.HalfHeight / 2,
+        ),
         TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.von, s),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            49,
+            48,
             "Qte设置空中位置，检测开始",
             ["开始位置", o],
             ["结束位置", s],
           ),
         TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-          e.Actor.CapsuleComponent,
+          t.Actor.CapsuleComponent,
           this.von,
           PROFILE_KEY,
           PROFILE_KEY,
         )),
-      n = this.von.HitResult;
+      a = this.von.HitResult;
     return (
-      (s.Z -= i.HalfHeight / 2),
+      GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+        t,
+        s,
+        -i.HalfHeight / 2,
+      ),
       o &&
-        n.bBlockingHit &&
+        a.bBlockingHit &&
         ((o = Vector_1.Vector.Create()),
         TraceElementCommon_1.TraceElementCommon.GetHitLocation(
           this.von.HitResult,
@@ -425,166 +450,170 @@ let RoleQteComponent = class RoleQteComponent extends EntityComponent_1.EntityCo
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            49,
+            48,
             "Qte设置空中位置，检测结果",
-            ["障碍物", n.Actors.Get(0)?.GetName()],
+            ["障碍物", a.Actors.Get(0)?.GetName()],
             ["碰撞位置", o],
           ),
-        (n = this.cz),
-        e.ActorLocationProxy.Subtraction(o, n),
-        (n.Z = 0),
-        n.Normalize(),
-        (i = i.Radius + e.GetRadius()),
-        n.Multiply(i, n),
+        (a = this.cz),
+        t.ActorLocationProxy.Subtraction(o, a),
+        GravityUtils_1.GravityUtils.SetZnInGravityForActor(t, a, 0),
+        a.Normalize(),
+        (i = i.Radius + t.GetRadius()),
+        a.Multiply(i, a),
         s.DeepCopy(o),
-        s.Addition(n, s),
-        (s.Z += t.Height)),
+        s.Addition(a, s),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(t, s, e.Height)),
       s
     );
   }
-  Pon(e, t, i) {
+  Pon(t, e, i) {
     var r = Vector_1.Vector.Create(),
       o = (r.DeepCopy(i.Location), i.HalfHeight - SUB_SIZE),
-      s = ((r.Z += o), Vector_1.Vector.Create()),
+      s =
+        (GravityUtils_1.GravityUtils.AddZnInGravityForActor(t, r, o),
+        Vector_1.Vector.Create()),
       o =
-        (e.ActorLocationProxy.Subtraction(i.Location, s),
-        s.IsNearlyZero() && s.DeepCopy(e.ActorForwardProxy),
-        (s.Z = 0),
-        s.RotateAngleAxis(t.Rotate, Vector_1.Vector.UpVectorProxy, s),
+        (t.ActorLocationProxy.Subtraction(i.Location, s),
+        s.IsNearlyZero() && s.DeepCopy(t.ActorForwardProxy),
+        GravityUtils_1.GravityUtils.SetZnInGravityForActor(t, s, 0),
+        s.RotateAngleAxis(e.Rotate, t.MoveComp.GravityUp, s),
         s.Normalize(),
-        o + t.Height - DEFAULT_ADD_HEIGHT),
-      n = e.Actor.CharacterMovement.K2_GetWalkableFloorAngle(),
-      i = t.Length + i.Radius;
-    let a = this.xon(r, s, i, o, n);
+        o + e.Height - DEFAULT_ADD_HEIGHT),
+      a = t.Actor.CharacterMovement.K2_GetWalkableFloorAngle(),
+      i = e.Length + i.Radius;
+    let n = this.xon(r, s, i, o, a);
     return (
-      a ||
+      n ||
         (s.Normalize(),
         s.Multiply(-1, s),
-        (a =
-          (a = this.xon(r, s, i, o, n)) ||
-          Vector_1.Vector.Create(e.ActorLocationProxy))),
-      (a.Z += t.Height),
-      a
+        (n =
+          (n = this.xon(r, s, i, o, a)) ||
+          Vector_1.Vector.Create(t.ActorLocationProxy))),
+      GravityUtils_1.GravityUtils.AddZnInGravityForActor(t, n, e.Height),
+      n
     );
   }
-  xon(e, t, i, r, o) {
+  xon(t, e, i, r, o) {
     var s = this.n$t.Actor.CapsuleComponent,
-      n = (t.Multiply(i, t), Vector_1.Vector.Create()),
-      e = (n.DeepCopy(e), Vector_1.Vector.Create()),
-      t =
-        (e.DeepCopy(n),
-        e.Addition(t, e),
+      a = (e.Multiply(i, e), Vector_1.Vector.Create()),
+      t = (a.DeepCopy(t), Vector_1.Vector.Create()),
+      e =
+        (t.DeepCopy(a),
+        t.Addition(e, t),
         this.von.HitResult?.Clear(),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            49,
+            48,
             "Qte设置地面位置，延输入方向检测开始",
-            ["开始位置", n],
-            ["结束位置", e],
+            ["开始位置", a],
+            ["结束位置", t],
           ),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.von, n),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.von, e),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.von, a),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.von, t),
         TraceElementCommon_1.TraceElementCommon.ShapeTrace(
           s,
           this.von,
           PROFILE_KEY,
           PROFILE_KEY,
         ));
-    let a = this.von.HitResult;
-    var h = Vector_1.Vector.Create(),
-      _ = Vector_1.Vector.Create();
-    if ((n.DeepCopy(e), t && a.bBlockingHit)) {
+    let n = this.von.HitResult;
+    var _ = Vector_1.Vector.Create(),
+      h = Vector_1.Vector.Create();
+    if ((a.DeepCopy(t), e && n.bBlockingHit)) {
       if (
-        (TraceElementCommon_1.TraceElementCommon.GetHitLocation(a, 0, h),
+        (TraceElementCommon_1.TraceElementCommon.GetHitLocation(n, 0, _),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            49,
+            48,
             "Qte设置地面位置，延输入方向检测结果",
-            ["障碍数量", a.Actors.Num()],
-            ["障碍物", a.Actors.Get(0)?.GetName()],
-            ["碰撞位置", h],
+            ["障碍数量", n.Actors.Num()],
+            ["障碍物", n.Actors.Get(0)?.GetName()],
+            ["碰撞位置", _],
           ),
-        TraceElementCommon_1.TraceElementCommon.GetImpactNormal(a, 0, _),
+        TraceElementCommon_1.TraceElementCommon.GetImpactNormal(n, 0, h),
         o <
           MathUtils_1.MathUtils.GetAngleByVectorDot(
-            _,
-            Vector_1.Vector.UpVectorProxy,
+            h,
+            this.n$t.MoveComp.GravityUp,
           ))
       )
         return;
-      n.DeepCopy(h);
+      a.DeepCopy(_);
     }
     i = i / Math.tan(o * MathUtils_1.MathUtils.DegToRad) + r;
     if (
-      (e.DeepCopy(n),
-      (e.Z -= i),
+      (t.DeepCopy(a),
+      GravityUtils_1.GravityUtils.AddZnInGravityForActor(this.n$t, t, -i),
       this.von.HitResult?.Clear(),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Character",
-          49,
+          48,
           "Qte设置地面位置，垂直方向检测开始",
-          ["开始位置", n],
-          ["结束位置", e],
+          ["开始位置", a],
+          ["结束位置", t],
         ),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.von, n),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.von, e),
-      (t = TraceElementCommon_1.TraceElementCommon.ShapeTrace(
+      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.von, a),
+      TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.von, t),
+      (e = TraceElementCommon_1.TraceElementCommon.ShapeTrace(
         s,
         this.von,
         PROFILE_KEY,
         PROFILE_KEY,
       )),
-      (a = this.von.HitResult),
-      h.Reset(),
+      (n = this.von.HitResult),
       _.Reset(),
-      t && a.bBlockingHit)
+      h.Reset(),
+      e && n.bBlockingHit)
     )
       return (
-        TraceElementCommon_1.TraceElementCommon.GetHitLocation(a, 0, h),
+        TraceElementCommon_1.TraceElementCommon.GetHitLocation(n, 0, _),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Character",
-            49,
+            48,
             "Qte设置地面位置，垂直方向检测结果",
-            ["障碍数量", a.Actors.Num()],
-            ["障碍物", a.Actors.Get(0)?.GetName()],
-            ["碰撞位置", h],
+            ["障碍数量", n.Actors.Num()],
+            ["障碍物", n.Actors.Get(0)?.GetName()],
+            ["碰撞位置", _],
           ),
-        TraceElementCommon_1.TraceElementCommon.GetImpactNormal(a, 0, _),
+        TraceElementCommon_1.TraceElementCommon.GetImpactNormal(n, 0, h),
         o <
         MathUtils_1.MathUtils.GetAngleByVectorDot(
-          _,
-          Vector_1.Vector.UpVectorProxy,
+          h,
+          this.n$t.MoveComp.GravityUp,
         )
           ? void 0
-          : h
+          : _
       );
   }
-  QZr(e) {
-    var e = e.Entity,
-      t = e.GetComponent(57)?.IsManipulating(),
-      i = e.GetComponent(34),
+  QZr(t) {
+    var t = t.Entity,
+      e = t.GetComponent(64)?.IsManipulating(),
+      i = t.GetComponent(39),
       r = i.SkillTarget;
-    !t &&
+    !e &&
     r?.Valid &&
     r.Entity?.Active &&
-    !r.Entity.GetComponent(190)?.HasTag(1008164187)
+    !r.Entity.GetComponent(203)?.HasTag(1008164187)
       ? ((this.tRr.SkillTarget = r),
         (this.tRr.SkillTargetSocket = i.SkillTargetSocket))
-      : ((t = e.GetComponent(29)).DetectSoftLockTarget(QTE_LOCKON_CONFIG_ID),
-        (this.tRr.SkillTarget = t.GetCurrentTarget()),
-        (this.tRr.SkillTargetSocket = t.GetCurrentTargetSocketName()));
+      : ((e = t.GetComponent(32)).DetectSoftLockTarget({
+          LockOnConfigId: QTE_LOCKON_CONFIG_ID,
+        }),
+        (this.tRr.SkillTarget = e.GetCurrentTarget()),
+        (this.tRr.SkillTargetSocket = e.GetCurrentTargetSocketName()));
   }
   rGn() {
     const i = ConfigManager_1.ConfigManager.WorldConfig.GetQteTagDataTable();
     let r = 0;
-    this.eGn.forEach((e) => {
-      var t = DataTableUtil_1.DataTableUtil.GetDataTableRow(i, e);
-      t.Priority >= r &&
-        ((this.tGn = e), (this.gFe.TriggerEnergy = t.Energy), (r = t.Priority));
+    this.eGn.forEach((t) => {
+      var e = DataTableUtil_1.DataTableUtil.GetDataTableRow(i, t);
+      e.Priority >= r &&
+        ((this.tGn = t), (this.gFe.TriggerEnergy = e.Energy), (r = e.Priority));
     }),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Entity,
@@ -592,55 +621,52 @@ let RoleQteComponent = class RoleQteComponent extends EntityComponent_1.EntityCo
       );
   }
   GetQteTagData() {
-    var e;
+    var t;
     if (this.tGn)
       return (
-        (e = ConfigManager_1.ConfigManager.WorldConfig.GetQteTagDataTable()),
-        DataTableUtil_1.DataTableUtil.GetDataTableRow(e, this.tGn)
+        (t = ConfigManager_1.ConfigManager.WorldConfig.GetQteTagDataTable()),
+        DataTableUtil_1.DataTableUtil.GetDataTableRow(t, this.tGn)
       );
   }
-  H8a(e) {
-    var t = Protocol_1.Aki.Protocol.k8a.create(),
-      e =
-        ((t.CUs = MathUtils_1.MathUtils.NumberToLong(
+  R7a(t) {
+    var e = Protocol_1.Aki.Protocol.$e_.create(),
+      t =
+        ((e.CUs = MathUtils_1.MathUtils.NumberToLong(
           ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
-            e.Entity.Id,
+            t.Entity.Id,
           ),
         )),
-        (t.mUs = MathUtils_1.MathUtils.NumberToLong(
+        (e.mUs = MathUtils_1.MathUtils.NumberToLong(
           ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
             this.Entity.Id,
           ),
         )),
-        (t.j8a = UE.GASBPLibrary.FnvHash(this.tGn)),
+        (e.U7a = UE.GASBPLibrary.FnvHash(this.tGn)),
         ModelManager_1.ModelManager.CombatMessageModel.GenMessageId());
-    return (
-      CombatMessage_1.CombatNet.Call(23356, this.Entity, t, void 0, void 0, e),
-      e
-    );
+    return CombatMessage_1.CombatNet.Send(29932, this.Entity, e, void 0, t), t;
   }
-  static ExecuteQteNotify(e, t) {
+  static ExecuteQteNotify(t, e) {
     var i = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-        MathUtils_1.MathUtils.LongToNumber(t.mUs),
+        MathUtils_1.MathUtils.LongToNumber(e.mUs),
       ),
-      t = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-        MathUtils_1.MathUtils.LongToNumber(t.CUs),
+      e = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
+        MathUtils_1.MathUtils.LongToNumber(e.CUs),
       );
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.CharExecuteMultiQte,
       i,
-      t,
+      e,
     );
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("fZa")],
+  [CombatMessage_1.CombatNet.Listen("Xsh", !0)],
   RoleQteComponent,
   "ExecuteQteNotify",
   null,
 ),
   (RoleQteComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(89)],
+    [(0, RegisterComponent_1.RegisterComponent)(96)],
     RoleQteComponent,
   )),
   (exports.RoleQteComponent = RoleQteComponent);

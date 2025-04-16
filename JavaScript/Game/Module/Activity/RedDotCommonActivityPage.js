@@ -12,16 +12,10 @@ class RedDotCommonActivityPage extends RedDotBase_1.RedDotBase {
     return !0;
   }
   OnGetEvents() {
-    return [
-      EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-      EventDefine_1.EEventName.RedDotRefreshItemData,
-    ];
+    return [EventDefine_1.EEventName.RefreshCommonActivityRedDot];
   }
   OnCheck(e) {
-    return (
-      ModelManager_1.ModelManager.ActivityModel.GetActivityById(e)
-        ?.RedPointShowState ?? !1
-    );
+    return ModelManager_1.ModelManager.ActivityModel.GetActivityRedDotState(e);
   }
 }
 exports.RedDotCommonActivityPage = RedDotCommonActivityPage;

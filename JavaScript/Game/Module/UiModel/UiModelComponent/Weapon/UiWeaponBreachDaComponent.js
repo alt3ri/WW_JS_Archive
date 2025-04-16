@@ -43,7 +43,7 @@ let UiWeaponBreachDaComponent = class UiWeaponBreachDaComponent extends UiModelC
   OnInit() {
     (this.ywr = this.Owner.CheckGetComponent(0)),
       (this.n$t = this.Owner.CheckGetComponent(1)),
-      (this.UBr = this.Owner.CheckGetComponent(18));
+      (this.UBr = this.Owner.CheckGetComponent(20));
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
@@ -83,7 +83,7 @@ let UiWeaponBreachDaComponent = class UiWeaponBreachDaComponent extends UiModelC
   }
 };
 (UiWeaponBreachDaComponent = __decorate(
-  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(19)],
+  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(21)],
   UiWeaponBreachDaComponent,
 )),
   (exports.UiWeaponBreachDaComponent = UiWeaponBreachDaComponent);

@@ -10,10 +10,11 @@ const UE = require("ue"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
-  MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
+  GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   Global_1 = require("../../../Global"),
   InputController_1 = require("../../../Input/InputController"),
   InputEnums_1 = require("../../../Input/InputEnums"),
@@ -33,8 +34,8 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.j_t = void 0),
       (this.W_t = void 0),
       (this.K_t = void 0),
-      (this.MTa = void 0),
-      (this.STa = void 0),
+      (this.ITa = void 0),
+      (this.TTa = void 0),
       (this.Q_t = Vector2D_1.Vector2D.Create(0, 0)),
       (this.X_t = 0),
       (this.$_t = Vector_1.Vector.Create()),
@@ -43,7 +44,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.z_t = Vector_1.Vector.Create(0, 0, 0)),
       (this.Z_t = Rotator_1.Rotator.Create()),
       (this.AXe = !1),
-      (this.ETa = 0),
+      (this.LTa = 0),
       (this.JoystickTouchId = -1),
       (this.eut = !1),
       (this.R$e = void 0),
@@ -54,8 +55,9 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.nut = Vector_1.Vector.Create()),
       (this.sut = void 0),
       (this.aut = 0),
-      (this.yTa = !1),
-      (this.ITa = !1),
+      (this.DTa = !1),
+      (this.ATa = !1),
+      (this.Mdc = WALK_TO_RUN_RATE),
       (this.hut = (t) => {
         this.lut(t) &&
           this.AXe &&
@@ -63,7 +65,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
           InputDistributeController_1.InputDistributeController.IsAllowFightMoveInput() &&
           (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
             Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Battle", 8, "动态摇杆开始拖动立即响应输入", [
+            Log_1.Log.Info("Battle", 10, "动态摇杆开始拖动立即响应输入", [
               "Position",
               this.Y_t,
             ]),
@@ -80,7 +82,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
           (this.tut = !0),
           (ModelManager_1.ModelManager.BattleUiModel.IsPressJoyStick = !0),
           (this.eut = !0),
-          this.yTa && (this.TTa(), this.STa?.SetUIActive(!0)),
+          this.DTa && (this.RTa(), this.TTa?.SetUIActive(!0)),
           this.AXe &&
             ((this.J_t.X = this.Y_t.X),
             (this.J_t.Y = this.Y_t.Y),
@@ -93,7 +95,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Battle",
-              8,
+              10,
               "JoystickPress",
               ["", this.JoystickTouchId],
               ["", this.Y_t],
@@ -114,8 +116,8 @@ class Joystick extends BattleChildView_1.BattleChildView {
             this.W_t.SetAnchorOffset(t),
             this.K_t.SetAnchorOffset(t));
       }),
-      (this.LTa = () => {
-        this.DTa();
+      (this.UTa = () => {
+        this.xTa();
       });
   }
   Initialize(t) {
@@ -128,8 +130,8 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.j_t = this.GetSprite(0)),
       (this.W_t = this.GetSprite(1)),
       (this.K_t = this.GetSprite(2)),
-      (this.MTa = this.GetItem(3)),
-      (this.STa = this.GetItem(5)),
+      (this.ITa = this.GetItem(3)),
+      (this.TTa = this.GetItem(5)),
       (this.R$e = Global_1.Global.CharacterController),
       (this.iut =
         CommonParamById_1.configCommonParamById.GetIntConfig("DodgeMinLength")),
@@ -138,7 +140,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       )),
       (this.AXe =
         ModelManager_1.ModelManager.BattleUiModel.GetIsDynamicJoystick()),
-      (this.ETa = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      (this.LTa = CommonParamById_1.configCommonParamById.GetFloatConfig(
         "MaskAreaEnableRootX",
       ));
   }
@@ -146,12 +148,16 @@ class Joystick extends BattleChildView_1.BattleChildView {
     var t, i;
     this.SetVisible(0, !0),
       this.SetActive(!0),
-      this.RootItem && this.ParentUiItem && 0 < this.ETa
+      this.RootItem && this.ParentUiItem && 0 < this.LTa
         ? ((t = this.ParentUiItem.GetWidth()),
           (i = this.RootItem.GetAnchorOffsetX()),
-          (this.yTa = 0 < t && i / t < this.ETa))
-        : (this.yTa = !1),
-      this.yTa || this.STa?.SetUIActive(!1);
+          (this.DTa = 0 < t && i / t < this.LTa))
+        : (this.DTa = !1),
+      this.DTa || this.TTa?.SetUIActive(!1),
+      (this.Mdc =
+        GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+          GameSettingsDefine_1.EFunction.WalkOrRunRate,
+        ) ?? WALK_TO_RUN_RATE);
   }
   HideBattleVisibleChildView() {
     this.SetVisible(0, !1), this.SetActive(!1);
@@ -200,7 +206,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         12,
-        this.LTa,
+        this.UTa,
       );
   }
   kre() {
@@ -216,7 +222,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         12,
-        this.LTa,
+        this.UTa,
       );
   }
   Tick(t) {
@@ -227,7 +233,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
           (InputDistributeController_1.InputDistributeController.IsAllowFightMoveInput()
             ? (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
                 Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Battle", 8, "手指滑动摇杆", [
+                Log_1.Log.Info("Battle", 10, "手指滑动摇杆", [
                   "Position",
                   this.Y_t,
                 ]),
@@ -236,7 +242,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
-                  8,
+                  10,
                   "手指滑动摇杆时不允许战斗输入,摇杆置回原点",
                 ),
               this._ut(this.J_t)))
@@ -253,7 +259,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (t.pointerID !== this.JoystickTouchId
         ? (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
             Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Battle", 8, "JoystickDrag No CurTouchId", [
+            Log_1.Log.Info("Battle", 10, "JoystickDrag No CurTouchId", [
               "",
               this.JoystickTouchId,
             ]),
@@ -261,12 +267,12 @@ class Joystick extends BattleChildView_1.BattleChildView {
         : ((t = t.GetLocalPointInPlane()),
           (this.Y_t.X = t.X),
           (this.Y_t.Y = t.Y),
-          this.TTa(),
+          this.RTa(),
           ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Battle",
-              8,
+              10,
               "JoystickDrag",
               ["", this.JoystickTouchId],
               ["", this.Y_t],
@@ -280,15 +286,15 @@ class Joystick extends BattleChildView_1.BattleChildView {
       this.fut(this.z_t),
       this.vut(this.z_t, i);
   }
-  TTa() {
+  RTa() {
     var t;
-    this.yTa &&
+    this.DTa &&
       (this.Q_t.Set(
         Math.min(this.Y_t.X, MASK_AREA_MAX_X),
         Math.min(this.Y_t.Y, MASK_AREA_MAX_Y),
       ),
       (t = this.Q_t.ToUeVector2D()),
-      this.STa.SetAnchorOffset(t));
+      this.TTa.SetAnchorOffset(t));
   }
   SaveDodgeStartInfo(t) {
     (this.rut = TimeUtil_1.TimeUtil.GetServerTimeStamp()), (this.nut = t);
@@ -317,7 +323,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
       (this.eut = !1),
       (this.tut = !1),
       (ModelManager_1.ModelManager.BattleUiModel.IsPressJoyStick = !1),
-      this.STa?.SetUIActive(!1);
+      this.TTa?.SetUIActive(!1);
   }
   fut(s) {
     var e = s.SizeSquared();
@@ -326,7 +332,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Battle",
-          8,
+          10,
           "设置摇杆偏移时，方向向量为0，不会设置角色移动",
           ["targetVector", s],
           ["distanceSquared2D", e],
@@ -359,7 +365,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Battle",
-            8,
+            10,
             "设置摇杆偏移",
             ["targetVector", s],
             ["normalTargetVector", this.$_t],
@@ -370,47 +376,36 @@ class Joystick extends BattleChildView_1.BattleChildView {
   }
   vut(t, i) {
     var s;
-    this.ITa && i && !t.Equality(Vector_1.Vector.ZeroVectorProxy)
-      ? ((s = MathUtils_1.MathUtils.RangeClamp(
-          t.X,
-          -JOYSTICK_RADIU,
-          JOYSTICK_RADIU,
-          -1,
-          1,
-        )),
-        (t = MathUtils_1.MathUtils.RangeClamp(
-          t.Y,
-          -JOYSTICK_RADIU,
-          JOYSTICK_RADIU,
-          -1,
-          1,
-        )),
-        Math.max(Math.abs(s), Math.abs(t)) > WALK_TO_RUN_RATE
-          ? this.yut()
-          : this.Iut(),
+    this.ATa && i && !t.Equality(Vector_1.Vector.ZeroVectorProxy)
+      ? ((this.Q_t.X = t.X / JOYSTICK_RADIU),
+        (this.Q_t.Y = t.Y / JOYSTICK_RADIU),
+        1 < this.Q_t.SizeSquared() && this.Q_t.Normalize(),
+        (t = this.Q_t.X),
+        (s = this.Q_t.Y),
+        Math.max(Math.abs(t), Math.abs(s)) > this.Mdc ? this.yut() : this.Iut(),
         ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Battle",
-            8,
+            10,
             "[CharacterInput]开始进行调用InputController输入逻辑",
-            ["resultX", s],
-            ["resultY", t],
+            ["resultX", t],
+            ["resultY", s],
           ),
         InputController_1.InputController.InputAxis(
           InputEnums_1.EInputAxis.MoveRight,
-          s,
+          t,
         ),
         InputController_1.InputController.InputAxis(
           InputEnums_1.EInputAxis.MoveForward,
-          t,
+          s,
         ))
       : (i ? this.Eut() : this.Sut(),
         ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Battle",
-            8,
+            10,
             "[CharacterInput]摇杆移回原位，开始进行调用InputController输入逻辑",
           ),
         InputController_1.InputController.InputAxis(
@@ -426,7 +421,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
     2 !== this.X_t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Battle", 8, "控制角色行走"),
+        Log_1.Log.Info("Battle", 10, "控制角色行走"),
       this.j_t.SetUIActive(!0),
       this.W_t.SetUIActive(!1),
       (this.X_t = 2));
@@ -435,7 +430,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
     3 !== this.X_t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Battle", 8, "控制角色奔跑"),
+        Log_1.Log.Info("Battle", 10, "控制角色奔跑"),
       this.j_t.SetUIActive(!1),
       this.W_t.SetUIActive(!0),
       (this.X_t = 3));
@@ -444,7 +439,7 @@ class Joystick extends BattleChildView_1.BattleChildView {
     0 !== this.X_t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Battle", 8, "松开摇杆时控制角色站立"),
+        Log_1.Log.Info("Battle", 10, "松开摇杆时控制角色站立"),
       this.K_t.SetUIActive(!this.AXe),
       1 !== this.X_t && (this.j_t.SetUIActive(!1), this.W_t.SetUIActive(!1)),
       (this.X_t = 0));
@@ -453,17 +448,17 @@ class Joystick extends BattleChildView_1.BattleChildView {
     1 !== this.X_t &&
       (ModelManager_1.ModelManager.BattleUiModel.IsOpenJoystickLog &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Battle", 8, "按下摇杆时控制角色站立"),
+        Log_1.Log.Info("Battle", 10, "按下摇杆时控制角色站立"),
       this.K_t.SetUIActive(!0),
       0 !== this.X_t && (this.j_t.SetUIActive(!1), this.W_t.SetUIActive(!1)),
       (this.X_t = 1));
   }
-  DTa() {
-    (this.ITa =
+  xTa() {
+    (this.ATa =
       ModelManager_1.ModelManager.BattleUiModel?.ChildViewData?.GetChildVisible(
         12,
       ) ?? !1),
-      this.MTa?.SetUIActive(this.ITa);
+      this.ITa?.SetUIActive(this.ATa);
   }
   SetVisible(t, i) {
     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildVisible(

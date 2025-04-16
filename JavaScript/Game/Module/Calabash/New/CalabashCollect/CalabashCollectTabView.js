@@ -80,7 +80,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.Npt = () => {
         if (this.Apt)
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Calabash", 44, "重复进入声骸图鉴的内部界面");
+            Log_1.Log.Error("Calabash", 43, "重复进入声骸图鉴的内部界面");
         else {
           (this.Apt = !0), this.SPe?.PlayLevelSequenceByName("Enter", !0);
           const i =
@@ -117,7 +117,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
         this.Ept.UpdateSkinInfo(e),
           (this.Rpt = e),
           this.kpt(),
-          this.GetItem(6)?.SetUIActive(i),
+          this.U$l(!0, i),
           i || this.Fpt();
       }),
       (this.wpt = () => {
@@ -154,7 +154,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
             );
         } else
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Calabash", 44, "重复退出声骸图鉴的内部界面");
+            Log_1.Log.Error("Calabash", 43, "重复退出声骸图鉴的内部界面");
       });
   }
   OnRegisterComponent() {
@@ -169,6 +169,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
       [7, UE.UIItem],
       [8, UE.UIItem],
       [9, UE.UIButtonComponent],
+      [10, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[9, this.xpt]]);
   }
@@ -242,9 +243,8 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
     this.Ept.Update(e),
       (this.Rpt = e.DevelopRewardData.MonsterId),
       this.kpt(),
-      e.UnlockData
-        ? (this.GetItem(6)?.SetUIActive(!1), this.Fpt())
-        : this.GetItem(6)?.SetUIActive(!0);
+      this.U$l(!1, !e.UnlockData),
+      e.UnlockData && this.Fpt();
   }
   Fpt() {
     if (
@@ -252,7 +252,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
       void 0 !== UiSceneManager_1.UiSceneManager.GetHandBookVision()
     )
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Calabash", 44, "声骸模型重复加载");
+        Log_1.Log.Error("Calabash", 43, "声骸模型重复加载");
     else {
       this.Tpt.SetLoadingActive(!0);
       const i = this.Rpt;
@@ -303,7 +303,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
     t
       ? t.CameraArmLength <= 0
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Calabash", 44, "相机臂长配置为空")
+          Log_1.Log.Error("Calabash", 43, "相机臂长配置为空")
         : ((e =
             ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
               e,
@@ -318,7 +318,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
           t?.PlayStart(),
           this.Tpt?.SetLoadingActive(!1))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Calabash", 44, "声骸模型为空");
+        Log_1.Log.Error("Calabash", 43, "声骸模型为空");
   }
   kpt() {
     this.Upt !== ResourceSystem_1.ResourceSystem.InvalidId &&
@@ -342,6 +342,10 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   Hpt() {
     (this.Rpt = 0), this.Spt?.DeselectCurrentGridProxy(), this.kpt();
+  }
+  U$l(e, i) {
+    this.GetItem(6)?.SetUIActive(!e && i),
+      this.GetItem(10)?.SetUIActive(e && i);
   }
 }
 exports.CalabashCollectTabView = CalabashCollectTabView;

@@ -14,8 +14,8 @@ var SceneItemPhysicalAttachComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         n = Reflect.decorate(t, e, i, s);
       else
-        for (var r = t.length - 1; 0 <= r; r--)
-          (h = t[r]) &&
+        for (var c = t.length - 1; 0 <= c; c--)
+          (h = t[c]) &&
             (n = (o < 3 ? h(n) : 3 < o ? h(e, i, n) : h(e, i)) || n);
       return 3 < o && n && Object.defineProperty(e, i, n), n;
     };
@@ -53,7 +53,7 @@ let SceneItemPhysicalAttachComponent =
         (this.Zln = (t) => {
           void 0 === this.Yln && this.e1n(),
             (this.Hte.PhysicsMode = 1),
-            this.Qln?.SetLinearDamping(0.1),
+            this.Qln?.SetLinearDamping(this.Lo?.DampingCoefficient ?? 0.1),
             this.$ln || this.t1n();
           t = Vector_1.Vector.Create(
             this.$ln.HitLocation.op_Subtraction(
@@ -62,7 +62,7 @@ let SceneItemPhysicalAttachComponent =
           );
           t.Normalize(),
             t.MultiplyEqual(this.$ln.HitDirection.Size()),
-            this.Qln?.SetPhysicsLinearVelocity(t.ToUeVector());
+            this.Qln?.SetPhysicsLinearVelocity(t.ToUeVectorOld());
         }),
         (this.i1n = (t, e) => {
           void 0 !== this.rvi &&
@@ -82,11 +82,11 @@ let SceneItemPhysicalAttachComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Hte = this.Entity.GetComponent(200)),
         (this.Qln = this.Hte.Owner?.GetComponentByClass(
           UE.StaticMeshComponent.StaticClass(),
         )),
-        (this.Xln = this.Entity.GetComponent(141)),
+        (this.Xln = this.Entity.GetComponent(152)),
         this.Xln.RegisterComponent(this),
         this.mSe(),
         !0
@@ -101,14 +101,14 @@ let SceneItemPhysicalAttachComponent =
       return this.n1n(), this.dSe(), !0;
     }
     OnTick(t) {
-      var e = UE.NewArray(UE.Vector);
-      e.Add(this.Jln.K2_GetActorLocation()),
+      var e = UE.NewArray(UE.VectorDouble);
+      e.Add(this.Jln.D_K2_GetActorLocation()),
         e.Add(this.Hte.ActorLocation),
-        this.zie?.SetSplinePoints(e, 1, !0),
+        this.zie?.D_SetSplinePoints(e, 1, !0),
         !this.Yln?.IsValid() ||
-          10 < this.Qln.GetPhysicsLinearVelocity().Size() ||
+          1 < this.Qln.GetPhysicsLinearVelocity().Size() ||
           ((e = this.Hte.ActorLocationProxy),
-          10 < Vector_1.Vector.Dist(this.zln, e)) ||
+          1 < Vector_1.Vector.Dist(this.zln, e)) ||
           ((this.Hte.PhysicsMode = 0),
           this.Yln.K2_DestroyActor(),
           (this.Yln = void 0));
@@ -139,10 +139,10 @@ let SceneItemPhysicalAttachComponent =
     }
     o1n() {
       var t,
-        e = new UE.Transform();
+        e = new UE.TransformDouble();
       e.SetTranslation(this.Hte.ActorLocation),
         "RelativePoint" === this.Lo.AttachTarget.Type &&
-          ((t = new UE.Vector(
+          ((t = new UE.VectorDouble(
             this.Lo.AttachTarget.RelativePoint.X ?? 0,
             this.Lo.AttachTarget.RelativePoint.Y ?? 0,
             this.Lo.AttachTarget.RelativePoint.Z ?? 0,
@@ -216,19 +216,21 @@ let SceneItemPhysicalAttachComponent =
       var t;
       (this.Hnr = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePathLine_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
       )),
         this.Hnr &&
           (this.Hnr.K2_AttachToActor(this.Jln, void 0, 2, 2, 2, !1),
-          (t = UE.NewArray(UE.Vector)).Add(this.Jln.K2_GetActorLocation()),
+          (t = UE.NewArray(UE.VectorDouble)).Add(
+            this.Jln.D_K2_GetActorLocation(),
+          ),
           t.Add(this.Hte.ActorLocation),
           (this.zie = this.Hnr.GetComponentByClass(
             UE.SplineComponent.StaticClass(),
           )),
-          this.zie.SetSplinePoints(t, 1, !0),
+          this.zie.D_SetSplinePoints(t, 1, !0),
           (this.rvi = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
             this.Lo?.EffectPath,
             "[SceneItemPhysicalAttachComponent.CreateSplineActor]",
             new EffectContext_1.EffectContext(void 0, this.Hnr),
@@ -248,14 +250,37 @@ let SceneItemPhysicalAttachComponent =
     }
     n1n() {
       void 0 !== this.Yln &&
-        (ActorSystem_1.ActorSystem.Put(this.Yln), (this.Yln = void 0)),
+        (this.Yln.K2_DetachFromActor(1, 1, 1),
+        ActorSystem_1.ActorSystem.Put(
+          "SceneItemPhysicalAttachComponent.ClearActors1",
+          this.Yln,
+        ),
+        (this.Yln = void 0)),
+        void 0 !== this.rvi &&
+          (EffectSystem_1.EffectSystem.StopEffectById(
+            this.rvi,
+            "[SceneItemPhysicalAttachComponent.ClearActors3]",
+            !0,
+          ),
+          (this.rvi = void 0)),
+        void 0 !== this.Hnr &&
+          (this.Hnr.K2_DetachFromActor(1, 1, 1),
+          ActorSystem_1.ActorSystem.Put(
+            "SceneItemPhysicalAttachComponent.ClearActors4",
+            this.Hnr,
+          ),
+          (this.Hnr = void 0)),
         void 0 !== this.Jln &&
-          (ActorSystem_1.ActorSystem.Put(this.Jln), (this.Jln = void 0));
+          (ActorSystem_1.ActorSystem.Put(
+            "SceneItemPhysicalAttachComponent.ClearActors2",
+            this.Jln,
+          ),
+          (this.Jln = void 0));
     }
   });
 (SceneItemPhysicalAttachComponent = SceneItemPhysicalAttachComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(203)],
+    [(0, RegisterComponent_1.RegisterComponent)(218)],
     SceneItemPhysicalAttachComponent,
   )),
   (exports.SceneItemPhysicalAttachComponent = SceneItemPhysicalAttachComponent);

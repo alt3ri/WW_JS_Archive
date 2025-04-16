@@ -34,74 +34,88 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       (this.Fr = () => {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Guide", 17, "OnButtonClick enter");
-        var e,
-          i = this.Nzt;
-        this.kzt(),
-          i?.IsInteractable() &&
-            this.xzt.bIsUIActive &&
-            (i.IsA(UE.UIButtonComponent.StaticClass())
-              ? (e = i).OnClickCallBack.IsBound() &&
+          Log_1.Log.Warn("Guide", 16, "OnButtonClick enter");
+        var e = this.Nzt;
+        if ((this.kzt(), e?.IsInteractable() && this.xzt.bIsUIActive)) {
+          if (e.IsA(UE.UIExtendButtonComponent.StaticClass())) {
+            var i = e;
+            if (!i.OnClickCallBack.IsBound() && 0 < i.HelpGroupId)
+              return (
+                GuideFocusItem.IsOpenLog &&
+                  Log_1.Log.CheckWarn() &&
+                  Log_1.Log.Warn(
+                    "Guide",
+                    74,
+                    "OnButtonClick execute parent SetDelegateForHelpClick UIExtendButtonComponent",
+                  ),
+                void ControllerHolder_1.ControllerHolder.HelpController.OpenHelpById(
+                  i.HelpGroupId,
+                )
+              );
+          }
+          e.IsA(UE.UIButtonComponent.StaticClass())
+            ? (i = e).OnClickCallBack.IsBound() &&
+              (GuideFocusItem.IsOpenLog &&
+                Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Guide",
+                  16,
+                  "OnButtonClick execute parent OnClickCallBack UIButtonComponent",
+                ),
+              i.OnClickCallBack.Execute())
+            : e.IsA(UE.UISelectableButtonComponent.StaticClass())
+              ? (i = e).OnClickCallBack.IsBound() &&
                 (GuideFocusItem.IsOpenLog &&
                   Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Guide",
-                    17,
-                    "OnButtonClick execute parent OnClickCallBack UIButtonComponent",
+                    16,
+                    "OnButtonClick execute parent OnClickCallBack UISelectableButtonComponent",
                   ),
-                e.OnClickCallBack.Execute())
-              : i.IsA(UE.UISelectableButtonComponent.StaticClass())
-                ? (e = i).OnClickCallBack.IsBound() &&
-                  (GuideFocusItem.IsOpenLog &&
+                i.OnClickCallBack.Execute())
+              : e.IsA(UE.UIToggleComponent.StaticClass())
+                ? (e.SetState(!e.IsOn, !0),
+                  GuideFocusItem.IsOpenLog &&
                     Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "Guide",
-                      17,
-                      "OnButtonClick execute parent OnClickCallBack UISelectableButtonComponent",
-                    ),
-                  e.OnClickCallBack.Execute())
-                : i.IsA(UE.UIToggleComponent.StaticClass())
-                  ? (i.SetState(!i.IsOn, !0),
-                    GuideFocusItem.IsOpenLog &&
+                      16,
+                      "OnButtonClick execute parent SetState UIToggleComponent",
+                    ))
+                : e.IsA(UE.UIExtendToggle.StaticClass())
+                  ? 0 === (i = e).GetToggleState() &&
+                    (GuideFocusItem.IsOpenLog &&
                       Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "Guide",
-                        17,
-                        "OnButtonClick execute parent SetState UIToggleComponent",
-                      ))
-                  : i.IsA(UE.UIExtendToggle.StaticClass())
-                    ? 0 === (e = i).GetToggleState() &&
-                      (GuideFocusItem.IsOpenLog &&
-                        Log_1.Log.CheckWarn() &&
-                        Log_1.Log.Warn(
-                          "Guide",
-                          17,
-                          "OnButtonClick execute parent SetToggleState ETT_Checked UIExtendToggle",
-                        ),
-                      e.SetToggleState(1, !0))
-                    : i.IsA(UE.UISliderComponent.StaticClass()) &&
-                      (e = i).OnValueChangeCb.IsBound() &&
-                      (GuideFocusItem.IsOpenLog &&
-                        Log_1.Log.CheckWarn() &&
-                        Log_1.Log.Warn(
-                          "Guide",
-                          17,
-                          "OnButtonClick execute parent OnValueChangeCb UISliderComponent",
-                        ),
-                      e.OnValueChangeCb.Execute(e.Value)));
+                        16,
+                        "OnButtonClick execute parent SetToggleState ETT_Checked UIExtendToggle",
+                      ),
+                    i.SetToggleState(1, !0))
+                  : e.IsA(UE.UISliderComponent.StaticClass()) &&
+                    (i = e).OnValueChangeCb.IsBound() &&
+                    (GuideFocusItem.IsOpenLog &&
+                      Log_1.Log.CheckWarn() &&
+                      Log_1.Log.Warn(
+                        "Guide",
+                        16,
+                        "OnButtonClick execute parent OnValueChangeCb UISliderComponent",
+                      ),
+                    i.OnValueChangeCb.Execute(i.Value));
+        }
       }),
       (this.Fzt = () => {
         var e, i;
         this.Bzt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Guide", 17, "OnButtonPointerDownCallBack enter"),
+            Log_1.Log.Warn("Guide", 16, "OnButtonPointerDownCallBack enter"),
           (e = this.Nzt)?.IsValid() &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "OnButtonPointerDownCallBack execute self",
               ),
             (this.qzt = !0),
@@ -111,7 +125,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                   Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Guide",
-                    17,
+                    16,
                     "OnButtonPointerDownCallBack execute parent UIButtonComponent",
                   ),
                 i.OnPointDownCallBack.Execute())
@@ -121,7 +135,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                   Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Guide",
-                    17,
+                    16,
                     "OnButtonPointerDownCallBack execute parent UIExtendToggle",
                   ),
                 i.OnPointDownCallBack.Execute(1))));
@@ -129,7 +143,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       (this.Vzt = () => {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Guide", 17, "OnButtonPointerUpCallBack enter");
+          Log_1.Log.Warn("Guide", 16, "OnButtonPointerUpCallBack enter");
         var e,
           i = this.Nzt;
         i?.IsValid() &&
@@ -138,7 +152,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "OnButtonPointerUpCallBack execute self TryFinishByClick",
             ),
           i.IsA(UE.UIButtonComponent.StaticClass())
@@ -147,7 +161,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                 Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Guide",
-                  17,
+                  16,
                   "OnButtonPointerUpCallBack execute parent UIButtonComponent",
                 ),
               this.kzt(),
@@ -158,7 +172,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                 Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Guide",
-                  17,
+                  16,
                   "OnButtonPointerUpCallBack execute parent UIExtendToggle",
                 ),
               this.kzt(),
@@ -169,13 +183,13 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         this.Bzt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Guide", 17, "OnDraggablePointerDownCallBack enter"),
+            Log_1.Log.Warn("Guide", 16, "OnDraggablePointerDownCallBack enter"),
           (i = this.Gzt)?.IsValid() &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "OnDraggablePointerDownCallBack execute self",
               ),
             i.OnPointerDownCallBack.IsBound()) &&
@@ -183,7 +197,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "OnDraggablePointerDownCallBack execute parent",
               ),
             i.OnPointerDownCallBack.Execute(e)));
@@ -195,7 +209,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "OnDraggablePointerBeginDragCallBack enter",
             ),
           (i = this.Gzt)?.IsValid() &&
@@ -203,7 +217,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "OnDraggablePointerBeginDragCallBack execute self",
               ),
             (this.bzt = !0),
@@ -212,7 +226,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "OnDraggablePointerBeginDragCallBack execute parent",
               ),
             i.OnPointerBeginDragCallBack.Execute(e)));
@@ -222,13 +236,13 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         this.Bzt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Guide", 17, "OnDraggablePointerDragCallBack enter"),
+            Log_1.Log.Warn("Guide", 16, "OnDraggablePointerDragCallBack enter"),
           (i = this.Gzt)?.IsValid() &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "OnDraggablePointerDragCallBack execute self",
               ),
             (this.Ozt = e),
@@ -237,7 +251,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "OnDraggablePointerDragCallBack execute parent",
               ),
             i.OnPointerDragCallBack.Execute(e)));
@@ -247,7 +261,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Guide",
-            17,
+            16,
             "OnDraggablePointerEndDragCallBack enter",
           );
         var i = this.Gzt;
@@ -256,7 +270,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "OnDraggablePointerEndDragCallBack execute self",
             ),
           (this.bzt = !1),
@@ -265,7 +279,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "OnDraggablePointerEndDragCallBack execute parent",
             ),
           i.OnPointerEndDragCallBack.Execute(e));
@@ -273,14 +287,14 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       (this.Qzt = (e) => {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Guide", 17, "OnDraggablePointerUpCallBack enter");
+          Log_1.Log.Warn("Guide", 16, "OnDraggablePointerUpCallBack enter");
         var i = this.Gzt;
         i?.IsValid() &&
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "OnDraggablePointerUpCallBack execute self",
             ),
           i.OnPointerUpCallBack.IsBound()) &&
@@ -288,7 +302,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "OnDraggablePointerUpCallBack execute parent",
             ),
           i.OnPointerUpCallBack.Execute(e),
@@ -296,7 +310,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Guide",
-              17,
+              16,
               "OnDraggablePointerUpCallBack execute TryFinishByClick",
             ),
           this.kzt());
@@ -436,11 +450,11 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       ((this.Bzt = !0),
       GuideFocusItem.IsOpenLog &&
         Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Guide", 17, "TryFinishByClick done"),
+        Log_1.Log.Warn("Guide", 16, "TryFinishByClick done"),
       this.Owner.DoCloseByFinished(),
       TimerSystem_1.TimerSystem.Next(() => {
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Guide", 17, "DoCloseByFinished");
+          Log_1.Log.Warn("Guide", 16, "DoCloseByFinished");
       }));
   }
   OnBaseViewCloseWhenFinish() {
@@ -481,10 +495,10 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   }
   ApplyButtonFollow() {
     var e = this.wzt,
-      i = e.K2_GetComponentScale(),
+      i = e.D_K2_GetComponentScale(),
       e =
-        (this.RootItem.K2_SetWorldLocation(
-          e.K2_GetComponentLocation(),
+        (this.RootItem.D_K2_SetWorldLocation(
+          e.D_K2_GetComponentLocation(),
           !1,
           void 0,
           !1,
@@ -495,8 +509,8 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         this.xzt),
       i = this.GetButton(0).RootUIComp;
     this.Config.ClickAnywhere
-      ? (i.K2_SetWorldLocation(
-          UiLayer_1.UiLayer.UiRootItem.K2_GetComponentLocation(),
+      ? (i.D_K2_SetWorldLocation(
+          UiLayer_1.UiLayer.UiRootItem.D_K2_GetComponentLocation(),
           !1,
           void 0,
           !1,
@@ -507,14 +521,14 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       : (i.SetPivot(e.GetPivot()),
         i.SetHeight(e.Height),
         i.SetWidth(e.Width),
-        i.SetRelativeScale3D(e.K2_GetComponentScale()),
-        i.K2_SetWorldLocation(e.K2_GetComponentLocation(), !1, void 0, !1));
+        i.D_SetRelativeScale3D(e.D_K2_GetComponentScale()),
+        i.D_K2_SetWorldLocation(e.D_K2_GetComponentLocation(), !1, void 0, !1));
   }
   ApplyBgFollow() {
     var e;
     this.Config.UseMask &&
-      ((e = this.tYe).K2_SetWorldLocation(
-        UiLayer_1.UiLayer.UiRootItem.K2_GetComponentLocation(),
+      ((e = this.tYe).D_K2_SetWorldLocation(
+        UiLayer_1.UiLayer.UiRootItem.D_K2_GetComponentLocation(),
         !1,
         void 0,
         !1,

@@ -32,7 +32,7 @@ class UiLoginSceneManager {
     );
   }
   static exo() {
-    for (const n of this.vwa)
+    for (const n of this.bwa)
       UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
         n,
       );
@@ -47,15 +47,15 @@ class UiLoginSceneManager {
   static InitCinematicTick() {
     (UiLoginSceneManager.ixo = ActorSystem_1.ActorSystem.Get(
       UE.BP_Cinematics_Tick_C.StaticClass(),
-      new UE.Transform(),
+      new UE.TransformDouble(),
     )),
       (UiLoginSceneManager.oxo = ActorSystem_1.ActorSystem.Get(
         UE.SpotLight.StaticClass(),
-        new UE.Transform(),
+        new UE.TransformDouble(),
       )),
       (UiLoginSceneManager.rxo = ActorSystem_1.ActorSystem.Get(
         UE.SpotLight.StaticClass(),
-        new UE.Transform(),
+        new UE.TransformDouble(),
       ));
   }
   static nxo() {
@@ -73,17 +73,26 @@ class UiLoginSceneManager {
   }
   static axo() {
     UiLoginSceneManager.ixo &&
-      (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.ixo),
+      (ActorSystem_1.ActorSystem.Put(
+        "UiLoginSceneManager.DestroyCinematicTick1",
+        UiLoginSceneManager.ixo,
+      ),
       (UiLoginSceneManager.ixo = void 0)),
       UiLoginSceneManager.oxo &&
-        (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.oxo),
+        (ActorSystem_1.ActorSystem.Put(
+          "UiLoginSceneManager.DestroyCinematicTick2",
+          UiLoginSceneManager.oxo,
+        ),
         (UiLoginSceneManager.oxo = void 0)),
       UiLoginSceneManager.rxo &&
-        (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.rxo),
+        (ActorSystem_1.ActorSystem.Put(
+          "UiLoginSceneManager.DestroyCinematicTick3",
+          UiLoginSceneManager.rxo,
+        ),
         (UiLoginSceneManager.rxo = void 0));
   }
-  static InitRoleObservers() {
-    UiLoginSceneManager.exo();
+  static InitRoleObservers(e) {
+    (UiLoginSceneManager.VO_ = e), UiLoginSceneManager.exo();
     var e =
         ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles(),
       n = e[LoginDefine_1.ELoginSex.Girl],
@@ -92,21 +101,16 @@ class UiLoginSceneManager {
         e[LoginDefine_1.ELoginSex.Boy]);
     UiLoginSceneManager.hxo(n, "BoyCase");
   }
-  static hxo(e, n) {
-    const i = UiLoginSceneManager.GetRoleObserver(e),
-      a = i.Model;
-    var r = a.CheckGetComponent(12);
+  static hxo(n, i) {
+    const a = UiLoginSceneManager.GetRoleObserver(n),
+      r = a.Model;
+    var e = r.CheckGetComponent(13);
     const o = () => {
-      UiModelUtil_1.UiModelUtil.SetVisible(a, !0),
-        a.CheckGetComponent(15).SetActive(!0),
-        a.CheckGetComponent(13)?.SetState(11),
-        i.Model?.CheckGetComponent(1)?.SetTransformByTag(n),
-        UiLoginSceneManager.txo.push(e),
-        2 <= UiLoginSceneManager.txo.length && UiLoginSceneManager.nxo();
+      r.CheckGetComponent(16).SetActive(!0);
     };
-    r?.LoadModelByRoleConfigId(e, !1, () => {
-      var e = a
-          .CheckGetComponent(15)
+    e?.LoadModelByRoleConfigId(n, -1, !1, () => {
+      var e = r
+          .CheckGetComponent(16)
           .GetHuluHandle()
           .Model.CheckGetComponent(2)
           .GetModelAllMesh(),
@@ -116,12 +120,22 @@ class UiLoginSceneManager {
             void 0,
             o,
           );
-      this.vwa.push(e);
+      this.bwa.push(e), UiModelUtil_1.UiModelUtil.SetVisible(r, !0);
+      r.CheckGetComponent(14)?.SetState(11);
+      e = a.Model?.CheckGetComponent(1);
+      e?.SetTransformByTag(i),
+        (e.MainMeshComponent.KuroLodMask = 1),
+        (e.MainMeshComponent.KuroAnimInstanceLod = 1),
+        UiLoginSceneManager.txo.push(n),
+        2 <= UiLoginSceneManager.txo.length &&
+          (UiLoginSceneManager.nxo(),
+          UiLoginSceneManager.VO_?.(),
+          (UiLoginSceneManager.VO_ = void 0));
     });
   }
   static PlayRoleMontage(e, n) {
     UiLoginSceneManager.GetRoleObserver(e)
-      .Model?.CheckGetComponent(13)
+      .Model?.CheckGetComponent(14)
       ?.SetState(n);
   }
   static SetRoleRenderingMaterial(e, n) {
@@ -139,13 +153,13 @@ class UiLoginSceneManager {
   }
   static SetHuluRenderingMaterial(e, n) {
     e = UiLoginSceneManager.GetRoleObserver(e)
-      .Model.CheckGetComponent(15)
+      .Model.CheckGetComponent(16)
       .GetHuluHandle();
     return UiModelUtil_1.UiModelUtil.SetRenderingMaterial(e.Model, n);
   }
   static RemoveHuluRenderingMaterialWithEnding(e, n) {
     UiLoginSceneManager.GetRoleObserver(e)
-      .Model.CheckGetComponent(15)
+      .Model.CheckGetComponent(16)
       .GetHuluHandle()
       .Model.CheckGetComponent(5)
       .RemoveRenderingMaterialWithEnding(n);
@@ -191,7 +205,7 @@ class UiLoginSceneManager {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiLoginSceneManager",
-              11,
+              10,
               "登录场景Sequence异步加载失败",
               ["path", g],
             ),
@@ -223,11 +237,11 @@ class UiLoginSceneManager {
           UiLoginSceneManager._xo.SequencePlayer.PlayLooping(),
           CameraController_1.CameraController.EnterCameraMode(2),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiLoginSceneManager", 11, "播放进入循环缓动镜头"))
+            Log_1.Log.Info("UiLoginSceneManager", 10, "播放进入循环缓动镜头"))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiLoginSceneManager",
-            11,
+            10,
             "登录场景Sequence异步加载失败",
             ["path", i],
           );
@@ -248,7 +262,7 @@ class UiLoginSceneManager {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiLoginSceneManager",
-          11,
+          10,
           "[BlendCameraSequence]混合相机动画失败",
         );
   }
@@ -266,6 +280,7 @@ class UiLoginSceneManager {
   (UiLoginSceneManager.rxo = void 0),
   (UiLoginSceneManager.lxo = 0),
   (UiLoginSceneManager.txo = []),
-  (UiLoginSceneManager.vwa = []),
+  (UiLoginSceneManager.bwa = []),
+  (UiLoginSceneManager.VO_ = void 0),
   (UiLoginSceneManager._xo = void 0);
 //# sourceMappingURL=UiLoginSceneManager.js.map

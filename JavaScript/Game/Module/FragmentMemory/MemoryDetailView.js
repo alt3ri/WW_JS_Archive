@@ -33,7 +33,9 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
             this.Twn.Id,
           );
-        this.SPe?.PlaySequencePurely("HideView"),
+        -1 !== this.Twn.Id &&
+          t &&
+          (this.SPe?.PlaySequencePurely("HideView"),
           UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !0),
           TimerSystem_1.TimerSystem.Delay(() => {
             ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
@@ -42,7 +44,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
             (e.FragmentMemoryTopicData = t),
               UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e),
               UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !1);
-          }, HIDEVIEWDELAY);
+          }, HIDEVIEWDELAY));
       }),
       (this.Uwn = (e) => {
         let t = !1;
@@ -132,7 +134,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
     if (
       ((this.Lwn =
         ModelManager_1.ModelManager.FragmentMemoryModel.GetAllFragmentTopic()),
-      this.OpenParam)
+      this.OpenParam && !this.Twn)
     ) {
       var e = this.OpenParam;
       for (const t of this.Lwn)
@@ -140,7 +142,7 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
           this.Twn = t;
           break;
         }
-    } else this.Twn = this.Lwn[0];
+    } else this.Twn || (this.Twn = this.Lwn[0]);
     this.Og(), this.xwn(), this.UiBlurBehaviour?.ChangeNeedBlurState(!1);
   }
   xwn() {

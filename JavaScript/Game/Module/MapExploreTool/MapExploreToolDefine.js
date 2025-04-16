@@ -7,7 +7,9 @@ class MapExploreToolUsingInfo {
       (this.SkillId = 0),
       (this.PhantomSkillId = 0),
       (this.Pos = void 0),
-      (this.Rot = void 0);
+      (this.Rot = void 0),
+      (this.MarkId = void 0),
+      (this.MarkType = void 0);
   }
 }
 exports.MapExploreToolUsingInfo = MapExploreToolUsingInfo;

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.UE_OTHER_COMPONENT_TICK_PRIORITY =
+  (exports.VEHICLE_INPUT_PRIORITY =
+    exports.UE_OTHER_COMPONENT_TICK_PRIORITY =
     exports.UE_SKELETAL_TICK_PRIORITY =
     exports.MOVEMENT_SYNC_TICK_PRIORITY =
     exports.GAIT_TICK_PRIORITY =
@@ -24,5 +25,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GAIT_TICK_PRIORITY = 70),
   (exports.MOVEMENT_SYNC_TICK_PRIORITY = 60),
   (exports.UE_SKELETAL_TICK_PRIORITY = 50),
-  (exports.UE_OTHER_COMPONENT_TICK_PRIORITY = 1);
+  (exports.UE_OTHER_COMPONENT_TICK_PRIORITY = 1),
+  (exports.VEHICLE_INPUT_PRIORITY = 90);
 //# sourceMappingURL=CharacterComponentPriorityDefine.js.map

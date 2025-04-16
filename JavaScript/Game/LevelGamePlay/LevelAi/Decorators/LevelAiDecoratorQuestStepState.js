@@ -30,17 +30,26 @@ class LevelAiDecoratorQuestStepState extends LevelAiDecorator_1.LevelAiDecorator
     );
   }
   CheckCondition(e) {
-    var t,
-      r = this.Params;
-    return (
-      !!r &&
-      (3 ===
-        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(r.QuestId) ||
-        (!!(t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-          r.QuestId,
-        )) &&
-          (t.GetNode(r.ChildQuestId)?.IsSuccess ?? !1)))
-    );
+    var t = this.Params;
+    if (!t) return !1;
+    let r = !1;
+    switch (
+      ModelManager_1.ModelManager.QuestNewModel.GetQuestState(t.QuestId)
+    ) {
+      case 0:
+      case 1:
+        r = !1;
+        break;
+      case 3:
+        r = !0;
+        break;
+      case 2:
+        var n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+          t.QuestId,
+        )?.GetNode(t.ChildQuestId);
+        r = n?.IsSuccess ?? !1;
+    }
+    return "Eq" === (t.Compare ?? "Eq") ? r : !r;
   }
 }
 exports.LevelAiDecoratorQuestStepState = LevelAiDecoratorQuestStepState;

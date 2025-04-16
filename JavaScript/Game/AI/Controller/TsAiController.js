@@ -10,8 +10,9 @@ const puerts_1 = require("puerts"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  GravityUtils_1 = require("../../Utils/GravityUtils"),
   DRAW_ARROW_SIZE = 100,
   DRAW_LINE_THICKNESS = 3,
   ARROW_LENGTH_SUB = 20,
@@ -37,6 +38,13 @@ class TsAiController extends UE.KuroAIController {
       (this.BehaviorTree = void 0),
       (this.StateMachineGroup = void 0);
   }
+  Constructor() {
+    (this.CharAiDesignComp = void 0),
+      (this.CharTagComp = void 0),
+      (this.CharBuffComp = void 0),
+      (this.CharStateMachineComp = void 0),
+      (this.AiController = void 0);
+  }
   GetEntity() {
     return this.CharAiDesignComp?.Entity;
   }
@@ -49,30 +57,31 @@ class TsAiController extends UE.KuroAIController {
   InitAiController(t) {
     (this.CharAiDesignComp = t),
       (this.AiController = t.AiController),
-      (this.CharBuffComp = t.Entity.GetComponent(160)),
-      (this.CharTagComp = t.Entity.GetComponent(190)),
-      (this.CharStateMachineComp = t.Entity.GetComponent(68));
+      (this.CharBuffComp = t.Entity.GetComponent(172)),
+      (this.CharTagComp = t.Entity.GetComponent(203)),
+      (this.CharStateMachineComp = t.Entity.GetComponent(75));
   }
   DrawDebugLines(t) {
-    var e, i, r;
+    var e, i, r, o;
     this.CharAiDesignComp?.Valid &&
-      ((r = this.AiController.CharActorComp.ActorLocationProxy),
+      ((o = this.AiController.CharActorComp.ActorLocationProxy),
       (e = this.AiController.AiHateList.GetCurrentTarget()),
-      this.DrawPerception(r, e),
+      this.DrawPerception(o, e),
       e?.Valid) &&
       ((e = e.Entity.GetComponent(3)),
-      this.DrawArrow(r, e.ActorLocationProxy, targetLinkColor),
+      this.DrawArrow(o, e.ActorLocationProxy, targetLinkColor),
       (e = this.AiController.AiTeam.GetAiTeamAreaMemberData(this.AiController))
         ?.IsAttacker &&
-        ((i = new UE.Vector(
-          r.X,
-          r.Y,
-          r.Z + this.AiController.CharActorComp.HalfHeight,
-        )),
-        UE.KismetSystemLibrary.DrawDebugBox(
+        (TsAiController.TmpVector.DeepCopy(o),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.AiController.CharActorComp,
+          TsAiController.TmpVector,
+          this.AiController.CharActorComp.HalfHeight,
+        ),
+        UE.KismetSystemLibrary.D_DrawDebugBox(
           this,
-          i,
-          new UE.Vector(10, 10, 10),
+          TsAiController.TmpVector.ToUeVector(),
+          new UE.VectorDouble(10, 10, 10),
           enemyLinkColor,
           this.AiController.CharActorComp.ActorRotation,
           0,
@@ -80,19 +89,20 @@ class TsAiController extends UE.KuroAIController {
         )),
       e) &&
       0 <= e.AreaIndex &&
-      ((i = Vector_1.Vector.Create(
-        r.X,
-        r.Y,
-        r.Z - this.AiController.CharActorComp.HalfHeight + 10,
-      )),
-      (r =
+      ((i = TsAiController.TmpVector3),
+      (r = TsAiController.TmpVector2),
+      i.DeepCopy(o),
+      GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+        this.AiController.CharActorComp,
+        i,
+        10 - this.AiController.CharActorComp.HalfHeight,
+      ),
+      (o =
         (e.CachedControllerYaw + e.AngleCenter) *
         MathUtils_1.MathUtils.DegToRad),
-      (r = Vector_1.Vector.Create(
-        e.CachedTargetLocation.X + Math.cos(r) * e.DistanceCenter,
-        e.CachedTargetLocation.Y + Math.sin(r) * e.DistanceCenter,
-        i.Z,
-      )),
+      r.Set(Math.cos(o) * e.DistanceCenter, Math.sin(o) * e.DistanceCenter, 0),
+      e.Group.GravityQuat.RotateVector(r, r),
+      r.AdditionEqual(i),
       this.DrawArrow(i, r, areaCenterColor));
   }
   DrawPerception(t, e) {
@@ -102,7 +112,7 @@ class TsAiController extends UE.KuroAIController {
     if (o) {
       for (const C of o.ShareAllyLink) {
         var s =
-          CharacterController_1.CharacterController.GetCharacterActorComponentById(
+          ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
             C,
           );
         s && this.DrawArrow(t, s.ActorLocationProxy, teamMemberLinkColor);
@@ -110,56 +120,62 @@ class TsAiController extends UE.KuroAIController {
       for (const A of o.Allies)
         o.ShareAllyLink.has(A) ||
           ((i =
-            CharacterController_1.CharacterController.GetCharacterActorComponentById(
+            ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
               A,
             )) &&
             this.DrawArrow(t, i.ActorLocationProxy, allyLinkColor));
       for (const d of o.AllEnemies)
         (e?.Valid && d === e.Id) ||
           ((r =
-            CharacterController_1.CharacterController.GetCharacterActorComponentById(
+            ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
               d,
             )) &&
             this.DrawArrow(t, r.ActorLocationProxy, enemyLinkColor));
       for (const _ of o.Neutrals) {
         var n =
-          CharacterController_1.CharacterController.GetCharacterActorComponentById(
+          ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
             _,
           );
         n && this.DrawArrow(t, n.ActorLocationProxy, neutralLinkColor);
       }
     }
-    var h = this.AiController.CharActorComp,
-      a =
-        (TsAiController.TmpVector.FromUeVector(h.GetInitLocation()),
+    var l = this.AiController.CharActorComp,
+      h =
+        (TsAiController.TmpVector.FromUeVector(l.GetInitLocation()),
         TsAiController.TmpVector),
-      l = ((a.Z -= h.HalfHeight), this.AiController.AiHateList.AiHate),
-      h = h.FloorLocation;
-    UE.KismetSystemLibrary.DrawDebugSphere(
+      a =
+        (GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          l,
+          h,
+          -l.HalfHeight,
+        ),
+        this.AiController.AiHateList.AiHate),
+      l = l.FloorLocation;
+    UE.KismetSystemLibrary.D_DrawDebugSphere(
       this,
-      h.ToUeVector(),
-      l.DisengageDistanceRange.Min,
+      l.ToUeVector(),
+      a.DisengageDistanceRange.Min,
       DEFAULT_SEGMENTS,
       minHateAreaColor,
     ),
-      UE.KismetSystemLibrary.DrawDebugSphere(
+      UE.KismetSystemLibrary.D_DrawDebugSphere(
         this,
-        h.ToUeVector(),
-        l.DisengageDistanceRange.Max,
+        l.ToUeVector(),
+        a.DisengageDistanceRange.Max,
         DEFAULT_SEGMENTS,
         maxHateAreaColor,
       ),
-      UE.KismetSystemLibrary.DrawDebugSphere(
+      UE.KismetSystemLibrary.D_DrawDebugSphere(
         this,
-        a.ToUeVector(),
-        l.DisengageBornDistance.Min,
+        h.ToUeVector(),
+        a.DisengageBornDistance.Min,
         DEFAULT_SEGMENTS,
         minHateInitAreaColor,
       ),
-      UE.KismetSystemLibrary.DrawDebugSphere(
+      UE.KismetSystemLibrary.D_DrawDebugSphere(
         this,
-        a.ToUeVector(),
-        l.DisengageBornDistance.Max,
+        h.ToUeVector(),
+        a.DisengageBornDistance.Max,
         DEFAULT_SEGMENTS,
         maxHateInitAreaColor,
       );
@@ -187,6 +203,24 @@ class TsAiController extends UE.KuroAIController {
           ["AIC", this.GetName()],
         );
   }
+  AddLevelVarBoolEventBinder(t, e) {
+    this.AiController
+      ? this.AiController.AiLevelVarEvents.AddLevelVarEvent(t, e)
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Test", 31, "Error Call AddLevelVarBoolEventBinder", [
+          "AIC",
+          this.GetName(),
+        ]);
+  }
+  AddLevelVarIntEventBinder(t, e) {
+    this.AiController
+      ? this.AiController.AiLevelVarEvents.AddLevelVarEvent(t, e)
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Test", 31, "Error Call AddLevelVarBoolEventBinder", [
+          "AIC",
+          this.GetName(),
+        ]);
+  }
   AddHateEventBinder(t) {
     this.AiController?.AiPerceptionEvents.AddAiHateEvent(t);
   }
@@ -208,23 +242,31 @@ class TsAiController extends UE.KuroAIController {
   }
   AicApplyBuff(t) {
     this.CharBuffComp?.Valid &&
-      this.CharBuffComp.AddBuffFromAi(this.AiController.AiCombatMessageId, t, {
-        InstigatorId: this.CharBuffComp.CreatureDataId,
-        Reason: "AIC蓝图添加buff(AicApplyBuff)",
-      });
+      this.CharBuffComp.AddBuffFromAi(
+        this.AiController.AiCombatMessageId,
+        Number(t),
+        {
+          InstigatorId: this.CharBuffComp.CreatureDataId,
+          Reason: "AIC蓝图添加buff(AicApplyBuff)",
+        },
+      );
   }
   AicApplyBuffToTarget(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 194);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 207);
     t &&
       this.CharBuffComp?.Valid &&
-      t.AddBuffFromAi(this.AiController.AiCombatMessageId, e, {
+      t.AddBuffFromAi(this.AiController.AiCombatMessageId, Number(e), {
         InstigatorId: this.CharBuffComp.CreatureDataId,
         Reason: "AIC蓝图添加buff(AicApplyBuffToTarget)",
       });
   }
   AicRemoveBuff(t) {
     this.CharBuffComp?.Valid &&
-      this.CharBuffComp.RemoveBuff(t, -1, "AIC蓝图移除buff（AIC Remove Buff）");
+      this.CharBuffComp.RemoveBuff(
+        Number(t),
+        -1,
+        "AIC蓝图移除buff（AIC Remove Buff）",
+      );
   }
   AicAddTag(t) {
     this.CharTagComp?.Valid && this.CharTagComp.AddTag(t?.TagId);
@@ -315,7 +357,7 @@ class TsAiController extends UE.KuroAIController {
   }
   LogReport(t) {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("BehaviorTree", 9, "埋点废弃,请删除相关配置");
+      Log_1.Log.Error("BehaviorTree", 8, "埋点废弃,请删除相关配置");
   }
   逻辑主控() {
     return this.AiController.CharActorComp.IsAutonomousProxy;
@@ -367,8 +409,9 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
 等待切换主控：${this.AiController.IsWaitingSwitchControl()}
 感知：${this.AiController.AiPerception?.GetEnableAiSenseDebug()}
 怪物仇恨组： ${this.AiController.HatredGroupId}
-部位血量: ${this.CharBuffComp?.Entity?.GetComponent(61)?.GetDebugText()}
+部位血量: ${this.CharBuffComp?.Entity?.GetComponent(68)?.GetDebugText()}
 集群Id：${this.AiController.GetTeamLevelId()}
+阵营: ${this.GetEntity()?.GetComponent(0)?.GetEntityCamp()}
 `;
   }
   ReceiveDestroyed() {
@@ -388,7 +431,7 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
     e = TsAiController.TmpVector.Size();
     TsAiController.TmpVector.MultiplyEqual((e - ARROW_LENGTH_SUB) / e),
       TsAiController.TmpVector.AdditionEqual(t),
-      UE.KismetSystemLibrary.DrawDebugArrow(
+      UE.KismetSystemLibrary.D_DrawDebugArrow(
         this,
         t.ToUeVector(),
         TsAiController.TmpVector.ToUeVector(),
@@ -400,6 +443,8 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
   }
 }
 (TsAiController.TmpVector = Vector_1.Vector.Create()),
+  (TsAiController.TmpVector2 = Vector_1.Vector.Create()),
+  (TsAiController.TmpVector3 = Vector_1.Vector.Create()),
   (TsAiController.StatSetAiHateConfig = Stats_1.Stat.Create("SetAiHateConfig")),
   (exports.default = TsAiController);
 //# sourceMappingURL=TsAiController.js.map

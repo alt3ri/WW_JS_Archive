@@ -4,7 +4,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -13,6 +13,14 @@ class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
       (this.Logic = 0),
       (this.DebugLog = !1),
       (this.IsInitTsVariables = !1),
+      (this.TsCheckTags = void 0),
+      (this.TsCheckTagValues = void 0),
+      (this.TsLogic = void 0),
+      (this.TsBlackBoardKeyTarget = ""),
+      (this.TsDebugLog = !1);
+  }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
       (this.TsCheckTags = void 0),
       (this.TsCheckTagValues = void 0),
       (this.TsLogic = void 0),
@@ -66,10 +74,11 @@ class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
         ]);
     let i = r.CharActorComp.Entity;
     if (this.TsBlackBoardKeyTarget) {
-      t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-        i.Id,
-        this.TsBlackBoardKeyTarget,
-      );
+      t =
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+          i.Id,
+          this.TsBlackBoardKeyTarget,
+        );
       if (!t)
         return (
           this.TsDebugLog &&
@@ -85,7 +94,7 @@ class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
           !1
         );
     }
-    var o = i.GetComponent(190);
+    var o = i.GetComponent(203);
     if (1 === this.TsLogic) {
       for (let t = this.TsCheckTags.length - 1; 0 <= t; --t) {
         var s = this.TsCheckTags[t],

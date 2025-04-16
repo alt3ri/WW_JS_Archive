@@ -42,8 +42,8 @@ class SingleItemSelect {
       (this.$Oo = (t, e) => {
         0 < t?.length ? (this.HOo = t[0]) : (this.HOo = void 0), this.YOo();
       }),
-      (this.JOo = (t, e, i, a) =>
-        !(this.HOo && e === this.HOo.IncId && i === this.HOo.ItemId && 0 < a));
+      (this.JOo = (t, e, i, s) =>
+        !(this.HOo && e === this.HOo.IncId && i === this.HOo.ItemId && 0 < s));
   }
   Init(t, e = 0) {
     (this.ebt = new MediumItemGrid_1.MediumItemGrid()),
@@ -52,7 +52,8 @@ class SingleItemSelect {
       (this.QOo = e),
       this.ebt.BindEmptySlotButtonCallback(this.OpenItemSelectView),
       this.ebt.BindReduceButtonCallback(this.OpenItemSelectView),
-      this.ebt.BindOnExtendToggleStateChanged(this.OpenItemSelectView),
+      this.ebt.BindOnExtendToggleRelease(this.OpenItemSelectView),
+      this.ebt.BindOnCanExecuteChange(() => !1),
       this.ebt.SetReduceButton(void 0),
       (this.KOo.IsSingleSelected = !0),
       (this.KOo.OnChangeSelectedFunction = this.$Oo),
@@ -71,40 +72,40 @@ class SingleItemSelect {
     else {
       var e = this.HOo.IncId,
         i = this.HOo.ItemId,
-        a = ModelManager_1.ModelManager.InventoryModel;
-      let t = a.GetAttributeItemData(e);
-      var s,
+        s = ModelManager_1.ModelManager.InventoryModel;
+      let t = s.GetAttributeItemData(e);
+      var a,
         h,
-        a = {
+        s = {
           Type: 4,
           ItemConfigId: i,
-          StarLevel: (t = t || a.GetCommonItemData(i)).GetQuality(),
+          StarLevel: (t = t || s.GetCommonItemData(i)).GetQuality(),
         };
       t instanceof AttributeItemData_1.AttributeItemData
-        ? ((a.BottomTextId = "Text_LevelShow_Text"),
+        ? ((s.BottomTextId = "Text_LevelShow_Text"),
           t instanceof PhantomItemData_1.PhantomItemData &&
             ((i =
               ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
                 i,
               )),
-            (s = (h =
+            (a = (h =
               ModelManager_1.ModelManager
                 .PhantomBattleModel).GetPhantomBattleData(e)),
             (h = h.GetPhantomBattleData(e).GetPhantomLevel()),
-            (a.BottomTextParameter = [h]),
-            (a.BottomTextId = i.Name),
-            (a.StarLevel = i.QualityId),
-            (a.Level = s.GetCost()),
-            (a.IsLevelTextUseChangeColor = !0)),
+            (s.BottomTextParameter = [h]),
+            (s.BottomTextId = i.Name),
+            (s.StarLevel = i.QualityId),
+            (s.Level = a.GetCost()),
+            (s.IsLevelTextUseChangeColor = !0)),
           t instanceof WeaponItemData_1.WeaponItemData &&
             ((i = (h =
               ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
                 e,
               )).GetLevel()),
-            (a.Level = h.GetResonanceLevel()),
-            (a.BottomTextParameter = [i])))
-        : (a.BottomText = this.HOo.SelectedCount.toString()),
-        this.ebt.Apply(a),
+            (s.Level = h.GetResonanceLevel()),
+            (s.BottomTextParameter = [i])))
+        : (s.BottomText = this.HOo.SelectedCount.toString()),
+        this.ebt.Apply(s),
         this.ebt.SetSelected(!0);
     }
     this.jOo(this.HOo);

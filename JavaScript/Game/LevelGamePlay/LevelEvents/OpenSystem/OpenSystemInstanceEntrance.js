@@ -2,26 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemInstanceEntrance = void 0);
 const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  InstanceDungeonEntranceController_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceController"),
   TowerData_1 = require("../../../Module/TowerDetailUi/TowerData"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemInstanceEntrance extends OpenSystemBase_1.OpenSystemBase {
-  async ExecuteOpenView(e, n) {
+  async ExecuteOpenView(e, r) {
     if (!e.BoardId) return !1;
     if (!ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed)
       return !1;
-    let r = void 0;
-    switch (n.Type) {
+    let n = void 0;
+    switch (r.Type) {
       case 5:
-        r = n.TriggerEntityId;
+        n = r.TriggerEntityId;
         break;
       case 1:
-        r = n.EntityId;
+        n = r.EntityId;
     }
-    return InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.EnterEntrance(
+    return ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.EnterEntrance(
       e.BoardId,
-      r,
+      n,
     );
   }
   GetViewName(e) {
@@ -40,8 +40,8 @@ class OpenSystemInstanceEntrance extends OpenSystemBase_1.OpenSystemBase {
               TowerData_1.VARIATION_RISK_DIFFICULTY
               ? "TowerNormalView"
               : "TowerVariationView"
-            : 9 === e
-              ? "InstanceDungeonEntranceRootView"
+            : 9 !== e && 10 === e
+              ? "ActivityInstanceEntranceView"
               : "InstanceDungeonEntranceView";
   }
 }

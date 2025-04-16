@@ -14,27 +14,34 @@ class ObtainFragmentView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.Jwn = void 0),
       (this.tWt = () => {
-        var e =
-          ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetFragmentMemoryPreNeedItemId();
-        let i = 1;
-        0 <
-        (i =
-          0 < e
-            ? ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-                e,
-              )
-            : i)
-          ? this.CloseMe(() => {
-              var e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
-              (e.FragmentMemoryTopicData = this.Jwn.GetTopicData()),
-                (e.CurrentSelectId = this.Jwn.GetId()),
-                (ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
-                  "Start02"),
-                UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e);
-            })
-          : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
-              "Condition_13000069_Description",
-            );
+        var e = this.Jwn.GetTopicData();
+        if (e.GetUnlockState()) {
+          var i =
+            ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetFragmentMemoryPreNeedItemId();
+          let e = 1;
+          0 <
+          (e =
+            0 < i
+              ? ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+                  i,
+                )
+              : e)
+            ? this.CloseMe(() => {
+                var e =
+                  new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
+                (e.FragmentMemoryTopicData = this.Jwn.GetTopicData()),
+                  (e.CurrentSelectId = this.Jwn.GetId()),
+                  (ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
+                    "Start02"),
+                  UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e);
+              })
+            : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+                "Condition_13000069_Description",
+              );
+        } else
+          ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+            e.GetConditionDesc(),
+          );
       });
   }
   OnRegisterComponent() {

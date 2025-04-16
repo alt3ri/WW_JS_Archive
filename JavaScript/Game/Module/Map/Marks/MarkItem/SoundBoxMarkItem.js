@@ -15,15 +15,18 @@ class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   get IsNewCustomMarkItem() {
     return this.NDi;
   }
-  Initialize() {
-    super.Initialize();
+  OnInitialize() {
+    super.OnInitialize();
     var e = this.ServerMarkInfo;
     this.SetTrackData(e.TrackTarget),
       this.SetConfigId(this.ConfigId),
-      this.UpdateTrackState();
+      this.UpdateVisibleRelativeState();
   }
-  OnCreateView() {
-    this.InnerView = new SoundBoxMarkItemView_1.SoundBoxMarkItemView(this);
+  GetMarkItemViewType() {
+    return 22;
+  }
+  CreateView() {
+    return new SoundBoxMarkItemView_1.SoundBoxMarkItemView(this);
   }
   SetConfigId(e) {
     (this.ServerMarkInfo.MarkConfigId = e), this.OnSetConfigId(e);

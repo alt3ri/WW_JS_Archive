@@ -23,7 +23,13 @@ class TsAnimNotifyStateKeepAwayFromGround extends UE.KuroAnimNotifyState {
       (this.TsMaxSpeed = -0),
       (this.TsTmpVector = void 0);
   }
-  K2_NotifyBegin(t, e, r) {
+  Constructor() {
+    (this.TsMinHeight = -0),
+      (this.TsMaxHeight = -0),
+      (this.TsMaxSpeed = -0),
+      (this.TsTmpVector = void 0);
+  }
+  K2_NotifyBegin(t, s, e) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     if (
@@ -35,78 +41,78 @@ class TsAnimNotifyStateKeepAwayFromGround extends UE.KuroAnimNotifyState {
     )
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Test", 29, "Z轴帧事件参数错误"),
+          Log_1.Log.Error("Test", 28, "Z轴帧事件参数错误"),
         !1
       );
     if (this.TsMaxSpeed <= 0) return !1;
-    let s = paramsMap.get(t.CharacterActorComponent.Entity.Id);
+    let r = paramsMap.get(t.CharacterActorComponent.Entity.Id);
     return (
-      s ||
-        ((s = new KeepAwayFromGroundParam()),
-        paramsMap.set(t.CharacterActorComponent.Entity.Id, s)),
-      (s.NowTime = 0),
-      (s.TotalTime = r),
+      r ||
+        ((r = new KeepAwayFromGroundParam()),
+        paramsMap.set(t.CharacterActorComponent.Entity.Id, r)),
+      (r.NowTime = 0),
+      (r.TotalTime = e),
       !0
     );
   }
-  K2_NotifyTick(t, e, r) {
-    var s;
+  K2_NotifyTick(t, s, e) {
+    var r;
     return (
-      !(r < MathUtils_1.MathUtils.KindaSmallNumber) &&
+      !(e < MathUtils_1.MathUtils.KindaSmallNumber) &&
       (t = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
-      ((t = t.CharacterActorComponent), !!(s = paramsMap.get(t.Entity.Id))) &&
-      (this.MoveToTarget(r, s, t), (s.NowTime += r), !0)
+      ((t = t.CharacterActorComponent), !!(r = paramsMap.get(t.Entity.Id))) &&
+      (this.MoveToTarget(e, r, t), (r.NowTime += e), !0)
     );
   }
-  K2_NotifyEnd(t, e) {
+  K2_NotifyEnd(t, s) {
     t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
       (paramsMap.delete(t.CharacterActorComponent.Entity.Id), !0)
     );
   }
-  GetRate(t, e) {
-    let r = 1;
-    t = e.NowTime + t;
-    if (e.TotalTime <= t) r = 1;
+  GetRate(t, s) {
+    let e = 1;
+    t = s.NowTime + t;
+    if (s.TotalTime <= t) e = 1;
     else if (this.MoveCurve) {
-      var s = this.MoveCurve.GetFloatValue(e.NowTime / e.TotalTime),
-        i = this.MoveCurve.GetFloatValue(t / e.TotalTime);
-      if (1 <= s) return 0;
-      r = (i - s) / (1 - s);
+      var r = this.MoveCurve.GetFloatValue(s.NowTime / s.TotalTime),
+        i = this.MoveCurve.GetFloatValue(t / s.TotalTime);
+      if (1 <= r) return 0;
+      e = (i - r) / (1 - r);
     } else {
-      (i = MathUtils_1.MathUtils.GetCubicValue(e.NowTime / e.TotalTime)),
-        (s = MathUtils_1.MathUtils.GetCubicValue(t / e.TotalTime));
+      (i = MathUtils_1.MathUtils.GetCubicValue(s.NowTime / s.TotalTime)),
+        (r = MathUtils_1.MathUtils.GetCubicValue(t / s.TotalTime));
       if (1 <= i) return 0;
-      r = (s - i) / (1 - i);
+      e = (r - i) / (1 - i);
     }
-    return r;
+    return e;
   }
-  MoveToTarget(t, e, r) {
-    var s = r.Entity.GetComponent(164).GetHeightAboveGround(this.TsMaxHeight);
-    if (s < this.TsMinHeight) {
-      this.TsTmpVector.Set(0, 0, this.TsMinHeight - s);
-      e = this.GetRate(t, e);
-      if (e <= 0) return;
+  MoveToTarget(t, s, e) {
+    var r = e.Entity.GetComponent(176).GetHeightAboveGround(this.TsMaxHeight);
+    if (r < this.TsMinHeight) {
+      this.TsTmpVector.Set(0, 0, this.TsMinHeight - r);
+      s = this.GetRate(t, s);
+      if (s <= 0) return;
       this.TsTmpVector.Z = Math.min(
-        this.TsTmpVector.Z * e,
+        this.TsTmpVector.Z * s,
         this.TsMaxSpeed * t,
       );
     } else {
       if (
         !(
-          s >= this.TsMaxHeight &&
-          r.ActorLocationProxy.Z > r.LastActorLocation.Z
+          r >= this.TsMaxHeight &&
+          e.ActorLocationProxy.Z > e.LastActorLocation.Z
         )
       )
         return;
       this.TsTmpVector.Set(
         0,
         0,
-        r.LastActorLocation.Z - r.ActorLocationProxy.Z,
+        e.LastActorLocation.Z - e.ActorLocationProxy.Z,
       );
     }
-    r.AddActorWorldOffset(
+    e.AddActorWorldOffset(
       this.TsTmpVector.ToUeVector(),
       "TsAnimNotifyStateKeepAwayFromGround.AddActorWorldOffset",
       !0,

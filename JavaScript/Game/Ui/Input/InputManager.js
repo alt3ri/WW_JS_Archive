@@ -20,7 +20,8 @@ const puerts_1 = require("puerts"),
   ViewHotKeyHandleDefine_1 = require("./Handle/ViewHotKeyHandleDefine"),
   Input_1 = require("./Input"),
   InputViewRecord_1 = require("./InputViewRecord"),
-  ViewHotKeyHandleContainer_1 = require("./ViewHotKeyHandleContainer");
+  ViewHotKeyHandleContainer_1 = require("./ViewHotKeyHandleContainer"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender");
 class InputManager {
   static Init() {
     EventSystem_1.EventSystem.Add(
@@ -31,9 +32,9 @@ class InputManager {
         EventDefine_1.EEventName.UiManagerDestroy,
         this.ht,
       ),
-      InputManager.Wya();
+      InputManager.Kya();
   }
-  static Wya() {
+  static Kya() {
     var e =
       ConfigManager_1.ConfigManager.ViewHotKeyConfig.GetAllOpenAndCloseViewHotKeyConfig();
     if (e)
@@ -60,27 +61,27 @@ class InputManager {
               t,
               n.HandleType,
             );
-        this.Qya.Add(t);
+        this.$ya.Add(t);
       }
   }
-  static kIa() {
-    this.Qya.ForEach((e) => {
+  static FIa() {
+    this.$ya.ForEach((e) => {
       e.Bind();
     });
   }
   static RegisterOpenViewFunc(e, t) {
-    e = this.Qya.Get(e);
+    e = this.$ya.Get(e);
     if (e) for (const n of e) n.BindOpenViewCallback(t);
   }
   static RegisterCloseViewFunc(e, t) {
-    e = this.Qya.Get(e);
+    e = this.$ya.Get(e);
     if (e) for (const n of e) n.BindCloseViewCallback(t);
   }
   static GetViewHotKeyHandle(e) {
-    return this.Qya.Get(e);
+    return this.$ya.Get(e);
   }
   static GetAllViewHotKeyHandle() {
-    return this.Qya.GetAll();
+    return this.$ya.GetAll();
   }
   static smr() {
     InputDistributeController_1.InputDistributeController.BindAction(
@@ -163,7 +164,7 @@ class InputManager {
       ((t = this.DisableShortcutKeyViewRecord.Add(e)), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "InputManager",
-        8,
+        10,
         "添加不允许打开界面快捷键的界面",
         ["viewName", e],
         ["length", this.DisableShortcutKeyViewRecord.Size()],
@@ -177,7 +178,7 @@ class InputManager {
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "InputManager",
-        8,
+        10,
         "删除不允许打开界面快捷键的界面",
         ["viewName", e],
         ["length", this.DisableShortcutKeyViewRecord.Size()],
@@ -231,7 +232,7 @@ class InputManager {
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "InputManager",
-              8,
+              10,
               "打开界面时显示鼠标 失败，原因是因为此界面的显示鼠标类型为：不影响鼠标显隐",
               ["viewName", e],
             ),
@@ -240,24 +241,24 @@ class InputManager {
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "InputManager",
-                8,
+                10,
                 "打开界面时显示鼠标 失败，原因是因为此界面的显示鼠标类型为：隐藏鼠标",
                 ["viewName", e],
               ),
-            this.Imr(),
+            this.fEc(e),
             1)
           : ((t = this.Umr.Add(e)),
             0 !== InputManager.ymr ||
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "InputManager",
-                  8,
+                  10,
                   "打开界面时尝试显示鼠标成功",
                   ["ViewName", e],
                   ["ShowCursorType", n.ShowCursorType],
                   ["count", t],
                 ),
-              this.Imr(),
+              this.fEc(e),
               0)))
     );
   }
@@ -268,7 +269,7 @@ class InputManager {
         ? Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "InputManager",
-            8,
+            10,
             "关闭界面时尝试隐藏失败，原因是因为UI表中，此界面的显示鼠标类型为：不影响鼠标显隐藏",
             ["viewName", e],
           )
@@ -276,7 +277,7 @@ class InputManager {
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "InputManager",
-              8,
+              10,
               "关闭界面时尝试隐藏失败，原因是因为运行了总是显示鼠标的GM指令",
             )
           : this.Umr.Has(e)
@@ -284,27 +285,43 @@ class InputManager {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "InputManager",
-                  8,
+                  10,
                   "关闭界面时尝试隐藏鼠标成功",
                   ["viewName", e],
                   ["ShowCursorType", t.ShowCursorType],
                 ),
-              this.Imr())
+              this.fEc(e))
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "InputManager",
-                8,
+                10,
                 "关闭界面时尝试隐藏失败，原因是因为此界面没有再显示鼠标界面列表中",
                 ["viewName", e],
                 ["ShowMouseViewList", this.Umr],
               ));
+  }
+  static fEc(e) {
+    var t = this.Umr.HasAny();
+    this.SetAlwaysShowCursor(t),
+      "NetWorkMaskView" != e &&
+        (t
+          ? GameSettingsDeviceRender_1.GameSettingsDeviceRender.TemporaryDisableDLSSG(
+              "CursorVisialbe",
+            )
+          : GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelTemporaryDisableDLSSG(
+              "CursorVisialbe",
+            ));
   }
   static Imr() {
     var e = this.Umr.HasAny();
     this.SetAlwaysShowCursor(e);
   }
   static Tmr() {
-    InputManager.Umr.Clear(), InputManager.SetAlwaysShowCursor(!1);
+    InputManager.Umr.Clear(),
+      InputManager.SetAlwaysShowCursor(!1),
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelTemporaryDisableDLSSG(
+        "CursorVisialbe",
+      );
   }
   static SetAlwaysShowCursor(e) {
     var t;
@@ -321,7 +338,7 @@ class InputManager {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "InputManager",
-            8,
+            10,
             "实际设置鼠标可见性",
             ["realSetValue", n],
             ["value", e],
@@ -338,7 +355,7 @@ class InputManager {
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "InputManager",
-          8,
+          10,
           "设置鼠标可见性失败，因为PlayerController不可用",
           ["value", e],
         );
@@ -410,7 +427,7 @@ class InputManager {
   (InputManager.DisableCloseViewByShortcutKeyViewRecord =
     new InputViewRecord_1.InputViewRecord()),
   (InputManager.m9s = void 0),
-  (InputManager.Qya =
+  (InputManager.$ya =
     new ViewHotKeyHandleContainer_1.ViewHotKeyHandleContainer()),
   (InputManager.IsAutoMoveCursorToCenter = !0),
   (InputManager.il = () => {
@@ -420,7 +437,7 @@ class InputManager {
       InputManager.Umr.Clear(),
       InputManager.DisableShortcutKeyViewRecord.Clear(),
       InputManager.DisableCloseViewByShortcutKeyViewRecord.Clear(),
-      InputManager.kIa()),
+      InputManager.FIa()),
       UE.KuroInputFunctionLibrary.ClearInputModeReply();
   }),
   (InputManager.ht = () => {
@@ -429,7 +446,7 @@ class InputManager {
       InputManager.Umr.Clear(),
       InputManager.DisableShortcutKeyViewRecord.Clear(),
       InputManager.DisableCloseViewByShortcutKeyViewRecord.Clear(),
-      InputManager.Qya?.Clear(),
+      InputManager.$ya?.Clear(),
       (InputManager.gU = !1));
   }),
   (InputManager.amr = (e, t) => {
@@ -444,7 +461,7 @@ class InputManager {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "InputManager",
-        8,
+        10,
         "按Alt尝试显示鼠标",
         ["是否通过GM总是显示鼠标", InputManager.ymr],
         ["是否已经打开总是显示鼠标界面", InputManager.Amr],

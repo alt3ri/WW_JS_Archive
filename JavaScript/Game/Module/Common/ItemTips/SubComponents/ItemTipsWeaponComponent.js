@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TipsWeaponComponent = void 0);
 const UE = require("ue"),
+  MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   StarItem_1 = require("../../../RoleUi/View/StarItem"),
   GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
@@ -133,16 +134,18 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
     this.GetItem(15).SetUIActive(t),
       t &&
         void 0 !== e &&
-        ((t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e)),
-        this.SetRoleIcon(
-          t.GetRoleConfig().RoleHeadIcon,
+        ((t =
+          ModelManager_1.ModelManager.RoleSkinModel.GetRoleSkinDataByRoleId(e)),
+        this.SetRoleSkinIcon(
+          t.GetRoleSkinConfig().RoleHeadIcon,
           this.GetTexture(16),
-          e,
+          t.GetItemId(),
         ),
+        (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.GetName())),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(17),
           "VisionEquipping",
-          t.GetName(),
+          e,
         ));
   }
   SetLockButtonShow(t) {

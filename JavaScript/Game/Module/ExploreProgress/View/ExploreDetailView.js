@@ -7,6 +7,7 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  MapUtil_1 = require("../../Map/MapUtil"),
   SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
   DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
   GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
@@ -127,10 +128,7 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
       (r = i.GetExploreCountryData(e).GetExploreAreaDataList()[0]),
       (i.SelectedAreaId = r.AreaId)),
       (i.SelectedCountryId = e),
-      (i.SelectedAreaId =
-        ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(
-          ExploreProgressDefine_1.AREA_LEVEL,
-        ));
+      (i.SelectedAreaId = MapUtil_1.MapUtil.GetWorldMapLevelOneAreaId());
   }
   m6t() {
     var e = [],
@@ -149,8 +147,8 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
           e.push(a),
           t === r.SelectedCountryId)
         ) {
-          var o,
-            s,
+          var s,
+            o,
             a = l.GetExploreAreaDataList();
           a.sort((e, r) => {
             var i = e.GetSortIndex(),
@@ -159,14 +157,14 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
           });
           for (const n of a)
             n.GetAllExploreAreaItemData().length <= 0 ||
-              ((o = n.AreaId),
-              (s = new ExploreAreaViewData_1.ExploreAreaViewData()).RefreshArea(
-                o,
+              ((s = n.AreaId),
+              (o = new ExploreAreaViewData_1.ExploreAreaViewData()).RefreshArea(
+                s,
                 n.GetNameId(),
                 n.GetProgress(),
               ),
-              e.push(s),
-              r.SelectedAreaId === o && (i = e.length - 1));
+              e.push(o),
+              r.SelectedAreaId === s && (i = e.length - 1));
         }
       }
     return i;

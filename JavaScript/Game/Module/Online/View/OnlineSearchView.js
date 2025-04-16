@@ -69,6 +69,7 @@ class OnlineSearchView extends UiTickViewBase_1.UiTickViewBase {
       this.GetLoopScrollViewComponent(3),
       e.GetOwner(),
       this.oOi,
+      !0,
     )),
       this.GetInputText(0).OnTextChange.Bind(this.h9t),
       this.u8t();

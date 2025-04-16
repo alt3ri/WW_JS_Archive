@@ -16,33 +16,43 @@ class AreaMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   OnInitialize() {
     super.OnInitialize(), this.SetNameText();
   }
+  OnReset() {
+    super.OnReset(), this.SetNameText();
+  }
   SetNameText() {
-    var e = AreaByDeliveryMarkId_1.configAreaByDeliveryMarkId.GetConfig(
+    var t = AreaByDeliveryMarkId_1.configAreaByDeliveryMarkId.GetConfig(
       this.Holder.MarkId,
     );
-    if (e) {
-      var a =
-        ModelManager_1.ModelManager.ExploreProgressModel.GetExploreAreaData(
-          e.AreaId,
-        );
-      const o = this.Holder.MarkConfig.MarkTitle;
-      let r = LEVEL_TREE_SIZE,
-        i = "",
-        t = "SmallAreaName";
-      e.Level === ExploreProgressDefine_1.AREA_LEVEL &&
-        ((e = a?.GetProgress()?.toString() ?? "0"),
-        (i = StringUtils_1.StringUtils.Format("{0}%", e)),
-        (r = LEVEL_TWO_SIZE),
-        (t = "BigAreaName")),
-        this.GetNameComponentAsync().then((e) => {
-          e.SetName(t, o, i, r);
-        });
+    if (t) {
+      var o =
+          ModelManager_1.ModelManager.ExploreProgressModel.GetExploreAreaData(
+            t.AreaId,
+          ),
+        s = this.Holder.MarkConfig.MarkTitle;
+      let e = LEVEL_TREE_SIZE,
+        r = "",
+        i = "SmallAreaName";
+      t.Level === ExploreProgressDefine_1.AREA_LEVEL &&
+        ((t = o?.GetProgress()?.toString() ?? "0"),
+        (r = o?.IsReachMaxProgress
+          ? StringUtils_1.StringUtils.Format("<color=#ffd12f>{0}%</color>", t)
+          : StringUtils_1.StringUtils.Format("{0}%", t)),
+        (e = LEVEL_TWO_SIZE),
+        (i = "BigAreaName")),
+        this.MarkItemNameHandle.SetName({
+          FormatStr: i,
+          Name: s,
+          Progress: r,
+          FontSize: e,
+        }),
+        this.MarkItemNameHandle.SetVisible(!0);
     } else
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Map", 50, "缺少区域配置", [
+        Log_1.Log.Debug("Map", 63, "缺少区域配置", [
           "标记id",
           this.Holder.MarkId.toString(),
-        ]);
+        ]),
+        this.MarkItemNameHandle.SetVisible(!1);
   }
   GetInteractiveFlag() {
     return !1;

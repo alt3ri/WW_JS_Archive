@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log");
 class TsDecoratorIsAutonomous extends UE.BTDecorator_BlueprintBase {
+  Constructor() {}
   PerformConditionCheckAI(o, e) {
     var r = o.AiController;
     return r

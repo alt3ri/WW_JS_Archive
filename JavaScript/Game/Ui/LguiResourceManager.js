@@ -32,13 +32,13 @@ class LguiResourceManager {
               )),
               o && o?.(e, a, ELguiLoadResultType.Success))
             : (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("LguiUtil", 11, "资源加载失败,Game.World为空", [
+                Log_1.Log.Error("LguiUtil", 10, "资源加载失败,Game.World为空", [
                   "path",
                   a,
                 ]),
               o?.(void 0, a, ELguiLoadResultType.Fail))
           : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("LguiUtil", 11, "资源加载失败,资源不存在", [
+              Log_1.Log.Error("LguiUtil", 10, "资源加载失败,资源不存在", [
                 "path",
                 a,
               ]),

@@ -34,6 +34,7 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
       [6, UE.UIItem],
       [7, UE.UIItem],
       [8, UE.UIItem],
+      [9, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[0, this.Syt]]);
   }
@@ -73,15 +74,23 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.RefreshPlayerTexture(),
       this.K7e(),
       this.RefreshMuteItem(),
-      this.qxa(),
+      this.Nxa(),
+      this.sPa(),
       e ? this.SetToggleState(1) : this.SetToggleState(0);
   }
-  qxa() {
+  Nxa() {
     var t;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((t = void 0 !== this.pSt && "" !== this.pSt?.GetSdkUserId()),
         this.GetItem(8)?.SetUIActive(t))
       : this.GetItem(8)?.SetUIActive(!1);
+  }
+  sPa() {
+    var t;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((t = void 0 !== this.pSt && "" !== this.pSt?.GetSdkUserId()),
+        this.GetItem(9)?.SetUIActive(!t))
+      : this.GetItem(9)?.SetUIActive(!1);
   }
   OnSelected(t) {
     this.SetToggleState(1), this.GetItem(2)?.SetUIActive(!1);

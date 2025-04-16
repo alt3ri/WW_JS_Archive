@@ -12,6 +12,9 @@ class OverlayMap {
   get MapId() {
     return this.mapid();
   }
+  get GravityFlip() {
+    return this.gravityflip();
+  }
   get MapAddress() {
     return this.mapaddress();
   }
@@ -32,11 +35,11 @@ class OverlayMap {
       this,
     );
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsOverlayMap(t, s) {
-    return (s || new OverlayMap()).__init(
+  static getRootAsOverlayMap(t, i) {
+    return (i || new OverlayMap()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -49,23 +52,33 @@ class OverlayMap {
     var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  gravityflip() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.readInt32(this.z7 + t) : 1;
+  }
   mapaddress(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetMapposAt(t) {
     return this.mappos(t);
   }
   mappos(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+    var i = this.J7.__offset(this.z7, 12);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   mapposLength() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   mapposArray() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 12);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -75,22 +88,22 @@ class OverlayMap {
       : null;
   }
   rotation() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetWidthheightAt(t) {
     return this.widthheight(t);
   }
   widthheight(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   widthheightLength() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   widthheightArray() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 16);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

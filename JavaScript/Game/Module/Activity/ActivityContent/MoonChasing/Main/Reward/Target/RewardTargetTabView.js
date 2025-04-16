@@ -19,7 +19,7 @@ class RewardTargetTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.Cua = -1),
       (this.LoopScroll = void 0),
       (this.ypt = []),
-      (this.txa = !0),
+      (this.nxa = !0),
       (this.dOn = (e) => {
         ModelManager_1.ModelManager.MoonChasingRewardModel.GetTaskDataById(e) &&
           (this.TabLayout.GetLayoutItemByIndex(this.Cua).RefreshRedDot(),
@@ -44,7 +44,7 @@ class RewardTargetTabView extends UiTabViewBase_1.UiTabViewBase {
     ];
   }
   OnStart() {
-    (this.txa = this.ExtraParams ?? !0),
+    (this.nxa = this.ExtraParams ?? !0),
       (this.TabLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(0),
         this.fqe,
@@ -102,7 +102,7 @@ class RewardTargetTabView extends UiTabViewBase_1.UiTabViewBase {
     e = ModelManager_1.ModelManager.MoonChasingRewardModel.GetTaskDataByTabId(
       e + 1,
     ).sort(ModelManager_1.ModelManager.MoonChasingRewardModel.SortTaskData);
-    if (this.txa) this.ypt = e;
+    if (this.nxa) this.ypt = e;
     else
       for (const i of e) {
         var t = i.DeepCopy(i);

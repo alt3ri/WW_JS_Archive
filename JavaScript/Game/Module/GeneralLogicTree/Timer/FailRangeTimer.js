@@ -65,7 +65,7 @@ class FailRangeTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       ),
       super.Destroy();
   }
-  StartShowTimer(e) {
+  StartShowTimer(e, s) {
     this.UYt.push(new StartShowProcess(e));
   }
   EndShowTimer() {

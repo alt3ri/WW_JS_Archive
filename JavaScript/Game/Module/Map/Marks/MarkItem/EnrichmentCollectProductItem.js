@@ -8,20 +8,22 @@ class EnrichmentCollectProductItem extends ServerMarkItem_1.ServerMarkItem {
   get MarkType() {
     return 23;
   }
-  constructor(e, t, r, i) {
-    super(e, t, r, i);
+  constructor(e, r, t, i) {
+    super(e, r, t, i);
   }
-  OnCreateView() {
-    this.InnerView =
-      new EnrichmentCollectProductItemView_1.EnrichmentCollectProductItemView(
-        this,
-      );
+  GetMarkItemViewType() {
+    return 8;
   }
-  Initialize() {
-    super.Initialize();
+  CreateView() {
+    return new EnrichmentCollectProductItemView_1.EnrichmentCollectProductItemView(
+      this,
+    );
+  }
+  OnInitialize() {
+    super.OnInitialize();
     var e = this.ServerMarkInfo;
     this.SetTrackData(e.TrackTarget);
-    this.SetConfigId(6), this.UpdateTrackState();
+    this.SetConfigId(6), this.UpdateVisibleRelativeState();
   }
   SetConfigId(e) {
     this.OnSetConfigId(e);

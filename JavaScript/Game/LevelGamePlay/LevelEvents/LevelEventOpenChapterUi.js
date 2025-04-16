@@ -23,7 +23,7 @@ class LevelEventOpenChapterUi extends LevelGeneralBase_1.LevelEventBase {
       e
         ? GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.OpenQuestChapterView(r, e)
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelEvent", 19, "非任务系统不可使用章节提示事件");
+          Log_1.Log.Error("LevelEvent", 18, "非任务系统不可使用章节提示事件");
     }
   }
 }

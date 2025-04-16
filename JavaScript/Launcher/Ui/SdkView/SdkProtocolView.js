@@ -4,11 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SdkProtocolViewLayoutData =
     exports.SdkProtocolView =
       void 0);
-const puerts_1 = require("puerts"),
-  UE = require("ue"),
-  BaseConfigController_1 = require("../../BaseConfig/BaseConfigController"),
+const BaseConfigController_1 = require("../../BaseConfig/BaseConfigController"),
   PlatformSdkConfig_1 = require("../../Platform/PlatformSdk/PlatformSdkConfig"),
   PlatformSdkManagerNew_1 = require("../../Platform/PlatformSdk/PlatformSdkManagerNew"),
+  PlatformSdkReportData_1 = require("../../Platform/PlatformSdk/PlatformSdkReportData"),
   HotFixManager_1 = require("../HotFix/HotFixManager"),
   LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
   LaunchUtil_1 = require("../LaunchUtil");
@@ -18,20 +17,19 @@ class SdkProtocolView extends LaunchComponentsAction_1.LaunchComponentsAction {
       (this.C0t = void 0),
       (this.ts = void 0),
       (this.HGe = void 0),
-      (this.uAa = void 0),
-      (this.cAa = void 0),
-      (this.cxa = void 0),
-      (this.mxa = void 0),
-      (this.dxa = void 0),
-      (this.Cxa = void 0),
+      (this.aRa = void 0),
+      (this.hRa = void 0),
       (this.gxa = void 0),
-      (this.fxa = []),
-      (this.CAa = []),
-      (this.TickManager = void 0),
+      (this.fxa = void 0),
+      (this.pxa = void 0),
+      (this.vxa = void 0),
+      (this.Mxa = void 0),
+      (this.Sxa = []),
+      (this.uRa = []),
       (this.Byr = (t) => {
         this.SetRootActorLaunchComponentsAction(t);
       }),
-      (this.gAa = () => {
+      (this.cRa = () => {
         this.C0t?.EnterCallback?.();
       }),
       (this.eDo = () => {
@@ -47,23 +45,26 @@ class SdkProtocolView extends LaunchComponentsAction_1.LaunchComponentsAction {
       t,
       i,
       this.Byr,
-    ),
-      (this.TickManager = new UE.KuroTickManager(t, "SdkProtocolView"));
+    );
+    t = new PlatformSdkReportData_1.PlatformReportAgreementShow();
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().ReportToThirdParty(
+      t,
+    );
   }
   OnStart() {
     (this.ts = this.GetText(3)),
       (this.HGe = this.GetText(5)),
-      (this.uAa = this.GetButton(0)),
-      (this.cAa = this.GetButton(1)),
-      this.uAa?.OnClickCallBack.Bind(this.gAa),
-      this.cAa?.OnClickCallBack.Bind(this.eDo),
-      (this.cxa = this.GetButton(2)),
-      (this.mxa = this.GetButton(6)),
-      (this.dxa = this.GetButton(7)),
-      (this.Cxa = this.GetButton(8)),
-      (this.gxa = this.GetButton(9)),
-      this.fxa.push(this.cxa, this.mxa, this.dxa, this.Cxa, this.gxa);
-    for (const t of this.fxa) t.RootUIComp.SetUIActive(!1);
+      (this.aRa = this.GetButton(0)),
+      (this.hRa = this.GetButton(1)),
+      this.aRa?.OnClickCallBack.Bind(this.cRa),
+      this.hRa?.OnClickCallBack.Bind(this.eDo),
+      (this.gxa = this.GetButton(2)),
+      (this.fxa = this.GetButton(6)),
+      (this.pxa = this.GetButton(7)),
+      (this.vxa = this.GetButton(8)),
+      (this.Mxa = this.GetButton(9)),
+      this.Sxa.push(this.gxa, this.fxa, this.pxa, this.vxa, this.Mxa);
+    for (const t of this.Sxa) t.RootUIComp.SetUIActive(!1);
     HotFixManager_1.HotFixManager.SetLocalText(
       this.GetText(10),
       "SdkProtocolRefuse",
@@ -82,11 +83,11 @@ class SdkProtocolView extends LaunchComponentsAction_1.LaunchComponentsAction {
       var i = this.C0t.LayoutData.length;
       for (let t = 0; t < i; t++) {
         var o = new ProtocolItem(this),
-          s = this.fxa[t].RootUIComp;
+          s = this.Sxa[t].RootUIComp;
         o.SetActor(s.GetOwner()),
           o.SetActive(!0),
           o.Refresh(this.C0t.LayoutData[t]),
-          this.CAa.push(o);
+          this.uRa.push(o);
       }
     }
   }
@@ -101,7 +102,7 @@ class SdkProtocolView extends LaunchComponentsAction_1.LaunchComponentsAction {
       HotFixManager_1.HotFixManager.SetLocalText(this.ts, this.C0t.DescTextId);
   }
   OnBeforeDestroy() {
-    this.TickManager && (this.TickManager = void 0), (this.CAa.length = 0);
+    this.uRa.length = 0;
   }
 }
 exports.SdkProtocolView = SdkProtocolView;
@@ -151,95 +152,94 @@ class SdkProtocolViewData {
   }
   static CreateViewData(t, i) {
     var o = [];
-    return (
+    if (
       "CN" !==
       BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")
-        ? (o.push(
-            SdkProtocolViewLayoutData.CreateLayoutData(
-              "UserProtocol",
-              "手柄LT",
-              (t) => {
-                this.gka(
-                  t,
-                  PlatformSdkConfig_1.PlatformSdkConfig.GetTermsOfService(),
-                );
-              },
-            ),
+    ) {
+      const s = PlatformSdkConfig_1.PlatformSdkConfig.GetTermsOfService(),
+        r = PlatformSdkConfig_1.PlatformSdkConfig.GetPrivacyPolicy();
+      s &&
+        "" !== s &&
+        o.push(
+          SdkProtocolViewLayoutData.CreateLayoutData(
+            "UserProtocol",
+            "手柄LT",
+            (t) => {
+              this.vFa(t, s);
+            },
           ),
+        ),
+        r &&
+          "" !== r &&
           o.push(
             SdkProtocolViewLayoutData.CreateLayoutData(
               "PrivacyPolicy",
               "手柄RT",
               (t) => {
-                this.gka(
-                  t,
-                  PlatformSdkConfig_1.PlatformSdkConfig.GetPrivacyPolicy(),
-                );
+                this.vFa(t, r);
               },
             ),
-          ))
-        : (o.push(
-            SdkProtocolViewLayoutData.CreateLayoutData(
-              "UserProtocol",
-              "手柄LT",
-              (t) => {
-                this.gka(
-                  t,
-                  PlatformSdkConfig_1.PlatformSdkConfig.GetTermsOfService(),
-                );
-              },
-            ),
+          );
+    } else {
+      const e = PlatformSdkConfig_1.PlatformSdkConfig.GetTermsOfService(),
+        a = PlatformSdkConfig_1.PlatformSdkConfig.GetPrivacyPolicy(),
+        h = PlatformSdkConfig_1.PlatformSdkConfig.GetChildPolicy();
+      e &&
+        "" !== e &&
+        o.push(
+          SdkProtocolViewLayoutData.CreateLayoutData(
+            "UserProtocol",
+            "手柄LT",
+            (t) => {
+              this.vFa(t, e);
+            },
           ),
+        ),
+        a &&
+          "" !== a &&
           o.push(
             SdkProtocolViewLayoutData.CreateLayoutData(
               "PrivacyPolicy",
               "手柄RT",
               (t) => {
-                this.gka(
-                  t,
-                  PlatformSdkConfig_1.PlatformSdkConfig.GetPrivacyPolicy(),
-                );
+                this.vFa(t, a);
               },
             ),
           ),
+        h &&
+          "" !== h &&
           o.push(
             SdkProtocolViewLayoutData.CreateLayoutData(
               "ChildProtocol",
               "手柄右边上键",
               (t) => {
-                this.gka(
-                  t,
-                  PlatformSdkConfig_1.PlatformSdkConfig.GetChildPolicy(),
-                );
+                this.vFa(t, h);
               },
             ),
-          )),
-      SdkProtocolViewData.Create("SdkProtocolTitle", "SdkProtocolDesc", t, i, o)
+          );
+    }
+    return SdkProtocolViewData.Create(
+      "SdkProtocolTitle",
+      "SdkProtocolDesc",
+      t,
+      i,
+      o,
     );
   }
-  static gka(i, t) {
-    if (
-      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.OpenWebBrowser(
-        t,
-      )
-    ) {
-      const o = (t) => {
-        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().PollWebViewClose() &&
-          (i.TickManager.RemoveTick(0),
-          (0, puerts_1.releaseManualReleaseDelegate)(o));
-      };
-      i.TickManager.AddTick(0, (0, puerts_1.toManualReleaseDelegate)(o));
-    }
+  static vFa(t, i) {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.OpenWebView(
+      i,
+    );
   }
-  static Create(t, i, o, s, e) {
-    var r = new SdkProtocolViewData();
+  static Create(t, i, o, s, r) {
+    var e = new SdkProtocolViewData();
     return (
-      (r.TitleId = t),
-      (r.DescTextId = i),
-      (r.EnterCallback = o),
-      (r.CancelCallback = s),
-      (r.LayoutData = e),
-      r
+      (e.TitleId = t),
+      (e.DescTextId = i),
+      (e.EnterCallback = o),
+      (e.CancelCallback = s),
+      (e.LayoutData = r),
+      e
     );
   }
 }

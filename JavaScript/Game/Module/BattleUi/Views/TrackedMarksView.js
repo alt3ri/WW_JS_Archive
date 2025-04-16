@@ -6,6 +6,7 @@ const Stats_1 = require("../../../../Core/Common/Stats"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   MarkItemUtil_1 = require("../../Map/Marks/MarkItemUtil"),
+  MapLogger_1 = require("../../Map/Misc/MapLogger"),
   TowerDefenceController_1 = require("../../TowerDefence/TowerDefenceController"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView"),
   TrackedMark_1 = require("./TrackedMark"),
@@ -15,38 +16,55 @@ class TrackedMarksView extends BattleChildView_1.BattleChildView {
     super(...arguments),
       (this.wmt = new Map()),
       (this.rgt = !1),
-      (this.ngt = (r) => {
-        if (
-          MarkItemUtil_1.MarkItemUtil.IsTrackPointedMarkInCurrentDungeon(
-            r,
-            !0,
-          ) &&
-          !MarkItemUtil_1.MarkItemUtil.IsHideTrackInView(r)
-        ) {
-          let t = this.wmt.get(r.TrackSource);
+      (this.ngt = (i) => {
+        if (MarkItemUtil_1.MarkItemUtil.CanShowTrackMark(i)) {
+          let r = this.wmt.get(i.TrackSource);
           if (
-            (t || ((t = new Map()), this.wmt.set(r.TrackSource, t)),
-            !t.has(r.Id))
+            (r || ((r = new Map()), this.wmt.set(i.TrackSource, r)),
+            !r.has(i.Id))
           ) {
-            let e = void 0;
-            (e = new (
-              TowerDefenceController_1.TowerDefenseController.CheckIsTowerEntity(
-                r,
-              )
-                ? TrackedMarkForTower_1.TrackedMarkForTower
-                : TrackedMark_1.TrackedMark
-            )(r)),
-              t.set(r.Id, e),
-              e.Initialize(this.RootItem);
+            let e = void 0,
+              t =
+                ((e = new (
+                  TowerDefenceController_1.TowerDefenseController.CheckIsTowerEntity(
+                    i,
+                  )
+                    ? TrackedMarkForTower_1.TrackedMarkForTower
+                    : TrackedMark_1.TrackedMark
+                )(i)),
+                r.set(i.Id, e),
+                e.Initialize(this.RootItem),
+                ModelManager_1.ModelManager.BattleUiModel.TrackDatas.get(
+                  i.TrackSource,
+                ));
+            t ||
+              ((t = new Map()),
+              ModelManager_1.ModelManager.BattleUiModel.TrackDatas.set(
+                i.TrackSource,
+                t,
+              )),
+              t.set(i.Id, i);
           }
           this.rgt = !0;
-        }
+        } else
+          MapLogger_1.MapLogger.Debug(
+            63,
+            "标记系统-追踪->TackedMarksView.TrackMark,追踪标记不满足显示条件",
+            ["trackData", i],
+          );
       }),
       (this.sgt = (e) => {
         var t,
           r = this.wmt.get(e.TrackSource);
         r &&
-          ((t = r.get(e.Id)) && (t.Destroy(), r.delete(e.Id)), (this.rgt = !0));
+          ((t = r.get(e.Id)) &&
+            (t.Destroy(),
+            r.delete(e.Id),
+            (t = ModelManager_1.ModelManager.BattleUiModel.TrackDatas.get(
+              e.TrackSource,
+            ))) &&
+            t.delete(e.Id),
+          (this.rgt = !0));
       }),
       (this.agt = (e, t, r) => {
         var e = this.wmt.get(e);
@@ -58,7 +76,13 @@ class TrackedMarksView extends BattleChildView_1.BattleChildView {
       });
   }
   Initialize(e) {
-    super.Initialize(e), this.yWe();
+    if (
+      (super.Initialize(e),
+      this.yWe(),
+      ModelManager_1.ModelManager.BattleUiModel.TrackDatas)
+    )
+      for (var [, t] of ModelManager_1.ModelManager.BattleUiModel.TrackDatas)
+        for (var [, r] of t) this.ngt(r);
   }
   Reset() {
     super.Reset(), this.Nmt();
@@ -72,21 +96,21 @@ class TrackedMarksView extends BattleChildView_1.BattleChildView {
     TrackedMarksView.Ult.Start(),
       ModelManager_1.ModelManager.TrackModel.ClearGroupMinDistance();
     for (const i of this.wmt.values())
-      for (const s of i.values()) s.UpdateTrackDistance();
+      for (const a of i.values()) a.UpdateTrackDistance();
     TrackedMarksView.Ult.Stop();
     for (var [t, r] of this.wmt)
-      for (const n of r.values())
+      for (const s of r.values())
         this.rgt &&
-          (this.IsTrackTargetRepeat(n, t)
-            ? (n.ShouldShowTrackMark = !1)
-            : (n.ShouldShowTrackMark = !0)),
-          n.Update(e);
+          (this.IsTrackTargetRepeat(s, t)
+            ? (s.ShouldShowTrackMark = !1)
+            : (s.ShouldShowTrackMark = !0)),
+          s.Update(e);
     this.rgt = !1;
   }
   IsTrackTargetRepeat(e, t) {
     for (var [r, i] of this.wmt)
-      for (const s of i.values())
-        if (e.TrackTarget === s.TrackTarget && t < r) return !0;
+      for (const a of i.values())
+        if (e.TrackTarget === a.TrackTarget && t < r) return !0;
     return !1;
   }
   OnHideBattleChildViewPanel() {

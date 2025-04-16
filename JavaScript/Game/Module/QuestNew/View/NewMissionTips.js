@@ -36,18 +36,19 @@ class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
           ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(
             e.QuestMarkId,
           ) ?? ""),
-        (this.uno = e.QuestNameTid),
+        (this.uno = e.NameKey),
         (this.mNe =
           ConfigManager_1.ConfigManager.QuestNewConfig.GetNewTipsShowTime(
             e.Type,
           ) ?? 0))
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "Quest",
-          19,
-          "Quest:NewMissionTips.OnBeforeCreate 找不到任务",
-          ["questId", i],
-        );
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Quest",
+            18,
+            "Quest:NewMissionTips.OnBeforeCreate 找不到任务",
+            ["questId", i],
+          ),
+        this.CloseMe());
   }
   OnStart() {
     super.OnStart();

@@ -9,12 +9,12 @@ class ActivityButtonItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.l4e = void 0),
-      (this.w4a = 0),
-      (this.$$a = new Set()),
+      (this.c8a = 0),
+      (this.UJa = new Set()),
       (this.Gke = void 0),
       (this.ije = () => {
         this.Gke?.();
-        for (const t of this.$$a) t();
+        for (const t of this.UJa) t();
       });
   }
   OnRegisterComponent() {
@@ -26,7 +26,11 @@ class ActivityButtonItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.ije]]);
   }
   OnBeforeDestroy() {
-    (this.Gke = void 0), this.$$a.clear(), this.UnBindGivenUid(this.w4a);
+    (this.Gke = void 0), this.UJa.clear(), this.UnBindGivenUid(this.c8a);
+  }
+  GetGuideUiItemAndUiItemForShowEx(t) {
+    var i = this.GetButton(0)?.RootUIComp;
+    if (void 0 !== i) return [i, i];
   }
   SetButtonAllowEventBubbleUp(t) {
     this.GetButton(0).AllowEventBubbleUp = t;
@@ -48,10 +52,10 @@ class ActivityButtonItem extends UiPanelBase_1.UiPanelBase {
     this.Gke = t;
   }
   SetExtraFunction(t) {
-    this.$$a.add(t);
+    this.UJa.add(t);
   }
   DeleteExtraFunction(t) {
-    this.$$a.delete(t);
+    this.UJa.delete(t);
   }
   SetRedDotVisible(t) {
     this.GetItem(2).SetUIActive(t);
@@ -59,7 +63,7 @@ class ActivityButtonItem extends UiPanelBase_1.UiPanelBase {
   BindRedDot(t, i = 0) {
     var e = this.GetItem(2);
     e &&
-      ((this.l4e = t), (this.w4a = i), this.l4e) &&
+      ((this.l4e = t), (this.c8a = i), this.l4e) &&
       RedDotController_1.RedDotController.BindRedDot(t, e, void 0, i);
   }
   UnBindGivenUid(t) {
@@ -70,13 +74,13 @@ class ActivityButtonItem extends UiPanelBase_1.UiPanelBase {
         t,
       ),
       (this.l4e = void 0),
-      (this.w4a = 0));
+      (this.c8a = 0));
   }
   UnBindRedDot() {
     this.l4e &&
       (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
       (this.l4e = void 0),
-      (this.w4a = 0));
+      (this.c8a = 0));
   }
 }
 exports.ActivityButtonItem = ActivityButtonItem;

@@ -16,13 +16,13 @@ class CharGrassInteraction extends CharRenderBase_1.CharRenderBase {
       (this.OwnerCapsule = void 0),
       (this.OwnerSkeletal = void 0),
       (this.BaseBias = void 0),
-      (this.oFa = 0),
-      (this.nFa = !1),
+      (this.M4a = 0),
+      (this.S4a = !1),
       (this.InteractionDefaultRadius = 70),
       (this.InteractionDefaultBias = new UE.Vector(0, 0, 70));
   }
-  sFa() {
-    return this.OwnerSkeletal.GetSocketTransform(refBoneName, 2).GetLocation()
+  E4a() {
+    return this.OwnerSkeletal.D_GetSocketTransform(refBoneName, 2).GetLocation()
       .Z;
   }
   SetEnabled(t) {
@@ -37,9 +37,9 @@ class CharGrassInteraction extends CharRenderBase_1.CharRenderBase {
       ((s = t.植被交互半径),
       (i = t.植被交互相对位置),
       (t = t.启用植被交互),
-      this.LDa(s, i, t));
+      this.UDa(s, i, t));
   }
-  LDa(t, s, i) {
+  UDa(t, s, i) {
     if (!this.IsOnMobile) {
       const e = this.RenderComponent.GetCachedOwner();
       if (
@@ -51,7 +51,7 @@ class CharGrassInteraction extends CharRenderBase_1.CharRenderBase {
       ) {
         if (
           (-1 !== this.OwnerSkeletal.GetBoneIndex(refBoneName) &&
-            ((this.oFa = this.sFa()), (this.nFa = !0)),
+            ((this.M4a = this.E4a()), (this.S4a = !0)),
           (this.BaseBias = new UE.Vector(
             s.X,
             s.Y,
@@ -82,7 +82,7 @@ class CharGrassInteraction extends CharRenderBase_1.CharRenderBase {
       this.IsOnMobile ||
         (this.RenderComponent.InteractionConfig
           ? this.SetConfig(this.RenderComponent.InteractionConfig)
-          : this.LDa(
+          : this.UDa(
               this.InteractionDefaultRadius,
               this.InteractionDefaultBias,
               !0,
@@ -93,17 +93,22 @@ class CharGrassInteraction extends CharRenderBase_1.CharRenderBase {
     var t;
     !this.IsOnMobile &&
       this.GrassInteractionComponent &&
-      this.nFa &&
-      ((t = this.sFa()),
-      (this.oFa = 0.9 * this.oFa + 0.1 * t),
-      (t = t - this.oFa),
+      this.S4a &&
+      ((t = this.E4a()),
+      (this.M4a = 0.9 * this.M4a + 0.1 * t),
+      (t = t - this.M4a),
       (t = Math.max(-10, t)),
-      (t = new UE.Vector(
+      (t = new UE.VectorDouble(
         this.BaseBias.X,
         this.BaseBias.Y,
         this.BaseBias.Z + 3 * t,
       )),
-      this.GrassInteractionComponent.K2_SetRelativeLocation(t, !1, void 0, !1));
+      this.GrassInteractionComponent.D_K2_SetRelativeLocation(
+        t,
+        !1,
+        void 0,
+        !1,
+      ));
   }
   Destroy() {
     this.GrassInteractionComponent &&

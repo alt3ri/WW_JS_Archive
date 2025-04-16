@@ -3,23 +3,24 @@ var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, s) {
     var o,
-      n = arguments.length,
-      r =
-        n < 3
+      h = arguments.length,
+      n =
+        h < 3
           ? t
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(t, i))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(e, t, i, s);
+      n = Reflect.decorate(e, t, i, s);
     else
-      for (var h = e.length - 1; 0 <= h; h--)
-        (o = e[h]) && (r = (n < 3 ? o(r) : 3 < n ? o(t, i, r) : o(t, i)) || r);
-    return 3 < n && r && Object.defineProperty(t, i, r), r;
+      for (var r = e.length - 1; 0 <= r; r--)
+        (o = e[r]) && (n = (h < 3 ? o(n) : 3 < h ? o(t, i, n) : o(t, i)) || n);
+    return 3 < h && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelActorComponent = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
@@ -38,6 +39,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
       (this.ChildMeshComponentList = void 0),
       (this.CharRenderingComponent = void 0),
       (this.ywr = void 0),
+      (this.D_r = void 0),
       (this.Iwr = void 0),
       (this.Twr = (e) => {
         var t;
@@ -57,11 +59,16 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
   }
   OnInit() {
     switch (
-      ((this.ywr = this.Owner.CheckGetComponent(0)), this.ywr.ModelActorType)
+      ((this.ywr = this.Owner.CheckGetComponent(0)),
+      (this.D_r = this.Owner.GetComponent(4)),
+      this.ywr.ModelActorType)
     ) {
       case 1:
       case 0:
-        this.CharRenderingComponent = this.Rwr();
+        this.CharRenderingComponent = this.Rwr(5);
+        break;
+      case 2:
+        this.CharRenderingComponent = this.Rwr(7);
     }
   }
   OnStart() {
@@ -97,19 +104,20 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
     );
     return (
       e.SetTickableWhenPaused(!0),
-      e.SetForcedLOD(1),
       this.Lwr(e, this.ywr.GetVisible()),
+      Info_1.Info.IsPlayInEditor &&
+        UE.LGUIBPLibrary.AddInstanceComponent(this.Actor, e),
       e
     );
   }
-  Rwr() {
-    var e = this.Actor.AddComponentByClass(
+  Rwr(e) {
+    var t = this.Actor.AddComponentByClass(
       UE.CharRenderingComponent_C.StaticClass(),
       !1,
       MathUtils_1.MathUtils.DefaultTransform,
       !1,
     );
-    return e.Init(5), e.SetTickableWhenPaused(!0), e;
+    return t.Init(e), t.SetTickableWhenPaused(!0), t;
   }
   Awr() {
     switch (this.ywr.ModelType) {
@@ -131,55 +139,83 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
           "HuluCase",
           this.MainMeshComponent,
         );
+        break;
+      case 4:
+        this.CharRenderingComponent.AddComponent(
+          "CharacterMesh0",
+          this.MainMeshComponent,
+        );
+        break;
+      case 5:
+        this.CharRenderingComponent.AddComponentByCase(
+          7,
+          this.MainMeshComponent,
+        );
     }
   }
-  ChangeMesh(e, t, i) {
+  ChangeMesh(e, t, i, s = 0) {
     switch (this.ywr.ModelType) {
       case 0:
-        this.Pwr(e, t, i);
+        this.Pwr(e, t, i, s);
+        break;
+      case 2:
+        this.xwr(e, t, i, s);
         break;
       case 1:
-      case 2:
       case 3:
-        this.xwr(e, t);
+      case 4:
+      case 5:
+        this.xwr(e, t, void 0, s);
     }
   }
-  xwr(e, t) {
-    this.CharRenderingComponent.ResetAllRenderingState(), this.wwr();
-    var i = this.MainMeshComponent,
-      s = i?.GetAnimInstance(),
-      s = (s && UE.KuroAnimLibrary.EndAnimNotifyStates(s), this.Uwr());
-    s?.SetSkeletalMesh(e),
-      s?.SetAnimClass(t),
-      (this.MainMeshComponent = s),
-      i && this.Bwr(i),
-      this.Awr();
+  xwr(e, t, i, s = 0) {
+    this.CharRenderingComponent?.ResetAllRenderingState(),
+      this.wwr(),
+      this.D_r?.DestroyAllEffect();
+    var o = this.MainMeshComponent,
+      h = o?.GetAnimInstance(),
+      h = (h && UE.KuroAnimLibrary.EndAnimNotifyStates(h), this.Uwr());
+    if (
+      (this.WR1(h, e, s),
+      h?.SetAnimClass(t),
+      (this.MainMeshComponent = h),
+      o && this.Bwr(o),
+      i && 0 < i.length)
+    )
+      for (const n of i) this.bwr(n);
+    this.Awr();
   }
-  Pwr(i, s, e) {
+  WR1(e, t, i = 0) {
+    e.SetSkeletalMesh(t), e.SetForcedLOD(i);
+  }
+  Pwr(i, e, s, o = 0) {
     if (0 !== this.ywr?.ModelActorType)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Character", 44, "actor类型必须为TsUiSceneRoleActor");
+        Log_1.Log.Error("Character", 43, "actor类型必须为TsUiSceneRoleActor");
     else {
-      this.CharRenderingComponent.ResetAllRenderingState(), this.wwr();
-      var o = this.MainMeshComponent;
+      this.CharRenderingComponent.ResetAllRenderingState(),
+        this.wwr(),
+        this.D_r?.DestroyAllEffect();
+      var h = this.MainMeshComponent;
       let t = void 0;
-      o &&
-        (t = this.GetAnimInstanceFromSkeletalMesh(o)) &&
+      h &&
+        0 === h.GetAnimationMode() &&
+        (t = this.GetAnimInstanceFromSkeletalMesh(h)) &&
         UE.KuroAnimLibrary.EndAnimNotifyStates(t);
       var n = this.Uwr(),
         i =
-          (n?.SetSkeletalMesh(i),
-          n?.SetAnimClass(s),
+          (this.WR1(n, i, o),
+          n?.SetAnimClass(e),
           this.GetAnimInstanceFromSkeletalMesh(n));
       if (t) {
         let e = !1;
-        s = t.StateInternal;
-        (e = s && ((13 <= s && s <= 15) || 7 === s) ? !0 : e) &&
+        o = t.StateInternal;
+        (e = o && ((13 <= o && o <= 15) || 7 === o) ? !0 : e) &&
           i &&
           i.SyncAnimInstance(t);
       }
-      if (((this.MainMeshComponent = n), o && this.Bwr(o), e && 0 < e.length))
-        for (const r of e) this.bwr(r);
+      if (((this.MainMeshComponent = n), h && this.Bwr(h), s && 0 < s.length))
+        for (const r of s) this.bwr(r);
       this.Awr();
     }
   }
@@ -187,7 +223,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
     this.ChildMeshComponentList || (this.ChildMeshComponentList = []);
     var t = this.Uwr(),
       e =
-        (t.SetSkeletalMesh(e),
+        (this.WR1(t, e),
         t.SetMasterPoseComponent(this.MainMeshComponent),
         this.ChildMeshComponentList.push(t),
         this.ChildMeshComponentList.length - 1);
@@ -200,7 +236,9 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
     }
   }
   Bwr(e) {
-    e.K2_DestroyComponent(this.Actor);
+    e.K2_DestroyComponent(this.Actor),
+      Info_1.Info.IsPlayInEditor &&
+        UE.LGUIBPLibrary.RemoveInstanceComponent(this.Actor, e);
   }
   SetTransformByTag(e) {
     var t = UE.KuroCollectActorComponent.GetActorWithTag(
@@ -208,12 +246,20 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
       1,
     );
     t
-      ? this.Actor.K2_SetActorTransform(t.GetTransform(), !1, void 0, !1)
+      ? this.Actor.D_K2_SetActorTransform(t.D_GetTransform(), !1, void 0, !1)
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiSceneRoleActor", 44, "查找不到标签对象", [
+        Log_1.Log.Error("UiSceneRoleActor", 43, "查找不到标签对象", [
           "标签Tag",
           e,
         ]);
+  }
+  SetAllMeshComponentRelativeTransform(e, t = !1, i, s = !1) {
+    if (
+      (this.MainMeshComponent?.K2_SetRelativeTransform(e, t, i, s),
+      this.ChildMeshComponentList && 0 !== this.ChildMeshComponentList.length)
+    )
+      for (const o of this.ChildMeshComponentList)
+        o.K2_SetRelativeTransform(e, t, i, s);
   }
   GetAnimInstanceFromSkeletalMesh(e) {
     var t = e.GetAnimInstance();
@@ -236,7 +282,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
                 Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "UiComponent",
-                  44,
+                  43,
                   "Ui场景以下网格体动画蓝图 LinkedAnimGraph节点父类配置错误，应该为ABP_Performance_{角色}",
                   ["Mesh:", e.SkeletalMesh.GetName()],
                 )
@@ -244,7 +290,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiComponent",
-            44,
+            43,
             "Ui场景 基本路径网格体动画蓝图错误",
             [
               "现错误Path:",
@@ -255,7 +301,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiComponent",
-            44,
+            43,
             "Ui场景以下网格体动画状态机ABP_Performance_{角色}_PC需要重新生成",
             ["Mesh:", e.SkeletalMesh.GetName()],
           );
@@ -263,7 +309,7 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiComponent",
-          44,
+          43,
           "Ui场景以下网格体AnimInstance获取失败",
           ["Mesh:", e.SkeletalMesh?.GetName()],
         );
@@ -273,6 +319,15 @@ let UiModelActorComponent = class UiModelActorComponent extends UiModelComponent
   }
   GetActor() {
     return this.Actor;
+  }
+  GetDangoAnimInstanceFromSkeletalMesh(e) {
+    var t = e.GetAnimInstance();
+    if (t) return t;
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("UiComponent", 58, "Ui团子获取网格体AnimInstance失败", [
+        "Mesh:",
+        e.SkeletalMesh?.GetName(),
+      ]);
   }
 };
 (UiModelActorComponent = __decorate(

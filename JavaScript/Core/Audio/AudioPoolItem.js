@@ -26,7 +26,7 @@ class AudioPoolItem {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
-          22,
+          21,
           "没有找到对应paramFlag的回调注册！",
           ["callbackFlag", t],
           ["Path", this.n8],
@@ -44,7 +44,7 @@ class AudioPoolItem {
     this.AudioEvent
       ? (this.AudioEvent = void 0)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Audio", 22, "Destroy 没有找到对应AudioEvent对象！", [
+        Log_1.Log.Warn("Audio", 21, "Destroy 没有找到对应AudioEvent对象！", [
           "Path",
           this.n8,
         ]);
@@ -63,13 +63,13 @@ class ExternalSourcesPoolItem {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Audio",
-            22,
+            21,
             "ExternalSources资源存在，现在进行销毁",
             ["Path", t],
           ),
         (this.s8 = void 0))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Audio", 22, "ExternalSources资源已经不存在", [
+        Log_1.Log.Debug("Audio", 21, "ExternalSources资源已经不存在", [
           "Path",
           t,
         ]);

@@ -8,64 +8,62 @@ const UE = require("ue"),
   CharBodyEffect_1 = require("../Character/Components/Components/CharBodyEffect"),
   CharDecalShadow_1 = require("../Character/Components/Components/CharDecalShadow"),
   CharDitherEffect_1 = require("../Character/Components/Components/CharDitherEffect"),
+  CharEnviInteractionEffect_1 = require("../Character/Components/Components/CharEnviInteractionEffect"),
   CharGrassInteraction_1 = require("../Character/Components/Components/CharGrassInteraction"),
-  CharNpcDitherEffect_1 = require("../Character/Components/Components/CharNpcDitherEffect"),
+  CharMaterialContainerV2_1 = require("../Character/Components/Components/CharMaterialContainerV2"),
+  CharMaterialControllerV2_1 = require("../Character/Components/Components/CharMaterialControllerV2"),
   CharPropertyModifier_1 = require("../Character/Components/Components/CharPropertyModifier"),
   CharSceneInteraction_1 = require("../Character/Components/Components/CharSceneInteraction"),
   CharMaterialContainer_1 = require("../Character/Components/MaterialContainer/CharMaterialContainer"),
   CharMaterialController_1 = require("../Character/Components/MaterialController/CharMaterialController");
 class RenderUtil {
-  static GetRenderComps(e) {
-    var r = new Array();
-    switch (e) {
+  static GetRenderComps(e, r) {
+    var a = new Array();
+    switch (
+      (r
+        ? (a.push(new CharMaterialControllerV2_1.CharMaterialControllerV2()),
+          a.push(new CharMaterialContainerV2_1.CharMaterialContainerV2()))
+        : (a.push(new CharMaterialController_1.CharMaterialController()),
+          a.push(new CharMaterialContainer_1.CharMaterialContainer())),
+      e)
+    ) {
       case 0:
       case 1:
-        r.push(new CharMaterialController_1.CharMaterialController()),
-          r.push(new CharMaterialContainer_1.CharMaterialContainer()),
-          r.push(new CharDitherEffect_1.CharDitherEffect()),
-          r.push(new CharSceneInteraction_1.CharSceneInteraction()),
-          r.push(new CharPropertyModifier_1.CharPropertyModifier()),
-          r.push(new CharBodyEffect_1.CharBodyEffect()),
-          r.push(new CharDecalShadow_1.CharDecalShadow()),
-          r.push(new CharGrassInteraction_1.CharGrassInteraction());
+        a.push(new CharDitherEffect_1.CharDitherEffect()),
+          a.push(new CharSceneInteraction_1.CharSceneInteraction()),
+          a.push(new CharPropertyModifier_1.CharPropertyModifier()),
+          a.push(new CharBodyEffect_1.CharBodyEffect()),
+          a.push(new CharDecalShadow_1.CharDecalShadow()),
+          a.push(new CharGrassInteraction_1.CharGrassInteraction()),
+          a.push(new CharEnviInteractionEffect_1.CharEnviInteractionEffect());
         break;
       case 3:
-        r.push(new CharDitherEffect_1.CharDitherEffect()),
-          r.push(new CharNpcDitherEffect_1.CharNpcDitherEffect()),
-          r.push(new CharDecalShadow_1.CharDecalShadow()),
-          r.push(new CharGrassInteraction_1.CharGrassInteraction());
+        a.push(new CharDitherEffect_1.CharDitherEffect()),
+          a.push(new CharDecalShadow_1.CharDecalShadow()),
+          a.push(new CharGrassInteraction_1.CharGrassInteraction());
         break;
       case 2:
-        r.push(new CharMaterialController_1.CharMaterialController()),
-          r.push(new CharMaterialContainer_1.CharMaterialContainer()),
-          r.push(new CharDitherEffect_1.CharDitherEffect()),
-          r.push(new CharSceneInteraction_1.CharSceneInteraction()),
-          r.push(new CharPropertyModifier_1.CharPropertyModifier()),
-          r.push(new CharDecalShadow_1.CharDecalShadow()),
-          r.push(new CharGrassInteraction_1.CharGrassInteraction());
+        a.push(new CharDitherEffect_1.CharDitherEffect()),
+          a.push(new CharSceneInteraction_1.CharSceneInteraction()),
+          a.push(new CharPropertyModifier_1.CharPropertyModifier()),
+          a.push(new CharDecalShadow_1.CharDecalShadow()),
+          a.push(new CharGrassInteraction_1.CharGrassInteraction());
         break;
       case 4:
-        r.push(new CharMaterialController_1.CharMaterialController()),
-          r.push(new CharMaterialContainer_1.CharMaterialContainer()),
-          r.push(new CharDitherEffect_1.CharDitherEffect()),
-          r.push(new CharSceneInteraction_1.CharSceneInteraction()),
-          r.push(new CharDecalShadow_1.CharDecalShadow());
+        a.push(new CharDitherEffect_1.CharDitherEffect()),
+          a.push(new CharSceneInteraction_1.CharSceneInteraction()),
+          a.push(new CharDecalShadow_1.CharDecalShadow());
         break;
       case 5:
-        r.push(new CharMaterialController_1.CharMaterialController()),
-          r.push(new CharMaterialContainer_1.CharMaterialContainer()),
-          r.push(new CharDitherEffect_1.CharDitherEffect());
+        a.push(new CharDitherEffect_1.CharDitherEffect());
         break;
       case 6:
-        r.push(new CharMaterialController_1.CharMaterialController()),
-          r.push(new CharMaterialContainer_1.CharMaterialContainer());
         break;
+      case 8:
       case 7:
-        r.push(new CharMaterialController_1.CharMaterialController()),
-          r.push(new CharMaterialContainer_1.CharMaterialContainer()),
-          r.push(new CharDitherEffect_1.CharDitherEffect());
+        a.push(new CharDitherEffect_1.CharDitherEffect());
     }
-    return r;
+    return a;
   }
   static GetFloat(e, r) {
     return UE.KuroCurveLibrary.GetValue_Float(e, r);
@@ -207,39 +205,52 @@ class RenderUtil {
   static BeginPSOSyncMode() {
     GlobalData_1.GlobalData.World &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderUtil", 47, "Begin pso sync mode"),
-      1 == Info_1.Info.PlatformType
-        ? ((RenderUtil.CCa = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
-            "r.PSO.CompilationMode",
-          )),
-          UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "r.PSO.CompilationMode 1",
-          ))
-        : 2 == Info_1.Info.PlatformType &&
-          ((RenderUtil.CCa = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+        Log_1.Log.Info("RenderUtil", 46, "Begin pso sync mode"),
+      (RenderUtil.Sel = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+        "r.PSO.CompilationMode",
+      )),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.PSO.CompilationMode 1",
+      ),
+      2 === Info_1.Info.PlatformType
+        ? ((RenderUtil.qVc = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
             "r.OpenGL.ProgramBinarySyncCreate",
           )),
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.OpenGL.ProgramBinarySyncCreate 1",
+          ))
+        : 3 === Info_1.Info.PlatformType &&
+          ((RenderUtil.yh_ = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+            "r.DX11AsyncCompileShader",
+          )),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.DX11AsyncCompileShader 1",
           )));
   }
   static EndPSOSyncMode() {
     GlobalData_1.GlobalData.World &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderUtil", 47, "End pso sync mode"),
-      1 == Info_1.Info.PlatformType
+        Log_1.Log.Info("RenderUtil", 46, "End pso sync mode"),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.PSO.CompilationMode " + RenderUtil.Sel,
+      ),
+      2 === Info_1.Info.PlatformType
         ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.PSO.CompilationMode " + RenderUtil.CCa,
+            "r.OpenGL.ProgramBinarySyncCreate " + RenderUtil.qVc,
           )
-        : 2 == Info_1.Info.PlatformType &&
+        : 3 === Info_1.Info.PlatformType &&
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.OpenGL.ProgramBinarySyncCreate " + RenderUtil.CCa,
+            "r.DX11AsyncCompileShader " + RenderUtil.yh_,
           ));
   }
 }
-(exports.RenderUtil = RenderUtil).CCa = 0;
+((exports.RenderUtil = RenderUtil).Sel = 0),
+  (RenderUtil.qVc = 0),
+  (RenderUtil.yh_ = 0);
 //# sourceMappingURL=RenderUtil.js.map

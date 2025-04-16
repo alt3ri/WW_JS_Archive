@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayBubble = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager"),
+const ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   CharacterFlowComponent_1 = require("../../NewWorld/Character/Common/Component/Flow/CharacterFlowComponent"),
   DynamicFlowController_1 = require("../../NewWorld/Character/Common/Component/Flow/DynamicFlowController"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
@@ -11,7 +12,9 @@ class LevelEventPlayBubble extends LevelGeneralBase_1.LevelEventBase {
     e
       ? ((a = e.EntityId),
         (e = this.BTe(a, e.Flow)),
-        DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(e),
+        ControllerHolder_1.ControllerHolder.DynamicFlowController.AddDynamicFlow(
+          e,
+        ),
         6 === r?.Type &&
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
             r.TreeIncId,

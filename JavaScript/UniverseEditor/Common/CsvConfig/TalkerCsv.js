@@ -9,7 +9,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       Type: "Int",
       Filter: "1",
       Condition: "notEmpty && unique",
-      RenderType: 18,
+      RenderType: 19,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "NameStringKey",
@@ -58,7 +58,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       CnName: "音色Id",
       Type: "Int",
       Default: "0",
-      RenderType: 49,
+      RenderType: 50,
     }),
   ];
 class TalkerCsvLoader extends CsvLoader_1.CsvLoader {

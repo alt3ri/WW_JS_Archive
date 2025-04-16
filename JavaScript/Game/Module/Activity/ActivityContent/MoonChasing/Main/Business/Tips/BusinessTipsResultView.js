@@ -30,7 +30,7 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
           this.GetItem(6)?.SetUIActive(!0),
           this.VAn("working", 0.1),
           AudioSystem_1.AudioSystem.PostEvent("play_ui_zuiyuejie_loading"),
-          this.kwa(),
+          this.tBa(),
           this.PlaySequenceAsync("Run").finally(() => {
             this.GetButton(5)?.RootUIComp.SetUIActive(!0), this.HAn();
           });
@@ -50,7 +50,7 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[5, this.t2e]]);
   }
   async OnBeforeStartAsync() {
-    await Promise.all([this.Zke(), this.UAr(), this.AAr(), this.Nwa()]),
+    await Promise.all([this.Zke(), this.UAr(), this.AAr(), this.iBa()]),
       this.jta(),
       this.GetButton(5)?.RootUIComp.SetUIActive(!1),
       this.GetItem(6)?.SetUIActive(!1);
@@ -83,7 +83,7 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
     ),
       this.GetSpine(0).SetAnimation(0, "idle", !0);
   }
-  async Nwa() {
+  async iBa() {
     (this.CurrencyItem =
       new BusinessTipsCurrencyItem_1.BusinessTipsCurrencyItem()),
       await this.CurrencyItem.CreateThenShowByActorAsync(
@@ -148,7 +148,7 @@ class BusinessTipsResultView extends UiViewBase_1.UiViewBase {
   VAn(e, i) {
     this.GetSpine(0).SetAnimation(0, e, !0)?.SetMixDuration(i);
   }
-  kwa() {
+  tBa() {
     var e =
         ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData(),
       i = e.OriginGold - e.CostGold;

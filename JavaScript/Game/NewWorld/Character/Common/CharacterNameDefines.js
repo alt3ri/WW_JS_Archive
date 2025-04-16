@@ -41,6 +41,9 @@ class CharacterNameDefines {}
   (CharacterNameDefines.PARAGLIDING_MESH_COMP_NAME = new UE.FName(
     "OtherCase0",
   )),
+  (CharacterNameDefines.SOAR_WING_MESH_COMP_NAME = new UE.FName(
+    "GenericCase0",
+  )),
   (CharacterNameDefines.KEEP_WEAPON_OUT_NAME = new UE.FName("KeepWeaponOut")),
   (CharacterNameDefines.PFT_NO_SPAWN = new UE.FName("PFT_NoSpawn")),
   (CharacterNameDefines.START_SECTION = new UE.FName("Start")),
@@ -55,6 +58,9 @@ class CharacterNameDefines {}
   (CharacterNameDefines.HULU_CASE = new UE.FName("HuluCase")),
   (CharacterNameDefines.HULU_PROP_01 = new UE.FName("HuluProp01")),
   (CharacterNameDefines.HIT_CASE_NAME = new UE.FName("HitCase")),
+  (CharacterNameDefines.ANIM_INSTANCE_ROLE = new UE.FName(
+    "KuroAnimInstanceRole",
+  )),
   (CharacterNameDefines.ABP_BASEROLE = new UE.FName("ABP_BaseRole_C")),
   (CharacterNameDefines.ABP_BASEROLENPC = new UE.FName("ABP_BaseRoleNpc_C")),
   (CharacterNameDefines.ABP_MONSTERCOMMON = new UE.FName(

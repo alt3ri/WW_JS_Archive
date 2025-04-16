@@ -56,7 +56,7 @@ let SceneItemBuffProducerComponent =
         (this.b1n = !0),
         (this.$Br = !1),
         (this._Mr = !1),
-        (this.eHr = BigInt(0)),
+        (this.eHr = 0),
         (this.Lo = void 0),
         (this.JUn = void 0),
         (this.gdn = (t) => {
@@ -97,12 +97,12 @@ let SceneItemBuffProducerComponent =
         }),
         (this._dn = () => {
           EventSystem_1.EventSystem.HasWithTarget(
-            this,
+            this.vdn,
             EventDefine_1.EEventName.BulletHit,
             this.sjo,
           ) &&
             EventSystem_1.EventSystem.RemoveWithTarget(
-              this,
+              this.vdn,
               EventDefine_1.EEventName.BulletHit,
               this.sjo,
             ),
@@ -113,9 +113,7 @@ let SceneItemBuffProducerComponent =
     }
     OnInitData(t) {
       var e = t.GetParam(SceneItemBuffProducerComponent_1)[0];
-      switch (
-        ((this.Lo = e), (this.eHr = BigInt(e.BuffId)), e.AddBuffMode.Type)
-      ) {
+      switch (((this.Lo = e), (this.eHr = e.BuffId), e.AddBuffMode.Type)) {
         case "Adsorb":
           (this.fgt = Vector_1.Vector.Create()),
             (this.LHo = Vector_1.Vector.Create());
@@ -135,12 +133,12 @@ let SceneItemBuffProducerComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Hte = this.Entity.GetComponent(200)),
         this.Hte
           ? ((this.Mne = this.Hte.CreatureData.GetPbDataId()),
-            (this.wsn = this.Entity.GetComponent(181)),
+            (this.wsn = this.Entity.GetComponent(194)),
             this.wsn
-              ? ((this.mBe = this.Entity.GetComponent(120)),
+              ? ((this.mBe = this.Entity.GetComponent(131)),
                 this.mBe
                   ? ((this.b1n = !0),
                     (this._Mr = !0),
@@ -148,7 +146,7 @@ let SceneItemBuffProducerComponent =
                     ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
                       ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
                       ? !(this._Mr = !1)
-                      : ((this.vtn = this.Entity.GetComponent(77)),
+                      : ((this.vtn = this.Entity.GetComponent(84)),
                         this.vtn &&
                           ((this.b1n = !1),
                           this.vtn.AddOnPlayerOverlapCallback(this.gdn)),
@@ -158,7 +156,7 @@ let SceneItemBuffProducerComponent =
                   : (Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "SceneGameplay",
-                        40,
+                        39,
                         "[BuffProducerComp] 组件初始化失败 实体缺少SceneItemStateComponent",
                         [
                           "CreatureDataId",
@@ -171,7 +169,7 @@ let SceneItemBuffProducerComponent =
               : (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "SceneGameplay",
-                    30,
+                    29,
                     "[BuffProducerComp] 组件初始化失败 实体缺少LevelTagComponent",
                     [
                       "CreatureDataId",
@@ -184,7 +182,7 @@ let SceneItemBuffProducerComponent =
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneGameplay",
-                30,
+                29,
                 "[BuffProducerComp] 组件初始化失败 Actor Component Undefined",
               ),
             !1)
@@ -242,10 +240,10 @@ let SceneItemBuffProducerComponent =
       var t = Global_1.Global.BaseCharacter;
       if (!t) return !1;
       var t = t.CharacterActorComponent.Entity,
-        e = t.CheckGetComponent(160);
+        e = t.CheckGetComponent(172);
       if (!e) return !1;
       let i = 0 < e.GetBuffTotalStackById(this.eHr);
-      e = t.CheckGetComponent(175);
+      e = t.CheckGetComponent(188);
       return (
         e &&
           (i ||=
@@ -304,13 +302,13 @@ let SceneItemBuffProducerComponent =
         (e = Global_1.Global.BaseCharacter) &&
         ((e = e.CharacterActorComponent),
         (i = this.Hte.ActorTransform),
-        (s = new UE.Transform(
+        (s = new UE.TransformDouble(
           i.GetRotation(),
           i.GetTranslation(),
           i.GetScale3D(),
         )),
         (h = Vector_1.Vector.Create()).DeepCopy(
-          i.GetRotation().RotateVector(this.pdn.ToUeVector()),
+          i.GetRotation().RotateVectorDouble(this.pdn.ToUeVector()),
         ),
         s.AddToTranslation(h.ToUeVector()),
         (this.vdn =
@@ -335,7 +333,7 @@ let SceneItemBuffProducerComponent =
   });
 (SceneItemBuffProducerComponent = SceneItemBuffProducerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(132)],
+    [(0, RegisterComponent_1.RegisterComponent)(143)],
     SceneItemBuffProducerComponent,
   )),
   (exports.SceneItemBuffProducerComponent = SceneItemBuffProducerComponent);

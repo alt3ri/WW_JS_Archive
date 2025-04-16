@@ -58,31 +58,31 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
           if (this.$oo) {
             i = this.zoo.get(this.$oo);
             if (i) {
-              var o,
-                n,
-                s =
+              var n,
+                s,
+                o =
                   Global_1.Global.BaseCharacter?.CharacterActorComponent
                     ?.ActorLocationProxy;
               let e = MathUtils_1.MathUtils.MaxFloat,
                 t = -1;
-              for ([o, n] of i) {
-                if (!n.SplinePoints)
+              for ([n, s] of i) {
+                if (!s.SplinePoints)
                   return void (
                     Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Guide",
-                      32,
+                      31,
                       "当前追踪任务Spline未找到",
                       ["TrackQuestId:", this.$oo],
-                      ["SplineId", o],
+                      ["SplineId", n],
                     )
                   );
-                var [r, a, _] = this.tro(s, n);
+                var [r, a, _] = this.tro(o, s);
                 !r ||
                   _ >
                     ConfigManager_1.ConfigManager.LevelGamePlayConfig
                       .GenExtraGuideEffectMaxDist ||
-                  ((n.BestIndex = a), _ < e && ((e = _), (t = o)));
+                  ((s.BestIndex = a), _ < e && ((e = _), (t = n)));
               }
               var f,
                 l,
@@ -93,12 +93,12 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
               this.iro();
               for ([f, l] of i) {
                 var c,
-                  h = this.oro(s, l, l.BestIndex, f === t && E);
+                  h = this.oro(o, l, l.BestIndex, f === t && E);
                 this.Yoo <= 0
                   ? Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Guide",
-                      32,
+                      31,
                       "当前位置无法生成spline",
                       ["TrackQuestId:", this.$oo],
                       ["SplineId", f],
@@ -128,16 +128,16 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
               }
             } else
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Guide", 34, "当前追踪任务未配置引导特效", [
+                Log_1.Log.Debug("Guide", 33, "当前追踪任务未配置引导特效", [
                   "TrackQuestId:",
                   this.$oo,
                 ]);
           } else
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Guide", 34, "当前无追踪任务");
+              Log_1.Log.Debug("Guide", 33, "当前无追踪任务");
       }),
       (this.nro = (e, t, i) => {
-        t === Protocol_1.Aki.Protocol.hTs.Proto_Finish &&
+        t === Protocol_1.Aki.Protocol.hTs.a3_ &&
           this.zoo.has(e) &&
           (this.$oo === e && (this.iro(), (this.$oo = void 0)),
           this.zoo.delete(e));
@@ -151,8 +151,8 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
   }
   rro(e, t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Guide", 32, "[GuideEffectAssistant] 生成新的特效");
-    var i = MathUtils_1.MathUtils.DefaultTransform;
+      Log_1.Log.Info("Guide", 31, "[GuideEffectAssistant] 生成新的特效");
+    var i = MathUtils_1.MathUtils.DefaultTransformDouble;
     return EffectSystem_1.EffectSystem.SpawnEffect(
       GlobalData_1.GlobalData.World,
       i,
@@ -202,12 +202,12 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
       var i = e.EffectHandle;
       if (EffectSystem_1.EffectSystem.IsValid(i)) {
         if (1 === e.State) {
-          const o = e.CurActor;
-          this.Zoo.add(o),
+          const n = e.CurActor;
+          this.Zoo.add(n),
             EffectSystem_1.EffectSystem.AddFinishCallback(
               e.EffectHandle,
               (e) => {
-                this.aro(o);
+                this.aro(n);
               },
             ),
             (e.CurActor = void 0),
@@ -218,13 +218,19 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
             ),
             (e.State = 2);
         }
-      } else ActorSystem_1.ActorSystem.Put(t), (e.CurActor = void 0);
+      } else
+        ActorSystem_1.ActorSystem.Put(
+          "GuideEffectAssistant.ClearSplineAndEffectHandle",
+          t,
+        ),
+          (e.CurActor = void 0);
     }
   }
   aro(e) {
     e?.IsValid() &&
       this.Zoo.has(e) &&
-      (this.Zoo.delete(e), ActorSystem_1.ActorSystem.Put(e));
+      (this.Zoo.delete(e),
+      ActorSystem_1.ActorSystem.Put("GuideEffectAssistant.AfterEffectEnd", e));
   }
   UpdateQuestGuideEffect(e) {
     if (this.$oo) {
@@ -237,117 +243,118 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
   }
   tro(e, t) {
     var i,
-      o,
+      n,
       t = t.SplinePoints;
-    let n = Number.MAX_VALUE,
-      s = -1;
-    for ([i, o] of t.entries()) {
-      var r = Vector_1.Vector.Dist(o, e);
-      r < n && ((n = r), (s = i));
+    let s = Number.MAX_VALUE,
+      o = -1;
+    for ([i, n] of t.entries()) {
+      var r = Vector_1.Vector.Dist(n, e);
+      r < s && ((s = r), (o = i));
     }
-    return -1 === s ? [!1, 0, 0] : [!0, s, n];
+    return -1 === o ? [!1, 0, 0] : [!0, o, s];
   }
-  oro(t, e, i, o) {
-    var n = ActorSystem_1.ActorSystem.Get(
+  oro(t, e, i, n) {
+    var s = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePathLine_C.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
       ),
-      s =
-        (n.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !0),
-        n.GetComponentByClass(UE.SplineComponent.StaticClass())),
+      o =
+        (s.D_K2_SetActorLocation(t.ToUeVector(), !1, void 0, !0),
+        s.GetComponentByClass(UE.SplineComponent.StaticClass())),
       r = e.SplinePoints,
-      a = UE.NewArray(UE.Vector);
-    o && this.hro(t, r[i], a);
+      a = UE.NewArray(UE.VectorDouble);
+    n && this.hro(t, r[i], a);
     var _ = i + 1 + Math.ceil(SHOW_EFFECT_DISTANCE / SAMPLE_STEP);
     _ = MathUtils_1.MathUtils.Clamp(_, i + 1, r.length);
     for (let e = i + 1; e < _; e++) {
       var f = Vector_1.Vector.Create();
       f.DeepCopy(r[e]), f.SubtractionEqual(t), a.Add(f.ToUeVector());
     }
-    return s.SetSplinePoints(a, 0, !0), (this.Yoo = a.Num()), n;
+    return o.D_SetSplinePoints(a, 0, !0), (this.Yoo = a.Num()), s;
   }
   hro(t, e, i) {
-    var o = UE.NavigationSystemV1.FindPathToLocationSynchronously(
+    var n = UE.NavigationSystemV1.FindPathToLocationSynchronously(
       GlobalData_1.GlobalData.World,
-      t.ToUeVector(),
-      e.ToUeVector(),
+      t.ToUeVectorOld(),
+      e.ToUeVectorOld(),
       void 0,
       void 0,
       !0,
     );
-    for (let e = 0; e < o.PathPoints.Num(); e++) {
-      var n = Vector_1.Vector.Create(o.PathPoints.Get(e)),
-        n = (n.SubtractionEqual(t), n.ToUeVector());
-      this.aoe(n, GlobalData_1.GlobalData.World),
-        n.Set(
-          n.X,
-          n.Y,
-          n.Z +
+    for (let e = 0; e < n.PathPoints.Num(); e++) {
+      var s = Vector_1.Vector.Create(n.PathPoints.Get(e)),
+        s = (s.SubtractionEqual(t), s.ToUeVector());
+      this.aoe(s, GlobalData_1.GlobalData.World),
+        s.Set(
+          s.X,
+          s.Y,
+          s.Z +
             ConfigManager_1.ConfigManager.LevelGamePlayConfig
               .ExtraGuideEffectRaiseDist,
         ),
-        i.Add(n);
+        i.Add(s);
     }
   }
   lro(e, t) {
     var i = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(e);
     if (i) {
-      var o = (0, IComponent_1.getComponent)(
+      var n = (0, IComponent_1.getComponent)(
         i.ComponentsData,
         "SplineComponent",
       );
-      if (o) {
+      if (n) {
         i = Vector_1.Vector.Create(
           i.Transform?.Pos.X ?? 0,
           i.Transform?.Pos.Y ?? 0,
           i.Transform?.Pos.Z ?? 0,
         );
-        if (o.Option.Type !== IComponent_1.ESplineType.Effect)
+        if (n.Option.Type !== IComponent_1.ESplineType.Effect)
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Level",
-              32,
+              31,
               "[SceneItemGuidePathComponent.LoadPathAsset] SplineComponent配置类型不是Effect",
               ["SplineEntityId", e],
             );
         else {
-          (this.Joo = o.Option.CreateOption.Type),
+          (this.Joo = n.Option.CreateOption.Type),
             this.Joo ===
               IComponent_1.EEffectSplineCreateMode.EquidistantPoint &&
-              ((o = o.Option.CreateOption), (this._0e = o.Space));
-          var n =
+              ((n = n.Option.CreateOption), (this._0e = n.Space));
+          var s =
               ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
                 e,
                 Global_1.Global.BaseCharacter.EntityId,
                 1,
               ),
-            o =
+            n =
               ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
                 e,
               );
-          if (ObjectUtils_1.ObjectUtils.IsValid(o)) {
-            o.K2_SetActorLocation(i.ToUeVector(), !1, void 0, !1);
-            var s = new Array();
-            for (let e = 0; e < n.GetNumberOfSplinePoints() - 1; ++e) {
-              var r = n.GetDistanceAlongSplineAtSplinePoint(e),
-                a = n.GetDistanceAlongSplineAtSplinePoint(e + 1);
+          if (ObjectUtils_1.ObjectUtils.IsValid(n)) {
+            n.D_K2_SetActorLocation(i.ToUeVector(), !1, void 0, !1);
+            var o = new Array();
+            for (let e = 0; e < s.GetNumberOfSplinePoints() - 1; ++e) {
+              var r = s.GetDistanceAlongSplineAtSplinePoint(e),
+                a = s.GetDistanceAlongSplineAtSplinePoint(e + 1);
               for (let e = r; e < a; e += SAMPLE_STEP) {
-                const _ = n.GetWorldLocationAtDistanceAlongSpline(e);
-                s.push(Vector_1.Vector.Create(_));
+                const _ = s.D_GetLocationAtDistanceAlongSpline(e, 1);
+                o.push(Vector_1.Vector.Create(_));
               }
             }
-            const _ = n.GetWorldLocationAtSplinePoint(
-              n.GetNumberOfSplinePoints() - 1,
+            const _ = s.D_GetLocationAtSplinePoint(
+              s.GetNumberOfSplinePoints() - 1,
+              1,
             );
-            s.push(Vector_1.Vector.Create(_)),
-              (t.SplinePoints = s),
-              (t.SplineData = o.SplineData),
-              (t.SplineLength = n.GetSplineLength());
+            o.push(Vector_1.Vector.Create(_)),
+              (t.SplinePoints = o),
+              (t.SplineData = n.SplineData),
+              (t.SplineLength = s.GetSplineLength());
           } else
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Level",
-                32,
+                31,
                 "[SceneItemGuidePathComponent.LoadPathAsset] Spline生成失败",
                 ["SplineEntityId", e],
               );
@@ -356,7 +363,7 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            32,
+            31,
             "[SceneItemGuidePathComponent.LoadPathAsset] 无法找到SplineComponent配置",
             ["SplineEntityId", e],
           );
@@ -364,7 +371,7 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Level",
-          32,
+          31,
           "[SceneItemGuidePathComponent.LoadPathAsset] 无法找到Spline Entity",
           ["SplineEntityId", e],
         );
@@ -385,21 +392,21 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, e),
       i.SetEndLocation(e.X, e.Y, e.Z - TRACE_DISTANCE);
     var t = TraceElementCommon_1.TraceElementCommon.LineTrace(i, PROFILE_KEY),
-      o = i.HitResult;
+      n = i.HitResult;
     t
-      ? TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, e)
+      ? TraceElementCommon_1.TraceElementCommon.GetHitLocation(n, 0, e)
       : (i.SetEndLocation(e.X, e.Y, e.Z + TRACE_DISTANCE),
         TraceElementCommon_1.TraceElementCommon.LineTrace(i, PROFILE_KEY) &&
-          ((o = i.HitResult),
-          TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, e)));
+          ((n = i.HitResult),
+          TraceElementCommon_1.TraceElementCommon.GetHitLocation(n, 0, e)));
   }
   AddQuestTraceEffect(e, t, i) {
-    var o = new EffectData();
-    let n = new Map();
-    this.zoo.has(e) ? (n = this.zoo.get(e)) : this.zoo.set(e, n),
-      n.set(i, o),
-      (o.Duration = t),
-      this.lro(i, o);
+    var n = new EffectData();
+    let s = new Map();
+    this.zoo.has(e) ? (s = this.zoo.get(e)) : this.zoo.set(e, s),
+      s.set(i, n),
+      (n.Duration = t),
+      this.lro(i, n);
   }
   RemoveQuestTraceEffect(e, t) {
     var i,

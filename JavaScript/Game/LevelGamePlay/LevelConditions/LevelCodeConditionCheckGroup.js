@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelCodeConditionCheckGroup = void 0);
-const LevelGeneralBase_1 = require("../LevelGeneralBase"),
-  LevelGeneralController_1 = require("../LevelGeneralController");
+const ControllerHolder_1 = require("../../Manager/ControllerHolder"),
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelCodeConditionCheckGroup extends LevelGeneralBase_1.LevelConditionBase {
-  CheckNew(e, r, l) {
+  CheckNew(e, r, o) {
     return (
       !e ||
       !e.ConditionGroup ||
-      LevelGeneralController_1.LevelGeneralController.CheckConditionNew(
+      ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
         e.ConditionGroup,
         r,
-        l,
+        o,
       )
     );
   }

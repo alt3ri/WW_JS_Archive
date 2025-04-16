@@ -14,7 +14,7 @@ class GuideCountDownItem extends UiPanelBase_1.UiPanelBase {
       (this.Rzt = void 0),
       (this.Lzt = t),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Guide", 17, "[引导计时器初始化:关闭界面倒计时]", [
+        Log_1.Log.Debug("Guide", 16, "[引导计时器初始化:关闭界面倒计时]", [
           "总时间",
           this.Lzt,
         ]);

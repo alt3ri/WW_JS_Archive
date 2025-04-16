@@ -25,19 +25,19 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
       (this.NonDetailsList = []),
       (this.SkipItem = void 0),
       (this.kKs = void 0),
-      (this.nfa = void 0),
-      (this.GDa = !1),
+      (this.tfa = void 0),
+      (this.FDa = !1),
       (this.aOn = new BusinessViewController_1.BusinessViewController()),
-      (this.ODa = () => {
+      (this.VDa = () => {
         this.GetItem(11)?.SetUIActive(!1),
           ModelManager_1.ModelManager.MoonChasingBusinessModel.IsUnlockRoleIdEmpty() &&
-            this.GDa &&
-            ((this.GDa = !0), this.UiViewSequence?.PlaySequence("Refresh"));
+            this.FDa &&
+            ((this.FDa = !0), this.UiViewSequence?.PlaySequence("Refresh"));
       }),
       (this.$Oe = (e) => {
         "MoonChasingUnlockRoleView" === e &&
-          this.GDa &&
-          ((this.GDa = !0), this.UiViewSequence?.PlaySequence("Refresh"));
+          this.FDa &&
+          ((this.FDa = !0), this.UiViewSequence?.PlaySequence("Refresh"));
       }),
       (this.rke = () => {
         this.GetItem(11)?.SetUIActive(!0), this.aOn.BackToState(0);
@@ -46,11 +46,11 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
         this.dsa();
       }),
       (this.iha = (e) => {
-        e ? ((this.GDa = !0), this.vJs()) : this.Lqa(),
+        e ? ((this.FDa = !0), this.vJs()) : this.Vqa(),
           this.eke.RefreshPopularity();
       }),
-      (this.Swa = () => {
-        this.Lqa(), this.eke.RefreshPopularity();
+      (this.Gwa = () => {
+        this.Vqa(), this.eke.RefreshPopularity();
       }),
       (this.SkipToMainView = () => {
         this.vJs(),
@@ -66,7 +66,7 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
       }),
       (this.SkipToDelegationDetails = (...e) => {
         e = e[0];
-        this.kpa(e).finally(void 0),
+        this.Npa(e).finally(void 0),
           this.CaptionItem.SetTitleIconByResourceId("SP_ChasingMoonIcon7"),
           this.UiViewSequence?.PlaySequenceAsync(
             "SwitchIn",
@@ -123,18 +123,18 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
       this.SkipItem.RegisterViewController(this.aOn),
       await this.SkipItem.CreateByActorAsync(this.GetItem(10).GetOwner());
   }
-  async Npa() {
+  async Fpa() {
     (this.Details = new DelegationDetailsModule_1.DelegationDetailsModule()),
       await this.Details.CreateByResourceIdAsync(
         "UiItem_EntrustQuest",
         this.GetItem(8),
       );
   }
-  sfa() {
+  ifa() {
     (this.kKs = new ButtonItem_1.ButtonItem(this.GetItem(0))),
       this.kKs.SetFunction(this.aOn.SkipToBuild),
-      (this.nfa = new ButtonItem_1.ButtonItem(this.GetItem(1))),
-      this.nfa.SetFunction(this.aOn.SkipToHelper);
+      (this.tfa = new ButtonItem_1.ButtonItem(this.GetItem(1))),
+      this.tfa.SetFunction(this.aOn.SkipToHelper);
   }
   async SJs() {
     await Promise.all([
@@ -153,7 +153,7 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
       e < t.length ? i.Refresh(t[e]) : i.SetActive(!1);
     }
   }
-  Lqa() {
+  Vqa() {
     var t =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetDelegationDataList();
     for (let e = 0; e < this.NonDetailsList.length; e++) {
@@ -168,9 +168,9 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
         this.U3e(),
         this.SJs(),
         this.Csa(),
-        this.Npa(),
+        this.Fpa(),
       ]),
-      this.sfa(),
+      this.ifa(),
       this.GetItem(11)?.SetUIActive(!1);
   }
   async OnBeforeShowAsyncImplementImplement() {
@@ -196,11 +196,11 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BusinessInvestResult,
-        this.Swa,
+        this.Gwa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ConditionUnlockRole,
-        this.ODa,
+        this.VDa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
@@ -222,11 +222,11 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BusinessInvestResult,
-        this.Swa,
+        this.Gwa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ConditionUnlockRole,
-        this.ODa,
+        this.VDa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -241,7 +241,7 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
       ? this.Details?.GetGuideUiItemAndUiItemForShowEx(e)
       : void 0;
   }
-  async kpa(e) {
+  async Npa(e) {
     e =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetDelegationData(e);
     this.Details.SetDelegationData(e), await this.Details.ShowAsync();
@@ -260,7 +260,7 @@ class BusinessMainView extends UiViewBase_1.UiViewBase {
   }
   RefreshRedDot() {
     this.kKs.BindRedDot("MoonChasingBuilding"),
-      this.nfa.BindRedDot("MoonChasingRole");
+      this.tfa.BindRedDot("MoonChasingRole");
   }
   SwitchShowViewSequence(e) {
     this.UiViewSequence.ShowSequenceName = e ? "ShowView" : "ShowView01";

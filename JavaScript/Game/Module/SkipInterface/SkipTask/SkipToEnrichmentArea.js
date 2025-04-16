@@ -8,7 +8,7 @@ class SkipToEnrichmentArea extends SkipTask_1.SkipTask {
   OnRun(e, o, r, t) {
     void 0 === t
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("SkipInterface", 64, "跳转富集区失败,道具Id为空->", [
+        Log_1.Log.Error("SkipInterface", 63, "跳转富集区失败,道具Id为空->", [
           "itemId:",
           t,
         ])

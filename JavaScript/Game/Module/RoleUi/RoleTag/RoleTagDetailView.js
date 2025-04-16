@@ -31,7 +31,7 @@ class RoleTagDetailView extends UiViewBase_1.UiViewBase {
     var e = this.OpenParam;
     void 0 === e
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 59, "RoleTagDetailView无效tagList")
+        Log_1.Log.Error("Role", 58, "RoleTagDetailView无效tagList")
       : ((this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
         this.lqe.SetCloseCallBack(this.Obt),
         (this.Klo = new GenericLayout_1.GenericLayout(

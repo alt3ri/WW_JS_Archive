@@ -67,10 +67,16 @@ class NumberSelectComponent extends UiPanelBase_1.UiPanelBase {
         this.Ywt,
       )),
       (this.jwt = this.GetText(5)),
-      (this.Wwt = 1);
+      (this.Wwt = 1),
+      (this.Fwt.ShouldPlayLongPressSound = !0),
+      (this.Vwt.ShouldPlayLongPressSound = !0);
   }
   OnBeforeDestroy() {
-    this.Hwt.OnValueChangeCb.Unbind(), this.Fwt.Clear(), this.Vwt.Clear();
+    this.Hwt.OnValueChangeCb.Unbind(),
+      (this.Vwt.ShouldPlayLongPressSound = !1),
+      (this.Fwt.ShouldPlayLongPressSound = !1),
+      this.Fwt.Clear(),
+      this.Vwt.Clear();
   }
   Jwt() {
     var t = this.GetText(2),

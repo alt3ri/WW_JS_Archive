@@ -37,7 +37,10 @@ class AdviceCreateActor {
       (this.v9e = () => {
         this.jm(),
           this.ActorInternal?.IsValid() &&
-            (ActorSystem_1.ActorSystem.Put(this.ActorInternal),
+            (ActorSystem_1.ActorSystem.Put(
+              "AdviceCreateActor.OnActorDestroy",
+              this.ActorInternal,
+            ),
             (this.ActorInternal = void 0)),
           ModelManager_1.ModelManager.AdviceModel.OnAdviceCreateActorDestroy();
       });
@@ -86,7 +89,7 @@ class AdviceCreateActor {
           .ActorRotationProxy,
       ),
       (e = ModelManager_1.ModelManager.CameraModel.CurrentCameraActor),
-      (i.Yaw = e.GetTransform().Rotator().Yaw + 90),
+      (i.Yaw = e.D_GetTransform().Rotator().Yaw + 90),
       (this.u9e =
         SceneInteractionManager_1.SceneInteractionManager.Get().CreateSceneInteractionLevel(
           s.AssetPathName?.toString(),
@@ -100,7 +103,7 @@ class AdviceCreateActor {
     this.ActorInternal ||
       ((this.ActorInternal = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
         void 0,
       )),
       (this.SkeletalMeshInternal = this.ActorInternal.AddComponentByClass(
@@ -140,8 +143,8 @@ class AdviceCreateActor {
             .ActorRotationProxy,
         ),
         ModelManager_1.ModelManager.CameraModel.CurrentCameraActor);
-    (i.Yaw = e.GetTransform().Rotator().Yaw + 90),
-      this.ActorInternal.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !0),
+    (i.Yaw = e.D_GetTransform().Rotator().Yaw + 90),
+      this.ActorInternal.D_K2_SetActorLocation(t.ToUeVector(), !1, void 0, !0),
       this.ActorInternal.K2_SetActorRotation(i.ToUeRotator(), !1);
   }
   S9e(t) {
@@ -152,7 +155,7 @@ class AdviceCreateActor {
     var i = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(t),
       i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i);
     const s = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId),
-      o =
+      r =
         ((this.m9e = !1),
         (this.d9e = !1),
         (this.C9e = !1),
@@ -166,7 +169,7 @@ class AdviceCreateActor {
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Advice",
-                  28,
+                  27,
                   "modelConfig.网格体.ToAssetPathName()读取",
                   ["mesh", s.网格体.ToAssetPathName()],
                 ),
@@ -176,13 +179,13 @@ class AdviceCreateActor {
         ConfigManager_1.ConfigManager.MotionConfig.GetMotionAnimation(t));
     if (
       (ResourceSystem_1.ResourceSystem.LoadAsync(
-        o,
+        r,
         UE.AnimationAsset,
         (t, i) => {
           (this.m9e = !0),
             (this.y9e = t),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Advice", 28, "动画读取", ["animation", o]),
+              Log_1.Log.Debug("Advice", 27, "动画读取", ["animation", r]),
             this.I9e();
         },
       ),
@@ -191,13 +194,13 @@ class AdviceCreateActor {
       this.l9e)
     ) {
       this.l9e.AddComponentByCase(0, this.SkeletalMeshInternal);
-      const r = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceModelMat();
+      const o = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceModelMat();
       ResourceSystem_1.ResourceSystem.LoadAsync(
-        r,
+        o,
         UE.PD_CharacterControllerData_C,
         (t, i) => {
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Advice", 28, "溯言特效读取", ["effectPath", r]),
+            Log_1.Log.Debug("Advice", 27, "溯言特效读取", ["effectPath", o]),
             (this.C9e = !0),
             this.Td && (this._9e = this.l9e.AddMaterialControllerData(t)),
             this.I9e();
@@ -212,7 +215,7 @@ class AdviceCreateActor {
       this.m9e &&
       this.Td &&
       this.SkeletalMeshInternal &&
-      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Advice", 28, "显示Mesh"),
+      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Advice", 27, "显示Mesh"),
       this.SkeletalMeshInternal.SetHiddenInGame(!1),
       this.SkeletalMeshInternal.Play(!0),
       this.y9e) &&
@@ -229,7 +232,10 @@ class AdviceCreateActor {
       SceneInteractionManager_1.SceneInteractionManager.Get().DestroySceneInteraction(
         this.u9e,
       ),
-      ActorSystem_1.ActorSystem.Put(this.ActorInternal),
+      ActorSystem_1.ActorSystem.Put(
+        "AdviceCreateActor.Destroy",
+        this.ActorInternal,
+      ),
       (this.ActorInternal = void 0),
       ModelManager_1.ModelManager.AdviceModel.OnAdviceCreateActorDestroy();
   }

@@ -21,17 +21,21 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       (this.Zhr = ""),
       (this.Cha = new Array()),
       (this.xW = void 0),
-      (this.q3a = 0);
+      (this.C6a = 0),
+      (this.Ocl = !1);
+  }
+  MarkForceUpdateThisFrame() {
+    this.Ocl = !0;
   }
   static GetMaxUpdateParamsPerFrame() {
     return (
-      CharMaterialContainer.G3a < 0 &&
-        (CharMaterialContainer.G3a = Info_1.Info.IsGameRunning()
+      CharMaterialContainer.g6a < 0 &&
+        (CharMaterialContainer.g6a = Info_1.Info.IsGameRunning()
           ? GlobalData_1.GlobalData.IsEs3
             ? 16
             : 32
           : 9999),
-      CharMaterialContainer.G3a
+      CharMaterialContainer.g6a
     );
   }
   Awake(e) {
@@ -39,68 +43,73 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
     e = this.RenderComponent.GetOwner();
     if (e?.IsValid()) {
       (this.Zhr = e.GetName()), (this.AllBodyInfoList = new Map());
-      var o = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
-        n = o.Num();
-      let r = !1;
-      for (let e = 0; e < n; e++) {
-        var t,
-          i = o.Get(e);
-        i?.IsValid()
-          ? ((t = i.GetName()),
-            i.SkeletalMesh?.IsValid()
-              ? ((i = this.AddSkeletalComponent(i, t)),
-                (r = r || i),
-                i ||
-                  (Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info(
-                      "RenderCharacter",
-                      14,
-                      "材质容器部位初始化失败",
-                      ["Actor", this.Zhr],
-                      ["部位名称", t],
-                    )))
+      var n = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
+        t = n.Num();
+      let r = !1,
+        o = !1;
+      var i = [];
+      for (let e = 0; e < t; e++) {
+        var a,
+          f,
+          d = n.Get(e);
+        d?.IsValid()
+          ? ((a = d.GetName()),
+            d.SkeletalMesh?.IsValid()
+              ? void 0 ===
+                (f = RenderConfig_1.RenderConfig.GetBodyTypeByName(a))
+                ? i.push(d)
+                : (0 === f && (o = !0),
+                  (r = r || this.AddSkeletalComponent(d, a)))
               : Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "RenderCharacter",
-                  41,
+                  40,
                   "资产的SkeletalMeshComponent的SkeletalMesh为空",
                   ["Actor", this.Zhr],
-                  ["SkeletalName", t],
+                  ["SkeletalName", a],
                 ))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderCharacter",
-              41,
+              40,
               "材质容器初始化失败，组件不可用",
               ["Actor", this.Zhr],
             );
       }
-      this.OnInitSuccess(),
-        r ||
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "RenderCharacter",
-              14,
-              "无Mesh类型材质控制器初始化",
-              ["Actor", this.Zhr],
-            ));
+      !o &&
+        0 < i.length &&
+        ((r =
+          r ||
+          this.AddSkeletalComponent(
+            i[0],
+            RenderConfig_1.RenderConfig.MaterialControlBodyCaseArray[0],
+          )),
+        i.splice(0, 1));
+      for (const _ of i) r = r || this.AddSkeletalComponent(_, _.GetName());
+      r ||
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("RenderCharacter", 13, "无Mesh类型材质控制器初始化", [
+            "Actor",
+            this.Zhr,
+          ])),
+        this.OnInitSuccess();
       e = "Render_CharMaterialContainer_" + this.Zhr;
-      this.xW = Stats_1.Stat.Create(e);
+      this.xW = Stats_1.Stat.CreateNoFlameGraph(e);
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderCharacter", 14, "Actor 为空");
+        Log_1.Log.Error("RenderCharacter", 13, "Actor 为空");
   }
-  AddSkeletalComponent(e, r, o = !0) {
+  AddSkeletalComponent(e, r, o = !1) {
     var n, t;
     return r
       ? e
         ? e.GetOwner()
           ? e.SkeletalMesh
             ? ((n = e.bHiddenInGame),
-              Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info(
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug(
                   "RenderCharacter",
-                  41,
+                  40,
                   "AddSkeletalMeshComponent",
                   ["Actor", this.Zhr],
                   ["SkeletalName", r],
@@ -112,8 +121,8 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                 this.Zhr,
                 r,
                 e,
-                o,
                 this,
+                o,
               ),
               this.AllBodyInfoList.set(r, t),
               n && e.SetHiddenInGame(!0),
@@ -121,7 +130,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "RenderCharacter",
-                  14,
+                  13,
                   "外部传入的SkeletalMeshComponent的SkeletalMesh为空",
                   ["Actor", this.Zhr],
                   ["SkeletalName", r],
@@ -130,7 +139,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "RenderCharacter",
-                41,
+                40,
                 "外部传入的SkeletalMeshComponent的Owner为空",
                 ["Actor", this.Zhr],
               ),
@@ -138,13 +147,13 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderCharacter",
-              14,
+              13,
               "外部传入了空的SkeletalMeshComponent",
               ["Actor", this.Zhr],
             ),
           !1)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderCharacter", 14, "角色骨骼名称错误", [
+          Log_1.Log.Error("RenderCharacter", 13, "角色骨骼名称错误", [
             "Actor",
             this.Zhr,
           ]),
@@ -164,83 +173,48 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
   RevertAlphaTestCommon() {
     for (const e of this.AllBodyInfoList.values()) e.RevertAlphaTestCommon();
   }
-  SetColor(r, o, e = 0, n = -1, t = 0) {
+  SetColor(r, o, e = 0, n = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= n &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "RenderCharacter",
-          41,
-          "SetColor: 不支持指定SectionIndex",
-        );
-      var i = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
-      for (let e = 0; e < i.length; e++) {
-        var a = this.AllBodyInfoList.get(i[e]);
-        a && a.SetColor(r, o, t);
-      }
-    }
-  }
-  RevertColor(r, e = 0, o = -1, n = 0) {
-    if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= o &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "RenderCharacter",
-          41,
-          "SetColor: 不支持指定SectionIndex",
-        );
       var t = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
       for (let e = 0; e < t.length; e++) {
         var i = this.AllBodyInfoList.get(t[e]);
-        i && i.RevertColor(r, n);
+        i && i.SetColor(r, o, n);
       }
     }
   }
-  SetFloat(r, o, e = 0, n = -1, t = 0) {
+  RevertColor(r, e = 0, o = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= n &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "RenderCharacter",
-          41,
-          "SetColor: 不支持指定SectionIndex",
-        );
-      var i = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
-      for (let e = 0; e < i.length; e++) {
-        var a = this.AllBodyInfoList.get(i[e]);
-        a && a.SetFloat(r, o, t);
+      var n = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
+      for (let e = 0; e < n.length; e++) {
+        var t = this.AllBodyInfoList.get(n[e]);
+        t && t.RevertColor(r, o);
       }
     }
   }
-  RevertFloat(r, e = 0, o = -1, n = 0) {
+  SetFloat(r, o, e = 0, n = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
-      0 <= o &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "RenderCharacter",
-          41,
-          "SetColor: 不支持指定SectionIndex",
-        );
       var t = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
       for (let e = 0; e < t.length; e++) {
         var i = this.AllBodyInfoList.get(t[e]);
-        i && i.RevertFloat(r, n);
+        i && i.SetFloat(r, o, n);
       }
     }
   }
-  SetTexture(r, o, e = 0, n = -1, t = 0) {
+  RevertFloat(r, e = 0, o = 0) {
+    if (!FNameUtil_1.FNameUtil.IsEmpty(r)) {
+      var n = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
+      for (let e = 0; e < n.length; e++) {
+        var t = this.AllBodyInfoList.get(n[e]);
+        t && t.RevertFloat(r, o);
+      }
+    }
+  }
+  SetTexture(r, o, e = 0, n = 0) {
     if (!FNameUtil_1.FNameUtil.IsEmpty(r) && void 0 !== o) {
-      0 <= n &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "RenderCharacter",
-          41,
-          "SetColor: 不支持指定SectionIndex",
-        );
-      var i = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
-      for (let e = 0; e < i.length; e++) {
-        var a = this.AllBodyInfoList.get(i[e]);
-        a && a.SetTexture(r, o, t);
+      var t = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
+      for (let e = 0; e < t.length; e++) {
+        var i = this.AllBodyInfoList.get(t[e]);
+        i && i.SetTexture(r, o, n);
       }
     }
   }
@@ -250,7 +224,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          41,
+          40,
           "SetColor: 不支持指定SectionIndex",
         );
       var t = RenderConfig_1.RenderConfig.GetBodyNamesByBodyType(e);
@@ -263,12 +237,15 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
   SetStarScarEnergy(e) {
     for (const r of this.AllBodyInfoList.values()) r.SetStarScarEnergy(e);
   }
+  SetNoWater(e) {
+    for (const r of this.AllBodyInfoList.values()) r.SetNoWater(e);
+  }
   LateUpdate() {
-    this.xW.Start(), ++this.q3a;
+    this.xW.Start(), ++this.C6a;
     var e = this.GetRenderingComponent().GetCachedOwner();
     let r = void 0;
     if (e instanceof UE.Character && e !== Global_1.Global.BaseCharacter) {
-      var o = e.GetVelocity().SizeSquared(),
+      var o = e.D_GetVelocity().SizeSquared(),
         n =
           CharRenderingComponent_1.CharRenderingComponent.MotionVelocitySquared;
       r = 0;
@@ -281,25 +258,24 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         }
     }
     var t = [];
-    for (const a of this.AllBodyInfoList.values())
+    for (const f of this.AllBodyInfoList.values())
       for (let e = 0; e <= t.length; ++e) {
         if (e === t.length) {
-          t.push(a);
+          t.push(f);
           break;
         }
-        if (t[e].LastUpdateCounter > a.LastUpdateCounter) {
-          t.splice(e, 0, a);
+        if (t[e].LastUpdateCounter > f.LastUpdateCounter) {
+          t.splice(e, 0, f);
           break;
         }
       }
-    let i = 0;
-    for (const f of t)
-      if (
-        ((i += f.Update(r)),
-        (f.LastUpdateCounter = this.q3a),
-        i > CharMaterialContainer.GetMaxUpdateParamsPerFrame())
-      )
-        break;
+    var i = this.Ocl
+      ? 9999
+      : CharMaterialContainer.GetMaxUpdateParamsPerFrame();
+    this.Ocl = !1;
+    let a = 0;
+    for (const d of t)
+      if (((a += d.Update(r)), (d.LastUpdateCounter = this.C6a), a > i)) break;
     this.xW.Stop();
   }
   Destroy() {
@@ -345,7 +321,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "已经执行过Revert逻辑",
           ["Actor", this.Zhr],
           ["DataAsset", r.DataName],
@@ -365,7 +341,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       r.HiddenAfterEffect)
     ) {
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("RenderCharacter", 41, "播放完效果后，隐藏mesh", [
+        Log_1.Log.Debug("RenderCharacter", 40, "播放完效果后，隐藏mesh", [
           "DataAsset",
           r.DataName,
         ]);
@@ -399,10 +375,10 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
               : i.SetDynamicMaterial(r.ReplaceMaterial);
           }
         }
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "RenderCharacter",
-            41,
+            40,
             "材质替换",
             ["Actor", this.Zhr],
             ["替换材质名称", o.DataName],
@@ -415,13 +391,13 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "材质替换失败，不存在替换材质:",
             ["替换材质名称", o.DataName],
           );
     else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderCharacter", 14, "材质替换失败，不存在替换材质", [
+        Log_1.Log.Error("RenderCharacter", 13, "材质替换失败，不存在替换材质", [
           "替换材质名称",
           o.DataName,
         ]);
@@ -463,10 +439,10 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           t.MaterialSlotList[n[e]].RevertReplaceMaterial(o.ReplaceMaterial) ||
             (r = !0);
       }
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "RenderCharacter",
-          41,
+          40,
           "材质替换Revert",
           ["Actor", this.Zhr],
           ["替换材质名称", e.DataName],
@@ -563,9 +539,9 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         o,
       ),
       a = RenderUtil_1.RenderUtil.GetColorFromGroup(r.DissolveColor, o);
-    for (const C of e.SpecifiedMaterialIndexMap.keys()) {
-      var f = e.SpecifiedMaterialIndexMap.get(C),
-        d = this.AllBodyInfoList.get(C);
+    for (const R of e.SpecifiedMaterialIndexMap.keys()) {
+      var f = e.SpecifiedMaterialIndexMap.get(R),
+        d = this.AllBodyInfoList.get(R);
       for (let e = 0; e < f.length; e++) {
         var _ = d.MaterialSlotList[f[e]];
         _.SetFloat(RenderConfig_1.RenderConfig.UseDissolve, 1),
@@ -685,9 +661,9 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         t = RenderUtil_1.RenderUtil.GetColorFromGroup(r.EmissionColor, o),
         i = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.EmissionIntensity, o),
         a = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.BaseColorIntensity, o);
-      for (const C of e.SpecifiedMaterialIndexMap.keys()) {
-        var f = e.SpecifiedMaterialIndexMap.get(C),
-          d = this.AllBodyInfoList.get(C);
+      for (const R of e.SpecifiedMaterialIndexMap.keys()) {
+        var f = e.SpecifiedMaterialIndexMap.get(R),
+          d = this.AllBodyInfoList.get(R);
         for (let e = 0; e < f.length; e++) {
           var _ = d.MaterialSlotList[f[e]];
           _.SetFloat(RenderConfig_1.RenderConfig.BaseUseTex, r.BaseUseTex),
@@ -751,27 +727,27 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       a = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.Rotation, o),
       f = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.TextureMaskRange, o),
       d = r.MaskTexture;
-    for (const l of e.SpecifiedMaterialIndexMap.keys()) {
-      var _ = e.SpecifiedMaterialIndexMap.get(l),
-        C = this.AllBodyInfoList.get(l);
+    for (const C of e.SpecifiedMaterialIndexMap.keys()) {
+      var _ = e.SpecifiedMaterialIndexMap.get(C),
+        R = this.AllBodyInfoList.get(C);
       for (let e = 0; e < _.length; e++) {
-        var R = C.MaterialSlotList[_[e]];
-        R.SetFloat(RenderConfig_1.RenderConfig.UseTexture, 1),
-          R.SetFloat(
+        var l = R.MaterialSlotList[_[e]];
+        l.SetFloat(RenderConfig_1.RenderConfig.UseTexture, 1),
+          l.SetFloat(
             RenderConfig_1.RenderConfig.TextureUseMask,
             r.UseAlphaToMask,
           ),
-          R.SetFloat(RenderConfig_1.RenderConfig.TextureMaskRange, f),
-          R.SetColor(RenderConfig_1.RenderConfig.TextureScaleAndOffset, n),
-          R.SetColor(RenderConfig_1.RenderConfig.TextureSpeed, t),
-          R.SetColor(RenderConfig_1.RenderConfig.TextureColor, i),
-          R.SetFloat(RenderConfig_1.RenderConfig.TextureRotation, a),
-          R.SetFloat(
+          l.SetFloat(RenderConfig_1.RenderConfig.TextureMaskRange, f),
+          l.SetColor(RenderConfig_1.RenderConfig.TextureScaleAndOffset, n),
+          l.SetColor(RenderConfig_1.RenderConfig.TextureSpeed, t),
+          l.SetColor(RenderConfig_1.RenderConfig.TextureColor, i),
+          l.SetFloat(RenderConfig_1.RenderConfig.TextureRotation, a),
+          l.SetFloat(
             RenderConfig_1.RenderConfig.TextureUseScreenUv,
             r.UseScreenUv,
           ),
-          d && R.SetTexture(RenderConfig_1.RenderConfig.NoiseTexture, d),
-          R.SetColor(
+          d && l.SetTexture(RenderConfig_1.RenderConfig.NoiseTexture, d),
+          l.SetColor(
             RenderConfig_1.RenderConfig.TextureUvSwitch,
             r.UvSelection,
           );
@@ -811,7 +787,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       var r = this.AllBodyInfoList.get(o);
       if (r.SkeletalComp?.IsValid()) {
         (e.TargetSkeletalMesh = r.SkeletalComp),
-          (e.MotionStartLocation = e.TargetSkeletalMesh.GetSocketLocation(
+          (e.MotionStartLocation = e.TargetSkeletalMesh.D_GetSocketLocation(
             RenderConfig_1.RenderConfig.RootName,
           )),
           void 0 === e.MotionEndLocation &&
@@ -827,7 +803,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Start();
       var o = e.InterpolateFactor,
         n = Math.pow(o.Factor, r.MotionOffsetLength),
-        t = e.TargetSkeletalMesh.GetSocketLocation(
+        t = e.TargetSkeletalMesh.D_GetSocketLocation(
           RenderConfig_1.RenderConfig.RootName,
         ),
         n =
@@ -849,17 +825,17 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           a < 100
             ? RenderUtil_1.RenderUtil.GetFloatFromGroup(r.MotionNoiseSpeed, o)
             : 0;
-      for (const l of e.SpecifiedMaterialIndexMap.keys()) {
-        var _ = e.SpecifiedMaterialIndexMap.get(l),
-          C = this.AllBodyInfoList.get(l);
+      for (const C of e.SpecifiedMaterialIndexMap.keys()) {
+        var _ = e.SpecifiedMaterialIndexMap.get(C),
+          R = this.AllBodyInfoList.get(C);
         for (let e = 0; e < _.length; e++) {
-          var R = C.MaterialSlotList[_[e]];
-          R.SetFloat(
+          var l = R.MaterialSlotList[_[e]];
+          l.SetFloat(
             RenderConfig_1.RenderConfig.MotionRange,
             r.MotionAffectVertexRange,
           ),
-            R.SetColor(RenderConfig_1.RenderConfig.MotionOffset, f),
-            R.SetFloat(RenderConfig_1.RenderConfig.MotionNoiseSpeed, d);
+            l.SetColor(RenderConfig_1.RenderConfig.MotionOffset, f),
+            l.SetFloat(RenderConfig_1.RenderConfig.MotionNoiseSpeed, d);
         }
       }
       RenderModuleConfig_1.RenderStats.StatCharMaterialControllerUpdateMotionOffset.Stop();
@@ -984,5 +960,5 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
     }
   }
 }
-(exports.CharMaterialContainer = CharMaterialContainer).G3a = -1;
+(exports.CharMaterialContainer = CharMaterialContainer).g6a = -1;
 //# sourceMappingURL=CharMaterialContainer.js.map

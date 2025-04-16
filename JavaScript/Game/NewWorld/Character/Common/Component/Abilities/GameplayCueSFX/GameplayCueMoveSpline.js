@@ -46,7 +46,11 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
         );
   }
   OnDestroy() {
-    ActorSystem_1.ActorSystem.Put(this._Yo.GetOwner()), super.OnDestroy();
+    ActorSystem_1.ActorSystem.Put(
+      "GameplayCueMoveSpline.OnDestroy",
+      this._Yo.GetOwner(),
+    ),
+      super.OnDestroy();
   }
   AttachEffect() {
     var t = [
@@ -83,7 +87,7 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
   dYo() {
     var e = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
-        this.ActorInternal.GetTransform(),
+        this.ActorInternal.D_GetTransform(),
       ),
       e =
         (GlobalData_1.GlobalData.IsPlayInEditor &&
@@ -92,10 +96,10 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
               ":" +
               GameplayCueMoveSpline.name,
           ),
-        e.AddComponentByClass(
+        e.D_AddComponentByClass(
           UE.KuroMoveSplineComponent.StaticClass(),
           !1,
-          this.ActorInternal.GetTransform(),
+          this.ActorInternal.D_GetTransform(),
           !1,
         ));
     return e;

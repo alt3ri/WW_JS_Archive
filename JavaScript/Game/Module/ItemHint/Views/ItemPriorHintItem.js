@@ -23,20 +23,19 @@ class ItemPriorHintItem extends ItemHintItem_1.ItemHintItem {
   async AsyncLoadUiResource() {
     this.Data =
       ModelManager_1.ModelManager.ItemHintModel.ShiftPriorInterfaceData();
-    var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
-      this.Data.Quality,
-    );
-    this.SetTextureByPath(e.AcquireQualityTexPath, this.GetTexture(4));
-    const i = new CustomPromise_1.CustomPromise(),
-      r = 5 === this.Data.Quality;
-    var t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        r ? "NS_Fx_LGUI_ItemList_Golden" : "NS_Fx_LGUI_ItemList_Other",
-      ),
-      s = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
+    var e =
+      ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityByItemIdAndQuality(
+        this.Data.ItemId,
         this.Data.Quality,
       );
-    const o = UE.Color.FromHex(s.TextColor),
-      n =
+    this.SetTextureByPath(e.AcquireQualityTexPath, this.GetTexture(4));
+    const i = new CustomPromise_1.CustomPromise(),
+      r = 5 <= this.Data.Quality;
+    var t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+      r ? "NS_Fx_LGUI_ItemList_Golden" : "NS_Fx_LGUI_ItemList_Other",
+    );
+    const s = UE.Color.FromHex(e.TextColor),
+      o =
         (ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.NiagaraSystem, (e) => {
           var t;
           i.SetResult(void 0),
@@ -46,14 +45,14 @@ class ItemPriorHintItem extends ItemHintItem_1.ItemHintItem {
               ((t = this.GetUiNiagara(6)).SetNiagaraSystem(e),
               r ||
                 (t.ColorParameter.Get("Color").Constant =
-                  UE.LinearColor.FromSRGBColor(o)));
+                  UE.LinearColor.FromSRGBColor(s)));
         }),
         this.SetSpriteByPath(e.AcquireQualitySpritePath, this.GetSprite(5), !1),
         new CustomPromise_1.CustomPromise());
     this.SetItemIcon(this.GetTexture(0), this.Data.ItemId, void 0, () => {
-      n.SetResult(void 0);
+      o.SetResult(void 0);
     }),
-      await Promise.all([n.Promise, i.Promise]);
+      await Promise.all([o.Promise, i.Promise]);
   }
 }
 exports.ItemPriorHintItem = ItemPriorHintItem;

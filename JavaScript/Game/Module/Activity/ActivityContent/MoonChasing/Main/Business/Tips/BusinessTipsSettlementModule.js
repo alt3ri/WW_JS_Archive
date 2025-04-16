@@ -29,12 +29,12 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
           e.RefreshProgressAdd(t),
             1 === t && (e.RefreshProgress(t), e.SetLightProgressWidth());
       }),
-      (this.Kpa = (t) => {
+      (this.$pa = (t) => {
         for (const e of this.CharacterListModule.GetItemList())
           e.RefreshCurrentValue(t);
       }),
       (this.q1a = () => {
-        this.Ypa(), this.Jpa();
+        this.Jpa(), this.zpa();
       });
   }
   OnRegisterComponent() {
@@ -59,7 +59,7 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
   }
   async OnBeforeStartAsync() {
     (this.Delegate = (0, puerts_1.toManualReleaseDelegate)(this.OAn)),
-      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.Kpa)),
+      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.$pa)),
       await this.PAr();
   }
   OnBeforeShow() {
@@ -82,14 +82,14 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
       ((0, puerts_1.releaseManualReleaseDelegate)(this.OAn),
       (this.Delegate = void 0)),
       this.ValueDelegate &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.Kpa),
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.$pa),
         (this.ValueDelegate = void 0)),
       this.gzi();
   }
   gzi() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  Xpa() {
+  Ypa() {
     for (const t of this.CharacterListModule.GetItemList())
       t.SetLightProgressWidth(), t.PlayAddAction(), t.RefreshAddText();
     (this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
@@ -102,10 +102,10 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
       this.ExpTweener?.OnCompleteCallBack.Bind(this.q1a),
       AudioSystem_1.AudioSystem.PostEvent("play_ui_figure_up_1s");
   }
-  Ypa() {
+  Jpa() {
     for (const t of this.CharacterListModule.GetItemList()) t.PlayEndAction();
   }
-  Jpa() {
+  zpa() {
     this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
       GlobalData_1.GlobalData.World,
       this.ValueDelegate,
@@ -116,7 +116,7 @@ class BusinessTipsSettlementModule extends UiPanelBase_1.UiPanelBase {
   }
   StartCharacterAnim() {
     ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData().UseInvestProperData(),
-      this.Xpa();
+      this.Ypa();
   }
 }
 exports.BusinessTipsSettlementModule = BusinessTipsSettlementModule;

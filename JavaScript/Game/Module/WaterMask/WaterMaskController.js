@@ -57,10 +57,10 @@ class WaterMaskView extends UiControllerBase_1.UiControllerBase {
         UiLayerType_1.ELayerType.WaterMask,
       ),
       t =
-        ((_a.SOo = UE.KuroActorManager.SpawnActor(
+        ((_a.SOo = UE.KuroActorManager.D_SpawnActor(
           Info_1.Info.World,
           UE.UIContainerActor.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           void 0,
         )),
         _a.SOo.RootComponent),
@@ -78,10 +78,10 @@ class WaterMaskView extends UiControllerBase_1.UiControllerBase {
       v = ModelManager_1.ModelManager.FunctionModel.PlayerId.toString();
     for (let a = 0; a < s; a++)
       for (let e = 0; e < o; e++) {
-        var E = UE.KuroActorManager.SpawnActor(
+        var E = UE.KuroActorManager.D_SpawnActor(
             Info_1.Info.World,
             UE.UITextActor.StaticClass(),
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
             void 0,
           ),
           U = E.RootComponent,

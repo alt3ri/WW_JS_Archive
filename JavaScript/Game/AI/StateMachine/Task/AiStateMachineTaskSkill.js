@@ -24,7 +24,7 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
         !1)
       : (t.TaskSkillByName
           ? ((this.SkillName = t.TaskSkillByName.SkillName),
-            (i = this.Node.Entity.GetComponent(34).GetSkillIdByName(
+            (i = this.Node.Entity.GetComponent(39).GetSkillIdByName(
               this.SkillName,
             )),
             (this.SkillId = i || 0),
@@ -51,7 +51,8 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
           (this.Done = this.Node.SkillComponent.BeginSkill(this.SkillId, {
             Target: i?.Entity,
             ContextId: t,
-            Context: "AiStateMachineTaskSkill.OnEnter",
+            ForbidNext: !0,
+            Reason: "AiStateMachineTaskSkill.OnEnter",
           }))))
       : CombatLog_1.CombatLog.Error(
           "StateMachineNew",
@@ -66,21 +67,15 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
       (this.Node.ElapseTime < this.Timeout
         ? (this.Done = this.Node.SkillComponent.BeginSkill(this.SkillId, {
             ContextId: i,
-            Context: "AiStateMachineTaskSkill.OnTick",
+            Reason: "AiStateMachineTaskSkill.OnTick",
           }))
         : (CombatLog_1.CombatLog.Info(
             "StateMachineNew",
             this.Node.Entity,
             `状态机技能释放失败 节点[${this.Node.Name}]，技能名[${this.SkillName}]`,
           ),
-          ((s = Protocol_1.Aki.Protocol.m4n.create()).r5n = this.SkillId),
-          CombatMessage_1.CombatNet.Call(
-            19436,
-            this.Node.Entity,
-            s,
-            () => {},
-            i,
-          ),
+          ((s = Protocol_1.Aki.Protocol.we_.create()).r5n = this.SkillId),
+          CombatMessage_1.CombatNet.Send(25456, this.Node.Entity, s, i),
           (this.Node.TaskFinish = !0),
           (this.Done = !0)));
   }

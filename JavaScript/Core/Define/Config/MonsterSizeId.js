@@ -33,10 +33,14 @@ class MonsterSizeId {
     return this.monstersizetag(t);
   }
   monstersizetag(t, s) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s)
-      : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, s) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   monstersizetagLength() {
     var t = this.J7.__offset(this.z7, 6);

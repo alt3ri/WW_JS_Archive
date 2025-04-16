@@ -55,7 +55,7 @@ class ActivitySubViewCollection extends ActivitySubViewBase_1.ActivitySubViewBas
                     e,
                   ),
                 MarkType: 12,
-                OpenAreaId: 0,
+                OpenFogId: 0,
               };
               WorldMapController_1.WorldMapController.OpenView(2, !1, t);
             };
@@ -80,7 +80,7 @@ class ActivitySubViewCollection extends ActivitySubViewBase_1.ActivitySubViewBas
                     t + 1,
                   ).MarkId,
                 MarkType: 0,
-                OpenAreaId: 0,
+                OpenFogId: 0,
               },
               t =
                 (WorldMapController_1.WorldMapController.OpenView(2, !1, t),

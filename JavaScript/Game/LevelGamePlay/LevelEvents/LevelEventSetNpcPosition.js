@@ -9,7 +9,7 @@ class LevelEventSetNpcPosition extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, o) {
     if (e) {
       var t = e,
-        r = new UE.Vector(0, 0, 0),
+        r = new UE.VectorDouble(0, 0, 0),
         n = new UE.Rotator(0, 0, 0);
       for (const v of t.EntityData) {
         var i = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
@@ -20,7 +20,7 @@ class LevelEventSetNpcPosition extends LevelGeneralBase_1.LevelEventBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelEvent",
-                27,
+                26,
                 "通过事件设置NPC坐标时找不到实体：pbDataId: " + v.EntityId,
               ),
             void this.Failure()

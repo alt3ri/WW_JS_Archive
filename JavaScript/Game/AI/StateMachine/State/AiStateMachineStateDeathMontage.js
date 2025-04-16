@@ -11,21 +11,21 @@ class AiStateMachineStateDeathMontage extends AiStateMachineState_1.AiStateMachi
       (this.Handle = -1);
   }
   OnActivate() {
-    var t = this.Node.MontageComponent;
+    var t = this.Node.DeathComponent;
     if (t)
       switch (this.DeathType) {
         case 1:
-          this.Handle = t.AddReplacement(1, this.MontageName);
+          this.Handle = t.ReplaceDeathMontage(1, this.MontageName);
           break;
         case 2:
-          this.Handle = t.AddReplacement(2, this.MontageName);
+          this.Handle = t.ReplaceDeathMontage(2, this.MontageName);
           break;
         default:
-          this.Handle = t.AddReplacement(0, this.MontageName);
+          this.Handle = t.ReplaceDeathMontage(0, this.MontageName);
       }
   }
   OnDeactivate() {
-    this.Node.MontageComponent?.RemoveReplacement(this.Handle),
+    this.Node.DeathComponent?.ResetDeathMontage(this.Handle),
       (this.Handle = -1);
   }
   OnInit(t) {

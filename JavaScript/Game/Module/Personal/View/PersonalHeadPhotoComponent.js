@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalHeadPhotoComponent = void 0);
 const UE = require("ue"),
-  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
-  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
@@ -15,19 +13,11 @@ class PersonalHeadPhotoComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
-      (this.RoleIdList = []),
-      (this.rVi = (e, i) => {
-        var r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e.Id),
-          t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i.Id);
-        return (void 0 !== r && void 0 !== t) || (void 0 === r && void 0 === t)
-          ? e.Id - i.Id
-          : void 0 === t
-            ? -1
-            : 1;
-      }),
-      (this.p5t = () => {
+      (this.PlayerHeadDataList = []),
+      (this.P7e = void 0),
+      (this.OnClickConfirm = () => {
         PersonalController_1.PersonalController.SendChangeHeadPhotoRequest(
-          this.nVi,
+          this.p3l.Id,
         ),
           UiManager_1.UiManager.CloseView("PersonalEditView"),
           UiManager_1.UiManager.CloseView("PersonalOptionView");
@@ -40,75 +30,59 @@ class PersonalHeadPhotoComponent extends UiPanelBase_1.UiPanelBase {
         this.aVi(e);
       });
   }
-  get nVi() {
+  get p3l() {
     var e = this.xqe.GetGenericLayout().GetSelectedGridIndex();
-    return e < 0 || e >= this.RoleIdList.length ? 0 : this.RoleIdList[e];
+    if (!(e < 0 || e >= this.PlayerHeadDataList.length))
+      return this.PlayerHeadDataList[e];
   }
   OnRegisterComponent() {
-    (this.ComponentRegisterInfos = [
+    this.ComponentRegisterInfos = [
       [0, UE.UIScrollViewWithScrollbarComponent],
       [1, UE.UITexture],
-      [2, UE.UIButtonComponent],
+      [2, UE.UIText],
       [3, UE.UIText],
-      [4, UE.UIInteractionGroup],
-      [5, UE.UIText],
-      [6, UE.UIItem],
-      [7, UE.UIText],
-    ]),
-      (this.BtnBindInfo = [[2, this.p5t]]);
+    ];
   }
-  async OnBeforeStartAsync() {
-    if (
-      (this.InitRoleList(),
+  OnStart() {
+    (this.PlayerHeadDataList =
+      ModelManager_1.ModelManager.PersonalModel.GetPlayerShowHeadDataList()),
       (this.xqe = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(0),
         this.Y5i,
-      )),
-      0 < this.RoleIdList.length)
+      ));
+  }
+  async OnBeforeShowAsyncImplement() {
+    if (
+      ((this.PlayerHeadDataList =
+        ModelManager_1.ModelManager.PersonalModel.GetPlayerShowHeadDataList()),
+      0 < this.PlayerHeadDataList.length)
     ) {
-      await this.xqe.RefreshByDataAsync(this.RoleIdList);
-      const o = ModelManager_1.ModelManager.PersonalModel.GetHeadPhotoId();
-      var e = this.RoleIdList.findIndex((e) => e === o);
-      this.xqe.ScrollTo(this.xqe.GetItemByIndex(e)), this.aVi(o);
-    }
-    var i = this.RoleIdList.length;
-    let r = 0;
-    for (let e = 0; e < i; e++) {
-      var t = this.RoleIdList[e];
-      ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(t) && r++,
-        LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "Collected", r);
+      await this.xqe.RefreshByDataAsync(this.PlayerHeadDataList);
+      const i = ModelManager_1.ModelManager.PersonalModel.GetHeadPhotoId();
+      var e = this.PlayerHeadDataList.findIndex((e) => e.Id === i);
+      this.xqe.ScrollTo(this.xqe.GetItemByIndex(e)),
+        this.aVi(this.PlayerHeadDataList[e]);
     }
   }
-  InitRoleList() {
-    var i = ConfigCommon_1.ConfigCommon.ToList(
-        ConfigManager_1.ConfigManager.RoleConfig.GetRoleListByType(1),
-      ),
-      r = (i.sort(this.rVi), i.length);
-    this.RoleIdList = [];
-    for (let e = 0; e < r; e++) {
-      var t = i[e];
-      t.IsTrial ||
-        (ModelManager_1.ModelManager.RoleModel.IsMainRole(t.Id) &&
-          ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleId() !==
-            t.Id) ||
-        this.RoleIdList.push(t.Id);
-    }
+  SetRefreshConfirmBtn(e) {
+    this.P7e = e;
   }
   aVi(i) {
-    var e = this.RoleIdList.findIndex((e) => e === i),
+    var e = this.PlayerHeadDataList.findIndex((e) => e === i),
       e =
         (this.xqe?.GetGenericLayout()?.SelectGridProxy(e),
         ModelManager_1.ModelManager.PersonalModel.GetHeadPhotoId()),
-      r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i),
-      t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i),
-      r = void 0 !== r,
-      e =
-        (this.GetInteractionGroup(4).SetInteractable(r && e !== i),
-        e === i ? "Text_InUse_Text" : "ConfirmBox_173_ButtonText_1");
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), e),
-      this.SetRoleIcon(t.RoleHeadIconLarge, this.GetTexture(1), i),
-      this.GetText(5).ShowTextNew(t.Name),
-      this.GetItem(6).SetUIActive(!r);
+      t = !i.Lock && e !== i.Id;
+    this.P7e && this.P7e(t, e === i.Id);
+    const r = this.GetTexture(1);
+    r.SetUIActive(!1),
+      this.SetTextureShowUntilLoaded(i.GetRoleHeadIconCircle(), r, () => {
+        r.SetUIActive(!0);
+      }),
+      this.GetText(2).ShowTextNew(i.GetName());
+    t = this.GetText(3);
+    t.SetUIActive(i.Lock),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(t, i.Config.Tips);
   }
 }
 exports.PersonalHeadPhotoComponent = PersonalHeadPhotoComponent;

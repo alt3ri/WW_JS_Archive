@@ -13,26 +13,22 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiManager_1 = require("../../../../Ui/UiManager"),
-  ActivityDoubleRewardController_1 = require("../../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
-  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
   HelpController_1 = require("../../../Help/HelpController"),
   ItemDefines_1 = require("../../../Item/Data/ItemDefines"),
   LevelPlay_1 = require("../../../LevelPlay/LevelPlay"),
-  MapController_1 = require("../../../Map/Controller/MapController"),
+  MapHelper_1 = require("../../../Map/MapHelper"),
   MarkUiUtils_1 = require("../../../Map/Mark/Misc/MarkUiUtils"),
-  TeleportController_1 = require("../../../Teleport/TeleportController"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
-  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
-  WorldMapDefine_1 = require("../../WorldMapDefine"),
-  MapTipsActivateTipPanel_1 = require("../Common/MapTipsActivateTipPanel"),
   TipsListView_1 = require("../TipsListView"),
+  WorldMapSecondaryUiLayoutA_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutA"),
+  WorldMapSecondaryUiLayoutHelper_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutHelper"),
   SceneGameplayTipGrid_1 = require("./SceneGameplayTipGrid"),
   HELP_ID = 88,
   POWER_COST_KEY = "power",
   REBORN_TIME_KEY = "reborn",
   REWARD_SHARE_COUNT = "reward",
   TARGET_ITEM_SHOW_TYPE = 41;
-class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
+class SceneGameplayPanel extends WorldMapSecondaryUiLayoutA_1.WorldMapSecondaryUiLayoutA {
   constructor() {
     super(...arguments),
       (this.Ymt = void 0),
@@ -43,43 +39,30 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (this.V2o = void 0),
       (this.IRe = void 0),
       (this.U2o = void 0),
-      (this.ZAt = void 0),
       (this.rFo = void 0),
       (this.nFo = !1),
-      (this.k4a = void 0),
-      (this.N4a = void 0),
-      (this.oza = void 0),
       (this.mji = () => {
         HelpController_1.HelpController.OpenHelpById(HELP_ID);
       }),
-      (this.m2o = () => {
-        var i = this.u2o.IsTracked;
-        MapController_1.MapController.RequestTrackMapMark(
-          this.u2o.MarkType,
-          this.u2o.MarkId,
-          !i,
-        ),
-          this.Close();
-      }),
-      (this.UOe = () => {
-        var i = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+      (this.OnDetailBtnClick = () => {
+        var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
           this.Ymt.Id,
         );
-        i.IsOccupied &&
-          ((i =
+        e.IsOccupied &&
+          ((e =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              i.QuestId,
+              e.QuestId,
             )),
-          UiManager_1.UiManager.OpenView("QuestView", i.TreeConfigId));
+          UiManager_1.UiManager.OpenView("QuestView", e.TreeConfigId));
       }),
-      (this.sFo = () => {
+      (this.OnStripBtnClick = () => {
         ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !0;
-        var i =
+        var e =
           MapMarkPhantomGroupByMarkId_1.configMapMarkPhantomGroupByMarkId.GetConfig(
             this.u2o.MarkId,
           );
         (ModelManager_1.ModelManager.CalabashModel.OnlyShowPhantomFetterGroupIdList =
-          i.ShowRange),
+          e.ShowRange),
           UiManager_1.UiManager.OpenView("CalabashRootView");
       }),
       (this.aFo = () => {
@@ -88,86 +71,39 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           this.Ymt.RewardId,
         );
       }),
-      (this.F4a = () => {
-        var i = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
-          this.Map,
-          this.u2o,
-        );
-        i &&
-          MarkUiUtils_1.MarkUiUtils.QuickGotoTeleport(this.u2o, i, () => {
-            this.Close();
-          });
-      }),
-      (this.P8e = () => {
-        var i = this.u2o;
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Map",
-            64,
-            "[地图系统]SceneGameplayPanel->追踪标记",
-            ["markId", i.MarkId],
-            ["IsTracked", i.IsTracked],
-          ),
-          MapController_1.MapController.RequestTrackMapMark(
-            i.MarkType,
-            i.MarkId,
-            !i.IsTracked,
-          ),
-          this.Close();
+      (this.OnConfirmBtnClick = () => {
+        this.HandleTeleport();
       });
   }
   GetResourceId() {
     return "UiView_InstanceEntranceTip_Prefab_2";
   }
-  OnRegisterComponent() {
-    (this.ComponentRegisterInfos =
-      WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA),
-      (this.BtnBindInfo = [
-        [15, this.UOe],
-        [18, this.sFo],
-      ]);
-  }
-  async OnBeforeStartAsync() {
-    return (
-      (this.oza = new MapTipsActivateTipPanel_1.MapTipsActivateTipPanel()),
-      await this.oza.CreateByActorAsync(this.GetItem(31).GetOwner()),
-      super.OnBeforeStartAsync()
-    );
-  }
   OnStart() {
-    this.RootItem.SetRaycastTarget(!1),
-      (this.U2o = new TipsListView_1.TipsListView()),
+    (this.U2o = new TipsListView_1.TipsListView()),
       this.U2o.Initialize(this.GetVerticalLayout(5)),
-      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.ZAt.SetActive(!0),
-      this.ZAt.SetFunction(this.m2o),
-      (this.k4a = new ButtonItem_1.ButtonItem(this.GetButton(28).RootUIComp)),
-      this.k4a.SetFunction(this.P8e),
-      (this.N4a = new ButtonItem_1.ButtonItem(this.GetButton(29).RootUIComp)),
-      this.N4a.SetFunction(this.F4a);
+      super.OnStart();
   }
   OnBeforeDestroy() {
     this.U2o.Clear(),
-      this.ZAt.Destroy(),
-      this.k4a.Destroy(),
-      this.N4a.Destroy(),
       (this.rFo = void 0),
       this.O2o && (this.AddChild(this.O2o), (this.O2o = void 0)),
       this.k2o && (this.AddChild(this.k2o), (this.k2o = void 0)),
       (this.F2o = void 0),
       (this.V2o = void 0),
       this.cG(),
-      (ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !1);
+      (ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !1),
+      super.OnBeforeDestroy();
   }
-  OnShowWorldMapSecondaryUi(i) {
-    i
-      ? ((this.u2o = i),
+  OnShowWorldMapSecondaryUi(e) {
+    e
+      ? ((this.u2o = e),
+        (this.LayoutContext.MarkItem = e),
         this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
         (this.Ymt = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
-          i.MarkConfig.RelativeId,
+          e.MarkConfig.RelativeId,
         )),
         this.Ymt ||
-          ((this.Ymt = new LevelPlay_1.LevelPlayInfo(i.MarkConfig.RelativeId)),
+          ((this.Ymt = new LevelPlay_1.LevelPlayInfo(e.MarkConfig.RelativeId)),
           this.Ymt.InitConfig()),
         (this.IRe = void 0),
         (this.nFo =
@@ -179,7 +115,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SceneGameplay",
-          18,
+          17,
           "玩法弹窗打开错误，地图标记不存在",
         );
   }
@@ -191,74 +127,63 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       (ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !1);
   }
   SHe() {
-    (this.F2o = ExchangeRewardById_1.configExchangeRewardById.GetConfig(
-      this.Ymt.RewardId,
-    )),
+    (this.F2o = this.Ymt.RewardId
+      ? ExchangeRewardById_1.configExchangeRewardById.GetConfig(
+          this.Ymt.RewardId,
+        )
+      : void 0),
       (this.V2o = this.Ymt.FirstRewardId
         ? ExchangeRewardById_1.configExchangeRewardById.GetConfig(
             this.Ymt.FirstRewardId,
           )
         : void 0);
-    var i,
-      e,
+    var e,
+      i,
       t = this.u2o.MarkConfigId,
-      r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
-    r
+      a = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
+    a
       ? ((e = (i = this.u2o.IsRelativeFunctionOpen())
-          ? r.MarkTitle
+          ? a.MarkTitle
           : "UnknownPlace"),
         this.GetText(1).ShowTextNew(e),
-        (e = i ? r.MarkDesc : "UnknownPlaceContent"),
+        (e = i ? a.MarkDesc : "UnknownPlaceContent"),
         this.GetText(4).ShowTextNew(e),
         this.lFo(),
-        this.GetItem(14).SetUIActive(!0),
-        this.GetItem(26).SetUIActive(!1),
-        this.GetVerticalLayout(5).RootUIComp.SetUIActive(!0),
-        this.GetItem(25).SetUIActive(!1),
-        this.GetItem(9).SetUIActive(!1),
-        this.GetItem(12).SetUIActive(!1),
-        this.GetItem(8).SetUIActive(!1),
-        this.GetVerticalLayout(16).RootUIComp.SetUIActive(!1),
-        (i = this.u2o.GetAreaText()) && this.GetText(3).SetText(i),
+        WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateAreaTxtByConfigMarkItem(
+          this.LayoutContext,
+        ),
         this.GetButton(18).RootUIComp?.SetUIActive(
           1 === this.u2o.MarkConfig.RelativeSubType,
         ),
-        (e =
-          !(r = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+        (a =
+          !(i = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
             this.Ymt.Id,
           )).IsOccupied && MarkUiUtils_1.MarkUiUtils.IsShowGoto(this.u2o)),
-        r.IsOccupied ? this.ZAt.SetActive(!1) : this.ZAt.SetActive(!e),
-        this.GetItem(32).SetUIActive(e),
-        this.oza.SetUiActive(!1),
-        e &&
-          ((i = this.GetButton(29)),
-          (r = TeleportController_1.TeleportController.CheckCanTeleport()),
-          (e = MarkUiUtils_1.MarkUiUtils.FindNearbyValidGotoMark(
-            this.Map,
-            this.u2o,
-          )),
-          this.oza.SetUiActive(!r || void 0 === e),
-          i.SetSelfInteractive(r && void 0 !== e)),
+        i.IsOccupied
+          ? this.ConfirmButton.SetActive(!1)
+          : this.ConfirmButton.SetActive(!a),
+        this.UpdateMarkItemRelativeLayout(),
+        this.UpdateQuickGotoActive(a),
         this.InitRewards(),
         this.W2o())
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("SceneGameplay", 18, "缺少标记配置", ["MarkId", t]);
+        Log_1.Log.Error("SceneGameplay", 17, "缺少标记配置", ["MarkId", t]);
   }
   lFo() {
-    let i = 0;
+    let e = 0;
     0 <
-      (i = this.F2o?.Cost.has(ItemDefines_1.EItemId.Power)
+      (e = this.F2o?.Cost.has(ItemDefines_1.EItemId.Power)
         ? this.F2o.Cost.get(ItemDefines_1.EItemId.Power)
-        : i) &&
-      ((r = this.U2o.AddItemByKey(POWER_COST_KEY)).SetIconByItemId(
+        : e) &&
+      ((a = this.U2o.AddItemByKey(POWER_COST_KEY)).SetIconByItemId(
         ItemDefines_1.EItemId.Power,
       ),
-      r.SetClickHelpFunc(this.mji),
-      r.SetLeftText(
+      a.SetClickHelpFunc(this.mji),
+      a.SetLeftText(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CostStamina") ??
           "",
       ),
-      r.SetRightText("x" + i.toString())),
+      a.SetRightText("x" + e.toString())),
       (this.rFo = this.U2o.AddItemByKey(REBORN_TIME_KEY)),
       this.rFo?.SetLeftText(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -267,18 +192,18 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       ),
       this.rFo?.SetHelpButtonVisible(!1),
       this.rFo?.SetActive(!1);
-    var e,
+    var i,
       t,
-      r = this.F2o.SharedId;
-    0 < r &&
+      a = this.F2o?.SharedId ?? 0;
+    0 < a &&
       0 <
-        (e =
+        (i =
           ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetShareMaxCount(
             this.F2o.SharedId,
           )) &&
-      ((r =
+      ((a =
         ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeRewardShareCount(
-          r,
+          a,
         )),
       (t = this.U2o.AddItemByKey(REWARD_SHARE_COUNT)).SetLeftText(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -288,95 +213,96 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       t.SetRightText(
         StringUtils_1.StringUtils.Format(
           "{0}/{1}",
-          (e - r).toString(),
-          e.toString(),
+          (i - a).toString(),
+          i.toString(),
         ),
       ),
       t.SetHelpButtonVisible(!1));
   }
   W2o() {
-    var i = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
+    var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
       this.Ymt.Id,
     );
-    this.GetItem(12).SetUIActive(i.IsOccupied),
-      i.IsOccupied &&
-        ((i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-          i.QuestId,
+    this.GetItem(12).SetUIActive(e.IsOccupied),
+      e.IsOccupied &&
+        ((e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+          e.QuestId,
         )),
-        (i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-          i.TreeConfigId,
+        (e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
+          e.TreeConfigId,
         )),
-        (i = StringUtils_1.StringUtils.Format(
+        (e = StringUtils_1.StringUtils.Format(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "Quest_Require_Note",
           ) ?? "",
-          i.Name,
+          e.Name,
         )),
-        this.GetText(13).SetText(i)),
+        this.GetText(13).SetText(e)),
       this.GetItem(17).SetUIActive(1 === this.u2o.MarkConfig.RelativeSubType);
   }
   InitRewards() {
-    let i = !1;
-    1 === this.u2o.MarkConfig.RelativeSubType &&
-      ((e =
-        ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
-          [3],
-          !1,
-        )),
-      (i = void 0 !== e),
-      e) &&
-      ((e = e.GetNumTxtAndParam()),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(20), e[0], e[1], e[2])),
-      this.GetItem(19).SetUIActive(i),
-      this.O2o ||
-        ((e = this.GetItem(8).GetOwner()),
-        (t = this.GetVerticalLayout(7).RootUIComp),
-        (this.k2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-        this.k2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(e, t)),
-        (this.O2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-        this.O2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(e, t)),
-        (this.O2o.OnClickPreviewCall = this.aFo));
-    var e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
+    var [e, i, t, a, r] = MapHelper_1.MapHelper.GetDoubleRestAndMaxTimes(
+        this.u2o,
+      ),
       t =
+        (e
+          ? (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(20), a, i, t),
+            LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(40), r),
+            this.GetText(40).SetUIActive(e))
+          : LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(40),
+              "Double_reward_tips_02",
+            ),
+        this.GetItem(19).SetUIActive(e),
+        this.O2o ||
+          ((a = this.GetItem(8).GetOwner()),
+          (i = this.GetVerticalLayout(7).RootUIComp),
+          (this.k2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
+          this.k2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(a, i)),
+          (this.O2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
+          this.O2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(a, i)),
+          (this.O2o.OnClickPreviewCall = this.aFo)),
+        ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel),
+      r =
         (this.k2o?.SetBtnPreviewVisible(!1),
         this.O2o.SetBtnPreviewVisible(this.nFo),
         this.Ymt.IsFirstPass);
-    t
+    r
       ? this.K2o(this.k2o, void 0, 0, "")
-      : this.K2o(this.k2o, this.V2o, e, "FirstReward"),
-      this.K2o(this.O2o, this.F2o, e, "ProbReward", i);
+      : this.K2o(this.k2o, this.V2o, t, "FirstReward"),
+      this.K2o(this.O2o, this.F2o, t, "ProbReward", e);
   }
-  K2o(i, r, s, e, a = !1) {
-    if (r) {
-      var h = r.PreviewReward;
+  K2o(e, a, r, i, s = !1) {
+    if (a) {
+      var o = a.PreviewReward;
       let t = void 0;
-      if (h.has(s)) t = h.get(s).MapIntInt;
+      if (o.has(r)) t = o.get(r).MapIntInt;
       else
-        for (let i = s - 1; 0 <= i; i--)
-          if (h.has(i)) {
-            t = h.get(i).MapIntInt;
+        for (let e = r - 1; 0 <= e; e--)
+          if (o.has(e)) {
+            t = o.get(e).MapIntInt;
             break;
           }
       if (!t) {
-        var o = r.RewardId;
-        let e = 0;
-        if (o.has(s)) e = o.get(s);
+        var h = a.RewardId;
+        let i = 0;
+        if (h.has(r)) i = h.get(r);
         else
-          for (let i = s - 1; 0 <= i; i--)
-            if (o.has(i)) {
-              e = o.get(i);
+          for (let e = r - 1; 0 <= e; e--)
+            if (h.has(e)) {
+              i = h.get(e);
               break;
             }
-        e &&
-          0 < e &&
-          ((M = DropPackageById_1.configDropPackageById.GetConfig(e))
+        i &&
+          0 < i &&
+          ((M = DropPackageById_1.configDropPackageById.GetConfig(i))
             ? (t = M.DropPreview)
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneGameplay",
-                18,
+                17,
                 "兑换奖励表配置的掉落ID读取不到掉落奖励",
-                ["兑换奖励ID", r.Id],
+                ["兑换奖励ID", a.Id],
               ));
       }
       if (1 === this.u2o.MarkConfig.RelativeSubType) {
@@ -388,7 +314,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             ConfigManager_1.ConfigManager.CalabashConfig?.GetCalabashConfigByLevel(
               M,
             ),
-          p = [];
+          g = [];
         for ([n] of t)
           this._Fo(n) &&
             ((_ =
@@ -399,47 +325,52 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             _.ShowTypes.includes(TARGET_ITEM_SHOW_TYPE)) &&
             l <= 0 &&
             _ &&
-            p.push(n);
-        p.forEach((i) => {
-          t.delete(i);
+            g.push(n);
+        g.forEach((e) => {
+          t.delete(e);
         });
       }
       t
-        ? (i.Refresh(t, e, !1, !1, a), i.SetActive(!0))
+        ? (e.Refresh(t, i, !1, !1, s), e.SetActive(!0))
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "SceneGameplay",
-              18,
+              17,
               "读取不到奖励配置",
-              ["兑换奖励ID", r.Id],
-              ["WorldLevel", s],
+              ["兑换奖励ID", a.Id],
+              ["WorldLevel", r],
             ),
-          i.SetActive(!1));
-    } else i.SetActive(!1);
+          e.SetActive(!1));
+    } else e.SetActive(!1);
   }
-  _Fo(i) {
-    i =
+  _Fo(e) {
+    e =
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
-        i,
+        e,
       );
-    return 7 === i || 0 === i;
+    return 7 === e || 0 === e;
   }
   l_i() {
-    let i = "";
-    (i = this.u2o.IsTracked
-      ? "InstanceDungeonEntranceCancelTrack"
-      : "InstanceDungeonEntranceTrack"),
-      this.ZAt.SetLocalText(i),
-      this.k4a.SetLocalText(i);
+    let e = "";
+    var i =
+      !ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(this.Ymt.Id)
+        .IsOccupied && MarkUiUtils_1.MarkUiUtils.IsShowGoto(this.u2o);
+    (e = i
+      ? this.u2o.IsTracked
+        ? "InstanceDungeonEntranceCancelTrack"
+        : "InstanceDungeonEntranceTrack"
+      : "TeleportFastMove"),
+      this.ConfirmButton.SetLocalText(e),
+      this.TrackBtn.SetLocalText(e);
   }
   hFo() {
-    var e = TimeUtil_1.TimeUtil.GetServerTime(),
+    var i = TimeUtil_1.TimeUtil.GetServerTime(),
       t = this.Ymt.RefreshTime;
-    if (t < e) this.cG();
+    if (t < i) this.cG();
     else {
-      t = t - e;
-      let i = void 0;
-      (i =
+      t = t - i;
+      let e = void 0;
+      (e =
         t < TimeUtil_1.TimeUtil.Minute
           ? "" +
             Math.floor(t) +
@@ -451,7 +382,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             : "" +
               Math.floor(t / TimeUtil_1.TimeUtil.Hour) +
               ConfigManager_1.ConfigManager.TextConfig.GetTextById("Hour")),
-        this.rFo?.SetRightText(i),
+        this.rFo?.SetRightText(e),
         void 0 === this.IRe && this.tGo();
     }
   }

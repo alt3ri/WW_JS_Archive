@@ -1,13 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.killProcess =
-    exports.isProcessRunning =
-    exports.isProcessRunningInPath =
-    exports.getProcessImagePathsByName =
-    exports.isRunAsAdmin =
-    exports.execAsUser =
-    exports.exec =
+  (exports.exec =
     exports.getTimeSeconds =
+    exports.regenerateField =
     exports.genGuid =
     exports.getNetWorkAddress =
     exports.getMacAddress =
@@ -21,6 +16,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.writeDataJson =
     exports.writeJson =
     exports.readJsonObj =
+    exports.isPipelineEnv =
     exports.isNumText =
     exports.clampNumber =
     exports.clampAngle =
@@ -33,10 +29,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.parseCsvFloatArray =
     exports.parseCsvStringArray =
     exports.parseCsvInt2Array =
+    exports.parseCsvIntToIntMap =
     exports.parseCsvIntArray =
     exports.parseBool =
     exports.parseIntSafe =
     exports.parseFloatSafe =
+    exports.isValidNumberString =
+    exports.stringifyCsvInt2Array =
+    exports.isNumber2dArray =
     exports.stringFormat =
     exports.parse =
     exports.stringify =
@@ -51,25 +51,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getEnumNames =
     exports.getEnumValues =
       void 0),
-  (exports.getBranchReqShortPath =
-    exports.compareTextOrder =
-    exports.doJsonHttpDelete =
-    exports.doJsonHttpPost =
-    exports.doJsonHttpGet =
-    exports.toDepotPath =
-    exports.deepCopyData =
-    exports.getMd5 =
-    exports.stringIsNullOrEmpty =
-    exports.formatDateTime =
-    exports.isPipelineEnv =
-    exports.isInPie =
-    exports.isValidVarName =
-    exports.getEditorCommandArgs =
-    exports.getCommandLine =
-    exports.getLocalIp =
-    exports.isPortInUse =
+  (exports.isPortInUse =
     exports.isSetEqual =
     exports.isTransformEqual =
+    exports.isSphereInsideSphere =
+    exports.isPosInsideSphere =
+    exports.scaleVector =
     exports.subVector =
     exports.addVector =
     exports.isVector2Equal =
@@ -84,6 +71,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.loadUgsSyncConfig =
     exports.getCurrentClientEditorSaviorSyncData =
     exports.loadEditorSaviorSyncConfig =
+    exports.getAkiBaseClient =
     exports.getAkiBaseProjectPath =
     exports.getAkiBaseLocalPath =
     exports.getChangeListShelveFiles =
@@ -93,7 +81,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getCurrentClientName =
     exports.getCurrentClientRoot =
     exports.getCurrentP4Stream =
+    exports.getP4ClientDataByFilePath =
     exports.checkP4Connection =
+    exports.getClientDatas =
     exports.upperStringFirstLetter =
     exports.checkMonsterValid =
     exports.getNextPathName =
@@ -101,8 +91,26 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getUniqueName =
     exports.getNextName =
     exports.getNameWithoutIndex =
+    exports.isRunInStandaloneGameWithCache =
+    exports.isRunInStandaloneGame =
+    exports.killProcess =
+    exports.isProcessRunning =
+    exports.isProcessRunningInPath =
+    exports.getProcessImagePathsByPort =
+    exports.getProcessPathAndCommandLine =
+    exports.getProcessImagePathsByName =
+    exports.isRunAsAdmin =
+    exports.execAsUser =
       void 0),
-  (exports.isIpAddress =
+  (exports.isArrayElementSame =
+    exports.objectIterator =
+    exports.isSubdirectoryDataPath =
+    exports.createValueStackByDataPath =
+    exports.getValueByDataPath =
+    exports.ValueStack =
+    exports.createDiffPaths =
+    exports.changeChineseStringToEnglishString =
+    exports.isIpAddress =
     exports.touchInstance =
     exports.execAsync =
     exports.isCurrentBranchAssetAsync =
@@ -111,11 +119,26 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.isTextFileInOriginRequiredListAsync =
     exports.isTextFileByExtension =
     exports.getTextFileOriginRequiredList =
-    exports.getFileDepotInfoAsync =
-    exports.getFileDepotInfo =
+    exports.getFileDepotInfoAsyncBatch =
     exports.isCurrentBranchAsset =
     exports.getAllDepotBranchDataSync =
     exports.getBranchOriginsDataSync =
+    exports.getBranchReqShortPath =
+    exports.compareTextOrder =
+    exports.doJsonHttpDelete =
+    exports.doJsonHttpPost =
+    exports.doJsonHttpGet =
+    exports.isDepotFileExist =
+    exports.toDepotPath =
+    exports.deepCopyData =
+    exports.getMd5 =
+    exports.stringIsNullOrEmpty =
+    exports.formatDateTime =
+    exports.isInPie =
+    exports.isValidVarName =
+    exports.getEditorCommandArgs =
+    exports.getCommandLine =
+    exports.getLocalIp =
       void 0);
 const crypto = require("crypto-js"),
   IEditor_1 = require("../../Interface/IEditor"),
@@ -127,423 +150,226 @@ const crypto = require("crypto-js"),
   Async_1 = require("./Async"),
   File_1 = require("./File"),
   Log_1 = require("./Log");
-function getEnumValues(e) {
-  return Object.keys(e)
-    .filter((t) => Number.isNaN(Number(t)))
-    .map((t) => e[t]);
+function getEnumValues(t) {
+  return Object.keys(t)
+    .filter((e) => Number.isNaN(Number(e)))
+    .map((e) => t[e]);
 }
-function getEnumNames(t) {
-  return Object.keys(t).filter((t) => Number.isNaN(Number(t)));
+function getEnumNames(e) {
+  return Object.keys(e).filter((e) => Number.isNaN(Number(e)));
 }
-function getEnumNameByValue(e, r) {
-  var t = Object.keys(e).find((t) => e[t] === r);
-  return t || "";
+function getEnumNameByValue(t, r) {
+  var e = Object.keys(t).find((e) => t[e] === r);
+  return e || "";
 }
-function subArray(t, e) {
-  return e.length <= 0 ? t : t.filter((t) => !e.includes(t));
+function subArray(e, t) {
+  return t.length <= 0 ? e : e.filter((e) => !t.includes(e));
 }
-function addArray(t, e) {
-  return [...t, ...e];
+function addArray(e, t) {
+  return [...e, ...t];
 }
-function unionArray(t, e) {
-  return Array.from(new Set([...t, ...e]));
+function unionArray(e, t) {
+  return Array.from(new Set([...e, ...t]));
 }
-function arrayToMap(t, e) {
-  return new Map(t.map((t) => [t[e], t]));
+function arrayToMap(e, t) {
+  return new Map(e.map((e) => [e[t], e]));
 }
-function arrayToRecord(t) {
-  const e = {};
-  return t.forEach((t) => (e[t] = t)), e;
+function arrayToRecord(e) {
+  const t = {};
+  return e.forEach((e) => (t[e] = e)), t;
 }
-function calHash(e) {
+function calHash(t) {
   let r = 0;
-  var n = e.length;
+  var n = t.length;
   if (0 !== n) {
-    for (let t = 0; t < n; t++) {
-      var o = e.charCodeAt(t);
+    for (let e = 0; e < n; e++) {
+      var o = t.charCodeAt(e);
       (r = (r << 5) - r + o), (r |= 0);
     }
     r < 0 && (r = -r);
   }
   return r;
 }
-function getFieldCount(t) {
-  let e = 0;
-  for (const r in t) r && e++;
-  return e;
+function getFieldCount(e) {
+  let t = 0;
+  for (const r in e) r && t++;
+  return t;
 }
-function stringify(t, r, e = !0) {
+function stringify(e, r, t = !0) {
   return JSON.stringify(
-    t,
-    (t, e) => {
-      if (!r || "string" != typeof t || !t.startsWith("_")) return e;
+    e,
+    (e, t) => {
+      if (!r || "string" != typeof e || !e.startsWith("_")) return t;
     },
-    e ? 2 : void 0,
+    t ? 2 : void 0,
   );
 }
-function parse(t, e) {
-  return JSON.parse(t, (t, r) => {
-    if (!e || !t.startsWith("_"))
+function parse(e, t) {
+  return JSON.parse(e, (e, r) => {
+    if (!t || !e.startsWith("_"))
       return (
         r instanceof Array &&
-          r.forEach((t, e) => {
-            null === t && (r[e] = void 0);
+          r.forEach((e, t) => {
+            null === e && (r[t] = void 0);
           }),
         r
       );
   });
 }
-function stringFormat(t, ...r) {
-  return t.replace(/{([0-9])}/g, (t, e) =>
-    void 0 !== r[e] ? r[e].toString() : t,
+function stringFormat(e, ...r) {
+  return e.replace(/{([0-9])}/g, (e, t) =>
+    void 0 !== r[t] ? r[t].toString() : e,
   );
 }
-function parseFloatSafe(t, e) {
-  (t = parseFloat(t)), (t = Number.isNaN(t) ? 0 : t);
-  return e ? ((e = 10 ** e), Math.round(t * e) / e) : t;
+function isNumber2dArray(e) {
+  if (!Array.isArray(e)) return !1;
+  for (const t of e) {
+    if (!Array.isArray(t)) return !1;
+    if (!t.every((e) => "number" == typeof e)) return !1;
+  }
+  return !0;
 }
-function parseIntSafe(t, e) {
-  t = parseInt(t, e);
-  return Number.isNaN(t) ? 0 : t;
+function stringifyCsvInt2Array(e) {
+  const t = [];
+  return (
+    e.forEach((e) => {
+      0 < e.length && t.push([e]);
+    }),
+    JSON.stringify(t)
+  );
 }
-function parseBool(t) {
-  return !!t && ("1" === t || "true" === t || "True" === t || "TRUE" === t);
+function isValidNumberString(e) {
+  return !Number.isNaN(Number(e));
 }
-function parseCsvIntArray(t) {
-  return t
-    .substring(1, t.length - 1)
+function parseFloatSafe(e, t) {
+  (e = parseFloat(e)), (e = Number.isNaN(e) ? 0 : e);
+  return t ? ((t = 10 ** t), Math.round(e * t) / t) : e;
+}
+function parseIntSafe(e, t) {
+  e = parseInt(e, t);
+  return Number.isNaN(e) ? 0 : e;
+}
+function parseBool(e) {
+  return !!e && ("1" === e || "true" === e || "True" === e || "TRUE" === e);
+}
+function parseCsvIntArray(e) {
+  return e
+    .replace(/^\s*["\\[]|["\]]\s*$/g, "")
+    .replace(/^\[|\]$/g, "")
     .split(",")
-    .map((t) => parseIntSafe(t));
+    .map((e) => {
+      e = parseIntSafe(e.trim(), 10);
+      return isNaN(e) ? 0 : e;
+    });
 }
-function parseCsvInt2Array(t) {
-  return JSON.parse(t);
+function parseCsvIntToIntMap(e) {
+  e = e.replace(/^\s*["\\[]|["\]]\s*$/g, "").replace(/^\[|\]$/g, "");
+  const r = {};
+  return (
+    e.split(",").forEach((e) => {
+      var [e, t] = e.split(":").map((e) => parseIntSafe(e.trim(), 10));
+      void 0 === e || void 0 === t || isNaN(e) || isNaN(t) || (r[e] = t);
+    }),
+    r
+  );
 }
-function parseCsvStringArray(t) {
-  return t.substring(1, t.length - 1).split(",");
+function parseCsvInt2Array(e) {
+  e = JSON.parse(e);
+  const t = [];
+  return (
+    e.forEach((e) => {
+      0 < e.length && ((e = e[0]), t.push(e));
+    }),
+    t
+  );
 }
-function parseCsvFloatArray(t) {
-  return t
-    .substring(1, t.length - 1)
+function parseCsvStringArray(e) {
+  return e.substring(1, e.length - 1).split(",");
+}
+function parseCsvFloatArray(e) {
+  return e
+    .substring(1, e.length - 1)
     .split(",")
-    .map((t) => parseFloatSafe(t));
+    .map((e) => parseFloatSafe(e));
 }
-function parseCsvLongArray(t) {
-  return t
-    .substring(1, t.length - 1)
+function parseCsvLongArray(e) {
+  return e
+    .substring(1, e.length - 1)
     .split(",")
-    .map((t) => parseIntSafe(t));
+    .map((e) => parseIntSafe(e));
 }
-function parsePos(t) {
-  t = parseCsvIntArray(t);
-  return t ? { X: t[0], Y: t[1], Z: t[2] } : { X: 0, Y: 0, Z: 0 };
+function parsePos(e) {
+  e = parseCsvIntArray(e);
+  return e ? { X: e[0], Y: e[1], Z: e[2] } : { X: 0, Y: 0, Z: 0 };
 }
-function parseVarValue(t, e) {
-  switch (t) {
+function parseVarValue(e, t) {
+  switch (e) {
     case "Boolean":
-      return parseBool(e);
+      return parseBool(t);
     case "String":
-      return e;
+      return t;
     case "Float":
-      return parseFloat(e);
+      return parseFloat(t);
     case "Entity":
     case "Quest":
     case "QuestState":
     case "Prefab":
     case "Int":
-      var r = parseInt(e);
+      var r = parseInt(t);
       return isNaN(r) ? 0 : r;
-    case "Pos":
-      return parsePos(e);
+    case "Transform":
+      return parsePos(t);
   }
-  return IVar_1.varConfig[t];
+  return IVar_1.varConfig[e];
 }
-function stringifyBool(t) {
-  return t ? "1" : "0";
+function stringifyBool(e) {
+  return e ? "1" : "0";
 }
-function stringifyEditor(t) {
+function stringifyEditor(e) {
   return JSON.stringify(
-    t,
-    (t, e) => {
+    e,
+    (e, t) => {
       if (
-        !("string" == typeof t && 0 < t.length) ||
-        t.startsWith("_") ||
-        "object" == typeof e
+        !("string" == typeof e && 0 < e.length) ||
+        e.startsWith("_") ||
+        "object" == typeof t
       )
-        return e;
+        return t;
     },
     2,
   );
 }
-function alignNumber(t, e = 1) {
-  return Math.floor(t / e) * e;
+function alignNumber(e, t = 1) {
+  return Math.floor(e / t) * t;
 }
-function clampAngle(t) {
-  let e = t % 360;
-  return e < 0 && (e += 360), e;
+function clampAngle(e) {
+  let t = e % 360;
+  return t < 0 && (t += 360), t;
 }
-function clampNumber(t, e, r) {
-  return Math.max(e, Math.min(t, r));
+function clampNumber(e, t, r) {
+  return Math.max(t, Math.min(e, r));
 }
-function isNumText(t) {
-  return /^\d+(\.\d+)?$/.test(t);
+function isNumText(e) {
+  return /^\d+(\.\d+)?$/.test(e);
 }
-function readJsonObj(t, e) {
-  t = (0, File_1.readFile)(t);
-  return t ? parse(t) : e || void 0;
+function isPipelineEnv() {
+  return (0, Platform_1.getPlatform)().IsPipelineEnv;
 }
-function writeJson(t, e, r) {
-  (0, File_1.writeFile)(e, stringify(t, r));
+function readJsonObj(e, t) {
+  e = (0, File_1.readFile)(e);
+  return e ? parse(e) : t || void 0;
 }
-function writeDataJson(t, e) {
-  writeJson(t, e, !0);
+function writeJson(e, t, r) {
+  (0, File_1.writeFile)(t, stringify(e, r));
 }
-function getClassNameFromBpPath(t) {
-  var e = t.lastIndexOf(".");
-  return e < 0
-    ? ((0, Log_1.error)("Blueprint path is invalid: " + t), t)
-    : t.slice(e + 1);
+function writeDataJson(e, t) {
+  writeJson(e, t, !0);
 }
-function createMultiData(e, t, r) {
-  if (void 0 === e) return (0, IUtil_1.clearIgnoreField)(t, r);
-  if (null == t) return null;
-  if ("object" != typeof t || "object" != typeof e)
-    return t !== e ? null : (0, IUtil_1.clearIgnoreField)(t, r);
-  if (e instanceof Array) {
-    var n = t;
-    if (!n || e.length !== n.length) return null;
-    const s = [];
-    for (let t = 0; t < e.length; t++) {
-      var o = createMultiData(e[t], n[t], r);
-      s.push(o);
-    }
-    return s;
-  }
-  const s = {};
-  for (const c in t) r?.(c) || (void 0 === e[c] && (s[c] = null));
-  for (const p in e) {
-    var a, i, u;
-    r?.(p) ||
-      ((a = t[p]),
-      (i = e[p]),
-      null === a || null === i
-        ? (s[p] = null)
-        : void 0 === a
-          ? (s[p] = void 0 === i ? void 0 : null)
-          : (u = typeof a) == typeof i && "object" == u
-            ? ((u = createMultiData(a, i, r)), (s[p] = u))
-            : (s[p] = a !== i ? null : a));
-  }
-  return s;
-}
-function applyMultiData(r, t, n) {
-  if (null === t) return r;
-  if ("object" != typeof t || "object" != typeof r) return t;
-  if (r instanceof Array) {
-    var e = t;
-    if (null !== e) {
-      if (0 === e.length || e.length < r.length) return e;
-      0 < e.length &&
-        e.forEach((t, e) => {
-          r[e] = "object" != typeof t ? t : applyMultiData(r[e], t, n);
-        });
-    }
-    return r;
-  }
-  var o,
-    s,
-    a,
-    i,
-    u = {};
-  for (const c in t)
-    n?.(c) ||
-      null === t ||
-      ((o = t[c]),
-      void 0 === r[c] &&
-        null !== o &&
-        (u[c] = (0, IUtil_1.removeNullField)(o)));
-  for (const p in r)
-    n?.(p) ||
-      ((s = t[p]),
-      (a = r[p]),
-      null !== s
-        ? (i = typeof s) == typeof a && "object" == i
-          ? ((i = applyMultiData(a, s, n)), (u[p] = i))
-          : (u[p] = s)
-        : (u[p] = a));
-  return u;
-}
-function strcmp(t, e) {
-  return t < e ? -1 : e < t ? 1 : 0;
-}
-function strcmpi(t, e) {
-  return t.toLowerCase() < e.toLowerCase()
-    ? -1
-    : t.toLowerCase() > e.toLowerCase()
-      ? 1
-      : 0;
-}
-function forEachField(t, e, r) {
-  if ("object" == typeof t) {
-    var n = t;
-    for (const s in n) {
-      var o = n[s];
-      "object" == typeof o ? forEachField(o, e, r) : e(s, o) && r(n, s, o);
-    }
-  }
-}
-function hasFieldMatch(t, e) {
-  if ("object" == typeof t) {
-    var r = t;
-    for (const o in r) {
-      var n = r[o];
-      if (e(o, n)) return !0;
-      if ("object" == typeof n && hasFieldMatch(n, e)) return !0;
-      if (Array.isArray(n))
-        for (const s of n)
-          if ("object" == typeof s && hasFieldMatch(s, e)) return !0;
-    }
-  }
-  return !1;
-}
-function getMacAddress() {
-  return (0, Platform_1.getPlatform)().GetMacAddress();
-}
-function getNetWorkAddress() {
-  var t = (0, Platform_1.getPlatform)().GetPhysicMacAddress();
-  if ("" !== t) return t;
-}
-function genGuid() {
-  let r = new Date().getTime(),
-    n = 0;
-  return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function (t) {
-    let e = 16 * Math.random();
-    return (
-      0 < r
-        ? ((e = (r + e) % 16 | 0), (r = Math.floor(r / 16)))
-        : ((e = (n + e) % 16 | 0), (n = Math.floor(n / 16))),
-      ("x" === t ? e : (3 & e) | 8).toString(16)
-    );
-  });
-}
-function getTimeSeconds() {
-  return new Date().getTime() / Async_1.MS_PER_SEC;
-}
-function exec(t, e) {
-  return (0, Platform_1.getPlatform)().Exec(t, e);
-}
-function execAsUser(t, e) {
-  return exec(
-    (0, File_1.getTsRoot)() +
-      "/Src/UniverseEditor/Tool/run_as_standard_user.bat" +
-      " " +
-      t,
-    e,
-  );
-}
-function isRunAsAdmin() {
-  var [t] = exec("net session");
-  return t;
-}
-function getProcessImagePathsByName(t) {
-  return (0, Platform_1.getPlatform)().GetProcessImagePathsByName(t);
-}
-function isProcessRunningInPath(t) {
-  const e = t.replace(/\\/g, "/");
-  return getProcessImagePathsByName(e.split("/").pop()).some(
-    (t) => t.replace(/\\/g, "/") === e,
-  );
-}
-function isProcessRunning(t) {
-  t = getProcessImagePathsByName(t);
-  return [0 < t.length, t];
-}
-function killProcess(t) {
-  exec(`wmic process where "name='${t}'" delete`);
-}
-function getNameWithoutIndex(t) {
-  var e = t.match(/[^0-9]/g),
-    e = t.lastIndexOf(e ? e[e.length - 1] : "");
-  return "" + t.substring(0, e + 1);
-}
-function getNextName(t, e = "-") {
-  if (!t) return `user${e}1`;
-  let r = -1,
-    n = "";
-  if (
-    ((n = e
-      ? ((r = t.lastIndexOf(e)), t.substring(r + 1))
-      : ((o = t.match(/[^0-9]/g)),
-        (r = t.lastIndexOf(o ? o[o.length - 1] : "") + 1),
-        t.substring(r))),
-    r < 0)
-  )
-    return "" + t + e + "1";
-  var o = Number.parseInt(n);
-  if (isNaN(o)) return "" + t + e + "1";
-  var s = n.length;
-  for (n = (o + 1).toString(); n.length < s; ) n = "0" + n;
-  return "" + t.substring(0, r) + e + n;
-}
-function getUniqueName(e, t, r = "-") {
-  if (e.length < 1) return `${t || "user"}${r}1`;
-  let n = getNextName(t || e[0], r);
-  for (let t = 0; t < e.length && e.includes(n); t++) n = getNextName(n, r);
-  return n;
-}
-function getPreName(t, e = "-") {
-  var r, n;
-  return t
-    ? (r = t.lastIndexOf(e)) < 0 ||
-      ((n = Number.parseInt(t.substring(r + 1))), isNaN(n))
-      ? "" + t + e + "1"
-      : ((n = n <= 1 ? n : n - 1), "" + t.substring(0, r) + e + n)
-    : `user${e}1`;
-}
-function getNextPathName(t) {
-  var e = t.lastIndexOf("."),
-    r = t.substring(e, t.length);
-  return getNextName(t.substring(0, e)) + r;
-}
-function checkMonsterValid(t) {
-  if (t.length < 2) return [{ X: 0, Y: 0, Z: 0 }, -1];
-  var e = t[0].X ?? 0,
-    r = t[0].Y ?? 0,
-    n = t[1].X ?? 0,
-    o = t[1].Y ?? 0;
-  let s = n < e ? n : e,
-    a = n < e ? e : n,
-    i = o < r ? o : r,
-    u = o < r ? r : o,
-    c = 2;
-  for (c = 2; c < t.length; c++) {
-    var p = t[c].X ?? 0,
-      f = t[c].Y ?? 0;
-    (s = p < s ? p : s),
-      (a = p > a ? p : a),
-      (i = f < i ? f : i),
-      (u = f > u ? f : u);
-  }
-  return [
-    { X: (s + a) / 2, Y: (u + i) / 2, Z: 0 },
-    Math.floor(Math.sqrt((a - s) * (a - s) + (u - i) * (u - i))) / 2,
-  ];
-}
-function upperStringFirstLetter(t) {
-  return t.charAt(0).toUpperCase() + t.slice(1);
-}
-function getClientDatas() {
-  var [t, e] = (0, Platform_1.getPlatform)().Exec(
-    "p4 -ztag -Mj clients -t --me",
-  );
-  if (t)
-    return e
-      .trim()
-      .split("\n")
-      .map((t) => parse(t.trim().replace('"client"', '"Client"')));
-}
-function checkP4Connection() {
-  var [t, e] = (0, Platform_1.getPlatform)().Exec("p4 info");
-  return t && !e.includes("Perforce client error");
+function getClassNameFromBpPath(e) {
+  var t = e.lastIndexOf(".");
+  return t < 0
+    ? ((0, Log_1.error)("Blueprint path is invalid: " + e), e)
+    : e.slice(t + 1);
 }
 (exports.getEnumValues = getEnumValues),
   (exports.getEnumNames = getEnumNames),
@@ -558,10 +384,14 @@ function checkP4Connection() {
   (exports.stringify = stringify),
   (exports.parse = parse),
   (exports.stringFormat = stringFormat),
+  (exports.isNumber2dArray = isNumber2dArray),
+  (exports.stringifyCsvInt2Array = stringifyCsvInt2Array),
+  (exports.isValidNumberString = isValidNumberString),
   (exports.parseFloatSafe = parseFloatSafe),
   (exports.parseIntSafe = parseIntSafe),
   (exports.parseBool = parseBool),
   (exports.parseCsvIntArray = parseCsvIntArray),
+  (exports.parseCsvIntToIntMap = parseCsvIntToIntMap),
   (exports.parseCsvInt2Array = parseCsvInt2Array),
   (exports.parseCsvStringArray = parseCsvStringArray),
   (exports.parseCsvFloatArray = parseCsvFloatArray),
@@ -574,11 +404,212 @@ function checkP4Connection() {
   (exports.clampAngle = clampAngle),
   (exports.clampNumber = clampNumber),
   (exports.isNumText = isNumText),
+  (exports.isPipelineEnv = isPipelineEnv),
   (exports.readJsonObj = readJsonObj),
   (exports.writeJson = writeJson),
   (exports.writeDataJson = writeDataJson),
-  (exports.getClassNameFromBpPath = getClassNameFromBpPath),
-  (exports.createMultiData = createMultiData),
+  (exports.getClassNameFromBpPath = getClassNameFromBpPath);
+const ARRAY_INDEX_KEY = "_arrayIndex";
+function createMultiData(t, e, r) {
+  if (void 0 === t) return (0, IUtil_1.clearIgnoreField)(e, r);
+  if (null == e) return null;
+  if ("object" != typeof e || "object" != typeof t)
+    return e !== t ? null : (0, IUtil_1.clearIgnoreField)(e, r);
+  if (t instanceof Array) {
+    var n = e;
+    if (!n || t.length !== n.length) return null;
+    const a = [];
+    for (let e = 0; e < t.length; e++) {
+      var o = createMultiData(t[e], n[e], r);
+      "object" == typeof o && null !== o && (o[ARRAY_INDEX_KEY] = e), a.push(o);
+    }
+    return a;
+  }
+  const a = {};
+  for (const p in e) {
+    var s;
+    r?.(p) ||
+      ((s = e[p]), void 0 === t[p] && (a[p] = void 0 === s ? void 0 : null));
+  }
+  for (const f in t) {
+    var i, u, c;
+    r?.(f) ||
+      ((i = e[f]),
+      (u = t[f]),
+      null === i || null === u
+        ? (a[f] = null)
+        : void 0 === i
+          ? (a[f] = void 0 === u ? void 0 : null)
+          : (c = typeof i) == typeof u && "object" == c
+            ? ((c = createMultiData(i, u, r)), (a[f] = c))
+            : (a[f] = i !== u ? null : i));
+  }
+  return a;
+}
+function applyMultiData(e, t, r) {
+  if (null === t) return e;
+  if ("object" != typeof t || "object" != typeof e) return t;
+  if (e instanceof Array) {
+    const u = e;
+    if (null === t) return u;
+    {
+      const n = [];
+      return (
+        t.forEach((e, t) => {
+          null === e
+            ? void 0 !== u[t] &&
+              null !== u[t] &&
+              ((t = applyMultiData(u[t], e, r)), n.push(t))
+            : void 0 !== (t = e[ARRAY_INDEX_KEY]) && t < u.length
+              ? ((t = applyMultiData(u[t], e, r)), n.push(t))
+              : n.push(e);
+        }),
+        n
+      );
+    }
+  }
+  const n = {};
+  for (const c in t) {
+    var o;
+    r?.(c) ||
+      null === t ||
+      c === ARRAY_INDEX_KEY ||
+      ((o = t[c]),
+      void 0 === e[c] &&
+        null !== o &&
+        (n[c] = (0, IUtil_1.removeNullField)(o)));
+  }
+  for (const p in e) {
+    var a, s, i;
+    r?.(p) ||
+      p === ARRAY_INDEX_KEY ||
+      ((a = t[p]),
+      (s = e[p]),
+      null !== a
+        ? (i = typeof a) == typeof s && "object" == i
+          ? ((i = applyMultiData(s, a, r)), (n[p] = i))
+          : (n[p] = a)
+        : (n[p] = s));
+  }
+  return n;
+}
+function strcmp(e, t) {
+  return e < t ? -1 : t < e ? 1 : 0;
+}
+function strcmpi(e, t) {
+  return e.toLowerCase() < t.toLowerCase()
+    ? -1
+    : e.toLowerCase() > t.toLowerCase()
+      ? 1
+      : 0;
+}
+function forEachField(e, t, r) {
+  if ("object" == typeof e) {
+    var n = e;
+    for (const a in n) {
+      var o = n[a];
+      "object" == typeof o ? forEachField(o, t, r) : t(a, o) && r(n, a, o);
+    }
+  }
+}
+function hasFieldMatch(e, t) {
+  if ("object" == typeof e) {
+    var r = e;
+    for (const o in r) {
+      var n = r[o];
+      if (t(o, n)) return !0;
+      if ("object" == typeof n && hasFieldMatch(n, t)) return !0;
+      if (Array.isArray(n))
+        for (const a of n)
+          if ("object" == typeof a && hasFieldMatch(a, t)) return !0;
+    }
+  }
+  return !1;
+}
+function getMacAddress() {
+  return (0, Platform_1.getPlatform)().GetMacAddress();
+}
+function getNetWorkAddress() {
+  var e = (0, Platform_1.getPlatform)().GetPhysicMacAddress();
+  if ("" !== e) return e;
+}
+function genGuid() {
+  let r = new Date().getTime(),
+    n = 0;
+  return "xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx".replace(/[xy]/g, function (e) {
+    let t = 16 * Math.random();
+    return (
+      0 < r
+        ? ((t = (r + t) % 16 | 0), (r = Math.floor(r / 16)))
+        : ((t = (n + t) % 16 | 0), (n = Math.floor(n / 16))),
+      ("x" === e ? t : (3 & t) | 8).toString(16)
+    );
+  });
+}
+function regenerateField(t) {
+  if (!t) return t;
+  if (t instanceof Array) {
+    var r = [];
+    for (let e = 0; e < t.length; e++) r[e] = regenerateField(t[e]);
+    return r;
+  }
+  if ("object" != typeof t) return t;
+  var e,
+    n = {};
+  for (const o in t)
+    (0, IUtil_1.isGuid)(o)
+      ? (n[o] = genGuid())
+      : ((e = t[o]), (n[o] = regenerateField(e)));
+  return n;
+}
+function getTimeSeconds() {
+  return new Date().getTime() / Async_1.MS_PER_SEC;
+}
+function exec(e, t) {
+  return (0, Platform_1.getPlatform)().Exec(e, t);
+}
+function execAsUser(e, t) {
+  return exec(
+    (0, File_1.getTsRoot)() +
+      "/Src/UniverseEditor/Tool/run_as_standard_user.bat" +
+      " " +
+      e,
+    t,
+  );
+}
+function isRunAsAdmin() {
+  var [e] = exec("net session");
+  return e;
+}
+function getProcessImagePathsByName(e) {
+  return (0, Platform_1.getPlatform)().GetProcessImagePathsByName(e);
+}
+function getProcessPathAndCommandLine(e) {
+  return (0, Platform_1.getPlatform)().GetProcessPathAndCommandLine(e);
+}
+function getProcessImagePathsByPort(e) {
+  return (0, Platform_1.getPlatform)().GetProcessImagePathsByPort(e);
+}
+function isProcessRunningInPath(e) {
+  const t = e.replace(/\\/g, "/");
+  return getProcessImagePathsByName(t.split("/").pop()).some(
+    (e) => e.replace(/\\/g, "/") === t,
+  );
+}
+function isProcessRunning(e) {
+  e = getProcessImagePathsByName(e);
+  return [0 < e.length, e];
+}
+function killProcess(e) {
+  exec(`wmic process where "name='${e}'" delete`);
+}
+function isRunInStandaloneGame() {
+  for (const e of getProcessPathAndCommandLine("UE4Editor.exe"))
+    if (e.CommandLine.includes('-SessionName="Play in Standalone Game"'))
+      return !0;
+  return !1;
+}
+(exports.createMultiData = createMultiData),
   (exports.applyMultiData = applyMultiData),
   (exports.strcmp = strcmp),
   (exports.strcmpi = strcmpi),
@@ -587,32 +618,160 @@ function checkP4Connection() {
   (exports.getMacAddress = getMacAddress),
   (exports.getNetWorkAddress = getNetWorkAddress),
   (exports.genGuid = genGuid),
+  (exports.regenerateField = regenerateField),
   (exports.getTimeSeconds = getTimeSeconds),
   (exports.exec = exec),
   (exports.execAsUser = execAsUser),
   (exports.isRunAsAdmin = isRunAsAdmin),
   (exports.getProcessImagePathsByName = getProcessImagePathsByName),
+  (exports.getProcessPathAndCommandLine = getProcessPathAndCommandLine),
+  (exports.getProcessImagePathsByPort = getProcessImagePathsByPort),
   (exports.isProcessRunningInPath = isProcessRunningInPath),
   (exports.isProcessRunning = isProcessRunning),
   (exports.killProcess = killProcess),
+  (exports.isRunInStandaloneGame = isRunInStandaloneGame);
+let isStandaloneGame = !1,
+  lastCheckNewProcessTime = 0;
+function isRunInStandaloneGameWithCache() {
+  var e = getTimeSeconds();
+  return (
+    e - lastCheckNewProcessTime < 5 ||
+      ((lastCheckNewProcessTime = e),
+      (isStandaloneGame = isRunInStandaloneGame())),
+    isStandaloneGame
+  );
+}
+function getNameWithoutIndex(e) {
+  var t = e.match(/[^0-9]/g),
+    t = e.lastIndexOf(t ? t[t.length - 1] : "");
+  return "" + e.substring(0, t + 1);
+}
+function getNextName(e, t = "-") {
+  if (!e) return `user${t}1`;
+  let r = -1,
+    n = "";
+  if (
+    ((n = t
+      ? ((r = e.lastIndexOf(t)), e.substring(r + 1))
+      : ((o = e.match(/[^0-9]/g)),
+        (r = e.lastIndexOf(o ? o[o.length - 1] : "") + 1),
+        e.substring(r))),
+    r < 0)
+  )
+    return "" + e + t + "1";
+  var o = Number.parseInt(n);
+  if (isNaN(o)) return "" + e + t + "1";
+  var a = n.length;
+  for (n = (o + 1).toString(); n.length < a; ) n = "0" + n;
+  return "" + e.substring(0, r) + t + n;
+}
+function getUniqueName(t, e, r = "-") {
+  if (t.length < 1) return `${e || "user"}${r}1`;
+  let n = getNextName(e || t[0], r);
+  for (let e = 0; e < t.length && t.includes(n); e++) n = getNextName(n, r);
+  return n;
+}
+function getPreName(e, t = "-") {
+  var r, n;
+  return e
+    ? (r = e.lastIndexOf(t)) < 0 ||
+      ((n = Number.parseInt(e.substring(r + 1))), isNaN(n))
+      ? "" + e + t + "1"
+      : ((n = n <= 1 ? n : n - 1), "" + e.substring(0, r) + t + n)
+    : `user${t}1`;
+}
+function getNextPathName(e) {
+  var t = e.lastIndexOf("."),
+    r = e.substring(t, e.length);
+  return getNextName(e.substring(0, t)) + r;
+}
+function checkMonsterValid(e) {
+  if (e.length < 2) return [{ X: 0, Y: 0, Z: 0 }, -1];
+  var t = e[0].X ?? 0,
+    r = e[0].Y ?? 0,
+    n = e[1].X ?? 0,
+    o = e[1].Y ?? 0;
+  let a = n < t ? n : t,
+    s = n < t ? t : n,
+    i = o < r ? o : r,
+    u = o < r ? r : o,
+    c = 2;
+  for (c = 2; c < e.length; c++) {
+    var p = e[c].X ?? 0,
+      f = e[c].Y ?? 0;
+    (a = p < a ? p : a),
+      (s = p > s ? p : s),
+      (i = f < i ? f : i),
+      (u = f > u ? f : u);
+  }
+  return [
+    { X: (a + s) / 2, Y: (u + i) / 2, Z: 0 },
+    Math.floor(Math.sqrt((s - a) * (s - a) + (u - i) * (u - i))) / 2,
+  ];
+}
+function upperStringFirstLetter(e) {
+  return e.charAt(0).toUpperCase() + e.slice(1);
+}
+function getP4CurrentDirectory() {
+  var [e, t] = (0, Platform_1.getPlatform)().Exec("p4 info");
+  return (e = e && t.split("\n").find((e) => e.includes("Current directory: ")))
+    ? 0 <= (e = (t = e.replace(/\\/g, "/")).indexOf("/Package/Engine/"))
+      ? t.substring("Current directory: ".length, e)
+      : t.substring("Current directory: ".length)
+    : "";
+}
+(exports.isRunInStandaloneGameWithCache = isRunInStandaloneGameWithCache),
   (exports.getNameWithoutIndex = getNameWithoutIndex),
   (exports.getNextName = getNextName),
   (exports.getUniqueName = getUniqueName),
   (exports.getPreName = getPreName),
   (exports.getNextPathName = getNextPathName),
   (exports.checkMonsterValid = checkMonsterValid),
-  (exports.upperStringFirstLetter = upperStringFirstLetter),
+  (exports.upperStringFirstLetter = upperStringFirstLetter);
+let clientInfos = void 0;
+function getClientDatas() {
+  if (clientInfos) return clientInfos;
+  let e = [];
+  var t,
+    r,
+    n = "p4 -ztag -Mj clients -t --me";
+  return 0 !==
+    (e =
+      0 ===
+        (e =
+          isPipelineEnv() &&
+          "" !== (t = getP4CurrentDirectory()) &&
+          ((t = t
+            .split("/")
+            .map((e) => `find /I "${e}"`)
+            .join(" | ")),
+          ([t, r] = (0, Platform_1.getPlatform)().Exec(n + " | " + t)),
+          t)
+            ? r.trim().split("\n")
+            : e).length && (([t, r] = (0, Platform_1.getPlatform)().Exec(n)), t)
+        ? r.trim().split("\n")
+        : e).length
+    ? (clientInfos = e.map((e) =>
+        parse(e.trim().replace('"client"', '"Client"')),
+      ))
+    : void 0;
+}
+function checkP4Connection() {
+  var [e, t] = (0, Platform_1.getPlatform)().Exec("p4 info");
+  return e && !t.includes("Perforce client error");
+}
+(exports.getClientDatas = getClientDatas),
   (exports.checkP4Connection = checkP4Connection);
 let currentP4ClientData = void 0;
 function getP4ClientData() {
   if (currentP4ClientData) return currentP4ClientData;
   if (checkP4Connection()) {
-    var t = getClientDatas();
-    if (t) {
-      const e = upperStringFirstLetter((0, File_1.getProjectPath)(""));
-      return (currentP4ClientData = t.find((t) =>
-        e.startsWith(
-          (upperStringFirstLetter(t.Root).replace(/\\/g, "/") + "/").replace(
+    var e = getClientDatas();
+    if (e) {
+      const t = upperStringFirstLetter((0, File_1.getProjectPath)(""));
+      return (currentP4ClientData = e.find((e) =>
+        t.startsWith(
+          (upperStringFirstLetter(e.Root).replace(/\\/g, "/") + "/").replace(
             /\/+/g,
             "/",
           ),
@@ -621,39 +780,54 @@ function getP4ClientData() {
     }
   }
 }
-function getStreamFromSpecFile(t) {
+function getP4ClientDataByFilePath(e) {
+  var t = getClientDatas();
   if (t) {
-    var e = (0, File_1.getProjectPath)(
+    const r = upperStringFirstLetter(e);
+    return t.find((e) =>
+      r.startsWith(
+        (upperStringFirstLetter(e.Root).replace(/\\/g, "/") + "/").replace(
+          /\/+/g,
+          "/",
+        ),
+      ),
+    );
+  }
+}
+function getStreamFromSpecFile(e) {
+  if (e) {
+    var t = (0, File_1.getProjectPath)(
         "Content/Aki/JavaScript_Raw/UniverseEditor/Interface/IGlobal.js",
       ).replace(/\\/g, "/"),
-      [t, e] = (0, Platform_1.getPlatform)().Exec(
-        `p4 -ztag -c ${t} filelog -m 1 ` + e,
+      [e, t] = (0, Platform_1.getPlatform)().Exec(
+        `p4 -ztag -c ${e} filelog -m 1 ` + t,
       );
-    if (t) {
-      t = e.split("\n").find((t) => t.includes("depotFile"));
-      if (t)
-        return (e = /\/\/([^/]+\/[^/]+)\//.exec(t)) && e[1]
-          ? "//" + e[1]
+    if (e) {
+      e = t.split("\n").find((e) => e.includes("depotFile"));
+      if (e)
+        return (t = /\/\/([^/]+\/[^/]+)\//.exec(e)) && t[1]
+          ? "//" + t[1]
           : void 0;
     }
   }
 }
 function getStreamFromEnv() {
-  var t =
+  var e =
     process.env.Stream ??
     process.env.STREAM ??
     process.env.AKI_Stream ??
     process.env.Branch;
-  if (t) return t.indexOf("//aki/") < 0 ? "//aki/" + t : t;
+  if (e) return e.indexOf("//aki/") < 0 ? "//aki/" + e : e;
 }
+exports.getP4ClientDataByFilePath = getP4ClientDataByFilePath;
 let currentStream = void 0;
 function getCurrentP4Stream() {
-  var t;
+  var e;
   return (
     currentStream ||
       ((currentStream = getStreamFromEnv()) ||
-        ((t = getP4ClientData()),
-        (currentStream = t?.Stream ?? getStreamFromSpecFile(t?.Client))),
+        ((e = getP4ClientData()),
+        (currentStream = e?.Stream ?? getStreamFromSpecFile(e?.Client))),
       (0, Log_1.log)("Run in Stream: " + currentStream)),
     currentStream
   );
@@ -665,9 +839,9 @@ function getCurrentClientName() {
   return getP4ClientData()?.Client;
 }
 function getCurrentP4Branch() {
-  var t = getCurrentP4Stream();
-  if (!t) throw new Error("找不到当前工作空间的Stream");
-  if (t.startsWith("//aki/")) return t.substring("//aki/".length);
+  var e = getCurrentP4Stream();
+  if (!e) throw new Error("找不到当前工作空间的Stream");
+  if (e.startsWith("//aki/")) return e.substring("//aki/".length);
   throw new Error("当前P4环境不是aki分支");
 }
 function getWorkspaceBranch() {
@@ -676,14 +850,14 @@ function getWorkspaceBranch() {
 function getCurrentP4Owner() {
   return getP4ClientData()?.Owner;
 }
-function getChangeListShelveFiles(t) {
-  var t = "p4 -ztag -Mj describe -S " + t,
-    [t, e] = (0, Platform_1.getPlatform)().Exec(t);
-  if (!t) return [];
-  t = parse(e);
-  if (!t) return [];
+function getChangeListShelveFiles(e) {
+  var e = "p4 -ztag -Mj describe -S " + e,
+    [e, t] = (0, Platform_1.getPlatform)().Exec(e);
+  if (!e) return [];
+  e = parse(t);
+  if (!e) return [];
   var r = [];
-  for (const n of Object.entries(t)) n[0].includes("depotFile") && r.push(n[1]);
+  for (const n of Object.entries(e)) n[0].includes("depotFile") && r.push(n[1]);
   return r;
 }
 (exports.getCurrentP4Stream = getCurrentP4Stream),
@@ -696,69 +870,80 @@ function getChangeListShelveFiles(t) {
 let akiBasePath = void 0;
 function getAkiBaseLocalPath() {
   if (akiBasePath) return akiBasePath;
-  var e = getClientDatas();
-  if (e) {
-    e = e.filter((t) => "//AkiBase/mainline" === t.Stream);
-    if (e.length <= 0) (0, Log_1.error)("找不到AkiBase目录, 请先创建WorkSpace");
+  var t = getClientDatas();
+  if (t) {
+    t = t.filter((e) => "//AkiBase/mainline" === e.Stream);
+    if (t.length <= 0) (0, Log_1.error)("找不到AkiBase目录, 请先创建WorkSpace");
     else {
-      let t = void 0;
-      for (const n of e) {
+      let e = void 0;
+      for (const n of t) {
         var r = n.Root;
         if ((0, File_1.existDir)(r)) {
-          t = n;
+          e = n;
           break;
         }
       }
-      if (t) return (akiBasePath = t.Root);
+      if (e) return (akiBasePath = e.Root);
       (0, Log_1.error)("本地找不到AkiBase目录, 请先创建WorkSpace");
     }
   }
 }
-function getAkiBaseProjectPath(t) {
-  return getAkiBaseLocalPath() + "/Source/Client/" + t;
+function getAkiBaseProjectPath(e) {
+  return getAkiBaseLocalPath() + "/Source/Client/" + e;
+}
+(exports.getAkiBaseLocalPath = getAkiBaseLocalPath),
+  (exports.getAkiBaseProjectPath = getAkiBaseProjectPath);
+let akiBaseClient = void 0;
+function getAkiBaseClient() {
+  if (akiBaseClient) return akiBaseClient;
+  var e = getClientDatas();
+  if (e) {
+    e = e.find((e) => "//AkiBase/mainline" === e.Stream);
+    if (e) return (akiBaseClient = e.Client);
+    (0, Log_1.error)("找不到AkiBase目录, 请先创建WorkSpace");
+  }
 }
 function loadEditorSaviorSyncConfig() {
-  var t = new Map(),
-    e = (0, File_1.getUserDirPath)(".editor_savior/sync_config.json");
-  if ((0, File_1.existFile)(e)) {
-    var r = readJsonObj(e);
+  var e = new Map(),
+    t = (0, File_1.getUserDirPath)(".editor_savior/sync_config.json");
+  if ((0, File_1.existFile)(t)) {
+    var r = readJsonObj(t);
     if (r)
       for (const o in r) {
         var n = r[o];
-        n.forEach((t) => {
-          t.Type = "EditorSavior";
+        n.forEach((e) => {
+          e.Type = "EditorSavior";
         }),
-          t.set(o, n);
+          e.set(o, n);
       }
   }
-  return t;
+  return e;
 }
 function getCurrentClientEditorSaviorSyncData() {
-  var t = getCurrentP4Stream();
-  if (t) {
-    t = loadEditorSaviorSyncConfig().get(t);
-    if (t) return t.find((t) => t.ClientName === getCurrentClientName());
+  var e = getCurrentP4Stream();
+  if (e) {
+    e = loadEditorSaviorSyncConfig().get(e);
+    if (e) return e.find((e) => e.ClientName === getCurrentClientName());
   }
 }
 function loadUgsSyncConfig() {
-  var t = (0, File_1.getProjectPath)("../../.ugs/state.json");
-  if ((0, File_1.existFile)(t)) {
-    t = readJsonObj(t);
-    if (t)
-      return (t.Type = "Ugs"), (t.Timestamp = Date.parse(t.LastSyncTime)), t;
+  var e = (0, File_1.getProjectPath)("../../.ugs/state.json");
+  if ((0, File_1.existFile)(e)) {
+    e = readJsonObj(e);
+    if (e)
+      return (e.Type = "Ugs"), (e.Timestamp = Date.parse(e.LastSyncTime)), e;
   }
 }
 function getCurrentSyncData() {
-  var t,
-    e = getCurrentClientEditorSaviorSyncData(),
+  var e,
+    t = getCurrentClientEditorSaviorSyncData(),
     r = loadUgsSyncConfig();
-  return e && r
-    ? ((t = isNaN(e.Timestamp) ? -1 : e.Timestamp),
-      (isNaN(r.Timestamp) ? -1 : r.Timestamp) < t ? e : r)
-    : (e ?? r);
+  return t && r
+    ? ((e = isNaN(t.Timestamp) ? -1 : t.Timestamp),
+      (isNaN(r.Timestamp) ? -1 : r.Timestamp) < e ? t : r)
+    : (t ?? r);
 }
-(exports.getAkiBaseLocalPath = getAkiBaseLocalPath),
-  (exports.getAkiBaseProjectPath = getAkiBaseProjectPath),
+(exports.getAkiBaseClient = getAkiBaseClient),
   (exports.loadEditorSaviorSyncConfig = loadEditorSaviorSyncConfig),
   (exports.getCurrentClientEditorSaviorSyncData =
     getCurrentClientEditorSaviorSyncData),
@@ -767,20 +952,20 @@ function getCurrentSyncData() {
 let currentSafeVersion = void 0;
 function getLocalSafeVersion() {
   if (void 0 === currentSafeVersion) {
-    var t = getCurrentSyncData();
-    if (!t)
+    var e = getCurrentSyncData();
+    if (!e)
       return (
-        (0, Log_1.warn)(
+        ((currentSafeVersion = 0), Log_1.warn)(
           "当前未从【编辑器救世主】或【UGS】更新过安全版本，请先拉取安全版本",
         ),
         0
       );
-    switch (t.Type) {
+    switch (e.Type) {
       case "EditorSavior":
-        currentSafeVersion = t.ChangeNum;
+        currentSafeVersion = e.ChangeNum;
         break;
       case "Ugs":
-        currentSafeVersion = t.CurrentChangeNumber;
+        currentSafeVersion = e.CurrentChangeNumber;
     }
   }
   return currentSafeVersion;
@@ -797,56 +982,78 @@ function isNodeJsPlatform() {
 function isRuntimePlatform() {
   return 2 === getPlatformType();
 }
-function isVectorEqual(t, e, r = 0, n = 1e-4) {
+function isVectorEqual(e, t, r = 0, n = 1e-4) {
   return (
-    Math.abs((t?.X ?? r) - (e?.X ?? r)) <= n &&
-    Math.abs((t?.Y ?? r) - (e?.Y ?? r)) <= n &&
-    Math.abs((t?.Z ?? r) - (e?.Z ?? r)) <= n
+    Math.abs((e?.X ?? r) - (t?.X ?? r)) <= n &&
+    Math.abs((e?.Y ?? r) - (t?.Y ?? r)) <= n &&
+    Math.abs((e?.Z ?? r) - (t?.Z ?? r)) <= n
   );
 }
-function getVectorDistance(t, e) {
-  var r = (t.X ?? 0) - (e.X ?? 0),
-    n = (t.Y ?? 0) - (e.Y ?? 0),
-    t = (t.Z ?? 0) - (e.Z ?? 0);
-  return Math.sqrt(r * r + n * n + t * t);
+function getVectorDistance(e, t) {
+  var r = (e.X ?? 0) - (t.X ?? 0),
+    n = (e.Y ?? 0) - (t.Y ?? 0),
+    e = (e.Z ?? 0) - (t.Z ?? 0);
+  return Math.sqrt(r * r + n * n + e * e);
 }
-function isVector2Equal(t, e, r = 0, n = 1e-4) {
+function isVector2Equal(e, t, r = 0, n = 1e-4) {
   return (
-    Math.abs((t?.X ?? r) - (e?.X ?? r)) <= n &&
-    Math.abs((t?.Y ?? r) - (e?.Y ?? r)) <= n
+    Math.abs((e?.X ?? r) - (t?.X ?? r)) <= n &&
+    Math.abs((e?.Y ?? r) - (t?.Y ?? r)) <= n
   );
 }
-function addVector(t, e) {
+function addVector(e, t) {
   return {
-    X: (t?.X ?? 0) + (e?.X ?? 0),
-    Y: (t?.Y ?? 0) + (e?.Y ?? 0),
-    Z: (t?.Z ?? 0) + (e?.Z ?? 0),
+    X: (e?.X ?? 0) + (t?.X ?? 0),
+    Y: (e?.Y ?? 0) + (t?.Y ?? 0),
+    Z: (e?.Z ?? 0) + (t?.Z ?? 0),
   };
 }
-function subVector(t, e) {
+function subVector(e, t) {
   return {
-    X: (t?.X ?? 0) - (e?.X ?? 0),
-    Y: (t?.Y ?? 0) - (e?.Y ?? 0),
-    Z: (t?.Z ?? 0) - (e?.Z ?? 0),
+    X: (e?.X ?? 0) - (t?.X ?? 0),
+    Y: (e?.Y ?? 0) - (t?.Y ?? 0),
+    Z: (e?.Z ?? 0) - (t?.Z ?? 0),
   };
 }
-function isTransformEqual(t, e, r = 1e-4, n = 1e-4, o = 1e-4) {
-  var s = { X: 0, Y: 0, Z: 0 },
-    a = { X: 1, Y: 1, Z: 1 };
+function scaleVector(e, t) {
+  return { X: (e.X ?? 0) * t, Y: (e.Y ?? 0) * t, Z: (e.Z ?? 0) * t };
+}
+function isPosInsideSphere(e, t, r) {
+  var n = e.X ?? 0,
+    o = e.Y ?? 0,
+    e = e.Z ?? 0,
+    n = (r.X ?? 0) - n,
+    o = (r.Y ?? 0) - o,
+    r = (r.Z ?? 0) - e;
+  return n * n + o * o + r * r <= t * t;
+}
+function isSphereInsideSphere(e, t, r, n, o = 0.01) {
+  var a = e.X ?? 0,
+    s = e.Y ?? 0,
+    e = e.Z ?? 0,
+    a = a - (r.X ?? 0),
+    s = s - (r.Y ?? 0),
+    e = e - (r.Z ?? 0),
+    r = n - t;
+  return a * a + s * s + e * e - r * r <= o * o;
+}
+function isTransformEqual(e, t, r = 1e-4, n = 1e-4, o = 1e-4) {
+  var a = { X: 0, Y: 0, Z: 0 },
+    s = { X: 1, Y: 1, Z: 1 };
   return (
-    isVectorEqual(t.Pos || s, e.Pos || s, 0, r) &&
-    isVectorEqual(t.Rot ?? s, e.Rot ?? s, 0, n) &&
-    isVectorEqual(t.Scale ?? a, e.Scale ?? a, 1, o)
+    isVectorEqual(e.Pos || a, t.Pos || a, 0, r) &&
+    isVectorEqual(e.Rot ?? a, t.Rot ?? a, 0, n) &&
+    isVectorEqual(e.Scale ?? s, t.Scale ?? s, 1, o)
   );
 }
-function isSetEqual(t, e) {
-  if (t.size !== e.size) return !1;
-  for (const r of t) if (!e.has(r)) return !1;
+function isSetEqual(e, t) {
+  if (e.size !== t.size) return !1;
+  for (const r of e) if (!t.has(r)) return !1;
   return !0;
 }
-function isPortInUse(t) {
+function isPortInUse(e) {
   return Recorder_1.perfRecorder.Run(
-    () => (0, Platform_1.getPlatform)().IsPortInUse(t),
+    () => (0, Platform_1.getPlatform)().IsPortInUse(e),
     "isPortInUse",
   );
 }
@@ -860,18 +1067,21 @@ function isPortInUse(t) {
   (exports.isVector2Equal = isVector2Equal),
   (exports.addVector = addVector),
   (exports.subVector = subVector),
+  (exports.scaleVector = scaleVector),
+  (exports.isPosInsideSphere = isPosInsideSphere),
+  (exports.isSphereInsideSphere = isSphereInsideSphere),
   (exports.isTransformEqual = isTransformEqual),
   (exports.isSetEqual = isSetEqual),
   (exports.isPortInUse = isPortInUse);
 let localIp = void 0;
 function getLocalIp() {
-  var t, e;
+  var e, t;
   return (
     localIp ||
-      (([e, t] = (0, Platform_1.getPlatform)().Exec("ipconfig")),
-      e &&
-        (e = /IPv4 Address.+?(\d+\.\d+\.\d+\.\d+)/.exec(t)) &&
-        (localIp = e[1])),
+      (([t, e] = (0, Platform_1.getPlatform)().Exec("ipconfig")),
+      t &&
+        (t = /IPv4 Address.+?(\d+\.\d+\.\d+\.\d+)/.exec(e)) &&
+        (localIp = t[1])),
     localIp
   );
 }
@@ -880,112 +1090,114 @@ function getCommandLine() {
 }
 function getEditorCommandArgs() {
   var r = getCommandLine();
-  if ((r.shift(), 0 === r.length)) return {};
+  if (1 === r.length) return {};
   var n = {},
     o = Object.keys(IEditor_1.defaultEditorArgConfig);
-  for (let e = 0; e < r.length; e++) {
-    var s = r[e];
-    if (s.startsWith("-")) {
-      s = s.slice(1);
-      let t = "";
-      o.includes(s) &&
-        (e + 1 < r.length && !r[e + 1].startsWith("-") && ((t = r[e + 1]), e++),
-        (n[s] = t));
+  for (let t = 1; t < r.length; t++) {
+    var a = r[t];
+    if (a.startsWith("-")) {
+      a = a.slice(1);
+      let e = "";
+      o.includes(a) &&
+        (t + 1 < r.length && !r[t + 1].startsWith("-") && ((e = r[t + 1]), t++),
+        (n[a] = e));
     }
   }
   return n;
 }
-function isValidVarName(t) {
-  return (
-    !(
-      16 < t.length ||
-      !t[0] ||
-      ("0" <= t[0] && t[0] <= "9") ||
-      "q_count" === t
-    ) && /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/.test(t)
-  );
+function isValidVarName(e, t = 16) {
+  return e.length > t
+    ? [!1, `变量【${e}】名称长度不能超过16`]
+    : !e[0] || ("0" <= e[0] && e[0] <= "9")
+      ? [!1, `变量【${e}】名称不能以数字开头`]
+      : "q_count" === e
+        ? [!1, `变量【${e}】名称不能包含程序定义字符【q_count】`]
+        : /^[\u4e00-\u9fa5_a-zA-Z0-9]+$/.test(e)
+          ? [!0, void 0]
+          : [!1, `变量【${e}】名称不能包含特殊字符`];
 }
 function isInPie() {
   return (0, Platform_1.getPlatform)().IsInPie();
 }
-function isPipelineEnv() {
-  return (0, Platform_1.getPlatform)().IsPipelineEnv;
-}
-function formatDateTime(t, e = "cn") {
-  var r = new Date(t),
+function formatDateTime(e, t = "cn") {
+  var r = new Date(e),
     n = r.getFullYear(),
     o = 9 < r.getMonth() + 1 ? r.getMonth() + 1 : "0" + (r.getMonth() + 1),
-    s = 9 < r.getDate() ? r.getDate() : "0" + r.getDate(),
-    a = 9 < r.getHours() ? r.getHours() : "0" + r.getHours(),
+    a = 9 < r.getDate() ? r.getDate() : "0" + r.getDate(),
+    s = 9 < r.getHours() ? r.getHours() : "0" + r.getHours(),
     i = 9 < r.getMinutes() ? r.getMinutes() : "0" + r.getMinutes(),
     u = 9 < r.getSeconds() ? r.getSeconds() : "0" + r.getSeconds();
-  switch (e) {
+  switch (t) {
     case "cn":
       return (
         n +
-        `-${o}-${s}-${"星期" + "日一二三四五六".charAt(r.getDay())} ${a}:${i}:` +
+        `-${o}-${a}-${"星期" + "日一二三四五六".charAt(r.getDay())} ${s}:${i}:` +
         u
       );
     case "simple":
-      return "" + n + o + s + a + i + u;
+      return "" + n + o + a + s + i + u;
   }
-  throw new Error("formatDateTime: unknown format " + e);
+  throw new Error("formatDateTime: unknown format " + t);
 }
-function stringIsNullOrEmpty(t) {
-  return "string" != typeof t || void 0 === t || 0 === t.length;
+function stringIsNullOrEmpty(e) {
+  return "string" != typeof e || void 0 === e || 0 === e.length;
 }
-function getMd5(t) {
-  return crypto.MD5(t).toString();
+function getMd5(e) {
+  return crypto.MD5(e).toString();
 }
-function deepCopyData(t) {
-  return JSON.parse(JSON.stringify(t));
+function deepCopyData(e) {
+  return JSON.parse(JSON.stringify(e));
 }
-function toDepotPath(t) {
-  let e = getCurrentP4Stream(),
+function toDepotPath(e) {
+  if (e.startsWith("//aki/")) return e;
+  let t = getCurrentP4Stream(),
     r = getCurrentClientRoot();
   var n;
-  if (e && r)
-    return (
-      (t = (0, File_1.getAbsolutePath)(t)),
+  return t && r
+    ? ((e = (0, File_1.getAbsolutePath)(e)),
       (r = r.replace(/\\/g, "/")).endsWith("/") &&
-        !e.endsWith("/") &&
-        (e += "/"),
+        !t.endsWith("/") &&
+        (t += "/"),
       (n = new RegExp(r, "gi")),
-      t.replace(/\\/g, "/").replace(n, e)
-    );
+      e.replace(/\\/g, "/").replace(n, t))
+    : void 0;
 }
-async function doJsonHttpGet(t, e) {
-  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("GET", t, e);
+function isDepotFileExist(e) {
+  var [e, t] = exec("p4 -Mj files " + e);
+  return e && !t.includes("no such file(s)") && !t.includes("- delete change");
+}
+async function doJsonHttpGet(e, t) {
+  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("GET", e, t);
   if (200 !== r.Status)
     throw new Error(
-      `doJsonHttpGet ${t} ${e} failed, status: ${r.Status}, data: ` + r.Data,
+      `doJsonHttpGet ${e} ${t} failed, status: ${r.Status}, data: ` + r.Data,
     );
   return r.Data;
 }
-async function doJsonHttpPost(t, e) {
-  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("POST", t, e);
+async function doJsonHttpPost(e, t) {
+  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("POST", e, t);
   if (201 !== r.Status && 200 !== r.Status)
     throw new Error(
-      `doJsonHttpPost ${t} ${e} failed, status: ${r.Status}, data: ` + r.Data,
+      `doJsonHttpPost ${e} ${t} failed, status: ${r.Status}, data: ` + r.Data,
     );
   return r.Data;
 }
-async function doJsonHttpDelete(t, e) {
-  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("DELETE", t, e);
+async function doJsonHttpDelete(e, t) {
+  var r = await (0, Platform_1.getPlatform)().DoJsonHttpReq("DELETE", e, t);
   if (204 !== r.Status)
     throw new Error(
-      `doJsonHttpDelete ${t} ${e} failed, status: ${r.Status}, data: ` + r.Data,
+      `doJsonHttpDelete ${e} ${t} failed, status: ${r.Status}, data: ` + r.Data,
     );
   return r.Data;
 }
-function compareTextOrder(t, e) {
-  var r = t.replace(/_[^_]*$/, ""),
-    n = e.replace(/_[^_]*$/, "");
+function compareTextOrder(e, t) {
+  var r = e.replace(/_[^_]*$/, ""),
+    n = t.replace(/_[^_]*$/, "");
   return r !== n
     ? r < n
       ? -1
       : 1
-    : (r = t.split("_").pop()) === (n = e.split("_").pop())
+    : (r = e.split("_").pop()) === (n = t.split("_").pop())
       ? 0
       : Number(r) && Number(n)
         ? Number(r) < Number(n)
@@ -995,33 +1207,33 @@ function compareTextOrder(t, e) {
           ? -1
           : 1;
 }
-function getBranchReqShortPath(t) {
-  var e = (0, File_1.getAbsolutePath)(t).replace(/\\/g, "/"),
-    r = e.indexOf("Source/");
+function getBranchReqShortPath(e) {
+  var t = (0, File_1.getAbsolutePath)(e).replace(/\\/g, "/"),
+    r = t.indexOf("Source/");
   if (r < 0)
     (0, Log_1.error)(
-      `文件: ${t} 不在分支 Source/ 目录下管理, 请确认是否为分支内文件 `,
+      `文件: ${e} 不在分支 Source/ 目录下管理, 请确认是否为分支内文件 `,
     );
-  else if (getCurrentP4Stream()) return e.substring(r);
+  else if (getCurrentP4Stream()) return t.substring(r);
 }
-function getBranchOriginsDataSync(t) {
-  var e = getBranchReqShortPath(t);
-  if (e) {
-    var [e, r] = exec(
-      `curl -X POST http://tools.aki.kuro.com:1025/multibranch/aki/file_origins -H "Content-Type:application/json" -d "{\\"filePath\\":\\"${e}\\"}"`,
+function getBranchOriginsDataSync(e) {
+  var t = getBranchReqShortPath(e);
+  if (t) {
+    var [t, r] = exec(
+      `curl -X POST http://tools.aki.kuro.com:1025/multibranch/aki/file_origins -H "Content-Type:application/json" -d "{\\"filePath\\":\\"${t}\\"}"`,
     );
-    if (e) {
-      e = r.indexOf('{"code":');
-      if (!(e < 0))
+    if (t) {
+      t = r.indexOf('{"code":');
+      if (!(t < 0))
         return {
-          Origins: (e = parse(r.substring(e))).data.origins,
-          IsInDepot: !e.data.useDefault,
+          Origins: (t = parse(r.substring(t))).data.origins,
+          IsInDepot: !t.data.useDefault,
         };
       (0, Log_1.error)(
-        `[${t}]获取文件分支信息返回异常: 
+        `[${e}]获取文件分支信息返回异常: 
 ` + r,
       );
-    } else (0, Log_1.error)("获取文件分支信息失败: " + t);
+    } else (0, Log_1.error)("获取文件分支信息失败: " + e);
   }
 }
 (exports.getLocalIp = getLocalIp),
@@ -1029,12 +1241,12 @@ function getBranchOriginsDataSync(t) {
   (exports.getEditorCommandArgs = getEditorCommandArgs),
   (exports.isValidVarName = isValidVarName),
   (exports.isInPie = isInPie),
-  (exports.isPipelineEnv = isPipelineEnv),
   (exports.formatDateTime = formatDateTime),
   (exports.stringIsNullOrEmpty = stringIsNullOrEmpty),
   (exports.getMd5 = getMd5),
   (exports.deepCopyData = deepCopyData),
   (exports.toDepotPath = toDepotPath),
+  (exports.isDepotFileExist = isDepotFileExist),
   (exports.doJsonHttpGet = doJsonHttpGet),
   (exports.doJsonHttpPost = doJsonHttpPost),
   (exports.doJsonHttpDelete = doJsonHttpDelete),
@@ -1044,96 +1256,75 @@ function getBranchOriginsDataSync(t) {
 let allBranchesFromServer = void 0;
 function getAllDepotBranchDataSync() {
   if (allBranchesFromServer) return allBranchesFromServer;
-  var [t, e] = exec(
+  var [e, t] = exec(
     "curl --request GET --url http://tools.aki.kuro.com:1025/multibranch/aki/branches",
   );
-  if (t) {
-    var t = e.indexOf('{"code":');
-    if (!(t < 0))
+  if (e) {
+    var e = t.indexOf('{"code":');
+    if (!(e < 0))
       return (
-        (t = parse(e.substring(t))),
-        (allBranchesFromServer = t.data.map((t) => t.replace("//aki/", "")))
+        (e = parse(t.substring(e))),
+        (allBranchesFromServer = e.data.map((e) => e.replace("//aki/", "")))
       );
     (0, Log_1.error)(
       `获取所有分支信息返回异常: 
-` + e,
+` + t,
     );
   } else (0, Log_1.error)("获取所有分支信息失败");
 }
-function isCurrentBranchAsset(t) {
-  var e,
-    t = getBranchOriginsDataSync(t);
-  return !!t && ((e = "//aki/" + getWorkspaceBranch()), t.Origins.includes(e));
+function isCurrentBranchAsset(e) {
+  var t,
+    e = getBranchOriginsDataSync(e);
+  return !!e && ((t = "//aki/" + getWorkspaceBranch()), e.Origins.includes(t));
 }
-function getFileDepotInfo(t) {
-  var e,
-    r,
-    t = getBranchReqShortPath(t);
-  return t
-    ? (([r, e] = exec(
-        (t = `curl -X POST http://tools.aki.kuro.com:1025/multibranch/aki/file/exist -H "Content-Type:application/json" -d "{\\"filePath\\":\\"${t}}\\""`),
-      )),
-      r
-        ? (r = e.indexOf('{"code":')) < 0
-          ? ((0, Log_1.error)(
-              `返回信息异常: 
-请求: ${t}
-回复: ` + e,
-            ),
-            [])
-          : parse(e.substring(r)).data
-        : ((0, Log_1.error)("获取分支信息失败: " + t), []))
-    : [];
-}
-async function getFileDepotInfoAsync(t) {
-  t = getBranchReqShortPath(t);
-  const e = { filePath: t };
+async function getFileDepotInfoAsyncBatch(e) {
+  e = e.map((e) => getBranchReqShortPath(e));
+  const t = { filePaths: e };
   let r = { Success: !1, Error: "获取仓库信息失败" };
   for (
-    let t = 0;
-    t < 2 &&
+    let e = 0;
+    e < 2 &&
     !(r = await (async () => {
       try {
-        var t = await doJsonHttpPost(
-          "http://tools.aki.kuro.com:1025/multibranch/aki/file/exist",
-          e,
+        var e = await doJsonHttpPost(
+          "http://tools.aki.kuro.com:1025/multibranch/aki/file/batch/exist",
+          t,
         );
-        return t
-          ? { Success: !0, Result: t.data }
+        return e
+          ? { Success: !0, Result: e.data }
           : {
               Success: !1,
-              Error: `获取仓库信息失败: ${t} (${stringify(e)})`,
-              Result: [],
+              Error: `获取仓库信息失败: ${e} (${stringify(t)})`,
+              Result: void 0,
             };
-      } catch (t) {
-        return { Success: !1, Error: "获取仓库信息异常: " + t };
+      } catch (e) {
+        return { Success: !1, Error: "获取仓库信息异常: " + e };
       }
     })()).Result;
-    t++
+    e++
   );
   return r.Error && (0, Log_1.error)(r.Error), r;
 }
 (exports.getAllDepotBranchDataSync = getAllDepotBranchDataSync),
   (exports.isCurrentBranchAsset = isCurrentBranchAsset),
-  (exports.getFileDepotInfo = getFileDepotInfo),
-  (exports.getFileDepotInfoAsync = getFileDepotInfoAsync);
+  (exports.getFileDepotInfoAsyncBatch = getFileDepotInfoAsyncBatch);
 let fileOriginRequiredList = void 0;
 async function getTextFileOriginRequiredList() {
-  var t;
+  var e;
   return (
     fileOriginRequiredList ||
-    ((t = await doJsonHttpGet(
+    ((e = await doJsonHttpGet(
       "http://tools.aki.kuro.com:1025/multibranch/aki/originrequiredlist",
     ))
-      ? (fileOriginRequiredList = t.data)
-      : ((t = "获取分支管理文本文件路径信息失败: " + t),
-        void (0, Log_1.error)(t)))
+      ? (fileOriginRequiredList = e.data)
+      : ((e = "获取分支管理文本文件路径信息失败: " + e),
+        void (0, Log_1.error)(e)))
   );
 }
-function isTextFileByExtension(t) {
-  t = t.split(".").pop()?.toLowerCase();
+function isTextFileByExtension(e) {
+  e = e.split(".").pop()?.toLowerCase();
   return !(
-    !t ||
+    !e ||
     ![
       "txt",
       "md",
@@ -1165,114 +1356,168 @@ function isTextFileByExtension(t) {
       "r",
       "go",
       "kt",
-    ].includes(t)
+    ].includes(e)
   );
 }
-async function isTextFileInOriginRequiredListAsync(t) {
-  var e = await getTextFileOriginRequiredList();
-  if (e)
-    for (const o of e) {
+async function isTextFileInOriginRequiredListAsync(e) {
+  var t = await getTextFileOriginRequiredList();
+  if (t)
+    for (const o of t) {
       var r = o.replace(/\./g, "\\.").replace(/\*/g, ".*"),
         r = new RegExp(`(^|\\/|\\\\)${r}$`),
-        n = t.replace(/^.*\/Source/, "Source");
+        n = e.replace(/^.*\/Source/, "Source");
       if (r.test(n)) return !0;
     }
   return !1;
 }
-async function getBatchFileBranchDataAsync(e) {
+async function getBatchFileBranchDataAsync(t) {
   const r = getCurrentP4Stream();
   if (!r) return { Success: !1, Error: "获取当前分支失败" };
-  var t = new Map(),
+  var e = new Map(),
     n = [],
     o = new Map(),
-    s = new Map();
-  for (const l of e) {
-    var a,
-      i = getBranchReqShortPath(l);
-    i &&
-      (a = await getFileDepotInfoAsync(i)).Success &&
-      (a.Result.findIndex((t) => t.endsWith(r)) < 0
-        ? t.set(l, { IsInDepot: !1, Origins: [r] })
-        : (s.set(i, a.Result), n.push(i), o.set(i, l)));
-  }
-  e = { filePaths: n };
-  try {
-    var u,
-      c = await doJsonHttpPost(
-        "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins/batch",
-        e,
-      );
-    if (!c)
-      return (
-        (u = `获取分支信息失败: ${c} (${stringify(e)})`),
-        (0, Log_1.error)(u),
-        { Success: !1, Error: u }
-      );
-    for (const [x, g] of Object.entries(c.data)) {
-      var p = o.get(x);
-      if (
-        isTextFileByExtension(p) &&
-        !(await isTextFileInOriginRequiredListAsync(p))
-      )
-        t.set(p, { IsInDepot: !0, Origins: ["//aki/" + getWorkspaceBranch()] });
-      else {
-        if (g.useDefault) {
-          var f = s.get(x) ?? [];
-          if (!(0 < f.length)) {
-            t.set(p, { IsInDepot: !1, Origins: [r] });
-            continue;
-          }
-          if (f.every((t) => !g.origins.includes(t))) {
-            t.set(p, { IsInDepot: !0, Origins: [f[0]] });
-            continue;
-          }
-        }
-        t.set(p, { IsInDepot: !0, Origins: g.origins });
-      }
+    a = new Map(),
+    t = await getFileDepotInfoAsyncBatch(t);
+  if (t.Success)
+    for (var [s, i] of Object.entries(t.Result)) {
+      var u = r + "/" + s;
+      i.findIndex((e) => e.endsWith(r)) < 0
+        ? e.set(u, { IsInDepot: !1, Origins: [r] })
+        : (a.set(s, i), n.push(s), o.set(s, u));
     }
-    return { Success: !0, Result: t };
-  } catch (t) {
-    e = "获取分支信息失败: " + t;
-    return (0, Log_1.error)(e), { Success: !1, Error: e };
+  t = { filePaths: n };
+  try {
+    var c,
+      p = await doJsonHttpPost(
+        "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins/batch",
+        t,
+      );
+    if (!p)
+      return (
+        (c = `获取分支信息失败: ${p} (${stringify(t)})`),
+        (0, Log_1.error)(c),
+        { Success: !1, Error: c }
+      );
+    for (const [x, g] of Object.entries(p.data)) {
+      var f = o.get(x);
+      if (f)
+        if (
+          isTextFileByExtension(f) &&
+          !(await isTextFileInOriginRequiredListAsync(f))
+        )
+          e.set(f, {
+            IsInDepot: !0,
+            Origins: ["//aki/" + getWorkspaceBranch()],
+          });
+        else {
+          if (g.useDefault) {
+            var l = a.get(x) ?? [];
+            if (!(0 < l.length)) {
+              e.set(f, { IsInDepot: !1, Origins: [r] });
+              continue;
+            }
+            if (l.every((e) => !g.origins.includes(e))) {
+              e.set(f, { IsInDepot: !0, Origins: [l[0]] });
+              continue;
+            }
+          }
+          e.set(f, { IsInDepot: !0, Origins: g.origins });
+        }
+      else (0, Log_1.error)(`获取分支信息: ${x} 未找到对应文件路径`);
+    }
+    return { Success: !0, Result: e };
+  } catch (e) {
+    t = "获取分支信息失败: " + e;
+    return (0, Log_1.error)(t), { Success: !1, Error: t };
   }
 }
-async function getFileSourceBranchAsync(t) {
-  var e = await getBatchFileBranchDataAsync([t]);
-  return e.Success
-    ? toDepotPath(t)
-      ? { Success: !0, Result: e.Result.get(t) }
+async function getFileSourceBranchAsync(e) {
+  var t = await getBatchFileBranchDataAsync([e]);
+  return t.Success
+    ? toDepotPath(e)
+      ? { Success: !0, Result: t.Result.get(e) }
       : { Success: !1, Error: "文件路径非法，不是项目内的文件" }
-    : { Success: !1, Error: e.Error };
+    : { Success: !1, Error: t.Error };
 }
-async function isCurrentBranchAssetAsync(t) {
-  var e = getBranchReqShortPath(t);
-  if (!e) return !1;
+async function isCurrentBranchAssetAsync(e) {
+  var t = getBranchReqShortPath(e);
+  if (!t) return !1;
   var r = getCurrentP4Stream();
   if (!r) return !1;
-  e = { filePath: e };
+  t = { filePath: t };
   try {
     var n = await doJsonHttpPost(
       "http://tools.aki.kuro.com:1025/multibranch/aki/file_origins",
-      e,
+      t,
     );
     return n
       ? n.data.origins.includes(r)
-      : ((0, Log_1.error)(`获取分支信息失败: ${n} (${t})`), !1);
-  } catch (t) {
-    e = "获取分支信息失败: " + t;
-    return (0, Log_1.error)(e), !1;
+      : ((0, Log_1.error)(`获取分支信息失败: ${n} (${e})`), !1);
+  } catch (e) {
+    t = "获取分支信息失败: " + e;
+    return (0, Log_1.error)(t), !1;
   }
 }
-async function execAsync(t) {
-  return await (0, Platform_1.getPlatform)().ExecAsync(t);
+async function execAsync(e) {
+  return await (0, Platform_1.getPlatform)().ExecAsync(e);
 }
-function touchInstance(t) {
-  return t.Instance;
+function touchInstance(e) {
+  return e.Instance;
 }
-function isIpAddress(t) {
+function isIpAddress(e) {
   return /^(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)$/.test(
-    t,
+    e,
   );
+}
+function changeChineseStringToEnglishString(t) {
+  let r = "";
+  for (let e = 0; e < t.length; e++) {
+    var n = t.codePointAt(e);
+    r += n.toString(36);
+  }
+  return r;
+}
+function createDiffPaths(e, t, r) {
+  const s = [],
+    i = (r, n, e, o) => {
+      if (r !== n)
+        if (r instanceof Array && n instanceof Array) {
+          var t = Math.max(r.length, n.length);
+          for (let e = 0; e < t; e++) {
+            var a = o ? `${o}.[${e}]` : `[${e}]`;
+            i(r[e], n[e], e, a);
+          }
+        } else
+          r instanceof Object && n instanceof Object
+            ? new Set([...Object.keys(r), ...Object.keys(n)]).forEach((e) => {
+                var t = o ? o + "." + e : e;
+                i(r[e], n[e], e, t);
+              })
+            : void 0 === r
+              ? s.push({
+                  Path: o,
+                  KeyOrIndex: e,
+                  Value1: void 0,
+                  Value2: n,
+                  State: "added",
+                })
+              : void 0 === n
+                ? s.push({
+                    Path: o,
+                    KeyOrIndex: e,
+                    Value1: r,
+                    Value2: void 0,
+                    State: "deleted",
+                  })
+                : s.push({
+                    Path: o,
+                    KeyOrIndex: e,
+                    Value1: r,
+                    Value2: n,
+                    State: "modified",
+                  });
+    };
+  return i(e, t, void 0, r), s;
 }
 (exports.getTextFileOriginRequiredList = getTextFileOriginRequiredList),
   (exports.isTextFileByExtension = isTextFileByExtension),
@@ -1283,5 +1528,93 @@ function isIpAddress(t) {
   (exports.isCurrentBranchAssetAsync = isCurrentBranchAssetAsync),
   (exports.execAsync = execAsync),
   (exports.touchInstance = touchInstance),
-  (exports.isIpAddress = isIpAddress);
+  (exports.isIpAddress = isIpAddress),
+  (exports.changeChineseStringToEnglishString =
+    changeChineseStringToEnglishString),
+  (exports.createDiffPaths = createDiffPaths);
+class ValueStack {
+  constructor() {
+    this.n5 = [];
+  }
+  Push(e, t) {
+    this.n5.push({ Value: e, Key: t });
+  }
+  Pop() {
+    return this.n5.pop();
+  }
+  Peek() {
+    return this.n5[this.n5.length - 1];
+  }
+  Size() {
+    return this.n5.length;
+  }
+  GetStack() {
+    return this.n5;
+  }
+  ToString(e = 0) {
+    var t = [];
+    for (const n of this.n5) {
+      var r = "number" == typeof n.Key ? `[${n.Key}]` : n.Key;
+      if (0 < e && e <= t.length) break;
+      t.push("" + r);
+    }
+    return t.join(".");
+  }
+}
+function getValueByDataPath(e, t) {
+  let r = e;
+  var n;
+  for (const o of t.split("."))
+    r instanceof Array
+      ? ((n = parseInt(o.slice(1, -1), 10)), isNaN(n) || (r = r[n]))
+      : r instanceof Object && (r = r[o]);
+  return r;
+}
+function createValueStackByDataPath(e, t) {
+  var r,
+    n = new ValueStack();
+  let o = e;
+  for (const a of t.split("."))
+    o instanceof Array
+      ? ((r = parseInt(a.slice(1, -1), 10)),
+        isNaN(r) || ((o = o[r]), n.Push(o, r)))
+      : o instanceof Object && ((o = o[a]), n.Push(o, a));
+  return n;
+}
+function isSubdirectoryDataPath(e, t) {
+  const r = e.split(".").filter((e) => e.length);
+  return t
+    .split(".")
+    .filter((e) => e.length)
+    .every((e, t) => r[t] === e);
+}
+function objectIterator(e, a) {
+  const s = (t, r) => {
+    if (null != t)
+      if (t instanceof Array)
+        for (let e = 0; e < t.length; e++) {
+          var n = t[e];
+          r.Push(n, e), a(n, r), s(n, r), r.Pop();
+        }
+      else if (t instanceof Object)
+        for (const o in t) {
+          var e = t[o];
+          r.Push(e, o), a(e, r), s(e, r), r.Pop();
+        }
+  };
+  s(e, new ValueStack());
+}
+function isArrayElementSame(e, t) {
+  var e = new Set(e),
+    r = new Set(t);
+  if (e.size !== r.size) return !1;
+  for (const n of e) if (!r.has(n)) return !1;
+  return !0;
+}
+(exports.ValueStack = ValueStack),
+  (exports.getValueByDataPath = getValueByDataPath),
+  (exports.createValueStackByDataPath = createValueStackByDataPath),
+  (exports.isSubdirectoryDataPath = isSubdirectoryDataPath),
+  (exports.objectIterator = objectIterator),
+  (exports.isArrayElementSame = isArrayElementSame);
 //# sourceMappingURL=Util.js.map

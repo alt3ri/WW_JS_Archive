@@ -10,8 +10,8 @@ class InputCombinationActionBinding {
       (this.uEe = new Map()),
       (this.cEe = -0),
       (this.ZMe = void 0),
-      (this.JXa = 0),
-      (this.ZXa = 0);
+      (this.Xih = 0),
+      (this.Yih = 0);
   }
   Initialize(t, i) {
     (this.ZMe = t), (this.cEe = i);
@@ -21,8 +21,8 @@ class InputCombinationActionBinding {
       (this.lEe = void 0),
       (this.uEe = void 0),
       (this.ZMe = void 0),
-      (this.JXa = 0),
-      (this.ZXa = 0);
+      (this.Xih = 0),
+      (this.Yih = 0);
   }
   AddKey(t, i) {
     this.uEe.set(t, i);
@@ -45,16 +45,16 @@ class InputCombinationActionBinding {
     return this.ZMe;
   }
   SetKeyboardVersion(t) {
-    this.JXa = t;
+    this.Xih = t;
   }
   GetKeyboardVersion() {
-    return this.JXa;
+    return this.Xih;
   }
   SetGamepadVersion(t) {
-    this.ZXa = t;
+    this.Yih = t;
   }
   GetGamepadVersion() {
-    return this.ZXa;
+    return this.Yih;
   }
   GetCombinationActionKeyMap() {
     return InputSettings_1.InputSettings.GetCombinationActionKeyMap(this.ZMe);
@@ -84,6 +84,9 @@ class InputCombinationActionBinding {
   }
   HasKey(t, i) {
     return this.uEe.get(t) === i;
+  }
+  GetSecondaryKeyNameByMainKey(t) {
+    return this.uEe.get(t);
   }
 }
 exports.InputCombinationActionBinding = InputCombinationActionBinding;

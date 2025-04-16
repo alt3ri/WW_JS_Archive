@@ -18,46 +18,49 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
       (this.MaterialAssetData = void 0),
       (this.HideMeshAfterPlay = !1);
   }
-  K2_NotifyBegin(e, a, t) {
+  Constructor() {}
+  K2_NotifyBegin(e, r, t) {
     if (GlobalData_1.GlobalData.World)
       if (UE.KismetSystemLibrary.IsValid(e)) {
-        if ((e.SetHiddenInGame(!1), this.IsAllValid(e, a))) {
-          var r = e.GetOwner(),
+        if ((e.SetHiddenInGame(!1), this.IsAllValid(e, r))) {
+          var a = e.GetOwner(),
             o =
-              (r instanceof UE.TsBaseCharacter_C &&
+              (a instanceof UE.TsBaseCharacter_C &&
                 Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "RenderCharacter",
-                  41,
-                  "除特殊情况外，TsBaseCharacter及其派生类应该使用AnimNotifyStateAddMaterialControllerData通知",
+                  25,
+                  "材质控制器不应该在角色蓝图上使用此动画通知，请检查动画",
                   ["Actor", e?.GetOwner()?.GetName()],
-                  ["动画", a?.GetName()],
+                  ["动画", r?.GetName()],
+                  ["材质控制器", this.MaterialAssetData?.GetName()],
                 ),
               new MaterialControllerData());
-          r instanceof TsEffectActor_1.default &&
-            ((o.CharRenderingComponent = r.GetComponentByClass(
+          (a instanceof TsEffectActor_1.default ||
+            a?.IsA(UE.EffectSystemActor.StaticClass())) &&
+            ((o.CharRenderingComponent = a.GetComponentByClass(
               UE.CharRenderingComponent_C.StaticClass(),
             )),
             o.CharRenderingComponent ||
-              ((o.CharRenderingComponent = r.AddComponentByClass(
+              ((o.CharRenderingComponent = a.AddComponentByClass(
                 UE.CharRenderingComponent_C.StaticClass(),
                 !1,
                 new UE.Transform(),
                 !1,
               )),
-              o.CharRenderingComponent.Init(7))),
+              o.CharRenderingComponent.Init(8))),
             o.CharRenderingComponent ||
               ((o.RenderActor =
-                UE.KuroRenderingRuntimeBPPluginBPLibrary.SpawnActorFromClass(
+                UE.KuroRenderingRuntimeBPPluginBPLibrary.D_SpawnActorFromClass(
                   e,
                   UE.BP_MaterialControllerRenderActor_C.StaticClass(),
-                  r.GetTransform(),
+                  a.D_GetTransform(),
                 )),
+              (o.RenderActor.RefActor = a),
               (o.CharRenderingComponent = o.RenderActor.CharRenderingComponent),
-              o.CharRenderingComponent.Init(7)),
-            GlobalData_1.GlobalData.IsUiSceneOpen &&
-              ++o.CharRenderingComponent.IsUiUpdate,
-            o.CharRenderingComponent.SetLogicOwner(r),
+              o.CharRenderingComponent.Init(7),
+              o.CharRenderingComponent.AddComponentByCase(0, e)),
+            o.CharRenderingComponent.SetLogicOwner(a),
             (o.HandleId = o.CharRenderingComponent.AddMaterialControllerData(
               this.MaterialAssetData,
             ));
@@ -72,10 +75,10 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "错误：动画Mesh不合法",
             ["Actor", e?.GetOwner()],
-            ["动画", a?.GetName()],
+            ["动画", r?.GetName()],
           );
     return !1;
   }
@@ -85,7 +88,7 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderCharacter",
-              14,
+              13,
               "错误：动画Mesh不合法",
               ["Actor", t?.GetOwner()?.GetName()],
               ["动画", e?.GetName()],
@@ -94,7 +97,7 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "错误：特效DA不合法",
             ["Actor", t?.GetOwner()?.GetName()],
             ["动画", e?.GetName()],
@@ -102,20 +105,18 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
         !1);
   }
   K2_NotifyEnd(t, e) {
-    var a, r;
+    var r, a;
     return (
       !!GlobalData_1.GlobalData.World &&
-      ((a = materialControllerStateHandleMap.get(t)) &&
-        (r = a.get(this)) &&
-        (a.delete(this),
-        a.size || materialControllerStateHandleMap.delete(t),
-        r.CharRenderingComponent &&
-          (0 <= r.HandleId &&
-            r.CharRenderingComponent.RemoveMaterialControllerData(r.HandleId),
-          GlobalData_1.GlobalData.IsUiSceneOpen) &&
-          --r.CharRenderingComponent.IsUiUpdate,
-        r.RenderActor &&
-          (r.CharRenderingComponent.Destroy(), r.RenderActor.K2_DestroyActor()),
+      ((r = materialControllerStateHandleMap.get(t)) &&
+        (a = r.get(this)) &&
+        (r.delete(this),
+        r.size || materialControllerStateHandleMap.delete(t),
+        a.CharRenderingComponent &&
+          0 <= a.HandleId &&
+          a.CharRenderingComponent.RemoveMaterialControllerData(a.HandleId),
+        a.RenderActor &&
+          (a.CharRenderingComponent.Destroy(), a.RenderActor.K2_DestroyActor()),
         this.HideMeshAfterPlay) &&
         t.SetHiddenInGame(!0),
       !0)

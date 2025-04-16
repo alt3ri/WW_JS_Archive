@@ -25,8 +25,12 @@ class GenericPromptView extends UiTickViewBase_1.UiTickViewBase {
       (this.rJt = (e) => {
         this.eJt.Empty ||
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("GenericPrompt", 11, "获取下一个显示数据"),
+            Log_1.Log.Info("GenericPrompt", 10, "获取下一个显示数据"),
           this.oJt());
+      }),
+      (this.OnPreparePhotoScreenShot = () => {
+        this.tJt?.IsShowOrShowing &&
+          (this.tJt?.GetRootItem()?.SetUIActive(!1), this.tJt?.SetActive(!1));
       });
   }
   OnRegisterComponent() {
@@ -51,13 +55,21 @@ class GenericPromptView extends UiTickViewBase_1.UiTickViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.InsertFloatTips,
       this.iJt,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPreparePhotoScreenShot,
+        this.OnPreparePhotoScreenShot,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.InsertFloatTips,
       this.iJt,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPreparePhotoScreenShot,
+        this.OnPreparePhotoScreenShot,
+      );
   }
   nJt() {
     var e,

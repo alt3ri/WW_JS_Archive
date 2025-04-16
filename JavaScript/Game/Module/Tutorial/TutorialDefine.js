@@ -14,7 +14,8 @@ var ETutorialType;
     (t[(t.QteReaction = 1)] = "QteReaction"),
     (t[(t.Enemy = 2)] = "Enemy"),
     (t[(t.System = 3)] = "System"),
-    (t[(t.Adventure = 4)] = "Adventure");
+    (t[(t.Adventure = 4)] = "Adventure"),
+    (t[(t.BuffOnEnemy = 5)] = "BuffOnEnemy");
 })((ETutorialType = exports.ETutorialType || (exports.ETutorialType = {})));
 class TutorialUtils {
   static AddSearchHighlight(t) {
@@ -43,6 +44,7 @@ class TutorialUtils {
     [ETutorialType.Enemy, "SP_TutorialIconEnemy"],
     [ETutorialType.System, "SP_TutorialIconSystem"],
     [ETutorialType.Adventure, "SP_TutorialIconAdventure"],
+    [ETutorialType.BuffOnEnemy, "SP_TutorialIconBuff"],
   ])),
   (TutorialUtils.BRo = new Map([
     [ETutorialType.All, "GuideTutorialType_0"],
@@ -50,6 +52,7 @@ class TutorialUtils {
     [ETutorialType.Enemy, "GuideTutorialType_2"],
     [ETutorialType.System, "GuideTutorialType_3"],
     [ETutorialType.Adventure, "GuideTutorialType_4"],
+    [ETutorialType.BuffOnEnemy, "GuideTutorialType_5"],
   ]));
 class TutorialItemData {
   constructor() {
@@ -64,7 +67,22 @@ class TutorialItemData {
 exports.TutorialItemData = TutorialItemData;
 class TutorialSaveData {
   constructor() {
-    (this.TimeStamp = 0), (this.TutorialId = 0), (this.HasRedDot = !1);
+    (this.TimeStamp = 0),
+      (this.TutorialId = 0),
+      (this.HasRedDot = !1),
+      (this.vKl = void 0);
+  }
+  get IsExcludedFromWiki() {
+    var t;
+    return (
+      void 0 === this.vKl &&
+        void 0 !==
+          (t = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(
+            this.TutorialId,
+          )?.ExcludeFromWiki) &&
+        (this.vKl = t),
+      this.vKl ?? !1
+    );
   }
   get TutorialData() {
     return ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(

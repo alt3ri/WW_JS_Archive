@@ -48,6 +48,15 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
         [3, this.gPe],
       ]);
   }
+  TryClearData() {
+    var t;
+    return !(
+      this.Mne <= 0 ||
+      ((t = this.hDt.ShowAllFilterContent()),
+      StringUtils_1.StringUtils.IsBlank(t)) ||
+      (this.gPe(), 0)
+    );
+  }
   OnStart() {
     this.GetItem(1).SetUIActive(!1), this.AddEventListener();
   }
@@ -91,6 +100,9 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
     s &&
       ModelManager_1.ModelManager.SortModel.SortDataList(i, e, s, ...this.lDt),
       this.UpdateDataListFunction?.(i, t, 0);
+  }
+  GetSelectRuleDataMap() {
+    return this.hDt.GetSelectRuleData();
   }
   mDt(t) {
     (this._Dt = t),

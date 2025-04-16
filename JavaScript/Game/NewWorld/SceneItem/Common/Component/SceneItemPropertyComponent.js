@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
     var n,
-      o = arguments.length,
-      r =
-        o < 3
+      r = arguments.length,
+      h =
+        r < 3
           ? e
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(e, i))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, e, i, s);
+      h = Reflect.decorate(t, e, i, s);
     else
-      for (var h = t.length - 1; 0 <= h; h--)
-        (n = t[h]) && (r = (o < 3 ? n(r) : 3 < o ? n(e, i, r) : n(e, i)) || r);
-    return 3 < o && r && Object.defineProperty(e, i, r), r;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (n = t[o]) && (h = (r < 3 ? n(h) : 3 < r ? n(e, i, h) : n(e, i)) || h);
+    return 3 < r && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemPropertyComponent = void 0);
@@ -31,29 +31,33 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
       (this.Xte = void 0),
       (this.A1n = void 0),
       (this.P1n = 0),
+      (this.Xrh = void 0),
       (this.x1n = !1),
       (this.Ero = !1),
-      (this.w1n = (t, e) => {
-        t.includes(-662723379)
-          ? TimerSystem_1.TimerSystem.Next(() => {
-              this.Xte?.AddTag(this.P1n),
-                (this.x1n = !0),
-                EventSystem_1.EventSystem.EmitWithTarget(
-                  this.Entity,
-                  EventDefine_1.EEventName.OnSceneItemLockPropChange,
-                  !0,
-                );
-            })
-          : e.includes(-662723379) &&
-            TimerSystem_1.TimerSystem.Next(() => {
-              this.Xte?.RemoveTag(this.P1n),
-                (this.x1n = !1),
-                EventSystem_1.EventSystem.EmitWithTarget(
-                  this.Entity,
-                  EventDefine_1.EEventName.OnSceneItemLockPropChange,
-                  !1,
-                );
-            });
+      (this.AttributeIdSet = void 0),
+      (this.Yrh = !1),
+      (this.zrh = (t, e) => {
+        -662723379 === t &&
+          (e
+            ? TimerSystem_1.TimerSystem.Next(() => {
+                this.Xte?.AddTag(this.P1n),
+                  (this.x1n = !0),
+                  EventSystem_1.EventSystem.EmitWithTarget(
+                    this.Entity,
+                    EventDefine_1.EEventName.OnSceneItemLockPropChange,
+                    !0,
+                  );
+              })
+            : e ||
+              TimerSystem_1.TimerSystem.Next(() => {
+                this.Xte?.RemoveTag(this.P1n),
+                  (this.x1n = !1),
+                  EventSystem_1.EventSystem.EmitWithTarget(
+                    this.Entity,
+                    EventDefine_1.EEventName.OnSceneItemLockPropChange,
+                    !1,
+                  );
+              }));
       });
   }
   get IsMoving() {
@@ -68,9 +72,18 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
   get IsLocked() {
     return this.x1n;
   }
+  OnInitData(t) {
+    var e = this.Entity?.GetComponent(0);
+    return (
+      e?.PbSceneItemAttributeIds &&
+        (this.AttributeIdSet = new Set(e.PbSceneItemAttributeIds)),
+      !0
+    );
+  }
   OnStart() {
     var t = this.Entity?.GetComponent(0);
     return (
+      (this.Xte = this.Entity?.GetComponent(194)),
       t &&
         (t = t.GetPbEntityInitData()) &&
         ((t = (0, IComponent_1.getComponent)(
@@ -79,29 +92,17 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
         )),
         (this.A1n = t?.LockConfig),
         this.A1n) &&
-        ((this.Xte = this.Entity?.GetComponent(181)),
-        EventSystem_1.EventSystem.AddWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.w1n,
-        ),
-        this.B1n()),
+        (this.Xrh ||
+          (this.Xrh = this.Xte?.ListenForTagAddOrRemove(-662723379, this.zrh)),
+        this.B1n(),
+        this.Jrh()),
       !0
     );
   }
   OnEnd() {
     return (
-      EventSystem_1.EventSystem.HasWithTarget(
-        this.Entity,
-        EventDefine_1.EEventName.OnLevelTagChanged,
-        this.w1n,
-      ) &&
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          this.Entity,
-          EventDefine_1.EEventName.OnLevelTagChanged,
-          this.w1n,
-        ),
-      !0
+      this.Xrh && (this.Xrh.EndTask(), (this.Xrh = void 0)),
+      !(this.AttributeIdSet = void 0)
     );
   }
   B1n() {
@@ -124,17 +125,25 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
           ((this.x1n = !0), this.Xte.AddTag(this.P1n));
     }
   }
-  RemoveLockPerformanceTagLocal() {
-    this.A1n && this.P1n && this.Xte.RemoveTag(this.P1n);
-  }
   SetIsBeingTargeted(t) {
     t
       ? this.Xte.HasTag(712704422) || this.Xte.AddTag(712704422)
       : this.Xte.HasTag(712704422) && this.Xte.RemoveTag(712704422);
   }
+  Jrh() {
+    if (this.AttributeIdSet && this.Xte)
+      for (const t of this.AttributeIdSet)
+        this.Xte.HasTag(t) || this.Xte.AddTag(t);
+    this.Yrh = !0;
+  }
+  HandleAttributeChanged(t, e) {
+    this.AttributeIdSet || (this.AttributeIdSet = new Set()),
+      e ? this.AttributeIdSet.add(t) : this.AttributeIdSet.delete(t),
+      this.Yrh && (e ? this.Xte?.AddTag(t) : this.Xte?.RemoveTag(t));
+  }
 };
 (SceneItemPropertyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(118)],
+  [(0, RegisterComponent_1.RegisterComponent)(128)],
   SceneItemPropertyComponent,
 )),
   (exports.SceneItemPropertyComponent = SceneItemPropertyComponent);

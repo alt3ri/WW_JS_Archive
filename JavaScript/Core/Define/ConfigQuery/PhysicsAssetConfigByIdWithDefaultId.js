@@ -18,29 +18,31 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configPhysicsAssetConfigByIdWithDefaultId.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configPhysicsAssetConfigByIdWithDefaultId.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configPhysicsAssetConfigByIdWithDefaultId.GetConfig(";
 exports.configPhysicsAssetConfigByIdWithDefaultId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, i, n, t, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var s = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i}#${n}#${t})`),
+      getConfigStat?.Start();
+    var s = Stats_1.Stat.CreateNoFlameGraph(
+        CONFIG_STAT_PREFIX + `#${o}#${i}#${n}#${t})`,
+      ),
       C =
-        (s.Start(),
+        (s?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (C) {
       if (e) {
@@ -48,8 +50,8 @@ exports.configPhysicsAssetConfigByIdWithDefaultId = {
         const g = ConfigCommon_1.ConfigCommon.GetConfig(f);
         if (g)
           return (
-            s.Stop(),
-            getConfigStat.Stop(),
+            s?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
@@ -93,8 +95,8 @@ exports.configPhysicsAssetConfigByIdWithDefaultId = {
               ((C = KEY_PREFIX + `#${o}#${i}#${n}#${t})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(C, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            s.Stop(),
-            getConfigStat.Stop(),
+            s?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
@@ -102,8 +104,8 @@ exports.configPhysicsAssetConfigByIdWithDefaultId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    s.Stop(),
-      getConfigStat.Stop(),
+    s?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

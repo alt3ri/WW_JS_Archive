@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelAiDecoratorCheckTodTimePeriod = void 0);
-const TimeOfDayController_1 = require("../../../Module/TimeOfDay/TimeOfDayController"),
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TimeOfDayDefine_1 = require("../../../Module/TimeOfDay/TimeOfDayDefine"),
   LevelAiDecorator_1 = require("../LevelAiDecorator"),
   DAYTIME_HOUR_START = 6,
@@ -13,18 +13,22 @@ class LevelAiDecoratorCheckTodTimePeriod extends LevelAiDecorator_1.LevelAiDecor
     this.CheckConditionOnTick = !0;
   }
   CheckCondition(e) {
-    var i = this.Params;
-    if (!i) return !1;
-    let r = 0,
-      T = 0;
-    T =
-      "DayTime" === i.TimePeriod
-        ? ((r = DAYTIME_HOUR_START * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR),
+    var r = this.Params;
+    if (!r) return !1;
+    let i = 0,
+      o = 0;
+    o =
+      "DayTime" === r.TimePeriod
+        ? ((i = DAYTIME_HOUR_START * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR),
           DAYTIME_HOUR_END * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR)
-        : ((r = NIGHT_HOUR_START * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR),
+        : ((i = NIGHT_HOUR_START * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR),
           NIGHT_HOUR_END * TimeOfDayDefine_1.TOD_MINUTE_PER_HOUR);
-    var o = TimeOfDayController_1.TimeOfDayController.CheckInMinuteSpan(r, T);
-    return "Eq" === i.Compare ? o : !o;
+    var T =
+      ControllerHolder_1.ControllerHolder.TimeOfDayController.CheckInMinuteSpan(
+        i,
+        o,
+      );
+    return "Eq" === r.Compare ? T : !T;
   }
 }
 exports.LevelAiDecoratorCheckTodTimePeriod = LevelAiDecoratorCheckTodTimePeriod;

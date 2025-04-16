@@ -18,18 +18,18 @@ const UE = require("ue"),
 class CountDownChallengeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.k3a = 0),
+      (this.f6a = 0),
       (this.mNe = 0),
       (this.MYt = 0),
-      (this.Sqa = ""),
+      (this.Gqa = ""),
       (this.AYt = void 0),
-      (this.yqa = void 0),
-      (this.Iqa = void 0),
-      (this.Tqa = void 0),
+      (this.kqa = void 0),
+      (this.Nqa = void 0),
+      (this.Fqa = void 0),
       (this.SequencePlayer = void 0),
       (this.PYt = (e, t) => {
         var i, s, h;
-        (this.k3a = this.mNe),
+        (this.f6a = this.mNe),
           (this.mNe = e),
           this.mNe <= 0
             ? ((ModelManager_1.ModelManager.GeneralLogicTreeModel.CountDownViewClosing =
@@ -40,7 +40,7 @@ class CountDownChallengeView extends UiViewBase_1.UiViewBase {
                     !1);
               }))
             : ((e = 10 <= this.mNe),
-              10 <= this.k3a &&
+              10 <= this.f6a &&
                 !e &&
                 (this.SequencePlayer.GetCurrentSequence() === SWITCH_ANIM &&
                   this.SequencePlayer.StopCurrentSequence(!1, !0),
@@ -58,17 +58,17 @@ class CountDownChallengeView extends UiViewBase_1.UiViewBase {
                   : "") + h),
               (i = Math.floor((this.mNe - Math.floor(this.mNe)) * ONE_HUNDRED)),
               this.AYt?.SetText(s + `:${h}:` + ((i < 10 ? "0" : "") + i)),
-              this.AYt?.SetArtTextData(e ? this.Iqa : this.Tqa),
+              this.AYt?.SetArtTextData(e ? this.Nqa : this.Fqa),
               t &&
-                (this.yqa?.SetArtTextData(e ? this.Iqa : this.Tqa),
+                (this.kqa?.SetArtTextData(e ? this.Nqa : this.Fqa),
                 (s = Math.round((t - this.MYt) / 1e3)),
                 (this.MYt = t),
                 0 !== s) &&
-                (this.yqa?.SetText(0 < s ? `+${s}s` : s + "s"),
+                (this.kqa?.SetText(0 < s ? `+${s}s` : s + "s"),
                 this.SequencePlayer.GetCurrentSequence() === ADD_ANIM &&
                   this.SequencePlayer.StopCurrentSequence(!1, !0),
                 this.SequencePlayer.PlayLevelSequenceByName(ADD_ANIM)),
-              (h = PublicUtil_1.PublicUtil.GetConfigTextByKey(this.Sqa)),
+              (h = PublicUtil_1.PublicUtil.GetConfigTextByKey(this.Gqa)),
               this.GetText(1)?.SetText(h));
       });
   }
@@ -84,23 +84,23 @@ class CountDownChallengeView extends UiViewBase_1.UiViewBase {
     var e = this.OpenParam,
       e =
         ((this.MYt = e.TimerEndTime),
-        (this.Sqa = e.UiTitleKey),
+        (this.Gqa = e.UiTitleKey),
         (this.AYt = this.GetArtText(2)),
-        (this.yqa = this.GetArtText(3)),
+        (this.kqa = this.GetArtText(3)),
         (this.SequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
           this.RootItem,
         )),
-        (this.Iqa = this.AYt.GetArtTextData()),
+        (this.Nqa = this.AYt.GetArtTextData()),
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "TextData_NumB1",
         ));
     ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.LGUIArtTextData, (e, t) => {
       e && e.IsValid()
-        ? (this.Tqa = e)
+        ? (this.Fqa = e)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiImageSetting",
-            19,
+            18,
             "CountDownChallengeView找不到artTextData：TextData_NumB1",
           );
     });

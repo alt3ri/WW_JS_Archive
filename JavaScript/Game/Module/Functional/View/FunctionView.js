@@ -6,8 +6,11 @@ const UE = require("ue"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   PlayerExpByPlayerLevel_1 = require("../../../../Core/Define/ConfigQuery/PlayerExpByPlayerLevel"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  CloudGameManager_1 = require("../../../Manager/CloudGameManager"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -16,12 +19,15 @@ const UE = require("ue"),
   UiManager_1 = require("../../../Ui/UiManager"),
   NoCircleAttachView_1 = require("../../AutoAttach/NoCircleAttachView"),
   CommonInputViewController_1 = require("../../Common/InputView/Controller/CommonInputViewController"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  PreDownloadButton_1 = require("../../MobilePredownload/PreDownloadButton"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   WorldLevelController_1 = require("../../WorldLevel/WorldLevelController"),
   FunctionController_1 = require("../FunctionController"),
   FunctionAttachItemGrid_1 = require("./FunctionAttachItemGrid"),
   FunctionBottomButtonItem_1 = require("./FunctionBottomButtonItem"),
+  FunctionResDownLoadItem_1 = require("./FunctionResDownLoadItem"),
   FunctionTabLayout_1 = require("./FunctionTabLayout");
 class FunctionView extends UiViewBase_1.UiViewBase {
   constructor() {
@@ -34,9 +40,20 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       (this.k7t = void 0),
       (this.F7t = void 0),
       (this.V7t = void 0),
+      (this._4_ = void 0),
+      (this.gLt = void 0),
+      (this.eCc = void 0),
+      (this.RR1 = void 0),
       (this.H7t = new Map()),
       (this.ypt = new Array()),
       (this.j7t = void 0),
+      (this.Hmc = () => {
+        this.gLt?.Refresh(
+          ModelManager_1.ModelManager.PersonalModel.GetDressedPlayerTitleId(),
+          ModelManager_1.ModelManager.PersonalModel.GetDressedPlayerTitleLevel(),
+          ModelManager_1.ModelManager.PersonalModel.GetSex(),
+        );
+      }),
       (this.W7t = () => {
         this.CloseMe();
       }),
@@ -74,8 +91,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
           UiManager_1.UiManager.OpenView(
             "PersonalRootView",
             ModelManager_1.ModelManager.PersonalModel.GetPersonalInfoData(),
-          ),
-          ModelManager_1.ModelManager.PersonalModel.TryHidePersonalTip();
+          );
       }),
       (this.tHt = () => {
         UiManager_1.UiManager.OpenView("PersonalOptionView");
@@ -119,6 +135,11 @@ class FunctionView extends UiViewBase_1.UiViewBase {
             );
         }
       }),
+      (this.tCc = () => {
+        ControllerHolder_1.ControllerHolder.PreDownloadController.OnPreDownloadBtnClick(
+          !1,
+        );
+      }),
       (this.sHt = () => {
         this.N7t.SetUIActive(!1), this.G7t.SetUIActive(!1);
       }),
@@ -154,6 +175,9 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       (this.CHt = (t, e, i) => {
         t = new FunctionAttachItemGrid_1.FunctionAttachItemGrid(t);
         return t.SetNeedAnim(0 === e), this.H7t.set(e, t), t;
+      }),
+      (this.ZT1 = (t) => {
+        this.eb1();
       });
   }
   OnRegisterComponent() {
@@ -194,6 +218,10 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       [33, UE.UISprite],
       [34, UE.UIItem],
       [35, UE.UIItem],
+      [36, UE.UISprite],
+      [37, UE.UIButtonComponent],
+      [38, UE.UIItem],
+      [39, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [6, this.W7t],
@@ -212,7 +240,15 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         [17, this.rHt],
         [16, this.nHt],
         [32, this.cWs],
+        [37, this.tCc],
       ]);
+  }
+  async OnBeforeStartAsync() {
+    (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(38).GetOwner()),
+      this.Hmc(),
+      (this.RR1 = new FunctionResDownLoadItem_1.FunctionResDownLoadItem()),
+      await this.RR1.CreateByActorAsync(this.GetItem(39).GetOwner());
   }
   OnStart() {
     (this.G7t = this.GetButton(17).RootUIComp),
@@ -229,6 +265,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         this.ovt.CreateItems(t.GetOwner(), 0, this.CHt),
         this.ovt.SetDragBeginCallback(this.sHt),
         this.ovt.SetMoveMultiFactor(50),
+        this.ovt.SetPageLimitState(!0),
         (this.F7t = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
           this.GetButton(8).RootUIComp,
           "FunctionMail",
@@ -237,13 +274,26 @@ class FunctionView extends UiViewBase_1.UiViewBase {
           this.GetButton(15).RootUIComp,
           "FunctionNotice",
         )),
+        (this._4_ = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
+          this.GetButton(20).RootUIComp,
+          "FunctionPhotograph",
+        )),
+        (this.eCc = new PreDownloadButton_1.PreDownloadButtonItemB(
+          this.GetButton(37).RootUIComp,
+        )),
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10060)),
       t =
         (this.GetButton(21).RootUIComp.SetRaycastTarget(t),
+        this.GetButton(7).RootUIComp.SetUIActive(
+          !CloudGameManager_1.CloudGameManager.IsCloudGame,
+        ),
         this.gHt(),
-        this.mWs(),
         this.ovt.GetCurrentSelectIndex());
-    this.BNe(t), this.B7t.SetToggleSelectByIndex(t);
+    this.BNe(t),
+      this.B7t.SetToggleSelectByIndex(t),
+      Platform_1.Platform.IsPs5Platform() &&
+        (this.GetButton(14)?.SetSelfInteractive(!1),
+        this.GetSprite(36)?.SetUIActive(!1));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -273,6 +323,14 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FunctionGridSelected,
         this.dHt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayerTitleChange,
+        this.Hmc,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.ResDownLoadStateRefresh,
+        this.ZT1,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFunctionViewShow,
@@ -304,8 +362,16 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         this.mHt,
       ),
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayerTitleChange,
+        this.Hmc,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FunctionGridSelected,
         this.dHt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.ResDownLoadStateRefresh,
+        this.ZT1,
       );
   }
   BNe(t) {
@@ -341,7 +407,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     return !1;
   }
   OnBeforeShow() {
-    this.vHt(), this.MHt(), this.K8e();
+    this.vHt(), this.MHt(), this.K8e(), this.mWs(), this.eb1();
   }
   OnAfterShow() {
     this.EHt();
@@ -351,21 +417,31 @@ class FunctionView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     for (const t of this.ovt.GetItems()) this.AddChild(t);
-    this.B7t.Destroy(), this.F7t.Destroy(), this.V7t.Destroy();
+    this.B7t.Destroy(),
+      this.F7t.Destroy(),
+      this.V7t.Destroy(),
+      this._4_.Destroy(),
+      this.gLt.Destroy(),
+      this.eCc.Destroy(),
+      this.RR1.EndShow();
   }
   K8e() {
     this.F7t.BindRedDot(),
       this.V7t.BindRedDot(),
+      this._4_.BindRedDot(),
+      this.eCc.BindRedDot(),
       RedDotController_1.RedDotController.BindRedDot(
-        "PersonalCard",
+        "PersonalInfo",
         this.GetItem(34),
       );
   }
   Ovt() {
     this.F7t.UnBindRedDot(),
       this.V7t.UnBindRedDot(),
+      this._4_.UnBindRedDot(),
+      this.eCc.UnBindRedDot(),
       RedDotController_1.RedDotController.UnBindGivenUi(
-        "PersonalCard",
+        "PersonalInfo",
         this.GetItem(34),
       );
   }
@@ -376,7 +452,8 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       this._Ht(),
       this.cHt(),
       this.r9t(),
-      this.yHt();
+      this.yHt(),
+      this.Hmc();
   }
   K7e() {
     var t = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
@@ -413,12 +490,14 @@ class FunctionView extends UiViewBase_1.UiViewBase {
   _Ht() {
     var t = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(4);
     const e = this.GetTexture(11);
-    e.SetUIActive(!1),
-      this.SetRoleIcon("", e, t, void 0, () => {
+    var t = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(t);
+    void 0 !== t &&
+      (e.SetUIActive(!1),
+      this.SetTextureShowUntilLoaded(t.GetRoleHeadIconCircle(), e, () => {
         e.SetUIActive(!0);
-      });
-    t = ModelManager_1.ModelManager.PersonalModel.CheckCanShowPersonalTip();
-    this.GetItem(35).SetUIActive(t);
+      }),
+      (t = ModelManager_1.ModelManager.PersonalModel.CheckCanShowPersonalTip()),
+      this.GetItem(35).SetUIActive(t));
   }
   cHt() {
     var t = ModelManager_1.ModelManager.PersonalModel.GetCurCardId();
@@ -510,7 +589,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
   GetGuideUiItemAndUiItemForShowEx(t) {
     if (1 < t.length || isNaN(Number(t[0])))
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 17, "功能菜单聚焦引导的ExtraParam配置错误", [
+        Log_1.Log.Error("Guide", 16, "功能菜单聚焦引导的ExtraParam配置错误", [
           "configParams",
           t,
         ]);
@@ -521,7 +600,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "功能菜单聚焦引导的ExtraParam配置错误, 检查functionId",
             ["functionId", t],
           );
@@ -538,7 +617,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Guide",
-              17,
+              16,
               "功能菜单聚焦引导的ExtraParam配置错误, 检查functionId",
               ["functionId", t],
             );
@@ -556,17 +635,22 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10019),
       ),
       this.GetButton(15).SetSelfInteractive(
-        ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk(),
-      ),
-      this.GetButton(20).SetSelfInteractive(
-        ModelManager_1.ModelManager.FunctionModel.IsOpen(10049),
+        ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() ||
+          PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn,
       );
+    this.GetButton(20).SetSelfInteractive(
+      ModelManager_1.ModelManager.FunctionModel.IsOpen(10049),
+    );
+    var t =
+      ModelManager_1.ModelManager.PreDownloadModel.IsPreDownloadAvailable() ||
+      ModelManager_1.ModelManager.PreDownloadModel.IsComplete();
+    this.GetButton(37)?.RootUIComp.SetUIActive(t);
   }
   EHt() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Functional",
-        11,
+        10,
         "功能开启界面Start阶段计算数据输出",
         ["剩余宽度", this.j7t.OffsetWidth],
         ["显示数量", this.j7t.TotalGridNumber],
@@ -575,7 +659,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Functional",
-        11,
+        10,
         "功能开启界面AfterShow阶段计算数据输出",
         ["剩余宽度", t.OffsetWidth],
         ["显示数量", t.TotalGridNumber],
@@ -598,6 +682,11 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         n * (Math.floor((t - e.Top - e.Bottom) / (i.Y + r.Y)) + s),
       OffsetWidth: o >= i.X ? o - i.X : o + r.X,
     };
+  }
+  eb1() {
+    ModelManager_1.ModelManager.ResDownLoadModel.NeedShowBattleViewButton()
+      ? (this.RR1?.SetUiActive(!0), this.RR1?.StartShow())
+      : (this.RR1?.SetUiActive(!1), this.RR1?.EndShow());
   }
 }
 exports.FunctionView = FunctionView;

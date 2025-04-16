@@ -2,25 +2,30 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerDefensePhantomSkillItem = void 0);
 const UE = require("ue"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class TowerDefensePhantomSkillItem extends GridProxyAbstract_1.GridProxyAbstract {
-  Refresh(e, t, i) {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.SkillTextId),
+  Refresh(t, e, i) {
+    var r = this.GetText(0);
+    StringUtils_1.StringUtils.IsEmpty(t.SkillTextId)
+      ? r?.SetUIActive(!1)
+      : (r?.SetUIActive(!0),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.SkillTextId)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(1),
         "Text_InstanceDungeonRecommendLevel_Text",
-        e.Level,
+        t.Level,
       ),
-      e.DescriptionArgs
+      t.DescriptionArgs
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(2),
-            e.DescriptionTextId,
-            ...e.DescriptionArgs,
+            t.DescriptionTextId,
+            ...t.DescriptionArgs,
           )
         : LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(2),
-            e.DescriptionTextId,
+            t.DescriptionTextId,
           );
   }
   OnRegisterComponent() {

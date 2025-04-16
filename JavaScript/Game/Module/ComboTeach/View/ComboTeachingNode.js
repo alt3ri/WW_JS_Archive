@@ -140,7 +140,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
           s &&
             ((n = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
             (h = EntitySystem_1.EntitySystem.Get(n)
-              .GetComponent(34)
+              .GetComponent(39)
               .GetSkillInfo(Number(s)))) &&
             this.SetSpriteByPath(
               h.SkillIcon?.AssetPathName?.toString(),

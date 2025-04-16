@@ -44,10 +44,10 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(20881, EditFormationController.i5t);
+    Net_1.Net.Register(18530, EditFormationController.i5t);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(20881);
+    Net_1.Net.UnRegister(18530);
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -67,9 +67,9 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
   }
   static GetFormationDataRequest() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Formation", 49, "请求所有编队数据");
+      Log_1.Log.Info("Formation", 48, "请求所有编队数据");
     var o = new Protocol_1.Aki.Protocol.Wis();
-    Net_1.Net.Call(24282, o, (o) => {});
+    Net_1.Net.Call(27975, o, (o) => {});
   }
   static async EditFormationRequest(o) {
     var r,
@@ -90,7 +90,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
               }
             if (r) {
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Formation", 49, "更新单机编队，新旧编队相同");
+                Log_1.Log.Info("Formation", 48, "更新单机编队，新旧编队相同");
               continue;
             }
           }
@@ -114,12 +114,14 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         (l.GVn = r), (l.OVn = i), (l.C5n = t), (l.NVn = o), e.push(l);
       }
     }
-    var g = new Protocol_1.Aki.Protocol.Nis();
-    (g.kVn = e),
-      ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Formation", 49, "更新单机编队", ["formations", e]),
-      await Net_1.Net.CallAsync(25429, g);
+    var g = new Protocol_1.Aki.Protocol.Nis(),
+      g =
+        ((g.kVn = e),
+        ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Formation", 48, "更新单机编队", ["formations", e]),
+        await Net_1.Net.CallAsync(16531, g));
+    return g?.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs;
   }
   static async UpdateFormationRequest(o, r, t, e) {
     var n = new Protocol_1.Aki.Protocol.M6s(),
@@ -133,32 +135,38 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         ((o.kVn = [n]),
         ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Formation", 49, "更新单机编队", ["formation", n]),
-        await Net_1.Net.CallAsync(25429, o));
+          Log_1.Log.Info("Formation", 48, "更新单机编队", ["formation", n]),
+        await Net_1.Net.CallAsync(16531, o));
     return void 0 !== r;
   }
   static async UpdateFightRoleRequest() {
-    var r = ModelManager_1.ModelManager.EditFormationModel,
-      t = r.GetEditingRoleIdList(-1);
-    if (!(t.length <= 0)) {
-      var e = r.GetCurrentFormationData.GetCurrentRolePosition;
-      let o = r.GetEditingRoleId(-1, e);
-      if (!o || r.IsRoleDead(o))
-        for (const n of t)
-          if (n !== o && !r.IsRoleDead(n)) {
-            o = n;
-            break;
-          }
-      o
-        ? (((e = new Protocol_1.Aki.Protocol.$is()).FVn = o),
-          (e.C5n = t),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Formation", 49, "更新联机编队", ["massage", e]),
-          ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
-          await Net_1.Net.CallAsync(17584, e))
-        : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Formation", 49, "更新联机编队，找不到当前角色");
-    }
+    var o = ModelManager_1.ModelManager.EditFormationModel,
+      r = o.GetEditingRoleIdSet(-1);
+    if (r.size <= 0) return !1;
+    var t = o.GetCurrentFormationData.GetCurrentRolePosition;
+    let e = o.GetEditingRoleId(-1, t);
+    if (!e || o.IsRoleDead(e))
+      for (const i of r)
+        if (i !== e && !o.IsRoleDead(i)) {
+          e = i;
+          break;
+        }
+    if (!e)
+      return (
+        Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("Formation", 48, "更新联机编队，找不到当前角色"),
+        !1
+      );
+    var n = [];
+    for (const a of r) n.push(a);
+    (t = new Protocol_1.Aki.Protocol.$is()),
+      (t.FVn = e),
+      (t.C5n = n),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Formation", 48, "更新联机编队", ["massage", t]),
+      ModelManager_1.ModelManager.SceneTeamModel.RefreshLastTransform(),
+      (r = await Net_1.Net.CallAsync(29803, t));
+    return r?.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs;
   }
 }
 (exports.EditFormationController = EditFormationController),
@@ -184,7 +192,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Formation",
-            32,
+            31,
             "打开编队按钮时，当前编队为声骸编队，无法打开",
           ),
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -203,10 +211,10 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
     if (2 === r.GetCurrentGroupLivingState(e))
       return (
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Formation", 49, "打开编队按钮时，当前编队已死亡"),
+          Log_1.Log.Warn("Formation", 48, "打开编队按钮时，当前编队已死亡"),
         !1
       );
-    r = t.Entity.GetComponent(190);
+    r = t.Entity.GetComponent(203);
     if (!r?.Valid)
       return (
         Log_1.Log.CheckWarn() &&
@@ -217,7 +225,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
           ),
         !1
       );
-    e = t.Entity.GetComponent(160);
+    e = t.Entity.GetComponent(172);
     if (!e?.Valid)
       return (
         Log_1.Log.CheckWarn() &&
@@ -303,7 +311,7 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
         t.Entity,
         Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
       );
-      if (r && r.Entity.GetComponent(190)?.HasTag(40422668))
+      if (r && r.Entity.GetComponent(203)?.HasTag(40422668))
         return (
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -317,20 +325,20 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
           !1
         );
     }
-    return 0 < e.GetBuffTotalStackById(BigInt("90003001"))
+    return 0 < e.GetBuffTotalStackById(90003001)
       ? (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Formation", 36, "打开编队按钮时，当前角色在电梯中"),
+          Log_1.Log.Info("Formation", 35, "打开编队按钮时，当前角色在电梯中"),
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           EditFormationController.o5t,
         ),
         !1)
       : !(
-          (r = t.Entity.GetComponent(71)) &&
+          (r = t.Entity.GetComponent(78)) &&
           0 < r.WalkOnWaterStage &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Formation",
-              37,
+              36,
               "打开编队按钮时，当前角色在水面上行走",
             ),
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -361,19 +369,22 @@ class EditFormationController extends UiControllerBase_1.UiControllerBase {
   (EditFormationController.i5t = (o) => {
     var r = o.gUs;
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Formation", 49, "更新背包编队", ["formations", r]),
+      Log_1.Log.Info("Formation", 48, "更新背包编队", ["formations", r]),
       ModelManager_1.ModelManager.OnlineModel.RefreshWorldTeamRoleInfo(r),
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
       UiManager_1.UiManager.IsViewOpen("EditFormationView")
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Formation",
-              49,
+              48,
               "更新背包编队时联机打开界面中，进行缓存",
             ),
           (_a.r5t = o))
-        : ModelManager_1.ModelManager.EditFormationModel.UpdatePlayerFormations(
+        : (ModelManager_1.ModelManager.EditFormationModel.UpdatePlayerFormations(
             r,
-          );
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnRefreshOnlineTeamList,
+          ));
   });
 //# sourceMappingURL=EditFormationController.js.map

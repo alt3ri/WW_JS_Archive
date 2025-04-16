@@ -15,8 +15,6 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
       (this.unr = -0),
       (this.cnr = -0),
       (this.mnr = void 0),
-      (this.dnr = void 0),
-      (this.Cnr = void 0),
       (this.gnr = []),
       (this.fnr = []),
       (this.pnr = -0),
@@ -24,7 +22,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
       (this.Mnr = ""),
       (this.Enr = ""),
       (this.Snr = ""),
-      (this.ynr = ""),
+      (this.Qsl = ""),
       (this.Inr = -0),
       (this.Tnr = -0),
       (this.Lnr = -0);
@@ -45,12 +43,6 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
       )),
       (this.mnr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulatableItemPushFXAsset",
-      )),
-      (this.dnr = CommonParamById_1.configCommonParamById.GetStringConfig(
-        "ManipulateItemAppearEffect",
-      )),
-      (this.Cnr = CommonParamById_1.configCommonParamById.GetStringConfig(
-        "ManipulateItemDisappearEffect",
       )),
       (this.gnr = new Array()),
       CommonParamById_1.configCommonParamById
@@ -80,7 +72,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
       (this.Snr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulatableItemHandFXAssetPath",
       )),
-      (this.ynr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.Qsl = CommonParamById_1.configCommonParamById.GetStringConfig(
         "MatControllerDAPath",
       )),
       (this.Inr = CommonParamById_1.configCommonParamById.GetFloatConfig(
@@ -107,12 +99,6 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
   get PushEffectPath() {
     return this.mnr;
   }
-  get ItemAppearEffectPath() {
-    return this.dnr;
-  }
-  get ItemDisappearEffectPath() {
-    return this.Cnr;
-  }
   get SearchAnglesCos() {
     return this.gnr;
   }
@@ -132,7 +118,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
     return this.Enr;
   }
   get MatControllerDaPath() {
-    return this.ynr;
+    return this.Qsl;
   }
   get HandFxPath() {
     return this.Snr;
@@ -150,7 +136,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
     var a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(10, t);
     if (a) return this.Dnr(a.ManipulatePoints, a.Duration, e);
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("World", 32, "加载失败，Manipulate Precast表中没有该项", [
+      Log_1.Log.Info("World", 31, "加载失败，Manipulate Precast表中没有该项", [
         "Row Name",
         t,
       ]);
@@ -159,7 +145,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
     var a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(9, t);
     if (a) return this.Dnr(a.ManipulatePoints, a.Duration, e);
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("World", 32, "加载失败，Manipulate Item表中没有该项", [
+      Log_1.Log.Info("World", 31, "加载失败，Manipulate Item表中没有该项", [
         "Row Name",
         t,
       ]);
@@ -178,7 +164,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
           2 !== e.PointType
             ? ((i = i - a),
               0 === e.PointType
-                ? MathUtils_1.MathUtils.LerpVector(e.Location, t.Location, i)
+                ? MathUtils_1.MathUtils.LerpVectorOld(e.Location, t.Location, i)
                 : this.Rnr(
                     e.Location,
                     e.LeaveTangent,
@@ -189,12 +175,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
             : e.Location);
   }
   OnClear() {
-    return (
-      (this._nr = void 0),
-      (this.mnr = void 0),
-      (this.dnr = void 0),
-      !(this.Cnr = void 0)
-    );
+    return (this._nr = void 0), !(this.mnr = void 0);
   }
   Rnr(t, e, a, i, r) {
     var n = r * r,
@@ -207,7 +188,9 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
       t = Vector_1.Vector.Create(e).MultiplyEqual(r),
       o = Vector_1.Vector.Create(i).MultiplyEqual(m),
       e = Vector_1.Vector.Create(a).MultiplyEqual(s);
-    return n.AdditionEqual(t).AdditionEqual(o).AdditionEqual(e), n.ToUeVector();
+    return (
+      n.AdditionEqual(t).AdditionEqual(o).AdditionEqual(e), n.ToUeVectorOld()
+    );
   }
 }
 exports.ManipulateConfig = ManipulateConfig;

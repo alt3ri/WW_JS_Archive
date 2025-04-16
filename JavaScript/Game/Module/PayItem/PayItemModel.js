@@ -13,23 +13,26 @@ class PayItemModel extends ModelBase_1.ModelBase {
       (this.JOi = new Map()),
       (this.Version = ""),
       (this.zOi = void 0),
-      (this.lka = new Map());
+      (this.cFa = new Map());
   }
   UpdateProductInfoMap(e) {
     e.forEach((e) => {
-      this.lka.set(e.GoodId, e);
+      this.cFa.set(e.GoodId, e);
     }),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Pay", 17, "PayItemModel UpdateProductInfoMap:", [
+        Log_1.Log.Debug("Pay", 16, "PayItemModel UpdateProductInfoMap:", [
           "ProductInfoMap",
-          this.lka,
+          this.cFa,
         ]);
   }
   GetProductLabelByGoodsId(e) {
-    return this.lka.get(e)?.GoodLabel;
+    return this.cFa.get(e)?.GoodLabel;
+  }
+  GetProductChannelGoodsIdByGoodsId(e) {
+    return this.cFa.get(e)?.ChannelGoodId;
   }
   GetProductInfoByGoodsId(e) {
-    return this.lka.get(e);
+    return this.cFa.get(e);
   }
   GetDataList() {
     return this.YOi;
@@ -74,13 +77,13 @@ class PayItemModel extends ModelBase_1.ModelBase {
     var e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(e),
       r = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId),
       o = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(e.ItemId),
-      i = e.PayId,
-      n = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(i);
+      n = e.PayId,
+      i = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(n);
     return {
       product_id:
-        ModelManager_1.ModelManager.RechargeModel.GetPayIdProductId(i),
+        ModelManager_1.ModelManager.RechargeModel.GetPayIdProductId(n),
       cpOrderId: t,
-      price: n,
+      price: i,
       goodsName: "" + r + e.ItemCount,
       goodsDesc: "" + o + e.ItemCount,
       extraParams: " ",

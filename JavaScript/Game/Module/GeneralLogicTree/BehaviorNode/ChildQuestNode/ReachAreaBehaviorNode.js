@@ -30,7 +30,7 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
       (this.f$t = void 0),
       (this.p$t = 0),
       (this.v$t = 0),
-      (this.gXa = !1),
+      (this.OJa = !1),
       (this.OnAfterSubmit = (e) => {
         this.u$t = !1;
       });
@@ -45,14 +45,13 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
       (this.a$t = e.MatchRoleOption),
       (this.ConditionGrop = e.PreConditions),
       (this.EffectPathKey = e.EffectPath);
-    var t =
-      void 0 !== e.RangeEntityId
-        ? ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
-            e.RangeEntityId,
-          )
-        : void 0;
+    var t = e.RangeEntityId
+      ? ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
+          e.RangeEntityId,
+        )
+      : void 0;
     if (
-      ((this.gXa = void 0 !== e.RangeEntities && 0 < e.RangeEntities?.length),
+      ((this.OJa = void 0 !== e.RangeEntities && 0 < e.RangeEntities?.length),
       t)
     ) {
       this._$t = e.Range;
@@ -112,11 +111,13 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   }
   OnTick() {
     this.wY++,
-      ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
+      this.Blackboard?.DungeonId !==
+        ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.Id ||
+        ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
         this.u$t ||
         (!this.Blackboard.IsTracking && this.wY % 2 != 0) ||
         ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
-        this.gXa ||
+        this.OJa ||
         (this.M$t() && this.SubmitNode());
   }
   M$t() {

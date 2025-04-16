@@ -5,24 +5,21 @@ const UE = require("ue"),
   ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
   Log_1 = require("../../Core/Common/Log"),
   ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
-  TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   ModelManager_1 = require("../Manager/ModelManager");
 class ActorUtils {
-  static LoadActorByModelConfig(e, r) {
-    var o = e.蓝图?.ToAssetPathName();
-    if (o && o.length && "None" !== o) {
-      o = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+  static LoadActorByModelConfig(e, o) {
+    var t = e.蓝图?.ToAssetPathName();
+    if (t && t.length && "None" !== t) {
+      t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         e.蓝图.ToAssetPathName(),
         UE.Class,
       );
-      if (o?.IsValid()) {
+      if (t?.IsValid()) {
         let e = void 0;
         return (
-          (e = o.IsChildOf(UE.TsBaseItem_C.StaticClass())
-            ? ActorSystem_1.ActorSystem.Get(o, r, void 0)
-            : ActorSystem_1.ActorSystem.Spawn(o, r, void 0)) instanceof
-            TsBaseCharacter_1.default && e.CreateAttribute(),
-          e?.IsValid() &&
+          (e = t.IsChildOf(UE.TsBaseItem_C.StaticClass())
+            ? ActorSystem_1.ActorSystem.Get(t, o, void 0)
+            : ActorSystem_1.ActorSystem.Spawn(t, o, void 0))?.IsValid() &&
             (e.SetActorHiddenInGame(!0),
             e.SetActorTickEnabled(!1),
             e.SetActorEnableCollision(!1)),
@@ -38,17 +35,15 @@ class ActorUtils {
           ["ModelId", e.ID],
         );
   }
-  static LoadActorByPath(e, r, o) {
+  static LoadActorByPath(e, o, t) {
     if (e && e.length && "None" !== e) {
-      var t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(e, UE.Class);
-      if (t?.IsValid()) {
+      var r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(e, UE.Class);
+      if (r?.IsValid()) {
         let e = void 0;
         return (
-          (e = t.IsChildOf(UE.TsBaseItem_C.StaticClass())
-            ? ActorSystem_1.ActorSystem.Get(t, r, void 0)
-            : ActorSystem_1.ActorSystem.Spawn(t, r, void 0)) instanceof
-            TsBaseCharacter_1.default && e.CreateAttribute(),
-          e?.IsValid() &&
+          (e = r.IsChildOf(UE.TsBaseItem_C.StaticClass())
+            ? ActorSystem_1.ActorSystem.Get(r, o, void 0)
+            : ActorSystem_1.ActorSystem.Spawn(r, o, void 0))?.IsValid() &&
             (e.SetActorHiddenInGame(!0),
             e.SetActorTickEnabled(!1),
             e.SetActorEnableCollision(!1)),
@@ -62,28 +57,28 @@ class ActorUtils {
           7,
           "[ActorUtils.LoadActorByPath] 加载Actor失败，因为模型的蓝图没有设置。",
           ["Path", e],
-          ["EntityConfigId", o],
+          ["EntityConfigId", t],
         );
   }
-  static LoadAndChangeMeshAnim(e, r, o) {
-    var r = r.ToAssetPathName(),
-      r =
-        (r?.length &&
-          "None" !== r &&
-          (r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-            r,
+  static LoadAndChangeMeshAnim(e, o, t) {
+    var o = o.ToAssetPathName(),
+      o =
+        (o?.length &&
+          "None" !== o &&
+          (o = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+            o,
             UE.SkeletalMesh,
           )) &&
-          e.SkeletalMesh !== r &&
-          e.SetSkeletalMesh(r),
-        o.ToAssetPathName());
-    r?.length &&
-      "None" !== r &&
-      (o = ResourceSystem_1.ResourceSystem.GetLoadedAsset(r, UE.Class)) &&
-      e.AnimClass !== o &&
-      e.SetAnimClass(o);
+          e.SkeletalMesh !== o &&
+          e.SetSkeletalMesh(o),
+        t.ToAssetPathName());
+    o?.length &&
+      "None" !== o &&
+      (t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(o, UE.Class)) &&
+      e.AnimClass !== t &&
+      e.SetAnimClass(t);
   }
-  static GetEntityByActor(e, r = !0) {
+  static GetEntityByActor(e, o = !0) {
     if (
       UE.KuroStaticLibrary.IsImplementInterface(
         e?.GetClass(),
@@ -96,7 +91,7 @@ class ActorUtils {
           e.GetEntityId(),
         )
       );
-    r &&
+    o &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "World",

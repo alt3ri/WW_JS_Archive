@@ -9,7 +9,7 @@ class Node {
 (exports.Node = Node).Undefined = new Node(void 0);
 class LinkedList {
   constructor() {
-    (this.Cme = Node.Undefined), (this.XAa = Node.Undefined), (this.TT = 0);
+    (this.Cme = Node.Undefined), (this.SAa = Node.Undefined), (this.TT = 0);
   }
   get Size() {
     return this.TT;
@@ -23,7 +23,7 @@ class LinkedList {
       var s = t["Next"];
       (t.Next = Node.Undefined), (t.Prev = Node.Undefined), (t = s);
     }
-    (this.Cme = Node.Undefined), (this.XAa = Node.Undefined), (this.TT = 0);
+    (this.Cme = Node.Undefined), (this.SAa = Node.Undefined), (this.TT = 0);
   }
   Unshift(t) {
     return this.ya(t, !1);
@@ -38,15 +38,15 @@ class LinkedList {
   }
   Pop() {
     var t;
-    if (this.XAa !== Node.Undefined)
-      return (t = this.XAa.Element), this.jp(this.XAa), t;
+    if (this.SAa !== Node.Undefined)
+      return (t = this.SAa.Element), this.jp(this.SAa), t;
   }
   ya(t, s) {
     const e = new Node(t);
     this.Cme === Node.Undefined
-      ? ((this.Cme = e), (this.XAa = e))
+      ? ((this.Cme = e), (this.SAa = e))
       : s
-        ? ((t = this.XAa), (((this.XAa = e).Prev = t).Next = e))
+        ? ((t = this.SAa), (((this.SAa = e).Prev = t).Next = e))
         : ((s = this.Cme), (((this.Cme = e).Next = s).Prev = e)),
       (this.TT += 1);
     let i = !1;
@@ -59,9 +59,9 @@ class LinkedList {
     t.Prev !== Node.Undefined && t.Next !== Node.Undefined
       ? (((s = t.Prev).Next = t.Next), (t.Next.Prev = s))
       : t.Prev === Node.Undefined && t.Next === Node.Undefined
-        ? ((this.Cme = Node.Undefined), (this.XAa = Node.Undefined))
+        ? ((this.Cme = Node.Undefined), (this.SAa = Node.Undefined))
         : t.Next === Node.Undefined
-          ? ((this.XAa = this.XAa.Prev), (this.XAa.Next = Node.Undefined))
+          ? ((this.SAa = this.SAa.Prev), (this.SAa.Next = Node.Undefined))
           : t.Prev === Node.Undefined &&
             ((this.Cme = this.Cme.Next), (this.Cme.Prev = Node.Undefined)),
       --this.TT;

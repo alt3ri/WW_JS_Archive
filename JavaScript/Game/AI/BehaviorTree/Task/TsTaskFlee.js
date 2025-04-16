@@ -8,9 +8,9 @@ const puerts_1 = require("puerts"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   GravityUtils_1 = require("../../../Utils/GravityUtils"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
@@ -26,6 +26,23 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
       (this.ForceNavigation = !1),
       (this.LeapMode = !1),
       (this.LeapDistance = 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsTargetKey = ""),
+      (this.TsOverrideTurnSpeed = !1),
+      (this.TsTurnSpeed = 0),
+      (this.TsForceNavigation = !1),
+      (this.TsLeapMode = !1),
+      (this.TsLeapDistance = 0),
+      (this.FoundPath = !1),
+      (this.NavigationPath = void 0),
+      (this.CurrentNavigationIndex = 0),
+      (this.NavigationEndTime = -0),
+      (this.IsFlying = !1),
+      (this.MoveComp = void 0),
+      (this.CompleteDistance = 0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsTargetKey = ""),
       (this.TsOverrideTurnSpeed = !1),
@@ -59,7 +76,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
         let i = void 0;
         if (this.TsTargetKey) {
           var r =
-            BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
               s.CharActorComp.Entity.Id,
               this.TsTargetKey,
             );
@@ -76,7 +93,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
           if (r) {
             const n = r.Entity;
             if (n)
-              if (((this.MoveComp = n.GetComponent(164)), this.MoveComp)) {
+              if (((this.MoveComp = n.GetComponent(176)), this.MoveComp)) {
                 5 === this.MoveComp.CharacterMovement.MovementMode &&
                   (this.IsFlying = !0);
                 var r = r.ActorLocationProxy,
@@ -99,7 +116,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
                   );
                 let t = 0;
                 this.IsFlying && (t = s.AiFlee.FleeHeight);
-                h = new UE.Vector(
+                h = new UE.VectorDouble(
                   r.X + (h.X * l + o.X * a) * _,
                   r.Y + (h.Y * l + o.Y * a) * _,
                   r.Z + t,
@@ -127,13 +144,13 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
                     this.NavigationPath.push(Vector_1.Vector.Create(h))),
                   this.FoundPath ||
                     ((a = (0, puerts_1.$ref)(void 0)),
-                    UE.NavigationSystemV1.K2_ProjectPointToNavigation(
+                    UE.NavigationSystemV1.D_K2_ProjectPointToNavigation(
                       GlobalData_1.GlobalData.World,
                       h,
                       a,
                       void 0,
                       void 0,
-                      new UE.Vector(_, _, EDGE_Z),
+                      new UE.VectorDouble(_, _, EDGE_Z),
                     ) &&
                       (this.FoundPath =
                         AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
@@ -146,7 +163,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
                     ? ((this.CurrentNavigationIndex = 1),
                       (this.NavigationEndTime =
                         Time_1.Time.WorldTime + s.AiFlee.TimeMilliseconds),
-                      (l = s.CharAiDesignComp.Entity.GetComponent(92))?.Valid &&
+                      (l = s.CharAiDesignComp.Entity.GetComponent(99))?.Valid &&
                         l.SetMoveState(
                           CharacterUnifiedStateTypes_1.ECharMoveState.Run,
                         ))
@@ -155,13 +172,13 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
                 Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "BehaviorTree",
-                    30,
+                    29,
                     "CharacterMoveComponent Invalid",
                     ["Type", e.GetClass().GetName()],
                   );
             else
               Log_1.Log.CheckError() &&
-                Log_1.Log.Error("BehaviorTree", 30, "Entity Invalid", [
+                Log_1.Log.Error("BehaviorTree", 29, "Entity Invalid", [
                   "Type",
                   e.GetClass().GetName(),
                 ]);
@@ -169,7 +186,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "BehaviorTree",
-                30,
+                29,
                 "CharacterActorComponent Invalid",
                 ["Type", e.GetClass().GetName()],
               );
@@ -202,7 +219,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
           this.NavigationPath[this.CurrentNavigationIndex],
         )).Subtraction(s.ActorLocationProxy, r),
         this.IsFlying ||
-          GravityUtils_1.GravityUtils.ConvertToPlanarVector(s, r),
+          GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(s, r),
         (h = r.Size()),
         (this.CompleteDistance = this.TsLeapMode
           ? this.TsLeapDistance

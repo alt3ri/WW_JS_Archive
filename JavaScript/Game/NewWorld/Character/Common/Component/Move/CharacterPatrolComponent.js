@@ -2,20 +2,20 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    var h,
-      o = arguments.length,
-      r =
-        o < 3
+    var o,
+      r = arguments.length,
+      h =
+        r < 3
           ? i
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(i, e))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, i, e, s);
+      h = Reflect.decorate(t, i, e, s);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (h = t[n]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
-    return 3 < o && r && Object.defineProperty(i, e, r), r;
+        (o = t[n]) && (h = (r < 3 ? o(h) : 3 < r ? o(i, e, h) : o(i, e)) || h);
+    return 3 < r && h && Object.defineProperty(i, e, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPatrolComponent = void 0);
@@ -32,13 +32,16 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
   CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes");
 class PatrolRecord {
-  constructor() {
+  constructor(t) {
     (this.IsActive = !1),
       (this.PatrolState = 0),
       (this.LastPointIndex = -1),
       (this.OnArrivePointHandle = void 0),
       (this.OnTriggerActionsHandle = void 0),
-      (this.OnPatrolEndHandle = void 0);
+      (this.OnPatrolEndHandle = void 0),
+      (this.OnArrivePointHandle = t.OnArrivePointHandle),
+      (this.OnTriggerActionsHandle = t.OnTriggerActionsHandle),
+      (this.OnPatrolEndHandle = t.OnPatrolEndHandle);
   }
 }
 class SplineInfo {
@@ -76,7 +79,9 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
             i && i.length
               ? this.OnTriggerSplineActions(i)
               : (i = this.GetNextPointMoveConfig())
-                ? ((i.StartIndex = 0), this.MoveComp.MoveAlongPath(i))
+                ? ((i.StartIndex = 0),
+                  (i.NavigateToStartPos = !1),
+                  this.MoveComp.MoveAlongPath(i))
                 : this.OnPatrolFinished();
         }
       }),
@@ -98,13 +103,14 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
               s && s(t),
               this.SplineActionRunner(i, e, t);
         }
-      });
+      }),
+      (this.pKl = !1);
   }
   OnStart() {
     return (
       (this.CreatureData = this.Entity.GetComponent(0)),
       (this.ActorComp = this.Entity.GetComponent(1)),
-      (this.MoveComp = this.Entity.GetComponent(38)),
+      (this.MoveComp = this.Entity.GetComponent(44)),
       (this.RecordList = new Map()),
       (this.SplineInfoList = new Map()),
       (this.CacheVector = Vector_1.Vector.Create()),
@@ -116,46 +122,69 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
   OnClear() {
     return !0;
   }
-  StartPatrol(i, e) {
-    if (!this.CurrentPatrol?.IsActive)
-      if (this.RestoreSplineState(i) || this.InitSpline(i, e)) {
-        var s = new PatrolRecord();
-        (this.CurrentPatrol = s),
-          (this.CurrentPatrol.IsActive = !0),
-          (this.CurrentPatrol.PatrolState = 1),
-          (this.CurrentPatrol.OnArrivePointHandle = e.OnArrivePointHandle),
-          (this.CurrentPatrol.OnTriggerActionsHandle =
-            e.OnTriggerActionsHandle),
-          (this.CurrentPatrol.OnPatrolEndHandle = e.OnPatrolEndHandle),
-          this.RecordList.set(i, s),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "AI",
-              51,
-              "[CharacterPatrolComp.StartPatrol] 开始样条巡逻",
-              ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
-              ["Actor", this.ActorComp?.Owner?.GetName()],
-              ["SplineId", i],
-              ["LastPoint", this.CurrentPatrol?.LastPointIndex],
-            );
-        let t = this.GetNextPointIndex();
-        e.UseNearestPoint && (t = this.GetNearestPatrolPointIndex());
-        (s = this.GetSegmentInfo(t)),
-          (e = this.CurrentSplineInfo.SegmentsMoveConfig[s.SegmentIndex]);
-        e &&
-          ((e.StartIndex = s.IndexInSegment),
-          this.MoveComp.MoveAlongPath(e),
-          this.PatrolBeginRequest());
-      } else
-        Log_1.Log.CheckError() &&
+  StartPatrol(t, i) {
+    var e;
+    this.CurrentPatrol?.IsActive ||
+      ((e = this.SplineInfoList.get(t) ?? this.InitSplineInfo(t, i)) &&
+      this.PartitionSplineAndCreateMoveConfig(e, i)
+        ? this.Pih(e, i)
+        : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "AI",
-            51,
+            50,
             "初始化样条失败，无法开始巡逻",
             ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
-            ["SplineId", i],
-          ),
-          this.ResetState(i);
+            ["SplineId", t],
+          ));
+  }
+  StartSplineCurvePatrol(t, i, e, s) {
+    this.CurrentPatrol?.IsActive ||
+      ((i =
+        this.SplineInfoList.get(t) ??
+        this.InitSplineInfoWithCurve(t, i, e, s, !0)) &&
+      this.PartitionSplineAndCreateMoveConfig(i, s)
+        ? this.Pih(i, s)
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "AI",
+            50,
+            "初始化样条失败，无法开始巡逻",
+            ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
+            ["SplineId", t],
+          ));
+  }
+  Pih(t, i) {
+    var e = t.SplineId,
+      s = new PatrolRecord(i);
+    (s.IsActive = !0),
+      (s.PatrolState = 1),
+      (this.CurrentPatrol = s),
+      (this.CurrentSplineInfo = t),
+      this.RecordList.set(e, s),
+      this.SplineInfoList.set(e, t),
+      (this.pKl = i.NoRequestServer ?? !1),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "AI",
+          50,
+          "[CharacterPatrolComp.StartPatrol] 开始样条巡逻",
+          ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
+          ["Actor", this.ActorComp?.Owner?.GetName()],
+          ["SplineId", e],
+          ["LastPoint", this.CurrentPatrol?.LastPointIndex],
+        );
+    let o = this.GetNextPointIndex();
+    i.UseNearestPoint &&
+      (o = i.IgnorePointDirection
+        ? this.GetNearestDistancePointIndex()
+        : this.GetNearestPatrolPointIndex());
+    (s = this.GetSegmentInfo(o)),
+      (t = this.CurrentSplineInfo.SegmentsMoveConfig[s.SegmentIndex]);
+    t &&
+      ((t.StartIndex = s.IndexInSegment),
+      (t.NavigateToStartPos = !0),
+      this.MoveComp.MoveAlongPath(t),
+      this.PatrolBeginRequest());
   }
   PausePatrol(i, e) {
     var s = this.RecordList.get(i);
@@ -166,7 +195,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           ? Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "AI",
-              51,
+              50,
               "[CharacterPlanComponent] 重复使用暂停巡逻的Key",
               ["PbDataId", this.CreatureData?.GetPbDataId()],
               ["SplineId", i],
@@ -178,7 +207,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "AI",
-                  51,
+                  50,
                   "[CharacterPatrolComp.PausePatrol] 暂停样条巡逻",
                   ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
                   ["Actor", this.ActorComp?.Owner?.GetName()],
@@ -199,7 +228,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "AI",
-                51,
+                50,
                 "[CharacterPatrolComp.ResumePatrol] 继续样条巡逻",
                 ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
                 ["Actor", this.ActorComp?.Owner?.GetName()],
@@ -213,7 +242,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "AI",
-              51,
+              50,
               "[CharacterPatrolComp] 继续巡逻使用了未定义的Key",
               ["PbDataId", this.CreatureData?.GetPbDataId()],
               ["SplineId", t],
@@ -225,7 +254,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "AI",
-        51,
+        50,
         "[CharacterPatrolComp.StopPatrol] 停止样条巡逻",
         ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
         ["Actor", this.ActorComp?.Owner?.GetName()],
@@ -255,11 +284,29 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
   HasPatrolRecord(t) {
     return t ? !!this.RecordList?.has(t) : !!this.CurrentPatrol;
   }
+  GetIsPauseState(t) {
+    return !!this.PauseKeyMap.get(t) && 0 < this.PauseKeyMap.get(t).size;
+  }
+  IsInPatrol() {
+    return this.CurrentPatrol?.IsActive ?? !1;
+  }
+  IsPositiveDirection() {
+    return (
+      !(
+        this.CurrentSplineInfo &&
+        this.CurrentPatrol &&
+        this.CurrentSplineInfo.IsLoop &&
+        this.CurrentSplineInfo.IsCircle
+      ) ||
+      this.CurrentPatrol.LastPointIndex <
+        this.CurrentSplineInfo.SplineComp.PathPoint.length - 1
+    );
+  }
   SplineActionRunner(i, e, t) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "AI",
-        51,
+        50,
         "开始执行同步事件",
         ["PbDataId", this.CreatureData?.GetPbDataId()],
         ["SplineId", i],
@@ -274,7 +321,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "AI",
-              51,
+              50,
               "同步事件执行完毕",
               ["PbDataId", this.CreatureData?.GetPbDataId()],
               ["SplineId", i],
@@ -285,118 +332,137 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
         },
       );
   }
-  InitSpline(t, i) {
+  InitSplineInfo(t, i) {
     var e = new GameSplineComponent_1.GameSplineComponent(t);
-    if (!this.TryInitSplineFromAiPatrol(e) && !e.Initialize())
-      return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "LevelAi",
-            43,
-            "[CharacterPatrolComp.InitSpline] GameSplineComponent初始化失败",
-            ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
-            ["SplinePbDataId", t],
-          ),
-        !1
-      );
     if (
-      e.Option.Type !== IComponent_1.ESplineType.LevelAI &&
-      e.Option.Type !== IComponent_1.ESplineType.Patrol
+      this.TryInitSplineFromAiPatrol(e) ||
+      e.InitializeWithSubPoints(t) ||
+      e.Initialize()
     )
-      return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "LevelAi",
-            51,
-            "[CharacterPatrolComp.InitSpline] 非巡逻样条或关卡Ai样条，无法初始化",
-            ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
-            ["SplinePbDataId", t],
-          ),
-        !1
+      return this.InitSplineInfoFromSplineComp(e, i);
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "LevelAi",
+        42,
+        "[CharacterPatrolComp.InitSpline] GameSplineComponent初始化失败",
+        ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
+        ["SplinePbDataId", t],
       );
-    var s = new SplineInfo();
-    switch (((s.SplineId = t), (this.CurrentSplineInfo = s), e.Option.Type)) {
-      case IComponent_1.ESplineType.Patrol:
-        (this.CurrentSplineInfo.IsLoop = !1),
-          (this.CurrentSplineInfo.IsCircle = !1),
-          e.Option.CycleOption &&
-            e.Option.CycleOption.Type === IComponent_1.EPatrolCycleMode.Loop &&
-            ((this.CurrentSplineInfo.IsLoop = !0),
-            (this.CurrentSplineInfo.IsCircle = e.Option.CycleOption.IsCircle));
-        break;
-      case IComponent_1.ESplineType.LevelAI:
-        (this.CurrentSplineInfo.IsLoop = !1),
-          (this.CurrentSplineInfo.IsCircle = !1),
-          e.Option.CycleOption &&
-            e.Option.CycleOption.Type === IComponent_1.ELevelAiCycleMode.Loop &&
-            ((this.CurrentSplineInfo.IsLoop = !0),
-            (this.CurrentSplineInfo.IsCircle = e.Option.CycleOption.IsCircle));
-    }
-    if (
-      ((this.CurrentSplineInfo.SplineComp = e),
-      (this.CurrentSplineInfo.VirtualSplinePoints = e.PathPoint.slice(0)),
-      this.CurrentSplineInfo.IsCircle &&
-        2 < this.CurrentSplineInfo.VirtualSplinePoints.length)
-    )
-      for (let t = e.PathPoint.length - 2; 0 < t; --t)
-        this.CurrentSplineInfo.VirtualSplinePoints.push(e.PathPoint[t]);
-    return !!this.PartitionSpline(i) && (this.SplineInfoList.set(t, s), !0);
   }
-  PartitionSpline(i) {
-    if (!this.CurrentSplineInfo) return !1;
-    if (!this.CurrentSplineInfo.VirtualSplinePoints.length) return !1;
-    this.CurrentSplineInfo.SegmentsMoveConfig = new Array();
-    let e = [],
-      s = 0;
-    var h = this.CurrentSplineInfo.VirtualSplinePoints.length;
-    for (let t = 0; t < h; ++t) {
-      var o = this.CurrentSplineInfo.VirtualSplinePoints[t];
-      e.push(o),
-        (t === h - 1 || (o.Actions && 0 !== o.Actions.length)) &&
-          (this.CreateMoveConfig(e, s, i), (s += e.length), (e = []));
+  InitSplineInfoWithCurve(t, i, e, s, o) {
+    t = new GameSplineComponent_1.GameSplineComponent(t);
+    return (
+      t.InitializeWithSplineCurve(i, e, o),
+      this.InitSplineInfoFromSplineComp(t, s)
+    );
+  }
+  InitSplineInfoFromSplineComp(i, t) {
+    if (
+      i.Option.Type === IComponent_1.ESplineType.LevelAI ||
+      i.Option.Type === IComponent_1.ESplineType.Patrol
+    ) {
+      var e,
+        s = i.SplineId,
+        o = new SplineInfo();
+      switch (((o.SplineId = s), i.Option.Type)) {
+        case IComponent_1.ESplineType.Patrol:
+          (o.IsLoop = !1),
+            (o.IsCircle = !1),
+            i.Option.CycleOption &&
+              i.Option.CycleOption.Type ===
+                IComponent_1.EPatrolCycleMode.Loop &&
+              ((o.IsLoop = !0), (o.IsCircle = i.Option.CycleOption.IsCircle));
+          break;
+        case IComponent_1.ESplineType.LevelAI:
+          (o.IsLoop = !1),
+            (o.IsCircle = !1),
+            i.Option.CycleOption &&
+              i.Option.CycleOption.Type ===
+                IComponent_1.ELevelAiCycleMode.Loop &&
+              ((o.IsLoop = !0), (o.IsCircle = i.Option.CycleOption.IsCircle));
+      }
+      if (
+        ((void 0 === t.StartPointIndex && void 0 === t.EndPointIndex) ||
+          ((s = i.PathPoint.length),
+          (e = t.StartPointIndex
+            ? MathUtils_1.MathUtils.Clamp(t.StartPointIndex, 0, s - 1)
+            : 0),
+          (t = t.EndPointIndex
+            ? MathUtils_1.MathUtils.Clamp(t.EndPointIndex, 0, s - 1)
+            : s - 1),
+          (i.PathPoint = i.PathPoint.slice(e, t + 1))),
+        (o.SplineComp = i),
+        (o.VirtualSplinePoints = i.PathPoint.slice(0)),
+        o.IsCircle && 2 < o.VirtualSplinePoints.length)
+      )
+        for (let t = i.PathPoint.length - 2; 0 < t; --t)
+          o.VirtualSplinePoints.push(i.PathPoint[t]);
+      return o;
+    }
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "LevelAi",
+        50,
+        "[CharacterPatrolComp.InitSpline] 非巡逻样条或关卡Ai样条，无法初始化",
+        ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
+        ["SplinePbDataId", i.SplineId],
+      );
+  }
+  PartitionSplineAndCreateMoveConfig(s, o) {
+    if (!s.VirtualSplinePoints.length) return !1;
+    if (!s.SegmentsMoveConfig) {
+      s.SegmentsMoveConfig = new Array();
+      let i = [],
+        e = 0;
+      var r = s.VirtualSplinePoints.length;
+      for (let t = 0; t < r; ++t) {
+        var h = s.VirtualSplinePoints[t];
+        i.push(h),
+          (t === r - 1 || (h.Actions && 0 !== h.Actions.length)) &&
+            (this.CreateMoveConfig(s, i, e, o), (e += i.length), (i = []));
+      }
     }
     return !0;
   }
-  CreateMoveConfig(i, e, t) {
-    if (this.CurrentSplineInfo?.SplineComp && i.length) {
-      var s = [];
+  CreateMoveConfig(t, i, e, s) {
+    if (t.SplineComp && i.length) {
+      var o = [];
       for (let t = 0; t < i.length; t++) {
-        const r = i[t];
-        var h = {
+        const n = i[t];
+        var r = {
           Index: t,
-          Position: r.Point,
+          Position: n.Point,
           Actions: new Array(),
-          MoveState: r.MoveState,
-          MoveSpeed: r.MoveSpeed,
-          PosState: r.CharPositionState
-            ? this.GetPosStateType(r.CharPositionState)
+          MoveState: n.MoveState,
+          MoveSpeed: n.MoveSpeed,
+          PosState: n.CharPositionState
+            ? this.GetPosStateType(n.CharPositionState)
             : void 0,
           Callback: () => {
             this.UpdatePatrolRecord(t + e),
-              r.IsMain &&
+              n.IsMain &&
                 this.CurrentPatrol?.OnArrivePointHandle &&
                 this.CurrentPatrol.OnArrivePointHandle();
           },
         };
         this.ActorComp?.CreatureData.IsRole() ||
-          h.MoveState !== IComponent_1.EPatrolMoveState.Sprint ||
-          (h.MoveState = IComponent_1.EPatrolMoveState.Run),
-          s.push(h);
+          r.MoveState !== IComponent_1.EPatrolMoveState.Sprint ||
+          (r.MoveState = IComponent_1.EPatrolMoveState.Run),
+          o.push(r);
       }
-      var o = this.CurrentSplineInfo.SplineComp.Option,
-        o = {
-          Points: s,
-          Navigation: o.IsNavigation ?? !1,
-          IsFly: o.IsFloating ?? !1,
-          DebugMode: t.DebugMode ?? !1,
+      var h = t.SplineComp.Option,
+        h = {
+          Points: o,
+          Navigation: h.IsNavigation ?? !1,
+          IsFly: s.IsFollowStrictly ?? h.IsFloating ?? !1,
+          DebugMode: s.DebugMode ?? !1,
           Loop: !1,
           CircleMove: !1,
           UsePreviousIndex: !1,
           UseNearestPoint: !1,
           ReturnFalseWhenNavigationFailed: !1,
         };
-      (o.Callback = this.OnSegmentPatrolFinished),
-        this.CurrentSplineInfo.SegmentsMoveConfig.push(o);
+      (h.Callback = this.OnSegmentPatrolFinished), t.SegmentsMoveConfig.push(h);
     }
   }
   UpdatePatrolRecord(t) {
@@ -408,7 +474,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "AI",
-        51,
+        50,
         "到达点巡逻点",
         ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
         ["Actor", this.ActorComp?.Owner?.GetName()],
@@ -429,10 +495,11 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
             this.CurrentSplineInfo.SegmentsMoveConfig[
               i.SegmentIndex
             ]).StartIndex = i.IndexInSegment),
+          (e.NavigateToStartPos = !0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "AI",
-              51,
+              50,
               "[CharacterPatrolComp.MoveAlongPathWithRecord] 依据历史选择下个目标点",
               ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
               ["Actor", this.ActorComp?.Owner?.GetName()],
@@ -447,7 +514,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           this.OnPatrolFinished());
   }
   ResetState(t) {
-    this.RecordList.delete(t),
+    this.RecordList?.delete(t),
       this.PauseKeyMap.delete(t),
       t === this.CurrentSplineInfo?.SplineId &&
         ((this.CurrentPatrol = void 0), (this.CurrentSplineInfo = void 0));
@@ -466,6 +533,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
   PatrolBeginRequest() {
     var t;
     this.CreatureData.IsMonster() &&
+      !this.pKl &&
       (((t = Protocol_1.Aki.Protocol.Kes.create()).F4n =
         MathUtils_1.MathUtils.NumberToLong(
           this.CreatureData.GetCreatureDataId(),
@@ -473,23 +541,25 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       (t.V4n =
         this.CurrentPatrol.LastPointIndex <
         this.CurrentSplineInfo.SplineComp.PathPoint.length - 1),
-      Net_1.Net.Call(21744, t, () => {}));
+      Net_1.Net.Call(17943, t, () => {}));
   }
   PatrolEndRequest() {
     var t;
     this.CreatureData.IsMonster() &&
+      !this.pKl &&
       (((t = Protocol_1.Aki.Protocol.Xes.create()).F4n =
         MathUtils_1.MathUtils.NumberToLong(
           this.CreatureData.GetCreatureDataId(),
         )),
-      Net_1.Net.Call(15110, t, () => {}));
+      Net_1.Net.Call(22325, t, () => {}));
   }
   DirectionChangeRequest(t) {
     var i;
     this.CreatureData.IsMonster() &&
+      !this.pKl &&
       (0 === t
         ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("AI", 51, "往返式巡逻：回到起点", [
+            Log_1.Log.Info("AI", 50, "往返式巡逻：回到起点", [
               "PbDataID",
               this.ActorComp.CreatureData.GetPbDataId(),
             ]),
@@ -498,10 +568,10 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
               this.CreatureData.GetCreatureDataId(),
             )),
           (i.V4n = !0),
-          Net_1.Net.Call(17259, i, () => {}))
+          Net_1.Net.Call(21855, i, () => {}))
         : t === this.CurrentSplineInfo.SplineComp.PathPoint.length - 1 &&
           (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("AI", 51, "往返式巡逻：走到终点", [
+            Log_1.Log.Info("AI", 50, "往返式巡逻：走到终点", [
               "PbDataID",
               this.ActorComp.CreatureData.GetPbDataId(),
             ]),
@@ -510,7 +580,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
               this.ActorComp.CreatureData.GetCreatureDataId(),
             )),
           (i.V4n = !1),
-          Net_1.Net.Call(17259, i, () => {})));
+          Net_1.Net.Call(21855, i, () => {})));
   }
   GetSegmentInfo(e) {
     if (
@@ -523,14 +593,14 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
       let i = 0;
       var s = this.CurrentSplineInfo.SegmentsMoveConfig.length;
       for (let t = 0; t < s; ++t) {
-        var h = this.CurrentSplineInfo.SegmentsMoveConfig[t].Points.length;
-        if (e >= i && e < i + h)
+        var o = this.CurrentSplineInfo.SegmentsMoveConfig[t].Points.length;
+        if (e >= i && e < i + o)
           return {
             SegmentIndex: t,
             IndexInSegment: e - i,
-            IsEnd: e - i == h - 1,
+            IsEnd: e - i == o - 1,
           };
-        i += h;
+        i += o;
       }
     }
     return { SegmentIndex: -1, IndexInSegment: -1, IsEnd: !1 };
@@ -549,7 +619,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
     if (!this.CurrentSplineInfo?.VirtualSplinePoints?.length)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("AI", 51, "获取最近点失败", [
+          Log_1.Log.Error("AI", 50, "获取最近点失败", [
             "PbDataId",
             this.ActorComp.CreatureData.GetPbDataId(),
           ]),
@@ -558,24 +628,44 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
     var i = this.CurrentSplineInfo.VirtualSplinePoints;
     let e = 0,
       s = Number.MAX_VALUE;
-    var h = this.ActorComp.ActorLocationProxy,
-      o = Vector_1.Vector.Create(),
-      r = Vector_1.Vector.Create();
+    var o = this.ActorComp.ActorLocationProxy,
+      r = Vector_1.Vector.Create(),
+      h = Vector_1.Vector.Create();
     for (let t = 0; t < i.length - 1; t++) {
-      o.DeepCopy(i[t].Point),
-        r.DeepCopy(i[t + 1].Point),
-        this.CacheVector.Set(r.X, r.Y, r.Z),
-        this.CacheVector.Subtraction(o, this.CacheVector);
+      r.DeepCopy(i[t].Point),
+        h.DeepCopy(i[t + 1].Point),
+        this.CacheVector.Set(h.X, h.Y, h.Z),
+        this.CacheVector.Subtraction(r, this.CacheVector);
       var n = this.CacheVector.Size();
-      this.CacheVector2.Set(h.X, h.Y, h.Z),
-        this.CacheVector2.Subtraction(r, this.CacheVector2),
+      this.CacheVector2.Set(o.X, o.Y, o.Z),
+        this.CacheVector2.Subtraction(h, this.CacheVector2),
         0 < this.CacheVector.DotProduct(this.CacheVector2) ||
-          (this.CacheVector2.Set(h.X, h.Y, h.Z),
-          this.CacheVector2.Subtraction(o, this.CacheVector2),
+          (this.CacheVector2.Set(o.X, o.Y, o.Z),
+          this.CacheVector2.Subtraction(r, this.CacheVector2),
           this.CacheVector.DotProduct(this.CacheVector2) < 0) ||
           this.CacheVector.DotProduct(this.ActorComp.ActorForwardProxy) < 0 ||
           (this.CacheVector.CrossProduct(this.CacheVector2, this.CacheVector),
           (n = this.CacheVector.Size() / n) < s && ((s = n), (e = t + 1)));
+    }
+    return e;
+  }
+  GetNearestDistancePointIndex() {
+    if (!this.CurrentSplineInfo?.VirtualSplinePoints?.length)
+      return (
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error("AI", 50, "获取最近点失败", [
+            "PbDataId",
+            this.ActorComp.CreatureData.GetPbDataId(),
+          ]),
+        0
+      );
+    var i = this.CurrentSplineInfo.VirtualSplinePoints;
+    let e = 0,
+      s = Number.MAX_VALUE;
+    var o = this.ActorComp.ActorLocationProxy;
+    for (let t = 0; t < i.length - 1; t++) {
+      var r = Vector_1.Vector.DistSquared(o, i[t].Point);
+      r < s && ((e = t), (s = r));
     }
     return e;
   }
@@ -589,7 +679,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelAi",
-                51,
+                50,
                 "[CharacterPatrolComp.GetRawIndexInSpline] 索引越界",
                 ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
                 ["SplineId", this.CurrentSplineInfo?.SplineId],
@@ -635,7 +725,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
     }
   }
   TryInitSplineFromAiPatrol(i) {
-    var t = this.Entity.GetComponent(40)?.AiController.AiPatrol;
+    var t = this.Entity.GetComponent(46)?.AiController.AiPatrol;
     if (!t?.AllPatrolPoints || !t.AllPatrolPoints.length) return !1;
     if (!i.InitializeWithSubPoints(this.CreatureData.GetPbDataId())) return !1;
     i.PathPoint.length = 0;
@@ -647,7 +737,7 @@ let CharacterPatrolComponent = class CharacterPatrolComponent extends EntityComp
   }
 };
 (CharacterPatrolComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(41)],
+  [(0, RegisterComponent_1.RegisterComponent)(47)],
   CharacterPatrolComponent,
 )),
   (exports.CharacterPatrolComponent = CharacterPatrolComponent);

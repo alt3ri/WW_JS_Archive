@@ -23,12 +23,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPendulumComponent = void 0);
 const UE = require("ue"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../../GlobalData"),
-  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   LIMIT_FRAME_TIME = 33,
   LIMIT_FRAME_TIME2 = 50,
   UPDATE_UP_Z = 5,
@@ -110,7 +110,7 @@ let CharacterPendulumComponent =
             EventDefine_1.EEventName.CharMovementModeChanged,
             this.Ejr,
           ),
-          this.Entity.GetComponent(164).CharacterMovement);
+          this.Entity.GetComponent(176).CharacterMovement);
       return (this.vjr = t.AirControl), !0;
     }
     OnEnd() {
@@ -139,9 +139,9 @@ let CharacterPendulumComponent =
         (n = new UE.LinearColor(n, n, n, n)),
         (i = t.GetLocation()),
         (r = new UE.Vector(10, 10, 10)),
-        (r = new UE.Vector(0.5 * r.X, 0.5 * r.Y, 0.5 * r.Z)),
+        (r = new UE.VectorDouble(0.5 * r.X, 0.5 * r.Y, 0.5 * r.Z)),
         (s = t.Rotator()),
-        UE.KismetSystemLibrary.DrawDebugBox(
+        UE.KismetSystemLibrary.D_DrawDebugBox(
           GlobalData_1.GlobalData.World,
           i,
           r,
@@ -151,12 +151,15 @@ let CharacterPendulumComponent =
           30,
         ),
         (i = 0.5),
-        (r = UE.KismetMathLibrary.TransformLocation(t, new UE.Vector(i, i, i))),
-        (s = UE.KismetMathLibrary.TransformLocation(
+        (r = UE.KismetMathLibrary.D_TransformLocation(
           t,
-          new UE.Vector(-i, -i, -i),
+          new UE.VectorDouble(i, i, i),
         )),
-        UE.KismetSystemLibrary.DrawDebugLine(
+        (s = UE.KismetMathLibrary.D_TransformLocation(
+          t,
+          new UE.VectorDouble(-i, -i, -i),
+        )),
+        UE.KismetSystemLibrary.D_DrawDebugLine(
           GlobalData_1.GlobalData.World,
           r,
           s,
@@ -164,15 +167,15 @@ let CharacterPendulumComponent =
           e,
           15,
         ),
-        (r = UE.KismetMathLibrary.TransformLocation(
+        (r = UE.KismetMathLibrary.D_TransformLocation(
           t,
-          new UE.Vector(i, -i, i),
+          new UE.VectorDouble(i, -i, i),
         )),
-        (s = UE.KismetMathLibrary.TransformLocation(
+        (s = UE.KismetMathLibrary.D_TransformLocation(
           t,
-          new UE.Vector(-i, i, i),
+          new UE.VectorDouble(-i, i, i),
         )),
-        UE.KismetSystemLibrary.DrawDebugLine(
+        UE.KismetSystemLibrary.D_DrawDebugLine(
           GlobalData_1.GlobalData.World,
           r,
           s,
@@ -184,7 +187,7 @@ let CharacterPendulumComponent =
     yjr(t) {
       var e, n, i;
       this.cjr &&
-        (this.Anr.FromUeVector(this.ujr.GetVelocity()),
+        (this.Anr.FromUeVector(this.ujr.D_GetVelocity()),
         (e = 1),
         t > LIMIT_FRAME_TIME &&
           ((i =
@@ -193,7 +196,7 @@ let CharacterPendulumComponent =
               : t / LIMIT_FRAME_TIME),
           1 < (e = this.Anr.Size() / i)) &&
           this.Anr.Z < 0 &&
-          ((i = this.Entity.GetComponent(164)),
+          ((i = this.Entity.GetComponent(176)),
           (n = t > LIMIT_FRAME_TIME2 ? UPDATE_UP_Z2 : UPDATE_UP_Z),
           CharacterPendulumComponent_1.TmpVector.Set(
             0,
@@ -206,21 +209,21 @@ let CharacterPendulumComponent =
             "钩锁.ThrowRopeAndSwing",
           )),
         (e = Vector_1.Vector.Create(
-          this.ujr.K2_GetActorLocation(),
+          this.ujr.D_K2_GetActorLocation(),
         )).Subtraction(this.djr, e),
         (n = Vector_1.Vector.DotProduct(this.Anr, e)),
         e.Normalize(),
         (i = Vector_1.Vector.Create()),
         e.Multiply(n, i),
         i.Multiply(this.RopeForce, i),
-        (t = this.Entity.GetComponent(164).CharacterMovement),
+        (t = this.Entity.GetComponent(176).CharacterMovement),
         i.Size() > LIMIT_FORCE && (i.Normalize(), i.Multiply(LIMIT_FORCE, i)),
-        t.AddForce(i.ToUeVector()),
+        t.AddForce(i.ToUeVectorOld()),
         (t.AirControl = this.fjr));
     }
     Sjr() {
       (this.cjr = !1),
-        (this.Entity.GetComponent(164).CharacterMovement.AirControl = this.vjr);
+        (this.Entity.GetComponent(176).CharacterMovement.AirControl = this.vjr);
     }
     SetPendulumData(t, e, n, i, r, s, o, h, _, a, E) {
       (this.cjr = !0), (this.pjr = 1);
@@ -232,7 +235,7 @@ let CharacterPendulumComponent =
 (CharacterPendulumComponent.TmpVector = Vector_1.Vector.Create()),
   (CharacterPendulumComponent = CharacterPendulumComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(63)],
+      [(0, RegisterComponent_1.RegisterComponent)(70)],
       CharacterPendulumComponent,
     )),
   (exports.CharacterPendulumComponent = CharacterPendulumComponent);

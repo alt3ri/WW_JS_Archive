@@ -18,29 +18,31 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configEntityAudioConfigByIdWithZero.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configEntityAudioConfigByIdWithZero.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configEntityAudioConfigByIdWithZero.GetConfig(";
 exports.configEntityAudioConfigByIdWithZero = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, i, n, t = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var C = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i}#${n})`),
+      getConfigStat?.Start();
+    var C = Stats_1.Stat.CreateNoFlameGraph(
+        CONFIG_STAT_PREFIX + `#${o}#${i}#${n})`,
+      ),
       e =
-        (C.Start(),
+        (C?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (t) {
@@ -48,8 +50,8 @@ exports.configEntityAudioConfigByIdWithZero = {
         const g = ConfigCommon_1.ConfigCommon.GetConfig(f);
         if (g)
           return (
-            C.Stop(),
-            getConfigStat.Stop(),
+            C?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
@@ -90,8 +92,8 @@ exports.configEntityAudioConfigByIdWithZero = {
               ((e = KEY_PREFIX + `#${o}#${i}#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            C.Stop(),
-            getConfigStat.Stop(),
+            C?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
@@ -99,8 +101,8 @@ exports.configEntityAudioConfigByIdWithZero = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    C.Stop(),
-      getConfigStat.Stop(),
+    C?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

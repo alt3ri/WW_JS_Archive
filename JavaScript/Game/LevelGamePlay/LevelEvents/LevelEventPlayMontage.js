@@ -1,29 +1,53 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayMontage = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../Core/Common/Log"),
-  Time_1 = require("../../../Core/Common/Time"),
+const Log_1 = require("../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
-  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
-  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   WaitEntityTask_1 = require("../../World/Define/WaitEntityTask"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
-  DEFAULT_FINISHED_TIME = 6e4,
   DEFAULT_WAIT_ENTITY_TIMEOUT = 1e4;
 class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.Cfe = -0),
-      (this.oRe = void 0),
       (this.E0 = 0),
       (this.sDe = void 0),
       (this.gLe = void 0),
-      (this.XCa = !1),
-      (this.Kue = (e, t) => {
-        this.Cfe = Time_1.Time.WorldTime;
+      (this.zpe = (e, t) => {
+        this.sDe === t &&
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("LevelEvent", 26, "实体被移除,PlayMontage保底结束", [
+              "PbDataId",
+              t.PbDataId,
+            ]),
+          EventSystem_1.EventSystem.HasWithTarget(
+            this.sDe,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          ) &&
+            EventSystem_1.EventSystem.RemoveWithTarget(
+              this.sDe,
+              EventDefine_1.EEventName.RemoveEntity,
+              this.zpe,
+            ),
+          this.FinishExecute(!0));
+      }),
+      (this.ej_ = () => {
+        EventSystem_1.EventSystem.HasWithTarget(
+          this.sDe,
+          EventDefine_1.EEventName.RemoveEntity,
+          this.zpe,
+        ) &&
+          EventSystem_1.EventSystem.RemoveWithTarget(
+            this.sDe,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          ),
+          this.FinishExecute(!0);
       });
   }
   ExecuteInGm(e, t) {
@@ -38,7 +62,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelEvent",
-            51,
+            50,
             "[LevelEventPlayMontage]蒙太奇类型错误或路径为空",
             ["MontageType", e.ActionMontage.MontageType],
             ["Path", e.ActionMontage.Path],
@@ -56,7 +80,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelEvent",
-                  51,
+                  50,
                   "[LevelEventPlayMontage] 无法从行为上下文中获取PbDataId",
                   ["EntityId", t.EntityId],
                 ),
@@ -70,17 +94,17 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                 this.E0,
               )),
             this.sDe?.Entity?.IsInit
-              ? this.YCa()
-              : ((this.XCa = !0),
-                WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
+              ? this.zCa()
+              : WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
+                  "LevelEventPlayMontage.ExecuteNew",
                   this.E0,
                   (e) => {
                     e
-                      ? this.YCa()
+                      ? this.zCa()
                       : (Log_1.Log.CheckError() &&
                           Log_1.Log.Error(
                             "Event",
-                            51,
+                            50,
                             "[LevelEventPlayMontage] 等待实体加载超时",
                             ["PbDataId", this.E0],
                             ["Timeout", DEFAULT_WAIT_ENTITY_TIMEOUT],
@@ -89,11 +113,11 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                   },
                   DEFAULT_WAIT_ENTITY_TIMEOUT,
                   !1,
-                )))
+                ))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelEvent",
-                51,
+                50,
                 "[LevelEventPlayMontage] 无法获取执行Montage的实体",
                 ["PbDataId", this.E0],
               ),
@@ -103,19 +127,18 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelEvent",
-          51,
+          50,
           "[LevelEventPlayMontage]关卡事件参数为空",
         ),
         this.FinishExecute(!1);
   }
-  YCa() {
-    var e;
-    (this.XCa = !1),
-      (this.sDe = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-        this.E0,
-      )),
+  zCa() {
+    var e, t;
+    (this.sDe = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+      this.E0,
+    )),
       this.sDe?.Valid
-        ? this.sDe.Entity.GetComponent(40)?.IsAiDriver
+        ? this.sDe.Entity.GetComponent(46)?.IsAiDriver
           ? ((e = this.sDe.Entity.GetComponent(1)),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -126,55 +149,36 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                 ["Name", e.Owner.GetName()],
               ),
             this.FinishExecute(!0))
-          : ((this.oRe = this.sDe.Entity.GetComponent(37)),
-            ObjectUtils_1.ObjectUtils.IsValid(this.oRe?.MainAnimInstance)
-              ? ((this.Cfe =
-                  (this.gLe.Duration ?? DEFAULT_FINISHED_TIME) +
-                  Time_1.Time.WorldTime),
-                ResourceSystem_1.ResourceSystem.LoadAsync(
-                  this.gLe.ActionMontage.Path,
-                  UE.AnimMontage,
-                  (e) => {
-                    this.sDe?.Valid
-                      ? (this.IsAsync ||
-                          this.gLe.Duration ||
-                          this.oRe.AddOnMontageEnded(this.Kue),
-                        this.oRe.PlayOnce(e))
-                      : (this.IsAsync || this.FinishExecute(!0),
-                        Log_1.Log.CheckError() &&
-                          Log_1.Log.Error(
-                            "LevelEvent",
-                            27,
-                            "播放蒙太奇加载完资源后EntityHandle失效",
-                            ["PbDataId", this.E0],
-                            ["AssetPath", this.gLe.ActionMontage.Path],
-                          ));
-                  },
-                ),
-                this.IsAsync && this.FinishExecute(!0))
-              : (Log_1.Log.CheckError() &&
-                  Log_1.Log.Error(
-                    "LevelEvent",
-                    27,
-                    "播放蒙太奇时找不到动画蓝图",
-                    ["PbDataId", this.E0],
+          : (e = this.sDe.Entity?.GetComponent(45))
+            ? ((t =
+                void 0 === this.gLe.Duration ||
+                (0 <= this.gLe.Duration &&
+                  this.gLe.Duration < TimerSystem_1.MIN_TIME)),
+              this.IsAsync
+                ? (e.PlayPerformMontage(2, {
+                    MontagePath: this.gLe.ActionMontage.Path,
+                    IsLoop: !t,
+                    Duration: this.gLe.Duration,
+                  }),
+                  this.FinishExecute(!0))
+                : (EventSystem_1.EventSystem.AddWithTarget(
+                    this.sDe,
+                    EventDefine_1.EEventName.RemoveEntity,
+                    this.zpe,
                   ),
-                this.FinishExecute(!1)))
+                  e.PlayPerformMontage(2, {
+                    MontagePath: this.gLe.ActionMontage.Path,
+                    IsLoop: !t,
+                    Duration: this.gLe.Duration,
+                    OnEndCallback: this.ej_,
+                  })))
+            : this.FinishExecute(!0)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("LevelEvent", 51, "播放蒙太奇时找不到Entity", [
+            Log_1.Log.Error("LevelEvent", 50, "播放蒙太奇时找不到Entity", [
               "PbDataId",
               this.E0,
             ]),
           this.FinishExecute(!1));
-  }
-  OnTick(e) {
-    this.XCa ||
-      (this.Cfe < Time_1.Time.WorldTime &&
-        (this.oRe && this.oRe.RemoveOnMontageEnded(this.Kue),
-        this.FinishExecute(!0)));
-  }
-  OnReset() {
-    this.Cfe = 0;
   }
 }
 exports.LevelEventPlayMontage = LevelEventPlayMontage;

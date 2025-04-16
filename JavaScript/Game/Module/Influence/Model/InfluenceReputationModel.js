@@ -36,7 +36,7 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "InfluenceReputation",
-            11,
+            10,
             "奖励获取有问题,当前客户端没有该势力数据",
             ["Id", e],
           ),

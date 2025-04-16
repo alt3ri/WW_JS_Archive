@@ -6,35 +6,47 @@ class EffectParametersBase {
     (this.HasCurveParameters = !1),
       (this.EffectParameter = new CPP.KuroEffectParameters());
   }
-  CollectFloatCurve(t, s) {
+  CollectFloatCurve(t, e) {
     (this.HasCurveParameters = !0),
-      s.bUseCurve
-        ? this.EffectParameter.FloatCurveMap.Set(t, s)
-        : this.CollectFloatConst(t, s.Constant);
+      e.bUseCurve
+        ? this.EffectParameter.FloatCurveMap.Set(t, e)
+        : this.CollectFloatConst(t, e.Constant);
   }
-  CollectFloatConst(t, s) {
-    this.EffectParameter.FloatConstMap.Set(t, s);
+  CollectFloatConst(t, e) {
+    this.EffectParameter.FloatConstMap.Set(t, e);
   }
-  CollectLinearColorCurve(t, s) {
+  CollectLinearColorCurve(t, e) {
     (this.HasCurveParameters = !0),
-      s.bUseCurve
-        ? this.EffectParameter.LinearColorCurveMap.Set(t, s)
-        : this.CollectLinearColorConst(t, s.Constant);
+      e.bUseCurve
+        ? this.EffectParameter.LinearColorCurveMap.Set(t, e)
+        : this.CollectLinearColorConst(t, e.Constant);
   }
-  CollectLinearColorConst(t, s) {
-    this.EffectParameter.LinearColorConstMap.Set(t, s);
+  CollectLinearColorConst(t, e) {
+    this.EffectParameter.LinearColorConstMap.Set(t, e);
   }
-  CollectVectorCurve(t, s) {
+  CollectVectorCurve(t, e) {
     (this.HasCurveParameters = !0),
-      s.bUseCurve
-        ? this.EffectParameter.VectorCurveMap.Set(t, s)
-        : this.CollectVectorConst(t, s.Constant);
+      e.bUseCurve
+        ? this.EffectParameter.VectorCurveMap.Set(t, e)
+        : this.CollectVectorConst(t, e.Constant);
   }
-  CollectVectorConst(t, s) {
-    this.EffectParameter.VectorConstMap.Set(t, s);
+  CollectVectorConst(t, e) {
+    this.EffectParameter.VectorConstMap.Set(t, e);
   }
-  Apply(t, s, e) {
-    t && this.HasCurveParameters && this.EffectParameter.Apply(t, s, e);
+  RemoveFloatCurveOrConst(t) {
+    this.EffectParameter.FloatCurveMap.Remove(t),
+      this.EffectParameter.FloatConstMap.Remove(t);
+  }
+  RemoveLinearColorCurveOrConst(t) {
+    this.EffectParameter.LinearColorCurveMap.Remove(t),
+      this.EffectParameter.LinearColorConstMap.Remove(t);
+  }
+  RemoveVectorCurveOrConst(t) {
+    this.EffectParameter.VectorCurveMap.Remove(t),
+      this.EffectParameter.VectorConstMap.Remove(t);
+  }
+  Apply(t, e, s) {
+    t && (s || this.HasCurveParameters) && this.EffectParameter.Apply(t, e, s);
   }
 }
 exports.default = EffectParametersBase;

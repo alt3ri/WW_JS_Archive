@@ -12,7 +12,7 @@ class LevelConditionQuestStepState extends LevelGeneralBase_1.LevelConditionBase
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -24,7 +24,7 @@ class LevelConditionQuestStepState extends LevelGeneralBase_1.LevelConditionBase
     if (isNaN(o) || isNaN(n) || isNaN(a))
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelCondition", 17, "配置错误！条件的参数不合法", [
+          Log_1.Log.Error("LevelCondition", 16, "配置错误！条件的参数不合法", [
             "inConditionInfo.Id",
             e.Id,
           ]),
@@ -42,7 +42,7 @@ class LevelConditionQuestStepState extends LevelGeneralBase_1.LevelConditionBase
                 : (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Quest",
-                      19,
+                      18,
                       "任务步骤条件检测：找不到进行中的任务",
                     ),
                   !1));

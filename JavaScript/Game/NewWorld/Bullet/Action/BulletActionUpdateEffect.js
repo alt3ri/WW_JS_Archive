@@ -5,6 +5,7 @@ const UE = require("ue"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  CharacterUtils_1 = require("../../Character/CharacterUtils"),
   BulletConstant_1 = require("../BulletConstant"),
   BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction"),
   BulletPool_1 = require("../Model/BulletPool"),
@@ -17,7 +18,11 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
         ((t.EffectData = e.Render),
         (t.IsFinishAuto = t.EffectData.EffectStopInsteadDestroy),
         t.EffectData.SpecialEffect);
-    this.VVo(),
+    (t.DisablePostProcess =
+      !CharacterUtils_1.CharacterUtils.CanCharacterMonsterOrSummonedDisplayEffect(
+        this.BulletInfo.AttackerHandle,
+      )),
+      this.VVo(),
       4 === e.Base.Shape
         ? ((e = t.EffectData.EffectBulletParams.get(1)),
           (e = Number(e)),
@@ -40,7 +45,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
               BulletStaticFunction_1.BulletStaticFunction.PlayBulletEffect(
                 l,
                 e,
-                l.GetTransform(),
+                l.D_GetTransform(),
                 this.BulletInfo,
                 "[BulletActionUpdateEffect.OnExecute] 2",
               )),
@@ -52,14 +57,14 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
       e,
       l,
       i,
-      u,
-      s = this.BulletInfo.ActorComponent;
-    s &&
+      s,
+      u = this.BulletInfo.ActorComponent;
+    u &&
       (this.BulletInfo.BulletDataMain.Render.HandOverParentEffect
         ? BulletStaticFunction_1.BulletStaticFunction.HandOverEffectsAfterInitTransform(
             this.BulletInfo,
           )
-        : (u = (i = this.BulletInfo.EffectInfo).EffectData).EffectBullet
+        : (i = (l = this.BulletInfo.EffectInfo).EffectData).EffectBullet
             .length <= 0 ||
           ((t = BulletPool_1.BulletPool.CreateRotator()),
           this.BulletInfo.IsCollisionRelativeRotationModify
@@ -69,56 +74,71 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
                 t,
               )
             : t.FromUeRotator(BulletConstant_1.BulletConstant.RotateToRight),
-          (e = new UE.Transform(
-            UE.KismetMathLibrary.TransformRotation(
-              s.ActorTransform,
+          (s = new UE.TransformDouble(
+            UE.KismetMathLibrary.D_TransformRotation(
+              u.ActorTransform,
               t.ToUeRotator(),
             ),
-            s.ActorLocation,
-            s.ActorScale,
+            u.ActorLocation,
+            u.ActorScale,
           )),
           BulletPool_1.BulletPool.RecycleRotator(t),
-          (i.Effect =
+          (l.Effect =
             BulletStaticFunction_1.BulletStaticFunction.PlayBulletEffect(
-              s.Owner,
-              u.EffectBullet,
-              e,
+              u.Owner,
+              i.EffectBullet,
+              s,
               this.BulletInfo,
               "[BulletActionUpdateEffect.SpawnBulletEffectOnBegin]",
             )),
-          EffectSystem_1.EffectSystem.IsValid(i.Effect) &&
-            (t = EffectSystem_1.EffectSystem.GetEffectActor(i.Effect)) &&
+          EffectSystem_1.EffectSystem.IsValid(l.Effect) &&
+            ((t =
+              this.BulletInfo.BulletDataMain.Render.EffectBulletParams.get(
+                5,
+              )) &&
+              ((s =
+                BulletStaticFunction_1.BulletStaticFunction.GetNiagaraQualityLevel(
+                  Number(t),
+                )),
+              EffectSystem_1.EffectSystem.SetEffectQualityLevel(l.Effect, s)),
+            (t = EffectSystem_1.EffectSystem.GetEffectActor(l.Effect))) &&
             (t.K2_AttachToActor(
-              s.Owner,
+              u.Owner,
               FNameUtil_1.FNameUtil.NONE,
               1,
               1,
               1,
               !0,
             ),
-            u.EffectBulletParams.has(3) &&
-              ((e = u.EffectBulletParams.get(3).split(",")),
-              (i = Number(e[1])),
-              (s = Number(e[2])),
-              (e = Number(e[0])),
-              (l = BulletPool_1.BulletPool.CreateRotator()).Set(i, s, e),
-              t.K2_SetActorRelativeRotation(l.ToUeRotator(), !1, void 0, !0),
-              BulletPool_1.BulletPool.RecycleRotator(l)),
-            u.EffectBulletParams.has(2) &&
-              ((i = u.EffectBulletParams.get(2).split(",")),
-              (s = Number(i[0])),
-              (e = Number(i[1])),
-              (l = Number(i[2])),
-              (i = BulletPool_1.BulletPool.CreateVector()).Set(s, e, l),
-              t.K2_SetActorRelativeLocation(i.ToUeVector(), !1, void 0, !0),
-              BulletPool_1.BulletPool.RecycleVector(i)),
-            u.EffectBulletParams.has(4)) &&
-            ((s = u.EffectBulletParams.get(4).split(",")),
-            (e = Number(s[1])),
-            (l = Number(s[0])),
-            (i = Number(s[2])),
-            (u = BulletPool_1.BulletPool.CreateVector()).Set(e, l, i),
-            t.SetActorScale3D(u.ToUeVector()),
+            i.EffectBulletParams.has(3) &&
+              ((s = i.EffectBulletParams.get(3).split(",")),
+              (l = Number(s[1])),
+              (u = Number(s[2])),
+              (s = Number(s[0])),
+              (e = BulletPool_1.BulletPool.CreateRotator()).Set(l, u, s),
+              t.K2_SetActorRelativeRotation(e.ToUeRotator(), !1, void 0, !0),
+              BulletPool_1.BulletPool.RecycleRotator(e)),
+            i.EffectBulletParams.has(2) &&
+              ((l = i.EffectBulletParams.get(2).split(",")),
+              (u = Number(l[0])),
+              (s = Number(l[1])),
+              (e = Number(l[2])),
+              (l = BulletPool_1.BulletPool.CreateVector()).Set(u, s, e),
+              t.D_K2_SetActorRelativeLocation(l.ToUeVector(), !1, void 0, !0),
+              BulletPool_1.BulletPool.RecycleVector(l)),
+            (u = BulletPool_1.BulletPool.CreateVector(!0)),
+            i.EffectBulletParams.has(4) &&
+              ((s = i.EffectBulletParams.get(4).split(",")),
+              (e = Number(s[1])),
+              (l = Number(s[0])),
+              (i = Number(s[2])),
+              u.Set(e, l, i)),
+            (s = this.BulletInfo.AdditionInfo)?.Valid &&
+              !s.SizeScale.IsZero() &&
+              (u.IsZero()
+                ? u.FromUeVector(s.SizeScale)
+                : u.MultiplyEqual(s.SizeScale)),
+            u.IsZero() || t.D_SetActorScale3D(u.ToUeVector()),
             BulletPool_1.BulletPool.RecycleVector(u))));
   }
   OnTick(t) {
@@ -128,7 +148,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
       ((l = BulletPool_1.BulletPool.CreateVector()).X = 1),
       (l.Y = this.BulletInfo.RayInfo.Length * e.EffectOriginSize),
       (l.Z = 1),
-      EffectSystem_1.EffectSystem.GetEffectActor(e.Effect)?.SetActorScale3D(
+      EffectSystem_1.EffectSystem.GetEffectActor(e.Effect)?.D_SetActorScale3D(
         l.ToUeVector(),
       ),
       BulletPool_1.BulletPool.RecycleVector(l),
@@ -143,7 +163,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
       (this.BulletInfo.RayInfo.IsBlock
         ? (EffectSystem_1.EffectSystem.GetEffectActor(
             e.EffectBlock,
-          )?.K2_SetActorLocation(
+          )?.D_K2_SetActorLocation(
             this.BulletInfo.RayInfo.EndPoint.ToUeVector(),
             !1,
             void 0,
@@ -152,7 +172,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
           EffectSystem_1.EffectSystem.GetEffectActor(e.EffectBlock))
         : (EffectSystem_1.EffectSystem.GetEffectActor(
             e.EffectExtremity,
-          )?.K2_SetActorLocation(
+          )?.D_K2_SetActorLocation(
             this.BulletInfo.RayInfo.EndPoint.ToUeVector(),
             !1,
             void 0,

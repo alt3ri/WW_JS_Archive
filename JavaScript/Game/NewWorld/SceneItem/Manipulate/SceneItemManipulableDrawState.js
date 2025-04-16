@@ -10,6 +10,7 @@ const UE = require("ue"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   Global_1 = require("../../../Global"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   PortalUtils_1 = require("../../../Utils/PortalUtils"),
   SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
@@ -19,10 +20,9 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
       (this.esr = void 0),
       (this.tsr = void 0),
       (this.Znr = void 0),
-      (this.x0a = !1),
+      (this.bga = !1),
       (this.pYi = e),
-      (this.Znr = i),
-      (this.StateType = "BeDrawing");
+      (this.Znr = i);
   }
   SetEnterCallback(t) {
     this.EnterCallback = t;
@@ -32,7 +32,7 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Character",
-          32,
+          31,
           "[CharacterManipulateComp] DrawState OnEnter",
           ["PbDataId", this.SceneItem?.ActorComp?.CreatureData.GetPbDataId()],
           ["ActivatedOutlet", this.SceneItem.ActivatedOutlet?.Valid],
@@ -65,7 +65,7 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
       (this.Timer = 0),
       (this.esr = this.SceneItem.GetDrawStartLocation().ToUeVector()),
       (this.tsr = this.SceneItem.ActorComp.ActorRotation),
-      (this.x0a = !1),
+      (this.bga = !1),
       this.EnterCallback && this.EnterCallback();
   }
   OnTick(t) {
@@ -103,8 +103,18 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
           1,
         )),
         (i = UE.KismetMathLibrary.Ease(0, 1, i, 7)));
-    var s = new UE.Vector(this.esr.X, this.esr.Y, this.esr.Z),
-      t = ((s.Z += t.牵引高度 * e), this.tsr),
+    var t = Vector_1.Vector.Create(0, 0, t.牵引高度 * e),
+      t =
+        (GravityUtils_1.GravityUtils.RotatedVectorByActorInitGravity(
+          this.SceneItem.ActorComp,
+          t,
+        ),
+        new UE.VectorDouble(
+          this.esr.X + t.X,
+          this.esr.Y + t.Y,
+          this.esr.Z + t.Z,
+        )),
+      s = this.tsr,
       r = this.SceneItem.UsingAssistantHoldOffset
         ? this.SceneItem.ConfigAssistantHoldOffset
         : this.SceneItem.ConfigHoldOffset,
@@ -114,7 +124,7 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
       this.SceneItem.ConfigHoldRotator,
       a.Rotator(),
     );
-    var a = this.SceneItem.Entity.GetComponent(125);
+    var a = this.SceneItem.Entity.GetComponent(136);
     a?.Valid &&
       ((a = new UE.Rotator(0, -a.Rotation, 0)),
       (h = UE.KismetMathLibrary.ComposeRotators(a, h)));
@@ -125,7 +135,7 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
     let _ = 0,
       c = [];
     if (a) {
-      if (4 !== (c = this.b0a(this.esr, r)).length) return { Loc: o, Rot: l };
+      if (4 !== (c = this.Bga(this.esr, r)).length) return { Loc: o, Rot: l };
       (n = Vector_1.Vector.Dist(c[0], c[1])),
         (n += Vector_1.Vector.Dist(c[2], c[3])),
         (_ = Vector_1.Vector.Dist(c[0], c[1]) / n);
@@ -134,29 +144,29 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
       i < 1 &&
         (a
           ? i < _
-            ? (o = UE.KismetMathLibrary.VLerp(
+            ? (o = UE.KismetMathLibrary.D_VLerp(
                 c[0].ToUeVector(),
                 c[1].ToUeVector(),
                 i / _,
               ))
-            : ((o = UE.KismetMathLibrary.VLerp(
+            : ((o = UE.KismetMathLibrary.D_VLerp(
                 c[2].ToUeVector(),
                 c[3].ToUeVector(),
                 (i - _) / (1 - _),
               )),
-              this.x0a ||
-                ((this.x0a = !0),
+              this.bga ||
+                ((this.bga = !0),
                 this.SceneItem.ActorComp.SetActorLocation(
                   o,
                   "[ManipulableDrawState.PassThroughPortal]",
                   !1,
                 )))
-          : (o = UE.KismetMathLibrary.VLerp(s, r, i)),
-        (l = UE.KismetMathLibrary.RLerp(t, h, i, !0))),
+          : (o = UE.KismetMathLibrary.D_VLerp(t, r, i)),
+        (l = UE.KismetMathLibrary.RLerp(s, h, i, !0))),
       { Loc: o, Rot: l }
     );
   }
-  b0a(t, e) {
+  Bga(t, e) {
     var i = [],
       s = 1 === this.SceneItem.GetPassThroughPortalType(),
       r = Vector_1.Vector.Create(e),

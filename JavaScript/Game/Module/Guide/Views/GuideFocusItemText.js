@@ -96,7 +96,7 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
     var e = this.OQt.RectItem,
       t = this.GetHorizontalLayout(3),
       i = this.Yzt.GetFocusViewConf(),
-      s = t.RootUIComp.K2_GetComponentScale().X;
+      s = t.RootUIComp.D_K2_GetComponentScale().X;
     let r = 0;
     var a = this.RootItem;
     switch (i.ContentDirection) {
@@ -119,7 +119,7 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
       case "CT":
         var h =
           ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocusCenterTextPos();
-        a.K2_SetWorldLocation(h, !1, void 0, !1);
+        a.D_K2_SetWorldLocation(h, !1, void 0, !1);
     }
     i = this.GetText(7);
     i.GetWidth() > FocusItemText.eZt &&
@@ -128,15 +128,15 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
   Zzt() {
     if (!(!this.$zt || this.Xzt <= 0 || 0 < --this.Xzt)) {
       var r = this.GetHorizontalLayout(3).RootUIComp,
-        a = r.K2_GetComponentLocation(),
-        h = this.RootItem.K2_GetComponentLocation(),
-        o = r.K2_GetComponentScale(),
+        a = r.D_K2_GetComponentLocation(),
+        h = this.RootItem.D_K2_GetComponentLocation(),
+        o = r.D_K2_GetComponentScale(),
         n = o.X,
         o = o.Y,
         c = UiLayer_1.UiLayer.UiRootItem,
         u = c.Width,
         U = c.Height,
-        c = c.K2_GetComponentLocation(),
+        c = c.D_K2_GetComponentLocation(),
         u = u / 2,
         U = U / 2,
         _ = r.Width,
@@ -149,7 +149,7 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
         i > s && ((i += s), (s = i - s), (i -= s)),
         (a.X = MathUtils_1.MathUtils.Clamp(h.X, e, t)),
         (a.Y = MathUtils_1.MathUtils.Clamp(a.Y, i, s)),
-        r.K2_SetWorldLocation(a, !1, void 0, !1),
+        r.D_K2_SetWorldLocation(a, !1, void 0, !1),
         this.GetVerticalLayout(0).SetEnable(!1);
     }
   }

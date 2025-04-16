@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorTreeTimerCenter = void 0);
 const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest"),
+  PublicUtil_1 = require("../../../Common/PublicUtil"),
   GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine"),
   CountDownTimer_1 = require("../Timer/CountDownTimer"),
   FailRangeTimer_1 = require("../Timer/FailRangeTimer"),
@@ -23,72 +25,92 @@ class BehaviorTreeTimerCenter {
     this.SJ.clear();
   }
   UpdateTimerInfo(e) {
-    var i, r;
+    var i, r, t;
     e &&
       ((i = e.c9n),
       !e.dps || 0 === (r = MathUtils_1.MathUtils.LongToNumber(e.dps))
         ? this.dQt(i)
-        : this.CQt(i, r, e.b5n));
+        : ((t = MathUtils_1.MathUtils.LongToNumber(e.QE_)),
+          this.CQt(i, r, t, e.b5n)));
   }
-  CQt(r, e, t) {
-    let a = void 0;
+  CQt(r, e, i, t) {
+    let s = void 0;
     switch (r) {
       case "CountDownChallenge":
       case "PublicTime":
-        if (!(a = this.GetTimer(r))) {
-          var s = this.Yre.GetNode(t);
+      case "BehaviorTreeTimer1":
+      case "BehaviorTreeTimer2":
+      case "BehaviorTreeTimer3":
+      case "BehaviorTreeTimer4":
+      case "BehaviorTreeTimer5":
+        if (!(s = this.GetTimer(r))) {
+          var a = this.Yre.GetNode(t);
           let e = 0,
             i = "";
-          "QuestFailed" === s?.NodeType &&
-            ((e = s.TimerUiConfig?.UiType ?? 0),
-            (i = s.TimerUiConfig?.UiTitle ?? this.Yre.TreeConfigId + "-" + t)),
-            (a = new CountDownTimer_1.CountDownTimer(
+          "QuestFailed" === a?.NodeType
+            ? ((e = a.TimerUiConfig?.UiType ?? 0),
+              (i = a.TimerUiConfig?.TidTitle
+                ? (PublicUtil_1.PublicUtil.GetConfigTextByKey(
+                    a.TimerUiConfig?.TidTitle,
+                  ) ?? this.Yre.TreeConfigId + "-" + t)
+                : this.Yre.TreeConfigId + "-" + t))
+            : "ChildQuest" === a?.NodeType &&
+              a.ChildQuestType === IQuest_1.EChildQuest.Timer &&
+              ((a = a.TimerUiConfig),
+              (e = a?.UiType ?? 0),
+              (i = a?.TidTitle
+                ? (PublicUtil_1.PublicUtil.GetConfigTextByKey(a?.TidTitle) ??
+                  this.Yre.TreeConfigId + "-" + t)
+                : this.Yre.TreeConfigId + "-" + t)),
+            (s = new CountDownTimer_1.CountDownTimer(
               this.$mt,
               r,
               e,
               i,
               TICK_INTETVAL_TIME,
             )),
-            this.SJ.set(r, a);
+            this.SJ.set(r, s);
         }
         break;
       case "WaitTime":
-        (a = this.GetTimer(r)) ||
-          ((a = new NoUiTimer_1.NoUiTimer(this.$mt, r, !0, TICK_INTETVAL_TIME)),
-          this.SJ.set(r, a));
+        (s = this.GetTimer(r)) ||
+          ((s = new NoUiTimer_1.NoUiTimer(this.$mt, r, !0, TICK_INTETVAL_TIME)),
+          this.SJ.set(r, s));
         break;
       case "GameStartCountDown":
-        (a = this.GetTimer(r)) ||
-          ((a = new LevelPlayPrepareTimer_1.LevelPlayPrepareTimer(
+        (s = this.GetTimer(r)) ||
+          ((s = new LevelPlayPrepareTimer_1.LevelPlayPrepareTimer(
             this.$mt,
             r,
             !1,
           )),
-          this.SJ.set(r, a));
+          this.SJ.set(r, s));
         break;
       case GeneralLogicTreeDefine_1.OUTRANGEFAILED_TIMERTYPE:
-        this.GetRemainTime("CountDownChallenge") <= 10 ||
-          (a = this.GetTimer(r)) ||
-          ((a = new FailRangeTimer_1.FailRangeTimer(
+        s = this.GetTimer("CountDownChallenge");
+        a = this.GetRemainTime("CountDownChallenge");
+        (void 0 !== s && a <= 10) ||
+          (s = this.GetTimer(r)) ||
+          ((s = new FailRangeTimer_1.FailRangeTimer(
             this.$mt,
             r,
             FAILEDRANGE_INTERTVAL,
           )),
-          this.SJ.set(r, a));
+          this.SJ.set(r, s));
         break;
       case GeneralLogicTreeDefine_1.NPCFARAWAY_TIMERTYPE:
-        a = this.GetTimer("CountDownChallenge");
-        s = this.GetRemainTime("CountDownChallenge");
-        (void 0 !== a && s <= 10) ||
-          (a = this.GetTimer(r)) ||
-          ((a = new FailRangeTimer_1.FailRangeTimer(
+        s = this.GetTimer("CountDownChallenge");
+        a = this.GetRemainTime("CountDownChallenge");
+        (void 0 !== s && a <= 10) ||
+          (s = this.GetTimer(r)) ||
+          ((s = new FailRangeTimer_1.FailRangeTimer(
             this.$mt,
             r,
             FAILEDRANGE_INTERTVAL,
           )),
-          this.SJ.set(r, a));
+          this.SJ.set(r, s));
     }
-    a?.StartShowTimer(e);
+    s?.StartShowTimer(e, i);
   }
   dQt(e) {
     var i = this.GetTimer(e);

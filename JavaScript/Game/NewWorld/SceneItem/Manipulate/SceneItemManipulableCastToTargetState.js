@@ -3,16 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableCastToTargetState = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
   SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
-  constructor(t, e) {
-    super(t, e),
+  constructor() {
+    super(...arguments),
       (this.NHo = void 0),
-      (this.znr = Vector_1.Vector.Create()),
-      (this.StateType = "BeCastingToTarget");
+      (this.znr = Vector_1.Vector.Create());
   }
   SetTarget(t) {
     this.NHo = t;
@@ -28,13 +29,18 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
         (t = this.NHo.GetComponent(1)),
         (this.SceneItem.TargetActorComponent = t),
         (this.SceneItem.TargetOutletComponent = void 0),
+        this.NeedNotifyServer &&
+          LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
+            this.SceneItem.Entity.Id,
+            Protocol_1.Aki.Protocol.Zw_.Proto_EControlStateLockEntityThrowing,
+          ),
         this.StartCast(),
         this.CalcDirection(),
         this.EnterCallback && this.EnterCallback())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SceneItem",
-          32,
+          31,
           "被控物没有进入CastToTarget时,没有设置目标",
         );
   }
@@ -64,7 +70,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
             ? e.AngularVelocity
             : t) * this.Timer,
       e = UE.KismetMathLibrary.RotatorFromAxisAndAngle(
-        this.CastRotAxis.ToUeVector(),
+        this.CastRotAxis.ToUeVectorOld(),
         e,
       );
     this.SceneItem.ActorComp.SetActorRotation(
@@ -80,7 +86,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
       ((t = Vector_1.Vector.Create()),
       this.SceneItem.ActorComp.ActorLocationProxy.Subtraction(this.znr, t),
       t.Normalize(),
-      (t = UE.KismetMathLibrary.FindLookAtRotation(
+      (t = UE.KismetMathLibrary.D_FindLookAtRotation(
         this.SceneItem.ActorComp.ActorLocation,
         this.SceneItem.ActorComp.ActorLocation.op_Addition(t.ToUeVector()),
       )),
@@ -101,7 +107,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
       t.Normalize(),
       t.MultiplyEqual(this.SceneItem.Config.ThrowCfg.MotionConfig.Velocity),
       this.SceneItem.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
-        t.ToUeVector(),
+        t.ToUeVectorOld(),
       ));
   }
 }

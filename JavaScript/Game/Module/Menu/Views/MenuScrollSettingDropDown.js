@@ -51,7 +51,7 @@ class MenuScrollSettingDropDown extends MenuScrollSettingBaseItem_1.MenuScrollSe
     this.hbi.InitScroll(t, this.g8e, e);
   }
   Update(t) {
-    (this.Data = t), this.mGe(), this._bi(), this.sxi(), this.pVa();
+    (this.Data = t), this.mGe(), this._bi(), this.sxi(), this.cHa();
   }
   async ClearAsync() {
     var t = [];
@@ -70,7 +70,7 @@ class MenuScrollSettingDropDown extends MenuScrollSettingBaseItem_1.MenuScrollSe
       (e = this.Data.GetDetailTextId()),
       LguiUtil_1.LguiUtil.SetLocalTextNew(t, e));
   }
-  pVa() {
+  cHa() {
     this.Data && this.GetSprite(4)?.SetUIActive(this.Data.HasDetailText());
   }
 }

@@ -29,7 +29,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../Common/Event/EventSystem");
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder");
 let SceneItemNearbyTrackingComponent =
   (SceneItemNearbyTrackingComponent_1 = class SceneItemNearbyTrackingComponent extends (
     EntityComponent_1.EntityComponent
@@ -60,14 +61,14 @@ let SceneItemNearbyTrackingComponent =
         });
     }
     get ShowRange() {
-      return "Icon" === this.Lvn?.Type
-        ? this.Lvn.ShowRange
-        : this.Lvn?.FarRadius;
+      return "AudioPoint" === this.Lvn?.Type
+        ? this.Lvn.FarRadius
+        : this.Lvn?.ShowRange;
     }
     get HideRange() {
-      return "Icon" === this.Lvn?.Type
-        ? this.Lvn.HideRange
-        : this.Lvn?.FarRadius;
+      return "AudioPoint" === this.Lvn?.Type
+        ? this.Lvn.FarRadius
+        : this.Lvn?.HideRange;
     }
     get IconOffset() {
       return this.Rvn;
@@ -90,9 +91,16 @@ let SceneItemNearbyTrackingComponent =
     }
     get IconPath() {
       if ("Icon" === this.Lvn?.Type) return this.wYi(this.Lvn.TexturePath);
+      if ("Compass" === this.Lvn?.Type) {
+        var e = this.Lvn.IconTrackingConfig?.TexturePath;
+        if (e) return this.wYi(e);
+      }
     }
     get TrackType() {
       return this.E9;
+    }
+    get TrackConfigType() {
+      return this.Lvn?.Type ?? "Icon";
     }
     get AudioPointNearRadius() {
       if ("AudioPoint" === this.Lvn?.Type) return this.Lvn.NearRadius;
@@ -103,6 +111,17 @@ let SceneItemNearbyTrackingComponent =
     get AudioPointFarRadius() {
       if ("AudioPoint" === this.Lvn?.Type) return this.Lvn.FarRadius;
     }
+    get CompassNearbyShowRange() {
+      if ("Compass" === this.Lvn?.Type)
+        return this.Lvn?.IconTrackingConfig?.ShowRange;
+    }
+    get CompassNearbyHideRange() {
+      if ("Compass" === this.Lvn?.Type)
+        return this.Lvn?.IconTrackingConfig?.HideRange;
+    }
+    get CompassDetectVehicleTypes() {
+      if ("Compass" === this.Lvn?.Type) return this.Lvn?.VehicleTypes;
+    }
     OnInitData(e) {
       var e = e.GetParam(SceneItemNearbyTrackingComponent_1)[0],
         t = this.Entity.GetComponent(0);
@@ -111,7 +130,7 @@ let SceneItemNearbyTrackingComponent =
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "SceneItem",
-            32,
+            31,
             "[NearbyTracking OnCreate]",
             ["EntityId", t.GetPbDataId()],
             ["IsEnableValue", this.Tvn],
@@ -123,7 +142,7 @@ let SceneItemNearbyTrackingComponent =
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneItem",
-              40,
+              39,
               "组件OnCreate失败，追踪类型无法确定",
               ["EntityId", t.GetPbDataId()],
             ),
@@ -134,7 +153,7 @@ let SceneItemNearbyTrackingComponent =
       return (
         this.Lo?.IsEnableWhileUnlock &&
           !this.Lo?.IsEnable &&
-          ((this.Xte = this.Entity?.GetComponent(181)),
+          ((this.Xte = this.Entity?.GetComponent(194)),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemLockPropChange,
@@ -174,17 +193,26 @@ let SceneItemNearbyTrackingComponent =
         this.Dvn &&
           TimerSystem_1.TimerSystem.Has(this.Dvn) &&
           (TimerSystem_1.TimerSystem.Remove(this.Dvn), (this.Dvn = void 0)),
+        "Compass" === this.Lvn?.Type &&
+          ControllerHolder_1.ControllerHolder.TreasureHuntController.RemoveCompassTrack(
+            this.Entity.Id,
+          ),
         !0
       );
     }
     Pvn(e) {
       return "Icon" === e?.Type
         ? ((this.Rvn = Vector_1.Vector.Create(0, 0, 0)),
-          e.UiOffset && this.Rvn.Set(e.UiOffset.X, e.UiOffset.Y, e.UiOffset.Z),
+          e.UiOffset && this.Rvn.FromConfigVector(e.UiOffset),
           0)
         : "AudioPoint" === e?.Type
           ? 1
-          : void 0;
+          : "Compass" === e?.Type
+            ? ((this.Rvn = Vector_1.Vector.Create(0, 0, 0)),
+              e.IconTrackingConfig?.UiOffset &&
+                this.Rvn.FromConfigVector(e.IconTrackingConfig.UiOffset),
+              0)
+            : void 0;
     }
     wYi(e) {
       e = GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(
@@ -198,7 +226,7 @@ let SceneItemNearbyTrackingComponent =
   });
 (SceneItemNearbyTrackingComponent = SceneItemNearbyTrackingComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(147)],
+    [(0, RegisterComponent_1.RegisterComponent)(158)],
     SceneItemNearbyTrackingComponent,
   )),
   (exports.SceneItemNearbyTrackingComponent = SceneItemNearbyTrackingComponent);

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponTrialData = void 0);
 const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  WeaponSkinDefine_1 = require("../../Skin/Tab/Weapon/WeaponSkinDefine"),
   WeaponDataBase_1 = require("./WeaponDataBase");
 class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
   constructor() {
@@ -40,6 +41,11 @@ class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
   }
   GetItemId() {
     return this.TrialConfig.WeaponId;
+  }
+  GetSkinId() {
+    return 0 < this.TrialConfig.WeaponSkinId
+      ? this.TrialConfig.WeaponSkinId
+      : WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID;
   }
   GetLevel() {
     return this.TrialConfig.WeaponLevel;

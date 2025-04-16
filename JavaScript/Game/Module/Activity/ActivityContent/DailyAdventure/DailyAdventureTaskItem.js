@@ -97,14 +97,12 @@ class DailyAdventureTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
       }
       1 !== l.length
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Activity", 38, "[日常探险活动] 任务奖励配置不正确", [
+          Log_1.Log.Error("Activity", 37, "[日常探险活动] 任务奖励配置不正确", [
             "TaskId",
             this.Pe.TaskId,
           ])
         : ((h = { Item: l[0], HasClaimed: 2 === this.Pe.TaskState }),
-          this.gOe.Refresh(h),
-          this.gOe.SetReceivableVisible(0 === this.Pe.TaskState),
-          this.gOe.SetLockVisible(1 === this.Pe.TaskState),
+          this.gOe.Refresh(h, 0 === this.Pe.TaskState, 1 === this.Pe.TaskState),
           (h = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             r.TaskTitle,
           )),

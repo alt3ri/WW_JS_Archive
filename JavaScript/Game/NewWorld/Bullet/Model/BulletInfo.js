@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.BulletInfo = void 0);
+  (exports.BulletAdditionInfo = exports.BulletInfo = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   Time_1 = require("../../../../Core/Common/Time"),
@@ -39,6 +39,7 @@ class BulletInfo {
       (this.ShakeNumbers = 0),
       (this.IsFrozen = !1),
       (this.FrozenTime = void 0),
+      (this.IsShield = !1),
       (this.yHo = void 0),
       (this.Fyn = !1),
       (this.RandomPosOffset = Vector_1.Vector.Create()),
@@ -50,6 +51,7 @@ class BulletInfo {
       (this.InitPosition = Vector_1.Vector.Create()),
       (this.DHo = new Array()),
       (this.CreateFrame = 0),
+      (this.LiveTimeRatio = 1),
       (this.LiveTimeAddDelta = 0),
       (this.LiveTime = 0),
       (this.LiveTimeCurHit = 0),
@@ -99,6 +101,7 @@ class BulletInfo {
       (this.BornFrameCount = void 0),
       (this.PreContextId = void 0),
       (this.ContextId = void 0),
+      (this.CreateSource = 0),
       (this.HHo = () => {
         this.ClearAttacker(),
           BulletController_1.BulletController.DestroyBullet(
@@ -109,7 +112,10 @@ class BulletInfo {
       (this.jHo = () => {
         this.ClearTarget();
       }),
-      (this.BornLocationOffset = Vector_1.Vector.Create());
+      (this.BornLocationOffset = Vector_1.Vector.Create()),
+      (this.AdditionInfo = void 0),
+      (this.y6o = 0),
+      (this.ParentIds = void 0);
   }
   get BulletEntityId() {
     return this.xe;
@@ -160,7 +166,7 @@ class BulletInfo {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Bullet",
-            18,
+            17,
             "设置子弹坐标为Nan,直接销毁",
             ["location", t],
             ["BulletEntityId", this.BulletEntityId],
@@ -177,7 +183,7 @@ class BulletInfo {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Bullet",
-            18,
+            17,
             "设置子弹朝向为Nan,直接销毁",
             ["rotation", t],
             ["BulletEntityId", this.BulletEntityId],
@@ -210,29 +216,31 @@ class BulletInfo {
       this.ActorComponent.AddBulletLocalRotator(t);
   }
   ApplyCacheLocationAndRotation() {
-    if (this.IHo)
-      return this.THo
-        ? (this.ActorComponent.SetActorLocationAndRotation(
-            this.LHo.ToUeVector(),
-            this.gii.ToUeRotator(),
-            this.constructor.name,
-            !1,
-          ),
-          (this.IHo = !1),
-          void (this.THo = !1))
-        : (this.ActorComponent.SetActorLocation(
-            this.LHo.ToUeVector(),
-            this.constructor.name,
-            !1,
-          ),
-          void (this.IHo = !1));
-    this.THo &&
-      (this.ActorComponent.SetActorRotation(
-        this.gii.ToUeRotator(),
-        this.constructor.name,
-        !1,
-      ),
-      (this.THo = !1));
+    this.IHo
+      ? (this.THo
+          ? (this.ActorComponent.SetActorLocationAndRotation(
+              this.LHo.ToUeVector(),
+              this.gii.ToUeRotator(),
+              this.constructor.name,
+              !1,
+            ),
+            (this.IHo = !1),
+            (this.THo = !1))
+          : (this.ActorComponent.SetActorLocation(
+              this.LHo.ToUeVector(),
+              this.constructor.name,
+              !1,
+            ),
+            (this.IHo = !1)),
+        (this.GetCollisionLocationFrame = 0))
+      : this.THo &&
+        (this.ActorComponent.SetActorRotation(
+          this.gii.ToUeRotator(),
+          this.constructor.name,
+          !1,
+        ),
+        (this.THo = !1),
+        (this.GetCollisionLocationFrame = 0));
   }
   ClearCacheLocationAndRotation() {
     (this.IHo = !1), (this.THo = !1);
@@ -274,16 +282,25 @@ class BulletInfo {
       ? this.CollisionInfo.CollisionComponent.K2_GetComponentRotation()
       : this.ActorComponent.ActorRotation;
   }
-  get CollisionLocation() {
+  GetCollisionLocation(t = !0) {
     return (
-      this.GetCollisionLocationFrame < Time_1.Time.Frame &&
-        ((this.GetCollisionLocationFrame = Time_1.Time.Frame),
-        !this.IsCollisionRelativeLocationZero &&
-        this.CollisionInfo.CollisionComponent
-          ? this.AHo.FromUeVector(
-              this.CollisionInfo.CollisionComponent.K2_GetComponentLocation(),
-            )
-          : this.AHo.FromUeVector(this.ActorComponent.ActorLocationProxy)),
+      t && !BulletInfo.InAfterTick
+        ? Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Bullet",
+            20,
+            "GetCollisionLocation只能在AfterTick中使用",
+            ["BulletEntityId", this.BulletEntityId],
+            ["BulletRowName", this.BulletRowName],
+          )
+        : this.GetCollisionLocationFrame < Time_1.Time.Frame &&
+          ((this.GetCollisionLocationFrame = Time_1.Time.Frame),
+          !this.IsCollisionRelativeLocationZero &&
+          this.CollisionInfo.CollisionComponent
+            ? this.AHo.FromUeVector(
+                this.CollisionInfo.CollisionComponent.D_K2_GetComponentLocation(),
+              )
+            : this.AHo.FromUeVector(this.ActorComponent.ActorLocationProxy)),
       this.AHo
     );
   }
@@ -313,16 +330,16 @@ class BulletInfo {
     return this.eVo || (this.eVo = this.Attacker?.GetComponent(3)), this.eVo;
   }
   get AttackerSkillComp() {
-    return this.BHo || (this.BHo = this.Attacker?.GetComponent(34)), this.BHo;
+    return this.BHo || (this.BHo = this.Attacker?.GetComponent(39)), this.BHo;
   }
   get AttackerBuffComp() {
-    return this.bHo || (this.bHo = this.Attacker?.GetComponent(160)), this.bHo;
+    return this.bHo || (this.bHo = this.Attacker?.GetComponent(172)), this.bHo;
   }
   get AttackerMoveComp() {
-    return this.qHo || (this.qHo = this.Attacker?.GetComponent(164)), this.qHo;
+    return this.qHo || (this.qHo = this.Attacker?.GetComponent(176)), this.qHo;
   }
   get AttackerAudioComponent() {
-    return this.GHo || (this.GHo = this.Attacker?.GetComponent(44)), this.GHo;
+    return this.GHo || (this.GHo = this.Attacker?.GetComponent(50)), this.GHo;
   }
   get Target() {
     if (this.NHo) return this.NHo?.Entity;
@@ -340,7 +357,7 @@ class BulletInfo {
     return this.OHo || (this.OHo = this.Target?.GetComponent(1)), this.OHo;
   }
   GetLockOnTargetDynamic() {
-    return this.xHo?.Entity?.GetComponent(29)
+    return this.xHo?.Entity?.GetComponent(32)
       ?.GetCurrentTarget()
       ?.Entity?.GetComponent(1);
   }
@@ -408,6 +425,7 @@ class BulletInfo {
       (this.ShakeNumbers = 0),
       (this.IsFrozen = !1),
       (this.FrozenTime = void 0),
+      (this.IsShield = !1),
       this.InitPosition.Reset(),
       (this.DHo.length = 0),
       (this.CreateFrame = 0),
@@ -446,12 +464,14 @@ class BulletInfo {
       this.CollisionInfo.Clear(),
       this.MoveInfo.Clear(),
       this.EffectInfo.Clear(),
+      this.AdditionInfo?.Clear(),
       (this.ChildInfo = void 0),
       (this.UHo = void 0),
       this.BornLocationOffset.Reset(),
       (this.ContextId = void 0),
       (this.PreContextId = void 0),
       (this.Fyn = !1),
+      (this.ParentIds = void 0),
       BulletConstant_1.BulletConstant.OpenClearCheck && BulletInfo.zHo(this);
   }
   SwapActionInfoList() {
@@ -510,7 +530,7 @@ class BulletInfo {
               (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Bullet",
-                  18,
+                  17,
                   "BulletInfo回收时，Vector没重置",
                   ["key", e],
                 ))
@@ -519,7 +539,7 @@ class BulletInfo {
                 (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Bullet",
-                    18,
+                    17,
                     "BulletInfo回收时，Rotator没重置",
                     ["key", e],
                   ))
@@ -533,7 +553,7 @@ class BulletInfo {
                   (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Bullet",
-                      18,
+                      17,
                       "BulletInfo回收时，Transform没重置",
                       ["key", e],
                     ))
@@ -542,7 +562,7 @@ class BulletInfo {
                     Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Bullet",
-                      18,
+                      17,
                       "BulletInfo回收时，Array没清空",
                       ["key", e],
                     )
@@ -551,7 +571,7 @@ class BulletInfo {
                       Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "Bullet",
-                        18,
+                        17,
                         "BulletInfo回收时，Map没清空",
                         ["key", e],
                       )
@@ -560,14 +580,14 @@ class BulletInfo {
                         Log_1.Log.CheckError() &&
                         Log_1.Log.Error(
                           "Bullet",
-                          18,
+                          17,
                           "BulletInfo回收时，Set没清空",
                           ["key", e],
                         )
                       : Log_1.Log.CheckError() &&
                         Log_1.Log.Error(
                           "Bullet",
-                          18,
+                          17,
                           "BulletInfo回收时，该变量不为undefined",
                           ["type", s],
                           ["key", e],
@@ -578,6 +598,7 @@ class BulletInfo {
     switch (this.BulletDataMain.Move.TrackTarget) {
       case 6:
       case 2:
+      case 11:
       case 7:
       case 8:
       case 5:
@@ -586,6 +607,33 @@ class BulletInfo {
         this.SetTargetById(0);
     }
   }
+  get Duration() {
+    return this.y6o;
+  }
+  set Duration(t) {
+    this.y6o = t;
+  }
 }
-exports.BulletInfo = BulletInfo;
+(exports.BulletInfo = BulletInfo).InAfterTick = !1;
+class BulletAdditionInfo {
+  constructor() {
+    (this.SizeScale = Vector_1.Vector.Create()),
+      (this.IntervalScale = 0),
+      (this.DurationAddition = 0),
+      (this.GSc = !1);
+  }
+  get Valid() {
+    return this.GSc;
+  }
+  Clear() {
+    (this.GSc = !1),
+      this.SizeScale.Reset(),
+      (this.IntervalScale = 0),
+      (this.DurationAddition = 0);
+  }
+  Init() {
+    this.GSc = !0;
+  }
+}
+exports.BulletAdditionInfo = BulletAdditionInfo;
 //# sourceMappingURL=BulletInfo.js.map

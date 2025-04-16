@@ -176,6 +176,9 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
       (this.hco = (e) => {
         this.zuo = e;
       }),
+      (this.qdi = () => {
+        this.Cl();
+      }),
       (this.Dji = () => {
         var e = this.ypt;
         let t = !1;
@@ -246,8 +249,8 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
             o,
           );
         e.SetCurrentValue(s);
-        let a = !1,
-          n = 0;
+        let n = !1,
+          a = 0;
         r < i
           ? 0 <
               (r = ModelManager_1.ModelManager.RoleModel.GetAddAttrLevelUp(
@@ -257,10 +260,10 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
                 i,
                 o,
                 t,
-              )) && ((n = s + r), (a = !0))
-          : (a = !1),
-          e.SetNextItemActive(a),
-          a && e.SetNextValue(n);
+              )) && ((a = s + r), (n = !0))
+          : (n = !1),
+          e.SetNextItemActive(n),
+          n && e.SetNextValue(a);
       });
   }
   OnRegisterComponent() {
@@ -280,7 +283,7 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e)),
       void 0 === this.RoleInstance
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "无效的roleId", [
+          Log_1.Log.Error("Role", 58, "无效的roleId", [
             "界面名称",
             "RoleLevelUpView",
           ])
@@ -359,29 +362,29 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
       r = [],
       o = this.RoleInstance.GetLevelData(),
       s = this.RoleInstance.GetRoleId(),
-      a = o.GetBreachLevel();
+      n = o.GetBreachLevel();
     for (const _ of i) {
-      var n = _.GetAttributeId(),
+      var a = _.GetAttributeId(),
         l = ModelManager_1.ModelManager.RoleModel.GetAttributeByLevel(
           s,
-          n,
-          e,
           a,
+          e,
+          n,
         ),
         h = ModelManager_1.ModelManager.RoleModel.GetAttributeByLevel(
           s,
-          n,
-          t,
           a,
+          t,
+          n,
         );
       l !== h &&
-        ((l = new AttrListScrollData_1.AttrListScrollData(n, l, h, 0, !1, 0)),
+        ((l = new AttrListScrollData_1.AttrListScrollData(a, l, h, 0, !1, 0)),
         ((h =
           RoleLevelUpSuccessController_1.RoleLevelUpSuccessController.ConvertsAttrListScrollDataToAttributeInfo(
             l,
           )).Name =
           ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-            n,
+            a,
           ).AnotherName),
         r.push(h));
     }
@@ -444,6 +447,10 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleLevelUpReceiveItem,
         this.hco,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
       );
   }
   OnRemoveEventListener() {
@@ -454,6 +461,10 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleLevelUpReceiveItem,
         this.hco,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
       );
   }
   aco() {

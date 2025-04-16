@@ -13,16 +13,22 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../Core/Common/Log"),
   LogAnalyzer_1 = require("../Core/Common/LogAnalyzer"),
   Stats_1 = require("../Core/Common/Stats"),
+  Time_1 = require("../Core/Common/Time"),
+  Core_1 = require("../Core/Core"),
   Http_1 = require("../Core/Http/Http"),
   ResourceSystem_1 = require("../Core/Resource/ResourceSystem"),
   TickProcessSystem_1 = require("../Core/Tick/TickProcessSystem"),
   TickSystem_1 = require("../Core/Tick/TickSystem"),
   MathUtils_1 = require("../Core/Utils/MathUtils"),
   UiTextTranslationUtils_1 = require("../Core/Utils/UiTextTranslationUtils"),
+  LauncherLogUpload_1 = require("../Launcher/LogUpload/LauncherLogUpload"),
+  CloudGameManagerLauncher_1 = require("../Launcher/Platform/CloudGameManagerLauncher"),
   TestModuleBridge_1 = require("./Bridge/TestModuleBridge"),
+  AsyncUtil_1 = require("./Common/AsyncUtil"),
   EventDefine_1 = require("./Common/Event/EventDefine"),
   EventSystem_1 = require("./Common/Event/EventSystem"),
   LocalStorage_1 = require("./Common/LocalStorage"),
+  StatDefine_1 = require("./Common/StatDefine"),
   TimeUtil_1 = require("./Common/TimeUtil"),
   EffectSystem_1 = require("./Effect/EffectSystem"),
   GameSettingsDeviceRender_1 = require("./GameSettings/GameSettingsDeviceRender"),
@@ -51,12 +57,14 @@ const puerts_1 = require("puerts"),
   HudUnitHandleManager_1 = require("./Module/HudUnit/HudUnitHandleManager"),
   Heartbeat_1 = require("./Module/Login/Heartbeat"),
   ThinkingAnalyticsReporter_1 = require("./Module/LogReport/ThinkingAnalyticsReporter"),
-  LogUpload_1 = require("./Module/LogUpload/LogUpload"),
+  LogUploadHelper_1 = require("./Module/LogUpload/LogUploadHelper"),
   UiCameraAnimationManager_1 = require("./Module/UiCameraAnimation/UiCameraAnimationManager"),
   UiSceneManager_1 = require("./Module/UiComponent/UiSceneManager"),
   BulletController_1 = require("./NewWorld/Bullet/BulletController"),
   FightLibrary_1 = require("./NewWorld/Character/Common/Blueprint/Utils/FightLibrary"),
+  UeMovementTickManageComponent_1 = require("./NewWorld/Common/Component/UeMovementTickManageComponent"),
   UeSkeletalTickManageComponent_1 = require("./NewWorld/Common/Component/UeSkeletalTickManageComponent"),
+  VehiclePathMoveController_1 = require("./NewWorld/Vehicle/Controller/VehiclePathMoveController"),
   RedDotSystem_1 = require("./RedDot/RedDotSystem"),
   TickScoreController_1 = require("./TickScore/TickScoreController"),
   UiTimeDilation_1 = require("./Ui/Base/UiTimeDilation"),
@@ -72,16 +80,21 @@ class Game {
   static *Start(e) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 1, "启动 Game"),
       GlobalData_1.GlobalData.Init(e),
-      TimeUtil_1.TimeUtil.SetServerTimeStamp(Date.parse(new Date().toString())),
+      TimeUtil_1.TimeUtil.SetServerTimeStamp(Date.now()),
+      CloudGameManager_1.CloudGameManager.Init(),
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.InitializeEnvironment(),
       InputController_1.InputController.InitializeEnvironment(),
       Http_1.Http.SetHttpThreadActiveMinimumSleepTimeInSeconds(0.005),
       Http_1.Http.SetHttpThreadIdleMinimumSleepTimeInSeconds(0.033),
       ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Init(),
-      LocalStorage_1.LocalStorage.Initialize(),
+      CloudGameManagerLauncher_1.CloudGameManagerLauncher.IsPreLaunch ||
+        LocalStorage_1.LocalStorage.Initialize(),
       yield GameUtils_1.GameUtils.WaitFrame(),
       ConfigManagerCreator_1.ConfigManagerCreator.Init(),
       yield GameUtils_1.GameUtils.WaitFrame(),
+      CloudGameManagerLauncher_1.CloudGameManagerLauncher.IsPreLaunch &&
+        (yield CloudGameManager_1.CloudGameManager.WaitForUser(),
+        LocalStorage_1.LocalStorage.Initialize()),
       InputSettings_1.InputSettings.Initialize(),
       InputSettingsManager_1.InputSettingsManager.Initialize(),
       InputManager_1.InputManager.Init(),
@@ -93,11 +106,37 @@ class Game {
       TouchFingerManager_1.TouchFingerManager.Initialize(),
       EffectSystem_1.EffectSystem.Initialize(),
       TaskSystem_1.TaskSystem.Initialize(),
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.InitializeBaseInfo(),
       GameSettingsManager_1.GameSettingsManager.Initialize(),
       GameSettingsDeviceRender_1.GameSettingsDeviceRender.Initialize(),
       TickScoreController_1.TickScoreController.Init(),
+      AsyncUtil_1.AsyncUtil.InitializeEnvironment(),
       TimeUtil_1.TimeUtil.Init(ConfigManager_1.ConfigManager.TextConfig),
+      Core_1.Core.RegisterPreTick(() => {
+        UeMovementTickManageComponent_1.UeMovementTickController.TickManagers();
+      }),
+      TickSystem_1.TickSystem.Add(
+        this.TickPriority2,
+        "GamePriority2",
+        0,
+        !0,
+        2,
+      ),
+      TickSystem_1.TickSystem.Add(
+        this.TickPriority1,
+        "GamePriority1",
+        0,
+        !0,
+        1,
+      ),
       TickSystem_1.TickSystem.Add(this.r6, "Game", 0, !0),
+      TickSystem_1.TickSystem.Add(
+        this.AfterTickPriority1,
+        "GamePriority1",
+        4,
+        !0,
+        1,
+      ),
       TickSystem_1.TickSystem.Add(this.AfterTick, "Game", 4, !0),
       TickSystem_1.TickSystem.Add(this.AfterCameraTick, "Game", 5, !0),
       Heartbeat_1.Heartbeat.RegisterTick(),
@@ -129,11 +168,11 @@ class Game {
         EventDefine_1.EEventName.EndTravelMap,
         Game.cve,
       ),
-      Application_1.Application.AddEditorPreEndPIEHandler(Game._ve);
+      Application_1.Application.AddEditorPreEndPIEHandler(Game._ve),
+      Game.o_l && (0, StatDefine_1.InitStatConsoleCommand)();
   }
   static *ModuleStart() {
-    CloudGameManager_1.CloudGameManager.Init(),
-      ThirdPartySdkManager_1.ThirdPartySdkManager.Init(),
+    ThirdPartySdkManager_1.ThirdPartySdkManager.Init(),
       yield GameUtils_1.GameUtils.WaitFrame(),
       ModelManagerCreator_1.ModelManagerCreator.Init(),
       yield GameUtils_1.GameUtils.WaitFrame(),
@@ -146,76 +185,78 @@ class Game {
       FightLibrary_1.FightLibrary.Init(),
       PakManager_1.PakManager.Init(),
       UiTimeDilation_1.UiTimeDilation.Init(),
-      LogUpload_1.LogUpload.Init();
+      LauncherLogUpload_1.LauncherLogUpload.SetParams(
+        LogUploadHelper_1.LogUploadHelper.CreateParams(),
+      );
   }
   static Shutdown() {
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 25, "Game.Shutdown Start"),
-      Http_1.Http.SetHttpThreadActiveMinimumSleepTimeInSeconds(0),
-      Http_1.Http.SetHttpThreadIdleMinimumSleepTimeInSeconds(0),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 24, "Game.Shutdown Start"),
       LogAnalyzer_1.LogAnalyzer.Clear(),
       TickProcessSystem_1.TickProcessSystem.Clear(),
+      ThirdPartySdkManager_1.ThirdPartySdkManager.Clear(),
+      PakManager_1.PakManager.Clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown PerformanceManager.Destroy Finished",
         ),
       TickSystem_1.TickSystem.Destroy(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Game", 25, "Game.Shutdown TickSystem.Destroy Finished"),
+        Log_1.Log.Info("Game", 24, "Game.Shutdown TickSystem.Destroy Finished"),
       UiTimeDilation_1.UiTimeDilation.Destroy(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown UiTimeDilation.Destroy Finished",
         ),
       ControllerManager_1.ControllerManager.Clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown ControllerManager.Clear Finished",
         ),
       ModelManagerCreator_1.ModelManagerCreator.Clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown ModelManagerCreator.Clear Finished",
         ),
       GameSettingsDeviceRender_1.GameSettingsDeviceRender.Clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown GameSettingsRenderManager.Clear Finished",
         ),
       TaskSystem_1.TaskSystem.Clear(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Game", 25, "Game.Shutdown TaskSystem.Clear Finished"),
+        Log_1.Log.Info("Game", 24, "Game.Shutdown TaskSystem.Clear Finished"),
       EffectSystem_1.EffectSystem.Clear(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Game", 25, "Game.Shutdown EffectSystem.Clear Finished"),
+        Log_1.Log.Info("Game", 24, "Game.Shutdown EffectSystem.Clear Finished"),
       UiTextTranslationUtils_1.UiTextTranslationUtils.Destroy(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown UiTextTranslationUtils.Destroy Finished",
         ),
       RichTextUtils_1.RichTextUtils.Destroy(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown RichTextUtils.Destroy Finished",
         ),
       InputSettingsManager_1.InputSettingsManager.Clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          64,
+          63,
           "Game.Shutdown InputSettingsManager.Clear Finished",
         ),
       Application_1.Application.RemoveEditorPreEndPIEHandler(Game._ve),
@@ -223,22 +264,29 @@ class Game {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown Application.Destroy Finished",
         ),
       GameSettingsManager_1.GameSettingsManager.Clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          25,
+          24,
           "Game.Shutdown GameSettingsManager.Clear Finished",
+        ),
+      AsyncUtil_1.AsyncUtil.DestroyEnvironment(),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Game",
+          36,
+          "Game.Shutdown AsyncUtil.DestroyEnvironment Finished",
         );
   }
   static LockLoad() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Game",
-        17,
+        16,
         "[Game.EndTravelMap] SetActorPermanentExtraStatic true",
       );
   }
@@ -246,7 +294,7 @@ class Game {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Game",
-        17,
+        16,
         "[Game.EndTravelMap] SetActorPermanentExtraStatic false",
       );
   }
@@ -327,7 +375,7 @@ class Game {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.ErrorWithStack(
             "Game",
-            20,
+            19,
             "Error when execute",
             e,
             ["this type", a.constructor.name],
@@ -336,7 +384,7 @@ class Game {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Game",
-            20,
+            19,
             "Error when execute",
             ["this type", a.constructor.name],
             ["error", e],
@@ -358,6 +406,7 @@ class Game {
   (Game.pve = Stats_1.Stat.Create("Other")),
   (Game.vve = Stats_1.Stat.Create("TickScore")),
   (Game.sve = void 0),
+  (Game.o_l = !0),
   (Game.hve = () => {
     Game.dve();
   }),
@@ -378,7 +427,7 @@ class Game {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Game",
-            17,
+            16,
             "[Game.ClearSceneAsync]: Duplicate ClearSceneAsync",
           ),
         !1
@@ -387,7 +436,7 @@ class Game {
       new CustomPromise_1.CustomPromise();
     var e = ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel;
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Game", 17, "[Game.ClearSceneAsync] 场景清理操作开始", [
+      Log_1.Log.Info("Game", 16, "[Game.ClearSceneAsync] 场景清理操作开始", [
         "无缝加载",
         e,
       ]),
@@ -396,7 +445,7 @@ class Game {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "Game",
-              17,
+              16,
               "[Game.LeaveLevel] 调用 UiManager.ClearAsync 异常。",
               e,
               ["error", e.message],
@@ -404,7 +453,7 @@ class Game {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Game",
-              17,
+              16,
               "[Game.LeaveLevel] 调用 UiManager.ClearAsync 异常。",
               ["error", e],
             );
@@ -412,7 +461,7 @@ class Game {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          17,
+          16,
           "[Game.ClearSceneAsync] UiManager.ClearAsync清理操作完成",
         );
     try {
@@ -422,7 +471,7 @@ class Game {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.ErrorWithStack(
             "Game",
-            22,
+            21,
             "[Game.LeaveLevel] 调用AudioController.Clear异常。",
             e,
             ["error", e.message],
@@ -430,7 +479,7 @@ class Game {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Game",
-            22,
+            21,
             "[Game.LeaveLevel] 调用AudioController.Clear异常。",
             ["error", e],
           );
@@ -438,7 +487,7 @@ class Game {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Game",
-        17,
+        16,
         "[Game.ClearSceneAsync] AudioController.Clear清理操作完成",
       );
     try {
@@ -464,7 +513,7 @@ class Game {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Game",
-        17,
+        16,
         "[Game.ClearSceneAsync] Game.ClearControllerAndModel清理操作完成",
       );
     try {
@@ -476,7 +525,7 @@ class Game {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.ErrorWithStack(
             "Game",
-            22,
+            21,
             "[Game.LeaveLevel] 调用ActorSystem.Clear异常。",
             e,
             ["error", e.message],
@@ -484,14 +533,14 @@ class Game {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Game",
-            22,
+            21,
             "[Game.LeaveLevel] 调用ActorSystem.Clear异常。",
             ["error", e],
           );
     }
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Game", 17, "[Game.ClearSceneAsync] 场景清理操作完成", [
+        Log_1.Log.Info("Game", 16, "[Game.ClearSceneAsync] 场景清理操作完成", [
           "无缝加载",
           e,
         ]),
@@ -500,9 +549,43 @@ class Game {
       !(GlobalData_1.GlobalData.ClearSceneDone = void 0)
     );
   }),
-  (Game.r6 = (e) => {
-    CombatMessageController_1.CombatMessageController.PreTick(e),
+  (Game.TickPriority2 = (e) => {
+    Core_1.Core.ForbiddenTickPriority ||
       TickSystem_1.TickSystem.IsPaused ||
+      (UeSkeletalTickManageComponent_1.UeSkeletalTickController
+        .EnabledNewSkelTickTiming &&
+        UeSkeletalTickManageComponent_1.UeSkeletalTickController.TickManagers(
+          e * MathUtils_1.MathUtils.MillisecondToSecond,
+        ),
+      CombatMessageController_1.CombatMessageController.TickPriority1(e),
+      VehiclePathMoveController_1.VehiclePathMoveController.TickPriority1(e),
+      ComponentForceTickController_1.ComponentForceTickController.MoveTickPriority1(
+        e,
+      ));
+  }),
+  (Game.TickPriority1 = (e) => {
+    Core_1.Core.ForbiddenTickPriority
+      ? UeSkeletalTickManageComponent_1.UeSkeletalTickController.TickManagersStep2()
+      : (TickSystem_1.TickSystem.IsPaused ||
+          UeMovementTickManageComponent_1.UeMovementTickController.TickManagersPriority1(
+            e,
+          ),
+        UeSkeletalTickManageComponent_1.UeSkeletalTickController.TickManagersStep2(),
+        TickSystem_1.TickSystem.SetTickFunctionCompletionCallbackInMainThread(
+          0,
+          1,
+        ));
+  }),
+  (Game.r6 = (e) => {
+    Core_1.Core.ForbiddenTickPriority &&
+      !TickSystem_1.TickSystem.IsPaused &&
+      (VehiclePathMoveController_1.VehiclePathMoveController.TickPriority1(e),
+      ComponentForceTickController_1.ComponentForceTickController.MoveTickPriority1(
+        e,
+      )),
+      TickSystem_1.TickSystem.IsPaused ||
+        UeSkeletalTickManageComponent_1.UeSkeletalTickController
+          .EnabledNewSkelTickTiming ||
         UeSkeletalTickManageComponent_1.UeSkeletalTickController.TickManagers(
           e * MathUtils_1.MathUtils.MillisecondToSecond,
         ),
@@ -531,6 +614,10 @@ class Game {
         Game.vve.Stop()),
       ResourceSystem_1.ResourceSystem.UpdateDelayCallback();
   }),
+  (Game.AfterTickPriority1 = (e) => {
+    Time_1.Time.AfterTickPriority1(e),
+      UeSkeletalTickManageComponent_1.UeSkeletalTickController.DealCompleteSkeletalComp();
+  }),
   (Game.AfterTick = (e) => {
     TickSystem_1.TickSystem.IsPaused ||
       (UeSkeletalTickManageComponent_1.UeSkeletalTickController.AfterTickManagers(
@@ -538,11 +625,11 @@ class Game {
       ),
       BulletController_1.BulletController.AfterTick(e),
       ComponentForceTickController_1.ComponentForceTickController.AfterTick(e)),
-      EffectSystem_1.EffectSystem.AfterTick(e);
+      EffectSystem_1.EffectSystem.AfterTick(e),
+      CombatMessageController_1.CombatMessageController.AfterTick(e);
   }),
   (Game.AfterCameraTick = (e) => {
-    CombatMessageController_1.CombatMessageController.AfterTick(e),
-      UiManager_1.UiManager.AfterTick(e),
+    UiManager_1.UiManager.AfterTick(e),
       TickSystem_1.TickSystem.IsPaused ||
         HudUnitController_1.HudUnitController.AfterTick(e);
   }),

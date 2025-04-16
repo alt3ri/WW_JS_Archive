@@ -29,24 +29,24 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
                 ActivityPhantomCollectController.ActivityId,
               ))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Activity", 35, "声骇收集活动数据更新错误:", [
+              Log_1.Log.Error("Activity", 34, "声骇收集活动数据更新错误:", [
                 "ActivityId:",
                 t.w6n,
               ])
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Activity",
-              35,
+              34,
               "声骇收集活动数据更新错误，没有活动数据:",
               ["ActivityId:", t.w6n],
             );
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(15212, this.OnPhantomCollectUpdateNotify);
+    Net_1.Net.Register(15796, this.OnPhantomCollectUpdateNotify);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(15212);
+    Net_1.Net.UnRegister(15796);
   }
   OnGetActivityResource(t) {
     return "UiItem_ActivityPhantomCollect";
@@ -75,12 +75,12 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
       e =
         ((e.h5n = t),
         (e.w6n = ActivityPhantomCollectController.ActivityId),
-        await Net_1.Net.CallAsync(16175, e));
+        await Net_1.Net.CallAsync(23047, e));
     if (e)
       if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
         ErrorCodeController_1.ErrorCodeController.OpenErrorCodeTipView(
           e.Q4n,
-          16175,
+          23047,
         );
       else {
         e = ActivityPhantomCollectController.GetCurrentActivityDataById();

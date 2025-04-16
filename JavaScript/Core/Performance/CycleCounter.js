@@ -2,8 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CycleCounter = exports.STAT_MAX_NAME_LENGTH = void 0);
 const cpp_1 = require("cpp"),
-  puerts_1 = require("puerts"),
-  UE = require("ue");
+  puerts_1 = require("puerts");
 exports.STAT_MAX_NAME_LENGTH = 800;
 class CycleCounter {
   static RefreshState() {
@@ -12,7 +11,7 @@ class CycleCounter {
       this.cY !== this.mY && ((this.cY = this.mY), (this.uY = !0), !this.cY))
     ) {
       var e = this.dY.length;
-      for (let t = 0; t < e; t++) UE.KuroJsStatsLibrary.StopCycleCounter();
+      for (let t = 0; t < e; t++) cpp_1.FKuroCycleCounter.StopCycleCounter();
       this.dY.splice(0);
     }
     this.CY !== this.gY && ((this.CY = this.gY), (this.uY = !0));
@@ -26,11 +25,9 @@ class CycleCounter {
   static SetNeedCheck(t) {
     this.gY = t;
   }
-  static Init(t, e = "", s = "") {
-    UE.KuroJsStatsLibrary.CreateCycleCounter(t, e, s);
-  }
   static Start(t) {
-    this.cY && (UE.KuroJsStatsLibrary.StartCycleCounter(t), this.CheckStart(t));
+    this.cY &&
+      (cpp_1.FKuroCycleCounter.StartCycleCounterByName(t), this.CheckStart(t));
   }
   static CheckStart(t) {
     this.CY && this.dY.push(t);
@@ -38,7 +35,7 @@ class CycleCounter {
   static Stop(t) {
     this.cY &&
       this.IsPassedStackCheck(t) &&
-      UE.KuroJsStatsLibrary.StopCycleCounter();
+      cpp_1.FKuroCycleCounter.StopCycleCounter();
   }
   static IsPassedStackCheck(s) {
     if (!this.CY) return !0;
@@ -55,7 +52,7 @@ class CycleCounter {
         i.push(this.dY.pop());
         let t = i[0];
         for (; t !== s; )
-          UE.KuroJsStatsLibrary.StopCycleCounter(),
+          cpp_1.FKuroCycleCounter.StopCycleCounter(),
             i.push(this.dY.pop()),
             (t = i[i.length - 1]);
         return (
@@ -75,10 +72,9 @@ class CycleCounter {
       : (puerts_1.logger.error("CycleCounter.Stop()匹配失败 name: " + s), !1);
   }
 }
-((exports.CycleCounter = CycleCounter).cY =
-  cpp_1.FKuroUtilityForPuerts.IsWithStat()),
+((exports.CycleCounter = CycleCounter).cY = cpp_1.KuroApplication.IsWithStat()),
   (CycleCounter.mY = CycleCounter.cY),
-  (CycleCounter.CY = !cpp_1.FKuroUtilityForPuerts.IsBuildShipping()),
+  (CycleCounter.CY = !cpp_1.KuroApplication.IsBuildShipping()),
   (CycleCounter.gY = CycleCounter.CY),
   (CycleCounter.uY = !1),
   (CycleCounter.dY = new Array());

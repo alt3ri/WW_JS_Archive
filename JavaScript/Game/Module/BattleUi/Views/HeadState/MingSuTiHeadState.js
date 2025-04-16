@@ -62,34 +62,37 @@ class MingSuTiHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   ActiveBattleHeadState(t) {
     super.ActiveBattleHeadState(t), this.Rst(), this.Hlt(), this.A_t();
   }
-  OnHealthChanged(t) {
-    this.HeadStateData.GetEntityId() === t && this.Rst();
+  OnHealthChanged() {
+    this.Rst();
   }
   P_t(t) {
     return this.R_t[t];
   }
   Rst() {
-    var [i, e] = this.GetHpAndMaxHp();
-    if (this.U_t !== i) {
-      this.U_t = i;
-      for (let t = 0; t < Math.floor(e); t++) {
+    var [e, i] = this.GetHpAndMaxHp();
+    if (this.U_t !== e) {
+      this.U_t = e;
+      for (let t = 0; t < Math.floor(i); t++) {
         var s = this.P_t(t);
-        s && t < i !== s.bIsUIActive && s.SetUIActive(t < i);
+        s && t < e !== s.bIsUIActive && s.SetUIActive(t < e);
       }
     }
   }
   A_t() {
     for (let t = this.GetMaxHp(); t < this.R_t.length; t++) {
-      var i = this.P_t(t);
-      i && i.GetParentAsUIItem().SetUIActive(!1);
+      var e = this.P_t(t);
+      e && e.GetParentAsUIItem().SetUIActive(!1);
     }
   }
   Hlt() {
     var t = this.GetHpColor();
     if (t) {
-      var i = UE.Color.FromHex(t);
-      for (const e of this.R_t) e.SetColor(i);
+      var e = UE.Color.FromHex(t);
+      for (const i of this.R_t) i.SetColor(e);
     }
+  }
+  RefreshOnCampChanged() {
+    this.Hlt();
   }
 }
 exports.MingSuTiHeadState = MingSuTiHeadState;

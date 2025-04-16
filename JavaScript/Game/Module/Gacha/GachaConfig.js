@@ -69,7 +69,7 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
     return (
       a ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Gacha", 9, "无法找到此奖品的文本Id", [
+          Log_1.Log.Error("Gacha", 8, "无法找到此奖品的文本Id", [
             "awardType",
             e,
           ])),
@@ -96,14 +96,14 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
     var a = this.GetGachaViewInfo(e);
     if (a) return a.Type;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Gacha", 44, "奖池界面信息配置为空", ["gachaPoolId", e]);
+      Log_1.Log.Error("Gacha", 43, "奖池界面信息配置为空", ["gachaPoolId", e]);
   }
   GetGachaViewInfo(e) {
     var a = GachaViewInfoById_1.configGachaViewInfoById.GetConfig(e);
     return (
       a ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Gacha", 44, "奖池界面信息配置为空", [
+          Log_1.Log.Error("Gacha", 43, "奖池界面信息配置为空", [
             "gachaPoolId",
             e,
           ])),
@@ -115,7 +115,7 @@ class GachaConfig extends ConfigBase_1.ConfigBase {
     return (
       a ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Gacha", 44, "抽卡贴图信息表没有配置", [
+          Log_1.Log.Error("Gacha", 43, "抽卡贴图信息表没有配置", [
             "itemId",
             e,
           ])),

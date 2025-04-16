@@ -187,7 +187,7 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
             t
               ? ((this.Data = t), this.Refresh(this.Data, !1, this.GridIndex))
               : Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Activity", 35, "声骸收集活动领取奖励失败", [
+                Log_1.Log.Error("Activity", 34, "声骸收集活动领取奖励失败", [
                   "Type",
                   this.Data.h5n,
                 ]);
@@ -233,7 +233,7 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
       );
     if (void 0 === o)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Activity", 35, "声骸收集活动数据未查询到", [
+        Log_1.Log.Error("Activity", 34, "声骸收集活动数据未查询到", [
           "ActivityId",
           ActivityPhantomCollectController_1.ActivityPhantomCollectController
             .ActivityId,

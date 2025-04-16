@@ -95,15 +95,15 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
       return !1;
     var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity.GetComponent(
-        190,
+        203,
       );
     if (!t) return 0 === e.AllowTags.length;
-    for (const n of e.AllowTags) {
-      var r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(n);
+    for (const o of e.AllowTags) {
+      var r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o);
       if (!r || !t.HasTag(r)) return !1;
     }
-    for (const o of e.BanTags) {
-      var l = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o);
+    for (const n of e.BanTags) {
+      var l = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(n);
       if (l && t.HasTag(l)) return !1;
     }
     return !0;
@@ -112,22 +112,22 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
     if (SpecialItemController.IsSpecialItem(e)) {
       var r = ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(e);
       if (r) {
-        var l = t?.Entity?.GetComponent(190);
+        var l = t?.Entity?.GetComponent(203);
         SpecialItemController.StopListenSpecialItemRelatedTags();
         for (const a of r.AllowTags) {
-          var n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(a);
-          n &&
-            (l?.AddTagAddOrRemoveListener(n, SpecialItemController.egi),
+          var o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(a);
+          o &&
+            (l?.AddTagAddOrRemoveListener(o, SpecialItemController.egi),
             ModelManager_1.ModelManager.SpecialItemModel.WatchedAllowTagIds.add(
-              n,
+              o,
             ));
         }
         for (const i of r.BanTags) {
-          var o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i);
-          o &&
-            (l?.AddTagAddOrRemoveListener(o, SpecialItemController.egi),
+          var n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i);
+          n &&
+            (l?.AddTagAddOrRemoveListener(n, SpecialItemController.egi),
             ModelManager_1.ModelManager.SpecialItemModel.WatchedBanTagIds.add(
-              o,
+              n,
             ));
         }
         (ModelManager_1.ModelManager.SpecialItemModel.TagWatchedItemId = e),
@@ -139,7 +139,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
   static StopListenSpecialItemRelatedTags() {
     var e =
       ModelManager_1.ModelManager.SpecialItemModel?.TagWatchedEntityHandle?.Entity?.GetComponent(
-        190,
+        203,
       );
     if (e)
       for (const t of ModelManager_1.ModelManager.SpecialItemModel
@@ -165,7 +165,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Item",
-              38,
+              37,
               "特殊道具配置类型无法装备",
               ["Id", t],
               ["SpecialItemType", e.SpecialItemType],
@@ -174,13 +174,13 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
                 t,
               ) <= 0
             ? Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Item", 38, "背包中没有对应特殊道具,无法切换", [
+              Log_1.Log.Info("Item", 37, "背包中没有对应特殊道具,无法切换", [
                 "Id",
                 t,
               ])
             : ModelManager_1.ModelManager.SpecialItemModel.GetEquipSpecialItemId() !==
                 t
-              ? ModelManager_1.ModelManager.RouletteModel.SaveCurrentRouletteData(
+              ? RouletteController_1.RouletteController.SaveCurrentRouletteData(
                   void 0,
                   void 0,
                   t,
@@ -202,7 +202,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Item",
-            38,
+            37,
             "特殊道具不存在,请检查是否配置t.特殊道具",
             ["Id", t],
           ));
@@ -210,7 +210,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
   static UnEquipSpecialItem(e) {
     ModelManager_1.ModelManager.SpecialItemModel.GetEquipSpecialItemId() ===
       e &&
-      ModelManager_1.ModelManager.RouletteModel.SaveCurrentRouletteData(
+      RouletteController_1.RouletteController.SaveCurrentRouletteData(
         void 0,
         void 0,
         0,
@@ -230,8 +230,8 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
   static tgi(e, t, r) {
     var l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity;
     l?.Valid &&
-      (l = l.GetComponent(34)).Valid &&
-      l.BeginSkill(r, { Context: "Explore skill item: UseSkill" });
+      (l = l.GetComponent(39)).Valid &&
+      l.BeginSkill(r, { Reason: "Explore skill item: UseSkill" });
   }
 }
 (exports.SpecialItemController = SpecialItemController),
@@ -287,7 +287,7 @@ class SpecialItemController extends UiControllerBase_1.UiControllerBase {
             r,
           )).CheckUseCondition() && r.OnUse())
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Item", 38, "特殊道具不存在,请检查是否配置t.特殊道具", [
+        Log_1.Log.Error("Item", 37, "特殊道具不存在,请检查是否配置t.特殊道具", [
           "Id",
           e,
         ]);

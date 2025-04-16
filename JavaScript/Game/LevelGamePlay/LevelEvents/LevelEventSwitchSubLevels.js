@@ -24,6 +24,9 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
           break;
         case IAction_1.ESwitchSubLevelsType.Preload:
           this.QRe(t);
+          break;
+        case IAction_1.ESwitchSubLevelsType.Permission:
+          this.FinishExecute(!0);
       }
     }
   }
@@ -31,11 +34,10 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
     this.FinishExecute(!0);
   }
   QRe(e) {
-    ControllerHolder_1.ControllerHolder.GameModeController.PreloadSubLevel(
+    ControllerHolder_1.ControllerHolder.SubLevelController.PreloadSubLevel(
       e.PreloadLevels,
-    ).then(() => {
+    ),
       this.FinishExecute(!0);
-    });
   }
   KRe(e) {
     let r = void 0,
@@ -50,7 +52,7 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
           Log_1.Log.Error(
             "LevelEvent",
             3,
-            "[CreatureController.SceneSubLevelsChangedNotify] 要传送的TeleportEntityId不存在。",
+            "[ControllerHolder.CreatureController.SceneSubLevelsChangedNotify] 要传送的TeleportEntityId不存在。",
             ["TeleportEntityId", e.TeleportEntityId],
           )
         );
@@ -60,7 +62,7 @@ class LevelEventSwitchLevels extends LevelGeneralBase_1.LevelEventBase {
           o.Transform.Rot);
       l && (t = Rotator_1.Rotator.Create(l.Y ?? 0, l.Z ?? 0, l.X ?? 0));
     }
-    ControllerHolder_1.ControllerHolder.GameModeController.ChangeSubLevel(
+    ControllerHolder_1.ControllerHolder.SubLevelController.ChangeSubLevel(
       e.UnloadLevels,
       e.LoadLevels,
       0,

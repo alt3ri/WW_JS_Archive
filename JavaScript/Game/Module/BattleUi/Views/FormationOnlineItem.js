@@ -12,7 +12,7 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.fht = void 0),
       (this.pht = void 0),
-      (this.Dza = void 0),
+      (this.yrh = void 0),
       (this.vht = !1),
       (this.Mht = !1),
       (this.Eht = !1),
@@ -26,6 +26,7 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UITexture],
       [3, UE.UIText],
       [4, UE.UIItem],
+      [5, UE.UIItem],
     ];
   }
   OnStart() {
@@ -36,9 +37,9 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
     this.Sht.Clear(), (this.Sht = void 0);
   }
   SetNameText(t) {
-    this.InAsyncLoading() ? (this.fht = t) : ((this.fht = t), this.Rza(t));
+    this.InAsyncLoading() ? (this.fht = t) : ((this.fht = t), this.Erh(t));
   }
-  async Rza(t) {
+  async Erh(t) {
     var i = this.GetText(3);
     return (
       StringUtils_1.StringUtils.IsEmpty(t)
@@ -72,22 +73,23 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshPlayStationItem(t) {
     this.InAsyncLoading()
-      ? (this.Dza = t)
-      : ((this.Dza = t), this.xza(t), this.fht && this.Rza(this.fht));
+      ? (this.yrh = t)
+      : ((this.yrh = t),
+        this.Trh(t),
+        this.sPa(t),
+        this.fht && this.Erh(this.fht));
   }
-  async xza(t) {
-    var i;
+  sPa(t) {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((t = "" !== t), this.GetItem(5)?.SetUIActive(!t))
+      : this.GetItem(5)?.SetUIActive(!1);
+  }
+  async Trh(t) {
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((t = "" !== t),
-        (i = await this.Uza()),
-        this.GetItem(4)?.SetUIActive(t && !i))
+        this.GetItem(4)?.SetUIActive(t),
+        await Promise.resolve())
       : this.GetItem(4)?.SetUIActive(!1);
-  }
-  async Uza() {
-    var t,
-      i =
-        await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetSdkBlockingUser();
-    return void 0 !== i && void 0 !== (t = this.Dza) && i.has(t);
   }
   SetNetDisconnect(t) {
     this.InAsyncLoading() ? (this.Eht = t) : this.Iht(t);
@@ -100,8 +102,8 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
   yht() {
     void 0 !== this.fht && (this.SetNameText(this.fht), (this.fht = void 0)),
       this.pht && (this.SetOnlineNumber(this.pht), (this.pht = void 0)),
-      void 0 !== this.Dza &&
-        (this.RefreshPlayStationItem(this.Dza), (this.Dza = void 0)),
+      void 0 !== this.yrh &&
+        (this.RefreshPlayStationItem(this.yrh), (this.yrh = void 0)),
       this.GetItem(0).SetUIActive(this.Mht),
       this.Iht(this.Eht),
       this.SetIsGrayByOtherControl(this.vht);

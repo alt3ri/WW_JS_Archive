@@ -5,46 +5,50 @@ const puerts_1 = require("puerts"),
   ue_1 = require("ue"),
   Log_1 = require("../Misc/Log"),
   Util_1 = require("../Unreal/Util"),
-  Interface_1 = require("./Interface");
+  Interface_1 = require("./Interface"),
+  REDIRECTOR_FILE_SIZE = 5120;
 class PlatformUe extends Interface_1.Platform {
   constructor() {
-    super(...arguments), (this.Be = () => {});
+    super(...arguments),
+      (this.wx_ = new Map()),
+      (this.Rx_ = new Map()),
+      (this.Be = () => {});
   }
   ReadFile(e) {
-    var r = (0, puerts_1.$ref)("");
+    var t = (0, puerts_1.$ref)("");
     return (
-      ue_1.KuroStaticLibrary.LoadFileToString(r, e), (0, puerts_1.$unref)(r)
+      ue_1.KuroStaticLibrary.LoadFileToString(t, e), (0, puerts_1.$unref)(t)
     );
   }
-  async ReadFileAsync(r) {
-    return new Promise((t, e) => {
-      const s = (e, r) => {
+  async ReadFileAsync(t) {
+    return new Promise((r, e) => {
+      const s = (e, t) => {
         (0, puerts_1.releaseManualReleaseDelegate)(s),
-          t({ IsSuccess: e, FileContent: r });
+          r({ IsSuccess: e, FileContent: t });
       };
       ue_1.EditorRuntimeOperations.ReadFileAsync(
-        r,
+        t,
         (0, puerts_1.toManualReleaseDelegate)(s),
       );
     });
   }
-  async ReadBatchFilesAsync(r) {
+  async ReadBatchFilesAsync(t) {
     return new Promise((s, e) => {
-      const u = (r, e) => {
+      const u = (t, e) => {
         (0, puerts_1.releaseManualReleaseDelegate)(u);
-        var t = new Map();
-        for (let e = 0; e < r.Num(); e++)
-          t.set(r.Get(e).FilePath, r.Get(e).FileContent);
-        s({ FileMap: t, FailedFiles: (0, Util_1.toTsArray)(e) });
+        var r = new Map();
+        for (let e = 0; e < t.Num(); e++)
+          r.set(t.Get(e).FilePath, t.Get(e).FileContent);
+        s({ FileMap: r, FailedFiles: (0, Util_1.toTsArray)(e) });
       };
       ue_1.EditorRuntimeOperations.ReadBatchFilesAsync(
-        (0, Util_1.toUeArray)(r, ue_1.BuiltinString),
+        (0, Util_1.toUeArray)(t, ue_1.BuiltinString),
         (0, puerts_1.toManualReleaseDelegate)(u),
       );
     });
   }
-  WriteFile(e, r) {
-    ue_1.KuroStaticLibrary.SaveStringToFile(r, e);
+  WriteFile(e, t) {
+    ue_1.KuroStaticLibrary.SaveStringToFile(t, e);
   }
   RemoveFile(e) {
     return ue_1.MyFileHelper.Remove(e);
@@ -59,11 +63,11 @@ class PlatformUe extends Interface_1.Platform {
     return ue_1.MyFileHelper.ExistDir(e);
   }
   CreateDir(e) {
-    var r = e.split("/");
-    let t = r[0];
-    for (let e = 1; e < r.length; e++)
-      if (((t = t + "/" + r[e]), !ue_1.MyFileHelper.CreateDir(t)))
-        return this.Log(2, `Create dir: [${t}] failed`), !1;
+    var t = e.split("/");
+    let r = t[0];
+    for (let e = 1; e < t.length; e++)
+      if (((r = r + "/" + t[e]), !ue_1.MyFileHelper.CreateDir(r)))
+        return this.Log(2, `Create dir: [${r}] failed`), !1;
     return !0;
   }
   GetProjectPath(e) {
@@ -81,29 +85,29 @@ class PlatformUe extends Interface_1.Platform {
       e
     );
   }
-  ListFiles(e, r, t) {
+  ListFiles(e, t, r) {
     var s = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.BuiltinString));
     return (
-      void 0 === r && (r = ""),
-      t
-        ? ue_1.MyFileHelper.FindFilesRecursively(s, e, r)
-        : ue_1.MyFileHelper.FindFiles(s, e, r),
+      void 0 === t && (t = ""),
+      r
+        ? ue_1.MyFileHelper.FindFilesRecursively(s, e, t)
+        : ue_1.MyFileHelper.FindFiles(s, e, t),
       (0, Util_1.toTsArray)((0, puerts_1.$unref)(s))
     );
   }
-  ListDirs(e, r) {
-    var t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.BuiltinString));
+  ListDirs(e, t) {
+    var r = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.BuiltinString));
     return (
-      r
-        ? ue_1.MyFileHelper.FindDirsRecursively(t, e)
-        : ue_1.MyFileHelper.FindDirs(t, e),
-      (0, Util_1.toTsArray)((0, puerts_1.$unref)(t))
+      t
+        ? ue_1.MyFileHelper.FindDirsRecursively(r, e)
+        : ue_1.MyFileHelper.FindDirs(r, e),
+      (0, Util_1.toTsArray)((0, puerts_1.$unref)(r))
     );
   }
-  GetRelativePathToDir(e, r) {
-    return r.endsWith("/")
-      ? ue_1.MyFileHelper.GetPathRelativeTo(e, r)
-      : ue_1.MyFileHelper.GetPathRelativeTo(e, r + "/");
+  GetRelativePathToDir(e, t) {
+    return t.endsWith("/")
+      ? ue_1.MyFileHelper.GetPathRelativeTo(e, t)
+      : ue_1.MyFileHelper.GetPathRelativeTo(e, t + "/");
   }
   GetAbsolutePath(e) {
     return ue_1.MyFileHelper.GetAbsolutePath(e);
@@ -111,28 +115,28 @@ class PlatformUe extends Interface_1.Platform {
   GetFileModifyTick(e) {
     return ue_1.MyFileHelper.GetFileModifyTick(e);
   }
-  Log(e, r) {
+  Log(e, t) {
     switch (e) {
       case 0:
-        this.LogLevel <= 0 && ue_1.MyLog?.Log(r);
+        this.LogLevel <= 0 && ue_1.MyLog?.Log(t);
         break;
       case 1:
-        this.LogLevel <= 1 && ue_1.MyLog?.Warn(r);
+        this.LogLevel <= 1 && ue_1.MyLog?.Warn(t);
         break;
       case 2:
-        this.LogLevel <= 2 && (ue_1.MyLog?.Error(r), this.Be(r));
+        this.LogLevel <= 2 && (ue_1.MyLog?.Error(t), this.Be(t));
     }
   }
   SetErrorReportFun(e) {
     this.Be = e;
   }
-  Exec(e, r) {
+  Exec(e, t) {
     e.includes("\\") && (e = e.split("\\").join("\\\\"));
-    var t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+    var r = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
       s = (0, puerts_1.$ref)("");
     let u = "";
     (u = (
-      r
+      t
         ? ["import os", `os.system('''${e}''')`]
         : [
             "import subprocess",
@@ -143,11 +147,11 @@ class PlatformUe extends Interface_1.Platform {
           ]
     ).join("\n")),
       (0, Log_1.log)("Exec: " + e);
-    (r = ue_1.PythonScriptLibrary.ExecutePythonCommandEx(u, s, t)),
-      (e = (0, puerts_1.$unref)(t));
+    (t = ue_1.PythonScriptLibrary.ExecutePythonCommandEx(u, s, r)),
+      (e = (0, puerts_1.$unref)(r));
     let o = (0, puerts_1.$unref)(s);
     return [
-      r,
+      t,
       (o = !(o = "None" === o ? "" : o) && 0 < e.Num() ? e.Get(0).Output : o),
     ];
   }
@@ -169,7 +173,7 @@ class PlatformUe extends Interface_1.Platform {
       ? e
       : "";
   }
-  ConvertExcelToCsv(e, r, t, s) {
+  ConvertExcelToCsv(e, t, r, s) {
     var u;
     return (
       !!this.ExistFile(e) &&
@@ -178,19 +182,19 @@ class PlatformUe extends Interface_1.Platform {
       )),
       this.ExistFile(u)
         ? ((s = void 0 === s ? -1 : s),
-          (r = [
+          (t = [
             "import subprocess",
-            `args = "${u} ${e} ${r} ${(e = t.includes("|")) ? t.replace(/\|/g, ",") : t} ${e} ${s}"`,
+            `args = "${u} ${e} ${t} ${(e = r.includes("|")) ? r.replace(/\|/g, ",") : r} ${e} ${s}"`,
             `subp = subprocess.Popen(args, stdin=subprocess.PIPE,
                 stdout=subprocess.PIPE, stderr=subprocess.PIPE, universal_newlines=True, shell=True)`,
             "print(subp.communicate()[0])",
           ].join("\r\n")),
-          (t = (0, puerts_1.$ref)(
+          (r = (0, puerts_1.$ref)(
             (0, ue_1.NewArray)(ue_1.PythonLogOutputEntry),
           )),
-          (0, Log_1.log)("ExecutePythonCommandEx: " + r),
-          ue_1.PythonScriptLibrary.ExecutePythonCommandEx(r, void 0, t),
-          0 !== (e = (0, puerts_1.$unref)(t)).Num() &&
+          (0, Log_1.log)("ExecutePythonCommandEx: " + t),
+          ue_1.PythonScriptLibrary.ExecutePythonCommandEx(t, void 0, r),
+          0 !== (e = (0, puerts_1.$unref)(r)).Num() &&
             "false" !== e.Get(0).Output.replace(/\r\n/g, "\n").split("\n")[0])
         : ((0, Log_1.error)("ExcelConverter not exist: " + u), !1))
     );
@@ -204,11 +208,11 @@ class PlatformUe extends Interface_1.Platform {
         "except:",
         '   print("true")',
       ].join("\n"),
-      r = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+      t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
       e =
         ((0, Log_1.log)("ExecutePythonCommandEx: " + e),
-        ue_1.PythonScriptLibrary.ExecutePythonCommandEx(e, void 0, r),
-        (0, puerts_1.$unref)(r));
+        ue_1.PythonScriptLibrary.ExecutePythonCommandEx(e, void 0, t),
+        (0, puerts_1.$unref)(t));
     return 0 !== e.Num() && "true" === e.Get(0).Output;
   }
   IsPortInUse(e) {
@@ -220,40 +224,70 @@ class PlatformUe extends Interface_1.Platform {
   IsInPie() {
     return ue_1.EditorOperations.IsInPie();
   }
-  CopyDir(e, r, t) {
-    this.Exec(`robocopy "${e}" "${r}" /MIR`);
+  CopyDir(e, t, r) {
+    this.Exec(`robocopy "${e}" "${t}" /MIR`);
   }
-  CopyFile(e, r) {
-    this.Exec(`echo F | xcopy "${e}" "${r}" /F /Y`);
+  CopyFile(e, t) {
+    this.Exec(`echo F | xcopy "${e}" "${t}" /F /Y`);
   }
-  async DoJsonHttpReq(e, r, t) {
+  async DoJsonHttpReq(e, t, r) {
     const n = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString);
     for (const s of Object.entries({ "Content-Type": "application/json" }))
       n.Add(s[0], s[1]);
     return new Promise((s, u) => {
-      const o = (e, r, t) => {
+      const o = (e, t, r) => {
         (0, puerts_1.releaseManualReleaseDelegate)(o),
           e
-            ? s({ Status: r, Data: t ? JSON.parse(t) : void 0 })
-            : u(new Error(`Http request failed, code: ${r}, response: ` + t));
+            ? s({ Status: t, Data: r ? JSON.parse(r) : void 0 })
+            : u(new Error(`Http request failed, code: ${t}, response: ` + r));
       };
       ue_1.EditorRuntimeOperations.SendHttpRequest(
         e,
-        r,
+        t,
         n,
-        t ? JSON.stringify(t) : "",
+        r ? JSON.stringify(r) : "",
         (0, puerts_1.toManualReleaseDelegate)(o),
       );
     });
   }
   GetProcessImagePathsByName(e) {
-    var r = ue_1.KuroProcessUtils.GetProcessImagePathsByName(e),
-      t = [];
-    for (let e = 0; e < r.Num(); e++) t.push(r.Get(e));
-    return t;
+    var t = ue_1.KuroProcessUtils.GetProcessImagePathsByName(e),
+      r = [];
+    for (let e = 0; e < t.Num(); e++) r.push(t.Get(e));
+    return r;
+  }
+  GetProcessPathAndCommandLine(e) {
+    var t = ue_1.KuroProcessUtils.GetProcessPathAndCommandLine(e),
+      r = [];
+    for (let e = 0; e < t.Num(); e += 2)
+      r.push({ Path: t.Get(e), CommandLine: t.Get(e + 1) });
+    return r;
+  }
+  GetProcessImagePathsByPort(e) {
+    var t = ue_1.KuroProcessUtils.GetProcessImagePathsByPort(e),
+      r = [];
+    for (let e = 0; e < t.Num(); e++) r.push(t.Get(e));
+    return r;
   }
   async ExecAsync(e) {
     throw new Error("Method not implemented.");
+  }
+  IsAssetRedirector(e) {
+    let t = this.wx_.get(e) ?? e;
+    if (
+      (t.startsWith("/Game/") &&
+        ((t = ue_1.MyFileHelper.ConvertGamePathToDiskPath(e)),
+        this.wx_.set(e, t)),
+      this.Rx_.has(t))
+    )
+      return !!this.Rx_.get(t);
+    var r = ue_1.MyFileHelper.GetFileSizeInBytes(t);
+    if (r <= 0 || r > REDIRECTOR_FILE_SIZE) return this.Rx_.set(t, !1), !1;
+    let s = e;
+    s.startsWith("/Game/") ||
+      (s = ue_1.MyFileHelper.ConvertDiskPathToGamePath(e));
+    r = ue_1.EditorOperations.IsAssetRedirector(s);
+    return this.Rx_.set(t, r), r;
   }
 }
 (exports.PlatformUe = PlatformUe), (exports.platformUe = new PlatformUe());

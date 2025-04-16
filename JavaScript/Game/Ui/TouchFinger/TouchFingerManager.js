@@ -27,7 +27,7 @@ class TouchFingerManager {
       !e.IsInTouch() &&
       (TouchFingerManager.CurrentTouchFingerCount++,
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("ControlScreen", 8, "开始触碰屏幕", [
+        Log_1.Log.Debug("ControlScreen", 10, "开始触碰屏幕", [
           "FingerCount",
           TouchFingerManager.CurrentTouchFingerCount,
         ]),
@@ -42,7 +42,7 @@ class TouchFingerManager {
         0,
       )),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("ControlScreen", 8, "结束触碰屏幕", [
+        Log_1.Log.Debug("ControlScreen", 10, "结束触碰屏幕", [
           "FingerCount",
           TouchFingerManager.CurrentTouchFingerCount,
         ]),

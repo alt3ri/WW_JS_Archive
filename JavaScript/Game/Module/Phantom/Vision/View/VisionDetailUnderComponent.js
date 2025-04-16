@@ -9,7 +9,7 @@ const UE = require("ue"),
   ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
   LguiUtil_1 = require("../../../Util/LguiUtil");
 class VisionDetailUnderComponent extends UiPanelBase_1.UiPanelBase {
-  constructor(t) {
+  constructor(e) {
     super(),
       (this.M9i = void 0),
       (this.E9i = void 0),
@@ -22,7 +22,7 @@ class VisionDetailUnderComponent extends UiPanelBase_1.UiPanelBase {
       (this.I9i = () => {
         this.tNe?.();
       }),
-      this.CreateThenShowByActor(t.GetOwner());
+      this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -38,34 +38,34 @@ class VisionDetailUnderComponent extends UiPanelBase_1.UiPanelBase {
       this.S9i.SetFunction(this.I9i),
       (this.M9i = new EquipRoleAttribute(this.GetItem(2)));
   }
-  RefreshRightButtonText(t) {
-    this.E9i.SetLocalText(t);
+  RefreshRightButtonText(e) {
+    this.E9i.SetLocalText(e);
   }
-  RefreshLeftButtonText(t) {
-    this.S9i.SetLocalText(t);
+  RefreshLeftButtonText(e) {
+    this.S9i.SetLocalText(e);
   }
-  SetRightButtonClick(t) {
-    this.iNe = t;
+  SetRightButtonClick(e) {
+    this.iNe = e;
   }
-  SetLeftButtonClick(t) {
-    this.tNe = t;
+  SetLeftButtonClick(e) {
+    this.tNe = e;
   }
-  RefreshViewByCompareState(t) {
-    this.S9i.SetActive(!t), this.E9i.SetActive(!t);
+  RefreshViewByCompareState(e) {
+    this.S9i.SetActive(!e), this.E9i.SetActive(!e);
   }
-  Update(t) {
+  Update(e) {
     this.M9i.SetActive(
       ControllerHolder_1.ControllerHolder.PhantomBattleController.CheckIsEquip(
-        t.GetUniqueId(),
+        e.GetUniqueId(),
       ),
     ),
-      this.M9i.Update(t);
+      this.M9i.Update(e);
   }
 }
 exports.VisionDetailUnderComponent = VisionDetailUnderComponent;
 class EquipRoleAttribute extends UiPanelBase_1.UiPanelBase {
-  constructor(t) {
-    super(), this.CreateThenShowByActor(t.GetOwner());
+  constructor(e) {
+    super(), this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -83,23 +83,26 @@ class EquipRoleAttribute extends UiPanelBase_1.UiPanelBase {
           ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
             i.GetUniqueId(),
           ),
-        i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o),
+        i =
+          ModelManager_1.ModelManager.RoleSkinModel?.GetRoleSkinDataByRoleId(
+            o,
+          ).GetRoleSkinConfig(),
         r =
-          ConfigManager_1.ConfigManager.ComponentConfig.GetRoleConfigParam(
+          ConfigManager_1.ConfigManager.ComponentConfig.GetRoleSkinConfigParam(
             "RoleIcon1",
           );
       this.SetTextureByPath(i[r], this.GetTexture(0));
-      let t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(i.Name);
+      let e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(i.Name);
       var s = ConfigManager_1.ConfigManager.RoleConfig.GetAllMainRoleConfig();
-      let e = !1;
+      let t = !1;
       var n = s.length;
-      for (let t = 0; t < n; t++)
-        if (s[t].Id === o) {
-          e = !0;
+      for (let e = 0; e < n; e++)
+        if (s[e].Id === o) {
+          t = !0;
           break;
         }
-      e && (t = ModelManager_1.ModelManager.FunctionModel.GetPlayerName()),
-        LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "VisionEquipping", t);
+      t && (e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName()),
+        LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "VisionEquipping", e);
     }
   }
 }

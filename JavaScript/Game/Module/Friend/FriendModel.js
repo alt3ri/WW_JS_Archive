@@ -27,7 +27,7 @@ class FriendModel extends ModelBase_1.ModelBase {
       (this.FreshFriendApplicationIds = new Set()),
       (this.RecentlyTeamList = new Map()),
       (this.t8t = void 0),
-      (this.V8a = void 0),
+      (this.D7a = void 0),
       (this.i8t = void 0),
       (this.o8t = void 0),
       (this.TestDataLoaded = !1),
@@ -133,7 +133,7 @@ class FriendModel extends ModelBase_1.ModelBase {
   GetFriendById(e) {
     if (e) return this.J6t.get(e);
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Friend", 28, "获取选中玩家时id不存在");
+      Log_1.Log.Error("Friend", 27, "获取选中玩家时id不存在");
   }
   GetFriendDataInApplicationById(e) {
     if (this.z6t.has(e)) return this.z6t.get(e).ApplyPlayerData;
@@ -216,7 +216,7 @@ class FriendModel extends ModelBase_1.ModelBase {
             default:
               return void (
                 Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Friend", 28, "所属页签错误！", [
+                Log_1.Log.Error("Friend", 27, "所属页签错误！", [
                   "页签filter",
                   this.FilterState,
                 ])
@@ -233,7 +233,7 @@ class FriendModel extends ModelBase_1.ModelBase {
         default:
           return void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Friend", 28, "当前展示View错误！", ["view名", r])
+            Log_1.Log.Error("Friend", 27, "当前展示View错误！", ["view名", r])
           );
       }
   }
@@ -336,10 +336,10 @@ class FriendModel extends ModelBase_1.ModelBase {
     this.o8t = e;
   }
   SetCurrentOperationPlayerId(e) {
-    this.V8a = e;
+    this.D7a = e;
   }
   GetCurrentOperationPlayerId() {
-    return this.V8a;
+    return this.D7a;
   }
 }
 exports.FriendModel = FriendModel;

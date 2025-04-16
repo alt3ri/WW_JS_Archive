@@ -68,14 +68,14 @@ let SceneItemTimeTrackControlComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
-        (this.Lie = this.Entity.GetComponent(190)),
-        (this.mBe = this.Entity.GetComponent(120)),
+        (this.Hte = this.Entity.GetComponent(200)),
+        (this.Lie = this.Entity.GetComponent(203)),
+        (this.mBe = this.Entity.GetComponent(131)),
         !0
       );
     }
     OnActivate() {
-      var e = this.Entity.GetComponent(182);
+      var e = this.Entity.GetComponent(195);
       if (e) {
         var t = e.GetInteractController();
         if (t) {
@@ -185,7 +185,7 @@ let SceneItemTimeTrackControlComponent =
   });
 (SceneItemTimeTrackControlComponent = SceneItemTimeTrackControlComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(121)],
+    [(0, RegisterComponent_1.RegisterComponent)(132)],
     SceneItemTimeTrackControlComponent,
   )),
   (exports.SceneItemTimeTrackControlComponent =

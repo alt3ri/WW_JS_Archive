@@ -27,7 +27,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
-        this.Nya,
+        this.Vya,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -73,7 +73,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
-        this.Nya,
+        this.Vya,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -138,14 +138,14 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "CameraAnimation",
-            8,
+            58,
             "当打开主界面时，Ui镜头栈有未抛出的数据，检查是否没有关闭界面，或手动播放了Ui镜头但没有手动抛出",
           );
         for (const t of UiCameraAnimationManager_1.UiCameraAnimationManager.GetHandleDataStack())
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "CameraAnimation",
-              8,
+              58,
               "未抛出的Ui镜头数据",
               ["HandleName", t.HandleName],
               ["ViewName", t.ViewName],
@@ -162,7 +162,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
-            8,
+            58,
             "当打开界面时",
             ["viewName", e],
             ["delayTime", n],
@@ -187,7 +187,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "CameraAnimation",
-          8,
+          58,
           "当打开页签界面时",
           ["tabViewName", e],
           ["delayTime", a],
@@ -201,7 +201,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
   }),
   (UiCameraAnimationController.PopCameraHandle = (e, a, i, n = !0) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("CameraAnimation", 8, "当隐藏界面时", ["viewName", e]),
+      Log_1.Log.Info("CameraAnimation", 58, "当隐藏界面时", ["viewName", e]),
       UiCameraAnimationController.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.PopCameraHandleByCloseView(
         e,
@@ -209,6 +209,29 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
         i,
         n,
       );
+  }),
+  (UiCameraAnimationController.EnterUiCameraMode = () => {
+    var e =
+        UiCameraAnimationManager_1.UiCameraAnimationManager.UiCamera?.GetStructure(),
+      e =
+        (e && e.Activate(),
+        UiCameraAnimationManager_1.UiCameraAnimationManager.GetLastHandleData());
+    e &&
+      UiCameraAnimationManager_1.UiCameraAnimationManager.ActivateCameraHandle(
+        e,
+        !1,
+        !1,
+      );
+  }),
+  (UiCameraAnimationController.ExitUiCameraMode = () => {
+    var e =
+      UiCameraAnimationManager_1.UiCameraAnimationManager.UiCamera?.GetStructure();
+    e && e.Deactivate(), CameraController_1.CameraController.ExitCameraMode(2);
+  }),
+  (UiCameraAnimationController.DeepCopyCamera = (e) => {
+    var a =
+      UiCameraAnimationManager_1.UiCameraAnimationManager.GetCurrentCameraHandle();
+    a && a.DeepCopyCameraInfo(e);
   }),
   (UiCameraAnimationController.NAo = (e) => {
     var a =
@@ -221,7 +244,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "CameraAnimation",
-          8,
+          58,
           "当界面加载完成时,重新激活镜头状态",
         ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ReactivateCameraHandle(
@@ -239,7 +262,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
   (UiCameraAnimationController.SYi = () => {
     UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay();
   }),
-  (UiCameraAnimationController.Nya = () => {
+  (UiCameraAnimationController.Vya = () => {
     UiCameraAnimationController.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay(),
       CameraController_1.CameraController.ExitCameraMode(2);
@@ -265,7 +288,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "CameraAnimation",
-          8,
+          58,
           "当玩家角色添加实体时,重新激活镜头状态",
         ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ReactivateCameraHandle());
@@ -274,7 +297,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",
-        8,
+        58,
         "当角色系统切换角色时,尝试重新激活镜头状态",
       ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ReactivateCameraHandle();
@@ -283,7 +306,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",
-        8,
+        58,
         "当Ui场景加载完成时,尝试重新激活镜头状态",
       ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ReactivateCameraHandle();

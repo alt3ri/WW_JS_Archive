@@ -12,6 +12,12 @@ class TsTaskAnimalDropItem extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsDoOnce = !0),
       (this.HasDone = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsDoOnce = !0),
+      (this.HasDone = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0), (this.TsDoOnce = this.DoOnce));
@@ -20,7 +26,7 @@ class TsTaskAnimalDropItem extends TsTaskAbortImmediatelyBase_1.default {
     this.InitTsVariables();
     var t = e.AiController;
     t
-      ? (t = t.CharActorComp.Entity).GetComponent(40)
+      ? (t = t.CharActorComp.Entity).GetComponent(46)
         ? ((this.TsDoOnce && this.HasDone) ||
             ((t = t.GetComponent(0).GetCreatureDataId()),
             ControllerHolder_1.ControllerHolder.CreatureController.AnimalDropItemRequest(

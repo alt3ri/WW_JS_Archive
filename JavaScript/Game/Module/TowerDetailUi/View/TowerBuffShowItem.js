@@ -15,7 +15,7 @@ class TowerBuffShowItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   Refresh(e, r, t) {
-    (this.sDo = Number(e)), this.Og();
+    (this.sDo = e), this.Og();
   }
   Og() {
     var e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerBuffDesc(

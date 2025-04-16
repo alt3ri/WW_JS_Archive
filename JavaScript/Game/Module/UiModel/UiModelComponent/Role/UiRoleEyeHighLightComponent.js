@@ -66,7 +66,7 @@ let UiRoleEyeHighLightComponent = class UiRoleEyeHighLightComponent extends UiMo
   }
 };
 (UiRoleEyeHighLightComponent = __decorate(
-  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(16)],
+  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(17)],
   UiRoleEyeHighLightComponent,
 )),
   (exports.UiRoleEyeHighLightComponent = UiRoleEyeHighLightComponent);

@@ -2,13 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonLevelUpAttributeItem = void 0);
 const UE = require("ue"),
-  ConfigManager_1 = require("../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
-  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
-class CommonLevelUpAttributeItem extends UiPanelBase_1.UiPanelBase {
-  constructor(e) {
-    super(), this.CreateThenShowByActor(e.GetOwner());
-  }
+  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
+  LguiUtil_1 = require("../Util/LguiUtil");
+class CommonLevelUpAttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UIText],
@@ -18,29 +14,18 @@ class CommonLevelUpAttributeItem extends UiPanelBase_1.UiPanelBase {
       [4, UE.UITexture],
     ];
   }
-  Update(e) {
-    var t =
-      ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-        e.Id,
-      );
-    this.SetTextureByPath(t.Icon, this.GetTexture(4)),
-      this.GetText(0).ShowTextNew(t.Name),
-      this.GetText(1).SetText(
-        ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(
-          e.Id,
-          e.BaseValue,
-          e.IsRatio,
-        ),
-      ),
-      this.GetText(3).SetText(
-        ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(
-          e.Id,
-          e.AddValue,
-          e.IsRatio,
-        ),
-      ),
-      this.GetItem(2).SetUIActive(0 < e.AddValue - e.BaseValue),
-      this.GetText(3).SetUIActive(0 < e.AddValue - e.BaseValue);
+  Refresh(t) {
+    void 0 !== t.IconPath &&
+      this.SetTextureByPath(t.IconPath, this.GetTexture(4)),
+      this.GetTexture(4).SetUIActive(void 0 !== t.IconPath),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.Name),
+      t.PreText
+        ? this.GetText(1).SetText(t.PreText)
+        : this.GetText(1).SetUIActive(!1),
+      this.GetItem(2).SetUIActive(t.ShowArrow ?? !1),
+      t.CurText
+        ? this.GetText(3).SetText(t.CurText)
+        : this.GetText(3).SetUIActive(!1);
   }
 }
 exports.CommonLevelUpAttributeItem = CommonLevelUpAttributeItem;

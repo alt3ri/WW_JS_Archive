@@ -1,11 +1,13 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AntiCheatController = void 0);
-const UE = require("ue"),
+const Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ThirdPartySdkManager_1 = require("../../Manager/ThirdPartySdkManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
@@ -15,6 +17,9 @@ const UE = require("ue"),
   HEARTBEAT_EXCEPTION_FACTOR = 0.5,
   HEARTBEAT_REPORT_INTERVAL = TimeUtil_1.TimeUtil.Hour;
 class AntiCheatController extends UiControllerBase_1.UiControllerBase {
+  static OnInit() {
+    return !(this.yxl = !1);
+  }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ChangePlayerInfoId,
@@ -37,16 +42,15 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
   }
   static xje() {
     var e;
-    AntiCheatController.wje() &&
+    Info_1.Info.IsIosPlatform() &&
       ((e = AntiCheatModel_1.AntiCheatModel.GetBundleData()),
       LogReportController_1.LogReportController.LogReport(e));
   }
-  static wje() {
-    return "iOS" === UE.KuroLauncherLibrary.GetPlatform();
-  }
 }
-((exports.AntiCheatController = AntiCheatController).Bje = 0),
+(exports.AntiCheatController = AntiCheatController),
+  ((_a = AntiCheatController).Bje = 0),
   (AntiCheatController.bje = 0),
+  (AntiCheatController.yxl = !1),
   (AntiCheatController.Aje = () => {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe(
@@ -60,9 +64,18 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
       t =
         (0.001 * (e - AntiCheatController.bje) >= HEARTBEAT_REPORT_INTERVAL &&
           (ModelManager_1.ModelManager.AntiCheatModel.HasHeartbeatException() &&
-            ((t =
-              ModelManager_1.ModelManager.AntiCheatModel.GetHeartbeatData()),
-            LogReportController_1.LogReportController.LogReport(t),
+            (void 0 !==
+            (t = ModelManager_1.ModelManager.AntiCheatModel.GetHeartbeatData())
+              ? LogReportController_1.LogReportController.LogReport(t)
+              : !_a.yxl &&
+                ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
+                void 0 !==
+                  (t =
+                    ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()
+                      ?.Uid) &&
+                (Log_1.Log.CheckError() &&
+                  Log_1.Log.Error("Temp", 21, "Data undefined", ["id", t]),
+                (_a.yxl = !0)),
             ModelManager_1.ModelManager.AntiCheatModel.ResetHeartbeatException()),
           (AntiCheatController.bje = e)),
         e - AntiCheatController.Bje),
@@ -72,7 +85,7 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
       t <= r &&
       (ModelManager_1.ModelManager.AntiCheatModel.HitHeartbeatException(),
       Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Net", 22, "心跳过快"),
+      Log_1.Log.Debug("Net", 21, "心跳过快"),
       (AntiCheatController.Bje = e);
   });
 //# sourceMappingURL=AntiCheatController.js.map

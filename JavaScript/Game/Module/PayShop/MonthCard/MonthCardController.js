@@ -14,7 +14,9 @@ const Log_1 = require("../../../../Core/Common/Log"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ItemDefines_1 = require("../../Item/Data/ItemDefines"),
   ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
-  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
+  SplashScreenController_1 = require("../../SplashScreen/SplashScreenController"),
+  SplashScreenTask_1 = require("../../SplashScreen/SplashScreenTask");
 class MonthCardController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return !0;
@@ -27,28 +29,30 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
   }
   static async RequestMonthCardData() {
     var e = Protocol_1.Aki.Protocol.vhs.create(),
-      e = await Net_1.Net.CallAsync(21219, e);
+      e = await Net_1.Net.CallAsync(15432, e);
     e &&
       (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
         ? this.H2i(e.Pbs)
         : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            17769,
+            23571,
           ));
   }
   static j2i() {
     ModelManager_1.ModelManager.MonthCardModel.CanShowDailyRewardView &&
-      MonthCardController.W2i();
+      MonthCardController.W2i(!1);
   }
   static K2i() {
+    var e;
     ModelManager_1.ModelManager.MonthCardModel.CanShowDailyRewardView &&
-      ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed &&
-      UiManager_1.UiManager.IsViewOpen("BattleView") &&
-      MonthCardController.W2i();
+      ((e = new SplashScreenTask_1.SplashScreenTask(1, 0, () => {
+        MonthCardController.W2i(!0);
+      })),
+      SplashScreenController_1.SplashScreenController.PushSplashScreenTask(e));
   }
-  static W2i() {
+  static W2i(e) {
     UiManager_1.UiManager.IsViewOpen("MonthCardRewardView") ||
-      UiManager_1.UiManager.OpenView("MonthCardRewardView");
+      UiManager_1.UiManager.OpenView("MonthCardRewardView", e);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OnItemUse, this.e9e),
@@ -57,11 +61,7 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
         this.xkt,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ActiveBattleView,
-        this.NTn,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.WorldDoneAndCloseLoading,
+        EventDefine_1.EEventName.WorldDone,
         this.NTn,
       );
   }
@@ -75,20 +75,16 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
         this.xkt,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.ActiveBattleView,
-        this.NTn,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.WorldDoneAndCloseLoading,
+        EventDefine_1.EEventName.WorldDone,
         this.NTn,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(25148, MonthCardController.Q2i),
-      Net_1.Net.Register(18244, MonthCardController.X2i);
+    Net_1.Net.Register(19651, MonthCardController.Q2i),
+      Net_1.Net.Register(22928, MonthCardController.X2i);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(25148), Net_1.Net.UnRegister(18244);
+    Net_1.Net.UnRegister(19651), Net_1.Net.UnRegister(22928);
   }
 }
 (exports.MonthCardController = MonthCardController),
@@ -99,52 +95,52 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
     _a.RequestMonthCardData();
   }),
   (MonthCardController.Q2i = (e) => {
-    var t = e.m9n,
-      r = e.L8n,
+    var r = e.m9n,
+      t = e.L8n,
       e = e.Pbs,
-      r =
+      t =
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Shop",
-            38,
+            37,
             "MonthCard:【月卡每日奖励】信息推送 - MonthCardDailyRewardNotify",
-            ["Count", t],
-            ["itemId", r],
+            ["Count", r],
+            ["itemId", t],
             ["remainDays", e],
           ),
-        [{ IncId: 0, ItemId: r }, t]);
-    (ModelManager_1.ModelManager.MonthCardModel.ServerDailyReward = r),
+        [{ IncId: 0, ItemId: t }, r]);
+    (ModelManager_1.ModelManager.MonthCardModel.ServerDailyReward = t),
       (ModelManager_1.ModelManager.MonthCardModel.CanShowDailyRewardView = !0),
       MonthCardController.H2i(e),
       MonthCardController.K2i();
   }),
   (MonthCardController.X2i = (e) => {
-    var t = e.Pbs,
+    var r = e.Pbs,
       e =
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Shop",
-            38,
+            37,
             "MonthCard:【月卡购买通知】-MonthCardBuyNotify-信息推送",
-            ["remainDays", t],
+            ["remainDays", r],
           ),
         [{ IncId: 0, ItemId: e.L8n }, e.m9n]);
     (ModelManager_1.ModelManager.MonthCardModel.ServerOnceReward = e),
       ModelManager_1.ModelManager.MonthCardModel.GetRemainDays() < 0 &&
         (ModelManager_1.ModelManager.MonthCardModel.CanShowDailyRewardView =
           !0),
-      MonthCardController.H2i(t),
+      MonthCardController.H2i(r),
       ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed &&
         (0 !==
-        (t = (e =
+        (r = (e =
           ModelManager_1.ModelManager.MonthCardModel.ServerOnceReward)[0]
           .ItemId)
-          ? ((t = new RewardItemData_1.RewardItemData(t, e[1])),
-            (e = new Array()).push(t),
-            (t =
+          ? ((r = new RewardItemData_1.RewardItemData(r, e[1])),
+            (e = new Array()).push(r),
+            (r =
               ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardRewardId()),
             ItemRewardController_1.ItemRewardController.OpenCommonRewardView(
-              t,
+              r,
               e,
               () => {
                 MonthCardController.j2i();
@@ -152,13 +148,13 @@ class MonthCardController extends UiControllerBase_1.UiControllerBase {
             ))
           : MonthCardController.j2i());
   }),
-  (MonthCardController.e9e = (e, t) => {
+  (MonthCardController.e9e = (e, r) => {
     e = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
-    let r = e.Parameters.get(
+    let t = e.Parameters.get(
       ItemDefines_1.EItemFunctionType.ManualOpenMonthCard,
     );
-    (r =
-      r ||
+    (t =
+      t ||
       e.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenMonthCard)) &&
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
         "UseMonthCard",

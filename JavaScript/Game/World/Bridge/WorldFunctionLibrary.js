@@ -25,7 +25,6 @@ const puerts_1 = require("puerts"),
   PhantomUtil_1 = require("../../Module/Phantom/PhantomUtil"),
   RoleDefine_1 = require("../../Module/RoleUi/RoleDefine"),
   UiCameraAnimationManager_1 = require("../../Module/UiCameraAnimation/UiCameraAnimationManager"),
-  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
   CampUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/CampUtils"),
   BattleSetting_1 = require("../../NewWorld/Setting/BattleSetting"),
   RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
@@ -37,6 +36,7 @@ const puerts_1 = require("puerts"),
   WorldGlobal_1 = require("../WorldGlobal"),
   zero = 0n;
 class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static SetChangeFootStep(t) {
     WorldFunctionLibrary.IsChangeFootStep = t;
   }
@@ -55,7 +55,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static ActorHasSceneItemTag(t, e) {
     return ActorUtils_1.ActorUtils.GetEntityByActor(t)
-      .Entity.GetComponent(181)
+      .Entity.GetComponent(194)
       .HasTag(e);
   }
   static GetControlVisionEntityId(t) {
@@ -69,7 +69,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       if (e) return e.Id;
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 29, "无法找到拥有者实体", [
+        Log_1.Log.Error("Battle", 28, "无法找到拥有者实体", [
           "ownerEntityId",
           t,
         ]);
@@ -94,7 +94,11 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SetVisionEnable(t, e) {
     var r = EntitySystem_1.EntitySystem.Get(t);
     r
-      ? PhantomUtil_1.PhantomUtil.SetVisionEnable(r, e)
+      ? PhantomUtil_1.PhantomUtil.SetVisionEnable(
+          r,
+          e,
+          "WorldFunctionLibrary.SetVisionEnable",
+        )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 4, "无法找到幻象拥有者实体", [
           "ownerEntityId",
@@ -107,10 +111,10 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       e,
     );
   }
-  static SetCustomEntityEnable(t, e, r, a, o) {
+  static SetCustomEntityEnable(t, e, r, o, a) {
     var n, l;
-    a?.IsValid()
-      ? ((a = `[蓝图:${a.GetName()}] ` + o),
+    o?.IsValid()
+      ? ((o = `[蓝图:${o.GetName()}] ` + a),
         (n = EntitySystem_1.EntitySystem.Get(t))
           ? e > (n = n.GetComponent(0).CustomServerEntityIds).length || 0 === e
             ? Log_1.Log.CheckError() &&
@@ -120,7 +124,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 "pos不合法！",
                 ["pos", e],
                 ["serverEntityIds", n],
-                ["Reason", a],
+                ["Reason", o],
               )
             : (l = ModelManager_1.ModelManager.CreatureModel.GetEntity(
                   n[e - 1],
@@ -140,7 +144,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
                     ["customServerEntityIds", n],
                     ["customEntity", l.Id],
                     ["enable", r],
-                    ["Reason", a],
+                    ["Reason", o],
                   ))
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -159,7 +163,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 3, "callObject为空，请传递callObject", [
           "Reason",
-          o,
+          a,
         ]);
   }
   static GetSummonerEntityId(t) {
@@ -170,7 +174,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
           e.GetSummonerId(),
         ))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 29, "幻象实体已销毁！", [
+          Log_1.Log.Error("Battle", 28, "幻象实体已销毁！", [
             "visionEntityId",
             t,
           ]),
@@ -181,7 +185,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return e?.Valid
       ? (e.GetComponent(0).GetVisionComponent()?.VisionId ?? 0)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 29, "幻象实体已销毁！", [
+          Log_1.Log.Error("Battle", 28, "幻象实体已销毁！", [
             "visionEntityId",
             t,
           ]),
@@ -201,19 +205,19 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
         ),
         e)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 29, "无法找到拥有者实体", [
+          Log_1.Log.Error("Battle", 28, "无法找到拥有者实体", [
             "ownerEntityId",
             t,
           ]),
         UE.NewArray(UE.BuiltinInt));
   }
-  static SummonRequest(t, e, r, a, o) {
+  static SummonRequest(t, e, r, o, a) {
     t = ControllerHolder_1.ControllerHolder.CreatureController.SummonRequest(
       t,
       e,
       r,
-      a,
       o,
+      a,
     );
     return t ? BigInt(t) : 0n;
   }
@@ -311,9 +315,9 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetEntityDestructible(t) {
     var e = EntitySystem_1.EntitySystem.Get(t);
     return e
-      ? void 0 !== e.GetComponent(93)
+      ? void 0 !== e.GetComponent(100)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 40, "无法找到实体", ["entityId", t]),
+          Log_1.Log.Error("Battle", 39, "无法找到实体", ["entityId", t]),
         !1);
   }
   static AddPrivateTags(t, e) {
@@ -386,9 +390,9 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : UE.NewArray(UE.BuiltinInt);
   }
   static SetIntValuesByEntity(t, e, r) {
-    var a = new Array();
-    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), a),
-      BlackboardController_1.BlackboardController.SetIntValuesByEntity(t, e, a);
+    var o = new Array();
+    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), o),
+      BlackboardController_1.BlackboardController.SetIntValuesByEntity(t, e, o);
   }
   static GetLongValueByEntity(t, e) {
     t = BlackboardController_1.BlackboardController.GetLongValueByEntity(t, e);
@@ -406,12 +410,12 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : UE.NewArray(UE.BuiltinInt64);
   }
   static SetLongValuesByEntity(t, e, r) {
-    var a = new Array();
-    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), a),
+    var o = new Array();
+    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), o),
       BlackboardController_1.BlackboardController.SetLongValuesByEntity(
         t,
         e,
-        a,
+        o,
       );
   }
   static GetBooleanValueByEntity(t, e) {
@@ -447,12 +451,12 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : UE.NewArray(UE.BuiltinFloat);
   }
   static SetFloatValuesByEntity(t, e, r) {
-    var a = new Array();
-    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), a),
+    var o = new Array();
+    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), o),
       BlackboardController_1.BlackboardController.SetFloatValuesByEntity(
         t,
         e,
-        a,
+        o,
       );
   }
   static GetStringValueByEntity(t, e) {
@@ -475,12 +479,12 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return WorldGlobal_1.WorldGlobal.ToUeStringArray(t, e), e;
   }
   static SetStringValuesByEntity(t, e, r) {
-    var a = new Array();
-    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), a),
+    var o = new Array();
+    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), o),
       BlackboardController_1.BlackboardController.SetStringValuesByEntity(
         t,
         e,
-        a,
+        o,
       );
   }
   static RemoveValueByEntity(t, e) {
@@ -490,7 +494,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return BlackboardController_1.BlackboardController.HasValueByEntity(t, e);
   }
   static GetVectorValueByEntity(t, e) {
-    var r = new UE.Vector(),
+    var r = new UE.VectorDouble(),
       t = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
         t,
         e,
@@ -507,30 +511,30 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static GetVectorValuesByEntity(t, e) {
-    var r = UE.NewArray(UE.Vector),
+    var r = UE.NewArray(UE.VectorDouble),
       t = BlackboardController_1.BlackboardController.GetVectorValuesByEntity(
         t,
         e,
       );
     if (t)
-      for (const o of t) {
-        var a = WorldGlobal_1.WorldGlobal.ToUeVector(o);
-        r.Add(a);
+      for (const a of t) {
+        var o = WorldGlobal_1.WorldGlobal.ToUeVector(a);
+        r.Add(o);
       }
     return r;
   }
   static SetVectorValuesByEntity(t, e, r) {
-    var a = new Array(),
-      o = (0, puerts_1.$unref)(r);
-    for (let t = 0; t < o.Num(); ++t) {
-      var n = o.Get(t),
+    var o = new Array(),
+      a = (0, puerts_1.$unref)(r);
+    for (let t = 0; t < a.Num(); ++t) {
+      var n = a.Get(t),
         n = WorldGlobal_1.WorldGlobal.ToTsVector(n);
-      a.push(n);
+      o.push(n);
     }
     BlackboardController_1.BlackboardController.SetVectorValuesByEntity(
       t,
       e,
-      a,
+      o,
     );
   }
   static GetRotatorValueByEntity(t, e) {
@@ -556,24 +560,24 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
         e,
       );
     if (t)
-      for (const o of t) {
-        var a = WorldGlobal_1.WorldGlobal.ToUeRotator(o);
-        r.Add(a);
+      for (const a of t) {
+        var o = WorldGlobal_1.WorldGlobal.ToUeRotator(a);
+        r.Add(o);
       }
     return r;
   }
   static SetRotatorValuesByEntity(t, e, r) {
-    var a = new Array(),
-      o = (0, puerts_1.$unref)(r);
-    for (let t = 0; t < o.Num(); ++t) {
-      var n = o.Get(t),
+    var o = new Array(),
+      a = (0, puerts_1.$unref)(r);
+    for (let t = 0; t < a.Num(); ++t) {
+      var n = a.Get(t),
         n = WorldGlobal_1.WorldGlobal.ToTsRotator(n);
-      a.push(n);
+      o.push(n);
     }
     BlackboardController_1.BlackboardController.SetRotatorValuesByEntity(
       t,
       e,
-      a,
+      o,
     );
   }
   static GetEntityIdByEntity(t, e) {
@@ -594,9 +598,9 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return WorldGlobal_1.WorldGlobal.ToUeInt32Array(t, e), e;
   }
   static SetEntityIdsByEntity(t, e, r) {
-    var a = new Array();
-    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), a),
-      BlackboardController_1.BlackboardController.SetEntityIdsByEntity(t, e, a);
+    var o = new Array();
+    WorldGlobal_1.WorldGlobal.ToTsArray((0, puerts_1.$unref)(r), o),
+      BlackboardController_1.BlackboardController.SetEntityIdsByEntity(t, e, o);
   }
   static GetBlackboardInfosByEntity(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
@@ -610,7 +614,10 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetDynamicEntity(t) {
     t = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(t);
-    if (t?.Valid) return CharacterController_1.CharacterController.GetActor(t);
+    if (t?.Valid)
+      return ControllerHolder_1.ControllerHolder.CharacterController.GetActor(
+        t,
+      );
   }
   static GetWorldOwner() {
     return ModelManager_1.ModelManager.CreatureModel.GetWorldOwner();
@@ -653,10 +660,8 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : 0;
   }
   static GetOwnerIdByEntity(t) {
-    var t = EntitySystem_1.EntitySystem.Get(t);
-    return t?.Valid && (t = t.GetComponent(0)).GetOwnerId()
-      ? t.GetOwnerId()
-      : zero;
+    t = EntitySystem_1.EntitySystem.Get(t);
+    return (t?.Valid && t.GetComponent(0).GetOwnerId()) || zero;
   }
   static JumpToMarkLevelSequence(t, e) {
     UE.KismetSystemLibrary.IsValid(t) &&
@@ -731,24 +736,24 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetCurrentWeatherState() {
     return 0;
   }
-  static ChangeEntityState(t, e, r, a) {
+  static ChangeEntityState(t, e, r, o) {
     t = { EntityId: t, State: e };
     LevelGeneralNetworks_1.LevelGeneralNetworks.RequestChangeEntityState(
       t,
-      LevelGeneralContextDefine_1.EntityContext.Create(a),
+      LevelGeneralContextDefine_1.EntityContext.Create(o),
     );
   }
-  static TestSpawnTemplateEntityPush(t, e, r, a, o) {
+  static TestSpawnTemplateEntityPush(t, e, r, o, a) {
     var n = Protocol_1.Aki.Protocol.hes.create();
     (n.s5n = MathUtils_1.MathUtils.NumberToLong(Number(t))),
       (n.F6n = r),
       (n.v9n = e),
-      (n.l8n = WorldGlobal_1.WorldGlobal.ToTsVector(a.GetLocation())),
+      (n.l8n = WorldGlobal_1.WorldGlobal.ToTsVector(o.GetLocation())),
       (n._8n = WorldGlobal_1.WorldGlobal.ToTsRotator(
-        a.GetRotation().Rotator(),
+        o.GetRotation().Rotator(),
       )),
-      (n.mKn = o),
-      Net_1.Net.Send(16365, n);
+      (n.mKn = a),
+      Net_1.Net.Send(23336, n);
   }
   static GetTestSpawnTemplateEntityString() {
     var t = UE.NewArray(UE.BuiltinString);
@@ -771,22 +776,22 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       UE.BlueprintPathsLibrary.FileExists(e) &&
         UE.BlueprintPathsLibrary.FileExists(r))
     ) {
-      var a = new Map(),
-        o = (0, puerts_1.$ref)(""),
-        o =
-          (UE.KuroStaticLibrary.LoadFileToString(o, e),
-          (o = (0, puerts_1.$unref)(o)),
-          JSON.parse(o));
-      for (const i of o.Templates) a.set(i.BlueprintType, i.Id);
+      var o = new Map(),
+        a = (0, puerts_1.$ref)(""),
+        a =
+          (UE.KuroStaticLibrary.LoadFileToString(a, e),
+          (a = (0, puerts_1.$unref)(a)),
+          JSON.parse(a));
+      for (const i of a.Templates) o.set(i.BlueprintType, i.Id);
       var n,
         l,
-        o = (0, puerts_1.$ref)(""),
-        o =
-          (UE.KuroStaticLibrary.LoadFileToString(o, r),
-          (o = (0, puerts_1.$unref)(o)),
-          JSON.parse(o));
-      for ([n, l] of Object.entries(o.BlueprintConfig))
-        t.Add(l.Name + "|" + a.get(n));
+        a = (0, puerts_1.$ref)(""),
+        a =
+          (UE.KuroStaticLibrary.LoadFileToString(a, r),
+          (a = (0, puerts_1.$unref)(a)),
+          JSON.parse(a));
+      for ([n, l] of Object.entries(a.BlueprintConfig))
+        t.Add(l.Name + "|" + o.get(n));
     } else
       for (const s of TemplateConfigAll_1.configTemplateConfigAll.GetConfigList())
         t.Add(s.Name + "|" + s.Id);
@@ -795,7 +800,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetEntityDebugInfoManager() {
     return TsEntityDebugInfoManager_1.default.GetInstance();
   }
-  static ChangeSubLevel(t, e, r, a, o) {
+  static ChangeSubLevel(t, e, r, o, a) {
     var t = (0, puerts_1.$unref)(t),
       e = (0, puerts_1.$unref)(e),
       n = new Array(),
@@ -803,39 +808,39 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       t =
         (WorldGlobal_1.WorldGlobal.ToTsArray(t, n),
         WorldGlobal_1.WorldGlobal.ToTsArray(e, l),
-        Vector_1.Vector.Create(a));
-    ControllerHolder_1.ControllerHolder.GameModeController.ChangeSubLevel(
+        Vector_1.Vector.Create(o));
+    ControllerHolder_1.ControllerHolder.SubLevelController.ChangeSubLevel(
       n,
       l,
       r,
       t,
-      o,
+      a,
     );
   }
   static GetActorByCreatureDataId(t) {
     t = ModelManager_1.ModelManager.CreatureModel?.GetEntity(Number(t));
     if (t?.IsInit) return t.Entity.GetComponent(1)?.Owner;
   }
-  static SetEntityLocation(t, e, r = !0, a = !1) {
+  static SetEntityLocation(t, e, r = !0, o = !1) {
     t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(1);
     t &&
-      (a
+      (o
         ? t.SetActorLocation(e, "SetEntityLocation", r)
-        : ((a = Vector_1.Vector.Create(e)).SubtractionEqual(
+        : ((o = Vector_1.Vector.Create(e)).SubtractionEqual(
             t.ActorLocationProxy,
           ),
-          t.AddActorWorldOffset(a.ToUeVector(), "SetEntityLocation", r)));
+          t.AddActorWorldOffset(o.ToUeVector(), "SetEntityLocation", r)));
   }
   static SetEntityRotation(t, e, r = !0) {
     t = EntitySystem_1.EntitySystem.Get(t);
     t && t.GetComponent(1)?.SetActorRotation(e, "SetEntityRotation", r);
   }
-  static SetEntityLocationAndRotation(t, e, r, a = !1) {
+  static SetEntityLocationAndRotation(t, e, r, o = !1) {
     t = EntitySystem_1.EntitySystem.Get(t);
     t &&
       t
         .GetComponent(1)
-        ?.SetActorLocationAndRotation(e, r, "SetEntityLocationAndRotation", a);
+        ?.SetActorLocationAndRotation(e, r, "SetEntityLocationAndRotation", o);
   }
   static GetActorByPbDataId(t) {
     t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t);
@@ -848,14 +853,14 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetActorsByPbDataIdArray(t) {
     var e,
       r = (0, puerts_1.$unref)(t),
-      a = UE.NewArray(UE.Actor);
-    for (const o of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
-      o?.IsInit &&
-        (e = o.Entity.GetComponent(0).GetPbDataId()) &&
+      o = UE.NewArray(UE.Actor);
+    for (const a of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
+      a?.IsInit &&
+        (e = a.Entity.GetComponent(0).GetPbDataId()) &&
         r.Contains(e) &&
-        (e = o.Entity.GetComponent(1)) &&
-        a.Add(e.Owner);
-    return a;
+        (e = a.Entity.GetComponent(1)) &&
+        o.Add(e.Owner);
+    return o;
   }
   static MonsterBoomRequest(t, e) {
     ControllerHolder_1.ControllerHolder.CreatureController.MonsterBoomRequest(
@@ -872,12 +877,12 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ? WorldGlobal_1.WorldGlobal.ToUeVector(
           t.GetComponent(0).GetInitLocation(),
         )
-      : new UE.Vector();
+      : new UE.VectorDouble();
   }
   static DisableCreatureActor(t, e, r) {
-    var a;
+    var o;
     return e?.IsValid()
-      ? ((a = `[蓝图:${e.GetName()}] ` + r),
+      ? ((o = `[蓝图:${e.GetName()}] ` + r),
         t?.IsValid()
           ? UE.KuroStaticLibrary.IsImplementInterface(
               t.GetClass(),
@@ -886,13 +891,13 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
             ? ((t = t),
               EntitySystem_1.EntitySystem.Get(t.GetEntityId())
                 .GetComponent(1)
-                .DisableActor(a))
+                .DisableActor(o))
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Entity",
                   3,
                   "Actor未实现接口CreatureInterface",
-                  ["Reason", a],
+                  ["Reason", o],
                 ),
               -1)
           : (Log_1.Log.CheckError() &&
@@ -901,7 +906,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 3,
                 "actor无效, DisableCreatureActor失败。",
                 ["CallObject", e?.GetName()],
-                ["Reason", a],
+                ["Reason", o],
               ),
             -1))
       : (Log_1.Log.CheckError() &&
@@ -946,9 +951,9 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
         !1);
   }
   static DisableCreatureCollision(t, e, r) {
-    var a;
+    var o;
     return e?.IsValid()
-      ? ((a = `[蓝图:${e.GetName()}] ` + r),
+      ? ((o = `[蓝图:${e.GetName()}] ` + r),
         t?.IsValid()
           ? UE.KuroStaticLibrary.IsImplementInterface(
               t.GetClass(),
@@ -957,13 +962,13 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
             ? ((t = t),
               EntitySystem_1.EntitySystem.Get(t.GetEntityId())
                 .GetComponent(1)
-                .DisableCollision(a))
+                .DisableCollision(o))
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Entity",
                   3,
                   "Actor未实现接口CreatureInterface",
-                  ["Reason", a],
+                  ["Reason", o],
                 ),
               -1)
           : (Log_1.Log.CheckError() &&
@@ -972,7 +977,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 3,
                 "actor无效, DisableCreatureCollision失败。",
                 ["CallObject", e?.GetName()],
-                ["Reason", a],
+                ["Reason", o],
               ),
             -1))
       : (Log_1.Log.CheckError() &&
@@ -1033,7 +1038,10 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     for (const r of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
       r.IsControl() &&
         (t = r.EntityHandle)?.Valid &&
-        (t = CharacterController_1.CharacterController.GetActor(t)) &&
+        (t =
+          ControllerHolder_1.ControllerHolder.CharacterController.GetActor(
+            t,
+          )) &&
         e.Add(t);
     return e;
   }
@@ -1049,11 +1057,11 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static ShowCharacterCollision(t, e) {
     e = EntitySystem_1.EntitySystem.Get(e);
-    e && (e.GetComponent(20).EnableCollisionDebugDraw = t);
+    e && (e.GetComponent(22).EnableCollisionDebugDraw = t);
   }
   static GetEnableCollisionDebug(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
-    return !!t && t.GetComponent(20).EnableCollisionDebugDraw;
+    return !!t && t.GetComponent(22).EnableCollisionDebugDraw;
   }
   static ChangeRole(t) {}
   static ChangeRoleInExitSkill(t, e) {}
@@ -1085,7 +1093,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       t,
     );
     var e = Protocol_1.Aki.Protocol.GCs.create();
-    (e.dKn = t), Net_1.Net.Send(15359, e);
+    (e.dKn = t), Net_1.Net.Send(26819, e);
   }
   static GetTimeDilation() {
     return GlobalData_1.GlobalData.GameInstance
@@ -1096,23 +1104,23 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetEntitiesInRange(t, e) {
     var r = [],
-      a = [];
+      o = [];
     ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRange(t, 62, r);
     for (const n of r) {
-      var o = n.Entity.GetComponent(0).GetEntityCamp();
-      CampUtils_1.CampUtils.GetCampRelationship(o, 0) === e &&
-        a.push(n.Entity.Id);
+      var a = n.Entity.GetComponent(0).GetEntityCamp();
+      CampUtils_1.CampUtils.GetCampRelationship(a, 0) === e &&
+        o.push(n.Entity.Id);
     }
     t = UE.NewArray(UE.BuiltinInt);
-    return WorldGlobal_1.WorldGlobal.ToUeInt32Array(a, t), t;
+    return WorldGlobal_1.WorldGlobal.ToUeInt32Array(o, t), t;
   }
-  static AttachToActor(t, e, r, a, o, n, l, i, s, c, _) {
+  static AttachToActor(t, e, r, o, a, n, l, i, s, c, _) {
     return t?.IsValid()
-      ? ((t = `[蓝图:${t.GetName()}] ` + o),
+      ? ((t = `[蓝图:${t.GetName()}] ` + a),
         ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
           e,
           r,
-          a,
+          o,
           t,
           n,
           l,
@@ -1124,17 +1132,17 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Entity", 3, "callObject无效, AttachToActor失败。", [
             "Reason",
-            o,
+            a,
           ]),
         !1);
   }
-  static AttachToComponent(t, e, r, a, o, n, l, i, s, c, _) {
+  static AttachToComponent(t, e, r, o, a, n, l, i, s, c, _) {
     return t?.IsValid()
-      ? ((t = `[蓝图:${t.GetName()}] ` + o),
+      ? ((t = `[蓝图:${t.GetName()}] ` + a),
         ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToComponent(
           e,
           r,
-          a,
+          o,
           t,
           n,
           l,
@@ -1146,25 +1154,25 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Entity", 3, "callObject无效, AttachToActor失败。", [
             "Reason",
-            o,
+            a,
           ]),
         !1);
   }
-  static DetachActor(t, e, r, a, o, n, l) {
+  static DetachActor(t, e, r, o, a, n, l) {
     return t?.IsValid()
-      ? ((t = `[蓝图:${t.GetName()}] ` + a),
+      ? ((t = `[蓝图:${t.GetName()}] ` + o),
         ControllerHolder_1.ControllerHolder.AttachToActorController.DetachActor(
           e,
           r,
           t,
-          o,
+          a,
           n,
           l,
         ))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Entity", 3, "callObject无效, DetachActor失败。", [
             "Reason",
-            a,
+            o,
           ]),
         !1);
   }
@@ -1174,7 +1182,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
         ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
           t,
         )
-          ?.GetComponent(206)
+          ?.GetComponent(221)
           ?.GetFollower()?.Id;
     return t || 0;
   }
@@ -1184,7 +1192,7 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
         t,
       )
-        ?.GetComponent(206)
+        ?.GetComponent(221)
         ?.IsFollowerEnable() ?? !1
     );
   }
@@ -1193,18 +1201,11 @@ class WorldFunctionLibrary extends UE.BlueprintFunctionLibrary {
     ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
       e,
     )
-      ?.GetComponent(206)
+      ?.GetComponent(221)
       ?.SetFollowerEnable(t);
   }
   static IsPlayerFollowerNeedInput(t, e) {
-    var r = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
-    return (
-      ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
-        r,
-      )
-        ?.GetComponent(206)
-        ?.IsFollowerNeedInput(t, e) ?? !1
-    );
+    return !1;
   }
   static RegisterToBpActorController(t, e) {
     ControllerHolder_1.ControllerHolder.BpActorController.RegisterBpActor(t, e);

@@ -38,7 +38,7 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
                 CommonParamById_1.configCommonParamById.GetIntConfig(
                   "MowingMarkType",
                 ),
-              OpenAreaId: 0,
+              OpenFogId: 0,
             }),
             WorldMapController_1.WorldMapController.OpenView(2, !1, i),
             this.D2e.ReadNewInstance())

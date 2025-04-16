@@ -10,7 +10,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
+  GameSettingsDefine_1 = require("../../GameSettings/GameSettingsDefine"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
@@ -214,12 +214,10 @@ class AdviceModel extends ModelBase_1.ModelBase {
       this.RandomSecondSentenceWord();
   }
   SetAdviceShowSetting(e) {
-    this.H9e = e;
-    e = this.H9e ? 1 : 0;
-    GameSettingsManager_1.GameSettingsManager.SetApplySave(59, e),
+    (this.H9e = e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshMenuSetting,
-        59,
+        GameSettingsDefine_1.EFunction.ADVICESETTING,
       );
   }
   GetAdviceShowSetting() {
@@ -230,38 +228,38 @@ class AdviceModel extends ModelBase_1.ModelBase {
     return this.Q9e()
       ? ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         ? (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Advice", 28, "IsInInstance"),
+            Log_1.Log.Debug("Advice", 27, "IsInInstance"),
           !1)
         : ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
           ? AdviceController_1.AdviceController.CheckIfStandAndInValidActor()
             ? !(
                 (e =
                   ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-                    190,
+                    203,
                   )).HasTag(1996802261) ||
                 (!e.HasTag(248240472) &&
                   (Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug("Advice", 28, "行为状态.动作状态.站立Tag"),
+                    Log_1.Log.Debug("Advice", 27, "行为状态.动作状态.站立Tag"),
                   1))
               )
             : (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Advice", 28, "CheckIfStandAndInValidActor"),
+                Log_1.Log.Debug("Advice", 27, "CheckIfStandAndInValidActor"),
               !1)
           : (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Advice", 28, "IsMyWorld"),
+              Log_1.Log.Debug("Advice", 27, "IsMyWorld"),
             !1)
       : (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Advice", 28, "CheckIfSystemOpen"),
+          Log_1.Log.Debug("Advice", 27, "CheckIfSystemOpen"),
         !1);
   }
   GetCreateConditionState() {
     return AdviceController_1.AdviceController.CheckBehindAdviceActor()
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Advice", 28, "CheckBehindAdviceActor"),
+          Log_1.Log.Debug("Advice", 27, "CheckBehindAdviceActor"),
         !1)
       : AdviceController_1.AdviceController.CheckInInValidArea()
         ? (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Advice", 28, "CheckInInValidArea"),
+            Log_1.Log.Debug("Advice", 27, "CheckInInValidArea"),
           !1)
         : !this.CheckIfMaxAdvice();
   }
@@ -273,7 +271,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
     return (
       ModelManager_1.ModelManager.AdviceModel.GetAdviceArray().length >= e &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Advice", 28, "AdviceCreateLimit"),
+        Log_1.Log.Debug("Advice", 27, "AdviceCreateLimit"),
       !0)
     );
   }
@@ -286,7 +284,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
           ? AdviceController_1.AdviceController.CheckIfStandAndInValidActor()
             ? (e =
                 ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-                  190,
+                  203,
                 )).HasTag(1996802261)
               ? "AdviceCannotOpenOnBattle"
               : e.HasTag(248240472)

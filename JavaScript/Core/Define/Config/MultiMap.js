@@ -15,6 +15,9 @@ class MultiMap {
   get MapId() {
     return this.mapid();
   }
+  get GravityFlip() {
+    return this.gravityflip();
+  }
   get Floor() {
     return this.floor();
   }
@@ -76,49 +79,61 @@ class MultiMap {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  floor() {
+  gravityflip() {
     var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.readInt32(this.z7 + t) : 1;
+  }
+  floor() {
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetMaptilepathAt(t) {
     return this.maptilepath(t);
   }
   maptilepath(t, i) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   maptilepathLength() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetMinimaptilepathAt(t) {
     return this.minimaptilepath(t);
   }
   minimaptilepath(t, i) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   minimaptilepathLength() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetAreaAt(t) {
     return this.area(t);
   }
   area(t) {
-    var i = this.J7.__offset(this.z7, 16);
+    var i = this.J7.__offset(this.z7, 18);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   areaLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   areaArray() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -131,15 +146,15 @@ class MultiMap {
     return this.mark(t);
   }
   mark(t) {
-    var i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   markLength() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   markArray() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -149,16 +164,28 @@ class MultiMap {
       : null;
   }
   conditionid() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   floorname(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   flooricon(t) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 26),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.MultiMap = MultiMap;

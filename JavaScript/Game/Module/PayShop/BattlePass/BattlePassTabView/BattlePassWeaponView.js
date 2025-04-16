@@ -5,6 +5,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   WeaponController_1 = require("../../../../Module/Weapon/WeaponController"),
   UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
+  WeaponSkinDefine_1 = require("../../../Skin/Tab/Weapon/WeaponSkinDefine"),
   WeaponDetailTipsComponent_1 = require("../../../Weapon/WeaponDetailTipsComponent"),
   WeaponListComponent_1 = require("../../../Weapon/WeaponListComponent");
 class BattlePassWeaponView extends UiTabViewBase_1.UiTabViewBase {
@@ -14,17 +15,18 @@ class BattlePassWeaponView extends UiTabViewBase_1.UiTabViewBase {
       (this.G2i = void 0),
       (this.N2i = void 0),
       (this.O2i = void 0),
-      (this.Mya = 1),
+      (this.Eya = 1),
       (this.k2i = () => {
         let e = this.G2i.GetCurSelectedData();
-        var t,
-          i = e.GetFullLevelWeaponData();
-        void 0 !== i && ((t = 1 === this.Mya), (e = t ? i : e)),
+        var i,
+          t = e.GetFullLevelWeaponData();
+        void 0 !== t && ((i = 1 === this.Eya), (e = i ? t : e)),
           this.q2i.UpdateComponent(e),
           WeaponController_1.WeaponController.OnSelectedWeaponChange(
             e,
             this.N2i,
             this.O2i,
+            WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID,
             !0,
           );
       });
@@ -59,16 +61,17 @@ class BattlePassWeaponView extends UiTabViewBase_1.UiTabViewBase {
   OnClickFullLevelToggle(e) {
     this.RefreshToggleState(e);
   }
-  RefreshToggleState(t) {
-    if (t !== this.Mya && ((this.Mya = t), this.IsShowOrShowing)) {
+  RefreshToggleState(i) {
+    if (i !== this.Eya && ((this.Eya = i), this.IsShowOrShowing)) {
       let e = this.G2i.GetCurSelectedData();
-      var i = e.GetFullLevelWeaponData();
-      1 === t && i && (e = i),
+      var t = e.GetFullLevelWeaponData();
+      1 === i && t && (e = t),
         this.q2i.UpdateComponent(e),
         WeaponController_1.WeaponController.OnSelectedWeaponChange(
           e,
           this.N2i,
           this.O2i,
+          WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID,
           !0,
         );
     }

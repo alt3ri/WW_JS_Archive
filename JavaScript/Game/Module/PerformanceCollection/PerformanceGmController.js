@@ -51,7 +51,7 @@ class PerformanceGmController {
         ((o = o.Entity.GetComponent(0).GetCreatureDataId()),
         ((t = new Protocol_1.Aki.Protocol.Gzn()).VVn = 0),
         (t.P8n = "@GmRemoveMonster " + o),
-        Net_1.Net.Call(29319, t, () => {}));
+        Net_1.Net.Call(24668, t, () => {}));
     }
     return !0;
   }
@@ -94,7 +94,7 @@ class PerformanceGmController {
     var e = Global_1.Global.BaseCharacter;
     return (
       !!e &&
-      !!(e = e.CharacterActorComponent.Entity.GetComponent(160)) &&
+      !!(e = e.CharacterActorComponent.Entity.GetComponent(172)) &&
       (e.AddBuff(CharacterBuffIds_1.buffId.IgnoreHateBuff, {
         InstigatorId: e.CreatureDataId,
         Reason: "IgnoreBattle",
@@ -121,7 +121,7 @@ class PerformanceGmController {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Performance",
-          36,
+          35,
           "捕捉WorldEntityName " +
             PerformanceController_1.PerformanceController
               .IsOpenCatchWorldEntity,
@@ -130,8 +130,8 @@ class PerformanceGmController {
   static EntityPerformanceTestSingle(e) {
     this.IgnoreBattle() ||
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 36, "忽略战斗失效"));
-    var r = Global_1.Global.BaseCharacter.GetTransform();
+        Log_1.Log.Info("Performance", 35, "忽略战斗失效"));
+    var r = Global_1.Global.BaseCharacter.D_GetTransform();
     const t = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
       Number(e[0]),
     );
@@ -141,6 +141,7 @@ class PerformanceGmController {
       PerformanceController_1.PerformanceController.SetEntityTickPerformanceTest(
         !0,
       );
+    var o = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(r);
     for (let e = 0; e < ENTITY_PERFORMANCE_TEST_NUM; e++)
       WorldFunctionLibrary_1.default.TestSpawnTemplateEntityPush(
         BigInt(
@@ -148,7 +149,7 @@ class PerformanceGmController {
         ),
         t.Id,
         1,
-        r,
+        o,
         0,
       );
     e = 10 * TimeUtil_1.TimeUtil.InverseMillisecond;
@@ -158,7 +159,7 @@ class PerformanceGmController {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Performance",
-            36,
+            35,
             "EntityPerformanceTestSingle",
             ["CId", t.Id],
             ["Name", t.Name],
@@ -201,7 +202,7 @@ class PerformanceGmController {
         ),
         ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
     for (let e = r.length - 1; 0 <= e; e--)
-      r[e].Entity.GetComponent(102)?.SetTakeOverTick(!0);
+      r[e].Entity.GetComponent(112)?.SetTakeOverTick(!0);
     return !0;
   }
   static GetEntityTemplateList(e) {
@@ -214,7 +215,7 @@ class PerformanceGmController {
       o.BlueprintType.includes(r) && t.push(o.Id);
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 36, "实体模板id列表", ["list", t]),
+        Log_1.Log.Info("Performance", 35, "实体模板id列表", ["list", t]),
       !0
     );
   }

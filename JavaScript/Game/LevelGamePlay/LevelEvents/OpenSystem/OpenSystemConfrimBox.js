@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemConfrimBox = void 0);
 const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
-  ConfirmBoxController_1 = require("../../../Module/ConfirmBox/ConfirmBoxController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ConfirmBoxDefine_1 = require("../../../Module/ConfirmBox/ConfirmBoxDefine"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemConfrimBox extends OpenSystemBase_1.OpenSystemBase {
@@ -13,11 +13,16 @@ class OpenSystemConfrimBox extends OpenSystemBase_1.OpenSystemBase {
       (e.FinishOpenFunction = (e) => {
         r.SetResult(e);
       }),
-      (e = ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(e));
+      (e =
+        ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+          e,
+        ));
     return !!e && r.Promise;
   }
   GetViewName(e, o) {
-    return ConfirmBoxController_1.ConfirmBoxController.GetUiViewName(e.BoardId);
+    return ControllerHolder_1.ControllerHolder.ConfirmBoxController.GetUiViewName(
+      e.BoardId,
+    );
   }
 }
 exports.OpenSystemConfrimBox = OpenSystemConfrimBox;

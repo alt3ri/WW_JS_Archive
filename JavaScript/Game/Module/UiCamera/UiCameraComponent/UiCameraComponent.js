@@ -31,7 +31,7 @@ class UiCameraComponent {
   Activate() {
     this.ZRo ||
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCamera", 8, "激活相机组件", [
+        Log_1.Log.Info("UiCamera", 58, "激活相机组件", [
           "Name",
           this.constructor.name,
         ]),
@@ -42,7 +42,7 @@ class UiCameraComponent {
   Deactivate() {
     this.ZRo &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCamera", 8, "休眠相机组件", [
+        Log_1.Log.Info("UiCamera", 58, "休眠相机组件", [
           "Name",
           this.constructor.name,
         ]),

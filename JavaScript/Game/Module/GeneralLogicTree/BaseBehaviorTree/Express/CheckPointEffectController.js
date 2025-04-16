@@ -48,10 +48,10 @@ class CheckPointEffectController {
     StringUtils_1.StringUtils.IsBlank(e) ||
       EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
-        new UE.Transform(
+        new UE.TransformDouble(
           Rotator_1.Rotator.ZeroRotator,
           t.EffectSpawnPosition.ToUeVector(),
-          Vector_1.Vector.OneVector,
+          Vector_1.Vector.OneVectorDouble,
         ),
         e,
         "[CheckPointEffectController.CreateTrackEffect]",
@@ -63,7 +63,7 @@ class CheckPointEffectController {
             ? Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "GeneralLogicTree",
-                19,
+                18,
                 "GeneralLogicTree:CheckPointEffectController.SpawnEffect 错误",
                 ["result", t],
               )

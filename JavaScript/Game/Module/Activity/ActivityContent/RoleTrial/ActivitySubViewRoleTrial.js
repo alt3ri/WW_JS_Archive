@@ -87,7 +87,11 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
             (this.ActivityBaseData.SetRoleTrialState(3),
             ActivityRoleTrialController_1.ActivityRoleTrialController.EnterRoleTrialDungeonDirectly(
               i,
-            ));
+              this.ActivityBaseData.Id,
+              this.CurrentRoleId,
+            ).then((i) => {
+              i || this.ActivityBaseData.SetRoleTrialState(1);
+            }));
       });
   }
   OnRegisterComponent() {
@@ -148,26 +152,26 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
       (this.iFe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnStart() {
-    var i = this.ActivityBaseData.LocalConfig,
-      i =
+    var t = this.ActivityBaseData.LocalConfig,
+      t =
         (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
         this.LNe.SetSubTitleVisible(
-          !StringUtils_1.StringUtils.IsEmpty(i?.DescTheme),
+          !StringUtils_1.StringUtils.IsEmpty(t?.DescTheme),
         ),
-        i?.DescTheme && this.LNe.SetSubTitleByTextId(i.DescTheme),
+        t?.DescTheme && this.LNe.SetSubTitleByTextId(t.DescTheme),
         this.FNe(),
         this.UNe.SetTitleByTextId("CollectActivity_reward"),
         this.UNe.InitGridLayout(this.W2e),
         this.ANe.FunctionButton.SetFunction(this.hFe),
         this.ActivityBaseData.RoleIdList);
-    if (0 !== i.length) {
-      const t =
-        0 === this.ActivityBaseData.CurrentRoleId
-          ? i[0]
-          : this.ActivityBaseData.CurrentRoleId;
-      this.tFe.RefreshByData(i, () => {
-        this.rFe(t);
-      });
+    if (0 !== t.length) {
+      let i = t[0];
+      this.ActivityBaseData.CurrentRoleId &&
+        t.includes(this.ActivityBaseData.CurrentRoleId) &&
+        (i = this.ActivityBaseData.CurrentRoleId),
+        this.tFe.RefreshByData(t, () => {
+          this.rFe(i);
+        });
     }
   }
   OnBeforeShow() {}
@@ -223,31 +227,35 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
   Ake(i) {
     this.lFe(i);
     var t =
-      ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
-        i,
-      );
-    let e = t.Introduction;
-    StringUtils_1.StringUtils.IsEmpty(e) &&
-      (e = this.ActivityBaseData.LocalConfig.Desc);
-    var s = !StringUtils_1.StringUtils.IsEmpty(e),
-      s =
-        (this.DNe.SetContentVisible(s),
-        s && this.DNe.SetContentByTextId(e),
-        this.j2e.Update(i),
+        ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
+          i,
+        ),
+      e =
+        ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialRoleConfigByRoleId(
+          t.RoleId,
+        );
+    let s = e.Introduction;
+    StringUtils_1.StringUtils.IsEmpty(s) &&
+      (s = this.ActivityBaseData.LocalConfig.Desc);
+    var r = !StringUtils_1.StringUtils.IsEmpty(s),
+      r =
+        (this.DNe.SetContentVisible(r),
+        r && this.DNe.SetContentByTextId(s),
+        this.j2e.Update(t.RoleId),
         this.GetTexture(1)),
-      s = (this.SetTextureShowUntilLoaded(t.RoleStand, s), this.GetTexture(12)),
-      r = this.GetTexture(13),
-      s =
-        (t.RoleStand2 &&
-          (this.SetTextureShowUntilLoaded(t.RoleStand2, s),
-          this.SetTextureShowUntilLoaded(t.RoleStand2, r)),
-        this.jja(t.UiConfigId),
-        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i));
-    s &&
-      ((r = s.PartyId),
-      (t = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(r)),
-      StringUtils_1.StringUtils.IsEmpty(t?.Logo) ||
-        ((s = this.GetTexture(0)), this.SetTextureByPath(t.Logo, s))),
+      r = (this.SetTextureShowUntilLoaded(e.RoleStand, r), this.GetTexture(12)),
+      h = this.GetTexture(13),
+      r =
+        (e.RoleStand2 &&
+          (this.SetTextureShowUntilLoaded(e.RoleStand2, r),
+          this.SetTextureShowUntilLoaded(e.RoleStand2, h)),
+        this.h$a(e.UiConfigId),
+        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t.RoleId));
+    r &&
+      ((h = r.PartyId),
+      (e = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(h)),
+      StringUtils_1.StringUtils.IsEmpty(e?.Logo) ||
+        ((t = this.GetTexture(0)), this.SetTextureByPath(e.Logo, t))),
       this.jqe(i);
   }
   sFe() {
@@ -255,7 +263,7 @@ class ActivitySubViewRoleTrial extends ActivitySubViewBase_1.ActivitySubViewBase
       ? this.iFe.ReplaySequenceByKey("Switch")
       : this.iFe.PlayLevelSequenceByName("Switch", !1);
   }
-  jja(i) {
+  h$a(i) {
     i =
       ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialUiConfigById(
         i,
@@ -323,17 +331,20 @@ class RoleItem extends GridProxyAbstract_1.GridProxyAbstract {
           .CurrentActivityId,
       );
     i &&
-      ((t =
+      ((e =
         ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
           this.RoleId,
         )),
-      (e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
-        t.TrialRoleId,
+      (t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+        e.TrialRoleId,
       )),
-      t.RoleIcon &&
-        (this.SetTextureShowUntilLoaded(t.RoleIcon, this.GetTexture(3)),
-        this.SetTextureShowUntilLoaded(t.RoleIcon, this.GetTexture(5))),
-      this.mFe(e.GetRoleConfig().QualityId),
+      (e =
+        ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialRoleConfigByRoleId(
+          e.RoleId,
+        )).RoleIcon &&
+        (this.SetTextureShowUntilLoaded(e.RoleIcon, this.GetTexture(3)),
+        this.SetTextureShowUntilLoaded(e.RoleIcon, this.GetTexture(5))),
+      this.mFe(t.GetRoleConfig().QualityId),
       this.BNe(i));
   }
   mFe(i) {

@@ -17,23 +17,23 @@ class VisibleAnimMachine {
             : 2 === this.State && (this.State = 1);
       });
   }
-  InitCallback(i, s, t) {
+  InitCallback(i, t, s) {
     (this.VisibleCallback = i),
-      (this.PlayAnimCallback = s),
-      (this.StopAnimCallback = t);
+      (this.PlayAnimCallback = t),
+      (this.StopAnimCallback = s);
   }
   InitVisible(i) {
     (this.Visible = i), (this.State = i ? 1 : 0);
   }
-  SetVisible(i, s) {
+  SetVisible(i, t) {
     this.Visible !== i &&
       ((this.Visible = i),
       this.StopAnimCallback(!i),
-      0 < s
+      0 < t
         ? (i ? (this.VisibleCallback(!0), (this.State = 2)) : (this.State = 3),
           this.PlayAnimCallback(i),
           this.BCe(),
-          (this._Ct = TimerSystem_1.TimerSystem.Delay(this.uCt, s)))
+          (this._Ct = TimerSystem_1.TimerSystem.Delay(this.uCt, t)))
         : ((this.State = i ? 1 : 0), this.VisibleCallback(i)));
   }
   ForcePlayShowAnim(i) {
@@ -46,6 +46,12 @@ class VisibleAnimMachine {
   }
   Reset() {
     this.BCe();
+  }
+  Deactivate() {
+    this.BCe(),
+      3 === this.State
+        ? this.StopAnimCallback(!1)
+        : 2 === this.State && this.StopAnimCallback(!0);
   }
   BCe() {
     this._Ct &&

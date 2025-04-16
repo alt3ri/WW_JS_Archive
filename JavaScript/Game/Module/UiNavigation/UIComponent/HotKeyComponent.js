@@ -26,6 +26,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       (this.HotKeyTextId = void 0),
       (this.w7t = void 0),
       (this.aqo = void 0),
+      (this.Xnl = void 0),
       (this.Dut = (t) => {
         var i = this.GetActionName();
         StringUtils_1.StringUtils.IsEmpty(i) || i !== t || this.hqo();
@@ -101,7 +102,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiNavigationHotKey",
-        11,
+        10,
         "[LogicMode]模式设置",
         ["配置id", this.HotKeyMapIndex],
         ["Tag", this.GetBindButtonTag()],
@@ -152,7 +153,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "UiNavigationHotKey",
-                  11,
+                  10,
                   "仅键鼠透明",
                   ["配置id", this.HotKeyMapIndex],
                   ["Tag", this.GetBindButtonTag()],
@@ -165,7 +166,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
                   Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "UiNavigationHotKey",
-                    11,
+                    10,
                     "仅手柄透明",
                     ["配置id", this.HotKeyMapIndex],
                     ["Tag", this.GetBindButtonTag()],
@@ -179,7 +180,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "UiNavigationHotKey",
-                  11,
+                  10,
                   "键盘和手柄透明",
                   ["配置id", this.HotKeyMapIndex],
                   ["Tag", this.GetBindButtonTag()],
@@ -191,7 +192,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
       this.gqo();
   }
   RegisterMe() {
-    this.dde(), this.hqo();
+    this.dde(), this.gqo(!0), this.hqo();
   }
   UnRegisterMe() {
     this.Cde(), this.OnUnRegisterMe(), this.fqo(this.GetAxisName());
@@ -217,7 +218,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiNavigationHotKey",
-            11,
+            10,
             "[LogicMode]当前设置可见性模式",
             ["配置id", this.HotKeyMapIndex],
             ["this.LogicMode", MathUtils_1.MathUtils.DecimalToBinary(this.sqo)],
@@ -246,8 +247,9 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
   }
   RefreshMode() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiNavigationHotKey", 11, "切换了控制器,强制刷新表现"),
-      this.gqo(!0);
+      Log_1.Log.Info("UiNavigationHotKey", 10, "切换了控制器,强制刷新表现"),
+      this.gqo(!0),
+      this.CurComponent?.RefreshPcAndGamepad();
   }
   Press() {
     this.cqo() && ((this.IsPress = !0), this.OnPress(this.GetHotKeyConfig()));
@@ -305,6 +307,12 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
   SetHotKeyType(t) {
     this.CurComponent.SetHotKeyType(t);
   }
+  SetLinkComponent(t) {
+    this.Xnl = t;
+  }
+  IsLinkListener(t) {
+    return !this.Xnl || (!!t && (this.Xnl.ActorList?.Contains(t) ?? !1));
+  }
   Clear() {
     this.OnClear();
   }
@@ -314,7 +322,7 @@ class HotKeyComponent extends UiPanelBase_1.UiPanelBase {
   OnUnRegisterMe() {}
   OnClear() {}
   OnIsOccupancyFightInput() {
-    return !0;
+    return this.nqo?.IsOccupancyFightInput ?? !0;
   }
   OnPress(t) {}
   OnRelease(t) {}

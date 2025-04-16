@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneInteractionModel = void 0);
 const UE = require("ue"),
+  Stats_1 = require("../../../../Core/Common/Stats"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -9,7 +10,11 @@ const UE = require("ue"),
   CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines");
 class SceneInteractionModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Fsr = !1);
+    super(...arguments),
+      (this.Fsr = !1),
+      (this.JQl = Stats_1.Stat.Create(
+        "SceneInteractionModel.GetEntityByActor",
+      ));
   }
   GetEntityByBaseItem(e) {
     this.Fsr ||
@@ -22,8 +27,13 @@ class SceneInteractionModel extends ModelBase_1.ModelBase {
     return ModelManager_1.ModelManager.CreatureModel?.GetEntityById(e);
   }
   GetEntityByActor(e, t = !1) {
+    this.JQl.Start();
     e = this.GetBaseItemByActor(e, t);
-    if (e) return ActorUtils_1.ActorUtils.GetEntityByActor(e);
+    if (e)
+      return (
+        (t = ActorUtils_1.ActorUtils.GetEntityByActor(e)), this.JQl.Stop(), t
+      );
+    this.JQl.Stop();
   }
   GetBaseItemByActor(t, r = !1) {
     if (t?.IsValid()) {

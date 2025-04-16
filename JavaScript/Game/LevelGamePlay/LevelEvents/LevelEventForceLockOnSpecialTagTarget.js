@@ -14,22 +14,22 @@ class LevelEventForceLockOnSpecialTagTarget extends LevelGeneralBase_1.LevelEven
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            23,
+            22,
             "LevelEventForceLockOnSpecialTagTarget 事件EntityId为空",
           )),
       (a =
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
-          29,
+          32,
         ))?.Valid
         ? ((r = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
             e.EntityId,
           )),
           ((n = new CharacterLockOnComponent_1.LockOnInfo()).EntityHandle = r),
-          a.ForceLookAtTarget(n, e.IsLocked))
+          a.ForceLookAt(n, e.IsLocked))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
-            23,
+            22,
             "LevelEventForceLockOnSpecialTagTarget 获取不到玩家lockon组件",
           ));
   }

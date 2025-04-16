@@ -24,7 +24,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ShowTypeChange,
-      this.aEa,
+      this.lEa,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
@@ -34,7 +34,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ShowTypeChange,
-      this.aEa,
+      this.lEa,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
@@ -42,32 +42,32 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(21397, InventoryController.Tci),
-      Net_1.Net.Register(22716, InventoryController.Lci),
-      Net_1.Net.Register(28027, InventoryController.Dci),
-      Net_1.Net.Register(19742, InventoryController.Rci),
-      Net_1.Net.Register(15773, InventoryController.Uci),
-      Net_1.Net.Register(24889, InventoryController.Aci),
-      Net_1.Net.Register(17740, InventoryController.Pci),
-      Net_1.Net.Register(21270, InventoryController.xci),
-      Net_1.Net.Register(25782, InventoryController.wci),
-      Net_1.Net.Register(21295, InventoryController.Bci),
-      Net_1.Net.Register(15219, InventoryController.bci),
-      Net_1.Net.Register(21698, InventoryController.qci);
+    Net_1.Net.Register(19184, InventoryController.Tci),
+      Net_1.Net.Register(29860, InventoryController.Lci),
+      Net_1.Net.Register(16359, InventoryController.Dci),
+      Net_1.Net.Register(15238, InventoryController.Rci),
+      Net_1.Net.Register(19861, InventoryController.Uci),
+      Net_1.Net.Register(23439, InventoryController.Aci),
+      Net_1.Net.Register(29366, InventoryController.Pci),
+      Net_1.Net.Register(15616, InventoryController.xci),
+      Net_1.Net.Register(20786, InventoryController.wci),
+      Net_1.Net.Register(28012, InventoryController.Bci),
+      Net_1.Net.Register(16337, InventoryController.bci),
+      Net_1.Net.Register(27306, InventoryController.qci);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(21397),
-      Net_1.Net.UnRegister(22716),
-      Net_1.Net.UnRegister(28027),
-      Net_1.Net.UnRegister(19742),
-      Net_1.Net.UnRegister(15773),
-      Net_1.Net.UnRegister(24889),
-      Net_1.Net.UnRegister(17740),
-      Net_1.Net.UnRegister(21270),
-      Net_1.Net.UnRegister(25782),
-      Net_1.Net.UnRegister(21295),
-      Net_1.Net.UnRegister(15219),
-      Net_1.Net.UnRegister(21698);
+    Net_1.Net.UnRegister(19184),
+      Net_1.Net.UnRegister(29860),
+      Net_1.Net.UnRegister(16359),
+      Net_1.Net.UnRegister(15238),
+      Net_1.Net.UnRegister(19861),
+      Net_1.Net.UnRegister(23439),
+      Net_1.Net.UnRegister(29366),
+      Net_1.Net.UnRegister(15616),
+      Net_1.Net.UnRegister(20786),
+      Net_1.Net.UnRegister(28012),
+      Net_1.Net.UnRegister(16337),
+      Net_1.Net.UnRegister(27306);
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
@@ -94,11 +94,11 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
             t,
           );
         const r = e.GetIsDeprecated();
-        Net_1.Net.Call(24444, o, (e) => {
+        Net_1.Net.Call(18390, o, (e) => {
           e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.G9n,
-                15148,
+                23368,
               )
             : (n
                 ? r
@@ -125,14 +125,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       var n =
         ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(e);
       if (n && n.CanDeprecate()) {
-        var o = new Protocol_1.Aki.Protocol.Veh();
+        var o = new Protocol_1.Aki.Protocol.jm_();
         (o.b9n = e), (o.q9n = t ? 1 : 2);
         const r = n.GetIsLock();
-        Net_1.Net.Call(16867, o, (e) => {
+        Net_1.Net.Call(15814, o, (e) => {
           e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.G9n,
-                26415,
+                22338,
               )
             : t
               ? r
@@ -156,14 +156,14 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       if (e)
         if (
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity.GetComponent(
-            34,
+            39,
           )?.IsSkillInCd(e)
         )
           return void (
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Inventory",
-              18,
+              17,
               "特殊道具对应的技能处于CD中",
               ["skillId", e],
               ["configId", t],
@@ -173,7 +173,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     o.SpecialItem &&
     !SpecialItemController_1.SpecialItemController.AllowReqUseSpecialItem(t)
       ? (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Inventory", 40, "试图请求使用的特殊道具被禁用", [
+          Log_1.Log.Warn("Inventory", 39, "试图请求使用的特殊道具被禁用", [
             "configId",
             t,
           ]),
@@ -183,22 +183,22 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       : (((e = new Protocol_1.Aki.Protocol._ns()).L8n = t),
         (e.m9n = n),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Inventory", 8, "5207_客户端请求使用物品:massage", [
+          Log_1.Log.Debug("Inventory", 37, "5207_客户端请求使用物品:massage", [
             "massage",
             e,
           ]),
-        Net_1.Net.Call(27909, e, (e) => {
+        Net_1.Net.Call(22564, e, (e) => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Inventory",
-              8,
+              37,
               "5208_服务端返回使用道具结果:massage",
               ["massage", e],
             ),
             e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.G9n,
-                  18061,
+                  20953,
                 )
               : o.SpecialItem && o && 0 === o.Parameters.size
                 ? EventSystem_1.EventSystem.Emit(
@@ -216,44 +216,52 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   static NormalItemRequest() {
     var e = new Protocol_1.Aki.Protocol.gns();
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Inventory", 8, "NormalItemRequest 获取所有普通道具请求"),
-      Net_1.Net.Call(18763, Protocol_1.Aki.Protocol.gns.create(e), this.Gci);
+      Log_1.Log.Debug(
+        "Inventory",
+        37,
+        "NormalItemRequest 获取所有普通道具请求",
+      ),
+      Net_1.Net.Call(20451, Protocol_1.Aki.Protocol.gns.create(e), this.Gci);
   }
   static ValidTimeItemRequest() {
     var e = new Protocol_1.Aki.Protocol.qns();
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        38,
+        37,
         "ValidTimeItemRequest 获取所有特殊限时道具请求",
       ),
-      Net_1.Net.Call(23703, Protocol_1.Aki.Protocol.gns.create(e), this.Nci);
+      Net_1.Net.Call(25584, Protocol_1.Aki.Protocol.gns.create(e), this.Nci);
   }
   static WeaponItemRequest() {
     var e = new Protocol_1.Aki.Protocol.Sns();
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Inventory", 8, "WeaponItemRequest 获取所有武器道具请求"),
-      Net_1.Net.Call(18172, Protocol_1.Aki.Protocol.Sns.create(e), this.Oci);
+      Log_1.Log.Debug(
+        "Inventory",
+        37,
+        "WeaponItemRequest 获取所有武器道具请求",
+      ),
+      Net_1.Net.Call(25323, Protocol_1.Aki.Protocol.Sns.create(e), this.Oci);
   }
   static PhantomItemRequest() {
     var e = new Protocol_1.Aki.Protocol.Tns();
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "PhantomItemRequest 获取所有幻象道具请求",
       ),
-      Net_1.Net.Call(27123, Protocol_1.Aki.Protocol.Tns.create(e), this.kci);
+      Net_1.Net.Call(22946, Protocol_1.Aki.Protocol.Tns.create(e), this.kci);
   }
   static ItemDestructPreviewRequest(v) {
     var e = new Protocol_1.Aki.Protocol.sns();
     (e.O9n = v),
-      Net_1.Net.Call(22828, e, (e) => {
+      Net_1.Net.Call(17357, e, (e) => {
         if (e)
           if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              16776,
+              15369,
             );
           else {
             var t = [];
@@ -275,15 +283,15 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   static ItemDestructRequest(t) {
     var e = new Protocol_1.Aki.Protocol.ons();
     (e.O9n = t),
-      Net_1.Net.Call(27718, e, (e) => {
+      Net_1.Net.Call(22743, e, (e) => {
         e &&
           (e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.G9n,
-                23593,
+                20298,
               )
             : Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Inventory", 38, "执行道具销毁成功", [
+              Log_1.Log.Debug("Inventory", 37, "执行道具销毁成功", [
                 "ItemList",
                 t,
               ]));
@@ -294,7 +302,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     this.Fci ||
       ((this.Fci = !0),
       (e = new Protocol_1.Aki.Protocol.wns()),
-      Net_1.Net.Call(29295, e, (e) => {
+      Net_1.Net.Call(21993, e, (e) => {
         (this.Fci = !1),
           e &&
             e.zws &&
@@ -304,7 +312,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   }
   static InvalidItemCheckRequest() {
     var e = new Protocol_1.Aki.Protocol.bns();
-    Net_1.Net.Call(15115, e, (e) => {
+    Net_1.Net.Call(16138, e, (e) => {
       if (e && 0 !== e.Zws.length) {
         var t = new Map();
         for (const v of e.Zws) {
@@ -332,6 +340,9 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     for (const n of InventoryController.Vci) if (n(e, t)) return !0;
     return !1;
   }
+  static TryUseGiftItemWithSelectedItem(e, t, n = 1) {
+    return ItemUseLogic_1.ItemUseLogic.TryUseGiftItemWithSelectedItem(e, t, n);
+  }
 }
 ((exports.InventoryController = InventoryController).Q5e = () => {
   InventoryController.NormalItemRequest(),
@@ -339,7 +350,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     InventoryController.PhantomItemRequest(),
     InventoryController.ValidTimeItemRequest();
 }),
-  (InventoryController.aEa = (e, t) => {
+  (InventoryController.lEa = (e, t) => {
     UiManager_1.UiManager.IsViewShow("InventoryView") &&
       (UiManager_1.UiManager.CloseView("InventoryView"),
       UiManager_1.UiManager.OpenView("InventoryView"));
@@ -348,7 +359,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "NormalItemResponse 获取所有普通道具返回",
         ["response", e],
       );
@@ -375,7 +386,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "NormalItemUpdateNotify 普通道具更新通知",
         ["notify", e],
       );
@@ -425,7 +436,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "NormalItemRemoveNotify 普通道具通知删除",
         ["notify", e],
       );
@@ -453,7 +464,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   }),
   (InventoryController.Dci = (e) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Inventory", 8, "NormalItemAddNotify 添加普通道具通知", [
+      Log_1.Log.Debug("Inventory", 37, "NormalItemAddNotify 添加普通道具通知", [
         "notify",
         e,
       ]);
@@ -502,7 +513,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Inventory",
-          38,
+          37,
           "ValidTimeItemRequest 获取所有特殊限时道具返回",
           ["response", e],
         ),
@@ -532,7 +543,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        38,
+        37,
         "ValidTimeItemUpdateNotify 特殊限时道具更新通知",
         ["notify", e],
       );
@@ -573,7 +584,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        38,
+        37,
         "ValidTimeItemRemoveNotify 特殊限时道具通知删除",
         ["notify", e],
       );
@@ -604,7 +615,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        38,
+        37,
         "ValidTimeItemAddNotify 添加特殊限时道具通知",
         ["notify", e],
       );
@@ -645,7 +656,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "WeaponItemResponse 获取所有武器道具返回",
         ["response", e],
       );
@@ -669,7 +680,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   }),
   (InventoryController.Pci = (e) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Inventory", 8, "WeaponItemAddNotify 添加武器道具通知", [
+      Log_1.Log.Debug("Inventory", 37, "WeaponItemAddNotify 添加武器道具通知", [
         "notify",
         e,
       ]);
@@ -708,7 +719,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "WeaponItemRemoveNotify 删除武器道具通知",
         ["notify", e],
       );
@@ -727,7 +738,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "PhantomItemResponse 获取所有幻象道具返回",
         ["response", e],
       ),
@@ -757,10 +768,12 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   }),
   (InventoryController.wci = (e) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Inventory", 8, "PhantomItemAddNotify 获取幻象道具通知", [
-        "notify",
-        e,
-      ]);
+      Log_1.Log.Debug(
+        "Inventory",
+        37,
+        "PhantomItemAddNotify 获取幻象道具通知",
+        ["notify", e],
+      );
     const t = e.qws;
     if (t && 0 !== t.length) {
       var n = ModelManager_1.ModelManager.InventoryModel;
@@ -781,11 +794,13 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnAddPhantomItemList,
               t,
+              !0,
             );
           }, ConfigManager_1.ConfigManager.CalabashConfig.DelayTime)
         : EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnAddPhantomItemList,
             t,
+            !1,
           ),
         n.SaveNewAttributeItemUniqueIdList(),
         n.SaveRedDotAttributeItemUniqueIdList(),
@@ -798,7 +813,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "PhantomItemRemoveNotify 删除幻象道具通知",
         ["notify", e],
       );
@@ -817,7 +832,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Inventory",
-        8,
+        37,
         "ItemFuncValueUpdateNotify 物品FunctionValue改变通知",
         ["notify", e],
       );
@@ -833,7 +848,7 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
   }),
   (InventoryController.qci = (e) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Inventory", 38, "ItemPkgOpenNotify 背包开启列表通知", [
+      Log_1.Log.Debug("Inventory", 37, "ItemPkgOpenNotify 背包开启列表通知", [
         "notify",
         e,
       ]),
@@ -856,6 +871,8 @@ class InventoryController extends UiControllerBase_1.UiControllerBase {
     ItemUseLogic_1.ItemUseLogic.TryUseGiftItem,
     ItemUseLogic_1.ItemUseLogic.TryUseMonthCardItem,
     ItemUseLogic_1.ItemUseLogic.TryUseBattlePassItem,
+    ItemUseLogic_1.ItemUseLogic.TryUseBirthdayItem,
     ItemUseLogic_1.ItemUseLogic.TryUseParameterItem,
+    ItemUseLogic_1.ItemUseLogic.TryUseShipTowerItem,
   ]);
 //# sourceMappingURL=InventoryController.js.map

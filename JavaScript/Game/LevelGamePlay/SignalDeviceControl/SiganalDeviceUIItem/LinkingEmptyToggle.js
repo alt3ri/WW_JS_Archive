@@ -25,7 +25,7 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
       (this.KAe = void 0),
       (this.QAe = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "OnToggleHover", ["index", this.Xy]),
+          Log_1.Log.Debug("Temp", 35, "OnToggleHover", ["index", this.Xy]),
           ModelManager_1.ModelManager.SignalDeviceModel.CurrentColor !==
           IAction_1.EPieceColorType.White
             ? AudioSystem_1.AudioSystem.PostEvent(
@@ -38,7 +38,7 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
       }),
       (this.XAe = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "OnTogglePress", ["index", this.Xy]),
+          Log_1.Log.Debug("Temp", 35, "OnTogglePress", ["index", this.Xy]),
           this.WAe.OnPressed(!0),
           SignalDeviceController_1.SignalDeviceController.OnDotPressed(
             this.Xy,
@@ -52,12 +52,12 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
       }),
       (this.$Ae = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "OnToggleRelease", ["index", this.Xy]),
+          Log_1.Log.Debug("Temp", 35, "OnToggleRelease", ["index", this.Xy]),
           SignalDeviceController_1.SignalDeviceController.CheckLinking(this.Xy);
       }),
       (this.YAe = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "OnToggleCancel", ["index", this.Xy]),
+          Log_1.Log.Debug("Temp", 35, "OnToggleCancel", ["index", this.Xy]),
           SignalDeviceController_1.SignalDeviceController.CheckLinking(this.Xy);
       }),
       (this.JAe = (e, i) => {
@@ -125,7 +125,7 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
   }
   SetLineData(e, i, t, s, n) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Temp", 36, "SetLineData", ["neighborType", t]),
+      Log_1.Log.Debug("Temp", 35, "SetLineData", ["neighborType", t]),
       (this.KAe = i),
       this.KAe.CreateThenShowByActor(e.GetOwner()),
       this.KAe.InitIcon(t, !0),

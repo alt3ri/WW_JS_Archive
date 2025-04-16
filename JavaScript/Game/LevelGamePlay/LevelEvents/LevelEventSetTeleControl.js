@@ -12,25 +12,25 @@ class LevelEventSetTeleControl extends LevelGeneralBase_1.LevelEventBase {
       : ((l = (e =
           ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
             e.Config.EntityId,
-          ))?.Entity?.GetComponent(143)),
+          ))?.Entity?.GetComponent(154)),
         e?.Valid && l
-          ? l.CurrentState === l.DropState
+          ? 11 === l.GetState()
             ? this.FinishExecute(!0)
-            : l.CurrentState !== l.ResetState
+            : 1 !== l.GetState()
               ? (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "LevelEvent",
-                    40,
+                    39,
                     "[LevelEventSetTeleControl] 被控物不处于Reset状态",
                   ),
                 this.FinishExecute(!1))
-              : ((l.CurrentState = l.DropState),
+              : (l?.SetState(11, "LevelEventSetTeleControl Execute"),
                 l.TryEnableTick(),
                 this.FinishExecute(!0))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelEvent",
-                40,
+                39,
                 "[LevelEventSetTeleControl] 找不到对应的实体组件",
               ),
             this.FinishExecute(!1)));

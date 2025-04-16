@@ -40,7 +40,7 @@ class CharacterShield {
     t
       ? ((this.Priority = t.Priority), (this.ShieldValue = i))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 36, "护盾添加失败，护盾Id不存在", ["Id", e]);
+        Log_1.Log.Error("Battle", 35, "护盾添加失败，护盾Id不存在", ["Id", e]);
   }
 }
 exports.CharacterShield = CharacterShield;
@@ -57,8 +57,8 @@ let CharacterShieldComponent = class CharacterShieldComponent extends EntityComp
   }
   OnStart() {
     return (
-      (this.m1t = this.Entity.CheckGetComponent(160)),
-      (this.Xte = this.Entity.CheckGetComponent(190)),
+      (this.m1t = this.Entity.CheckGetComponent(172)),
+      (this.Xte = this.Entity.CheckGetComponent(203)),
       !0
     );
   }
@@ -99,7 +99,7 @@ let CharacterShieldComponent = class CharacterShieldComponent extends EntityComp
       : this.Add(t, e, i);
   }
   static OnShieldUpdateNotify(t, e) {
-    var i = t?.GetComponent(67);
+    var i = t?.GetComponent(74);
     if (i)
       for (const s of e.kAs) {
         var o = s.OAs,
@@ -111,7 +111,7 @@ let CharacterShieldComponent = class CharacterShieldComponent extends EntityComp
             : o === r.Proto_EShieldUpdateTypeModify && 0 < s.ETs
               ? i.ChangeValue(s.uVn, s.v9n, s.ETs)
               : Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("Battle", 36, "护盾更新错误", ["shield", s]);
+                Log_1.Log.Warn("Battle", 35, "护盾更新错误", ["shield", s]);
       }
   }
   GetShieldValue(t) {
@@ -135,7 +135,7 @@ __decorate(
   null,
 ),
   (CharacterShieldComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(67)],
+    [(0, RegisterComponent_1.RegisterComponent)(74)],
     CharacterShieldComponent,
   )),
   (exports.CharacterShieldComponent = CharacterShieldComponent);

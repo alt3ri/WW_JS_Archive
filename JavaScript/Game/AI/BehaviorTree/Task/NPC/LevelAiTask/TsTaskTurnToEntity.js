@@ -26,6 +26,16 @@ class TsTaskTurnToEntity extends TsTaskAbortImmediatelyBase_1.default {
       (this.MovementMode = 0),
       (this.IsInitTsVariables = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.TsTurnMode = 0),
+      (this.TsTargetEntityId = 0),
+      (this.TsTargetPos = void 0),
+      (this.TsTurnSpeed = 180),
+      (this.Character = void 0),
+      (this.MovementMode = 0),
+      (this.IsInitTsVariables = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -40,15 +50,15 @@ class TsTaskTurnToEntity extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    var e,
-      s = t.AiController;
-    s
-      ? ((e = (s = s.CharAiDesignComp.Entity).GetComponent(0)),
-        s?.Valid
-          ? ((this.Character = s.GetComponent(3)),
-            (s = s.GetComponent(38)?.CharacterMovement)?.IsValid()
-              ? ((this.MovementMode = s.MovementMode),
-                (s.MovementMode = 1),
+    var s,
+      e = t.AiController;
+    e
+      ? ((s = (e = e.CharAiDesignComp.Entity).GetComponent(0)),
+        e?.Valid
+          ? ((this.Character = e.GetComponent(3)),
+            (e = e.GetComponent(44)?.CharacterMovement)?.IsValid()
+              ? ((this.MovementMode = e.MovementMode),
+                (e.MovementMode = 1),
                 MathUtils_1.MathUtils.CommonTempVector.Reset(),
                 this.GetTurnToPosition(MathUtils_1.MathUtils.CommonTempVector)
                   ? AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
@@ -60,15 +70,15 @@ class TsTaskTurnToEntity extends TsTaskAbortImmediatelyBase_1.default {
               : (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "LevelAi",
-                    51,
+                    50,
                     "[TsTaskTurnToEntity]无效的CharacterMovement",
-                    ["PbDataId", e.GetPbDataId()],
+                    ["PbDataId", s.GetPbDataId()],
                   ),
                 this.FinishExecute(!0)))
           : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("LevelAi", 30, "执行转向动作时实体不存在:", [
+              Log_1.Log.Error("LevelAi", 29, "执行转向动作时实体不存在:", [
                 "PbDataId",
-                e.GetPbDataId(),
+                s.GetPbDataId(),
               ]),
             this.FinishExecute(!0)))
       : (Log_1.Log.CheckError() &&
@@ -78,11 +88,11 @@ class TsTaskTurnToEntity extends TsTaskAbortImmediatelyBase_1.default {
           ]),
         this.FinishExecute(!0));
   }
-  ReceiveTickAI(t, i, e) {
+  ReceiveTickAI(t, i, s) {
     GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(
       this.Character,
     ) < TOLERANCE &&
-      ((this.Character.Entity.GetComponent(38).CharacterMovement.MovementMode =
+      ((this.Character.Entity.GetComponent(44).CharacterMovement.MovementMode =
         this.MovementMode),
       this.Finish(!0));
   }

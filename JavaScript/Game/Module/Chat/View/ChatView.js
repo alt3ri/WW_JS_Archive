@@ -11,6 +11,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
+  GameSettingsDeviceRender_1 = require("../../../GameSettings/GameSettingsDeviceRender"),
   InputKeyDisplayData_1 = require("../../../InputSettings/InputKeyDisplayData"),
   InputSettings_1 = require("../../../InputSettings/InputSettings"),
   InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
@@ -50,7 +51,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       (this.BSt = (t) => {}),
       (this.bSt = (t) => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Chat", 8, "当聊天文本提交时", ["content", t]),
+          Log_1.Log.Info("Chat", 5, "当聊天文本提交时", ["content", t]),
           this.qSt(t, Protocol_1.Aki.Protocol.p8n.DIs);
       }),
       (this.GSt = () => {}),
@@ -105,7 +106,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           this.jSt(s),
           this.WSt(r, s),
           i === t) &&
-          this.$Wa(e);
+          this.vXa(e);
       }),
       (this.Uze = () => {
         this.xSt.SetScrollProgress(1), (this.PSt = !1);
@@ -146,7 +147,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
             if (!e)
               return void (
                 Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("Chat", 8, "私聊对象玩家Id不存在", [
+                Log_1.Log.Warn("Chat", 5, "私聊对象玩家Id不存在", [
                   "targetPlayerId",
                   e,
                 ])
@@ -155,7 +156,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           this.qSt(t.toString(), Protocol_1.Aki.Protocol.p8n.Proto_Emoji);
         } else
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");
+            Log_1.Log.Warn("Chat", 5, "当前没有加入任何一个聊天室");
       }),
       (this.ryt = () => {
         UiManager_1.UiManager.OpenView("SelectedFriendChatView");
@@ -258,6 +259,9 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       [20, UE.UIItem],
       [21, UE.UIItem],
       [22, UE.UIText],
+      [23, UE.UIItem],
+      [24, UE.UIItem],
+      [25, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [0, this.ryt],
@@ -292,7 +296,16 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       this.XSt(void 0 !== i),
       this.gyt(),
       this.$Pn(),
-      this.Ore();
+      this.Ore(),
+      this.Rah();
+  }
+  Rah() {
+    var t = UiManager_1.UiManager.IsViewShow("BattleView"),
+      e = this.GetItem(23),
+      i = this.GetItem(24);
+    t
+      ? (e.SetUIActive(!0), i.SetUIActive(!1))
+      : (e.SetUIActive(!1), i.SetUIActive(!0));
   }
   OnBeforeDestroy() {
     this.fyt(),
@@ -438,13 +451,15 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
         this.XBo,
       );
   }
-  async $Wa(t) {
+  async vXa(t) {
     let e = !1;
     var i =
       await PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkBlockingUser();
     (e = i && t.PsAccountId && i.get(t.PsAccountId) ? !0 : e) ||
       this.YSt(t, (t) => {
-        this.XSt(!0), this.JSt(ChatDefine_1.CHAT_SCROLL_DELAY);
+        this.XSt(!0),
+          this.JSt(ChatDefine_1.CHAT_SCROLL_DELAY),
+          t.GetOriginalItem()?.SetHierarchyIndex(this.TSt.length);
       });
   }
   JSt(t) {
@@ -507,7 +522,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
             if (!s)
               return void (
                 Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("Chat", 8, "私聊对象玩家Id不存在", [
+                Log_1.Log.Warn("Chat", 5, "私聊对象玩家Id不存在", [
                   "targetPlayerId",
                   s,
                 ])
@@ -534,7 +549,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
         }
       } else
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");
+          Log_1.Log.Warn("Chat", 5, "当前没有加入任何一个聊天室");
     }
   }
   XSt(t) {
@@ -552,7 +567,8 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       ((e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
       this.cyt(t, !0),
       this.K7e(t),
-      this.qxa(t),
+      this.Nxa(t),
+      this.sPa(t),
       this.WSt(t, e),
       this.eyt(t),
       this.vyt(!0),
@@ -564,7 +580,8 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       ((e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
       this.WSt(t, e),
       this.eyt(t),
-      this.qxa(void 0),
+      this.Nxa(void 0),
+      this.sPa(void 0),
       this.cyt(void 0, !1),
       this.K7e(void 0, !0),
       this.vyt(!1),
@@ -584,9 +601,10 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
     var t = e[i];
     t
       ? this.YSt(t, (t) => {
-          i >= e.length
-            ? this.JSt(ChatDefine_1.FIRST_CHAT_SCROLL_DELAY)
-            : this.Myt(e, i + 1);
+          t.GetOriginalItem()?.SetHierarchyIndex(this.TSt.length),
+            i >= e.length
+              ? this.JSt(ChatDefine_1.FIRST_CHAT_SCROLL_DELAY)
+              : this.Myt(e, i + 1);
         })
       : this.JSt(ChatDefine_1.FIRST_CHAT_SCROLL_DELAY);
   }
@@ -708,7 +726,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           return this.Cyt(), e;
       }
   }
-  qxa(t) {
+  Nxa(t) {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e = void 0 !== t && "" !== t?.GetPsnUserId()),
@@ -718,6 +736,22 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
             this.GetText(22)?.SetUIActive(!0))
           : this.GetText(22)?.SetUIActive(!1))
       : (this.GetItem(21)?.SetUIActive(!1), this.GetText(22)?.SetUIActive(!1));
+  }
+  sPa(t) {
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((t = void 0 !== t && "" !== t?.GetPsnUserId()),
+        this.GetItem(25)?.SetUIActive(!t))
+      : this.GetItem(25)?.SetUIActive(!1);
+  }
+  OnBeforeShow() {
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.TemporaryDisableDLSSG(
+      "ChatView",
+    );
+  }
+  OnAfterHide() {
+    GameSettingsDeviceRender_1.GameSettingsDeviceRender.CancelTemporaryDisableDLSSG(
+      "ChatView",
+    );
   }
 }
 exports.ChatView = ChatView;

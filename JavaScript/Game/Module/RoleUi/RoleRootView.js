@@ -20,9 +20,11 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../GlobalData"),
   InputSettings_1 = require("../../InputSettings/InputSettings"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   RedDotController_1 = require("../../RedDot/RedDotController"),
   RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
+  RenderUtil_1 = require("../../Render/Utils/RenderUtil"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
@@ -43,8 +45,7 @@ const puerts_1 = require("puerts"),
   UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
   UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
   RoleListComponent_1 = require("./Component/RoleListComponent"),
-  RoleDefine_1 = require("./RoleDefine"),
-  RenderUtil_1 = require("../../Render/Utils/RenderUtil");
+  RoleDefine_1 = require("./RoleDefine");
 class OperationParam {
   constructor(e, t) {
     (this.OperationType = e), (this.Param = t);
@@ -112,7 +113,8 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
           (this.I6e = e),
           (this.rmo = i),
           this.lmo(e, this.nmo),
-          (this.U8i = this.P8i());
+          (this.U8i = this.P8i()),
+          this.nn_(i);
       }),
       (this.q8i = (e) => {
         0 !== e &&
@@ -196,37 +198,42 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       (this.cmo = () => {
         (this.U8i = !1), this.A8i?.PauseTick();
       }),
-      (this.mmo = () => {
-        var e,
-          t = UiCameraManager_1.UiCameraManager.Get(),
-          t =
-            ((this.A8i = t.AddUiCameraComponent(
-              UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
-              !1,
-            )),
-            ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetDefaultRoleCameraConfig());
-        this.A8i.InitDataByConfig(t),
+      (this.mmo = (e) => {
+        var t;
+        this.Z0l(e.ViewName) &&
+          ((e = UiCameraManager_1.UiCameraManager.Get()),
+          (this.A8i = e.AddUiCameraComponent(
+            UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
+            !1,
+          )),
+          (e =
+            ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetDefaultRoleCameraConfig()),
+          this.A8i.InitDataByConfig(e),
+          this.A8i.SetNeedFloorReflection(!0),
           (this.U8i = this.P8i()),
-          this.U8i &&
-            ((e = (t = this.dmo).K2_GetActorLocation()),
-            (t = (t.Model?.CheckGetComponent(11)).RoleConfigId),
-            (t =
-              ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+          this.U8i
+            ? ((t = (e = this.dmo).D_K2_GetActorLocation()),
+              (e = (e.Model?.CheckGetComponent(12)).RoleConfigId),
+              (e =
+                ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+                  e,
+                ).RoleBody),
+              (e =
+                ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetRoleCameraOffsetConfig(
+                  e,
+                )),
+              this.A8i.UpdateData(
                 t,
-              ).RoleBody),
-            (t =
-              ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetRoleCameraOffsetConfig(
-                t,
-              )),
-            this.A8i.UpdateData(
-              e,
-              t.镜头浮动最大高度,
-              t.镜头浮动最低高度,
-              t.镜头浮动最长臂长,
-              t.镜头浮动最短臂长,
-            ),
-            this.A8i.Activate(),
-            this.A8i.ResumeTick());
+                e.镜头浮动最大高度,
+                e.镜头浮动最低高度,
+                e.镜头浮动最长臂长,
+                e.镜头浮动最短臂长,
+              ),
+              this.A8i.Activate(),
+              this.A8i.ResumeTick())
+            : TimerSystem_1.TimerSystem.Next(() => {
+                UiSceneManager_1.UiSceneManager.SetSceneFloorReflection(!1, !1);
+              }));
       }),
       (this.Cmo = (e) => {
         this.GetItem(2).SetUIActive(e);
@@ -282,7 +289,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     (this.d1o = this.OpenParam),
       void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleRootView",
           ])
@@ -414,6 +421,16 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         this.GetItem(4),
       ));
   }
+  nn_(e) {
+    this.TabComponent?.SetHelpButtonShowState(!1),
+      "RolePhantomTabView" === e &&
+        (this.TabComponent?.SetHelpButtonCallBack(() => {
+          ControllerHolder_1.ControllerHolder.HelpController.OpenHelpById(
+            ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomEquipHelpGroupId(),
+          );
+        }),
+        this.TabComponent?.SetHelpButtonShowState(!0));
+  }
   lmo(s, e) {
     const n = this.TabDataList[s].LightSequence;
     var t = this.cVi.get(s);
@@ -428,29 +445,32 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
           var t, i;
           ObjectUtils_1.ObjectUtils.IsValid(e)
             ? ((e = e),
-              ((t = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
+              ((i = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
                 !0),
-              (i = (0, puerts_1.$ref)(void 0)),
+              (t = (0, puerts_1.$ref)(void 0)),
               UE.LevelSequencePlayer.CreateLevelSequencePlayer(
                 GlobalData_1.GlobalData.World,
                 e,
                 new UE.MovieSceneSequencePlaybackSettings(),
-                i,
+                t,
               ),
-              ((i = (0, puerts_1.$unref)(i)).PlaybackSettings = t),
-              i.SetSequence(e),
-              this.cVi.set(s, i),
+              ((t = (0, puerts_1.$unref)(t)).PlaybackSettings = i),
+              t.SetSequence(e),
+              this.cVi.set(s, t),
               this.RHt &&
                 (this.RHt.Stop(), (this.smo = !1), (this.RHt = void 0)),
               this.I6e === s &&
-                ((this.RHt = i.SequencePlayer),
-                (i.bOverrideInstanceData = !0),
-                (i.DefaultInstanceData.TransformOrigin =
-                  RenderModuleController_1.RenderModuleController.GetKuroCurrentUiSceneTransform()),
+                ((this.RHt = t.SequencePlayer),
+                (t.bOverrideInstanceData = !0),
+                (i = t.DefaultInstanceData),
+                (e = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(
+                  RenderModuleController_1.RenderModuleController.GetKuroCurrentUiSceneTransform(),
+                )),
+                (i.TransformOrigin = e),
                 this.RHt.Play(),
                 (this.smo = !0)))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Role", 44, "加载level sequence失败:", [
+              Log_1.Log.Error("Role", 43, "加载level sequence失败:", [
                 "sequencePath",
                 n,
               ]),
@@ -469,7 +489,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (this.Rjt)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 44, "异步操作执行过程中不能触发引导");
+        Log_1.Log.Error("Guide", 43, "异步操作执行过程中不能触发引导");
     else {
       if (2 === e.length && e[0] === GuideConfig_1.GuideConfig.TabTag) {
         this.TabComponent ||
@@ -490,7 +510,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Guide",
-              17,
+              16,
               "角色界面聚焦引导的额外参数配置有误, 找不到Layout",
               ["configParams", e],
             )
@@ -501,7 +521,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
           ? [t.GetRootItem(), t.GetIconSprite()]
           : void (
               Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Guide", 44, "Layout加载未完成")
+              Log_1.Log.Error("Guide", 43, "Layout加载未完成")
             );
       }
       if (2 === e.length && e[0] === GuideConfig_1.GuideConfig.SlotTag) {
@@ -526,7 +546,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "角色界面聚焦引导的额外参数配置有误, 找不到角色Id",
             ["roleId", i],
           );
@@ -545,7 +565,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            44,
+            43,
             "角色界面聚焦引导的额外参数配置有误, 找不到角色Id",
             ["roleId", i],
           );
@@ -714,6 +734,10 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       i
     );
   }
+  Z0l(e) {
+    for (const t of this.TabDataList) if (t.ChildViewName === e) return !0;
+    return !1;
+  }
   RefreshUiMode() {
     this.RefreshRoleSystemModeUiParam();
   }
@@ -729,7 +753,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       (this.Nlo = EffectUtil_1.EffectUtil.SpawnUiEffect(
         "RoleSystemFloorEffect",
         "[RoleRootView.LoadFloorEffect]",
-        e.GetTransform(),
+        e.D_GetTransform(),
         new EffectContext_1.EffectContext(void 0, e),
       ));
   }
@@ -739,8 +763,10 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       : "RoleResonanceTabNewView" === e
         ? "RoleResonanceTab"
         : "RolePhantomTabView" === e
-          ? "VisionOneKeyEquip"
-          : void 0;
+          ? "VisionTabRedDot"
+          : "RoleWeaponTabView" === e
+            ? "RoleWeaponTabBreakUp"
+            : void 0;
   }
   BindRedDot(e) {
     e
@@ -783,7 +809,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     this.UnBindRedDot(),
-      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Role", 44, "角色界面关闭");
+      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Role", 43, "角色界面关闭");
   }
   UDn() {
     this.RDn ||
@@ -803,7 +829,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroyImplement() {
     this.UDn(),
       this.ClearData(),
-      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Role", 44, "角色界面销毁");
+      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Role", 43, "角色界面销毁");
   }
   ClearData() {
     this.TabViewComponent &&

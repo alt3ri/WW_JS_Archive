@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.YouHuQteView = void 0);
 const UE = require("ue"),
-  AudioDefine_1 = require("../../../../Core/Audio/AudioDefine"),
-  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
@@ -31,9 +29,9 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
       (this.Zdn = void 0),
       (this.OOi = void 0),
       (this.SPe = void 0),
-      (this.$wa = []),
-      (this.RBa = []),
-      (this.UBa = []),
+      (this._Ba = []),
+      (this.WBa = []),
+      (this.QBa = []),
       (this.xOi = void 0),
       (this.gJs = 0),
       (this.$xt = (e) => {
@@ -91,8 +89,8 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
   }
   async OnBeforeStartAsync() {
     if (!this.IsMobile) {
-      for (let e = 11; e <= 14; e++) this.RBa.push(this.GetItem(e));
-      for (let e = 15; e <= 18; e++) this.UBa.push(this.GetItem(e));
+      for (let e = 11; e <= 14; e++) this.WBa.push(this.GetItem(e));
+      for (let e = 15; e <= 18; e++) this.QBa.push(this.GetItem(e));
       var t = [];
       for (let e = 7; e <= 10; e++) {
         var i,
@@ -104,8 +102,8 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
       }
       await Promise.all(t);
       for (let e = 0; e < this.dJs.length; e++) {
-        var r = { ActionOrAxisName: actionNames[e] };
-        this.dJs[e].RefreshByActionOrAxis(r), this.dJs[e].SetActive(!0);
+        var n = { ActionOrAxisName: actionNames[e] };
+        this.dJs[e].RefreshByActionOrAxis(n), this.dJs[e].SetActive(!0);
       }
     }
     this.IsQteStart = !1;
@@ -117,16 +115,16 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
           (this.Zdn = this.GetUiNiagara(6)),
           (this.OOi = this.GetItem(0)),
           (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.OOi)),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(1)),
           ),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(2)),
           ),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(3)),
           ),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(4)),
           ),
           this.GetButton(7).OnPointDownCallBack.Bind(() => {
@@ -145,19 +143,19 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
           (this.Zdn = this.GetUiNiagara(6)),
           (this.OOi = this.GetItem(0)),
           (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.OOi)),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(1)),
           ),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(2)),
           ),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(3)),
           ),
-          this.$wa.push(
+          this._Ba.push(
             new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(4)),
           ),
-          this.xBa()),
+          this.KBa()),
       this.SPe.BindSequenceCloseEvent(this.$xt),
       this.GOi();
   }
@@ -165,7 +163,7 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
     super.OnBeforeShow(),
       ModelManager_1.ModelManager.PanelQteModel.IsInQte ||
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("PanelQte", 18, "界面打开时qte已经结束了"),
+          Log_1.Log.Info("PanelQte", 17, "界面打开时qte已经结束了"),
         UiManager_1.UiManager.CloseView("YouHuQteView"));
   }
   OnBeforeDestroy() {
@@ -177,8 +175,8 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
         this.GetButton(10).OnPointDownCallBack.Unbind()),
       this.SPe?.Clear(),
       (this.SPe = void 0);
-    for (const e of this.$wa) e.Clear();
-    (this.$wa.length = 0), this.NOi();
+    for (const e of this._Ba) e.Clear();
+    (this._Ba.length = 0), this.NOi();
   }
   RefreshVisible() {}
   NOi() {
@@ -191,15 +189,15 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
       ? e !==
         (e = ModelManager_1.ModelManager.PanelQteModel.GetContext()).QteHandleId
         ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("PanelQte", 18, "qte handleId 不匹配"),
+            Log_1.Log.Error("PanelQte", 17, "qte handleId 不匹配"),
           UiManager_1.UiManager.CloseView("YouHuQteView"))
         : ((this.gJs =
             e.Config.Duration * TimeUtil_1.TimeUtil.InverseMillisecond),
           this.SPe?.PlayLevelSequenceByName("Start02"),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("PanelQte", 18, "触发釉瑚Qte"))
+            Log_1.Log.Debug("PanelQte", 17, "触发釉瑚Qte"))
       : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("PanelQte", 18, "界面打开时qte已经结束了"),
+          Log_1.Log.Info("PanelQte", 17, "界面打开时qte已经结束了"),
         UiManager_1.UiManager.CloseView("YouHuQteView"));
   }
   OnTick(e) {
@@ -232,8 +230,8 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
   }
   bOi(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("PanelQte", 18, "按下Qte", ["编号", e + 1]),
-      this.$wa[e].PlayLevelSequenceByName("ButtonPre");
+      Log_1.Log.Debug("PanelQte", 17, "按下Qte", ["编号", e + 1]),
+      this._Ba[e].PlayLevelSequenceByName("ButtonPre");
     var t = this.OpenParam,
       i = ModelManager_1.ModelManager.PanelQteModel.GetContext();
     t === i.QteHandleId && (i.BuffIndex = e),
@@ -241,21 +239,17 @@ class YouHuQteView extends PanelQteView_1.PanelQteView {
       PanelQteController_1.PanelQteController.StopQte(t);
   }
   InputControllerChangeInner() {
-    this.xBa();
+    this.KBa();
   }
-  xBa() {
+  KBa() {
     var e = Info_1.Info.IsInGamepad();
-    for (const i of this.UBa) i.SetUIActive(e);
+    for (const i of this.QBa) i.SetUIActive(e);
     var t = Info_1.Info.IsInKeyBoard();
-    for (const s of this.RBa) s.SetUIActive(t);
+    for (const s of this.WBa) s.SetUIActive(t);
   }
   HandleQteEnd() {
     this.xOi ||
-      (AudioSystem_1.AudioSystem.SetState(
-        AudioDefine_1.STATEGROUP,
-        AudioDefine_1.STATENORMAL,
-      ),
-      this.SPe?.PlayLevelSequenceByName("Close"),
+      (this.SPe?.PlayLevelSequenceByName("Close"),
       (this.xOi = TimerSystem_1.TimerSystem.Delay(() => {
         (this.xOi = void 0), UiManager_1.UiManager.CloseView("YouHuQteView");
       }, STOP_ANIM_TIME)));

@@ -4,7 +4,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskFindRandomPosition extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -14,6 +14,15 @@ class TsTaskFindRandomPosition extends TsTaskAbortImmediatelyBase_1.default {
       (this.MaxRange = 0),
       (this.UseFullRange = !1),
       (this.SaveBlackBoardKey = ""),
+      (this.IsInitTsVariables = !1),
+      (this.TsStartPositionOffset = void 0),
+      (this.TsMinRange = 0),
+      (this.TsMaxRange = 0),
+      (this.TsUseFullRange = !1),
+      (this.TsSaveBlackBoardKey = "");
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsStartPositionOffset = void 0),
       (this.TsMinRange = 0),
@@ -40,7 +49,7 @@ class TsTaskFindRandomPosition extends TsTaskAbortImmediatelyBase_1.default {
       ? ((e = e.CharActorComp),
         this.TsSaveBlackBoardKey &&
           ((i = this.CalculateTargetPosition(e)),
-          BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
             e.Entity.Id,
             this.TsSaveBlackBoardKey,
             i.X,

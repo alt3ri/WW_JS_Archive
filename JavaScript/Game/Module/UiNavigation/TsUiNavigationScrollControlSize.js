@@ -13,6 +13,13 @@ class TsUiNavigationScrollControlSize extends UE.LGUIBehaviour {
       (this.ContentItem = void 0),
       (this.UseScroll = !1);
   }
+  Constructor() {
+    (this.ScrollView = void 0),
+      (this.SizeController = void 0),
+      (this.ScrollHeight = 0),
+      (this.ContentItem = void 0),
+      (this.UseScroll = !1);
+  }
   AwakeBP() {
     (this.SizeController = this.GetOwner()?.GetComponentByClass(
       UE.UISizeControlByOther.StaticClass(),
@@ -28,7 +35,7 @@ class TsUiNavigationScrollControlSize extends UE.LGUIBehaviour {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "该组件需要放在有SizeControlByOther的Actor上",
           );
   }

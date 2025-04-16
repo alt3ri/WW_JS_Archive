@@ -5,7 +5,7 @@ const UE = require("ue"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsDecoratorNearChainEdge extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -13,16 +13,19 @@ class TsDecoratorNearChainEdge extends UE.BTDecorator_BlueprintBase {
       (this.IsInitTsVariables = !1),
       (this.TsDistToChainEdgeLessThan = -0);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1), (this.TsDistToChainEdgeLessThan = -0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsDistToChainEdgeLessThan = this.DistToChainEdgeLessThan));
   }
-  PerformConditionCheckAI(r, e) {
+  PerformConditionCheckAI(e, r) {
     this.InitTsVariables();
     var o,
       t,
-      a = r.AiController;
+      a = e.AiController;
     return a
       ? !(void 0 === (o = a.AiHateList.AiHate?.MaxMoveFromBorn) || o < 0) &&
           (o < this.TsDistToChainEdgeLessThan
@@ -35,7 +38,7 @@ class TsDecoratorNearChainEdge extends UE.BTDecorator_BlueprintBase {
                 ),
               !0)
             : ((t =
-                BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+                ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
                   a.CharActorComp.Entity.Id,
                   "CenterLocation",
                 )),
@@ -52,7 +55,7 @@ class TsDecoratorNearChainEdge extends UE.BTDecorator_BlueprintBase {
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
             "Type",
-            r.GetClass().GetName(),
+            e.GetClass().GetName(),
           ]),
         !1);
   }

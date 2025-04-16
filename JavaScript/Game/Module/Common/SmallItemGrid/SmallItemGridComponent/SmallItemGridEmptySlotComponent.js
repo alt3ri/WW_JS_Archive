@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SmallItemGridEmptySlotComponent = void 0);
 const UE = require("ue"),
-  SmallItemGridComponent_1 = require("./SmallItemGridComponent");
-class SmallItemGridEmptySlotComponent extends SmallItemGridComponent_1.SmallItemGridComponent {
+  SmallItemGridVisibleComponent_1 = require("./SmallItemGridVisibleComponent");
+class SmallItemGridEmptySlotComponent extends SmallItemGridVisibleComponent_1.SmallItemGridVisibleComponent {
   constructor() {
     super(...arguments),
       (this.oft = void 0),
@@ -30,7 +30,6 @@ class SmallItemGridEmptySlotComponent extends SmallItemGridComponent_1.SmallItem
   UnBindEmptySlotButtonCallback() {
     this.oft = void 0;
   }
-  OnRefresh(t) {}
 }
 exports.SmallItemGridEmptySlotComponent = SmallItemGridEmptySlotComponent;
 //# sourceMappingURL=SmallItemGridEmptySlotComponent.js.map

@@ -2,51 +2,47 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleQuestButton = void 0);
 const ue_1 = require("ue"),
-  BattleEntranceButton_1 = require("./BattleEntranceButton"),
-  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
-  LguiUtil_1 = require("../../../Util/LguiUtil"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  MissionUpgradeIn = "MissionUpgradeIn",
-  MissionUpgradeOut = "MissionUpgradeOut";
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BattleEntranceButton_1 = require("./BattleEntranceButton"),
+  MISSION_UPGRADE_IN = "MissionUpgradeIn",
+  MISSION_UPGRADE_OUT = "MissionUpgradeOut";
 class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
   constructor() {
     super(...arguments),
       (this.SequencePlayer = void 0),
-      (this.$ut = void 0),
       (this.owt = (e) => {
         switch (e) {
-          case MissionUpgradeIn:
-            this.GetItem(2)?.SetUIActive(!0);
+          case MISSION_UPGRADE_IN:
+            this.GetItem(2)?.SetUIActive(
+              ModelManager_1.ModelManager.BattleUiModel.IsMissionPanelVisible,
+            );
             break;
-          case MissionUpgradeOut:
+          case MISSION_UPGRADE_OUT:
         }
       }),
       (this.yct = (e) => {
         switch (e) {
-          case MissionUpgradeIn:
-            this.SequencePlayer.PlayLevelSequenceByName(MissionUpgradeOut),
+          case MISSION_UPGRADE_IN:
+            this.SequencePlayer.PlayLevelSequenceByName(MISSION_UPGRADE_OUT),
               "Disabled" !==
                 ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() &&
                 this.SequencePlayer.StopCurrentSequence(!0, !0);
             break;
-          case MissionUpgradeOut:
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.MissionUpdateAnimEnd,
-              this.$ut,
-            );
+          case MISSION_UPGRADE_OUT:
         }
       }),
       (this.rxn = (e) => {
-        this.$ut = e;
         var t = this.GetText(3),
           e =
-            (e.IsNewQuest
+            (e
               ? LguiUtil_1.LguiUtil.SetLocalText(t, "QuestUpdateNewQuestTips")
               : LguiUtil_1.LguiUtil.SetLocalText(t, "QuestUpdateNewGoalTips"),
             this.SequencePlayer.StopCurrentSequence(!0, !0),
-            this.SequencePlayer.PlayLevelSequenceByName(MissionUpgradeIn),
+            this.SequencePlayer.PlayLevelSequenceByName(MISSION_UPGRADE_IN),
             "Disabled" !==
               ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode());
         e && this.SequencePlayer.StopCurrentSequence(!0, !0);

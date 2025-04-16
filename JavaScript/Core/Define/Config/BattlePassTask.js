@@ -30,6 +30,9 @@ class BattlePassTask {
   taskrewardValue(t) {
     return this.taskreward(t)?.value();
   }
+  get JumpId() {
+    return this.jumpid();
+  }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
   }
@@ -44,8 +47,14 @@ class BattlePassTask {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   taskname(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   updatetype() {
     var t = this.J7.__offset(this.z7, 8);
@@ -66,6 +75,10 @@ class BattlePassTask {
   taskrewardLength() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  jumpid() {
+    var t = this.J7.__offset(this.z7, 12);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.BattlePassTask = BattlePassTask;

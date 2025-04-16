@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   Time_1 = require("../../../../Core/Common/Time"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSetNowTime extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -12,23 +12,28 @@ class TsTaskSetNowTime extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsInitTsVariables = !1),
       (this.TsBlackboardKey = "");
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsBlackboardKey = "");
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsBlackboardKey = this.BlackboardKey));
   }
-  ReceiveTickAI(e, o, r) {
-    var s,
-      t = e.AiController;
-    t
+  ReceiveTickAI(e, s, t) {
+    var r,
+      o = e.AiController;
+    o
       ? (this.InitTsVariables(),
         this.TsBlackboardKey &&
-          ((t = t.CharActorComp.Entity.Id),
-          (s = Time_1.Time.WorldTime),
-          BlackboardController_1.BlackboardController.SetIntValueByEntity(
-            t,
+          ((o = o.CharActorComp.Entity.Id),
+          (r = Time_1.Time.WorldTime),
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
+            o,
             this.TsBlackboardKey,
-            s,
+            r,
           )),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&

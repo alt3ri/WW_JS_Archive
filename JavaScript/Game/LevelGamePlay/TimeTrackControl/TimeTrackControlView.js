@@ -9,12 +9,12 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   LongPressButtonItem_1 = require("../../Module/Common/Button/LongPressButtonItem"),
   SceneTeamEvent_1 = require("../../Module/SceneTeam/SceneTeamEvent"),
   LguiUtil_1 = require("../../Module/Util/LguiUtil"),
   UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
-  TimeTrackController_1 = require("./TimeTrackController"),
   TimeTrackControlPoint_1 = require("./TimeTrackControlPoint"),
   ANGLE_RANGE = 26,
   ANGLE_MIN = -13,
@@ -42,14 +42,14 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       (this.ywe = void 0),
       (this.Iwe = void 0),
       (this.Twe = void 0),
-      (this.Lwe = (t, i) => {
+      (this.Lwe = (t, e) => {
         0 === t.CalculateType &&
-          (TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
+          (ControllerHolder_1.ControllerHolder.TimeTrackController.HandleTimeTrackControlViewClose(),
           (this.$Ar = !0),
           this.CloseMe());
       }),
-      (this.Dwe = (t, i) => {
-        i === Protocol_1.Aki.Protocol.Q4n.Proto_ErrTimelineMove
+      (this.Dwe = (t, e) => {
+        e === Protocol_1.Aki.Protocol.Q4n.Proto_ErrTimelineMove
           ? this.Rwe()
           : this.dwe !== t &&
             (this.uwe && this.uwe[this.dwe].ToggleSelected(!1),
@@ -63,7 +63,7 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
             AudioSystem_1.AudioSystem.PostEvent(LOOP_AKEVENT));
       }),
       (this.Awe = () => {
-        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
+        ControllerHolder_1.ControllerHolder.TimeTrackController.HandleTimeTrackControlViewClose(),
           (this.Mwe = !0),
           this.CloseMe();
       }),
@@ -103,18 +103,18 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       (this.ywe = Rotator_1.Rotator.Create(0, this.gwe, 0)),
       this.Swe.SetUIRelativeRotation(this.ywe.ToUeRotator()),
       (this.vwe = !1);
-    var i = this.GetItem(4);
-    (this.lwe = this.GetItem(3)), (this.uwe = new Array()), i.SetUIActive(!1);
+    var e = this.GetItem(4);
+    (this.lwe = this.GetItem(3)), (this.uwe = new Array()), e.SetUIActive(!1);
     for (let t = 0; t < this.Cwe; t++) {
-      var e = LguiUtil_1.LguiUtil.CopyItem(i, this.lwe),
-        s = (e.SetUIActive(!0), this.Uwe(t)),
-        e = new TimeTrackControlPoint_1.TimeTrackControlPoint(e, t, s);
-      e.UpdateState(
+      var i = LguiUtil_1.LguiUtil.CopyItem(e, this.lwe),
+        s = (i.SetUIActive(!0), this.Uwe(t)),
+        i = new TimeTrackControlPoint_1.TimeTrackControlPoint(i, t, s);
+      i.UpdateState(
         ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(
           t,
         ),
       ),
-        this.uwe.push(e);
+        this.uwe.push(i);
     }
     this.uwe[this.dwe].ToggleSelected(!0),
       this.bwe(),
@@ -182,7 +182,7 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       AudioSystem_1.AudioSystem.ExecuteAction(LOOP_AKEVENT, 0),
       this.Mwe ||
         this.$Ar ||
-        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose();
+        ControllerHolder_1.ControllerHolder.TimeTrackController.HandleTimeTrackControlViewClose();
   }
   OnTick(t) {
     this.vwe &&
@@ -202,12 +202,12 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       this.uwe)
     ) {
       this.uwe[this.dwe].ToggleSelected(!0);
-      for (const i of this.uwe) {
+      for (const e of this.uwe) {
         var t =
           ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(
-            i.Index,
+            e.Index,
           );
-        i.UpdateState(t),
+        e.UpdateState(t),
           t && AudioSystem_1.AudioSystem.PostEvent(HIGHLIGHT_AKEVENT);
       }
       this.bwe();
@@ -227,11 +227,11 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       (ModelManager_1.ModelManager.TimeTrackControlModel.CanUpdated &&
         (t
           ? this.dwe < this.Cwe - 1 &&
-            TimeTrackController_1.TimeTrackController.TimelineTraceControlRequest(
+            ControllerHolder_1.ControllerHolder.TimeTrackController.TimelineTraceControlRequest(
               !0,
             )
           : 0 < this.dwe &&
-            TimeTrackController_1.TimeTrackController.TimelineTraceControlRequest(
+            ControllerHolder_1.ControllerHolder.TimeTrackController.TimelineTraceControlRequest(
               !1,
             )));
   }
@@ -240,29 +240,29 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
   }
   bwe() {
     let t = this.dwe,
-      i = this.dwe;
+      e = this.dwe;
     for (
       t -= 1;
       0 <= t &&
       ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(t);
       t--
     );
-    var e;
+    var i;
     for (
       0 <= t
-        ? ((e = (t + 1) / (this.Cwe - 1)),
+        ? ((i = (t + 1) / (this.Cwe - 1)),
           this.GetSprite(2).SetUIActive(!0),
-          this.GetSprite(2).SetFillAmount(e))
+          this.GetSprite(2).SetFillAmount(i))
         : this.GetSprite(2).SetUIActive(!1),
-        i += 1;
-      i < this.Cwe &&
-      ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(i);
-      i++
+        e += 1;
+      e < this.Cwe &&
+      ModelManager_1.ModelManager.TimeTrackControlModel.IsControlPointUsable(e);
+      e++
     );
-    i < this.Cwe
-      ? ((e = (this.Cwe - i) / (this.Cwe - 1)),
+    e < this.Cwe
+      ? ((i = (this.Cwe - e) / (this.Cwe - 1)),
         this.GetSprite(8).SetUIActive(!0),
-        this.GetSprite(8).SetFillAmount(e))
+        this.GetSprite(8).SetFillAmount(i))
       : this.GetSprite(8).SetUIActive(!1);
   }
 }

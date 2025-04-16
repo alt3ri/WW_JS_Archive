@@ -8,8 +8,10 @@ const puerts_1 = require("puerts"),
   Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  SpineBackgroundById_1 = require("../../../../Core/Define/ConfigQuery/SpineBackgroundById"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
@@ -25,7 +27,10 @@ const puerts_1 = require("puerts"),
   UiNavigationNewController_1 = require("../../UiNavigation/New/UiNavigationNewController"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   PlotController_1 = require("../PlotController"),
+  PlotDefine_1 = require("../PlotDefine"),
+  PlotChildView_1 = require("./PlotChildView"),
   PlotOptionItem_1 = require("./PlotOptionItem"),
+  PlotReviewComponent_1 = require("./PlotReviewComponent"),
   PlotSkipComponent_1 = require("./PlotSkipComponent"),
   PlotTextLogic_1 = require("./PlotTextLogic"),
   FADE_TIME = 1e3,
@@ -51,6 +56,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (this.ceo = void 0),
       (this.meo = !1),
       (this.deo = void 0),
+      (this.mpc = void 0),
       (this.geo = void 0),
       (this.Mbn = !1),
       (this.Sbn = !1),
@@ -72,27 +78,40 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (this.weo = void 0),
       (this.Beo = !1),
       (this.x8i = void 0),
-      (this.iSa = void 0),
-      (this.fya = void 0),
+      (this.QMa = void 0),
+      (this.vya = void 0),
       (this.TRn = () => {
         this.meo || this.ceo?.SetActive(!1);
+      }),
+      (this.X11 = () => {
+        (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay = !1),
+          this.Feo(),
+          this.Oeo();
+      }),
+      (this.iv1 = () => {
+        var t = ModelManager_1.ModelManager.PlotModel.PlotConfig;
+        t.IsAutoPlayCache && ((t.IsAutoPlay = !0), this.Oeo()),
+          !t.IsAutoPlay ||
+            this.geo.IsTextAnimPlaying ||
+            this.HasOptions ||
+            this.OnBtnSubtitleSkipClick();
       }),
       (this.Dvo = (t) => {
         this.deo?.AddSummary(t.TalkOutline);
       }),
-      (this.p3a = (t) => {
+      (this.K5a = (t) => {
         InputController_1.InputController.InputAxis(
           InputEnums_1.EInputAxis.LookUp,
           t,
         );
       }),
-      (this.f3a = (t) => {
+      (this.$5a = (t) => {
         InputController_1.InputController.InputAxis(
           InputEnums_1.EInputAxis.Turn,
           t,
         );
       }),
-      (this.v3a = (t) => {
+      (this.X5a = (t) => {
         0 !== t &&
           ((t = t * ZOOM_RATE),
           InputController_1.InputController.InputAxis(
@@ -168,13 +187,14 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         var t = ModelManager_1.ModelManager.PlotModel.PlotConfig.CanPause;
         this.GetExtendToggle(0).RootUIComp.SetUIActive(t),
           this.GetButton(16).RootUIComp.SetUIActive(t),
+          this.mpc.EnableReviewButton(t),
           this.GetButton(1).RootUIComp.SetUIActive(!0),
           this.Oeo(),
           (this.Beo = !0),
           this.GetSprite(9).SetUIActive(this.Beo);
       }),
       (this.keo = (t) => {
-        this.Feo(), (this.leo = !1), this.fya?.Remove(), (this.fya = void 0);
+        this.Feo(), (this.leo = !1), this.vya?.Remove(), (this.vya = void 0);
         var i =
           (t.CaptionParams?.StartTime ?? 0) *
           CommonDefine_1.MILLIONSECOND_PER_SECOND;
@@ -185,8 +205,8 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
           i > TimerSystem_1.MIN_TIME
             ? (s || this.gto(!1),
               this.ito(),
-              (this.fya = TimerSystem_1.TimerSystem.Delay(() => {
-                (this.fya = void 0),
+              (this.vya = TimerSystem_1.TimerSystem.Delay(() => {
+                (this.vya = void 0),
                   this.geo.UpdatePlotSubtitle(t),
                   "Option" === t.Type || "SystemOption" === t.Type
                     ? this.Jeo()
@@ -229,30 +249,35 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
               : ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay &&
                 this.$eo());
       }),
-      (this.OnBtnSubtitleSkipClick = () => {
-        if (this.geo.IsInteraction) {
-          if (!this.aeo || this.heo >= this.aeo.length) return;
-        } else if (
-          !ControllerHolder_1.ControllerHolder.FlowController.IsInShowTalk()
-        )
-          return;
-        this.leo
-          ? void 0 !== this.geo.SubtitleAnimationTimer
-            ? this.geo.ForceSkipPlotContentAnim()
-            : (this.Yeo(!1),
-              this.Jeo(),
-              AudioSystem_1.AudioSystem.PostEvent(CLICK_AUDIO_EVENT))
-          : void 0 !== this.qZi &&
-            void 0 === this.geo.SubtitleAnimationTimer &&
-            Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn(
-              "Plot",
-              27,
-              "当前字幕已显示完全，但等待时间未结束，无法点到下一句",
-              ["TalkId", this.geo.CurrentContent.Id],
-              ["WaitTime", this.geo.CurrentContent.WaitTime],
-              ["AnimationTime", this.geo.GetPlotContentAnimDuration()],
-            );
+      (this.OnBtnSubtitleSkipClick = (t) => {
+        if (
+          !t?.dragComponent ||
+          !ModelManager_1.ModelManager.PlotModel.CanControlView
+        ) {
+          if (this.geo.IsInteraction) {
+            if (!this.aeo || this.heo >= this.aeo.length) return;
+          } else if (
+            !ControllerHolder_1.ControllerHolder.FlowController.IsInShowTalk()
+          )
+            return;
+          this.leo
+            ? void 0 !== this.geo.SubtitleAnimationTimer
+              ? this.geo.ForceSkipPlotContentAnim()
+              : (this.Yeo(!1),
+                this.Jeo(),
+                AudioSystem_1.AudioSystem.PostEvent(CLICK_AUDIO_EVENT))
+            : void 0 !== this.qZi &&
+              void 0 === this.geo.SubtitleAnimationTimer &&
+              Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Plot",
+                26,
+                "当前字幕已显示完全，但等待时间未结束，无法点到下一句",
+                ["TalkId", this.geo.CurrentContent.Id],
+                ["WaitTime", this.geo.CurrentContent.WaitTime],
+                ["AnimationTime", this.geo.GetPlotContentAnimDuration()],
+              );
+        }
       }),
       (this.OnBtnAutoClick = () => {
         var t = !ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay;
@@ -272,13 +297,37 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
           this.Oeo(),
           this.fha();
       }),
-      (this.uCa = () => {
+      (this.cCa = () => {
         this.pha();
       }),
       (this.Zeo = () => {
         this.fha(), (this.Lrt = !1);
         var t = ModelManager_1.ModelManager.PlotModel.PlotConfig;
         (t.IsAutoPlay = !1), (t.IsAutoPlayCache = !1), this.Feo(), this.Oeo();
+      }),
+      (this.DZ_ = () => {
+        var t;
+        ControllerHolder_1.ControllerHolder.FlowController.OpenPlotReviewView() &&
+          (this.fha(),
+          ((t = ModelManager_1.ModelManager.PlotModel.PlotConfig).IsAutoPlay =
+            !1),
+          (t.IsAutoPlayCache = !1),
+          this.Feo(),
+          this.Oeo());
+      }),
+      (this.FQe = (t) => {
+        "PlotReviewView" === t &&
+          AudioSystem_1.AudioSystem.PostEvent(
+            PlotDefine_1.PLOT_REVIEW_ENTER_AUDIO_EVENT,
+          );
+      }),
+      (this.$Ge = (t) => {
+        "PlotReviewView" === t &&
+          (AudioSystem_1.AudioSystem.PostEvent(
+            PlotDefine_1.PLOT_REVIEW_EXIT_AUDIO_EVENT,
+          ),
+          (this.Lrt = !0),
+          this.pha());
       }),
       (this.Qzi = (t) => {
         this.RootItem.SetUIActive(!t);
@@ -328,7 +377,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         this.weo
           ? this.Aeo && this.Teo
             ? (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("BlackScreen", 46, "Plot图片FadeIn结束"),
+                Log_1.Log.Info("BlackScreen", 45, "Plot图片FadeIn结束"),
               this.xeo &&
                 (this.veo.SetTexture(this.Meo.GetTexture()),
                 this.Meo.SetAlpha(0)),
@@ -338,14 +387,14 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
             : !this.Aeo &&
               this.Ieo &&
               (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("BlackScreen", 46, "Plot图片FadeOut结束"),
+                Log_1.Log.Info("BlackScreen", 45, "Plot图片FadeOut结束"),
               this.Ieo.SetResult(!0),
               (this.Ieo = void 0),
               this.SetTextureByPath(DEFAULT_PATH, this.veo),
               (this.xeo = !1))
           : this.Aeo && this.Teo
             ? (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("BlackScreen", 46, "Plot Middle图片FadeIn结束"),
+                Log_1.Log.Info("BlackScreen", 45, "Plot Middle图片FadeIn结束"),
               this.xeo,
               this.Teo.SetResult(!0),
               (this.Teo = void 0),
@@ -353,7 +402,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
             : !this.Aeo &&
               this.Ieo &&
               (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("BlackScreen", 46, "Plot Middle图片FadeOut结束"),
+                Log_1.Log.Info("BlackScreen", 45, "Plot Middle图片FadeOut结束"),
               this.Seo?.SetUIActive(!1),
               this.Ieo.SetResult(!0),
               (this.Ieo = void 0),
@@ -371,17 +420,19 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (this.dto = () => {
         this.Peo && this.Teo
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("BlackScreen", 46, "Plot黑幕FadeIn结束"),
+              Log_1.Log.Info("BlackScreen", 45, "Plot黑幕FadeIn结束"),
             this.Teo.SetResult(!0),
             (this.Teo = void 0))
           : !this.Peo &&
             this.Ieo &&
             (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("BlackScreen", 46, "Plot黑幕FadeOut结束"),
+              Log_1.Log.Info("BlackScreen", 45, "Plot黑幕FadeOut结束"),
             this.Ieo.SetResult(!0),
             (this.Ieo = void 0)),
           this.Deo && this.Deo();
-      });
+      }),
+      (this.fUl = void 0),
+      (this.UQl = "");
   }
   get Options() {
     return this.ceo?.GetLayoutItemList();
@@ -428,11 +479,12 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       [28, UE.UIItem],
       [29, UE.UIItem],
       [30, UE.UIItem],
+      [31, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.OnBtnSubtitleSkipClick],
         [0, this.OnBtnAutoClick],
         [16, this.Zeo],
+        [31, this.DZ_],
       ]);
   }
   OnStart() {
@@ -460,9 +512,15 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         this.t2e,
         this.zeo,
         void 0,
-        this.uCa,
+        this.cCa,
       )),
       this.deo.EnableSkipButton(!1),
+      this.GetButton(31).RootUIComp.SetUIActive(!1),
+      (this.mpc = new PlotReviewComponent_1.PlotReviewComponent(
+        this.GetButton(31),
+        this.DZ_,
+      )),
+      this.mpc.EnableReviewButton(!1),
       (this._eo = this.GetItem(17)),
       this.Yeo(!1),
       this.Cto(!1),
@@ -526,11 +584,12 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       this.geo.ClearPlotContent(),
       this.nto(),
       this.ceo.SetActive(!1),
-      this.iSa?.Remove(),
-      (this.iSa = void 0),
-      this.fya?.Remove(),
-      (this.fya = void 0),
-      this.GetItem(30).SetUIActive(!1);
+      this.QMa?.Remove(),
+      (this.QMa = void 0),
+      this.vya?.Remove(),
+      (this.vya = void 0),
+      this.GetItem(30).SetUIActive(!1),
+      this.CloseChildView();
   }
   OnBeforeDestroy() {
     this.geo.Clear(),
@@ -540,7 +599,9 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (this.Teo = void 0),
       (this.ceo = void 0),
       this.deo?.OnClear(),
-      (this.deo = void 0);
+      (this.deo = void 0),
+      this.mpc?.OnClear(),
+      (this.mpc = void 0);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -589,15 +650,31 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerPlotForward,
-        this.p3a,
+        this.K5a,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerPlotRight,
-        this.f3a,
+        this.$5a,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerPlotZoom,
-        this.v3a,
+        this.X5a,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OpenView,
+        this.FQe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CloseView,
+        this.$Ge,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnTermExplanationViewOpening,
+        this.X11,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnTermExplanationViewClosed,
+        this.iv1,
       ),
       InputDistributeController_1.InputDistributeController.BindTouch(
         InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -605,13 +682,22 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       ),
       this.deo.AddEventListener();
     var t = this.GetButton(1)
-      .RootUIComp.GetOwner()
-      .GetComponentByClass(UE.UIDraggableComponent.StaticClass());
-    t &&
-      (t.OnPointerBeginDragCallBack.Bind(this.w8i),
-      t.OnPointerDragCallBack.Bind(this.B8i),
-      t.OnPointerEndDragCallBack.Bind(this.b8i),
-      t.OnPointerScrollCallBack.Bind(this.N8i));
+        .RootUIComp.GetOwner()
+        .GetComponentByClass(UE.UIDraggableComponent.StaticClass()),
+      t =
+        (t &&
+          (t.OnPointerBeginDragCallBack.Bind(this.w8i),
+          t.OnPointerDragCallBack.Bind(this.B8i),
+          t.OnPointerEndDragCallBack.Bind(this.b8i),
+          t.OnPointerUpCallBack.Bind(this.OnBtnSubtitleSkipClick),
+          t.OnPointerScrollCallBack.Bind(this.N8i)),
+        this.GetItem(3));
+    ControllerHolder_1.ControllerHolder.TermExplanationController.RegisterTextHyperlink(
+      this.GetText(5),
+      0,
+      3,
+      t,
+    );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
@@ -660,15 +746,31 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerPlotForward,
-        this.p3a,
+        this.K5a,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerPlotRight,
-        this.f3a,
+        this.$5a,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerPlotZoom,
-        this.v3a,
+        this.X5a,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OpenView,
+        this.FQe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.CloseView,
+        this.$Ge,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnTermExplanationViewOpening,
+        this.X11,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnTermExplanationViewClosed,
+        this.iv1,
       ),
       this.deo.RemoveEventListener(),
       InputDistributeController_1.InputDistributeController.UnBindTouch(
@@ -679,19 +781,23 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       .RootUIComp.GetOwner()
       .GetComponentByClass(UE.UIDraggableComponent.StaticClass());
     t &&
-      (t.OnPointerDragCallBack.Unbind(),
+      (t.OnPointerBeginDragCallBack.Unbind(),
+      t.OnPointerDragCallBack.Unbind(),
       t.OnPointerEndDragCallBack.Unbind(),
       t.OnPointerUpCallBack.Unbind(),
-      t.OnPointerScrollCallBack.Unbind());
+      t.OnPointerScrollCallBack.Unbind()),
+      ControllerHolder_1.ControllerHolder.TermExplanationController.UnRegisterTextHyperlink(
+        this.GetText(5),
+      );
   }
   OnTick(t) {
     this.Sbn && this.sto(t), this.Mbn && this.uto(t);
   }
   SimulateClickSubtitle() {
-    Info_1.Info.IsBuildDevelopmentOrDebug && this.OnBtnSubtitleSkipClick();
+    Info_1.Info.IsBuildShipping || this.OnBtnSubtitleSkipClick();
   }
   SimulateClickOption() {
-    if (Info_1.Info.IsBuildDevelopmentOrDebug)
+    if (!Info_1.Info.IsBuildShipping)
       for (let t = this.Options.length - 1; 0 <= t; --t) {
         var i = this.Options[t];
         i.CheckToggleGray() || i.OptionClick(!0);
@@ -711,11 +817,14 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
   }
   jeo(t) {
     var i = new Array();
-    for (const s of t)
-      ModelManager_1.ModelManager.PlotModel.CheckOptionCondition(
-        s,
+    for (const e of t) {
+      var s = ModelManager_1.ModelManager.PlotModel.CheckOptionCondition(
+        e,
         this.CurrentSubtitle,
-      ) && i.push(s);
+      );
+      (s || e.OptionLockTip) &&
+        ((s = { Config: e, ConditionCheck: s }), i.push(s));
+    }
     return i;
   }
   Veo(i) {
@@ -725,7 +834,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       this.geo.IsInteraction ||
         !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanInteractive)
     )
-      this.leo = !0;
+      this.Yeo(!0), this.Cto(!1), (this.leo = !0);
     else {
       let t = i.WaitTime;
       void 0 === t &&
@@ -798,7 +907,10 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
     var t;
     this.heo++,
       this.heo < this.aeo.length
-        ? ((t = this.aeo[this.heo]), this.geo.PlaySubtitle(t), this.Veo(t))
+        ? (this.geo.ClearPlotContent(),
+          (t = this.aeo[this.heo]),
+          this.geo.PlaySubtitle(t),
+          this.Veo(t))
         : this.heo === this.aeo.length && this.Xeo();
   }
   Yeo(t) {
@@ -840,13 +952,13 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
         ? (this.ceo.SetActive(!0),
           this.UiViewSequence.PlaySequence("ChoiceStart"),
           this.GetItem(30).SetUIActive(!0),
-          (this.iSa = TimerSystem_1.TimerSystem.Delay(() => {
-            this.GetItem(30).SetUIActive(!1), (this.iSa = void 0);
+          (this.QMa = TimerSystem_1.TimerSystem.Delay(() => {
+            this.GetItem(30).SetUIActive(!1), (this.QMa = void 0);
           }, ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.ProtectOptionTime)))
         : (this.UiViewSequence.PlaySequence("ChoiceClose"),
           this.GetItem(30).SetUIActive(!1),
-          this.iSa?.Remove(),
-          (this.iSa = void 0)));
+          this.QMa?.Remove(),
+          (this.QMa = void 0)));
   }
   AddScreenEffectPlotRoot() {
     var t = (0, puerts_1.$ref)(void 0),
@@ -857,12 +969,12 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
       (i = this.GetItem(13)),
       this.ueo?.IsValid()) &&
       (this.ueo.K2_AttachRootComponentTo(i), Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Plot", 46, "PlotView::AddScreenEffectPlotRoot");
+      Log_1.Log.Debug("Plot", 45, "PlotView::AddScreenEffectPlotRoot");
   }
   RemoveScreenEffectPlotRoot() {
     this.ueo?.IsValid() &&
       (this.ueo.K2_DetachFromActor(), Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Plot", 46, "PlotView::RemoveScreenEffectPlotRoot"),
+      Log_1.Log.Debug("Plot", 45, "PlotView::RemoveScreenEffectPlotRoot"),
       (this.ueo = void 0);
   }
   fto() {
@@ -923,7 +1035,7 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
             this.Seo?.SetUIActive(!0), (this.Leo = i), this.fto();
           })
         : (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("BlackScreen", 46, "PlotView设置图片,但未找到Path"),
+            Log_1.Log.Warn("BlackScreen", 45, "PlotView设置图片,但未找到Path"),
           this.SetTextureByPath(DEFAULT_PATH, this.Eeo, void 0, () => {
             (this.Leo = i), this.fto();
           })),
@@ -949,18 +1061,46 @@ class PlotView extends UiTickViewBase_1.UiTickViewBase {
   async FadeInBgBlackScreen(t) {
     (this.Teo = new CustomPromise_1.CustomPromise()),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("BlackScreen", 46, "FadeInBgBlackScreen黑幕进入"),
+        Log_1.Log.Info("BlackScreen", 45, "FadeInBgBlackScreen黑幕进入"),
       (this.Deo = t),
       this.pto(),
       await this.Teo.Promise;
   }
   async FadeOutBgBlackScreen(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("BlackScreen", 46, "FadeInBgBlackScreen黑幕退出"),
+      Log_1.Log.Info("BlackScreen", 45, "FadeInBgBlackScreen黑幕退出"),
       (this.Deo = t),
       (this.Ieo = new CustomPromise_1.CustomPromise()),
       this.pto(),
       await this.Ieo.Promise;
+  }
+  async OpenChildView(t, i) {
+    t = SpineBackgroundById_1.configSpineBackgroundById.GetConfig(t);
+    let s = void 0,
+      e = void 0;
+    if (
+      ((e =
+        1 === ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender()
+          ? ((s = StringUtils_1.StringUtils.IsEmpty(t.UiPrefabIdMaleVariant)
+              ? t.UiPrefabId
+              : t.UiPrefabIdMaleVariant),
+            StringUtils_1.StringUtils.IsEmpty(t.AnimationNameMaleVariant)
+              ? t.AnimationName
+              : t.AnimationNameMaleVariant)
+          : ((s = t.UiPrefabId), t.AnimationName)),
+      this.fUl)
+    ) {
+      if (this.UQl === s) return void this.fUl.PlaySpineAnimation(e, i);
+      await this.fUl.CloseAsync(), (this.fUl = void 0);
+    }
+    t = this.GetItem(29);
+    (this.fUl = new PlotChildView_1.PlotChildView()),
+      (this.UQl = s),
+      await this.fUl.OpenAsync(t, s, e, i);
+  }
+  async CloseChildView() {
+    this.fUl &&
+      (await this.fUl.CloseAsync(), (this.fUl = void 0), (this.UQl = ""));
   }
 }
 exports.PlotView = PlotView;

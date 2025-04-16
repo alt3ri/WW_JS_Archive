@@ -1,20 +1,20 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, n, r) {
-    var o,
+  function (e, t, n, o) {
+    var r,
       i = arguments.length,
       s =
         i < 3
           ? t
-          : null === r
-            ? (r = Object.getOwnPropertyDescriptor(t, n))
-            : r;
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, n))
+            : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(e, t, n, r);
+      s = Reflect.decorate(e, t, n, o);
     else
       for (var f = e.length - 1; 0 <= f; f--)
-        (o = e[f]) && (s = (i < 3 ? o(s) : 3 < i ? o(t, n, s) : o(t, n)) || s);
+        (r = e[f]) && (s = (i < 3 ? r(s) : 3 < i ? r(t, n, s) : r(t, n)) || s);
     return 3 < i && s && Object.defineProperty(t, n, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -22,18 +22,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
-  LevelGeneralNetworks_1 = require("../../../../LevelGamePlay/LevelGeneralNetworks");
+  EventSystem_1 = require("../../../../Common/Event/EventSystem");
 let EffectAreaComponent = class EffectAreaComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
       (this.Zhn = !1),
       (this.eln = (e) => {
-        (this.Zhn = e),
-          LevelGeneralNetworks_1.LevelGeneralNetworks.RequestPlayerAccessEffectArea(
-            this.Entity.Id,
-            e,
-          );
+        this.Zhn = e;
       });
   }
   OnInitData(e) {
@@ -62,7 +57,7 @@ let EffectAreaComponent = class EffectAreaComponent extends EntityComponent_1.En
   }
 };
 (EffectAreaComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(202)],
+  [(0, RegisterComponent_1.RegisterComponent)(217)],
   EffectAreaComponent,
 )),
   (exports.EffectAreaComponent = EffectAreaComponent);

@@ -5,12 +5,14 @@ const UE = require("ue"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   EditFormationDefine_1 = require("../../EditFormation/EditFormationDefine"),
   FriendController_1 = require("../../Friend/FriendController"),
@@ -22,6 +24,7 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.dOi = void 0),
       (this.COi = !1),
+      (this.gLt = void 0),
       (this.gOi = () => {
         FriendController_1.FriendController.RequestFriendApplyAddSend(
           this.dOi.PlayerId,
@@ -81,6 +84,10 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       [21, UE.UITexture],
       [20, UE.UIItem],
       [22, UE.UIButtonComponent],
+      [23, UE.UIItem],
+      [24, UE.UIText],
+      [25, UE.UIItem],
+      [26, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [14, this.gOi],
@@ -88,6 +95,10 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
         [22, this.PNi],
         [15, this.DSi],
       ]);
+  }
+  async OnBeforeStartAsync() {
+    (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(26).GetOwner());
   }
   OnStart() {
     this.GetItem(18).SetUIActive(!1),
@@ -107,7 +118,7 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   OnBeforeDestroy() {
-    this.RemoveEventListener();
+    this.RemoveEventListener(), this.gLt?.Destroy(), (this.gLt = void 0);
   }
   Refresh(e, i, r) {
     this.GetButton(22).RootUIComp.SetRaycastTarget(
@@ -130,11 +141,13 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetButton(14).RootUIComp.SetUIActive(n),
       this.GetButton(15).RootUIComp.SetUIActive(o),
       this.GetText(1).SetUIActive(a);
-    var s = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+    var s = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(
         e.HeadId,
-      )?.RoleHeadIconBig,
+        !1,
+      ),
       s =
-        (s && this.SetTextureByPath(s, this.GetTexture(3)),
+        (s &&
+          this.SetTextureByPath(s.GetRoleHeadIconLarge(), this.GetTexture(3)),
         ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId)),
       l = this.GetText(0),
       s =
@@ -145,7 +158,7 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
           )?.FriendRemark) &&
         "" !== s
           ? LguiUtil_1.LguiUtil.SetLocalText(l, "NameMark", s)
-          : l.SetText(e.Name),
+          : l.SetText(e.GetRawName()),
         this.GetText(2).SetText("Lv." + e.Level),
         this.GetText(7));
     e.Signature && "" !== e.Signature
@@ -168,7 +181,25 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
         e.PlayerDetails.ESs);
     0 < s &&
       ((l = BackgroundCardById_1.configBackgroundCardById.GetConfig(s)),
-      this.SetTextureByPath(l.LongCardPath, this.GetTexture(21)));
+      this.SetTextureByPath(l.LongCardPath, this.GetTexture(21))),
+      this.Nxa(e.GetOnlineName()),
+      this.sPa(e.GetOnlineName()),
+      this.gLt?.Refresh(e.PlayerTitleId, e.PlayerTitleStarLevel, e.Sex);
+  }
+  sPa(e) {
+    !PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId() ||
+    (void 0 !== e && "" !== e)
+      ? this.GetItem(25)?.SetUIActive(!1)
+      : this.GetItem(25)?.SetUIActive(!0);
+  }
+  Nxa(e) {
+    var i;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((i = "" !== e && void 0 !== e),
+        this.GetItem(23)?.SetUIActive(i),
+        this.GetText(24)?.SetUIActive(i),
+        i && ((i = e ?? ""), this.GetText(24)?.SetText(i)))
+      : (this.GetItem(23)?.SetUIActive(!1), this.GetText(24)?.SetUIActive(!1));
   }
   pOi(e) {
     var i,

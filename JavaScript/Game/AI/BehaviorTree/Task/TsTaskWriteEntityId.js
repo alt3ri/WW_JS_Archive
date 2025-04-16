@@ -3,8 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskWriteEntityId extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -15,13 +15,19 @@ class TsTaskWriteEntityId extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsBlackboardKeyTarget = ""),
       (this.TsBlackboardKeyWriteTo = "");
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsBlackboardKeyTarget = ""),
+      (this.TsBlackboardKeyWriteTo = "");
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsBlackboardKeyTarget = this.BlackboardKeyTarget),
       (this.TsBlackboardKeyWriteTo = this.BlackboardKeyWriteTo));
   }
-  ReceiveTickAI(e, r, t) {
+  ReceiveTickAI(e, t, r) {
     var s = e.AiController;
     if (s)
       if ((this.InitTsVariables(), this.TsBlackboardKeyTarget)) {
@@ -29,7 +35,7 @@ class TsTaskWriteEntityId extends TsTaskAbortImmediatelyBase_1.default {
         if (this.TsBlackboardKeyTarget) {
           if (
             !(e =
-              BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
                 s.CharAiDesignComp.Entity.Id,
                 this.TsBlackboardKeyTarget,
               ))
@@ -45,7 +51,7 @@ class TsTaskWriteEntityId extends TsTaskAbortImmediatelyBase_1.default {
           )
             return void this.FinishExecute(!1);
         }
-        BlackboardController_1.BlackboardController.SetEntityIdByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.SetEntityIdByEntity(
           e,
           this.TsBlackboardKeyWriteTo,
           s.CharAiDesignComp.Entity.Id,

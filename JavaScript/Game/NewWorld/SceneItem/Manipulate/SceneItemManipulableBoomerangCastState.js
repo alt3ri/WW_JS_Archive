@@ -23,7 +23,6 @@ class SceneItemManipulableBoomerangCastState extends SceneItemManipulableCastSta
       (this.Gnr = Vector_1.Vector.Create()),
       (this.Nnr = Vector_1.Vector.Create()),
       (this.Onr = 0),
-      (this.StateType = "BeCastingFree"),
       (this.wnr = this.SceneItem.Config.ThrowCfg.MotionConfig),
       (this.Anr = this.wnr.Velocity),
       (this.Pnr = this.wnr.AngularVelocity),
@@ -115,6 +114,9 @@ class SceneItemManipulableBoomerangCastState extends SceneItemManipulableCastSta
       (e = o), s.push(o);
     }
     return s;
+  }
+  IsNoLockCasting() {
+    return !0;
   }
 }
 exports.SceneItemManipulableBoomerangCastState =

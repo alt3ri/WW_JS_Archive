@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PropertyIndex = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class PropertyIndex {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -35,11 +36,11 @@ class PropertyIndex {
   get Dec() {
     return this.dec();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsPropertyIndex(t, r) {
-    return (r || new PropertyIndex()).__init(
+  static getRootAsPropertyIndex(t, i) {
+    return (i || new PropertyIndex()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -49,16 +50,34 @@ class PropertyIndex {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   key(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   name(t) {
-    var r = this.J7.__offset(this.z7, 8);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   anothername(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   converttowhiteid() {
     var t = this.J7.__offset(this.z7, 12);
@@ -77,12 +96,24 @@ class PropertyIndex {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icon(t) {
-    var r = this.J7.__offset(this.z7, 20);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   dec(t) {
-    var r = this.J7.__offset(this.z7, 22);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.PropertyIndex = PropertyIndex;

@@ -22,7 +22,7 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Z3i = 0),
       (this.jbe = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Shop", 11, "PayShop:ShopItem 点击充值", [
+          Log_1.Log.Info("Shop", 10, "PayShop:ShopItem 点击充值", [
             "Id",
             this.Pe.PayItemId,
           ]),
@@ -35,7 +35,7 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Shop",
-            11,
+            10,
             "PayShop:ShopItem 充值成功,道具到账",
             ["订单号", t.OrderId],
             ["道具id", t.ItemId],

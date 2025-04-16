@@ -6,6 +6,7 @@ class PrewarFormationData {
   constructor() {
     (this.j8 = 0),
       (this.Mne = 0),
+      (this.BIl = 0),
       (this.B8 = 0),
       (this.Uai = !1),
       (this.Aai = -1),
@@ -24,6 +25,12 @@ class PrewarFormationData {
   }
   SetConfigId(e) {
     this.Mne = e;
+  }
+  GetSkinId() {
+    return this.BIl;
+  }
+  SetSkinId(e) {
+    this.BIl = e;
   }
   IsEmpty() {
     return 0 === this.Mne;

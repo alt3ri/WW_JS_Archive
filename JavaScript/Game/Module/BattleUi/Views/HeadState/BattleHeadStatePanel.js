@@ -9,10 +9,10 @@ const UE = require("ue"),
   EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
   ObjectSystem_1 = require("../../../../../Core/Object/ObjectSystem"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  CharacterController_1 = require("../../../../NewWorld/Character/CharacterController"),
   UiLayer_1 = require("../../../../Ui/UiLayer"),
   ChargingDeviceHeadState_1 = require("./ChargingDeviceHeadState"),
   CommonHeadState_1 = require("./CommonHeadState"),
@@ -37,6 +37,7 @@ const UE = require("ue"),
 class BattleHeadStatePanel {
   constructor() {
     (this.olt = new Map()),
+      (this.sT1 = new Map()),
       (this.rlt = new Map()),
       (this.nlt = 0),
       (this.slt = 0),
@@ -48,21 +49,13 @@ class BattleHeadStatePanel {
       (this.mlt = 0),
       (this.Xrt = 0),
       (this.dlt = 0),
-      (this.Clt = (t, e, a) => {
-        var i = EntitySystem_1.EntitySystem.Get(t);
-        i?.Valid &&
-          CharacterController_1.CharacterController.GetCharacter(i) &&
-          !i.GetComponent(190).HasTag(1008164187) &&
-          (i = this.glt(t)) &&
-          i.OnHealthChanged(t);
-      }),
       (this.flt = (t) => {
         8 === this.plt(t.Id) &&
           this.vlt(t) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Battle",
-              8,
+              17,
               "[HeadState]当任何使用多阶段打击机关耐久度（不可完全破坏）的可破坏物受击时，添加显示血条的实体",
               ["EntityId", t.Id],
             ),
@@ -74,7 +67,7 @@ class BattleHeadStatePanel {
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Battle",
-                8,
+                17,
                 "[HeadState]当任何可破坏物受击时",
                 ["EntityId", t.Id],
                 ["newDurability", e],
@@ -90,7 +83,7 @@ class BattleHeadStatePanel {
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Battle",
-                      8,
+                      17,
                       "[HeadState]可破坏物耐久度<=0时，不自动删除可破坏物血条",
                       ["EntityId", t.Id],
                       ["newDurability", e],
@@ -101,7 +94,7 @@ class BattleHeadStatePanel {
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Battle",
-                      8,
+                      17,
                       "[HeadState]可破坏物耐久度<=0时，删除可破坏物血条",
                       ["EntityId", t.Id],
                       ["newDurability", e],
@@ -113,7 +106,7 @@ class BattleHeadStatePanel {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
-                  8,
+                  17,
                   "[HeadState]可破坏物耐久度<=0时，找不到对应的可破坏物血条",
                   ["EntityId", t.Id],
                   ["newDurability", e],
@@ -124,7 +117,7 @@ class BattleHeadStatePanel {
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
-                  8,
+                  17,
                   "[HeadState]当任何可破坏物耐久改变时，添加显示血条的实体",
                   ["EntityId", t.Id],
                   ["newDurability", e],
@@ -138,7 +131,7 @@ class BattleHeadStatePanel {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Battle",
-              40,
+              39,
               "[HeadState] 当任何进度控制机关启用状态改变时",
               ["EntityId", t.Id],
               ["PbDataId", i],
@@ -151,7 +144,7 @@ class BattleHeadStatePanel {
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
-                  40,
+                  39,
                   "[HeadState] 进度控制机关停用时，删除进度条",
                   ["EntityId", t.Id],
                   ["PbDataId", i],
@@ -162,7 +155,7 @@ class BattleHeadStatePanel {
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
-                  40,
+                  39,
                   "[HeadState] 进度控制机关停用时，找不到对应的进度条",
                   ["EntityId", t.Id],
                   ["PbDataId", i],
@@ -174,7 +167,7 @@ class BattleHeadStatePanel {
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Battle",
-                40,
+                39,
                 "[HeadState] 进度控制机关启用时，尝试添加进度条",
                 ["EntityId", t.Id],
                 ["PbDataId", i],
@@ -183,6 +176,7 @@ class BattleHeadStatePanel {
             a.ProgressCtrlType)
           ) {
             case "CaptureStrategicPoint":
+            case "CaptureStrategicPoint2":
             case "ChargingDevice":
               this.Mlt(t, a.CurrentValue / a.MaxValue, !1);
               break;
@@ -190,7 +184,7 @@ class BattleHeadStatePanel {
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Battle",
-                  40,
+                  39,
                   "[HeadState] 进度控制机关启用时，尚未支持所用的进度数据类型",
                   ["EntityId", t.Id],
                   ["PbDataId", i],
@@ -205,14 +199,18 @@ class BattleHeadStatePanel {
         this.ClearAllHeadState();
       }),
       (this.OnAddOrRemoveBuff = (t, e, a, i) => {
-        var r = this.glt(t);
-        r && r.AddOrRemoveBuff(t, e, a, i);
+        var s = this.glt(t);
+        s && s.AddOrRemoveBuff(t, e, a, i);
       }),
       (this.OnRoleLevelChange = (t, e, a) => {
         for (const i of this.rlt.values()) i.RoleLevelChange(t, e, a);
       }),
       (this.OnChangeTeam = () => {
         for (const t of this.rlt.values()) t.ChangeTeam();
+      }),
+      (this.OnEntityCampModify = (t, e, a) => {
+        t = this.olt.get(t.Id);
+        t && t.ModifyEntityCamp(a);
       }),
       (this.Tlt = (t) => {
         this.Slt(t);
@@ -228,42 +226,57 @@ class BattleHeadStatePanel {
       )),
       (this._lt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "GameplayStateShowDistance",
+      )),
+      (this.mlt = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "TempHeadStateHideTime",
+      )),
+      (this.Xrt = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "ComHPAttenuateBufferSpeed",
+      )),
+      (this.dlt = CommonParamById_1.configCommonParamById.GetIntConfig(
+        "Detail_Head_State_Range",
       ));
+  }
+  async Preload() {
+    await Promise.all([this.aT1(1, 6), this.aT1(2, 4)]);
+  }
+  Init() {
     var t = CommonParamById_1.configCommonParamById.GetStringConfig(
         "HeadStateScaleCurvePath",
       ),
       e = CommonParamById_1.configCommonParamById.GetStringConfig(
         "DurabilityHeadStateScaleCurvePath",
       );
-    (this.mlt = CommonParamById_1.configCommonParamById.GetIntConfig(
-      "TempHeadStateHideTime",
-    )),
-      (this.Xrt = CommonParamById_1.configCommonParamById.GetIntConfig(
-        "ComHPAttenuateBufferSpeed",
-      )),
-      (this.dlt = CommonParamById_1.configCommonParamById.GetIntConfig(
-        "Detail_Head_State_Range",
-      )),
-      ResourceSystem_1.ResourceSystem.LoadAsync(
-        e,
-        UE.CurveFloat,
-        (t) => {
-          t?.IsValid() && (this.clt = t);
-        },
-        103,
-      ),
-      ResourceSystem_1.ResourceSystem.LoadAsync(
-        t,
-        UE.CurveFloat,
-        (t) => {
-          t?.IsValid() &&
-            ((this.ult = t),
-            this.RefreshCurrentRole(),
-            this.InitializeEntityList(),
-            this.Ore());
-        },
-        103,
-      );
+    (this.clt = ResourceSystem_1.ResourceSystem.Load(e, UE.CurveFloat)),
+      (this.ult = ResourceSystem_1.ResourceSystem.Load(t, UE.CurveFloat)),
+      this.RefreshCurrentRole(),
+      this.InitializeEntityList(),
+      this.Ore();
+  }
+  async aT1(e, a) {
+    if (!this.sT1.has(e)) {
+      var i = headStateViewMap.get(e);
+      if (i) {
+        var s = [],
+          r = (this.sT1.set(e, s), []);
+        for (let t = 0; t < a; t++) {
+          var n = new i();
+          r.push(
+            n.InitializeHeadState(
+              UiLayer_1.UiLayer.WorldSpaceUiRootItem,
+              e,
+              this.Xrt,
+              this.dlt,
+              this.slt,
+              this.hlt,
+              void 0,
+            ),
+          ),
+            s.push(n);
+        }
+        await Promise.all(r);
+      }
+    }
   }
   InitializeEntityList() {
     var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
@@ -282,6 +295,8 @@ class BattleHeadStatePanel {
   ClearAllHeadState() {
     for (const t of this.rlt.values()) t.Destroy();
     this.rlt.clear();
+    for (const e of this.sT1.values()) for (const a of e) a.Destroy();
+    this.sT1.clear();
   }
   Rlt() {
     for (const t of this.olt.values()) t.Clear();
@@ -289,13 +304,9 @@ class BattleHeadStatePanel {
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.CharOnHealthChanged,
-      this.Clt,
+      EventDefine_1.EEventName.OnAnySceneItemEntityHit,
+      this.flt,
     ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnAnySceneItemEntityHit,
-        this.flt,
-      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAnySceneItemDurabilityChange,
         this.Elt,
@@ -323,17 +334,17 @@ class BattleHeadStatePanel {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
         this.OnChangeTeam,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.EntityCampModify,
+        this.OnEntityCampModify,
       );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.CharOnHealthChanged,
-      this.Clt,
+      EventDefine_1.EEventName.OnAnySceneItemEntityHit,
+      this.flt,
     ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnAnySceneItemEntityHit,
-        this.flt,
-      ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAnySceneItemDurabilityChange,
         this.Elt,
@@ -361,6 +372,10 @@ class BattleHeadStatePanel {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
         this.OnChangeTeam,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.EntityCampModify,
+        this.OnEntityCampModify,
       );
   }
   Tick(t) {
@@ -414,7 +429,11 @@ class BattleHeadStatePanel {
     this.Llt(t) && this.Dlt(t);
   }
   OnRemoveEntity(t) {
-    (this.Llt(t) || this.vlt(t)) && this.Slt(t);
+    this.Flh(t)
+      ? TimerSystem_1.TimerSystem.Delay(() => {
+          this.Slt(t);
+        }, 500)
+      : (this.Llt(t) || this.vlt(t)) && this.Slt(t);
   }
   Dlt(t, e) {
     if (ObjectSystem_1.ObjectSystem.IsValid(t)) {
@@ -452,11 +471,20 @@ class BattleHeadStatePanel {
   }
   async Glt(a) {
     var i = a.GetHeadStateType(),
-      r = headStateViewMap.get(i);
-    if (r) {
-      var s = a.GetEntityId(),
-        r = new r();
-      this.rlt.set(s, r);
+      s = this.sT1.get(i);
+    if (s) {
+      const r = s.pop();
+      if (r) {
+        await r.ActiveBattleHeadStatePreload(a);
+        const n = a.GetEntityId();
+        return this.rlt.set(n, r), r;
+      }
+    }
+    s = headStateViewMap.get(i);
+    if (s) {
+      const n = a.GetEntityId(),
+        r = new s();
+      this.rlt.set(n, r);
       let t = void 0,
         e = void 0;
       if (
@@ -485,21 +513,24 @@ class BattleHeadStatePanel {
   }
   Blt(t, e = !1) {
     BattleHeadStatePanel.Nlt.Start();
-    var a = this.glt(t);
-    a
+    var a,
+      i = this.glt(t);
+    i
       ? (e &&
           Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Battle", 8, "[HeadState]休眠头顶状态条", [
+          Log_1.Log.Info("Battle", 17, "[HeadState]休眠头顶状态条", [
             "EntityId",
             t,
           ]),
-        a.Destroy(),
+        (a = this.sT1.get(i.HeadStateType))
+          ? (i.Recycle(), a.push(i))
+          : i.Destroy(),
         this.rlt.delete(t))
       : e &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Battle",
-          8,
+          17,
           "[HeadState]休眠头顶状态条时，找不到对应的状态条",
           ["EntityId", t],
         ),
@@ -511,10 +542,12 @@ class BattleHeadStatePanel {
       ? ((a = t.Id), this.Blt(a, e))
       : e &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Battle", 8, "[HeadState]休眠头顶状态条时，实体不可用", [
-          "EntityId",
-          t.Id,
-        ]);
+        Log_1.Log.Info(
+          "Battle",
+          17,
+          "[HeadState]休眠头顶状态条时，实体不可用",
+          ["EntityId", t.Id],
+        );
   }
   Llt(t) {
     t = t.GetComponent(3);
@@ -531,6 +564,14 @@ class BattleHeadStatePanel {
       !!t?.Valid &&
       t.CreatureData.GetEntityType() ===
         Protocol_1.Aki.Protocol.kks.Proto_SceneItem
+    );
+  }
+  Flh(t) {
+    return (
+      !!this.vlt(t) &&
+      !!(t = t.GetComponent(127))?.Valid &&
+      !!(t = t.GetProgressData()) &&
+      "ChargingDevice" === t.ProgressCtrlType
     );
   }
   plt(t) {

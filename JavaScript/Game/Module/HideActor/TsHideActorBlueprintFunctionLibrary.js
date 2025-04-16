@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   HideActorController_1 = require("./HideActorController");
 class TsHideActorBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static HideMesh() {
     HideActorController_1.HideActorController.HideMesh();
   }

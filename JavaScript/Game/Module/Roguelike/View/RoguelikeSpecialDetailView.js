@@ -45,7 +45,7 @@ class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
     var e = this.OpenParam;
     void 0 === e
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Roguelike", 59, "RoguelikeSpecialDetailView无效输入")
+        Log_1.Log.Error("Roguelike", 58, "RoguelikeSpecialDetailView无效输入")
       : ((this.nPn = e[0]),
         (this.Usa = e[1]),
         (this.$be = new GenericLayout_1.GenericLayout(

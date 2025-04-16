@@ -41,6 +41,7 @@ exports.GachaContentInfo = GachaContentInfo;
 class GachaModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
+      (this.IsCacheShowNewNotify = !1),
       (this.MWt = void 0),
       (this.EWt = 0),
       (this.SWt = void 0),
@@ -97,26 +98,26 @@ class GachaModel extends ModelBase_1.ModelBase {
   set CurGachaResult(e) {
     this.SWt = e;
     var o = new Map();
-    for (const s of this.SWt) {
-      var r = s?.e9n?.L8n,
-        t = s?.e9n?.n9n;
-      o.set(r, (o.get(r) ?? 0) + t);
+    for (const i of this.SWt) {
+      var t = i?.e9n?.L8n,
+        r = i?.e9n?.n9n;
+      o.set(t, (o.get(t) ?? 0) + r);
     }
     for (const n of this.SWt) {
       var a = n?.e9n?.L8n,
-        i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(a);
-      i
-        ? (n.IsNew = GachaController_1.GachaController.IsNewRole(i.Id))
-        : (i =
+        s = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(a);
+      s
+        ? (n.IsNew = GachaController_1.GachaController.IsNewRole(s.Id))
+        : (s =
               LocalStorage_1.LocalStorage.GetPlayer(
                 LocalStorageDefine_1.ELocalStoragePlayerKey.GachaWeaponRecord,
               ) ?? []).includes(a)
           ? (n.IsNew = !1)
           : ((n.IsNew = !0),
-            i.push(a),
+            s.push(a),
             LocalStorage_1.LocalStorage.SetPlayer(
               LocalStorageDefine_1.ELocalStoragePlayerKey.GachaWeaponRecord,
-              i,
+              s,
             ));
     }
   }
@@ -148,11 +149,11 @@ class GachaModel extends ModelBase_1.ModelBase {
   GetValidGachaList() {
     var e,
       o = [];
-    for (const r of ModelManager_1.ModelManager.GachaModel.GachaInfoArray)
-      ModelManager_1.ModelManager.GachaModel.CheckGachaValid(r) &&
+    for (const t of ModelManager_1.ModelManager.GachaModel.GachaInfoArray)
+      ModelManager_1.ModelManager.GachaModel.CheckGachaValid(t) &&
         (e =
-          0 < (e = r.UsePoolId) ? r.GetPoolInfo(e) : r.GetFirstValidPool()) &&
-        o.push(new GachaDefine_1.GachaPoolData(r, e));
+          0 < (e = t.UsePoolId) ? t.GetPoolInfo(e) : t.GetFirstValidPool()) &&
+        o.push(new GachaDefine_1.GachaPoolData(t, e));
     return o;
   }
   CheckCountIsEnough(e, o) {
@@ -195,16 +196,16 @@ class GachaModel extends ModelBase_1.ModelBase {
   }
   UpdateCount(e, o) {
     this.EWt -= o;
-    for (const r of this.GachaInfoArray)
-      if (r.Id === e) {
-        (r.TodayTimes += o), (r.TotalTimes += o);
+    for (const t of this.GachaInfoArray)
+      if (t.Id === e) {
+        (t.TodayTimes += o), (t.TotalTimes += o);
         break;
       }
   }
   CheckNewGachaPool() {
     if (
       (Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Gacha", 9, "当前打开过的卡池", [
+        Log_1.Log.Warn("Gacha", 8, "当前打开过的卡池", [
           "GachaPoolOpenRecord",
           this.yWt,
         ]),
@@ -218,7 +219,7 @@ class GachaModel extends ModelBase_1.ModelBase {
   }
   async PreloadGachaSequence(e) {
     var o = [];
-    for (const r of e) o.push(this.PreloadGachaSequenceOne(r));
+    for (const t of e) o.push(this.PreloadGachaSequenceOne(t));
     await Promise.all(o);
   }
   GetLoadedSequence(e) {
@@ -226,23 +227,23 @@ class GachaModel extends ModelBase_1.ModelBase {
   }
   async PreloadGachaSequenceOne(e) {
     var o = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
-    const r =
+    const t =
         ConfigManager_1.ConfigManager.GachaConfig.GetGachaSequenceConfigById(
           o.ShowSequence,
         ),
-      t = new CustomPromise_1.CustomPromise();
+      r = new CustomPromise_1.CustomPromise();
     (o = ResourceSystem_1.ResourceSystem.LoadAsync(
-      r.SequencePath,
+      t.SequencePath,
       UE.LevelSequence,
       (e) => {
-        this.UWt.set(r.SequencePath, e),
+        this.UWt.set(t.SequencePath, e),
           UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(e, !0),
-          t.SetResult(!0);
+          r.SetResult(!0);
       },
       102,
     )),
       this.RWt.push(o),
-      await t.Promise,
+      await r.Promise,
       (o = ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e));
     const a = new CustomPromise_1.CustomPromise();
     2 === o &&
@@ -268,12 +269,12 @@ class GachaModel extends ModelBase_1.ModelBase {
         o,
       );
     this.UWt.forEach((e) => {
-      UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(e, !0);
+      UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(e, !1);
     }),
       this.UWt.clear();
   }
   IsRolePool(e) {
-    return 1 === e || 4 === e || 2 === e || 6 === e;
+    return 1 === e || 4 === e || 2 === e || 7 === e || 6 === e;
   }
   GetGachaQuality(e) {
     let o = 0;
@@ -294,7 +295,7 @@ class GachaModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Gacha",
-            44,
+            43,
             "抽卡获得物品的类型错误，必须是角色或武器",
             ["itemId", e],
           );
@@ -302,20 +303,8 @@ class GachaModel extends ModelBase_1.ModelBase {
     return o;
   }
   GetGachaRecordUrlPrefix() {
-    var e =
-        ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk(),
-      o = BaseConfigController_1.BaseConfigController.GetGachaUrl();
-    return e && void 0 !== o.GachaGlobalRecord
-      ? o.GachaGlobalRecord
-      : o.GachaRecord;
-  }
-  GetGachaPoolUrlPrefix() {
-    var e =
-        ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk(),
-      o = BaseConfigController_1.BaseConfigController.GetGachaUrl();
-    return e && void 0 !== o.GachaPoolGlobalDetail
-      ? o.GachaPoolGlobalDetail
-      : o.GachaPoolDetail;
+    return BaseConfigController_1.BaseConfigController.GetGachaUrl()
+      .GachaRecord;
   }
   GetServerArea() {
     return ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk()

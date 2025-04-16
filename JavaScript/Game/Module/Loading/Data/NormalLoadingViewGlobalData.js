@@ -19,7 +19,7 @@ class NormalLoadingViewGlobalData {
     this.Mvi = new CustomPromise_1.CustomPromise();
   }
   static FinishEndPromise() {
-    this.Mvi.SetResult(void 0), (this.Mvi = void 0);
+    this.Mvi?.SetResult(void 0), (this.Mvi = void 0);
   }
   static get IsNotifyCloseView() {
     return this.Evi;

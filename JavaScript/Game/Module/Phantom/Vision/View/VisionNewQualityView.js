@@ -24,7 +24,7 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       (this.FMt = () => {
         var e;
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Calabash", 28, "跳转到鸣域终端收集页签", [
+          Log_1.Log.Info("Calabash", 27, "跳转到鸣域终端收集页签", [
             "目标幻象Id",
             this.NMt.PhantomItem.MonsterId,
           ]),
@@ -159,7 +159,7 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
     0 <
     ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList.length
       ? (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Calabash", 28, "刷新下个声骸数据"),
+          Log_1.Log.Info("Calabash", 27, "刷新下个声骸数据"),
         this.Refresh(),
         this.UiViewSequence?.PlaySequence("Start"))
       : this.CloseMe();

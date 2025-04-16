@@ -4,6 +4,7 @@ const UE = require("ue"),
   WorldModel_1 = require("../../../World/Model/WorldModel"),
   TsSimpleInteractBase_1 = require("../SimpleBlueprintItem/TsSimpleInteractBase");
 class SceneItemLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static FindInteractItemByTypeId(e) {
     var e = WorldModel_1.WorldModel.GetTsSimpleInteractItemById(e),
       r = UE.NewArray(TsSimpleInteractBase_1.default);

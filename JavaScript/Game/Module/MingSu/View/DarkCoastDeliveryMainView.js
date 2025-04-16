@@ -27,14 +27,14 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.EHa = void 0),
-      (this.IHa = void 0),
-      (this.THa = []),
-      (this.LHa = []),
-      (this.DHa = []),
+      (this.TQa = void 0),
+      (this.LQa = void 0),
+      (this.AQa = []),
+      (this.DQa = []),
+      (this.RQa = []),
       (this.lqe = void 0),
       (this.eho = void 0),
-      (this.AHa = 0),
+      (this.UQa = 0),
       (this.Jvt = () => {
         this.CloseMe();
       }),
@@ -43,8 +43,8 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
           MingSuDefine_1.DARK_COAST_HELP_ID,
         );
       }),
-      (this.RHa = (e, i) => {
-        this.TZa(e, i);
+      (this.xQa = (e, i) => {
+        this.dah(e, i);
       }),
       (this.YDo = () => {
         var e = this.Pe.GetActivityRewardViewData();
@@ -52,43 +52,43 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
           e && this.AddChildViewById(i);
         });
       }),
-      (this.UHa = () => {
+      (this.PQa = () => {
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
           this.Pe.GetCoreId(),
         ) <= 0
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
               "DarkCoastDelivery_Item_0",
             )
-          : ((this.AHa = this.Pe.GetDragonPoolLevel()),
+          : ((this.UQa = this.Pe.GetDragonPoolLevel()),
             MingSuController_1.MingSuController.SendHandInMingSuRequest(
               this.Pe.DragonPoolId,
             ));
       }),
-      (this.xHa = () => {
+      (this.wQa = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           this.Pe.GetCoreId(),
         );
       }),
-      (this.PHa = () => {
+      (this.BQa = () => {
         const i = this.Pe.GetDragonPoolLevel();
         var e;
-        i > this.AHa
+        i > this.UQa
           ? ((e =
               new DarkCoastDeliveryLevelUpViewData_1.DarkCoastDeliveryLevelUpViewData(
-                this.AHa,
+                this.UQa,
                 i,
               )),
             UiManager_1.UiManager.OpenView(
               "DarkCoastDeliveryLevelUpView",
               e,
               () => {
-                var e = this.LZa(i);
-                void 0 !== e && this.TZa(e.LevelData, e);
+                var e = this.Cah(i);
+                void 0 !== e && this.dah(e.LevelData, e);
               },
             ))
           : (this.UiViewSequence.PlaySequence("Sweep"), this.Hqe());
       }),
-      (this.KWa = () => {
+      (this.pXa = () => {
         this.Hqe();
       });
   }
@@ -127,18 +127,18 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
     ]),
       (this.BtnBindInfo = [
         [19, this.YDo],
-        [22, this.UHa],
-        [24, this.xHa],
+        [22, this.PQa],
+        [24, this.wQa],
       ]);
   }
   async OnBeforeStartAsync() {
     (this.Pe = this.OpenParam),
       void 0 === this.Pe
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("MingSuTi", 59, "DarkCoastDeliveryMainView无效输入！")
-        : ((this.AHa = this.Pe.GetDragonPoolLevel()),
-          this.bHa(),
-          await this.qHa(),
+          Log_1.Log.Error("MingSuTi", 58, "DarkCoastDeliveryMainView无效输入！")
+        : ((this.UQa = this.Pe.GetDragonPoolLevel()),
+          this.OQa(),
+          await this.GQa(),
           (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(
             this.GetItem(23),
           )),
@@ -151,25 +151,25 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
             this.GetItem(18).GetOwner(),
           ));
   }
-  bHa() {
-    (this.THa = []), (this.LHa = []);
+  OQa() {
+    (this.AQa = []), (this.DQa = []);
     for (let e = LINE_START_INDEX; e < LINE_START_INDEX + 2 * LINE_COUNT; e++)
-      (e % 2 != 0 ? this.THa : this.LHa).push(this.GetItem(e));
+      (e % 2 != 0 ? this.AQa : this.DQa).push(this.GetItem(e));
   }
-  async qHa() {
+  async GQa() {
     var i = this.Pe.GetLevelDataList(),
       t = Math.min(i.length, ITEM_COUNT),
       s = new Array();
     for (let e = 0; e < t; e++) {
       var r = new DarkCoastDeliveryLevelItem_1.DarkCoastDeliveryLevelItem(i[e]),
         h =
-          (r.SetClickToggleCallback(this.RHa),
-          this.DHa.push(r),
+          (r.SetClickToggleCallback(this.xQa),
+          this.RQa.push(r),
           this.GetItem(e + ITEM_START_INDEX));
       s.push(this.j1a(r, h)),
-        (0 !== e && !i[e].GetIsUnLock()) || ((this.EHa = i[e]), (this.IHa = r));
+        (0 !== e && !i[e].GetIsUnLock()) || ((this.TQa = i[e]), (this.LQa = r));
     }
-    await Promise.all(s), this.IHa?.SetSelect(!0);
+    await Promise.all(s), this.LQa?.SetSelect(!0);
   }
   async j1a(e, i) {
     await e.CreateThenShowByActorAsync(i.GetOwner());
@@ -178,9 +178,9 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
     (ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId =
       ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
       this.Hqe(),
-      this.BHa(),
-      this.EHa && this.eho.RefreshUi(this.EHa),
-      this.ZYa();
+      this.qQa(),
+      this.TQa && this.eho.RefreshUi(this.TQa),
+      this.hth();
   }
   Hqe() {
     var e = this.Pe.GetCurLevelTexturePath(),
@@ -227,36 +227,44 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
       e = (this.GetItem(25).SetUIActive(t), this.Pe.GetRewardRedDotState());
     this.GetItem(26)?.SetUIActive(e);
   }
-  ZYa() {
-    var e = this.Pe.GetDragonPoolLevel();
-    if (!(this.AHa >= e)) {
-      let i = this.AHa + 1;
-      var t = e - i + 1;
-      TimerSystem_1.TimerSystem.Loop(
-        () => {
-          var e = this.LZa(i);
-          e && (e.RefreshUi(), e.PlaySequence(!1), i++);
-        },
-        LEVEL_ITEM_SHOW_DELAY,
-        t,
-      ),
-        (this.AHa = e);
+  hth() {
+    var i = this.Pe.GetDragonPoolLevel();
+    if (!(this.UQa >= i)) {
+      let e = this.UQa + 1;
+      var t = i - e + 1;
+      t <= 0 ||
+        (1 == t
+          ? TimerSystem_1.TimerSystem.Delay(() => {
+              this.J1l(e);
+            }, LEVEL_ITEM_SHOW_DELAY)
+          : TimerSystem_1.TimerSystem.Loop(
+              () => {
+                this.J1l(e), e++;
+              },
+              LEVEL_ITEM_SHOW_DELAY,
+              t,
+            ),
+        (this.UQa = i));
     }
   }
-  LZa(e) {
-    for (const i of this.DHa) if (i.LevelData.Id === e) return i;
+  J1l(e) {
+    e = this.Cah(e);
+    e && (e.RefreshUi(), e.PlaySequence(!1));
   }
-  BHa() {
+  Cah(e) {
+    for (const i of this.RQa) if (i.LevelData.Id === e) return i;
+  }
+  qQa() {
     var i = this.Pe.GetDragonPoolLevel();
-    for (let e = 0; e < this.LHa.length; e++)
-      this.LHa[e].SetUIActive(i >= e), this.THa[e].SetUIActive(i < e);
+    for (let e = 0; e < this.DQa.length; e++)
+      this.DQa[e].SetUIActive(i >= e), this.AQa[e].SetUIActive(i < e);
   }
-  TZa(e, i) {
-    this.EHa !== e &&
-      (void 0 !== this.IHa && this.IHa.SetSelect(!1),
-      (this.EHa = e),
-      (this.IHa = i),
-      this.IHa.SetSelect(!0),
+  dah(e, i) {
+    this.TQa !== e &&
+      (void 0 !== this.LQa && this.LQa.SetSelect(!1),
+      (this.TQa = e),
+      (this.LQa = i),
+      this.LQa.SetSelect(!0),
       this.eho.RefreshUi(e),
       this.eho.SetUiActive(!0),
       this.UiViewSequence.StopPrevSequence(!1),
@@ -265,21 +273,21 @@ class DarkCoastDeliveryMainView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateDragonPoolView,
-      this.PHa,
+      this.BQa,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-        this.KWa,
+        this.pXa,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateDragonPoolView,
-      this.PHa,
+      this.BQa,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-        this.KWa,
+        this.pXa,
       );
   }
 }

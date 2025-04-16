@@ -18,12 +18,13 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
       (this.OldCameraMode = 0),
       (this.OldAssistLimit = -0);
   }
-  K2_NotifyBegin(e, t, i) {
-    e = e.GetOwner();
-    if (e instanceof TsBaseCharacter_1.default) {
-      var s = e.CharacterActorComponent?.Entity;
+  Constructor() {}
+  K2_NotifyBegin(t, e, i) {
+    t = t.GetOwner();
+    if (t instanceof TsBaseCharacter_1.default) {
+      var s = t.CharacterActorComponent?.Entity;
       if (s) {
-        var s = s.GetComponent(163).MainAnimInstance;
+        var s = s.GetComponent(175).MainAnimInstance;
         if (
           UE.KuroStaticLibrary.IsObjectClassByName(
             s,
@@ -49,20 +50,20 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Test",
-            58,
+            57,
             "No Entity for TsBaseCharacter ",
-            ["Name", e.GetName()],
-            ["location", e.K2_GetActorLocation()],
+            ["Name", t.GetName()],
+            ["location", t.D_K2_GetActorLocation()],
           );
     }
     return !1;
   }
-  K2_NotifyEnd(e, t) {
-    e = e.GetOwner();
-    if (e instanceof TsBaseCharacter_1.default) {
-      var i = e.CharacterActorComponent?.Entity;
+  K2_NotifyEnd(t, e) {
+    t = t.GetOwner();
+    if (t instanceof TsBaseCharacter_1.default) {
+      var i = t.CharacterActorComponent?.Entity;
       if (i) {
-        var i = i.GetComponent(163).MainAnimInstance;
+        var i = i.GetComponent(175).MainAnimInstance;
         if (
           UE.KuroStaticLibrary.IsObjectClassByName(
             i,
@@ -82,10 +83,10 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Test",
-            58,
+            57,
             "No Entity for TsBaseCharacter",
-            ["Name", e.GetName()],
-            ["location", e.K2_GetActorLocation()],
+            ["Name", t.GetName()],
+            ["location", t.D_K2_GetActorLocation()],
           );
     }
     return !1;

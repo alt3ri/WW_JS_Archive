@@ -132,7 +132,7 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
     return (
       void 0 === e &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("UiCommon", 28, "找不到可附着物体，拿第一个做保底"),
+          Log_1.Log.Debug("UiCommon", 27, "找不到可附着物体，拿第一个做保底"),
         (e = this.Items[0])),
       e
     );

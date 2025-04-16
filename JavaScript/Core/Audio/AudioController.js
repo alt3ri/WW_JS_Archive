@@ -35,7 +35,7 @@ class AudioController {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Audio",
-        40,
+        39,
         "[AudioController.PostEvent] 播放AkEvent: ",
         ["eventPath", t],
         ["callbackMask", i],
@@ -47,7 +47,7 @@ class AudioController {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Audio",
-            40,
+            39,
             "[AudioController.PostEvent] PlayAudioByEventPath",
             ["eventPath", t],
             ["callbackMask", i],
@@ -95,7 +95,7 @@ class AudioController {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Audio",
-              34,
+              33,
               "停止加载音频",
               ["eventPath", t.EventPath],
               ["CallbackId", r],
@@ -107,7 +107,7 @@ class AudioController {
     return t && 0 !== t.length
       ? void 0 !== AudioController.w6.GetAudioPool(t)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Audio", 22, "没有传入音频事件资源路径"),
+          Log_1.Log.Error("Audio", 21, "没有传入音频事件资源路径"),
         !1);
   }
   static AddAudioEventCallback(t, o) {
@@ -129,9 +129,9 @@ class AudioController {
         (t = e
           ? s
             ? UE.AkGameplayStatics.PostEvent(n, e, i, r, l, a)
-            : UE.AkGameplayStatics.PostEventAtLocation(
+            : UE.AkGameplayStatics.D_PostEventAtLocation(
                 n,
-                e.K2_GetActorLocation(),
+                e.D_K2_GetActorLocation(),
                 new UE.Rotator(0, 0, 0),
                 a,
                 e.GetWorld(),
@@ -144,7 +144,7 @@ class AudioController {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Audio",
-        22,
+        21,
         "没有对应的音频事件资源，请检查是否已经加载！",
         ["eventPath", o],
       ),
@@ -158,9 +158,9 @@ class AudioController {
         o
           ? r
             ? o.PostAkEvent(l, e, i, l.GetName())
-            : UE.AkGameplayStatics.PostEventAtLocation(
+            : UE.AkGameplayStatics.D_PostEventAtLocation(
                 l,
-                o.K2_GetComponentLocation(),
+                o.D_K2_GetComponentLocation(),
                 new UE.Rotator(0, 0, 0),
                 "",
                 o.GetWorld(),
@@ -170,7 +170,7 @@ class AudioController {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Audio",
-        22,
+        21,
         "没有对应的音频事件资源，请检查是否已经加载！",
         ["eventPath", t],
       );
@@ -211,7 +211,7 @@ class AudioController {
   static GetAudioEvent(t, o = !0) {
     if (t && 0 !== t.length) return AudioController.w6.GetAudioPool(t, o);
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Audio", 22, "没有传入音频事件资源路径");
+      Log_1.Log.Error("Audio", 21, "没有传入音频事件资源路径");
   }
   static PostEventNotInputPool(t, e, i, r, l, s, a = !0) {
     StringUtils_1.StringUtils.IsNothing(t)
@@ -222,9 +222,9 @@ class AudioController {
             (t = e
               ? a
                 ? UE.AkGameplayStatics.PostEvent(o, e, r, l, s)
-                : UE.AkGameplayStatics.PostEventAtLocation(
+                : UE.AkGameplayStatics.D_PostEventAtLocation(
                     o,
-                    e.K2_GetActorLocation(),
+                    e.D_K2_GetActorLocation(),
                     new UE.Rotator(0, 0, 0),
                     "",
                     e.GetWorld(),
@@ -233,7 +233,7 @@ class AudioController {
               i && i(o, t);
           } else
             Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Audio", 22, "不进入缓存池音效加载资源失败：", [
+              Log_1.Log.Error("Audio", 21, "不进入缓存池音效加载资源失败：", [
                 "eventPath: ",
                 t,
               ]),
@@ -249,7 +249,7 @@ class AudioController {
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Audio",
-        22,
+        21,
         "输入MediaName 或者 ExternalSourceName 异常",
         ["MediaName", e],
         ["ExternalSourceName", i],
@@ -258,19 +258,19 @@ class AudioController {
       AudioController.PostEvent(t, o, r, s, a);
   }
   static SetMultiplePositions(t, o, e) {
-    UE.AkGameplayStatics.SetMultiplePositions(t, o, e);
+    UE.AkGameplayStatics.D_SetMultiplePositions(t, o, e);
   }
   static PostSelectableAudioEvent(t, o) {
     (o = this.b6(t, o.GetName())), (o = this.q6(o));
     o
       ? (AudioController.PostEventByUi(t, o),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("UiCore", 22, "点击声音!!!!!!!!!!!", [
+          Log_1.Log.Debug("UiCore", 21, "点击声音!!!!!!!!!!!", [
             "eventPath",
             t,
           ]))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("UiCore", 22, "没有点击声音!!!!!!!!");
+        Log_1.Log.Debug("UiCore", 21, "没有点击声音!!!!!!!!");
   }
   static StopSelectableAudioEventByName(t) {
     t = this.G6(t);
@@ -309,7 +309,7 @@ class AudioController {
     return this.V6.get(t);
   }
   static Clear() {
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("UiCore", 22, "缓存音效数据清除"),
+    Log_1.Log.CheckDebug() && Log_1.Log.Debug("UiCore", 21, "缓存音效数据清除"),
       this.F6();
   }
 }

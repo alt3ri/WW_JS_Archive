@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configRiskHarvestInstById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configRiskHarvestInstById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configRiskHarvestInstById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configRiskHarvestInstById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configRiskHarvestInstById.GetConfig(";
 exports.configRiskHarvestInstById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (t, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${t})`),
+      getConfigStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${t})`),
       i =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (n) {
@@ -43,8 +47,8 @@ exports.configRiskHarvestInstById = {
         const a = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (a)
           return (
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -76,8 +80,8 @@ exports.configRiskHarvestInstById = {
               ((i = KEY_PREFIX + `#${t})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, a)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            o.Stop(),
-            getConfigStat.Stop(),
+            o?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -85,8 +89,8 @@ exports.configRiskHarvestInstById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigStat.Stop(),
+    o?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

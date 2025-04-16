@@ -10,7 +10,7 @@ class PlotCameraTemplateConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Plot", 43, "找不到相机模板配置", [
+          Log_1.Log.Error("Plot", 42, "找不到相机模板配置", [
             "CameraTemplate ID",
             e,
           ])),

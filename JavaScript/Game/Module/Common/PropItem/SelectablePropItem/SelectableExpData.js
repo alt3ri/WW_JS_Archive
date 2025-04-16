@@ -74,7 +74,7 @@ class SelectableExpData {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelExperienceComponent",
-            11,
+            10,
             "Unregistered SetMaxExpFunction CallBack",
           ),
         0
@@ -108,12 +108,16 @@ class SelectableExpData {
     return this.CurrentLevel;
   }
   GetExpDistanceToMax() {
-    let e = 0;
-    for (let t = 0; t <= this.CurrentMaxLevel - 1; t++)
-      e += this.StageMaxExp(t);
+    return this.GetExpDistanceToLevel(this.CurrentMaxLevel);
+  }
+  GetExpDistanceToLevel(t) {
+    if (t <= this.CurrentLevel) return 0;
+    var e = Math.min(t, this.CurrentMaxLevel);
     let i = 0;
-    for (let t = 0; t <= this.CurrentLevel - 1; t++) i += this.StageMaxExp(t);
-    return e - i - this.CurrentExp;
+    for (let t = 0; t <= e - 1; t++) i += this.StageMaxExp(t);
+    let s = 0;
+    for (let t = 0; t <= this.CurrentLevel - 1; t++) s += this.StageMaxExp(t);
+    return i - s - this.CurrentExp;
   }
   GetCurrentExp() {
     return this.CurrentExp;

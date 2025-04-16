@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configGamePlayScanByUid.Init"),
-  getConfigStat = Stats_1.Stat.Create("configGamePlayScanByUid.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGamePlayScanByUid.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGamePlayScanByUid.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configGamePlayScanByUid.GetConfig(";
 exports.configGamePlayScanByUid = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (n, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n})`),
+      getConfigStat?.Start();
+    var a = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${n})`),
       i =
-        (a.Start(),
+        (a?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (o) {
@@ -43,8 +47,8 @@ exports.configGamePlayScanByUid = {
         const t = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (t)
           return (
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -76,8 +80,8 @@ exports.configGamePlayScanByUid = {
               ((i = KEY_PREFIX + `#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -85,8 +89,8 @@ exports.configGamePlayScanByUid = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    a.Stop(),
-      getConfigStat.Stop(),
+    a?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

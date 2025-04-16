@@ -7,9 +7,9 @@ const Log_1 = require("../../../Core/Common/Log"),
   Net_1 = require("../../../Core/Net/Net"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
-  CameraController_1 = require("../../Camera/CameraController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
@@ -76,7 +76,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
     this.TimelineTraceExitRequest();
     var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(
       ModelManager_1.ModelManager.TimeTrackControlModel.RefEntityId,
-    )?.Entity?.GetComponent(150);
+    )?.Entity?.GetComponent(161);
     e && e.ForceExitSeqCamera(),
       (ModelManager_1.ModelManager.StaticSceneModel.IsNotAutoExitSceneCamera =
         !1),
@@ -95,7 +95,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
         Protocol_1.Aki.Protocol.NCs.create());
     (r.F4n = MathUtils_1.MathUtils.NumberToLong(a)),
       (r.c5n = e),
-      Net_1.Net.Call(15147, r, (e) => {
+      Net_1.Net.Call(27134, r, (e) => {
         e
           ? (ModelManager_1.ModelManager.TimeTrackControlModel.InitControlInfo(
               e,
@@ -107,7 +107,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
               ? Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "SceneGameplay",
-                  46,
+                  45,
                   "时间控制装置启动请求:HandleStaticSceneSeq成功",
                   ["entityid", t],
                 )
@@ -117,14 +117,14 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "SceneGameplay",
-                    46,
+                    45,
                     "时间控制装置启动请求:HandleStaticSceneSeq失败",
                     ["entityid", t],
                   )))
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "SceneGameplay",
-                46,
+                45,
                 "时间控制装置启动请求:response请求失败",
                 ["entityid", t],
               ),
@@ -145,7 +145,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
         Protocol_1.Aki.Protocol.VCs.create());
     (a.f6n = e),
       (a.F4n = MathUtils_1.MathUtils.NumberToLong(t)),
-      Net_1.Net.Call(18608, a, (e) => {
+      Net_1.Net.Call(22178, a, (e) => {
         var t;
         (ModelManager_1.ModelManager.TimeTrackControlModel.CanUpdated = !0),
           e &&
@@ -182,7 +182,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
           ),
         Protocol_1.Aki.Protocol.HCs.create());
     (t.F4n = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(25003, t, (e) => {});
+      Net_1.Net.Call(17642, t, (e) => {});
   }
   static Gwe(t, a) {
     if (t?.length) {
@@ -190,7 +190,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
         var r = MathUtils_1.MathUtils.LongToNumber(t[e]),
           i = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
         if (i?.Valid) {
-          i = i.Entity?.GetComponent(150);
+          i = i.Entity?.GetComponent(161);
           if (i && i.ForceEnterSeqCamera())
             return (
               (ModelManager_1.ModelManager.TimeTrackControlModel.RefEntityId =
@@ -204,7 +204,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "SceneGameplay",
-          46,
+          45,
           "时间控制装置启动请求:失败，没找到合适的entityId",
           ["entityid", a],
         );
@@ -212,7 +212,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "SceneGameplay",
-          46,
+          45,
           "时间控制装置启动请求:失败，inId数组长度异常",
           ["entityid", a],
         );
@@ -221,14 +221,14 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
   static Nwe(e, t) {
     var a = ModelManager_1.ModelManager.TimeTrackControlModel.ControllerEntity;
     a?.Valid
-      ? ((a = a.Entity.GetComponent(121)),
+      ? ((a = a.Entity.GetComponent(132)),
         ModelManager_1.ModelManager.TimeTrackControlModel.GetConfigStatesCounts() <
           2 ||
           (t !== e && a?.PlayActiveSeqForDuration(t < e, -1)))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "SceneGameplay",
-          40,
+          39,
           "时间控制装置自身表现变化:当前没有有效的控制实体",
         );
   }
@@ -237,7 +237,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "SceneGameplay",
-          46,
+          45,
           "时间控制装置启动请求:FinishCallback",
         ),
       this.B7(e),
@@ -250,7 +250,7 @@ class TimeTrackController extends UiControllerBase_1.UiControllerBase {
     _a.FinishCallback(!0);
   }),
   (TimeTrackController.OnViewTargetChanged = (e) => {
-    CameraController_1.CameraController.Model.IsToLockOnCameraMode() &&
+    ControllerHolder_1.ControllerHolder.CameraController.Model.IsToLockOnCameraMode() &&
       _a.B7 &&
       (e <= 1
         ? TimerSystem_1.TimerSystem.Delay(_a.VBn, 1e3)

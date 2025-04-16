@@ -8,7 +8,7 @@ class ButtonSpriteItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.l4e = void 0),
-      (this.w4a = 0),
+      (this.c8a = 0),
       (this.Gke = void 0),
       (this.ije = () => {
         this.Gke && this.Gke();
@@ -53,16 +53,16 @@ class ButtonSpriteItem extends UiPanelBase_1.UiPanelBase {
   BindRedDot(t, e = 0) {
     var i = this.GetItem(2);
     i &&
-      (this.UnBindRedDot(), (this.l4e = t), (this.w4a = e), this.l4e) &&
+      (this.UnBindRedDot(), (this.l4e = t), (this.c8a = e), this.l4e) &&
       RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
   }
   UnBindRedDot() {
     var t;
     this.l4e &&
       ((t = this.GetItem(2)),
-      RedDotController_1.RedDotController.UnBindGivenUi(this.l4e, t, this.w4a),
+      RedDotController_1.RedDotController.UnBindGivenUi(this.l4e, t, this.c8a),
       (this.l4e = void 0),
-      (this.w4a = 0));
+      (this.c8a = 0));
   }
 }
 exports.ButtonSpriteItem = ButtonSpriteItem;

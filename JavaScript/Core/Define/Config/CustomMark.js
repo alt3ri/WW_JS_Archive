@@ -25,6 +25,12 @@ class CustomMark {
   get Scale() {
     return this.scale();
   }
+  get TrackHudEnable() {
+    return this.trackhudenable();
+  }
+  get TrackAutoCancelDistance() {
+    return this.trackautocanceldistance();
+  }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
   }
@@ -39,8 +45,14 @@ class CustomMark {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markpic(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetShowrangeAt(t) {
     return this.showrange(t);
@@ -70,6 +82,14 @@ class CustomMark {
   scale() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
+  }
+  trackhudenable() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  trackautocanceldistance() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.readFloat32(this.z7 + t) : -1;
   }
 }
 exports.CustomMark = CustomMark;

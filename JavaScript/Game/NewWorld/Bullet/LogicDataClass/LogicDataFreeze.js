@@ -8,6 +8,9 @@ class LogicDataFreeze extends LogicDataBase_1.default {
       (this.Tags = void 0),
       (this.FreezeTime = -0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataFreeze;
 //# sourceMappingURL=LogicDataFreeze.js.map

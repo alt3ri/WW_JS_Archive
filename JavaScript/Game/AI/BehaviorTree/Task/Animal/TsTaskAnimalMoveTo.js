@@ -4,9 +4,9 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   Time_1 = require("../../../../../Core/Common/Time"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   AnimalMoveToController_1 = require("../../../../NewWorld/Character/Animal/Controller/AnimalMoveToController"),
   CharacterUnifiedStateTypes_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
-  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
   TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
   DEFAULT_DISTANCE_ERROR_THRESHOLD = 100;
 class TsTaskAnimalMoveTo extends TsTaskAbortImmediatelyBase_1.default {
@@ -19,6 +19,20 @@ class TsTaskAnimalMoveTo extends TsTaskAbortImmediatelyBase_1.default {
       (this.LimitTime = 0),
       (this.RootMotion = !0),
       (this.DistanceErrorThreshold = 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsLimitTime = -0),
+      (this.TsTurnSpeed = 0),
+      (this.TsMoveState = CharacterUnifiedStateTypes_1.ECharMoveState.Walk),
+      (this.TsNavigationOn = !1),
+      (this.TsTargetLocation = ""),
+      (this.TsRootMotion = !1),
+      (this.TsDistanceErrorThreshold = 0),
+      (this.AnimalMoveToController = void 0),
+      (this.TargetCache = void 0),
+      (this.EndTime = -0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsLimitTime = -0),
       (this.TsTurnSpeed = 0),
@@ -64,21 +78,21 @@ class TsTaskAnimalMoveTo extends TsTaskAbortImmediatelyBase_1.default {
             )),
       (this.IsInitTsVariables = !0));
   }
-  ReceiveExecuteAI(i, e) {
+  ReceiveExecuteAI(i, t) {
     TsTaskAnimalMoveTo.StaticVariablesInited ||
       TsTaskAnimalMoveTo.InitStaticVariables();
-    var t,
+    var e,
       s = i.AiController;
     s
       ? (s = s.CharActorComp?.Entity)?.Valid
         ? (this.InitTsVariables(s),
           TsTaskAnimalMoveTo.AnimalValidMoveState.has(this.TsMoveState)
-            ? ((t =
-                BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+            ? ((e =
+                ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
                   s.Id,
                   this.TsTargetLocation,
                 )),
-              this.TargetCache.DeepCopy(t),
+              this.TargetCache.DeepCopy(e),
               (this.AnimalMoveToController =
                 new AnimalMoveToController_1.AnimalMoveToController(s)),
               this.AnimalMoveToController.Init(
@@ -95,24 +109,24 @@ class TsTaskAnimalMoveTo extends TsTaskAbortImmediatelyBase_1.default {
               0 < this.TsLimitTime &&
                 (this.EndTime = Time_1.Time.WorldTime + this.TsLimitTime))
             : (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("BehaviorTree", 30, "错误的移动状态", [
+                Log_1.Log.Error("BehaviorTree", 29, "错误的移动状态", [
                   "Type",
                   i.GetClass().GetName(),
                 ]),
               this.FinishExecute(!1)))
         : this.FinishExecute(!1)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             i.GetClass().GetName(),
           ]),
         this.FinishExecute(!1));
   }
-  ReceiveTickAI(i, e, t) {
+  ReceiveTickAI(i, t, e) {
     if (0 < this.TsLimitTime && this.EndTime < Time_1.Time.WorldTime)
       this.AnimalMoveToController.Stop(), this.Finish(!0);
     else
-      switch (this.AnimalMoveToController.Update(t)) {
+      switch (this.AnimalMoveToController.Update(e)) {
         case 1:
           this.Finish(!0);
           break;

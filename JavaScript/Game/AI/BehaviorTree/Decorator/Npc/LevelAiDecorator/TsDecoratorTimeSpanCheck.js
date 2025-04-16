@@ -4,7 +4,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
   GlobalData_1 = require("../../../../../GlobalData"),
-  TimeOfDayController_1 = require("../../../../../Module/TimeOfDay/TimeOfDayController");
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder");
 class TsDecoratorTimeSpanCheck extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -12,6 +12,12 @@ class TsDecoratorTimeSpanCheck extends UE.BTDecorator_BlueprintBase {
       (this.StartTime = new UE.Timecode()),
       (this.EndTime = new UE.Timecode()),
       (this.IsInitTsVariables = !1),
+      (this.TsCheckType = 0),
+      (this.TsStartTime = new UE.Timecode()),
+      (this.TsEndTime = new UE.Timecode());
+  }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
       (this.TsCheckType = 0),
       (this.TsStartTime = new UE.Timecode()),
       (this.TsEndTime = new UE.Timecode());
@@ -37,15 +43,19 @@ class TsDecoratorTimeSpanCheck extends UE.BTDecorator_BlueprintBase {
     var e =
         this.TsStartTime.Hours * CommonDefine_1.MINUTE_PER_HOUR +
         this.TsStartTime.Minutes,
-      i =
+      r =
         this.TsEndTime.Hours * CommonDefine_1.MINUTE_PER_HOUR +
         this.TsEndTime.Minutes,
-      r = TimeOfDayController_1.TimeOfDayController.CheckInMinuteSpan(e, i);
+      o =
+        ControllerHolder_1.ControllerHolder.TimeOfDayController.CheckInMinuteSpan(
+          e,
+          r,
+        );
     switch (this.TsCheckType) {
       case 0:
-        return r;
+        return o;
       case 1:
-        return !r;
+        return !o;
       default:
         return !1;
     }

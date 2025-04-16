@@ -28,7 +28,7 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
       (this.Qvt = (e) => {
         this.Fvt.UpdateByDataList(e);
       }),
-      (this.SNa = (t) => {
+      (this.I3a = (t) => {
         var e,
           i,
           s = this.OpenParam;
@@ -84,7 +84,7 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
       );
   }
   OnRemoveEventListener() {
@@ -94,7 +94,7 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
       );
   }
   OnBeforeShow() {

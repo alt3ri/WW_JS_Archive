@@ -45,6 +45,9 @@ class LoadingLevelArea {
   get ActivityId() {
     return this.activityid();
   }
+  get Type() {
+    return this.type();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -139,6 +142,10 @@ class LoadingLevelArea {
   }
   activityid() {
     var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  type() {
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

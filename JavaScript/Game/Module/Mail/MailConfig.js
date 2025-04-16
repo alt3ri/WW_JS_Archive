@@ -24,7 +24,7 @@ class MailConfig extends ConfigBase_1.ConfigBase {
     return (
       i ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Mail", 50, "缺少邮件筛选配置 ID:", ["id", e])),
+          Log_1.Log.Error("Mail", 49, "缺少邮件筛选配置 ID:", ["id", e])),
       i
     );
   }

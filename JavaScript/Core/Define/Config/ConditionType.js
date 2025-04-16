@@ -305,8 +305,14 @@ class ConditionType {
     );
   }
   type(t) {
-    var r = this.J7.__offset(this.z7, 4);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 4),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   isclienttrigger() {
     var t = this.J7.__offset(this.z7, 6);
@@ -354,8 +360,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam1(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 14),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam2At(t, r) {
     return this.param2(t);
@@ -374,8 +386,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam2(t) {
-    var r = this.J7.__offset(this.z7, 18);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 18),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam3At(t, r) {
     return this.param3(t);
@@ -394,8 +412,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam3(t) {
-    var r = this.J7.__offset(this.z7, 22);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 22),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam4At(t, r) {
     return this.param4(t);
@@ -414,8 +438,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam4(t) {
-    var r = this.J7.__offset(this.z7, 26);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 26),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam5At(t, r) {
     return this.param5(t);
@@ -434,8 +464,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam5(t) {
-    var r = this.J7.__offset(this.z7, 30);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 30),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam6At(t, r) {
     return this.param6(t);
@@ -454,8 +490,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam6(t) {
-    var r = this.J7.__offset(this.z7, 34);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 34),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam7At(t, r) {
     return this.param7(t);
@@ -474,8 +516,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam7(t) {
-    var r = this.J7.__offset(this.z7, 38);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 38),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam8At(t, r) {
     return this.param8(t);
@@ -494,8 +542,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam8(t) {
-    var r = this.J7.__offset(this.z7, 42);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 42),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam9At(t, r) {
     return this.param9(t);
@@ -514,8 +568,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam9(t) {
-    var r = this.J7.__offset(this.z7, 46);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 46),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam10At(t, r) {
     return this.param10(t);
@@ -534,8 +594,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam10(t) {
-    var r = this.J7.__offset(this.z7, 50);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 50),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam11At(t, r) {
     return this.param11(t);
@@ -554,8 +620,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam11(t) {
-    var r = this.J7.__offset(this.z7, 54);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 54),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam12At(t, r) {
     return this.param12(t);
@@ -574,8 +646,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam12(t) {
-    var r = this.J7.__offset(this.z7, 58);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 58),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam13At(t, r) {
     return this.param13(t);
@@ -594,8 +672,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam13(t) {
-    var r = this.J7.__offset(this.z7, 62);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 62),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam14At(t, r) {
     return this.param14(t);
@@ -614,8 +698,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam14(t) {
-    var r = this.J7.__offset(this.z7, 66);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 66),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam15At(t, r) {
     return this.param15(t);
@@ -634,8 +724,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam15(t) {
-    var r = this.J7.__offset(this.z7, 70);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 70),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
   GetParam16At(t, r) {
     return this.param16(t);
@@ -654,8 +750,14 @@ class ConditionType {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultparam16(t) {
-    var r = this.J7.__offset(this.z7, 74);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 74),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
 }
 exports.ConditionType = ConditionType;

@@ -17,7 +17,7 @@ class PlotInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Input",
-            8,
+            10,
             "[InputDistribute]刷新剧情输入Tag时，除了视角旋转和鼠标输入,其他输入都会被禁止",
           ),
         this.SetInputDistributeTags([

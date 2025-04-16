@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AkiMap = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class AkiMap {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -44,6 +45,9 @@ class AkiMap {
   get LimitContent() {
     return this.limitcontent();
   }
+  get IsGravityMap() {
+    return this.isgravitymap();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -58,8 +62,14 @@ class AkiMap {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   mapname(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   fathermap() {
     var t = this.J7.__offset(this.z7, 8);
@@ -74,16 +84,34 @@ class AkiMap {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   switchcondition(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   mappic3d(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   mappic2d(t) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   bigmapdefaultscale() {
     var t = this.J7.__offset(this.z7, 20);
@@ -102,8 +130,18 @@ class AkiMap {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   limitcontent(t) {
-    var i = this.J7.__offset(this.z7, 28);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 28),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  isgravitymap() {
+    var t = this.J7.__offset(this.z7, 30);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.AkiMap = AkiMap;

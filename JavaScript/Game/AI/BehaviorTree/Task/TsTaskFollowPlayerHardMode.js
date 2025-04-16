@@ -39,6 +39,26 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
       (this.TempVector = Vector_1.Vector.Create()),
       (this.IsInitTsVariables = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.TsMoveSpeed = 0),
+      (this.TsRotateSpeed = 0),
+      (this.TsLocationOffset = Vector_1.Vector.Create()),
+      (this.TsForceMoveDistance = 0),
+      (this.TsLookAtTarget = !1),
+      (this.TsDetectTargetDistance = 0),
+      (this.MoveComp = void 0),
+      (this.TraceElement = void 0),
+      (this.LineElement = void 0),
+      (this.RotateOffset = Rotator_1.Rotator.Create()),
+      (this.UpdateRotateOffsetTime = 0),
+      (this.TempRotator = Rotator_1.Rotator.Create()),
+      (this.TempTargetLocation = Vector_1.Vector.Create()),
+      (this.TempTargetForward = Vector_1.Vector.Create()),
+      (this.TempMoveVector = Vector_1.Vector.Create()),
+      (this.TempVector = Vector_1.Vector.Create()),
+      (this.IsInitTsVariables = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -61,12 +81,15 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(t, i) {
     var s = t.AiController;
     if (s) {
-      s = s.CharActorComp;
-      if (s?.Valid) {
+      var h = s.CharActorComp;
+      if (h?.Valid) {
         if (
           (this.InitTsVariables(),
-          (this.MoveComp = s.Entity?.GetComponent(38)),
-          this.MoveComp?.CharacterMovement?.SetMovementMode(5),
+          (this.MoveComp = h.Entity?.GetComponent(44)),
+          s.CharActorComp?.Actor.KuroSetMovementMode({
+            Mode: 5,
+            Context: "[TsTaskFollowPlayerHardMode.ReceiveExecuteAI]",
+          }),
           (this.UpdateRotateOffsetTime = 0),
           this.RotateOffset.Reset(),
           this.TraceElement ||
@@ -75,9 +98,9 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
             )),
             (this.TraceElement.bIsSingle = !0),
             (this.TraceElement.bIgnoreSelf = !0),
-            (this.TraceElement.WorldContextObject = s.Owner),
-            (this.TraceElement.HalfHeight = s.DefaultHalfHeight),
-            (this.TraceElement.Radius = s.DefaultRadius),
+            (this.TraceElement.WorldContextObject = h.Owner),
+            (this.TraceElement.HalfHeight = h.DefaultHalfHeight),
+            (this.TraceElement.Radius = h.DefaultRadius),
             this.TraceElement.AddObjectTypeQuery(
               QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic,
             ),
@@ -92,14 +115,14 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
           (this.LineElement = UE.NewObject(UE.TraceLineElement.StaticClass())),
             (this.LineElement.bIsSingle = !0),
             (this.LineElement.bIgnoreSelf = !0),
-            (this.LineElement.WorldContextObject = s.Owner);
+            (this.LineElement.WorldContextObject = h.Owner);
           for (let t = 0; t < this.DetectTargetTypes.Num(); t++)
             this.LineElement.AddObjectTypeQuery(this.DetectTargetTypes.Get(t));
         }
       } else this.FinishExecute(!1);
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("BehaviorTree", 49, "错误的Controller类型", [
+        Log_1.Log.Error("BehaviorTree", 48, "错误的Controller类型", [
           "Type",
           t.GetClass().GetName(),
         ]),
@@ -114,7 +137,8 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
       ? ((r = r.CharActorComp),
         (e = Global_1.Global.BaseCharacter?.CharacterActorComponent)?.Valid &&
         r?.Valid
-          ? ((o = e.ActorLocationProxy),
+          ? ((s = s * r.Actor.CustomTimeDilation),
+            (o = e.ActorLocationProxy),
             (h = r.ActorLocationProxy),
             (e = e.ActorUpProxy),
             this.TempRotator.FromUeRotator(
@@ -179,7 +203,7 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
                 )))
           : this.FinishExecute(!1))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 49, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 48, "错误的Controller类型", [
             "Type",
             t.GetClass().GetName(),
           ]),
@@ -212,7 +236,7 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
       this.UpdateRotateOffsetTime < UPDATE_ROTATE_OFFSET_INTERVAL ||
         ((this.UpdateRotateOffsetTime = 0),
         this.TempVector.FromUeVector(
-          Global_1.Global.CharacterCameraManager.GetCameraLocation(),
+          Global_1.Global.CharacterCameraManager.D_GetCameraLocation(),
         ),
         this.TempMoveVector.FromUeVector(
           Global_1.Global.CharacterCameraManager.GetActorForwardVector(),
@@ -239,13 +263,13 @@ class TsTaskFollowPlayerHardMode extends TsTaskAbortImmediatelyBase_1.default {
               this.TempVector,
             ),
             this.RotateOffset.FromUeRotator(
-              UE.KismetMathLibrary.FindLookAtRotation(
+              UE.KismetMathLibrary.D_FindLookAtRotation(
                 i.ToUeVector(),
                 this.TempVector.ToUeVector(),
               ),
             ))
           : this.RotateOffset.FromUeRotator(
-              UE.KismetMathLibrary.FindLookAtRotation(
+              UE.KismetMathLibrary.D_FindLookAtRotation(
                 i.ToUeVector(),
                 this.TempMoveVector.ToUeVector(),
               ),

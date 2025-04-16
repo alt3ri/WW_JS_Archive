@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
+  Net_1 = require("../../../Core/Net/Net"),
   ObjectSystem_1 = require("../../../Core/Object/ObjectSystem"),
   CameraController_1 = require("../../Camera/CameraController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -12,6 +13,7 @@ const Info_1 = require("../../../Core/Common/Info"),
   LocalStorage_1 = require("../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
@@ -20,8 +22,9 @@ const Info_1 = require("../../../Core/Common/Info"),
   InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
   UiLayer_1 = require("../../Ui/UiLayer"),
   UiManager_1 = require("../../Ui/UiManager"),
+  CooperationController_1 = require("../Battle/Cooperation/CooperationController"),
+  ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
   DamageUiManager_1 = require("../DamageUi/DamageUiManager"),
-  SceneTeamController_1 = require("../SceneTeam/SceneTeamController"),
   BattleUiModel_1 = require("./BattleUiModel"),
   BattleUiPool_1 = require("./BattleUiPool");
 class BattleUiControl extends UiControllerBase_1.UiControllerBase {
@@ -51,7 +54,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ShowTypeChange,
-        this.aEa,
+        this.lEa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenSet,
@@ -94,6 +97,10 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         this.xQe,
       ),
       EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.UIViewPortSizeChanged,
+        this.xQe,
+      ),
+      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerFollowerCreate,
         this.mDn,
       ),
@@ -103,7 +110,19 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerFollowerEnableChange,
-        this.Nza,
+        this.xrh,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.GuideGroupOpening,
+        this.IJt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.DriveFishingShipStateChanged,
+        this.Gd_,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.BattleUiSpecialSkillEnableChanged,
+        this.QTc,
       );
     var e =
         ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
@@ -112,11 +131,21 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
           e,
           this.bMe,
         ),
-        ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
-    InputDistributeController_1.InputDistributeController.BindActions(
-      e,
-      this.gTn,
+        ModelManager_1.ModelManager.BattleUiModel.FormationPanelData);
+    e.RegisterInputHandler(
+      0,
+      CooperationController_1.CooperationController.FormationInputHandler,
     ),
+      e.RegisterInputHandler(
+        1,
+        ControllerHolder_1.ControllerHolder.FishingController
+          .FishingInputHandler,
+      ),
+      e.SetInputType(0),
+      InputDistributeController_1.InputDistributeController.BindActions(
+        e.GetActionNames(),
+        this.gTn,
+      ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         0,
         this.wQe,
@@ -149,7 +178,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ShowTypeChange,
-        this.aEa,
+        this.lEa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenSet,
@@ -192,6 +221,10 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         this.xQe,
       ),
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.UIViewPortSizeChanged,
+        this.xQe,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerFollowerCreate,
         this.mDn,
       ),
@@ -201,20 +234,30 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerFollowerEnableChange,
-        this.Nza,
+        this.xrh,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.GuideGroupOpening,
+        this.IJt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.DriveFishingShipStateChanged,
+        this.Gd_,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.BattleUiSpecialSkillEnableChanged,
+        this.QTc,
       );
     var e =
-        ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
-      e =
-        (InputDistributeController_1.InputDistributeController.UnBindActions(
-          e,
-          this.bMe,
-        ),
-        ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
+      ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames();
     InputDistributeController_1.InputDistributeController.UnBindActions(
       e,
-      this.gTn,
+      this.bMe,
     ),
+      InputDistributeController_1.InputDistributeController.UnBindActions(
+        ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames(),
+        this.gTn,
+      ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         0,
         this.wQe,
@@ -224,31 +267,53 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         this.BQe,
       );
   }
-  static async PreloadBattleViewFromLoading() {
+  static OnRegisterNetEvent() {
+    Net_1.Net.Register(28385, this.Yuc), Net_1.Net.Register(29691, this.zuc);
+  }
+  static OnUnRegisterNetEvent() {
+    Net_1.Net.UnRegister(28385), Net_1.Net.UnRegister(29691);
+  }
+  static async PreloadBattleViewFromLoading(e) {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "battleView preload start"),
+        Log_1.Log.Debug("Battle", 17, "battleView preload start"),
       await this.Pool.Init(),
       await ModelManager_1.ModelManager.BattleUiModel.Preload(),
-      (BattleUiControl.bQe =
-        await UiManager_1.UiManager.PreOpenViewAsync("BattleView")),
+      e ||
+        (BattleUiControl.bQe =
+          await UiManager_1.UiManager.PreOpenViewAsync("BattleView")),
       DamageUiManager_1.DamageUiManager.PreloadDamageView(),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "battleView preload end"),
+        Log_1.Log.Debug("Battle", 17, "battleView preload end"),
       !0
     );
   }
   static async OpenBattleViewFromLoading() {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "battleView open start"),
+        Log_1.Log.Debug("Battle", 17, "battleView open start"),
       (await UiManager_1.UiManager.OpenViewAfterPreOpenedAsync(
         BattleUiControl.bQe,
       )) || (await UiManager_1.UiManager.OpenViewAsync("BattleView")),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "battleView open end"),
+        Log_1.Log.Debug("Battle", 17, "battleView open end"),
+      await this.CheckOpenDungeonMainView(),
       !0
     );
+  }
+  static async CheckOpenDungeonMainView() {
+    var e = this.GetDungeonToViewName();
+    return !!e && (await UiManager_1.UiManager.OpenViewAsync(e), !0);
+  }
+  static GetDungeonToViewName() {
+    if (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()) {
+      var e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+        e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e);
+      if (e?.InstSubType) {
+        e = this.X4c.get(e.InstSubType);
+        if (e) return e;
+      }
+    }
   }
   static qQe() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ShowHUD);
@@ -272,7 +337,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       0 < this.NQe.size ||
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(9);
   }
-  static SetBattleViewDisable() {
+  static SetBattleViewInvisible() {
     return (
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(9),
       this.OQe++,
@@ -295,7 +360,33 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   }
   static ResetFocus() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    e?.Valid && e.Entity.GetComponent(29).ResetFocus();
+    e?.Valid && e.Entity.GetComponent(32).ResetFocus();
+  }
+  static TryOpenPureMode() {
+    const t = ModelManager_1.ModelManager.BattleUiModel?.PureModeData;
+    var e;
+    t &&
+      !t.IsOpen &&
+      (t.IsSkipConfirmBox
+        ? (t.IsOpen = !0)
+        : ((t.IsSkipConfirmBoxTmp = !1),
+          ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(230)).HasToggle = !0),
+          (e.ToggleText = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+            "PlotSkipConfirmToggle",
+          )),
+          e.SetToggleFunction((e) => {
+            t.IsSkipConfirmBoxTmp = e;
+          }),
+          e.FunctionMap.set(2, () => {
+            (t.IsSkipConfirmBox = t.IsSkipConfirmBoxTmp), (t.IsOpen = !0);
+          }),
+          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+            e,
+          )));
+  }
+  static TryClosePureMode() {
+    var e = ModelManager_1.ModelManager.BattleUiModel?.PureModeData;
+    return !!e && !!e.IsOpen && !(e.IsOpen = !1);
   }
 }
 (exports.BattleUiControl = BattleUiControl),
@@ -306,6 +397,11 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   (BattleUiControl.Pool = new BattleUiPool_1.BattleUiPool()),
   (BattleUiControl.OQe = 0),
   (BattleUiControl.NQe = new Set()),
+  (BattleUiControl.X4c = new Map([
+    [35, "DangoMonopolyMainView"],
+    [34, "MapRogueMainView"],
+    [31, "RacingBetsMainView"],
+  ])),
   (BattleUiControl.nye = () => {
     ModelManager_1.ModelManager.BattleUiModel.OnWorldDone();
   }),
@@ -331,24 +427,19 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       n,
     );
   }),
-  (BattleUiControl.aEa = (e, t) => {
+  (BattleUiControl.lEa = (e, t) => {
     UiManager_1.UiManager.IsViewOpen("BattleView") &&
       !Info_1.Info.IsMobilePlatform() &&
       UiManager_1.UiManager.CloseView("BattleView", () => {
         UiManager_1.UiManager.OpenView("BattleView");
-      });
+      }),
+      ModelManager_1.ModelManager.BattleUiModel.ShowTypeChange(e, t);
   }),
   (BattleUiControl.DQe = (e, t) => {
     (10016 !== e && !t) ||
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Battle",
-          8,
-          "当唤鸣者招募处解锁状态登录设置时，广播红点时间检查红点",
-        ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFirstOpenShopChanged,
-      ));
+      );
   }),
   (BattleUiControl.RQe = (e, t) => {
     (10016 !== e && !t) ||
@@ -361,16 +452,16 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ));
   }),
   (BattleUiControl.AQe = (e, t, n) => {
-    var a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    a?.Valid &&
-      a.Id === e &&
-      ((a = t.Id),
+    var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    i?.Valid &&
+      i.Id === e &&
+      ((i = t.Id),
       n
-        ? (e = BattleUiControl.AddFullScreenEffect(t.Path, a)) &&
+        ? (e = BattleUiControl.AddFullScreenEffect(t.Path, BigInt(i))) &&
           ((n = UiLayer_1.UiLayer.UiRootItem),
           e.SetFloatParameter("Sprite_X", n.Width),
           e.SetFloatParameter("Sprite_Y", n.Height))
-        : BattleUiControl.RemoveFullScreenEffectByUniqueId(a));
+        : BattleUiControl.RemoveFullScreenEffectByUniqueId(BigInt(i)));
   }),
   (BattleUiControl.mWe = () => {
     ModelManager_1.ModelManager.BattleUiModel.OnFormationLoaded();
@@ -403,10 +494,21 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   (BattleUiControl.dDn = () => {
     ModelManager_1.ModelManager.BattleUiModel.FormationData.RemoveFollower();
   }),
-  (BattleUiControl.Nza = (e) => {
+  (BattleUiControl.xrh = (e) => {
     ModelManager_1.ModelManager.BattleUiModel.FormationData.ChangePlayerFollowerEnable(
       e,
     );
+  }),
+  (BattleUiControl.IJt = (e) => {
+    e !== ModelManager_1.ModelManager.BattleUiModel?.PureModeData?.GuideId &&
+      BattleUiControl.TryClosePureMode();
+  }),
+  (BattleUiControl.Gd_ = (e) => {
+    var t = ModelManager_1.ModelManager.BattleUiModel.FormationPanelData;
+    t && (e ? t.SetInputType(1) : t.SetInputType(0));
+  }),
+  (BattleUiControl.QTc = (e, t, n) => {
+    1407 === t && n && UiManager_1.UiManager.OpenView("XiaKongQteView", e);
   }),
   (BattleUiControl.bMe = (e, t) => {
     ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.InputAction(
@@ -414,29 +516,11 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       0 === t,
     );
   }),
-  (BattleUiControl.gTn = (t, n) => {
-    if (0 === n) {
-      let e = -1;
-      switch (t) {
-        case InputMappingsDefine_1.actionMappings.切换角色1:
-          e = 1;
-          break;
-        case InputMappingsDefine_1.actionMappings.切换角色2:
-          e = 2;
-          break;
-        case InputMappingsDefine_1.actionMappings.切换角色3:
-          e = 3;
-          break;
-        case InputMappingsDefine_1.actionMappings.切换角色4:
-          e = 4;
-      }
-      e < 0 ||
-        ((n =
-          ModelManager_1.ModelManager.BattleUiModel.FormationPanelData?.GetItemData(
-            e,
-          )?.CreatureDataId ?? 0),
-        SceneTeamController_1.SceneTeamController.TryChangeRoleOrQte(n));
-    }
+  (BattleUiControl.gTn = (e, t) => {
+    0 === t &&
+      ModelManager_1.ModelManager.BattleUiModel.FormationPanelData?.GetInputHandler()?.(
+        e,
+      );
   }),
   (BattleUiControl.bQe = void 0),
   (BattleUiControl.wQe = () => {
@@ -457,5 +541,11 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         UiLayerType_1.ELayerType.BattleFloat,
         1,
       ).SetUIActive(e);
+  }),
+  (BattleUiControl.Yuc = (e) => {
+    ModelManager_1.ModelManager.BattleUiModel.AddGuest(e.Fsc);
+  }),
+  (BattleUiControl.zuc = (e) => {
+    ModelManager_1.ModelManager.BattleUiModel.RemoveGuest(e.Fsc);
   });
 //# sourceMappingURL=BattleUiControl.js.map

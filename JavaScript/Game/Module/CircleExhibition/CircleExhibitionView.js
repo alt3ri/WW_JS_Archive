@@ -11,7 +11,7 @@ class CircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibiti
   ReloadView(i, t) {
     if (i < this.ShowItemNum)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCommon", 28, "组件数据长度需要大于等于展示长度");
+        Log_1.Log.Error("UiCommon", 27, "组件数据长度需要大于等于展示长度");
     else {
       this.DataLength = i;
       for (let i = 0; i < this.Items.length; i++) this.Items[i].SetActive(!1);

@@ -15,6 +15,11 @@ class TsActionHandle extends UE.Object {
       (this.OnPressStat = void 0),
       (this.OnReleaseStat = void 0);
   }
+  Constructor() {
+    (this.OnInputActionCallback = void 0),
+      (this.OnPressStat = void 0),
+      (this.OnReleaseStat = void 0);
+  }
   Initialize(t) {
     (this.PlayerController = t),
       (this.OnPressStat = Stats_1.Stat.Create(
@@ -51,7 +56,7 @@ class TsActionHandle extends UE.Object {
           new UE.FName(this.OnReleaseAction.name),
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Controller", 8, "添加Action输入绑定时，回调不存在", [
+        Log_1.Log.Error("Controller", 10, "添加Action输入绑定时，回调不存在", [
           "actionName",
           t,
         ]);

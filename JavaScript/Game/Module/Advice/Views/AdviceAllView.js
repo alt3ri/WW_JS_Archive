@@ -60,7 +60,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
                 .ActorRotationProxy,
             ),
             (i = ModelManager_1.ModelManager.CameraModel.CurrentCameraActor),
-            (t.Yaw = i.GetTransform().Rotator().Yaw + 90),
+            (t.Yaw = i.D_GetTransform().Rotator().Yaw + 90),
             AdviceController_1.AdviceController.RequestCreateAdvice(
               e,
               t,
@@ -258,7 +258,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
     var e,
       t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t.Valid &&
-      ((e = t.Entity.GetComponent(190)),
+      ((e = t.Entity.GetComponent(203)),
       (this.p7e = e.HasTag(1996802261)),
       this.N7e(),
       this.p7e ? this.CloseMe() : this.O7e(t));
@@ -267,7 +267,7 @@ class AdviceAllView extends UiViewBase_1.UiViewBase {
     this.f7e?.EndTask(), (this.f7e = void 0);
   }
   O7e(e) {
-    e = e.Entity.GetComponent(190);
+    e = e.Entity.GetComponent(203);
     this.f7e = e.ListenForTagAddOrRemove(1996802261, this.v7e);
   }
   L7e(e) {

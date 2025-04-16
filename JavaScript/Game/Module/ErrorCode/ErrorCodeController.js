@@ -8,7 +8,7 @@ const Cpp = require("cpp"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
-  PackageConfigUtil_1 = require("../../Common/PackageConfigUtil"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
@@ -52,10 +52,10 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(25625, this.$5t), Net_1.Net.Register(21793, this.Y5t);
+    Net_1.Net.Register(29397, this.$5t), Net_1.Net.Register(28824, this.Y5t);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(25625), Net_1.Net.UnRegister(21793);
+    Net_1.Net.UnRegister(29397), Net_1.Net.UnRegister(28824);
   }
   static OpenErrorCodeScrollingTipsView(r, o) {
     var e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r),
@@ -67,7 +67,15 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
               Number(r),
             ))),
         ErrorCodeController.J5t(e, o));
-    ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(r);
+    ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(r),
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "ErrorCode",
+          10,
+          "服务器错误信息",
+          ["error", r],
+          ["errorParams", o],
+        );
   }
   static OpenErrorCodeTipView(r, o, e = void 0, t = !0, i = !0) {
     var n = ConfigManager_1.ConfigManager.ErrorCodeConfig,
@@ -75,7 +83,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     let C = ErrorCodeController.J5t(l, e);
     (l = n.IsTipsOnly(r)),
       (n =
-        PackageConfigUtil_1.PackageConfigUtil.GetPackageConfigOrDefault(
+        BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
           LoginModel_1.STREAM,
         ) === LoginModel_1.STREAM_MAINLINE);
     if (t && ErrorCodeController.IsErrorCodeOpen) {
@@ -91,7 +99,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "ErrorCode",
-              9,
+              8,
               "服务器错误信息",
               ["error", C],
               ["errorCode", r],
@@ -99,12 +107,13 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
             )
           )
         );
-      i && (C = `[${o}][${r}]:` + C), this.OpenConfirmBoxByText(C);
+      i && (C = 0 < o ? `[${o}][${r}]:` + C : `[-][${r}]:` + C),
+        this.OpenConfirmBoxByText(C);
     }
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "ErrorCode",
-        9,
+        8,
         "服务器错误信息",
         ["error", C],
         ["errorParams", e],
@@ -116,7 +125,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "ErrorCode",
-        9,
+        8,
         "服务器错误信息",
         ["error", r],
         ["errorParams", o],
@@ -133,16 +142,9 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     return e;
   }
   static OpenLoginStatusCodeTipView(r) {
-    var o = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r);
-    ErrorCodeController.IsErrorCodeOpen && this.OpenConfirmBoxByText(o),
+    ErrorCodeController.IsErrorCodeOpen && this.OpenErrorCodeTipView(r, 0),
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "ErrorCode",
-          9,
-          "Http登录返回错误码",
-          ["code", r],
-          ["info", o],
-        );
+        Log_1.Log.Error("ErrorCode", 8, "Http登录返回错误码", ["code", r]);
   }
   static OpenConfirmBoxByTextId(r) {
     var o;
@@ -154,12 +156,28 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         o,
       ));
   }
+  static CheckErrorCode(r, o, e = !0) {
+    return (
+      !r ||
+      (r.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "ErrorCode",
+            69,
+            "CheckErrorCode",
+            ["ErrorCode", r.Q4n],
+            ["MsgId", o],
+          ),
+        e && this.OpenErrorCodeTipView(r.Q4n, o),
+        !0))
+    );
+  }
 }
 (exports.ErrorCodeController = ErrorCodeController),
   ((_a = ErrorCodeController).IsErrorCodeOpen = !0),
   (ErrorCodeController.$5t = (r) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Net", 31, "服务端通知客户端消息解码失败:", [
+      Log_1.Log.Debug("Net", 30, "服务端通知客户端消息解码失败:", [
         "notify",
         r,
       ]);
@@ -174,11 +192,6 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
       LogReportController_1.LogReportController.LogReport(o);
   }),
   (ErrorCodeController.Y5t = (r) => {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Gm", 8, "5651_服务端通知客户端系统提示信息:", [
-        "notify",
-        r,
-      ]);
     var o = r.lvs,
       r = r.Q4n;
     ErrorCodeController.OpenErrorCodeScrollingTipsView(r, o);
@@ -191,7 +204,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "ErrorCode",
-            38,
+            37,
             "服务器异常: 功能关闭",
             ["errorCode", o],
             ["RpcId", r],
@@ -203,7 +216,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ErrorCode",
-            9,
+            8,
             "服务器异常",
             ["errorCode", o],
             ["RpcId", r],

@@ -2,24 +2,26 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarBase = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
+  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   BattleUiControl_1 = require("../../BattleUiControl"),
   VisibleStateUtil_1 = require("../../VisibleStateUtil"),
+  BattleUiTweenAnimPlayer_1 = require("../BattleUiTweenAnimPlayer"),
   SpecialEnergyBarKeyItem_1 = require("./SpecialEnergyBarKeyItem"),
   SpecialEnergyBarNumItem_1 = require("./SpecialEnergyBarNumItem"),
-  SpecialEnergyBarPercentMachine_1 = require("./SpecialEnergyBarPercentMachine"),
-  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
-  Info_1 = require("../../../../../Core/Common/Info"),
-  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
+  SpecialEnergyBarPercentMachine_1 = require("./SpecialEnergyBarPercentMachine");
 class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.NeedOverrideDestroy = !0),
       (this.Destroyed = !1),
       (this.PrefabPath = ""),
       (this.RoleData = void 0),
       (this.Config = void 0),
+      (this.AttributeId = 0),
+      (this.MaxAttributeId = 0),
       (this.AttributeComponent = void 0),
       (this.TagComponent = void 0),
       (this.BuffComponent = void 0),
@@ -32,6 +34,7 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
       (this.NumItem = void 0),
       (this.PercentMachine =
         new SpecialEnergyBarPercentMachine_1.SpecialEnergyBarPercentMachine()),
+      (this.TweenAnimPlayer = void 0),
       (this.GYe = new Map()),
       (this.VisibleState = 0),
       (this.pdt = (t, i, e) => {
@@ -46,7 +49,7 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   }
   async InitByPathAsync(t, i) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "加载特殊能量条", ["path", i]),
+      Log_1.Log.Debug("Battle", 17, "加载特殊能量条", ["path", i]),
       (this.PrefabPath = i);
     i = await BattleUiControl_1.BattleUiControl.Pool.LoadActor(i, t);
     this.Destroyed
@@ -55,32 +58,37 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
         this.AddEvents(),
         this.RefreshVisible());
   }
+  async InitByActorAsync(t) {
+    await this.CreateByActorAsync(t), this.AddEvents(), this.RefreshVisible();
+  }
   InitData(t, i, e = !0) {
     (this.NeedInitKeyItem = e),
       !this.Destroyed &&
         t &&
         (this.RoleData &&
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 18, "能量条设置了多次角色的数据"),
+            Log_1.Log.Error("Battle", 17, "能量条设置了多次角色的数据"),
           this.kYe(),
           this.FYe()),
         (this.RoleData = t),
         (this.Config = i),
+        (this.AttributeId = i.AttributeId),
+        (this.MaxAttributeId = i.MaxAttributeId),
         (this.AttributeComponent = this.RoleData.AttributeComponent),
         (this.TagComponent = this.RoleData.GameplayTagComponent),
         (this.BuffComponent = this.RoleData.BuffComponent),
-        this.PercentMachine.Init(this.GetTargetAttributePercent()),
         this.OnInitData(),
+        this.PercentMachine.Init(this.GetTargetAttributePercent()),
         this.InitKeyEnableTag());
   }
   OnInitData() {}
   AddEvents() {
-    this.ListenForAttributeChanged(this.Config.AttributeId, this.pdt),
-      this.ListenForAttributeChanged(this.Config.MaxAttributeId, this.vdt);
+    this.ListenForAttributeChanged(this.AttributeId, this.pdt),
+      this.ListenForAttributeChanged(this.MaxAttributeId, this.vdt);
   }
   RemoveEvents() {
-    this.RemoveListenAttributeChanged(this.Config.AttributeId, this.pdt),
-      this.RemoveListenAttributeChanged(this.Config.MaxAttributeId, this.vdt);
+    this.RemoveListenAttributeChanged(this.AttributeId, this.pdt),
+      this.RemoveListenAttributeChanged(this.MaxAttributeId, this.vdt);
   }
   SetVisible(t, i = 0) {
     (this.VisibleState = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
@@ -94,37 +102,35 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
     var t;
     this.InAsyncLoading() ||
       this.IsRegister ||
+      this.IsCreateOrCreating ||
       ((t = 0 === this.VisibleState)
         ? this.IsShowOrShowing || this.Show()
         : this.IsShowOrShowing && this.Hide(),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          18,
+          17,
           "改变特殊能量条显隐",
           ["visible", t],
           ["entityId", this.RoleData.EntityHandle?.Id],
         ));
   }
   DestroyOverride() {
-    return (
-      (this.Destroyed = !0),
-      !this.NeedOverrideDestroy &&
-        (this.InAsyncLoading() ||
-          (BattleUiControl_1.BattleUiControl.Pool.RecycleActorByPath(
-            this.PrefabPath,
-            this.RootActor,
-            !0,
-          ),
-          (this.RootActor = void 0),
-          (this.RootItem = void 0)),
-        !0)
-    );
+    return !(this.Destroyed = !0);
   }
   OnBeforeDestroy() {
     this.InAsyncLoading() || this.RemoveEvents(),
+      this.ClearAllTweenAnim(),
       this.kYe(),
       this.FYe(),
+      this.NeedInitKeyItem &&
+        ((this.NeedInitKeyItem = !1),
+        this.KeyItem?.Destroy(),
+        (this.KeyItem = void 0)),
+      this.NeedInitNumItem &&
+        ((this.NeedInitNumItem = !1),
+        this.NumItem?.Destroy(),
+        (this.NumItem = void 0)),
       (this.RoleData = void 0),
       (this.AttributeComponent = void 0),
       (this.TagComponent = void 0),
@@ -205,6 +211,7 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   async InitKeyItem(t) {
     !this.NeedInitKeyItem ||
       Info_1.Info.IsInTouch() ||
+      this.Config.KeyInfoList.length <= 0 ||
       ((this.KeyItem = new SpecialEnergyBarKeyItem_1.SpecialEnergyBarKeyItem()),
       this.KeyItem.SetConfig(this.Config),
       await this.KeyItem.CreateThenShowByResourceIdAsync(
@@ -227,8 +234,8 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
       this.ListenForTagAddOrRemoveChanged(t, this.OnKeyEnableTagChanged));
   }
   GetTargetAttributePercent() {
-    var t = this.AttributeComponent.GetCurrentValue(this.Config.AttributeId),
-      i = this.AttributeComponent.GetCurrentValue(this.Config.MaxAttributeId);
+    var t = this.AttributeComponent.GetCurrentValue(this.AttributeId),
+      i = this.AttributeComponent.GetCurrentValue(this.MaxAttributeId);
     let e = 0 < i ? t / i : 0;
     return e;
   }
@@ -241,6 +248,21 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   OnKeyEnableChanged() {}
   OnChangeVisibleByTagChange(t) {}
   ReplaceFullEffect(t) {}
+  InitTweenAnim(t) {
+    this.TweenAnimPlayer ||
+      (this.TweenAnimPlayer =
+        new BattleUiTweenAnimPlayer_1.BattleUiTweenAnimPlayer()),
+      this.TweenAnimPlayer.InitTweenAnim(t, this.GetItem(t));
+  }
+  PlayTweenAnim(t) {
+    this.TweenAnimPlayer?.PlayTweenAnim(t);
+  }
+  StopTweenAnim(t) {
+    this.TweenAnimPlayer?.StopTweenAnim(t);
+  }
+  ClearAllTweenAnim() {
+    this.TweenAnimPlayer?.Clear();
+  }
 }
 exports.SpecialEnergyBarBase = SpecialEnergyBarBase;
 //# sourceMappingURL=SpecialEnergyBarBase.js.map

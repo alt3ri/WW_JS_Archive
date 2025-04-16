@@ -1,29 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotBase = exports.RedDotData = void 0);
-const cpp_1 = require("cpp"),
-  Log_1 = require("../../Core/Common/Log"),
+const Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
-  Time_1 = require("../../Core/Common/Time"),
-  Macro_1 = require("../../Core/Preprocessor/Macro"),
   StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  RedDotSystem_1 = require("./RedDotSystem"),
-  DEBUG_MODE = !1,
-  STAT_MODE = !0;
+  RedDotSystem_1 = require("./RedDotSystem");
 class RedDotData {
   constructor() {
     (this.Tar = 0), (this.Lar = new Set());
   }
   get State() {
-    return 0 < this.Tar;
+    return RedDotData.StateByGm && 0 < this.Tar;
   }
   get StateCount() {
     return this.Tar;
   }
   set StateCount(t) {
-    (this.Tar = t), this.Tar < 0 && (this.Tar = 0);
+    this.Tar = t < 0 ? 0 : t;
   }
   GetUiItemSet() {
     return this.Lar;
@@ -57,13 +52,14 @@ class RedDotData {
     );
   }
 }
-exports.RedDotData = RedDotData;
+(exports.RedDotData = RedDotData).StateByGm = !0;
 class RedDotBase {
   constructor() {
     (this.Name = void 0),
       (this.dce = !0),
       (this.NQ = new Map()),
       (this.Dar = void 0),
+      (this.fbo = void 0),
       (this.Rar = () => {
         this.Uar(!0);
       }),
@@ -73,67 +69,39 @@ class RedDotBase {
       (this.Par = (...t) => {
         let e = 0;
         t && "number" == typeof t[0] && this.IsAllEventParamAsUId()
-          ? ((e = t[0]),
-            this.xar(e),
-            RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, e))
+          ? ((e = t[0]), this.xar(e), this.Arl(e))
           : this.IsMultiple()
             ? this.NQ.forEach((t, e) => {
-                RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, e);
+                this.Arl(e);
               })
-            : (this.xar(e),
-              RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, e));
+            : (this.xar(e), this.Arl(e));
       }),
       (this.war = (t = 0) => {
-        (RedDotBase.ae = cpp_1.KuroTime.GetMicroseconds64()),
-          STAT_MODE && RedDotBase.fbo.Start();
+        this.fbo?.Start();
         var e = this.OnCheck(t),
           i = this.ANo(t);
         i
           ? (i.TryChangeState(e) &&
               (this.Dar && this.Dar(i.State, t), this.bar(e, t)),
-            DEBUG_MODE &&
-              Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "RedDot",
-                17,
-                "Check",
-                ["Name", this.Name],
-                ["uId", t],
-                ["result", e],
-              ),
-            STAT_MODE && RedDotBase.fbo.Stop(),
-            1 === ModelManager_1.ModelManager.GameModeModel?.LoadingPhase &&
-              ((i = cpp_1.KuroTime.GetMicroseconds64() - RedDotBase.ae),
-              RedDotBase.m5i !== Time_1.Time.Frame
-                ? (0 < RedDotBase.m5i &&
-                    cpp_1.FKuroPerfSightHelper.PostValueFloat1(
-                      "RedDot",
-                      "RedDotCostPerFrame",
-                      RedDotBase.O5t,
-                    ),
-                  (RedDotBase.m5i = Time_1.Time.Frame),
-                  (RedDotBase.O5t = i))
-                : (RedDotBase.O5t += i)))
+            this.fbo?.Stop())
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RedDot",
-              17,
+              16,
               "Check失败，红点数据未绑定到事件上！",
               ["Name", this.Name],
               ["uId", t],
             );
-      }),
-      this.qar();
-    var t = this.GetActiveEvents();
-    if (t) for (const e of t) EventSystem_1.EventSystem.Add(e, this.Rar);
-    t = this.GetDisActiveEvents();
-    if (t) for (const i of t) EventSystem_1.EventSystem.Add(i, this.Aar);
+      });
   }
   get Gar() {
     return ModelManager_1.ModelManager.RedDotModel.GetRedDotTree(this.Name);
   }
   qar() {
     for (const t of this.Nar()) EventSystem_1.EventSystem.Add(t, this.Par);
+  }
+  SetRedDotActiveByGm(t) {
+    this.Uar(t);
   }
   Oar(t) {
     if ((this.dce = t)) this.qar();
@@ -156,12 +124,23 @@ class RedDotBase {
       (this.Oar(t), t && this.Far(), void 0 !== this.Gar.Parent) &&
       this.Gar.Parent.Element.Har(this, t);
   }
+  Init(t) {
+    (this.Name = t), this.qar();
+    var e = this.GetActiveEvents();
+    if (e) for (const i of e) EventSystem_1.EventSystem.Add(i, this.Rar);
+    e = this.GetDisActiveEvents();
+    if (e) for (const s of e) EventSystem_1.EventSystem.Add(s, this.Aar);
+    this.fbo = Stats_1.Stat.CreateNoFlameGraph("RedDot" + t);
+  }
+  Arl(t = 0) {
+    RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, t, this.Name);
+  }
   Har(t, e) {
     for (var [i, s] of t.NQ) {
       i = this.NQ.get(i);
       i &&
-        (e ? (i.StateCount += s.StateCount) : (i.StateCount -= s.StateCount)),
-        i.UpdateRedDotUIActive();
+        (e ? (i.StateCount += s.StateCount) : (i.StateCount -= s.StateCount),
+        i.UpdateRedDotUIActive());
     }
     void 0 !== this.Gar.Parent && this.Gar.Parent.Element.Har(t, e);
   }
@@ -205,6 +184,15 @@ class RedDotBase {
     }),
       (this.Dar = void 0);
   }
+  UnBindGivenUiAndDeleteData(t = 0, e) {
+    var i = this.ANo(t);
+    void 0 === i ||
+      (i.DeleteUiItem(e), 0 < i.GetUiItemSet().size) ||
+      this.NQ.delete(t);
+  }
+  UnBindUiAndClearData() {
+    this.UnBindUi(), this.NQ.clear();
+  }
   UpdateState(t = 0) {
     var e = this.ANo(t);
     e.UpdateRedDotUIActive(), this.Dar && this.Dar(e.State, t);
@@ -237,23 +225,23 @@ class RedDotBase {
       r = new StringBuilder_1.StringBuilder();
     for ([t, e] of this.NQ) {
       r.Clear();
-      for (const a of e.GetUiItemSet()) r.Append(a.GetDisplayName() + ", ");
+      for (const n of e.GetUiItemSet()) r.Append(n.GetDisplayName() + ", ");
       s.Append(
         `{uid:${t}, stateCount:${e.StateCount} uiItem:[${r.ToString()}] }`,
       );
     }
-    var o,
-      h = new StringBuilder_1.StringBuilder();
-    for ([o] of this.Gar.ChildMap) h.Append(o.Name + ", ");
+    var h,
+      o = new StringBuilder_1.StringBuilder();
+    for ([h] of this.Gar.ChildMap) o.Append(h.Name + ", ");
     return (
-      i.Append(`[红点:${this.Name} 父红点:${this.Gar.Parent?.Element.Name} 子红点:{${h.ToString()}}  数据:{ ${s.ToString()} }]
+      i.Append(`[红点:${this.Name} 父红点:${this.Gar.Parent?.Element.Name} 子红点:{${o.ToString()}}  数据:{ ${s.ToString()} }]
 `),
       i.ToString()
     );
   }
   PrintStateDebugString() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RedDot", 8, "=======子红点状态打印开始=======：", [
+      Log_1.Log.Info("RedDot", 69, "=======子红点状态打印开始=======：", [
         "Name",
         this.Name,
       ]);
@@ -262,7 +250,7 @@ class RedDotBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "RedDot",
-          8,
+          69,
           "红点状态数据：",
           ["Uid", t],
           ["State", e.State],
@@ -271,20 +259,22 @@ class RedDotBase {
         );
       for (const s of i)
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("RedDot", 8, "受控制的UI对象", [
+          Log_1.Log.Info("RedDot", 69, "受控制的UI对象", [
             "UiItem",
             s.GetDisplayName(),
           ]);
     }
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RedDot", 8, "=======子红点状态打印结束=======：", [
+      Log_1.Log.Info("RedDot", 69, "=======子红点状态打印结束=======：", [
         "Name",
         this.Name,
       ]);
   }
+  UpdateAllRedDotData() {
+    this.NQ.forEach((t, e) => {
+      this.Arl(e);
+    });
+  }
 }
-((exports.RedDotBase = RedDotBase).fbo = Stats_1.Stat.Create("RedDot")),
-  (RedDotBase.m5i = 0),
-  (RedDotBase.O5t = 0),
-  (RedDotBase.ae = 0);
+exports.RedDotBase = RedDotBase;
 //# sourceMappingURL=RedDotBase.js.map

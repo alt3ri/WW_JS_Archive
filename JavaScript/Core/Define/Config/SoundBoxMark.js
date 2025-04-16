@@ -31,11 +31,11 @@ class SoundBoxMark {
   get Scale() {
     return this.scale();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, s) {
+    return (this.z7 = t), (this.J7 = s), this;
   }
-  static getRootAsSoundBoxMark(t, r) {
-    return (r || new SoundBoxMark()).__init(
+  static getRootAsSoundBoxMark(t, s) {
+    return (s || new SoundBoxMark()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -45,16 +45,34 @@ class SoundBoxMark {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markpic(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   marktitle(t) {
-    var r = this.J7.__offset(this.z7, 8);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   markdesc(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   showpriority() {
     var t = this.J7.__offset(this.z7, 12);
@@ -64,8 +82,8 @@ class SoundBoxMark {
     return this.showrange(t);
   }
   showrange(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
+    var s = this.J7.__offset(this.z7, 14);
+    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   showrangeLength() {
     var t = this.J7.__offset(this.z7, 14);

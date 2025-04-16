@@ -13,8 +13,8 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       i = Reflect.decorate(e, t, n, r);
     else
-      for (var s = e.length - 1; 0 <= s; s--)
-        (o = e[s]) && (i = (a < 3 ? o(i) : 3 < a ? o(t, n, i) : o(t, n)) || i);
+      for (var C = e.length - 1; 0 <= C; C--)
+        (o = e[C]) && (i = (a < 3 ? o(i) : 3 < a ? o(t, n, i) : o(t, n)) || i);
     return 3 < a && i && Object.defineProperty(t, n, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -22,17 +22,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
   Log_1 = require("../../Core/Common/Log"),
   EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  CameraController_1 = require("./CameraController"),
-  RegisterComponent_1 = require("../../Core/Entity/RegisterComponent");
+  CameraController_1 = require("./CameraController");
 let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
       (this.pxr = void 0),
       (this.nye = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Camera", 58, "[SequenceCamera] Spawn OnWorldDone"),
+          Log_1.Log.Debug("Camera", 57, "[SequenceCamera] Spawn OnWorldDone"),
           (this.pxr = CameraController_1.CameraController.SpawnCineCamera()),
           1 === CameraController_1.CameraController.Model.CameraMode &&
             CameraController_1.CameraController.SetViewTarget(
@@ -45,10 +45,13 @@ let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extend
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Camera",
-              58,
+              57,
               "[SequenceCamera] Clear OnClearWorld",
             ),
-          ActorSystem_1.ActorSystem.Put(this.pxr),
+          ActorSystem_1.ActorSystem.Put(
+            "SequenceCameraDisplayComponent.OnClearWorld",
+            this.pxr,
+          ),
           (this.pxr = void 0));
       });
   }
@@ -56,15 +59,15 @@ let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extend
     return (
       this.pxr?.IsValid() ||
         ((this.pxr = CameraController_1.CameraController.SpawnCineCamera()),
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Camera", 58, "[SequenceCamera] 保底生成CineCamera")),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Camera", 57, "[SequenceCamera] 保底生成CineCamera")),
       this.pxr
     );
   }
   OnInit() {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Camera", 58, "[SequenceCamera] Spawn OnInit"),
+        Log_1.Log.Debug("Camera", 57, "[SequenceCamera] Spawn OnInit"),
       (this.pxr = CameraController_1.CameraController.SpawnCineCamera()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
@@ -81,8 +84,11 @@ let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extend
     return (
       this.pxr &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Camera", 58, "[SequenceCamera] Clear OnClear"),
-        ActorSystem_1.ActorSystem.Put(this.pxr),
+          Log_1.Log.Debug("Camera", 57, "[SequenceCamera] Clear OnClear"),
+        ActorSystem_1.ActorSystem.Put(
+          "SequenceCameraDisplayComponent.OnClearWorld",
+          this.pxr,
+        ),
         (this.pxr = void 0)),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,

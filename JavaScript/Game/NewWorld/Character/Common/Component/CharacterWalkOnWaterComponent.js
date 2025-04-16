@@ -4,18 +4,18 @@ var __decorate =
   function (t, e, i, s) {
     var h,
       r = arguments.length,
-      _ =
+      a =
         r < 3
           ? e
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(e, i))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      _ = Reflect.decorate(t, e, i, s);
+      a = Reflect.decorate(t, e, i, s);
     else
-      for (var a = t.length - 1; 0 <= a; a--)
-        (h = t[a]) && (_ = (r < 3 ? h(_) : 3 < r ? h(e, i, _) : h(e, i)) || _);
-    return 3 < r && _ && Object.defineProperty(e, i, _), _;
+      for (var _ = t.length - 1; 0 <= _; _--)
+        (h = t[_]) && (a = (r < 3 ? h(a) : 3 < r ? h(e, i, a) : h(e, i)) || a);
+    return 3 < r && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterWalkOnWaterComponent = void 0);
@@ -30,12 +30,14 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
   CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
   MAX_BYTE = 255,
   EIGHTY = 80,
   COS_EIGHTY = 0.173,
   PROFILE_DETECT_WATER_DEPTH = "CharacterWalkOnWaterComponent_DetectWaterDepth",
+  PROFILE_DETECT_WATER_UP_BLOCK = "CharacterWalkOnWaterComponent_WaterUpBlock",
   ENTER_UP_TO_WALK_ON_WATER_DEPTH = 10,
   ENTER_WALK_ON_WATER_DEPTH = 4,
   PRE_FRAME_POSITION_MAX_DISTANCE = 1e3,
@@ -65,6 +67,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
   constructor() {
     super(...arguments),
       (this.IsDebug = !1),
+      (this.QT1 = void 0),
       (this.Mao = void 0),
       (this.pKr = void 0),
       (this.Hte = void 0),
@@ -78,13 +81,12 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
       (this.UWr = void 0),
       (this.AWr = void 0),
       (this.MKr = 0),
-      (this.RSa = -1),
       (this.EKr = 0),
       (this.SKr = void 0),
       (this.yKr = void 0),
       (this.WalkOnWaterStage = 0),
       (this.IKr = void 0),
-      (this.b3a = new Set()),
+      (this.d6a = new Set()),
       (this.XOr = (t, e) => {
         1 === this.WalkOnWaterStage &&
           0 < this.TKr(e) &&
@@ -103,8 +105,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
       }),
       (this.I3r = (t) => {
         t?.Valid &&
-          ((this.RSa = 0),
-          (this.IsActive = this.Lie.HasTag(-1523054094)),
+          ((this.IsActive = this.Lie.HasTag(-1523054094)),
           this.IsActive ||
             (this.DKr(0),
             this.mBe.SetPositionSubState(
@@ -112,12 +113,11 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
             )));
       }),
       (this.RKr = (t, e) => {
-        (this.RSa = 0),
-          (this.IsActive = e) ||
-            (this.DKr(0),
-            this.mBe.SetPositionSubState(
-              CharacterUnifiedStateTypes_1.ECharPositionSubState.None,
-            ));
+        (this.IsActive = e) ||
+          (this.DKr(0),
+          this.mBe.SetPositionSubState(
+            CharacterUnifiedStateTypes_1.ECharPositionSubState.None,
+          ));
       }),
       (this.DVr = (t, e) => {
         this.IsActive &&
@@ -130,7 +130,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
                 CharacterUnifiedStateTypes_1.ECharPositionSubState.None,
               ),
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Movement", 37, "[WalkOnWater] EnterGround")));
+                Log_1.Log.Debug("Movement", 36, "[WalkOnWater] EnterGround")));
       }),
       (this.Ilt = (t, e) => {
         this.IsActive &&
@@ -147,15 +147,15 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
   }
   OnStart() {
     this.Hte = this.Entity.GetComponent(3);
-    var t = this.Entity.GetComponent(190);
+    var t = this.Entity.GetComponent(203);
     if (!t?.Valid) return !1;
     this.Lie = t;
-    t = this.Entity.GetComponent(164);
+    t = this.Entity.GetComponent(176);
     return (
       !!t?.Valid &&
       ((this.WalkOnWaterStage = 0),
       (this.Gce = t),
-      (this.mBe = this.Entity.GetComponent(161)),
+      (this.mBe = this.Entity.GetComponent(173)),
       (this.vWr = this.Hte.HalfHeight + WALK_ON_WATER_HALF_HEIGHT_OFFSET),
       this.qWr(),
       this.k_(),
@@ -237,7 +237,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
       (this.yKr = void 0);
   }
   static get Dependencies() {
-    return [3, 164, 190];
+    return [3, 176, 203];
   }
   ewr() {
     (this.Mao = UE.NewObject(UE.TraceSphereElement.StaticClass())),
@@ -269,6 +269,20 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
       TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(
         this.pKr,
         CharacterSwimUtils.DebugColor2,
+      ),
+      (this.QT1 = UE.NewObject(UE.TraceLineElement.StaticClass())),
+      (this.QT1.WorldContextObject = this.Hte.Actor),
+      (this.QT1.bIgnoreSelf = !0),
+      (this.QT1.bIsSingle = !0),
+      this.QT1.SetDrawDebugTrace(this.IsDebug ? 1 : 0),
+      this.QT1.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.Visible),
+      TraceElementCommon_1.TraceElementCommon.SetTraceColor(
+        this.QT1,
+        CharacterSwimUtils.DebugColor3,
+      ),
+      TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(
+        this.QT1,
+        CharacterSwimUtils.DebugColor4,
       );
   }
   TKr(t) {
@@ -300,13 +314,31 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
         (t.Z = FIVE_HUNDRED_TO_FIND_SURFACE),
         this.Hte.ActorLocationProxy.Addition(t, t),
         this.AWr),
-      t =
+      i =
         (this.Hte.ActorUpProxy.Multiply(-this.vWr, e),
         this.Hte.ActorLocationProxy.Subtraction(e, e),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.Mao, t),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.Mao, e),
         this.nKr(t, e));
-    return t;
+    if (i) {
+      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.QT1, t),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.QT1, e);
+      (t = this.cz),
+        (e = TraceElementCommon_1.TraceElementCommon.LineTrace(
+          this.QT1,
+          PROFILE_DETECT_WATER_UP_BLOCK,
+        ));
+      if (e && this.QT1.HitResult.bBlockingHit)
+        if (
+          (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
+            this.QT1.HitResult,
+            0,
+            t,
+          ),
+          t.Z - (this.Hte.ActorLocationProxy.Z - this.Hte.HalfHeight) <
+            this.MKr)
+        )
+          return !1;
+    }
+    return i;
   }
   UKr() {
     var t = this.UWr,
@@ -363,7 +395,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
         0,
         e,
       ),
-      0 < (t = e.Z - (this.Hte.ActorLocationProxy.Z - this.vWr)))
+      0 < (t = e.Z - (this.Hte.ActorLocationProxy.Z - this.Hte.HalfHeight)))
       ? t
       : 0;
   }
@@ -374,38 +406,53 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
       (t.Z = MathUtils_1.MathUtils.Clamp(
         this.PKr + this.xKr * UP_TO_WATER_SURFACE_SPEED,
         this.PKr,
-        this.Hte.ActorLocationProxy.Z + this.MKr,
+        this.Hte.ActorLocationProxy.Z + this.MKr - 1,
       )),
       this.Hte.SetActorLocation(t.ToUeVector(), "修正在水中的Z轴"));
   }
   GKr() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Movement", 37, "[WalkOnWater] EnterUpToWalkOnWater"),
-      (this.Gce.CharacterMovement.Velocity.Z = 0),
-      this.Gce.CharacterMovement.SetMovementMode(
-        6,
-        CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_UP_TO_WALK_ON_WATER,
+      Log_1.Log.Debug("Movement", 36, "[WalkOnWater] EnterUpToWalkOnWater"),
+      this.cz.DeepCopy(this.Hte.ActorVelocityProxy),
+      GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+        this.Hte,
+        this.cz,
       ),
+      this.Hte.SetActorVelocity(this.cz),
+      this.Hte?.Actor.KuroSetMovementMode({
+        Mode: 6,
+        CustomMode:
+          CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_UP_TO_WALK_ON_WATER,
+        Context: "[CharacterWalkOnWaterComponent.EnterUpToWalkOnWater]",
+      }),
       (this.xKr = 0),
       (this.PKr = this.Hte.ActorLocationProxy.Z),
       (this.EKr = this.Gce.CharacterMovement.MaxCustomMovementSpeed);
   }
   NKr() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Movement", 37, "[WalkOnWater] ExitUpToWalkOnWater"),
+      Log_1.Log.Debug("Movement", 36, "[WalkOnWater] ExitUpToWalkOnWater"),
       (this.Gce.CharacterMovement.MaxCustomMovementSpeed = this.EKr);
   }
   OKr() {
-    (this.Gce.CharacterMovement.Velocity.Z = 0),
+    this.cz.DeepCopy(this.Hte.ActorVelocityProxy),
+      GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+        this.Hte,
+        this.cz,
+      ),
+      this.Hte.SetActorVelocity(this.cz),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Movement", 37, "[WalkOnWater] EnterWalkOnWater"),
-      this.Gce.CharacterMovement.SetMovementMode(1),
+        Log_1.Log.Debug("Movement", 36, "[WalkOnWater] EnterWalkOnWater"),
+      this.Hte?.Actor.KuroSetMovementMode({
+        Mode: 1,
+        Context: "[CharacterWalkOnWaterComponent.EnterWalkOnWater]",
+      }),
       this.EnableOrDisableWalkOnWater(!0, "CharWalkOnWaterComp");
   }
   kKr(t = !1) {
     t && this._Kr() && this.qKr(TimeUtil_1.TimeUtil.InverseMillisecond),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Movement", 37, "[WalkOnWater] ExitWalkOnWater"),
+        Log_1.Log.Debug("Movement", 36, "[WalkOnWater] ExitWalkOnWater"),
       this.EnableOrDisableWalkOnWater(!1, "CharWalkOnWaterComp");
   }
   tKr(t, e) {
@@ -446,12 +493,15 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
         break;
       case 0:
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Movement", 37, "[WalkOnWater] EnterNone"),
+          Log_1.Log.Debug("Movement", 36, "[WalkOnWater] EnterNone"),
           5 === this.Gce.CharacterMovement.MovementMode ||
             (6 === this.Gce.CharacterMovement.MovementMode &&
               this.Gce.CharacterMovement.CustomMovementMode ===
                 CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_LEISURE) ||
-            this.Gce.CharacterMovement.SetMovementMode(3);
+            this.Hte?.Actor.KuroSetMovementMode({
+              Mode: 3,
+              Context: "[CharacterWalkOnWaterComponent.EnterStage]",
+            });
     }
   }
   VKr(t) {
@@ -464,7 +514,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
         break;
       case 0:
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Movement", 37, "[WalkOnWater] ExitNone"),
+          Log_1.Log.Debug("Movement", 36, "[WalkOnWater] ExitNone"),
           this.mBe.SetPositionSubState(
             CharacterUnifiedStateTypes_1.ECharPositionSubState.WaterSurface,
           );
@@ -484,12 +534,10 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
                   0 === this.WalkOnWaterStage
                 ? 1
                 : this.WalkOnWaterStage)
-        : 0 === this.MKr && 0 < this.RSa
-          ? (t = 2)
-          : this._Kr()
-            ? (t = 1)
-            : 0 !== this.WalkOnWaterStage &&
-              (t = this.AKr() ? this.WalkOnWaterStage : 0),
+        : this._Kr()
+          ? (t = 1)
+          : 0 !== this.WalkOnWaterStage &&
+            (t = this.AKr() ? this.WalkOnWaterStage : 0),
         this.DKr(t),
         this.jKr(e),
         0 === this.WalkOnWaterStage &&
@@ -504,14 +552,13 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
             CharacterUnifiedStateTypes_1.ECharPositionSubState.None,
           ),
           Log_1.Log.CheckDebug()) &&
-          Log_1.Log.Debug("Movement", 37, "[WalkOnWater] EnterGround"),
-        (this.RSa = this.MKr);
+          Log_1.Log.Debug("Movement", 36, "[WalkOnWater] EnterGround");
     }
   }
   EnableOrDisableWalkOnWater(t, e, i = !1) {
     t
-      ? this.b3a.has(e) ||
-        (0 === this.b3a.size &&
+      ? this.d6a.has(e) ||
+        (0 === this.d6a.size &&
           (this.Hte.Actor.CapsuleComponent?.SetCollisionResponseToChannel(
             QueryTypeDefine_1.KuroCollisionChannel.KuroWater,
             2,
@@ -526,7 +573,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
             !1,
           )),
           t) &&
-          ((t = this.Entity.GetComponent(163))
+          ((t = this.Entity.GetComponent(175))
             ? t.SetLocationAndRotatorWithModelBuffer(
                 i.ToUeVector(),
                 this.Hte.ActorRotation,
@@ -540,9 +587,9 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
                 "WalkOnWater.FixLocation",
                 !1,
               )),
-        this.b3a.add(e))
-      : (this.b3a.delete(e),
-        0 === this.b3a.size &&
+        this.d6a.add(e))
+      : (this.d6a.delete(e),
+        0 === this.d6a.size &&
           this.Hte.Actor.CapsuleComponent.SetCollisionResponseToChannel(
             QueryTypeDefine_1.KuroCollisionChannel.KuroWater,
             this.IKr ?? 1,
@@ -550,7 +597,7 @@ let CharacterWalkOnWaterComponent = class CharacterWalkOnWaterComponent extends 
   }
 };
 (CharacterWalkOnWaterComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(71)],
+  [(0, RegisterComponent_1.RegisterComponent)(78)],
   CharacterWalkOnWaterComponent,
 )),
   (exports.CharacterWalkOnWaterComponent = CharacterWalkOnWaterComponent);

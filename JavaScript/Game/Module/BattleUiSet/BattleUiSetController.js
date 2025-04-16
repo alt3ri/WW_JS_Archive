@@ -15,10 +15,10 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(23399, BattleUiSetController.lgt);
+    Net_1.Net.Register(27045, BattleUiSetController.lgt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(23399);
+    Net_1.Net.UnRegister(27045);
   }
   static MobileButtonSettingUpdateRequest(e) {
     var t = new Protocol_1.Aki.Protocol.Bms();
@@ -26,16 +26,16 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "BattleUiSet",
-          8,
+          17,
           "MobileButtonSettingUpdateRequest 客户端请求移动端键位设置",
           ["request", t],
         ),
-      Net_1.Net.Call(17765, Protocol_1.Aki.Protocol.Bms.create(t), this._gt);
+      Net_1.Net.Call(17422, Protocol_1.Aki.Protocol.Bms.create(t), this._gt);
   }
 }
 ((exports.BattleUiSetController = BattleUiSetController).lgt = (e) => {
   Log_1.Log.CheckInfo() &&
-    Log_1.Log.Info("BattleUiSet", 8, "SettingNotify 通知移动端按键设置", [
+    Log_1.Log.Info("BattleUiSet", 17, "SettingNotify 通知移动端按键设置", [
       "notify",
       e,
     ]);
@@ -63,13 +63,21 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "BattleUiSet",
-        8,
+        17,
         "MobileButtonSettingUpdateResponse 服务端返回移动端键位设置",
         ["response", e],
       ),
-      e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
-        ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-          "SaveButton",
-        );
+      e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+        ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+            e.Q4n,
+            28200,
+          )
+        : ModelManager_1.ModelManager.BattleUiModel?.PureModeData?.IsOpen
+          ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+              "SaveButtonPureMode",
+            )
+          : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+              "SaveButton",
+            );
   });
 //# sourceMappingURL=BattleUiSetController.js.map

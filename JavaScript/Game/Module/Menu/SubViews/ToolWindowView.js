@@ -15,6 +15,7 @@ class ToolWindowView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.UBi = void 0),
       (this.ABi = void 0),
+      (this.Lic = void 0),
       (this.PBi = () => {
         UiManager_1.UiManager.OpenView("LogUploadView");
       }),
@@ -35,6 +36,9 @@ class ToolWindowView extends UiViewBase_1.UiViewBase {
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             e,
           );
+      }),
+      (this.wic = () => {
+        UiManager_1.UiManager.OpenView("NetworkDetectionView");
       });
   }
   OnRegisterComponent() {
@@ -75,11 +79,26 @@ class ToolWindowView extends UiViewBase_1.UiViewBase {
         this.UBi.BindCallback(this.PBi),
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "SP_Tool_Upload",
+        )),
+      e =
+        (this.UBi.RefreshIcon(e, () => {
+          this.UBi.SetIconVisible(!0);
+        }),
+        (this.Lic = new ToolWindowButtonItem_1.ToolWindowButtonItem(
+          this.GetItem(3),
+        )),
+        ConfigManager_1.ConfigManager.TextConfig.GetMultiTextByKey(
+          "NetworkDetection_Title",
+        )),
+      e =
+        (this.Lic.SetText(e),
+        this.Lic.BindCallback(this.wic),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+          "SP_IconNet",
         ));
-    this.UBi.RefreshIcon(e, () => {
-      this.UBi.SetIconVisible(!0);
+    this.Lic.RefreshIcon(e, () => {
+      this.Lic.SetIconVisible(!0);
     }),
-      this.GetItem(3).SetUIActive(!1),
       this.GetItem(4).SetUIActive(!1);
   }
 }

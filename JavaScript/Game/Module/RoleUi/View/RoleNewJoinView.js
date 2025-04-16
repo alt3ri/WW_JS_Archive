@@ -40,6 +40,7 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
         UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue),
       (this.lKt = 0),
       (this.l0o = !1),
+      (this.C4_ = !1),
       (this.OnSequenceEventByStringParam = (e) => {
         switch (e) {
           case "Flash1":
@@ -65,7 +66,7 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       }),
       (this.BKt = (e) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Gacha", 28, "GachaScene被关闭"),
+          Log_1.Log.Debug("Gacha", 27, "GachaScene被关闭"),
           e &&
             (UiManager_1.UiManager.IsViewShow(this.Info.Name) && this.CloseMe(),
             EventSystem_1.EventSystem.Emit(
@@ -111,7 +112,16 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
     ]);
   }
   async OnBeforeStartAsync() {
-    await this.yNn();
+    (this.C4_ =
+      0 ===
+      UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+        "r.SkyBlending.AllowSettingLerpPerFrame",
+      )),
+      this.C4_ &&
+        UE.KuroSequencePerformanceManager.SimpleExecuteCommand(
+          "r.SkyBlending.AllowSettingLerpPerFrame 1",
+        ),
+      await this.yNn();
   }
   async yNn() {
     var e = this.dFe,
@@ -123,9 +133,10 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
         e.SequencePath,
       ),
       i =
-        ((this.b2t = ActorSystem_1.ActorSystem.Get(
+        (UE.KuroSequencePerformanceManager.OpenKuroPerformanceMode(e),
+        (this.b2t = ActorSystem_1.ActorSystem.Get(
           UE.LevelSequenceActor.StaticClass(),
-          new UE.Transform(),
+          new UE.TransformDouble(),
           void 0,
           !1,
         )),
@@ -202,7 +213,12 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
           UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue)),
       this.DKt(),
       this.hKt?.EndGachaScene(),
-      ModelManager_1.ModelManager.GachaModel.ReleaseLoadGachaSequence();
+      ModelManager_1.ModelManager.GachaModel.ReleaseLoadGachaSequence(),
+      UE.KuroSequencePerformanceManager.CloseKuroPerformanceMode(),
+      this.C4_ &&
+        UE.KuroSequencePerformanceManager.SimpleExecuteCommand(
+          "r.SkyBlending.AllowSettingLerpPerFrame 0",
+        );
   }
   OnHandleLoadScene() {
     (this.exe = UE.KuroCollectActorComponent.GetActorWithTag(
@@ -234,13 +250,13 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
       this.tKt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1),
       this.iKt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1),
       this.oKt.K2_AttachToActor(this.exe, void 0, 2, 2, 2, !1);
-    var e = new UE.Vector(200, 0, 0),
-      i = new UE.Vector(60, 0, 0),
+    var e = new UE.VectorDouble(200, 0, 0),
+      i = new UE.VectorDouble(60, 0, 0),
       t = new UE.Rotator(0, 90, 0);
-    this.eKt.K2_SetActorRelativeLocation(i, !1, void 0, !1),
-      this.tKt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
-      this.iKt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
-      this.oKt.K2_SetActorRelativeLocation(e, !1, void 0, !1),
+    this.eKt.D_K2_SetActorRelativeLocation(i, !1, void 0, !1),
+      this.tKt.D_K2_SetActorRelativeLocation(e, !1, void 0, !1),
+      this.iKt.D_K2_SetActorRelativeLocation(e, !1, void 0, !1),
+      this.oKt.D_K2_SetActorRelativeLocation(e, !1, void 0, !1),
       this.eKt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
       this.tKt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
       this.iKt.K2_SetActorRelativeRotation(t, !1, void 0, !1),
@@ -310,7 +326,10 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
               FNameUtil_1.FNameUtil.GetDynamicFName("KuroUiSceneRoot"),
               1,
             )),
-            (t.TransformOrigin = e.GetTransform()))
+            (e = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(
+              e.D_GetTransform(),
+            )),
+            (t.TransformOrigin = e))
         : 0 < i.BindPoint?.length &&
           ((this.b2t.bOverrideInstanceData = !0),
           (this.b2t.DefaultInstanceData.TransformOriginActor =
@@ -365,7 +384,7 @@ class RoleNewJoinView extends UiViewBase_1.UiViewBase {
     ) {
       const e = this.b2t;
       TimerSystem_1.TimerSystem.Next(() => {
-        ActorSystem_1.ActorSystem.Put(e);
+        ActorSystem_1.ActorSystem.Put("RoleNewJoinView.DestroySequence", e);
       }),
         (this.b2t = void 0);
     }

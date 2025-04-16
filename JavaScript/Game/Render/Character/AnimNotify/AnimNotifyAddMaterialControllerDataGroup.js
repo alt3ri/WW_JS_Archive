@@ -6,13 +6,14 @@ class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.MaterialAssetData = void 0);
   }
+  Constructor() {}
   IsAllValid(t, e) {
     if (!UE.KismetSystemLibrary.IsValid(this.MaterialAssetData))
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "错误：特效DA不合法",
             ["Actor", t?.GetOwner()?.GetName()],
             ["动画", e?.GetName()],
@@ -24,7 +25,7 @@ class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "错误：动画Mesh不合法",
             ["Actor", t?.GetOwner()?.GetName()],
             ["动画", e?.GetName()],
@@ -36,7 +37,7 @@ class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "错误：动画Owner不合法",
             ["Actor", t?.GetOwner()?.GetName()],
             ["动画", e?.GetName()],
@@ -49,7 +50,7 @@ class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderCharacter",
-              14,
+              13,
               "错误：DAGroup的每一个子项不能是Runtime类型,Runtime类型请使用AnimNotifyStateAddMaterialControllerDataGroup",
               ["Actor", t?.GetOwner()?.GetName()],
               ["动画", e?.GetName()],
@@ -57,30 +58,35 @@ class AnimNotifyAddMaterialControllerDataGroup extends UE.KuroAnimNotify {
             ),
           !1
         );
-    return (
-      t.GetOwner() instanceof UE.TsBaseCharacter_C ||
-      (Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn(
-          "RenderCharacter",
-          14,
-          "错误：必须是TsBaseCharacter及其派生类调用",
-          ["Actor", t?.GetOwner()?.GetName()],
-          ["动画", e?.GetName()],
-        ),
-      !1)
-    );
+    return !0;
   }
   K2_Notify(r, t) {
-    return (
-      !!this.IsAllValid(r, t) &&
-      (t = r.GetOwner()) instanceof UE.TsBaseCharacter_C &&
-      (t.CharRenderingComponent.CheckInit() ||
-        t.CharRenderingComponent.Init(t.RenderType),
-      0 <=
-        t.CharRenderingComponent.AddMaterialControllerDataGroup(
+    if (!this.IsAllValid(r, t)) return !1;
+    t = r.GetOwner();
+    if (t instanceof UE.TsBaseCharacter_C) {
+      t.CharRenderingComponent.CheckInit() ||
+        t.CharRenderingComponent.Init(t.RenderType);
+      const o =
+        t.CharRenderingComponent.AddMaterialControllerDataGroupWithAnimObject(
           this.MaterialAssetData,
-        ))
+          r,
+        );
+      return 0 <= o;
+    }
+    let e = t.GetComponentByClass(UE.CharRenderingComponent_C.StaticClass());
+    e ||
+      ((e = t.AddComponentByClass(
+        UE.CharRenderingComponent_C.StaticClass(),
+        !1,
+        new UE.Transform(),
+        !1,
+      )).Init(8),
+      e.SetLogicOwner(t));
+    const o = e.AddMaterialControllerDataGroupWithAnimObject(
+      this.MaterialAssetData,
+      r,
     );
+    return 0 <= o;
   }
   GetNotifyName() {
     var r = this.MaterialAssetData.GetName();

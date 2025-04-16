@@ -11,17 +11,13 @@ class InstanceDungeonEntranceFlowSkipEditFormation extends InstanceDungeonEntran
       UiManager_1.UiManager.OpenView("InstanceDungeonEntranceView");
     }),
       this.AddStep(() => {
-        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.EnterInstanceDungeonByAutoRole()
-          .then(
-            (e) => {
-              e &&
-                EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView();
-            },
-            () => {},
-          )
-          .finally(() => {
-            this.Reset();
-          });
+        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.EnterInstanceDungeonByAutoRole().then(
+          (e) => {
+            EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView(),
+              e ? this.Reset() : this.RevertStep();
+          },
+          () => {},
+        );
       });
   }
 }

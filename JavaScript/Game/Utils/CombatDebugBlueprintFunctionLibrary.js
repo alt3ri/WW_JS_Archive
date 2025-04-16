@@ -1,20 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   FormationPropertyAll_1 = require("../../Core/Define/ConfigQuery/FormationPropertyAll"),
   PassiveSkillById_1 = require("../../Core/Define/ConfigQuery/PassiveSkillById"),
   EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
   RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
+  ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
   GameplayTagUtils_1 = require("../../Core/Utils/GameplayTagUtils"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   FormationAttributeController_1 = require("../Module/Abilities/FormationAttributeController"),
   CharacterAttributeTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
+  CharacterPassiveSkillComponent_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterPassiveSkillComponent"),
   CharacterTagContainer_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterTagContainer"),
   TriggerType_1 = require("../NewWorld/Character/Common/Component/Abilities/Trigger/TriggerType"),
   CombatDebugController_1 = require("./CombatDebugController"),
-  CombatDebugDrawController_1 = require("./CombatDebugDrawController");
+  CombatDebugDrawController_1 = require("./CombatDebugDrawController"),
+  CombatLog_1 = require("./CombatLog");
 class CombatDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
+  static AddPassiveSkillForDebug(t, e) {
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 26);
+    t?.Valid && t.LearnPassiveSkill(Number(e), { CombatMessageId: -1n });
+  }
+  static RemovePassiveSkillForDebug(t, e) {
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 26);
+    t?.Valid && t.ForgetPassiveSkill(Number(e));
+  }
   static GetDebugMonsterMovePath() {
     return CombatDebugDrawController_1.CombatDebugDrawController
       .DebugMonsterMovePath;
@@ -62,29 +75,47 @@ class CombatDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static FilterScript(t) {
     return CombatDebugController_1.CombatDebugController.FilterCmd(t);
   }
+  static IsDebugPrintOpened(t) {
+    return CombatLog_1.CombatLog.DebugCombatInfo.has(t);
+  }
+  static SetDebugPrintOpened(t, e) {
+    e
+      ? CombatLog_1.CombatLog.DebugCombatInfo.add(t)
+      : CombatLog_1.CombatLog.DebugCombatInfo.delete(t);
+  }
   static TryRefreshServerDebugInfo() {
     CombatDebugController_1.CombatDebugController.RefreshServerDebugInfo();
   }
+  static GetBuffComponent(t, e) {
+    t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(207);
+    return t?.GetBuffByHandle(e)
+      ? t
+      : t &&
+          (0, RegisterComponent_1.isComponentInstance)(t, 188) &&
+          t.GetFormationBuffComp()?.GetBuffByHandle(e)
+        ? t.GetFormationBuffComp()
+        : void 0;
+  }
   static GetServerBuffRemainDuration(t, e) {
     return (
-      EntitySystem_1.EntitySystem.Get(t)
-        ?.GetComponent(20)
+      CombatDebugBlueprintFunctionLibrary.GetBuffComponent(t, e)
+        ?.Entity.GetComponent(22)
         ?.GetServerBuffRemainDuration(e) ?? -1
     );
   }
   static GetServerBuffTotalDuration(t, e) {
     return (
-      EntitySystem_1.EntitySystem.Get(t)
-        ?.GetComponent(20)
+      CombatDebugBlueprintFunctionLibrary.GetBuffComponent(t, e)
+        ?.Entity.GetComponent(22)
         ?.GetServerBuffTotalDuration(e) ?? -1
     );
   }
   static GetDebugBuff(t, e) {
-    var t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(194),
+    var t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(207),
       r = t?.GetBuffByHandle(e);
     return (
       r ||
-      (!r && (0, RegisterComponent_1.isComponentInstance)(t, 175)
+      (!r && (0, RegisterComponent_1.isComponentInstance)(t, 188)
         ? t.GetFormationBuffComp().GetBuffByHandle(e)
         : void 0)
     );
@@ -102,168 +133,223 @@ class CombatDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       CombatDebugBlueprintFunctionLibrary.GetDebugBuff(t, e)?.Duration ?? -1
     );
   }
+  static HasServerBuff(t, e) {
+    var r = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(22);
+    return (
+      !!r &&
+      ((t = EntitySystem_1.EntitySystem.Get(t)
+        ?.GetComponent(188)
+        ?.GetFormationBuffComp()
+        ?.Entity.GetComponent(22)),
+      r.HasServerBuff(e) ||
+        t?.HasServerBuff(e) ||
+        !(r.HasBuffRequest(e) || t?.HasBuffRequest(e)))
+    );
+  }
   static GetAttributeDebugString(t) {
-    var e = EntitySystem_1.EntitySystem.GetComponent(t, 20),
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 159);
+    var e = EntitySystem_1.EntitySystem.GetComponent(t, 22),
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 171);
     if (!e || !r) return "";
-    var n = new Set(CharacterAttributeTypes_1.attributeIdsWithMax.values()),
-      o = new Set(CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.values()),
-      a = new Set(CharacterAttributeTypes_1.attrsAutoRecoverMaxMap.values());
+    var a = new Set(CharacterAttributeTypes_1.attributeIdsWithMax.values()),
+      n = new Set(CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.values()),
+      o = new Set(CharacterAttributeTypes_1.attrsAutoRecoverMaxMap.values());
     let i = "";
-    const u = e.iGr?.GSs;
-    var s = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
-    if (u) for (const m of u) s[m.tSs] = m;
+    const s = e.ServerDebugInfo?.GSs;
+    var u = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
+    if (s) for (const y of s) u[y.tSs] = y;
     for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++)
       if (
         !(
           CharacterAttributeTypes_1.attributeIdsWithMax.has(t) ||
-          n.has(t) ||
+          a.has(t) ||
           CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.has(t) ||
-          o.has(t) ||
-          a.has(t)
+          n.has(t) ||
+          o.has(t)
         )
       ) {
-        var [l, C] = [r.GetBaseValue(t), r.GetCurrentValue(t)],
-          b = C.toFixed(0),
-          C = C === l ? "" : (l < C ? "(+" : "(") + (C - l).toFixed(0) + ")";
-        const u = s[t];
-        var [l, y] = [u?.eSs ?? 0, u?.y6n ?? 0],
-          c = y.toFixed(0),
-          y = y === l ? "" : (l < y ? "(+" : "(") + (y - l).toFixed(0) + ")";
-        i += `#${t} undefined C:${b}${C} | S:${c}${y}
+        var [C, l] = [r.GetBaseValue(t), r.GetCurrentValue(t)],
+          b = l.toFixed(0),
+          l = l === C ? "" : (C < l ? "(+" : "(") + (l - C).toFixed(0) + ")";
+        const s = u[t];
+        var [C, c] = [s?.eSs ?? 0, s?.y6n ?? 0],
+          m = c.toFixed(0),
+          c = c === C ? "" : (C < c ? "(+" : "(") + (c - C).toFixed(0) + ")";
+        i += `#${t} undefined C:${b}${l} | S:${m}${c}
 `;
       }
     return i.trim();
   }
   static GetStateAttributeDebugString(t) {
-    var e = EntitySystem_1.EntitySystem.GetComponent(t, 20),
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 159);
+    var e = EntitySystem_1.EntitySystem.GetComponent(t, 22),
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 171);
     if (!e || !r) return "";
-    let n = "";
-    const o = e.iGr?.GSs;
-    var a = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
-    if (o) for (const c of o) a[c.tSs] = c;
+    let a = "";
+    const n = e.ServerDebugInfo?.GSs;
+    var o = new Array(CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX);
+    if (n) for (const c of n) o[c.tSs] = c;
     for (let t = 1; t < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; t++)
       if (
         CharacterAttributeTypes_1.attributeIdsWithMax.has(t) ||
         CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.has(t)
       ) {
-        var i = void 0,
-          u = r.GetBaseValue(t).toFixed(0);
-        const o = a[t];
+        var i = r.GetBaseValue(t).toFixed(0);
+        const n = o[t];
         var s,
-          l,
+          u,
           C,
-          b,
-          y = (o?.eSs ?? 0).toFixed(0);
+          l,
+          b = (n?.eSs ?? 0).toFixed(0);
         CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.has(t)
           ? ((s =
               CharacterAttributeTypes_1.attrsAutoRecoverSpeedMap.get(t) ?? 0),
-            (b = CharacterAttributeTypes_1.attrsAutoRecoverMaxMap.get(t) ?? 0),
-            (l = r.GetCurrentValue(b).toFixed(0)),
-            (b = (a[b]?.y6n ?? 0).toFixed(0)),
+            (l = CharacterAttributeTypes_1.attrsAutoRecoverMaxMap.get(t) ?? 0),
+            (u = r.GetCurrentValue(l).toFixed(0)),
+            (l = (o[l]?.y6n ?? 0).toFixed(0)),
             (C = r.GetCurrentValue(s).toFixed(0)),
-            (s = (a[s]?.y6n ?? 0).toFixed(0)),
-            (n += `#${t} ${i} C:${u}/${l} (${C}/s) | S:${y}/${b} (${s}/s)
+            (s = (o[s]?.y6n ?? 0).toFixed(0)),
+            (a += `#${t} undefined C:${i}/${u} (${C}/s) | S:${b}/${l} (${s}/s)
 `))
           : CharacterAttributeTypes_1.attributeIdsWithMax.has(t) &&
-            ((l = CharacterAttributeTypes_1.attributeIdsWithMax.get(t) ?? 0),
-            (C = r.GetCurrentValue(l).toFixed(0)),
-            (b = (a[l]?.y6n ?? 0).toFixed(0)),
-            (n += `#${t} ${i} C:${u}/${C} | S:${y}/${b}
+            ((u = CharacterAttributeTypes_1.attributeIdsWithMax.get(t) ?? 0),
+            (C = r.GetCurrentValue(u).toFixed(0)),
+            (l = (o[u]?.y6n ?? 0).toFixed(0)),
+            (a += `#${t} undefined C:${i}/${C} | S:${b}/${l}
 `));
       }
-    return n.trim();
+    return a.trim();
   }
   static GetFormationAttributeDebugString(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 20);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 22);
     if (!t) return "";
     let e = "";
-    var t = t.iGr?.M6n,
+    var t = t.ServerDebugInfo?.M6n,
       r = new Array();
-    if (t) for (const C of t) r[C.E6n] = C;
+    if (t) for (const l of t) r[l.E6n] = l;
     for (const b of FormationPropertyAll_1.configFormationPropertyAll.GetConfigList()) {
-      var n = b.Id,
-        o =
+      var a = b.Id,
+        n =
           FormationAttributeController_1.FormationAttributeController.GetValue(
-            n,
+            a,
           ),
-        a =
-          FormationAttributeController_1.FormationAttributeController.GetMax(n),
+        o =
+          FormationAttributeController_1.FormationAttributeController.GetMax(a),
         i =
           FormationAttributeController_1.FormationAttributeController.GetSpeed(
-            n,
+            a,
           ),
-        u = r[n],
-        s = u?.y6n.toFixed(0) ?? "???",
-        l = u?.I6n.toFixed(0) ?? "???",
-        u = u?.L6n.toFixed(0) ?? "???";
+        s = r[a],
+        u = s?.y6n.toFixed(0) ?? "???",
+        C = s?.I6n.toFixed(0) ?? "???",
+        s = s?.L6n.toFixed(0) ?? "???";
       e +=
-        `#${n} C:${o?.toFixed(0)}/${a?.toFixed(0)} (${i?.toFixed(0)}/s)` +
-        ` | S:${s}/${l} (${u}/s)
+        `#${a} C:${n?.toFixed(0)}/${o?.toFixed(0)} (${i?.toFixed(0)}/s)` +
+        ` | S:${u}/${C} (${s}/s)
 `;
     }
     return e.trim();
   }
   static GetPassiveDebugString(t) {
-    var e = EntitySystem_1.EntitySystem.GetComponent(t, 23),
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 25);
+    var e = EntitySystem_1.EntitySystem.GetComponent(t, 26),
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 28);
     if (!e) return "";
-    let n = "";
-    for (const u of e.GetAllPassiveSkills()) {
-      var o = r?.GetTrigger(u.TriggerHandle),
-        a = PassiveSkillById_1.configPassiveSkillById.GetConfig(u.SkillId),
-        i = e.BOr?.GetPassiveSkillCdInfo(u.SkillId)?.CurRemainingCd,
-        i =
-          ((n +=
-            `技能: ${u.SkillId} handle: ${u.TriggerHandle} CD:${i?.toFixed(2)}
+    let a = "";
+    if (0 < e.GetAllPassiveSkills().length) {
+      var n = EntitySystem_1.EntitySystem.GetComponent(t, 204);
+      a += "----- 客户端被动技能 -----\n";
+      for (const u of e.GetAllPassiveSkills()) {
+        r?.GetTrigger(u.TriggerHandle);
+        var o = PassiveSkillById_1.configPassiveSkillById.GetConfig(u.SkillId),
+          i =
+            n?.GetPassiveSkillCdInfo(u.SkillId)?.CurRemainingCd?.toFixed(2) ??
+            "【无CD组件】";
+        a =
+          (a =
+            (a =
+              (a += `技能: ${u.SkillId} handle: ${u.TriggerHandle} CD:${i}
+`) +
+              `说明: ${o.SkillDesc}
+`) +
+            `触发器类型: ${o.TriggerType}${void 0 !== TriggerType_1.ETriggerEvent[o.TriggerType] ? "" : "(非法类型)"}
 ` +
-            `说明: ${a.SkillDesc}
-触发器类型: ${a.TriggerType}${void 0 !== TriggerType_1.ETriggerEvent[a.TriggerType] ? "" : "(非法类型)"}
-条件公式: 
-${a.TriggerFormula}
-`),
-          o?.GetLastFormulaResult() ?? "");
-      "" !== i &&
-        (n += `最后触发结果:
-${i}
-`),
-        (n += "\n\n");
+            `触发时机: undefined
+`) +
+          `条件公式: undefined
+` +
+          "触发行为:\n";
+        for (const C of u.Actions) {
+          var s = C.Action;
+          switch (s) {
+            case CharacterPassiveSkillComponent_1.ESkillAction.AddBullet:
+              a += `    添加子弹 ${C.BulletRowNames.join("、")}
+`;
+              break;
+            case CharacterPassiveSkillComponent_1.ESkillAction.RemoveBullet:
+              a += `    移除子弹 ${C.BulletRowNames.map((t, e) => `${t}(${C.SummonChild ? "创建子子弹" : "不创建子子弹"})`).join("、")}
+`;
+              break;
+            case CharacterPassiveSkillComponent_1.ESkillAction.AddBuff:
+              a += `    添加Buff ${C.BuffId.join("、")}
+`;
+              break;
+            case CharacterPassiveSkillComponent_1.ESkillAction.RemoveBuff:
+              a += `    移除Buff ${C.BuffId.map((t, e) => "" + t + (C.StackCount[e] <= 0 ? "" : `(移除${C.StackCount[e]}层)`)).join("、")}
+`;
+              break;
+            case CharacterPassiveSkillComponent_1.ESkillAction.StartSkill:
+              a += `    触发主动技能 ${C.SkillId}
+`;
+              break;
+            case CharacterPassiveSkillComponent_1.ESkillAction.LockOn:
+              a += `    锁定目标 ${C.IsHardLock} ${C.LockOnConfigId} ${C.SkillTargetPriority} ${C.ShowTarget} ${C.GlobalTarget}
+`;
+              break;
+            case CharacterPassiveSkillComponent_1.ESkillAction.Customize:
+              a += `    自定义行为 ${C.Formula.FormulaStr} 
+`;
+              break;
+            default:
+              a += `    未知行为 ${s}
+`;
+          }
+        }
+        a += "\n\n";
+      }
     }
-    return n.trim();
+    e = EntitySystem_1.EntitySystem.GetComponent(t, 22)?.ServerDebugInfo?.nT_;
+    return (a = e ? a + "----- 服务端被动技能 -----\n" + e : a).trim();
   }
   static GetTagsDebugString(t) {
-    const a = EntitySystem_1.EntitySystem.GetComponent(t, 190)?.TagContainer;
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 20);
-    if (!t || !a) return "";
-    var e = t?.iGr?.bAs,
-      t = t?.iGr?.qAs,
+    const o = EntitySystem_1.EntitySystem.GetComponent(t, 203)?.TagContainer;
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 22);
+    if (!t || !o) return "";
+    var e = t?.ServerDebugInfo?.bAs,
+      t = t?.ServerDebugInfo?.qAs,
       r = new Map();
     const i = new Map([
       ["实体", new Map()],
       ["编队", new Map()],
     ]);
     if (e) {
-      var n = i.get("实体");
-      for (const u of e)
-        r.set(u.m5n, r.get(u.m5n) ?? 0 + u.m9n), n.set(u.m5n, u.m9n);
+      var a = i.get("实体");
+      for (const s of e)
+        r.set(s.m5n, r.get(s.m5n) ?? 0 + s.m9n), a.set(s.m5n, s.m9n);
     }
     if (t) {
-      var o = i.get("编队");
-      for (const s of t)
-        r.set(s.m5n, r.get(s.m5n) ?? 0 + s.m9n), o.set(s.m5n, s.m9n);
+      var n = i.get("编队");
+      for (const u of t)
+        r.set(u.m5n, r.get(u.m5n) ?? 0 + u.m9n), n.set(u.m5n, u.m9n);
     }
     return (
       "【客户端】\n" +
-      [...a.GetAllExactTags()]
+      [...o.GetAllExactTags()]
         .map((t) => {
-          var e = a.GetExactTagCount(t);
+          var e = o.GetExactTagCount(t);
           let r =
             GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t) + ` x ${e}(`;
-          for (const o of a.GetAllChannels()) {
-            var n = a.GetRowTagCount(o, t);
-            n &&
-              (r += CharacterTagContainer_1.channelDebugName[o] + ` x ${n} `);
+          for (const n of o.GetAllChannels()) {
+            var a = o.GetRawTagCount(n, t);
+            a &&
+              (r += CharacterTagContainer_1.channelDebugName[n] + ` x ${a} `);
           }
           return r.trimEnd() + ")\n";
         })
@@ -274,10 +360,10 @@ ${i}
         .map(([t, e]) => {
           let r =
             GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t) + ` x ${e}(`;
-          var n, o;
-          for ([n, o] of i.entries()) {
-            var a = o.get(t);
-            a && (r += n + ` x ${a} `);
+          var a, n;
+          for ([a, n] of i.entries()) {
+            var o = n.get(t);
+            o && (r += a + ` x ${o} `);
           }
           return r.trimEnd() + ")\n";
         })
@@ -286,15 +372,19 @@ ${i}
     ).trim();
   }
   static GetCueDebugString(t, e = "") {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 19);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 21);
     if (!t) return "";
     let r = "";
-    var n = [...e.matchAll(/[0-9]+/g)].map((t) => t[0] ?? "");
-    for (const o of t.GetAllCurrentCueRef())
-      (0 < n.length && !n.some((t) => String(o.CueConfig.Id).includes(t))) ||
-        (r += `CueId: ${o.CueConfig.Id} Handle: ${o.Handle} BuffId: ${o.BuffId}
+    var a = [...e.matchAll(/[0-9]+/g)].map((t) => t[0] ?? "");
+    for (const n of t.GetAllCurrentCueRef())
+      (0 < a.length && !a.some((t) => String(n.CueConfig.Id).includes(t))) ||
+        (r += `CueId: ${n.CueConfig.Id} Handle: ${n.Handle} BuffId: ${n.BuffId}
 `);
     return r;
+  }
+  static LoadDataTable(t) {
+    if (Info_1.Info.IsPlayInEditor)
+      return ResourceSystem_1.ResourceSystem.Load(t, UE.DataTable);
   }
 }
 exports.default = CombatDebugBlueprintFunctionLibrary;

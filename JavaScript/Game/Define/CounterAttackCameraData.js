@@ -9,6 +9,7 @@ class CounterAttackCameraData extends UE.KuroBpDataAsset {
       (this.VictimTimeScale = void 0),
       (this.CameraShake = void 0);
   }
+  Constructor() {}
 }
 exports.default = CounterAttackCameraData;
 //# sourceMappingURL=CounterAttackCameraData.js.map

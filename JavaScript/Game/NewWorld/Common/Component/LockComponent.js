@@ -30,7 +30,7 @@ let LockComponent = class LockComponent extends EntityComponent_1.EntityComponen
       (this.onn = 0);
   }
   OnStart() {
-    (this.inn = this.Entity.GetComponent(181)),
+    (this.inn = this.Entity.GetComponent(194)),
       (this.u1t = this.Entity.GetComponent(0));
     var t = this.u1t.GetEntityEnterComponentState();
     if (void 0 !== t)
@@ -55,7 +55,7 @@ let LockComponent = class LockComponent extends EntityComponent_1.EntityComponen
   }
 };
 (LockComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(95)],
+  [(0, RegisterComponent_1.RegisterComponent)(102)],
   LockComponent,
 )),
   (exports.LockComponent = LockComponent);

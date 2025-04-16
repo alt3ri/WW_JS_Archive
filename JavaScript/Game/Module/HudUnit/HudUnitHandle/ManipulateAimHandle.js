@@ -153,7 +153,7 @@ class ManipulateAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   ari() {
     if (this.Xoi)
       return this.$oi && this.Yoi && this.$oi.DoesSocketExist(this.Yoi)
-        ? this.$oi.GetSocketLocation(this.Yoi)
+        ? this.$oi.D_GetSocketLocation(this.Yoi)
         : this.Xoi.ActorLocation;
   }
 }

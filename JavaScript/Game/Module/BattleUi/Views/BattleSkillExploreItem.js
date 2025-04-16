@@ -33,10 +33,10 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
   }
   OnRegisterComponent() {
     super.OnRegisterComponent(),
-      this.ComponentRegisterInfos.push([12, UE.UIButtonComponent]);
+      this.ComponentRegisterInfos.push([13, UE.UIButtonComponent]);
   }
   Initialize(e) {
-    (this.Jtt = this.GetButton(12)),
+    (this.Jtt = this.GetButton(13)),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GuideTouchIdInject,
         this.Ztt,
@@ -52,7 +52,7 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
       super.Reset();
   }
   IsNeedLongPress() {
-    return !0;
+    return this.SkillButtonData.IsEnableLongPress();
   }
   OnSkillButtonPressed() {
     (ModelManager_1.ModelManager.BattleUiModel.IsLongPressExploreButton = !1),

@@ -33,10 +33,14 @@ class WeaponHideConfig {
     return this.hideweapontags(t);
   }
   hideweapontags(t, i) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e
-      ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i)
-      : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.J7.__vector(this.z7 + e) + 4 * t, i) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   hideweapontagsLength() {
     var t = this.J7.__offset(this.z7, 6);

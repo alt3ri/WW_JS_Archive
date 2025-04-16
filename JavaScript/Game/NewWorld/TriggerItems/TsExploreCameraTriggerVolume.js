@@ -16,18 +16,21 @@ class TsExploreCameraTriggerVolume extends TsTriggerVolume_1.default {
       (this.ArmLengthMin = -0),
       (this.ArmLengthMax = -0);
   }
-  OnCollisionEnterFunc(e) {
-    var r;
-    e instanceof TsBaseCharacter_1.default &&
-      Global_1.Global.BaseCharacter === e &&
+  Constructor() {
+    super.Constructor();
+  }
+  OnCollisionEnterFunc(r) {
+    var e;
+    r instanceof TsBaseCharacter_1.default &&
+      Global_1.Global.BaseCharacter === r &&
       (UE.KismetSystemLibrary.IsValid(this.LookAtActor1) &&
       UE.KismetSystemLibrary.IsValid(this.LookAtActor2)
-        ? ((e = this.LookAtActor1.K2_GetActorLocation()),
-          (r = this.LookAtActor2.K2_GetActorLocation()),
+        ? ((r = this.LookAtActor1.D_K2_GetActorLocation()),
+          (e = this.LookAtActor2.D_K2_GetActorLocation()),
           CameraController_1.CameraController.EnterCameraExplore(
             this.Id,
-            e,
             r,
+            e,
             this.PrepTime,
             this.FadeDistance,
             this.ArmLengthMin,
@@ -43,9 +46,9 @@ class TsExploreCameraTriggerVolume extends TsTriggerVolume_1.default {
             this.ArmLengthMax,
           ));
   }
-  OnCollisionExitFunc(e) {
-    e instanceof TsBaseCharacter_1.default &&
-      Global_1.Global.BaseCharacter === e &&
+  OnCollisionExitFunc(r) {
+    r instanceof TsBaseCharacter_1.default &&
+      Global_1.Global.BaseCharacter === r &&
       CameraController_1.CameraController.ExitCameraExplore(this.Id);
   }
 }

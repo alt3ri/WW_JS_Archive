@@ -1,20 +1,20 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, i, s) {
-    var r,
+  function (t, e, i, r) {
+    var s,
       o = arguments.length,
       h =
         o < 3
           ? e
-          : null === s
-            ? (s = Object.getOwnPropertyDescriptor(e, i))
-            : s;
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(e, i))
+            : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      h = Reflect.decorate(t, e, i, s);
+      h = Reflect.decorate(t, e, i, r);
     else
       for (var a = t.length - 1; 0 <= a; a--)
-        (r = t[a]) && (h = (o < 3 ? r(h) : 3 < o ? r(e, i, h) : r(e, i)) || h);
+        (s = t[a]) && (h = (o < 3 ? s(h) : 3 < o ? s(e, i, h) : s(e, i)) || h);
     return 3 < o && h && Object.defineProperty(e, i, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -31,7 +31,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   Global_1 = require("../Global"),
-  CameraController_1 = require("./CameraController"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   CameraUtility_1 = require("./CameraUtility"),
   SEQUENCE_CAMERA = new UE.FName("SequenceCamera");
 let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends EntityComponent_1.EntityComponent {
@@ -88,7 +88,7 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
     if (((this.nZo = void 0), this.exr)) {
       const t = this.exr;
       TimerSystem_1.TimerSystem.Next(() => {
-        ActorSystem_1.ActorSystem.Put(t);
+        ActorSystem_1.ActorSystem.Put("OrbitalCameraPlayerComponent.OnEnd", t);
       }),
         (this.exr = void 0),
         (this.txr = void 0);
@@ -112,25 +112,25 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
             "[OrbitalCameraPlayerComponent.OnTick] this.CameraSequenceActor无效",
           ));
   }
-  PlayCameraOrbitalPath(t, e, i, s, r) {
+  PlayCameraOrbitalPath(t, e, i, r, s) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Test", 6, "Orbital Play"),
       (this.ixr = t),
       this._ae.FromUeVector(e),
       this.uae.FromUeVector(i),
-      (this.ose = s),
-      (this.rxr = r),
+      (this.ose = r),
+      (this.rxr = s),
       this.uae.Subtraction(this._ae, this.oxr),
       (this.nJo = this.oxr.Size()),
       this.oxr.DivisionEqual(this.nJo),
       this._xr();
   }
-  PlayCameraOrbital(t, e, i, s, r) {
+  PlayCameraOrbital(t, e, i, r, s) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Test", 6, "Orbital Play"),
       (this.nZo = t),
       this._ae.FromUeVector(e),
       this.uae.FromUeVector(i),
-      (this.ose = s),
-      (this.rxr = r),
+      (this.ose = r),
+      (this.rxr = s),
       this.uae.Subtraction(this._ae, this.oxr),
       (this.nJo = this.oxr.Size()),
       this.oxr.DivisionEqual(this.nJo),
@@ -142,17 +142,23 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
       this.ixr || this.nZo)
     ) {
       if (
-        (CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
+        (ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.SetRotation(
           CameraUtility_1.CameraUtility.GetCameraDefaultFocusUeRotator(),
         ),
-        CameraController_1.CameraController.ExitCameraMode(4, this.rxr),
+        ControllerHolder_1.ControllerHolder.CameraController.ExitCameraMode(
+          4,
+          this.rxr,
+        ),
         this.nZo && (this.nZo = void 0),
         this.exr)
       ) {
         this.txr.Stop();
         const t = this.exr;
         TimerSystem_1.TimerSystem.Next(() => {
-          ActorSystem_1.ActorSystem.Put(t);
+          ActorSystem_1.ActorSystem.Put(
+            "OrbitalCameraPlayerComponent.StopCameraOrbital",
+            t,
+          );
         }),
           (this.exr = void 0),
           (this.txr = void 0);
@@ -175,12 +181,13 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
       (t.bDisableLookAtInput = !1),
       (this.exr = ActorSystem_1.ActorSystem.Get(
         UE.LevelSequenceActor.StaticClass(),
-        MathUtils_1.MathUtils.DefaultTransform,
+        MathUtils_1.MathUtils.DefaultTransformDouble,
         void 0,
         !1,
       )),
       (this.exr.PlaybackSettings = t),
       this.exr.SetSequence(this.nZo),
+      (this.exr.bOverrideInstanceData = !0),
       (this.txr = this.exr.SequencePlayer),
       this.txr.Play(),
       this.txr.SetPlayRate(0),
@@ -189,7 +196,11 @@ let OrbitalCameraPlayerComponent = class OrbitalCameraPlayerComponent extends En
       this.exr.SetBindingByTag(SEQUENCE_CAMERA, this.GPe, !1),
       this.GPe.Empty(),
       (this.nxr = this.txr.GetEndTime().Time.FrameNumber.Value),
-      CameraController_1.CameraController.EnterCameraMode(4, this.ose, 0);
+      ControllerHolder_1.ControllerHolder.CameraController.EnterCameraMode(
+        4,
+        this.ose,
+        0,
+      );
   }
   hxr() {
     var t;

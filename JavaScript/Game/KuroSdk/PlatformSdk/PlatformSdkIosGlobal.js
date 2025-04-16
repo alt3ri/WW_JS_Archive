@@ -47,10 +47,10 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       (this.CustomerServiceResultCallBack = (e) => {
         var r = Json_1.Json.Parse(e);
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["num", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "当前客服红点数量", ["num", e]),
           r &&
             (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", [
+              Log_1.Log.Debug("KuroSdk", 27, "当前客服红点数量", [
                 "num",
                 r.isredot,
               ]),
@@ -84,21 +84,21 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       e =
         ((t.islogin = r.IsSdkLoggedIn() ? 1 : 0),
         (t.from = e),
-        (t.RoleId = o.GetId()),
+        (t.RoleId = this.GetCustomServerRoleId()),
         (t.RoleName = o.GetAccountName()),
         (t.ServerId = r.GetServerId()),
         (t.ServerName = r.GetServerName()),
         (t.RoleLevel = o.GetPlayerLevel()),
         Json_1.Json.Stringify(t));
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "IosCustomerService", ["json", e]),
+      Log_1.Log.Debug("KuroSdk", 27, "IosCustomerService", ["json", e]),
       ue_1.KuroSDKManager.OpenCustomerService(e);
   }
   GetChannelId() {
     var e = this.zSe();
     return e?.channelId
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "channel_id", ["userInfo", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "channel_id", ["userInfo", e]),
         e?.channelId)
       : "";
   }
@@ -106,7 +106,7 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var e = this.zSe();
     return e?.idfv
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "idfv", ["userInfo", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "idfv", ["userInfo", e]),
         e?.idfv)
       : "";
   }
@@ -114,7 +114,7 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var e = this.zSe();
     return e?.jyDeviceId
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "jyDeviceId", ["userInfo", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "jyDeviceId", ["userInfo", e]),
         e?.jyDeviceId)
       : "";
   }
@@ -132,7 +132,7 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var t = r.length;
     for (let e = 0; e < t; e++) (o += r[e]), e !== t - 1 && (o += ",");
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "QueryProduct", ["data", o]),
+      Log_1.Log.Debug("KuroSdk", 27, "QueryProduct", ["data", o]),
       ue_1.KuroSDKManager.QueryProductInfo(o);
   }
   OnQueryProduct(e) {
@@ -150,13 +150,13 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
             o.push(r);
         }),
         Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("KuroSdk", 28, "queryProduct", ["queryProduct", e]),
+        Log_1.Log.Debug("KuroSdk", 27, "queryProduct", ["queryProduct", e]),
       o
     );
   }
   OnGetSharePlatform(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "OnGetSharePlatform", [
+      Log_1.Log.Debug("KuroSdk", 27, "OnGetSharePlatform", [
         "OnGetSharePlatform",
         e,
       ]);
@@ -183,25 +183,18 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "KuroSdk",
-        28,
+        27,
         "AndroidPayment",
         ["json", r],
         ["paymentInfo", e],
       ),
       ue_1.KuroSDKManager.KuroSDKEvent(8, r);
   }
-  ISe() {
-    return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
-      ? ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString()
-      : ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId()
-        ? ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId().toString()
-        : "";
-  }
   bSe() {
     var e = ModelManager_1.ModelManager.FunctionModel,
       r = ModelManager_1.ModelManager.LoginModel;
     return {
-      roleId: this.ISe(),
+      roleId: this.GetRoleId(),
       roleName: e.GetPlayerName() ? e.GetPlayerName() : "",
       roleLevel: e.GetPlayerLevel() ? e.GetPlayerLevel().toString() : "1",
       serverId: r.GetServerId() ? r.GetServerId() : "",
@@ -213,7 +206,7 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     };
   }
   qSe(e, r) {
-    var o = new KuroSdkData_1.PayInfoIosGlobal();
+    var o = new KuroSdkData_1.PayInfoMacIosGlobal();
     return (
       (o.RoleId = r.roleId.toString()),
       (o.RoleName = r.roleName.toString()),
@@ -233,26 +226,26 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   Share(e, r) {
     e = Json_1.Json.Stringify(e);
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "Share", ["json", e], ["imagePath", r]),
+      Log_1.Log.Debug("KuroSdk", 27, "Share", ["json", e], ["imagePath", r]),
       UE.KuroSDKStaticLibrary.Share(r, e);
   }
   ShareTexture(e, r) {
     e = Json_1.Json.Stringify(e);
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "Share", ["json", e], ["imagePath", r]),
+      Log_1.Log.Debug("KuroSdk", 27, "Share", ["json", e], ["imagePath", r]),
       UE.KuroSDKStaticLibrary.Share(r, e);
   }
   SetFont() {
     var e = ModelManager_1.ModelManager.KuroSdkModel.GetDeviceFontAsset();
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("KuroSdk", 28, "SetFont", ["fontPath", e]),
+      Log_1.Log.Info("KuroSdk", 27, "SetFont", ["fontPath", e]),
       ue_1.KuroSDKManager.SetFont(e);
   }
   OnShareResult(e, r, o) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "KuroSdk",
-        28,
+        27,
         "OnShareResult",
         ["code", e],
         ["platform", r],

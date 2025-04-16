@@ -19,16 +19,19 @@ class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.wSi = 1),
       (this.vDt = LordGymDefine_1.NONE_FILTER_TYPE),
+      (this.BFl = void 0),
       (this.BSi = void 0),
       (this.bSi = void 0),
-      (this.qSi = (e, i) => {
-        return new DropDownItem(e);
+      (this.IJl = 0),
+      (this.qFl = 0),
+      (this.qSi = (i, e) => {
+        return new DropDownItem(i);
       }),
-      (this.GSi = (e) => {
-        return new DropDownTitle(e);
+      (this.GSi = (i) => {
+        return new DropDownTitle(i);
       }),
-      (this.NSi = (e, i) => {
-        (this.vDt = i.Id), this.OSi();
+      (this.NSi = (i, e) => {
+        (this.vDt = e.Id), this.OSi();
       }),
       (this.kSi = () => {
         (this.wSi = Math.max(MIN_DIFFICULTY, this.wSi - 1)), this.OSi();
@@ -54,48 +57,70 @@ class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.BSi = new CommonDropDown_1.CommonDropDown(
-      this.GetItem(5),
-      this.qSi,
-      this.GSi,
-    )),
+    var i;
+    (this.IJl = this.OpenParam),
+      this.IJl &&
+        ((i =
+          ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymEntranceLordList(
+            this.IJl,
+          )),
+        (i = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(
+          i[0],
+        )),
+        (this.qFl = i.FilterType)),
+      (this.BSi = new CommonDropDown_1.CommonDropDown(
+        this.GetItem(5),
+        this.qSi,
+        this.GSi,
+      )),
       await this.BSi.Init();
   }
   OnStart() {
-    this.BSi.InitScroll(
-      ConfigManager_1.ConfigManager.LordGymConfig.GetAllLordGymFilterTypeConfig(),
-      (e) => e,
-    ),
+    (this.BFl =
+      ConfigManager_1.ConfigManager.LordGymConfig.GetAllLordGymFilterTypeConfig()),
+      this.BSi.InitScroll(this.BFl, (i) => i),
       this.BSi?.SetOnSelectCall(this.NSi),
       this.BSi?.SetShowType(1),
       (this.bSi = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(1),
         this.VSi,
       ));
+    let e = 0;
+    if (this.qFl)
+      for (let i = 0; i < this.BFl.length; i++)
+        if (this.BFl[i].Id === this.qFl) {
+          e = i;
+          break;
+        }
+    this.BSi?.SetSelectedIndex(e), this.NSi(e, this.BFl[e]);
   }
   OnBeforeDestroy() {
     this.BSi?.Destroy(), (this.BSi = void 0);
   }
-  OnBeforeShow() {
-    this.OSi();
-  }
   HSi() {
-    var e =
-      ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymAllConfigByDifficulty(
-        this.wSi,
-      );
-    return (
-      e?.filter((e) => !e.IsDebug),
-      this.vDt === LordGymDefine_1.NONE_FILTER_TYPE
-        ? ConfigCommon_1.ConfigCommon.ToList(e)
-        : e?.filter((e) => e.FilterType === this.vDt)
-    );
+    let i = void 0;
+    var e = ConfigManager_1.ConfigManager.LordGymConfig,
+      t = e.GetLordGymAllConfigByDifficulty(this.wSi);
+    if (
+      (t?.filter((i) => !i.IsDebug),
+      (i =
+        this.vDt === LordGymDefine_1.NONE_FILTER_TYPE
+          ? ConfigCommon_1.ConfigCommon.ToList(t)
+          : t?.filter((i) => i.FilterType === this.vDt)),
+      this.IJl)
+    ) {
+      t = e.GetLordGymEntranceLordList(this.IJl);
+      if (t.length < this.wSi || this.wSi <= 0) return i;
+      const s = t[this.wSi - 1];
+      i?.sort((i, e) => (i.Id === s ? -1 : i.Id - e.Id));
+    }
+    return i;
   }
   OSi() {
     this.GetButton(3)?.SetSelfInteractive(this.wSi !== MIN_DIFFICULTY),
       this.GetButton(4)?.SetSelfInteractive(this.wSi !== MAX_DIFFICULTY);
-    var e = this.HSi();
-    e && this.bSi.RefreshByData(e),
+    var i = this.HSi();
+    i && this.bSi.RefreshByData(i),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(6),
         "LordGymDifficulty",
@@ -111,8 +136,8 @@ class DropDownItem extends DropDownItemBase_1.DropDownItemBase {
       [1, UE.UIText],
     ];
   }
-  OnShowDropDownItemBase(e) {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Name);
+  OnShowDropDownItemBase(i) {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), i.Name);
   }
   GetDropDownToggle() {
     return this.GetExtendToggle(0);
@@ -123,8 +148,8 @@ class DropDownTitle extends TitleItemBase_1.TitleItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[TEXT_INDEX, UE.UIText]];
   }
-  ShowTemp(e, i) {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(TEXT_INDEX), e.Name);
+  ShowTemp(i, e) {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(TEXT_INDEX), i.Name);
   }
 }
 exports.DropDownTitle = DropDownTitle;

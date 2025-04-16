@@ -25,15 +25,24 @@ class AudioDelegate {
       (this.Callback = void 0),
       (this.Entity = void 0),
       (this.Config = void 0),
+      (this.ExtraDuration = 0),
       (this.sZi = (i, t) => {
         this.AudioDelegateEnable
-          ? 3 === i && this.Callback(t.Duration, this.Entity, this.Config)
+          ? 3 === i &&
+            this.Callback(
+              t.Duration + this.ExtraDuration,
+              this.Entity,
+              this.Config,
+            )
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Level", 27, "冒泡音频回调没移除成功");
+            Log_1.Log.Error("Level", 26, "冒泡音频回调没移除成功");
       });
   }
-  Init(i, t, e) {
-    (this.Callback = i), (this.Entity = t), (this.Config = e);
+  Init(i, t, e, o = 0) {
+    (this.Callback = i),
+      (this.Entity = t),
+      (this.Config = e),
+      (this.ExtraDuration = o);
   }
   Clear() {
     this.Disable(),
@@ -74,7 +83,11 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
             e.WaitTime && 0 < e.WaitTime
               ? e.WaitTime + 0.05
               : this.WaitSecondsRemain + 0.05),
-          t.GetComponent(73).SetDialogueText(i, e));
+          (t = t.GetComponent(80)),
+          (this.IsWaitForDialogueUi = !0),
+          t.SetDialogueText(i, e).finally(() => {
+            this.IsWaitForDialogueUi = !1;
+          }));
       });
   }
   get RedDotLogic() {
@@ -101,7 +114,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
     this.MZi(t?.TalkAkEvent),
       (this.xer = !1),
       t.Montage &&
-        i.GetComponent(170)?.TryPlayMontage(t.Montage.ActionMontage.Path);
+        i.GetComponent(183)?.TryPlayMontage(t.Montage.ActionMontage.Path);
     var e = t.PlayVoice
       ? PlotAudioById_1.configPlotAudioById.GetConfig(t.TidTalk)
       : void 0;
@@ -109,34 +122,36 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
     else {
       if (t.UniversalTone) {
         var e = t.UniversalTone.UniversalToneId,
-          o = t.UniversalTone.TimberId ?? i.GetComponent(170)?.GetTimberId();
+          o = t.UniversalTone.TimberId || i.GetComponent(183)?.GetTimberId();
         if (o && e) {
-          var r =
+          var s =
             InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
               o,
               e,
             );
-          if (r) return this.ber(r, t, i), !0;
+          if (s) return this.ber(s, t, i), !0;
         }
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Plot",
-            27,
+            26,
             "通用语气配置无法获取，策划检查配置捏",
             ["entity", i.Id],
             ["timberId", o],
             ["universalToneId", e],
           );
       }
-      (r = this.GetFlowText(t.TidTalk)),
+      (s = this.GetFlowText(t.TidTalk)),
         (o =
           ((this.WaitSecondsRemain = this.GetWaitSeconds(t)),
           this.WaitSecondsRemain + 0.05));
-      i.GetComponent(73).SetDialogueText(
-        r,
-        o,
-        this.RedDotLogic.GetRedDotActive(),
-      );
+      (this.IsWaitForDialogueUi = !0),
+        i
+          .GetComponent(80)
+          .SetDialogueText(s, o, this.RedDotLogic.GetRedDotActive())
+          .finally(() => {
+            this.IsWaitForDialogueUi = !1;
+          });
     }
     return !0;
   }
@@ -146,35 +161,40 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           i.ExternalSourceSetting,
         ),
-      i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(i),
-      t =
-        (this.YZt.Init(this.lei, e, t),
-        this.YZt.Enable(),
-        e.GetComponent(3)?.Actor);
-    AudioController_1.AudioController.PostEventByExternalSources(
-      o.AudioEventPath,
+      s = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(i);
+    this.YZt.Init(
+      this.lei,
+      e,
       t,
-      i,
-      o.ExternalSrcName,
-      this.Per,
-      void 0,
-      PLAY_FLAG,
-      this.YZt.AudioDelegate,
-    );
+      i.TailTime < 0
+        ? ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
+            .BubbleAudioEndDelay
+        : i.TailTime,
+    ),
+      this.YZt.Enable(),
+      AudioController_1.AudioController.PostEventByExternalSources(
+        o.BubbleEvent,
+        this.ActorComp?.Owner,
+        s,
+        o.BubbleSrc,
+        this.Per,
+        void 0,
+        PLAY_FLAG,
+        this.YZt.AudioDelegate,
+      );
   }
   ber(i, t, e) {
     (this.xer = !0),
       (this.WaitSecondsRemain = LOAD_AUDIO_TIME),
       this.YZt.Init(this.lei, e, t),
-      this.YZt.Enable();
-    t = e.GetComponent(3)?.Actor;
-    AudioController_1.AudioController.PostEvent(
-      i.AkEvent,
-      t,
-      this.Per,
-      PLAY_FLAG,
-      this.YZt.AudioDelegate,
-    );
+      this.YZt.Enable(),
+      AudioController_1.AudioController.PostEvent(
+        i.AkEvent,
+        this.ActorComp?.Owner,
+        this.Per,
+        PLAY_FLAG,
+        this.YZt.AudioDelegate,
+      );
   }
   MZi(i) {
     var t, e, o;
@@ -183,7 +203,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
         ? ((t = i.AkEvent),
           AudioController_1.AudioController.PostEvent(t, void 0),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Event", 27, "[NpcFlowLogic][FlowAudio][Global]", [
+            Log_1.Log.Debug("Event", 26, "[NpcFlowLogic][FlowAudio][Global]", [
               "AkEvent",
               i?.AkEvent,
             ]))
@@ -193,37 +213,39 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
           (o =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e)) ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "实体不存在", ["entityId", e])),
+              Log_1.Log.Error("Event", 26, "实体不存在", ["entityId", e])),
           (o = o.Entity.GetComponent(1)?.Owner)?.IsValid()
             ? (AudioController_1.AudioController.PostEvent(t, o),
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Event",
-                  27,
+                  26,
                   "[NpcFlowLogic][FlowAudio][Entity]",
                   ["EntityID", e],
                   ["AkEvent", i?.AkEvent],
                 ))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "未能获取到该实体对应的有效Actor", [
+              Log_1.Log.Error("Event", 26, "未能获取到该实体对应的有效Actor", [
                 "entityId",
                 e,
               ])));
   }
   Tick(i) {
-    this.EnableUpdate &&
-      ((this.WaitSecondsRemain -= i), this.WaitSecondsRemain <= 0) &&
-      (this.xer
-        ? (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Level", 27, "冒泡音频加载超时"),
-          (this.xer = !1),
-          this.ClearAudio(),
-          this.YZt.ManualExec(0))
-        : this.IsExecuteFlowEnd
-          ? this.IsPause
-            ? (this.EnableUpdate = !1)
-            : this.StartFlow()
-          : this.PlayTalk(this.CurrentTalkId + 1));
+    !this.EnableUpdate ||
+      this.IsWaitForDialogueUi ||
+      ((this.WaitSecondsRemain -= i),
+      this.WaitSecondsRemain <= 0 &&
+        (this.xer
+          ? (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn("Level", 26, "冒泡音频加载超时"),
+            (this.xer = !1),
+            this.ClearAudio(),
+            this.YZt.ManualExec(0))
+          : this.IsExecuteFlowEnd
+            ? this.IsPause
+              ? (this.EnableUpdate = !1)
+              : this.StartFlow()
+            : this.PlayTalk(this.CurrentTalkId + 1)));
   }
   ClearAudio() {
     (this.xer = !1),

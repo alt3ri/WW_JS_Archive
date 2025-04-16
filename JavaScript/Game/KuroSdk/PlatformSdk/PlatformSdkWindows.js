@@ -50,7 +50,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       (this.AnnounceRedPointCallBack = (e) => {
         (e = Json_1.Json.Parse(e)), (e = Json_1.Json.Parse(e.data));
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "公告红点", ["data", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "公告红点", ["data", e]),
           ControllerHolder_1.ControllerHolder.KuroSdkController.SetPostWebViewRedPointState(
             e.showRed,
           ),
@@ -62,10 +62,10 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         var o = Json_1.Json.Parse(e),
           r = Json_1.Json.Parse(o.data);
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["result", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "当前客服红点数量", ["result", e]),
           o &&
             (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", [
+              Log_1.Log.Debug("KuroSdk", 27, "当前客服红点数量", [
                 "num",
                 r.isreddot,
               ]),
@@ -107,7 +107,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         (_.innerbrowser = !0),
         Json_1.Json.Stringify(_));
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("KuroSdk", 28, "OpenWebView", ["sdkJson", _ ?? ""]),
+      Log_1.Log.Info("KuroSdk", 27, "OpenWebView", ["sdkJson", _ ?? ""]),
       ue_1.KuroSDKManager.OpenWebView(e, o, r, t, n, _);
   }
   GetSdkOpenUrlWndInfo(e, o) {
@@ -115,7 +115,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       e = ((r.title = e), (r.url = o), Json_1.Json.Stringify(r));
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("KuroSdk", 28, "SdkJson", ["sdkJson", e ?? ""]),
+        Log_1.Log.Info("KuroSdk", 27, "SdkJson", ["sdkJson", e ?? ""]),
       e
     );
   }
@@ -136,9 +136,9 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       t,
       n,
       _,
-      a = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
-    a
-      ? ((_ = a.url),
+      s = BaseConfigController_1.BaseConfigController.GetFeedBackUrl();
+    s
+      ? ((_ = s.url),
         (e = ModelManager_1.ModelManager.LoginModel),
         (o = ModelManager_1.ModelManager.FunctionModel),
         (r = ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
@@ -163,24 +163,25 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         )),
         ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
           ? ControllerHolder_1.ControllerHolder.KuroSdkController.OpenWebView(
-              a.title,
+              s.title,
               _,
               !0,
               !0,
             )
           : UE.KismetSystemLibrary.LaunchURL(_))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 28, "CDN没有反馈配置");
+        Log_1.Log.Debug("KuroSdk", 27, "CDN没有反馈配置");
   }
   SdkExit() {
     ue_1.KuroSDKManager.ShowExitGameDialog();
   }
   InitializePostWebView() {
     var e,
-      o = BaseConfigController_1.BaseConfigController.GetLoginServers();
+      o =
+        ModelManager_1.ModelManager.LoginServerModel.GetLoginServersByClientRegion();
     o
-      ? (Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "serverId"),
-        Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, o[0].id),
+      ? (Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 27, "serverId"),
+        Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 27, o[0].id),
         ((e = new KuroSdkData_1.InitializePostWebViewParam()).language =
           LanguageSystem_1.LanguageSystem.PackageLanguage),
         (e.cdn = [
@@ -189,10 +190,10 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         (e.serverId = void 0 === o[0].id ? "1013" : o[0].id),
         (o = Json_1.Json.Stringify(e)),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("KuroSdk", 28, "初始化公告", ["json", o]),
+          Log_1.Log.Info("KuroSdk", 27, "初始化公告", ["json", o]),
         ue_1.KuroSDKManager.KuroSDKEvent(10, o))
       : Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("KuroSdk", 28, "没有登录服务器信息");
+        Log_1.Log.Info("KuroSdk", 27, "没有登录服务器信息");
   }
   GetChannelId() {
     return ue_1.KuroSDKManager.GetSdkParams("channel_id");
@@ -217,7 +218,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() ||
         ((o = Json_1.Json.Parse(r)), (e = o)),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 28, "AgreementData", ["AgreementData", r]),
+        Log_1.Log.Debug("KuroSdk", 27, "AgreementData", ["AgreementData", r]),
       e
     );
   }
@@ -229,7 +230,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "KuroSdk",
-          28,
+          27,
           "WindowsPayment",
           ["json", o],
           ["paymentInfo", e],
@@ -261,41 +262,35 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       o =
         ((r.islogin = o.IsSdkLoggedIn()),
         (r.from = e),
+        (r.roleId = this.GetCustomServerRoleId()),
         Json_1.Json.Stringify(r));
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "WindowsCustomerService", ["json", o]),
+      Log_1.Log.Debug("KuroSdk", 27, "WindowsCustomerService", ["json", o]),
       ue_1.KuroSDKManager.OpenCustomerService(o);
   }
   SdkSelectRole() {
     var e;
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报选择角色"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 27, "上报选择角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.ZSe()), ue_1.KuroSDKManager.KuroSDKEvent(2, e));
   }
   SdkCreateRole() {
     var e;
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报创建新角色"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 27, "上报创建新角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.tye()), ue_1.KuroSDKManager.KuroSDKEvent(3, e));
   }
   SdkLevelUpRole() {
     var e;
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报角色升级"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 27, "上报角色升级"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.ZSe()), ue_1.KuroSDKManager.KuroSDKEvent(4, e));
-  }
-  ISe() {
-    return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
-      ? ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString()
-      : ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId()
-        ? ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId().toString()
-        : "";
   }
   tye() {
     var e = ModelManager_1.ModelManager.LoginModel,
       o = new KuroSdkData_1.RoleInfoWindows(),
       e =
-        ((o.roleId = this.ISe()),
+        ((o.roleId = this.GetRoleId()),
         (o.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
         (o.serverId = e.GetServerId() ? e.GetServerId() : ""),
         (o.serverName = e.GetServerName() ? e.GetServerName() : ""),
@@ -311,7 +306,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         Json_1.Json.Stringify(o) ?? "");
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 28, "SdkGetRoleInfo", ["data", e]),
+        Log_1.Log.Debug("KuroSdk", 27, "SdkGetRoleInfo", ["data", e]),
       e
     );
   }
@@ -320,7 +315,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
       o = ModelManager_1.ModelManager.LoginModel,
       r = new KuroSdkData_1.RoleInfoWindows(),
       o =
-        ((r.roleId = this.ISe()),
+        ((r.roleId = this.GetRoleId()),
         (r.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
         (r.serverId = o.GetServerId() ? o.GetServerId() : ""),
         (r.serverName = o.GetServerName() ? o.GetServerName() : ""),
@@ -336,7 +331,7 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
         Json_1.Json.Stringify(r) ?? "");
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 28, "SdkGetRoleInfo", ["data", o]),
+        Log_1.Log.Debug("KuroSdk", 27, "SdkGetRoleInfo", ["data", o]),
       o
     );
   }
@@ -353,14 +348,14 @@ class PlatformSdkWindows extends PlatformSdkBase_1.PlatformSdkBase {
           o),
         Json_1.Json.Stringify(e) ?? "");
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("KuroSdk", 28, "SetFont", ["data", o]),
+      Log_1.Log.Info("KuroSdk", 27, "SetFont", ["data", o]),
       ue_1.KuroSDKManager.SetFont(o);
   }
   OnPaymentCallBack(e, o, r) {
     let t = !1;
     0 === Json_1.Json.Parse(o)?.error &&
       ((t = !0), Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("KuroSdk", 28, "OnPaymentCallBack Windows Success"),
+      Log_1.Log.Info("KuroSdk", 27, "OnPaymentCallBack Windows Success"),
       r(t, o);
   }
 }

@@ -8,8 +8,8 @@ function formatColor(e, r) {
     A: r ?? 1,
   };
 }
-function rgbToHex(e, r, t) {
-  return "#" + ((e << 16) | (r << 8) | t).toString(16).padStart(6, "0");
+function rgbToHex(e, r, o) {
+  return "#" + ((e << 16) | (r << 8) | o).toString(16).padStart(6, "0");
 }
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.underline =
@@ -24,8 +24,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.FOCUS_COLOR =
     exports.HIGHTLIGHT_COLOR =
       void 0),
-  (exports.HIGHTLIGHT_COLOR = "#003000 dark green"),
-  (exports.FOCUS_COLOR = "#005000 moderate green"),
+  (exports.HIGHTLIGHT_COLOR = "#001000 forest green"),
+  (exports.FOCUS_COLOR = "#002000 moss green"),
   (exports.formatColor = formatColor),
   (exports.rgbToHex = rgbToHex);
 const OKBLUE = "[94m",

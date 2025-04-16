@@ -13,8 +13,8 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, n, r);
     else
-      for (var m = e.length - 1; 0 <= m; m--)
-        (i = e[m]) && (s = (o < 3 ? i(s) : 3 < o ? i(t, n, s) : i(t, n)) || s);
+      for (var a = e.length - 1; 0 <= a; a--)
+        (i = e[a]) && (s = (o < 3 ? i(s) : 3 < o ? i(t, n, s) : i(t, n)) || s);
     return 3 < o && s && Object.defineProperty(t, n, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -37,9 +37,13 @@ let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends En
               "WidgetCamera.OnWorldDone",
             );
       }),
-      (this.y$a = () => {
+      (this.Kza = () => {
         this.pxr &&
-          (ActorSystem_1.ActorSystem.Put(this.pxr), (this.pxr = void 0));
+          (ActorSystem_1.ActorSystem.Put(
+            "WidgetCameraDisplayComponent.OnUiManagerClearAsync",
+            this.pxr,
+          ),
+          (this.pxr = void 0));
       });
   }
   get CineCamera() {
@@ -54,7 +58,7 @@ let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends En
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUiManagerClearAsync,
-        this.y$a,
+        this.Kza,
       ),
       !!this.pxr
     );
@@ -62,7 +66,11 @@ let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends En
   OnClear() {
     return (
       this.pxr &&
-        (ActorSystem_1.ActorSystem.Put(this.pxr), (this.pxr = void 0)),
+        (ActorSystem_1.ActorSystem.Put(
+          "WidgetCameraDisplayComponent.OnClear",
+          this.pxr,
+        ),
+        (this.pxr = void 0)),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -73,11 +81,11 @@ let WidgetCameraDisplayComponent = class WidgetCameraDisplayComponent extends En
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnUiManagerClearAsync,
-        this.y$a,
+        this.Kza,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnUiManagerClearAsync,
-          this.y$a,
+          this.Kza,
         ),
       !0
     );

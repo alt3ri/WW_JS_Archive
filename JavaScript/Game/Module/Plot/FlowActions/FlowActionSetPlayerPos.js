@@ -19,14 +19,27 @@ class FlowActionSetPlayerPos extends FlowActionServerAction_1.FlowActionServerAc
             ?.ActorLocationProxy.Z,
           A: Global_1.Global.BaseCharacter.CharacterActorComponent
             ?.ActorRotationProxy.Yaw,
+          Roll: Global_1.Global.BaseCharacter.CharacterActorComponent
+            ?.ActorRotationProxy.Roll,
+          Pitch:
+            Global_1.Global.BaseCharacter.CharacterActorComponent
+              ?.ActorRotationProxy.Pitch,
         }),
+          EventSystem_1.EventSystem.Has(
+            EventDefine_1.EEventName.PlotTeleportToPositionFinished,
+            this.Ilt,
+          ) &&
+            EventSystem_1.EventSystem.Remove(
+              EventDefine_1.EEventName.PlotTeleportToPositionFinished,
+              this.Ilt,
+            ),
           this.FinishExecute(!0);
       });
   }
   OnExecute() {
     this.RequestServerAction(),
       EventSystem_1.EventSystem.Once(
-        EventDefine_1.EEventName.TeleportComplete,
+        EventDefine_1.EEventName.PlotTeleportToPositionFinished,
         this.Ilt,
       );
   }
@@ -37,14 +50,9 @@ class FlowActionSetPlayerPos extends FlowActionServerAction_1.FlowActionServerAc
   }
   OnInterruptExecute() {
     EventSystem_1.EventSystem.Has(
-      EventDefine_1.EEventName.TeleportComplete,
+      EventDefine_1.EEventName.PlotTeleportToPositionFinished,
       this.Ilt,
-    ) &&
-      (EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.TeleportComplete,
-        this.Ilt,
-      ),
-      this.Ilt());
+    ) && this.Ilt();
   }
 }
 exports.FlowActionSetPlayerPos = FlowActionSetPlayerPos;

@@ -10,23 +10,23 @@ class LevelConditionCheckAiState extends LevelGeneralBase_1.LevelConditionBase {
     if (!e)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelCondition", 30, "参数不合法"),
+          Log_1.Log.Error("LevelCondition", 29, "参数不合法"),
         !1
       );
     if (!n)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelCondition", 30, "上下文不合法"),
+          Log_1.Log.Error("LevelCondition", 29, "上下文不合法"),
         !1
       );
     n = ModelManager_1.ModelManager.CreatureModel.GetEntityById(n.EntityId);
     if (!n?.Valid)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelCondition", 30, "对象Entity不合法"),
+          Log_1.Log.Error("LevelCondition", 29, "对象Entity不合法"),
         !1
       );
-    var i = n.Entity.GetComponent(190);
+    var i = n.Entity.GetComponent(203);
     let r = !1;
     switch (e.StateType) {
       case ICondition_1.EAiStateType.AnimalRandomAction:

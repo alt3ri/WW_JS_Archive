@@ -22,15 +22,15 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
       (this.ZAt = void 0),
       (this._Et = CommonInputViewDefine_1.MAX_SINGLE_LENGTH),
       (this.uEt = 0),
-      (this.e7a = !1),
+      (this.tWa = !1),
       (this.BAt = (t) => {
         t && 1 === this.PAt && this.C4e(0);
       }),
       (this.qAt = () => {
         var t, i;
-        this.e7a
+        this.tWa
           ? Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCommon", 11, "通用输入框锁住确认点击")
+            Log_1.Log.Info("UiCommon", 10, "通用输入框锁住确认点击")
           : ((t = this.yAt.GetText()),
             (i = StringUtils_1.StringUtils.GetStringRealCount(t)) > this._Et
               ? (this.C4e(2), (this.j3 = 0))
@@ -38,7 +38,7 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
                 ? (this.C4e(1), (this.j3 = 0))
                 : i < this.uEt
                   ? (this.C4e(3), (this.j3 = 0))
-                  : ((this.e7a = !0),
+                  : ((this.tWa = !0),
                     this.zAt
                       .ConfirmFunc?.(t)
                       .then(
@@ -55,13 +55,13 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
                           Log_1.Log.CheckError() &&
                             Log_1.Log.Error(
                               "UiCommon",
-                              11,
+                              10,
                               "通用输入框执行出现未知错误",
                             );
                         },
                       )
                       .finally(() => {
-                        this.e7a = !1;
+                        this.tWa = !1;
                       })));
       }),
       (this.ePt = (t) => {
@@ -89,6 +89,9 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
       }),
       (this.VAt = () => {
         this.OAt("PrefabTextItem_Textillegality_Text", 0);
+      }),
+      (this.vY_ = () => {
+        this.OAt("PrefabTextItem_TextNull_Text", 0);
       }),
       (this.r6 = (t) => {
         this.j3 !== CommonDefine_1.INVALID_VALUE &&
@@ -121,8 +124,9 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
       2: this.kAt,
       3: this.FAt,
       4: this.VAt,
-      5: () => {},
+      5: this.vY_,
       6: () => {},
+      7: () => {},
     }),
       (this.ZAt = this.GetButton(4)),
       (this.yAt = this.GetInputText(2)),

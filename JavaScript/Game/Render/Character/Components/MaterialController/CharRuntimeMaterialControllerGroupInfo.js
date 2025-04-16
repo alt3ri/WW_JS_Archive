@@ -7,6 +7,7 @@ class CharMaterialControlRuntimeDataGroup {
   constructor() {
     (this.CharRenderingComponent = void 0),
       (this.DataGroup = void 0),
+      (this.AnimObject = void 0),
       (this.IsDead = !1),
       (this.DataMap = void 0),
       (this.xhr = void 0),
@@ -16,7 +17,7 @@ class CharMaterialControlRuntimeDataGroup {
       (this.Blr = !1),
       (this.blr = !1);
   }
-  Init(s, t) {
+  Init(s, t, i) {
     (this.CharRenderingComponent = s),
       (this.DataGroup = t),
       (this.DataMap = new Map()),
@@ -24,6 +25,7 @@ class CharMaterialControlRuntimeDataGroup {
       (this.Plr = []),
       (this.xlr = []),
       (this.IsDead = !1),
+      (this.AnimObject = i),
       (this.wlr = 0),
       (this.Blr = !1),
       MapUtils_1.MapUtils.ForEach(this.DataGroup.DataMap, (t, i) => {
@@ -31,7 +33,9 @@ class CharMaterialControlRuntimeDataGroup {
           (this.Blr = this.Blr || 1 === t.DataType),
           0 < i
             ? this.DataMap.set(t, i)
-            : this.Plr.push(s.AddMaterialControllerData(t));
+            : this.Plr.push(
+                s.AddMaterialControllerDataWithAnimObject(t, this.AnimObject),
+              );
       });
   }
   BeforeUpdateState(t, i) {

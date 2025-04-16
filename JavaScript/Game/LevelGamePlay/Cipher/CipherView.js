@@ -5,12 +5,12 @@ const UE = require("ue"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   GenericLayoutNew_1 = require("../../Module/Util/Layout/GenericLayoutNew"),
   UiTickViewBase_1 = require("../../Ui/Base/UiTickViewBase"),
   UiLayer_1 = require("../../Ui/UiLayer"),
   UiManager_1 = require("../../Ui/UiManager"),
-  CipherController_1 = require("./CipherController"),
   CipherKey_1 = require("./CipherKey"),
   WRONG_COLOR = -1,
   RIGHT_COLOR = 1,
@@ -135,7 +135,7 @@ class CipherView extends UiTickViewBase_1.UiTickViewBase {
       this.GetButton(1).OnClickCallBack.Unbind();
   }
   TriggerInteraction() {
-    CipherController_1.CipherController.RequestCipherComplete();
+    ControllerHolder_1.ControllerHolder.CipherController.RequestCipherComplete();
   }
   Fye(e, i, t) {
     let r = WRONG_COLOR,

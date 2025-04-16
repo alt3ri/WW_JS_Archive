@@ -22,6 +22,12 @@ class ShopFixed {
   get CondId() {
     return this.condid();
   }
+  get VisableCondition() {
+    return this.visablecondition();
+  }
+  get DisableCondition() {
+    return this.disablecondition();
+  }
   get LimitNum() {
     return this.limitnum();
   }
@@ -94,57 +100,83 @@ class ShopFixed {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  limitnum() {
+  visablecondition() {
     var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  disablecondition() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  limitnum() {
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.readInt32(this.z7 + t) : -1;
   }
   GetOriginalpriceAt(t, i) {
     return this.originalprice(t);
   }
   originalprice(t, i) {
-    var r = this.J7.__offset(this.z7, 16);
-    return r
+    var s = this.J7.__offset(this.z7, 20);
+    return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
   }
   originalpriceLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   GetPriceAt(t, i) {
     return this.price(t);
   }
   price(t, i) {
-    var r = this.J7.__offset(this.z7, 18);
-    return r
+    var s = this.J7.__offset(this.z7, 22);
+    return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
   }
   priceLength() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   show() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 24);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   label(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 26),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   switchtext(t) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 28),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   purchasetext(t) {
-    var i = this.J7.__offset(this.z7, 26);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 30),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.ShopFixed = ShopFixed;

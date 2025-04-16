@@ -18,29 +18,31 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configFoleySynthConfigByIdWithDefaultId.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configFoleySynthConfigByIdWithDefaultId.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configFoleySynthConfigByIdWithDefaultId.GetConfig(";
 exports.configFoleySynthConfigByIdWithDefaultId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n, i, t, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var C = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n}#${i}#${t})`),
+      getConfigStat?.Start();
+    var C = Stats_1.Stat.CreateNoFlameGraph(
+        CONFIG_STAT_PREFIX + `#${o}#${n}#${i}#${t})`,
+      ),
       f =
-        (C.Start(),
+        (C?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (f) {
       if (e) {
@@ -48,8 +50,8 @@ exports.configFoleySynthConfigByIdWithDefaultId = {
         const d = ConfigCommon_1.ConfigCommon.GetConfig(g);
         if (d)
           return (
-            C.Stop(),
-            getConfigStat.Stop(),
+            C?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             d
           );
@@ -93,8 +95,8 @@ exports.configFoleySynthConfigByIdWithDefaultId = {
               ((f = KEY_PREFIX + `#${o}#${n}#${i}#${t})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(f, d)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            C.Stop(),
-            getConfigStat.Stop(),
+            C?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             d
           );
@@ -102,8 +104,8 @@ exports.configFoleySynthConfigByIdWithDefaultId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    C.Stop(),
-      getConfigStat.Stop(),
+    C?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

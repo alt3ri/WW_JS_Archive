@@ -68,7 +68,7 @@ class WorldMapInteractComponent extends MapComponent_1.MapComponent {
         var e = Time_1.Time.NowSeconds;
         this.IsMultiFingerControl || e - this.IFo < MULTI_TOUCH_DELAY_TIME
           ? Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Map", 19, "正在进行双指缩放")
+            Log_1.Log.Info("Map", 18, "正在进行双指缩放")
           : this.bFo(t.pointerPosition)
             ? this.SFo
               ? ((this.SFo = !1), this.NFo())
@@ -157,19 +157,19 @@ class WorldMapInteractComponent extends MapComponent_1.MapComponent {
       ((this.yFo = t), this.yFo) ||
       (this.IFo = Time_1.Time.NowSeconds);
   }
-  get MKa() {
+  get NYa() {
     var t = this.Parent;
     if (void 0 !== t) return t;
-    this.LogError(64, "[地图系统]->二级界面组件没有附加到容器下！");
+    this.LogError(63, "[地图系统]->二级界面组件没有附加到容器下！");
   }
   get BFo() {
-    return this.MKa.UiParams;
+    return this.NYa.UiParams;
   }
   get PYe() {
-    return this.MKa.ViewPortSize;
+    return this.NYa.ViewPortSize;
   }
   OnAdd() {
-    var t = this.MKa.Map.GetRootActor().GetComponentByClass(
+    var t = this.NYa.Map.GetRootActor().GetComponentByClass(
       UE.UIDraggableComponent.StaticClass(),
     );
     ObjectUtils_1.ObjectUtils.IsValid(t) &&

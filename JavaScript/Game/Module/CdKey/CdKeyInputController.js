@@ -52,9 +52,9 @@ class CdKeyInputController extends UiControllerBase_1.UiControllerBase {
       e =
         ((t.R8n = e),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Functional", 38, "请求CdKey兑换", ["CdKey", e]),
+          Log_1.Log.Info("Functional", 37, "请求CdKey兑换", ["CdKey", e]),
         CdKeyInputController.nEt(),
-        await Net_1.Net.CallAsync(23536, t));
+        await Net_1.Net.CallAsync(27237, t));
     if (e) return e.Q4n;
   });
 //# sourceMappingURL=CdKeyInputController.js.map

@@ -205,7 +205,7 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
   }
   OnStart() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "[RogueScoreUnit]OnStart"),
+      Log_1.Log.Debug("Battle", 17, "[RogueScoreUnit]OnStart"),
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       (this.UIn = this.GetTexture(0)),
       (this.AIn = this.UIn.GetOwner().GetComponentByClass(
@@ -244,7 +244,7 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          18,
+          17,
           "肉鸽战斗评分UI更新",
           ["score", e],
           ["level", t?.Level],

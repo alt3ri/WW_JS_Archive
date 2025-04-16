@@ -14,25 +14,28 @@ class TowerRoleComplexItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UITexture],
       [2, UE.UIItem],
       [3, UE.UIText],
+      [4, UE.UISprite],
     ];
   }
   OnStart() {
-    this.GetItem(2).SetUIActive(!1);
+    this.GetItem(2).SetUIActive(!0),
+      this.GetText(3).SetUIActive(!1),
+      this.GetSprite(4).SetUIActive(!1);
   }
   RefreshRoleId(e) {
-    var r,
-      s = this.GetTexture(1),
+    var s,
+      r = this.GetTexture(1),
       t = this.GetSprite(0);
     e
-      ? (s.SetUIActive(!0),
+      ? (r.SetUIActive(!0),
         t.SetUIActive(!0),
-        (r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
-        this.SetRoleIcon(r.RoleHeadIconBig, s, e),
+        (s = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
+        this.SetRoleIcon(s.RoleHeadIconBig, r, e),
         (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleQualityInfo(
-          r.QualityId,
+          s.QualityId,
         )),
         this.SetSpriteByPath(e.Image, t, !1))
-      : (s.SetUIActive(!1), t.SetUIActive(!1));
+      : (r.SetUIActive(!1), t.SetUIActive(!1));
   }
 }
 exports.TowerRoleComplexItem = TowerRoleComplexItem;

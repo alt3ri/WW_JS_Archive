@@ -6,6 +6,7 @@ class TsAnimNotifyStateSetCollisionChannel extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.IgnoreChannels = void 0);
   }
+  Constructor() {}
   K2_NotifyBegin(e, t, r) {
     var s = e.GetOwner();
     if (s instanceof TsBaseCharacter_1.default) {

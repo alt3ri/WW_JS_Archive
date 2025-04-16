@@ -28,6 +28,7 @@ const UE = require("ue"),
   QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
   CurveUtils_1 = require("../../../../../Core/Utils/Curve/CurveUtils"),
   Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
   Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
@@ -38,13 +39,13 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../../GlobalData"),
-  ActorUtils_1 = require("../../../../Utils/ActorUtils"),
   GravityUtils_1 = require("../../../../Utils/GravityUtils"),
-  TsBaseItem_1 = require("../../../SceneItem/BaseItem/TsBaseItem"),
+  BasePlatform_1 = require("../../../Common/BasePlatform"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
   BaseMoveCharacter_1 = require("./Move/BaseMoveCharacter"),
+  CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
   MoveToLocationLogic_1 = require("./Move/MoveToLocationLogic"),
   PROFILE_KEY = "CharacterMoveComponent_GetHeightAboveGround",
   ROTATION_AIM = 1500,
@@ -186,6 +187,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (this.IsFallingIntoWater = !1),
       (this.JumpFrameCount = 0),
       (this.CharHeightAboveGround = -1),
+      (this.CharHeightAboveGroundDetectHeight = -1),
       (this.CreatureProperty = void 0),
       (this.MovementData = void 0),
       (this.B2r = void 0),
@@ -199,8 +201,8 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (this.DeltaBaseMovementSpeed = void 0),
       (this.DeltaConveyBeltSpeed = void 0),
       (this.DeltaBaseMovementQuat = Quat_1.Quat.Create()),
-      (this.BasePrimitiveComponent = void 0),
-      (this.IsDeltaBaseSpeedNeedZ = !1),
+      (this.H__ = void 0),
+      (this.BasePlatform = void 0),
       (this.IsLockedRotation = !1),
       (this.SpeedLockFrame = 0),
       (this.VelocityVector = Vector_1.Vector.Create()),
@@ -247,7 +249,6 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (this.VelocityAdditionMapByMesh = new Map()),
       (this.AddMoveOffset = void 0),
       (this.AddMoveRotation = Rotator_1.Rotator.Create()),
-      (this.StartLocation = Vector_1.Vector.Create()),
       (this.CurrentGravityScale = void 0),
       (this.PauseLocks = new Map());
   }
@@ -259,9 +260,9 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         t,
       ]),
       this.ForceSpeed.DeepCopy(t),
-      this.CharacterMovement &&
-        (this.CharacterMovement.Velocity = this.ForceSpeed.ToUeVector()),
-      this.ActorComp && this.ActorComp.ResetCachedVelocityTime();
+      this.ActorComp &&
+        (this.ActorComp.SetActorVelocity(this.ForceSpeed),
+        this.ActorComp.ResetCachedVelocityTime());
   }
   get IsJump() {
     return 0 < this.JumpFrameCount;
@@ -271,6 +272,41 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   }
   set CurrentMovementSettings(t) {
     (this.B2r = t), this.b2r.UpdateSettings(t.ControllerRotationSpeedSetting);
+  }
+  SetGravityDirectWithoutRotate(t) {
+    this.SetGravityDirectWithoutRotateByNumber(t.X, t.Y, t.Z);
+  }
+  SetGravityDirectWithoutRotateByNumber(t, i, e) {
+    (this.TmpVector.X = t),
+      (this.TmpVector.Y = i),
+      (this.TmpVector.Z = e),
+      this.TmpVector.Normalize() &&
+        !this.GravityDirectInternal.Equals(this.TmpVector) &&
+        ((this.IsStandardGravityInternal = MathUtils_1.MathUtils.IsNearlyEqual(
+          this.TmpVector.Z,
+          -1,
+        )),
+        this.IsStandardGravityInternal
+          ? this.GravityDirectInternal.Set(0, 0, -1)
+          : this.GravityDirectInternal.DeepCopy(this.TmpVector),
+        this.GravityDirectInternal.UnaryNegation(this.GravityUpInternal),
+        this.CharacterMovement &&
+          this.CharacterMovement.Kuro_SetGravityDirect(
+            this.GravityDirectInternal.ToUeVectorOld(),
+          ),
+        this.ActorComp.ResetGravityRelatedCachedTime(),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharGravityDirectChanged,
+          this.GravityDirect,
+          this.IsStandardGravity,
+        ),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.AnyCharGravityDirectChanged,
+          this.Entity,
+          this.GravityDirect,
+          this.IsStandardGravity,
+        ));
   }
   SetGravityDirectByNumber(t, i, e, s = !0) {
     (this.TmpVector.X = t),
@@ -292,22 +328,33 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
           this.TmpVector,
           this.TmpQuat,
         ),
-        this.TmpQuat.Multiply(this.ActorComp.ActorQuatProxy, this.TmpQuat2),
-        this.TmpQuat.Rotator(this.TmpRotator),
-        (this.IsStandardGravityInternal =
-          Math.abs(this.TmpVector.Z + 1) < MathUtils_1.MathUtils.SmallNumber),
+        (this.IsStandardGravityInternal = MathUtils_1.MathUtils.IsNearlyEqual(
+          this.TmpVector.Z,
+          -1,
+        )),
         this.IsStandardGravityInternal
           ? this.GravityDirectInternal.Set(0, 0, -1)
           : this.GravityDirectInternal.DeepCopy(this.TmpVector),
         this.GravityDirectInternal.UnaryNegation(this.GravityUpInternal),
         this.CharacterMovement &&
           (this.CharacterMovement.Kuro_SetGravityDirect(
-            this.GravityDirectInternal.ToUeVector(),
+            this.GravityDirectInternal.ToUeVectorOld(),
           ),
           s) &&
           this.UnifiedStateComponent?.PositionState ===
             CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
-          this.CharacterMovement.SetMovementMode(3),
+          this.ActorComp?.Actor.KuroSetMovementMode({
+            Mode: 3,
+            Context: "[BaseMoveComponent.SetGravityDirectByNumber]",
+          }),
+        this.ActorComp.ActorUpProxy.DotProduct(this.TmpVector) >
+          MathUtils_1.MathUtils.KindaSmallNumber - 1 &&
+        (this.TmpQuat.RotateVector(
+          Vector_1.Vector.UpVectorProxy,
+          this.TmpVector,
+        ),
+        this.TmpQuat.Multiply(this.ActorComp.ActorQuatProxy, this.TmpQuat2),
+        this.TmpQuat2.Rotator(this.TmpRotator),
         this.AnimComp
           ? this.AnimComp.SetLocationAndRotatorWithModelBuffer(
               this.ActorComp.ActorLocationProxy.ToUeVector(),
@@ -319,19 +366,29 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
               this.TmpRotator.ToUeRotator(),
               "SetGravity",
             ),
-        this.TmpQuat.RotateVector(
-          this.ActorComp.InputDirectProxy,
-          this.TmpVector,
-        ),
-        this.ActorComp.SetInputDirect(this.TmpVector),
-        this.TmpQuat.RotateVector(
-          this.ActorComp.InputFacingProxy,
-          this.TmpVector,
-        ),
-        this.ActorComp.SetInputFacing(this.TmpVector),
+        this.ActorComp?.IsRoleAndCtrlByMe) &&
+        !this.Entity.GetComponent(61)?.IsLocalInput
+          ? (this.TmpQuat.RotateVector(
+              this.ActorComp.InputDirectProxy,
+              this.TmpVector,
+            ),
+            this.ActorComp.SetInputDirect(this.TmpVector, !0),
+            this.TmpQuat.RotateVector(
+              this.ActorComp.InputFacingProxy,
+              this.TmpVector,
+            ),
+            this.ActorComp.SetInputFacing(this.TmpVector, !0))
+          : this.ActorComp.ClearInput(),
+        this.ActorComp.ResetGravityRelatedCachedTime(),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharGravityDirectChanged,
+          this.GravityDirect,
+          this.IsStandardGravity,
+        ),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.AnyCharGravityDirectChanged,
+          this.Entity,
           this.GravityDirect,
           this.IsStandardGravity,
         ));
@@ -343,7 +400,11 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     return this.GravityDirectInternal;
   }
   get GravityUp() {
-    return this.GravityUpInternal;
+    return this.GravityUpInternal.Equals(Vector_1.Vector.ZeroVectorProxy)
+      ? (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Movement", 4, "GravityUp is zero"),
+        Vector_1.Vector.UpVectorProxy)
+      : this.GravityUpInternal;
   }
   get IsStandardGravity() {
     return this.IsStandardGravityInternal;
@@ -361,20 +422,6 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   ClearFallingHorizontalMaxSpeed() {
     this.FallingHorizontalMaxSpeed = DEFAULT_MAX_FALLING_VELOCITY_2D;
   }
-  get BasePlatform() {
-    var t;
-    if (this.BasePrimitiveComponent?.IsValid())
-      return (t = this.BasePrimitiveComponent?.GetOwner()) instanceof
-        UE.BP_BasePlatform_C
-        ? t
-        : (t = ActorUtils_1.ActorUtils.GetEntityByActor(
-              this.BasePrimitiveComponent.GetOwner()?.GetAttachRootParentActor(),
-              !1,
-            )?.Entity?.GetComponent(187))
-          ? t?.GetInteractionMainActor()?.BasePlatform
-          : void 0;
-    this.BasePrimitiveComponent = void 0;
-  }
   OnInit(t) {
     return (
       (this.IsStandardGravityInternal = !0),
@@ -382,6 +429,9 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       this.GravityUpInternal.Set(0, 0, 1),
       !0
     );
+  }
+  OnStart() {
+    return this.InitGravityDirect(), !0;
   }
   SetUseDebugMovementSetting(t) {
     this.UseDebugMovementSetting = t;
@@ -412,7 +462,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Character",
-          58,
+          57,
           "以下BP_{Character}没有在蓝图中配置Dt_BaseMovementSetting找对应的蓝图负责人处理",
           ["Character", this.ActorComp.Actor.GetName()],
         );
@@ -459,7 +509,17 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         this.CurrentMovementSettings?.GroundFriction ?? 0);
   }
   SetAddMoveOffset(t) {
-    (this.AddMoveOffset = t),
+    t &&
+      !MathUtils_1.MathUtils.IsValidVector(t) &&
+      Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "Movement",
+        6,
+        "AddMove NaN",
+        ["Actor", this.ActorComp.Actor.GetName()],
+        ["Offset", t],
+      ),
+      (this.AddMoveOffset = t),
       this.ActorComp.IsRoleAndCtrlByMe &&
         t &&
         1e6 < t.SizeSquared() &&
@@ -477,9 +537,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   }
   StopMove(t) {
     t &&
-      (this.CharacterMovement &&
-        (this.CharacterMovement.Velocity = Vector_1.Vector.ZeroVector),
-      this.ActorComp?.ResetCachedVelocityTime(),
+      (this.ActorComp?.SetActorVelocity(Vector_1.Vector.ZeroVectorProxy),
       this.MoveController?.StopMove()),
       (this.IsStopInternal = t);
   }
@@ -487,8 +545,14 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     t !== this.IsHidden &&
       (t
         ? ((this.OldMovementMode = this.CharacterMovement?.MovementMode),
-          this.CharacterMovement?.SetMovementMode(0))
-        : this.CharacterMovement?.SetMovementMode(this.OldMovementMode),
+          this.ActorComp?.Actor.KuroSetMovementMode({
+            Mode: 0,
+            Context: "[BaseMoveComponent.SetHiddenMovementMode] if true",
+          }))
+        : this.ActorComp?.Actor.KuroSetMovementMode({
+            Mode: this.OldMovementMode,
+            Context: "[BaseMoveComponent.SetHiddenMovementMode]",
+          }),
       (this.IsHidden = t));
   }
   OnInitData() {
@@ -548,11 +612,14 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       CharacterUnifiedStateTypes_1.ECharMoveState.Run,
     ),
       2 === this.CharacterMovement.MovementMode &&
-        this.CharacterMovement.SetMovementMode(1);
+        this.ActorComp?.Actor.KuroSetMovementMode({
+          Mode: 1,
+          Context: "[BaseMoveComponent.OnActivate]",
+        });
   }
   PrintAnimInstanceMovementInfo() {
     Log_1.Log.CheckWarn() &&
-      Log_1.Log.Warn("Test", 58, "TickInfo:", [
+      Log_1.Log.Warn("Test", 57, "TickInfo:", [
         "HasMoveInput",
         this.HasMoveInput,
       ]);
@@ -564,6 +631,10 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (this.CharacterMovement.HitPriority = this.CreatureProperty.碰撞优先级),
       (this.CharacterMovement.GoThroughPriority =
         this.CreatureProperty.穿透优先级);
+  }
+  InitGravityDirect() {
+    var t = this.Entity.GetComponent(0);
+    this.SetGravityDirect(Vector_1.Vector.Create(t.GetInitGravityDirection()));
   }
   ResetHitPriorityAndGoThrough() {
     this.CreatureProperty &&
@@ -583,10 +654,8 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         Math.abs(this.ActorComp.ActorRotationProxy.Yaw - this.PreviousAimYaw) /
         this.DeltaTimeSeconds)),
       (this.HasMoveInput =
-        GravityUtils_1.GravityUtils.GetPlanarSizeSquared2D(
-          this.ActorComp,
-          this.ActorComp.InputDirectProxy,
-        ) > MathUtils_1.MathUtils.SmallNumber &&
+        this.ActorComp.InputDirectProxy.SizeSquared() >
+          MathUtils_1.MathUtils.SmallNumber &&
         this.CharacterMovement.MaxAcceleration >
           MathUtils_1.MathUtils.SmallNumber);
   }
@@ -633,29 +702,18 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
             this.TmpRotator,
           ))
         : (this.TmpRotator.DeepCopy(t),
-          this.TmpRotator.Quaternion(this.TmpQuat),
-          this.TmpQuat.RotateVector(
-            Vector_1.Vector.ForwardVectorProxy,
-            this.TmpVector,
-          ),
-          (r = Math.abs(
-            Vector_1.Vector.DotProduct(
-              this.TmpVector,
-              this.ActorComp.ActorForwardProxy,
-            ) * MathUtils_1.MathUtils.RadToDeg,
+          GravityUtils_1.GravityUtils.RotatorInterpConstantToForActor(
+            this.ActorComp,
+            r,
+            this.TmpRotator,
+            e,
+            (o ? this.SpeedScaled(i) : i) * this.TurnRate,
+            this.TmpRotator,
           )),
-          (t = (o ? this.SpeedScaled(i) : i) * this.TurnRate * e) < r &&
-            Quat_1.Quat.Slerp(
-              this.ActorComp.ActorQuatProxy,
-              this.TmpQuat,
-              t / r,
-              this.TmpQuat,
-            ),
-          this.TmpQuat.Rotator(this.TmpRotator)),
       1 < this.Entity.GetTickInterval() &&
       this.AnimComp?.Valid &&
       this.ActorComp.Owner.WasRecentlyRenderedOnScreen()
-        ? ((o = this.AnimComp.GetMeshTransform()),
+        ? ((t = this.AnimComp.GetMeshTransform()),
           this.ActorComp.SetActorRotationWithPriority(
             this.TmpRotator.ToUeRotator(),
             h,
@@ -663,7 +721,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
             s,
           ),
           this.AnimComp.SetModelBuffer(
-            o,
+            t,
             e * MathUtils_1.MathUtils.SecondToMillisecond,
           ))
         : this.ActorComp.SetActorRotationWithPriority(
@@ -675,14 +733,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   }
   ApplyForceSpeedAndRecordSpeed() {
     this.ForceSpeed.X !== INVALID_FORCE_SPEED &&
-      (this.ForceSpeed.ContainsNaN()
-        ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Movement", 6, "ForceSpeed Nan.", [
-            "V",
-            this.ForceSpeed,
-          ])
-        : (this.CharacterMovement.Velocity = this.ForceSpeed.ToUeVector()),
-      this.ActorComp.ResetCachedVelocityTime(),
+      (this.ActorComp?.SetActorVelocity(this.ForceSpeed),
       (this.ForceSpeed.X = INVALID_FORCE_SPEED));
   }
   ConsumeForceFallingSpeed() {
@@ -697,7 +748,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Game",
-          15,
+          14,
           "[CharacterMoveComponent.SetAddMoveWorldSpeedWithMesh] 叠加位移失败，mesh为空",
         );
   }
@@ -705,13 +756,13 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     var h;
     t
       ? ((h = this.VelocityAdditionMapByMesh.get(t) ?? 0),
-        (i = this.ActorComp.ActorRotation.RotateVector(i)),
+        (i = this.ActorComp.ActorRotation.RotateVectorDouble(i)),
         (h = this.SetAddMoveWorld(i, e, s, h)) &&
           this.VelocityAdditionMapByMesh.set(t, h))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Game",
-          15,
+          14,
           "[CharacterMoveComponent.SetAddMoveWithMesh] 叠加位移失败，mesh为空",
         );
   }
@@ -721,7 +772,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Game",
-            15,
+            14,
             "[CharacterMoveComponent.SetAddMoveWorldNew] 叠加位移失败，速度为空",
           ),
         0
@@ -736,7 +787,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Game",
-            21,
+            20,
             "速度曲线配置错误",
             ["Min", r],
             ["Max", a],
@@ -772,7 +823,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Game",
-          15,
+          14,
           "[CharacterMoveComponent.SetAddMoveWorldWithMesh] 叠加位移失败，mesh为空",
         );
   }
@@ -787,7 +838,10 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     this.VelocityAdditionMap.clear();
   }
   OnTick(t) {
-    (this.CanMoveWithDistanceInternal = this.Entity.DistanceWithCamera <= 7e3),
+    (this.CharHeightAboveGround = -1),
+      (this.CharHeightAboveGroundDetectHeight = -1),
+      (this.CanMoveWithDistanceInternal =
+        this.Entity.DistanceWithCamera <= 7e3),
       this.uha &&
         this.cha + WALK_OFF_LEDGE_DELAY_FRAME <= Time_1.Time.Frame &&
         ((this.cha = Time_1.Time.Frame),
@@ -802,7 +856,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         CharacterUnifiedStateTypes_1.ECharPositionState.Air
         ? (OPEN_DEBUG &&
             Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Character", 21, "OnTickGravityScale结束", [
+            Log_1.Log.Debug("Character", 20, "OnTickGravityScale结束", [
               "Entity.Id",
               this.Entity.Id,
             ]),
@@ -811,7 +865,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         : ((this.CurrentGravityScale.ElapsedTime += this.DeltaTimeSeconds),
           OPEN_DEBUG &&
             Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Character", 21, "OnTickGravityScale", [
+            Log_1.Log.Debug("Character", 20, "OnTickGravityScale", [
               "Entity.Id",
               this.Entity.Id,
             ]),
@@ -828,173 +882,124 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Character",
-              21,
+              20,
               "受击重力",
               ["EntityId", this.Entity.Id],
               ["Velocity", this.CharacterMovement.Velocity.Z],
               ["GravityScale", this.CharacterMovement.GravityScale],
             )));
   }
-  UpdateAddMoveOffset() {
-    return (
+  GetAndConsumeAddMove(t, i, e) {
+    if (
+      (i.Reset(),
+      e.Reset(),
       this.AddMoveOffset &&
-        (this.UnifiedStateComponent?.PositionState ===
-        CharacterUnifiedStateTypes_1.ECharPositionState.Ground
-          ? (this.VelocityVector.FromUeVector(this.AddMoveOffset),
-            this.VelocityVector.DivisionEqual(this.DeltaTimeSeconds),
-            this.ActorComp.KuroMoveAlongFloor(
-              this.VelocityVector.ToUeVector(),
-              this.DeltaTimeSeconds,
-              "UpdateAddMoveOffset",
-            ))
-          : (this.VelocityVector.FromUeVector(this.AddMoveOffset),
-            this.MoveCharacter(
-              this.VelocityVector,
-              this.DeltaTimeSeconds,
-              "移动.更新速度叠加",
-            )),
+        (this.TmpVector.FromUeVector(this.AddMoveOffset),
+        i.AdditionEqual(this.TmpVector),
         (this.AddMoveOffset = void 0)),
-      !this.AddMoveRotation.IsNearlyZero() &&
-        (this.ActorComp.AddActorLocalRotation(
-          this.AddMoveRotation.ToUeRotator(),
-          "移动.更新旋转叠加 ",
-          !1,
-        ),
-        this.AddMoveRotation.Reset(),
-        !0)
-    );
-  }
-  UpdateAddMoveSpeed(t = 1) {
-    if (0 === this.VelocityAdditionMap.size) return !1;
-    BaseMoveComponent_1.VelocityAdditionTotal.Reset();
-    var i,
-      e,
-      s,
-      h = this.DeltaTimeSeconds * t;
-    for ([i, e] of this.VelocityAdditionMap)
-      if (0 <= e.Duration && e.ElapsedTime >= e.Duration)
-        this.VelocityAdditionMap.delete(i);
-      else if (
-        e.MovementMode &&
-        this.CharacterMovement.CustomMovementMode !== e.MovementMode
-      )
-        this.VelocityAdditionMap.delete(i);
-      else if (((e.ElapsedTime += h), !(0 < this.PauseLocks.size)))
-        if (
-          (this.VelocityVector.FromUeVector(e.Velocity),
-          0 !== e.VelocityCurveType
-            ? ((s = e.VelocityCurveFunc(
-                0 < e.Duration ? e.ElapsedTime / e.Duration : 1,
-              )),
-              this.VelocityVector.FromUeVector(e.Velocity),
-              this.VelocityVector.MultiplyEqual(s))
-            : e.CurveFloat?.IsValid() &&
-              this.VelocityVector.MultiplyEqual(
-                e.CurveFloat.GetFloatValue(
-                  0 < e.Duration ? e.ElapsedTime / e.Duration : 1,
-                ),
-              ),
-          0 < e.Duration &&
-            e.ElapsedTime > e.Duration &&
-            ((s = e.ElapsedTime - e.Duration),
-            this.VelocityVector.MultiplyEqual((h - s) / h)),
-          BaseMoveComponent_1.VelocityAdditionTotal.AdditionEqual(
-            this.VelocityVector,
-          ),
-          this.VelocityVector.ContainsNaN())
+      this.AddMoveRotation.IsNearlyZero() ||
+        (e.DeepCopy(this.AddMoveRotation), this.AddMoveRotation.Reset()),
+      0 !== this.VelocityAdditionMap.size)
+    ) {
+      BaseMoveComponent_1.VelocityAdditionTotal.Reset();
+      for (var [s, h] of this.VelocityAdditionMap) {
+        var o;
+        if (0 <= h.Duration && h.ElapsedTime >= h.Duration)
+          this.VelocityAdditionMap.delete(s);
+        else if (
+          h.MovementMode &&
+          this.CharacterMovement.CustomMovementMode !== h.MovementMode
         )
-          return (
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Movement",
-                6,
-                "VelocityVector NaN",
-                ["key", i],
-                ["VelocityVector", this.VelocityVector],
-                ["velocityAddition.Velocity", e.Velocity],
-                ["deltaTimeSeconds", h],
-              ),
-            this.VelocityAdditionMap.delete(i),
-            !1
-          );
-    return (
-      0 !== this.VelocityAdditionMap.size &&
-      (this.ActorComp.IsRoleAndCtrlByMe &&
-        Math.abs(BaseMoveComponent_1.VelocityAdditionTotal.X) <
-          MathUtils_1.MathUtils.SmallNumber &&
-        Math.abs(BaseMoveComponent_1.VelocityAdditionTotal.Y) <
-          MathUtils_1.MathUtils.SmallNumber &&
-        Math.abs(BaseMoveComponent_1.VelocityAdditionTotal.Z - 50) <
-          MathUtils_1.MathUtils.SmallNumber &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Movement", 6, "叠加向上移动50厘米", [
-          "Actor",
-          this.ActorComp.Actor.GetName(),
-        ]),
-      this.UnifiedStateComponent.PositionState ===
-      CharacterUnifiedStateTypes_1.ECharPositionState.Ground
-        ? this.ActorComp.KuroMoveAlongFloor(
-            BaseMoveComponent_1.VelocityAdditionTotal.ToUeVector(),
-            h,
-            "UpdateAddMoveSpeed",
+          this.VelocityAdditionMap.delete(s);
+        else if (((h.ElapsedTime += t), !(0 < this.PauseLocks.size)))
+          if (
+            (this.VelocityVector.FromUeVector(h.Velocity),
+            0 !== h.VelocityCurveType
+              ? ((o = h.VelocityCurveFunc(
+                  0 < h.Duration ? h.ElapsedTime / h.Duration : 1,
+                )),
+                this.VelocityVector.FromUeVector(h.Velocity),
+                this.VelocityVector.MultiplyEqual(o))
+              : h.CurveFloat?.IsValid() &&
+                this.VelocityVector.MultiplyEqual(
+                  h.CurveFloat.GetFloatValue(
+                    0 < h.Duration ? h.ElapsedTime / h.Duration : 1,
+                  ),
+                ),
+            0 < h.Duration &&
+              h.ElapsedTime > h.Duration &&
+              ((o = h.ElapsedTime - h.Duration),
+              this.VelocityVector.MultiplyEqual((t - o) / t)),
+            BaseMoveComponent_1.VelocityAdditionTotal.AdditionEqual(
+              this.VelocityVector,
+            ),
+            this.VelocityVector.ContainsNaN())
           )
-        : (BaseMoveComponent_1.VelocityAdditionDestination.DeepCopy(
-            BaseMoveComponent_1.VelocityAdditionTotal,
-          ),
-          BaseMoveComponent_1.VelocityAdditionDestination.MultiplyEqual(h),
-          BaseMoveComponent_1.VelocityAdditionDestination.ContainsNaN()
-            ? Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Movement",
-                6,
-                "VelocityAdditionDestination NaN",
-                [
-                  "VelocityAdditionDestination",
-                  BaseMoveComponent_1.VelocityAdditionDestination,
-                ],
-                [
-                  "VelocityAdditionTotal",
-                  BaseMoveComponent_1.VelocityAdditionTotal,
-                ],
-                ["deltaTimeSeconds", h],
-              )
-            : this.ActorComp.AddActorWorldOffset(
-                BaseMoveComponent_1.VelocityAdditionDestination.ToUeVector(),
-                "UpdateAddMoveSpeed",
-                !0,
-              )),
-      !0)
-    );
+            return (
+              Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "Movement",
+                  6,
+                  "VelocityVector NaN",
+                  ["key", s],
+                  ["VelocityVector", this.VelocityVector],
+                  ["velocityAddition.Velocity", h.Velocity],
+                  ["deltaTimeSeconds", t],
+                ),
+              void this.VelocityAdditionMap.delete(s)
+            );
+      }
+      BaseMoveComponent_1.VelocityAdditionTotal.Multiply(
+        t,
+        BaseMoveComponent_1.VelocityAdditionDestination,
+      ),
+        BaseMoveComponent_1.VelocityAdditionDestination.ContainsNaN()
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Movement",
+              6,
+              "VelocityAdditionDestination NaN",
+              [
+                "VelocityAdditionDestination",
+                BaseMoveComponent_1.VelocityAdditionDestination,
+              ],
+              [
+                "VelocityAdditionTotal",
+                BaseMoveComponent_1.VelocityAdditionTotal,
+              ],
+              ["deltaTimeSeconds", t],
+            )
+          : i.AdditionEqual(BaseMoveComponent_1.VelocityAdditionDestination);
+    }
   }
   GetHeightAboveGround(t = HEIGHT_DETECT) {
     var i, e;
     return (
-      this.CharHeightAboveGround >= t ||
-        (MathUtils_1.MathUtils.TransformPosition(
-          this.ActorComp.ActorLocationProxy,
-          this.ActorComp.ActorRotationProxy,
-          this.ActorComp.ActorScaleProxy,
-          this.CapsuleOffset,
-          this.StartLocation,
-        ),
+      this.CharHeightAboveGroundDetectHeight >= t ||
+        ((this.CharHeightAboveGroundDetectHeight = t),
+        (i = this.ActorComp.FloorLocation),
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(
           this.SphereTrace,
-          this.StartLocation,
+          i,
         ),
-        this.SphereTrace.SetEndLocation(
-          this.StartLocation.X,
-          this.StartLocation.Y,
-          this.StartLocation.Z - t,
+        this.TmpVector.DeepCopy(i),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.ActorComp,
+          this.TmpVector,
+          -t,
+        ),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(
+          this.SphereTrace,
+          this.TmpVector,
         ),
         (this.SphereTrace.Radius = this.ActorComp.ScaledRadius),
-        (e = TraceElementCommon_1.TraceElementCommon.SphereTrace(
+        (i = TraceElementCommon_1.TraceElementCommon.SphereTrace(
           this.SphereTrace,
           PROFILE_KEY,
         )),
-        (i = this.SphereTrace.HitResult),
-        e && i.bBlockingHit
-          ? ((e = i.LocationZ_Array.Get(0)),
-            (this.CharHeightAboveGround = this.StartLocation.Z - e))
+        (e = this.SphereTrace.HitResult),
+        i && e.bBlockingHit
+          ? (this.CharHeightAboveGround = e.TimeArray.Get(0) * t)
           : (this.CharHeightAboveGround = t)),
       this.CharHeightAboveGround
     );
@@ -1003,6 +1008,13 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     return (
       this.UnifiedStateComponent?.PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Air
+    );
+  }
+  IsInRoll() {
+    return (
+      6 === this.CharacterMovement?.MovementMode &&
+      this.CharacterMovement?.CustomMovementMode ===
+        CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_ROLL
     );
   }
   SetSpeedLock() {
@@ -1019,7 +1031,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     2 === this.CharacterMovement?.MovementMode
       ? (t.DivisionEqual(i),
         this.ActorComp.KuroMoveAlongFloor(
-          t.ToUeVector(),
+          t.ToUeVectorOld(),
           i,
           e || "MoveCharacter",
         ))
@@ -1086,35 +1098,36 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       );
   }
   UpdateBaseMovement() {
-    var t,
-      i = this.ActorComp.Actor.BasedMovement;
+    var i = this.ActorComp.Actor.BasedMovement,
+      e = i?.MovementBase?.GetOwner();
+    this.H__ === e ||
+      !(this.H__ = e) ||
+      e instanceof TsBaseCharacter_1.default ||
+      2 !== i?.MovementBase?.Mobility ||
+      TickSystem_1.TickSystem.AddTickPrerequisiteActor(0, e, 2);
+    let t = !1;
+    e =
+      BasePlatform_1.BasePlatformController.GetBasePlatformByBasedMovementInfo(
+        i,
+      );
     if (
       ((this.HasBaseMovement === i.bRelativeRotation &&
-        this.BasePrimitiveComponent === i.MovementBase) ||
+        this.BasePlatform === e) ||
         ((this.HasBaseMovement = i.bRelativeRotation),
-        (this.BasePrimitiveComponent = i.MovementBase),
-        this.BasePrimitiveComponent &&
-          this.HasBaseMovement &&
-          (t =
-            this.BasePrimitiveComponent.GetOwner()?.RootComponent
-              ?.AttachParent) &&
-          ((t = t.AttachParent?.GetOwner()) instanceof TsBaseCharacter_1.default
-            ? ((this.IsDeltaBaseSpeedNeedZ = !1),
-              (e = t.GetEntityNoBlueprint()) &&
-                e.GetComponent(102)?.SetTakeOverTick(!0))
-            : t instanceof TsBaseItem_1.default &&
-              (this.IsDeltaBaseSpeedNeedZ = !0))),
+        (this.BasePlatform = e),
+        (t = !0)),
       this.HasBaseMovement && 2 === i?.MovementBase?.Mobility)
     ) {
-      var e = this.CharacterMovement.BaseDeltaQuat;
-      this.DeltaBaseMovementQuat.FromUeQuat(e),
-        (this.DeltaBaseMovementOffset =
-          this.CharacterMovement.BaseDeltaPosition);
+      var s = this.CharacterMovement.BaseDeltaQuat;
+      this.DeltaBaseMovementQuat.FromUeQuat(s),
+        (this.DeltaBaseMovementOffset = new UE.VectorDouble(
+          this.CharacterMovement.BaseDeltaPosition,
+        ));
       let t = void 0;
       (t = MathUtils_1.MathUtils.IsNearlyZero(this.DeltaTimeSeconds)
-        ? new UE.Vector(0, 0, 0)
+        ? new UE.VectorDouble(0, 0, 0)
         : this.DeltaBaseMovementOffset.op_Division(this.DeltaTimeSeconds)),
-        this.IsDeltaBaseSpeedNeedZ || (t.Z = 0),
+        e && !e.IsDeltaBaseSpeedNeedZ && (t.Z = 0),
         this.DeltaBaseMovementSpeed
           ? MathUtils_1.MathUtils.LerpVector(
               this.DeltaBaseMovementSpeed,
@@ -1136,10 +1149,14 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
           ),
         (this.HasDeltaBaseMovementData = !0);
     } else
-      (this.DeltaBaseMovementOffset = void 0),
-        this.DeltaBaseMovementQuat.Reset(),
+      this.DeltaBaseMovementQuat.Reset(),
         (this.DeltaBaseMovementSpeed = void 0),
         (this.HasDeltaBaseMovementData = !1);
+    t &&
+      EventSystem_1.EventSystem.EmitWithTarget(
+        this.Entity,
+        EventDefine_1.EEventName.CharBasePlatformChanged,
+      );
   }
   SpeedScaled(t) {
     return t;
@@ -1177,7 +1194,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Movement",
-          51,
+          50,
           "[BaseMoveComponent.MoveAlongPath]正在移动中，停止当前移动",
           ["PbDataId", this.ActorComp?.CreatureData.GetPbDataId()],
           ["Actor", this.ActorComp?.Owner?.GetName()],
@@ -1234,7 +1251,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   (BaseMoveComponent.VelocityAdditionDestination = Vector_1.Vector.Create()),
   (BaseMoveComponent = BaseMoveComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(38)],
+      [(0, RegisterComponent_1.RegisterComponent)(44)],
       BaseMoveComponent,
     )),
   (exports.BaseMoveComponent = BaseMoveComponent);

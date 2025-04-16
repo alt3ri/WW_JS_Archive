@@ -12,18 +12,21 @@ const Log_1 = require("../../../../Core/Common/Log"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine");
 class PlotSkipComponent {
-  constructor(i, t, e, o, s) {
+  constructor(i, t, e, s, o) {
     (this.dce = !1),
       (this.Zzi = void 0),
       (this.eZi = StringUtils_1.EMPTY_STRING),
       (this.tZi = !0),
       (this.iZi = void 0),
-      (this._Ca = void 0),
+      (this.uCa = void 0),
+      (this.ro_ = !1),
       (this.EnableSkipButton = (i) => {
         (i && !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanSkip) ||
           this.dce === i ||
           ((this.dce = i), this.oZi.SetUIActive(this.dce), this.dce) ||
-          (ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
+          (this.ro_ &&
+            ((this.ro_ = !1),
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView()),
           UiManager_1.UiManager.IsViewOpen("SummaryPopView") &&
             UiManager_1.UiManager.CloseView("SummaryPopView"),
           this.rsa?.());
@@ -32,7 +35,7 @@ class PlotSkipComponent {
         var i;
         this.dce &&
           (this.NTt?.(),
-          StringUtils_1.StringUtils.IsEmpty(this._Ca)
+          StringUtils_1.StringUtils.IsEmpty(this.uCa)
             ? ModelManager_1.ModelManager.PlotModel.PlotConfig
                 .IsSkipConfirmBoxShow
               ? ((this.tZi = !0),
@@ -42,23 +45,25 @@ class PlotSkipComponent {
                 i.SetToggleFunction(this.Cke),
                 (i.AttachView = this.iZi),
                 i.FunctionMap.set(1, () => {
-                  this?.dce && this.rsa?.();
+                  this?.dce && ((this.ro_ = !1), this.rsa?.());
                 }),
                 i.FunctionMap.set(2, () => {
                   this?.dce &&
                     ((ModelManager_1.ModelManager.PlotModel.PlotConfig.IsSkipConfirmBoxShow =
                       this.tZi),
                     (this.dce = !1),
+                    (this.ro_ = !1),
                     this.nZi?.());
                 }),
-                ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                  i,
-                ))
+                (this.ro_ =
+                  ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                    i,
+                  )))
               : this.nZi?.()
             : (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Plot", 27, "剧情梗概", ["text", this._Ca]),
+                Log_1.Log.Debug("Plot", 26, "剧情梗概", ["text", this.uCa]),
               (i = {
-                Text: this._Ca,
+                Text: this.uCa,
                 ConfirmFunc: () => {
                   this?.dce && ((this.dce = !1), this.nZi?.());
                 },
@@ -75,10 +80,10 @@ class PlotSkipComponent {
       (this.oZi = i.RootUIComp),
       (this.nZi = t),
       (this.NTt = e),
-      (this.rsa = s),
-      (this.iZi = o),
+      (this.rsa = o),
+      (this.iZi = s),
       (this.dce = !1),
-      (this._Ca = void 0),
+      (this.uCa = void 0),
       this.Zzi.OnClickCallBack.Bind(this.rZi),
       (this.eZi = ConfigManager_1.ConfigManager.TextConfig?.GetTextById(
         "PlotSkipConfirmToggle",
@@ -95,11 +100,13 @@ class PlotSkipComponent {
       (this.Zzi = void 0),
       (this.oZi = void 0),
       (this.iZi = void 0),
-      (this._Ca = void 0),
+      (this.uCa = void 0),
       (this.nZi = void 0),
       (this.NTt = void 0),
       (this.rsa = void 0),
-      ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
+      this.ro_ &&
+        ((this.ro_ = !1),
+        ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView());
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -117,7 +124,7 @@ class PlotSkipComponent {
     i &&
       !StringUtils_1.StringUtils.IsEmpty(i.TidOutline) &&
       ((i = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(i.TidOutline)),
-      (this._Ca =
+      (this.uCa =
         ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(i)));
   }
 }

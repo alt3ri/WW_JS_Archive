@@ -22,7 +22,7 @@ class MoonChasingMainView extends UiViewBase_1.UiViewBase {
       (this.NKs = void 0),
       (this.kKs = void 0),
       (this.FKs = void 0),
-      (this.Tfa = void 0),
+      (this.Sfa = void 0),
       (this.s6e = void 0),
       (this.aOn = new MoonChasingViewController_1.MoonChasingViewController()),
       (this.u2e = () => {
@@ -67,8 +67,8 @@ class MoonChasingMainView extends UiViewBase_1.UiViewBase {
       this.FKs.SetFunction(() => {
         this.aOn.SkipToTask();
       }),
-      (this.Tfa = new ButtonItem_1.ButtonItem(this.GetItem(0))),
-      this.Tfa.SetFunction(this.aOn.SkipToHandbook),
+      (this.Sfa = new ButtonItem_1.ButtonItem(this.GetItem(0))),
+      this.Sfa.SetFunction(this.aOn.SkipToHandbook),
       (this.s6e = new ButtonItem_1.ButtonItem(this.GetItem(1))),
       this.s6e.SetFunction(this.aOn.SkipToReward);
   }
@@ -120,7 +120,7 @@ class MoonChasingMainView extends UiViewBase_1.UiViewBase {
   RefreshRedDot() {
     this.NKs.BindRedDot("MoonChasingDelegation"),
       this.kKs.BindRedDot("MoonChasingBuilding"),
-      this.Tfa.BindRedDot("MoonChasingHandbook"),
+      this.Sfa.BindRedDot("MoonChasingHandbook"),
       this.s6e.BindRedDot("MoonChasingRewardAndShop"),
       this.FKs.BindRedDot("MoonChasingAllQuest");
   }

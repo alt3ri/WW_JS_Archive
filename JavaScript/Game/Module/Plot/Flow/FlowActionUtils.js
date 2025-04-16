@@ -35,19 +35,19 @@ class FlowActionUtils {
                 (n < 0 || Math.abs(r.Z - o.Z) < n)
             );
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Entity", 27, "当前角色未准备好");
+            Log_1.Log.Warn("Entity", 26, "当前角色未准备好");
         } else
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Entity", 27, "找不到BaseInfoComp，检查实体模板", [
+            Log_1.Log.Error("Entity", 26, "找不到BaseInfoComp，检查实体模板", [
               "pbDataId",
               e,
             ]);
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Entity", 27, "Entity坐标未配置", ["pbDataId", e]);
+          Log_1.Log.Error("Entity", 26, "Entity坐标未配置", ["pbDataId", e]);
     else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Entity", 27, "找不到EntityData，实体不存在", [
+        Log_1.Log.Error("Entity", 26, "找不到EntityData，实体不存在", [
           "pbDataId",
           e,
         ]);

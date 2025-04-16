@@ -11,6 +11,7 @@ class TsSceneUiTag extends UE.Actor {
       (this.CalculateCamera = !1),
       (this.BindUiTagArray = void 0);
   }
+  Constructor() {}
   ReceiveBeginPlay() {}
   ReceiveEndPlay() {}
   CalculateSquaredDistance() {
@@ -24,10 +25,10 @@ class TsSceneUiTag extends UE.Actor {
     } else {
       var t = Global_1.Global.BaseCharacter;
       if (!t) return 0;
-      r = t.GetTransform();
+      r = t.D_GetTransform();
     }
     return Vector_1.Vector.Create(
-      r.InverseTransformPositionNoScale(this.K2_GetActorLocation()),
+      r.InverseTransformPositionNoScale(this.D_K2_GetActorLocation()),
     ).SizeSquared();
   }
   CanTick() {

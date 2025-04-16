@@ -21,6 +21,9 @@ class BulletDataLogic {
       (this.xKs = void 0),
       (this.v8o = void 0),
       (this.M8o = void 0),
+      (this.vka = void 0),
+      (this.Mka = void 0),
+      (this.Zeh = void 0),
       (this.E8o = void 0),
       (this.S8o = void 0),
       (this.y8o = void 0),
@@ -95,6 +98,15 @@ class BulletDataLogic {
     return (
       void 0 === this.M8o && (this.M8o = this.Data.是否可以触发拼刀), this.M8o
     );
+  }
+  get CounterAttackIgnoreAngle() {
+    return void 0 === this.vka && (this.vka = this.Data.拼刀忽略角度), this.vka;
+  }
+  get CounterAttackIgnoreDist() {
+    return void 0 === this.Mka && (this.Mka = this.Data.拼刀忽略距离), this.Mka;
+  }
+  get CanBreakWindupAttack() {
+    return void 0 === this.Zeh && (this.Zeh = this.Data.触发前摇拼刀), this.Zeh;
   }
   get CanVisionCounterAttack() {
     return (

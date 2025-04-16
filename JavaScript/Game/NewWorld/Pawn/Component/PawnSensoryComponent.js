@@ -85,7 +85,7 @@ let PawnSensoryComponent = class PawnSensoryComponent extends EntityComponent_1.
   }
 };
 (PawnSensoryComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(108)],
+  [(0, RegisterComponent_1.RegisterComponent)(118)],
   PawnSensoryComponent,
 )),
   (exports.PawnSensoryComponent = PawnSensoryComponent);

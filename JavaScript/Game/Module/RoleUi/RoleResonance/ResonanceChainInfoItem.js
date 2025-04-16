@@ -76,7 +76,17 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
       this.Pco.Initialize(this.GetItem(4).GetOwner()),
       (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetRootItem(),
-      ));
+      )),
+      ControllerHolder_1.ControllerHolder.TermExplanationController.RegisterTextHyperlink(
+        this.GetText(2),
+        1,
+        2,
+      );
+  }
+  OnBeforeDestroy() {
+    ControllerHolder_1.ControllerHolder.TermExplanationController.UnRegisterTextHyperlink(
+      this.GetText(2),
+    );
   }
   async ShowItem() {
     await this.LoadPromise, this.$pt.PlayLevelSequenceByName("Start");
@@ -118,11 +128,11 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
       e ||
         i.ActivateConsume.forEach((e, t) => {
           var i = { Type: 4, ItemConfigId: t },
-            n =
+            r =
               ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(t);
           (i.BottomTextId = "Text_ItemEnoughText_Text"),
-            n < e && (i.BottomTextId = "Text_ItemNotEnoughText_Text"),
-            (i.BottomTextParameter = [n, e]),
+            r < e && (i.BottomTextId = "Text_ItemNotEnoughText_Text"),
+            (i.BottomTextParameter = [r, e]),
             this.Pco.Apply(i),
             this.Pco.BindOnCanExecuteChange(() => !1),
             this.Pco.BindOnExtendToggleClicked(() => {

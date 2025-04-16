@@ -63,7 +63,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelEvent",
-              40,
+              39,
               "执行保底行为：",
               ["actionName", n],
               ["ActionInfo", o],
@@ -85,7 +85,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
           LevelGeneralContextDefine_1.GuaranteeContext.Create(),
         ),
         Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("LevelEvent", 40, "场景保底行为已全部完成", [
+        Log_1.Log.Info("LevelEvent", 39, "场景保底行为已全部完成", [
           "保底行为列表",
           e,
         ]);
@@ -109,7 +109,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "LevelEvent",
-        40,
+        39,
         "树保底行为已全部完成",
         ["treeIncId", e],
         ["保底行为列表", t],
@@ -159,7 +159,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
-                40,
+                39,
                 "添加行为树保底行为：" + o.Name,
                 ["触发行为", t],
                 ["ActionInfo", o],
@@ -169,7 +169,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
-                40,
+                39,
                 "移除行为树保底行为：" + o.Name,
                 ["触发行为", t],
                 ["ActionInfo", o],
@@ -181,7 +181,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
-                40,
+                39,
                 "添加场景保底行为：" + o.Name,
                 ["触发行为", t],
                 ["ActionInfo", o],
@@ -190,7 +190,7 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
-                40,
+                39,
                 "移除场景保底行为：" + o.Name,
                 ["触发行为", t],
                 ["ActionInfo", o],

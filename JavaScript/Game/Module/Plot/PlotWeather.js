@@ -28,7 +28,7 @@ class PlotWeatherActorInfo {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Plot",
-          18,
+          17,
           "停止剧情天气",
           ["id", this.WeatherConfig.Id],
           ["DA", this.WeatherConfig.DAPath],
@@ -43,7 +43,11 @@ class PlotWeatherActorInfo {
   Destroy() {
     (this.WeatherConfig = void 0),
       this.Actor?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.Actor), (this.Actor = void 0)),
+        (ActorSystem_1.ActorSystem.Put(
+          "PlotWeatherActorInfo.Destroy",
+          this.Actor,
+        ),
+        (this.Actor = void 0)),
       (this.KuroPostProcessComponent = void 0);
   }
 }
@@ -101,7 +105,7 @@ class PlotWeather {
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "Plot",
-            18,
+            17,
             "剧情天气开始",
             ["id", t.WeatherConfig.Id],
             ["DA", t.WeatherConfig.DAPath],
@@ -112,7 +116,7 @@ class PlotWeather {
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "Plot",
-            18,
+            17,
             "剧情天气结束",
             ["id", t.WeatherConfig.Id],
             ["DA", t.WeatherConfig.DAPath],
@@ -161,8 +165,8 @@ class PlotWeather {
     this.kje &&
       this.kje.Actor?.IsValid() &&
       Global_1.Global.BaseCharacter &&
-      this.kje.Actor.K2_SetActorLocation(
-        Global_1.Global.BaseCharacter.K2_GetActorLocation(),
+      this.kje.Actor.D_K2_SetActorLocation(
+        Global_1.Global.BaseCharacter.D_K2_GetActorLocation(),
         !1,
         void 0,
         !0,
@@ -171,8 +175,8 @@ class PlotWeather {
   Hto() {
     let t = void 0;
     t = Global_1.Global.BaseCharacter
-      ? Global_1.Global.BaseCharacter.GetTransform()
-      : new UE.Transform();
+      ? Global_1.Global.BaseCharacter.D_GetTransform()
+      : new UE.TransformDouble();
     var i = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t),
       s = i.AddComponentByClass(
         UE.KuroPostProcessComponent.StaticClass(),
@@ -210,7 +214,7 @@ class PlotWeather {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            18,
+            17,
             "加载剧情天气",
             ["id", i.Id],
             ["DA", i.DAPath],

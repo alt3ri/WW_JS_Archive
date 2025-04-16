@@ -7,12 +7,13 @@ const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"
   TowerConfigBySeason_1 = require("../../../Core/Define/ConfigQuery/TowerConfigBySeason"),
   TowerDifficultyByDifficulty_1 = require("../../../Core/Define/ConfigQuery/TowerDifficultyByDifficulty"),
   TowerTargetById_1 = require("../../../Core/Define/ConfigQuery/TowerTargetById"),
-  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  TowerData_1 = require("./TowerData");
 class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   GetAreaFloorNumber(e, r, o) {
     let t = 0;
     for (const f of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
-      r <= 2 ? 0 : e,
+      r === TowerData_1.VARIATION_RISK_DIFFICULTY ? e : 0,
     ))
       f.Difficulty === r && f.AreaNum === o && t++;
     return t;
@@ -20,7 +21,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   GetDifficultyFloorNumber(e, r) {
     let o = 0;
     for (const t of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
-      r <= 2 ? 0 : e,
+      r === TowerData_1.VARIATION_RISK_DIFFICULTY ? e : 0,
     ))
       t.Difficulty === r && o++;
     return o;
@@ -30,7 +31,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
       t = -1,
       f = -1;
     for (const i of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
-      r <= 2 ? 0 : e,
+      r === TowerData_1.VARIATION_RISK_DIFFICULTY ? e : 0,
     ))
       i.Difficulty === r &&
         (o < i.AreaNum && ((o = i.AreaNum), (t = -1)), t < i.Floor) &&
@@ -40,7 +41,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   GetDifficultyAllFloor(e, r) {
     var o = [];
     for (const t of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
-      r <= 2 ? 0 : e,
+      r === TowerData_1.VARIATION_RISK_DIFFICULTY ? e : 0,
     ))
       t.Difficulty === r && o.push(t.Id);
     return o;
@@ -49,7 +50,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
     let o = -1;
     var t = [];
     for (const f of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
-      r <= 2 ? 0 : e,
+      r === TowerData_1.VARIATION_RISK_DIFFICULTY ? e : 0,
     ))
       f.Difficulty === r && o !== f.AreaNum && (t.push(f.Id), (o = f.AreaNum));
     return t;
@@ -57,7 +58,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   GetDifficultyAreaAllFloor(e, r, o) {
     var t = [];
     for (const f of TowerConfigBySeason_1.configTowerConfigBySeason.GetConfigList(
-      r <= 2 ? 0 : e,
+      r === TowerData_1.VARIATION_RISK_DIFFICULTY ? e : 0,
     ))
       r === f.Difficulty && o === f.AreaNum && t.push(f.Id);
     return t;
@@ -79,7 +80,7 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
     return this.GetTowerBuffConfig(e)?.Icon;
   }
   GetTowerBuffConfig(e) {
-    e = TowerBuffById_1.configTowerBuffById.GetConfig(BigInt(e));
+    e = TowerBuffById_1.configTowerBuffById.GetConfig(e);
     if (e) return e;
   }
   GetFloorTarget(e) {
@@ -123,22 +124,28 @@ class TowerClimbConfig extends ConfigBase_1.ConfigBase {
   }
   GetNewTowerDifficultTitle(e) {
     switch (e) {
-      case 1:
+      case TowerData_1.LOW_RISK_DIFFICULTY:
         return (
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "NewTower_Diffcult_1",
           ) ?? ""
         );
-      case 2:
+      case TowerData_1.HIGH_RISK_DIFFICULTY:
         return (
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "NewTower_Diffcult_2",
           ) ?? ""
         );
-      case 3:
+      case TowerData_1.VARIATION_RISK_DIFFICULTY:
         return (
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "NewTower_Diffcult_3",
+          ) ?? ""
+        );
+      case TowerData_1.OVERLOCK_RISK_DIFFICULTY:
+        return (
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            "NewTower_Diffcult_4",
           ) ?? ""
         );
       default:

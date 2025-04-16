@@ -18,7 +18,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
     var e = FavorRoleInfoByRoleId_1.configFavorRoleInfoByRoleId.GetConfig(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Role", 44, "角色档案配置表获取配置失败,RoleId = ", [
+      Log_1.Log.Error("Role", 43, "角色档案配置表获取配置失败,RoleId = ", [
         "roleId",
         o,
       ]);
@@ -27,7 +27,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
     var e = FavorGoodsByRoleId_1.configFavorGoodsByRoleId.GetConfigList(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Role", 44, "好感度物品配置表获取配置失败,RoleId = ", [
+      Log_1.Log.Error("Role", 43, "好感度物品配置表获取配置失败,RoleId = ", [
         "roleId",
         o,
       ]);
@@ -38,7 +38,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Role",
-        44,
+        43,
         "好感度故事配置表获取配置失败,RoleId =  Order By Sort",
         ["roleId", o],
       );
@@ -53,7 +53,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Role",
-        44,
+        43,
         `好感度语音配置表获取配置失败,RoleId = ${o} Type = ` + e,
       );
   }
@@ -61,7 +61,7 @@ class RoleFavorConfig extends ConfigBase_1.ConfigBase {
     var e = FavorTabCameraById_1.configFavorTabCameraById.GetConfig(o);
     if (e) return e;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Role", 44, "好感度切页镜头配置获取失败,Id = ", [
+      Log_1.Log.Error("Role", 43, "好感度切页镜头配置获取失败,Id = ", [
         "favorTabType",
         o,
       ]);

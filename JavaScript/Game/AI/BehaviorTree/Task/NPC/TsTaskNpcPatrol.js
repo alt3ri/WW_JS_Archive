@@ -66,6 +66,41 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
       (this.HandleMoveEnd = void 0),
       (this.ChangeStateHandle = void 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.Entity = void 0),
+      (this.ActorComp = void 0),
+      (this.MoveComp = void 0),
+      (this.StateComp = void 0),
+      (this.AnimComp = void 0),
+      (this.AiComp = void 0),
+      (this.CacheCrossVector = void 0),
+      (this.CacheVector = void 0),
+      (this.SingleMoveForward = void 0),
+      (this.CurTime = -0),
+      (this.ChangeMoveTimeInternal = -0),
+      (this.TraceElement = void 0),
+      (this.IsInit = !1),
+      (this.IsPause = !1),
+      (this.ForceExit = !1),
+      (this.EntityConfigId = 0),
+      (this.IsDebugEntity = !1),
+      (this.DebugComp = void 0),
+      (this.PatrolLogic = void 0),
+      (this.PatrolConfig = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsDebugMode = !1),
+      (this.TsMoveState = 0),
+      (this.TsMoveOnePath = !1),
+      (this.TsUseSimpleMove = !1),
+      (this.TsRaycastLength = 0),
+      (this.TsChangeMoveTime = -0),
+      (this.TsChangeMoveAngle = 0),
+      (this.TsMaxChangeAngle = 0),
+      (this.TsChangeMoveDistance = 0),
+      (this.HandleMoveEnd = void 0),
+      (this.ChangeStateHandle = void 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -98,7 +133,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "AI",
-                  43,
+                  42,
                   "NPC开始巡逻",
                   ["Id", this.EntityConfigId],
                   ["IsLogicAutonomousProxy", this.ActorComp.IsAutonomousProxy],
@@ -126,10 +161,10 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
       ((this.CacheCrossVector = Vector_1.Vector.Create()),
       (this.CacheVector = Vector_1.Vector.Create()),
       (this.SingleMoveForward = Vector_1.Vector.Create())),
-      (this.MoveComp = this.Entity.GetComponent(38)),
-      (this.StateComp = this.Entity.GetComponent(161)),
-      (this.AnimComp = this.Entity.GetComponent(163)),
-      (this.AiComp = this.Entity.GetComponent(40)),
+      (this.MoveComp = this.Entity.GetComponent(44)),
+      (this.StateComp = this.Entity.GetComponent(173)),
+      (this.AnimComp = this.Entity.GetComponent(175)),
+      (this.AiComp = this.Entity.GetComponent(46)),
       (this.CurTime = 0),
       (this.IsInit = !1),
       (this.IsPause = !1),
@@ -346,7 +381,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Level",
-          43,
+          42,
           "NPC巡逻，碰撞到实体",
           ["Id", this.EntityConfigId],
           ["Actor", i.Actors.Get(0).GetActorLabel()],
@@ -384,7 +419,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "AI",
-            43,
+            42,
             "NPC巡逻，触发异常停止",
             ["Id", this.EntityConfigId],
             ["EntityActive", this.Entity.Active],
@@ -401,7 +436,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "AI",
-            43,
+            42,
             "NPC巡逻，巡逻信息",
             ["PlayerDist", Math.ceil(Vector_1.Vector.Dist2D(t, s))],
             ["PatrolDist", Math.ceil(Vector_1.Vector.Dist2D(t, i))],
@@ -412,7 +447,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "AI",
-            43,
+            42,
             "NPC巡逻，角色输入信息",
             ["SimpleMove", this.TsUseSimpleMove],
             ["MoveState", this.StateComp?.MoveState],
@@ -423,11 +458,11 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
             ["InputDirect", this.ActorComp.InputDirectProxy],
             ["InputFacing", this.ActorComp.InputFacingProxy],
             ["ActorForward", this.ActorComp.ActorForwardProxy],
-            ["Velocity", this.ActorComp.Owner.GetVelocity()],
+            ["Velocity", this.ActorComp.Owner.D_GetVelocity()],
           ),
         (s = this.AnimComp.MainAnimInstance),
         Log_1.Log.CheckWarn()) &&
-        Log_1.Log.Warn("AI", 43, "NPC巡逻，角色ABP动画详细信息", [
+        Log_1.Log.Warn("AI", 42, "NPC巡逻，角色ABP动画详细信息", [
           "Anims",
           s.GetDebugAnimNodeString(),
         ]),
@@ -445,7 +480,7 @@ class TsTaskNpcPatrol extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       (AiPatrolController_1.AiPatrolController.OpenNpcPatrolDebugMode &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("AI", 43, "NPC退出巡逻", ["Id", this.EntityConfigId]),
+        Log_1.Log.Info("AI", 42, "NPC退出巡逻", ["Id", this.EntityConfigId]),
       this.MoveComp &&
         (this.TsMoveOnePath &&
           this.MoveComp.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy),

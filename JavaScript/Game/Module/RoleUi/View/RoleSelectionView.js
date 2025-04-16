@@ -25,7 +25,7 @@ class RoleSelectionView extends UiViewBase_1.UiViewBase {
         this.d0o !== this.nVi &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RoleSystemChangeRole,
-            this.d0o,
+            this.nVi,
           ),
           this.CloseMe();
       }),
@@ -98,7 +98,7 @@ class RoleSelectionView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     var e = this.d1o.GetCurSelectRoleData();
-    this.f0o(e, !0);
+    (this.d0o = this.d1o.GetCurSelectRoleId()), this.f0o(e, !0);
   }
   g0o(i, e, t) {
     if (
@@ -124,7 +124,10 @@ class RoleSelectionView extends UiViewBase_1.UiViewBase {
       ((this.nVi = i),
       this.gOt(e.GetName()),
       this.d1o.SetCurSelectRoleId(this.nVi),
-      RoleController_1.RoleController.OnSelectedRoleChange(this.nVi),
+      RoleController_1.RoleController.OnSelectedRoleChange(
+        this.nVi,
+        e.GetRoleSkinId(),
+      ),
       RoleController_1.RoleController.PlayRoleMontage(3, !1, 0 < t));
   }
   f0o(e, i = !1) {

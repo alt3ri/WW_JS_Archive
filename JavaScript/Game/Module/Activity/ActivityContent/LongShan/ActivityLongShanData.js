@@ -11,7 +11,28 @@ const LongShanStageAll_1 = require("../../../../../Core/Define/ConfigQuery/LongS
   LongShanStageInfo_1 = require("./LongShanStageInfo");
 class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
   constructor() {
-    super(...arguments), (this.StageIds = void 0), (this.ROe = void 0);
+    super(...arguments),
+      (this.StageIds = void 0),
+      (this.ROe = void 0),
+      (this.TaskSort = (e, t) => {
+        var n, a;
+        return e.mMs !== t.mMs
+          ? e.mMs
+            ? 1
+            : -1
+          : e.dMs !== t.dMs
+            ? e.dMs
+              ? -1
+              : 1
+            : (n = LongShanTaskById_1.configLongShanTaskById.GetConfig(
+                  e.s5n,
+                ).SortId) !==
+                (a = LongShanTaskById_1.configLongShanTaskById.GetConfig(
+                  t.s5n,
+                ).SortId)
+              ? n - a
+              : e.s5n - t.s5n;
+      });
   }
   PhraseEx(e) {
     this.ROe?.clear(), (this.ROe = this.ROe ?? new Map()), (this.StageIds = []);
@@ -74,8 +95,31 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
       : 0;
   }
   CheckStageRed(e) {
-    e = this.GetStageInfoById(e);
-    return !!e && 0 <= e.cMs.findIndex((e) => e.dMs && !e.mMs);
+    var t = this.GetStageInfoById(e);
+    return (
+      !!t &&
+      (!ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+        this.Id,
+        0,
+        e,
+        0,
+        0,
+      ) ||
+        0 <= t.cMs.findIndex((e) => e.dMs && !e.mMs))
+    );
+  }
+  SaveNewStageFlag(e) {
+    ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
+      this.Id,
+      e,
+      0,
+      0,
+      1,
+    ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+        this.Id,
+      );
   }
   CheckAnyStageRed() {
     if (this.StageIds)

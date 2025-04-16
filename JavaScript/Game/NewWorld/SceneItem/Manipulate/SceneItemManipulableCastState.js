@@ -2,13 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableCastState = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
-  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
+  Global_1 = require("../../../Global"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(t, i) {
@@ -28,6 +32,7 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       (this.AfterHit = !1),
       (this.NeedResetPhysicsMode = !0),
       (this.NeedNotifyServer = !0),
+      (this.rAc = new Map()),
       (this.Ynr = () => {
         this.AfterHit = !0;
       }),
@@ -43,7 +48,8 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
     this.EnterCallback = t;
   }
   OnEnter() {
-    this.StartCameraShake(this.pYi),
+    if (
+      (this.StartCameraShake(this.pYi),
       (this.Timer = 0),
       (this.AfterHit = !1),
       this.SceneItem.ActorComp.Owner.OnActorHit.Clear(),
@@ -51,11 +57,6 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
         (this.SceneItem.ActorComp.Owner.OnActorHit.Add(this.HitCallback),
         this.SceneItem.ActorComp.Owner.OnActorHit.Add(this.Ynr)),
       (this.SceneItem.NeedRemoveControllerId = !0),
-      this.NeedNotifyServer &&
-        LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
-          this.SceneItem.Entity.Id,
-          !1,
-        ),
       this.SceneItem.OnCastItem(),
       this.SceneItem.TryAddTagById(1488763518),
       FNameUtil_1.FNameUtil.IsNothing(
@@ -63,17 +64,57 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       ) ||
         this.SceneItem.ActorComp.GetPrimitiveComponent().SetCollisionProfileName(
           this.SceneItem.ManipulateBaseConfig.投掷状态碰撞预设,
+        ),
+      this.SceneItem.ManipulateBaseConfig.投掷状态CueId &&
+        0 < this.SceneItem.ManipulateBaseConfig.投掷状态CueId.Num())
+    ) {
+      var i =
+        Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()?.GetComponent(
+          222,
         );
+      if (void 0 !== i)
+        for (
+          let t = 0;
+          t < this.SceneItem.ManipulateBaseConfig.投掷状态CueId.Num();
+          t++
+        ) {
+          var e = this.SceneItem.ManipulateBaseConfig.投掷状态CueId.GetKey(t),
+            s = this.SceneItem.ManipulateBaseConfig.投掷状态CueId.Get(e);
+          if (!(void 0 === s || s <= 0)) {
+            var h = i.AddCue(e);
+            const o = i.GetCueByHandle(h);
+            void 0 !== o &&
+              (void 0 ===
+              (h = TimerSystem_1.TimerSystem.Delay(() => {
+                this.rAc.delete(o), o.Destroy();
+              }, s * TimeUtil_1.TimeUtil.InverseMillisecond))
+                ? (Log_1.Log.CheckError() &&
+                    Log_1.Log.Error("SceneItem", 31, "创建TimerHandle失败", [
+                      "CueId",
+                      e,
+                    ]),
+                  o.Destroy())
+                : this.rAc.set(o, h));
+          }
+        }
+    }
   }
   OnTick(t) {
     return !0;
   }
   OnExit() {
-    this.StopCameraShake(),
+    if (
+      (this.StopCameraShake(),
       this.SceneItem.TryRemoveTagById(1488763518),
       (this.NeedResetPhysicsMode = !0),
       (this.NeedNotifyServer = !0),
-      this.HitCallback && this.SceneItem.ActorComp.Owner.OnActorHit.Clear();
+      this.HitCallback && this.SceneItem.ActorComp.Owner.OnActorHit.Clear(),
+      this.rAc && 0 < this.rAc.size)
+    ) {
+      for (var [t, i] of this.rAc)
+        TimerSystem_1.TimerSystem.Remove(i), t.Destroy();
+      this.rAc.clear();
+    }
   }
   StartCast() {
     var t = Vector_1.Vector.Dist(
@@ -107,8 +148,13 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
         (this.PathScaleFactor = t.Size()),
         t.Normalize(),
         (this.CastDirection = Vector_1.Vector.Create(t)),
-        Vector_1.Vector.Create());
-    this.CastDirection.CrossProduct(Vector_1.Vector.UpVectorProxy, t),
+        Vector_1.Vector.Create()),
+      i = Vector_1.Vector.Create(Vector_1.Vector.UpVectorProxy);
+    GravityUtils_1.GravityUtils.RotatedVectorByActorInitGravity(
+      this.SceneItem.ActorComp,
+      i,
+    ),
+      this.CastDirection.CrossProduct(i, t),
       t.CrossProduct(this.CastDirection, this.$nr),
       this.$nr.Normalize(),
       this.$nr.CrossProduct(this.CastDirection, this.Xnr),
@@ -122,7 +168,8 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
         this.SceneItem.ActorComp.GetPrimitiveComponent().GetComponentVelocity()).Normalize(
         MathCommon_1.MathCommon.SmallNumber,
       ),
-      (t = UE.KismetMathLibrary.FindLookAtRotation(
+      (t = UE.KismetMathLibrary.Conv_VectorToVectorDouble(t)),
+      (t = UE.KismetMathLibrary.D_FindLookAtRotation(
         this.SceneItem.ActorComp.ActorLocation,
         this.SceneItem.ActorComp.ActorLocation.op_Addition(t),
       )),
@@ -133,11 +180,11 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       ));
   }
   UpdateLocation(t) {
-    var i, e, s, h, a;
+    var i, e, s, h, o;
     this.SceneItem.PlayingMatchSequence ||
       ((i = Vector_1.Vector.Create()),
       this.IsUsePath
-        ? ((a = Vector_1.Vector.Create(
+        ? ((o = Vector_1.Vector.Create(
             this.SceneItem.ManipulateBaseConfig.投掷运动轨迹曲线.GetVectorValue(
               t,
             ),
@@ -145,16 +192,16 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
           (e = Vector_1.Vector.Create()),
           (s = Vector_1.Vector.Create()),
           (h = Vector_1.Vector.Create()),
-          this.CastDirection.Multiply(a.X, e),
-          this.Xnr.Multiply(a.Y, s),
-          this.$nr.Multiply(a.Z, h),
+          this.CastDirection.Multiply(o.X, e),
+          this.Xnr.Multiply(o.Y, s),
+          this.$nr.Multiply(o.Z, h),
           i.AdditionEqual(e).AdditionEqual(s).AdditionEqual(h),
           i.AdditionEqual(this.StartLoc))
-        : ((a = UE.KismetMathLibrary.Ease(0, 1, t, 6, 3)),
+        : ((o = UE.KismetMathLibrary.Ease(0, 1, t, 6, 3)),
           Vector_1.Vector.Lerp(
             this.StartLoc,
             this.SceneItem.CastTargetLocation,
-            a,
+            o,
             i,
           )),
       this.SceneItem.ActorComp.SetActorLocation(

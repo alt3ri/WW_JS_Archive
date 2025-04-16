@@ -85,39 +85,27 @@ class AiPerception {
       (this.uoe = void 0),
       (this.MaxSenseRange = 0),
       (this.Poe = !1),
-      (this.tha = !1),
       (this.xoe = Stats_1.Stat.Create("IsActorInSense")),
       (this.woe = Stats_1.Stat.Create("FindNewInSenseActor")),
       (this.Boe = Stats_1.Stat.Create("FindOutSenseActor")),
       (this.boe = Stats_1.Stat.Create("SenseActor")),
       (this.qoe = Stats_1.Stat.Create("FindShareAlly")),
-      (this.Goe = Stats_1.Stat.Create("RefreshAllEnemies"));
-    var e = t.CharActorComp?.CreatureData;
-    (this.tha = 122000237 === e?.GetPbDataId()),
+      (this.Goe = Stats_1.Stat.Create("RefreshAllEnemies")),
       (this.E0 = t.CharActorComp.Entity.Id),
       (this.Noe = t.CharActorComp.Actor.Camp),
       this.EntitiesInSense.set(this.E0, 0),
       this.Roe.set(0, new Set()),
       this.Roe.set(1, new Set());
-    let h = -1;
-    for (const n of s) {
-      var r = new AiSenseObject(n);
-      this.Loe.push(r),
-        0 < ++h ||
-          (this.tha &&
-            Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "AI",
-              6,
-              "EnableAiSense Init",
-              ["Actor", this.Bte.CharActorComp.Actor.GetName()],
-              ["AiSenseObject", r.AiSense.Id],
-            ),
-          r.WithAngleHorizontal && ++this.Uoe,
-          r.WithAngleVertical && ++this.Aoe,
-          n.SenseDistanceRange.Max > this.MaxSenseRange &&
-            (this.MaxSenseRange = n.SenseDistanceRange.Max),
-          this.Roe.get(r.AiSense.SenseTarget)?.add(r));
+    let e = -1;
+    for (const r of s) {
+      var h = new AiSenseObject(r);
+      this.Loe.push(h),
+        0 < ++e ||
+          (h.WithAngleHorizontal && ++this.Uoe,
+          h.WithAngleVertical && ++this.Aoe,
+          r.SenseDistanceRange.Max > this.MaxSenseRange &&
+            (this.MaxSenseRange = r.SenseDistanceRange.Max),
+          this.Roe.get(h.AiSense.SenseTarget)?.add(h));
     }
     (this.Ooe = i ? i.ShareDis * i.ShareDis : 0), this.koe();
   }
@@ -193,7 +181,15 @@ class AiPerception {
     for (const e of this.Loe) e.AiSense.SenseType === t && this.Foe(e, i);
     for (var [, s] of this.Doe) s.AiSense.SenseType === t && this.Foe(s, i);
   }
-  Clear(t = !0) {
+  Clear(t = !0, i = !1) {
+    if (i) {
+      for (const s of this.Allies)
+        this.Bte.AiPerceptionEvents.CollectAiPerceptionEventById(!1, s, 1);
+      for (const e of this.Enemies)
+        this.Bte.AiPerceptionEvents.CollectAiPerceptionEventById(!1, e, 2);
+      for (const h of this.Neutrals)
+        this.Bte.AiPerceptionEvents.CollectAiPerceptionEventById(!1, h, 0);
+    }
     this.Allies.clear(),
       this.Enemies.clear(),
       this.Neutrals.clear(),
@@ -226,31 +222,31 @@ class AiPerception {
     var h = this.Bte.CharActorComp.ActorLocationProxy,
       r = t.GetComponent(1),
       n = e && r.CreatureData.IsRole(),
-      o = (r.ActorLocationProxy.Subtraction(h, this.Lz), this.Lz.SizeSquared());
-    let a = 0,
-      _ = 0;
+      a = (r.ActorLocationProxy.Subtraction(h, this.Lz), this.Lz.SizeSquared());
+    let o = 0,
+      f = 0;
     (this.Uoe || this.Aoe) &&
       (this.Lz.FromUeVector(
-        this.Bte.CharActorComp.ActorRotation.UnrotateVector(
+        this.Bte.CharActorComp.ActorRotation.UnrotateVectorDouble(
           this.Lz.ToUeVector(),
         ),
       ),
       this.Uoe &&
-        (a = MathUtils_1.MathUtils.RadToDeg * Math.atan2(this.Lz.Y, this.Lz.X)),
+        (o = MathUtils_1.MathUtils.RadToDeg * Math.atan2(this.Lz.Y, this.Lz.X)),
       this.Aoe) &&
-      (_ =
-        MathUtils_1.MathUtils.RadToDeg * Math.asin(this.Lz.Z / Math.sqrt(o)));
-    var e = t.GetComponent(92),
-      f = e?.Valid
+      (f =
+        MathUtils_1.MathUtils.RadToDeg * Math.asin(this.Lz.Z / Math.sqrt(a)));
+    var e = t.GetComponent(99),
+      _ = e?.Valid
         ? e.PositionState
         : CharacterUnifiedStateTypes_1.ECharPositionState.Ground,
-      S = e?.Valid
+      c = e?.Valid
         ? e.MoveState
         : CharacterUnifiedStateTypes_1.ECharMoveState.Other;
     TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.uoe, h),
       this.Toe.clear();
     for (const l of this.Roe.get(s))
-      if (l.InArea(o, a, _, f, S, i)) {
+      if (l.InArea(a, o, f, _, c, i)) {
         if (
           (n &&
             Log_1.Log.CheckInfo() &&
@@ -275,16 +271,16 @@ class AiPerception {
               PROFILE_KEY,
             ))
           ) {
-            var c = this.uoe.HitResult;
-            if (c.bBlockingHit && c.Actors.Get(0) !== r.Owner) {
+            var S = this.uoe.HitResult;
+            if (S.bBlockingHit && S.Actors.Get(0) !== r.Owner) {
               n &&
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "AI",
                   6,
                   "Mingzhongzhigui Ai Hit",
-                  ["actor", c.Actors.Get(0)?.GetName()],
-                  ["Comp", c.Components.Get(0)?.GetName()],
+                  ["actor", S.Actors.Get(0)?.GetName()],
+                  ["Comp", S.Components.Get(0)?.GetName()],
                 ),
                 this.Toe.add(l.AiSense.BlockType);
               continue;
@@ -322,14 +318,8 @@ class AiPerception {
           r.Entity?.Valid &&
             r.Entity.Active &&
             (this.EntitiesInSense.has(r.Entity.Id) ||
-              (this.Qoe(r.Entity, !1, i, this.tha) &&
-                (this.tha &&
-                  Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("AI", 6, "Mingzhongzhigui In Sense", [
-                    "actor",
-                    r.Id,
-                  ]),
-                this.EntitiesToAdd.set(r.Entity.Id, i))));
+              (this.Qoe(r.Entity, !1, i) &&
+                this.EntitiesToAdd.set(r.Entity.Id, i)));
       }
     this.woe.Stop();
   }
@@ -453,12 +443,12 @@ class AiPerception {
           e !== t.Actor.Camp ||
           Vector_1.Vector.DistSquared(s, t.ActorLocationProxy) > this.Ooe ||
           (this.voe.add(r.Entity.Id), this.ShareAllyLink.has(r.Entity.Id)) ||
-          ((t = r.Entity.GetComponent(40))?.Valid &&
+          ((t = r.Entity.GetComponent(46))?.Valid &&
             t.AiController.AiPerception?.Moe.add(this.E0));
       for (const n of this.ShareAllyLink)
         this.voe.has(n) ||
           ((i = EntitySystem_1.EntitySystem.Get(n))?.Valid &&
-            (i = i.GetComponent(40))?.Valid &&
+            (i = i.GetComponent(46))?.Valid &&
             i.AiController.AiPerception?.Moe.delete(this.E0));
       var h = this.voe;
       (this.voe = this.ShareAllyLink),
@@ -475,7 +465,7 @@ class AiPerception {
       var t = this.f6.pop(),
         t = EntitySystem_1.EntitySystem.Get(t);
       if (t?.Valid) {
-        t = t.GetComponent(40);
+        t = t.GetComponent(46);
         if (t?.Valid && t.AiController.AiPerception) {
           for (const e of t.AiController.AiPerception.Enemies)
             this.AllEnemies.add(e);
@@ -485,6 +475,54 @@ class AiPerception {
       }
     }
     this.Goe.Stop();
+  }
+  OnEntityCampModified(i, s, t) {
+    if (i.Id === this.Bte.CharAiDesignComp?.Entity.Id)
+      (this.Noe = this.Bte.CharActorComp.Actor.Camp), this.Clear(!1, !0);
+    else {
+      var e = this.EntitiesInSense?.get(i.Id);
+      if (0 === e) {
+        (e = CampUtils_1.CampUtils.GetCampRelationship(this.Noe, s)),
+          (s = CampUtils_1.CampUtils.GetCampRelationship(this.Noe, t));
+        if (e !== s) {
+          let t = !1;
+          switch (e) {
+            case 2:
+              (t = this.Enemies.delete(i.Id)), this.AllEnemies.delete(i.Id);
+              break;
+            case 1:
+              t = this.Allies.delete(i.Id);
+              break;
+            default:
+              t = this.Neutrals.delete(i.Id);
+          }
+          if (t) {
+            switch (
+              (this.Bte.AiPerceptionEvents.CollectAiPerceptionEventById(
+                !1,
+                i.Id,
+                e,
+              ),
+              s)
+            ) {
+              case 2:
+                this.Enemies.add(i.Id), this.AllEnemies.add(i.Id);
+                break;
+              case 1:
+                this.Allies.add(i.Id);
+                break;
+              default:
+                this.Neutrals.add(i.Id);
+            }
+            this.Bte.AiPerceptionEvents.CollectAiPerceptionEventById(
+              !0,
+              i.Id,
+              s,
+            );
+          }
+        }
+      }
+    }
   }
 }
 exports.AiPerception = AiPerception;

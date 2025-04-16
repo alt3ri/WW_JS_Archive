@@ -7,10 +7,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 class BaseConfigModel {}
 ((exports.BaseConfigModel = BaseConfigModel).BaseConfig = new Map()),
   (BaseConfigModel.PublicConfigLoaded = !1),
-  (BaseConfigModel.ParamsConfig = new Map()),
+  (BaseConfigModel.BuildInfoMap = new Map()),
+  (BaseConfigModel.ConfigVersionMap = new Map()),
   (BaseConfigModel.ParamsConfigInited = !1),
   (BaseConfigModel.EntryJson = void 0),
-  (BaseConfigModel.IsGray = void 0),
   (BaseConfigModel.GrayBoxConfigMap = new Map()),
   (BaseConfigModel.BoxResultMap = new Map());
 class EntryJson {
@@ -18,16 +18,17 @@ class EntryJson {
     (this.CdnUrl = void 0),
       (this.SpeedRatio = -0),
       (this.PriceRatio = -0),
-      (this.NoticUrl = ""),
       (this.NoticeUrl = ""),
       (this.LoginServers = void 0),
       (this.PrivateServers = void 0),
       (this.GmOpen = !1),
+      (this.RptOpen = !0),
       (this.AsyncCheck = !1),
+      (this.NewHttpTimer = !0),
+      (this.NewHttpApi = !0),
       (this.GARUrl = ""),
       (this.TDCfg = void 0),
       (this.LogReport = void 0),
-      (this.LoginServerAdditionData = void 0),
       (this.PackageUpdateUrl = void 0),
       (this.PackageUpdateDescUrl = void 0),
       (this.IosAuditFirstDownloadTip = !1),
@@ -35,28 +36,29 @@ class EntryJson {
       (this.ResUri = ""),
       (this.GachaUrl = void 0),
       (this.GrayBox = void 0),
+      (this.SDKEnvironment = void 0),
       (this.CdnUrl = (s && s.CdnUrl ? s : i).CdnUrl),
       (this.SpeedRatio =
         s && void 0 !== s.SpeedRatio ? s.SpeedRatio : (i.SpeedRatio ?? 0)),
       (this.PriceRatio =
         s && void 0 !== s.PriceRatio ? s.PriceRatio : (i.PriceRatio ?? 0)),
-      (this.NoticUrl =
-        s && void 0 !== s.NoticUrl ? s.NoticUrl : (i.NoticUrl ?? "")),
-      (this.NoticeUrl =
-        s && void 0 !== s.NoticeUrl
-          ? s.NoticeUrl
-          : (i.NoticeUrl ?? this.NoticUrl)),
+      (this.NoticeUrl = (s && void 0 !== s.NoticeUrl ? s : i).NoticeUrl),
       (this.LoginServers = (s && s.LoginServers ? s : i).LoginServers),
       (this.PrivateServers = (s && s.PrivateServers ? s : i).PrivateServers),
       (this.GmOpen = s && void 0 !== s.GmOpen ? s.GmOpen : (i.GmOpen ?? !1)),
+      (this.RptOpen =
+        s && void 0 !== s.RptOpen ? s.RptOpen : (i.RptOpen ?? !0)),
       (this.AsyncCheck =
         s && void 0 !== s.AsyncCheck ? s.AsyncCheck : (i.AsyncCheck ?? !1)),
+      (this.NewHttpTimer =
+        s && void 0 !== s.NewHttpTimer
+          ? s.NewHttpTimer
+          : (i.NewHttpTimer ?? !0)),
+      (this.NewHttpApi =
+        s && void 0 !== s.NewHttpApi ? s.NewHttpApi : (i.NewHttpApi ?? !0)),
       (this.GARUrl = s && void 0 !== s.GARUrl ? s.GARUrl : (i.GARUrl ?? "")),
       (this.TDCfg = (s && s.TDCfg ? s : i).TDCfg),
       (this.LogReport = (s && s.LogReport ? s : i).LogReport),
-      (this.LoginServerAdditionData = (
-        s && s.LoginServerAdditionData ? s : i
-      ).LoginServerAdditionData),
       (this.IosAuditFirstDownloadTip =
         s && void 0 !== s.IosAuditFirstDownloadTip
           ? s.IosAuditFirstDownloadTip
@@ -70,7 +72,8 @@ class EntryJson {
       (this.PackageUpdateDescUrl = (
         s && s.PackageUpdateDescUrl ? s : i
       ).PackageUpdateDescUrl),
-      (this.GrayBox = (s && s.GrayBox ? s : i).GrayBox);
+      (this.GrayBox = (s && s.GrayBox ? s : i).GrayBox),
+      (this.SDKEnvironment = (s && s.SDKEnvironment ? s : i).SDKEnvironment);
   }
 }
 function parseGrayBox(i) {}

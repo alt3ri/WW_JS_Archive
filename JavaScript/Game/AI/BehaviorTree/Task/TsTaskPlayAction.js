@@ -6,7 +6,7 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ServerGmController_1 = require("../../../World/Controller/ServerGmController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
   DEFAULT_FINISHED_TIME = 6e4;
@@ -17,6 +17,18 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
       (this.LoopTimeMillisecond = 0),
       (this.BlackboardKeyTime = ""),
       (this.MaskInteract = !1),
+      (this.IsInitTsVariables = !1),
+      (this.TsMontageName = ""),
+      (this.TsLoopTimeMillisecond = 0),
+      (this.TsBlackboardKeyTime = ""),
+      (this.TsMaskInteract = !1),
+      (this.EndTime = -0),
+      (this.AnimComp = void 0),
+      (this.InteractComponent = void 0),
+      (this.OnMontageEnded = void 0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsMontageName = ""),
       (this.TsLoopTimeMillisecond = 0),
@@ -62,20 +74,20 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
         e =
           (this.TsBlackboardKeyTime &&
             (o =
-              BlackboardController_1.BlackboardController.GetIntValueByEntity(
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
                 i.Id,
                 this.TsBlackboardKeyTime,
               )) &&
             (t = o),
           this.TsMontageName);
       var o =
-        BlackboardController_1.BlackboardController.GetStringValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetStringValueByEntity(
           i.Id,
           "TargetMontageName",
         );
       o &&
         ((e = o),
-        BlackboardController_1.BlackboardController.RemoveValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
           i.Id,
           "TargetMontageName",
         )),
@@ -91,7 +103,7 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
             ["spMontageName", o],
             ["montageName", e],
           ),
-        (this.InteractComponent = i.GetComponent(182)),
+        (this.InteractComponent = i.GetComponent(195)),
         this.TsMaskInteract &&
           this.InteractComponent &&
           this.InteractComponent.SetInteractionState(
@@ -99,7 +111,7 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
             "TsTaskPlayAction ReceiveExecuteAI",
           ),
         (this.EndTime = t + Time_1.Time.WorldTime),
-        (this.AnimComp = i.GetComponent(163)),
+        (this.AnimComp = i.GetComponent(175)),
         this.AnimComp &&
           ((o = this.AnimComp.GetMontageResPathByName(e)),
           s &&

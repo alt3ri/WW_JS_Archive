@@ -40,7 +40,7 @@ class InputCallback {
   }
   Call(t) {
     this.Kmr = !0;
-    for (const s of this.fIo) s(this.Qmr.Name, t, this.Qmr);
+    for (const i of this.fIo) i(this.Qmr.Name, t, this.Qmr);
     this.Xmr(), (this.Kmr = !1);
   }
   Add(t) {
@@ -64,11 +64,16 @@ class InputCallback {
   }
 }
 class InputDistributeHandle {
-  constructor(t, s) {
-    (this.$mr = t), (this.B7 = new InputCallback(s));
+  constructor(t, i) {
+    (this.$mr = ""),
+      (this.B7 = void 0),
+      (this.jkl = void 0),
+      (this.$mr = t),
+      (this.B7 = new InputCallback(i)),
+      (this.jkl = new InputCallback(i));
   }
   Reset() {
-    this.B7.Clear(), (this.B7 = void 0);
+    this.B7.Clear(), (this.B7 = void 0), this.jkl.Clear(), (this.jkl = void 0);
   }
   Bind(t) {
     this.B7.Add(t);
@@ -79,8 +84,14 @@ class InputDistributeHandle {
   Call(t) {
     this.B7.Call(t);
   }
-  GetCallbackLength() {
-    return this.B7.Length();
+  BindIgnoreLimit(t) {
+    this.jkl.Add(t);
+  }
+  UnBindIgnoreLimit(t) {
+    this.jkl.Remove(t);
+  }
+  CallIgnoreLimit(t) {
+    this.jkl.Call(t);
   }
   GetInputDistributeTag() {
     return this.$mr;

@@ -35,9 +35,10 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
       : this.GetRoleRealName();
   }
   GetRoleRealName() {
-    return ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
-      this.GetRoleConfig().Name,
+    var e = ModelManager_1.ModelManager.RoleSkinModel.GetRoleSkinData(
+      this.GetRoleSkinId(),
     );
+    return ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.GetName());
   }
   GetSkillInfoLevel(e) {
     return this.GetSkillData().GetReferencedSkillLevel(
@@ -112,7 +113,8 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
     }
     a.SetSkillNodeStateData(n), this.RefreshRoleAttr(t.bws, t.Bws);
     for (const f of t._xs) this.RefreshResonance(f);
-    this.GetResonanceData().SetResonantChainGroupIndex(t.mxs);
+    this.GetResonanceData().SetResonantChainGroupIndex(t.mxs),
+      this.SetRoleSkinId(t.Z7n);
   }
   RefreshResonance(e) {
     var t = this.GetResonanceData(),
@@ -135,14 +137,17 @@ class RoleInstance extends RoleDataBase_1.RoleDataBase {
     );
   }
   TryRemoveNewFlag() {
-    ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
-      LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
-      this.Id,
-    ) &&
-      ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
+    return (
+      !!ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
         LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
         this.Id,
-      );
+      ) &&
+      (ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
+        this.Id,
+      ),
+      !0)
+    );
   }
 }
 exports.RoleInstance = RoleInstance;

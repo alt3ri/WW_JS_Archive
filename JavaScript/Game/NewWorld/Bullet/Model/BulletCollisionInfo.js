@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.BulletConditionResult =
       void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   BulletPool_1 = require("./BulletPool"),
@@ -51,6 +52,7 @@ class BulletCollisionInfo {
       (this.IsPassDelay = !1),
       (this.AllowedEnergy = !1),
       (this.ActiveDelayMs = -0),
+      (this.ActiveLengthMs = 0),
       (this.IntervalMs = -0),
       (this.IsProcessOpen = !1),
       (this.LastStageInterval = 0),
@@ -64,24 +66,27 @@ class BulletCollisionInfo {
       (this.UpdateTraceLine = void 0),
       (this.ObstaclesTraceElement = void 0),
       (this.IgnoreChannels = new Set()),
-      (this.IgnoreQueries = new Set());
+      (this.IgnoreQueries = new Set()),
+      (this.DamageId = 0),
+      (this.BeHitEffect = FNameUtil_1.FNameUtil.NONE),
+      (this.WeaknessBeHitEffect = FNameUtil_1.FNameUtil.NONE);
   }
   get CollisionTransform() {
     return this.CollisionComponent
-      ? this.CollisionComponent.K2_GetComponentToWorld()
-      : MathUtils_1.MathUtils.DefaultTransform;
+      ? this.CollisionComponent.D_K2_GetComponentToWorld()
+      : MathUtils_1.MathUtils.DefaultTransformDouble;
   }
   AddHitActorData(t, i) {
     this.IsInProcessHit
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "处理子弹碰撞期间不允许修改碰撞数组")
+        Log_1.Log.Error("Bullet", 17, "处理子弹碰撞期间不允许修改碰撞数组")
       : this.MapHitActorData.has(t) ||
         (this.MapHitActorData.set(t, i), this.ArrayHitActorData.push(i));
   }
   ClearHitActorData() {
     if (this.IsInProcessHit)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "处理子弹碰撞期间不允许修改碰撞数组");
+        Log_1.Log.Error("Bullet", 17, "处理子弹碰撞期间不允许修改碰撞数组");
     else {
       for (const t of this.ArrayHitActorData)
         BulletPool_1.BulletPool.RecycleBulletHitActorData(t);
@@ -93,7 +98,7 @@ class BulletCollisionInfo {
   ClearLastHitActorData() {
     if (this.IsInProcessHit)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "处理子弹碰撞期间不允许修改碰撞数组");
+        Log_1.Log.Error("Bullet", 17, "处理子弹碰撞期间不允许修改碰撞数组");
     else {
       for (const t of this.LastArrayHitActorData)
         BulletPool_1.BulletPool.RecycleBulletHitActorData(t);
@@ -104,7 +109,7 @@ class BulletCollisionInfo {
     var t;
     this.IsInProcessHit
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "处理子弹碰撞期间不允许修改碰撞数组")
+        Log_1.Log.Error("Bullet", 17, "处理子弹碰撞期间不允许修改碰撞数组")
       : ((t = this.LastArrayHitActorData),
         (this.LastArrayHitActorData = this.ArrayHitActorData),
         (this.ArrayHitActorData = t),
@@ -124,7 +129,7 @@ class BulletCollisionInfo {
   Clear() {
     this.IsInProcessHit &&
       Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Bullet", 18, "处理子弹碰撞期间不允许修改碰撞数组");
+      Log_1.Log.Error("Bullet", 17, "处理子弹碰撞期间不允许修改碰撞数组");
     for (const i of this.ArrayHitActorData)
       BulletPool_1.BulletPool.RecycleBulletHitActorData(i);
     for (const s of this.LastArrayHitActorData)
@@ -156,6 +161,7 @@ class BulletCollisionInfo {
       (this.IsPassDelay = !1),
       (this.AllowedEnergy = !1),
       (this.ActiveDelayMs = 0),
+      (this.ActiveLengthMs = 0),
       (this.IntervalMs = 0),
       (this.LastStageInterval = 0),
       (this.StageInterval = 0),

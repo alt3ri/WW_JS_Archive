@@ -10,10 +10,10 @@ class LevelEventEnterSequenceCamera extends LevelGeneralBase_1.LevelEventBase {
       (e.ShouldEnter
         ? (ModelManager_1.ModelManager.PlotModel.SwitchCameraMode(3),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("LevelEvent", 27, "通过事件进入剧情相机"))
+            Log_1.Log.Debug("LevelEvent", 26, "通过事件进入剧情相机"))
         : (ModelManager_1.ModelManager.PlotModel.SwitchCameraMode(1),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("LevelEvent", 27, "通过事件退出剧情相机")));
+            Log_1.Log.Debug("LevelEvent", 26, "通过事件退出剧情相机")));
   }
 }
 exports.LevelEventEnterSequenceCamera = LevelEventEnterSequenceCamera;

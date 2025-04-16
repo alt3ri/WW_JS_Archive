@@ -21,7 +21,7 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
       (this.sOt = () => {
         this.GetButton(3).IsSelfInteractive
           ? CommonManager_1.CommonManager.SendManufacture(
-              this.yTi.ItemId,
+              this.yTi.ConfigId,
               this.zOt.GetManufactureCount(),
             )
           : ComposeController_1.ComposeController.PlayCompositeFailDisplay(
@@ -33,7 +33,7 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
       (this.I7e = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OpenHelpRole,
-          this.yTi.ItemId,
+          this.yTi.ConfigId,
         );
       }),
       (this.ITi = () => {
@@ -115,7 +115,7 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
   RefreshTips(e) {
     this.yTi = e;
     var e = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        e.ItemId,
+        e.ConfigId,
       ),
       t = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId),
       t =
@@ -140,9 +140,9 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
   }
   ekt() {
     var e = ModelManager_1.ModelManager.ComposeModel,
-      t = e.CheckComposeMaterialEnough(this.yTi.ItemId),
+      t = e.CheckComposeMaterialEnough(this.yTi.ConfigId),
       i = e.CheckUnlock(this.yTi),
-      s = e.CheckCoinEnough(this.yTi.ItemId),
+      s = e.CheckCoinEnough(this.yTi.ConfigId),
       e = e.CheckLimitCount(this.yTi);
     this.GetText(7).SetText(this.ikt(i, t, s, e)),
       this.GetItem(6).SetUIActive(!(i && t && e)),

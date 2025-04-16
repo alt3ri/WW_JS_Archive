@@ -7,14 +7,14 @@ const ModelManager_1 = require("../../../../../../../Manager/ModelManager"),
 class RewardShopGridItem extends PayShopItem_1.PayShopItem {
   constructor() {
     super(...arguments),
-      (this.o2a = (e, o) => {
+      (this.b2a = (e, o) => {
         ModelManager_1.ModelManager.MoonChasingRewardModel.ReadShopItemUnlockFlag(
           o,
         ) && this.SetNewFlagState(!1);
       });
   }
   OnStart() {
-    super.OnStart(), this.SetExtraFunction(this.o2a);
+    super.OnStart(), this.SetExtraFunction(this.b2a);
   }
   Refresh(e, o, a) {
     e instanceof PayShopGoods_1.PayShopGoods &&

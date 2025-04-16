@@ -23,13 +23,28 @@ class UiNavigationLogic {
   static ClearNavigationDelegate(i) {
     i.TryFindNavigationDelegate.Unbind();
   }
-  static TBo(i, e) {
-    var t;
-    i?.HasDynamicScrollView() &&
-      ((t = i.GetNavigationGroup()),
-      (t = i.ScrollView.Horizontal ? t.HorizontalWrapMode : t.VerticalWrapMode),
-      (e = 2 !== e && 4 !== e),
-      i.ScrollView.NavigateScrollToUIItem(i?.GetRootComponent(), e, t));
+  static mSc(i, e) {
+    if (i.Horizontal) {
+      if (2 === e || 1 === e) return !0;
+    } else if (4 === e || 3 === e) return !0;
+    return !1;
+  }
+  static TBo(i, e, t) {
+    var a;
+    i?.HasNormalScrollView() &&
+      !e &&
+      ((a = i.ScrollView), !!(i = i.GetNavigationGroup())) &&
+      (i.SlideToLeftOrTop || i.SlideToRightOrDown) &&
+      this.mSc(a, t) &&
+      (a?.SetScrollProgress(2 !== t && 4 !== t ? 0 : 1),
+      ModelManager_1.ModelManager.UiNavigationModel?.RepeatMove()),
+      e?.HasDynamicScrollView() &&
+        ((i = e.GetNavigationGroup()),
+        (a = e.ScrollView.Horizontal
+          ? i.HorizontalWrapMode
+          : i.VerticalWrapMode),
+        (i = 2 !== t && 4 !== t),
+        e.ScrollView.NavigateScrollToUIItem(e?.GetRootComponent(), i, a));
   }
   static LBo(i) {
     i &&
@@ -157,8 +172,20 @@ class UiNavigationLogic {
         i?.RootUIComp),
       e.SetCursorFollowItem(i),
       this.MemoryGroupConfigLastSelect(i),
-      (e = i?.GetBehaviorComponent()) instanceof UE.UISelectableComponent) &&
-      e.NotifyFocusListener();
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.UpdateNavigationListener,
+      ));
+  }
+  static UpdateSameNavigationListener(i) {
+    var e;
+    LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem
+      .navigationComponent === i.RootUIComp &&
+      (e = ModelManager_1.ModelManager.UiNavigationModel) &&
+      (e.SetCursorFollowItem(i),
+      this.MemoryGroupConfigLastSelect(i),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.UpdateNavigationListener,
+      ));
   }
   static MemoryGroupConfigLastSelect(i) {
     var e;
@@ -168,7 +195,7 @@ class UiNavigationLogic {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "[MemoryGroupConfigLastSelect]查找不到当前导航的导航组,逻辑上有问题",
           ));
   }
@@ -212,11 +239,15 @@ class UiNavigationLogic {
       i.SetIsForceChange(!0);
   }
   static ExecuteInputNavigation(i, e) {
-    var t =
-      UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle();
-    t &&
-      t.GetFocusListener() &&
-      LguiEventSystemManager_1.LguiEventSystemManager.InputNavigation(i, e);
+    1 === e
+      ? this.wut &&
+        ((this.wut = !1),
+        LguiEventSystemManager_1.LguiEventSystemManager.InputNavigation(i, 1))
+      : (e =
+          UiNavigationViewManager_1.UiNavigationViewManager.GetCurrentViewHandle()) &&
+        e.GetFocusListener() &&
+        ((this.wut = !0),
+        LguiEventSystemManager_1.LguiEventSystemManager.InputNavigation(i, 0));
   }
   static ExecuteInterfaceMethod(i, e, ...t) {
     e in i && "function" == typeof i[e] && i[e](...t);
@@ -224,6 +255,7 @@ class UiNavigationLogic {
 }
 (exports.UiNavigationLogic = UiNavigationLogic),
   ((_a = UiNavigationLogic).TryFindNavigationDelegate = (i, e) => {
+    var t;
     return 0 !== i || e
       ? UiNavigationGlobalData_1.UiNavigationGlobalData.IsBlockNavigation
         ? void 0
@@ -232,10 +264,10 @@ class UiNavigationLogic {
             : LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem
                 .navigationComponent),
           (e = UiNavigationLogic.UBo(e)),
-          (e = UiNavigationLogic.DBo(e, i)),
-          _a.TBo(e, i),
-          _a.LBo(e),
-          e?.GetSceneComponent())
+          (t = UiNavigationLogic.DBo(e, i)),
+          _a.TBo(e, t, i),
+          _a.LBo(t),
+          t?.GetSceneComponent())
       : LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystem
           .navigationComponent;
   }),
@@ -250,5 +282,6 @@ class UiNavigationLogic {
     if (t)
       for (const a of t.GetAxisHotKeyComponentSet(i))
         a.IsAllowTickContinue() && a.InputAxis(i, e);
-  });
+  }),
+  (UiNavigationLogic.wut = !1);
 //# sourceMappingURL=UiNavigationLogic.js.map

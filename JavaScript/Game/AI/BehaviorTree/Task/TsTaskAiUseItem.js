@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskAiUseItem extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -12,25 +12,31 @@ class TsTaskAiUseItem extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsInitTsVariables = !1),
       (this.TsItemBlackboardKey = "");
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsItemBlackboardKey = "");
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsItemBlackboardKey = this.ItemBlackboardKey));
   }
-  ReceiveExecuteAI(e, a) {
-    var r,
-      o = e.AiController;
-    o
+  ReceiveExecuteAI(e, r) {
+    var s,
+      t = e.AiController;
+    t
       ? (this.InitTsVariables(),
-        (o = o.CharActorComp),
-        (r = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-          o.Entity.Id,
-          this.TsItemBlackboardKey,
-        )),
+        (t = t.CharActorComp),
+        (s =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
+            t.Entity.Id,
+            this.TsItemBlackboardKey,
+          )),
         GlobalData_1.GlobalData.Networking() &&
           (ModelManager_1.ModelManager.AiWeaponModel.Net.SendHoldWeaponPushOnSafe(
-            o.Entity.Id,
-            r,
+            t.Entity.Id,
+            s,
           ),
           this.FinishExecute(!0)))
       : Log_1.Log.CheckError() &&

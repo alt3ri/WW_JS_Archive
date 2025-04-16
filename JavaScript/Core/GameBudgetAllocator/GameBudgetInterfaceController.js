@@ -18,7 +18,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
     return this.EK;
   }
   static get CurrentGlobalMode() {
-    return this.RPa;
+    return this.wPa;
   }
   static OnInit() {
     return (
@@ -91,20 +91,20 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   static UpdateBudgetTime(e) {
     this.RK.UpdateBudgetTime(e);
   }
-  static RegisterTick(e, t, a, r, o = !0) {
+  static RegisterTick(e, t, a, r, o = !0, i = !0, s = !0, n = !0) {
     return this.UK.has(a)
       ? (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Game", 25, "Object has already added!"),
+          Log_1.Log.Warn("Game", 24, "Object has already added!"),
         this.UK.get(a))
       : ((e = cpp_1.FKuroGameBudgetAllocatorInterface.RegisterFunction(
           e,
           t,
           r,
           a.ScheduledTick,
-          a.ScheduledAfterTick,
-          a.OnEnabledChange,
-          o ? a.OnWasRecentlyRenderedOnScreenChange : void 0,
-          a.LocationProxyFunction,
+          o ? a.ScheduledAfterTick : void 0,
+          i ? a.OnEnabledChange : void 0,
+          s ? a.OnWasRecentlyRenderedOnScreenChange : void 0,
+          n ? a.LocationProxyFunction : void 0,
           a,
         )),
         this.UK.set(a, e),
@@ -115,7 +115,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
     t
       ? (this.UK.delete(e),
         cpp_1.FKuroGameBudgetAllocatorInterface.UnregisterFunction(t))
-      : Log_1.Log.CheckWarn() && Log_1.Log.Warn("Game", 25, "Not found error!");
+      : Log_1.Log.CheckWarn() && Log_1.Log.Warn("Game", 24, "Not found error!");
   }
   static UpdateRegisterActor(e, t, a) {
     cpp_1.FKuroGameBudgetAllocatorInterface.UpdateActor(e, t, a);
@@ -179,12 +179,12 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   }
   static PK() {
     var e = this.IsInPlot ? 2 : this.IsInFight && !this.AK ? 1 : 0;
-    (this.RPa = e),
+    (this.wPa = e),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalMode(e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          37,
+          36,
           "[GameBudget]RefreshGlobalMode",
           ["IsInPlot", this.IsInPlot],
           ["IsInFight", this.IsInFight],
@@ -196,7 +196,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Game",
-          37,
+          36,
           "[GameBudget]时间预算管理模式更改",
           ["NewModel", e],
           ["OldModel", this.TK],
@@ -248,7 +248,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   (GameBudgetInterfaceController.IsInPlot = !1),
   (GameBudgetInterfaceController.IsInFight = !1),
   (GameBudgetInterfaceController.AK = !1),
-  (GameBudgetInterfaceController.RPa = 0),
+  (GameBudgetInterfaceController.wPa = 0),
   (GameBudgetInterfaceController.RK =
     new GameBudgetTimeEstimationFramesOffset_1.GameBudgetTimeEstimationFramesOffset()),
   (GameBudgetInterfaceController.yK = (e) => {
@@ -258,7 +258,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
         ((_a.IsInPlot = !1), Log_1.Log.CheckError()) &&
         Log_1.Log.Error(
           "Game",
-          37,
+          36,
           "[GameBudget]进入战斗时时间预算管理仍然处于剧情模式",
         ),
       _a.PK();

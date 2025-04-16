@@ -10,6 +10,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   PayShopDirectGoodsByGoodsId_1 = require("../../../Core/Define/ConfigQuery/PayShopDirectGoodsByGoodsId"),
   PayShopGoodsById_1 = require("../../../Core/Define/ConfigQuery/PayShopGoodsById"),
   PayShopGoodsByItemId_1 = require("../../../Core/Define/ConfigQuery/PayShopGoodsByItemId"),
+  PayShopRecommendAll_1 = require("../../../Core/Define/ConfigQuery/PayShopRecommendAll"),
+  PayShopRecommendById_1 = require("../../../Core/Define/ConfigQuery/PayShopRecommendById"),
   PayShopTabByShopId_1 = require("../../../Core/Define/ConfigQuery/PayShopTabByShopId"),
   PayShopTabByShopIdAndTabId_1 = require("../../../Core/Define/ConfigQuery/PayShopTabByShopIdAndTabId"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
@@ -28,7 +30,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Config",
-            11,
+            10,
             "查询商城数据失败,查看商业化商城表格PayShop",
             ["商城ID", o],
           )),
@@ -36,22 +38,22 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetPayShopTabConfig(o, e) {
-    var r =
+    var a =
       PayShopTabByShopIdAndTabId_1.configPayShopTabByShopIdAndTabId.GetConfig(
         o,
         e,
       );
     return (
-      r ||
+      a ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Config",
-            11,
+            10,
             "查询商城数据失败,查看商业化商城表格PayShopTab",
             ["商城ID", o],
             ["页签ID", e],
           )),
-      r
+      a
     );
   }
   GetPayShopGoodsConfigByItemConfigId(o) {
@@ -67,7 +69,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Config",
-            11,
+            10,
             "查询直购商品ID数据失败,查看商业化商城表格PayShopDirectGoods",
             ["直购商品ID", o],
           )),
@@ -81,7 +83,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Config",
-            11,
+            10,
             "查询商品条件ID数据失败,查看商业化商城表格PayShopCondition",
             ["商品条件ID", o],
           )),
@@ -97,7 +99,7 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
       ),
       e = [];
     o.sort((o, e) => o.Sort - e.Sort);
-    for (const r of o) r.Enable && e.push(r.TabId);
+    for (const a of o) a.Enable && e.push(a.TabId);
     return e;
   }
   GetPayShopItemName(o) {
@@ -118,6 +120,37 @@ class PayShopConfig extends ConfigBase_1.ConfigBase {
   GetMonthCardRewardId() {
     return CommonParamById_1.configCommonParamById.GetIntConfig(
       "MonthCardRewardId",
+    );
+  }
+  GetRecommendRoleSkinIdList() {
+    return CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+      "RecommendRoleSkinId",
+    );
+  }
+  GetRecommendData() {
+    return PayShopRecommendAll_1.configPayShopRecommendAll.GetConfigList();
+  }
+  GetRecommendDataById(o) {
+    return PayShopRecommendById_1.configPayShopRecommendById.GetConfig(o);
+  }
+  GetBuySkinDetailWeaponCameraId() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "BuySkinDetailWeaponCameraId",
+    );
+  }
+  GetBuySkinDetailRoleCameraId() {
+    return CommonParamById_1.configCommonParamById.GetIntConfig(
+      "BuySkinDetailRoleCameraId",
+    );
+  }
+  GetBuySkinDetailRoleCameraConfigId() {
+    return CommonParamById_1.configCommonParamById.GetStringConfig(
+      "BuySkinDetailRoleCameraConfigId",
+    );
+  }
+  GetBuySkinDetailWeaponCameraConfigId() {
+    return CommonParamById_1.configCommonParamById.GetStringConfig(
+      "BuySkinDetailWeaponCameraConfigId",
     );
   }
 }

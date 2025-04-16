@@ -9,10 +9,10 @@ const puerts_1 = require("puerts"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   ColorUtils_1 = require("../../../Utils/ColorUtils"),
   GravityUtils_1 = require("../../../Utils/GravityUtils"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
@@ -50,6 +50,27 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       (this.CurrentMoveIndex = 0),
       (this.NeedTurn = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsEnemyKey = ""),
+      (this.TsTurnSpeed = 0),
+      (this.ActorComp = void 0),
+      (this.TargetActorComp = void 0),
+      (this.Initialized = !1),
+      (this.AngleMin = 0),
+      (this.AngleMax = 0),
+      (this.InnerDiameter = 0),
+      (this.OuterDiameter = 0),
+      (this.EscapeEndTime = 0),
+      (this.FoundLocation = !1),
+      (this.EscapeLocation = void 0),
+      (this.OptimalDirections = void 0),
+      (this.FoundPath = !1),
+      (this.MovePath = void 0),
+      (this.CurrentMoveIndex = 0),
+      (this.NeedTurn = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -57,37 +78,37 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsTurnSpeed = this.TurnSpeed));
   }
   ReceiveExecuteAI(t, i) {
-    var s, e;
+    var s, h;
     t instanceof TsAiController_1.default
       ? ((s = t.AiController),
         this.InitConfig(s)
           ? (this.InitTsVariables(),
             (this.ActorComp = s.CharActorComp),
             this.TsEnemyKey &&
-              (e =
-                BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+              (h =
+                ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
                   this.ActorComp.Entity.Id,
                   this.TsEnemyKey,
                 )) &&
-              (e = EntitySystem_1.EntitySystem.Get(e)) &&
-              (this.TargetActorComp = e.GetComponent(3)),
+              (h = EntitySystem_1.EntitySystem.Get(h)) &&
+              (this.TargetActorComp = h.GetComponent(3)),
             this.TargetActorComp ||
               (this.TargetActorComp =
                 Global_1.Global.BaseCharacter.CharacterActorComponent),
             this.InitData(),
-            (e = Vector_1.Vector.Create()),
+            (h = Vector_1.Vector.Create()),
             this.ActorComp.ActorLocationProxy.Subtraction(
               this.TargetActorComp.ActorLocationProxy,
-              e,
+              h,
             ),
-            (e.Z = 0),
-            e.Normalize(),
-            this.FindOptimalDirections(e),
+            (h.Z = 0),
+            h.Normalize(),
+            this.FindOptimalDirections(h),
             0 === this.OptimalDirections.length
               ? (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "BehaviorTree",
-                    30,
+                    29,
                     "无可行方向，请检查逻辑和配置",
                     ["EntityId: ", this.ActorComp.Entity.Id],
                   ),
@@ -98,7 +119,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
                   Time_1.Time.WorldTime + s.AiFlee.TimeMilliseconds)))
           : this.FinishExecute(!1))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             t.GetClass().GetName(),
           ]),
@@ -110,7 +131,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       if (!i)
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("BehaviorTree", 30, "没有配置逃跑", [
+            Log_1.Log.Error("BehaviorTree", 29, "没有配置逃跑", [
               "AiBaseId",
               t.AiBase.Id,
             ]),
@@ -126,24 +147,24 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
   }
   InitData() {
     this.OptimalDirections || (this.OptimalDirections = new Array()),
-      this.EscapeLocation || (this.EscapeLocation = new UE.Vector()),
+      this.EscapeLocation || (this.EscapeLocation = new UE.VectorDouble()),
       this.MovePath || (this.MovePath = new Array()),
       (this.CurrentMoveIndex = 1);
   }
   FindOptimalDirections(i) {
     var s = this.ActorComp.ActorForwardProxy,
-      e = Math.max(this.AngleMax - this.AngleMin, HALF_PI_DEG),
-      r = Vector_1.Vector.Create(),
-      h = (i.Multiply(-1, r), DOUBLE_PI_DEG / HALF_PI_DEG),
+      h = Math.max(this.AngleMax - this.AngleMin, HALF_PI_DEG),
+      e = Vector_1.Vector.Create(),
+      r = (i.Multiply(-1, e), DOUBLE_PI_DEG / HALF_PI_DEG),
       o = new Array();
-    for (let t = 0; t < h; t++) {
+    for (let t = 0; t < r; t++) {
       var a = t * HALF_PI_DEG,
         _ = Vector_1.Vector.Create(),
         a =
           (s.RotateAngleAxis(a, this.ActorComp.ActorUpProxy, _),
-          MathUtils_1.MathUtils.GetAngleByVectorDot(r, _));
+          MathUtils_1.MathUtils.GetAngleByVectorDot(e, _));
       a < HALF_PI_DEG ||
-        e < (a = MathUtils_1.MathUtils.GetAngleByVectorDot(i, _)) ||
+        h < (a = MathUtils_1.MathUtils.GetAngleByVectorDot(i, _)) ||
         o.push([_, a]);
     }
     o.sort((t, i) => t[1] - i[1]);
@@ -152,21 +173,21 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
   FindEscapeLocation() {
     var i = Vector_1.Vector.Create(),
       s = (0, puerts_1.$ref)(void 0);
-    for (const h of this.OptimalDirections) {
+    for (const r of this.OptimalDirections) {
       for (
         let t = this.OuterDiameter;
         t >= this.InnerDiameter;
         t -= INSPECTION_INTERVAL
       ) {
-        h.Multiply(t, i), i.AdditionEqual(this.ActorComp.ActorLocationProxy);
-        var e = t * Math.sin(FRONT_RANDOM_RAD);
+        r.Multiply(t, i), i.AdditionEqual(this.ActorComp.ActorLocationProxy);
+        var h = t * Math.sin(FRONT_RANDOM_RAD);
         if (
           ((this.FoundLocation =
             UE.NavigationSystemV1.K2_GetRandomLocationInNavigableRadius(
               GlobalData_1.GlobalData.World,
-              i.ToUeVector(),
+              i.ToUeVectorOld(),
               s,
-              e,
+              h,
             )),
           this.FoundLocation)
         )
@@ -180,15 +201,15 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       }
     }
     if (!this.FoundLocation) {
-      var r = this.OptimalDirections[0];
+      var e = this.OptimalDirections[0];
       for (let t = this.InnerDiameter; 0 < t; t -= INSPECTION_INTERVAL)
         if (
-          (r.Multiply(t, i),
+          (e.Multiply(t, i),
           i.AdditionEqual(this.ActorComp.ActorLocationProxy),
           (this.FoundLocation =
             UE.NavigationSystemV1.K2_ProjectPointToNavigation(
               GlobalData_1.GlobalData.World,
-              i.ToUeVector(),
+              i.ToUeVectorOld(),
               s,
               void 0,
               void 0,
@@ -215,7 +236,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
         DEBUG_MODE && GlobalData_1.GlobalData.IsPlayInEditor && this.FoundPath)
       )
         for (let t = 0, i = this.MovePath.length; t < i; ++t)
-          UE.KismetSystemLibrary.DrawDebugSphere(
+          UE.KismetSystemLibrary.D_DrawDebugSphere(
             this,
             this.MovePath[t].ToUeVector(),
             DEBUG_RADIUS,
@@ -238,7 +259,7 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
       (this.FoundPath = !0),
       DEBUG_MODE &&
         GlobalData_1.GlobalData.IsPlayInEditor &&
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           this,
           this.EscapeLocation,
           DEBUG_RADIUS,
@@ -248,22 +269,25 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
         );
   }
   ReceiveTickAI(t, i, s) {
-    var e, r, h;
+    var h, e, r;
     t.AiController && this.ActorComp?.Valid
       ? Time_1.Time.WorldTime > this.EscapeEndTime
         ? this.Finish(!0)
-        : ((t = this.ActorComp.Entity.GetComponent(92)),
-          (e = Vector_1.Vector.Create(
+        : ((t = this.ActorComp.Entity.GetComponent(99)),
+          (h = Vector_1.Vector.Create(
             this.MovePath[this.CurrentMoveIndex],
           )).SubtractionEqual(this.ActorComp.ActorLocationProxy),
-          GravityUtils_1.GravityUtils.ConvertToPlanarVector(this.ActorComp, e),
-          (r = e.SizeSquared()),
-          e.Normalize(),
-          (h = MathUtils_1.MathUtils.GetAngleByVectorDot(
+          GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+            this.ActorComp,
+            h,
+          ),
+          (e = h.SizeSquared()),
+          h.Normalize(),
+          (r = MathUtils_1.MathUtils.GetAngleByVectorDot(
             this.ActorComp.ActorForwardProxy,
-            e,
+            h,
           )),
-          (this.NeedTurn = h > TURN_COMPLETE_DEG),
+          (this.NeedTurn = r > TURN_COMPLETE_DEG),
           1 === this.CurrentMoveIndex && this.NeedTurn
             ? (t?.Valid &&
                 t.SetMoveState(
@@ -272,19 +296,19 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
               this.ActorComp.ClearInput(),
               AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
                 this.ActorComp,
-                e,
+                h,
                 this.TsTurnSpeed,
               ))
             : (t?.Valid &&
                 t.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run),
-              r < NAVIGATION_COMPLETE_DISTANCE &&
+              e < NAVIGATION_COMPLETE_DISTANCE &&
               (this.CurrentMoveIndex++,
               this.CurrentMoveIndex === this.MovePath.length)
                 ? this.Finish(!0)
-                : (this.ActorComp.SetInputDirect(e),
+                : (this.ActorComp.SetInputDirect(h),
                   AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
                     this.ActorComp,
-                    e,
+                    h,
                     this.TsTurnSpeed,
                   ))))
       : this.Finish(!1);

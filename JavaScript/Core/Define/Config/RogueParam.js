@@ -76,6 +76,20 @@ class RogueParam {
       this,
     );
   }
+  get ValidRoleOpenTimeMap() {
+    return GameUtils_1.GameUtils.ConvertToMap(
+      this.validroleopentimemapLength(),
+      this.validroleopentimemapKey,
+      this.validroleopentimemapValue,
+      this,
+    );
+  }
+  validroleopentimemapKey(t) {
+    return this.validroleopentimemap(t)?.key();
+  }
+  validroleopentimemapValue(t) {
+    return this.validroleopentimemap(t)?.value();
+  }
   get DungeonRoleOpenTimeMap() {
     return GameUtils_1.GameUtils.ConvertToMap(
       this.dungeonroleopentimemapLength(),
@@ -89,6 +103,16 @@ class RogueParam {
   }
   dungeonroleopentimemapValue(t) {
     return this.dungeonroleopentimemap(t)?.value();
+  }
+  get BlackFlowerDropId() {
+    return this.blackflowerdropid();
+  }
+  get BlackFlowerInstList() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.blackflowerinstlistLength(),
+      this.blackflowerinstlist,
+      this,
+    );
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -104,20 +128,44 @@ class RogueParam {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   roguelikesettlebgs(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roguelikesettlebgnormal(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roguelikeroomfloattipsnoheadicon(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roguelikeroomfloattipsspecialicon(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   roguelikesettles() {
     var t = this.J7.__offset(this.z7, 14);
@@ -226,10 +274,10 @@ class RogueParam {
         )
       : null;
   }
-  GetDungeonroleopentimemapAt(t, i) {
-    return this.dungeonroleopentimemap(t);
+  GetValidroleopentimemapAt(t, i) {
+    return this.validroleopentimemap(t);
   }
-  dungeonroleopentimemap(t, i) {
+  validroleopentimemap(t, i) {
     var e = this.J7.__offset(this.z7, 42);
     return e
       ? (i || new DicIntInt_1.DicIntInt()).__init(
@@ -238,9 +286,50 @@ class RogueParam {
         )
       : null;
   }
-  dungeonroleopentimemapLength() {
+  validroleopentimemapLength() {
     var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  GetDungeonroleopentimemapAt(t, i) {
+    return this.dungeonroleopentimemap(t);
+  }
+  dungeonroleopentimemap(t, i) {
+    var e = this.J7.__offset(this.z7, 44);
+    return e
+      ? (i || new DicIntInt_1.DicIntInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + e) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  dungeonroleopentimemapLength() {
+    var t = this.J7.__offset(this.z7, 44);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  blackflowerdropid() {
+    var t = this.J7.__offset(this.z7, 46);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  GetBlackflowerinstlistAt(t) {
+    return this.blackflowerinstlist(t);
+  }
+  blackflowerinstlist(t) {
+    var i = this.J7.__offset(this.z7, 48);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  blackflowerinstlistLength() {
+    var t = this.J7.__offset(this.z7, 48);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  blackflowerinstlistArray() {
+    var t = this.J7.__offset(this.z7, 48);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
 }
 exports.RogueParam = RogueParam;

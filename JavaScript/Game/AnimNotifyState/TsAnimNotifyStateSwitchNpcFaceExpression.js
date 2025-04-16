@@ -6,11 +6,12 @@ class TsAnimNotifyStateSwitchNpcFaceExpression extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.FaceExpressionId = -1);
   }
-  K2_NotifyBegin(e, t, s) {
+  Constructor() {}
+  K2_NotifyBegin(e, t, r) {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      !!(e = e.CharacterActorComponent?.Entity.GetComponent(172)) &&
+      !!(e = e.CharacterActorComponent?.Entity.GetComponent(185)) &&
       (e.ExpressionController.ChangeFaceForExpressionFromAnimNotify(
         this.FaceExpressionId,
         this,
@@ -22,7 +23,7 @@ class TsAnimNotifyStateSwitchNpcFaceExpression extends UE.KuroAnimNotifyState {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      !!(e = e.CharacterActorComponent?.Entity.GetComponent(172)) &&
+      !!(e = e.CharacterActorComponent?.Entity.GetComponent(185)) &&
       (e.ExpressionController.ResetFaceForExpressionFromAnimNotify(this), !0)
     );
   }

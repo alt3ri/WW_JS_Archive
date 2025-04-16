@@ -5,6 +5,9 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   RedDotBase_1 = require("../../RedDotBase");
 class RedDotBattlePass extends RedDotBase_1.RedDotBase {
+  OnGetParentName() {
+    return "BattleViewMenu";
+  }
   OnCheck() {
     return (
       ModelManager_1.ModelManager.BattlePassModel.GetInTimeRange() &&

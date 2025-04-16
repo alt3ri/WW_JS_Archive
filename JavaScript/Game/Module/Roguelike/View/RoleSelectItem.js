@@ -92,29 +92,39 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Ake(), this.Sho(), this.WTt();
   }
   Ake() {
-    var t,
-      e,
-      i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
+    var e =
+      ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
         this.mho.ConfigId,
       );
-    i &&
-      ((e = Math.min(5, this.mho.AffixEntryList.length + 1)),
-      (t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e)),
-      (e =
-        ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueQualityConfigByQualityId(
-          e,
-        )),
-      t &&
-        ((t = UE.Color.FromHex(t.DropColor)),
-        this.GetTexture(0).SetColor(t),
-        this.GetTexture(2).SetColor(t),
-        this.GetSprite(3).SetColor(t)),
-      e &&
-        ((t = new UE.LinearColor(UE.Color.FromHex(e.RoleNiagaraColor))),
-        this.GetUiNiagara(9).SetNiagaraVarLinearColor("Color", t)),
-      (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i.RoleId))) &&
-      (this.GetText(4).ShowTextNew(e.Name),
-      this.SetTextureByPath(e.FormationRoleCard, this.GetTexture(1)));
+    if (e) {
+      var i = Math.min(5, this.mho.AffixEntryList.length + 1),
+        r = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(i),
+        i =
+          ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueQualityConfigByQualityId(
+            i,
+          ),
+        i =
+          (r &&
+            ((r = UE.Color.FromHex(r.DropColor)),
+            this.GetTexture(0).SetColor(r),
+            this.GetTexture(2).SetColor(r),
+            this.GetSprite(3).SetColor(r)),
+          i &&
+            ((r = new UE.LinearColor(UE.Color.FromHex(i.RoleNiagaraColor))),
+            this.GetUiNiagara(9).SetNiagaraVarLinearColor("Color", r)),
+          ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.RoleId));
+      if (i) {
+        this.GetText(4).ShowTextNew(i.Name);
+        let t = i.FormationRoleCard;
+        r = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+          e.RoleId,
+        ).GetRoleSkinId();
+        -1 !== r &&
+          ((i = ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(r)),
+          (t = i.FormationRoleCard)),
+          this.SetTextureByPath(t, this.GetTexture(1));
+      }
+    }
   }
   Sho() {
     this.Rlo.RefreshByDataAsync(this.mho.AffixEntryList ?? []).then(() => {
@@ -124,18 +134,18 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.Ulo?.has(t.AffixEntry.Id) &&
             (t.SetSecondColor(), t.RefreshPanel(), (o = t));
         if (void 0 !== o) {
-          const h = this.GetScrollViewWithScrollbar(13);
+          const a = this.GetScrollViewWithScrollbar(13);
           let s = 0;
-          h.OnLateUpdate.Bind((t) => {
+          a.OnLateUpdate.Bind((t) => {
             if (2 === ++s) {
               let t = 0;
               var e = o.GetRootItem().GetHeight(),
-                i = h.GetViewport().GetUIItem().GetHeight(),
-                r = h.ContentUIItem.GetHeight();
+                i = a.GetViewport().GetUIItem().GetHeight(),
+                r = a.ContentUIItem.GetHeight();
               (t = i < e ? r - i * Math.trunc(e / i) - (e % i) - 10 : r - i),
                 (t = Math.max(t, 0)),
-                h.ContentUIItem.SetAnchorOffsetY(t),
-                h.OnLateUpdate.Unbind();
+                a.ContentUIItem.SetAnchorOffsetY(t),
+                a.OnLateUpdate.Unbind();
             }
           });
         }

@@ -18,19 +18,22 @@ class WorldEntity extends Entity_1.Entity {
       o = -1,
       a = -1;
     if (r instanceof WorldEntity) {
-      var n = r.GetComponent(0),
-        n =
-          ((e = n.GetEntityType()),
-          (t = n.GetSubEntityType()),
-          (o = n.GetSummonerId()),
-          n.GetBaseInfo());
-      if (n) {
-        if (n.EntityUpdateStrategy)
-          return GameBudgetAllocatorConfigCreator_1
-            .GameBudgetAllocatorConfigCreator.TsStabilizeLowEntityGroupConfig;
+      var n = r.GetComponent(0);
+      if (
+        ((e = n.GetEntityType()),
+        (t = n.GetSubEntityType()),
+        (o = n.GetSummonerId()),
+        n.IsHighFrequencyUpdateStrategy())
+      )
+        return GameBudgetAllocatorConfigCreator_1
+          .GameBudgetAllocatorConfigCreator.TsAlwaysTickHotFixConfig;
+      if (n.IsLowFrequencyUpdateStrategy())
+        return GameBudgetAllocatorConfigCreator_1
+          .GameBudgetAllocatorConfigCreator.TsStabilizeLowEntityGroupConfig;
+      n = n.GetBaseInfo();
+      n &&
         void 0 !== n.Category.MonsterMatchType &&
-          (a = n?.Category.MonsterMatchType);
-      }
+        (a = n?.Category.MonsterMatchType);
     }
     switch (e) {
       case Protocol_1.Aki.Protocol.kks.Proto_Player:
@@ -46,7 +49,7 @@ class WorldEntity extends Entity_1.Entity {
                   .GameBudgetAllocatorConfigCreator.TsBossEntityGroupConfig
               : GameBudgetAllocatorConfigCreator_1
                   .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
-          if (r.GetComponent(204))
+          if (r.GetComponent(219))
             return GameBudgetAllocatorConfigCreator_1
               .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
         }
@@ -97,7 +100,7 @@ class WorldEntity extends Entity_1.Entity {
         (t = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
           t.BlueprintType,
         )) &&
-        ((this.TickStatTdType = Stats_1.Stat.Create(
+        ((this.TickStatTdType = Stats_1.Stat.CreateNoFlameGraph(
           `PbDataId: ${e.GetPbDataId()}, PrefabId: ${e.GetPrefabId()} ,BlueprintType: ` +
             t.BlueprintType,
         )),

@@ -105,7 +105,7 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
         "TowerRewardByDifficulties",
         this.GetItem(8),
         void 0,
-        4,
+        5,
       ),
       this.ZDo(),
       EventSystem_1.EventSystem.Emit(
@@ -113,12 +113,13 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
-        3,
-      ),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
-        4,
+        5,
       );
+    var e = !ModelManager_1.ModelManager.TowerModel.GetOverLockHasShow(),
+      r = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
+        TowerData_1.VARIATION_RISK_DIFFICULTY,
+      );
+    e && r && this.GetItem(8)?.SetUIActive(!0);
   }
   OnBeforeDestroy() {
     this.gLt.Destroy(),
@@ -151,9 +152,11 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
     }, Promise.resolve());
   }
   OnStart() {
-    (this.dRo = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
-      TowerData_1.HIGH_RISK_DIFFICULTY,
-    )),
+    ModelManager_1.ModelManager.TowerModel.CheckInTower() &&
+      TowerController_1.TowerController.ClearAllHatredInTower(),
+      (this.dRo = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
+        TowerData_1.HIGH_RISK_DIFFICULTY,
+      )),
       (ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties =
         TowerData_1.VARIATION_RISK_DIFFICULTY),
       (this.gLt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
@@ -191,7 +194,7 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       RedDotController_1.RedDotController.UnBindGivenUi(
         "TowerRewardByDifficulties",
         this.GetItem(8),
-        4,
+        5,
       );
   }
   OnTick(e) {

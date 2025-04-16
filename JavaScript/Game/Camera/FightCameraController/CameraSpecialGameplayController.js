@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraSpecialGameplayController = void 0);
 const ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../Core/Common/Log"),
-  CameraController_1 = require("../CameraController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   CameraControllerBase_1 = require("./CameraControllerBase"),
   ISpecialGameplayCamera_1 = require("./SpecialGameplay/ISpecialGameplayCamera");
 class CameraSpecialGameplayController extends CameraControllerBase_1.CameraControllerBase {
@@ -22,8 +22,8 @@ class CameraSpecialGameplayController extends CameraControllerBase_1.CameraContr
   EnterSpecialGameplayController(e) {
     this.CameraActor ||
       (this.CameraActor =
-        CameraController_1.CameraController.SpawnCameraActor()),
-      CameraController_1.CameraController.SetViewTarget(
+        ControllerHolder_1.ControllerHolder.CameraController.SpawnCameraActor()),
+      ControllerHolder_1.ControllerHolder.CameraController.SetViewTarget(
         this.CameraActor,
         "EnterSpecialGameplayController",
         0,
@@ -36,7 +36,7 @@ class CameraSpecialGameplayController extends CameraControllerBase_1.CameraContr
             )()),
           this.wce.OnInit(this.CameraActor))
         : Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Camera", 58, "[特殊玩法相机] 使用空相机", [
+          Log_1.Log.Debug("Camera", 57, "[特殊玩法相机] 使用空相机", [
             "gameplayId",
             e,
           ]),
@@ -44,12 +44,15 @@ class CameraSpecialGameplayController extends CameraControllerBase_1.CameraContr
   }
   ExitSpecialGameplayController() {
     this.Camera?.CameraActor?.IsValid() &&
-      CameraController_1.CameraController.SetViewTarget(
+      ControllerHolder_1.ControllerHolder.CameraController.SetViewTarget(
         this.Camera.CameraActor,
         "ExitSpecialGameplayController",
       ),
       this?.CameraActor &&
-        (ActorSystem_1.ActorSystem.Put(this.CameraActor),
+        (ActorSystem_1.ActorSystem.Put(
+          "CameraSpecialGameplayController.ExitSpecialGameplayController",
+          this.CameraActor,
+        ),
         (this.CameraActor = void 0)),
       this.wce?.OnDestroy(),
       (this.wce = void 0),

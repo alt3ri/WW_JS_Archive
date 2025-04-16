@@ -7,9 +7,8 @@ class BulletHitCountUtil {
       return BulletHitCountUtil.HitCountCondition(t.ParentBulletInfo, i);
     let e = i;
     if (!e) return !1;
-    (i = e.GetComponent(49)),
-      i && (e = i.GetAttributeHolder()),
-      (i = t.BulletDataMain);
+    e = e.GetComponent(55)?.GetAttributeHolderExceptVisionSummon() ?? e;
+    i = t.BulletDataMain;
     if (
       0 <= i.Base.VictimCount &&
       t.EntityHitCount.size >= i.Base.VictimCount &&
@@ -55,6 +54,11 @@ class BulletHitCountUtil {
       : (i = t.BulletDataMain).Logic.DestroyOnCountZero &&
           0 < i.Base.HitCountMax &&
           t.HitNumberAll >= i.Base.HitCountMax;
+  }
+  static GetHitCountByVictim(t, i) {
+    return t.CountByParent && t.ParentBulletInfo
+      ? BulletHitCountUtil.GetHitCountByVictim(t.ParentBulletInfo, i)
+      : (t.EntityHitCount.get(i) ?? 0);
   }
 }
 exports.BulletHitCountUtil = BulletHitCountUtil;

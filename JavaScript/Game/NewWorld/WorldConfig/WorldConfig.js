@@ -10,12 +10,10 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ROLE_COMMON_SKILLINFO_PATH =
     "/Game/Aki/Data/Fight/DT_Common_Role_SkillInfo.DT_Common_Role_SkillInfo",
-  MOMSTER_COMMON_SKILLINFO_PATH =
-    "/Game/Aki/Data/Fight/DT_Common_Monster_SkillInfo.DT_Common_Monster_SkillInfo",
   VISION_COMMON_SKILLINFO_PATH =
     "/Game/Aki/Data/Fight/DT_Common_Vision_SkillInfo.DT_Common_Vision_SkillInfo",
   COMMON_BULLET_PATH =
-    "/Game/Aki/Data/Fight/DT_CommonNewBulletDataMain.DT_CommonNewBulletDataMain",
+    "/Game/Aki/Data/Fight/CDT_CommonBulletData.CDT_CommonBulletData",
   COMMON_HIT_EFFECT_PATH =
     "/Game/Aki/Data/Fight/DT_CommonHitEffect.DT_CommonHitEffect",
   CAUGHT_DATA_PATH = "/Game/Aki/Data/Fight/DT_CaughtInfo.DT_CaughtInfo",
@@ -27,8 +25,6 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
     super(...arguments),
       (this.zsr = void 0),
       (this.Zsr = void 0),
-      (this.ear = void 0),
-      (this.tar = void 0),
       (this.iar = void 0),
       (this.oar = void 0),
       (this.rar = void 0),
@@ -62,25 +58,6 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
   }
   GetRoleCommonSkillRowNames() {
     return this.Zsr || this.GetRoleCommonSkillInfo(), this.Zsr;
-  }
-  GetMonsterCommonSkillInfo() {
-    return (
-      this.ear ||
-        ((this.ear = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-          MOMSTER_COMMON_SKILLINFO_PATH,
-          UE.DataTable,
-        )),
-        (this.tar = new Array()),
-        this.ear &&
-          DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(
-            this.ear,
-            this.tar,
-          )),
-      this.ear
-    );
-  }
-  GetMonsterCommonSkillRowNames() {
-    return this.tar || this.GetMonsterCommonSkillInfo(), this.tar;
   }
   GetVisionCommonSkillInfo() {
     return (
@@ -143,7 +120,6 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
   }
   ClearCommonSkillData() {
     (this.zsr = void 0),
-      (this.ear = void 0),
       (this.rar = void 0),
       (this.iar = void 0),
       (this.sar = void 0),
@@ -178,7 +154,7 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
           ((t = o[0]), "None" !== (i = o[1]).QteTag.TagName) &&
           (this.sGn.has(i.QteTag.TagId)
             ? Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Config", 29, "DT_QteTag重复注册QTE标签", [
+              Log_1.Log.Error("Config", 28, "DT_QteTag重复注册QTE标签", [
                 "tag",
                 i.QteTag.TagName,
               ])

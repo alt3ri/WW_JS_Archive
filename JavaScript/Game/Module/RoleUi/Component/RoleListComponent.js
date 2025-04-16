@@ -5,6 +5,8 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiCameraAnimationManager_1 = require("../../UiCameraAnimation/UiCameraAnimationManager"),
@@ -31,10 +33,13 @@ class RoleListComponent extends UiPanelBase_1.UiPanelBase {
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation()),
       (this.n1o = (e) => {
         this.ScrollView.GetGenericLayout().SelectGridProxy(e),
-          this.RoleViewAgent?.SetCurSelectRoleId(this.CurSelectDataId),
-          RoleController_1.RoleController.OnSelectedRoleChange(
-            this.CurSelectDataId,
-          ),
+          this.RoleViewAgent.SetCurSelectRoleId(this.CurSelectDataId);
+        e = this.RoleViewAgent.GetCurSelectRoleData();
+        RoleController_1.RoleController.OnSelectedRoleChange(
+          this.CurSelectDataId,
+          e.GetRoleSkinId(),
+        ),
+          this.N1l(this.CurSelectDataId),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RoleSystemChangeRole,
             this.CurSelectDataId,
@@ -57,7 +62,7 @@ class RoleListComponent extends UiPanelBase_1.UiPanelBase {
     (this.RoleViewAgent = this.OpenParam),
       void 0 === this.RoleViewAgent
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleListComponent",
           ])
@@ -65,6 +70,17 @@ class RoleListComponent extends UiPanelBase_1.UiPanelBase {
             this.GetScrollViewWithScrollbar(0),
             this.nFe,
           ));
+  }
+  N1l(e) {
+    e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
+    void 0 !== e &&
+      e.TryRemoveNewFlag() &&
+      (ModelManager_1.ModelManager.NewFlagModel.SaveNewFlagConfig(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RoleSelectionListUpdate,
+      ));
   }
   UnBindRedDot() {
     RedDotController_1.RedDotController.UnBindRedDot("RoleSystemRoleList");
@@ -79,6 +95,7 @@ class RoleListComponent extends UiPanelBase_1.UiPanelBase {
       (i.RoleDataId = o),
         (i.NeedShowTrial = this.RoleSystemUiParams?.RoleListNeedTrial ?? !0),
         (i.NeedRedDot = this.RoleSystemUiParams?.RoleListRedDot ?? !1),
+        (i.TeamPositionType = this.RoleViewAgent?.TeamPositionType ?? 0),
         t.push(i);
     }
     (this.DataList = t), await this.ScrollView.RefreshByDataAsync(t);

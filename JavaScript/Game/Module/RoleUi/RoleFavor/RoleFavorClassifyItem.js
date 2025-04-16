@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleFavorClassifyItem = exports.initContentItem = void 0);
 const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -51,14 +52,15 @@ class RoleFavorClassifyItem extends UiPanelBase_1.UiPanelBase {
     var t = [],
       i = this.d_o.RoleId,
       r = this.d_o.TypeParam,
-      a = this.d_o.FavorTabType;
+      a = this.d_o.FavorTabType,
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i);
     let o = void 0;
     switch (this.d_o.FavorTabType) {
       case 2:
-        o = ConfigManager_1.ConfigManager.MotionConfig.GetRoleMotionByType(
-          i,
-          r,
-        );
+        o =
+          ConfigManager_1.ConfigManager.MotionConfig.GetRoleMotionByRoleSkinId(
+            e.GetRoleSkinId(),
+          );
         break;
       case 1:
         o =

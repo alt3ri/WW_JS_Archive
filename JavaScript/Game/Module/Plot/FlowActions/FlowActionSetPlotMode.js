@@ -31,7 +31,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
         this.Z$i < GUARANTEED_WAIT_TIME
           ? (this.Z$i += e)
           : (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Plot", 27, "C级剧情等待交互转身-结束", [
+              Log_1.Log.Debug("Plot", 26, "C级剧情等待交互转身-结束", [
                 "waitTime",
                 this.Z$i,
               ]),
@@ -45,7 +45,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       }),
       (this.Ilt = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 27, "剧情前保底传送 -结束");
+          Log_1.Log.Info("Plot", 26, "剧情前保底传送 -结束");
         var e = this.w9s;
         (this.w9s = void 0), e.SetResult();
       });
@@ -60,7 +60,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Plot",
-          27,
+          26,
           "SetPlotMode",
           ["Level", e.Mode],
           ["ChangeRole", e.IsSwitchMainRole],
@@ -71,22 +71,24 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
-              27,
+              26,
               "剧情界面所依赖的界面未打开，本段剧情跳过",
               ["ViewName", this.Context.UiParam.ViewName],
             ),
           (this.Context.IsBackground = !0),
           this.FinishExecute(!0))
-        : Promise.all([this.iYi(), this.oYi(), this.rYi(), this.nYi()]).finally(
+        : Promise.all([this.ZR1(), this.oYi(), this.nYi(), this.b9s()]).finally(
             () => {
               this.FinishExecute(!0);
             },
           );
   }
-  async iYi() {
-    ModelManager_1.ModelManager.PlotModel.PlotConfig.ShouldSwitchMainRole &&
-      (await ModelManager_1.ModelManager.SceneTeamModel.LoadTeamPromise
-        ?.Promise);
+  async ZR1() {
+    await this.rYi(),
+      ModelManager_1.ModelManager.PlotModel.PlotConfig.ShouldSwitchMainRole &&
+        (await ModelManager_1.ModelManager.SceneTeamModel.LoadTeamPromise
+          ?.Promise,
+        PlotController_1.PlotController.RequestChangeRole());
   }
   async oYi() {
     const t = new CustomPromise_1.CustomPromise();
@@ -115,7 +117,7 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
     "LevelC" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
       ModelManager_1.ModelManager.InteractionModel.IsInteractionTurning &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "C级剧情等待交互转身-开始"),
+        Log_1.Log.Debug("Plot", 26, "C级剧情等待交互转身-开始"),
       (this.J$i = new CustomPromise_1.CustomPromise()),
       (this.Z$i = 0),
       (this.z$i = ControllerHolder_1.ControllerHolder.PlotController.AddTick(
@@ -123,40 +125,41 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
       )),
       await this.J$i.Promise);
   }
-  async CheckPosSafe() {
-    var e,
-      t =
+  async b9s() {
+    var e, t;
+    ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode() ||
+      ((e =
         Global_1.Global.BaseCharacter?.CharacterActorComponent
-          ?.ActorLocationProxy;
-    this.Context?.Pos
-      ? ((e = Vector_1.Vector.Dist(t, this.Context.Pos)),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Plot",
-            27,
-            "剧情坐标检查",
-            ["dist", e],
-            ["cur", t],
-            ["target", this.Context.Pos],
-          ),
-        e > SAFE_DISTANCE_SQAURED &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Plot", 27, "剧情前保底传送 -开始"),
-          (this.w9s = new CustomPromise_1.CustomPromise()),
-          FlowNetworks_1.FlowNetworks.RequestSafeTeleport(
-            this.Context.FlowIncId,
-            (e) => {
-              e
-                ? EventSystem_1.EventSystem.Once(
-                    EventDefine_1.EEventName.TeleportComplete,
-                    this.Ilt,
-                  )
-                : this.w9s.SetResult();
-            },
-          ),
-          await this.w9s.Promise))
-      : Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Plot", 27, "无剧情保底坐标点", ["curPos", t]);
+          ?.ActorLocationProxy),
+      this.Context?.Pos
+        ? ((t = Vector_1.Vector.Dist(e, this.Context.Pos)),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Plot",
+              26,
+              "剧情坐标检查",
+              ["dist", t],
+              ["cur", e],
+              ["target", this.Context.Pos],
+            ),
+          t > SAFE_DISTANCE_SQAURED &&
+            (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Plot", 26, "剧情前保底传送 -开始"),
+            (this.w9s = new CustomPromise_1.CustomPromise()),
+            FlowNetworks_1.FlowNetworks.RequestSafeTeleport(
+              this.Context.FlowIncId,
+              (e) => {
+                e
+                  ? EventSystem_1.EventSystem.Once(
+                      EventDefine_1.EEventName.TeleportComplete,
+                      this.Ilt,
+                    )
+                  : this.w9s.SetResult();
+              },
+            ),
+            await this.w9s.Promise))
+        : Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Plot", 26, "无剧情保底坐标点", ["curPos", e]));
   }
   OnInterruptExecute() {
     EventSystem_1.EventSystem.Has(

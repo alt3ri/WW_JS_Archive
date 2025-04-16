@@ -6,10 +6,12 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   LevelCodeConditionCheckGroup_1 = require("./LevelCodeConditionCheckGroup"),
   LevelCondictionCheckExploreLevel_1 = require("./LevelCondictionCheckExploreLevel"),
   LevelConditionAccountSettingOpen_1 = require("./LevelConditionAccountSettingOpen"),
+  LevelConditionAlwaysFalse_1 = require("./LevelConditionAlwaysFalse"),
   LevelConditionAnyPhantomCouldUpdate_1 = require("./LevelConditionAnyPhantomCouldUpdate"),
   LevelConditionAnyRoleFullPhantom_1 = require("./LevelConditionAnyRoleFullPhantom"),
   LevelConditionCheckActivityOpen_1 = require("./LevelConditionCheckActivityOpen"),
   LevelConditionCheckAiState_1 = require("./LevelConditionCheckAiState"),
+  LevelConditionCheckAnimalParts_1 = require("./LevelConditionCheckAnimalParts"),
   LevelConditionCheckBattleRole_1 = require("./LevelConditionCheckBattleRole"),
   LevelConditionCheckBattleRoleIsNot_1 = require("./LevelConditionCheckBattleRoleIsNot"),
   LevelConditionCheckBattleRoleWeaponType_1 = require("./LevelConditionCheckBattleRoleWeaponType"),
@@ -17,6 +19,8 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   LevelConditionCheckCalabashLevel_1 = require("./LevelConditionCheckCalabashLevel"),
   LevelConditionCheckCharacterTag_1 = require("./LevelConditionCheckCharacterTag"),
   LevelConditionCheckCharacterTagByEvent_1 = require("./LevelConditionCheckCharacterTagByEvent"),
+  LevelConditionCheckClientEvent_1 = require("./LevelConditionCheckClientEvent"),
+  LevelConditionCheckClientQuestNode_1 = require("./LevelConditionCheckClientQuestNode"),
   LevelConditionCheckClientUseSkill_1 = require("./LevelConditionCheckClientUseSkill"),
   LevelConditionCheckClientUseVisionSkill_1 = require("./LevelConditionCheckClientUseVisionSkill"),
   LevelConditionCheckComboTeachingState_1 = require("./LevelConditionCheckComboTeachingState"),
@@ -25,23 +29,37 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   LevelConditionCheckCurWorldLevelOp_1 = require("./LevelConditionCheckCurWorldLevelOp"),
   LevelConditionCheckDirection_1 = require("./LevelConditionCheckDirection"),
   LevelConditionCheckDis_1 = require("./LevelConditionCheckDis"),
+  LevelConditionCheckDockyardWareHouseHasItem_1 = require("./LevelConditionCheckDockyardWareHouseHasItem"),
   LevelConditionCheckDungeon_1 = require("./LevelConditionCheckDungeon"),
   LevelConditionCheckDungeonFinished_1 = require("./LevelConditionCheckDungeonFinished"),
+  LevelConditionCheckDungeonHasSaveConfig_1 = require("./LevelConditionCheckDungeonHasSaveConfig"),
   LevelConditionCheckDungeonId_1 = require("./LevelConditionCheckDungeonId"),
   LevelConditionCheckEnemyBuff_1 = require("./LevelConditionCheckEnemyBuff"),
   LevelConditionCheckEnemyTag_1 = require("./LevelConditionCheckEnemyTag"),
+  LevelConditionCheckEntitiesExist_1 = require("./LevelConditionCheckEntitiesExist"),
   LevelConditionCheckEntityCommonTag_1 = require("./LevelConditionCheckEntityCommonTag"),
   LevelConditionCheckEntityCommonTagByself_1 = require("./LevelConditionCheckEntityCommonTagByself"),
   LevelConditionCheckEntityConfigId_1 = require("./LevelConditionCheckEntityConfigId"),
+  LevelConditionCheckEntityGravityDirection_1 = require("./LevelConditionCheckEntityGravityDirection"),
+  LevelConditionCheckEntityHasSceneItemAttributeTag_1 = require("./LevelConditionCheckEntityHasSceneItemAttributeTag"),
   LevelConditionCheckEntityLocked_1 = require("./LevelConditionCheckEntityLocked"),
   LevelConditionCheckEquippedPhantom_1 = require("./LevelConditionCheckEquippedPhantom"),
   LevelConditionCheckExploreSkill_1 = require("./LevelConditionCheckExploreSkill"),
   LevelConditionCheckFanIsNotRotating_1 = require("./LevelConditionCheckFanIsNotRotating"),
   LevelConditionCheckFightEnergyBall_1 = require("./LevelConditionCheckFightEnergyBall"),
   LevelConditionCheckFightEnergyBar_1 = require("./LevelConditionCheckFightEnergyBar"),
+  LevelConditionCheckFishingDockyardItemTipsShown_1 = require("./LevelConditionCheckFishingDockyardItemTipsShown"),
+  LevelConditionCheckFishingEntrustAvailablePeriod_1 = require("./LevelConditionCheckFishingEntrustAvailablePeriod"),
+  LevelConditionCheckFishingEntrustState_1 = require("./LevelConditionCheckFishingEntrustState"),
+  LevelConditionCheckFishingQteBtnHitValidArea_1 = require("./LevelConditionCheckFishingQteBtnHitValidArea"),
+  LevelConditionCheckFishingRoleTechViewOpen_1 = require("./LevelConditionCheckFishingRoleTechViewOpen"),
+  LevelConditionCheckFishingTechUnlock_1 = require("./LevelConditionCheckFishingTechUnlock"),
+  LevelConditionCheckFishingWareHouseItemListLength_1 = require("./LevelConditionCheckFishingWareHouseItemListLength"),
   LevelConditionCheckFormationAnyRoleDead_1 = require("./LevelConditionCheckFormationAnyRoleDead"),
+  LevelConditionCheckGravityFlipEntityDirectionSameAsPlayer_1 = require("./LevelConditionCheckGravityFlipEntityDirectionSameAsPlayer"),
   LevelConditionCheckGuideStatus_1 = require("./LevelConditionCheckGuideStatus"),
   LevelConditionCheckHasFirstPhantomAtPosition_1 = require("./LevelConditionCheckHasFirstPhantomAtPosition"),
+  LevelConditionCheckHasSkinInRoleSkinSubView_1 = require("./LevelConditionCheckHasSkinInRoleSkinSubView"),
   LevelConditionCheckHasUnlockAffixInBossRush_1 = require("./LevelConditionCheckHasUnlockAffixInBossRush"),
   LevelConditionCheckInCombat_1 = require("./LevelConditionCheckInCombat"),
   LevelConditionCheckInputAction_1 = require("./LevelConditionCheckInputAction"),
@@ -50,19 +68,24 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   LevelConditionCheckInstanceState_1 = require("./LevelConditionCheckInstanceState"),
   LevelConditionCheckInTodTimeSpan_1 = require("./LevelConditionCheckInTodTimeSpan"),
   LevelConditionCheckIsMulti_1 = require("./LevelConditionCheckIsMulti"),
+  LevelConditionCheckIsShowProgressBarInMapExploreDetailView_1 = require("./LevelConditionCheckIsShowProgressBarInMapExploreDetailView"),
+  LevelConditionCheckIsUsingVehicle_1 = require("./LevelConditionCheckIsUsingVehicle"),
   LevelConditionCheckItemWithOperator_1 = require("./LevelConditionCheckItemWithOperator"),
   LevelConditionCheckLevel_1 = require("./LevelConditionCheckLevel"),
   LevelConditionCheckLevelOp_1 = require("./LevelConditionCheckLevelOp"),
   LevelConditionCheckLevelPlayRewardState_1 = require("./LevelConditionCheckLevelPlayRewardState"),
   LevelConditionCheckLevelPlayState_1 = require("./LevelConditionCheckLevelPlayState"),
   LevelConditionCheckLockEnemyMode_1 = require("./LevelConditionCheckLockEnemyMode"),
+  LevelConditionCheckMapFocusByQuestId_1 = require("./LevelConditionCheckMapFocusByQuestId"),
   LevelConditionCheckOnSelectSettingMainType_1 = require("./LevelConditionCheckOnSelectSettingMainType"),
   LevelConditionCheckOnTrap_1 = require("./LevelConditionCheckOnTrap"),
   LevelConditionCheckOriginWorldLevel_1 = require("./LevelConditionCheckOriginWorldLevel"),
   LevelConditionCheckPhantom_1 = require("./LevelConditionCheckPhantom"),
   LevelConditionCheckPlayerMotionState_1 = require("./LevelConditionCheckPlayerMotionState"),
+  LevelConditionCheckPlayerMotionStateNew_1 = require("./LevelConditionCheckPlayerMotionStateNew"),
   LevelConditionCheckPlayerStateRestriction_1 = require("./LevelConditionCheckPlayerStateRestriction"),
   LevelConditionCheckPositionRolePhantomSkillEquip_1 = require("./LevelConditionCheckPositionRolePhantomSkillEquip"),
+  LevelConditionCheckPureModeWhenBattleViewActive_1 = require("./LevelConditionCheckPureModeWhenBattleViewActive"),
   LevelConditionCheckRangeByPbDataId_1 = require("./LevelConditionCheckRangeByPbDataId"),
   LevelConditionCheckRangeSphere_1 = require("./LevelConditionCheckRangeSphere"),
   LevelConditionCheckRogueAbilitySelect_1 = require("./LevelConditionCheckRogueAbilitySelect"),
@@ -71,12 +94,14 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   LevelConditionCheckRoleLevel_1 = require("./LevelConditionCheckRoleLevel"),
   LevelConditionCheckRoleSkillTargetLevel_1 = require("./LevelConditionCheckRoleSkillTargetLevel"),
   LevelConditionCheckRoleTargetLevel_1 = require("./LevelConditionCheckRoleTargetLevel"),
+  LevelConditionCheckShipTowerTeamOpen_1 = require("./LevelConditionCheckShipTowerTeamOpen"),
   LevelConditionCheckSkillPoint_1 = require("./LevelConditionCheckSkillPoint"),
   LevelConditionCheckSystemFunction_1 = require("./LevelConditionCheckSystemFunction"),
   LevelConditionCheckSystemState_1 = require("./LevelConditionCheckSystemState"),
   LevelConditionCheckTargetAttribute_1 = require("./LevelConditionCheckTargetAttribute"),
   LevelConditionCheckTeamRoleCouldLevelUp_1 = require("./LevelConditionCheckTeamRoleCouldLevelUp"),
   LevelConditionCheckTeamWeaponCouldLevelUp_1 = require("./LevelConditionCheckTeamWeaponCouldLevelUp"),
+  LevelConditionCheckTeleControlState_1 = require("./LevelConditionCheckTeleControlState"),
   LevelConditionCheckTeleportStatus_1 = require("./LevelConditionCheckTeleportStatus"),
   LevelConditionCheckTeleportTypeUnlock_1 = require("./LevelConditionCheckTeleportTypeUnlock"),
   LevelConditionCheckTodTimePeriod_1 = require("./LevelConditionCheckTodTimePeriod"),
@@ -87,16 +112,23 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   LevelConditionCheckWeaponCount_1 = require("./LevelConditionCheckWeaponCount"),
   LevelConditionCheckWeather_1 = require("./LevelConditionCheckWeather"),
   LevelConditionCheckWorldMapSecondaryUiOpened_1 = require("./LevelConditionCheckWorldMapSecondaryUiOpened"),
+  LevelConditionCiacconaAvgGuide_1 = require("./LevelConditionCiacconaAvgGuide"),
   LevelConditionCompareEntityGroupState_1 = require("./LevelConditionCompareEntityGroupState"),
+  LevelConditionCompareFishingBoatState_1 = require("./LevelConditionCompareFishingBoatState"),
   LevelConditionCompareNpcPerformState_1 = require("./LevelConditionCompareNpcPerformState"),
   LevelConditionCompareTeammateDie_1 = require("./LevelConditionCompareTeammateDie"),
   LevelConditionCompareVar_1 = require("./LevelConditionCompareVar"),
+  LevelConditionDangoAbyssGuide_1 = require("./LevelConditionDangoAbyssGuide"),
+  LevelConditionDangoMatchGuide_1 = require("./LevelConditionDangoMatchGuide"),
+  LevelConditionDangoMonopolyGuide_1 = require("./LevelConditionDangoMonopolyGuide"),
   LevelConditionDistanceLess_1 = require("./LevelConditionDistanceLess"),
   LevelConditionDragonPoolState_1 = require("./LevelConditionDragonPoolState"),
   LevelConditionEntityState_1 = require("./LevelConditionEntityState"),
   LevelConditionFinishGuideStepByEvent_1 = require("./LevelConditionFinishGuideStepByEvent"),
   LevelConditionForMoonChasing_1 = require("./LevelConditionForMoonChasing"),
   LevelConditionHasBuff_1 = require("./LevelConditionHasBuff"),
+  LevelConditionHasNotInvitedRoleInSpring25_1 = require("./LevelConditionHasNotInvitedRoleInSpring25"),
+  LevelConditionHideSettingInCloudGame_1 = require("./LevelConditionHideSettingInCloudGame"),
   LevelConditionInTowerDefenceBattle_1 = require("./LevelConditionInTowerDefenceBattle"),
   LevelConditionInvokeCheckedByEvent_1 = require("./LevelConditionInvokeCheckedByEvent"),
   LevelConditionIsPlayer_1 = require("./LevelConditionIsPlayer"),
@@ -104,15 +136,26 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   LevelConditionItemCountByType_1 = require("./LevelConditionItemCountByType"),
   LevelConditionLiftLocation_1 = require("./LevelConditionLiftLocation"),
   LevelConditionMoveStateCheck_1 = require("./LevelConditionMoveStateCheck"),
+  LevelConditionMovieRogueGuide_1 = require("./LevelConditionMovieRogueGuide"),
+  LevelConditionOnActivitySubViewDone_1 = require("./LevelConditionOnActivitySubViewDone"),
+  LevelConditionOnChangeBossRushBuff_1 = require("./LevelConditionOnChangeBossRushBuff"),
   LevelConditionOnCostInsufficient_1 = require("./LevelConditionOnCostInsufficient"),
+  LevelConditionOnFishingBackpackBtnStateChange_1 = require("./LevelConditionOnFishingBackpackBtnStateChange"),
+  LevelConditionOnFishingBackpackQuickSellToggleShow_1 = require("./LevelConditionOnFishingBackpackQuickSellToggleShow"),
+  LevelConditionOnFishingQteScoreReachedMaximum_1 = require("./LevelConditionOnFishingQteScoreReachedMaximum"),
   LevelConditionOnPlayerRevive_1 = require("./LevelConditionOnPlayerRevive"),
+  LevelConditionOnPlayerTitleUnlock_1 = require("./LevelConditionOnPlayerTitleUnlock"),
   LevelConditionOnPlayerUseSkill_1 = require("./LevelConditionOnPlayerUseSkill"),
   LevelConditionOnShowPhantomInFormation_1 = require("./LevelConditionOnShowPhantomInFormation"),
+  LevelConditionOnSkillButtonDataRefresh_1 = require("./LevelConditionOnSkillButtonDataRefresh"),
   LevelConditionOnTakingPhoto_1 = require("./LevelConditionOnTakingPhoto"),
   LevelConditionOnTreasureBoxOpen_1 = require("./LevelConditionOnTreasureBoxOpen"),
+  LevelConditionOnTreasureCompassUnitShow_1 = require("./LevelConditionOnTreasureCompassUnitShow"),
+  LevelConditionOnUiTabViewShow_1 = require("./LevelConditionOnUiTabViewShow"),
   LevelConditionOnViewClose_1 = require("./LevelConditionOnViewClose"),
   LevelConditionQuestState_1 = require("./LevelConditionQuestState"),
   LevelConditionQuestStepState_1 = require("./LevelConditionQuestStepState"),
+  LevelConditionRoguelikeHasSelectEntryAndShow_1 = require("./LevelConditionRoguelikeHasSelectEntryAndShow"),
   LevelConditionRoleBreach_1 = require("./LevelConditionRoleBreach"),
   LevelConditionRoleLevel_1 = require("./LevelConditionRoleLevel"),
   LevelConditionRolePhantomNum_1 = require("./LevelConditionRolePhantomNum"),
@@ -295,8 +338,23 @@ class LevelConditionCenter {
         [EventDefine_1.EEventName.MoonChasingOnOpenInteractive],
       ),
       this.$Te(
+        E_LGC.OnActivitySubViewDone,
+        LevelConditionOnActivitySubViewDone_1.LevelConditionOnActivitySubViewDone,
+        [EventDefine_1.EEventName.OnSelectActivityAndSubViewReady],
+      ),
+      this.$Te(
+        E_LGC.CheckPureModeWhenBattleViewActive,
+        LevelConditionCheckPureModeWhenBattleViewActive_1.LevelConditionCheckPureModeWhenBattleViewActive,
+        [EventDefine_1.EEventName.ActiveBattleView],
+      ),
+      this.$Te(
         E_LGC.CheckLockEnemyMode,
         LevelConditionCheckLockEnemyMode_1.LevelConditionCheckLockEnemyMode,
+      ),
+      this.$Te(
+        E_LGC.CheckIsShowProgressBarInMapExploreDetailView,
+        LevelConditionCheckIsShowProgressBarInMapExploreDetailView_1.LevelConditionCheckIsShowProgressBarInMapExploreDetailView,
+        [EventDefine_1.EEventName.OnUpdateExploreProgressBar],
       ),
       this.$Te(
         E_LGC.MoveStateCheck,
@@ -348,6 +406,19 @@ class LevelConditionCenter {
           EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
           EventDefine_1.EEventName.OnQuestStateChange,
         ],
+      ),
+      this.$Te(
+        E_LGC.CheckClientQuestNode,
+        LevelConditionCheckClientQuestNode_1.LevelConditionCheckClientQuestNode,
+        [EventDefine_1.EEventName.OnLogicTreeNodeStatusChange],
+      ),
+      this.$Te(
+        E_LGC.HideSettingInCloudGame,
+        LevelConditionHideSettingInCloudGame_1.LevelConditionHideSettingInCloudGame,
+      ),
+      this.$Te(
+        E_LGC.AlwaysFalse,
+        LevelConditionAlwaysFalse_1.LevelConditionAlwaysFalse,
       ),
       this.$Te(
         E_LGC.CheckClientUseSkill,
@@ -479,6 +550,10 @@ class LevelConditionCenter {
         E_LGC.OnPlayerUseSkill,
         LevelConditionOnPlayerUseSkill_1.LevelConditionOnPlayerUseSkill,
         [EventDefine_1.EEventName.CharUseSkill],
+      ),
+      this.$Te(
+        E_LGC.OnSkillButtonDataRefresh,
+        LevelConditionOnSkillButtonDataRefresh_1.LevelConditionOnSkillButtonDataRefresh,
       ),
       this.$Te(
         E_LGC.FinishGuideStepByEvent,
@@ -655,6 +730,16 @@ class LevelConditionCenter {
         [EventDefine_1.EEventName.RequestChangeBossRushView],
       ),
       this.$Te(
+        E_LGC.OnChangeBossRushBuff,
+        LevelConditionOnChangeBossRushBuff_1.LevelConditionOnChangeBossRushBuff,
+        [EventDefine_1.EEventName.BossRushSubViewChanged],
+      ),
+      this.$Te(
+        E_LGC.RoguelikeHasSelectEntryAndShow,
+        LevelConditionRoguelikeHasSelectEntryAndShow_1.LevelConditionRoguelikeHasSelectEntryAndShow,
+        [EventDefine_1.EEventName.RoguelikeHasSelectEntryAndShow],
+      ),
+      this.$Te(
         E_LGC.CheckActivityOpen,
         LevelConditionCheckActivityOpen_1.LevelConditionCheckActivityOpen,
       ),
@@ -669,9 +754,210 @@ class LevelConditionCenter {
         [EventDefine_1.EEventName.TowerDefenseOnPhantomInfoUpdateNotify],
       ),
       this.$Te(
+        E_LGC.CheckHasSkinInRoleSkinSubView,
+        LevelConditionCheckHasSkinInRoleSkinSubView_1.LevelConditionCheckHasSkinInRoleSkinSubView,
+        [EventDefine_1.EEventName.OnRoleSkinSubViewShow],
+      ),
+      this.$Te(
+        E_LGC.HasNotInvitedRoleInSpring25,
+        LevelConditionHasNotInvitedRoleInSpring25_1.LevelConditionHasNotInvitedRoleInSpring25,
+      ),
+      this.$Te(
+        E_LGC.CheckMapFocusByQuestId,
+        LevelConditionCheckMapFocusByQuestId_1.LevelConditionCheckMapFocusByQuestId,
+        [EventDefine_1.EEventName.WorldMapOpenedForQuestMapFocus],
+      ),
+      this.$Te(
         E_LGC.OnTakingPhoto,
         LevelConditionOnTakingPhoto_1.LevelConditionOnTakingPhoto,
         [EventDefine_1.EEventName.OnScreenShotDone],
+      ),
+      this.$Te(
+        E_LGC.CheckFishingRoleTechViewOpen,
+        LevelConditionCheckFishingRoleTechViewOpen_1.LevelConditionCheckFishingRoleTechViewOpen,
+        [EventDefine_1.EEventName.FishingRoleTechViewOpened],
+      ),
+      this.$Te(
+        E_LGC.CheckFishingDockyardItemTipsShown,
+        LevelConditionCheckFishingDockyardItemTipsShown_1.LevelConditionCheckFishingDockyardItemTipsShown,
+        [EventDefine_1.EEventName.FishingDockyardItemTipsShown],
+      ),
+      this.$Te(
+        E_LGC.CheckShipTowerTeamOpen,
+        LevelConditionCheckShipTowerTeamOpen_1.LevelConditionCheckShipTowerTeamOpen,
+        [EventDefine_1.EEventName.ShipTowerTeamPanelShown],
+      ),
+      this.$Te(
+        E_LGC.CheckDockyardWareHouseHasItem,
+        LevelConditionCheckDockyardWareHouseHasItem_1.LevelConditionCheckDockyardWareHouseHasItem,
+      ),
+      this.$Te(
+        E_LGC.CheckFishingQteBtnHitValidArea,
+        LevelConditionCheckFishingQteBtnHitValidArea_1.LevelConditionCheckFishingQteBtnHitValidArea,
+        [EventDefine_1.EEventName.FishingQteBtnHitValidArea],
+      ),
+      this.$Te(
+        E_LGC.OnFishingQteScoreReachedMaximum,
+        LevelConditionOnFishingQteScoreReachedMaximum_1.LevelConditionOnFishingQteScoreReachedMaximum,
+        [EventDefine_1.EEventName.OnFishingQteScoreReachedMaximum],
+      ),
+      this.$Te(
+        E_LGC.CheckFishingTechUnlock,
+        LevelConditionCheckFishingTechUnlock_1.LevelConditionCheckFishingTechUnlock,
+      ),
+      this.$Te(
+        E_LGC.OnFishingBackpackBtnStateChange,
+        LevelConditionOnFishingBackpackBtnStateChange_1.LevelConditionOnFishingBackpackBtnStateChange,
+        [EventDefine_1.EEventName.FishingBackpackBtnStateChange],
+      ),
+      this.$Te(
+        E_LGC.CheckFishingEntrustState,
+        LevelConditionCheckFishingEntrustState_1.LevelConditionCheckFishingEntrustState,
+      ),
+      this.$Te(
+        E_LGC.CheckFishingWareHouseItemListLength,
+        LevelConditionCheckFishingWareHouseItemListLength_1.LevelConditionCheckFishingWareHouseItemListLength,
+      ),
+      this.$Te(
+        E_LGC.CheckCurFishingEntrustAvailablePeriod,
+        LevelConditionCheckFishingEntrustAvailablePeriod_1.LevelConditionCheckCurFishingEntrustAvailablePeriod,
+      ),
+      this.$Te(
+        E_LGC.OnTreasureCompassUnitShow,
+        LevelConditionOnTreasureCompassUnitShow_1.LevelConditionOnTreasureCompassUnitShow,
+        [EventDefine_1.EEventName.OnTreasureCompassUnitVisibleChange],
+      ),
+      this.$Te(
+        E_LGC.OnFishingBackpackQuickSellToggleShow,
+        LevelConditionOnFishingBackpackQuickSellToggleShow_1.LevelConditionOnFishingBackpackQuickSellToggleShow,
+        [EventDefine_1.EEventName.OnFishingBackpackQuickSellToggleStateChange],
+      ),
+      this.$Te(
+        E_LGC.OnPlayerTitleUnlock,
+        LevelConditionOnPlayerTitleUnlock_1.LevelConditionOnPlayerTitleUnlock,
+        [EventDefine_1.EEventName.OnPlayerTitleUnlock],
+      ),
+      this.$Te(
+        E_LGC.CheckDangoMonopolyHasFinishedRound,
+        LevelConditionDangoMonopolyGuide_1.LevelConditionCheckDangoMonopolyHasFinishedRound,
+      ),
+      this.$Te(
+        E_LGC.OnDangoMonopolyMoveStop,
+        LevelConditionDangoMonopolyGuide_1.LevelConditionOnDangoMonopolyMoveStop,
+        [EventDefine_1.EEventName.DangoMonopolyMoveStepStartOrEnd],
+      ),
+      this.$Te(
+        E_LGC.OnDangoAbyssPluginRoleSelect,
+        LevelConditionDangoAbyssGuide_1.LevelConditionOnDangoAbyssPluginRoleSelect,
+        [EventDefine_1.EEventName.OnAbyssPluginDangoSelect],
+      ),
+      this.$Te(
+        E_LGC.CheckDangoMatchState,
+        LevelConditionDangoMatchGuide_1.LevelConditionCheckDangoMatchState,
+      ),
+      this.$Te(
+        E_LGC.OnEnterDangoMatchView,
+        LevelConditionDangoMatchGuide_1.LevelConditionOnEnterDangoMatchView,
+        [EventDefine_1.EEventName.OnRacingBetsViewAfterShow],
+      ),
+      this.$Te(
+        E_LGC.OnDangoMonopolyViewStart,
+        LevelConditionDangoMonopolyGuide_1.LevelConditionOnDangoMonopolyViewStart,
+        [EventDefine_1.EEventName.DangoMonopolyViewStart],
+      ),
+      this.$Te(
+        E_LGC.OnCiacconaAvgInspirationChoiceShow,
+        LevelConditionCiacconaAvgGuide_1.LevelConditionOnCiacconaAvgInspirationChoiceShow,
+        [EventDefine_1.EEventName.OnCiacconaAvgInspirationChoiceShow],
+      ),
+      this.$Te(
+        E_LGC.OnMovieRogueInfoRefreshWithMultipleEnds,
+        LevelConditionMovieRogueGuide_1.LevelConditionOnMovieRogueInfoRefreshWithMultipleEnds,
+        [EventDefine_1.EEventName.RogueViewInfoRefresh],
+      ),
+      this.$Te(
+        E_LGC.CheckMovieRogueFinishedEndingCount,
+        LevelConditionMovieRogueGuide_1.LevelConditionCheckMovieRogueFinishedEndingCount,
+      ),
+      this.$Te(
+        E_LGC.OnDangoAbyssEnterWithTeamExploreBtn,
+        LevelConditionDangoAbyssGuide_1.LevelConditionOnDangoAbyssEnterWithTeamExploreBtn,
+        [EventDefine_1.EEventName.OnAbyssTeamBtnVisibleRefresh],
+      ),
+      this.$Te(
+        E_LGC.OnDangoMonopolyViewShowProcessEnd,
+        LevelConditionDangoMonopolyGuide_1.LevelConditionOnDangoMonopolyViewShowProcessEnd,
+        [EventDefine_1.EEventName.DangoMonopolyViewShowProcessStartOrEnd],
+      ),
+      this.$Te(
+        E_LGC.OnDangoAbyssEquipPluginWithValidChange,
+        LevelConditionDangoAbyssGuide_1.LevelConditionOnDangoAbyssEquipPluginWithValidChange,
+        [EventDefine_1.EEventName.OnAbyssPluginEquipAttrRefresh],
+      ),
+      this.$Te(
+        E_LGC.OnDangoAbyssEquipPluginWithInvalid,
+        LevelConditionDangoAbyssGuide_1.LevelConditionOnDangoAbyssEquipPluginWithInvalid,
+        [EventDefine_1.EEventName.OnAbyssPluginEquipAttrRefresh],
+      ),
+      this.$Te(
+        E_LGC.OnCiacconaChapterFirstStart,
+        LevelConditionCiacconaAvgGuide_1.LevelConditionOnCiacconaChapterFirstStart,
+        [EventDefine_1.EEventName.OnCiacconaChapterFirstStart],
+      ),
+      this.$Te(
+        E_LGC.OnCiacconaChapterRestart,
+        LevelConditionCiacconaAvgGuide_1.LevelConditionOnCiacconaChapterRestart,
+        [EventDefine_1.EEventName.OnCiacconaChapterRestart],
+      ),
+      this.$Te(
+        E_LGC.CheckDangoMatchPlayerNumType,
+        LevelConditionDangoMatchGuide_1.LevelConditionCheckDangoMatchPlayerNumType,
+      ),
+      this.$Te(
+        E_LGC.OnMovieRogueLinkRefresh,
+        LevelConditionMovieRogueGuide_1.LevelConditionOnMovieRogueLinkRefresh,
+        [EventDefine_1.EEventName.RogueTeamEditViewLinkBtnRefresh],
+      ),
+      this.$Te(
+        E_LGC.OnMovieRogueMapMoveEnd,
+        LevelConditionMovieRogueGuide_1.LevelConditionOnMovieRogueMapMoveEnd,
+        [EventDefine_1.EEventName.RogueMapMoveTweenStarOrEnd],
+      ),
+      this.$Te(
+        E_LGC.OnDangoMonopolyCameraFocusOnMainDango,
+        LevelConditionDangoMonopolyGuide_1.LevelConditionOnDangoMonopolyCameraFocusOnMainDango,
+        [EventDefine_1.EEventName.DangoMonopolyCameraFocusOnMainDango],
+      ),
+      this.$Te(
+        E_LGC.CheckDangoAbyssProgress,
+        LevelConditionDangoAbyssGuide_1.LevelConditionCheckDangoAbyssProgress,
+      ),
+      this.$Te(
+        E_LGC.CheckDangoMatchFinalEnd,
+        LevelConditionDangoMatchGuide_1.LevelConditionCheckDangoMatchFinalEnd,
+      ),
+      this.$Te(
+        E_LGC.OnUiTabViewShow,
+        LevelConditionOnUiTabViewShow_1.LevelConditionOnUiTabViewShow,
+        [EventDefine_1.EEventName.OpenTabView],
+      ),
+      this.$Te(
+        E_LGC.OnMapRogueEventDetailShow,
+        LevelConditionMovieRogueGuide_1.LevelConditionOnMapRogueEventDetailShow,
+        [EventDefine_1.EEventName.RogueMapEventDetailOpenOrClose],
+      ),
+      this.$Te(
+        E_LGC.CheckDangoAbyssHasItemByType,
+        LevelConditionDangoAbyssGuide_1.LevelConditionCheckDangoAbyssHasItemByType,
+      ),
+      this.$Te(
+        E_LGC.CheckMapRogueEventDetailShow,
+        LevelConditionMovieRogueGuide_1.LevelConditionCheckMapRogueEventDetailShow,
+        [EventDefine_1.EEventName.RogueMapEventDetailOpenOrClose],
+      ),
+      this.$Te(
+        E_LGC.CheckGridHasExplored,
+        LevelConditionMovieRogueGuide_1.LevelConditionCheckGridHasExplored,
       ),
       this.$Te(
         "CheckChildQuestFinished",
@@ -744,6 +1030,10 @@ class LevelConditionCenter {
         LevelConditionCheckPlayerMotionState_1.LevelConditionCheckPlayerMotionState,
       ),
       this.$Te(
+        "ComparePlayerMotionState2",
+        LevelConditionCheckPlayerMotionStateNew_1.LevelConditionCheckPlayerMotionStateNew,
+      ),
+      this.$Te(
         "CompareEntityGroupState",
         LevelConditionCompareEntityGroupState_1.LevelConditionCompareEntityGroupState,
       ),
@@ -787,6 +1077,38 @@ class LevelConditionCenter {
         "CompareNpcPerformState",
         LevelConditionCompareNpcPerformState_1.LevelConditionCompareNpcPerformState,
       ),
+      this.$Te(
+        "CheckTeleControlState",
+        LevelConditionCheckTeleControlState_1.LevelConditionCheckTeleControlState,
+      ),
+      this.$Te(
+        "CheckEntityHasSceneItemAttributeTag",
+        LevelConditionCheckEntityHasSceneItemAttributeTag_1.LevelConditionCheckEntityHasSceneItemAttributeTag,
+      ),
+      this.$Te(
+        "CheckVehicleCondition",
+        LevelConditionCheckIsUsingVehicle_1.LevelConditionCheckIsUsingVehicle,
+      ),
+      this.$Te(
+        "CheckCollectAnimalParts",
+        LevelConditionCheckAnimalParts_1.LevelConditionCheckAnimalParts,
+      ),
+      this.$Te(
+        "CompareFishingBoatState",
+        LevelConditionCompareFishingBoatState_1.LevelConditionCompareFishingBoatState,
+      ),
+      this.$Te(
+        "CheckEntityGravityDirection",
+        LevelConditionCheckEntityGravityDirection_1.LevelConditionCheckEntityGravityDirection,
+      ),
+      this.$Te(
+        "CheckDungeonHasSaveConfig",
+        LevelConditionCheckDungeonHasSaveConfig_1.LevelConditionCheckDungeonHasSaveConfig,
+      ),
+      this.$Te(
+        "CheckEntitesExist",
+        LevelConditionCheckEntitiesExist_1.LevelConditionCheckEntitiesExist,
+      ),
       this.YTe(
         0,
         LevelConditionCheckCharacterTag_1.LevelConditionCheckCharacterTag,
@@ -799,10 +1121,28 @@ class LevelConditionCenter {
         2,
         LevelConditionCheckFanIsNotRotating_1.LevelConditionCheckFanIsNotRotating,
       ),
-      this.YTe(3, LevelCodeConditionCheckGroup_1.LevelCodeConditionCheckGroup);
+      this.YTe(3, LevelCodeConditionCheckGroup_1.LevelCodeConditionCheckGroup),
+      this.YTe(
+        4,
+        LevelConditionCheckGravityFlipEntityDirectionSameAsPlayer_1.LevelConditionCheckGravityFlipEntityDirectionSameAsPlayer,
+      ),
+      this.Z_c(
+        "CheckClientEvent",
+        LevelConditionCheckClientEvent_1.LevelConditionCheckClientEvent,
+        new Map([[EventDefine_1.EEventName.CheckClientEvent, [0, 1]]]),
+      );
   }
   static $Te(e, i, n) {
     this.JTe.set(e, { LevelCondition: new i(), EventNames: n || [] });
+  }
+  static Z_c(e, i, n) {
+    this.$Te(e, i), this.ecc.has(e) || this.ecc.set(e, new Map());
+    for (var [t, o] of n) {
+      this.tcc.has(t) || this.tcc.set(t, new Set()),
+        this.tcc.get(t).add(e),
+        this.ecc.get(e).has(t) || this.ecc.get(e).set(t, new Set());
+      for (const C of o) this.ecc.get(e).get(t).add(C);
+    }
   }
   static YTe(e, i) {
     this.zTe.set(e, new i());
@@ -810,11 +1150,17 @@ class LevelConditionCenter {
   static GetCondition(e) {
     if (this.JTe.has(e)) return this.JTe.get(e).LevelCondition;
   }
+  static GetConditionsByEvent(e) {
+    return this.tcc.get(e);
+  }
   static GetCodeCondition(e) {
     return this.zTe.get(e);
   }
   static GetConditionEventNames(e) {
     return this.JTe.has(e) ? this.JTe.get(e).EventNames : [];
+  }
+  static GetConditionListenerEventInfo(e) {
+    return this.ecc.get(e);
   }
   static GetConditionExParams(e) {
     return this.ZTe.get(e);
@@ -835,5 +1181,7 @@ class LevelConditionCenter {
 ((exports.LevelConditionCenter = LevelConditionCenter).JTe = new Map()),
   (LevelConditionCenter.zTe = new Map()),
   (LevelConditionCenter.eLe = void 0),
-  (LevelConditionCenter.ZTe = new Map());
+  (LevelConditionCenter.ZTe = new Map()),
+  (LevelConditionCenter.tcc = new Map()),
+  (LevelConditionCenter.ecc = new Map());
 //# sourceMappingURL=LevelConditionCenter.js.map

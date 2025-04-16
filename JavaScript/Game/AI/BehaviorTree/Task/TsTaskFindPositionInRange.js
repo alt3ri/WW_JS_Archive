@@ -4,7 +4,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
   PI = 3.14;
 class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
@@ -13,6 +13,14 @@ class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
       (this.RangeCenterKey = ""),
       (this.RangeRadius = 0),
       (this.BlackboardKey = ""),
+      (this.IsInitTsVariables = !1),
+      (this.TsRangeCenterKey = ""),
+      (this.TsRangeRadius = 0),
+      (this.TsBlackboardKey = ""),
+      (this.RangeCenter = void 0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsRangeCenterKey = ""),
       (this.TsRangeRadius = 0),
@@ -36,14 +44,14 @@ class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
           i = s.Id;
         if (this.TsRangeCenterKey) {
           var r =
-            BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
               i,
               this.TsRangeCenterKey,
             );
           if (!r)
             return (
               Log_1.Log.CheckError() &&
-                Log_1.Log.Error("BehaviorTree", 30, "不存在BlackboardKey", [
+                Log_1.Log.Error("BehaviorTree", 29, "不存在BlackboardKey", [
                   "Key",
                   this.TsRangeCenterKey,
                 ]),
@@ -58,7 +66,7 @@ class TsTaskFindPositionInRange extends TsTaskAbortImmediatelyBase_1.default {
           (r = this.RandomPointInCircle(this.TsRangeRadius));
         (s.X = this.RangeCenter.X + r.X),
           (s.Y = this.RangeCenter.Y + r.Y),
-          BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
             i,
             this.TsBlackboardKey,
             s.X,

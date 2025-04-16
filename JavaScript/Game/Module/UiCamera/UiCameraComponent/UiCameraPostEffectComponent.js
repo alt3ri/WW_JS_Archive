@@ -3,6 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraPostEffectComponent = void 0);
 const UiCameraComponent_1 = require("./UiCameraComponent");
 class UiCameraPostEffectComponent extends UiCameraComponent_1.UiCameraComponent {
+  SetCameraFocusMethod(e) {
+    this.CineCameraComponent.FocusSettings.FocusMethod = e;
+  }
   SetCameraFieldOfView(e) {
     this.CineCameraComponent.SetFieldOfView(e);
   }
@@ -14,6 +17,9 @@ class UiCameraPostEffectComponent extends UiCameraComponent_1.UiCameraComponent 
   }
   SetCameraAperture(e) {
     this.CineCameraComponent.CurrentAperture = e;
+  }
+  SetCameraFocalRegion(e) {
+    this.CineCameraComponent.CurrentFocalRegion = e;
   }
   SetCameraPostProcessBlendWeight(e) {
     this.CineCameraComponent.SetPostProcessBlendWeight(e);

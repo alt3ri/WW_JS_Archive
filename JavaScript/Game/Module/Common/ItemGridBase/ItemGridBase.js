@@ -11,16 +11,19 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
       (this.mPt = new Map()),
       (this.dPt = new Set()),
       (this.CPt = new Set()),
+      (this.sa1 = []),
       (this.gPt = []),
       (this.fPt = []),
       (this.pPt = void 0),
       (this.vPt = void 0),
+      (this.aa1 = void 0),
       (this.LongPressButton = new LongPressButtonItem_1.LongPressButtonItem()),
       (this.IsHover = !1),
       (this.IsSelected = !1),
       (this.IsForceSelected = !1),
       (this.MPt = !0),
       (this.EPt = !1),
+      (this.AllComponentLoadedCallback = void 0),
       (this.SPt = void 0),
       (this.yPt = void 0),
       (this.IPt = void 0),
@@ -89,7 +92,8 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
           0 < this.dPt.size ||
             ((this.EPt = !1),
             this.RefreshComponentVisible(),
-            this.RefreshComponentHierarchyIndex());
+            this.RefreshComponentHierarchyIndex(),
+            this.AllComponentLoadedCallback?.());
       });
   }
   Initialize(t) {
@@ -98,6 +102,7 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
   OnStartImplement() {
     (this.pPt = this.OnSetTopAdditionItem()),
       (this.vPt = this.OnSetBottomAdditionItem()),
+      (this.aa1 = this.OnSetUnderTextAdditionItem()),
       this.LongPressButton.Initialize(
         this.GetItemGridExtendToggle(),
         this.OnLongPressActivate,
@@ -110,6 +115,8 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroyImplement() {
     (this.pPt = void 0),
       (this.vPt = void 0),
+      (this.aa1 = void 0),
+      (this.sa1.length = 0),
       (this.gPt.length = 0),
       (this.fPt.length = 0),
       this.LongPressButton?.Clear(),
@@ -126,17 +133,21 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
       this.ClearItemGridComponents(),
       this.RemoveEvents();
   }
+  OnSetUnderTextAdditionItem() {
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("Inventory", 75, "没有实现OnSetUnderTextAdditionItem");
+  }
   OnSetBottomAdditionItem() {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Inventory", 8, "没有实现OnSetBottomAdditionItem");
+      Log_1.Log.Error("Inventory", 37, "没有实现OnSetBottomAdditionItem");
   }
   OnSetTopAdditionItem() {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Inventory", 8, "没有实现OnSetBottomAdditionItem");
+      Log_1.Log.Error("Inventory", 37, "没有实现OnSetBottomAdditionItem");
   }
   GetItemGridExtendToggle() {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Inventory", 8, "没有实现GetItemGridExtendToggle");
+      Log_1.Log.Error("Inventory", 37, "没有实现GetItemGridExtendToggle");
   }
   AddEvents() {
     var t = this.GetItemGridExtendToggle();
@@ -247,6 +258,9 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
           break;
         case 1:
           i.Initialize(this.vPt);
+          break;
+        case 2:
+          i.Initialize(this.aa1);
       }
       this.mPt.set(t, i),
         this.dPt.add(i),
@@ -268,10 +282,13 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
         break;
       case 1:
         this.gPt.push(t);
+        break;
+      case 2:
+        this.sa1.push(t);
     }
   }
   ClearComponentList() {
-    (this.gPt.length = 0), (this.fPt.length = 0);
+    (this.sa1.length = 0), (this.gPt.length = 0), (this.fPt.length = 0);
   }
   RefreshComponentHierarchyIndex() {
     if (!this.EPt) {
@@ -279,6 +296,8 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
         this.fPt[t].SetHierarchyIndex(t);
       for (let t = 0; t < this.gPt.length; t++)
         this.gPt[t].SetHierarchyIndex(t);
+      for (let t = 0; t < this.sa1.length; t++)
+        this.sa1[t].SetHierarchyIndex(t);
     }
   }
   GetItemGridComponent(t) {

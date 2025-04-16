@@ -4,6 +4,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
@@ -14,10 +17,16 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
       (this.Pot = ""),
       (this.xot = void 0),
       (this.wot = ""),
+      (this.dsh = ""),
       (this.Bot = void 0),
       (this.bot = void 0),
+      (this.Csh = void 0),
       (this.qot = -1),
       (this.vot = new Map()),
+      (this.Qel = !1),
+      (this.Eoh = (t) => {
+        this.ixl();
+      }),
       this.CreateByResourceIdAsync("UiItem_BattleSkillUltraItem", t);
   }
   OnRegisterComponent() {
@@ -26,14 +35,31 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UINiagara],
       [2, UE.UINiagara],
       [3, UE.UINiagara],
+      [4, UE.UINiagara],
     ];
   }
   OnStart() {
     this.Uot = this.GetSprite(0);
     for (const t of this.vot.values()) t();
+    ModelManager_1.ModelManager.BattleLinkModel?.CheckInDreamLink() &&
+      (this.ixl(),
+      (this.Qel = !0),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnBattleLinkStatusChanged,
+        this.Eoh,
+      ));
   }
   OnBeforeDestroy() {
-    (this.Uot = void 0), this.vot.clear(), this.Got(), this.Not();
+    (this.Uot = void 0),
+      this.vot.clear(),
+      this.Got(),
+      this.Not(),
+      this.Qel &&
+        ((this.Qel = !1),
+        EventSystem_1.EventSystem.Remove(
+          EventDefine_1.EEventName.OnBattleLinkStatusChanged,
+          this.Eoh,
+        ));
   }
   SetComponentActive(t) {
     this.Visible = t;
@@ -43,12 +69,12 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
     this.InAsyncLoading() ? this.vot.set("SetActive", t) : t();
   }
   SetBarPercent(t, i) {
-    var s;
+    var e;
     this.qot !== t &&
-      ((s = () => {
+      ((e = () => {
         this.Uot.SetFillAmount(t), (this.qot = t);
       }),
-      this.InAsyncLoading() ? this.vot.set("SetBarPercent", s) : s());
+      this.InAsyncLoading() ? this.vot.set("SetBarPercent", e) : e());
   }
   SetBarVisible(t) {
     var i = () => {
@@ -65,13 +91,26 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
       }),
       this.InAsyncLoading() ? this.vot.set("SetFrameSprite", i) : i());
   }
-  SetUltraEffectEnable(i) {
-    var t = () => {
-      var t = this.GetUiNiagara(1);
+  gsh(t, i) {
+    t &&
       t.bIsUIActive !== i &&
-        (t.SetUIActive(i), i ? t.ActivateSystem(!0) : t.DeactivateSystem());
+      (t.SetUIActive(i), i ? t.ActivateSystem(!0) : t.DeactivateSystem());
+  }
+  SetUltraEffectEnable(t) {
+    var i = () => {
+      this.HasValidUltDynamicEffect()
+        ? t
+          ? (this.SetBarVisible(!1),
+            this.gsh(this.GetUiNiagara(1), !1),
+            this.gsh(this.GetUiNiagara(4), !0))
+          : (this.SetBarVisible(!0),
+            this.gsh(this.GetUiNiagara(1), !1),
+            this.gsh(this.GetUiNiagara(4), !1))
+        : (this.SetBarVisible(!0),
+          this.gsh(this.GetUiNiagara(1), t),
+          this.gsh(this.GetUiNiagara(4), !1));
     };
-    this.InAsyncLoading() ? this.vot.set("SetUltraEffectEnable", t) : t();
+    this.InAsyncLoading() ? this.vot.set("SetUltraEffectEnable", i) : i();
   }
   SetUltraTipsEffectEnable(i) {
     var t = () => {
@@ -92,10 +131,10 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
     this.InAsyncLoading() ? this.vot.set("SetUltraUpEffectEnable", t) : t();
   }
   RefreshUltraEffect(t, i) {
-    var s;
+    var e;
     StringUtils_1.StringUtils.IsEmpty(this.Pot) || this.Pot !== t
       ? ((this.xot = i),
-        (s = () => {
+        (e = () => {
           this.Got(),
             (this.Bot = ResourceSystem_1.ResourceSystem.LoadAsync(
               t,
@@ -109,7 +148,7 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
             )),
             (this.Pot = t);
         }),
-        this.InAsyncLoading() ? this.vot.set("RefreshUltraEffect", s) : s())
+        this.InAsyncLoading() ? this.vot.set("RefreshUltraEffect", e) : e())
       : this.xot !== i &&
         ((this.xot = i),
         this.InAsyncLoading() ||
@@ -140,6 +179,46 @@ class BattleSkillUltraItem extends UiPanelBase_1.UiPanelBase {
     this.bot &&
       (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.bot),
       (this.bot = void 0));
+  }
+  RefreshUltraDynamicEffect(t, i = 0) {
+    var e;
+    (!StringUtils_1.StringUtils.IsEmpty(this.dsh) && this.dsh === t) ||
+      ((e = () => {
+        this.fsh(),
+          (this.Csh = ResourceSystem_1.ResourceSystem.LoadAsync(
+            t,
+            UE.NiagaraSystem,
+            (t) => {
+              t?.IsValid() && this.GetUiNiagara(4)?.SetNiagaraSystem(t);
+            },
+          )),
+          (this.dsh = t);
+      }),
+      this.InAsyncLoading()
+        ? this.vot.set("RefreshUltraDynamicEffect", e)
+        : e());
+  }
+  fsh() {
+    this.Csh &&
+      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Csh),
+      (this.Csh = void 0));
+  }
+  StopUltraDynamicEffect() {
+    var t = this.GetUiNiagara(4);
+    t?.DeactivateSystem(), t?.SetUIActive(!1);
+  }
+  HasValidUltDynamicEffect() {
+    return (
+      !(
+        !this.Csh ||
+        !ModelManager_1.ModelManager.BattleLinkModel.CheckInDreamLink()
+      ) && ModelManager_1.ModelManager.BattleLinkModel.CanUseLinkSkill()
+    );
+  }
+  ixl() {
+    ModelManager_1.ModelManager.BattleLinkModel?.CanUseLinkSkill()
+      ? this.SetUltraEffectEnable(!0)
+      : this.SetUltraEffectEnable(!1);
   }
 }
 exports.BattleSkillUltraItem = BattleSkillUltraItem;

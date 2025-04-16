@@ -143,8 +143,14 @@ class BattlePass {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   exclusiverewardpath(t) {
-    var r = this.J7.__offset(this.z7, 26);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 26),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
 }
 exports.BattlePass = BattlePass;

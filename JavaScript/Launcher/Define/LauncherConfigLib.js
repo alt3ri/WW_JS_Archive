@@ -6,7 +6,9 @@ const cpp_1 = require("cpp"),
   UE = require("ue"),
   LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib"),
   LauncherLog_1 = require("../Util/LauncherLog"),
+  LauncherDownLoadConfig_1 = require("./LauncherDownLoadConfig"),
   LauncherMenuConfig_1 = require("./LauncherMenuConfig"),
+  LauncherServerLimitConfig_1 = require("./LauncherServerLimitConfig"),
   LaunchGameSettingMenuConfig_1 = require("./LaunchGameSettingMenuConfig");
 class DbInfo {
   constructor(n, e) {
@@ -22,22 +24,39 @@ class LauncherConfigLib {
       var n = cpp_1.KuroApplication.ProjectContentDir(),
         i =
           ((LauncherConfigLib.te = n + "Aki/ConfigDB/"),
-          LauncherMenuConfig_1.LauncherMenuConfig.GetTableName());
+          LauncherMenuConfig_1.LauncherMenuConfig.GetTableName()),
+        r =
+          LauncherServerLimitConfig_1.LauncherServerLimitConfig.GetTableName(),
+        L = LauncherDownLoadConfig_1.LauncherDownLoadConfig.GetTableName();
       let e = 0;
       var n = n + "Aki/ConfigDB/aki_base.csv",
         a = UE.KuroStaticLibrary.LoadFileToStringArray(n);
       for (let n = 1; n < a.Num(); n++) {
-        var u = a.Get(n).split(",");
+        var o = a.Get(n).split(",");
         if (
-          !(u.length <= 2) &&
+          !(o.length <= 2) &&
           (LauncherConfigLib.aSr ||
-            (u[0] === i &&
+            (o[0] === i &&
               ((LauncherConfigLib.aSr = new DbInfo(
-                LauncherConfigLib.te + u[1],
-                u[2],
+                LauncherConfigLib.te + o[1],
+                o[2],
               )),
               e++)),
-          2 <= e)
+          LauncherConfigLib.Qic ||
+            (o[0] === r &&
+              ((LauncherConfigLib.Qic = new DbInfo(
+                LauncherConfigLib.te + o[1],
+                o[2],
+              )),
+              e++)),
+          LauncherConfigLib.Cb1 ||
+            (o[0] === L &&
+              ((LauncherConfigLib.Cb1 = new DbInfo(
+                LauncherConfigLib.te + o[1],
+                o[2],
+              )),
+              e++)),
+          3 <= e)
         )
           break;
       }
@@ -80,6 +99,25 @@ class LauncherConfigLib {
       n,
     ]);
   }
+  static GetServerLimitConfig(n) {
+    var e =
+        `SELECT * FROM \`${LauncherServerLimitConfig_1.LauncherServerLimitConfig.GetTableName()}\` WHERE Id=` +
+        n,
+      i = new UE.KuroSqliteResultSet();
+    if (
+      UE.KuroSqliteLibrary.Query(LauncherConfigLib.Qic.ConfigDbPath, e, i) &&
+      i.HasValue()
+    )
+      return (
+        (e = LauncherServerLimitConfig_1.LauncherServerLimitConfig.Parse(i)),
+        i.Release(),
+        e
+      );
+    LauncherLog_1.LauncherLog.Error("查询LauncherServerLimitConfig失败", [
+      "regionId",
+      n,
+    ]);
+  }
   static IsLanguageValid(n) {
     var e = `SELECT * FROM \`${LauncherMenuConfig_1.LauncherMenuConfig.GetLanguageTableName()}\` WHERE LanguageCode='${n}'`,
       i = new UE.KuroSqliteResultSet();
@@ -107,14 +145,14 @@ class LauncherConfigLib {
       var e = LauncherConfigLib.hSr.get(n);
       if (e) return e;
       var i = `SELECT * FROM \`${TABLE}\` WHERE Id="${n}"`,
-        a = new UE.KuroSqliteResultSet(),
-        u = UE.KuroSqliteLibrary.Query(LauncherConfigLib.lSr(DB), i, a),
-        r = (0, puerts_1.$ref)(void 0);
-      if (u && a.HasValue()) {
-        if (a.GetString("Content", r))
+        r = new UE.KuroSqliteResultSet(),
+        L = UE.KuroSqliteLibrary.Query(LauncherConfigLib.lSr(DB), i, r),
+        a = (0, puerts_1.$ref)(void 0);
+      if (L && r.HasValue()) {
+        if (r.GetString("Content", a))
           return (
-            a.Release(),
-            (e = (0, puerts_1.$unref)(r)),
+            r.Release(),
+            (e = (0, puerts_1.$unref)(a)),
             LauncherConfigLib.hSr.set(n, e),
             e
           );
@@ -137,9 +175,36 @@ class LauncherConfigLib {
       n;
     return LauncherConfigLib.te + e;
   }
+  static GetDownLoadTabConfig(n) {
+    var e =
+        `SELECT * FROM \`${LauncherDownLoadConfig_1.LauncherDownLoadConfig.GetTableName()}\` WHERE Id=` +
+        n,
+      i = new UE.KuroSqliteResultSet();
+    if (
+      UE.KuroSqliteLibrary.Query(LauncherConfigLib.Cb1.ConfigDbPath, e, i) &&
+      i.HasValue()
+    )
+      return (
+        (e = LauncherDownLoadConfig_1.LauncherDownLoadConfig.Parse(i)),
+        LauncherLog_1.LauncherLog.Info(
+          "GetDownLoadTabConfig",
+          ["config.Id", n],
+          ["config", e],
+          ["rs.IsValid();", i.IsValid()],
+        ),
+        i.Release(),
+        e
+      );
+    LauncherLog_1.LauncherLog.Error("查询LauncherDownLoadConfig失败", [
+      "regionId",
+      n,
+    ]);
+  }
 }
 ((exports.LauncherConfigLib = LauncherConfigLib).te = ""),
   (LauncherConfigLib.aSr = void 0),
+  (LauncherConfigLib.Qic = void 0),
+  (LauncherConfigLib.Cb1 = void 0),
   (LauncherConfigLib.hSr = new Map()),
   (LauncherConfigLib.gU = !1);
 //# sourceMappingURL=LauncherConfigLib.js.map

@@ -5,7 +5,7 @@ const UE = require("ue"),
   Time_1 = require("../../../../Core/Common/Time"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskPortal extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -19,6 +19,19 @@ class TsTaskPortal extends TsTaskAbortImmediatelyBase_1.default {
       (this.StartMaterialControllerData = void 0),
       (this.EndMaterialControllerData = void 0),
       (this.FollowPointName = "FollowPoint"),
+      (this.FollowPoint = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsEffectDieTime = -0),
+      (this.TsEffectBornTime = -0),
+      (this.TsActiveModel = !1),
+      (this.TsWaitTime = -0),
+      (this.TsStartMaterialControllerData = void 0),
+      (this.TsEndMaterialControllerData = void 0),
+      (this.TsFollowPointName = "");
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.EffectId = 0),
       (this.FollowPoint = void 0),
       (this.IsInitTsVariables = !1),
       (this.TsEffectDieTime = -0),
@@ -55,13 +68,13 @@ class TsTaskPortal extends TsTaskAbortImmediatelyBase_1.default {
     if (i) {
       var e = i.CharActorComp;
       this.FollowPoint =
-        BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
           i.CharAiDesignComp.Entity.Id,
           this.TsFollowPointName,
         );
-      let t = Vector_1.Vector.ZeroVector;
+      let t = Vector_1.Vector.ZeroVectorDouble;
       this.FollowPoint &&
-        (t = new UE.Vector(
+        (t = new UE.VectorDouble(
           this.FollowPoint.X,
           this.FollowPoint.Y,
           this.FollowPoint.Z,
@@ -75,17 +88,17 @@ class TsTaskPortal extends TsTaskAbortImmediatelyBase_1.default {
               this.TsStartMaterialControllerData,
             ),
             (this.TsActiveModel = !1),
-            (i = UE.KismetMathLibrary.ProjectPointOnToPlane(
+            (i = UE.KismetMathLibrary.D_ProjectPointOnToPlane(
               e.ActorLocation,
               t,
-              new UE.Vector(0, 0, 1),
+              new UE.VectorDouble(0, 0, 1),
             )),
-            (i = UE.KismetMathLibrary.FindLookAtRotation(i, t)),
+            (i = UE.KismetMathLibrary.D_FindLookAtRotation(i, t)),
             e.SetActorLocationAndRotation(t, i, "行为树节点.巡逻", !0),
             (this.TsWaitTime = this.TsEffectBornTime + Time_1.Time.WorldTime))
           : this.TsWaitTime <= Time_1.Time.WorldTime &&
             t &&
-            t !== Vector_1.Vector.ZeroVector &&
+            t !== Vector_1.Vector.ZeroVectorDouble &&
             ((this.TsActiveModel = !0),
             (this.EffectId =
               e.Actor.CharRenderingComponent.AddMaterialControllerData(

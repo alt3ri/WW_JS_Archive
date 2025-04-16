@@ -46,6 +46,7 @@ class AutoAttachBaseView {
       (this.tKe = 0),
       (this.iKe = new Map()),
       (this.Items = new Array()),
+      (this.jD_ = void 0),
       (this.AttachDirection = void 0),
       (this.CurrentSelectState = !1),
       (this.oKe = 0),
@@ -53,14 +54,20 @@ class AutoAttachBaseView {
       (this.nKe = 1),
       (this.sKe = TickSystem_1.TickSystem.InvalidId),
       (this.aKe = MOVEMULFACTOR),
+      (this.Dy1 = !1),
       (this.hKe = DEFALTAUDIO),
       (this.lKe = void 0),
       (this.CreateItemFunction = (t, i, s) => {}),
       (this._Ke = !1),
       (this.uKe = void 0),
+      (this.v9e = () => {
+        this.Clear();
+      }),
       (this.r6 = (t) => {
         if (
-          (this.cKe &&
+          (void 0 !== this.Kj_ && (this.Xj_(this.Kj_), (this.Kj_ = void 0)),
+          this.jD_ && (this.HD_(this.jD_), (this.jD_ = void 0)),
+          this.cKe &&
             ((this.mKe += 1), 1 <= this.mKe) &&
             ((this.cKe = !1), this.dKe(this.CKe)),
           this.DragState || (!this.InertiaState && !this.VelocityMoveState))
@@ -89,6 +96,7 @@ class AutoAttachBaseView {
           ((this._Ke = this.MovingState()), this._Ke) &&
           this.uKe?.();
       }),
+      (this.Kj_ = void 0),
       (this.pKe = (t) => {
         (this.DragState = !0),
           (this.InertiaState = !1),
@@ -111,7 +119,7 @@ class AutoAttachBaseView {
           (this.SetMoveTypeOffset(1, i),
           (i = this.RecalculateMoveOffset(i)),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiCommon", 28, "OnpointerDrag", ["result", i]),
+            Log_1.Log.Debug("UiCommon", 27, "OnpointerDrag", ["result", i]),
           this.EKe(i),
           (this.WWe = t));
       }),
@@ -131,10 +139,12 @@ class AutoAttachBaseView {
             Math.abs(t) < this.tKe
               ? ((i = this.FindAutoAttachItem()),
                 this.AttachToIndex(i.GetCurrentShowItemIndex()))
-              : ((this.VelocityMoveState = !0),
-                this.SetMoveTypeOffset(0, t),
-                (this.XWe = 0 < t ? 1 : -1),
-                (this.CurrentVelocityRunningTime = 0));
+              : this.Dy1 && Math.abs(t) > this.By1()
+                ? ((i = 0 < t ? -1 : 1), this.AttachToNextItem(i))
+                : ((this.VelocityMoveState = !0),
+                  this.SetMoveTypeOffset(0, t),
+                  (this.XWe = 0 < t ? 1 : -1),
+                  (this.CurrentVelocityRunningTime = 0));
         } else {
           i = this.FindAutoAttachItem();
           this.AttachToIndex(i.GetCurrentShowItemIndex());
@@ -168,10 +178,14 @@ class AutoAttachBaseView {
         ConfigManager_1.ConfigManager.CommonConfig.GetAutoAttachVelocityTime()),
       (this.zWe =
         ConfigManager_1.ConfigManager.CommonConfig.GetAutoAttachInertiaTime()),
-      (this._Ke = !1);
+      (this._Ke = !1),
+      this.ControllerItem.GetOwner()?.OnDestroyed.Add(this.v9e);
   }
   SetItemSelectMode(t) {
     this.nKe = t;
+  }
+  SetPageLimitState(t) {
+    this.Dy1 = t;
   }
   SetMoveMultiFactor(t) {
     this.aKe = t;
@@ -197,7 +211,7 @@ class AutoAttachBaseView {
       (this.SourceItemHeight = this.SourceItem.Height),
       (this.SourceItemWidth = this.SourceItem.Width),
       (this.ShowItemNum = this.yKe()),
-      (this.tKe = (this.GetItemSize() + this.Gap) / 2),
+      (this.tKe = this.By1() / 2),
       this.IKe();
   }
   SetMoveBoundary(t) {
@@ -212,11 +226,14 @@ class AutoAttachBaseView {
   SetBoundDistance(t) {
     this.MoveBoundary = t;
   }
+  By1() {
+    return this.GetItemSize() + this.Gap;
+  }
   yKe() {
     let t = 0;
     t =
       0 === this.AttachDirection ? this.ControllerWidth : this.ControllerHeight;
-    var i = this.GetItemSize() + this.Gap,
+    var i = this.By1(),
       i = Math.ceil(t / i);
     return i % 2 == 0 ? i - 1 : i;
   }
@@ -312,8 +329,8 @@ class AutoAttachBaseView {
     var t = this.FindAutoAttachItem();
     this.ScrollToItem(t);
   }
-  ReloadView(t, i) {
-    (this.DataLength = t), this.ReloadItems(t, i);
+  ReloadView(t, i, s = 0) {
+    (this.DataLength = t), this.ReloadItems(t, i, s);
   }
   GetShowItemNum() {
     return this.ShowItemNum;
@@ -339,7 +356,7 @@ class AutoAttachBaseView {
       return s;
     }
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiCommon", 28, "列表没有数据，找不到中间物体");
+      Log_1.Log.Error("UiCommon", 27, "列表没有数据，找不到中间物体");
   }
   GetItems() {
     return this.Items;
@@ -364,39 +381,52 @@ class AutoAttachBaseView {
   }
   ScrollToItem(t, i = !1) {
     var s;
-    this.InertiaState ||
+    (this.InertiaState && !i) ||
       ((s = t.GetCurrentPosition()),
       this.SetMoveTypeOffset(1, -s),
       this.ForceUnSelectItems(),
       (this.oKe = t.GetCurrentShowItemIndex()),
-      i
-        ? (this.SetMoveTypeOffset(1, -s),
-          (t = this.RecalculateMoveOffset(-s)),
-          this.EKe(t, i))
-        : ((this.rKe = 0), (this.InertiaState = !0)));
+      i ? (this.jD_ = t) : ((this.rKe = 0), (this.InertiaState = !0)));
+  }
+  Xj_(t) {
+    var i = this.FindNearestMiddleItem();
+    i &&
+      ((t = t - i.GetCurrentShowItemIndex()),
+      (t = this.LKe() * this.By1() * t + i.GetCurrentPosition()),
+      this.SetMoveTypeOffset(1, -t),
+      (i = this.RecalculateMoveOffset(-t)),
+      this.EKe(i, !0),
+      (this.InertiaState = !1),
+      (this.VelocityMoveState = !1));
+  }
+  HD_(t) {
+    (t = t.GetCurrentPosition()),
+      this.SetMoveTypeOffset(1, -t),
+      (t = this.RecalculateMoveOffset(-t));
+    this.EKe(t, !0), (this.InertiaState = !1), (this.VelocityMoveState = !1);
   }
   AttachToNextItem(t) {
     t = this.FindNextDirectionItem(t);
     t && this.AttachToIndex(t.GetCurrentShowItemIndex());
   }
   AttachToIndex(t, i = !1) {
-    var s;
-    this.InertiaState ||
-      ((s = this.GetShowIndexItem(t))
-        ? this.ScrollToItem(s, i)
-        : (this.ForceUnSelectItems(),
-          (this.oKe = t),
-          (s = this.FindNearestMiddleItem()) &&
-            ((t = t - s.GetCurrentShowItemIndex()),
-            (t =
-              this.LKe() * (this.GetItemSize() + this.Gap) * t -
-              s.GetCurrentPosition()),
+    if (!this.InertiaState || i) {
+      var s = this.GetShowIndexItem(t);
+      if (s) this.ScrollToItem(s, i);
+      else {
+        this.ForceUnSelectItems(), (this.oKe = t);
+        s = this.FindNearestMiddleItem();
+        if (!s) return;
+        i
+          ? (this.Kj_ = t)
+          : ((i = t - s.GetCurrentShowItemIndex()),
+            (t = this.LKe() * this.By1() * i - s.GetCurrentPosition()),
             this.SetMoveTypeOffset(1, -t),
-            i
-              ? (this.SetMoveTypeOffset(1, -t),
-                (s = this.RecalculateMoveOffset(-t)),
-                this.EKe(s, i))
-              : ((this.rKe = 0), (this.InertiaState = !0)))));
+            (this.rKe = 0),
+            (this.InertiaState = !0));
+      }
+      this.r6(0);
+    }
   }
   LKe() {
     return 0 === this.AttachDirection ? 1 : -1;
@@ -444,7 +474,8 @@ class AutoAttachBaseView {
     }),
       (this.Items = []),
       this.sKe !== TickSystem_1.TickSystem.InvalidId &&
-        TickSystem_1.TickSystem.Remove(this.sKe);
+        (TickSystem_1.TickSystem.Remove(this.sKe),
+        (this.sKe = TickSystem_1.TickSystem.InvalidId));
   }
 }
 exports.AutoAttachBaseView = AutoAttachBaseView;

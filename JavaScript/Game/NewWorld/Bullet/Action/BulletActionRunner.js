@@ -28,19 +28,19 @@ class BulletActionRunner {
   Pause() {
     0 !== this.ac
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Temp", 18, "当前不是空闲状态，不允许暂停")
+        Log_1.Log.Error("Temp", 17, "当前不是空闲状态，不允许暂停")
       : (this.ac = 1);
   }
   Resume() {
     1 !== this.ac
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Temp", 18, "当前不是暂停状态")
+        Log_1.Log.Error("Temp", 17, "当前不是暂停状态")
       : (this.ac = 0);
   }
   Run(t = 0, e = !1) {
     if (0 !== this.ac)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "当前不是空闲状态，不允许切换到运行状态");
+        Log_1.Log.Error("Bullet", 17, "当前不是空闲状态，不允许切换到运行状态");
     else {
       BulletActionRunner.BVo.Start(), (this.ac = 2);
       var o = ModelManager_1.ModelManager.BulletModel.GetBulletEntityMap();
@@ -104,7 +104,7 @@ class BulletActionRunner {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "Bullet",
-              18,
+              17,
               "Run BulletAction Error",
               t,
               ["BulletEntityId", s.BulletEntityId],
@@ -114,7 +114,7 @@ class BulletActionRunner {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
-              18,
+              17,
               "Run BulletAction Error",
               ["BulletEntityId", s.BulletEntityId],
               ["BulletRowName", s.BulletRowName],
@@ -148,12 +148,12 @@ class BulletActionRunner {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
-            18,
+            17,
             "清理子弹数据期间不允许有新的行为进来，请检查代码逻辑",
           );
         break;
       default:
-        Log_1.Log.CheckError() && Log_1.Log.Error("Bullet", 18, "当前状态异常");
+        Log_1.Log.CheckError() && Log_1.Log.Error("Bullet", 17, "当前状态异常");
     }
   }
   IsRunning() {
@@ -164,7 +164,7 @@ class BulletActionRunner {
       BulletConstant_1.BulletConstant.OpenActionStat &&
       !(0 < this.qVo.length)
     )
-      for (let t = 0; t < 18; t++)
+      for (let t = 0; t < 19; t++)
         6 === t
           ? this.qVo.push(Stats_1.Stat.Create("BulletActionInitCollision"))
           : 3 === t
@@ -180,7 +180,9 @@ class BulletActionRunner {
                       Stats_1.Stat.Create("BulletActionSummonBullet"),
                     )
                   : BulletConstant_1.BulletConstant.OpenAllActionStat
-                    ? this.qVo.push(Stats_1.Stat.Create("BulletAction" + t))
+                    ? this.qVo.push(
+                        Stats_1.Stat.CreateNoFlameGraph("BulletAction" + t),
+                      )
                     : this.qVo.push(void 0);
   }
 }

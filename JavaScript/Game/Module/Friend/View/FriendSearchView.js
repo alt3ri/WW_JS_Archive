@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendSearchView = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -18,20 +19,21 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.n9t = void 0),
       (this.s9t = []),
-      (this.Xxa = 0),
+      (this.Zxa = 0),
       (this.a9t = void 0),
-      (this.Yxa = () => {
-        (this.Xxa = 0 === this.Xxa ? 1 : 0), this.zxa(), this.UZa(), this.Iwn();
+      (this.ePa = () => {
+        (this.Zxa = 0 === this.Zxa ? 1 : 0), this.tPa(), this.Nah(), this.Iwn();
       }),
       (this.fGe = () => {
         return new FriendItem_1.FriendItem(this.Info.Name);
       }),
       (this.h9t = () => {
-        "" === this.GetInputText(0).GetText()
-          ? (this.a9t.RefreshSprite("SP_Paste"),
-            this.a9t.BindCallback(this.QAt))
-          : (this.a9t.RefreshSprite("SP_Clear"),
-            this.a9t.BindCallback(this.KAt));
+        this.a9t &&
+          ("" === this.GetInputText(0).GetText()
+            ? (this.a9t.RefreshSprite("SP_Paste"),
+              this.a9t.BindCallback(this.QAt))
+            : (this.a9t.RefreshSprite("SP_Clear"),
+              this.a9t.BindCallback(this.KAt)));
       }),
       (this.KAt = () => {
         this.GetInputText(0).SetText(""), this.h9t();
@@ -52,7 +54,7 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
             e.ClearRefuseFriendList(),
             this.GetInputText(0).GetText());
         0 < e.length &&
-          (0 === this.Xxa
+          (0 === this.Zxa
             ? FriendController_1.FriendController.RequestSearchPlayerBasicInfo(
                 Number(e),
               )
@@ -102,31 +104,31 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
     ]),
       (this.BtnBindInfo = [
         [2, this.l9t],
-        [6, this.Yxa],
+        [6, this.ePa],
       ]);
   }
-  UZa() {
+  Nah() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendSearchByThirdPartyId()
-      ? ((e = 0 === this.Xxa ? "Search_UID_Tips" : "Search_PSN_ID_Tips"),
+      ? ((e = 0 === this.Zxa ? "Search_UID_Tips" : "Search_PSN_ID_Tips"),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), e))
       : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), "Search_UID_Tips");
   }
   Iwn() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendSearchByThirdPartyId()
-      ? ((e = 0 === this.Xxa ? "Search_UID_Result" : "Search_PSN_ID_Result"),
+      ? ((e = 0 === this.Zxa ? "Search_UID_Result" : "Search_PSN_ID_Result"),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), e))
       : LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(9),
           "Search_UID_Result",
         );
   }
-  zxa() {
+  tPa() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendSearchByThirdPartyId()
       ? (this.GetButton(6).RootUIComp.SetUIActive(!0),
-        (e = 0 === this.Xxa ? "NormalSearch" : "PlayStationSearch"),
+        (e = 0 === this.Zxa ? "NormalSearch" : "PlayStationSearch"),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), e))
       : this.GetButton(6).RootUIComp.SetUIActive(!1);
   }
@@ -176,13 +178,20 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {}
   OnStart() {
-    this.a9t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(1));
-    var e = this.GetItem(3),
+    var e = !Platform_1.Platform.IsPs5Platform(),
+      e =
+        (e &&
+          (this.a9t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(
+            this.GetItem(1),
+          )),
+        this.GetItem(1)?.SetUIActive(e),
+        this.GetItem(3)),
       e =
         ((this.n9t = new LoopScrollView_1.LoopScrollView(
           this.GetLoopScrollViewComponent(4),
           e.GetOwner(),
           this.fGe,
+          !0,
         )),
         this.GetInputText(0).OnTextChange.Bind(this.h9t),
         ModelManager_1.ModelManager.FriendModel);
@@ -206,14 +215,17 @@ class FriendSearchView extends UiViewBase_1.UiViewBase {
   u8t() {
     0 < this.s9t.length && this.n9t.ReloadData(this.s9t),
       this.d9t(),
-      this.zxa(),
-      this.UZa(),
+      this.tPa(),
+      this.Nah(),
       this.Iwn();
   }
   d9t() {
     this.GetInputText(0).SetText(""),
       this.h9t(),
-      this.GetItem(5).SetUIActive(this.s9t.length <= 0);
+      this.GetItem(5).SetUIActive(this.s9t.length <= 0),
+      this.GetLoopScrollViewComponent(4).RootUIComp.SetUIActive(
+        0 < this.s9t.length,
+      );
   }
 }
 exports.FriendSearchView = FriendSearchView;

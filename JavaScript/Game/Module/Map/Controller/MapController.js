@@ -111,11 +111,11 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ModelReady);
   }
   static async RequestMapData() {
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("Map", 35, "开始请求地图数据"),
+    Log_1.Log.CheckDebug() && Log_1.Log.Debug("Map", 34, "开始请求地图数据"),
       await MapController.cYt(0).RequestTrackInfo(),
       await MapController.cYt(1).RequestTeleportData(),
       await MapController.cYt(2).RequestUnlockedAreaInfo(),
-      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Map", 35, "结束请求地图数据");
+      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Map", 34, "结束请求地图数据");
   }
   static GetMarkPosition(e, t) {
     return this.NLi.GetMarkPosition(e, t);
@@ -137,14 +137,11 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Map",
-              64,
+              63,
               "MapController.GetNewCustomMarkPosition()",
               ["自定义地图标记不在有效范围 Z轴坐标:", o.Z],
             )),
         o);
-  }
-  static RequestUnlockTeleport(e) {
-    MapController.cYt(1).RequestUnlockTeleport(e);
   }
   static RequestMapMarkReplace(e, t) {
     MapController.cYt(0).RequestMapMarkReplace(e, t);
@@ -156,33 +153,56 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
     var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
     for (const a of t)
       r &&
-        r[0] === e &&
-        r[1] === a &&
+        r.MarkType === e &&
+        r.MarkId === a &&
         ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0);
     MapController.cYt(0).RequestRemoveMapMarks(e, t);
   }
-  static RequestTrackMapMark(e, t, r) {
-    r
-      ? (void 0 ===
-          (r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark()) ||
-          (r[0] === e && r[1] === t) ||
-          MapController.cYt(0).RequestCancelTrackMapMark(r[0], r[1]),
-        MapController.cYt(0).RequestTrackMapMark(e, t),
-        ModelManager_1.ModelManager.MapModel.SetCurTrackMark([e, t]))
-      : (ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0),
-        MapController.cYt(0).RequestCancelTrackMapMark(e, t));
+  static RequestTrackMapMark(e, t) {
+    (e.TrackMode = e.TrackMode ?? 1),
+      e.Track
+        ? (this.UCc(e), 1 === e.TrackMode ? this.DCc(e, t) : this.BCc(e, t))
+        : 1 === e.TrackMode
+          ? this.kCc(e, t)
+          : this.OCc(e, t);
+  }
+  static UCc(e) {
+    var t = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
+    void 0 === t ||
+      (t.MarkType === e.MarkType && t.MarkId === e.MarkId) ||
+      (1 === t.TrackMode ? this.kCc(t) : this.OCc(t));
+  }
+  static DCc(e, t) {
+    MapController.cYt(0).RequestTrackMapMark(e.MarkType, e.MarkId, t),
+      ModelManager_1.ModelManager.MapModel.SetCurTrackMark(e);
+  }
+  static BCc(e, t) {
+    ModelManager_1.ModelManager.MapModel.SetCurTrackMark(e),
+      ModelManager_1.ModelManager.MapModel.SetTrackMark(
+        e.MarkType,
+        e.MarkId,
+        e.Track,
+      ),
+      t?.(0, !0);
+  }
+  static kCc(e, t) {
+    ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0),
+      MapController.cYt(0).RequestCancelTrackMapMark(e.MarkType, e.MarkId, t);
+  }
+  static OCc(e, t) {
+    ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0),
+      ModelManager_1.ModelManager.MapModel.SetTrackMark(
+        e.MarkType,
+        e.MarkId,
+        !1,
+      ),
+      t?.(0, !1);
   }
   static UpdateCustomMapMarkPosition(e, t) {
     MapController.cYt(0).UpdateCustomMapMarkPosition(e, t);
   }
-  static RequestCreateTemporaryTeleport(e, t) {
-    MapController.cYt(0).RequestCreateTemporaryTeleport(e, t);
-  }
   static RequestTrackEnrichmentArea(e) {
     MapController.cYt(0).RequestTrackEnrichmentArea(e);
-  }
-  static RequestRemoveDynamicMapMark(e) {
-    MapController.cYt(0).RequestRemoveDynamicMapMark(e);
   }
   static RequestTeleportToTargetByTemporaryTeleport(e, t) {
     var r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;

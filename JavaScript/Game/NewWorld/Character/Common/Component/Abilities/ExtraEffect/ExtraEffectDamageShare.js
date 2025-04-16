@@ -22,7 +22,7 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
     for (var [a, o] of this.GetShareRateMap(t, e)) {
       var a = EntitySystem_1.EntitySystem.Get(a),
         h = a?.CheckGetComponent(1)?.ActorLocation;
-      a?.CheckGetComponent(18)?.ExecuteBuffShareDamage(
+      a?.CheckGetComponent(19)?.ExecuteBuffShareDamage(
         { ...r, HitPosition: h },
         i,
         o,
@@ -35,7 +35,7 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Battle",
-            20,
+            19,
             "[DamageShare] Cannot Share damage to oneself.",
             ["entityId", this.InstigatorEntityId],
           ),
@@ -59,7 +59,7 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
   static GetShareRateMap(t, e) {
     var r,
       i,
-      s = t.GetComponent(160),
+      s = t.GetComponent(172),
       t = s.BuffEffectManager.FilterById(18),
       a = new Map();
     for (const o of t)

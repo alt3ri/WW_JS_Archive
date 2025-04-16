@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
   RenderConfig_1 = require("../../../Config/RenderConfig"),
+  RenderDataManager_1 = require("../../../Data/RenderDataManager"),
   STAR_SCAR_SLOT_NAME = "MI_Star",
   ORIGINAL_INDEX = 0,
   CACHE_INDEX = 1,
@@ -49,10 +50,10 @@ class CharMaterialSlot {
       (this.ReplaceMaterialArray = new Array());
   }
   SetDynamicMaterial(t) {
-    (this.DynamicMaterial = t),
-      (this.FloatParamMap = new Map()),
+    (this.DynamicMaterial = t) &&
+      ((this.FloatParamMap = new Map()),
       (this.VectorParamMap = new Map()),
-      (this.TextureParamMap = new Map()),
+      (this.TextureParamMap = new Map())),
       (this.MaterialDirty = !0);
   }
   SetSkeletalMeshMaterial(t) {
@@ -61,7 +62,11 @@ class CharMaterialSlot {
       ((this.MaterialDirty = !1),
       0 < (i = this.ReplaceMaterialArray.length)
         ? t.SetMaterial(this.MaterialIndex, this.ReplaceMaterialArray[i - 1])
-        : t.SetMaterial(this.MaterialIndex, this.DynamicMaterial));
+        : t.SetMaterial(
+            this.MaterialIndex,
+            this.DynamicMaterial ||
+              RenderDataManager_1.RenderDataManager.Get().GetEmptyMaterial(),
+          ));
   }
   UpdateMaterialParam() {
     if (!this.IsDynamicMaterialValid()) return 0;
@@ -99,13 +104,13 @@ class CharMaterialSlot {
     }
     if (this.Rlr) {
       this.Rlr = !1;
-      for (const T of this.TextureParamMap.keys()) {
-        var a = this.TextureParamMap.get(T),
+      for (const n of this.TextureParamMap.keys()) {
+        var a = this.TextureParamMap.get(n),
           E = a[TARGET_INDEX];
         void 0 !== E &&
           a[CACHE_INDEX] !== E &&
           ((a[CACHE_INDEX] = E),
-          (a = FNameUtil_1.FNameUtil.GetDynamicFName(T)),
+          (a = FNameUtil_1.FNameUtil.GetDynamicFName(n)),
           t.SetTextureParameterValue(a, E),
           ++i);
       }

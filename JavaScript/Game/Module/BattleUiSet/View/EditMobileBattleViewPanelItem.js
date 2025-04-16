@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditMobileBattleViewPanelItem = void 0);
 const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
-  BattleUiSetDefine_1 = require("../BattleUiSetDefine"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  BattleUiSetDefine_1 = require("../BattleUiSetDefine");
 class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -20,7 +20,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
           2 <=
             ModelManager_1.ModelManager.BattleUiSetModel.GetTouchFingerDataCount() ||
           ((i = t.GetLocalPointInPlane()),
-          (t = t.dragComponent.GetOwner().GetActorScale3D()),
+          (t = t.dragComponent.GetOwner().D_GetActorScale3D()),
           (s = (i.X - this.pgt.X) * t.X),
           (t = (i.Y - this.pgt.Y) * t.Z),
           0 != s &&
@@ -35,7 +35,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
         this.PanelItemData &&
           this.PanelItemData.CanEdit &&
           ((this.pgt = t.GetLocalPointInPlane()),
-          (this.vgt = this.RootItem.RelativeLocation),
+          (this.vgt = new UE.VectorDouble(this.RootItem.RelativeLocation)),
           ModelManager_1.ModelManager.BattleUiSetModel.SetPanelItemSelected(
             this.PanelItemData,
           ));
@@ -128,11 +128,15 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
         (this.$Ve.OnStateChange.Remove(this.Jgt),
         this.$Ve.CanExecuteChange.Unbind());
   }
+  RefreshRelativeLocation() {
+    var t = this.GetRelativeLocation();
+    this.SetRelativeLocation(t);
+  }
   SetRelativeLocation(t) {
     t = this.t0t(t);
     (this.PanelItemData.EditOffsetX = this.RootItem.GetAnchorOffsetX()),
       (this.PanelItemData.EditOffsetY = this.RootItem.GetAnchorOffsetY()),
-      this.RootItem.K2_SetRelativeLocation(t, !1, void 0, !1);
+      this.RootItem.D_K2_SetRelativeLocation(t, !1, void 0, !1);
   }
   GetRelativeLocation() {
     return this.vgt;
@@ -143,7 +147,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       (this.PanelItemData.EditOffsetY = this.RootItem.GetAnchorOffsetY()));
   }
   t0t(t) {
-    var i = this.RootActor.GetActorScale3D().X,
+    var i = this.RootActor.D_GetActorScale3D().X,
       s = this.RootItem.GetPivot(),
       h = s.Y,
       s = s.X,
@@ -174,7 +178,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       this.RootItem.SetAnchorOffsetY(this.PanelItemData.OffsetY),
       this.RootItem.SetUIItemAlpha(this.PanelItemData.Alpha),
       this.RootItem.SetHierarchyIndex(this.PanelItemData.HierarchyIndex),
-      (this.vgt = this.RootItem.RelativeLocation));
+      (this.vgt = new UE.VectorDouble(this.RootItem.RelativeLocation)));
   }
   Reset() {
     var t;
@@ -188,7 +192,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
       this.RootItem.SetAnchorOffsetY(this.PanelItemData.SourceOffsetY),
       this.RootItem.SetUIItemAlpha(this.PanelItemData.SourceAlpha),
       this.RootItem.SetHierarchyIndex(this.PanelItemData.SourceHierarchyIndex),
-      (this.vgt = this.RootItem.RelativeLocation));
+      (this.vgt = new UE.VectorDouble(this.RootItem.RelativeLocation)));
   }
   SetSelected(t) {
     this.$Ve &&

@@ -9,7 +9,7 @@ class RoleVisionCommonItem extends UiPanelBase_1.UiPanelBase {
       (this.AnimationState = !1),
       (this.CurrentIndex = void 0),
       (this.CurrentData = void 0),
-      (this.RoleId = 0),
+      (this.RoleData = void 0),
       (this.ShowType = 0),
       (this.wqe = void 0),
       (this.NeedRedDot = !1),
@@ -34,7 +34,7 @@ class RoleVisionCommonItem extends UiPanelBase_1.UiPanelBase {
       }),
       (this.CurrentIndex = e),
       (this.wqe = t),
-      (this.RoleId = i),
+      (this.RoleData = i),
       (this.NeedRedDot = s);
   }
   async Init() {
@@ -60,8 +60,9 @@ class RoleVisionCommonItem extends UiPanelBase_1.UiPanelBase {
     return this.CurrentData;
   }
   SetAniLightState(t) {}
-  UpdateItem(t) {
+  UpdateItem(t, e) {
     (this.CurrentData = t),
+      (this.RoleData = e || this.RoleData),
       this.xCo(t),
       this.Kbe(t),
       this.BGt(t),

@@ -42,7 +42,7 @@ class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
     (this.d1o = this.OpenParam),
       void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleResonanceTabViewNew",
           ])

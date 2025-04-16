@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ActivityTurntableToggleItem =
+  (exports.ActivityTurntableDailyItem =
+    exports.ActivityTurntableDailyPanel =
+    exports.ActivityTurntableToggleItem =
     exports.ActivityTurntableToggleGroupItem =
     exports.ActivityTurntableQuestItem =
       void 0);
@@ -10,6 +12,7 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   ActivitySmallItemGrid_1 = require("../UniversalComponents/ActivitySmallItemGrid");
 class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
@@ -164,4 +167,52 @@ class ActivityTurntableToggleItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 exports.ActivityTurntableToggleItem = ActivityTurntableToggleItem;
+class ActivityTurntableDailyPanel extends UiPanelBase_1.UiPanelBase {
+  constructor(t) {
+    super(),
+      (this.ActivityBaseData = t),
+      (this.tLl = void 0),
+      (this.iLl = () => new ActivityTurntableDailyItem());
+  }
+  OnRegisterComponent() {
+    this.ComponentRegisterInfos = [
+      [0, UE.UIVerticalLayout],
+      [1, UE.UIItem],
+    ];
+  }
+  OnStart() {
+    this.tLl = new GenericLayout_1.GenericLayout(
+      this.GetVerticalLayout(0),
+      this.iLl,
+    );
+  }
+  Refresh() {
+    this.tLl.RefreshByData(
+      this.ActivityBaseData.GetAllTurntableDailyQuestData(),
+    );
+  }
+}
+exports.ActivityTurntableDailyPanel = ActivityTurntableDailyPanel;
+class ActivityTurntableDailyItem extends GridProxyAbstract_1.GridProxyAbstract {
+  OnRegisterComponent() {
+    this.ComponentRegisterInfos = [
+      [0, UE.UISprite],
+      [1, UE.UIText],
+    ];
+  }
+  Refresh(t, i, e) {
+    this.GetSprite(0).SetUIActive(2 === t.Status);
+    var s =
+      ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableTaskByTaskId(
+        t.Id,
+      );
+    LguiUtil_1.LguiUtil.SetLocalTextNew(
+      this.GetText(1),
+      s.TaskDescription,
+      t.Current,
+      t.Target,
+    );
+  }
+}
+exports.ActivityTurntableDailyItem = ActivityTurntableDailyItem;
 //# sourceMappingURL=ActivityTurntableItem.js.map

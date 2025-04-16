@@ -5,10 +5,11 @@ const UE = require("ue"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
-  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   OnlineController_1 = require("../OnlineController"),
@@ -20,6 +21,7 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.DNi = void 0),
       (this.XFt = void 0),
       (this.RNi = void 0),
+      (this.gLt = void 0),
       (this.PYt = () => {
         this.LNi
           ? 0 < this.LNi.ApplyTimeLeftTime
@@ -88,11 +90,19 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
       [20, UE.UIItem],
       [21, UE.UITexture],
       [22, UE.UIButtonComponent],
+      [23, UE.UIItem],
+      [24, UE.UIText],
+      [25, UE.UIItem],
+      [26, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [4, this.ANi],
         [22, this.PNi],
       ]);
+  }
+  async OnBeforeStartAsync() {
+    (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(26).GetOwner());
   }
   OnStart() {
     this.GetText(1).SetUIActive(!1),
@@ -107,7 +117,8 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
     (this.LNi = void 0),
       (this.DNi = void 0) !== this.RNi &&
         TimerSystem_1.TimerSystem.Remove(this.RNi),
-      (this.RNi = void 0);
+      (this.RNi = void 0),
+      this.gLt?.Destroy();
   }
   Refresh(i, t, e) {
     (this.LNi = i),
@@ -118,11 +129,13 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
             TICK_INTERVAL_TIME,
           )))
         : this.UNi(!0);
-    var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+    var r = ModelManager_1.ModelManager.PersonalModel.GetPlayerHeadData(
         i.HeadId,
-      )?.RoleHeadIconBig,
+        !1,
+      ),
       r =
-        (r && this.SetTextureByPath(r, this.GetTexture(3)),
+        (r &&
+          this.SetTextureByPath(r.GetRoleHeadIconLarge(), this.GetTexture(3)),
         ModelManager_1.ModelManager.FriendModel.IsMyFriend(i.PlayerId)),
       s = this.GetText(0),
       r =
@@ -134,44 +147,62 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
         "" !== r
           ? LguiUtil_1.LguiUtil.SetLocalText(s, "NameMark", r)
           : s.SetText(i.Name),
+        this.gLt?.Refresh(i.PlayerTitleId, i.PlayerTitleStarLevel, i.Sex),
         this.GetText(2).SetText("Lv." + i.Level),
         this.GetText(7)),
-      o =
+      h =
         (i.Signature && "" !== i.Signature
           ? (r.SetText(i.Signature), this.GetItem(20).SetUIActive(!0))
           : this.GetItem(20).SetUIActive(!1),
         this.GetItem(5)),
-      h = this.GetItem(6);
+      a = this.GetItem(6);
     switch (i.PlayerCount) {
       case 2:
-        o.SetUIActive(!0), h.SetUIActive(!1);
+        h.SetUIActive(!0), a.SetUIActive(!1);
         break;
       case 3:
-        o.SetUIActive(!0), h.SetUIActive(!0);
+        h.SetUIActive(!0), a.SetUIActive(!0);
         break;
       default:
-        o.SetUIActive(!1), h.SetUIActive(!1);
+        h.SetUIActive(!1), a.SetUIActive(!1);
     }
     var s = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel,
       r = ModelManager_1.ModelManager.OnlineModel.EnterDiff,
-      a = this.GetInteractionGroup(8),
-      n = this.GetText(9),
+      o = this.GetInteractionGroup(8),
+      l = this.GetText(9),
       r =
         (i.WorldLevel > s + r
-          ? (a.SetInteractable(!1),
+          ? (o.SetInteractable(!1),
             (s = i.WorldLevel - r),
-            LguiUtil_1.LguiUtil.SetLocalText(n, "ApplyBtnDisable", s))
-          : (LguiUtil_1.LguiUtil.SetLocalText(n, "ApplyBtnEnable"),
-            a.SetInteractable(!0)),
+            LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnDisable", s))
+          : (LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnEnable"),
+            o.SetInteractable(!0)),
         i.PlayerCard);
     0 < r &&
       ((s = BackgroundCardById_1.configBackgroundCardById.GetConfig(r)),
-      this.SetTextureByPath(s.LongCardPath, this.GetTexture(21)));
+      this.SetTextureByPath(s.LongCardPath, this.GetTexture(21))),
+      this.Nxa(i),
+      this.sPa(i);
   }
   UNi(i) {
     this.GetButton(4).RootUIComp.SetUIActive(i),
       this.GetItem(12).SetUIActive(i),
       this.GetItem(10).SetUIActive(!i);
+  }
+  Nxa(i) {
+    var t;
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+      ? ((t = "" !== i.PlayerDetails.Jxa),
+        this.GetItem(23)?.SetUIActive(t),
+        this.GetText(24)?.SetUIActive(t),
+        t && ((t = i.PlayerDetails.Qxa ?? ""), this.GetText(24)?.SetText(t)))
+      : (this.GetItem(23)?.SetUIActive(!1), this.GetText(24)?.SetUIActive(!1));
+  }
+  sPa(i) {
+    !PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId() ||
+    "" !== i.PlayerDetails.Jxa
+      ? this.GetItem(25)?.SetUIActive(!1)
+      : this.GetItem(25)?.SetUIActive(!0);
   }
 }
 exports.OnlineHallItem = OnlineHallItem;

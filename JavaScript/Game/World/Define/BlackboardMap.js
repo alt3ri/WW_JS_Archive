@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BlackboardMap = exports.BlackboardParam = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
-  MathUtils_1 = require("../../../Core/Utils/MathUtils");
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IVar_1 = require("../../../UniverseEditor/Interface/IVar"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class BlackboardParam {
   constructor(t) {
     (this.jEe = ""),
@@ -31,10 +33,10 @@ class BlackboardParam {
         case t.Proto_BlackboardParamType_Long:
           return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.fKn)), e;
         case t.Proto_BlackboardParamType_LongArray:
-          var s = r.pKn.gKn,
-            a = new Array();
-          for (const i of s) a.push(MathUtils_1.MathUtils.LongToBigInt(i));
-          return e.SetLongValues(a), e;
+          var a = r.pKn.gKn,
+            o = new Array();
+          for (const i of a) o.push(MathUtils_1.MathUtils.LongToBigInt(i));
+          return e.SetLongValues(o), e;
         case t.Proto_BlackboardParamType_Boolean:
           return e.SetBooleanValue(r.vKn), e;
         case t.Proto_BlackboardParamType_String:
@@ -56,13 +58,57 @@ class BlackboardParam {
         case t.Proto_BlackboardParamType_Entity:
           return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.fKn)), e;
         case t.Proto_BlackboardParamType_EntityArray:
-          var s = r.pKn.gKn,
-            o = new Array();
-          for (const l of s) o.push(MathUtils_1.MathUtils.LongToBigInt(l));
-          return e.SetLongValues(o), e;
+          var a = r.pKn.gKn,
+            s = new Array();
+          for (const n of a) s.push(MathUtils_1.MathUtils.LongToBigInt(n));
+          return e.SetLongValues(s), e;
         default:
           return;
       }
+    }
+  }
+  static CreateByConfig(t) {
+    var r = Protocol_1.Aki.Protocol.sNs;
+    switch (t.Type) {
+      case IVar_1.EBlackBoardType.Boolean:
+        var e = new BlackboardParam(r.Proto_BlackboardParamType_Boolean);
+        return e.SetKey(t.Key), e.SetBooleanValue(t.Value), e;
+      case IVar_1.EBlackBoardType.Int:
+        e = new BlackboardParam(r.Proto_BlackboardParamType_Int);
+        return e.SetKey(t.Key), e.SetIntValue(t.Value), e;
+      case IVar_1.EBlackBoardType.Float:
+        e = new BlackboardParam(r.Proto_BlackboardParamType_Float);
+        return e.SetKey(t.Key), e.SetFloatValue(t.Value), e;
+      case IVar_1.EBlackBoardType.String:
+        e = new BlackboardParam(r.Proto_BlackboardParamType_String);
+        return e.SetKey(t.Key), e.SetStringValue(t.Value), e;
+      case IVar_1.EBlackBoardType.Vector:
+        e = new BlackboardParam(r.Proto_BlackboardParamType_Vector);
+        return (
+          e.SetKey(t.Key),
+          e.SetVectorValue(t.Vector.X ?? 0, t.Vector.Y ?? 0, t.Vector.Z ?? 0),
+          e
+        );
+      case IVar_1.EBlackBoardType.EntityPos:
+        var e = new BlackboardParam(r.Proto_BlackboardParamType_Vector),
+          a =
+            (e.SetKey(t.Key),
+            ModelManager_1.ModelManager.CreatureModel?.GetCompleteEntityData(
+              t.EntityId,
+            ));
+        return a
+          ? (e.SetVectorValue(
+              a.Transform?.Pos.X ?? 0,
+              a.Transform?.Pos.Y ?? 0,
+              a.Transform?.Pos.Z ?? 0,
+            ),
+            e)
+          : void 0;
+      case IVar_1.EBlackBoardType.EntityId:
+        a = new BlackboardParam(r.Proto_BlackboardParamType_Float);
+        return a.SetKey(t.Key), a.SetFloatValue(t.EntityId), a;
+      default:
+        return;
     }
   }
   GetKey() {
@@ -177,9 +223,9 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_LongArray: {
         let r = "[";
         if (void 0 !== this.avr) {
-          var s = this.avr.length;
-          for (let t = 0; t < s; t++)
-            (r += this.avr[t]), t !== s - 1 && (r += ", ");
+          var a = this.avr.length;
+          for (let t = 0; t < a; t++)
+            (r += this.avr[t]), t !== a - 1 && (r += ", ");
         }
         return (r += "]");
       }
@@ -190,9 +236,9 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_StringArray: {
         let r = "[";
         if (void 0 !== this.lvr) {
-          var a = this.lvr.length;
-          for (let t = 0; t < a; t++)
-            (r += this.lvr[t]), t !== a - 1 && (r += ", ");
+          var o = this.lvr.length;
+          for (let t = 0; t < o; t++)
+            (r += this.lvr[t]), t !== o - 1 && (r += ", ");
         }
         return (r += "]");
       }
@@ -201,9 +247,9 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_FloatArray: {
         let r = "[";
         if (void 0 !== this.hvr) {
-          var o = this.hvr.length;
-          for (let t = 0; t < o; t++)
-            (r += this.hvr[t]), t !== o - 1 && (r += ", ");
+          var s = this.hvr.length;
+          for (let t = 0; t < s; t++)
+            (r += this.hvr[t]), t !== s - 1 && (r += ", ");
         }
         return (r += "]");
       }
@@ -220,8 +266,8 @@ class BlackboardParam {
         if (void 0 !== this.ovr) {
           var i = this.ovr.length;
           for (let t = 0; t < i; t++) {
-            var l = this.ovr[t];
-            (r += `X:${l.X} Y:${l.Y} Z:` + l.Z), t !== i - 1 && (r += ", ");
+            var n = this.ovr[t];
+            (r += `X:${n.X} Y:${n.Y} Z:` + n.Z), t !== i - 1 && (r += ", ");
           }
         }
         return (r += "]");
@@ -239,11 +285,11 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_RotatorArray: {
         let r = "[";
         if (void 0 !== this.nvr) {
-          var u = this.nvr.length;
-          for (let t = 0; t < u; t++) {
-            var n = this.nvr[t];
-            (r += `Pitch:${n.Pitch} Roll:${n.Roll} Yaw:` + n.Yaw),
-              t !== u - 1 && (r += ", ");
+          var l = this.nvr.length;
+          for (let t = 0; t < l; t++) {
+            var c = this.nvr[t];
+            (r += `Pitch:${c.Pitch} Roll:${c.Roll} Yaw:` + c.Yaw),
+              t !== l - 1 && (r += ", ");
           }
         }
         return (r += "]");

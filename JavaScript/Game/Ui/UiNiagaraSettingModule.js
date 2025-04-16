@@ -23,7 +23,7 @@ class UiNiagaraSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule
                 : (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "UiImageSetting",
-                      38,
+                      37,
                       `设置NiagaraSystem失败，Niagara资源加载失败，资源路径：${o}}`,
                     ),
                   r?.(!1)));

@@ -10,7 +10,8 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
     super(...arguments),
       (this.NKe = void 0),
       (this.U1e = void 0),
-      (this.OKe = !1);
+      (this.OKe = !1),
+      (this.p5l = new Array());
   }
   SetIfNeedFakeItem(t) {
     this.OKe = t;
@@ -37,7 +38,7 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
     return (
       void 0 === i &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("UiCommon", 28, "找不到可附着物体，拿第一个做保底"),
+          Log_1.Log.Debug("UiCommon", 27, "找不到可附着物体，拿第一个做保底"),
         (i = this.Items[0])),
       i
     );
@@ -193,26 +194,29 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
       this.GetShowIndexItem(i)
     );
   }
-  ReloadItems(t, i) {
-    var s,
-      e = t > this.ShowItemNum || this.OKe ? this.ShowItemNum + 1 : t;
-    for (let t = 0; t < this.Items.length; t++) this.Items[t].SetUiActive(!1);
-    for (let t = 0; t < e; t++)
-      t >= this.Items.length &&
-        ((s = LguiUtil_1.LguiUtil.DuplicateActor(
-          this.SourceActor,
-          this.ControllerItem,
-        )),
-        (s = this.CreateItemFunction(s, t, this.ShowItemNum)).SetSourceView(
-          this,
-        ),
-        this.Items.push(s)),
+  ReloadItems(i, s, t = 0) {
+    var e,
+      h = i > this.ShowItemNum || this.OKe ? this.ShowItemNum + 1 : i;
+    for (let t = i; t < this.p5l.length; t++) this.p5l[t].SetUiActive(!1);
+    this.Items = [];
+    for (let t = 0; t < h; t++)
+      t >= this.p5l.length
+        ? ((e = LguiUtil_1.LguiUtil.DuplicateActor(
+            this.SourceActor,
+            this.ControllerItem,
+          )),
+          (e = this.CreateItemFunction(e, t, this.ShowItemNum)).SetSourceView(
+            this,
+          ),
+          this.Items.push(e),
+          this.p5l.push(e))
+        : this.Items.push(this.p5l[t]),
         this.Items[t].SetIfNeedShowFakeItem(this.OKe),
         this.Items[t].SetItemIndex(t),
         this.Items[t].SetUiActive(!0),
-        this.Items[t].SetData(i),
+        this.Items[t].SetData(s),
         this.Items[t].InitItem();
-    this.RefreshItems(), this.ForceUnSelectItems(), this.AttachToIndex(0, !0);
+    this.RefreshItems(), this.ForceUnSelectItems(), this.AttachToIndex(t, !0);
   }
   GetIfCircle() {
     return !1;

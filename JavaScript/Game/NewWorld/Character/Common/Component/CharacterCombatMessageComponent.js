@@ -47,7 +47,7 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
         }
       });
   }
-  Push(e, t, o, s) {
+  AddToQueue(e, t, o, s) {
     this.B4r.Push([t, e, o, s]),
       this.B4r.Size >= MESSAGE_BUFFER_MAX_SIZE
         ? (CombatLog_1.CombatLog.Warn(
@@ -121,7 +121,7 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
         ? Log_1.Log.CheckError() &&
           Log_1.Log.ErrorWithStack(
             "CombatInfo",
-            15,
+            14,
             "战斗协议执行回调方法异常",
             e,
             ["messageId", t[1]],
@@ -130,7 +130,7 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "CombatInfo",
-            15,
+            14,
             "战斗协议执行回调方法异常",
             ["messageId", t[1]],
             ["stack", e],
@@ -139,7 +139,7 @@ let CharacterCombatMessageComponent = class CharacterCombatMessageComponent exte
   }
 };
 (CharacterCombatMessageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(46)],
+  [(0, RegisterComponent_1.RegisterComponent)(52)],
   CharacterCombatMessageComponent,
 )),
   (exports.CharacterCombatMessageComponent = CharacterCombatMessageComponent);

@@ -17,27 +17,31 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configAreaByCountryAndLevel.Init"),
-  getConfigListStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configAreaByCountryAndLevel.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configAreaByCountryAndLevel.GetConfigList",
   ),
   CONFIG_LIST_STAT_PREFIX = "configAreaByCountryAndLevel.GetConfigList(";
 exports.configAreaByCountryAndLevel = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (o, n, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start();
-    var t = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o}#${n})`),
+      getConfigListStat?.Start();
+    var t = Stats_1.Stat.CreateNoFlameGraph(
+        CONFIG_LIST_STAT_PREFIX + `#${o}#${n})`,
+      ),
       i =
-        (t.Start(),
+        (t?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (e) {
@@ -45,8 +49,8 @@ exports.configAreaByCountryAndLevel = {
         const a = ConfigCommon_1.ConfigCommon.GetConfig(C);
         if (a)
           return (
-            t.Stop(),
-            getConfigListStat.Stop(),
+            t?.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             a
           );
@@ -82,8 +86,8 @@ exports.configAreaByCountryAndLevel = {
           )
             return (
               ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-              t.Stop(),
-              getConfigListStat.Stop(),
+              t?.Stop(),
+              getConfigListStat?.Stop(),
               void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
           r = Area_1.Area.getRootAsArea(
@@ -96,16 +100,16 @@ exports.configAreaByCountryAndLevel = {
             ((C = KEY_PREFIX + `#${o}#${n})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(C, a, a.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          t.Stop(),
-          getConfigListStat.Stop(),
+          t?.Stop(),
+          getConfigListStat?.Stop(),
           ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           a
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    t.Stop(),
-      getConfigListStat.Stop(),
+    t?.Stop(),
+      getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

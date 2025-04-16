@@ -9,7 +9,7 @@ const UE = require("ue"),
   VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
 class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
   constructor() {
-    super(...arguments), (this.bxt = void 0);
+    super(...arguments), (this.ko_ = 0), (this.bxt = void 0);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -17,35 +17,48 @@ class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
       [1, UE.UIText],
       [2, UE.UIItem],
       [3, UE.UIText],
+      [4, UE.UIItem],
     ]),
       (this.BtnBindInfo = []);
   }
   GetDropDownToggle() {
     return this.GetExtendToggle(0);
   }
-  OnShowDropDownItemBase(e) {
-    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
-      this.GetItem(2),
-    )),
+  SetRoleId(e) {
+    this.ko_ = e;
+  }
+  OnShowDropDownItemBase(t) {
+    var e =
+      ModelManager_1.ModelManager.VisionRecommendModel.GetRoleFetterRecommendInfo(
+        this.ko_,
+      );
+    let i = !1;
+    e &&
+      0 < e.length &&
+      (i = !!e.find((e) => e.GetRecommendFetterGroupId() === t)),
+      this.GetItem(4).SetUIActive(i),
+      (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+        this.GetItem(2),
+      )),
       this.bxt.Init();
-    var t = e;
-    let i = [],
-      o = "";
-    (o =
-      0 < e
-        ? ((i =
+    e = t;
+    let o = [],
+      r = "";
+    (r =
+      0 < t
+        ? ((o =
             ModelManager_1.ModelManager.PhantomBattleModel.GetVisionSortUseDataList(
-              e,
+              t,
               0,
             )),
-          (e =
+          (n =
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(
-              e,
+              t,
             )),
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            e.FetterGroupName,
+            n.FetterGroupName,
           ) ?? "")
-        : ((i =
+        : ((o =
             ModelManager_1.ModelManager.PhantomBattleModel.GetVisionSortUseDataList(
               0,
               0,
@@ -53,12 +66,12 @@ class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "Text_FilterTextAllVisionFetter_Text",
           ) ?? "")),
-      this.GetText(3).SetText(i.length.toString()),
-      this.GetText(1).SetText(o);
-    e = t
-      ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(t)
+      this.GetText(3).SetText(o.length.toString()),
+      this.GetText(1).SetText(r);
+    var n = e
+      ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(e)
       : void 0;
-    this.bxt.Update(e), this.bxt.SetActive(!0);
+    this.bxt.Update(n), this.bxt.SetActive(!0);
   }
   OnBeforeDestroy() {
     this.bxt?.Destroy();

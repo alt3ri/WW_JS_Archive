@@ -41,12 +41,14 @@ class EventDispatcher {
 }
 exports.EventDispatcher = EventDispatcher;
 const editorEventDefine = {
+  ForceExit: () => {},
   RestartEditor: () => {},
   OpenEditorForEditorObject: (e, t) => {},
   SaveCsvEditor: (e) => {},
+  JumpToCsvPage: (e, t) => {},
   ResetTestEditor: () => {},
   AsyncCheckResult: (e) => {},
-  SelectEntityDatas: (e, t, s) => {},
+  SelectEntityDatas: (e, t, s, r = 0) => {},
   ClearEntityAddRecords: () => {},
   RefreshActorPreviewTag: () => {},
   DelaySelectionChanged: () => {},
@@ -54,20 +56,23 @@ const editorEventDefine = {
   LoadUseCase: (e, t) => {},
   EditorPortAllInUse: () => {},
   VarTypeChanged: (e, t) => {},
+  ClearEditorHistory: (e) => {},
 };
 class EditorEventDispatcher extends EventDispatcher {}
 exports.EditorEventDispatcher = EditorEventDispatcher;
 const tabEventDefine = {
   NavToBtReferenceEntity: (e, t, s) => {},
   SearchEntity: (e, t) => {},
-  SaveEditor: (e, t) => {},
+  SaveEditor: (e, t, s) => {},
   ActiveSideBar: (e) => {},
+  OnCloseRequest: (e) => {},
 };
 class TabEventDispatcher extends EventDispatcher {}
 exports.TabEventDispatcher = TabEventDispatcher;
 const clientEventDefine = {
   GameLoginCompleted: () => {},
   ClientReady: () => {},
+  ClientExitGame: () => {},
 };
 class ClientEventDispatcher extends EventDispatcher {}
 (exports.ClientEventDispatcher = ClientEventDispatcher),

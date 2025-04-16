@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiPopFrameView = void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../Core/Common/Log"),
   LguiUtil_1 = require("../../Module/Util/LguiUtil"),
   UiLayer_1 = require("../UiLayer"),
   UiPopFrameViewStorage_1 = require("../UiPopFrameViewStorage"),
@@ -52,6 +53,11 @@ class UiPopFrameView extends UiPanelBase_1.UiPanelBase {
       await i.Promise;
   }
   OnBeforeShow() {}
+  OnAutoDestroy() {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("UiCommon", 10, "UiPopFrameView执行自动销毁"),
+      this.$pt.Clear();
+  }
   SetCloseBtnInteractive(e) {
     this.PopItem.SetCloseBtnInteractive(e);
   }

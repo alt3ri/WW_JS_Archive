@@ -11,18 +11,18 @@ class MediaPlayer {
       (this.MediaPlayer = void 0),
       (this.VideoName = void 0),
       (this.MUe = ResourceSystem_1.ResourceSystem.InvalidId),
-      (this.z9a = void 0),
+      (this.Jja = void 0),
       (this.KNo = () => {
-        this.z9a?.(this.VideoName),
+        this.Jja?.(this.VideoName),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Video", 38, "[MediaPlayer] 视频播放结束", [
+            Log_1.Log.Debug("Video", 37, "[MediaPlayer] 视频播放结束", [
               "视频名称",
               this.VideoName,
             ]);
       }),
       (this.QNo = () => {
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Video", 38, "[MediaPlayer] 视频文件打开失败", [
+          Log_1.Log.Error("Video", 37, "[MediaPlayer] 视频文件打开失败", [
             "视频名称",
             this.VideoName,
           ]);
@@ -34,7 +34,7 @@ class MediaPlayer {
         ? (this.MediaPlayer.OnEndReached.Add(this.KNo),
           this.MediaPlayer.OnMediaOpenFailed.Add(this.QNo))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Video", 38, "[MediaPlayer] 获取MediaPlayer异常");
+          Log_1.Log.Error("Video", 37, "[MediaPlayer] 获取MediaPlayer异常");
   }
   Clear() {
     this.bra(),
@@ -65,7 +65,7 @@ class MediaPlayer {
                 : Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Video",
-                    38,
+                    37,
                     "[MediaPlayer] 打开视频失败",
                     ["配置名称", e],
                     ["视频路径", s],
@@ -73,7 +73,7 @@ class MediaPlayer {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Video",
-                38,
+                37,
                 "[MediaPlayer] mediaSource加载失败",
                 ["配置名称", e],
                 ["视频路径", s],
@@ -84,7 +84,7 @@ class MediaPlayer {
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Video",
-        38,
+        37,
         "[MediaPlayer] mediaSource加载失败",
         ["配置名称", e],
         ["视频路径", s],
@@ -105,7 +105,7 @@ class MediaPlayer {
                 : Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Video",
-                    38,
+                    37,
                     "[MediaPlayer] 打开视频失败",
                     ["配置名称", e],
                     ["视频路径", s],
@@ -113,7 +113,7 @@ class MediaPlayer {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Video",
-                38,
+                37,
                 "[MediaPlayer] mediaSource加载失败",
                 ["配置名称", e],
                 ["视频路径", s],
@@ -141,7 +141,7 @@ class MediaPlayer {
       this.MediaPlayer.Play();
   }
   BindCallbackOnVideoEnd(i) {
-    this.z9a = i;
+    this.Jja = i;
   }
 }
 exports.MediaPlayer = MediaPlayer;

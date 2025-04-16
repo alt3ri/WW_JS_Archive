@@ -19,7 +19,7 @@ class RoleSkillTreeAttributeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.r1a = this.GetItem(5)?.GetWidth() ?? 0), this.SetNextLevelItem(!1);
+    this.r1a = this.GetItem(5)?.GetWidth() ?? 0;
   }
   Refresh(e, t) {
     var i = this.GetText(0),

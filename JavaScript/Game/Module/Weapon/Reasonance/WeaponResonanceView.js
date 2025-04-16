@@ -42,7 +42,7 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
             this.O2i,
           ),
           (t = this.N2i.Model),
-          UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(
+          UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
             t,
             "WeaponResonanceUpEffect",
           ),

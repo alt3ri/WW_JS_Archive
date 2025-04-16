@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EntityCommonTagInfo = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class EntityCommonTagInfo {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -8,8 +9,8 @@ class EntityCommonTagInfo {
   get Id() {
     return this.id();
   }
-  get TagName() {
-    return this.tagname();
+  get UglyTagName() {
+    return this.uglytagname();
   }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
@@ -24,9 +25,15 @@ class EntityCommonTagInfo {
     var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  tagname(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+  uglytagname(t) {
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.EntityCommonTagInfo = EntityCommonTagInfo;

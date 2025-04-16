@@ -35,7 +35,9 @@ class SelectablePropDataUtil {
       ? this.WeaponPropData(e.GetUniqueId())
       : 3 === t
         ? this.PhantomPropData(e.GetUniqueId(), e.GetCount())
-        : this.MaterialPropData(e.GetConfigId(), e.GetCount());
+        : 13 === t
+          ? this.DangoAbyssItemPropData(e)
+          : this.MaterialPropData(e.GetConfigId(), e.GetCount());
   }
   static WeaponPropData(e) {
     var t = new SelectablePropItemDefine_1.SelectablePropData(),
@@ -66,6 +68,21 @@ class SelectablePropDataUtil {
         ).replace("{0}", r.GetPhantomLevel().toString())),
         (a.Count = t),
         a
+      );
+  }
+  static DangoAbyssItemPropData(e) {
+    var t,
+      a = ModelManager_1.ModelManager.DangoAbyssModel.GetPluginItemInfoById(
+        e.GetUniqueId(),
+      );
+    if (a)
+      return (
+        ((t = new SelectablePropItemDefine_1.SelectablePropData()).IncId =
+          e.GetUniqueId()),
+        (t.ItemId = e.GetConfigId()),
+        (t.ItemDataType = e.GetItemDataType()),
+        (t.RoleId = a.GetRoleId()),
+        t
       );
   }
   static MaterialPropData(e, t) {

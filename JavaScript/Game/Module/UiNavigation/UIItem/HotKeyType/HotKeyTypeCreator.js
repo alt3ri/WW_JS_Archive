@@ -25,7 +25,7 @@ class HotKeyTypeCreator {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiNavigation",
-              11,
+              10,
               "快捷键类型不存在!代码未进行注册",
               ["Type", o],
             )

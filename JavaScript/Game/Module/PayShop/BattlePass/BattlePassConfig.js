@@ -23,7 +23,7 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Temp",
-        11,
+        10,
         "获取战令配置错误，BattlePass表格里没有这个id",
         ["battlePassId", e],
       );
@@ -34,7 +34,7 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Temp",
-        11,
+        10,
         "获取战令配置错误，BattlePassTask表格里没有这个id",
         ["taskId", e],
       );
@@ -48,7 +48,7 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Temp",
-        54,
+        53,
         "获取战令配置错误，BattlePassTask表格里没有这个id",
         ["taskId", e],
       );
@@ -66,7 +66,7 @@ class BattlePassConfig extends ConfigBase_1.ConfigBase {
       }
     else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Temp", 54, "BattlePassUnlockPop里没有该type", [
+        Log_1.Log.Error("Temp", 53, "BattlePassUnlockPop里没有该type", [
           "type",
           e,
         ]);

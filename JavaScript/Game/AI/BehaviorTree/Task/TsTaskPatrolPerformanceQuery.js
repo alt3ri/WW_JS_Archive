@@ -4,12 +4,15 @@ const Log_1 = require("../../../../Core/Common/Log"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskPatrolPerformanceQuery extends TsTaskAbortImmediatelyBase_1.default {
+  Constructor() {
+    super.Constructor();
+  }
   ReceiveExecuteAI(e, r) {
     var o, s, t;
     e instanceof TsAiController_1.default
       ? (s = e.AiController?.AiPatrol) &&
         ((t = (o = e.AiController.CharActorComp.Entity).GetComponent(17)),
-        (o = o.GetComponent(190)),
+        (o = o.GetComponent(203)),
         t) &&
         o
         ? (t.ClearLastPerformanceTag(),

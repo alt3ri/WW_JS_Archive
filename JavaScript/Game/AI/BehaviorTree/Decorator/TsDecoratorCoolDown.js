@@ -17,6 +17,12 @@ class TsDecoratorCoolDown extends UE.BTDecorator_BlueprintBase {
       (this.TsRandomCdTime = void 0),
       (this.TsReturnTrueFirstTime = !1);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.TsId = 0),
+      (this.TsRandomCdTime = void 0),
+      (this.TsReturnTrueFirstTime = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -28,30 +34,30 @@ class TsDecoratorCoolDown extends UE.BTDecorator_BlueprintBase {
   }
   PerformConditionCheckAI(t, i) {
     var t = t.AiController,
-      e =
+      s =
         (this.InitTsVariables(),
         ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? TimeUtil_1.TimeUtil.GetServerTimeStamp()
           : Time_1.Time.WorldTime);
-    let s = t.GetCoolDownTime(this.TsId);
-    return 0 === s
-      ? ((s =
-          e +
+    let e = t.GetCoolDownTime(this.TsId);
+    return 0 === e
+      ? ((e =
+          s +
           MathUtils_1.MathUtils.GetRandomRange(
             this.TsRandomCdTime.LowerBoundValue,
             this.TsRandomCdTime.UpperBoundValue,
           )),
-        t.SetCoolDownTime(this.TsId, s, !0, "行为树"),
+        t.SetCoolDownTime(this.TsId, e, !0, "行为树"),
         this.TsReturnTrueFirstTime)
       : !(
-          s > e ||
-          ((s =
-            e +
+          e > s ||
+          ((e =
+            s +
             MathUtils_1.MathUtils.GetRandomRange(
               this.TsRandomCdTime.LowerBoundValue,
               this.TsRandomCdTime.UpperBoundValue,
             )),
-          t.SetCoolDownTime(this.TsId, s, !0, "行为树"),
+          t.SetCoolDownTime(this.TsId, e, !0, "行为树"),
           0)
         );
   }

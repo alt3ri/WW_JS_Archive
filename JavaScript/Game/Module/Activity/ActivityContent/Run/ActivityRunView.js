@@ -34,9 +34,8 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       (this.C3e = void 0),
       (this.lqe = void 0),
       (this.g3e = (e) => {
-        var i =
-          ModelManager_1.ModelManager.ActivityModel?.GetCurrentSelectActivity();
-        e.has(i.Id) &&
+        var i;
+        e.has(this.m3e.Id) &&
           ((e = () => {
             this.CloseMe();
           }),
@@ -74,7 +73,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
                   .CurrentSelectChallengeId,
               ),
             MarkType: 13,
-            OpenAreaId: 0,
+            OpenFogId: 0,
           }),
           WorldMapController_1.WorldMapController.OpenView(2, !1, e));
       }),
@@ -134,8 +133,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       this.lqe.SetTitle(this.m3e.GetTitle());
   }
   OnStart() {
-    (this.m3e =
-      ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity()),
+    (this.m3e = this.OpenParam),
       (this.c3e = this.m3e.GetChallengeDataArray()),
       this.U3e();
     var e = this.GetVerticalLayout(7);
@@ -211,7 +209,7 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeShow() {
     ActivityRunController_1.ActivityRunController.SelectDefaultChallengeId(
-      ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity(),
+      this.m3e,
     ),
       this.A3e(),
       this.P3e();

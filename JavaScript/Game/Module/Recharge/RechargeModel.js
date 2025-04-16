@@ -25,7 +25,7 @@ class RechargeModel extends ModelBase_1.ModelBase {
     return r
       ? r.Amount
       : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Shop", 28, "获取PayId的服务器价格失败", ["id", e]),
+          Log_1.Log.Info("Shop", 27, "获取PayId的服务器价格失败", ["id", e]),
         "0");
   }
   zso(e) {
@@ -42,7 +42,7 @@ class RechargeModel extends ModelBase_1.ModelBase {
     return r
       ? r.ProductId
       : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Shop", 28, "获取PayId的商品名称价格失败", ["id", e]),
+          Log_1.Log.Info("Shop", 27, "获取PayId的商品名称价格失败", ["id", e]),
         "");
   }
 }

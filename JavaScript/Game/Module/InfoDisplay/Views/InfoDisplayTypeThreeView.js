@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InfoDisplayTypeThreeView = void 0);
 const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   InfoDisplayController_1 = require("../InfoDisplayController"),
@@ -77,6 +78,13 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnTick(e) {
     this.sai?.OnTick(e);
+  }
+  async OnBeforeHideAsync() {
+    this.OpenParam?.FadeBeforeHide &&
+      (await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitOpenLoading(
+        0,
+        3,
+      ));
   }
 }
 exports.InfoDisplayTypeThreeView = InfoDisplayTypeThreeView;

@@ -152,6 +152,10 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
         this.D5e,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.NotifyBattlePassToBuyEvent,
+        this.l2i,
       );
   }
   RemoveEventListener() {
@@ -166,6 +170,10 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
         this.D5e,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.NotifyBattlePassToBuyEvent,
+        this.l2i,
       );
   }
   OnStart() {

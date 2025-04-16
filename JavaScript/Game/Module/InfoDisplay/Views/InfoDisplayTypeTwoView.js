@@ -5,6 +5,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   CircleAttachView_1 = require("../../AutoAttach/CircleAttachView"),
@@ -19,16 +20,16 @@ class InfoDisplayTypeTwoView extends UiTickViewBase_1.UiTickViewBase {
       (this.dai = 0),
       (this.Iye = void 0),
       (this.ovt = void 0),
-      (this.jbe = (t) => {
-        this.Cai(t);
+      (this.jbe = (e) => {
+        this.Cai(e);
       }),
       (this.gai = 3),
-      (this.Uye = (t, e, i) => {
-        return new InfoDisplayCircleAttachItem_1.InfoDisplayCircleAttachItem(t);
+      (this.Uye = (e, t, i) => {
+        return new InfoDisplayCircleAttachItem_1.InfoDisplayCircleAttachItem(e);
       }),
-      (this.fai = (t, e, i) => {
+      (this.fai = (e, t, i) => {
         return new InfoDisplayNoCircleAttachItem_1.InfoDisplayNoCircleAttachItem(
-          t,
+          e,
         );
       }),
       (this.Jvt = () => {
@@ -73,21 +74,21 @@ class InfoDisplayTypeTwoView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   OnStart() {
-    var t = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
-    this.SHe(t), this.vai(t), this.Hxt(t);
+    var e = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
+    this.SHe(e), this.vai(e), this.Hxt(e);
   }
-  SHe(t) {
+  SHe(e) {
     this.Iye?.Clear(),
       this.ovt?.Clear(),
       (this.Iye = void 0),
       (this.ovt = void 0);
-    var t =
+    var e =
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-          t,
+          e,
         ),
-      e = this.GetItem(1);
-    (t.length < this.gai
-      ? ((this.ovt = new NoCircleAttachView_1.NoCircleAttachView(e.GetOwner())),
+      t = this.GetItem(1);
+    (e.length < this.gai
+      ? ((this.ovt = new NoCircleAttachView_1.NoCircleAttachView(t.GetOwner())),
         this.ovt.CreateItems(
           this.GetItem(0).GetOwner(),
           PICTURE_DISTANCE,
@@ -95,7 +96,7 @@ class InfoDisplayTypeTwoView extends UiTickViewBase_1.UiTickViewBase {
         ),
         this.ovt.DisableDragEvent(),
         this.ovt)
-      : ((this.Iye = new CircleAttachView_1.CircleAttachView(e.GetOwner())),
+      : ((this.Iye = new CircleAttachView_1.CircleAttachView(t.GetOwner())),
         this.Iye.CreateItems(
           this.GetItem(0).GetOwner(),
           PICTURE_DISTANCE,
@@ -103,58 +104,65 @@ class InfoDisplayTypeTwoView extends UiTickViewBase_1.UiTickViewBase {
         ),
         this.Iye.DisableDragEvent(),
         this.Iye)
-    ).ReloadView(t.length, t),
-      (this.dai = t.length),
+    ).ReloadView(e.length, e),
+      (this.dai = e.length),
       this.GetItem(0).SetUIActive(!1),
       this.Mai();
   }
-  vai(t) {
-    t =
+  vai(e) {
+    e =
       1 <
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-        t,
+        e,
       ).length;
-    this.GetItem(8).SetUIActive(t), this.GetItem(9).SetUIActive(t);
+    this.GetItem(8).SetUIActive(e), this.GetItem(9).SetUIActive(e);
   }
-  Hxt(t) {
-    this.l7e(t), this.Mai();
+  Hxt(e) {
+    this.l7e(e), this.Mai();
   }
-  l7e(t) {
-    var e =
+  l7e(e) {
+    var t =
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
-          t,
+          e,
         ),
-      e =
-        (this.GetText(6).SetText(e),
+      t =
+        (this.GetText(6).SetText(t),
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
-          t,
+          e,
         ));
-    this.GetText(5).SetText(e);
+    this.GetText(5).SetText(t);
   }
-  pai(t) {
+  pai(e) {
     void 0 !== this.ovt
-      ? this.ovt.AttachToNextItem(t)
-      : void 0 !== this.Iye && this.Iye.AttachToNextItem(t);
+      ? this.ovt.AttachToNextItem(e)
+      : void 0 !== this.Iye && this.Iye.AttachToNextItem(e);
   }
-  Cai(t) {
+  Cai(e) {
     void 0 !== this.ovt
-      ? this.ovt?.ScrollToItem(t)
-      : void 0 !== this.Iye && this.Iye?.ScrollToItem(t),
+      ? this.ovt?.ScrollToItem(e)
+      : void 0 !== this.Iye && this.Iye?.ScrollToItem(e),
       this.Mai();
   }
   Mai() {
-    let t = 0;
+    let e = 0;
     void 0 !== this.ovt
-      ? (t = this.ovt.GetCurrentSelectIndex())
-      : void 0 !== this.Iye && (t = this.Iye.GetCurrentSelectIndex());
-    var e = t + 1 + "/" + this.dai;
-    this.GetText(2).SetText(e);
+      ? (e = this.ovt.GetCurrentSelectIndex())
+      : void 0 !== this.Iye && (e = this.Iye.GetCurrentSelectIndex());
+    var t = e + 1 + "/" + this.dai;
+    this.GetText(2).SetText(t);
   }
   OnBeforeDestroy() {
-    var t = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
-    InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(t),
+    var e = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
+    InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(e),
       this.Iye?.Clear(),
       this.ovt?.Clear();
+  }
+  async OnBeforeHideAsync() {
+    this.OpenParam?.FadeBeforeHide &&
+      (await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitOpenLoading(
+        0,
+        3,
+      ));
   }
 }
 exports.InfoDisplayTypeTwoView = InfoDisplayTypeTwoView;

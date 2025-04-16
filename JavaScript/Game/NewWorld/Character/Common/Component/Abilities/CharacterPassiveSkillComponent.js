@@ -4,23 +4,23 @@ var ESkillAction,
     (this && this.__decorate) ||
     function (t, e, i, s) {
       var o,
-        l = arguments.length,
-        r =
-          l < 3
+        r = arguments.length,
+        l =
+          r < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
               : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        r = Reflect.decorate(t, e, i, s);
+        l = Reflect.decorate(t, e, i, s);
       else
         for (var a = t.length - 1; 0 <= a; a--)
           (o = t[a]) &&
-            (r = (l < 3 ? o(r) : 3 < l ? o(e, i, r) : o(e, i)) || r);
-      return 3 < l && r && Object.defineProperty(e, i, r), r;
+            (l = (r < 3 ? o(l) : 3 < r ? o(e, i, l) : o(e, i)) || l);
+      return 3 < r && l && Object.defineProperty(e, i, l), l;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.CharacterPassiveSkillComponent = void 0);
+  (exports.CharacterPassiveSkillComponent = exports.ESkillAction = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
   PassiveSkillById_1 = require("../../../../../../Core/Define/ConfigQuery/PassiveSkillById"),
   Entity_1 = require("../../../../../../Core/Entity/Entity"),
@@ -31,6 +31,7 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
   SkillMessageController_1 = require("../../../../../Module/CombatMessage/SkillMessageController"),
   CombatLog_1 = require("../../../../../Utils/CombatLog"),
+  ConditionFormula_1 = require("../../../../../Utils/Trigger/ConditionFormula"),
   BulletController_1 = require("../../../../Bullet/BulletController"),
   TriggerType_1 = require("./Trigger/TriggerType"),
   GlobalTriggerWhitelist =
@@ -39,9 +40,11 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
         (t[(t.RemoveBullet = 2)] = "RemoveBullet"),
         (t[(t.AddBuff = 3)] = "AddBuff"),
         (t[(t.RemoveBuff = 4)] = "RemoveBuff"),
-        (t[(t.StartSkill = 5)] = "StartSkill");
-    })((ESkillAction = ESkillAction || {})),
-    [1302101064n]);
+        (t[(t.StartSkill = 5)] = "StartSkill"),
+        (t[(t.LockOn = 6)] = "LockOn"),
+        (t[(t.Customize = 7)] = "Customize");
+    })((ESkillAction = exports.ESkillAction || (exports.ESkillAction = {}))),
+    [1302101064]);
 let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -53,9 +56,9 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
   }
   OnInit() {
     return (
-      (this.xOr = this.Entity.CheckGetComponent(25)),
-      (this.wOr = this.Entity.CheckGetComponent(160)),
-      (this.BOr = this.Entity.GetComponent(192)),
+      (this.xOr = this.Entity.CheckGetComponent(28)),
+      (this.wOr = this.Entity.CheckGetComponent(172)),
+      (this.BOr = this.Entity.GetComponent(204)),
       !0
     );
   }
@@ -63,12 +66,15 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
     return !0;
   }
   OnActivate() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Fys")?.Fys?.KIs;
-    if (t)
-      for (const e of t)
-        this.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(e.r5n), {
-          CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(e.K8n.$8n),
-        });
+    var t = this.Entity.GetComponent(0).ComponentDataMap;
+    if (this.wOr.HasBuffAuthority()) {
+      t = t.get("Fys")?.Fys?.KIs;
+      if (t)
+        for (const e of t)
+          this.LearnPassiveSkill(MathUtils_1.MathUtils.LongToNumber(e.r5n), {
+            CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(e.K8n.$8n),
+          });
+    }
     return !0;
   }
   OnClear() {
@@ -84,10 +90,10 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
   HasSkill(t) {
     return this.bOr.has(t);
   }
-  LearnPassiveSkill(o, t = void 0) {
-    if (this.HasSkill(o)) return !1;
-    const l = PassiveSkillById_1.configPassiveSkillById.GetConfig(o);
-    if (!l)
+  LearnPassiveSkill(o, t) {
+    if (this.HasSkill(o) || !this.wOr.HasBuffAuthority()) return !1;
+    const r = PassiveSkillById_1.configPassiveSkillById.GetConfig(o);
+    if (!r)
       return (
         CombatLog_1.CombatLog.Error(
           "PassiveSkill",
@@ -97,8 +103,8 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
         ),
         !1
       );
-    var e = TriggerType_1.ETriggerEvent[l.TriggerType];
-    if (!l.TriggerType || void 0 === e)
+    var e = TriggerType_1.ETriggerEvent[r.TriggerType];
+    if (!r.TriggerType || void 0 === e)
       return (
         CombatLog_1.CombatLog.Error(
           "PassiveSkill",
@@ -124,23 +130,23 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Battle",
-        20,
+        19,
         "角色添加被动技能",
         ["owner", this.Entity.Id],
         ["skillId", o],
       );
     e = this.xOr.AddTrigger(
       {
-        Type: l.TriggerType,
-        Preset: l.TriggerPreset,
-        Params: l.TriggerParams,
-        Formula: l.TriggerFormula,
+        Type: r.TriggerType,
+        Preset: r.TriggerPreset,
+        Params: r.TriggerParams,
+        Formula: r.TriggerFormula,
       },
       (t, e) => {
         let i = this.Entity;
-        var s = l.InstigatorType;
+        var s = r.InstigatorType;
         (i = s ? (t?.[s] ?? e?.[s]) : i) && i instanceof Entity_1.Entity
-          ? this.ExecuteAction(o, i)
+          ? this.ExecuteAction(o, i, e)
           : CombatLog_1.CombatLog.Error(
               "PassiveSkill",
               this.Entity,
@@ -149,19 +155,20 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
               ["skillId", o],
             );
       },
-      () => !this.BOr?.IsPassiveSkillInCd(o),
+      () => {
+        var t = this.BOr?.IsPassiveSkillInCd(o);
+        return !t;
+      },
     );
     return (
       this.bOr.set(o, {
         SkillId: o,
         TriggerHandle: e,
-        Actions: this.ParseActions(l),
-        TargetKey: l.InstigatorType,
-        CombatMessageId: t?.CombatMessageId,
+        Actions: this.ParseActions(r, o, t),
+        TargetKey: r.InstigatorType,
+        CombatMessageId: t.CombatMessageId,
       }),
-      l.IsDefaultActivated && this.xOr.SetTriggerActive(e, !0),
-      this.BOr?.InitPassiveSkill(l),
-      this.OnPassiveSkillAdded(o, t),
+      this.OnPassiveSkillAdded(o, e, r, t),
       !0
     );
   }
@@ -171,7 +178,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Battle",
-          20,
+          19,
           "角色失去被动技能",
           ["owner", this.Entity.Id],
           ["skillId", t],
@@ -187,52 +194,102 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
       0 < t.TriggerHandle &&
       this.xOr.SetTriggerActive(t.TriggerHandle, e);
   }
-  ParseActions(t) {
-    var e = [],
-      i = this.ParseAction(t.SkillAction, t.SkillActionParams);
-    void 0 !== i && e.push(i);
-    for (const o of t.SubSkillAction) {
-      var s = PassiveSkillById_1.configPassiveSkillById.GetConfig(o),
-        s = this.ParseAction(s.SkillAction, s.SkillActionParams);
-      void 0 !== s && e.push(s);
+  ParseActions(t, e, i) {
+    var s = [],
+      o = this.ParseAction(t, e, i);
+    void 0 !== o && s.push(o);
+    for (const l of t.SubSkillAction) {
+      var r = PassiveSkillById_1.configPassiveSkillById.GetConfig(l),
+        r = this.ParseAction(r, e, i);
+      void 0 !== r && s.push(r);
     }
-    return e;
+    return s;
   }
-  ParseAction(t, e) {
-    var i = ESkillAction[t];
-    if (void 0 !== i)
+  ParseAction(t, a, e) {
+    var i = ESkillAction[t.SkillAction];
+    if (void 0 !== i) {
+      var s = t.SkillActionParams;
       switch (i) {
         case ESkillAction.AddBullet:
-          return { Action: i, BulletRowNames: e.map((t) => t.trim()) };
+          return { Action: i, BulletRowNames: s.map((t) => t.trim()) };
         case ESkillAction.RemoveBullet:
           return {
             Action: i,
-            BulletRowNames: e[0].split("#").map((t) => t.trim()),
-            SummonChild: "1" === e[1]?.trim(),
+            BulletRowNames: s.map((t) => t.split("#")?.[0]?.trim()),
+            SummonChild: s.map((t) => "1" === t.split("#")?.[1]?.trim()),
           };
         case ESkillAction.AddBuff:
-          return { Action: i, BuffId: e.map((t) => BigInt(t)) };
+          return { Action: i, BuffId: s.map((t) => Number(t)) };
         case ESkillAction.RemoveBuff: {
-          const s = {
+          const r = {
             Action: i,
-            BuffId: new Array(e.length),
-            StackCount: new Array(e.length),
+            BuffId: new Array(s.length),
+            StackCount: new Array(s.length),
           };
           return (
-            e.forEach((t, e) => {
+            s.forEach((t, e) => {
               var [t, i] = t.split("#");
-              (s.BuffId[e] = BigInt(t)), (s.StackCount[e] = Number(i ?? -1));
+              (r.BuffId[e] = Number(t)), (r.StackCount[e] = Number(i ?? -1));
             }),
-            s
+            r
           );
         }
         case ESkillAction.StartSkill:
-          return { Action: i, SkillId: Number(e[0]) };
+          return { Action: i, SkillId: Number(s[0]) };
+        case ESkillAction.LockOn:
+          return {
+            Action: i,
+            IsHardLock: "1" === s[0],
+            LockOnConfigId: Number(s[1] ?? 0),
+            SkillTargetPriority: Number(s[2] ?? 8),
+            ShowTarget: "1" === (s[3] ?? "1"),
+            GlobalTarget: "1" === s[4],
+          };
+        case ESkillAction.Customize:
+          var o = t.ActionScriptParams?.length
+            ? JSON.parse(t.ActionScriptParams)
+            : {};
+          return (
+            (o.Owner = this.Entity),
+            {
+              Action: i,
+              Formula: new ConditionFormula_1.Formula(t.SkillActionScript)
+                .SetBuiltinFunctions(this.xOr.TriggerFormulaFunc)
+                .AddBuiltinFunction("AddBuff2", (t, e, i, s) => {
+                  var o,
+                    r,
+                    l = this.bOr.get(a);
+                  return t && l
+                    ? ((o = t.GetComponent(172)),
+                      (r = `被动技能${a}添加`),
+                      o.AddBuff(e, {
+                        InstigatorId:
+                          s?.GetComponent(0)?.GetCreatureDataId() ??
+                          this.wOr.CreatureDataId,
+                        PreMessageId: l.CombatMessageId,
+                        Reason: r,
+                        OuterStackCount: i,
+                      }),
+                      !0)
+                    : (CombatLog_1.CombatLog.Error(
+                        "PassiveSkill",
+                        this.Entity,
+                        "被动技能添加buff失败",
+                        ["skillId", a],
+                        ["targetEntity", t],
+                        ["Instigator", s],
+                      ),
+                      !1);
+                })
+                .SetDefaultParams(o),
+            }
+          );
         default:
           return;
       }
+    }
   }
-  ExecuteAction(t, e) {
+  ExecuteAction(t, e, i) {
     if (this.wOr.HasBuffAuthority() && !this.BOr?.IsPassiveSkillInCd(t))
       if (this.LockMap.has(t))
         CombatLog_1.CombatLog.Error(
@@ -248,21 +305,21 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
           ["current executing skill ids", [...this.LockMap]],
         );
       else {
-        var i = this.bOr.get(t);
-        if (void 0 !== i) {
+        var s = this.bOr.get(t);
+        if (void 0 !== s) {
           this.BOr?.StartPassiveCd(t), this.LockMap.add(t);
-          for (const u of i.Actions)
-            switch (u.Action) {
+          for (const _ of s.Actions)
+            switch (_.Action) {
               case ESkillAction.AddBullet:
-                var s = e?.GetComponent(1)?.ActorTransform;
-                if (s)
-                  for (const d of u.BulletRowNames)
+                var o = e?.GetComponent(1)?.ActorTransform;
+                if (o)
+                  for (const P of _.BulletRowNames)
                     BulletController_1.BulletController.CreateBulletCustomTarget(
                       this.Entity,
-                      d,
-                      s,
+                      P,
+                      o,
                       {},
-                      i.CombatMessageId,
+                      s.CombatMessageId,
                     );
                 else
                   CombatLog_1.CombatLog.Error(
@@ -274,63 +331,84 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
                   );
                 break;
               case ESkillAction.RemoveBullet:
-                var o =
+                var r =
                   ModelManager_1.ModelManager.BulletModel?.GetBulletSetByAttacker(
                     this.Entity.Id,
                   );
-                if (void 0 !== o) {
-                  var l = new Array(),
-                    r = u.SummonChild;
-                  for (const f of o) {
-                    var a = f.GetBulletInfo();
-                    u.BulletRowNames.includes(a.BulletRowName) &&
-                      l.push(a.BulletEntityId);
+                if (void 0 !== r) {
+                  var l,
+                    a,
+                    n = new Array(),
+                    c = _.BulletRowNames,
+                    h = _.SummonChild;
+                  for (const A of r) {
+                    var u = A.GetBulletInfo(),
+                      k = c.indexOf(u.BulletRowName);
+                    0 <= k && ((k = h[k]), n.push([u.BulletEntityId, k ?? !1]));
                   }
-                  for (const g of l)
-                    BulletController_1.BulletController.DestroyBullet(g, r, 3);
+                  for ([l, a] of n)
+                    BulletController_1.BulletController.DestroyBullet(l, a, 3);
                 }
                 break;
               case ESkillAction.AddBuff:
-                var n = e.GetComponent(160),
-                  c = `被动技能${t}添加`;
-                for (const S of u.BuffId)
-                  n.AddBuff(S, {
+                var v = e.GetComponent(172),
+                  d = `被动技能${t}添加`;
+                for (const b of _.BuffId)
+                  v.AddBuff(b, {
                     InstigatorId: this.wOr.CreatureDataId,
-                    PreMessageId: i.CombatMessageId,
-                    Reason: c,
+                    PreMessageId: s.CombatMessageId,
+                    Reason: d,
                   });
                 break;
               case ESkillAction.RemoveBuff:
-                var h = e.GetComponent(160),
-                  v = `被动技能${t}移除`;
-                for (let t = 0; t < u.BuffId.length; t++) {
-                  var k = u.StackCount[t] ?? -1;
-                  h.RemoveBuff(u.BuffId[t], k, v);
+                var g = e.GetComponent(172),
+                  S = `被动技能${t}移除`;
+                for (let t = 0; t < _.BuffId.length; t++) {
+                  var f = _.StackCount[t] ?? -1;
+                  g.RemoveBuff(_.BuffId[t], f, S);
                 }
                 break;
               case ESkillAction.StartSkill:
-                o = e.CheckGetComponent(34);
-                o &&
-                  o.BeginSkill(u.SkillId, {
-                    ContextId: i.CombatMessageId,
-                    Context: "PassiveSkillComponent.ExecuteAction",
+                r = e.CheckGetComponent(39);
+                r &&
+                  r.BeginSkill(_.SkillId, {
+                    ContextId: s.CombatMessageId,
+                    Reason: "PassiveSkillComponent.ExecuteAction",
                   });
+                break;
+              case ESkillAction.LockOn:
+                var C = e.CheckGetComponent(32),
+                  m = e.CheckGetComponent(39);
+                _.IsHardLock
+                  ? C?.EnterLockDirection()
+                  : m?.LockOnTargetAndSetShow({
+                      LockOnConfigId: _.LockOnConfigId,
+                      SkillTargetPriority: _.SkillTargetPriority,
+                      ShowTarget: _.ShowTarget,
+                      GlobalTarget: _.GlobalTarget,
+                    });
+                break;
+              case ESkillAction.Customize:
+                _.Formula.Evaluate(i);
             }
           this.LockMap.delete(t);
         }
       }
   }
-  OnPassiveSkillAdded(t, e = void 0) {
-    e &&
-      e.NeedBroadcast &&
-      ((e = e.Buff?.MessageId),
-      (e =
-        SkillMessageController_1.SkillMessageController.PassiveSkillAddRequest(
-          this.Entity,
-          t,
-          e,
-        )),
-      (this.bOr.get(t).CombatMessageId = e));
+  OnPassiveSkillAdded(t, e, i, s = void 0) {
+    this.xOr.GetTrigger(e);
+    this.BOr?.InitPassiveSkill(i),
+      s &&
+        s.NeedBroadcast &&
+        ((s = s.Buff?.MessageId),
+        (s =
+          SkillMessageController_1.SkillMessageController.PassiveSkillAddRequest(
+            this.Entity,
+            t,
+            s,
+          )),
+        (this.bOr.get(t).CombatMessageId = s)),
+      i.IsDefaultActivated && this.xOr.SetTriggerActive(e, !0);
   }
   OnPassiveSkillRemoved(t, e) {
     e &&
@@ -340,16 +418,16 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
       );
   }
   static PassiveSkillAddNotify(t, e) {
-    var i = t?.GetComponent(23);
+    var i = t?.GetComponent(26);
     for (const s of e.KIs)
-      i?.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s.r5n), {
+      i?.LearnPassiveSkill(MathUtils_1.MathUtils.LongToNumber(s.r5n), {
         CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(s.K8n.$8n),
       });
   }
   static PassiveSkillRemoveNotify(t, e) {
-    var i = t?.GetComponent(23);
+    var i = t?.GetComponent(26);
     for (const s of e._As)
-      i?.ForgetPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s));
+      i?.ForgetPassiveSkill(MathUtils_1.MathUtils.LongToNumber(s));
   }
 };
 __decorate(
@@ -365,7 +443,7 @@ __decorate(
     null,
   ),
   (CharacterPassiveSkillComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(23)],
+    [(0, RegisterComponent_1.RegisterComponent)(26)],
     CharacterPassiveSkillComponent,
   )),
   (exports.CharacterPassiveSkillComponent = CharacterPassiveSkillComponent);

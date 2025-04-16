@@ -2,21 +2,21 @@
 var SceneItemResetPositionComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (t, e, i, o) {
-      var s,
+    function (t, e, i, s) {
+      var o,
         n = arguments.length,
         r =
           n < 3
             ? e
-            : null === o
-              ? (o = Object.getOwnPropertyDescriptor(e, i))
-              : o;
+            : null === s
+              ? (s = Object.getOwnPropertyDescriptor(e, i))
+              : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        r = Reflect.decorate(t, e, i, o);
+        r = Reflect.decorate(t, e, i, s);
       else
         for (var h = t.length - 1; 0 <= h; h--)
-          (s = t[h]) &&
-            (r = (n < 3 ? s(r) : 3 < n ? s(e, i, r) : s(e, i)) || r);
+          (o = t[h]) &&
+            (r = (n < 3 ? o(r) : 3 < n ? o(e, i, r) : o(e, i)) || r);
       return 3 < n && r && Object.defineProperty(e, i, r), r;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -43,6 +43,7 @@ let SceneItemResetPositionComponent =
     constructor() {
       super(...arguments),
         (this.fMn = void 0),
+        (this.Jll = !1),
         (this.Sen = void 0),
         (this.wS = void 0),
         (this.pMn = void 0),
@@ -50,6 +51,7 @@ let SceneItemResetPositionComponent =
         (this.vMn = void 0),
         (this.EIe = void 0),
         (this.MMn = !1),
+        (this.Een = void 0),
         (this.OnRemoveEntity = (t, e) => {
           var i = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
           this.EIe.GetPbDataId() === i
@@ -64,23 +66,29 @@ let SceneItemResetPositionComponent =
               ));
         }),
         (this.GUe = (t, e, i) => {
-          var o = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
-          this.vMn.includes(o) &&
-            ((o = this.vMn.indexOf(o)),
-            this.vMn.splice(o, 1),
-            EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
-              this,
+          var s = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0;
+          this.wS?.includes(s) &&
+            (EventSystem_1.EventSystem.HasWithTarget(
               e,
               EventDefine_1.EEventName.RemoveEntity,
               this.OnRemoveEntity,
-            ));
+            ) ||
+              EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+                this,
+                e,
+                EventDefine_1.EEventName.RemoveEntity,
+                this.OnRemoveEntity,
+              ),
+            this.vMn.includes(s)) &&
+            ((e = this.vMn.indexOf(s)), this.vMn.splice(e, 1));
         }),
         (this.rtn = (t, e) => {
           var i;
           this.MMn ||
-            !(e = this.ftn(e))?.Valid ||
-            ((i = e.Entity.GetComponent(187)) && !i.IsReadyForOverlap) ||
-            (this.wS &&
+            ((e = this.ftn(e))?.Valid &&
+              (!(i = e.Entity.GetComponent(200)) ||
+                (i.IsReadyForOverlap && i.Active)) &&
+              this.wS &&
               ((i = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
               this.wS.includes(i)) &&
               !this.vMn.includes(i) &&
@@ -88,23 +96,22 @@ let SceneItemResetPositionComponent =
                 e,
                 void 0,
                 this.Entity.GetComponent(0).GetCreatureDataId(),
-                !0,
               ));
         }),
-        (this.itn = (t, e, i, o) => {
-          var s;
+        (this.itn = (t, e, i, s) => {
+          var o;
           this.MMn ||
-            !(e = this.ftn(e))?.Valid ||
-            ((s = e.Entity.GetComponent(187)) && !s.IsReadyForOverlap) ||
-            (this.wS &&
-              ((s = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
-              this.wS.includes(s)) &&
-              !this.vMn.includes(s) &&
+            ((e = this.ftn(e))?.Valid &&
+              (!(o = e.Entity.GetComponent(200)) ||
+                (o.IsReadyForOverlap && o.Active)) &&
+              this.wS &&
+              ((o = e.Entity.GetComponent(0)?.GetPbDataId() ?? 0),
+              this.wS.includes(o)) &&
+              !this.vMn.includes(o) &&
               LevelGamePlayController_1.LevelGamePlayController.OnManipulatableItemExitAreaInternal(
                 e,
                 void 0,
                 this.Entity.GetComponent(0).GetCreatureDataId(),
-                !0,
               ));
         });
     }
@@ -113,61 +120,99 @@ let SceneItemResetPositionComponent =
       return (this.wS = t.EntityIds), (this.Lo = t), (this.vMn = []), !0;
     }
     OnStart() {
-      var t = this.Entity.GetComponent(1),
-        t =
-          (t && (this.fMn = t.Owner),
-          (this.EIe = this.Entity.GetComponent(0)),
-          (this.pMn = this.EIe.GetTransform()),
-          this.Lo),
-        t = t.Range;
+      (this.EIe = this.Entity.GetComponent(0)),
+        (this.pMn = this.EIe.D_GetTransform());
+      var t = this.Entity.GetComponent(1);
+      return (
+        t &&
+          ((this.Jll = !0),
+          (this.fMn = ActorSystem_1.ActorSystem.Get(
+            UE.Actor.StaticClass(),
+            this.pMn,
+          )),
+          this.fMn?.K2_AttachToActor(t.Owner, void 0, 1, 1, 1, !1)),
+        this.Koh()
+      );
+    }
+    Koh() {
+      const e = this.Lo.Range;
       if (
-        ("Box" === t.Type
-          ? this._tn(t)
-          : "Sphere" === t.Type
-            ? this.utn(t)
-            : "Volume" === t.Type && this.mtn(t),
-        !this.fMn)
-      )
-        return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "SceneGameplay",
-              30,
-              "[SceneItemResetPositionComponent] TriggerItem创建失败",
-              ["CreatureDataId", this.EIe.GetCreatureDataId()],
-              ["ConfigId", this.EIe.GetPbDataId()],
-            ),
-          !1
-        );
-      if ("Volume" === t.Type) this.fMn.OnActorEndOverlap.Add(this.rtn);
-      else {
-        if (!this.Sen)
+        ("Box" === e.Type
+          ? this._tn(e)
+          : "Sphere" === e.Type
+            ? this.utn(e)
+            : "Volume" === e.Type && this.mtn(e),
+        this.fMn)
+      ) {
+        if ("Volume" === e.Type) this.fMn.OnActorEndOverlap.Add(this.rtn);
+        else {
+          if (!this.Sen)
+            return (
+              Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "SceneGameplay",
+                  29,
+                  "[SceneItemResetPositionComponent] TriggerComponent创建失败",
+                  ["CreatureDataId", this.EIe.GetCreatureDataId()],
+                  ["ConfigId", this.EIe.GetPbDataId()],
+                ),
+              !1
+            );
+          this.Sen.OnComponentEndOverlap.Add(this.itn);
+        }
+        this.mSe();
+      } else {
+        if ("Volume" !== e.Type)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneGameplay",
-                30,
-                "[SceneItemResetPositionComponent] TriggerComponent创建失败",
+                29,
+                "[SceneItemResetPositionComponent] TriggerItem创建失败",
                 ["CreatureDataId", this.EIe.GetCreatureDataId()],
                 ["ConfigId", this.EIe.GetPbDataId()],
               ),
             !1
           );
-        this.Sen.OnComponentEndOverlap.Add(this.itn);
+        {
+          const i = (t) => {
+            t?.toString() === e.VolumeKey &&
+              ((t = this.Een.GetKuroTriggerVolume(
+                FNameUtil_1.FNameUtil.GetDynamicFName(e.VolumeKey),
+              )),
+              (this.Jll = !1),
+              (this.fMn = t),
+              this.fMn.OnActorEndOverlap.Add(this.rtn),
+              this.mSe(),
+              this.Een.OnTriggerVolumeAddToSubsystem.Remove(i));
+          };
+          this.Een.OnTriggerVolumeAddToSubsystem.Add(i);
+        }
       }
-      return this.mSe(), !0;
+      return !0;
     }
     OnClear() {
-      return this.dSe(), !0;
+      return (
+        this.dSe(),
+        this.Jll &&
+          this.fMn?.IsValid() &&
+          (this.fMn.K2_DetachFromActor(),
+          ActorSystem_1.ActorSystem.Put(
+            "SceneItemResetPositionComponent.OnClear",
+            this.fMn,
+          )),
+        (this.Jll = !1),
+        !(this.fMn = void 0)
+      );
     }
     mSe() {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AddEntity,
         this.GUe,
       );
-      for (const e of this.wS) {
+      for (const i of this.wS) {
         var t =
-          ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
+          ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i);
         t &&
           EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
             this,
@@ -176,6 +221,15 @@ let SceneItemResetPositionComponent =
             this.OnRemoveEntity,
           );
       }
+      var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+        this.EIe.GetPbDataId(),
+      );
+      EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+        this,
+        e,
+        EventDefine_1.EEventName.RemoveEntity,
+        this.OnRemoveEntity,
+      );
     }
     dSe() {
       EventSystem_1.EventSystem.Remove(
@@ -187,11 +241,12 @@ let SceneItemResetPositionComponent =
     _tn(t) {
       var e, i;
       this.fMn ||
+        ((this.Jll = !0),
         (this.fMn = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
           this.pMn,
-        )),
-        (this.Sen = this.fMn?.AddComponentByClass(
+        ))),
+        (this.Sen = this.fMn?.D_AddComponentByClass(
           UE.BoxComponent.StaticClass(),
           !1,
           this.pMn,
@@ -199,14 +254,14 @@ let SceneItemResetPositionComponent =
         )),
         this.Sen &&
           (this.Sen.SetCollisionProfileName(TRIGGER_COMPONENT_TAG, !1),
-          this.Sen?.SetBoxExtent(
-            new UE.Vector(t.Size.X, t.Size.Y, t.Size.Z),
+          this.Sen?.D_SetBoxExtent(
+            new UE.VectorDouble(t.Size.X, t.Size.Y, t.Size.Z),
             !0,
           ),
           (i = Vector_1.Vector.Create(this.pMn.GetLocation())),
           (e = Vector_1.Vector.Create(t.Center.X, t.Center.Y, t.Center.Z)),
           i.AdditionEqual(e),
-          this.Sen.K2_SetWorldLocation(i.ToUeVector(), !1, void 0, !1),
+          this.Sen.D_K2_SetWorldLocation(i.ToUeVector(), !1, void 0, !1),
           t.Rotator) &&
           ((e = Rotator_1.Rotator.Create(this.pMn.GetRotation().Rotator())),
           (i = Rotator_1.Rotator.Create(t.Rotator.Y, t.Rotator.Z, t.Rotator.X)),
@@ -216,11 +271,12 @@ let SceneItemResetPositionComponent =
     utn(t) {
       var e;
       this.fMn ||
+        ((this.Jll = !0),
         (this.fMn = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
           this.pMn,
-        )),
-        (this.Sen = this.fMn?.AddComponentByClass(
+        ))),
+        (this.Sen = this.fMn?.D_AddComponentByClass(
           UE.SphereComponent.StaticClass(),
           !1,
           this.pMn,
@@ -232,16 +288,17 @@ let SceneItemResetPositionComponent =
           (e = Vector_1.Vector.Create(this.pMn.GetLocation())),
           (t = Vector_1.Vector.Create(t.Center.X, t.Center.Y, t.Center.Z)),
           e.AdditionEqual(t),
-          this.Sen.K2_SetWorldLocation(e.ToUeVector(), !1, void 0, !1));
+          this.Sen.D_K2_SetWorldLocation(e.ToUeVector(), !1, void 0, !1));
     }
     mtn(t) {
-      t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+      this.Een = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
         GlobalData_1.GlobalData.World,
         UE.KuroTriggerVolumeManager.StaticClass(),
-      ).GetKuroTriggerVolume(
+      );
+      t = this.Een.GetKuroTriggerVolume(
         FNameUtil_1.FNameUtil.GetDynamicFName(t.VolumeKey),
       );
-      t && (this.fMn = t);
+      t && ((this.Jll = !1), (this.fMn = t));
     }
     ftn(t) {
       if (
@@ -255,7 +312,7 @@ let SceneItemResetPositionComponent =
   });
 (SceneItemResetPositionComponent = SceneItemResetPositionComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(151)],
+    [(0, RegisterComponent_1.RegisterComponent)(163)],
     SceneItemResetPositionComponent,
   )),
   (exports.SceneItemResetPositionComponent = SceneItemResetPositionComponent);

@@ -14,9 +14,9 @@ const UE = require("ue"),
   IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
-  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
   AiPatrolConfig_1 = require("./AiPatrolConfig"),
   PATROL_ANGLE_LIMIT = 15,
   TRACE_DISTANCE = 500,
@@ -53,7 +53,7 @@ class AiPatrolController {
     return !!this.$ie && !!this.Zie && 0 !== this.Xie.length;
   }
   ResetPatrol(t) {
-    var i = this.Hte.Entity.GetComponent(40),
+    var i = this.Hte.Entity.GetComponent(46),
       i = ConfigManager_1.ConfigManager.AiConfig.LoadAiPatrolConfig(
         i.AiController.AiBase,
         t,
@@ -85,10 +85,10 @@ class AiPatrolController {
               MathUtils_1.MathUtils.NumberToLong(
                 this.Hte.CreatureData.GetCreatureDataId(),
               )),
-            Net_1.Net.Call(15110, t, () => {}))
+            Net_1.Net.Call(22325, t, () => {}))
           : (this.Yie.Id = 0)),
       0 !== this.Yie.Id) &&
-      (t = this.Hte.Entity.GetComponent(190)) &&
+      (t = this.Hte.Entity.GetComponent(203)) &&
       !t.HasTag((i = 2003306528)) &&
       t.AddTag(i);
   }
@@ -108,7 +108,7 @@ class AiPatrolController {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "AI",
-          43,
+          42,
           "[AiPatrolController] NewPatrolConfig没有正确初始化",
           ["EntityId", this.E0],
         );
@@ -132,7 +132,7 @@ class AiPatrolController {
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Level",
-                32,
+                31,
                 "[AiPatrolController.InitSplineNew] SplineComponent配置类型不是Patrol",
                 ["SplineEntityId", r],
               )
@@ -146,7 +146,7 @@ class AiPatrolController {
                   r,
                 )),
               ObjectUtils_1.ObjectUtils.IsValid(e)
-                ? (e.K2_SetActorLocation(o.ToUeVector(), !1, void 0, !1),
+                ? (e.D_K2_SetActorLocation(o.ToUeVector(), !1, void 0, !1),
                   (this.zie = i),
                   (this.Jie = e),
                   this.noe("新样条实体" + r, t),
@@ -154,21 +154,21 @@ class AiPatrolController {
                 : Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Level",
-                    32,
+                    31,
                     "[AiPatrolController.InitSplineNew] Spline获取失败",
                     ["SplineEntityId", r],
                   )))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            32,
+            31,
             "[AiPatrolController.InitSplineNew] 无法找到SplineComponent配置",
             ["SplineEntityId", r],
           )
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Level",
-          32,
+          31,
           "[AiPatrolController.InitSplineNew] 无法找到Spline Entity",
           ["SplineEntityId", r],
         );
@@ -182,15 +182,15 @@ class AiPatrolController {
         (i = o?.Patrol));
       var s = this.zie,
         h = this.Jie,
-        a = this.Yie.IsNavigation,
-        n = this.Yie.Sampling,
+        n = this.Yie.IsNavigation,
+        l = this.Yie.Sampling,
         o = s.GetNumberOfSplinePoints(),
-        l = GlobalData_1.GlobalData.World,
+        a = GlobalData_1.GlobalData.World,
         _ = this.Xie;
       (_.length = 0), _.splice(0, _.length);
       for (let t = 0, e = o; t < e; t++) {
-        var C = s.GetWorldLocationAtSplinePoint(t),
-          d = (a && l && this.aoe(C, l), new PatrolPoint());
+        var C = s.D_GetLocationAtSplinePoint(t, 1),
+          d = (n && a && this.aoe(C, a), new PatrolPoint());
         if (
           ((d.IsMain = !0),
           (d.Point = Vector_1.Vector.Create(C)),
@@ -201,27 +201,27 @@ class AiPatrolController {
           r)
         ) {
           let i = s.GetDirectionAtSplinePoint(t, 1);
-          if (0 < n && t < e - 1) {
+          if (0 < l && t < e - 1) {
             var C = s.GetDistanceAlongSplineAtSplinePoint(t),
               E = s.GetDistanceAlongSplineAtSplinePoint(t + 1);
-            for (let t = C + n; t < E; t += n) {
-              var c,
-                P = s.GetDirectionAtDistanceAlongSpline(t, 1);
-              MathUtils_1.MathUtils.GetAngleByVectorDot(i, P) <
+            for (let t = C + l; t < E; t += l) {
+              var P,
+                p = s.GetDirectionAtDistanceAlongSpline(t, 1);
+              MathUtils_1.MathUtils.GetAngleByVectorDot(i, p) <
                 PATROL_ANGLE_LIMIT ||
-                ((i = P),
-                (P = s.GetWorldLocationAtDistanceAlongSpline(t)),
-                a && l && this.aoe(P, l),
-                ((c = new PatrolPoint()).IsMain = !1),
-                (c.Point = Vector_1.Vector.Create(P)),
-                _.push(c));
+                ((i = p),
+                (p = s.D_GetLocationAtDistanceAlongSpline(t, 1)),
+                n && a && this.aoe(p, a),
+                ((P = new PatrolPoint()).IsMain = !1),
+                (P.Point = Vector_1.Vector.Create(p)),
+                _.push(P));
             }
           }
         }
       }
       0 === _.length &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Level", 30, "Spline初始化移动点为空", ["Path", t]);
+        Log_1.Log.Error("Level", 29, "Spline初始化移动点为空", ["Path", t]);
     }
   }
   aoe(t, i) {
@@ -296,7 +296,7 @@ class AiPatrolController {
         i?.IsMain &&
           (this.ChangeMoveSpeed(e, r, i.MoveSpeed),
           (s = this.Hte).SkeletalMesh?.SetVisibility(!i.IsHide),
-          (o = s.Entity.GetComponent(190))) &&
+          (o = s.Entity.GetComponent(203))) &&
           ((e = -841499802),
           i.IsHide
             ? o.HasTag(e) || o.AddTag(e)
@@ -322,7 +322,7 @@ class AiPatrolController {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Level",
-          30,
+          29,
           "巡逻过程中MoveState发生改变",
           ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
           ["CorrectState", e],
@@ -346,7 +346,7 @@ class AiPatrolController {
     this.eoe || (this.eoe = new Array());
     for (let t = 0, i = e.length; t < i; t++) this.eoe.push(e[t]);
     var t,
-      i = this.Hte.Entity.GetComponent(190);
+      i = this.Hte.Entity.GetComponent(203);
     i && !i.HasTag((t = -1645015979)) && i.AddTag(t);
   }
   GetNextPerformanceTag() {
@@ -367,12 +367,12 @@ class AiPatrolController {
       i =
         ((this.E0 = e.Entity.Id),
         (this.roe = i),
-        BlackboardController_1.BlackboardController.SetIntValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
           this.E0,
           END_KEY,
           0,
         ),
-        BlackboardController_1.BlackboardController.GetIntValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
           this.E0,
           TIMES_KEY,
         ));
@@ -382,7 +382,7 @@ class AiPatrolController {
       t
         ? void 0 !==
             (i =
-              BlackboardController_1.BlackboardController.GetIntValueByEntity(
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
                 this.E0,
                 INDEX_KEY,
               )) && i < this.Xie.length
@@ -391,7 +391,7 @@ class AiPatrolController {
             this.coe(t))
         : ((i = this.GetNearestPatrolPointIndex(e.ActorLocationProxy)),
           this.coe(i)),
-      BlackboardController_1.BlackboardController.SetIntValueByEntity(
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
         this.E0,
         INDEX_KEY,
         this.ioe,
@@ -409,13 +409,13 @@ class AiPatrolController {
       this.Yie.CirclePatrol
         ? (this.ioe + 1) % this.Xie.length === this.Yie.StartIndex &&
           (++this.toe,
-          BlackboardController_1.BlackboardController.SetIntValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
             this.E0,
             TIMES_KEY,
             this.toe,
           ),
           this.Yie.Loop ||
-            BlackboardController_1.BlackboardController.SetIntValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
               this.E0,
               END_KEY,
               1,
@@ -424,21 +424,21 @@ class AiPatrolController {
           ? 0 === this.ioe &&
             ((this.ooe = !1),
             ++this.toe,
-            BlackboardController_1.BlackboardController.SetIntValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
               this.E0,
               TIMES_KEY,
               this.toe,
             ))
           : this.ioe === this.Xie.length - 1 &&
             (++this.toe,
-            BlackboardController_1.BlackboardController.SetIntValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
               this.E0,
               TIMES_KEY,
               this.toe,
             ),
             this.Yie.Loop
               ? (this.ooe = !0)
-              : BlackboardController_1.BlackboardController.SetIntValueByEntity(
+              : ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
                   this.E0,
                   END_KEY,
                   1,
@@ -453,7 +453,7 @@ class AiPatrolController {
     ) {
       if (!this.$ie.Loop)
         return (
-          BlackboardController_1.BlackboardController.SetIntValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
             this.E0,
             END_KEY,
             1,
@@ -461,7 +461,7 @@ class AiPatrolController {
           !0
         );
       ++this.toe,
-        BlackboardController_1.BlackboardController.SetIntValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
           this.E0,
           TIMES_KEY,
           this.toe,
@@ -475,7 +475,7 @@ class AiPatrolController {
         ? ((this.ooe = !1),
           this.coe(0),
           ++this.toe,
-          BlackboardController_1.BlackboardController.SetIntValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
             this.E0,
             TIMES_KEY,
             this.toe,
@@ -484,7 +484,7 @@ class AiPatrolController {
     else if (this.ioe === this.Xie.length - 1) {
       if (
         (++this.toe,
-        BlackboardController_1.BlackboardController.SetIntValueByEntity(
+        ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
           this.E0,
           TIMES_KEY,
           this.toe,
@@ -492,7 +492,7 @@ class AiPatrolController {
         !this.$ie.Loop)
       )
         return (
-          BlackboardController_1.BlackboardController.SetIntValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
             this.E0,
             END_KEY,
             1,
@@ -504,11 +504,11 @@ class AiPatrolController {
     return !1;
   }
   PatrolFinish() {
-    BlackboardController_1.BlackboardController.GetIntValueByEntity(
+    ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
       this.E0,
       INDEX_KEY,
     ) !== this.ioe &&
-      BlackboardController_1.BlackboardController.SetIntValueByEntity(
+      ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByEntity(
         this.E0,
         INDEX_KEY,
         this.ioe,
@@ -529,10 +529,11 @@ class AiPatrolController {
     return this.Xie;
   }
   GetLastPatrolPoint() {
-    var t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-      this.E0,
-      INDEX_KEY,
-    );
+    var t =
+      ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
+        this.E0,
+        INDEX_KEY,
+      );
     if (t) {
       t = this.GetPatrolPoint(t);
       if (t) return t.Point;
@@ -546,7 +547,8 @@ class AiPatrolController {
       this.soe();
   }
 }
-(exports.AiPatrolController = AiPatrolController).OpenNpcPatrolDebugMode = !0;
+((exports.AiPatrolController = AiPatrolController).OpenNpcPatrolDebugMode = !0),
+  (AiPatrolController.uoe = void 0);
 class PatrolPoint {
   constructor() {
     (this.IsMain = !1),

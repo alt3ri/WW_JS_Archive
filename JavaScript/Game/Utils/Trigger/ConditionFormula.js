@@ -250,12 +250,15 @@ class Formula {
       (this.Params = void 0),
       (this.lDt = void 0),
       (this.$gr = new Map()),
-      (this.JQn = ""),
+      (this.olh = new Map()),
       (this.zQn = new Set()),
       (this.Rgr = r);
     var e = new Lexer(r).Tokenize(),
       e = new Parser(e);
     (this.Xgr = e.Parse(r)), (this.Params = void 0);
+  }
+  get FormulaStr() {
+    return this.Rgr;
   }
   SetBuiltinFunctions(r) {
     this.$gr.clear();
@@ -355,7 +358,7 @@ class Formula {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "Event",
-              20,
+              19,
               "Trigger条件解析异常",
               r,
               ["formula", this.Rgr],
@@ -364,7 +367,7 @@ class Formula {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Event",
-              20,
+              19,
               "Trigger条件解析异常",
               ["formula", this.Rgr],
               ["error", r],
@@ -373,36 +376,6 @@ class Formula {
       this.lDt = void 0;
     }
     return e;
-  }
-  GetFormulaString(r) {
-    switch (r.NodeType) {
-      case 0:
-      case 1:
-      case 2:
-        return r.Value.toString();
-      case 3:
-        return `[${r.Value.map((r) => this.GetFormulaString(r)).join(",")}]`;
-      case 4:
-        return r.Value;
-      case 9:
-        return `${this.GetFormulaString(r.Value)}[${this.GetFormulaString(r.Index)}]`;
-      case 6:
-        return `${r.Operator}(${this.GetFormulaString(r.Args[0])})`;
-      case 5:
-        return (
-          `${this.GetFormulaString(r.Args[0])} ${r.Operator} ` +
-          this.GetFormulaString(r.Args[1])
-        );
-      case 7:
-        return `${r.Value}(${r.Args.map((r) => this.GetFormulaString(r)).join(",")})`;
-      case 8:
-        return `(${this.GetFormulaString(r.Value)})`;
-      default:
-        return "";
-    }
-  }
-  GetLastResult() {
-    return this.JQn;
   }
 }
 exports.Formula = Formula;

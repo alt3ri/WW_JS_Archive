@@ -1,6 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.InteractionModel = void 0);
+  (exports.InteractionModel =
+    exports.COLOR_SUFFIX =
+    exports.COLOR_PREFIX =
+    exports.LOCK_TEXTURE_PREFIX =
+    exports.LOCK_TEXTURE =
+    exports.UNLOCK_TEXTURE =
+      void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
@@ -19,6 +25,14 @@ const puerts_1 = require("puerts"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   TsInteractionUtils_1 = require("./TsInteractionUtils"),
   DEFAULT_CD = 0.5;
+(exports.UNLOCK_TEXTURE =
+  "/Game/Aki/UI/UIResources/Common/Image/InteractionIcon/T_InteractionIcon11.T_InteractionIcon11"),
+  (exports.LOCK_TEXTURE =
+    "/Game/Aki/UI/UIResources/Common/Image/InteractionIcon/T_InteractionIcon12.T_InteractionIcon12"),
+  (exports.LOCK_TEXTURE_PREFIX =
+    "<texture=/Game/Aki/UI/UIResources/Common/Image/InteractionIcon/T_InteractionIcon12.T_InteractionIcon12,0.4687/>"),
+  (exports.COLOR_PREFIX = "<color=#e2524c>"),
+  (exports.COLOR_SUFFIX = "</color>");
 class SameTipInteract {
   constructor() {
     (this.EntityId = 0), (this.CurrentDistance = 0);
@@ -145,7 +159,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Interaction",
-            18,
+            17,
             "获取交互默认退出选项失败，请检查配置InteractionConfig是否有Common_Exit",
           )
         : (this.I_i = this.y_i.交互选项组.Get(0));
@@ -175,11 +189,11 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   RefreshInteractEntities(e) {
     let t = 0;
-    for (const n of this.R_i)
-      if (n) {
-        var i = n.GetEntity();
+    for (const o of this.R_i)
+      if (o) {
+        var i = o.GetEntity();
         if (i?.Valid) {
-          var r = n.DirectOptionInstanceIds.length;
+          var r = o.DirectOptionInstanceIds.length;
           if (r <= 0) e.push(i), this.CanAutoPickUp(i) && t++;
           else {
             this.CanAutoPickUp(i) && (t += r);
@@ -190,8 +204,8 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return (
       (this.x_i = e.length),
       e.sort((t, e) => {
-        (t = t.GetComponent(182)),
-          (e = e.GetComponent(182)),
+        (t = t.GetComponent(195)),
+          (e = e.GetComponent(195)),
           (t = t.GetInteractController().InteractEntity.Priority);
         return e.GetInteractController().InteractEntity.Priority - t;
       }),
@@ -205,10 +219,10 @@ class InteractionModel extends ModelBase_1.ModelBase {
     var e;
     return (
       !!t?.Valid &&
-      !t.GetComponent(213)?.GetIsDisableOneClickCollection() &&
+      !t.GetComponent(247)?.GetIsDisableOneClickCollection() &&
       !(
-        !(e = t.GetComponent(182))?.IsPawnInteractive() ||
-        (!t.GetComponent(105)?.IsDropItem() &&
+        !(e = t.GetComponent(195))?.IsPawnInteractive() ||
+        (!t.GetComponent(115)?.IsDropItem() &&
           !e.IsCollection() &&
           (!e.IsAnimationItem() ||
             !(e = t.GetComponent(0))?.Valid ||
@@ -236,6 +250,24 @@ class InteractionModel extends ModelBase_1.ModelBase {
         e -= i.DirectOptionNames.length;
       } else e--;
   }
+  GetConditionIconPath(t) {
+    let e = t;
+    for (const i of this.R_i)
+      if (i && !i.IsAdvice && 0 < i.DirectOptionInstanceIds.length) {
+        if (e < i.DirectOptionConditionIcon.length)
+          return i.DirectOptionConditionIcon[e];
+        e -= i.DirectOptionConditionIcon.length;
+      } else e--;
+  }
+  GetToggleGray(t) {
+    let e = t;
+    for (const i of this.R_i)
+      if (i && !i.IsAdvice && 0 < i.DirectOptionInstanceIds.length) {
+        if (e < i.DirectOptionGray.length) return i.DirectOptionGray[e];
+        e -= i.DirectOptionGray.length;
+      } else e--;
+    return !1;
+  }
   GetCommonExitOption() {
     return this.I_i || this.w_i(), this.I_i;
   }
@@ -245,78 +277,78 @@ class InteractionModel extends ModelBase_1.ModelBase {
   InInteractCd() {
     return this.T_i > TimeUtil_1.TimeUtil.GetServerTime();
   }
-  HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
-    if (t) {
-      let t = !1;
-      if ((t = !i || this.B_i(e, i, r))) {
-        if (t)
-          if (this.D_i.includes(e)) {
-            if (
-              TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
-            )
-              return;
-          } else this.D_i.push(e), this.R_i.push(n);
-        TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
-          ? 0 < this.D_i.length &&
-            TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
-          : TsInteractionUtils_1.TsInteractionUtils.OpenInteractHintView();
-      } else
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Interaction",
-            37,
-            "[交互界面提前返回] bAllowPush为false",
-          );
+  HandleInteractionHint(e, i, t = void 0) {
+    if (e) {
+      if (this.D_i.includes(i)) {
+        if (TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened())
+          return;
+      } else this.D_i.push(i), this.R_i.push(t);
+      TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
+        ? 0 < this.D_i.length &&
+          TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
+        : TsInteractionUtils_1.TsInteractionUtils.OpenInteractHintView();
     } else {
-      t = this.D_i.indexOf(e);
-      -1 < t &&
-        (this.D_i.splice(t, 1),
-        this.R_i.splice(t, 1),
-        0 < this.D_i.length
-          ? TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
-          : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView());
+      e = this.D_i.indexOf(i);
+      if (-1 < e) {
+        this.D_i.splice(e, 1), this.R_i.splice(e, 1);
+        let t = void 0;
+        for (const r of this.U_i)
+          if (r[1].EntityId === i) {
+            t = r[0];
+            break;
+          }
+        t && this.U_i.delete(t),
+          0 < this.D_i.length
+            ? TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
+            : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView();
+      }
     }
   }
-  B_i(t, e = void 0, i = -1) {
-    let r = !1;
-    if (1 === e.CustomOptionType) return !1;
-    if (!e.IsUniqueness) return !0;
-    if (e.UniequenessType === IAction_1.EInteractUniqueness.Closest) {
-      if ("" === e.TidContent || -1 === i) return !0;
-      var n,
-        o = this.U_i.get(e.TidContent);
-      if (!o)
-        return (
-          ((n = new SameTipInteract()).EntityId = t),
-          (n.CurrentDistance = i),
-          this.U_i.set(e.TidContent, n),
-          !0
-        );
-      this.D_i.includes(o.EntityId)
-        ? o.CurrentDistance > i && t !== o.EntityId
-          ? ((r = !0),
-            -1 < (e = this.D_i.indexOf(o.EntityId)) &&
-              (this.D_i.splice(e, 1), this.R_i.splice(e, 1)),
-            (o.EntityId = t),
-            (o.CurrentDistance = i))
-          : t === o.EntityId && (o.CurrentDistance = i)
-        : ((r = !0), (o.EntityId = t), (o.CurrentDistance = i));
-    } else r = !0;
-    return r;
+  CheckOptionUniqueness(t, e = void 0, i = -1) {
+    var r, o;
+    return (
+      1 !== e.CustomOptionType &&
+      !(
+        e.IsUniqueness &&
+        e.UniequenessType === IAction_1.EInteractUniqueness.Closest &&
+        "" !== e.TidContent &&
+        -1 !== i &&
+        ((r = this.U_i.get(e.TidContent))
+          ? r.CurrentDistance > i && t !== r.EntityId
+            ? (-1 < (o = this.D_i.indexOf(r.EntityId)) &&
+                (this.D_i.splice(o, 1), this.R_i.splice(o, 1)),
+              (r.EntityId = t),
+              (r.CurrentDistance = i),
+              0)
+            : t !== r.EntityId || ((r.CurrentDistance = i), 0)
+          : (((o = new SameTipInteract()).EntityId = t),
+            (o.CurrentDistance = i),
+            this.U_i.set(e.TidContent, o),
+            0))
+      )
+    );
   }
-  AddInteractOption(t, e, i, r, n) {
-    t = this.GetInteractController(t);
-    return t
+  AddInteractOption(t, e, i, r, o) {
+    var n = this.GetInteractController(t);
+    return n
       ? (e = this.GetDynamicConfig(e))
-        ? t.AddDynamicInteractOption(e, i, r, n)
+        ? n.AddDynamicInteractOption(e, i, r, o)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Interaction",
-              19,
+              18,
               "交互选项配置丢失，请确认前后端配置是否一致",
+              ["PbDataId", t.GetComponent(0)?.GetPbDataId()],
             ),
           -1)
-      : -1;
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Interaction",
+            36,
+            "AddInteractOption failed.InteractController is undefined",
+            ["PbDataId", t.GetComponent(0)?.GetPbDataId()],
+          ),
+        -1);
   }
   RemoveInteractOption(t, e) {
     t = this.GetInteractController(t);
@@ -328,7 +360,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetInteractController(t) {
     if (t) {
-      t = t.GetComponent(182);
+      t = t.GetComponent(195);
       if (t) return t.GetInteractController();
     }
   }
@@ -336,7 +368,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     this.A_i !== t &&
       ((this.A_i = t),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Interaction", 37, "切换交互目标", ["entityId", t]),
+        Log_1.Log.Debug("Interaction", 36, "切换交互目标", ["entityId", t]),
       InputDistributeController_1.InputDistributeController.RefreshInputTag());
   }
   get CurrentInteractEntityId() {
@@ -380,7 +412,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
       }
     } else
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("World", 37, "不存在InteractOption配置文件。", [
+        Log_1.Log.Warn("World", 36, "不存在InteractOption配置文件。", [
           "Path",
           e,
         ]);
@@ -423,7 +455,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     return this.L_i;
   }
   LockInteraction(t, e) {
-    t = t?.GetComponent(182);
+    t = t?.GetComponent(195);
     t && t.Valid && t.SetServerLockInteract(e, "Interacting Notify");
   }
   GetInteractEntityIds() {
@@ -434,7 +466,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelEvent",
-          37,
+          36,
           "交互锁定状态不支持多重锁定，请做到配置成对",
         )
       : ((this.LockInteractionEntity = t),
@@ -451,7 +483,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
     this.LockInteractionEntity &&
       ((t = EntitySystem_1.EntitySystem.GetComponent(
         this.LockInteractionEntity,
-        182,
+        195,
       )),
       (this.LockInteractionEntity = void 0),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(1),

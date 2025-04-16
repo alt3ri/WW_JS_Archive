@@ -11,6 +11,7 @@ class AiModel extends ModelBase_1.ModelBase {
       (this.ActiveAiControllers = new Map()),
       (this.AiScoreManager = new ScoreUpdateManager_1.ScoreUpdateManager()),
       (this.HatredGroups = new Map()),
+      (this.a6_ = new Map()),
       (this.Lte = 0);
   }
   AddAiScore(e) {
@@ -29,21 +30,28 @@ class AiModel extends ModelBase_1.ModelBase {
       t
     );
   }
-  AddActiveAiController(t) {
-    var e = t.CharAiDesignComp.Entity.Id;
+  AddActiveAiController(i) {
+    var s = i.CharAiDesignComp.Entity.Id;
     if (
-      !this.ActiveAiControllers.has(e) &&
-      (this.ActiveAiControllers.set(e, t), t.HatredGroupId)
+      !this.ActiveAiControllers.has(s) &&
+      (this.ActiveAiControllers.set(s, i), i.HatredGroupId)
     ) {
-      let e = this.HatredGroups.get(t.HatredGroupId);
-      e || ((e = new Set()), this.HatredGroups.set(t.HatredGroupId, e)),
-        e.add(t);
+      s = i.CharActorComp.Actor.Camp;
+      this.a6_.set(i, s);
+      let e = this.HatredGroups.get(s),
+        t =
+          (e || ((e = new Map()), this.HatredGroups.set(s, e)),
+          e.get(i.HatredGroupId));
+      t || ((t = new Set()), e.set(i.HatredGroupId, t)), t.add(i);
     }
   }
   RemoveActiveAiController(e) {
+    var t;
     this.ActiveAiControllers.delete(e.CharAiDesignComp.Entity.Id) &&
       e.HatredGroupId &&
-      this.HatredGroups.get(e.HatredGroupId)?.delete(e);
+      (t = this.a6_.get(e)) &&
+      (this.HatredGroups.get(t)?.get(e.HatredGroupId)?.delete(e),
+      this.a6_.delete(e));
   }
 }
 exports.AiModel = AiModel;

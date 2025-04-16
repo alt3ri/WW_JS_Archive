@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiPanelFormationRolePhantomExtension = void 0);
 const UE = require("ue"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
-  UiManager_1 = require("../../Ui/UiManager"),
   LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
   TowerDefenceController_1 = require("../TowerDefence/TowerDefenceController"),
   TowerDefenceDefine_1 = require("../TowerDefence/TowerDefenceDefine");
@@ -18,12 +17,10 @@ class UiPanelFormationRolePhantomExtension extends UiPanelBase_1.UiPanelBase {
       (this.xua = void 0),
       (this.Pua = !1),
       (this.eTt = () => {
-        var e;
-        TowerDefenceController_1.TowerDefenseController.CheckIsSelf(
+        TowerDefenceController_1.TowerDefenseController.TryOpenPhantomViewByPlayerIdAndRoleId(
           this.PlayerId,
-        ) &&
-          ((e = { RoleCfgId: this.RoleCfgId }),
-          UiManager_1.UiManager.OpenView("TowerDefencePhantomView", e));
+          this.RoleCfgId,
+        );
       }),
       (this.mzt = e);
   }

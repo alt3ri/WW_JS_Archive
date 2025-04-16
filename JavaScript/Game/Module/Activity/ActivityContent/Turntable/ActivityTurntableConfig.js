@@ -4,24 +4,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const TurntableActivityByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TurntableActivityByActivityId"),
   TurntableAwardsByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/TurntableAwardsByActivityId"),
   TurntableInfoById_1 = require("../../../../../Core/Define/ConfigQuery/TurntableInfoById"),
+  TurntableTaskByTaskId_1 = require("../../../../../Core/Define/ConfigQuery/TurntableTaskByTaskId"),
   ConfigBase_1 = require("../../../../../Core/Framework/ConfigBase");
 class ActivityTurntableConfig extends ConfigBase_1.ConfigBase {
-  GetTurntableAwardsByActivityId(t) {
+  GetTurntableAwardsByActivityId(e) {
     return (
       TurntableAwardsByActivityId_1.configTurntableAwardsByActivityId.GetConfigList(
-        t,
+        e,
       ) ?? []
     );
   }
-  GetTurntableInfoByActivityId(t) {
-    return TurntableInfoById_1.configTurntableInfoById.GetConfig(t);
+  GetTurntableInfoByActivityId(e) {
+    return TurntableInfoById_1.configTurntableInfoById.GetConfig(e);
   }
-  GetTurntableActivityByActivityId(t) {
+  GetTurntableActivityByActivityId(e) {
     return (
       TurntableActivityByActivityId_1.configTurntableActivityByActivityId.GetConfigList(
-        t,
+        e,
       ) ?? []
     );
+  }
+  GetTurntableTaskByTaskId(e) {
+    return TurntableTaskByTaskId_1.configTurntableTaskByTaskId.GetConfig(e);
   }
 }
 exports.ActivityTurntableConfig = ActivityTurntableConfig;

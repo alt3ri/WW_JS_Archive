@@ -16,9 +16,6 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
   RefreshPhantom(t, a) {
     this.PhantomMap.set(t, a);
   }
-  GetPhantomId(t) {
-    return this.PhantomMap.get(t);
-  }
   SetIsTrial(t) {
     this.Hfi = t;
   }
@@ -42,22 +39,16 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     }
     return this.NQ;
   }
+  GetIncrIdList() {
+    return ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
+      this.RoleId,
+    ).GetIncrIdList();
+  }
   GetDataByIndex(t) {
     return this.GetDataMap().get(t);
   }
-  GetMainProp() {
-    var t;
-    return this.Hfi
-      ? this.NQ.get(0)
-      : ((t = ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
-          this.RoleId,
-        ).GetIncrIdList()),
-        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-          t[0],
-        ));
-  }
   GetPhantomFettersData() {
-    const n = new Array();
+    const s = new Array();
     return (
       this.GetPhantomFetterMap().forEach((t, r) => {
         t.forEach((t, a) => {
@@ -67,10 +58,10 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
             (e.NeedActiveNum = t),
             (e.ActiveFetterGroupNum = t),
             (e.ActiveState = !0),
-            n.push(e);
+            s.push(e);
         });
       }),
-      n
+      s
     );
   }
   GetPhantomFetterMap() {

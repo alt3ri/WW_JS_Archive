@@ -14,7 +14,7 @@ class UiResourceConfig extends ConfigBase_1.ConfigBase {
     return o
       ? UiResourceConfig.GetResourcePathNormal(o)
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Resource", 11, "查找资源配置失败", [
+          Log_1.Log.Error("Resource", 10, "查找资源配置失败", [
             "ResourceId",
             e,
           ]),

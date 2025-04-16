@@ -68,8 +68,8 @@ let SceneItemReboundComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
-        (this.Lie = this.Entity.GetComponent(181)),
+        (this.Hte = this.Entity.GetComponent(200)),
+        (this.Lie = this.Entity.GetComponent(194)),
         (this.Ovn = Vector_1.Vector.Create()),
         (this.kvn = Vector_1.Vector.Create()),
         (this.u9r = Vector_1.Vector.Create()),
@@ -107,7 +107,7 @@ let SceneItemReboundComponent =
         this.l9r.SetTraceTypeQuery(
           QueryTypeDefine_1.KuroTraceTypeQuery.Visible,
         )),
-        (this.l9r.WorldContextObject = this.Entity.GetComponent(187)?.Owner);
+        (this.l9r.WorldContextObject = this.Entity.GetComponent(200)?.Owner);
     }
     CalculateReflectDir(t, e, i = void 0, s = !0) {
       if (
@@ -183,7 +183,7 @@ let SceneItemReboundComponent =
           ),
           this.Wvn
             ? ((i
-                ? (this.Ovn.DeepCopy(i.K2_GetActorLocation()),
+                ? (this.Ovn.DeepCopy(i.D_K2_GetActorLocation()),
                   this.cie.FromUeRotator(i.K2_GetActorRotation()),
                   this.cie)
                 : (this.Ovn.DeepCopy(this.Hte.ActorLocationProxy),
@@ -207,7 +207,7 @@ let SceneItemReboundComponent =
   });
 (SceneItemReboundComponent = SceneItemReboundComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(149)],
+    [(0, RegisterComponent_1.RegisterComponent)(160)],
     SceneItemReboundComponent,
   )),
   (exports.SceneItemReboundComponent = SceneItemReboundComponent);

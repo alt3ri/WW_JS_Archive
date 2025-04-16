@@ -24,8 +24,12 @@ class MonsterInfo {
   get Tachine() {
     return this.tachine();
   }
-  get ElementId() {
-    return this.elementid();
+  get ElementIdArray() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.elementidarrayLength(),
+      this.elementidarray,
+      this,
+    );
   }
   get MonsterEntityID() {
     return this.monsterentityid();
@@ -46,11 +50,11 @@ class MonsterInfo {
       this,
     );
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsMonsterInfo(t, s) {
-    return (s || new MonsterInfo()).__init(
+  static getRootAsMonsterInfo(t, i) {
+    return (i || new MonsterInfo()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -60,51 +64,116 @@ class MonsterInfo {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   rarityid() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   icon(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   bigicon(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   tachine(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
-  elementid() {
+  GetElementidarrayAt(t) {
+    return this.elementidarray(t);
+  }
+  elementidarray(t) {
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  elementidarrayLength() {
     var t = this.J7.__offset(this.z7, 16);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  elementidarrayArray() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   monsterentityid(t) {
-    var s = this.J7.__offset(this.z7, 18);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   monsterpose(t) {
-    var s = this.J7.__offset(this.z7, 20);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   undiscovereddes(t) {
-    var s = this.J7.__offset(this.z7, 22);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   discovereddes(t) {
-    var s = this.J7.__offset(this.z7, 24);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetPerchidAt(t) {
     return this.perchid(t);
   }
   perchid(t) {
-    var s = this.J7.__offset(this.z7, 26);
-    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+    var i = this.J7.__offset(this.z7, 26);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   perchidLength() {
     var t = this.J7.__offset(this.z7, 26);

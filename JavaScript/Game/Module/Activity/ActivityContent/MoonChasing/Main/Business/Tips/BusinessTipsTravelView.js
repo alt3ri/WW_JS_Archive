@@ -47,14 +47,14 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
           t.RefreshProgressAdd(i),
             1 === i && (t.RefreshProgress(i), t.SetLightProgressWidth());
       }),
-      (this.Kpa = (i) => {
+      (this.$pa = (i) => {
         for (const t of this.CharacterListModule.GetItemList())
           t.RefreshCurrentValue(i);
       }),
-      (this.ufa = () => {
+      (this.afa = () => {
         (this.RunTimerHandle = void 0),
-          this.$pa(),
           this.Xpa(),
+          this.Ypa(),
           (this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
             GlobalData_1.GlobalData.World,
             this.Delegate,
@@ -62,24 +62,27 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
             1,
             TWEEN_TIME,
           )),
-          this.ExpTweener?.OnCompleteCallBack.Bind(this.Fwa),
+          this.ExpTweener?.OnCompleteCallBack.Bind(this.rBa),
           AudioSystem_1.AudioSystem.PostEvent("play_ui_figure_up_1s");
       }),
-      (this.Fwa = () => {
+      (this.rBa = () => {
         this.q1a(!1);
       }),
       (this.t2e = () => {
         if (this.IsLastFinishShow) this.GAn(), this.Dsa();
         else if (this.IsInResult) {
-          this.Vwa();
+          this.oBa();
           const i = this.GAn();
           if (i) {
-            if (this.SNn()) return void this.zpa();
-            this.Zpa(), this.ShowAddCharacter();
-          } else this.ExpTweener?.Kill(), this.q1a(!0);
+            if (this.SNn()) return void this.Zpa();
+            this.qva(), this.ShowAddCharacter();
+          } else
+            this.ExpTweener &&
+              (this.ExpTweener.Kill(), (this.ExpTweener = void 0)),
+              this.q1a(!0);
         } else {
-          const i = this.vfa();
-          i && this.ufa();
+          const i = this.mfa();
+          i && this.afa();
         }
       });
   }
@@ -124,7 +127,7 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
     this.GetButton(2)?.RootUIComp.SetUIActive(!1),
       this.GetLayoutBase(3)?.RootUIComp.SetUIActive(!1),
       (this.Delegate = (0, puerts_1.toManualReleaseDelegate)(this.OAn)),
-      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.Kpa)),
+      (this.ValueDelegate = (0, puerts_1.toManualReleaseDelegate)(this.$pa)),
       await Promise.all([this.PAr(), this.mJs()]);
   }
   async OnBeforeShowAsyncImplementImplement() {
@@ -139,12 +142,12 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
         ((0, puerts_1.releaseManualReleaseDelegate)(this.OAn),
         (this.Delegate = void 0)),
       this.ValueDelegate &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.Kpa),
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.$pa),
         (this.ValueDelegate = void 0)),
       this.gzi(),
-      this.pfa(),
-      this.vfa(),
-      this.Hwa();
+      this.Cfa(),
+      this.mfa(),
+      this.nBa();
   }
   ShowAddCharacter() {
     if (!this.SNn()) {
@@ -159,7 +162,7 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
         var s = this.e2e[i].CurrentValue + e.CharacterValueList[i];
         this.e2e[i].SetCurrentValue(s);
       }
-      this.Kva(), this.Xva(), this.Mfa(), this.Sfa();
+      this.Gva(), this.Ova(), this.gfa(), this.ffa();
     }
   }
   async n2e() {
@@ -183,32 +186,32 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
   gzi() {
     this.ExpTweener && (this.ExpTweener.Kill(), (this.ExpTweener = void 0));
   }
-  Kva() {
+  Gva() {
     this.RoleLayout.GetLayoutItemByKey(this.ShowIndex)?.PlayStartAction();
   }
-  Xva() {
+  Ova() {
     for (const i of this.CharacterListModule.GetItemList()) i.PlayStartAction();
   }
-  $pa() {
+  Xpa() {
     var i = this.RoleLayout.GetLayoutItemByKey(this.ShowIndex),
       t = ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData(),
       e = i.GetRoleId(),
       t = t.GetRoleResultDataById(e),
       e = this.OpenParam.LastLevelList;
-    i?.PlayRunFinishAction(t.SuccessResult, e[this.ShowIndex]), this.jwa();
+    i?.PlayRunFinishAction(t.SuccessResult, e[this.ShowIndex]), this.sBa();
   }
-  Vwa() {
+  oBa() {
     this.RoleLayout.GetLayoutItemByKey(this.ShowIndex)?.StopRunToLastFrame();
   }
-  Xpa() {
+  Ypa() {
     for (const i of this.CharacterListModule.GetItemList())
       i.PlayAddAction(), i.RefreshAddText();
   }
-  Zpa() {
+  qva() {
     (this.IsInResult = !1),
       this.RoleLayout.GetLayoutItemByKey(this.ShowIndex)?.PlayEndAction();
   }
-  Ypa() {
+  Jpa() {
     for (const i of this.CharacterListModule.GetItemList()) i.PlayEndAction();
   }
   SNn() {
@@ -223,7 +226,7 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
       ),
       ControllerHolder_1.ControllerHolder.MoonChasingController.TipsTravelSkipToNextStep();
   }
-  Mfa() {
+  gfa() {
     this.GetButton(2)?.RootUIComp.SetUIActive(!1);
     var i = ConfigManager_1.ConfigManager.BusinessConfig.GetSkipAnimDelayTime();
     this.SkipAnimDelayTimerHandle = TimerSystem_1.TimerSystem.Delay(() => {
@@ -231,34 +234,34 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
         (this.SkipAnimDelayTimerHandle = void 0);
     }, i);
   }
-  pfa() {
+  Cfa() {
     this.SkipAnimDelayTimerHandle &&
       (TimerSystem_1.TimerSystem.Remove(this.SkipAnimDelayTimerHandle),
       (this.SkipAnimDelayTimerHandle = void 0));
   }
-  Sfa() {
-    this.RunTimerHandle = TimerSystem_1.TimerSystem.Delay(this.ufa, RUN_TIME);
+  ffa() {
+    this.RunTimerHandle = TimerSystem_1.TimerSystem.Delay(this.afa, RUN_TIME);
   }
-  vfa() {
+  mfa() {
     return !(
       !this.RunTimerHandle ||
       (TimerSystem_1.TimerSystem.Remove(this.RunTimerHandle),
       (this.RunTimerHandle = void 0))
     );
   }
-  jwa() {
+  sBa() {
     this.SkipResultTimeHandle = TimerSystem_1.TimerSystem.Delay(() => {
-      this.Hwa(), (this.IsInResult = !0);
+      this.nBa(), (this.IsInResult = !0);
     }, SKIP_RESULT_DELAY);
   }
-  Hwa() {
+  nBa() {
     return !(
       !this.SkipResultTimeHandle ||
       (TimerSystem_1.TimerSystem.Remove(this.SkipResultTimeHandle),
       (this.SkipResultTimeHandle = void 0))
     );
   }
-  Jpa() {
+  zpa() {
     this.ExpTweener = UE.LTweenBPLibrary.FloatTo(
       GlobalData_1.GlobalData.World,
       this.ValueDelegate,
@@ -268,19 +271,19 @@ class BusinessTipsTravelView extends UiViewBase_1.UiViewBase {
     );
   }
   q1a(i) {
-    this.Ypa(),
-      this.Jpa(),
+    this.Jpa(),
+      this.zpa(),
       this.GAn(),
       i
         ? this.SNn()
-          ? this.zpa()
-          : (this.Zpa(), this.ShowAddCharacter())
+          ? this.Zpa()
+          : (this.qva(), this.ShowAddCharacter())
         : (this.TimerHandle = TimerSystem_1.TimerSystem.Delay(() => {
             (this.TimerHandle = void 0),
-              this.SNn() ? this.zpa() : (this.Zpa(), this.ShowAddCharacter());
+              this.SNn() ? this.Zpa() : (this.qva(), this.ShowAddCharacter());
           }, NORMAL_SHOW));
   }
-  zpa() {
+  Zpa() {
     (this.IsLastFinishShow = !0),
       (this.IsInResult = !1),
       (this.TimerHandle = TimerSystem_1.TimerSystem.Delay(() => {

@@ -13,9 +13,7 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  TOLERANCE = 0.01,
-  DYNAMIC_REVERB_RTPC_1 = "reverb_azi_count",
-  DYNAMIC_REVERB_RTPC_2 = "reverb_eleva_distance";
+  GameAudioModel_1 = require("./GameAudioModel");
 class EnvironmentCache {
   constructor() {
     (this.StateEvent = ""),
@@ -35,7 +33,7 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
     return (
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AfterLoadMap,
-        this.h2a,
+        this.k2a,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
@@ -57,15 +55,29 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.WeatherChange,
         this.dIe,
       ),
-      Net_1.Net.Register(28679, GameAudioController.UUn),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.ChangeArea,
+        this.Hje,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnInstanceChange,
+        this.KDc,
+      ),
+      Net_1.Net.Register(21732, GameAudioController.UUn),
       !0
     );
+  }
+  static OnTick(e) {
+    (this.mie += e),
+      this.mie > GameAudioModel_1.CHECK_TIME_OUT_COOLDOWN_RECORD &&
+        ((this.mie = 0),
+        ModelManager_1.ModelManager.GameAudioModel?.CheckTimeOutCooldownRecords());
   }
   static OnClear() {
     return (
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AfterLoadMap,
-        this.h2a,
+        this.k2a,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
@@ -87,7 +99,15 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.WeatherChange,
         this.dIe,
       ),
-      Net_1.Net.UnRegister(28679),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.ChangeArea,
+        this.Hje,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnInstanceChange,
+        this.KDc,
+      ),
+      Net_1.Net.UnRegister(21732),
       !0
     );
   }
@@ -113,149 +133,253 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
     }
   }
   static xin(e) {
-    var t,
-      o,
-      n = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
-    n?.IsValid()
-      ? ((t = n.GetEnvironmentInfo(e)).StateEvent !== this.YTn.StateEvent &&
-          ((this.YTn.StateEvent = t.StateEvent),
-          (o = t.StateEvent || this.HWe?.ResetEvent)
-            ? (AudioSystem_1.AudioSystem.PostEvent(o),
-              Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Audio", 57, "[Game.Environment] PostEvent", [
-                  "Event",
-                  o,
-                ]))
-            : Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "Audio",
-                57,
-                "[Game.Environment] 当前地图未配置重置音频事件",
-              )),
-        t.bEnableDynamicReverb
-          ? ((this.YTn.DynamicReverbEnabled = !0),
-            (o = n.CalculateDynamicReverbParam(e)),
-            this.JTn(o))
-          : this.YTn.DynamicReverbEnabled &&
-            ((this.YTn.DynamicReverbEnabled = !1), this.JTn(void 0)))
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "Audio",
-          57,
-          "[Game.Controller] AudioEnvironmentSubsystem 无效",
-        );
-  }
-  static $Tn(e) {
-    var t = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
-    t?.IsValid()
-      ? (t = t.GetEnvironmentInfo_MusicCompatible(e)).StateEvent !==
-          this.YTn.StateEvent_MusicCompatible &&
-        ((this.YTn.StateEvent_MusicCompatible = t.StateEvent),
-        (e = t.StateEvent || this.HWe?.MusicResetEvent)
+    var o = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
+    o?.IsValid()
+      ? (o = o.GetEnvironmentInfo(e.op_ToVector())).StateEvent !==
+          this.YTn.StateEvent &&
+        ((this.YTn.StateEvent = o.StateEvent),
+        (e = o.StateEvent || this.HWe?.ResetEvent)
           ? (AudioSystem_1.AudioSystem.PostEvent(e),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Audio", 57, "[Game.Environment] PostEvent", [
+              Log_1.Log.Info("Audio", 56, "[Game.Environment] PostEvent", [
                 "Event",
                 e,
               ]))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Audio",
-              57,
+              56,
               "[Game.Environment] 当前地图未配置重置音频事件",
             ))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
-          57,
+          56,
           "[Game.Controller] AudioEnvironmentSubsystem 无效",
         );
   }
-  static JTn(e) {
-    var t;
-    e
-      ? ((t = Math.trunc((e.HorizontalHitCount - 1) / 2)),
-        Math.abs(this.YTn.DynamicReverbRtpc1 - t) > TOLERANCE &&
-          ((this.YTn.DynamicReverbRtpc1 = t),
-          AudioSystem_1.AudioSystem.SetRtpcValue(DYNAMIC_REVERB_RTPC_1, t)),
-        (t = e.VerticalHitDistance),
-        Math.abs(this.YTn.DynamicReverbRtpc2 - t) > TOLERANCE &&
-          ((this.YTn.DynamicReverbRtpc2 = t),
-          AudioSystem_1.AudioSystem.SetRtpcValue(DYNAMIC_REVERB_RTPC_2, t)))
-      : ((this.YTn.DynamicReverbRtpc1 = 0),
-        (this.YTn.DynamicReverbRtpc2 = 0),
-        AudioSystem_1.AudioSystem.SetRtpcValue(DYNAMIC_REVERB_RTPC_1, 0),
-        AudioSystem_1.AudioSystem.SetRtpcValue(DYNAMIC_REVERB_RTPC_2, 0));
+  static $Tn(e) {
+    var o = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
+    o?.IsValid()
+      ? (o = o.GetEnvironmentInfo_MusicCompatible(e.op_ToVector()))
+          .StateEvent !== this.YTn.StateEvent_MusicCompatible &&
+        ((this.YTn.StateEvent_MusicCompatible = o.StateEvent),
+        (e = o.StateEvent || this.HWe?.MusicResetEvent)
+          ? (AudioSystem_1.AudioSystem.PostEvent(e),
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("Audio", 56, "[Game.Environment] PostEvent", [
+                "Event",
+                e,
+              ]))
+          : Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "Audio",
+              56,
+              "[Game.Environment] 当前地图未配置重置音频事件",
+            ))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Audio",
+          56,
+          "[Game.Controller] AudioEnvironmentSubsystem 无效",
+        );
   }
   static kWe(e) {
-    var t = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
-    if (t?.IsValid()) {
-      var o,
-        n,
+    var o = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
+    if (o?.IsValid()) {
+      var t,
         i,
+        n,
         a,
-        r = t.GetEnvironmentStates(e);
-      for ([o, n] of this.VWe.entries()) {
-        var _ = r.Get(o);
+        r = o.GetEnvironmentStates(e.op_ToVector());
+      for ([t, i] of this.VWe.entries()) {
+        var _ = r.Get(t);
         _
-          ? (r.Remove(o),
-            _ !== n &&
-              (this.VWe.set(o, _),
-              UE.KuroAudioStatics.SetState(o, _),
+          ? (r.Remove(t),
+            _ !== i &&
+              (this.VWe.set(t, _),
+              UE.KuroAudioStatics.SetState(t, _),
               Log_1.Log.CheckInfo()) &&
               Log_1.Log.Info(
                 "Audio",
-                57,
+                56,
                 "[Game.Environment] SetState",
-                ["Group", o],
+                ["Group", t],
                 ["State", _],
               ))
-          : (this.VWe.delete(o),
-            UE.KuroAudioStatics.SetState(o, "none"),
+          : (this.VWe.delete(t),
+            UE.KuroAudioStatics.SetState(t, "none"),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Audio",
-                57,
+                56,
                 "[Game.Environment] SetState",
-                ["Group", o],
+                ["Group", t],
                 ["State", "none"],
               ));
       }
-      for (let e = 0; e < r.Num(); e++)
+      for (let e = 0; e < r.GetMaxIndex(); e++)
         r.IsValidIndex(e) &&
-          ((i = r.GetKey(e)), (a = r.Get(i))) &&
-          (this.VWe.set(i, a),
-          UE.KuroAudioStatics.SetState(i, a),
+          ((n = r.GetKey(e)), (a = r.Get(n))) &&
+          (this.VWe.set(n, a),
+          UE.KuroAudioStatics.SetState(n, a),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Audio",
-            57,
+            56,
             "[Game.Environment] SetState",
-            ["Group", i],
+            ["Group", n],
             ["State", a],
           );
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
-          57,
+          56,
           "[Game.Controller] AudioEnvironmentSubsystem 无效",
         );
   }
   static UpdateAudioState(e) {
-    for (const t of e)
-      t.Y4n
-        ? UE.KuroAudioStatics.SetState(t.USs, t.Y4n)
-        : UE.KuroAudioStatics.SetState(t.USs, "none");
+    for (const o of e)
+      o.Y4n
+        ? UE.KuroAudioStatics.SetState(o.USs, o.Y4n)
+        : UE.KuroAudioStatics.SetState(o.USs, "none");
+  }
+  static UpdateAudioStatebyClient(e) {
+    e.Group && UE.KuroAudioStatics.SetState(e.Group, e.State);
+  }
+  static UpdateLoadingType(e) {
+    if (this.Ltl !== e)
+      if (
+        ((this.Ltl = e),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Audio", 42, "[Game.Audio] UpdateLoadingType", [
+            "type",
+            e,
+          ]),
+        void 0 !== e)
+      )
+        switch (e) {
+          case 1:
+            AudioSystem_1.AudioSystem.SetState("loading", "default");
+            break;
+          case 2:
+            AudioSystem_1.AudioSystem.SetState("loading", "fade");
+            break;
+          case 4:
+            AudioSystem_1.AudioSystem.SetState("loading", "seamless");
+            break;
+          default:
+            AudioSystem_1.AudioSystem.SetState("loading", "others");
+        }
+      else AudioSystem_1.AudioSystem.SetState("loading", "none");
+  }
+  static GetAkComponent(e, o) {
+    if (e.IsA(UE.TsBaseCharacter_C.StaticClass())) {
+      var t = e.CharacterActorComponent?.Entity?.GetComponent(50);
+      if (t?.Valid) return t.GetAkComponent(o);
+    }
+    if (e.IsA(UE.TsUiSceneRoleActor_C.StaticClass())) {
+      t = AudioSystem_1.AudioSystem.GetAkComponent(e, {
+        SocketName: o,
+        OnCreated: (e) => {
+          AudioSystem_1.AudioSystem.SetSwitch("actor_ui_switch", "sys_ui", e);
+        },
+      });
+      if (t) return t;
+    }
+    if (e.IsA(UE.Actor.StaticClass())) {
+      t = AudioSystem_1.AudioSystem.GetAkComponent(e, {
+        SocketName: o,
+        OnCreated: (e) => {
+          this.SetRolePriority(0, e);
+        },
+      });
+      if (t) return t;
+    }
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "Audio",
+        42,
+        "[Game.Audio] GetAkComponent 失败",
+        ["Owner", e.GetName()],
+        ["Socket", o],
+        ["Class", e.GetClass().GetName()],
+      );
+  }
+  static SetRolePriority(e, o) {
+    let t = 0,
+      i = "p1",
+      n = "";
+    switch (e) {
+      case 0:
+        (t = 1), (i = "p1"), (n = "当前控制");
+        break;
+      case 1:
+        (t = 0.5), (i = "p3"), (n = "后台控制");
+        break;
+      case 2:
+        (t = 0), (i = "p3"), (n = "其他归属");
+    }
+    AudioSystem_1.AudioSystem.SetSwitch("char_p1orp3", i, o),
+      AudioSystem_1.AudioSystem.SetRtpcValue("role_priority", t, { Actor: o }),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Audio",
+          42,
+          "[char_p1orp3] 实体声音模式设置P1/P3优先级和RTPC(role_priority)",
+          ["char_p1orp3", i],
+          ["RolePriority", n],
+          ["actor", o.GetName()],
+        );
+  }
+  static AddRolePrioritySummon(e, o, t) {
+    GameAudioController.rQl.has(e) || GameAudioController.rQl.set(e, []),
+      GameAudioController.rQl.get(e).push({ Id: o, Actor: t }),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Audio",
+          42,
+          "[char_p1orp3] 角色语音优先级记录召唤物",
+          ["召唤师ID", e],
+          ["召唤物ID", o],
+          ["actor", t.GetName()],
+        );
+  }
+  static RemoveRolePrioritySummon(e, o) {
+    GameAudioController.rQl.has(e) &&
+      GameAudioController.rQl.get(e).filter((e) => e.Id !== o),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Audio",
+          42,
+          "[char_p1orp3] 角色语音优先级移除记录的召唤物",
+          ["召唤师ID", e],
+          ["召唤物ID", o],
+        );
+  }
+  static RoleChangeController(e, o) {
+    if (GameAudioController.rQl.has(e))
+      for (const t of GameAudioController.rQl.get(e))
+        GameAudioController.SetRolePriority(o ? 0 : 1, t.Actor);
+  }
+  static AddPostAkEventHandle(e) {
+    this.XDc.add(e);
+  }
+  static RemovePostAkEventHandle(e) {
+    this.XDc.has(e) && this.XDc.delete(e);
   }
 }
 (exports.GameAudioController = GameAudioController),
   ((_a = GameAudioController).HWe = void 0),
   (GameAudioController.Nme = void 0),
+  (GameAudioController.Ltl = void 0),
   (GameAudioController.YTn = new EnvironmentCache()),
   (GameAudioController.VWe = new Map()),
   (GameAudioController.ZUn = new StateRef_1.StateRef("weather_type", "none")),
-  (GameAudioController.h2a = () => {
+  (GameAudioController.bPl = new StateRef_1.StateRef("country", "none")),
+  (GameAudioController.mie = 0),
+  (GameAudioController.k2a = () => {
     var e = UE.KuroAudioStatics.GetAudioEnvironmentSubsystem(Info_1.Info.World);
     e?.IsValid()
       ? e.EnvironmentUpdatedDelegate.Add(() => {
@@ -268,19 +392,19 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "Audio",
-              57,
+              56,
               "[Game.Environment] EnvironmentUpdatedDelegate",
             );
         })
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
-          57,
+          56,
           "[Game.Controller] AudioEnvironmentSubsystem 无效",
         );
   }),
   (GameAudioController.nye = () => {
-    _a.zUn();
+    _a.zUn(), AudioSystem_1.AudioSystem.PostEvent("on_world_done");
   }),
   (GameAudioController.FWe = () => {
     var e = ModelManager_1.ModelManager.GameModeModel?.MapConfig.MapId;
@@ -290,14 +414,14 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
       _a.HWe?.EnterEvent &&
         (AudioSystem_1.AudioSystem.PostEvent(_a.HWe.EnterEvent),
         Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("Audio", 57, "[Game.World] PostEvent", [
+        Log_1.Log.Info("Audio", 56, "[Game.World] PostEvent", [
           "Event",
           _a.HWe.EnterEvent,
         ]),
       _a.HWe?.Event &&
         (AudioSystem_1.AudioSystem.PostEvent(_a.HWe.Event),
         Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("Audio", 57, "[Game.World] PostEvent", [
+        Log_1.Log.Info("Audio", 56, "[Game.World] PostEvent", [
           "Event",
           _a.HWe.Event,
         ]);
@@ -306,14 +430,14 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
     _a.HWe?.Event &&
       (AudioSystem_1.AudioSystem.ExecuteAction(_a.HWe.Event, 0),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Audio", 57, "[Game.World] StopEvent", [
+      Log_1.Log.Info("Audio", 56, "[Game.World] StopEvent", [
         "Event",
         _a.HWe.Event,
       ]),
       _a.HWe?.ExitEvent &&
         (AudioSystem_1.AudioSystem.PostEvent(_a.HWe.ExitEvent),
         Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("Audio", 57, "[Game.World] PostEvent", [
+        Log_1.Log.Info("Audio", 56, "[Game.World] PostEvent", [
           "Event",
           _a.HWe.ExitEvent,
         ]),
@@ -327,7 +451,52 @@ class GameAudioController extends ControllerBase_1.ControllerBase {
   (GameAudioController.dIe = () => {
     _a.zUn();
   }),
+  (GameAudioController.Hje = () => {
+    var e;
+    ModelManager_1.ModelManager.AreaModel?.AreaInfo &&
+      ConfigManager_1.ConfigManager.InfluenceConfig &&
+      ((e =
+        ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(
+          ModelManager_1.ModelManager.AreaModel.AreaInfo.CountryId,
+        )?.AudioName ?? "none"),
+      (_a.bPl.State = e),
+      Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug(
+        "Audio",
+        42,
+        "[Game.World] Change area, update country audio",
+        ["AudioName", e],
+      );
+  }),
   (GameAudioController.UUn = (e) => {
     _a.UpdateAudioState(e.wSs);
+  }),
+  (GameAudioController.rQl = new Map()),
+  (GameAudioController.XDc = new Set()),
+  (GameAudioController.KDc = (e, o) => {
+    if (e !== o || 0 !== _a.XDc.size) {
+      if (
+        (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Audio",
+            42,
+            "[PostAkEventAudio] 地图变更",
+            ["Old", e],
+            ["New", o],
+          ),
+        ConfigManager_1.ConfigManager.WorldMapConfig.IsDungeonInWorld(o) &&
+          !ConfigManager_1.ConfigManager.WorldMapConfig.IsDungeonInWorld(e))
+      )
+        for (const t of _a.XDc)
+          AudioSystem_1.AudioSystem.ExecuteAction(t, 0),
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Audio",
+                42,
+                "[PostAkEventAudio] 全局音频事件Handle移除",
+                ["Handle", t],
+              );
+      _a.XDc.clear();
+    }
   });
 //# sourceMappingURL=GameAudioController.js.map

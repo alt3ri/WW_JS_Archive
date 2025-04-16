@@ -13,28 +13,34 @@ class TsTaskChangeMoveSpeed extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsMoveSpeed = 0),
       (this.TsResetDefault = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsMoveSpeed = 0),
+      (this.TsResetDefault = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsMoveSpeed = this.MoveSpeed),
       (this.TsResetDefault = this.ResetDefault));
   }
-  ReceiveExecuteAI(e, s) {
+  ReceiveExecuteAI(s, t) {
     this.InitTsVariables();
-    var t,
-      i = e.AiController;
+    var e,
+      i = s.AiController;
     i
       ? ((i = i.CharActorComp) &&
           (i = ActorUtils_1.ActorUtils.GetEntityByActor(i.Actor)) &&
-          (t = i.Entity.GetComponent(38)) &&
+          (e = i.Entity.GetComponent(44)) &&
           (this.TsResetDefault
-            ? ((i = i.Entity.GetComponent(161).MoveState), t.ResetMaxSpeed(i))
-            : (t.SetMaxSpeed(this.TsMoveSpeed), t.SetSpeedLock())),
+            ? ((i = i.Entity.GetComponent(173).MoveState), e.ResetMaxSpeed(i))
+            : (e.SetMaxSpeed(this.TsMoveSpeed), e.SetSpeedLock())),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
             "Type",
-            e.GetClass().GetName(),
+            s.GetClass().GetName(),
           ]),
         this.FinishExecute(!1));
   }

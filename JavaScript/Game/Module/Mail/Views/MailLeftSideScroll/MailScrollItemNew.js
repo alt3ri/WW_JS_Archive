@@ -24,12 +24,13 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
       [0, UE.UISprite],
-      [1, UE.UIText],
-      [2, UE.UIItem],
-      [3, UE.UIText],
+      [1, UE.UIExtendToggle],
+      [2, UE.UIText],
+      [3, UE.UIItem],
       [4, UE.UIText],
-      [5, UE.UIItem],
+      [5, UE.UIText],
       [6, UE.UIItem],
+      [7, UE.UIItem],
     ]),
       (this.BtnBindInfo = []);
   }
@@ -41,8 +42,8 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
         : t === this.AIi?.()
           ? this.OnSelected(!1)
           : this.OnDeselected(!1),
-      this.GetText(1).SetText(i.Title),
-      this.GetText(3).SetText(i.Sender);
+      this.GetText(2).SetText(i.Title),
+      this.GetText(4).SetText(i.Sender);
     var e,
       t = TimeUtil_1.TimeUtil.CalculateDayGapBetweenNow(
         i.Time,
@@ -50,19 +51,19 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
       );
     t > DAY_GAP
       ? ((e = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(i.Time)),
-        this.GetText(4).SetText(`${e.Year}/${e.Month}/` + e.Day))
+        this.GetText(5).SetText(`${e.Year}/${e.Month}/` + e.Day))
       : 1 <= t
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(4),
+            this.GetText(5),
             "Text_FriendOfflineSomeDay_Text",
             t,
           )
         : LguiUtil_1.LguiUtil.SetLocalTextNew(
-            this.GetText(4),
+            this.GetText(5),
             "Text_Today_Text",
           ),
-      this.GetItem(5).SetUIActive(!i.GetWasScanned()),
-      this.GetItem(2).SetUIActive(2 === i.GetMailLevel()),
+      this.GetItem(6).SetUIActive(!i.GetWasScanned()),
+      this.GetItem(3).SetUIActive(2 === i.GetMailLevel()),
       i.GetWasScanned() || 2 !== i.GetAttachmentStatus()
         ? i.GetWasScanned() && 2 === i.GetAttachmentStatus()
           ? ((e =
@@ -70,14 +71,14 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
                 "SP_IconRewardA",
               )),
             this.SetSpriteByPath(e, this.GetSprite(0), !1),
-            this.GetItem(6).SetAlpha(1))
+            this.GetItem(7).SetAlpha(1))
           : i.GetWasScanned() && 1 === i.GetAttachmentStatus()
             ? ((t =
                 ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                   "SP_IconRewardB",
                 )),
               this.SetSpriteByPath(t, this.GetSprite(0), !1),
-              this.GetItem(6).SetAlpha(0.4))
+              this.GetItem(7).SetAlpha(0.4))
             : i.GetWasScanned() || 0 !== i.GetAttachmentStatus()
               ? i.GetWasScanned() &&
                 0 === i.GetAttachmentStatus() &&
@@ -86,19 +87,19 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
                     "SP_IconMailB",
                   )),
                 this.SetSpriteByPath(e, this.GetSprite(0), !1),
-                this.GetItem(6).SetAlpha(0.4))
+                this.GetItem(7).SetAlpha(0.4))
               : ((t =
                   ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                     "SP_IconMailA",
                   )),
                 this.SetSpriteByPath(t, this.GetSprite(0), !1),
-                this.GetItem(6).SetAlpha(1))
+                this.GetItem(7).SetAlpha(1))
         : ((i =
             ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
               "SP_IconRewardA",
             )),
           this.SetSpriteByPath(i, this.GetSprite(0), !1),
-          this.GetItem(6).SetAlpha(1));
+          this.GetItem(7).SetAlpha(1));
   }
   BindSelectCall(i) {
     this.UIi = i;

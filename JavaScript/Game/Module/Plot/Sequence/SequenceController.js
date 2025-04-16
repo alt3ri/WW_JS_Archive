@@ -38,9 +38,9 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
         (this.Kio
           ? this.Kio.EndSwitchPose()
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Plot", 39, "SwitchPose 失败!"),
+            Log_1.Log.Warn("Plot", 38, "SwitchPose 失败!"),
         Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("Plot", 39, "SwitchPose 结束"),
+        Log_1.Log.Debug("Plot", 38, "SwitchPose 结束"),
       this.FlushDialogueState(),
       this.Xio && this.CheckSeqStreamingData();
   }
@@ -120,26 +120,31 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
           ),
           i(!1));
   }
+  static LoadData(t, s) {
+    (this.jio.State = 1), (this.jio.Config = t), this.Qio.LoadNecessaryData(s);
+  }
   static ManualFinish() {
     0 === this.jio.State || 4 === this.jio.State || 5 === this.jio.State
       ? (this.jio.FinishCallback = void 0)
       : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 27, "剧情Sequence强制停止"),
+          Log_1.Log.Info("Plot", 26, "剧情Sequence强制停止"),
         this.ioo(),
         this.jio.Reset());
   }
   static un(s) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Plot", 27, "[剧情加载等待] Sequence加载-开始");
+      Log_1.Log.Info("Plot", 26, "[剧情加载等待] Sequence加载-开始");
     var t = this.jio.Config.Path;
     if (!StringUtils_1.StringUtils.IsEmpty(t)) {
       this.jio.State = 1;
       var t = this.zio.LoadPromise(),
         i = this.Kio.BeginLoadMouthAssetPromise();
-      const e = new CustomPromise_1.CustomPromise();
+      const e = new CustomPromise_1.CustomPromise(),
+        r = new CustomPromise_1.CustomPromise();
       this.Qio.Load((t) => {
         t
-          ? this.Kio.Load((t) => {
+          ? (this.zio.PreloadUi(r),
+            this.Kio.Load((t) => {
               t
                 ? this.$io.Load((t) => {
                     t
@@ -148,14 +153,14 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
                           Log_1.Log.CheckDebug() &&
                             Log_1.Log.Debug(
                               "Plot",
-                              39,
+                              38,
                               "检查手动流送：开始检查完成",
                             ),
                           this.CheckSeqStreamingData())
                         : (Log_1.Log.CheckDebug() &&
                             Log_1.Log.Debug(
                               "Plot",
-                              39,
+                              38,
                               "检查手动流送：不检查完成",
                             ),
                           this.CheckSeqStreamingData(),
@@ -163,13 +168,13 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
                       : e.SetResult(!1);
                   })
                 : e.SetResult(!1);
-            })
-          : e.SetResult(!1);
+            }))
+          : (e.SetResult(!1), r.SetResult(!1));
       }),
-        Promise.all([t, i, e.Promise]).then((t) => {
-          t = t[0] && t[1] && t[2];
+        Promise.all([t, i, e.Promise, r.Promise]).then((t) => {
+          t = t[0] && t[1] && t[2] && t[3];
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Plot", 27, "[剧情加载等待] Sequence加载-完成", [
+            Log_1.Log.Info("Plot", 26, "[剧情加载等待] Sequence加载-完成", [
               "result",
               t,
             ]),
@@ -184,9 +189,9 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
       this.zio.PreAllPlay(),
       this.Kio.PreAllPlay((t) => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 39, "准备开始演出，延迟到帧头执行"),
+          Log_1.Log.Info("Plot", 38, "准备开始演出，延迟到帧头执行"),
           TimerSystem_1.TimerSystem.Next(() => {
-            Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 39, "开始演出"),
+            Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 38, "开始演出"),
               t
                 ? (this.Wio.PreAllPlay(),
                   this.Yio.PreAllPlay(),
@@ -294,7 +299,13 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
     this.Kio.TryApplyMouthAnim(t, s);
   }
   static StopMouthAnim() {
-    this.Kio.StopMouthAnim();
+    this.Kio
+      ? this.Kio.StopMouthAnim()
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("Plot", 45, "StopMouthAnim失败,this.ActorAssistant为空");
+  }
+  static TempHideAllShouanren() {
+    this.Kio.TempHideAllShouanren();
   }
   static RunSequenceFrameEvents(t) {
     this.$io.RunSequenceFrameEvents(t);
@@ -302,7 +313,9 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
   static TriggerCutChange() {
     (this.jio.DisableMotionBlurFrame = 2),
       this.Wio.SetMotionBlurState(!1),
-      this.Kio.TriggerCutChange(),
+      0 === this.jio.Type &&
+        this.Qio.ReadNeedHidePlayer() &&
+        this.Kio.PlayerHide(),
       this.Yio.CalcPreloadLocation(),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
@@ -312,14 +325,29 @@ class SequenceController extends ControllerWithAssistantBase_1.ControllerWithAss
   static ShowLogo(t) {
     this.$io.ShowLogo(t);
   }
-  static OpenUiView(t, s) {
-    this.$io.OpenBackgroundImage(t, s);
+  static OpenUiView(t, s, i = !0) {
+    this.$io.OpenBackgroundImage(t, s, i);
+  }
+  static OpenUiViewForArray(t, s) {
+    this.$io.OpenBackgroundImageInArray(t, s);
   }
   static PlayUiLevelSequence(t) {
     this.$io.PlayUiLevelSequence(t);
   }
   static CloseUiView() {
     this.$io.CloseBackgroundImage();
+  }
+  static PlaySpineAnim(t, s = !0) {
+    this.$io.PlaySpineAnim(t, s);
+  }
+  static PlaySpineAnimInArray(t) {
+    this.$io.PlaySpineAnimInArray(t);
+  }
+  static CloseSpineAnim(t) {
+    this.$io.CloseSpineAnimation(t);
+  }
+  static CloseSpineAnimInArray(t) {
+    this.$io.CloseSpineAnimationInArray(t);
   }
   static DisableMotionBlurAwhile() {
     (this.jio.DisableMotionBlurFrame = 2), this.Wio.SetMotionBlurState(!1);

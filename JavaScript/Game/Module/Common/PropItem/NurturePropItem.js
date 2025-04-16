@@ -129,7 +129,7 @@ class NurturePropItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
     t ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCommon", 9, "没有磁带数据", ["Id", this.zwt.Id])),
+        Log_1.Log.Error("UiCommon", 8, "没有磁带数据", ["Id", this.zwt.Id])),
       (this.zwt.Count = t.GetCount()),
       this.hBt(t.GetType()),
       this.NurturePropDataFunction[this.zwt.ItemType](),

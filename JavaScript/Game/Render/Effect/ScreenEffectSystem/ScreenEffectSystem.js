@@ -10,7 +10,7 @@ class ScreenEffectSystem {
       this.Me?.IsValid() ||
         (this.Me = ActorSystem_1.ActorSystem.Get(
           UE.BP_ScreenEffectSystem_C.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
         )),
       this.Me
     );

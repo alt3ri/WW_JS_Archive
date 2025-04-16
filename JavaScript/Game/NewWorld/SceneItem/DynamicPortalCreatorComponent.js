@@ -2,27 +2,26 @@
 var DynamicPortalCreatorComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (t, e, o, r) {
-      var i,
+    function (t, e, o, i) {
+      var r,
         n = arguments.length,
         s =
           n < 3
             ? e
-            : null === r
-              ? (r = Object.getOwnPropertyDescriptor(e, o))
-              : r;
+            : null === i
+              ? (i = Object.getOwnPropertyDescriptor(e, o))
+              : i;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        s = Reflect.decorate(t, e, o, r);
+        s = Reflect.decorate(t, e, o, i);
       else
         for (var a = t.length - 1; 0 <= a; a--)
-          (i = t[a]) &&
-            (s = (n < 3 ? i(s) : 3 < n ? i(e, o, s) : i(e, o)) || s);
+          (r = t[a]) &&
+            (s = (n < 3 ? r(s) : 3 < n ? r(e, o, s) : r(e, o)) || s);
       return 3 < n && s && Object.defineProperty(e, o, s), s;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DynamicPortalCreatorComponent = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
-  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   Net_1 = require("../../../Core/Net/Net"),
@@ -52,7 +51,7 @@ let DynamicPortalCreatorComponent =
           )),
             (e.Mjn = t.BulletId),
             (e.ila = !0),
-            Net_1.Net.Call(16070, e, (t) => {
+            Net_1.Net.Call(23790, e, (t) => {
               switch (t?.Q4n) {
                 case Protocol_1.Aki.Protocol.Q4n.KRs:
                 case Protocol_1.Aki.Protocol.Q4n.Proto_ErrPortalCreatorActive:
@@ -60,7 +59,7 @@ let DynamicPortalCreatorComponent =
                 default:
                   ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                     t.Q4n,
-                    26066,
+                    22719,
                   );
               }
             });
@@ -78,22 +77,12 @@ let DynamicPortalCreatorComponent =
       );
     }
     OnStart() {
-      if (
-        ((this.EIe = this.Entity.GetComponent(0)),
-        "Bullet" === this.Lo.Model.Type)
-      )
-        if (((this.Xln = this.Entity.GetComponent(141)), void 0 === this.Xln))
-          return (
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "SceneItem",
-                32,
-                "[DynamicPortalCreatorComponent] 找不到HitComp清检查配置",
-                ["PbDataId", this.EIe.GetPbDataId()],
-              ),
-            !1
-          );
-      return !0;
+      return (
+        (this.EIe = this.Entity.GetComponent(0)),
+        "Bullet" === this.Lo.Model.Type &&
+          (this.Xln = this.Entity.GetComponent(152)),
+        !0
+      );
     }
     OnActivate() {
       "Bullet" === this.Lo.Model.Type && this.$la();
@@ -101,31 +90,36 @@ let DynamicPortalCreatorComponent =
     OnEnd() {
       return "Bullet" === this.Lo.Model.Type && this.Xla(), !0;
     }
+    GetPortalRenderConfig() {
+      return this.Lo?.Model.RenderConfig;
+    }
     $la() {
-      this.Xln.AddComponentHitCondition(this, this.Qla),
+      void 0 !== this.Xln &&
+        (this.Xln.AddComponentHitCondition(this, this.Qla),
         EventSystem_1.EventSystem.AddWithTarget(
+          this,
+          EventDefine_1.EEventName.OnSceneItemHitByHitData,
+          this.Kla,
+        ));
+    }
+    Xla() {
+      void 0 !== this.Xln &&
+        (this.Xln.RemoveComponentHitCondition(this, this.Qla),
+        EventSystem_1.EventSystem.HasWithTarget(
+          this,
+          EventDefine_1.EEventName.OnSceneItemHitByHitData,
+          this.Kla,
+        )) &&
+        EventSystem_1.EventSystem.RemoveWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
           this.Kla,
         );
     }
-    Xla() {
-      this.Xln.RemoveComponentHitCondition(this, this.Qla),
-        EventSystem_1.EventSystem.HasWithTarget(
-          this,
-          EventDefine_1.EEventName.OnSceneItemHitByHitData,
-          this.Kla,
-        ) &&
-          EventSystem_1.EventSystem.RemoveWithTarget(
-            this,
-            EventDefine_1.EEventName.OnSceneItemHitByHitData,
-            this.Kla,
-          );
-    }
   });
 (DynamicPortalCreatorComponent = DynamicPortalCreatorComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(210)],
+    [(0, RegisterComponent_1.RegisterComponent)(225)],
     DynamicPortalCreatorComponent,
   )),
   (exports.DynamicPortalCreatorComponent = DynamicPortalCreatorComponent);

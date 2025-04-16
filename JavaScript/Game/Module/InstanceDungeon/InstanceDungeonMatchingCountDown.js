@@ -23,7 +23,7 @@ class InstanceDungeonMatchingCountDown extends UiPanelBase_1.UiPanelBase {
           ? Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "InstanceDungeon",
-              28,
+              27,
               "当前正在播放Close动画，不响应点击事件",
             )
           : 3 !==
@@ -40,7 +40,8 @@ class InstanceDungeonMatchingCountDown extends UiPanelBase_1.UiPanelBase {
       (this.D1i = () => {
         (UiManager_1.UiManager.IsViewShow("InstanceDungeonEntranceView") ||
           UiManager_1.UiManager.IsViewShow("OnlineWorldHallView") ||
-          UiManager_1.UiManager.IsViewShow("EditBattleTeamView")) &&
+          UiManager_1.UiManager.IsViewShow("EditBattleTeamView") ||
+          UiManager_1.UiManager.IsViewShow("DangoAbyssInsSelectView")) &&
           this.GetText(5)?.SetText(
             TimeUtil_1.TimeUtil.GetTimeString(
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel

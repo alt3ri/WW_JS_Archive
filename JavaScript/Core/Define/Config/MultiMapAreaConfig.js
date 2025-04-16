@@ -7,6 +7,9 @@ class MultiMapAreaConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
   }
+  get Id() {
+    return this.id();
+  }
   get Block() {
     return this.block();
   }
@@ -24,6 +27,12 @@ class MultiMapAreaConfig {
       this,
     );
   }
+  get MapConfigId() {
+    return this.mapconfigid();
+  }
+  get GravityFlip() {
+    return this.gravityflip();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -33,23 +42,39 @@ class MultiMapAreaConfig {
       t,
     );
   }
+  id(t) {
+    var i = this.J7.__offset(this.z7, 4),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
   block(t) {
-    var i = this.J7.__offset(this.z7, 4);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetMultimaplistAt(t) {
     return this.multimaplist(t);
   }
   multimaplist(t) {
-    var i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   multimaplistLength() {
-    var t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   multimaplistArray() {
-    var t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -62,7 +87,7 @@ class MultiMapAreaConfig {
     return this.multimaprangelist(t);
   }
   multimaprangelist(t, i) {
-    var s = this.J7.__offset(this.z7, 8);
+    var s = this.J7.__offset(this.z7, 10);
     return s
       ? (i || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
@@ -71,8 +96,16 @@ class MultiMapAreaConfig {
       : null;
   }
   multimaprangelistLength() {
-    var t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  mapconfigid() {
+    var t = this.J7.__offset(this.z7, 12);
+    return t ? this.J7.readInt32(this.z7 + t) : 8;
+  }
+  gravityflip() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
 }
 exports.MultiMapAreaConfig = MultiMapAreaConfig;

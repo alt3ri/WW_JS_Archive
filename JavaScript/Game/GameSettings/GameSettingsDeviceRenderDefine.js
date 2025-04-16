@@ -12,93 +12,112 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.HD_SCREEN_WIDTH =
     exports.performanceLimitConfigs =
     exports.PERFORMENCELIMIT_SEQ_TAIL =
+    exports.frameRateListAndroidForRedMagic =
     exports.frameRateListAndroid =
     exports.frameRateListIos =
     exports.frameRateListPc =
       void 0),
   (exports.frameRateListPc = [30, 45, 60, 120]),
-  (exports.frameRateListIos = [30, 60]),
-  (exports.frameRateListAndroid = [24, 30, 45, 60]),
+  (exports.frameRateListIos = [30, 60, 120]),
+  (exports.frameRateListAndroid = [24, 30, 40, 60]),
+  (exports.frameRateListAndroidForRedMagic = [30, 60, 90]),
   (exports.PERFORMENCELIMIT_SEQ_TAIL = "_Seq"),
   (exports.performanceLimitConfigs = new Map([
-    ["RoleRootView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-    ["RoleLevelUpView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-    ["HandBookEntranceView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-    ["AchievementMainView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-    ["CommonActivityView", { FrameLimit: !0, CacheWorldFrame: !1 }],
-    ["VideoView", { FrameLimit: !0, CacheWorldFrame: !0 }],
+    ["RoleRootView", { FrameLimit: !1, CacheWorldFrame: !1 }],
+    ["RoleLevelUpView", { FrameLimit: !1, CacheWorldFrame: !1 }],
+    ["HandBookEntranceView", { FrameLimit: !1, CacheWorldFrame: !1 }],
+    ["AchievementMainView", { FrameLimit: !1, CacheWorldFrame: !1 }],
+    ["CommonActivityView", { FrameLimit: !1, CacheWorldFrame: !1 }],
+    ["VideoView", { FrameLimit: !1, CacheWorldFrame: !0 }],
     [
       "GachaScanView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !1 },
+      { FrameLimit: !1, CacheWorldFrame: !1 },
     ],
     [
       "DrawMainView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !1 },
+      { FrameLimit: !1, CacheWorldFrame: !1 },
     ],
     [
       "GachaResultView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !1 },
+      { FrameLimit: !1, CacheWorldFrame: !1 },
     ],
     [
       "WorldMapView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "CalabashRootView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !1 },
+      { FrameLimit: !1, CacheWorldFrame: !1 },
     ],
     [
       "BattlePassMainView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !1 },
+      { FrameLimit: !1, CacheWorldFrame: !1 },
     ],
     [
       "GachaMainView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "PayShopRootView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "AdventureGuideView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "TutorialView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "QuestView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "FriendView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "TimeOfDaySecondView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "EditFormationView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "InventoryView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "MailBoxView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "MenuView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
     [
       "FunctionView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
-      { FrameLimit: !0, CacheWorldFrame: !0 },
+      { FrameLimit: !1, CacheWorldFrame: !0 },
     ],
+    [
+      "DreamLinkMainView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !1, CacheWorldFrame: !0 },
+    ],
+    [
+      "FishingQteView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !1, CacheWorldFrame: !0 },
+    ],
+    [
+      "ShipTowerView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !1, CacheWorldFrame: !0 },
+    ],
+    [
+      "MapRogueMainView" + exports.PERFORMENCELIMIT_SEQ_TAIL,
+      { FrameLimit: !1, CacheWorldFrame: !0 },
+    ],
+    ["FunctionView_Special", { FrameLimit: !1, CacheWorldFrame: !0 }],
   ])),
   (exports.HD_SCREEN_WIDTH = 2e3),
   (exports.HD_SCREEN_HEIGHT = 1100),

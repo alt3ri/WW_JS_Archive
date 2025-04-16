@@ -3,8 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
   GlobalData_1 = require("../GlobalData"),
-  ModelManager_1 = require("../Manager/ModelManager");
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CharacterDebugUtil_1 = require("../NewWorld/Character/CharacterDebugUtil");
 class GmDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static TsRunGm(e) {
     ModelManager_1.ModelManager.SundryModel.GetGmBlueprintFunctionLib()?.RunGm(
       e,
@@ -69,6 +71,19 @@ class GmDebugBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     ModelManager_1.ModelManager.SundryModel.GetGmBlueprintFunctionLib()?.SetAoeDestroyEnemyRange(
       e,
     );
+  }
+  static TsGmLoadFightDt(e) {
+    CharacterDebugUtil_1.CharacterDebugUtil.LoadFightDtDebug(e);
+  }
+  static TsTestLifePoint(e, a, t, r, n, o) {
+    (ModelManager_1.ModelManager.LifePointModel.AnimParam.MaxTime = e),
+      (ModelManager_1.ModelManager.LifePointModel.AnimParam.AccelerationRes =
+        a),
+      (ModelManager_1.ModelManager.LifePointModel.AnimParam.MinInterval = t),
+      (ModelManager_1.ModelManager.LifePointModel.AnimParam.GridMinRate = r),
+      (ModelManager_1.ModelManager.LifePointModel.AnimParam.GridMaxRate = n),
+      (ModelManager_1.ModelManager.LifePointModel.AnimParam.GridAccelerationTime =
+        o);
   }
 }
 exports.default = GmDebugBlueprintFunctionLibrary;

@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComponentAction = void 0);
 const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../Core/Common/Log"),
-  List_1 = require("../../../Core/Container/List");
+  List_1 = require("../../../Core/Container/List"),
+  Macro_1 = require("../../../Core/Preprocessor/Macro");
 var EComponentState, EActionCommandType;
 !(function (t) {
   (t[(t.Register = 0)] = "Register"),
@@ -99,7 +100,7 @@ class ComponentAction {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
-          17,
+          16,
           "Enter CreateAsync failed, Duplicate call",
           ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
@@ -111,7 +112,7 @@ class ComponentAction {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "Enter CreateAsync failed",
               ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
@@ -125,7 +126,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter CreateAsync Creating",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -137,7 +138,7 @@ class ComponentAction {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "Creating failed",
               ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
@@ -150,7 +151,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter CreateAsync Create",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -170,7 +171,7 @@ class ComponentAction {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
-          17,
+          16,
           "Enter StartAsyncImplement failed, Duplicate call",
           ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
@@ -182,7 +183,7 @@ class ComponentAction {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "Enter StartAsyncImplement failed",
               ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
@@ -195,7 +196,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter StartAsyncImplement Starting",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -207,7 +208,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter StartAsyncImplement Start",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -223,23 +224,13 @@ class ComponentAction {
       : ((t = await this.E_r()), this.M_r(), t);
   }
   async E_r() {
-    if (this.IsShowOrShowing)
-      Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn(
-          "UiCore",
-          17,
-          "Enter ShowAsyncImplement failed, Duplicate call",
-          ["ComponentState", EComponentState[this.C_r]],
-          ["ComponentName", this.constructor.name],
-          ["ComponentId", this.ComponentId],
-        );
-    else {
+    if (!this.IsShowOrShowing) {
       if (!this.IsStartOrStarting && !this.IsHideOrHiding)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "Enter ShowAsyncImplement failed",
               ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
@@ -252,7 +243,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter ShowAsyncImplement Showing",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -264,7 +255,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter ShowAsyncImplement Show",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -280,23 +271,13 @@ class ComponentAction {
       : ((t = await this.S_r()), this.M_r(), t);
   }
   async S_r() {
-    if (this.IsHideOrHiding)
-      Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn(
-          "UiCore",
-          17,
-          "Enter HideAsyncImplement failed, Duplicate call",
-          ["ComponentState", EComponentState[this.C_r]],
-          ["ComponentName", this.constructor.name],
-          ["ComponentId", this.ComponentId],
-        );
-    else {
+    if (!this.IsHideOrHiding) {
       if (!this.IsStartOrStarting && !this.IsShowOrShowing)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "Enter HideAsyncImplement failed",
               ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
@@ -309,7 +290,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter HideAsyncImplement Hiding",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -321,7 +302,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter HideAsyncImplement Hide",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -348,7 +329,7 @@ class ComponentAction {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
-          17,
+          16,
           "Enter DestroyAsyncImplement failed, Duplicate call",
           ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
@@ -362,7 +343,7 @@ class ComponentAction {
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "UiCore",
-              17,
+              16,
               "Enter DestroyAsyncImplement Destroying",
               ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
@@ -375,7 +356,7 @@ class ComponentAction {
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "UiCore",
-              17,
+              16,
               "Enter DestroyAsyncImplement Destroy",
               ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
@@ -386,7 +367,7 @@ class ComponentAction {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "Game",
-              17,
+              16,
               "Enter DestroyAsyncImplement Error",
               t,
               ["error", t.message],
@@ -394,7 +375,7 @@ class ComponentAction {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Game",
-              17,
+              16,
               "Enter DestroyAsyncImplement Exception",
               ["error", t],
             );
@@ -403,7 +384,7 @@ class ComponentAction {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "Enter DestroyAsyncImplement Dead",
             ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
@@ -450,25 +431,19 @@ class ComponentAction {
         return EActionCommandType.Default;
     }
   }
+  lEc(t, e) {
+    t !== e &&
+      e === EActionCommandType.Show &&
+      this.HandleCacheShowActionFailIfIsPair();
+  }
   p_r(t) {
     var e, n;
-    return this.T_r() === t
-      ? (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "UiCore",
-            17,
-            "[TryCacheAction] is same with current action",
-            ["actionType", EActionCommandType[t]],
-            ["ComponentState", EComponentState[this.C_r]],
-            ["ComponentName", this.constructor.name],
-            ["ComponentId", this.ComponentId],
-          ),
-        !1)
-      : (n = (e = this.g_r.TailNode).Element.ActionCommand) === t
+    return ComponentAction.SwitchCheckSameTypeLogic || this.T_r() !== t
+      ? (n = (e = this.g_r.TailNode).Element.ActionCommand) === t
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "UiCore",
-              17,
+              16,
               "[TryCacheAction] is same with tail action",
               ["actionType", EActionCommandType[t]],
               ["ComponentState", EComponentState[n]],
@@ -480,7 +455,7 @@ class ComponentAction {
           ? (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "UiCore",
-                17,
+                16,
                 "[TryCacheAction] tailActionType is Destroy, not allow to cache any action",
                 ["actionType", EActionCommandType[t]],
                 ["ComponentState", EComponentState[this.C_r]],
@@ -492,7 +467,7 @@ class ComponentAction {
             ? (Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "UiCore",
-                  17,
+                  16,
                   "[TryCacheAction] remove tail action which is pair with this action",
                   ["actionType", EActionCommandType[t]],
                   ["tailActionType", EActionCommandType[n]],
@@ -500,24 +475,50 @@ class ComponentAction {
                   ["ComponentName", this.constructor.name],
                   ["ComponentId", this.ComponentId],
                 ),
+              this.lEc(n, t),
               this.g_r.RemoveNode(e),
               !1)
-            : (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug(
-                  "UiCore",
-                  17,
-                  "[TryCacheAction] done",
-                  ["actionType", EActionCommandType[t]],
-                  [
-                    "tailActionType",
-                    EActionCommandType[this.g_r.TailNode.Element.ActionCommand],
-                  ],
-                  ["ComponentState", EComponentState[this.C_r]],
-                  ["ComponentName", this.constructor.name],
-                  ["ComponentId", this.ComponentId],
-                ),
-              this.g_r.AddTail({ ActionCommand: t, Processed: !1 }),
-              !0);
+            : ComponentAction.SwitchCheckSameTypeLogic && this.T_r() === t
+              ? (Log_1.Log.CheckWarn() &&
+                  Log_1.Log.Warn(
+                    "UiCore",
+                    16,
+                    "[TryCacheAction] is same with current action",
+                    ["actionType", EActionCommandType[t]],
+                    ["ComponentState", EComponentState[this.C_r]],
+                    ["ComponentName", this.constructor.name],
+                    ["ComponentId", this.ComponentId],
+                  ),
+                !1)
+              : (Log_1.Log.CheckDebug() &&
+                  Log_1.Log.Debug(
+                    "UiCore",
+                    16,
+                    "[TryCacheAction] done",
+                    ["actionType", EActionCommandType[t]],
+                    [
+                      "tailActionType",
+                      EActionCommandType[
+                        this.g_r.TailNode.Element.ActionCommand
+                      ],
+                    ],
+                    ["ComponentState", EComponentState[this.C_r]],
+                    ["ComponentName", this.constructor.name],
+                    ["ComponentId", this.ComponentId],
+                  ),
+                this.g_r.AddTail({ ActionCommand: t, Processed: !1 }),
+                !0)
+      : (Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "UiCore",
+            16,
+            "[TryCacheAction] is same with current action",
+            ["actionType", EActionCommandType[t]],
+            ["ComponentState", EComponentState[this.C_r]],
+            ["ComponentName", this.constructor.name],
+            ["ComponentId", this.ComponentId],
+          ),
+        !1);
   }
   async M_r() {
     let t = this.g_r.GetHeadNextNode();
@@ -527,7 +528,7 @@ class ComponentAction {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            17,
+            16,
             "[ExecuteCachedActions]",
             ["actionType", EActionCommandType[e]],
             ["ComponentState", EComponentState[this.C_r]],
@@ -553,6 +554,7 @@ class ComponentAction {
     }
     this.g_r.RemoveAllNodeWithoutHead();
   }
+  HandleCacheShowActionFailIfIsPair() {}
   OnStartImplementCompatible() {}
   OnShowImplementCompatible() {}
   OnHideImplementCompatible() {}
@@ -581,5 +583,6 @@ class ComponentAction {
   }
 }
 ((exports.ComponentAction = ComponentAction).OpenLog = !0),
+  (ComponentAction.SwitchCheckSameTypeLogic = !0),
   (ComponentAction.f_r = 0);
 //# sourceMappingURL=ComponentAction.js.map

@@ -42,7 +42,6 @@ class GameQualityData {
       (this.MobileVerticalViewSensitivity = void 0),
       (this.MobileAimHorizontalViewSensitivity = void 0),
       (this.MobileAimVerticalViewSensitivity = void 0),
-      (this.MobileCameraShakeStrength = void 0),
       (this.CommonSpringArmLength = void 0),
       (this.FightSpringArmLength = void 0),
       (this.IsResetFocusEnable = void 0),

@@ -19,7 +19,7 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
       (this.PZs = void 0),
       (this.wZs = void 0),
       (this.p9t = void 0),
-      (this.nca = void 0),
+      (this.hca = void 0),
       (this.BZs = void 0),
       (this.I5t = () => {
         this.CloseMe();
@@ -40,7 +40,7 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
         ),
           this.CloseMe();
       }),
-      (this.YYa = () => {
+      (this.rth = () => {
         var e = this.BZs.RoleCfgId;
         TowerDefenceController_1.TowerDefenseController.SetCurrentTowerDefensePhantomIdInUiTemp(
           TowerDefenceDefine_1.DEFAULT_ID,
@@ -51,10 +51,10 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
           ),
           this.CloseMe();
       }),
-      (this.sca = () => {
+      (this.lca = () => {
         this.CloseMe();
       }),
-      (this.oZa = () => {
+      (this.tsh = () => {
         this.qZs(!1), this.OZs();
       });
   }
@@ -81,11 +81,11 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DissolvePrewar,
-        this.sca,
+        this.lca,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TowerDefensePhantomChanged,
-        this.oZa,
+        this.tsh,
       );
   }
   OnRemoveEventListener() {
@@ -95,29 +95,33 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DissolvePrewar,
-        this.sca,
+        this.lca,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TowerDefensePhantomChanged,
-        this.oZa,
+        this.tsh,
       );
   }
-  async OnBeforeStartAsync() {
+  async B1h() {
     var e = new TowerDefensePhantomLockItem();
     await e.CreateByActorAsync(this.GetItem(10).GetOwner()),
       e.SetText("TowerDefence_lock"),
-      (this.nca = e);
+      (this.hca = e);
   }
-  OnStart() {
+  async b1h() {
+    (this.PZs = new LoopScrollView_1.LoopScrollView(
+      this.GetLoopScrollViewComponent(1),
+      this.GetItem(2).GetOwner(),
+      TowerDefenceController_1.TowerDefenseController.BuildPhantomIconItem,
+      !0,
+    )),
+      await this.qZs(!0);
+  }
+  async OnBeforeStartAsync() {
     (this.BZs = this.OpenParam),
       TowerDefenceController_1.TowerDefenseController.ResetCurrentTowerDefensePhantomIdInUiTemp(),
+      await Promise.all([this.B1h(), this.b1h()]),
       this.GetItem(9).SetUIActive(!0),
-      (this.PZs = new LoopScrollView_1.LoopScrollView(
-        this.GetLoopScrollViewComponent(1),
-        this.GetItem(2).GetOwner(),
-        TowerDefenceController_1.TowerDefenseController.BuildPhantomIconItem,
-      )),
-      this.qZs(!0),
       (this.wZs = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(6),
         TowerDefenceController_1.TowerDefenseController.BuildPhantomSkillItem,
@@ -130,7 +134,7 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroy() {
     this.BZs = void 0;
   }
-  qZs(e) {
+  async qZs(e) {
     var t =
       TowerDefenceController_1.TowerDefenseController.BuildPhantomIconScrollData();
     TowerDefenceController_1.TowerDefenseController.MarkPhantomIconScrollDataChosen(
@@ -138,7 +142,7 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
       e,
       this.BZs.RoleCfgId,
     ),
-      this.PZs.RefreshByData(t);
+      await this.PZs.RefreshByDataAsync(t);
   }
   GZs() {
     var e =
@@ -156,7 +160,7 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
           ? (this.p9t.SetUiActive(!0),
             this.p9t.SetEnableClick(!0),
             this.p9t.SetLocalTextNew("Text_GoDownText_Text"),
-            this.p9t.SetFunction(this.YYa))
+            this.p9t.SetFunction(this.rth))
           : (this.p9t.SetUiActive(!0),
             this.p9t.SetEnableClick(!1),
             this.p9t.SetLocalTextNew("PrefabTextItem_266690258_Text"))
@@ -166,15 +170,17 @@ class TowerDefensePhantomView extends UiViewBase_1.UiViewBase {
           this.p9t.SetLocalTextNew("TowerDefence_confirm"));
   }
   OZs() {
-    var e =
-        TowerDefenceController_1.TowerDefenseController.BuildPhantomOtherData(),
-      t = e.IsLocked;
-    this.p9t.SetUiActive(!t),
-      this.M3e(t),
-      this.nca.SetUiActive(t),
-      this.SetSpriteByPath(e.TypeIconPath, this.GetSprite(4), !1),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), e.TypeTextId),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), e.NameTextId);
+    var e,
+      t =
+        TowerDefenceController_1.TowerDefenseController.BuildPhantomOtherData();
+    t &&
+      ((e = t.IsLocked),
+      this.p9t.SetUiActive(!e),
+      this.M3e(e),
+      this.hca.SetUiActive(e),
+      this.SetSpriteByPath(t.TypeIconPath, this.GetSprite(4), !1),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), t.TypeTextId),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), t.NameTextId));
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (this.PZs) {

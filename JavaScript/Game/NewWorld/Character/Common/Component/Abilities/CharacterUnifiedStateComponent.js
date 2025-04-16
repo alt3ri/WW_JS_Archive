@@ -36,7 +36,7 @@ const cpp_1 = require("cpp"),
   CombatLog_1 = require("../../../../../Utils/CombatLog"),
   BaseUnifiedStateComponent_1 = require("../../../../Common/Component/BaseUnifiedStateComponent"),
   RoleAudioController_1 = require("../../../Role/RoleAudioController"),
-  CharacterHitComponent_1 = require("../CharacterHitComponent"),
+  BaseHitComponent_1 = require("../BaseHitComponent"),
   CustomMovementDefine_1 = require("../Move/CustomMovementDefine"),
   CharacterUnifiedStateTypes_1 = require("./CharacterUnifiedStateTypes"),
   GameplayCueController_1 = require("./GameplayCueSFX/Controller/GameplayCueController");
@@ -52,38 +52,49 @@ let CharacterUnifiedStateComponent =
         (this.ActorComponent = void 0),
         (this.Gkr = void 0),
         (this.o4o = void 0),
+        (this.Si_ = void 0),
         (this.Nkr = (t, e) => {
           FormationDataController_1.FormationDataController.MarkAggroDirty();
           var i,
-            a = t.CheckGetComponent(161);
+            a = t.CheckGetComponent(173);
           if (((this.Okr = a.Okr), e))
-            CharacterUnifiedStateTypes_1.legalMoveStates
-              .get(this.PositionState)
-              .has(a.MoveState) && this.SetMoveState(a.MoveState);
-          else if ((this.SetPositionState(a.PositionState), this.Gkr))
+            a.MoveState !==
+              CharacterUnifiedStateTypes_1.ECharMoveState.Flying &&
+              a.MoveState !==
+                CharacterUnifiedStateTypes_1.ECharMoveState.Roll &&
+              CharacterUnifiedStateTypes_1.legalMoveStates
+                .get(this.PositionState)
+                .has(a.MoveState) &&
+              this.SetMoveState(a.MoveState);
+          else if (this.Gkr)
             switch (a.MoveState) {
               case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
-                this.Gkr.EnableRoleGaitState(1)
-                  ? this.SetMoveState(a.MoveState)
-                  : (i = this.Gkr.FindEnableCharMoveState()) &&
-                    this.SetMoveState(i);
+                this.SetPositionState(a.PositionState),
+                  this.Gkr.EnableRoleGaitState(1)
+                    ? this.SetMoveState(a.MoveState)
+                    : (i = this.Gkr.FindEnableCharMoveState()) &&
+                      this.SetMoveState(i);
                 break;
               case CharacterUnifiedStateTypes_1.ECharMoveState.Run:
-                this.Gkr.EnableRoleGaitState(2)
-                  ? this.SetMoveState(a.MoveState)
-                  : (i = this.Gkr.FindEnableCharMoveState()) &&
-                    this.SetMoveState(i);
+                this.SetPositionState(a.PositionState),
+                  this.Gkr.EnableRoleGaitState(2)
+                    ? this.SetMoveState(a.MoveState)
+                    : (i = this.Gkr.FindEnableCharMoveState()) &&
+                      this.SetMoveState(i);
                 break;
               case CharacterUnifiedStateTypes_1.ECharMoveState.Sprint:
-                this.Gkr.EnableRoleGaitState(3)
-                  ? this.SetMoveState(a.MoveState)
-                  : (i = this.Gkr.FindEnableCharMoveState()) &&
-                    this.SetMoveState(i);
+                this.SetPositionState(a.PositionState),
+                  this.Gkr.EnableRoleGaitState(3)
+                    ? this.SetMoveState(a.MoveState)
+                    : (i = this.Gkr.FindEnableCharMoveState()) &&
+                      this.SetMoveState(i);
                 break;
               case CharacterUnifiedStateTypes_1.ECharMoveState.Flying:
+              case CharacterUnifiedStateTypes_1.ECharMoveState.Roll:
                 break;
               default:
-                this.SetMoveState(a.MoveState);
+                this.SetPositionState(a.PositionState),
+                  this.SetMoveState(a.MoveState);
             }
           t = a.DirectionState;
           t !== CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
@@ -190,6 +201,19 @@ let CharacterUnifiedStateComponent =
                       CharacterUnifiedStateTypes_1.ECharMoveState.Roll,
                     );
                   break;
+                case CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_KITE:
+                  this.SetPositionState(
+                    CharacterUnifiedStateTypes_1.ECharPositionState.Air,
+                  ),
+                    this.SetMoveState(
+                      CharacterUnifiedStateTypes_1.ECharMoveState.Kite,
+                    );
+                  break;
+                case CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_RIDE:
+                  this.SetPositionState(
+                    CharacterUnifiedStateTypes_1.ECharPositionState.Ride,
+                  );
+                  break;
                 default:
                   this.SetPositionState(
                     CharacterUnifiedStateTypes_1.ECharPositionState.Air,
@@ -214,14 +238,17 @@ let CharacterUnifiedStateComponent =
         (this.oWe = new Set()),
         (this.OnAggroChanged = (t, e) => {
           var i = e.CharActorComp.Entity.Id,
-            t =
+            i =
               (t ? this.oWe.add(i) : this.oWe.delete(i),
               this.Entity.Id ===
                 ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity
                   ?.Id);
-          t &&
+          i &&
             FormationDataController_1.FormationDataController.MarkAggroDirty(),
             this.IsInFighting ||
+              FormationDataController_1.FormationDataController
+                .GlobalIsInFight ||
+              !t ||
               this.ActorComponent?.CreatureData.GetEntityType() !==
                 Protocol_1.Aki.Protocol.kks.Proto_Player ||
               ((i = Vector_1.Vector.Dist(
@@ -235,7 +262,7 @@ let CharacterUnifiedStateComponent =
         }),
         (this.OnInFight = (t) => {
           this.Vkr(t),
-            this.Entity.GetComponent(163)?.SetAnimParamsInFight(t),
+            this.Entity.GetComponent(175)?.SetAnimParamsInFight(t),
             (ModelManager_1.ModelManager.CombatMessageModel.AnyHateChange = !0);
         }),
         (this.OnUpdateSceneTeam = () => {
@@ -249,19 +276,24 @@ let CharacterUnifiedStateComponent =
         (this.Okr = !1);
     }
     static get Dependencies() {
-      return [3, 17];
+      return [3, 18];
     }
     OnInit() {
-      return CharacterUnifiedStateComponent_1.Load(), !0;
+      return (
+        CharacterUnifiedStateComponent_1.Load(),
+        (this.Si_ =
+          this.Entity.EntityData?.GetCharacterUnifiedStateComponent()),
+        !0
+      );
     }
     OnStart() {
       return (
         (this.ActorComponent = this.Entity.GetComponent(3)),
-        (this.qkr = this.Entity.GetComponent(19)),
-        (this.bkr = this.Entity.CheckGetComponent(17)),
-        (this.TagComponent = this.Entity.CheckGetComponent(190)),
-        (this.o4o = this.Entity.CheckGetComponent(164)),
-        (this.Gkr = this.Entity.GetComponent(85)),
+        (this.qkr = this.Entity.GetComponent(21)),
+        (this.bkr = this.Entity.CheckGetComponent(18)),
+        (this.TagComponent = this.Entity.CheckGetComponent(203)),
+        (this.o4o = this.Entity.CheckGetComponent(176)),
+        (this.Gkr = this.Entity.GetComponent(92)),
         (this.IsInGameInternal = !1),
         this.InitCharState(),
         EventSystem_1.EventSystem.AddWithTarget(
@@ -341,16 +373,15 @@ let CharacterUnifiedStateComponent =
     }
     SetPositionState(t) {
       var e = this.PositionState;
-      this.Hkr(t) &&
-        (this.OnPositionStateChange(e, t),
-        this.ActorComponent.IsMoveAutonomousProxy ||
-          CombatLog_1.CombatLog.Warn(
+      this.ActorComponent.IsMoveAutonomousProxy
+        ? this.Hkr(t) && this.OnPositionStateChange(e, t)
+        : CombatLog_1.CombatLog.Warn(
             "UnifiedState",
             this.Entity,
             "非主控端尝试修改位置状态",
             ["old", CharacterUnifiedStateTypes_1.ECharPositionState[e]],
             ["new", CharacterUnifiedStateTypes_1.ECharPositionState[t]],
-          ));
+          );
     }
     SetPositionStateHandle(t) {
       this.ActorComponent.IsMoveAutonomousProxy || this.Hkr(t);
@@ -371,6 +402,7 @@ let CharacterUnifiedStateComponent =
           ["old", CharacterUnifiedStateTypes_1.ECharPositionState[e]],
           ["new", CharacterUnifiedStateTypes_1.ECharPositionState[t]],
         ),
+        this.Si_ && (this.Si_.PositionState = t),
         !0)
       );
     }
@@ -395,32 +427,24 @@ let CharacterUnifiedStateComponent =
             );
     }
     OnPositionStateChange(t, e) {
-      switch (
-        (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Character",
-            6,
-            "UnifiedState PositionStateChange",
-            ["EntityId", this.Entity.Id],
-            ["Name", this.ActorComponent?.Owner?.GetName()],
-            ["From", CharacterUnifiedStateTypes_1.ECharPositionState[t]],
-            ["To", CharacterUnifiedStateTypes_1.ECharPositionState[e]],
-          ),
-        e)
-      ) {
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
-          this.OnLand();
-          break;
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Air:
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Water:
-        case CharacterUnifiedStateTypes_1.ECharPositionState.Climb:
-      }
-      EventSystem_1.EventSystem.EmitWithTarget(
-        this.Entity,
-        EventDefine_1.EEventName.CharOnPositionStateChanged,
-        t,
-        e,
-      );
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Character",
+          6,
+          "UnifiedState PositionStateChange",
+          ["EntityId", this.Entity.Id],
+          ["Name", this.ActorComponent?.Owner?.GetName()],
+          ["From", CharacterUnifiedStateTypes_1.ECharPositionState[t]],
+          ["To", CharacterUnifiedStateTypes_1.ECharPositionState[e]],
+        ),
+        e === CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
+          this.OnLand(),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharOnPositionStateChanged,
+          t,
+          e,
+        );
     }
     SetMoveState(t) {
       RoleAudioController_1.RoleAudioController.OnMoveStateChange(
@@ -456,6 +480,7 @@ let CharacterUnifiedStateComponent =
                 "Movement",
                 6,
                 "Error Move State",
+                ["Actor", this.ActorComponent?.Actor.GetName()],
                 ["PositionState", this.PositionState],
                 ["MoveState", t],
               ),
@@ -477,6 +502,7 @@ let CharacterUnifiedStateComponent =
               CharacterUnifiedStateComponent_1.MoveEnumToTag.get(t),
             ),
             (this.CachedMoveState = t),
+            this.Si_ && (this.Si_.MoveState = t),
             EventSystem_1.EventSystem.EmitWithTarget(
               this.Entity,
               EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
@@ -500,12 +526,15 @@ let CharacterUnifiedStateComponent =
           break;
         case 1:
           this.TagComponent.AddTag(1502858015);
+          break;
+        case 2:
+          this.TagComponent.AddTag(1111570152);
       }
       (this.ActorComponent.UseControllerRotation = !0),
         this.SetDirectionState(
           CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection,
         ),
-        this.Entity.GetComponent(55)?.OnEnterAimShoot();
+        this.Entity.GetComponent(62)?.OnEnterAimShoot();
     }
     ExitAimStatus() {
       this.TagComponent.RemoveTag(1118638468),
@@ -515,7 +544,7 @@ let CharacterUnifiedStateComponent =
           this.SetDirectionState(
             CharacterUnifiedStateTypes_1.ECharDirectionState.FaceDirection,
           ),
-        this.Entity.GetComponent(55)?.OnExitAimShoot();
+        this.Entity.GetComponent(62)?.OnExitAimShoot();
     }
     SetDirectionState(t) {
       var e;
@@ -669,23 +698,22 @@ let CharacterUnifiedStateComponent =
     }
     ExitHitState(t = "") {
       this.TagComponent.HasTag(-1503953470) &&
+        !this.TagComponent.HasTag(-648310348) &&
         this.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Other),
-        this.Entity.GetComponent(53).DeActiveStiff(t),
+        this.Entity.GetComponent(60).DeActiveStiff(t),
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          this.Entity.GetComponent(60).CollectSampleAndSend(),
+          this.Entity.GetComponent(67).CollectSampleAndSend(),
         this.ActorComponent.IsMoveAutonomousProxy &&
-          CharacterHitComponent_1.CharacterHitComponent.HitEndRequest(
-            this.Entity,
-          );
-      t = this.Entity.GetComponent(48);
+          BaseHitComponent_1.BaseHitComponent.HitEndRequest(this.Entity);
+      t = this.Entity.GetComponent(54);
       !t ||
         (2 !== t.CurrentState && 4 !== t.CurrentState) ||
-        (this.Entity.GetComponent(48).ResetState(),
+        (this.Entity.GetComponent(54).ResetState(),
         this.ActorComponent.ResetMoveControlled("退出受击"));
     }
     e2r() {
       this.o4o?.CanWalkPress &&
-        this.t2r(!this.Okr) &&
+        this.MarkWalkOrRun(!this.Okr) &&
         this.i2r(this.IsWalkMode);
     }
     CustomSetWalkOrRun(t) {
@@ -695,10 +723,10 @@ let CharacterUnifiedStateComponent =
           ? this.MoveState !== CharacterUnifiedStateTypes_1.ECharMoveState.Walk
           : this.MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Run) ||
-        (!!this.o4o?.CanWalkPress && (this.t2r(t) && this.i2r(t), !0))
+        (!!this.o4o?.CanWalkPress && (this.MarkWalkOrRun(t) && this.i2r(t), !0))
       );
     }
-    t2r(t) {
+    MarkWalkOrRun(t) {
       var e;
       return (
         t !== this.Okr &&
@@ -736,14 +764,14 @@ let CharacterUnifiedStateComponent =
       return (
         this.TagComponent?.AddTag(1996802261),
         this.InFightCueHandle === GameplayCueController_1.INVALID_CUE_HANDLE &&
-          (this.InFightCueHandle = this.qkr.CreateGameplayCue(1101005001n)),
+          (this.InFightCueHandle = this.qkr.AddCue(1101005001)),
         !0
       );
     }
     TryClearInFightTags() {
       return (
         this.TagComponent?.RemoveTag(1996802261),
-        this.qkr?.DestroyGameplayCueByHandle(this.InFightCueHandle),
+        this.qkr?.RemoveCueByHandle(this.InFightCueHandle),
         (this.InFightCueHandle = GameplayCueController_1.INVALID_CUE_HANDLE),
         !0
       );
@@ -753,7 +781,7 @@ let CharacterUnifiedStateComponent =
       for (const a of ModelManager_1.ModelManager.SceneTeamModel.GetAllGroupEntities(
         e.W5n,
       )) {
-        var i = a.Entity?.GetComponent(161);
+        var i = a.Entity?.GetComponent(173);
         i?.RefreshFightState(e.iWn), i?.OnInFight(e.iWn);
       }
       e.W5n === ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
@@ -789,7 +817,7 @@ let CharacterUnifiedStateComponent =
     static Load() {
       if (this.s2r) {
         (this.PositionTagList = [
-          -1898186757, 504239013, 40422668, 855966206, 1888918118,
+          -1898186757, 504239013, 40422668, 855966206, 1888918118, 485336017,
         ]),
           (this.MoveTagList = [
             -1867662364, 248240472, 498191540, -1625986130, 874657114,
@@ -798,6 +826,7 @@ let CharacterUnifiedStateComponent =
             756800494, 262865373, 31862857, -1973127492, -1504358738,
             -652371212, -648310348, 457513750, -1220068999, 84868970,
             1785019708, 1502279607, 389944200, -2027866845, -959917199,
+            1552667325, 427266238, -1013665181,
           ]),
           (this.DirectionTagList = [
             -1150819426, 428837378, -1462404775, 1260125908,
@@ -864,7 +893,7 @@ let CharacterUnifiedStateComponent =
   ),
   (CharacterUnifiedStateComponent = CharacterUnifiedStateComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(161)],
+      [(0, RegisterComponent_1.RegisterComponent)(173)],
       CharacterUnifiedStateComponent,
     )),
   (exports.CharacterUnifiedStateComponent = CharacterUnifiedStateComponent);

@@ -103,7 +103,7 @@ class BulletDataMain {
       0 < e.Children.length ||
       !e.Obstacle.Center.IsZero() ||
       0 < e.Obstacle.Radius ||
-      e.Interact.WaterInteract !== BulletDataMain.A8o
+      e.Interact.SceneInteract !== BulletDataMain.A8o
     );
   }
   CheckValid() {
@@ -175,7 +175,7 @@ class BulletDataMain {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Bullet",
-        18,
+        17,
         "子弹配置非法",
         ["", e],
         ["", this.BulletRowName],

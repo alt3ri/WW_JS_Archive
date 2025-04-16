@@ -142,7 +142,8 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                           },
                         );
                       }))))
-            : (e.PlayFailAnimation(),
+            : (this.GetItem(4).SetUIActive(!0),
+              e.PlayFailAnimation(),
               this.OnRemoveEventListener(),
               (this.YIt = !0),
               TimerSystem_1.TimerSystem.Delay(() => {
@@ -197,15 +198,24 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId = 0),
           (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillTime = 0);
       }),
-      (this.OnNextAttrChanged = (e, t) => {
-        this.$It ||
-          ((ModelManager_1.ModelManager.ComboTeachingModel.NextAttr = t),
-          (ModelManager_1.ModelManager.ComboTeachingModel.NextAttrSkillId = e));
+      (this.OnNextAttrChanged = (e, t, i) => {
+        if (!this.$It) {
+          e = EntitySystem_1.EntitySystem.Get(e);
+          if (e)
+            if (
+              e.GetComponent(0)?.GetEntityType() !==
+              Protocol_1.Aki.Protocol.kks.Proto_Player
+            )
+              return;
+          (ModelManager_1.ModelManager.ComboTeachingModel.NextAttr = i),
+            (ModelManager_1.ModelManager.ComboTeachingModel.NextAttrSkillId =
+              t);
+        }
       }),
       (this.OnHit = (e) => {
         var t;
         this.$It ||
-          ((t = e.Attacker.GetComponent(34)),
+          ((t = e.Attacker.GetComponent(39)),
           (ModelManager_1.ModelManager.ComboTeachingModel.HitSkillId =
             t?.CurrentSkill?.SkillId ?? 0),
           this.XIt[this.WIt]?.OnBulletHit(e));
@@ -220,6 +230,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       [1, UE.UIText],
       [2, UE.UIText],
       [3, UE.UIItem],
+      [4, UE.UIItem],
     ];
   }
   OnStart() {
@@ -326,6 +337,10 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnStartLoadingState,
         this.OnOpenLoading,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnSkillEnd,
+        this.OnCharEndSkill,
       ));
   }
   OnBeforeDestroy() {
@@ -338,7 +353,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
     else {
       var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
         e = EntitySystem_1.EntitySystem.Get(e);
-      const t = e?.GetComponent(190),
+      const t = e?.GetComponent(203),
         i =
           (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach(
             (e) => {
@@ -348,12 +363,12 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
             },
           ),
           (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.length = 0),
-          e?.GetComponent(160));
+          e?.GetComponent(172));
       ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.forEach(
         (e) => {
-          i?.GetBuffTotalStackById(BigInt(e)) &&
-            0 < i?.GetBuffTotalStackById(BigInt(e)) &&
-            i?.RemoveBuff(BigInt(e), -1, "ComboTeachingView.OnBeforeDestroy");
+          i?.GetBuffTotalStackById(e) &&
+            0 < i?.GetBuffTotalStackById(e) &&
+            i?.RemoveBuff(e, -1, "ComboTeachingView.OnBeforeDestroy");
         },
       ),
         (ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.length = 0);
@@ -368,8 +383,8 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         ));
     (e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       (e = EntitySystem_1.EntitySystem.Get(e));
-    const t = e?.GetComponent(190),
-      i = e?.GetComponent(160);
+    const t = e?.GetComponent(203),
+      i = e?.GetComponent(172);
     ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach((e) => {
       t?.RemoveTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e));
     }),
@@ -384,9 +399,9 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       }),
       ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.forEach(
         (e) => {
-          i?.GetBuffTotalStackById(BigInt(e)) &&
-            0 < i?.GetBuffTotalStackById(BigInt(e)) &&
-            i?.RemoveBuff(BigInt(e), -1, "ComboTeachingView.RefreshComboList");
+          i?.GetBuffTotalStackById(e) &&
+            0 < i?.GetBuffTotalStackById(e) &&
+            i?.RemoveBuff(e, -1, "ComboTeachingView.RefreshComboList");
         },
       ),
       (ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.length = 0),
@@ -410,16 +425,16 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         (this.XIt[e].CurConfig = this.KIt), this.XIt[e].Refresh(this.WIt);
       else {
         var n = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(3), this.GetItem(0));
-        const s = new ComboTeachingNode_1.ComboTeachingNode(e, this.KIt);
-        s.CreateThenShowByActorAsync(n.GetOwner()).then(() => {
-          s.Refresh(this.WIt);
+        const a = new ComboTeachingNode_1.ComboTeachingNode(e, this.KIt);
+        a.CreateThenShowByActorAsync(n.GetOwner()).then(() => {
+          a.Refresh(this.WIt);
         }),
-          this.XIt.push(s);
+          this.XIt.push(a);
       }
     var e = this.GetItem(3).GetWidth() + 220 * (this.XIt.length - 1),
-      a = this.GetItem(0).GetParentAsUIItem().GetWidth();
-    a < e &&
-      ((this.JIt = (e - a) / 2), this.GetItem(0).SetAnchorOffsetX(this.JIt)),
+      s = this.GetItem(0).GetParentAsUIItem().GetWidth();
+    s < e &&
+      ((this.JIt = (e - s) / 2), this.GetItem(0).SetAnchorOffsetX(this.JIt)),
       this.GetItem(3).SetUIActive(!1),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(1),
@@ -466,7 +481,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime = 0),
       Global_1.Global.BaseCharacter &&
         ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-        (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(164)).IsJump) &&
+        (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(176)).IsJump) &&
         0 === ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime &&
         (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime =
           BEFORE_JUMP_TIME),

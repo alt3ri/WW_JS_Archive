@@ -72,16 +72,16 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(21402, AdviceController.i9e),
-      Net_1.Net.Register(22288, AdviceController.o9e),
-      Net_1.Net.Register(26315, AdviceController.r9e),
-      Net_1.Net.Register(15927, AdviceController.n9e);
+    Net_1.Net.Register(29530, AdviceController.i9e),
+      Net_1.Net.Register(16134, AdviceController.o9e),
+      Net_1.Net.Register(22896, AdviceController.r9e),
+      Net_1.Net.Register(19617, AdviceController.n9e);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(21402),
-      Net_1.Net.UnRegister(22288),
-      Net_1.Net.UnRegister(15927),
-      Net_1.Net.UnRegister(26315);
+    Net_1.Net.UnRegister(29530),
+      Net_1.Net.UnRegister(16134),
+      Net_1.Net.UnRegister(19617),
+      Net_1.Net.UnRegister(22896);
   }
   static OpenAdviceConjunctionSelectView() {
     var e = ModelManager_1.ModelManager.AdviceModel;
@@ -178,7 +178,7 @@ class AdviceController extends ControllerBase_1.ControllerBase {
   }
   static s9e() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    if (e?.Valid && e.Entity.GetComponent(190).HasTag(1996802261))
+    if (e?.Valid && e.Entity.GetComponent(203).HasTag(1996802261))
       return (
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "BattleCannotOpenAdvice",
@@ -193,7 +193,7 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.AdviceModel.GetAdviceMotionActor(
         e,
       ).PlayMotion(e),
-      r.GetComponent(130)?.DoInteract();
+      r.GetComponent(141)?.DoInteract();
   }
   static RequestCreateAdvice(e, r, t, o) {
     const n = new Protocol_1.Aki.Protocol.NXn();
@@ -203,11 +203,11 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       t.forEach((e) => {
         n.u8n.push(e.ConvertToPb());
       }),
-      Net_1.Net.Call(22259, n, (e) => {
+      Net_1.Net.Call(25933, n, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              28388,
+              16055,
             )
           : (o && o(),
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -223,11 +223,11 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       t.forEach((e) => {
         o.u8n.push(e.ConvertToPb());
       }),
-      Net_1.Net.Call(23684, o, (e) => {
+      Net_1.Net.Call(20731, o, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              28552,
+              18910,
             )
           : ModelManager_1.ModelManager.AdviceModel.OnModifyAdvice(r, t);
       });
@@ -235,11 +235,11 @@ class AdviceController extends ControllerBase_1.ControllerBase {
   static RequestDeleteAdvice(r) {
     var e = new Protocol_1.Aki.Protocol.HXn();
     (e.s5n = r),
-      Net_1.Net.Call(19001, e, (e) => {
+      Net_1.Net.Call(29760, e, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              23456,
+              17051,
             )
           : ModelManager_1.ModelManager.AdviceModel.OnDeleteAdvice(r);
       });
@@ -248,11 +248,11 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     var o = new Protocol_1.Aki.Protocol.WXn();
     (o.s5n = e),
       (o.h5n = t),
-      Net_1.Net.Call(15967, o, (e) => {
+      Net_1.Net.Call(16062, o, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              16399,
+              27593,
             ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnAdviceVoteNotify,
@@ -263,11 +263,11 @@ class AdviceController extends ControllerBase_1.ControllerBase {
   static RequestSetAdviceShowState(e) {
     const r = new Protocol_1.Aki.Protocol.xXn();
     (r.q5n = e),
-      Net_1.Net.Call(26943, r, (e) => {
+      Net_1.Net.Call(25376, r, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              17142,
+              21919,
             )
           : ModelManager_1.ModelManager.AdviceModel.SetAdviceShowSetting(r.q5n);
       });
@@ -288,8 +288,8 @@ class AdviceController extends ControllerBase_1.ControllerBase {
         var o = Global_1.Global.BaseCharacter,
           n = a.Entity.GetComponent(1)?.Owner;
         if (o && a && n) {
-          (n = n.K2_GetActorLocation()), (o = o.K2_GetActorLocation());
-          if (UE.KismetMathLibrary.Vector_Distance(n, o) <= t) return !0;
+          (n = n.D_K2_GetActorLocation()), (o = o.D_K2_GetActorLocation());
+          if (UE.KismetMathLibrary.D_Vector_Distance(n, o) <= t) return !0;
         }
       }
     }
@@ -369,11 +369,11 @@ class AdviceController extends ControllerBase_1.ControllerBase {
   }),
   (AdviceController.RequestAdviceData = () => {
     var e = new Protocol_1.Aki.Protocol.GXn();
-    Net_1.Net.Call(26307, e, (e) => {
+    Net_1.Net.Call(17882, e, (e) => {
       e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            22096,
+            29600,
           )
         : ModelManager_1.ModelManager.AdviceModel.PhraseAdviceData(e);
     });

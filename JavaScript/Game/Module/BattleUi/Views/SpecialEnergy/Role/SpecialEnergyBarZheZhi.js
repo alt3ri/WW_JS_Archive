@@ -10,10 +10,10 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
 class SpecialEnergyBarZheZhi extends SpecialEnergyBarSlot_1.SpecialEnergyBarSlot {
   constructor() {
     super(...arguments),
-      (this.Cma = []),
-      (this.gma = 0),
-      (this.fma = (e, t) => {
-        this.pma(), this.RefreshBarPercent();
+      (this.wca = []),
+      (this.Bca = 0),
+      (this.bca = (e, t) => {
+        this.qca(), this.RefreshBarPercent();
       });
   }
   async InitSlotItem(e) {
@@ -29,9 +29,9 @@ class SpecialEnergyBarZheZhi extends SpecialEnergyBarSlot_1.SpecialEnergyBarSlot
       for (let e = 0; e < SUMMON_NUM && !(e > t.length - 1); e++) {
         var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(t[e]);
         r?.IsInit
-          ? this.Cma.push(r)
+          ? this.wca.push(r)
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Battle", 18, "折枝能量条读取伴生物实体时异常", [
+            Log_1.Log.Warn("Battle", 17, "折枝能量条读取伴生物实体时异常", [
               "creatureDataId",
               t[e],
             ]);
@@ -40,21 +40,21 @@ class SpecialEnergyBarZheZhi extends SpecialEnergyBarSlot_1.SpecialEnergyBarSlot
   }
   AddEvents() {
     super.AddEvents();
-    for (const t of this.Cma) {
-      var e = t.Entity?.GetComponent(190);
+    for (const t of this.wca) {
+      var e = t.Entity?.GetComponent(203);
       e &&
-        (e = e.ListenForTagAddOrRemove(-1285044114, this.fma)) &&
+        (e = e.ListenForTagAddOrRemove(-1285044114, this.bca)) &&
         this.TagTaskList.push(e);
     }
   }
-  pma() {
-    this.gma = 0;
-    for (const e of this.Cma)
-      e.Entity?.GetComponent(190)?.HasTag(-1285044114) && this.gma++;
+  qca() {
+    this.Bca = 0;
+    for (const e of this.wca)
+      e.Entity?.GetComponent(203)?.HasTag(-1285044114) && this.Bca++;
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "【能量条】折枝飞鹤数量更新", [
+      Log_1.Log.Debug("Battle", 17, "【能量条】折枝飞鹤数量更新", [
         "",
-        this.gma,
+        this.Bca,
       ]);
   }
   OnStart() {
@@ -63,16 +63,16 @@ class SpecialEnergyBarZheZhi extends SpecialEnergyBarSlot_1.SpecialEnergyBarSlot
         "Color_Offset",
         extraEnergyEffectParams[e],
       );
-    this.pma(), super.OnStart();
+    this.qca(), super.OnStart();
   }
   RefreshBarPercent(e = !1) {
     var t = this.PercentMachine.GetCurPercent(),
       r = this.GetKeyEnable();
     for (let e = 0; e < this.SlotItemList.length; e++) {
       var a = this.SlotItemList[e];
-      e < this.gma
+      e < this.Bca
         ? (a.UpdatePercent(0, !1, !0), a.SetEffectItemVisible(!0))
-        : (a.UpdatePercent(t * this.SlotNum - (e - this.gma), r, !0),
+        : (a.UpdatePercent(t * this.SlotNum - (e - this.Bca), r, !0),
           a.SetEffectItemVisible(!1));
     }
     this.KeyItem?.RefreshKeyEnable(r, e);

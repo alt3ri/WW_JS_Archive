@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyClearCharInput extends UE.KuroAnimNotify {
+  Constructor() {}
   K2_Notify(e, r) {
     e = e.GetOwner();
     return (

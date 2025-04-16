@@ -4,21 +4,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  CookController_1 = require("../../../Module/Cook/CookController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemFixCook extends OpenSystemBase_1.OpenSystemBase {
-  async ExecuteOpenView(e, o) {
+  async ExecuteOpenView(e, t) {
     return e.BoardId
-      ? (CookController_1.CookController.SetCurrentFixId(e.BoardId),
-        1 === o.Type &&
-          ((o = EntitySystem_1.EntitySystem.Get(o.EntityId)),
-          (o = MathUtils_1.MathUtils.NumberToLong(
-            o?.GetComponent(0).GetCreatureDataId(),
+      ? (ControllerHolder_1.ControllerHolder.CookController.SetCurrentFixId(
+          e.BoardId,
+        ),
+        1 === t.Type &&
+          ((t = EntitySystem_1.EntitySystem.Get(t.EntityId)),
+          (t = MathUtils_1.MathUtils.NumberToLong(
+            t?.GetComponent(0).GetCreatureDataId(),
           )),
-          CookController_1.CookController.SetCurrentEntityId(o)),
-        CookController_1.CookController.ShowFixCookView())
+          ControllerHolder_1.ControllerHolder.CookController.SetCurrentEntityId(
+            t,
+          )),
+        ControllerHolder_1.ControllerHolder.CookController.ShowFixCookView())
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Level", 8, "打开厨具修复参数有误", [
+          Log_1.Log.Error("Level", 64, "打开厨具修复参数有误", [
             "BoardId",
             e.BoardId,
           ]),

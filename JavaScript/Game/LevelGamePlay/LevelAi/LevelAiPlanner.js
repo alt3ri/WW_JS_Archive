@@ -114,7 +114,7 @@ class LevelAiPlanner {
       this.lTe.Equal(LevelAiPlan_1.LevelAiPlanStepId.None)
     )
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("LevelAi", 30, "没有未完成的任务层", [
+        Log_1.Log.Error("LevelAi", 29, "没有未完成的任务层", [
           "Owner",
           this.RIe.GetCreatureDataComponent().GetPbDataId(),
         ]);

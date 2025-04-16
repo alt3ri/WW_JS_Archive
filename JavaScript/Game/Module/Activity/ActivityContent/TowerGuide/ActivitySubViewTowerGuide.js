@@ -64,7 +64,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
           ? ((e = {
               MarkId: this.ActivityBaseData.MapMarkId,
               MarkType: 0,
-              OpenAreaId: 0,
+              OpenFogId: 0,
             }),
             WorldMapController_1.WorldMapController.OpenView(2, !1, e))
           : ((e = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
@@ -73,7 +73,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
             this.ActivityBaseData,
           );
       }),
-      (this.BZa = () => {
+      (this.hhh = () => {
         ControllerHolder_1.ControllerHolder.ActivityController.OpenActivityConditionView(
           this.ActivityBaseData.Id,
         );
@@ -112,7 +112,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
         [6, this.Q3e],
         [11, this.X3e],
         [12, this.$3e],
-        [23, this.BZa],
+        [23, this.hhh],
       ]);
   }
   OnSetData() {}

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicManipulatableCreateBullet = void 0);
 const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   BulletController_1 = require("../BulletController"),
+  BulletUtil_1 = require("../BulletUtil"),
   BulletHitActorData_1 = require("../Model/BulletHitActorData"),
   BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.BulletLogicController {
@@ -17,12 +18,12 @@ class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.Bulle
       t.Entity.GetComponent(0).IsSceneItem()
     ) {
       var e = t.Entity;
-      if (e?.GetComponent(143) && this.CheckCondition(e)) {
+      if (e?.GetComponent(154) && this.CheckCondition(e)) {
         var l = this.Bullet.GetBulletInfo(),
           r = l.AttackerActorComp.Actor,
           i =
             e.GetComponent(1)?.ActorTransform ??
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
           o = this.h7o.CreateBulletRowName.Num(),
           a = l.ContextId;
         for (let t = 0; t < o; t++) {
@@ -33,10 +34,13 @@ class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.Bulle
             i,
             {
               SkillId: l.BulletInitParams.SkillId,
+              SkillContextId: l.BulletInitParams.SkillContextId,
               ParentVictimId: e?.Id,
               ParentTargetId: l.Target?.Id,
               ParentId: this.Bullet.Id,
               DtType: l.BulletInitParams.DtType,
+              BattleFlags: l.BulletInitParams.BattleFlags,
+              ParentIds: void 0,
             },
             a,
           );
@@ -46,7 +50,7 @@ class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.Bulle
   }
   CheckCondition(t) {
     var e = this.h7o,
-      l = t?.GetComponent(181);
+      l = t?.GetComponent(194);
     if (!l) return !1;
     var r = e.ExistTagsCondition.GameplayTags,
       i = r.Num();

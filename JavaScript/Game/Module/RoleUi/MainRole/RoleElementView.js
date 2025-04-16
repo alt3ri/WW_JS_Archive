@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleElementView = void 0);
 const UE = require("ue"),
+  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
@@ -60,7 +61,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
       (this.OnClickSwitch = () => {
         var e;
         Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-          190,
+          203,
         )?.HasTag(1996802261)
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
               ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -79,9 +80,14 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
         (this.p1o = !0),
           UiLayer_1.UiLayer.SetShowMaskLayer("RoleElementView", !0),
           this.d1o.SetCurSelectRoleId(e),
-          this.dVi?.Model?.CheckGetComponent(11)?.SetRoleDataId(e),
+          this.d1o.CheckMainRoleToIdList(e);
+        var t = this.d1o.GetCurSelectRoleData();
+        this.dVi?.Model?.CheckGetComponent(12)?.SetRoleDataId(
+          e,
+          t.GetRoleSkinId(),
+        ),
           this.E1o(e);
-        for (const t of this.kGe.GetScrollItemList()) t.RefreshState();
+        for (const i of this.kGe.GetScrollItemList()) i.RefreshState();
         this.Svt();
       }),
       (this.S1o = (e) => {
@@ -119,7 +125,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
     (this.d1o = this.OpenParam),
       void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleElementView",
           ])
@@ -184,8 +190,12 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
   }
   E1o(e) {
     var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
+      t = ConfigManager_1.ConfigManager.ElementInfoConfig?.GetElementInfo(
+        e.ElementId,
+      )?.AudioEvent,
       t =
-        (RoleController_1.RoleController.PlayRoleMontage(21),
+        (t && AudioSystem_1.AudioSystem.PostEvent(t),
+        RoleController_1.RoleController.PlayRoleMontage(21),
         ConfigManager_1.ConfigManager.RoleConfig.GetRoleElementSwitchDelayTime());
     this.ShowElementSuccessEffectById(e.ElementId),
       TimerSystem_1.TimerSystem.Delay(() => {
@@ -195,7 +205,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
   async T1o(e, i, r, t, s, o) {
     let n = !1,
       a = void 0;
-    const l = new CustomPromise_1.CustomPromise();
+    const h = new CustomPromise_1.CustomPromise();
     o &&
       ((o = new LoadAsyncPromise_1.LoadAsyncPromise(o, UE.Texture)),
       (a = await o.Promise),
@@ -204,7 +214,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
     return (
       EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
-        t ?? MathUtils_1.MathUtils.DefaultTransform,
+        t ?? MathUtils_1.MathUtils.DefaultTransformDouble,
         o,
         "[RoleAnimStateEffectManager.PlayEffect]",
         new EffectContext_1.EffectContext(void 0, i),
@@ -220,24 +230,23 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
               EffectSystem_1.EffectSystem.GetEffectActor(
                 t,
               )?.K2_AttachToComponent(i, r, 0, 0, 0, !1),
-            l.SetResult(t));
+            h.SetResult(t));
         },
         void 0,
         !1,
         !0,
       ),
-      l.Promise
+      h.Promise
     );
   }
   L1o(e, t, i, r) {
-    var e = EffectSystem_1.EffectSystem.GetSureEffectActor(
-        e,
-      ).GetComponentByClass(UE.NiagaraComponent.StaticClass()),
-      s = e.Asset;
-    e.SetAsset(void 0),
-      e.SetAsset(s),
-      e.SetNiagaraVariableLinearColor("Color", t),
-      i && e.SetKuroNiagaraEmitterCustomTexture("Icon", "Mask", r);
+    var s,
+      e = EffectSystem_1.EffectSystem.GetNiagaraComponent(e);
+    e instanceof UE.NiagaraComponent &&
+      ((s = e.Asset), e.SetAsset(void 0), e.SetAsset(s)),
+      e &&
+        (e.SetNiagaraVariableLinearColor("Color", t), i) &&
+        e.SetKuroNiagaraEmitterCustomTexture("Icon", "Mask", r);
   }
   ShowElementSuccessEffectById(e) {
     var t,
@@ -273,10 +282,10 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
         });
       } else {
         var t = this.dVi,
-          i = new UE.Transform(
+          i = new UE.TransformDouble(
             new UE.Rotator(0, 0, 0),
-            new UE.Vector(0, 0, 0),
-            new UE.Vector(1, 1, 1),
+            new UE.VectorDouble(0, 0, 0),
+            new UE.VectorDouble(1, 1, 1),
           ),
           t = t.Model?.CheckGetComponent(1);
         this.T1o(
@@ -288,7 +297,8 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
           e.ElementEffectColor,
           e.Icon3,
         ).then((e) => {
-          this.g1o = e;
+          (this.g1o = e),
+            this.IsDestroyOrDestroying && this.HideElementPreviewEffect();
         }, this.I1o);
       }
       try {
@@ -302,15 +312,16 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
             "AttributePreviewBodyEffect",
             void 0,
             void 0,
-            r.GetTransform(),
+            r.D_GetTransform(),
           ).then((e) => {
-            this.f1o = e;
+            (this.f1o = e),
+              this.IsDestroyOrDestroying && this.HideElementPreviewEffect();
           }, this.I1o);
       } catch (e) {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Role",
-            50,
+            49,
             "给角色属性切换预览特效寻找坐标参考case点失败，中断后续流程",
           );
       }

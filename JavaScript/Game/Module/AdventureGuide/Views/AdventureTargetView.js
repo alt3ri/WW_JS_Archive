@@ -303,7 +303,7 @@ class AdventureTargetView extends UiTabViewBase_1.UiTabViewBase {
       t = this.H3e.GetGridByDisplayIndex(t);
     if (t) return [t, t];
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         e,
       ]);

@@ -4,23 +4,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../Core/Common/Log");
 class TestModuleBridge {
   static async TryGetTestModuleExports() {
-    if (this.VUa) return this.VUa;
+    if (this.QUa) return this.QUa;
     try {
       var e = await Promise.resolve().then(() =>
         require("../../Test/TestModuleExports"),
       );
-      if (e) return (this.VUa = e.TestModuleExports), this.VUa;
+      if (e) return (this.QUa = e.TestModuleExports), this.QUa;
     } catch (e) {
       e instanceof Error
         ? Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Game", 63, "找不到Test模块入口", [
+          Log_1.Log.Info("Game", 62, "找不到Test模块入口", [
             "error",
             e.stack || e.message,
           ])
         : Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Game", 63, "找不到Test模块入口", ["error", e]);
+          Log_1.Log.Info("Game", 62, "找不到Test模块入口", ["error", e]);
     }
   }
 }
-(exports.TestModuleBridge = TestModuleBridge).VUa = void 0;
+(exports.TestModuleBridge = TestModuleBridge).QUa = void 0;
 //# sourceMappingURL=TestModuleBridge.js.map

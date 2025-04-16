@@ -76,7 +76,7 @@ class ItemMaterialSimpleController extends (exports.ItemMaterialControllerBase =
             : this.CachedMaterials[s][2].push(void 0),
           i ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Render", 33, "材质控制器 - 使用了空材质", [
+              Log_1.Log.Error("Render", 32, "材质控制器 - 使用了空材质", [
                 "Actor",
                 e.GetOwner().GetName(),
               ]));
@@ -388,7 +388,26 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
           RenderConfig_1.RenderConfig.E_Action_TransparentColorQuanXiFengSuo,
           this.Data.TransparentColorQuanXiFengSuo,
         )),
+      this.UpdateCustomCurvePar(),
       RenderModuleConfig_1.RenderStats.StatItemMaterialControllerCollectParameter.Stop();
+  }
+  UpdateCustomCurvePar() {
+    if (this.Data?.CustomScalarParMap) {
+      var t = this.Data?.CustomScalarParMap;
+      for (let i = t.Num() - 1; 0 <= i; --i) {
+        var e = t.GetKey(i),
+          s = t.Get(e);
+        this.ModelParameters?.CollectFloatCurve(e, s);
+      }
+    }
+    if (this.Data?.CustomColorParMap) {
+      var h = this.Data?.CustomColorParMap;
+      for (let i = h.Num() - 1; 0 <= i; --i) {
+        var r = h.GetKey(i),
+          n = h.Get(r);
+        this.ModelParameters?.CollectLinearColorCurve(r, n);
+      }
+    }
   }
   UpdateParameters(i) {
     if (this.LifeTimeController) {
@@ -491,7 +510,7 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
             : this.CachedMaterials[s][2].push(void 0),
           i ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Render", 33, "材质控制器 - 使用了空材质", [
+              Log_1.Log.Error("Render", 32, "材质控制器 - 使用了空材质", [
                 "Actor",
                 e.GetOwner().GetName(),
               ]));
@@ -515,7 +534,7 @@ class ItemMaterialActorController extends ItemMaterialControllerBase {
         : (this.CachedDecalMaterials[e][2] = void 0),
         i ||
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Render", 33, "材质控制器 - 使用了空材质", [
+            Log_1.Log.Error("Render", 32, "材质控制器 - 使用了空材质", [
               "Actor",
               t.GetOwner().GetName(),
             ]));

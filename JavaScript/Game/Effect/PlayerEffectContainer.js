@@ -95,7 +95,7 @@ class PlayerEffectContainer {
     return this.Bpe[e].Size;
   }
   Fpe(t) {
-    if (ModelManager_1.ModelManager.CharacterModel.IsValid(t))
+    if (ModelManager_1.ModelManager.CharacterModel?.IsValid(t))
       for (let e = 0; e < this.Npe.length; e++) if (t === this.Npe[e]) return e;
     return -1;
   }

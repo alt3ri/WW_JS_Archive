@@ -1,10 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
-  CameraController_1 = require("../Camera/CameraController"),
   CameraUtility_1 = require("../Camera/CameraUtility"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  ModelManager_1 = require("../Manager/ModelManager");
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
+  CharacterUtils_1 = require("../NewWorld/Character/CharacterUtils");
 class TsAnimNotifyCameraModify extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -18,31 +19,40 @@ class TsAnimNotifyCameraModify extends UE.KuroAnimNotify {
       (this.CameraAttachSocket = "CameraPosition"),
       (this.条件 = void 0);
   }
-  K2_Notify(e, t) {
-    e = e.GetOwner();
-    if (!(e instanceof TsBaseCharacter_1.default)) return !1;
-    var i = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e.EntityId);
+  Constructor() {}
+  K2_Notify(t, r) {
+    t = t.GetOwner();
+    if (!(t instanceof TsBaseCharacter_1.default)) return !1;
+    var e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t.EntityId);
+    if (!e?.Valid) return !1;
+    if (
+      !CharacterUtils_1.CharacterUtils.CanCharacterMonsterOrSummonedDisplayEffect(
+        e,
+      )
+    )
+      return !1;
+    var i =
+      ControllerHolder_1.ControllerHolder.CameraController.FightCamera
+        .LogicComponent;
     if (!i?.Valid) return !1;
-    var r = CameraController_1.CameraController.FightCamera.LogicComponent;
-    if (!r?.Valid) return !1;
     let a = void 0;
     if (
-      (t instanceof UE.AnimMontage && (a = t),
+      (r instanceof UE.AnimMontage && (a = r),
       CameraUtility_1.CameraUtility.CheckApplyCameraModifyCondition(
-        i,
+        e,
         this.相机修改配置,
         this.生效客户端类型,
         this.条件,
       ))
     ) {
-      let t = void 0;
+      let r = void 0;
       0 !== this.生效客户端类型 &&
         1 !== this.生效客户端类型 &&
         6 !== this.生效客户端类型 &&
-        ((t = e),
+        ((r = t),
         (this.相机修改配置.IsLockInput = !0),
         (this.相机修改配置.OverrideCameraInput = !0)),
-        r.ApplyCameraModify(
+        i.ApplyCameraModify(
           this.Tag,
           this.持续时间,
           this.淡入时间,
@@ -52,9 +62,9 @@ class TsAnimNotifyCameraModify extends UE.KuroAnimNotify {
           this.打断淡出时间,
           void 0,
           void 0,
-          t,
+          r,
           this.CameraAttachSocket,
-          e,
+          t,
         );
     }
     return !0;

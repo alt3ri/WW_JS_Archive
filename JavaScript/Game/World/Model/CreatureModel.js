@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreatureModel =
     exports.globalEntityTypePerceptionType =
-    exports.globalEntityTypeQueryName =
+    exports.ENABLE_KAWAII_MASK =
+    exports.DISABLE_KAWAII_MASK =
       void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
@@ -19,12 +20,16 @@ const puerts_1 = require("puerts"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  Platform_1 = require("../../../Launcher/Platform/Platform"),
+  flatbuffers = require("../../../RunTimeLibs/FlatBuffers/flatbuffers"),
   IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
   IEntity_1 = require("../../../UniverseEditor/Interface/IEntity"),
   IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
+  GameSettingsDefine_1 = require("../../GameSettings/GameSettingsDefine"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -33,23 +38,20 @@ const puerts_1 = require("puerts"),
   SeamlessTravelController_1 = require("../../Module/SeamlessTravel/SeamlessTravelController"),
   CreatureDensityContainer_1 = require("../Define/CreatureDensityContainer"),
   EntityContainer_1 = require("../Define/EntityContainer"),
+  ComponentReadHelper_1 = require("../EntityReadCode/Component/ComponentReadHelper"),
   zero = 0n,
   ONE_HUNDRED = 100;
-(exports.globalEntityTypeQueryName = [
-  "NormalEntity",
-  "SimpleNpcEntity",
-  "NormalNpcEntity",
-  "CharacterEntity",
-  "BossEntity",
-  "PlayerAlwaysTickGroup",
-]),
+(exports.DISABLE_KAWAII_MASK = 1),
+  (exports.ENABLE_KAWAII_MASK = ~exports.DISABLE_KAWAII_MASK),
   (exports.globalEntityTypePerceptionType = [1, 2, 2, 2, 2, 4]);
 class CreatureModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.EnableEntityLog = !0),
+      (this.UseFbEntityConfig = !1),
       (this._Mr = 0),
       (this.uMr = void 0),
+      (this.qrl = void 0),
       (this.Ypr = void 0),
       (this.NUe = 0),
       (this.ScenePlayerDataMap = new Map()),
@@ -57,10 +59,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
       (this.hPr = new EntityContainer_1.EntityContainer()),
       (this.mMr = new Map()),
       (this.dMr = new Map()),
-      (this.kCa = new Map()),
+      (this.NCa = new Map()),
       (this.CMr = !1),
       (this.RemoveCreaturePendingSet = new Set()),
-      (this.gMr = void 0),
+      (this.Lvl = void 0),
       (this.fMr = void 0),
       (this.pMr = void 0),
       (this.vMr = void 0),
@@ -79,6 +81,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       (this.DisableLock = new Set()),
       (this.EntitiesSortedList = []),
       (this.LeavingLevel = !1),
+      (this.ifl = 0),
       (this.AMr = () => {
         for (const t of this.GetAllEntities())
           this.dMr.has(t.Id) ||
@@ -108,11 +111,14 @@ class CreatureModel extends ModelBase_1.ModelBase {
               i.Entity.GetComponent(0).GetEntityType() ===
                 Protocol_1.Aki.Protocol.kks.Proto_SceneItem ||
               this.dMr.has(i.Id) ||
-              this.kCa.has(i.Id) ||
+              this.NCa.has(i.Id) ||
               (i.IsInit
-                ? (e = i.Entity.GetComponent(99)) &&
-                  ((e = e.DisableTickWithLog("CreatureModel.OnTeleportStart")),
-                  this.kCa.set(i.Id, e))
+                ? ((e = i.Entity.GetComponent(109)) &&
+                    ((e = e.DisableTickWithLog(
+                      "CreatureModel.OnTeleportStart",
+                    )),
+                    this.NCa.set(i.Id, e)),
+                  (e = i.Entity.GetComponent(111)) && (e.TeleportLock = !0))
                 : this.dMr.set(
                     i.Id,
                     i.Entity.Disable("CreatureModel.OnTeleportStart"),
@@ -128,21 +134,25 @@ class CreatureModel extends ModelBase_1.ModelBase {
             t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t);
             t?.Valid && t.Entity.Enable(e, "CreatureModel.OnTeleportComplete");
           }
-          for (var [i, r] of this.kCa) {
+          for (var [i, r] of this.NCa) {
             i = ModelManager_1.ModelManager.CreatureModel.GetEntityById(i);
             i?.Valid &&
-              i.Entity.GetComponent(99).EnableTickWithLog(
+              (i.Entity.GetComponent(109).EnableTickWithLog(
                 r,
                 "CreatureModel.OnTeleportComplete",
-              );
+              ),
+              (r = i.Entity.GetComponent(111))) &&
+              (r.OnEntityBudgetTickEnableChange(!0), (r.TeleportLock = !1));
           }
-          this.dMr.clear(), this.kCa.clear();
+          this.dMr.clear(), this.NCa.clear();
         }
       });
   }
+  get KuroLodMask() {
+    return this.ifl;
+  }
   OnInit() {
-    return (
-      (this.EnableEntityLog = Info_1.Info.IsBuildDevelopmentOrDebug),
+    (this.EnableEntityLog = Info_1.Info.IsBuildDevelopmentOrDebug),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "World",
@@ -170,9 +180,11 @@ class CreatureModel extends ModelBase_1.ModelBase {
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "a.UseDelayAnim True",
-      ),
-      !0
+      );
+    var t = GameSettingsManager_1.GameSettingsManager.GetCurrentValueSafely(
+      GameSettingsDefine_1.EFunction.DynamicBones,
     );
+    return this.SetKawaiiMask(void 0 !== t && 0 < t), !0;
   }
   OnClear() {
     return (
@@ -230,12 +242,13 @@ class CreatureModel extends ModelBase_1.ModelBase {
   GetAllEntities() {
     return this.hPr.GetAllEntities();
   }
-  GetEntitiesInRange(t, e, i, r = !0) {
+  GetEntitiesInRange(t, e, i, r = !0, n = !1) {
     ControllerHolder_1.ControllerHolder.WorldController.GetEntitiesInRange(
       t,
       e,
       i,
       r,
+      n,
     );
   }
   GetEntitiesInRangeWithLocation(t, e, i, r, n = !0) {
@@ -267,6 +280,9 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   GetEntityWithDelayRemoveContainer(t) {
     return this.DelayRemoveContainer.GetEntity(t);
+  }
+  GetEntityWithPendingRemoveContainer(t) {
+    return this.lPr.GetEntity(t);
   }
   ExistEntity(t) {
     return this.hPr.ExistEntity(t);
@@ -304,7 +320,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
       this.RMr.clear(),
       this.hPr.Clear(),
       this.uYs.Clear(),
-      (this.gMr = void 0),
+      (this.Lvl = void 0),
       (this.fMr = void 0),
       !(this.pMr = void 0)
     );
@@ -319,7 +335,12 @@ class CreatureModel extends ModelBase_1.ModelBase {
     return this.NUe;
   }
   SetInstanceId(t) {
-    this.NUe = t;
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnInstanceChange,
+      this.NUe,
+      t,
+    ),
+      (this.NUe = t);
   }
   GetPlayerId() {
     var t = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
@@ -359,6 +380,12 @@ class CreatureModel extends ModelBase_1.ModelBase {
   GetSceneId() {
     return this.uMr;
   }
+  SetSceneTraceId(t) {
+    this.qrl = t;
+  }
+  GetSceneTraceId() {
+    return this.qrl;
+  }
   SetToken(t) {
     this.Ypr = t;
   }
@@ -377,7 +404,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
   ClearRemoveCreaturePending() {
     this.RemoveCreaturePendingSet.clear();
   }
-  InitEntityDataConfig(i) {
+  InitEntityDataConfig(t) {
+    return (this.Lvl = new Map()), this.AddEntityDataConfig(t);
+  }
+  AddEntityDataConfig(i) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
       let t = "";
       var r = (0, puerts_1.$ref)(t);
@@ -398,10 +428,12 @@ class CreatureModel extends ModelBase_1.ModelBase {
           return !1;
         t = t.trim();
         var n = Info_1.Info.IsBuildDevelopmentOrDebug,
-          i = JSON.parse(t);
-        this.gMr = new Map();
-        for (const o of i.EntityDatas)
-          (o.EdWpPath = void 0), n || (o.Name = ""), this.gMr.set(o.Id, o);
+          r = JSON.parse(t),
+          o = new Map();
+        this.Lvl || (this.Lvl = new Map());
+        for (const a of r.EntityDatas)
+          (a.EdWpPath = void 0), n || (a.Name = ""), o.set(a.Id, a);
+        this.Lvl.set(i, o);
       } else
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("World", 3, "不存在EntityConfigData配置文件。", [
@@ -563,45 +595,79 @@ class CreatureModel extends ModelBase_1.ModelBase {
           ["Path", t],
         );
   }
-  GetEntityData(t, e) {
-    if (void 0 !== t)
-      return !PublicUtil_1.PublicUtil.UseDbConfig() && this.gMr
-        ? this.gMr.get(t)
-        : (e =
-              LevelEntityConfigByMapIdAndEntityId_1.configLevelEntityConfigByMapIdAndEntityId.GetConfig(
-                e ?? ModelManager_1.ModelManager.GameModeModel.MapId,
-                t,
-              ))
-          ? (((t = {}).Id = e.EntityId),
-            (t.BlueprintType = e.BlueprintType),
-            (t.InSleep = e.InSleep),
-            (t.AreaId = e.AreaId),
-            (t.Transform = {}),
-            Info_1.Info.IsBuildDevelopmentOrDebug && (t.Name = e.Name),
-            (t.Transform.Pos = {
-              X: e.Transform[0].X / ONE_HUNDRED,
-              Y: e.Transform[0].Y / ONE_HUNDRED,
-              Z: e.Transform[0].Z / ONE_HUNDRED,
-            }),
-            (t.Transform.Rot = {
-              X: e.Transform[1].X / ONE_HUNDRED,
-              Y: e.Transform[1].Y / ONE_HUNDRED,
-              Z: e.Transform[1].Z / ONE_HUNDRED,
-            }),
-            (t.Transform.Scale = {
-              X: e.Transform[2].X / ONE_HUNDRED,
-              Y: e.Transform[2].Y / ONE_HUNDRED,
-              Z: e.Transform[2].Z / ONE_HUNDRED,
-            }),
-            (t.ComponentsData = JSON.parse(e.ComponentsData)),
-            t)
-          : void 0;
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error(
-        "Entity",
-        3,
-        "[CreatureModel.GetEntityData] pbDataId为undefined，外部调用的地方要保证这个参数不能为undefined",
-      );
+  GetEntityData(e, t) {
+    if (void 0 === e)
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Entity",
+          3,
+          "[CreatureModel.GetEntityData] pbDataId为undefined，外部调用的地方要保证这个参数不能为undefined",
+        );
+    else {
+      var i = t ?? ModelManager_1.ModelManager.GameModeModel.MapId;
+      if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
+        let t = this.Lvl?.get(i);
+        return t
+          ? t?.get(e)
+          : (this.AddEntityDataConfig(i), (t = this.Lvl?.get(i))?.get(e));
+      }
+      var r =
+        LevelEntityConfigByMapIdAndEntityId_1.configLevelEntityConfigByMapIdAndEntityId.GetConfig(
+          i,
+          e,
+        );
+      if (r) {
+        var n = {};
+        if (
+          ((n.Id = r.EntityId),
+          (n.BlueprintType = r.BlueprintType),
+          (n.InSleep = r.InSleep),
+          (n.AreaId = r.AreaId),
+          (n.Transform = {}),
+          Info_1.Info.IsBuildDevelopmentOrDebug && (n.Name = r.Name),
+          (n.Transform.Pos = {
+            X: r.Transform[0].X / ONE_HUNDRED,
+            Y: r.Transform[0].Y / ONE_HUNDRED,
+            Z: r.Transform[0].Z / ONE_HUNDRED,
+          }),
+          (n.Transform.Rot = {
+            X: r.Transform[1].X / ONE_HUNDRED,
+            Y: r.Transform[1].Y / ONE_HUNDRED,
+            Z: r.Transform[1].Z / ONE_HUNDRED,
+          }),
+          (n.Transform.Scale = {
+            X: r.Transform[2].X / ONE_HUNDRED,
+            Y: r.Transform[2].Y / ONE_HUNDRED,
+            Z: r.Transform[2].Z / ONE_HUNDRED,
+          }),
+          this.UseFbEntityConfig)
+        ) {
+          var i =
+              UE.BlueprintPathsLibrary.ProjectContentDir() +
+              `Aki/Config/UniverseEditorConfig/LevelEntity/${i}_${n.Id}.bytes`,
+            o = (0, puerts_1.$ref)(void 0);
+          if (!UE.KuroStaticLibrary.LoadFileToArray(i, o))
+            return void (
+              Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Entity",
+                3,
+                "加载文件失败",
+                ["MapId", t],
+                ["PbDataId", e],
+                ["File", i],
+              )
+            );
+          (t = UE.KuroStaticLibrary.ArrayToBuffer(o)),
+            (e = new Uint8Array(t)),
+            (i = new flatbuffers.ByteBuffer(e));
+          (n.ComponentsData =
+            ComponentReadHelper_1.ComponentReadHelper.ReadComponents(i)),
+            (n.BufferArray = o);
+        } else n.ComponentsData = JSON.parse(r.ComponentsData);
+        return n;
+      }
+    }
   }
   GetEntityDataByCreatureDataId(t) {
     t = this.GetEntity(t);
@@ -612,22 +678,24 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   GetAllEntityIdOfBlueprintType(t) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if (void 0 === this.gMr) return [];
-      const r = new Array();
-      for (const n of this.gMr.keys()) {
-        var e = this.gMr.get(n);
-        e.BlueprintType === t && r.push(e.Id);
-      }
-      return r;
+      if (void 0 === this.Lvl) return [];
+      const n = new Array();
+      var e = this.Lvl.get(ModelManager_1.ModelManager.GameModeModel.MapId);
+      if (e)
+        for (const o of e.keys()) {
+          var i = e.get(o);
+          i.BlueprintType === t && n.push(i.Id);
+        }
+      return n;
     }
-    var i =
+    var r =
       LevelEntityConfigByBlueprintType_1.configLevelEntityConfigByBlueprintType.GetConfigList(
         t,
       );
-    if (!i) return [];
-    const r = new Array();
-    for (const o of i) r.push(o.EntityId);
-    return r;
+    if (!r) return [];
+    const n = new Array();
+    for (const a of r) n.push(a.EntityId);
+    return n;
   }
   GetDynamicEntityData(t) {
     if (this.fMr) return this.fMr.get(t);
@@ -643,6 +711,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
           (i.EntityLogic = e.EntityLogic),
           (i.ModelId = e.ModelId),
           (i.HalfHeight = e.HalfHeight),
+          (i.TrackHeight = e.TrackHeight),
           i)
         : void 0
       : (this.vMr || ((this.vMr = new Map()), this.xMr()), this.vMr.get(t));
@@ -859,8 +928,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
           let t = e.get(r);
           t = t || [];
           for (const a of o.RefData)
-            ("Desktop" === a.Platform && !GlobalData_1.GlobalData.IsSm5) ||
-              ("Mobile" === a.Platform && !GlobalData_1.GlobalData.IsEs3) ||
+            (a.Platform &&
+              !Platform_1.Platform.CheckAssetPlatformInclude(
+                a.Platform.toString(),
+              )) ||
               t.push(a);
           e.set(r, t);
         }
@@ -908,7 +979,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "World",
-                51,
+                50,
                 "子实体具有与记录不同的父实体",
                 ["CreatureId", e],
                 ["ChildPbDataId", n],
@@ -922,7 +993,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "World",
-            51,
+            50,
             "添加实体Owner信息",
             ["CreatureId", e],
             ["ChildPbDataId", n],
@@ -944,7 +1015,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
           (0 == --i[1] && this.mMr.delete(r), Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "World",
-            51,
+            50,
             "移除实体Owner信息",
             ["CreatureId", t],
             ["ChildPbDataId", r],
@@ -972,7 +1043,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
                 i.ComponentsData,
                 "BaseInfoComponent",
               )),
-              (n = i && void 0 !== i.LowerNpcDensity ? i.LowerNpcDensity : 1))
+              (n =
+                i && void 0 !== i.LowerNpcDensity
+                  ? this._r_(i.LowerNpcDensity)
+                  : 1))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "World",
@@ -989,6 +1063,23 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   GetDensityLevelGroup(t) {
     return this.uYs.GetLevel(t);
+  }
+  SetKawaiiMask(t) {
+    t
+      ? (this.ifl &= exports.ENABLE_KAWAII_MASK)
+      : (this.ifl |= exports.DISABLE_KAWAII_MASK);
+  }
+  _r_(t) {
+    switch (t) {
+      case 1:
+        return 0;
+      case 0:
+        return 1;
+      case 2:
+        return 2;
+      default:
+        return 1;
+    }
   }
 }
 exports.CreatureModel = CreatureModel;

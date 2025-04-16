@@ -22,7 +22,7 @@ class ReportController extends UiControllerBase_1.UiControllerBase {
       (r.zVn = e.GetSignature()),
       (l.LHn = r),
       Net_1.Net.Call(
-        25215,
+        20205,
         Protocol_1.Aki.Protocol.nYn.create(l),
         this.ReportPlayerResponse,
       );
@@ -41,7 +41,7 @@ class ReportController extends UiControllerBase_1.UiControllerBase {
   e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
     ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
         e.Q4n,
-        15740,
+        25034,
       )
     : (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "ReportSuccess",

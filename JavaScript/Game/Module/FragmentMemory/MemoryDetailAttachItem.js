@@ -150,7 +150,9 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
       (this.Ypt = !0);
   }
   OnUnSelect() {
-    this.Ypt && this.SPe?.PlaySequencePurely("Unselect"),
+    this.Ypt &&
+      (this.SPe?.StopCurrentSequence(),
+      this.SPe?.PlaySequencePurely("Unselect")),
       this.GetExtendToggle(5)?.SetToggleState(0),
       (this.Ypt = !1);
   }

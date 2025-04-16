@@ -47,11 +47,11 @@ class ParkourChallenge {
   get LocationEntityConfigId() {
     return this.locationentityconfigid();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsParkourChallenge(t, r) {
-    return (r || new ParkourChallenge()).__init(
+  static getRootAsParkourChallenge(t, i) {
+    return (i || new ParkourChallenge()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -65,25 +65,37 @@ class ParkourChallenge {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   backgroundtexture(t) {
-    var r = this.J7.__offset(this.z7, 8);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   title(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   levelplayid() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  GetRewardsAt(t, r) {
+  GetRewardsAt(t, i) {
     return this.rewards(t);
   }
-  rewards(t, r) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i
-      ? (r || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+  rewards(t, i) {
+    var r = this.J7.__offset(this.z7, 14);
+    return r
+      ? (i || new DicIntInt_1.DicIntInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;
@@ -92,14 +104,14 @@ class ParkourChallenge {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
-  GetRewardlistAt(t, r) {
+  GetRewardlistAt(t, i) {
     return this.rewardlist(t);
   }
-  rewardlist(t, r) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i
-      ? (r || new IntPair_1.IntPair()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+  rewardlist(t, i) {
+    var r = this.J7.__offset(this.z7, 16);
+    return r
+      ? (i || new IntPair_1.IntPair()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

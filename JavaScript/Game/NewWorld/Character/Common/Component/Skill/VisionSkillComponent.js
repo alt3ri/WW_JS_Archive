@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, i, e, s) {
-    var n,
-      h = arguments.length,
-      o =
-        h < 3
+  function (t, i, s, e) {
+    var h,
+      n = arguments.length,
+      r =
+        n < 3
           ? i
-          : null === s
-            ? (s = Object.getOwnPropertyDescriptor(i, e))
-            : s;
+          : null === e
+            ? (e = Object.getOwnPropertyDescriptor(i, s))
+            : e;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(t, i, e, s);
+      r = Reflect.decorate(t, i, s, e);
     else
       for (var l = t.length - 1; 0 <= l; l--)
-        (n = t[l]) && (o = (h < 3 ? n(o) : 3 < h ? n(i, e, o) : n(i, e)) || o);
-    return 3 < h && o && Object.defineProperty(i, e, o), o;
+        (h = t[l]) && (r = (n < 3 ? h(r) : 3 < n ? h(i, s, r) : h(i, s)) || r);
+    return 3 < n && r && Object.defineProperty(i, s, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionSkillComponent = void 0);
@@ -36,54 +36,13 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
       (this.vZo = void 0),
       (this.EZo = void 0),
       (this.SZo = 0),
-      (this.kXa = 0),
+      (this.GJa = 0),
       (this.Ujs = !1),
       (this.yZo = !1),
       (this.IZo = !1),
       (this.TZo = !1),
       (this.UGn = !0),
-      (this.LZo = (t, i) => {
-        var e, s, n;
-        !(
-          t === InputEnums_1.EInputAction.幻象2 ||
-          (t === InputEnums_1.EInputAction.攻击 && this.UGn)
-        ) ||
-          this.SZo <= 0 ||
-          ((t = this.EZo.GetMultiSkillInfo(this.SZo))?.NextSkillId &&
-            ((e = t.NextSkillId),
-            (s = this.GetSkill(e))
-              ? this.EZo.CanStartMultiSkill(s) &&
-                (n = this.vZo)?.Valid &&
-                this.yZo &&
-                (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
-                    "Battle",
-                    18,
-                    "使用幻象技能（输入触发下一段）",
-                    ["skillId", t.NextSkillId],
-                  ),
-                this.AbilityComp.SendGameplayEventToActor(
-                  GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
-                    useNextSkillTagId,
-                  ),
-                ),
-                (t = n.Entity.CheckGetComponent(34)),
-                super.BeginSkill(e, {
-                  Target: t.SkillTarget?.Entity,
-                  SocketName: t.SkillTargetSocket,
-                  Context: "VisionSkill.OnCharInputPress",
-                })
-                  ? this.EZo.StartMultiSkill(s, !0) && (this.SZo = e)
-                  : CombatLog_1.CombatLog.Warn(
-                      "Skill",
-                      this.vZo?.Entity,
-                      "角色幻象变身中使用下一段技能失败",
-                      ["技能Id", s?.SkillId],
-                      ["技能名", s?.SkillName],
-                    ))
-              : Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Battle", 18, "幻象缺少技能", ["skillId", e])));
-      }),
+      (this.Ghh = !1),
       (this.xjs = () => {
         this.TZo || this.RZo();
       });
@@ -106,23 +65,23 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
   }
   BeginSkill(t, i = {}) {
     if (!this.Ujs) return super.BeginSkill(t, i);
-    let e = t;
+    let s = t;
     i.CheckMultiSkill &&
       0 !== this.SZo &&
       (t = this.EZo.GetMultiSkillInfo(this.SZo)).NextSkillId &&
       t.NextSkillId !== t.FirstSkillId &&
-      (e = t.NextSkillId);
-    var s,
-      t = this.GetSkill(e);
+      (s = t.NextSkillId);
+    var e,
+      t = this.GetSkill(s);
     return t
-      ? ((s = this.EZo.IsMultiSkill(t.SkillInfo)) && (this.kXa = e),
+      ? ((e = this.EZo.IsMultiSkill(t.SkillInfo)) && (this.GJa = s),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "使用幻象技能", ["skillId", e]),
-        super.BeginSkill(e, i)
-          ? (s &&
-              this.kXa === e &&
+          Log_1.Log.Debug("Battle", 17, "使用幻象技能", ["skillId", s]),
+        super.BeginSkill(s, i)
+          ? (e &&
+              this.GJa === s &&
               (this.Bjs(!0, !0), this.EZo.StartMultiSkill(t, !1)) &&
-              (this.SZo = e),
+              (this.SZo = s),
             (this.yZo = !0))
           : (CombatLog_1.CombatLog.Warn(
               "Skill",
@@ -133,10 +92,10 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
             ),
             !1))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "幻象缺少技能", ["skillId", e]),
+          Log_1.Log.Error("Battle", 17, "幻象缺少技能", ["skillId", s]),
         !1);
   }
-  OnMorphEnd(t) {
+  OnMorphEnd() {
     this.IZo || this.RZo(), (this.yZo = !1);
   }
   ExitMultiSkillState() {
@@ -158,7 +117,7 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
       (i = this.GetSkill(t))
         ? !this.EZo.CanStartMultiSkill(i)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 18, "幻象缺少技能", ["skillId", t]),
+            Log_1.Log.Error("Battle", 17, "幻象缺少技能", ["skillId", t]),
           1))
     );
   }
@@ -180,66 +139,107 @@ let VisionSkillComponent = class VisionSkillComponent extends CharacterSkillComp
   }
   RZo() {
     0 !== this.SZo && (this.EZo.ResetMultiSkills(this.SZo, !0), (this.SZo = 0)),
-      (this.kXa = 0),
+      (this.GJa = 0),
       this.Pjs(!0, !1);
   }
   Bjs(t, i) {
-    var e;
+    var s;
     this.vZo?.Valid &&
-      ((e = this.vZo.Entity),
-      t &&
-        !EventSystem_1.EventSystem.HasWithTarget(
-          e,
-          EventDefine_1.EEventName.CharInputPress,
-          this.LZo,
-        ) &&
-        EventSystem_1.EventSystem.AddWithTarget(
-          e,
-          EventDefine_1.EEventName.CharInputPress,
-          this.LZo,
-        ),
-      i) &&
+      ((this.Ghh = !0), (s = this.vZo.Entity), i) &&
       !EventSystem_1.EventSystem.HasWithTarget(
-        e,
+        s,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
         this.xjs,
       ) &&
       EventSystem_1.EventSystem.AddWithTarget(
-        e,
+        s,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
         this.xjs,
       );
   }
   Pjs(t, i) {
-    var e;
+    var s;
     this.vZo?.Valid &&
-      ((e = this.vZo.Entity),
-      t &&
-        EventSystem_1.EventSystem.HasWithTarget(
-          e,
-          EventDefine_1.EEventName.CharInputPress,
-          this.LZo,
-        ) &&
-        EventSystem_1.EventSystem.RemoveWithTarget(
-          e,
-          EventDefine_1.EEventName.CharInputPress,
-          this.LZo,
-        ),
-      i) &&
+      ((this.Ghh = !1), (s = this.vZo.Entity), i) &&
       EventSystem_1.EventSystem.HasWithTarget(
-        e,
+        s,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
         this.xjs,
       ) &&
       EventSystem_1.EventSystem.RemoveWithTarget(
-        e,
+        s,
         EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
         this.xjs,
       );
   }
+  LZo(t, i) {
+    if (
+      (t === InputEnums_1.EInputAction.幻象2 ||
+        (t === InputEnums_1.EInputAction.攻击 && this.UGn)) &&
+      !(this.SZo <= 0)
+    ) {
+      t = this.EZo.GetMultiSkillInfo(this.SZo);
+      if (t?.NextSkillId) {
+        var s = t.NextSkillId,
+          e = this.GetSkill(s);
+        if (e) {
+          if (this.EZo.CanStartMultiSkill(e)) {
+            var h = this.vZo;
+            if (h?.Valid && this.yZo) {
+              CombatLog_1.CombatLog.Info(
+                "Skill",
+                this.Entity,
+                "使用幻象技能（输入触发下一段）",
+                ["skillId", t.NextSkillId],
+              ),
+                this.AbilityComp.SendGameplayEventToActor(
+                  GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
+                    useNextSkillTagId,
+                  ),
+                );
+              h = h.Entity.CheckGetComponent(39);
+              if (
+                !super.BeginSkill(s, {
+                  Target: h.SkillTarget?.Entity,
+                  SocketName: h.SkillTargetSocket,
+                  Reason: "VisionSkill.OnCharInputPress",
+                })
+              )
+                return (
+                  CombatLog_1.CombatLog.Warn(
+                    "Skill",
+                    this.Entity,
+                    "角色幻象变身中使用下一段技能失败",
+                    ["技能Id", e?.SkillId],
+                    ["技能名", e?.SkillName],
+                  ),
+                  !1
+                );
+              if (
+                (CombatLog_1.CombatLog.Info(
+                  "Skill",
+                  this.Entity,
+                  "角色幻象变身中使用下一段技能成功",
+                  ["skillId", t.NextSkillId],
+                ),
+                this.EZo.StartMultiSkill(e, !0))
+              )
+                return (this.SZo = s), !0;
+            }
+          }
+        } else
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Battle", 17, "幻象缺少技能", ["skillId", s]);
+      }
+    }
+    return !1;
+  }
+  HandlePress(t, i) {
+    return !!this.Ghh && this.LZo(t, i);
+  }
 };
 (VisionSkillComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(35)],
+  [(0, RegisterComponent_1.RegisterComponent)(41)],
   VisionSkillComponent,
 )),
   (exports.VisionSkillComponent = VisionSkillComponent);

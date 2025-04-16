@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.State = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class State {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -14,11 +15,14 @@ class State {
   get CountryId() {
     return this.countryid();
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  get AudioName() {
+    return this.audioname();
   }
-  static getRootAsState(t, s) {
-    return (s || new State()).__init(
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
+  }
+  static getRootAsState(t, e) {
+    return (e || new State()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -28,12 +32,34 @@ class State {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   statename(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   countryid(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
+  }
+  audioname(t) {
+    var e = this.J7.__offset(this.z7, 10),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
 }
 exports.State = State;

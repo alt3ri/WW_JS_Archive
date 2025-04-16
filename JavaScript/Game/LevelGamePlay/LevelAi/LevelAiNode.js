@@ -24,7 +24,7 @@ class LevelAiNode {
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "LevelAi",
-        30,
+        29,
         e,
         ["Uid", this._A],
         ["Node", this.constructor.name],

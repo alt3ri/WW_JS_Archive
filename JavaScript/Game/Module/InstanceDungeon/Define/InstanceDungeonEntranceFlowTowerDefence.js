@@ -5,12 +5,15 @@ const ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController"),
   TowerDefenceController_1 = require("../../TowerDefence/TowerDefenceController"),
+  TowerInstanceDungeonViewModel_1 = require("../InstanceDungeonViewModel/TowerInstanceDungeonViewModel"),
   InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
 class InstanceDungeonEntranceFlowTowerDefense extends InstanceDungeonEntranceFlowBase_1.InstanceDungeonEntranceFlowBase {
   OnCreate() {
     this.AddStep(() => {
-      TowerDefenceController_1.TowerDefenseController.SetIsUiFlowOpen(!0),
-        UiManager_1.UiManager.OpenView("InstanceDungeonEntranceView");
+      TowerDefenceController_1.TowerDefenseController.SetIsUiFlowOpen(!0);
+      var e =
+        new TowerInstanceDungeonViewModel_1.TowerInstanceDungeonViewModel();
+      UiManager_1.UiManager.OpenView("InstanceDungeonEntranceView", e);
     }),
       this.AddStep(() => {
         EditBattleTeamController_1.EditBattleTeamController.PlayerOpenEditBattleTeamView(
@@ -23,13 +26,13 @@ class InstanceDungeonEntranceFlowTowerDefense extends InstanceDungeonEntranceFlo
       this.AddStep(() => {
         TowerDefenceController_1.TowerDefenseController.EnterTowerDefense().then(
           (e) => {
-            e
-              ? (EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView(),
-                this.Reset(),
-                TowerDefenceController_1.TowerDefenseController.SetIsUiFlowOpen(
-                  !1,
-                ))
-              : this.RevertStep();
+            EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView(),
+              e
+                ? (this.Reset(),
+                  TowerDefenceController_1.TowerDefenseController.SetIsUiFlowOpen(
+                    !1,
+                  ))
+                : this.RevertStep();
           },
         );
       });

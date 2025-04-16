@@ -14,7 +14,7 @@ class ModelUtil {
     var t = this.GetModelConfig(e);
     if (t) return t.网格体;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("ModelUtil", 11, "加载模型配置数据失败", ["ModelId", e]);
+      Log_1.Log.Error("ModelUtil", 10, "加载模型配置数据失败", ["ModelId", e]);
   }
 }
 exports.ModelUtil = ModelUtil;

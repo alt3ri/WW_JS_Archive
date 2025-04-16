@@ -1,96 +1,59 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelAudioSpec = void 0);
-const UE = require("ue"),
-  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
-  Info_1 = require("../../../Core/Common/Info"),
-  Log_1 = require("../../../Core/Common/Log"),
+const Log_1 = require("../../../Core/Common/Log"),
   EffectAudioContext_1 = require("../EffectContext/EffectAudioContext"),
+  EffectAudioController_1 = require("./EffectAudioController"),
   EffectSpec_1 = require("./EffectSpec");
 class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
   constructor() {
-    super(...arguments),
-      (this.ege = void 0),
-      (this.zge = void 0),
-      (this.Zge = void 0);
+    super(...arguments), (this.ege = void 0), (this.Wqc = 0);
   }
   OnInit() {
-    return (
-      (this.ege = this.Handle?.GetSureEffectActor()),
-      this.ege &&
-        ((this.zge = AudioSystem_1.AudioSystem.GetAkComponent(this.ege, {
-          OnCreated: (t) => {
-            var e = this.Handle?.GetContext();
-            e instanceof EffectAudioContext_1.EffectAudioContext &&
-              AudioSystem_1.AudioSystem.SetSwitch(
-                "char_p1orp3",
-                e.FromPrimaryRole ? "p1" : "p3",
-                t,
-              );
-          },
-        })),
-        this.EffectModel?.LocationOffsets) &&
-        0 < this.EffectModel.LocationOffsets.Num() &&
-        this.zge?.SetLocationOffsets(this.EffectModel.LocationOffsets),
-      !0
-    );
+    return (this.ege = this.Handle?.GetSureEffectActor()), !0;
   }
   OnPlay() {
-    var t = this.EffectModel?.AudioEvent;
-    t?.IsValid()
-      ? this.e0e(t)
+    var t;
+    this.EffectModel?.AudioEvent?.IsValid()
+      ? this.EffectModel
+        ? ((t = this.Handle?.GetContext()),
+          0 !== this.Wqc && this.Qqc("OnPlay"),
+          t instanceof EffectAudioContext_1.EffectAudioContext
+            ? (this.Wqc =
+                EffectAudioController_1.EffectAudioController.AddPlayEffectAudio(
+                  this.EffectModel,
+                  this.ege,
+                  t.FromPrimaryRole ? 0 : 2,
+                ))
+            : (this.Wqc =
+                EffectAudioController_1.EffectAudioController.AddPlayEffectAudio(
+                  this.EffectModel,
+                  this.ege,
+                )))
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Audio", 42, "[Game.EffectAudio] 无效的 EffectModel")
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
-          57,
+          56,
           "[Game.Effect] 无效的 AudioEvent",
           ["EffectModel", this.EffectModel?.GetName()],
           ["EffectActor", this.ege?.GetName()],
         );
   }
   OnClear() {
-    return this.zge?.K2_DestroyComponent(this.ege), !0;
+    return this.Qqc("OnClear"), !0;
   }
   OnStop() {
-    var t;
-    this.EffectModel?.IsValid() &&
-      (this.Zge &&
-        !this.EffectModel.KeepAlive &&
-        (AudioSystem_1.AudioSystem.ExecuteAction(this.Zge, 0, {
-          TransitionDuration: this.EffectModel.FadeOutTime,
-        }),
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Audio",
-            57,
-            "[Game.Effect] StopEvent",
-            ["Handle", this.Zge],
-            ["EffectModel", this.EffectModel?.GetName()],
-            ["EffectActor", this.ege?.GetName()],
-          ),
-        (this.Zge = void 0)),
-      (t = this.EffectModel?.TrailingAudioEvent)?.IsValid()) &&
-      this.e0e(t, !0);
+    this.Qqc("OnStop");
   }
-  e0e(t, e = !1) {
-    t = t.GetName();
-    this.zge &&
-      (e
-        ? ((e = new UE.Transform(this.zge.K2_GetComponentLocation())),
-          AudioSystem_1.AudioSystem.PostEvent(t, e))
-        : (this.Zge = AudioSystem_1.AudioSystem.PostEvent(t, this.zge, {
-            StopWhenOwnerDestroyed: !Info_1.Info.IsGameRunning(),
-          })),
-      Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug(
-        "Audio",
-        57,
-        "[Game.Effect] PostEvent",
-        ["EventName", t],
-        ["Handle", this.Zge],
-        ["EffectModel", this.EffectModel?.GetName()],
-        ["EffectActor", this.ege?.GetName()],
-      );
+  Qqc(t) {
+    0 !== this.Wqc &&
+      (EffectAudioController_1.EffectAudioController.OnStopEffectAudio(
+        this.Wqc,
+        t,
+      ),
+      (this.Wqc = 0));
   }
 }
 exports.EffectModelAudioSpec = EffectModelAudioSpec;

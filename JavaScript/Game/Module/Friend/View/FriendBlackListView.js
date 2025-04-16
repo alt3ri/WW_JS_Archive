@@ -8,7 +8,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
+  GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
   FriendController_1 = require("../FriendController"),
   FriendItem_1 = require("./FriendItem");
 class FriendBlackListView extends UiViewBase_1.UiViewBase {
@@ -16,9 +16,9 @@ class FriendBlackListView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.h8t = void 0),
       (this.l8t = []),
-      (this.sGe = (e, i, t) => {
-        i = new FriendItem_1.FriendItem(this.Info.Name, i);
-        return i.Refresh(e, !1, t), { Key: t, Value: i };
+      (this.sGe = () => {
+        var e = new FriendItem_1.FriendItem(this.Info.Name);
+        return e.SetIsInBlackList(!0), e;
       }),
       (this._8t = () => {
         this.u8t();
@@ -46,7 +46,7 @@ class FriendBlackListView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.c8t(),
-      (this.h8t = new GenericScrollView_1.GenericScrollView(
+      (this.h8t = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(2),
         this.sGe,
       )),
@@ -69,8 +69,7 @@ class FriendBlackListView extends UiViewBase_1.UiViewBase {
       this.GetItem(3).SetUIActive(this.l8t.length <= 0);
   }
   OnBeforeDestroy() {
-    this.h8t.ClearChildren(),
-      (this.l8t.length = 0),
+    (this.l8t.length = 0),
       ModelManager_1.ModelManager.FriendModel.ResetShowingView();
   }
 }

@@ -28,19 +28,19 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
     super(...arguments),
       (this.tli = 0),
       (this.Ghi = 0),
-      (this.vXa = !1),
+      (this.OZa = !1),
       (this.ili = 0),
       (this.dli = 0),
-      (this.KFa = 0),
+      (this.c5a = 0),
       (this.rli = []),
       (this.nli = new Map()),
       (this.sli = new Map()),
       (this.lli = void 0),
       (this._li = void 0),
-      (this.c8a = void 0),
-      (this.JZa = 2e3),
+      (this.Y9a = void 0),
+      (this._lh = 2e3),
       (this.Cli = void 0),
-      (this.m8a = void 0),
+      (this.z9a = void 0),
       (this.lqe = void 0),
       (this.Lli = (t, e, i) => {
         var n = new InstanceDetectItem_1.InstanceDetectItem();
@@ -64,15 +64,15 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
       (this.Dli = (t, e, i = void 0) => {
         (this.NUe = t),
           i &&
-            (this.c8a && (this.c8a.IsSelect = !1),
-            (this.c8a = i),
-            (this.c8a.IsSelect = !0)),
+            (this.Y9a && (this.Y9a.IsSelect = !1),
+            (this.Y9a = i),
+            (this.Y9a.IsSelect = !0)),
           (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId =
             this.NUe),
           this._li && this._li !== e && this._li.SetToggleState(0, !0),
           (this._li = e),
-          this.uHa(),
-          this.d8a(),
+          this.mQa(),
+          this.J9a(),
           this.UiViewSequence.PlaySequence("Xz");
       }),
       (this.Rli = (t, e, i) => {
@@ -96,9 +96,9 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
       (this.Awe = () => {
         this.CloseMe();
       }),
-      (this.C8a = () => {
-        if (this.$Fa()) {
-          this.KFa =
+      (this.Z9a = () => {
+        if (this.m5a()) {
+          this.c5a =
             TimeUtil_1.TimeUtil.GetServerTimeStamp() +
             CLICK_INSTANCE_BEGIN_BUTTON_CD;
           const i = this.NUe;
@@ -158,19 +158,19 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "InstanceDungeon",
-                17,
+                16,
                 "副本入口界面点击挑战错误，当前未选择副本",
               );
         }
       }),
-      (this.ZZa = () => {
-        this.Qli(), this.d8a();
+      (this.ulh = () => {
+        this.Qli(), this.J9a();
       }),
-      (this.eeh = () => {
+      (this.clh = () => {
         if (this.Cli)
           for (let t = 0; t < this.Cli.GetScrollItemCount(); t++)
             this.Cli?.GetScrollItemFromIndex(t)?.UpdateSelf();
-        this.m8a?.RefreshOnTick && this.m8a.RefreshOnTick();
+        this.z9a?.RefreshOnTick && this.z9a.RefreshOnTick();
       }),
       (this.Bli = () => {
         this.UiViewSequence.StopSequenceByKey("Popup"),
@@ -183,17 +183,17 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
   set NUe(t) {
     var e, i;
     0 === this.Ghi
-      ? (this.vXa = !0)
+      ? (this.OZa = !0)
       : ((e = (i =
           ConfigManager_1.ConfigManager.InstanceDungeonConfig).GetConfig(
           this.Ghi,
         )),
         (i = i.GetConfig(t)),
-        e && i && (this.vXa = e.BannerPath !== i.BannerPath)),
+        e && i && (this.OZa = e.BannerPath !== i.BannerPath)),
       (this.Ghi = t);
   }
-  get MXa() {
-    return this.vXa;
+  get GZa() {
+    return this.OZa;
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -207,42 +207,42 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    this.Fq(), this.o1i(), this.g8a(), await this.f8a(), await this.p8a();
+    this.Fq(), this.o1i(), this.e7a(), await this.t7a(), await this.i7a();
   }
   OnStart() {
-    this.Qli(), this.d8a();
+    this.Qli(), this.J9a();
   }
   OnBeforeShow() {
-    this.uHa();
+    this.mQa();
   }
   OnAfterShow() {
     (!this.rli || this.rli.length <= 0) && this.GetItem(2).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.v8a(), this.M8a();
+    this.r7a(), this.o7a();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickEnterInstanceSingle,
-      this.C8a,
+      this.Z9a,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnNeedRefreshByProtocol,
-        this.ZZa,
+        this.ulh,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickEnterInstanceSingle,
-      this.C8a,
+      this.Z9a,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnNeedRefreshByProtocol,
-        this.ZZa,
+        this.ulh,
       );
   }
   OnTick(t) {
-    (this.JZa -= t), 0 < this.JZa || (this.eeh(), (this.JZa = 2e3));
+    (this._lh -= t), 0 < this._lh || (this.clh(), (this._lh = 2e3));
   }
   Fq() {
     var e, i, t;
@@ -259,13 +259,16 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
     }
     for ([, t] of this.nli) for (const n of t) this.rli.push(n);
   }
-  M8a() {
-    (this.rli.length = 0), this.nli.clear(), this.sli.clear();
+  o7a() {
+    (this.rli.length = 0),
+      this.nli.clear(),
+      this.sli.clear(),
+      (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId = 0);
   }
-  v8a() {
+  r7a() {
     this.Cli?.ClearChildren(), (this.Cli = void 0);
   }
-  g8a() {
+  e7a() {
     var t = new CommonTabComponentData_1.CommonTabComponentData(
         this.fqe,
         this.pqe,
@@ -288,7 +291,7 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
         HelpController_1.HelpController.OpenHelpById(i.HelpButtonId);
       });
   }
-  async f8a() {
+  async t7a() {
     var t = new DynScrollView_1.DynamicScrollView(
       this.GetUIDynScrollViewComponent(0),
       this.GetItem(1),
@@ -297,21 +300,21 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
     );
     await t.Init(), (this.Cli = t);
   }
-  async p8a() {
+  async i7a() {
     var t =
       InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.CreateInstanceSubViewByType(
         this.tli,
       );
     void 0 !== t &&
       (await t.CreateThenShowByResourceIdAsync(t.ResourceId, this.GetItem(5)),
-      (this.m8a = t));
+      (this.z9a = t));
   }
-  uHa() {
+  mQa() {
     var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
       this.NUe,
     );
     t &&
-      this.MXa &&
+      this.GZa &&
       (this.SetTextureByPath(t.BannerPath, this.GetTexture(3)),
       this.UiViewSequence?.StopSequenceByKey("Switch"),
       this.UiViewSequence?.PlaySequence("Switch"));
@@ -326,8 +329,8 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
           this.Cli?.UnBindLateUpdate());
       });
   }
-  d8a() {
-    this.m8a?.RefreshExternalAsync();
+  J9a() {
+    this.z9a?.RefreshExternalAsync();
   }
   Uli() {
     this.dli = 0;
@@ -409,9 +412,9 @@ class InstanceDungeonEntranceRootView extends UiTickViewBase_1.UiTickViewBase {
       (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SelectInstanceId =
         this.NUe);
   }
-  $Fa() {
+  m5a() {
     return !(
-      this.KFa > TimeUtil_1.TimeUtil.GetServerTimeStamp() &&
+      this.c5a > TimeUtil_1.TimeUtil.GetServerTimeStamp() &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "InstanceDungeon",

@@ -8,7 +8,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       CnName: "Id",
       Type: "Int",
       Filter: "1",
-      RenderType: 18,
+      RenderType: 19,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "NameStringKey",
@@ -36,7 +36,7 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "MonsterPileIconAsset",
       CnName: "半身像资源",
-      RenderType: 17,
+      RenderType: 18,
     }),
   ];
 class MonsterDisplayCsvLoader extends CsvLoader_1.CsvLoader {

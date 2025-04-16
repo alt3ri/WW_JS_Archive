@@ -1,100 +1,47 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotMontage = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../Core/Common/Log"),
-  ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
-  ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
-  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
-  CharacterNameDefines_1 = require("../../NewWorld/Character/Common/CharacterNameDefines"),
-  MONTAGE_BLEND_OUT_TIME = 0.5;
+const Log_1 = require("../../../Core/Common/Log"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class PlotMontage {
   constructor() {
-    (this.ZYi = new Map()), (this.eJi = new Map());
+    this.tj_ = new Set();
   }
-  StartPlayMontage(e) {
-    var t;
-    e &&
-      e.ActionMontage.Path &&
-      "Empty" !== e.ActionMontage.Path &&
-      (t =
-        0 === e.EntityId
+  StartPlayMontage(o) {
+    var e, t;
+    o &&
+      o.ActionMontage.Path &&
+      "Empty" !== o.ActionMontage.Path &&
+      (e =
+        0 === o.EntityId
           ? ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity
           : ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-              e.EntityId,
+              o.EntityId,
             ))?.IsInit &&
-      this.tJi(t, e.ActionMontage.Path);
-  }
-  tJi(t, r, a = !1) {
-    var e;
-    t &&
-      !StringUtils_1.StringUtils.IsEmpty(r) &&
-      ((e = this.ZYi.get(r))
-        ? this.Fc(t, e, a)
-        : ResourceSystem_1.ResourceSystem.LoadAsync(r, UE.AnimMontage, (e) => {
-            ObjectUtils_1.ObjectUtils.IsValid(e) ||
-              (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Plot", 27, "播放失败, 检查动画资产", [
-                  "path",
-                  r,
-                ])),
-              this.ZYi.set(r, e),
-              this.Fc(t, e, a);
-          }));
-  }
-  Fc(e, t, r) {
-    var a,
-      s,
-      i = e.Entity.GetComponent(163)?.MainAnimInstance;
-    ObjectUtils_1.ObjectUtils.IsValid(i) &&
-      ((s = this.eJi.get(e)),
-      (a =
-        ObjectUtils_1.ObjectUtils.IsValid(s) && i.Montage_IsPlaying(s)
-          ? i.Montage_GetCurrentSection(s)
-          : CharacterNameDefines_1.CharacterNameDefines.NULL_SECTION),
-      (s === t &&
-        a !== CharacterNameDefines_1.CharacterNameDefines.END_SECTION) ||
-        i.Montage_Play(t),
-      (s = r
-        ? CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION
-        : CharacterNameDefines_1.CharacterNameDefines.END_SECTION),
-      i.Montage_SetNextSection(
-        CharacterNameDefines_1.CharacterNameDefines.START_SECTION,
-        CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
-        t,
-      ),
-      i.Montage_SetNextSection(
-        CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
-        s,
-        t,
-      ),
-      this.eJi.set(e, t),
+      (t = e.Entity.GetComponent(45)) &&
+      (t.OnNpcInPlot(!0),
+      t.PlayPerformMontage(1, {
+        MontagePath: o.ActionMontage.Path,
+        IsLoop: !1,
+      }),
+      this.tj_.add(e),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Plot",
-        27,
+        26,
         "NPC播放蒙太奇",
-        ["Id", e.Id],
-        ["Montage", t.GetName()],
+        ["Id", e.PbDataId],
+        ["Montage", o.ActionMontage.Path],
       );
   }
-  StopAllMontage(e = !0) {
-    for (var [t, r] of this.eJi) {
-      var a = t?.Entity?.GetComponent(163)?.MainAnimInstance;
-      ObjectUtils_1.ObjectUtils.IsValid(a) &&
-      ObjectUtils_1.ObjectUtils.IsValid(r) &&
-      a.Montage_IsPlaying(r)
-        ? e
-          ? a.Montage_Stop(MONTAGE_BLEND_OUT_TIME, r)
-          : a.Montage_SetNextSection(
-              CharacterNameDefines_1.CharacterNameDefines.LOOP_SECTION,
-              CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
-              r,
-            )
-        : this.eJi.delete(t);
-    }
-    e && (this.eJi.clear(), this.ZYi.clear());
+  StopAllMontage() {
+    for (const e of this.tj_)
+      if (e.Valid) {
+        var o = e.Entity.GetComponent(185);
+        if (!o) return;
+        o.StopPerformMontage(1, { Method: 0 }), o.OnNpcInPlot(!1);
+      }
+    this.tj_.clear();
   }
 }
 exports.PlotMontage = PlotMontage;

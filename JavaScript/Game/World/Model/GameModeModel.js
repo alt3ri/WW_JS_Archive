@@ -3,18 +3,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameModeModel = void 0);
 const UE = require("ue"),
   ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../Core/Common/Log"),
   LogProfiler_1 = require("../../../Core/Common/LogProfiler"),
   InstanceDungeonById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
-  FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
-  GlobalData_1 = require("../../GlobalData"),
-  GameModePromise_1 = require("../Define/GameModePromise"),
-  LoadLevelDefine_1 = require("../Define/LoadLevelDefine"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  GameModePromise_1 = require("../Define/GameModePromise"),
   WorldDefine_1 = require("../Define/WorldDefine");
 class GameModeModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -28,11 +27,12 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.VMr = !1),
       (this.HMr = !1),
       (this.jMr = ""),
+      (this.ghh = ""),
       (this.WMr = new Array()),
       (this.Aoa = void 0),
       (this.KMr = void 0),
       (this.QMr = void 0),
-      (this.XMr = 0),
+      (this.XMr = void 0),
       (this.$Mr = 0),
       (this.YMr = void 0),
       (this.JMr = !1),
@@ -42,16 +42,22 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.eEr = void 0),
       (this.tEr = !1),
       (this.iEr = !1),
+      (this.Wdl = !1),
+      (this.M0l = IAction_1.EFadeInScreenShowType.Black),
       (this.ShowCenterTextFlow = void 0),
       (this.oEr = !1),
-      (this.PreloadLevelMap = new Map()),
+      (this.ANc = void 0),
+      (this.PNc = void 0),
+      (this.xNc = !1),
+      (this.sIl = void 0),
+      (this.aIl = void 0),
       (this.ForceDisableGamePaused = !1),
       (this.GamePausedReasons = new Set()),
-      (this.SubLevelMap = new Map()),
-      (this.UnloadLevelMap = new Map()),
       (this.DataLayerSet = new Set()),
+      (this.TempDataLayer = []),
       (this.MaterialParameterCollectionMap = new Map()),
       (this.rEr = void 0),
+      (this.pr_ = !1),
       (this.nEr = 0),
       (this.LoadWorldProfiler = new LogProfiler_1.LogProfiler("加载世界")),
       (this.OpenLoadingProfiler =
@@ -70,10 +76,12 @@ class GameModeModel extends ModelBase_1.ModelBase {
         this.PreloadCommonAndEntityProfiler.CreateChild("预加载公共资源")),
       (this.PreloadEntitiesProfiler =
         this.PreloadCommonAndEntityProfiler.CreateChild("预加载实体")),
+      (this.LoadDataLayerAndSubLevelProfiler =
+        this.LoadWorldProfiler.CreateChild("加载DataLayer、加载子关卡")),
       (this.LoadSubLevelProfiler =
-        this.LoadWorldProfiler.CreateChild("加载子Level")),
+        this.LoadDataLayerAndSubLevelProfiler.CreateChild("加载子Level")),
       (this.LoadDataLayerProfiler =
-        this.LoadWorldProfiler.CreateChild("加载DataLayer")),
+        this.LoadDataLayerAndSubLevelProfiler.CreateChild("加载DataLayer")),
       (this.CheckVoxelStreamingSourceProfiler =
         this.LoadWorldProfiler.CreateChild("等待体素流送")),
       (this.CheckStreamingSourceProfiler =
@@ -82,12 +90,14 @@ class GameModeModel extends ModelBase_1.ModelBase {
         this.LoadWorldProfiler.CreateChild("创建实体")),
       (this.WaitRenderAssetsProfiler =
         this.LoadWorldProfiler.CreateChild("等待渲染资源")),
+      (this.WorldDoneProfiler =
+        this.LoadWorldProfiler.CreateChild("WorldDone")),
       (this.OpenBattleViewProfiler =
-        this.LoadWorldProfiler.CreateChild("打开主界面")),
-      (this.OpenPlotViewProfiler =
-        this.LoadWorldProfiler.CreateChild("打开剧情界面")),
+        this.WorldDoneProfiler.CreateChild("打开主界面(WorldDone阶段)")),
       (this.CloseLoadingProfiler =
         this.LoadWorldProfiler.CreateChild("关闭Loading界面")),
+      (this.CloseLoadingPhaseOpenBattleViewProfiler =
+        this.CloseLoadingProfiler.CreateChild("打开主界面(关闭Loading阶段)")),
       (this.sEr = void 0),
       (this.aEr = void 0),
       (this.hEr = void 0),
@@ -104,20 +114,20 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.vEr = void 0),
       (this.Dbn = void 0),
       (this.MEr = void 0),
-      (this.EEr = void 0),
+      (this.U$_ = void 0),
       (this.SEr = !1);
   }
   get JoinSceneInfo() {
     return this.rEr;
   }
-  set JoinSceneInfo(e) {
-    this.rEr = e;
+  set JoinSceneInfo(t) {
+    this.rEr = t;
   }
   get LoadingPhase() {
     return this.nEr;
   }
-  set LoadingPhase(e) {
-    this.nEr = e;
+  set LoadingPhase(t) {
+    this.nEr = t;
   }
   get Loading() {
     return 1 < this.nEr;
@@ -125,48 +135,51 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get HasGameModeData() {
     return this.GMr;
   }
-  set HasGameModeData(e) {
-    this.GMr = e;
+  set HasGameModeData(t) {
+    this.GMr = t;
   }
   get Mode() {
     return this.NMr;
   }
-  set Mode(e) {
-    this.NMr = e;
+  set Mode(t) {
+    this.NMr = t;
   }
   get MapPath() {
     return this.jMr;
   }
-  set MapPath(e) {
-    this.jMr = e;
+  set MapPath(t) {
+    this.jMr = t;
   }
-  AddLoadMapHandle(e) {
+  get LastMapPath() {
+    return this.ghh;
+  }
+  AddLoadMapHandle(t) {
     this.OMr || (this.OMr = new Map());
-    var t = this.OMr.get(e);
+    var e = this.OMr.get(t);
     return (
-      t ? this.OMr.set(e, ++t) : this.OMr.set(e, 1),
+      e ? this.OMr.set(t, ++e) : this.OMr.set(t, 1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "World",
           3,
           "添加LoadMapHandle",
-          ["添加的Handle", e],
+          ["添加的Handle", t],
           ["Size", this.OMr.size],
         ),
       !0
     );
   }
-  RemoveLoadMapHandle(e) {
-    var t;
-    return this.OMr?.has(e)
-      ? ((t = this.OMr.get(e)),
-        --t ? this.OMr.set(e, t) : this.OMr.delete(e),
+  RemoveLoadMapHandle(t) {
+    var e;
+    return this.OMr?.has(t)
+      ? ((e = this.OMr.get(t)),
+        --e ? this.OMr.set(t, e) : this.OMr.delete(t),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "World",
             3,
             "删除LoadMapHandle",
-            ["删除的Handle", e],
+            ["删除的Handle", t],
             ["Size", this.OMr.size],
           ),
         !0)
@@ -175,7 +188,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
             "World",
             3,
             "删除LoadManHandle失败",
-            ["Handle", e],
+            ["Handle", t],
             ["Size", this.OMr?.size],
           ),
         !1);
@@ -186,20 +199,20 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get NavMeshDone() {
     return this.kMr;
   }
-  set NavMeshDone(e) {
-    this.kMr = e;
+  set NavMeshDone(t) {
+    this.kMr = t;
   }
   get WorldDone() {
     return this.FMr;
   }
-  set WorldDone(e) {
-    this.FMr = e;
+  set WorldDone(t) {
+    this.FMr = t;
   }
   get WorldDoneAndLoadingClosed() {
     return this.VMr;
   }
-  set WorldDoneAndLoadingClosed(e) {
-    this.VMr = e;
+  set WorldDoneAndLoadingClosed(t) {
+    this.VMr = t;
   }
   get PlayerStarts() {
     return this.WMr;
@@ -207,71 +220,112 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get MapConfig() {
     return this.QMr;
   }
-  set MapConfig(e) {
-    this.QMr = e;
+  set MapConfig(t) {
+    this.QMr = t;
   }
   get InstanceDungeon() {
-    return InstanceDungeonById_1.configInstanceDungeonById.GetConfig(this.XMr);
+    return this.XMr;
   }
-  SetInstanceDungeon(e) {
-    this.XMr = e;
+  SetInstanceDungeon(t) {
+    this.XMr = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(t);
   }
   get MapId() {
     return this.$Mr;
   }
-  set MapId(e) {
-    this.$Mr = e;
+  set MapId(t) {
+    this.$Mr = t;
   }
   get InstanceType() {
     return this.YMr;
   }
-  set InstanceType(e) {
-    this.YMr = e;
+  set InstanceType(t) {
+    this.YMr = t;
   }
   get IsMulti() {
     return this.JMr;
   }
-  set IsMulti(e) {
-    this.JMr = e;
+  set IsMulti(t) {
+    this.JMr = t;
   }
   get ChangeModeState() {
     return this.HMr;
   }
-  set ChangeModeState(e) {
-    this.HMr = e;
+  set ChangeModeState(t) {
+    this.HMr = t;
   }
   get PlayTravelMp4() {
     return this.ZMr;
   }
-  set PlayTravelMp4(e) {
-    this.ZMr = e;
+  set PlayTravelMp4(t) {
+    this.ZMr = t;
   }
   get TravelMp4Path() {
     return this.eEr;
   }
-  set TravelMp4Path(e) {
-    this.eEr = e;
+  set TravelMp4Path(t) {
+    this.eEr = t;
   }
   get UseShowCenterText() {
     return this.iEr;
   }
-  set UseShowCenterText(e) {
-    this.iEr = e;
+  set UseShowCenterText(t) {
+    this.iEr = t;
+  }
+  set UseAsBlackScreen(t) {
+    this.Wdl = t;
+  }
+  get UseAsBlackScreen() {
+    return this.Wdl;
+  }
+  set BlackScreenColor(t) {
+    this.M0l = t;
+  }
+  get BlackScreenColor() {
+    return this.M0l;
   }
   get TravelMp4Playing() {
     return this.tEr;
   }
-  set TravelMp4Playing(e) {
-    this.tEr = e;
+  set TravelMp4Playing(t) {
+    this.tEr = t;
   }
   get DataLayerSwitching() {
     return this.oEr;
   }
-  set DataLayerSwitching(e) {
-    this.oEr = e;
+  set Mp4FadeInScreenColor(t) {
+    this.ANc = t;
   }
-  AddPlayerStart(e) {
-    this.WMr.push(e);
+  get Mp4FadeInScreenColor() {
+    return this.ANc;
+  }
+  set Mp4FadeOutScreenColor(t) {
+    this.PNc = t;
+  }
+  get Mp4FadeOutScreenColor() {
+    return this.PNc;
+  }
+  set NeedOpenBlackScreenWhenTeleportDungeon(t) {
+    this.xNc = t;
+  }
+  get NeedOpenBlackScreenWhenTeleportDungeon() {
+    return this.xNc;
+  }
+  BeginDataLayerChange() {
+    (this.oEr = !0),
+      (this.sIl = new CustomPromise_1.CustomPromise()),
+      (this.aIl = new CustomPromise_1.CustomPromise());
+  }
+  get DataLayerChangeVoxelPromise() {
+    return this.sIl;
+  }
+  get DataLayerChangeStreamingPromise() {
+    return this.aIl;
+  }
+  EndDataLayerChange() {
+    (this.oEr = !1), this.sIl?.SetResult(!0), this.aIl?.SetResult(!0);
+  }
+  AddPlayerStart(t) {
+    this.WMr.push(t);
   }
   ClearPlayerStart() {
     this.WMr.length = 0;
@@ -285,14 +339,14 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get UseWorldPartition() {
     return this.zMr;
   }
-  set UseWorldPartition(e) {
-    this.zMr = e;
+  set UseWorldPartition(t) {
+    this.zMr = t;
   }
   get IsTeleport() {
     return this.QIo;
   }
-  set IsTeleport(e) {
-    this.QIo = e;
+  set IsTeleport(t) {
+    this.QIo = t;
   }
   get BornLocation() {
     return this.sEr;
@@ -303,39 +357,43 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get RoleLocation() {
     return this.hEr;
   }
-  static nQs(e, t, i, s) {
-    var o = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), e),
-      r =
-        (o.AddComponentByClass(
+  static nQs(t, e, i, s) {
+    var r = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t),
+      o =
+        (r.AddComponentByClass(
           UE.SceneComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
           !1,
         ),
-        o.K2_SetActorLocation(e.GetLocation(), !1, void 0, !1),
-        o.AddComponentByClass(
+        r.D_K2_SetActorLocation(t.GetLocation(), !1, void 0, !1),
+        r.AddComponentByClass(
           UE.WorldPartitionStreamingSourceComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
           !1,
         ));
-    if (((r.Priority = t), (r.TargetBehavior = i), s))
-      for (const h of s) r.TargetGrids.Add(h);
+    if (((o.Priority = e), (o.TargetBehavior = i), s))
+      for (const h of s) o.TargetGrids.Add(h);
     return (
-      (r.bStreamingSourceShouldBlockOnSlowStreaming = !0),
-      r.DisableStreamingSource(),
-      o
+      (o.bStreamingSourceShouldBlockOnSlowStreaming = !0),
+      o.DisableStreamingSource(),
+      r
     );
   }
   InitStreamingSources() {
-    var e = new UE.Transform(
+    var t = new UE.TransformDouble(
         this.BornRotator,
         this.BornLocation,
-        new UE.Vector(1, 1, 1),
+        new UE.VectorDouble(1, 1, 1),
       ),
-      t = [WorldDefine_1.VOXEL_GRID_NAME];
-    (this.Aoa = GameModeModel.nQs(e, 64, 0, t)),
-      (this.KMr = GameModeModel.nQs(e, 128, 1, t)),
+      e = [WorldDefine_1.VOXEL_GRID_NAME];
+    this.Aoa?.IsValid()
+      ? this.Aoa?.D_K2_SetActorLocation(t.GetLocation(), !1, void 0, !1)
+      : (this.Aoa = GameModeModel.nQs(t, 64, 0, e)),
+      this.KMr?.IsValid()
+        ? this.KMr?.D_K2_SetActorLocation(t.GetLocation(), !1, void 0, !1)
+        : (this.KMr = GameModeModel.nQs(t, 128, 1, e)),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Level",
@@ -345,130 +403,64 @@ class GameModeModel extends ModelBase_1.ModelBase {
           ["Rotation", this.BornRotator],
         );
   }
-  SetBornInfo(e, t) {
-    (this.sEr = e ? new UE.Vector(e.X, e.Y, e.Z) : void 0),
-      (this.hEr = e ? Vector_1.Vector.Create(e) : void 0),
-      (this.aEr = t ? new UE.Rotator(t.Pitch, t.Yaw, t.Roll) : void 0);
+  AttachStreamingSourcesToActor(t) {
+    !this.pr_ &&
+      t &&
+      this.KMr?.IsValid() &&
+      this.Aoa?.IsValid() &&
+      (this.KMr.K2_AttachToActor(t, void 0, 2, 2, 2, !1),
+      this.Aoa.K2_AttachToActor(t, void 0, 2, 2, 2, !1));
   }
-  UpdateBornLocation(e) {
-    this.hEr.Set(e.X, e.Y, e.Z);
+  StartIndependentStreaming(t = void 0) {
+    this.KMr?.IsValid() &&
+      this.Aoa?.IsValid() &&
+      ((this.pr_ = !0),
+      this.KMr?.K2_DetachFromActor(1, 1, 1),
+      this.Aoa?.K2_DetachFromActor(1, 1, 1),
+      t) &&
+      (this.KMr?.D_K2_SetActorLocation(t, !1, void 0, !1),
+      this.Aoa?.D_K2_SetActorLocation(t, !1, void 0, !1));
   }
-  AddSubLevel(e) {
-    var t;
-    if (!this.SubLevelMap.has(e))
-      return (
-        (t = new LoadLevelDefine_1.SubLevel(e)), this.SubLevelMap.set(e, t), t
-      );
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error(
-        "World",
-        3,
-        "[GameModeModel.AddSubLevel] 重复添加子关卡。",
-        ["Path", e],
-      );
+  DetachStreamingSourceFromActor() {
+    this.KMr?.IsValid() &&
+      this.Aoa?.IsValid() &&
+      (this.KMr.K2_DetachFromActor(1, 1, 1),
+      this.Aoa.K2_DetachFromActor(1, 1, 1));
   }
-  AddSubLevelInstance(e) {
-    return this.SubLevelMap.has(e.Path)
-      ? (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "World",
-            3,
-            "[GameModeModel.AddSubLevelInstance] 重复添加子关卡。",
-            ["Path", e.Path],
-          ),
-        !1)
-      : ((e.IsPreload = !1), this.SubLevelMap.set(e.Path, e), !0);
+  StopIndependentStreaming(t = void 0) {
+    (this.pr_ = !1), this.AttachStreamingSourcesToActor(t);
   }
-  AddPreloadSubLevel(e) {
-    if (this.PreloadLevelMap.has(e))
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "World",
-          3,
-          "[GameModeModel.AddPreloadSubLevel] 重复添加预加载的Level，因为存在于this.PreloadLevelMap中",
-          ["Path", e],
-        );
-    else {
-      var t;
-      if (!this.SubLevelMap.has(e))
-        return (
-          (t = new LoadLevelDefine_1.SubLevel(e)),
-          this.PreloadLevelMap.set(e, t),
-          t
-        );
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "World",
-          3,
-          "[GameModeModel.AddPreloadSubLevel] 重复添加预加载Level，因为存在于SubLevelMap中",
-          ["Path", e],
-        );
-    }
+  SetBornInfo(t, e) {
+    (this.sEr = t ? new UE.VectorDouble(t.X, t.Y, t.Z) : void 0),
+      (this.hEr = t ? Vector_1.Vector.Create(t) : void 0),
+      (this.aEr = e ? new UE.Rotator(e.Pitch, e.Yaw, e.Roll) : void 0);
   }
-  RemovePreloadSubLevel(e) {
-    return this.PreloadLevelMap.delete(e);
+  UpdateBornLocation(t) {
+    this.hEr.Set(t.X, t.Y, t.Z);
   }
-  GetPreloadSubLevel(e) {
-    return this.PreloadLevelMap.get(e);
+  FlushTempDataLayers() {
+    for (const t of this.TempDataLayer) this.DataLayerSet.add(t);
   }
-  async RemoveSubLevel(e) {
-    var t, i, s;
-    return this.SubLevelMap.has(e)
-      ? ((t = this.SubLevelMap.get(e)),
-        this.SubLevelMap.delete(e),
-        (t.LoadType = 3),
-        (t.UnLoadPromise = new GameModePromise_1.GameModePromise()),
-        (i = FNameUtil_1.FNameUtil.GetDynamicFName(e)),
-        (i =
-          GlobalData_1.GlobalData.GameInstance.场景加载通知器.UnloadStreamLevel(
-            i,
-            !0,
-          )),
-        (s = this.UnloadLevelMap.size),
-        this.UnloadLevelMap.set(i, t),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "World",
-            3,
-            "切换子关卡:卸载子关卡。",
-            ["Path", e],
-            ["LinkId", i],
-            ["需要释放数量(前)", s],
-            ["需要释放数量(后)", this.UnloadLevelMap.size],
-          ),
-        t.UnLoadPromise.Promise)
-      : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "World",
-            3,
-            "[GameModeModel.RemoveSubLevel]不存在子关卡，删除子关卡失败。",
-            ["Path", e],
-          ),
-        !1);
-  }
-  AddDataLayer(e) {
-    return this.DataLayerSet.has(e)
+  AddDataLayer(t) {
+    return this.DataLayerSet.has(t)
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "World",
-            30,
+            29,
             "[GameModeModel.AddDataLayer] 重复添加DataLayer。",
-            ["Path", e],
+            ["Path", t],
           ),
         !1)
-      : (this.DataLayerSet.add(e), !0);
+      : (this.DataLayerSet.add(t), !0);
   }
-  RemoveDataLayer(e) {
-    return this.DataLayerSet.has(e)
-      ? (this.DataLayerSet.delete(e), !0)
-      : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "World",
-            30,
-            "[GameModeModel.RemoveDataLayer] 删除不存在的DataLayer。",
-            ["Path", e],
-          ),
-        !1);
+  RemoveDataLayer(t) {
+    return !!this.HasDataLayer(t) && (this.DataLayerSet.delete(t), !0);
+  }
+  HasDataLayer(t) {
+    return this.DataLayerSet.has(t);
+  }
+  GetAllDataLayers() {
+    return this.DataLayerSet;
   }
   get BeginLoadMapPromise() {
     return this.lEr;
@@ -488,8 +480,8 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get LoadMultiFormationPromise() {
     return this.dEr;
   }
-  set LoadMultiFormationPromise(e) {
-    this.dEr = e;
+  set LoadMultiFormationPromise(t) {
+    this.dEr = t;
   }
   get PreloadPromise() {
     return this.CEr;
@@ -503,32 +495,32 @@ class GameModeModel extends ModelBase_1.ModelBase {
   get CheckStreamingCompletedTimerId() {
     return this.fEr;
   }
-  set CheckStreamingCompletedTimerId(e) {
-    this.fEr = e;
+  set CheckStreamingCompletedTimerId(t) {
+    this.fEr = t;
   }
   get CheckRenderAssetsStreamingCompletedTimerId() {
     return this.vEr;
   }
-  set CheckRenderAssetsStreamingCompletedTimerId(e) {
-    this.vEr = e;
+  set CheckRenderAssetsStreamingCompletedTimerId(t) {
+    this.vEr = t;
   }
   get CheckRenderAssetsTimeoutId() {
     return this.Dbn;
   }
-  set CheckRenderAssetsTimeoutId(e) {
-    this.Dbn = e;
+  set CheckRenderAssetsTimeoutId(t) {
+    this.Dbn = t;
   }
   get VideoStartPromise() {
     return this.MEr;
   }
-  get VideoEndPromise() {
-    return this.EEr;
+  get OpenLoadingEnd() {
+    return this.U$_;
   }
   get RenderAssetDone() {
     return this.SEr;
   }
-  set RenderAssetDone(e) {
-    this.SEr = e;
+  set RenderAssetDone(t) {
+    this.SEr = t;
   }
   CreatePromise() {
     (this.lEr = new GameModePromise_1.GameModePromise()),
@@ -538,7 +530,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.x$s = new GameModePromise_1.GameModePromise()),
       (this.CEr = new GameModePromise_1.GameModePromise()),
       (this.MEr = new GameModePromise_1.GameModePromise()),
-      (this.EEr = new GameModePromise_1.GameModePromise()),
+      (this.U$_ = new GameModePromise_1.GameModePromise()),
       (this.gEr = new GameModePromise_1.GameModePromise());
   }
   ResetPromise() {
@@ -550,7 +542,7 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.CEr = void 0),
       (this.dEr = void 0),
       (this.MEr = void 0),
-      (this.EEr = void 0),
+      (this.U$_ = void 0),
       (this.gEr = void 0);
   }
   CreateChangeModePromise() {
@@ -559,25 +551,12 @@ class GameModeModel extends ModelBase_1.ModelBase {
   ResetChangeModePromise() {
     this.ETn = void 0;
   }
-  yEr() {
-    this.zMr &&
-      (this.KMr?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.KMr), (this.KMr = void 0)),
-      this.Aoa?.IsValid()) &&
-      (ActorSystem_1.ActorSystem.Put(this.Aoa), (this.Aoa = void 0));
-  }
   OnLeaveLevel() {
-    var e,
-      t,
-      i = new Array();
-    for ([e] of this.PreloadLevelMap) i.push(e);
-    for ([t] of this.SubLevelMap) i.push(t);
-    for (const s of i) this.RemoveSubLevel(s);
+    this.TempDataLayer.length = 0;
+    for (const t of this.DataLayerSet) this.TempDataLayer.push(t);
     return (
-      (i.length = 0),
       this.DataLayerSet.clear(),
       this.MaterialParameterCollectionMap.clear(),
-      this.yEr(),
       void 0 !== this.CheckStreamingCompletedTimerId &&
         (TimerSystem_1.TimerSystem.Remove(this.CheckStreamingCompletedTimerId),
         (this.CheckStreamingCompletedTimerId = void 0)),
@@ -585,12 +564,13 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.kMr = !1),
       (this.FMr = !1),
       (this.VMr = !1),
+      (this.ghh = this.jMr),
       (this.jMr = ""),
       (this.$Mr = 0),
       (this.JMr = !1),
       (this.YMr = Protocol_1.Aki.Protocol.i4s.Proto_NoneInstance),
       (this.QMr = void 0),
-      (this.XMr = 0),
+      (this.XMr = void 0),
       (this.zMr = !1),
       (this.QIo = !1),
       (this.RenderAssetDone = !1),

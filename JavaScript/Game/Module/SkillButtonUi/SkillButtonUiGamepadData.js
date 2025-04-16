@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonUiGamepadData = void 0);
 const Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
   InputEnums_1 = require("../../Input/InputEnums"),
   InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
@@ -12,6 +14,7 @@ const Info_1 = require("../../../Core/Common/Info"),
   InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
   UiManager_1 = require("../../Ui/UiManager"),
   BehaviorButtonData_1 = require("./BehaviorButtonData"),
+  GamepadSwitchInteractData_1 = require("./GamepadSwitchInteractData"),
   mainKeys = [
     "Gamepad_FaceButton_Top",
     "Gamepad_FaceButton_Left",
@@ -57,9 +60,7 @@ const Info_1 = require("../../../Core/Common/Info"),
     InputMappingsDefine_1.actionMappings.瞄准,
     InputMappingsDefine_1.actionMappings.通用交互,
   ],
-  mainSecondButtonTypeSet = new Set([1, 2, 4, 5, 6, 8, 7, 9, 101]),
-  climbingButtonTypeSet = new Set([1, 2, 4, 5, 7, 104]),
-  inWaterButtonTypeSet = new Set([5, 7, 104]),
+  mainSecondButtonTypeSet = new Set([1, 2, 4, 5, 6, 8, 7, 9, 101, 104]),
   subButtonTypeSet = new Set([1, 2, 4, 6, 8, 7, 9, 11, 101, 104]),
   phantomRoleButtonTypeSet = new Set([101, 104]);
 class SkillButtonUiGamepadData {
@@ -67,7 +68,7 @@ class SkillButtonUiGamepadData {
     (this.Byo = []),
       (this.byo = new Map()),
       (this.AllowChangeKeyReasonSet = new Set()),
-      (this.Zza = new Set()),
+      (this._oh = new Set()),
       (this.NoneIcon = ""),
       (this.SwimIcon = ""),
       (this.ButtonKeyList = []),
@@ -94,21 +95,36 @@ class SkillButtonUiGamepadData {
       (this.Qyo = !1),
       (this.Xyo = !1),
       (this.Climbing = !1),
-      (this.InWater = !1),
+      (this.CurStateTagId = 0),
+      (this.StateButtonTypeList = void 0),
       (this.IsPhantomRole = !1),
       (this.PhantomRoleButtonTypeList = void 0),
-      (this.ControlCameraByMoveAxis = !1);
+      (this.ControlCameraByMoveAxis = !1),
+      (this.Iqa = new Map()),
+      (this.RouletteKey = void 0),
+      (this.RouletteMainKey = void 0),
+      (this.RouletteSecondKey = void 0),
+      (this.SwitchInteractData =
+        new GamepadSwitchInteractData_1.GamepadSwitchInteractData());
   }
   Init() {
     (this.jyo = !1),
       this.$yo(),
       this.Yyo(),
       this.Jyo(),
+      this.SwitchInteractData.Init(),
       this.RefreshBaseConfigByUserSetting(),
+      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Valid &&
+        (this.mHs(),
+        this.RefreshAimButtonVisible(),
+        this.hIo(),
+        this.vEa(),
+        this.ChangeSkillOnAimStateChange()),
+      this.RefreshSwitchInteractOpen(!0),
       this.RefreshButtonData();
   }
   Clear() {
-    this.ControlCameraByMoveAxis = !1;
+    (this.ControlCameraByMoveAxis = !1), this.ClearInputAxis();
   }
   $yo() {
     this.Byo.length = 0;
@@ -147,8 +163,8 @@ class SkillButtonUiGamepadData {
   RefreshBaseConfigByUserSetting() {
     this.CombineButtonKey = "Gamepad_LeftShoulder";
     let t = 0;
-    for (const o of mainKeys) (this.ButtonKeyList[t] = o), t++;
-    for (const r of dPadKeys) (this.ButtonKeyList[t] = r), t++;
+    for (const r of mainKeys) (this.ButtonKeyList[t] = r), t++;
+    for (const o of dPadKeys) (this.ButtonKeyList[t] = o), t++;
     for (const p of subKeys)
       p !== this.CombineButtonKey &&
         ("Gamepad_RightTrigger" === p &&
@@ -197,7 +213,32 @@ class SkillButtonUiGamepadData {
             this.Gyo.set(a, f);
       }
     }
-    this.Zyo(), this.eIo(), this.W7a();
+    this.Zyo(), this.Oah(), this.eIo(), this.KWa();
+  }
+  Oah() {
+    (this.RouletteKey = void 0),
+      (this.RouletteMainKey = void 0),
+      (this.RouletteSecondKey = void 0);
+    var t = InputMappingsDefine_1.actionMappings.幻象探索选择界面,
+      i =
+        InputSettingsManager_1.InputSettingsManager.GetActionBinding(
+          t,
+        )?.GetGamepadKeyNameListReadonly();
+    if (i?.length && "Gamepad_Invalid" !== i[0]) this.RouletteKey = i[0];
+    else {
+      i =
+        InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
+          t,
+        );
+      if (i?.HasGamepadCombinationAction()) {
+        var e,
+          s,
+          t = new Map();
+        i.GetGamepadKeyNameMap(t);
+        for ([e, s] of t)
+          return (this.RouletteMainKey = e), void (this.RouletteSecondKey = s);
+      }
+    }
   }
   Zyo() {
     var t = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
@@ -245,11 +286,11 @@ class SkillButtonUiGamepadData {
             a,
           );
       if (s)
-        for (var [h, o] of s)
+        for (var [h, r] of s)
           InputSettingsManager_1.InputSettingsManager.AddCombinationActionKeyMap(
             InputMappingsDefine_1.actionMappings.手柄主攻击,
             h,
-            o,
+            r,
           );
     }
   }
@@ -299,7 +340,7 @@ class SkillButtonUiGamepadData {
       (this.SubAimSkillButtonTypeList[SUB_KEY_NUM] =
         this.SubSkillButtonTypeList[this.Nyo]);
   }
-  W7a() {
+  KWa() {
     for (const t of this.MainSkillCombineButtonTypeList)
       if (0 !== t) return void (this.IsShowCombineButton = !0);
     for (const i of this.SubSkillCombineButtonTypeList)
@@ -315,39 +356,42 @@ class SkillButtonUiGamepadData {
       0
     );
   }
+  RefreshSwitchInteractOpen(t = !1) {
+    this.SwitchInteractData.RefreshSwitchInteractOpen(t);
+  }
   RefreshButtonData() {
     if ((this.rIo(), (this.CurButtonTypeList.length = 0), this.jyo)) {
       for (let t = 0; t < MAIN_HALF_NUM; t++) {
-        var i = this.Q7a(this.MainSkillCombineButtonTypeList, t);
+        var i = this.$Wa(this.MainSkillCombineButtonTypeList, t);
         0 !== this.MainSkillCombineButtonTypeList[t]
           ? this.CurButtonTypeList.push(i)
           : this.CurButtonTypeList.push(
-              this.Q7a(this.MainSkillButtonTypeList, t),
+              this.$Wa(this.MainSkillButtonTypeList, t),
             );
       }
       for (let t = 0; t < MAIN_HALF_NUM; t++)
         this.CurButtonTypeList.push(
-          this.Q7a(this.MainSkillCombineButtonTypeList, t, !0),
+          this.$Wa(this.MainSkillCombineButtonTypeList, t, !0),
         );
       for (let t = 0; t < DPAD_KEY_NUM; t++) {
-        var e = this.Q7a(this.DpadSkillCombineButtonTypeList, t);
+        var e = this.$Wa(this.DpadSkillCombineButtonTypeList, t);
         0 !== this.DpadSkillCombineButtonTypeList[t]
           ? this.CurButtonTypeList.push(e)
           : this.CurButtonTypeList.push(
-              this.Q7a(this.DpadSkillButtonTypeList, t),
+              this.$Wa(this.DpadSkillButtonTypeList, t),
             );
       }
       for (let t = 0; t < SUB_KEY_NUM; t++)
         this.aIo(this.SubSkillCombineButtonTypeList[t]);
     } else {
       for (let t = 0; t < MAIN_HALF_NUM; t++)
-        this.CurButtonTypeList.push(this.Q7a(this.MainSkillButtonTypeList, t));
+        this.CurButtonTypeList.push(this.$Wa(this.MainSkillButtonTypeList, t));
       for (let t = 0; t < MAIN_HALF_NUM; t++)
         this.CurButtonTypeList.push(
-          this.Q7a(this.MainSkillCombineButtonTypeList, t, !0),
+          this.$Wa(this.MainSkillCombineButtonTypeList, t, !0),
         );
       for (let t = 0; t < DPAD_KEY_NUM; t++)
-        this.CurButtonTypeList.push(this.Q7a(this.DpadSkillButtonTypeList, t));
+        this.CurButtonTypeList.push(this.$Wa(this.DpadSkillButtonTypeList, t));
       if (this.Wyo)
         for (let t = 0; t < SUB_KEY_NUM + 1; t++)
           (this.jyo && 11 === this.SubAimSkillButtonTypeList[t]) ||
@@ -368,12 +412,12 @@ class SkillButtonUiGamepadData {
         0 <= (t = this.CurButtonTypeList.indexOf(101)) &&
         (this.CurButtonTypeList[t] = 12),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "RefreshGamepadButton", [
+        Log_1.Log.Debug("Battle", 17, "RefreshGamepadButton", [
           "",
           this.CurButtonTypeList,
         ]);
   }
-  Q7a(t, i, e = !1) {
+  $Wa(t, i, e = !1) {
     t = t[i];
     return (101 === t || this.nIo(t)) && this.sIo(t, e) ? t : 0;
   }
@@ -384,8 +428,9 @@ class SkillButtonUiGamepadData {
           !this.PhantomRoleButtonTypeList?.includes(t)
         )
       : !(
-          (this.Climbing && !climbingButtonTypeSet.has(t)) ||
-          (this.InWater && !inWaterButtonTypeSet.has(t)) ||
+          (0 !== this.CurStateTagId &&
+            this.StateButtonTypeList &&
+            !this.StateButtonTypeList.includes(t)) ||
           (i && !mainSecondButtonTypeSet.has(t))
         );
   }
@@ -402,7 +447,7 @@ class SkillButtonUiGamepadData {
     );
   }
   aIo(t) {
-    this.IsPhantomRole || this.Climbing || this.InWater
+    this.IsPhantomRole || 0 !== this.CurStateTagId
       ? this.sIo(t)
         ? this.CurButtonTypeList.push(t)
         : this.CurButtonTypeList.push(void 0)
@@ -412,10 +457,22 @@ class SkillButtonUiGamepadData {
   }
   rIo() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    t?.Valid &&
-      ((t = t.Entity.CheckGetComponent(190)),
-      (this.Climbing = t.HasTag(504239013)),
-      (this.InWater = t.HasTag(855966206)));
+    if (t?.Valid) {
+      var i = t.Entity.CheckGetComponent(203),
+        t =
+          ((this.Climbing = i.HasTag(504239013)),
+          (this.CurStateTagId = 0),
+          (this.StateButtonTypeList = void 0),
+          ModelManager_1.ModelManager.SkillButtonUiModel
+            ?.CurSkillButtonIndexData?.ButtonIndexConfig?.GamepadButtonTypeMap);
+      if (t)
+        for (var [e, s] of t)
+          if (i.HasTag(e))
+            return (
+              (this.CurStateTagId = e),
+              void (this.StateButtonTypeList = s.ArrayInt)
+            );
+    }
   }
   GetButtonTypeByActionName(t) {
     return actionNameToButtonTypeMap.get(t);
@@ -437,7 +494,7 @@ class SkillButtonUiGamepadData {
       (this.mHs(),
       this.RefreshAimButtonVisible(),
       this.hIo(),
-      this.fEa(),
+      this.vEa(),
       this.ChangeSkillOnAimStateChange(),
       this.RefreshButtonData());
   }
@@ -454,7 +511,7 @@ class SkillButtonUiGamepadData {
         t?.GetCurSkillButtonEntityData()?.SkillButtonIndexConfig?.DesktopButtonTypeList));
   }
   RefreshAimState() {
-    var t = this.hIo() || this.fEa();
+    var t = this.hIo() || this.vEa();
     return (
       t && (this.ChangeSkillOnAimStateChange(), this.RefreshButtonData()), t
     );
@@ -467,7 +524,7 @@ class SkillButtonUiGamepadData {
       !!e &&
       !!(t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity)
         ?.Valid &&
-      ((t = t.Entity.GetComponent(161).DirectionState),
+      ((t = t.Entity.GetComponent(173).DirectionState),
       (i = e.State),
       t === CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
         ? (e.State = 1)
@@ -475,7 +532,7 @@ class SkillButtonUiGamepadData {
       i !== e.State)
     );
   }
-  fEa() {
+  vEa() {
     var t =
       ModelManager_1.ModelManager.BattleUiModel.FormationData.GetFollowerAiming();
     return this.VRn !== t && ((this.VRn = t), !0);
@@ -504,7 +561,7 @@ class SkillButtonUiGamepadData {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Battle",
-              18,
+              17,
               "手柄RT没有绑定任何输入，瞄准时不需要更换原有按键绑定",
             );
         if (this.Hyo) {
@@ -515,7 +572,7 @@ class SkillButtonUiGamepadData {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              18,
+              17,
               "攻击输入没有绑定任何按键，瞄准时使RT键生效",
             );
       } else {
@@ -532,11 +589,16 @@ class SkillButtonUiGamepadData {
   RefreshInteractBehaviorData() {
     var t = this.GetBehaviorButtonDataByButtonType(104),
       i = UiManager_1.UiManager.IsViewOpen("InteractionHintView");
-    t.IsEnable = i;
+    (t.IsEnable = i), this.SwitchInteractData.SetInteractExist(i, 0);
   }
   OnActionKeyChanged(t) {
-    if (!(0 < this.AllowChangeKeyReasonSet.size))
-      return 0 < this.Zza.size
+    if (t === InputMappingsDefine_1.actionMappings.幻象探索选择界面)
+      this.Oah(),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.BattleUiRouletteKeyChanged,
+        );
+    else if (!(0 < this.AllowChangeKeyReasonSet.size))
+      return 0 < this._oh.size
         ? this.Qyo
           ? void 0
           : void (initActionNames.includes(t) && (this.Qyo = !0))
@@ -544,26 +606,26 @@ class SkillButtonUiGamepadData {
             this.Xyo ||
             (initActionNames.includes(t) &&
               Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Battle", 18, "在未知情况下触发了改键"))
+              Log_1.Log.Error("Battle", 17, "在未知情况下触发了改键"))
           );
   }
   AddChangeKeyReason(t) {
-    0 === this.Zza.size && this.Wyo && this.lIo(),
-      this.Zza.add(t),
+    0 === this._oh.size && this.Wyo && this.lIo(),
+      this._oh.add(t),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "添加手柄改键原因", [
+        Log_1.Log.Debug("Battle", 17, "添加手柄改键原因", [
           "EGamepadChangeKeyReason",
           t,
         ]);
   }
   RemoveChangeKeyReason(t) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "移除手柄改键原因", [
+      Log_1.Log.Debug("Battle", 17, "移除手柄改键原因", [
         "EGamepadChangeKeyReason",
         t,
       ]),
-      this.Zza.delete(t),
-      0 === this.Zza.size &&
+      this._oh.delete(t),
+      0 === this._oh.size &&
         (this.Qyo && ((this.Qyo = !1), this.RefreshBaseConfigByUserSetting()),
         this.IsAim() !== this.Wyo && this.lIo(),
         this.RefreshButtonData(),
@@ -571,6 +633,15 @@ class SkillButtonUiGamepadData {
         ModelManager_1.ModelManager.SkillButtonUiModel?.GetCurSkillButtonEntityData()?.RefreshSkillButtonData(
           2,
         );
+  }
+  CacheInputAxis(t, i) {
+    this.Iqa.set(t, i);
+  }
+  GetInputAxis(t) {
+    return this.Iqa.get(t) ?? 0;
+  }
+  ClearInputAxis() {
+    this.Iqa.clear();
   }
 }
 exports.SkillButtonUiGamepadData = SkillButtonUiGamepadData;

@@ -44,13 +44,13 @@ class Deque {
   }
   get Front() {
     if (this.n6) return this.r7[this.t7];
-    Log_1.Log.CheckError() && Log_1.Log.Error("Container", 15, "队列为空");
+    Log_1.Log.CheckError() && Log_1.Log.Error("Container", 14, "队列为空");
   }
   get Rear() {
     var t;
     if (this.n6)
       return (t = (this.i7 - 1 + this.r7.length) % this.r7.length), this.r7[t];
-    Log_1.Log.CheckError() && Log_1.Log.Error("Container", 15, "队列为空");
+    Log_1.Log.CheckError() && Log_1.Log.Error("Container", 14, "队列为空");
   }
   RemoveFront() {
     var t, i, s;
@@ -85,7 +85,7 @@ class Deque {
           this.n7(s),
         t
       );
-    Log_1.Log.CheckError() && Log_1.Log.Error("Container", 15, "队列为空");
+    Log_1.Log.CheckError() && Log_1.Log.Error("Container", 14, "队列为空");
   }
   Get(t) {
     if (this.n6) {
@@ -94,13 +94,13 @@ class Deque {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Container",
-          15,
+          14,
           "下标越界",
           ["index", t],
           ["size", this.n6],
         );
     } else
-      Log_1.Log.CheckError() && Log_1.Log.Error("Container", 15, "队列为空");
+      Log_1.Log.CheckError() && Log_1.Log.Error("Container", 14, "队列为空");
   }
   n7(t) {
     if (0 === this.n6) (this.r7.length = t), (this.t7 = 0), (this.i7 = 0);

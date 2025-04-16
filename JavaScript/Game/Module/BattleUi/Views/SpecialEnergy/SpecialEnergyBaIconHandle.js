@@ -5,23 +5,24 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
 class SpecialEnergyBaIconHandle {
   constructor() {
-    (this.ddt = void 0),
+    (this.B1l = void 0),
+      (this.OOi = void 0),
       (this.Cdt = ResourceSystem_1.ResourceSystem.InvalidId),
       (this.gdt = !1),
       (this.fdt = void 0);
   }
-  Init(s) {
-    this.ddt = s;
+  Init(s, e = void 0) {
+    (this.B1l = s), (this.OOi = e);
   }
   SetIcon(s) {
-    for (const e of this.ddt) e.SetUIActive(!1);
+    for (const e of this.B1l) e.SetUIActive(!1);
     s &&
       (this.Cdt = ResourceSystem_1.ResourceSystem.LoadAsync(
         s,
-        UE.LGUISpriteData_BaseObject,
+        UE.Texture2D,
         (s) => {
           if (((this.Cdt = ResourceSystem_1.ResourceSystem.InvalidId), s))
-            for (const e of this.ddt) e.SetUIActive(!0), e.SetSprite(s);
+            for (const e of this.B1l) e.SetUIActive(!0), e.SetTexture(s);
         },
         103,
       ));
@@ -31,17 +32,17 @@ class SpecialEnergyBaIconHandle {
       if (((this.gdt = s), this.Est(), s)) for (const e of this.fdt) e.Play();
       else {
         for (const t of this.fdt) t.Stop();
-        for (const o of this.ddt) o.SetAlpha(1);
+        for (const i of this.B1l) i.SetAlpha(1);
       }
   }
   Est() {
-    if (!this.fdt) {
-      this.fdt = [];
-      for (const e of this.ddt) {
-        var s = e
-          .GetOwner()
-          .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass());
-        this.fdt.push(s);
+    if (!this.fdt && ((this.fdt = []), this.OOi)) {
+      var e = this.OOi.GetOwner().K2_GetComponentsByClass(
+        UE.LGUIPlayTweenComponent.StaticClass(),
+      );
+      for (let s = 0; s < e.Num(); s++) {
+        var t = e.Get(s);
+        this.fdt.push(t);
       }
     }
   }

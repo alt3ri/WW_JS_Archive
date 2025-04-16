@@ -11,6 +11,7 @@ class TsAnimNotifyHideBone extends UE.KuroAnimNotify {
       (this.Hide = !1),
       (this.IgnoreTsBaseCharacter = !1);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     return (
       this.IgnoreTsBaseCharacter
@@ -21,7 +22,7 @@ class TsAnimNotifyHideBone extends UE.KuroAnimNotify {
           )
         : (e = e.GetOwner()) instanceof TsBaseCharacter_1.default &&
           e.CharacterActorComponent &&
-          e.CharacterActorComponent.Entity.GetComponent(163)?.HideBone(
+          e.CharacterActorComponent.Entity.GetComponent(175)?.HideBone(
             FNameUtil_1.FNameUtil.GetDynamicFName(this.BoneName),
             this.Hide,
           ),

@@ -76,7 +76,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
     super.OnBeforeShow(),
       ModelManager_1.ModelManager.PanelQteModel.IsInQte ||
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("PanelQte", 18, "界面打开时qte已经结束了"),
+          Log_1.Log.Info("PanelQte", 17, "界面打开时qte已经结束了"),
         this.CloseMe());
   }
   OnBeforeDestroy() {
@@ -103,7 +103,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
       ? i !==
         (i = ModelManager_1.ModelManager.PanelQteModel.GetContext()).QteHandleId
         ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("PanelQte", 18, "qte handleId 不匹配"),
+            Log_1.Log.Error("PanelQte", 17, "qte handleId 不匹配"),
           this.CloseMe())
         : ((t = i.Config.MaxSuccessCount),
           (e = i.Config.MinSuccessCount),
@@ -113,12 +113,12 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
           this.InitCameraShake(i.Config),
           this.InitBuff(i.Config),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("PanelQte", 18, "触发冰冻Qte", [
+            Log_1.Log.Debug("PanelQte", 17, "触发冰冻Qte", [
               "需按次数",
               this.$Xt,
             ]))
       : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("PanelQte", 18, "界面打开时qte已经结束了"),
+          Log_1.Log.Info("PanelQte", 17, "界面打开时qte已经结束了"),
         this.CloseMe());
   }
   OnAddEventListener() {
@@ -154,7 +154,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
         (this.$G[1] = !1),
         this.AOi++,
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("PanelQte", 18, "冰冻Qte中", ["已按次数", this.AOi]),
+          Log_1.Log.Debug("PanelQte", 17, "冰冻Qte中", ["已按次数", this.AOi]),
         this.AOi === this.$Xt) &&
         ((t = this.OpenParam),
         ModelManager_1.ModelManager.PanelQteModel.SetQteResult(t, !0),

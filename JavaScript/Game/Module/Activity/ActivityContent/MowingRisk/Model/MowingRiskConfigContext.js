@@ -4,12 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const RiskHarvestArtifactAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestArtifactAll"),
   RiskHarvestArtifactById_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestArtifactById"),
   RiskHarvestBuffGroupAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestBuffGroupAll"),
+  RiskHarvestBuffGroupByActivityId_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestBuffGroupByActivityId"),
   RiskHarvestBuffGroupById_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestBuffGroupById"),
-  RiskHarvestBuffRewardAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestBuffRewardAll"),
   RiskHarvestInstAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstAll"),
+  RiskHarvestInstByActivityId_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstByActivityId"),
   RiskHarvestInstById_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstById"),
   RiskHarvestInstByInstanceID_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestInstByInstanceID"),
-  RiskHarvestScoreRewardAll_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestScoreRewardAll"),
+  RiskHarvestScoreRewardByActivityId_1 = require("../../../../../../Core/Define/ConfigQuery/RiskHarvestScoreRewardByActivityId"),
   LocalStorage_1 = require("../../../../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../../../../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
@@ -41,11 +42,11 @@ const RiskHarvestArtifactAll_1 = require("../../../../../../Core/Define/ConfigQu
   ]);
 class MowingRiskConfigContext {
   constructor() {
-    (this.V5a = void 0),
-      (this.H5a = void 0),
-      (this.j5a = new Map()),
-      (this.L9a = new Map()),
-      (this.W5a = (e, r) =>
+    (this.LVa = void 0),
+      (this.AVa = void 0),
+      (this.DVa = new Map()),
+      (this.Aja = new Map()),
+      (this.RVa = (e, r) =>
         e.BuffType === r.BuffType ? e.Id - r.Id : e.BuffType - r.BuffType);
   }
   Init() {
@@ -79,8 +80,8 @@ class MowingRiskConfigContext {
           Partial: 1,
           Overall: 1,
         }),
-          this.j5a.set(n.Id, s),
-          this.L9a.set(n.Id, o);
+          this.DVa.set(n.Id, s),
+          this.Aja.set(n.Id, o);
       }
   }
   Dispose() {}
@@ -146,15 +147,15 @@ class MowingRiskConfigContext {
     );
   }
   GetProgressOverallPercentage(e, r) {
-    e = this.L9a.get(e);
+    e = this.Aja.get(e);
     return void 0 === e ? 0 : r >= e.length ? 1 : e[r].Overall;
   }
   GetProgressPartialPercentage(e, r) {
-    e = this.L9a.get(e);
+    e = this.Aja.get(e);
     return void 0 === e ? 0 : r >= e.length ? 1 : e[r].Partial;
   }
   GetProgressLevel(e, r) {
-    e = this.L9a.get(e);
+    e = this.Aja.get(e);
     return void 0 === e
       ? 0
       : r >= e.length
@@ -162,15 +163,20 @@ class MowingRiskConfigContext {
         : e[r].SuperLevel;
   }
   GetBuffThresholdByArtifactIdAndIndex(e, r) {
-    e = this.j5a.get(e);
+    e = this.DVa.get(e);
     return void 0 === e || r >= e.length ? 0 : e[r].Threshold;
   }
   GetBuffIdByArtifactIdAndIndex(e, r) {
-    e = this.j5a.get(e);
+    e = this.DVa.get(e);
     return void 0 === e || r >= e.length ? 0 : e[r].BuffId;
   }
   GetThresholdDataByArtifactId(e) {
-    return this.j5a.get(e);
+    return this.DVa.get(e);
+  }
+  GetBuffConfigById(e) {
+    return RiskHarvestBuffGroupById_1.configRiskHarvestBuffGroupById.GetConfig(
+      e,
+    );
   }
   GetBuffTypeById(e) {
     e = RiskHarvestBuffGroupById_1.configRiskHarvestBuffGroupById.GetConfig(e);
@@ -189,54 +195,38 @@ class MowingRiskConfigContext {
         ?.RewardScore ?? 0
     );
   }
+  GetScoreToUnlockById(e) {
+    e = RiskHarvestInstById_1.configRiskHarvestInstById.GetConfig(e);
+    return void 0 === e || 0 === e.UnlockInst ? 0 : e.UnlockScore;
+  }
   IsSuperBuffByBuffId(e) {
     return 3 === this.GetBuffTypeById(e);
   }
   IsSuperBuffAvailable(e, r, t) {
     if (this.IsSuperBuffByBuffId(r)) {
-      e = this.j5a.get(e);
+      e = this.DVa.get(e);
       if (void 0 !== e)
         for (const i of e) if (i.BuffId === r && t >= i.Threshold) return !0;
     }
     return !1;
   }
   get BasicBuffConfigs() {
-    if (void 0 === this.V5a) {
+    if (void 0 === this.LVa) {
       var e = [];
       for (const r of RiskHarvestBuffGroupAll_1.configRiskHarvestBuffGroupAll.GetConfigList())
         r.BuffType < 3 && e.push(r);
-      e.sort(this.W5a), (this.V5a = e);
+      e.sort(this.RVa), (this.LVa = e);
     }
-    return this.V5a;
+    return this.LVa;
   }
   get SuperBuffConfigs() {
-    if (void 0 === this.H5a) {
+    if (void 0 === this.AVa) {
       var e = [];
       for (const r of RiskHarvestBuffGroupAll_1.configRiskHarvestBuffGroupAll.GetConfigList())
         3 === r.BuffType && e.push(r);
-      e.sort(this.W5a), (this.H5a = e);
+      e.sort(this.RVa), (this.AVa = e);
     }
-    return this.H5a;
-  }
-  get RiskHarvestInstAll() {
-    return RiskHarvestInstAll_1.configRiskHarvestInstAll.GetConfigList() ?? [];
-  }
-  get RiskHarvestScoreRewardAll() {
-    return (
-      RiskHarvestScoreRewardAll_1.configRiskHarvestScoreRewardAll.GetConfigList() ??
-      []
-    );
-  }
-  get RiskHarvestBuffRewardAll() {
-    return (
-      RiskHarvestBuffRewardAll_1.configRiskHarvestBuffRewardAll.GetConfigList() ??
-      []
-    );
-  }
-  get MaxRewardScore() {
-    var e =
-      RiskHarvestScoreRewardAll_1.configRiskHarvestScoreRewardAll.GetConfigList();
-    return void 0 === e ? 0 : e[e.length - 1].Score;
+    return this.AVa;
   }
   get IsInstanceNewCache() {
     var e = LocalStorage_1.LocalStorage.GetPlayer(
@@ -258,6 +248,27 @@ class MowingRiskConfigContext {
     LocalStorage_1.LocalStorage.SetPlayer(
       LocalStorageDefine_1.ELocalStoragePlayerKey.MowingRiskIsInstanceNew,
       e,
+    );
+  }
+  GetRiskHarvestInstByActivityId(e) {
+    return (
+      RiskHarvestInstByActivityId_1.configRiskHarvestInstByActivityId.GetConfigList(
+        e,
+      ) ?? []
+    );
+  }
+  GetRiskHarvestScoreRewardByActivityId(e) {
+    return (
+      RiskHarvestScoreRewardByActivityId_1.configRiskHarvestScoreRewardByActivityId.GetConfigList(
+        e,
+      ) ?? []
+    );
+  }
+  GetBuffConfigListByActivityId(e) {
+    return (
+      RiskHarvestBuffGroupByActivityId_1.configRiskHarvestBuffGroupByActivityId.GetConfigList(
+        e,
+      ) ?? []
     );
   }
 }

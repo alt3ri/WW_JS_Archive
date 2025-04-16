@@ -15,6 +15,7 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       (this.PEo = void 0),
       (this.xEo = void 0),
       (this.aBn = void 0),
+      (this.$Rr = void 0),
       (this.Ist = 0);
   }
   async Init(t, i) {
@@ -28,6 +29,7 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       [1, UE.UIItem],
       [2, UE.UIItem],
       [3, UE.UIItem],
+      [4, UE.UIHorizontalLayout],
     ];
   }
   OnStart() {
@@ -35,6 +37,9 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       (this.PEo = this.GetItem(1)),
       (this.xEo = this.GetItem(2)),
       (this.aBn = this.GetItem(3)),
+      (this.$Rr = this.GetHorizontalLayout(4)),
+      this.$Rr.SetEnable(!1),
+      this.$Rr.SetAlign(3),
       this.wEo(),
       this.AEo.SetUIActive(!1),
       this.xEo.SetUIActive(!1),
@@ -46,41 +51,43 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       e = t.CurrentMorseCode,
       s = ((this.Ist = t.Speed), t.StartDecisionSize),
       n = t.EndDecisionSize,
-      o = 3 === t.CurrentGameplayType;
-    this.UEo = [];
-    for (let i = e.length - 1; 0 <= i; --i) {
-      var a,
-        h = e[i],
-        r = Number(h) ?? 0;
+      o = 3 === t.CurrentGameplayType,
+      h = ((this.UEo = []), this.RootItem.GetWidth() / 2);
+    let a = 0;
+    for (let i = 0; i < e.length; ++i) {
+      var r,
+        l = e[i],
+        g = Number(l) ?? 0;
+      i !== e.length - 1 &&
+        0 !== g &&
+        ((l = LguiUtil_1.LguiUtil.CopyItem(this.xEo, this.$Rr.RootUIComp)),
+        (r = new SignalLineItem_1.SignalLineItem(0, h, s, n)).Init(l, a),
+        this.UEo.push(r),
+        (a -= r.Width));
       let t = void 0;
-      switch (r) {
+      switch (g) {
         case 1:
-          var l = LguiUtil_1.LguiUtil.CopyItem(this.PEo, this.RootItem);
-          (t = new SignalItem_1.SignalItem(r, s, n)).Init(l);
+          var _ = LguiUtil_1.LguiUtil.CopyItem(this.PEo, this.$Rr.RootUIComp);
+          (t = new SignalItem_1.SignalItem(g, h, s, n)).Init(_, a);
           break;
         case 2:
-          l = LguiUtil_1.LguiUtil.CopyItem(this.AEo, this.RootItem);
-          (t = new SignalItem_1.SignalItem(r, s, n)).Init(l);
+          _ = LguiUtil_1.LguiUtil.CopyItem(this.AEo, this.$Rr.RootUIComp);
+          (t = new SignalItem_1.SignalItem(g, h, s, n)).Init(_, a);
           break;
         default:
-          var g = LguiUtil_1.LguiUtil.CopyItem(this.xEo, this.RootItem);
-          (t = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(g);
+          var c = LguiUtil_1.LguiUtil.CopyItem(this.xEo, this.$Rr.RootUIComp);
+          (t = new SignalLineItem_1.SignalLineItem(0, h, s, n)).Init(c, a);
       }
-      0 === r &&
-        o &&
-        ((h = LguiUtil_1.LguiUtil.CopyItem(this.aBn, this.RootItem)),
-        (a = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(h),
-        this.UEo.push(a)),
-        this.UEo.push(t),
-        0 !== i &&
-          0 !== r &&
-          ((h = LguiUtil_1.LguiUtil.CopyItem(this.xEo, this.RootItem)),
-          (a = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(h),
-          this.UEo.push(a));
+      0 === g && o && t.AddWidth(this.aBn.Width),
+        (a -= t.Width),
+        this.UEo.push(t);
     }
   }
   InitByGameplayType(t) {
     if (this.UEo) for (const i of this.UEo) i.InitByGameplayType(t);
+  }
+  InitMoveNode() {
+    this.$Rr.RootUIComp.SetAnchorOffsetX(-1280);
   }
   StartAgain() {
     if (this.UEo) for (const t of this.UEo) t.Reset();
@@ -102,11 +109,11 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
     return 0 === t ? 1 : i / t;
   }
   BEo(t) {
-    t = this.RootItem.GetAnchorOffsetX() + (t / 1e3) * this.Ist;
-    this.RootItem.SetAnchorOffsetX(t);
+    t = this.$Rr.RootUIComp.GetAnchorOffsetX() + (t / 1e3) * this.Ist;
+    this.$Rr.RootUIComp.SetAnchorOffsetX(t);
   }
   bEo() {
-    var t = this.RootItem.GetAnchorOffsetX();
+    var t = this.$Rr.RootUIComp.GetAnchorOffsetX();
     for (const e of this.UEo) {
       var i = t + e.GetRootItem().GetAnchorOffsetX();
       e.Update(i);

@@ -19,6 +19,13 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
       (this.MovementMode = 0),
       (this.IsInitTsVariables = !1);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.TsTargetPos = void 0),
+      (this.TsTurnSpeed = 180),
+      (this.Character = void 0),
+      (this.MovementMode = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -37,7 +44,7 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
       ? ((s = (e = e.CharAiDesignComp.Entity).GetComponent(0)),
         e?.Valid
           ? ((this.Character = e.GetComponent(3)),
-            (e = e.GetComponent(38)?.CharacterMovement)?.IsValid()
+            (e = e.GetComponent(44)?.CharacterMovement)?.IsValid()
               ? ((this.MovementMode = e.MovementMode),
                 (e.MovementMode = 1),
                 AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
@@ -48,13 +55,13 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
               : (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "LevelAi",
-                    51,
+                    50,
                     "[TsTaskTurnToPosition]无效的CharacterMovement",
                     ["PbDataId", s.GetPbDataId()],
                   ),
                 this.FinishExecute(!0)))
           : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("LevelAi", 30, "执行转向动作时实体不存在:", [
+              Log_1.Log.Error("LevelAi", 29, "执行转向动作时实体不存在:", [
                 "PbDataId",
                 s.GetPbDataId(),
               ]),
@@ -70,7 +77,7 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
     GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(
       this.Character,
     ) < TOLERANCE &&
-      ((this.Character.Entity.GetComponent(38).CharacterMovement.MovementMode =
+      ((this.Character.Entity.GetComponent(44).CharacterMovement.MovementMode =
         this.MovementMode),
       this.Finish(!0));
   }

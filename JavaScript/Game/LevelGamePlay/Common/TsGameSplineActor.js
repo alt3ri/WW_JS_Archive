@@ -7,12 +7,15 @@ class TsGameSplineActor extends UE.Actor {
   constructor() {
     super(...arguments), (this.SplineData = void 0);
   }
+  Constructor() {
+    this.SplineData = void 0;
+  }
   GetPatrolSpeedByIndex(e) {
     return this.SplineData.Type !== IComponent_1.ESplineType.Patrol
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelPlay",
-            32,
+            31,
             "[TsGameSplineActor.GetPatrolSpeedByIndex]当前样条非巡逻样条",
           ),
         -1)

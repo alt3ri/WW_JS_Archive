@@ -25,6 +25,7 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
           t = {
             Type: 2,
             ItemConfigId: e.Q6n,
+            SkinId: t.SkinId,
             BottomTextId: "Text_LevelShow_Text",
             BottomTextParameter: [e.F6n],
             ElementId: t.ElementId,
@@ -33,7 +34,7 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
         return i.Apply(t), { Key: r, Value: i };
       }),
       (this.oRo = () => {
-        EditBattleTeamController_1.EditBattleTeamController.SetEditBattleTeamByRoleId(
+        EditBattleTeamController_1.EditBattleTeamController.ResetSlotDataThenSetEditBattleTeamByRoleId(
           this.tRo,
         ),
           UiManager_1.UiManager.CloseView("TowerRecommendView");

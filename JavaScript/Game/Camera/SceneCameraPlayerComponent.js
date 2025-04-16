@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, r, a) {
-    var o,
-      n = arguments.length,
-      i =
-        n < 3
+  function (e, t, r, o) {
+    var n,
+      i = arguments.length,
+      l =
+        i < 3
           ? t
-          : null === a
-            ? (a = Object.getOwnPropertyDescriptor(t, r))
-            : a;
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, r))
+            : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      i = Reflect.decorate(e, t, r, a);
+      l = Reflect.decorate(e, t, r, o);
     else
-      for (var l = e.length - 1; 0 <= l; l--)
-        (o = e[l]) && (i = (n < 3 ? o(i) : 3 < n ? o(t, r, i) : o(t, r)) || i);
-    return 3 < n && i && Object.defineProperty(t, r, i), i;
+      for (var a = e.length - 1; 0 <= a; a--)
+        (n = e[a]) && (l = (i < 3 ? n(l) : 3 < i ? n(t, r, l) : n(t, r)) || l);
+    return 3 < i && l && Object.defineProperty(t, r, l), l;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneCameraPlayerComponent = void 0);
@@ -23,8 +23,8 @@ const UE = require("ue"),
   EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
   GlobalData_1 = require("../GlobalData"),
-  ModelManager_1 = require("../Manager/ModelManager"),
-  CameraController_1 = require("./CameraController");
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager");
 let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments), (this.ZPr = void 0), (this.fxr = void 0);
@@ -40,7 +40,7 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
     return (this.ZPr = void 0), !(this.fxr = void 0);
   }
   ExitCameraMode(e = () => {}, t, r) {
-    CameraController_1.CameraController.ExitCameraMode(
+    ControllerHolder_1.ControllerHolder.CameraController.ExitCameraMode(
       3,
       r && 1 === r ? 0 : t ? t.FadeOut : 1,
       0,
@@ -55,11 +55,11 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
         : this.ZPr.IsIdle()
           ? (ModelManager_1.ModelManager.CameraModel.IsInHigherMode(3) ||
               (this.ZPr.UpdateViewTarget(0),
-              CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
+              ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.SetRotation(
                 new UE.Rotator(
-                  CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Pitch,
+                  ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraRotation.Pitch,
                   this.ZPr.CineCamera.K2_GetActorRotation().Yaw,
-                  CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Roll,
+                  ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraRotation.Roll,
                 ),
               )),
             this.ExitCameraMode(t, e, r))
@@ -68,43 +68,54 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
   EnterSceneSubCamera(e) {
     e === this.ZPr.CurSceneSubCamera && this.ZPr.UpdateViewTarget();
   }
-  EnterFixSceneSubCamera(e, t, r, a, o, n) {
+  EnterFixSceneSubCamera(e, t, r, o, n, i, l, a = 0, s = 0, h = 0, d = 0) {
     ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() ||
-      (CameraController_1.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
+      (ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
         !1,
       ),
-      ((n = this.ZPr.GetUnBoundSceneCamera(n)).FadeIn = a),
-      (n.FadeOut = o),
-      n.Camera.GetCineCameraComponent().SetFieldOfView(r),
-      (n.Camera.CameraComponent.bConstrainAspectRatio = !1),
-      n.Camera.K2_SetActorTransform(
-        new UE.Transform(
+      ((i = this.ZPr.GetUnBoundSceneCamera(i)).FadeIn = o),
+      (i.FadeInFunc = a),
+      (i.FadeInExp = s),
+      (i.FadeOut = n),
+      (i.FadeOutFunc = h),
+      (i.FadeOutExp = d),
+      i.Camera.GetCineCameraComponent().SetFieldOfView(r),
+      (i.Camera.CameraComponent.bConstrainAspectRatio = !1),
+      i.Camera.D_K2_SetActorTransform(
+        new UE.TransformDouble(
           t.ToUeRotator(),
           e.ToUeVector(),
-          new UE.Vector(1, 1, 1),
+          new UE.VectorDouble(1, 1, 1),
         ),
         !1,
         void 0,
         !0,
       ),
-      this.fxr.push(n),
+      this.fxr.push(i),
       3 === ModelManager_1.ModelManager.CameraModel.CameraMode
-        ? this.EnterSceneSubCamera(n)
+        ? this.EnterSceneSubCamera(i)
         : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.Shadow.EnableCSMStable 0",
           ),
-          CameraController_1.CameraController.EnterCameraMode(3, a, 0, 0)));
+          ControllerHolder_1.ControllerHolder.CameraController.EnterCameraMode(
+            3,
+            o,
+            a,
+            s,
+            l,
+          )));
   }
-  ExitFixSceneSubCamera() {
+  ExitFixSceneSubCamera(e = void 0) {
     var t = () => {
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.Shadow.EnableCSMStable 1",
-      );
+      ),
+        e && e();
     };
     if (this.fxr.length) {
-      CameraController_1.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
+      ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
         !0,
       );
       let e = void 0;
@@ -118,28 +129,27 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
         var r = this.fxr.pop();
         this.ZPr.RemoveBoundSceneCamera(r);
       }
-      if (3 === ModelManager_1.ModelManager.CameraModel.CameraMode)
-        return this.ZPr.IsIdle()
-          ? ModelManager_1.ModelManager.CameraModel.IsInHigherMode(3)
-            ? void this.ExitCameraMode(t)
-            : (e &&
-                (this.ZPr.DefaultSceneSubCamera.CopyData(e),
-                this.ZPr.UpdateViewTarget(0)),
-              CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
-                new UE.Rotator(
-                  CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Pitch,
-                  this.ZPr.CineCamera.K2_GetActorRotation().Yaw,
-                  CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Roll,
-                ),
+      if (this.ZPr.IsIdle())
+        return ModelManager_1.ModelManager.CameraModel.IsInHigherMode(3)
+          ? void this.ExitCameraMode(t)
+          : (e &&
+              (this.ZPr.DefaultSceneSubCamera.CopyData(e),
+              this.ZPr.UpdateViewTarget(0)),
+            ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.SetRotation(
+              new UE.Rotator(
+                ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraRotation.Pitch,
+                this.ZPr.CineCamera.K2_GetActorRotation().Yaw,
+                ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraRotation.Roll,
               ),
-              void CameraController_1.CameraController.ExitCameraMode(
-                3,
-                this.ZPr.DefaultSceneSubCamera.FadeOut,
-                0,
-                0,
-                t,
-              ))
-          : void this.ZPr.UpdateViewTarget();
+            ),
+            void ControllerHolder_1.ControllerHolder.CameraController.ExitCameraMode(
+              3,
+              this.ZPr.DefaultSceneSubCamera.FadeOut,
+              this.ZPr.DefaultSceneSubCamera.FadeOutFunc,
+              this.ZPr.DefaultSceneSubCamera.FadeOutExp,
+              t,
+            ));
+      this.ZPr.UpdateViewTarget();
     }
   }
 };

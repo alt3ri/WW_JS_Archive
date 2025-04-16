@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   InfoDisplayController_1 = require("../InfoDisplayController"),
@@ -15,30 +16,30 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
       (this.sai = void 0),
       (this.aai = void 0),
       (this.hai = 0),
-      (this.lai = (e, i) => {
-        for (let i = 0; i < e.Num(); i++) {
-          var s, t;
-          this.aai.length > i &&
-            ((t = this.aai[i].Height),
-            (s = e.Get(i).toPrecision(1)),
-            (s = this.hai * Number(s)),
-            (t = MathUtils_1.MathUtils.Lerp(t, s, LERP_PERCENTAGE)),
-            this.aai[i].SetHeight(t));
+      (this.lai = (i, e) => {
+        for (let e = 0; e < i.Num(); e++) {
+          var r, t;
+          this.aai.length > e &&
+            ((t = this.aai[e].Height),
+            (r = i.Get(e).toPrecision(1)),
+            (r = this.hai * Number(r)),
+            (t = MathUtils_1.MathUtils.Lerp(t, r, LERP_PERCENTAGE)),
+            this.aai[e].SetHeight(t));
         }
       }),
       (this.Jvt = () => {
         this.CloseMe();
       }),
       (this._ai = () => {
-        var i =
+        var e =
             ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId(),
-          i =
+          e =
             ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-              i,
+              e,
             );
-        0 < i.length &&
+        0 < e.length &&
           (ModelManager_1.ModelManager.InfoDisplayModel.SetCurrentOpenInformationTexture(
-            i[0],
+            e[0],
           ),
           InfoDisplayController_1.InfoDisplayController.OpenInfoDisplayImgView());
       });
@@ -64,68 +65,75 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     this.sai = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
-    var i = this.GetItem(8),
-      e =
-        (this.sai.Initialize(i.GetOwner()),
+    var e = this.GetItem(8),
+      i =
+        (this.sai.Initialize(e.GetOwner()),
         this.sai.SetShowTextComponent(this.GetText(6)),
         this.sai.SetSpectrumCallBack(this.lai),
         (this.aai = new Array()),
         this.GetItem(10));
-    for (let i = 0; i < e.UIChildren.Num(); i++)
-      this.aai.push(e.UIChildren.Get(i)),
-        0 === i && (this.hai = e.UIChildren.Get(i).Height);
-    i = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
-    this.Hxt(i),
+    for (let e = 0; e < i.UIChildren.Num(); e++)
+      this.aai.push(i.UIChildren.Get(e)),
+        0 === e && (this.hai = i.UIChildren.Get(e).Height);
+    e = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
+    this.Hxt(e),
       this.sai.Refresh(
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
-          i,
+          e,
         ),
       );
   }
-  Hxt(i) {
-    this.uai(i), this.l7e(i), this.cai(i), this.mai(i);
+  Hxt(e) {
+    this.uai(e), this.l7e(e), this.cai(e), this.mai(e);
   }
-  uai(i) {
-    var i =
-      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-        i,
-      );
-    0 < i.length &&
-      "" !== (i = i[0]) &&
-      this.SetTextureByPath(i, this.GetTexture(1));
-  }
-  l7e(i) {
+  uai(e) {
     var e =
-        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
-          i,
-        ),
-      e =
-        (this.GetText(2).SetText(e),
-        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
-          i,
-        ));
-    this.GetText(4).SetText(e);
-  }
-  cai(i) {
-    i =
-      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayBgStamp(
-        i,
+      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
+        e,
       );
-    "" !== i && this.SetTextureByPath(i, this.GetTexture(7));
+    0 < e.length &&
+      "" !== (e = e[0]) &&
+      this.SetTextureByPath(e, this.GetTexture(1));
   }
-  OnTick(i) {
-    this.sai?.OnTick(i);
+  l7e(e) {
+    var i =
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
+          e,
+        ),
+      i =
+        (this.GetText(2).SetText(i),
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
+          e,
+        ));
+    this.GetText(4).SetText(i);
   }
-  mai(i) {
+  cai(e) {
+    e =
+      ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayBgStamp(
+        e,
+      );
+    "" !== e && this.SetTextureByPath(e, this.GetTexture(7));
+  }
+  OnTick(e) {
+    this.sai?.OnTick(e);
+  }
+  mai(e) {
     "" !==
-    ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(i)
+    ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(e)
       ? (this.GetItem(8).SetUIActive(!0), this.GetItem(9).SetUIActive(!0))
       : (this.GetItem(8).SetUIActive(!1), this.GetItem(9).SetUIActive(!1));
   }
   OnBeforeDestroy() {
     this.sai.Destroy();
-    var i = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
-    InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(i);
+    var e = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
+    InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(e);
+  }
+  async OnBeforeHideAsync() {
+    this.OpenParam?.FadeBeforeHide &&
+      (await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitOpenLoading(
+        0,
+        3,
+      ));
   }
 }
 exports.InfoDisplayTypeFourView = InfoDisplayTypeFourView;

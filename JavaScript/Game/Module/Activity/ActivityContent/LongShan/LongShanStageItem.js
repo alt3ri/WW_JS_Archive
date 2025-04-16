@@ -39,14 +39,14 @@ class LongShanStageItem extends UiPanelBase_1.UiPanelBase {
       t =
         ActivityLongShanController_1.ActivityLongShanController.GetActivityData(),
       i = t.GetStageInfoById(this.xOe),
-      s =
+      n =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Title),
         void 0 === i),
-      s =
-        (this.GetItem(5).SetUIActive(s),
-        this.GetItem(8).SetUIActive(!s),
+      n =
+        (this.GetItem(5).SetUIActive(n),
+        this.GetItem(8).SetUIActive(!n),
         t.GetProgress(this.xOe));
-    this.GetItem(4).SetUIActive(100 === s),
+    this.GetItem(4).SetUIActive(100 === n),
       i ||
         ((i =
           LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
@@ -56,12 +56,15 @@ class LongShanStageItem extends UiPanelBase_1.UiPanelBase {
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(3),
         "LongShanStage_ProgressPercentage02",
-        s,
+        n,
       ),
       this.GetItem(7).SetUIActive(t.CheckStageRed(this.xOe));
   }
   SetButtonInteractive(e) {
     this.GetButton(0)?.SetSelfInteractive(e);
+  }
+  GetLongShanButton() {
+    return this.GetButton(0).RootUIComp;
   }
 }
 exports.LongShanStageItem = LongShanStageItem;

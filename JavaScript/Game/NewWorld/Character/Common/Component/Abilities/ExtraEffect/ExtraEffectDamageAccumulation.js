@@ -11,7 +11,7 @@ class DamageAccumulation extends ExtraEffectBase_1.BuffEffect {
       (this.rXo = 0),
       (this.nXo = 0),
       (this.sXo = 0),
-      (this.aXo = void 0),
+      (this.aXo = []),
       (this.hXo = 0),
       (this.lXo = -0),
       (this.ine = void 0);
@@ -21,7 +21,7 @@ class DamageAccumulation extends ExtraEffectBase_1.BuffEffect {
       e =
         ((this.nXo = Number(t[0])),
         (this.sXo = Number(t[1])),
-        (this.aXo = t[2].split("#").map((t) => BigInt(t))),
+        (this.aXo = t[2].split("#").map((t) => Number(t))),
         (t[3] ?? "").split("#").map((t) => Number(t)));
     for (const i of e) this.hXo |= 1 << i;
     var s = (t[4] ?? "").split("#").map((t) => Number(t));
@@ -70,7 +70,7 @@ class DamageAccumulation extends ExtraEffectBase_1.BuffEffect {
           var e;
           (t = this.ine
             ? ((e = this.lXo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-              this.OwnerEntity.GetComponent(159)?.GetBaseValue(this.ine) * e)
+              this.OwnerEntity.GetComponent(171)?.GetBaseValue(this.ine) * e)
             : this.lXo) < this.rXo && this.mXo();
           break;
         }

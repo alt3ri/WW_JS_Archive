@@ -44,7 +44,7 @@ class UiComponentsTween {
   }
   PlayStartTween() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("UiCore", 11, "关卡序列:播放界面间的Tween"),
+      Log_1.Log.Debug("UiCore", 10, "关卡序列:播放界面间的Tween"),
       this.CollectUnSafeItem(),
       this.q_r();
   }

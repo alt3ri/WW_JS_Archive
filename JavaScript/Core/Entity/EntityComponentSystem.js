@@ -39,7 +39,7 @@ class EntityComponentSystem {
     if (!e)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Entity", 30, "清理不存在的组件类型", [
+          Log_1.Log.Error("Entity", 29, "清理不存在的组件类型", [
             "Component",
             t.constructor.name,
           ]),
@@ -54,7 +54,7 @@ class EntityComponentSystem {
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Entity",
-                  30,
+                  29,
                   "组件存在未定义清理方式的Object",
                   ["Component", t.constructor.name],
                   ["Object", n],

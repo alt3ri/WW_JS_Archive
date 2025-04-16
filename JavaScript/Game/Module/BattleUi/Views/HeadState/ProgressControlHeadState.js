@@ -11,6 +11,7 @@ class ProgressControlHeadState extends HeadStateViewBase_1.HeadStateViewBase {
       (this.OnProgressControlDataChange = (t) => {
         switch (t.ProgressCtrlType) {
           case "CaptureStrategicPoint":
+          case "CaptureStrategicPoint2":
           case "ChargingDevice":
             this.x_t(t.CurrentValue / t.MaxValue);
         }
@@ -29,15 +30,16 @@ class ProgressControlHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     super.ActiveBattleHeadState(t);
     var e = this.GetSprite(0),
       s = this.GetText(1),
-      i = e.GetStretchLeft(),
-      a = e.GetParentAsUIItem().GetWidth(),
+      a = e.GetStretchLeft(),
+      i = e.GetParentAsUIItem().GetWidth(),
       r =
-        ((this.Wlt = a - 2 * i),
+        ((this.Wlt = i - 2 * a),
         e.SetUIActive(!0),
         s.SetUIActive(!0),
         t.GetProgressControlData());
     switch (r.ProgressCtrlType) {
       case "CaptureStrategicPoint":
+      case "CaptureStrategicPoint2":
       case "ChargingDevice":
         this.x_t(r.CurrentValue / r.MaxValue);
     }

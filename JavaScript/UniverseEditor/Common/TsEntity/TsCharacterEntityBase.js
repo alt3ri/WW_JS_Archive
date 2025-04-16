@@ -9,6 +9,7 @@ class TsCharacterEntityBase extends ue_1.KuroEffectActor {
       (this.bSetActorComponentTickEnabledByFocus = !1),
       (this.Id = 0);
   }
+  Constructor() {}
   EditorFocusIn() {}
   EditorFocusOut() {}
   EditorInit() {}

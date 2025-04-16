@@ -30,7 +30,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
       (this.Ebn = void 0),
       (this.ybn = void 0),
       (this.vto = !1),
-      (this.lZi = -1),
+      (this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE),
       (this.Lbn = new Map()),
       (this.$bn = ""),
       (this.Mto = (e) => {
@@ -48,22 +48,22 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
             ? (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Plot",
-                  27,
+                  26,
                   "[PlotTips] 语音完成或没有语音，恢复提交字幕定时",
                 ),
               this.ybn.Resume())
             : (this.$bn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
-                (-1 !== this.lZi &&
+                (this.lZi !== AudioSystem_1.INVALID_AUDIO_EVENT_VALUE &&
                   (PlotTipsView.Ybn++,
                   AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 0, {
                     TransitionDuration: 0,
                   }),
-                  (this.lZi = -1)),
+                  (this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE)),
                 (this.$bn = LanguageSystem_1.LanguageSystem.PackageAudio)),
               this.EZi() ||
                 this.pZi() ||
                 this.Rbn(
-                  this.Ebn.CaptionParams?.TotalTime ??
+                  this.Ebn.CaptionParams?.TotalTime ||
                     ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                       .DefaultDurationPrompt,
                 ));
@@ -95,11 +95,11 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
           this.ybn?.Remove(),
           (this.ybn = void 0),
           (this.Ebn = void 0),
-          -1 !== this.lZi &&
+          this.lZi !== AudioSystem_1.INVALID_AUDIO_EVENT_VALUE &&
             (AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 0, {
               TransitionDuration: BREAK_TIME,
             }),
-            (this.lZi = -1));
+            (this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE));
       });
   }
   OnRegisterComponent() {
@@ -200,7 +200,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Plot",
-        27,
+        26,
         "[PlotTips] 开始延迟完成字幕",
         ["delay", e],
         ["isPause", t],
@@ -216,9 +216,9 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
   }
   Abn() {
     this.ybn?.Pause(),
-      -1 !== this.lZi &&
+      this.lZi !== AudioSystem_1.INVALID_AUDIO_EVENT_VALUE &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "[PlotTips] 暂停语音"),
+          Log_1.Log.Debug("Plot", 26, "[PlotTips] 暂停语音"),
         AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 1, {
           TransitionDuration: BREAK_TIME,
         }));
@@ -233,14 +233,14 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Plot",
-                27,
+                26,
                 "[PlotTips] 父界面已经隐藏，attach时子界面主动隐藏",
               ),
             this.Hide()))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
-              27,
+              26,
               "[PlotTips] 父界面已经不在，子界面直接关闭",
               ["parent", t.ViewName],
             ),
@@ -256,27 +256,27 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         e.ExternalSourceSetting,
       );
     const i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(e);
-    e = (0, AudioSystem_1.parseAudioEventPath)(t.AudioEventPath);
-    if (-1 === this.lZi) {
+    e = (0, AudioSystem_1.parseAudioEventPath)(t.SubtitleEvent);
+    if (this.lZi === AudioSystem_1.INVALID_AUDIO_EVENT_VALUE) {
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[PlotTips] 语音播放", ["mediaName", i]),
+        Log_1.Log.Debug("Plot", 26, "[PlotTips] 语音播放", ["mediaName", i]),
         PlotTipsView.Ybn++;
       const o = PlotTipsView.Ybn;
       this.lZi = AudioSystem_1.AudioSystem.PostEvent(e, void 0, {
-        ExternalSourceName: t.ExternalSrcName,
+        ExternalSourceName: t.SubtitleSrc,
         ExternalSourceMediaName: i,
         CallbackMask: 1,
         CallbackHandler: (e, t) => {
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "[PlotTips] 语音播放完成回调", [
+            Log_1.Log.Debug("Plot", 26, "[PlotTips] 语音播放完成回调", [
               "mediaName",
               i,
             ]),
             0 === e &&
               o === PlotTipsView.Ybn &&
-              ((this.lZi = -1),
+              ((this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE),
               this.Rbn(
-                this.Ebn.CaptionParams?.IntervalTime ??
+                this.Ebn.CaptionParams?.IntervalTime ||
                   ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                     .AudioEndWaitTimePrompt,
                 this.vto,
@@ -292,7 +292,7 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
   pZi() {
     if (!this.Ebn?.UniversalTone) return !1;
     var e =
-        this.Ebn.UniversalTone.TimberId ??
+        this.Ebn.UniversalTone.TimberId ||
         SpeakerById_1.configSpeakerById.GetConfig(this.Ebn.WhoId)?.TimberId,
       t = this.Ebn.UniversalTone.UniversalToneId;
     if (!e || !t)
@@ -317,24 +317,24 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
         !1
       );
     const o = (0, AudioSystem_1.parseAudioEventPath)(i.AkEvent);
-    if (-1 === this.lZi) {
+    if (this.lZi === AudioSystem_1.INVALID_AUDIO_EVENT_VALUE) {
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[PlotTips] 语气播放", ["event", o]),
+        Log_1.Log.Debug("Plot", 26, "[PlotTips] 语气播放", ["event", o]),
         PlotTipsView.Ybn++;
       const s = PlotTipsView.Ybn;
       this.lZi = AudioSystem_1.AudioSystem.PostEvent(o, void 0, {
         CallbackMask: 1,
         CallbackHandler: (e, t) => {
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "[PlotTips] 语气播放完成回调", [
+            Log_1.Log.Debug("Plot", 26, "[PlotTips] 语气播放完成回调", [
               "event",
               o,
             ]),
             0 === e &&
               s === PlotTipsView.Ybn &&
-              ((this.lZi = -1),
+              ((this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE),
               this.Rbn(
-                this.Ebn?.CaptionParams?.IntervalTime ??
+                this.Ebn.CaptionParams?.IntervalTime ||
                   ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                     .AudioEndWaitTimePrompt,
                 this.vto,
@@ -360,11 +360,11 @@ class PlotTipsView extends UiViewBase_1.UiViewBase {
           (t =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i)) ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "实体不存在", ["entityId", i])),
+              Log_1.Log.Error("Event", 26, "实体不存在", ["entityId", i])),
           (t = t.Entity.GetComponent(1)?.Owner)?.IsValid()
             ? AudioSystem_1.AudioSystem.PostEvent(e, t)
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "未能获取到该实体对应的有效Actor", [
+              Log_1.Log.Error("Event", 26, "未能获取到该实体对应的有效Actor", [
                 "entityId",
                 i,
               ])));

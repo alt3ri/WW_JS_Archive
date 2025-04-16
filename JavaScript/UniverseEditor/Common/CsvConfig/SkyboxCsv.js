@@ -9,7 +9,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       Type: "Int",
       Filter: "1",
       Condition: "notEmpty && unique",
-      RenderType: 18,
+      RenderType: 19,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "Name",
@@ -19,12 +19,12 @@ const CsvLoader_1 = require("./CsvLoader"),
     (0, CsvLoader_1.createCsvField)({
       Name: "StaticSkybox",
       CnName: "固定天空盒",
-      RenderType: 37,
+      RenderType: 38,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "DynamicSkybox",
       CnName: "动态天空盒",
-      RenderType: 38,
+      RenderType: 39,
     }),
   ];
 class SkyboxCsvLoader extends CsvLoader_1.CsvLoader {

@@ -8,16 +8,17 @@ class TsAnimNotifyStateInteractionRotateToLocation extends UE.KuroAnimNotifyStat
   constructor() {
     super(...arguments), (this.RotateSpeed = -0), (this.Rotator = -0);
   }
+  Constructor() {}
   K2_NotifyBegin(t, e, r) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var t = t.CharacterActorComponent?.Entity,
-      a = t.GetComponent(26),
+      o = t.GetComponent(29),
       t = t.GetComponent(3);
-    if (!a?.Valid || !t?.Valid) return !1;
-    var o = Vector_1.Vector.Create();
-    a.GetInteractionTargetLocation().Subtraction(t.ActorLocationProxy, o),
-      (this.Rotator = o.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg);
+    if (!o?.Valid || !t?.Valid) return !1;
+    var a = Vector_1.Vector.Create();
+    o.GetInteractionTargetLocation().Subtraction(t.ActorLocationProxy, a),
+      (this.Rotator = a.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg);
     let i = t.ActorRotationProxy.Yaw - this.Rotator;
     return (
       180 < i && (i = 360 - i),
@@ -30,7 +31,7 @@ class TsAnimNotifyStateInteractionRotateToLocation extends UE.KuroAnimNotifyStat
     var t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-      !!(t = t.CharacterActorComponent?.Entity?.GetComponent(164)) &&
+      !!(t = t.CharacterActorComponent?.Entity?.GetComponent(176)) &&
       (t.SmoothCharacterRotationByValue(
         0,
         this.Rotator,

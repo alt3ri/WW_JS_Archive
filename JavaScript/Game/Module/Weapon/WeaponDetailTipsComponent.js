@@ -86,23 +86,23 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
       e = this.WeaponData.GetLevel(),
       i = this.WeaponData.GetBreachLevel(),
       o = [];
-    for (const a of t) {
-      var n = a.PropId,
-        s = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
-          a.CurveId,
-          n.Value,
+    for (const s of t) {
+      var a = s.PropId,
+        n = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
+          s.CurveId,
+          a.Value,
           e,
           i,
         ),
-        n = { Id: n.Id, IsRatio: n.IsRatio, CurValue: s, BgActive: !0 };
-      o.push(n);
+        a = { Id: a.Id, IsRatio: a.IsRatio, CurValue: n, BgActive: !0 };
+      o.push(a);
     }
     this.AttributeLayout.RefreshByData(o);
   }
   jxt(e, i) {
     var o = new Array(i);
     for (let t = 0; t < i; ++t) {
-      var n = {
+      var a = {
         StarOnActive: t < e,
         StarOffActive: t >= e,
         StarNextActive: !1,
@@ -110,7 +110,7 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
         PlayLoopSequence: !1,
         PlayActivateSequence: !1,
       };
-      o[t] = n;
+      o[t] = a;
     }
     this.StarLayout.RefreshByData(o);
   }
@@ -125,27 +125,27 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
     var e = (this.WeaponData = t).GetWeaponConfig(),
       i = t.GetLevel(),
       o = t.GetBreachLevel(),
-      n = e.WeaponName,
-      s = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(
+      a = e.WeaponName,
+      n = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(
         e.BreachId,
       ),
-      a = t.GetBreachConfig(),
+      s = t.GetBreachConfig(),
       r = t.GetResonanceLevel(),
       i =
         (LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(2),
           "LevelRichText",
           i,
-          a.LevelLimit,
+          s.LevelLimit,
         ),
         ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e.QualityId)),
-      a = UE.Color.FromHex(i.DropColor),
+      s = UE.Color.FromHex(i.DropColor),
       i =
-        (this.GetText(1).SetColor(a),
-        this.GetText(1).ShowTextNew(n),
+        (this.GetText(1).SetColor(s),
+        this.GetText(1).ShowTextNew(a),
         this.vWt(e.WeaponType),
         this.k1o(e),
-        this.jxt(o, s),
+        this.jxt(o, n),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(6),
           "WeaponResonanceItemLevelText",
@@ -156,7 +156,7 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
           e.ResonId,
           r,
         )),
-      n =
+      a =
         (i
           ? (this.GetText(7).SetUIActive(!0),
             this.GetText(8).SetUIActive(!0),
@@ -165,26 +165,29 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
                 i.Name,
               ),
             ),
-            (a =
+            (s =
               ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
                 e,
                 r,
               )),
-            LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), e.Desc, ...a))
+            LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), e.Desc, ...s))
           : (this.GetText(7).SetUIActive(!1), this.GetText(8).SetUIActive(!1)),
         t);
-    n instanceof WeaponInstance_1.WeaponInstance
+    a instanceof WeaponInstance_1.WeaponInstance
       ? (this.Sko(!0),
         this.yko(!0),
-        (o = n.GetIncId()),
+        (o = a.GetIncId()),
         this.ReplaceButtonItem.SetData(o),
         this.CultureButtonItem.SetData(o),
-        this.UpdateWeaponLock(n.IsLock()))
+        this.UpdateWeaponLock(a.IsLock()))
       : (this.Sko(!1), this.yko(!1));
   }
   UpdateWeaponLock(t) {
     t = t ? 0 : 1;
     this.GetExtendToggle(3).SetToggleState(t, !1);
+  }
+  UpdateWeaponBreachRedDot(t) {
+    this.CultureButtonItem.SetRedDotVisible(t);
   }
   SetReplaceFunction(t) {
     this.ReplaceButtonItem.SetFunction(t);
@@ -207,8 +210,14 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
           this.Mko.SetCurrentEquippedState(!0),
           this.Mko.SetIconRootItemState(!0),
           (t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e)),
-          this.Mko.SetEquipIcon(t.GetRoleConfig().RoleHeadIcon),
-          this.Mko.SetEquipText("WeaponTipsRoleText", t.GetName())));
+          (e = ModelManager_1.ModelManager.RoleSkinModel.GetRoleSkinData(
+            t.GetRoleSkinId(),
+          )),
+          this.Mko.SetEquipIcon(e.GetRoleSkinConfig().RoleHeadIcon),
+          this.Mko.SetEquipText(
+            "WeaponTipsRoleText",
+            new LguiUtil_1.TableTextArgNew(e.GetName()),
+          )));
   }
   GetWeaponIncId() {
     var t = this.WeaponData;
@@ -228,7 +237,7 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
       if (e) return [e, e];
     }
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 17, "武器详情界面聚焦引导的额外参数配置错误", [
+      Log_1.Log.Error("Guide", 16, "武器详情界面聚焦引导的额外参数配置错误", [
         "configParams",
         t,
       ]);

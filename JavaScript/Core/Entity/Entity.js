@@ -11,6 +11,7 @@ const Info_1 = require("../Common/Info"),
   CommonDefine_1 = require("../Define/CommonDefine"),
   GameBudgetAllocatorConfig_1 = require("../GameBudgetAllocator/GameBudgetAllocatorConfig"),
   GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController"),
+  JsModelManager_1 = require("../Model/JsModelManager"),
   ObjectBase_1 = require("../Object/ObjectBase"),
   PerformanceDecorators_1 = require("../Performance/PerformanceDecorators"),
   FNameUtil_1 = require("../Utils/FNameUtil"),
@@ -121,6 +122,7 @@ class Entity extends ObjectBase_1.ObjectBase {
       (this.mW = void 0),
       (this.EndStatTdType = void 0),
       (this.dW = void 0),
+      (this.ir_ = void 0),
       (this.ActivateStatTdType = void 0),
       (this.gW = void 0),
       (this.TickStatTdType = void 0),
@@ -132,7 +134,7 @@ class Entity extends ObjectBase_1.ObjectBase {
       (this.OnBudgetTickEnableChangeComponents = void 0),
       (this.TickComponentManager = new TickComponentManager()),
       (this.vW = 0),
-      (this.lDa = 0),
+      (this.mDa = 0),
       (this.MW = 0),
       (this.LastTickFrame = 0),
       (this.EW = !1),
@@ -141,8 +143,10 @@ class Entity extends ObjectBase_1.ObjectBase {
       (this.IW = void 0),
       (this.TW = -1),
       (this.LW = new Array()),
-      (this.PFa = new Map()),
-      (this.wFa = new Map()),
+      (this.$4a = new Map()),
+      (this.X4a = new Map()),
+      (this.Ctl = void 0),
+      (this.EntityData = void 0),
       (this.LocationProxyFunction = void 0);
   }
   get IsEncloseSpace() {
@@ -180,21 +184,22 @@ class Entity extends ObjectBase_1.ObjectBase {
     return (
       i ||
         ((i = [
-          Stats_1.Stat.Create(t + ".Create"),
-          Stats_1.Stat.Create(t + ".Init"),
-          Stats_1.Stat.Create(t + ".Clear"),
-          Stats_1.Stat.Create(t + ".Start"),
-          Stats_1.Stat.Create(t + ".End"),
-          Stats_1.Stat.Create(t + ".Activate"),
-          Stats_1.Stat.Create(t + ".Tick"),
-          Stats_1.Stat.Create(t + ".AfterTick"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Create"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Init"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Clear"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Start"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".End"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Activate"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".PostActivate"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".Tick"),
+          Stats_1.Stat.CreateNoFlameGraph(t + ".AfterTick"),
         ]),
         Entity.UW.set(t, i)),
       i
     );
   }
   get Active() {
-    return 0 === this.PFa.size && 0 === this.wFa.size;
+    return 0 === this.$4a.size && 0 === this.X4a.size;
   }
   get TimeDilation() {
     return this.SW;
@@ -202,14 +207,17 @@ class Entity extends ObjectBase_1.ObjectBase {
   get IsCreate() {
     return !!(1 & this.pW);
   }
+  get IsStart() {
+    return !!(4 & this.pW);
+  }
   get IsInit() {
     return !!(8 & this.pW);
   }
   get IsEnd() {
-    return !!(16 & this.pW);
+    return !!(32 & this.pW);
   }
   get IsClear() {
-    return !!(32 & this.pW);
+    return !!(64 & this.pW);
   }
   ResetFlag() {
     this.pW = 0;
@@ -343,36 +351,40 @@ class Entity extends ObjectBase_1.ObjectBase {
     return this.MW;
   }
   GetDeltaSeconds() {
-    return this.lDa;
+    return this.mDa;
   }
-  RegisterToGameBudgetController(t, i) {
+  RegisterToGameBudgetController(i, s) {
     if (GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen)
       if (this.IW)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Entity",
-            25,
+            24,
             "Entity注册到时间预算管理器中失败，Token已经存在",
             ["entity", this.constructor.name],
             ["GameBudgetManagedToken", this.yW],
           );
       else {
-        this.IW = this.constructor.StaticGameBudgetConfig(i || this);
-        for (const s of this.Components)
-          s.OnEntityWasRecentlyRenderedOnScreenChange &&
+        this.IW = this.constructor.StaticGameBudgetConfig(s || this);
+        let t = !1;
+        for (const e of this.Components)
+          e.OnEntityWasRecentlyRenderedOnScreenChange &&
             (this.OnWasRecentlyRenderComponents ||
               (this.OnWasRecentlyRenderComponents = new Array()),
-            this.OnWasRecentlyRenderComponents.push(s)),
-            s.OnEntityBudgetTickEnableChange &&
+            this.OnWasRecentlyRenderComponents.push(e)),
+            e.OnEntityBudgetTickEnableChange &&
               (this.OnBudgetTickEnableChangeComponents ||
                 (this.OnBudgetTickEnableChangeComponents = new Array()),
-              this.OnBudgetTickEnableChangeComponents.push(s));
+              this.OnBudgetTickEnableChangeComponents.push(e)),
+            e.NeedAfterTick && (t = !0);
         this.yW =
           GameBudgetInterfaceController_1.GameBudgetInterfaceController.RegisterTick(
             this.IW.GroupName,
             this.IW.SignificanceGroup,
             this,
+            i,
             t,
+            void 0 !== this.OnBudgetTickEnableChangeComponents,
             void 0 !== this.OnWasRecentlyRenderComponents,
           );
       }
@@ -396,10 +408,11 @@ class Entity extends ObjectBase_1.ObjectBase {
         this.cW,
         this.mW,
         this.dW,
+        this.ir_,
         this.gW,
         this.fW,
       ] = i),
-      this.m6.Start(),
+      this.m6?.Start(),
       this.OnCreate !== Entity.prototype.OnCreate)
     )
       try {
@@ -412,7 +425,7 @@ class Entity extends ObjectBase_1.ObjectBase {
                 "Entity创建失败，请检查前面组件的报错",
                 ["entity", this.constructor.name],
               ),
-            this.m6.Stop(),
+            this.m6?.Stop(),
             !1
           );
       } catch (t) {
@@ -437,11 +450,11 @@ class Entity extends ObjectBase_1.ObjectBase {
                 ["entity", this.constructor.name],
                 ["error", t],
               ),
-          this.m6.Stop(),
+          this.m6?.Stop(),
           !1
         );
       }
-    return (this.pW = 1), this.TickComponentManager.Sort(), this.m6.Stop(), !0;
+    return (this.pW = 1), this.TickComponentManager.Sort(), this.m6?.Stop(), !0;
   }
   Respawn(t) {
     this.OnRespawn(t);
@@ -471,8 +484,9 @@ class Entity extends ObjectBase_1.ObjectBase {
         !1
       );
     if (
-      (this._W.Start(),
+      (this._W?.Start(),
       this.InitStatTdType?.Start(),
+      (this.EntityData = JsModelManager_1.JsModelManager.AddEntity(this.Id)),
       this.OnInit !== Entity.prototype.OnInit)
     )
       try {
@@ -486,7 +500,7 @@ class Entity extends ObjectBase_1.ObjectBase {
                 ["entity", this.constructor.name],
               ),
             this.InitStatTdType?.Stop(),
-            this._W.Stop(),
+            this._W?.Stop(),
             !1
           );
       } catch (t) {
@@ -512,23 +526,23 @@ class Entity extends ObjectBase_1.ObjectBase {
                 ["error", t],
               ),
           this.InitStatTdType?.Stop(),
-          this._W.Stop(),
+          this._W?.Stop(),
           !1
         );
       }
     for (const t of this.Components)
-      if (!t.Init()) return this.InitStatTdType?.Stop(), this._W.Stop(), !1;
-    return (this.pW |= 2), this.InitStatTdType?.Stop(), this._W.Stop(), !0;
+      if (!t.Init()) return this.InitStatTdType?.Stop(), this._W?.Stop(), !1;
+    return (this.pW |= 2), this.InitStatTdType?.Stop(), this._W?.Stop(), !0;
   }
   Clear() {
-    this.uW.Start(), this.ClearStatTdType?.Start();
+    this.uW?.Start(), this.ClearStatTdType?.Start();
     let i = !1;
     for (let t = this.Components.length - 1; 0 <= t; --t)
       EntityComponentSystem_1.EntityComponentSystem.Destroy(
         this,
         this.Components[t],
       ) || (i = !0);
-    if (i) return this.ClearStatTdType?.Stop(), this.uW.Stop(), !1;
+    if (i) return this.ClearStatTdType?.Stop(), this.uW?.Stop(), !1;
     if (this.OnClear !== Entity.prototype.OnClear)
       try {
         if (!this.OnClear())
@@ -539,7 +553,7 @@ class Entity extends ObjectBase_1.ObjectBase {
                 this.constructor.name,
               ]),
             this.ClearStatTdType?.Stop(),
-            this.uW.Stop(),
+            this.uW?.Stop(),
             !1
           );
       } catch (t) {
@@ -565,15 +579,15 @@ class Entity extends ObjectBase_1.ObjectBase {
                 ["error", t],
               ),
           this.ClearStatTdType?.Stop(),
-          this.uW.Stop(),
+          this.uW?.Stop(),
           !1
         );
       }
     return (
       this.AW(),
       this.ClearStatTdType?.Stop(),
-      this.uW.Stop(),
-      (this.pW |= 32),
+      this.uW?.Stop(),
+      (this.pW |= 64),
       !0
     );
   }
@@ -583,8 +597,9 @@ class Entity extends ObjectBase_1.ObjectBase {
       (this.SW = 1),
       (this.EW = !1),
       this.TickComponentManager.Clear(),
-      this.PFa.clear(),
-      this.wFa.clear();
+      this.$4a.clear(),
+      this.X4a.clear(),
+      (this.Ctl = void 0);
   }
   Start() {
     if (4 & this.pW)
@@ -600,7 +615,7 @@ class Entity extends ObjectBase_1.ObjectBase {
         !1
       );
     if (
-      (this.cW.Start(),
+      (this.cW?.Start(),
       this.StartStatTdType?.Start(),
       this.OnStart !== Entity.prototype.OnStart)
     )
@@ -613,7 +628,7 @@ class Entity extends ObjectBase_1.ObjectBase {
                 this.constructor.name,
               ]),
             this.StartStatTdType?.Stop(),
-            this.cW.Stop(),
+            this.cW?.Stop(),
             !1
           );
       } catch (t) {
@@ -639,26 +654,52 @@ class Entity extends ObjectBase_1.ObjectBase {
                 ["error", t],
               ),
           this.StartStatTdType?.Stop(),
-          this.cW.Stop(),
+          this.cW?.Stop(),
           !1
         );
       }
     for (const t of this.Components)
-      if (!t.Start()) return this.StartStatTdType?.Stop(), this.cW.Stop(), !1;
-    return (this.pW |= 4), this.StartStatTdType?.Stop(), this.cW.Stop(), !0;
+      if (!t.Start()) return this.StartStatTdType?.Stop(), this.cW?.Stop(), !1;
+    return (this.pW |= 4), this.StartStatTdType?.Stop(), this.cW?.Stop(), !0;
   }
   Activate() {
-    this.dW.Start(), this.ActivateStatTdType?.Start();
+    this.dW?.Start(), this.ActivateStatTdType?.Start();
     for (const t of this.Components) t.Activate();
-    (this.pW |= 8), this.ActivateStatTdType?.Stop(), this.dW.Stop();
+    (this.pW |= 8), this.ActivateStatTdType?.Stop(), this.dW?.Stop();
+  }
+  PostActivate() {
+    if ((this.ir_.Start(), 8 & this.pW)) {
+      var t = this.GetComponent(0)?.GetCreatureDataId(),
+        i = this.GetComponent(0)?.GetPbDataId();
+      void 0 !== t &&
+        Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Entity",
+          19,
+          "[实体生命周期:创建实体] 实体执行执行PostActivate",
+          ["CreatureDataId", t],
+          ["PbDataId", i],
+          ["EntityId", this.Id],
+        );
+      for (const s of this.Components) s.PostActivate();
+      (this.pW |= 16), this.ir_.Stop();
+    } else
+      Log_1.Log.CheckError() &&
+        Log_1.Log.Error(
+          "Entity",
+          19,
+          "Entity未执行Activate就执行PostActivate",
+          ["Id", this.Id],
+          ["entity", this.constructor.name],
+        );
   }
   End() {
     if (4 & this.pW) {
-      this.mW.Start(), this.EndStatTdType?.Start();
+      this.mW?.Start(), this.EndStatTdType?.Start();
       let i = !1;
       for (let t = this.Components.length - 1; 0 <= t; --t)
         this.Components[t].End() || (i = !0);
-      if (i) return this.EndStatTdType?.Stop(), this.mW.Stop(), !1;
+      if (i) return this.EndStatTdType?.Stop(), this.mW?.Stop(), !1;
       if (this.OnEnd !== Entity.prototype.OnEnd)
         try {
           if (!this.OnEnd())
@@ -669,7 +710,7 @@ class Entity extends ObjectBase_1.ObjectBase {
                   this.constructor.name,
                 ]),
               this.EndStatTdType?.Stop(),
-              this.mW.Stop(),
+              this.mW?.Stop(),
               !1
             );
         } catch (t) {
@@ -695,17 +736,22 @@ class Entity extends ObjectBase_1.ObjectBase {
                   ["error", t],
                 ),
             this.EndStatTdType?.Stop(),
-            this.mW.Stop(),
+            this.mW?.Stop(),
             !1
           );
         }
-      (this.pW |= 16), this.EndStatTdType?.Stop(), this.mW.Stop();
+      (this.pW |= 32),
+        this.EntityData &&
+          (JsModelManager_1.JsModelManager.RemoveEntity(this.Id),
+          (this.EntityData = void 0)),
+        this.EndStatTdType?.Stop(),
+        this.mW?.Stop();
     }
     return !0;
   }
   Enable(t, i) {
-    if (
-      (Info_1.Info.IsBuildDevelopmentOrDebug &&
+    return (
+      Info_1.Info.IsBuildDevelopmentOrDebug &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
@@ -716,29 +762,24 @@ class Entity extends ObjectBase_1.ObjectBase {
           ["Handle", t],
           ["Reason", i],
         ),
-      !this.PFa.get(t)[1])
-    )
-      return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Entity",
-            1,
-            "Entity实体激活失败句柄不存在",
-            ["EntityId", this.Id],
-            ["EntityName", this.constructor.name],
-            ["Handle", t],
-            ["Reason", i],
-          ),
-        !1
-      );
-    this.PFa.delete(t);
-    for (let t = this.Components.length - 1; 0 <= t; --t)
-      this.Components[t].RefreshEnable(i);
-    return !0;
+      this.$4a.get(t)[1]
+        ? (this.$4a.delete(t), this.gtl(i), !0)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Entity",
+              1,
+              "Entity实体激活失败句柄不存在",
+              ["EntityId", this.Id],
+              ["EntityName", this.constructor.name],
+              ["Handle", t],
+              ["Reason", i],
+            ),
+          !1)
+    );
   }
-  Disable(i) {
-    i
-      ? i.length < exports.DISABLE_REASON_LENGTH_LIMIT &&
+  Disable(t) {
+    t
+      ? t.length < exports.DISABLE_REASON_LENGTH_LIMIT &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Entity",
@@ -746,7 +787,7 @@ class Entity extends ObjectBase_1.ObjectBase {
           "Disable的Reason字符串长度必须大于等于限制字符数量",
           ["EntityId", this.Id],
           ["Entity", this.constructor.name],
-          ["Reason", i],
+          ["Reason", t],
           ["限制的字符数量", exports.DISABLE_REASON_LENGTH_LIMIT],
         )
       : Log_1.Log.CheckError() &&
@@ -754,11 +795,10 @@ class Entity extends ObjectBase_1.ObjectBase {
           "Entity",
           this.constructor.name,
         ]);
-    var t = ++this.vW;
-    this.PFa.set(t, i);
-    for (let t = this.Components.length - 1; 0 <= t; --t)
-      this.Components[t].RefreshEnable(i);
+    var i = ++this.vW;
     return (
+      this.$4a.set(i, t),
+      this.gtl(t),
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -767,31 +807,60 @@ class Entity extends ObjectBase_1.ObjectBase {
           "Entity.Disable",
           ["EntityId", this.Id],
           ["EntityName", this.constructor.name],
-          ["Handle", t],
-          ["Reason", i],
+          ["Handle", i],
+          ["Reason", t],
         ),
-      t
+      i
     );
   }
-  EnableByKey(i, t = !0) {
-    2 !== i && this.EnableByKey(2, !0);
-    var s = this.wFa.get(i);
-    if (!s || s <= 0) void 0 !== s && this.wFa.delete(i);
-    else {
-      !t && 1 < s ? this.wFa.set(i, s - 1) : this.wFa.delete(i);
-      for (let t = this.Components.length - 1; 0 <= t; --t)
-        this.Components[t].RefreshEnable(i);
-    }
+  EnableByKey(t, i = !0) {
+    Info_1.Info.IsBuildDevelopmentOrDebug &&
+      Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "Entity",
+        48,
+        "Entity.EnableByKey",
+        ["EntityId", this.Id],
+        ["EntityName", this.constructor.name],
+        ["Key", t],
+        ["RemoveAll", i],
+      ),
+      2 !== t && this.EnableByKey(2, !0);
+    var s = this.X4a.get(t);
+    !s || s <= 0
+      ? void 0 !== s && this.X4a.delete(t)
+      : (!i && 1 < s ? this.X4a.set(t, s - 1) : this.X4a.delete(t),
+        this.gtl(t));
   }
   HasDisableKey(t) {
-    return this.wFa.has(t);
+    return this.X4a.has(t);
   }
-  DisableByKey(i, t = !0) {
-    var s = Math.max(0, this.wFa.get(i) ?? 0);
-    if (!(t && 0 < s)) {
-      this.wFa.set(i, s + 1);
+  DisableByKey(t, i = !0) {
+    Info_1.Info.IsBuildDevelopmentOrDebug &&
+      Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "Entity",
+        48,
+        "Entity.DisableByKey",
+        ["EntityId", this.Id],
+        ["EntityName", this.constructor.name],
+        ["Key", t],
+        ["NoDuplicate", i],
+      );
+    var s = Math.max(0, this.X4a.get(t) ?? 0);
+    (i && 0 < s) || (this.X4a.set(t, s + 1), this.gtl(t));
+  }
+  gtl(i) {
+    if (this.IsStart)
       for (let t = this.Components.length - 1; 0 <= t; --t)
         this.Components[t].RefreshEnable(i);
+    else this.Ctl = i;
+  }
+  ExecutePendingEnableProcess() {
+    if (this.IsStart && this.Ctl) {
+      for (let t = this.Components.length - 1; 0 <= t; --t)
+        this.Components[t].RefreshEnable(this.Ctl);
+      this.Ctl = void 0;
     }
   }
   ForceTick(t) {
@@ -803,7 +872,7 @@ class Entity extends ObjectBase_1.ObjectBase {
       this.gW?.Stop());
   }
   ScheduledTick(t, i, s) {
-    (this.lDa = t),
+    (this.mDa = t),
       (this.MW = i),
       (this.LastTickFrame = Time_1.Time.Frame),
       MathUtils_1.MathUtils.IsNearlyEqual(this.TW, s) ||
@@ -878,7 +947,7 @@ class Entity extends ObjectBase_1.ObjectBase {
       i,
       s = new Array();
     let e = "";
-    for ([t, i] of this.PFa)
+    for ([t, i] of this.$4a)
       s.push(`${e}{Handle:${t},Reason:${i[0]}}`), (e = " ");
     return s.join("");
   }

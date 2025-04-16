@@ -7,30 +7,46 @@ const UE = require("ue"),
   Rotator_1 = require("../../../../../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../../../../Core/Utils/MathUtils"),
-  GlobalData_1 = require("../../../../../../../GlobalData");
+  GlobalData_1 = require("../../../../../../../GlobalData"),
+  RecorderBlueprintFunctionLibrary_1 = require("../../../../../../../Recorder/RecorderBlueprintFunctionLibrary");
 class GameplayCueBeamCommonItem {
   constructor(t, e) {
     (this.OQt = t),
-      (this.n8 = e),
+      (this.Path = e),
       (this.a$o = void 0),
       (this.h$o = 0),
-      (this.dce = !1);
+      (this.dce = !1),
+      (this.CurrentPoints = void 0);
   }
   static Spawn(t, e) {
     t = new this(t, e);
     return (t.dce = !0), (t.a$o = t.l$o()), t;
   }
   Tick(e, t) {
-    this.a$o
-      .GetOwner()
-      .K2_SetActorLocation(this.OQt.K2_GetActorLocation(), !1, void 0, !0);
+    (this.CurrentPoints = e),
+      this.a$o
+        .GetOwner()
+        .D_K2_SetActorLocation(
+          this.OQt.D_K2_GetActorLocation(),
+          !1,
+          void 0,
+          !0,
+        );
     var r = e.length;
     r !== this.h$o && this._$o(r);
-    for (let t = 0; t < r; t++) this.a$o.SetWorldLocationAtSplinePoint(t, e[t]);
+    for (let t = 0; t < r; t++) this.a$o.D_SetLocationAtSplinePoint(t, e[t], 1);
   }
   Destroy() {
-    (this.dce = !1),
-      this.a$o.GetOwner() && ActorSystem_1.ActorSystem.Put(this.a$o.GetOwner());
+    RecorderBlueprintFunctionLibrary_1.default.Recording &&
+      RecorderBlueprintFunctionLibrary_1.default.StopRecordGameplayCueHook(
+        this,
+      ),
+      (this.dce = !1),
+      this.a$o.GetOwner() &&
+        ActorSystem_1.ActorSystem.Put(
+          "GameplayCueBeamCommonItem.Destroy",
+          this.a$o.GetOwner(),
+        );
   }
   GetOwner() {
     return this.a$o.GetOwner();
@@ -38,9 +54,9 @@ class GameplayCueBeamCommonItem {
   l$o() {
     const r = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
-        this.OQt.GetTransform(),
+        this.OQt.D_GetTransform(),
       ),
-      s =
+      i =
         (GlobalData_1.GlobalData.IsPlayInEditor &&
           r.SetActorLabel(
             this.OQt.GetActorLabel() + ":" + GameplayCueBeamCommonItem.name,
@@ -52,9 +68,9 @@ class GameplayCueBeamCommonItem {
           !1,
         ));
     return (
-      s.ClearSplinePoints(),
+      i.ClearSplinePoints(),
       ResourceSystem_1.ResourceSystem.LoadAsync(
-        this.n8,
+        this.Path,
         UE.NiagaraSystem,
         (t) => {
           var e;
@@ -70,11 +86,16 @@ class GameplayCueBeamCommonItem {
             UE.KuroRenderingRuntimeBPPluginBPLibrary.SetNiagaraSplineComponent(
               e,
               "NewSpline",
-              s,
-            ));
+              i,
+            ),
+            RecorderBlueprintFunctionLibrary_1.default.Recording) &&
+            RecorderBlueprintFunctionLibrary_1.default.StartRecordGameplayCueHook(
+              r,
+              this,
+            );
         },
       ),
-      s
+      i
     );
   }
   _$o(e) {

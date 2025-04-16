@@ -67,6 +67,10 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshGoods,
         this.t3i,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.RefreshGoods,
+        this.t3i,
       );
   }
   RemoveEventListener() {

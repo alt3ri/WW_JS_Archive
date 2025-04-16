@@ -50,10 +50,14 @@ class DebugCommandConfig {
     return this.paramgettarget(t);
   }
   paramgettarget(t, e) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
-      : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   paramgettargetLength() {
     var t = this.J7.__offset(this.z7, 8);
@@ -67,10 +71,14 @@ class DebugCommandConfig {
     return this.parameffect(t);
   }
   parameffect(t, e) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
-      : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   parameffectLength() {
     var t = this.J7.__offset(this.z7, 12);

@@ -66,7 +66,7 @@ class InputActionMapping {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "InputSettings",
-          8,
+          10,
           "设置Action按键时，找不到对应Action",
           ["ActionName", t],
         );
@@ -83,7 +83,7 @@ class InputActionMapping {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "InputSettings",
-          8,
+          10,
           "设置Action按键时，找不到对应Action",
           ["ActionName", t],
         );
@@ -98,10 +98,12 @@ class InputActionMapping {
           i,
         ))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("InputSettings", 8, "添加Action按键，找不到对应Action", [
-          "ActionName",
-          t,
-        ]);
+        Log_1.Log.Warn(
+          "InputSettings",
+          10,
+          "添加Action按键，找不到对应Action",
+          ["ActionName", t],
+        );
   }
   RemoveKeys(t, n) {
     var i = this.WEe.get(t);
@@ -113,10 +115,12 @@ class InputActionMapping {
           i,
         ))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("InputSettings", 8, "删除Action按键，找不到对应Action", [
-          "ActionName",
-          t,
-        ]);
+        Log_1.Log.Warn(
+          "InputSettings",
+          10,
+          "删除Action按键，找不到对应Action",
+          ["ActionName", t],
+        );
   }
   RemoveKeysByCondition(t, n) {
     var i = this.WEe.get(t);
@@ -130,7 +134,7 @@ class InputActionMapping {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "InputSettings",
-          8,
+          10,
           "删除Action中符合条件的按键映射，找不到对应Action",
           ["ActionName", t],
         );

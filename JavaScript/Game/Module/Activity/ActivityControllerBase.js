@@ -21,6 +21,9 @@ class ActivityControllerBase {
   OpenView(e) {
     this.OnOpenView(e);
   }
+  async OpenViewByViewName(e) {
+    return await this.OnOpenSubView(e);
+  }
   CreateActivityData(e) {
     var t = this.OnCreateActivityData(e);
     return t.Init(e), t;
@@ -38,8 +41,14 @@ class ActivityControllerBase {
   OnClear() {
     return !0;
   }
+  async OnOpenSubView(e) {
+    return Promise.resolve(!1);
+  }
   GetActivityLevelUnlockState(e) {
     return !0;
+  }
+  GetActivityMapMarkState(e) {
+    return !1;
   }
   OnActivityFirstUnlock(e) {
     e.LocalConfig &&

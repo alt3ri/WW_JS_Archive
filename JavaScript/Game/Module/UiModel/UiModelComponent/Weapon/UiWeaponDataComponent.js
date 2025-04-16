@@ -36,7 +36,7 @@ let UiWeaponDataComponent = class UiWeaponDataComponent extends UiModelComponent
   }
 };
 (UiWeaponDataComponent = __decorate(
-  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(18)],
+  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(20)],
   UiWeaponDataComponent,
 )),
   (exports.UiWeaponDataComponent = UiWeaponDataComponent);

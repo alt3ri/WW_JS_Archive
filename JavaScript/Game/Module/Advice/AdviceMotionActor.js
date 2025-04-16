@@ -32,7 +32,10 @@ class AdviceMotionActor {
       (this.OnActorDestroy = () => {
         this.jm(),
           this.ActorInternal?.IsValid() &&
-            (ActorSystem_1.ActorSystem.Put(this.ActorInternal),
+            (ActorSystem_1.ActorSystem.Put(
+              "AdviceMotionActor.OnActorDestroy",
+              this.ActorInternal,
+            ),
             (this.ActorInternal = void 0)),
           ModelManager_1.ModelManager.AdviceModel.RemovePlayingMotionEntity(
             this.X9e,
@@ -46,9 +49,9 @@ class AdviceMotionActor {
         this.$9e(t);
       });
   }
-  M9e(t, s) {
+  M9e(t, e) {
     var t = EntitySystem_1.EntitySystem.Get(t),
-      i = t.GetComponent(187),
+      i = t.GetComponent(200),
       t = t.GetComponent(0).GetAdviceInfo().GetAdviceData().GetAdviceMotionId();
     0 !== t &&
       (this.ActorInternal ||
@@ -72,7 +75,7 @@ class AdviceMotionActor {
         this.SkeletalMeshInternal.SetCollisionEnabled(0),
         this.SkeletalMeshInternal.SetSimulatePhysics(!1),
         this.l9e.Init(0)),
-      this.ActorInternal.K2_SetActorRelativeLocation(
+      this.ActorInternal.D_K2_SetActorRelativeLocation(
         i.ActorLocationProxy.ToUeVector(),
         !1,
         void 0,
@@ -91,7 +94,7 @@ class AdviceMotionActor {
         (t, i) => {
           this.SkeletalMeshInternal?.SetSkeletalMesh(t),
             this.SkeletalMeshInternal?.SetHiddenInGame(!0),
-            s();
+            e();
         },
       ),
       this.ActorInternal.OnDestroyed.Add(this.OnActorDestroy));
@@ -105,17 +108,17 @@ class AdviceMotionActor {
       .GetAdviceMotionId();
     if (0 !== t) {
       this.f9e();
-      const s = this.SkeletalMeshInternal;
+      const e = this.SkeletalMeshInternal;
       var t = ConfigManager_1.ConfigManager.MotionConfig.GetMotionAnimation(t);
       ResourceSystem_1.ResourceSystem.LoadAsync(
         t,
         UE.AnimationAsset,
         (t, i) => {
-          this.Td && s.PlayAnimation(t, !1), this.Y9e();
+          this.Td && e.PlayAnimation(t, !1), this.Y9e();
         },
       ),
-        s.SetPlayRate(1),
-        s.SetPosition(1),
+        e.SetPlayRate(1),
+        e.SetPosition(1),
         this.l9e.AddComponentByCase(0, this.SkeletalMeshInternal),
         this.l9e &&
           ((t = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceModelMat()),

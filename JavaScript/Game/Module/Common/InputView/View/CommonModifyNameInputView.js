@@ -73,7 +73,7 @@ class CommonModifyNameInputView extends CommonInputViewBase_1.CommonInputViewBas
       },
       () => {
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("UiCommon", 11, "通用输入框执行出现未知错误");
+          Log_1.Log.Error("UiCommon", 10, "通用输入框执行出现未知错误");
       },
     );
   }

@@ -66,12 +66,18 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
         ConfirmBoxController.ShowConfirmBoxNew(o));
   }
   static ShowReturnLoginConfirmBox() {
-    var o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(51);
-    o.FunctionMap.set(2, () => {
-      ControllerHolder_1.ControllerHolder.ReConnectController.Logout(
-        ReconnectDefine_1.ELogoutReason.ExitGameConfirmBox,
-      );
-    }),
+    var o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(270);
+    (o.IsEscViewTriggerCallBack = !1),
+      o.FunctionMap.set(2, () => {
+        ControllerHolder_1.ControllerHolder.ReConnectController.Logout(
+          ReconnectDefine_1.ELogoutReason.ExitGameConfirmBox,
+        );
+      }),
+      o.FunctionMap.set(1, () => {
+        ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
+          5,
+        );
+      }),
       ConfirmBoxController.ShowConfirmBoxNew(o);
   }
   static GetUiViewName(o) {
@@ -83,5 +89,6 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
   [0, "ConfirmBoxView"],
   [1, "ConfirmBoxMiddleView"],
   [2, "ConfirmBoxMiddleWithoutItemView"],
+  [3, "RacingBetsConfirmBoxView"],
 ]);
 //# sourceMappingURL=ConfirmBoxController.js.map

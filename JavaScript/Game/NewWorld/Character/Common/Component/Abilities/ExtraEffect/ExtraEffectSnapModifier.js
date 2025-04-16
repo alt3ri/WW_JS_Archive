@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.DamageAmplifyOnBeHit =
+  (exports.ModifyDamageElement =
+    exports.DamageAmplifyOnBeHit =
     exports.DamageAmplifyOnHit =
     exports.ShieldSnapshotModify =
     exports.CommonSnapshotModify =
@@ -15,13 +16,13 @@ class SnapModifier {
   static VXo(t, s, i) {
     var e = new Map(),
       r = new Map(),
-      h = s.Attacker.OwnerBuffComponent.BuffEffectManager,
-      a = s.Target.OwnerBuffComponent.BuffEffectManager;
+      a = s.Attacker.OwnerBuffComponent.BuffEffectManager,
+      h = s.Target.OwnerBuffComponent.BuffEffectManager;
     for (const [c, u, f] of [
-      [e, 0, h],
-      [r, 1, h],
-      [e, 2, a],
-      [r, 3, a],
+      [e, 0, a],
+      [r, 1, a],
+      [e, 2, h],
+      [r, 3, h],
     ]) {
       var o = f.FilterById(
         [1, 46],
@@ -38,17 +39,17 @@ class SnapModifier {
     this.VXo(t, s, !0);
   }
   static HXo(t, s, i, e, r) {
-    let h = void 0;
+    let a = void 0;
     switch (r) {
       case 0:
       case 2:
-        h = s.Target.OwnerBuffComponent;
+        a = s.Target.OwnerBuffComponent;
         break;
       case 3:
       case 1:
-        h = s.Attacker.OwnerBuffComponent;
+        a = s.Attacker.OwnerBuffComponent;
     }
-    for (const a of e) a.TryExecute(t, h, i, s);
+    for (const h of e) h.TryExecute(t, a, i, s);
   }
   static jXo(t, s) {
     for (var [i, e] of t.entries()) {
@@ -78,7 +79,7 @@ class SnapModifyBuffEffect extends ExtraEffectBase_1.BuffEffect {
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Battle",
-            62,
+            61,
             "[SnapModifier] Get attributeSet failed.",
           ),
         0);
@@ -86,9 +87,9 @@ class SnapModifyBuffEffect extends ExtraEffectBase_1.BuffEffect {
   WXo(t, s) {
     switch (s) {
       case 1:
-        return this.OwnerEntity?.CheckGetComponent(159);
+        return this.OwnerEntity?.CheckGetComponent(171);
       case 0:
-        return this.InstigatorEntity?.Entity?.CheckGetComponent(159);
+        return this.InstigatorEntity?.Entity?.CheckGetComponent(171);
       case 2:
         return t.AttackerSnapshot;
       case 3:
@@ -136,22 +137,22 @@ class CommonSnapshotModify extends SnapModifyBuffEffect {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Battle",
-          20,
+          19,
           "[SnapModifier] Modify without resultMap.",
         );
     else {
       var e = this.AttrId,
         r = s.get(e) ?? 0,
-        h = this.Buff?.StackCount ?? 1,
-        a = 1 === this.StackType ? this.RefParam1 * h : this.RefParam1,
+        a = this.Buff?.StackCount ?? 1,
+        h = 1 === this.StackType ? this.RefParam1 * a : this.RefParam1,
         o = this.RefParam2;
       let t = 0;
       switch (this.CalculationPolicy) {
         case 0:
-          t = a;
+          t = h;
           break;
         case 1:
-          var c = a * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
+          var c = h * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
           t =
             this.GetAttrValue(
               i,
@@ -161,7 +162,7 @@ class CommonSnapshotModify extends SnapModifyBuffEffect {
             ) * c;
           break;
         case 2:
-          c = a * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
+          c = h * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND;
           t =
             this.GetAttrValue(
               i,
@@ -216,37 +217,37 @@ class ShieldSnapshotModify extends SnapModifyBuffEffect {
   }
   OnExecute(i, e) {
     var r = i.get(this.AttributeId) ?? 0,
-      h = this.BuffHolderType
+      a = this.BuffHolderType
         ? this.InstigatorEntity?.Entity
         : this.OwnerEntity;
-    if (h) {
-      var a,
-        h = h.CheckGetComponent(67)?.GetShieldValue(this.ShieldId) ?? 0;
-      let t = h >= this.ConvertThreshold,
-        s = h;
+    if (a) {
+      var h,
+        a = a.CheckGetComponent(74)?.GetShieldValue(this.ShieldId) ?? 0;
+      let t = a >= this.ConvertThreshold,
+        s = a;
       0 < this.ConvertLimit && (s = Math.min(s, this.ConvertLimit)),
         0 < this.CompareFactor &&
-          ((a = 0 === this.BuffHolderType ? 1 : 0),
-          (e = this.GetAttrValue(e, this.CompareFactor, 1, a)),
+          ((h = 0 === this.BuffHolderType ? 1 : 0),
+          (e = this.GetAttrValue(e, this.CompareFactor, 1, h)),
           (t =
-            h >=
+            a >=
             e *
               this.ConvertThreshold *
               CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
           0 < this.ConvertLimit) &&
           (s = Math.min(
-            h,
+            a,
             e *
               this.ConvertLimit *
               CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
           )),
         t &&
-          ((a =
+          ((h =
             s *
               this.ConvertRatio *
               CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
             this.ConvertMagnitude),
-          i.set(this.AttributeId, r + a));
+          i.set(this.AttributeId, r + h));
     }
   }
 }
@@ -269,8 +270,8 @@ class DamageAmplifyOnHit extends ExtraEffectBase_1.BuffEffect {
     var i = s.Attacker.OwnerBuffComponent,
       e = s.Target.OwnerBuffComponent;
     let r = 0;
-    for (const h of i.BuffEffectManager.FilterById(37))
-      h.Check(t, e) && (r += h.Execute());
+    for (const a of i.BuffEffectManager.FilterById(37))
+      a.Check(t, e) && (r += a.Execute());
     return r;
   }
 }
@@ -300,4 +301,23 @@ class DamageAmplifyOnBeHit extends ExtraEffectBase_1.BuffEffect {
   }
 }
 (exports.DamageAmplifyOnBeHit = DamageAmplifyOnBeHit).TempModifiedResult = 0;
+class ModifyDamageElement extends ExtraEffectBase_1.BuffEffect {
+  constructor() {
+    super(...arguments), (this.TargetType = 0), (this.DamageIds = new Set());
+  }
+  InitParameters(t) {
+    this.TargetType = Number(t.ExtraEffectParameters[0]);
+    for (const s of t.ExtraEffectParameters[1].split(","))
+      this.DamageIds.add(Number(s));
+  }
+  OnExecute() {
+    return this.TargetType;
+  }
+  static ApplyEffects(t, s) {
+    if (t)
+      for (const i of t.BuffEffectManager.FilterById(63))
+        if (i.DamageIds.has(s)) return i.TargetType;
+  }
+}
+exports.ModifyDamageElement = ModifyDamageElement;
 //# sourceMappingURL=ExtraEffectSnapModifier.js.map

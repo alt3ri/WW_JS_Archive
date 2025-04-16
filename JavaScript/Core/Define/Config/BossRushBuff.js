@@ -29,6 +29,26 @@ class BossRushBuff {
   get Name() {
     return this.name();
   }
+  get PopDescIdList() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.popdescidlistLength(),
+      this.popdescidlist,
+      this,
+    );
+  }
+  get BuffTitle() {
+    return this.bufftitle();
+  }
+  get BuffDesc() {
+    return this.buffdesc();
+  }
+  get BuffDescParam() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.buffdescparamLength(),
+      this.buffdescparam,
+      this,
+    );
+  }
   get Description() {
     return this.description();
   }
@@ -79,28 +99,108 @@ class BossRushBuff {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   texture(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   name(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
+  }
+  GetPopdescidlistAt(t) {
+    return this.popdescidlist(t);
+  }
+  popdescidlist(t) {
+    var s = this.J7.__offset(this.z7, 14);
+    return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+  }
+  popdescidlistLength() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  popdescidlistArray() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  bufftitle(t) {
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
+  }
+  buffdesc(t) {
+    var s = this.J7.__offset(this.z7, 18),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
+  }
+  GetBuffdescparamAt(t) {
+    return this.buffdescparam(t);
+  }
+  buffdescparam(t, s) {
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  buffdescparamLength() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   description(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 22),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetDescriptionparamAt(t) {
     return this.descriptionparam(t);
   }
   descriptionparam(t, s) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   descriptionparamLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }

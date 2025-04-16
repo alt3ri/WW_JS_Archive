@@ -42,10 +42,10 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
     );
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(22006, ActivityDailyAdventureController.KNe);
+    Net_1.Net.Register(28554, ActivityDailyAdventureController.KNe);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(22006);
+    Net_1.Net.UnRegister(28554);
   }
   static GetDailyAdventureData() {
     return ModelManager_1.ModelManager.ActivityModel?.GetActivityById(
@@ -59,12 +59,12 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
   static RequestTaskReward(t) {
     var e = new Protocol_1.Aki.Protocol.xZn();
     (e.s5n = t),
-      Net_1.Net.Call(23446, e, (e) => {
+      Net_1.Net.Call(20519, e, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                23672,
+                26107,
               )
             : (e = this.GetDailyAdventureData()) &&
               (e.SetTaskInfo(t, 2),
@@ -77,12 +77,12 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
   static RequestPointReward(t) {
     var e = new Protocol_1.Aki.Protocol.UZn();
     (e.s5n = t),
-      Net_1.Net.Call(26741, e, (e) => {
+      Net_1.Net.Call(21189, e, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                17526,
+                19912,
               )
             : (e = this.GetDailyAdventureData()) &&
               (e.SetPointReward(t, !0),

@@ -4,19 +4,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../../../Core/Define/CommonDefine"),
-  QueryTypeDefine_1 = require("../../../../../../Core/Define/QueryTypeDefine"),
   Quat_1 = require("../../../../../../Core/Utils/Math/Quat"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
-  TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
   AiContollerLibrary_1 = require("../../../../../AI/Controller/AiContollerLibrary"),
   GlobalData_1 = require("../../../../../GlobalData"),
-  ModelManager_1 = require("../../../../../Manager/ModelManager"),
   ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
+  GravityUtils_1 = require("../../../../../Utils/GravityUtils"),
   CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
-  CharacterActorComponent_1 = require("../CharacterActorComponent"),
   MoveToLocationLogic_1 = require("./MoveToLocationLogic"),
-  FIX_LOCATION_TOLERANCE = 2,
-  PROFILE_KEY = "PatrolMoveLogic_ResetActorLocation",
+  WHILE_UPDATE_MOVE_POINT_COUNT = 2,
   RESET_LOCATION_TOLERANCE = 10;
 class PatrolMoveLogic {
   constructor() {
@@ -32,28 +28,26 @@ class PatrolMoveLogic {
       (this.jJo = Quat_1.Quat.Create()),
       (this.nRi = -0),
       (this.WJo = Vector_1.Vector.Create()),
-      (this.w3a = Vector_1.Vector.Create()),
+      (this.c6a = Vector_1.Vector.Create()),
       (this.KJo = Vector_1.Vector.Create(0, 0, 0)),
       (this.XJo = 0),
       (this.NOe = 0),
       (this.$Jo = Vector_1.Vector.Create()),
-      (this.YJo = []),
-      (this.JJo = void 0);
+      (this.YJo = []);
   }
   Init(t) {
     (this.Entity = t),
       (this.Hte = t.CheckGetComponent(3)),
-      (this.oRe = t.CheckGetComponent(163)),
-      (this.mBe = t.GetComponent(92)),
-      this.zJo();
+      (this.oRe = t.CheckGetComponent(175)),
+      (this.mBe = t.GetComponent(99));
   }
   GetMovePoint(t) {
     if (0 <= t && t < this.YJo.length) return this.YJo[t];
   }
-  UpdateMovePath(t, i, s, e) {
+  UpdateMovePath(t, i, s, h) {
     (this.YJo.length = 0),
       this.YJo.push(...t),
-      (this.nJo = e),
+      (this.nJo = h),
       (this.sJo = i),
       (this.lJo = s),
       (this.NOe = 0),
@@ -62,17 +56,15 @@ class PatrolMoveLogic {
   StopMove() {
     (this.YJo.length = 0), (this.XJo = 0), (this.NOe = 0);
   }
-  UpdateMove(t, i) {
+  UpdateMove(t) {
     if (!this.GetMovePoint(this.NOe)) return this.StopMove(), !1;
-    for (
-      GlobalData_1.GlobalData.IsPlayInEditor &&
-        MoveToLocationLogic_1.MoveToLocationController.DebugDraw &&
-        this.IJo(),
-        this.ezo();
-      this.tzo();
-
-    ) {
-      if (this.NOe === this.YJo.length - 1) return !1;
+    GlobalData_1.GlobalData.IsPlayInEditor &&
+      MoveToLocationLogic_1.MoveToLocationController.DebugDraw &&
+      this.IJo(),
+      this.ezo();
+    let i = 0;
+    for (; this.tzo() && i < WHILE_UPDATE_MOVE_POINT_COUNT; ) {
+      if ((i++, this.NOe === this.YJo.length - 1)) return !1;
       this.ZJo(this.NOe + 1);
     }
     var s;
@@ -109,8 +101,8 @@ class PatrolMoveLogic {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
-          "UpdateMovePoint",
+          42,
+          "更新移动目标点",
           ["EntityId", this.Entity.Id],
           ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
           ["CurrentIndex", this.NOe],
@@ -121,7 +113,7 @@ class PatrolMoveLogic {
     var t;
     this.WJo.DeepCopy(this.$Jo),
       this.WJo.SubtractionEqual(this.Hte.ActorLocationProxy),
-      this.w3a.DeepCopy(this.WJo),
+      this.c6a.DeepCopy(this.WJo),
       this.mBe?.PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Climb
         ? (this.jye.DeepCopy(this.WJo),
@@ -132,7 +124,7 @@ class PatrolMoveLogic {
           this.jye.AdditionEqual(this.WJo),
           this.WJo.DeepCopy(this.jye))
         : this.sJo || (this.WJo.Z = 0),
-      (this.nRi = this.sJo ? this.w3a.Size() : this.w3a.Size2D());
+      (this.nRi = this.sJo ? this.c6a.Size() : this.c6a.Size2D());
   }
   tzo() {
     if (this.XJo === this.NOe || this.nRi <= this.nJo)
@@ -141,7 +133,7 @@ class PatrolMoveLogic {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "AI",
-            43,
+            42,
             "到达目标位置",
             ["EntityId", this.Entity.Id],
             ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -151,16 +143,16 @@ class PatrolMoveLogic {
         !0
       );
     this.$Jo.Subtraction(this.YJo[this.XJo], this.jye),
-      (this.jye.Z = 0),
-      this.RTe.DeepCopy(this.w3a),
-      (this.RTe.Z = 0);
+      GravityUtils_1.GravityUtils.SetZnInGravityForActor(this.Hte, this.jye, 0),
+      this.RTe.DeepCopy(this.c6a),
+      GravityUtils_1.GravityUtils.SetZnInGravityForActor(this.Hte, this.RTe, 0);
     var t = this.RTe.DotProduct(this.jye);
     return (
       (t < 0 || this.nRi < this.nJo) &&
         (this.ozo(), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "经过了目标位置",
           ["EntityId", this.Entity.Id],
           ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -172,14 +164,12 @@ class PatrolMoveLogic {
     );
   }
   ozo() {
-    this.jye.DeepCopy(this.$Jo),
-      this.sJo || (this.jye.Z += this.Hte.HalfHeight),
-      this.KJo.DeepCopy(this.jye),
+    this.KJo.DeepCopy(this.$Jo),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
-          "ResetActorLocation",
+          42,
+          "经过目标位置，更新拉回点记录",
           ["EntityId", this.Entity.Id],
           ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
           ["LastPatrolPoint", this.KJo],
@@ -199,7 +189,7 @@ class PatrolMoveLogic {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "AI",
-        43,
+        42,
         "Reset目标位置",
         ["EntityId", this.Entity.Id],
         ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -224,7 +214,7 @@ class PatrolMoveLogic {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
-          43,
+          42,
           "Reset目标位置结束",
           ["EntityId", this.Entity.Id],
           ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -237,105 +227,29 @@ class PatrolMoveLogic {
       this.KJo.Set(0, 0, 0);
   }
   rzo() {
-    this.sJo || this.nzo(this.KJo, this.KJo),
-      this.Hte.SetActorLocation(
-        this.KJo.ToUeVector(),
-        "拉回目标点设置坐标",
-        !1,
-      );
-  }
-  zJo() {
-    var t = UE.NewObject(UE.TraceSphereElement.StaticClass());
-    (t.bIsSingle = !1),
-      (t.bIgnoreSelf = !0),
-      t.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.IkGround),
-      TraceElementCommon_1.TraceElementCommon.SetTraceColor(
-        t,
-        ColorUtils_1.ColorUtils.LinearGreen,
-      ),
-      TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(
-        t,
-        ColorUtils_1.ColorUtils.LinearRed,
-      ),
-      (this.JJo = t);
-  }
-  nzo(t, h) {
-    this.jye.DeepCopy(t), (this.jye.Z += this.Hte.HalfHeight);
-    var i = this.jye,
-      t =
-        (this.RTe.DeepCopy(t),
-        (this.RTe.Z += CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
-        this.RTe),
-      s = this.JJo;
-    (s.WorldContextObject = this.Hte.Actor),
-      (s.Radius = this.Hte.ScaledRadius),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, i),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(s, t),
-      s.ActorsToIgnore.Empty();
-    for (const e of ModelManager_1.ModelManager.WorldModel.ActorsToIgnoreSet)
-      s.ActorsToIgnore.Add(e);
-    var i = TraceElementCommon_1.TraceElementCommon.ShapeTrace(
-        this.Hte.Actor.CapsuleComponent,
-        s,
-        PROFILE_KEY,
-        PROFILE_KEY,
-      ),
-      o = s.HitResult;
-    if (i && o.bBlockingHit) {
-      var r = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
-      let i = "";
-      var a = o.Actors.Num();
-      let s = -1,
-        e = "";
-      TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, r);
-      for (let t = 0; t < a; ++t) {
-        var n = o.Actors.Get(t);
-        if (
-          n?.IsValid() &&
-          ((i += n.GetName() + ", "), !n.IsA(UE.Character.StaticClass()))
-        ) {
-          (s = t),
-            (e = n.GetName()),
-            TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, t, r);
-          break;
-        }
-      }
-      return (
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
+    this.sJo
+      ? this.Hte.SetActorLocation(
+          this.KJo.ToUeVector(),
+          "拉回目标点设置坐标",
+          !1,
+        )
+      : this.Hte.FixBornLocation("拉回目标点地面修正", !0, this.KJo, !1, !0) ||
+        (Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
             "AI",
-            43,
-            "[CharacterActorComponent.FixBornLocation] 实体地面修正:射线碰到地面",
+            42,
+            "未能检测到地面，没设置拉回目标点",
             ["EntityId", this.Entity.Id],
             ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
-            ["经过修正的位置", r],
-            ["Actors", i],
-            ["HitLocationIndex", s],
-            ["HitLocationName", e],
-            ["this.ActorComp!.ScaledHalfHeight", this.Hte.ScaledHalfHeight],
-            ["this.ActorComp!.ScaledRadius", this.Hte.ScaledRadius],
-          ),
-        (r.Z += this.Hte.ScaledHalfHeight - this.Hte.ScaledRadius),
-        (r.Z += FIX_LOCATION_TOLERANCE),
-        this.JJo &&
-          ((this.JJo.WorldContextObject = void 0),
-          this.JJo.ActorsToIgnore.Empty()),
-        h.DeepCopy(r),
-        !0
-      );
-    }
-    return (
-      this.JJo &&
-        ((this.JJo.WorldContextObject = void 0),
-        this.JJo.ActorsToIgnore.Empty()),
-      !1
-    );
+            ["LastPatrolPoint", this.KJo],
+            ["ActorLocation", this.Hte.ActorLocationProxy],
+          ));
   }
   IJo() {
     if (0 !== this.YJo.length && GlobalData_1.GlobalData.IsPlayInEditor)
       for (let t = this.YJo.length - 1; -1 < t; t--) {
         var i = this.YJo[t];
-        UE.KismetSystemLibrary.DrawDebugSphere(
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
           GlobalData_1.GlobalData.World,
           i.ToUeVector(),
           35,

@@ -27,7 +27,7 @@ class LevelConditionFunctionUnlock extends LevelGeneralBase_1.LevelConditionBase
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -39,7 +39,7 @@ class LevelConditionFunctionUnlock extends LevelGeneralBase_1.LevelConditionBase
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的FunctionId参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.FunctionUnlock}的定义`,
             ),
           !1);
@@ -53,7 +53,7 @@ class LevelConditionSlotOfCurrentRole extends LevelGeneralBase_1.LevelConditionB
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -63,7 +63,7 @@ class LevelConditionSlotOfCurrentRole extends LevelGeneralBase_1.LevelConditionB
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的Slot参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.SlotOfCurrentRole}的定义`,
             ),
           !1)
@@ -84,7 +84,7 @@ class LevelConditionHpLowerThan extends LevelGeneralBase_1.LevelConditionBase {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -93,17 +93,17 @@ class LevelConditionHpLowerThan extends LevelGeneralBase_1.LevelConditionBase {
         ? !(
             !(t =
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity) ||
-            ((i = t.Entity.GetComponent(159)?.GetCurrentValue(
+            ((i = t.Entity.GetComponent(171)?.GetCurrentValue(
               EAttributeId.Proto_Life,
             )),
-            (r = t.Entity.GetComponent(159)?.GetCurrentValue(EAttributeId.l5n)),
+            (r = t.Entity.GetComponent(171)?.GetCurrentValue(EAttributeId.l5n)),
             !i) ||
             !r
           ) && i / r < o / CommonDefine_1.RATE_10000
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的Hp参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.HpLowerThan}的定义`,
             ),
           !1);
@@ -119,7 +119,7 @@ class LevelConditionHarmonyQte extends LevelGeneralBase_1.LevelConditionBase {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               "配置错误！条件的参数不应该为空",
               ["inConditionInfo.Id", e.Id],
             ),
@@ -128,14 +128,14 @@ class LevelConditionHarmonyQte extends LevelGeneralBase_1.LevelConditionBase {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelCondition",
-                17,
+                16,
                 `配置错误！条件${e.Id}的ElementType参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.HarmonyQte}的定义`,
               ),
             !1)
           : ((e = o[0]),
             (o = o[1]),
-            10 * (e = e.GetComponent(82)?.RoleElementType) +
-              (o = o.GetComponent(82)?.RoleElementType) ===
+            10 * (e = e.GetComponent(89)?.RoleElementType) +
+              (o = o.GetComponent(89)?.RoleElementType) ===
               t || 10 * o + e === t))
     );
   }
@@ -148,7 +148,7 @@ class LevelConditionGetWhichRole extends LevelGeneralBase_1.LevelConditionBase {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -158,7 +158,7 @@ class LevelConditionGetWhichRole extends LevelGeneralBase_1.LevelConditionBase {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的RoleCount参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.GetWhichRole}的定义`,
             ),
           !1);
@@ -172,7 +172,7 @@ class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -184,7 +184,7 @@ class LevelConditionGetNewItem extends LevelGeneralBase_1.LevelConditionBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             `配置错误！条件${e.Id}的ItemId参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.GetNewItem}的定义`,
           ),
         !1
@@ -218,7 +218,7 @@ class LevelConditionFightWithMonster extends LevelGeneralBase_1.LevelConditionBa
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           );
@@ -237,7 +237,7 @@ class LevelConditionFightWithMonster extends LevelGeneralBase_1.LevelConditionBa
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的MonsterId参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.FightWithMonster}的定义`,
             );
       }
@@ -254,7 +254,7 @@ class LevelConditionPawnInRange extends LevelGeneralBase_1.LevelConditionBase {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               "配置错误！条件的参数不应该为空",
               ["inConditionInfo.Id", e.Id],
             ),

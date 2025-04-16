@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameUtils = void 0);
-const Log_1 = require("../Core/Common/Log"),
-  Stats_1 = require("../Core/Common/Stats"),
-  ImmutableArray_1 = require("../Core/Container/ImmutableArray"),
+const ImmutableArray_1 = require("../Core/Container/ImmutableArray"),
   ImmutableMap_1 = require("../Core/Container/ImmutableMap"),
   TimerSystem_1 = require("../Core/Timer/TimerSystem");
 class GameUtils {
@@ -14,24 +12,24 @@ class GameUtils {
       });
     });
   }
-  static ConvertToArray(r, t, a = void 0) {
-    if (0 === r) return this.u_i;
-    var o = new Array();
-    for (let e = 0; e < r; e++) a ? o.push(t.call(a, e)) : o.push(t(e));
-    return o;
+  static ConvertToArray(t, r, a = void 0) {
+    if (0 === t) return this.u_i;
+    this.xpl.length = t;
+    var i = Array.from(this.xpl, this.Ppl);
+    for (let e = 0; e < t; e++) i[e] = r.call(a, e);
+    return i;
   }
-  static ConvertToMap(r, t, a, o = void 0) {
-    if (0 === r) return this.BKa;
-    var m = new Map();
-    for (let e = 0; e < r; e++)
-      o ? m.set(t.call(o, e), a.call(o, e)) : m.set(t(e), a(e));
-    return m;
+  static ConvertToMap(t, r, a, i = void 0) {
+    if (0 === t) return this.eza;
+    var s = new Map();
+    for (let e = 0; e < t; e++) s.set(r.call(i, e), a.call(i, e));
+    return s;
   }
-  static CreateStat(e) {
-    var r = Stats_1.Stat.Create(e);
-    r.Start(), r.Stop(), Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 52, e);
-  }
+  static InternalizedString(e) {}
 }
 ((exports.GameUtils = GameUtils).u_i = new ImmutableArray_1.ImmutableArray()),
-  (GameUtils.BKa = new ImmutableMap_1.ImmutableMap());
+  (GameUtils.eza = new ImmutableMap_1.ImmutableMap()),
+  (GameUtils.IsOptimizeDbString = !0),
+  (GameUtils.Ppl = () => 0),
+  (GameUtils.xpl = { length: 0 });
 //# sourceMappingURL=GameUtils.js.map

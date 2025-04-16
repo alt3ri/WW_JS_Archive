@@ -9,17 +9,23 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
+  constructor() {
+    super(...arguments),
+      (this.DateText = void 0),
+      (this.LogoConfigName = "PhotoLogo");
+  }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
+    (this.ComponentRegisterInfos = [
       [0, UE.UITexture],
       [1, UE.UIText],
       [2, UE.UIText],
-    ];
+    ]),
+      this.DateText && this.ComponentRegisterInfos.push([3, UE.UIText]);
   }
   OnStart() {
     var e =
       ConfigManager_1.ConfigManager.UiResourceConfig.GetLogoPathByLanguage(
-        "PhotoLogo",
+        this.LogoConfigName,
       );
     const a = this.GetTexture(0);
     a.SetUIActive(!1),
@@ -33,18 +39,16 @@ class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
         this.GetText(2),
         "FriendMyUid",
         ModelManager_1.ModelManager.FunctionModel.PlayerId,
-      ),
-      this.RefreshNameVisible();
+      );
+    e = this.GetText(3);
+    this.DateText && e && e.SetText(this.DateText);
   }
-  RefreshNameVisible() {
+  OnAfterShow() {
     var e = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.PhotoAndShareShowPlayerName,
       !0,
     );
-    this.SetNameVisible(e);
-  }
-  SetNameVisible(e) {
-    this.GetText(1)?.SetUIActive(e), this.GetText(2)?.SetUIActive(e);
+    this.SetUiActive(e);
   }
 }
 exports.PhotoSaveMarkItem = PhotoSaveMarkItem;

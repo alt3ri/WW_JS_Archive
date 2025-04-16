@@ -56,8 +56,11 @@ class ItemMaterialControllerActorData extends UE.PrimaryDataAsset {
       (this.OpaqueColorQuanXiPinTu = void 0),
       (this.EnableQuanXiFengSuo = !1),
       (this.TransparencyQuanXiFengSuo = void 0),
-      (this.TransparentColorQuanXiFengSuo = void 0);
+      (this.TransparentColorQuanXiFengSuo = void 0),
+      (this.CustomScalarParMap = void 0),
+      (this.CustomColorParMap = void 0);
   }
+  Constructor() {}
 }
 exports.default = ItemMaterialControllerActorData;
 //# sourceMappingURL=ItemMaterialControllerActorData.js.map

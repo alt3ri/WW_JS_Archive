@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NavigationGroupInsideComponent =
     exports.NavigationGroupPrevComponent =
+    exports.NavigationGroupDownNextComponent =
+    exports.NavigationGroupUpNextComponent =
     exports.NavigationGroupNextComponent =
       void 0);
 const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
@@ -9,15 +11,17 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   UiNavigationLogic_1 = require("../New/UiNavigationLogic"),
   UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   HotKeyComponent_1 = require("./HotKeyComponent");
-class NavigationGroupNextComponent extends HotKeyComponent_1.HotKeyComponent {
+class NavigationGroupNextComponentBase extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
       (this.Lqo = (t) => {
-        3 === t &&
-          UiNavigationNewController_1.UiNavigationNewController.JumpNavigationGroupByTag(
-            this.GetHotKeyConfig().BindButtonTag,
-          );
+        t === this.GetDirection() && this.JumpToNextGroupListener();
       });
+  }
+  JumpToNextGroupListener() {
+    UiNavigationNewController_1.UiNavigationNewController.JumpNavigationGroupByTag(
+      this.GetHotKeyConfig().BindButtonTag,
+    );
   }
   OnRelease(t) {
     UiNavigationNewController_1.UiNavigationNewController.JumpNavigationGroupByTag(
@@ -57,7 +61,24 @@ class NavigationGroupNextComponent extends HotKeyComponent_1.HotKeyComponent {
     } else this.SetVisibleMode(2, !1);
   }
 }
+class NavigationGroupNextComponent extends NavigationGroupNextComponentBase {
+  GetDirection() {
+    return 3;
+  }
+}
 exports.NavigationGroupNextComponent = NavigationGroupNextComponent;
+class NavigationGroupUpNextComponent extends NavigationGroupNextComponentBase {
+  GetDirection() {
+    return 1;
+  }
+}
+exports.NavigationGroupUpNextComponent = NavigationGroupUpNextComponent;
+class NavigationGroupDownNextComponent extends NavigationGroupNextComponentBase {
+  GetDirection() {
+    return 0;
+  }
+}
+exports.NavigationGroupDownNextComponent = NavigationGroupDownNextComponent;
 class NavigationGroupPrevComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
@@ -108,6 +129,7 @@ class NavigationGroupInsideComponent extends HotKeyComponent_1.HotKeyComponent {
   OnRefreshSelfHotKeyState(t) {
     t = t.GetFocusListener();
     t &&
+    this.IsLinkListener(t.GetOwner()) &&
     UiNavigationNewController_1.UiNavigationNewController.GetCanFocusInsideListener(
       t,
     )

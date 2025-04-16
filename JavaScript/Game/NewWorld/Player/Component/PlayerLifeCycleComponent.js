@@ -71,7 +71,7 @@ let PlayerLifeCycleComponent = class PlayerLifeCycleComponent extends EntityComp
   }
 };
 (PlayerLifeCycleComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(186)],
+  [(0, RegisterComponent_1.RegisterComponent)(199)],
   PlayerLifeCycleComponent,
 )),
   (exports.PlayerLifeCycleComponent = PlayerLifeCycleComponent);

@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponBreachView = void 0);
 const UE = require("ue"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -47,17 +49,17 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
               UiSceneManager_1.UiSceneManager.GetWeaponScabbardObserver()),
             (this.dmo =
               UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor());
-          const t =
+          const i =
             ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
               this.DOo,
             )?.GetRoleId() ?? 0;
           WeaponController_1.WeaponController.SendPbWeaponBreachRequest(
             this.DOo,
             (e) => {
-              var i = this.N2i.Model,
-                i =
+              var t = this.N2i.Model,
+                t =
                   (UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
-                    i,
+                    t,
                     "WeaponBreachEffect",
                   ),
                   WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
@@ -67,33 +69,36 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
                   ),
                   ConfigManager_1.ConfigManager.RoleConfig.GetWeaponBreachDaDelayTime());
               TimerSystem_1.TimerSystem.Delay(() => {
-                this.N2i?.Model?.CheckGetComponent(19)?.RefreshWeaponBreachDa(
+                this.N2i?.Model?.CheckGetComponent(21)?.RefreshWeaponBreachDa(
                   e,
-                  t,
+                  i,
                 ),
-                  this.O2i?.Model?.CheckGetComponent(19)?.RefreshWeaponBreachDa(
+                  this.O2i?.Model?.CheckGetComponent(21)?.RefreshWeaponBreachDa(
                     e,
-                    t,
+                    i,
                   ),
-                  this.dmo?.Model?.CheckGetComponent(14)?.RefreshWeaponDa();
-              }, i);
+                  this.dmo?.Model?.CheckGetComponent(15)?.RefreshWeaponDa();
+              }, t);
             },
           );
         }
       }),
       (this.LevelUpLockTipClick = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(175);
-        const i =
+        const t =
           ModelManager_1.ModelManager.QuestNewModel.GetCurWorldLevelBreakQuest();
-        i < 0
+        t < 0
           ? e.InteractionMap.set(1, !1)
           : (e.FunctionMap.set(2, () => {
-              UiManager_1.UiManager.OpenView("QuestView", i);
+              UiManager_1.UiManager.OpenView("QuestView", t);
             }),
             e.InteractionMap.set(1, !0)),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             e,
           );
+      }),
+      (this.qdi = () => {
+        this.FTt();
       }),
       (this.vke = () => {
         return new StarItem_1.StarItem();
@@ -110,6 +115,18 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
       [5, UE.UIItem],
       [6, UE.UIText],
     ];
+  }
+  AddEventListener() {
+    EventSystem_1.EventSystem.Add(
+      EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+      this.qdi,
+    );
+  }
+  RemoveEventListener() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+      this.qdi,
+    );
   }
   OnStart() {
     (this.StarLayout = new GenericLayout_1.GenericLayout(
@@ -136,16 +153,16 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
         this.DOo,
       ),
-      i = e.GetBreachConfig(),
-      t = e.GetWeaponConfig(),
+      t = e.GetBreachConfig(),
+      i = e.GetWeaponConfig(),
       r = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
-        t.BreachId,
+        i.BreachId,
         e.GetBreachLevel() + 1,
       ),
-      r = (this.GetText(0).SetText(r.LevelLimit.toString()), t.BreachId),
-      t = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(r),
+      r = (this.GetText(0).SetText(r.LevelLimit.toString()), i.BreachId),
+      i = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(r),
       o =
-        (this.jxt(e.GetBreachLevel(), t),
+        (this.jxt(e.GetBreachLevel(), i),
         (this.ROo =
           ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachState(
             this.DOo,
@@ -153,28 +170,28 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
         3 === this.ROo
           ? ((r =
               LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
-                i.ConditionId,
+                t.ConditionId,
               )),
             this.b1o.SetButtonItemActive(!1),
             this.b1o.SetLockItemActive(!0),
             this.b1o.SetLockLocalText(r ?? ""))
           : (this.b1o.SetButtonItemActive(!0), this.b1o.SetLockItemActive(!1)),
         []),
-      t = i.Consume;
-    if (t)
-      for (var [a, n] of t) {
-        a = {
-          ItemId: a,
+      i = t.Consume;
+    if (i)
+      for (var [n, a] of i) {
+        n = {
+          ItemId: n,
           IncId: 0,
           SelectedCount:
             ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-              a,
+              n,
             ),
-          Count: n,
+          Count: a,
         };
-        o.push(a);
+        o.push(n);
       }
-    r = i.GoldConsume;
+    r = t.GoldConsume;
     this.b1o.Update(o, ItemDefines_1.EItemId.Gold, r),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(1),
@@ -183,20 +200,20 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
       ),
       this.k1o();
   }
-  jxt(i, t) {
+  jxt(t, i) {
     this.StarLayout ||
       (this.StarLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(2),
         this.vke,
       ));
-    var r = new Array(t);
-    for (let e = 0; e < t; ++e) {
+    var r = new Array(i);
+    for (let e = 0; e < i; ++e) {
       var o = {
-        StarOnActive: e < i,
-        StarOffActive: e > i,
-        StarNextActive: e === i,
-        StarLoopActive: e === i,
-        PlayLoopSequence: e === i,
+        StarOnActive: e < t,
+        StarOffActive: e > t,
+        StarNextActive: e === t,
+        StarLoopActive: e === t,
+        PlayLoopSequence: e === t,
         PlayActivateSequence: !1,
       };
       r[e] = o;
@@ -207,25 +224,25 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
         this.DOo,
       ),
-      i = e.GetWeaponConfig(),
-      t =
+      t = e.GetWeaponConfig(),
+      i =
         ((this.UOo =
           ModelManager_1.ModelManager.WeaponModel.GetWeaponAttributeParamList(
-            i,
+            t,
           )),
         e.GetBreachLevel()),
-      r = t + 1,
+      r = i + 1,
       o = e.GetLevel(),
-      a = [];
+      n = [];
     for (const _ of this.UOo) {
-      var n = _.CurveId,
+      var a = _.CurveId,
         s = _.PropId,
         l = s.Value,
-        h = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(n, l, o, t);
+        h = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(a, l, o, i);
       let e = 0;
-      t < r &&
-        (e = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(n, l, o, r));
-      n = {
+      i < r &&
+        (e = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(a, l, o, r));
+      a = {
         Id: s.Id,
         IsRatio: s.IsRatio,
         CurValue: h,
@@ -233,20 +250,20 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
         ShowNext: e > h,
         NextValue: e,
       };
-      a.push(n);
+      n.push(a);
     }
-    this.AttributeLayout.RefreshByData(a);
+    this.AttributeLayout.RefreshByData(n);
   }
   P5e() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
         this.DOo,
       ).GetWeaponConfig(),
-      i = e.WeaponName,
+      t = e.WeaponName,
       e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
         e.QualityId,
       ),
       e = UE.Color.FromHex(e.DropColor);
-    this.GetText(6).SetColor(e), this.GetText(6).ShowTextNew(i);
+    this.GetText(6).SetColor(e), this.GetText(6).ShowTextNew(t);
   }
   OnBeforeDestroy() {
     this.b1o.Destroy();

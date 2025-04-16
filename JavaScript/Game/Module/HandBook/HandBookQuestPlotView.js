@@ -112,7 +112,7 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
             o?.GetTidText() === t
               ? (o.SetToggleState(1),
                 UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForViewSameGroup(
-                  o.GetToggleItem()?.GetRootComponent(),
+                  o.GetToggleItem().GetRootComponent(),
                 ),
                 (i = !0))
               : o.SetToggleState(0);
@@ -182,8 +182,8 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
     );
   }
   Og() {
-    var i = this.$Bn?.length ?? 0;
-    if (this.b9i >= i || this.b9i < 0)
+    var e = this.$Bn?.length ?? 0;
+    if (this.b9i >= e || this.b9i < 0)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("HandBook", 5, "HandBookPlot_剧情图鉴选择任务出错", [
           "index:",
@@ -191,88 +191,90 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
         ]);
     else {
       this.GetButton(5)?.RootUIComp.SetUIActive(0 < this.b9i),
-        this.GetButton(6)?.RootUIComp.SetUIActive(this.b9i + 1 < i);
-      var i = this.$Bn[this.b9i],
-        t =
-          ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfig(i);
-      if (t) {
+        this.GetButton(6)?.RootUIComp.SetUIActive(this.b9i + 1 < e);
+      var e = this.$Bn[this.b9i],
+        o =
+          ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfig(e);
+      if (o) {
         if (
-          !ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(t.Type, i)
+          !ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(o.Type, e)
             ?.IsRead
         ) {
-          var e = t.Type;
-          const l =
+          var s = o.Type;
+          const u =
             ConfigManager_1.ConfigManager.HandBookConfig?.GetPlotTypeConfig(
-              e,
+              s,
             )?.Type;
           ControllerHolder_1.ControllerHolder.HandBookController.SendIllustratedReadRequest(
-            l,
-            i,
+            u,
+            e,
           );
         }
-        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), t.Descrtption);
-        var o = ModelManager_1.ModelManager.QuestNewModel?.GetQuestConfig(
-            t.QuestId,
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), o.Descrtption);
+        var n = ModelManager_1.ModelManager.QuestNewModel?.GetQuestConfig(
+            o.QuestId,
           ),
-          e = o?.TidName
-            ? PublicUtil_1.PublicUtil.GetConfigTextByKey(o.TidName)
+          s = n?.TidName
+            ? PublicUtil_1.PublicUtil.GetConfigTextByKey(n.TidName)
             : "";
-        this.n6t.SetTitle(e);
-        const l =
+        this.n6t.SetTitle(s);
+        const u =
           ConfigManager_1.ConfigManager.HandBookConfig?.GetPlotTypeConfig(
-            t.Type,
+            o.Type,
           );
-        (i = ConfigManager_1.ConfigManager.HandBookConfig?.GetQuestTab(l.Type)),
-          (e =
-            (this.n6t.SetTitleIcon(i.Icon),
-            ConfigManager_1.ConfigManager.HandBookConfig.GetQuestPlotConfig(
-              t.QuestId,
-            )));
-        if (e) {
-          i = JSON.parse(e.Data);
-          this.OPn.clear(), (this.ZBn = []);
-          let t = "";
-          for (const u of i) {
-            const _ = u.IsHideUi ? "" : u.TidTip;
-            if ("" === _) {
-              if ("" === t) {
-                var s = o?.TidName ?? "",
-                  n = this.OPn.get(s);
-                if (!n) {
-                  (n = []).push(u), (t = s), this.OPn.set(s, n);
-                  continue;
-                }
-              }
-              this.OPn.get(t).push(u);
-            } else if (
-              "" !== t &&
-              "" !== _ &&
-              PublicUtil_1.PublicUtil.GetConfigTextByKey(t) ===
-                PublicUtil_1.PublicUtil.GetConfigTextByKey(_)
-            )
-              this.OPn.get(t).push(u);
-            else {
-              let i = this.OPn.get(_);
-              i ? i.push(u) : ((i = []).push(u), (t = _), this.OPn.set(_, i));
-            }
-          }
-          var h,
-            r = [];
-          for ([h] of this.OPn) {
-            var a = new HandBookDefine_1.HandBookQuestDynamicData();
-            (a.TidText = h), r.push(a), this.ZBn.push(h);
-          }
-          this.NodeScrollView.RefreshByData(r);
-          const _ = r[0].TidText;
-          this.kPn(!1, _);
-        } else
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "HandBook",
-              5,
-              "HandBookPlot_剧情图鉴获取任务对应剧情配置出错",
-              ["questId:", t.QuestId],
+        e = ConfigManager_1.ConfigManager.HandBookConfig?.GetQuestTab(u.Type);
+        this.n6t.SetTitleIcon(e.Icon);
+        let i = [];
+        for (const g of o.ShowQuestList) {
+          var h =
+            ConfigManager_1.ConfigManager.HandBookConfig.GetQuestPlotConfig(g);
+          if (!h)
+            return void (
+              Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "HandBook",
+                5,
+                "HandBookPlot_剧情图鉴获取任务对应剧情配置出错",
+                ["questId:", g],
+              )
             );
+          i = i.concat(JSON.parse(h.Data));
+        }
+        this.OPn.clear(), (this.ZBn = []);
+        let t = "";
+        for (const v of i) {
+          const d = v.IsHideUi ? "" : v.TidTip;
+          if ("" === d) {
+            if ("" === t) {
+              var r = n?.TidName ?? "",
+                a = this.OPn.get(r);
+              if (!a) {
+                (a = []).push(v), (t = r), this.OPn.set(r, a);
+                continue;
+              }
+            }
+            this.OPn.get(t).push(v);
+          } else if (
+            "" !== t &&
+            "" !== d &&
+            PublicUtil_1.PublicUtil.GetConfigTextByKey(t) ===
+              PublicUtil_1.PublicUtil.GetConfigTextByKey(d)
+          )
+            this.OPn.get(t).push(v);
+          else {
+            let i = this.OPn.get(d);
+            i ? i.push(v) : ((i = []).push(v), (t = d), this.OPn.set(d, i));
+          }
+        }
+        var l,
+          _ = [];
+        for ([l] of this.OPn) {
+          var f = new HandBookDefine_1.HandBookQuestDynamicData();
+          (f.TidText = l), _.push(f), this.ZBn.push(l);
+        }
+        this.NodeScrollView.RefreshByData(_);
+        const d = _[0].TidText;
+        this.kPn(!1, d);
       }
     }
   }
@@ -299,52 +301,66 @@ class HandBookQuestPlotView extends UiViewBase_1.UiViewBase {
       if ("PlayMovie" === n.Name)
         Log_1.Log.CheckDebug() && Log_1.Log.Debug("HandBook", 5, "播片剧情");
       else if ("ShowTalk" === n.Name)
-        for (const h of n.Params.TalkItems)
-          if (!(this.GPn && h.Id < this.GPn)) {
-            if (
-              ((this.GPn = 0), (h.WhoId ?? h.TidTalk) && "Option" !== h.Type)
-            ) {
-              var o = new HandBookDefine_1.HandBookPlotDynamicData(),
-                s =
-                  ((o.BelongToNode = e),
-                  h.WhoId
-                    ? SpeakerById_1.configSpeakerById.GetConfig(h.WhoId)
-                    : void 0);
-              let i = "";
-              " " !==
-                (i = s
-                  ? (PublicUtil_1.PublicUtil.GetConfigTextByTable(0, s.Id) ??
-                    "")
-                  : i) &&
-                "" !== i &&
-                (i += this.zBn),
-                (o.TalkOwnerName = i),
-                h.PlayVoice &&
-                  ((s = PlotAudioById_1.configPlotAudioById.GetConfig(
-                    h.TidTalk,
-                  )),
-                  (o.PlotAudio = s));
-              var s = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(h.TidTalk);
-              (o.TalkText = s),
-                (o.PlotId = t),
-                (o.TalkItemId = h.Id),
-                this.wPn.push(o);
+        for (const h of n.Params.TalkItems) {
+          if (this.GPn < 0) return;
+          if (!(this.GPn && h.Id < this.GPn))
+            if ("QTE" === h.Type)
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug("HandBook", 5, "QTE演出，屏蔽");
+            else {
+              if (
+                ((this.GPn = 0), (h.WhoId || h.TidTalk) && "Option" !== h.Type)
+              ) {
+                var o = new HandBookDefine_1.HandBookPlotDynamicData(),
+                  s =
+                    ((o.BelongToNode = e),
+                    h.WhoId
+                      ? SpeakerById_1.configSpeakerById.GetConfig(h.WhoId)
+                      : void 0);
+                let i = "";
+                " " !==
+                  (i = s
+                    ? (PublicUtil_1.PublicUtil.GetConfigTextByTable(0, s.Id) ??
+                      "")
+                    : i) &&
+                  "" !== i &&
+                  (i += this.zBn),
+                  (o.TalkOwnerName = i),
+                  h.PlayVoice &&
+                    ((s = PlotAudioById_1.configPlotAudioById.GetConfig(
+                      h.TidTalk,
+                    )),
+                    (o.PlotAudio = s));
+                var s = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(
+                  h.TidTalk,
+                );
+                (o.TalkText = s),
+                  (o.PlotId = t),
+                  (o.TalkItemId = h.Id),
+                  this.wPn.push(o);
+              }
+              h.Options &&
+                0 < h.Options.length &&
+                ((s = this.BPn.get(t)?.get(h.Id) ?? 0),
+                (o = h.Options[s]),
+                this.jPn(o.Actions, h.Id),
+                this.tVs(h.Options, s, e, t, h.Id)),
+                h.Actions && this.jPn(h.Actions, h.Id);
             }
-            h.Options &&
-              0 < h.Options.length &&
-              ((s = this.BPn.get(t)?.get(h.Id) ?? 0),
-              (o = h.Options[s]),
-              this.jPn(o.Actions, h.Id),
-              this.tVs(h.Options, s, e, t, h.Id)),
-              h.Actions && this.jPn(h.Actions, h.Id);
-          }
+        }
   }
   jPn(i, t) {
     if (i)
       for (const o of i) {
         if ("FinishTalk" === o.Name || "FinishState" === o.Name) return;
-        var e;
-        "JumpTalk" !== o.Name || (e = o.Params.TalkId) <= t || (this.GPn = e);
+        if ("JumpTalk" === o.Name) {
+          var e = o.Params.TalkId;
+          if (e <= t) {
+            this.GPn = -1;
+            break;
+          }
+          this.GPn = e;
+        }
       }
   }
   tVs(t, e, o, s, n) {

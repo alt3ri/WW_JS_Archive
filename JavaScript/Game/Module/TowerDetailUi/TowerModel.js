@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TowerModel =
+    exports.TOWER_LOOP_ACTIVITY_ID =
     exports.LOCK_COLOR =
     exports.NORMOL_COLOR =
     exports.FINISH_COLOR =
@@ -13,17 +14,18 @@ const CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   UiManager_1 = require("../../Ui/UiManager"),
   EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController"),
-  TowerData_1 = require("./TowerData"),
-  TOWER_LOOP_ACTIVITY_ID =
-    ((exports.FLOOR_STAR = 3),
-    (exports.FINISH_COLOR = "#FFD12F"),
-    (exports.NORMOL_COLOR = "#ECE5D8"),
-    (exports.LOCK_COLOR = "#ADADAD"),
-    100300002);
+  TowerData_1 = require("./TowerData");
+(exports.FLOOR_STAR = 3),
+  (exports.FINISH_COLOR = "#FFD12F"),
+  (exports.NORMOL_COLOR = "#ECE5D8"),
+  (exports.LOCK_COLOR = "#ADADAD"),
+  (exports.TOWER_LOOP_ACTIVITY_ID = 100300002);
 class TowerModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -52,7 +54,10 @@ class TowerModel extends ModelBase_1.ModelBase {
       (this.QLo = new Map()),
       (this.XLo = new Map()),
       (this.$Lo = void 0),
-      (this.NeedOpenReviveView = !1);
+      (this.NeedOpenReviveView = !1),
+      (this.MaxUnlockDifficulty = 0),
+      (this.IsWaitTowerStart = !1),
+      (this.IsWaitTowerSettlement = !1);
   }
   OnInit() {
     return (
@@ -73,20 +78,22 @@ class TowerModel extends ModelBase_1.ModelBase {
     );
   }
   OnLeaveLevel() {
-    return (this.CurrentSelectFloor = -1), (this.CurrentTowerId = -1), !0;
+    return (this.CurrentSelectFloor = -1), !0;
   }
   FGt() {
     this.YLo(TowerData_1.LOW_RISK_DIFFICULTY, void 0),
       this.YLo(TowerData_1.HIGH_RISK_DIFFICULTY, void 0),
-      this.YLo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0);
+      this.YLo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0),
+      this.YLo(TowerData_1.OVERLOCK_RISK_DIFFICULTY, void 0);
   }
   RefreshTowerInfo(t) {
     (this.TowerBeginTime = t.cps),
       (this.TowerEndTime = t.dps),
+      (this.MaxUnlockDifficulty = t.wGs),
       this.CurrentSeason !== t.EGs &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-          TOWER_LOOP_ACTIVITY_ID,
+          exports.TOWER_LOOP_ACTIVITY_ID,
         ),
       (this.CurrentSeason = t.EGs),
       (this.DataSeason = t.yGs),
@@ -120,8 +127,8 @@ class TowerModel extends ModelBase_1.ModelBase {
       for (var [, o] of this.WLo)
         o.Difficulties === t && o.Area === e && (i += o.Star);
     else
-      for (var [, s] of this.jLo)
-        s.Difficulties === t && s.Area === e && (i += s.Star);
+      for (var [, a] of this.jLo)
+        a.Difficulties === t && a.Area === e && (i += a.Star);
     return i;
   }
   GetDifficultyMaxStars(t, e = !1) {
@@ -173,13 +180,13 @@ class TowerModel extends ModelBase_1.ModelBase {
       var i =
           ConfigManager_1.ConfigManager.TowerClimbConfig.GetDifficultyReward(t),
         o = i.length,
-        s = [];
+        a = [];
       for (let t = 0; t < o; t++) {
-        var a = i[t],
-          a = new TowerData_1.TowerReward(a.Item1, a.Item2, t);
-        (a.IsReceived = e?.includes(t)), s.push(a);
+        var s = i[t],
+          s = new TowerData_1.TowerReward(s.Item1, s.Item2, t);
+        (s.IsReceived = e?.includes(t)), a.push(s);
       }
-      this.QLo.set(t, s);
+      this.QLo.set(t, a);
     }
   }
   zLo(t) {
@@ -227,17 +234,27 @@ class TowerModel extends ModelBase_1.ModelBase {
     return [e, t.length];
   }
   GetDifficultyIsClear(t) {
-    for (const e of ConfigManager_1.ConfigManager.TowerClimbConfig.GetDifficultyAllFloor(
-      this.CurrentSeason,
-      t,
-    ))
-      if (!this.jLo.get(e)) return !1;
+    if (!(this.MaxUnlockDifficulty > t))
+      for (const e of ConfigManager_1.ConfigManager.TowerClimbConfig.GetDifficultyAllFloor(
+        this.CurrentSeason,
+        t,
+      ))
+        if (!this.jLo.get(e)) return !1;
     return !0;
   }
   GetMaxDifficulty() {
     return this.GetDifficultyIsClear(TowerData_1.LOW_RISK_DIFFICULTY)
       ? this.GetDifficultyIsClear(TowerData_1.HIGH_RISK_DIFFICULTY)
-        ? TowerData_1.VARIATION_RISK_DIFFICULTY
+        ? 1 !==
+            this.GetDifficultyRewardProgress(
+              TowerData_1.VARIATION_RISK_DIFFICULTY,
+            ) ||
+          1 ===
+            this.GetDifficultyRewardProgress(
+              TowerData_1.OVERLOCK_RISK_DIFFICULTY,
+            )
+          ? TowerData_1.VARIATION_RISK_DIFFICULTY
+          : TowerData_1.OVERLOCK_RISK_DIFFICULTY
         : TowerData_1.HIGH_RISK_DIFFICULTY
       : TowerData_1.LOW_RISK_DIFFICULTY;
   }
@@ -400,6 +417,19 @@ class TowerModel extends ModelBase_1.ModelBase {
     let e = 0;
     for (const r of t) r.IsReceived && e++;
     return e / t.length;
+  }
+  GetOverLockHasShow() {
+    return (
+      LocalStorage_1.LocalStorage.GetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.TowerOverLockArea,
+      ) ?? !1
+    );
+  }
+  SetOverLockHasShow() {
+    LocalStorage_1.LocalStorage.SetPlayer(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.TowerOverLockArea,
+      !0,
+    );
   }
 }
 exports.TowerModel = TowerModel;

@@ -18,7 +18,7 @@ class BoneHiddenSwitch {
       Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Audio",
-        58,
+        57,
         "[BoneHiddenSwitch] BoneHiddenSwitch配置无效",
         ["ConfigId:", i.Id],
       ),

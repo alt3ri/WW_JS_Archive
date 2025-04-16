@@ -14,7 +14,7 @@ class LevelEventRestorePhantomFormation extends LevelGeneralBase_1.LevelEventBas
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            49,
+            48,
             "[RestorePhantomFormation] 队伍更新完成",
             ["isRole", e],
           ),
@@ -35,14 +35,14 @@ class LevelEventRestorePhantomFormation extends LevelGeneralBase_1.LevelEventBas
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            49,
+            48,
             "[RestorePhantomFormation] 当前已是角色队伍",
           ),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            49,
+            48,
             "[RestorePhantomFormation] 开始等待队伍更新",
           ),
         EventSystem_1.EventSystem.Add(

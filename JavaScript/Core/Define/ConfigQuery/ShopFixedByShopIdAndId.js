@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configShopFixedByShopIdAndId.Init"),
-  getConfigStat = Stats_1.Stat.Create("configShopFixedByShopIdAndId.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configShopFixedByShopIdAndId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configShopFixedByShopIdAndId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configShopFixedByShopIdAndId.GetConfig(";
 exports.configShopFixedByShopIdAndId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n, i = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${n})`),
+      getConfigStat?.Start();
+    var e = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o}#${n})`),
       t =
-        (e.Start(),
+        (e?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (i) {
@@ -43,8 +47,8 @@ exports.configShopFixedByShopIdAndId = {
         const C = ConfigCommon_1.ConfigCommon.GetConfig(d);
         if (C)
           return (
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -81,8 +85,8 @@ exports.configShopFixedByShopIdAndId = {
               ((t = KEY_PREFIX + `#${o}#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -90,8 +94,8 @@ exports.configShopFixedByShopIdAndId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    e.Stop(),
-      getConfigStat.Stop(),
+    e?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

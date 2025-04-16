@@ -16,9 +16,11 @@ const UE = require("ue"),
   PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   LocalStorage_1 = require("../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   DEFAULTSERVERREGION = "America",
+  SEASERVER = "SEA",
   CNSERVERNAME = "Default";
 exports.DEFAULTPING = 9999;
 class LoginPlayerInfo extends Json_1.JsonObjBase {
@@ -65,7 +67,8 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       (this.REi = new Map()),
       (this.OnBeginSuggestServerData = void 0),
       (this.CurrentSelectServerData = void 0),
-      (this.CurrentUiSelectSeverData = void 0);
+      (this.CurrentUiSelectSeverData = void 0),
+      (this.Eml = void 0);
   }
   GetCurrentSelectPayServerName() {
     let e =
@@ -74,7 +77,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       "CN" !== e && this.CurrentSelectServerData
         ? ((e = this.CurrentSelectServerData.Region),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Pay", 28, "海外支付区域", ["area", e]))
+            Log_1.Log.Debug("Pay", 27, "海外支付区域", ["area", e]))
         : (e = CNSERVERNAME),
       (e = StringUtils_1.StringUtils.IsEmpty(e) ? CNSERVERNAME : e)
     );
@@ -87,11 +90,10 @@ class LoginServerModel extends ModelBase_1.ModelBase {
         ? this.CurrentSelectServerData
           ? this.CurrentSelectServerData.ip
           : ""
-        : (e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
-            0 < e.length
+        : (e = this.GetLoginServersByClientRegion()) && 0 < e.length
           ? e[0].ip
           : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 28, "当前没有服务器，请检查CDN配置"),
+              Log_1.Log.Info("Login", 27, "当前没有服务器，请检查CDN配置"),
             "")
       : (ModelManager_1.ModelManager.LoginModel.GetServerIp() ?? "");
   }
@@ -101,11 +103,10 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       ? this.CurrentSelectServerData
         ? this.CurrentSelectServerData.name
         : ""
-      : (e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
-          0 < e.length
+      : (e = this.GetLoginServersByClientRegion()) && 0 < e.length
         ? e[0].name
         : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Login", 28, "当前没有服务器，请检查CDN配置"),
+            Log_1.Log.Info("Login", 27, "当前没有服务器，请检查CDN配置"),
           "");
   }
   GetCurrentLoginServerId() {
@@ -116,25 +117,58 @@ class LoginServerModel extends ModelBase_1.ModelBase {
         ? this.CurrentSelectServerData
           ? this.CurrentSelectServerData.id
           : "0"
-        : (e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
-            0 < e.length
+        : (e = this.GetLoginServersByClientRegion()) && 0 < e.length
           ? e[0].id
           : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Login", 28, "当前没有服务器，请检查CDN配置"),
+              Log_1.Log.Info("Login", 27, "当前没有服务器，请检查CDN配置"),
             "0")
       : (ModelManager_1.ModelManager.LoginModel.GetServerId() ?? "");
   }
+  GetLoginServersByClientRegion() {
+    if (!this.Eml) {
+      var e = BaseConfigController_1.BaseConfigController.GetLoginServers();
+      if (
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().BlockServerArea()
+      ) {
+        this.Eml = new Array();
+        var r,
+          o =
+            PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetSdkCountry();
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Login", 27, "锁区", ["currentCountryCode", o]);
+        for (const t of e)
+          t.Region &&
+            (r = ConfigManager_1.ConfigManager.LoginConfig.GetServerLimitConfig(
+              t.Region,
+            )) &&
+            o &&
+            r.CountryCodes.includes(o) &&
+            this.Eml.push(t);
+        if (0 === this.Eml.length)
+          for (const i of e)
+            if (i.Region === SEASERVER) {
+              this.Eml.push(i);
+              break;
+            }
+      } else this.Eml = e;
+    }
+    return this.Eml;
+  }
   SelectCurrentSelectServerByServerId(e, r) {
     ModelManager_1.ModelManager.LoginModel.SetServerIp(e, 1);
-    e = BaseConfigController_1.BaseConfigController.GetLoginServers();
+    e = this.GetLoginServersByClientRegion();
     if (e && 0 < e.length)
       for (const o of e)
         if (o.id === r) {
           this.CurrentSelectServerData = o;
           break;
         }
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Login", 28, "选择服务器", ["serverId", r]);
+    ModelManager_1.ModelManager.LoginModel.SetServerId(r),
+      ModelManager_1.ModelManager.LoginModel?.SetServerName(
+        this.CurrentSelectServerData?.name ?? "",
+      ),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Login", 27, "选择服务器", ["serverId", r]);
   }
   IsFirstLogin(e) {
     var r = LocalStorage_1.LocalStorage.GetGlobal(
@@ -144,7 +178,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Login",
-          28,
+          27,
           "IsFirstLogin",
           ["IsFirstLogin", r?.get(e)],
           ["sdkId", e],
@@ -161,7 +195,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Login",
-            28,
+            27,
             "LastTimeLoginData",
             ["result?.get(sdkUid).Ip", r?.get(e).Ip],
             ["sdkId", e],
@@ -195,7 +229,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     for (let e = 0; e < i; e++)
       t[e].PingUrl === r &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Login", 28, "RefreshIpPing", [t[e].Region, 1e3 * o]),
+          Log_1.Log.Debug("Login", 27, "RefreshIpPing", [t[e].Region, 1e3 * o]),
         this.REi.set(t[e], 1e3 * o));
   }
   GetPlayerLoginInfo(e) {
@@ -216,7 +250,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     (this.CurrentSelectServerData = this.FindIpServerData(e)),
       (this.OnBeginSuggestServerData = this.CurrentSelectServerData),
       this.OnBeginSuggestServerData ||
-        ((e = BaseConfigController_1.BaseConfigController.GetLoginServers()) &&
+        ((e = this.GetLoginServersByClientRegion()) &&
           0 < e.length &&
           ((this.OnBeginSuggestServerData = e[0]),
           (this.CurrentSelectServerData = e[0]))),
@@ -227,18 +261,18 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       o = r.length,
       t =
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Login", 28, "GetSuggestServerData"),
+          Log_1.Log.Debug("Login", 27, "GetSuggestServerData"),
         this.GetPlayerLoginInfo(e));
     if (!t)
       return (e = this.LastTimeLoginData(e))
         ? (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Login", 28, "没有服务器信息拿本地登录信息", [
+            Log_1.Log.Debug("Login", 27, "没有服务器信息拿本地登录信息", [
               "data",
               e.Region,
             ]),
           e)
         : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Login", 28, "没有拿到服务器推荐返回低Ping"),
+            Log_1.Log.Debug("Login", 27, "没有拿到服务器推荐返回低Ping"),
           this.AEi(DEFAULTSERVERREGION));
     let i = "";
     if (0 < t.UserInfos.length) {
@@ -254,7 +288,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
         return (
           (g = new RegionAndIpSt()).Phrase(e.Region, e.ip),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Login", 28, "recommendRegion", [
+            Log_1.Log.Debug("Login", 27, "recommendRegion", [
               "recommendRegion",
               i,
             ]),
@@ -267,7 +301,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
         if (this.xEi())
           return (
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Login", 28, "PingHigh", [r[e].Region, r[e].ip]),
+              Log_1.Log.Debug("Login", 27, "PingHigh", [r[e].Region, r[e].ip]),
             (l = new RegionAndIpSt()).Phrase(r[e].Region, r[e].ip),
             l
           );
@@ -277,12 +311,12 @@ class LoginServerModel extends ModelBase_1.ModelBase {
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Login",
-                28,
+                27,
                 "this.RegionPingMap.get(keys[i]) > 100",
               ),
             this.AEi(DEFAULTSERVERREGION)
           );
-        Log_1.Log.CheckDebug() && Log_1.Log.Debug("Login", 28, "返回推荐");
+        Log_1.Log.CheckDebug() && Log_1.Log.Debug("Login", 27, "返回推荐");
         var L = new RegionAndIpSt();
         return L.Phrase(r[e].Region, r[e].ip), L;
       }
@@ -310,7 +344,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     var a = new RegionAndIpSt();
     for (let e = 0; e < t; e++)
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Login", 28, "区域ping", [
+        Log_1.Log.Debug("Login", 27, "区域ping", [
           "ping",
           this.REi.get(o[e]).toString(),
         ]),
@@ -318,12 +352,12 @@ class LoginServerModel extends ModelBase_1.ModelBase {
           ((i = this.REi.get(o[e])),
           a.Phrase(o[e].Region, o[e].ip),
           Log_1.Log.CheckDebug()) &&
-          Log_1.Log.Debug("Login", 28, "尝试选择低Ping", [o[e].Region, i]),
+          Log_1.Log.Debug("Login", 27, "尝试选择低Ping", [o[e].Region, i]),
         o[e].Region === r && (n = o[e].ip);
     return (
       StringUtils_1.StringUtils.IsEmpty(a.Ip) &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Login", 28, "找不到低ping，用默认服务器"),
+          Log_1.Log.Debug("Login", 27, "找不到低ping，用默认服务器"),
         a.Phrase(r, n)),
       a
     );
@@ -338,7 +372,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     }
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Login", 28, "找不到ServerLevel", ["region", r]),
+        Log_1.Log.Debug("Login", 27, "找不到ServerLevel", ["region", r]),
       this.wEi(e, r)
     );
   }

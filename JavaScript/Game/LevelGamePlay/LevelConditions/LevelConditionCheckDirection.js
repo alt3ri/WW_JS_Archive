@@ -17,7 +17,7 @@ class LevelConditionCheckDirection extends LevelGeneralBase_1.LevelConditionBase
       if (t && e && Global_1.Global.BaseCharacter) {
         var s = Global_1.Global.BaseCharacter.CharacterActorComponent,
           a =
-            (this.tLe.FromUeVector(r.K2_GetActorLocation()),
+            (this.tLe.FromUeVector(r.D_K2_GetActorLocation()),
             this.tLe.Subtraction(s.ActorLocationProxy, this.tLe),
             this.tLe.Normalize(),
             MathUtils_1.MathUtils.GetAngleByVectorDot(
@@ -51,7 +51,7 @@ class LevelConditionCheckDirection extends LevelGeneralBase_1.LevelConditionBase
         e.Direction.Z ?? 0,
       )),
       (t = Vector_1.Vector.Create(
-        UE.Rotator.MakeFromEuler(t.ToUeVector()).Vector(),
+        UE.Rotator.MakeFromEuler(t.ToUeVectorOld()).VectorDouble(),
       )).Normalize(),
       MathUtils_1.MathUtils.GetAngleByVectorDot(t, r) < e.AngleInterval)
     );

@@ -60,8 +60,8 @@ class AlterTipMark extends UiPanelBase_1.UiPanelBase {
       i = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation(),
       e = Global_1.Global.CharacterController,
       s =
-        ((this.T$e = Vector_1.Vector.Create(this.E$e.K2_GetActorLocation())),
-        UE.GameplayStatics.ProjectWorldToScreen(
+        ((this.T$e = Vector_1.Vector.Create(this.E$e.D_K2_GetActorLocation())),
+        UE.GameplayStatics.D_ProjectWorldToScreen(
           e,
           this.T$e.ToUeVector(),
           this.S$e,
@@ -71,14 +71,14 @@ class AlterTipMark extends UiPanelBase_1.UiPanelBase {
           (this.T$e.Subtraction(i, this.yB),
           (s = Global_1.Global.CharacterCameraManager),
           Rotator_1.Rotator.Create(s.GetCameraRotation()).Vector(this.LYe),
-          (s = UE.KismetMathLibrary.ProjectVectorOnToVector(
+          (s = UE.KismetMathLibrary.D_ProjectVectorOnToVector(
             this.yB.ToUeVector(),
             this.LYe.ToUeVector(),
           ).op_Multiply(2)),
           this.DYe.Set(s.X, s.Y, s.Z),
           this.yB.SubtractionEqual(this.DYe),
           i.Addition(this.yB, this.T$e),
-          UE.GameplayStatics.ProjectWorldToScreen(
+          UE.GameplayStatics.D_ProjectWorldToScreen(
             e,
             this.T$e.ToUeVector(),
             this.S$e,
@@ -100,7 +100,7 @@ class AlterTipMark extends UiPanelBase_1.UiPanelBase {
   N$e() {
     var t = ActorUtils_1.ActorUtils.GetEntityByActor(
       this.E$e,
-    ).Entity.GetComponent(40).AiController.AiAlert.AlertValue;
+    ).Entity.GetComponent(46).AiController.AiAlert.AlertValue;
     if (0 < t) {
       if (0 < this.B$e) return;
       this.wYe.SetUIActive(!0);

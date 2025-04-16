@@ -44,8 +44,11 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
       }),
       (this.aBi = (t) => {
         let i = 2.2;
-        t < 0 && (i = MathUtils_1.MathUtils.Lerp(1.5, 2.2, (t + 1) / this.eBi)),
-          0 < t && (i = MathUtils_1.MathUtils.Lerp(2.2, 3.5, t / this.eBi)),
+        var s = this.eBi / 2;
+        (i =
+          t < s
+            ? MathUtils_1.MathUtils.Lerp(1.5, 2.2, t / s)
+            : MathUtils_1.MathUtils.Lerp(2.2, 3.5, (t - s) / s)),
           UE.KismetMaterialLibrary.SetScalarParameterValue(
             GlobalData_1.GlobalData.World,
             RenderDataManager_1.RenderDataManager.Get().GetUiShowBrightnessMaterialParameterCollection(),

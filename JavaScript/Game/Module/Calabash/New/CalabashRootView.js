@@ -18,7 +18,12 @@ const UE = require("ue"),
   CalabashTabItem_1 = require("./CalabashTabItem"),
   CALABASH_LEVEL_UP_HELP_ID = 48,
   CALABASH_COLLECT_HELP_ID = 47,
-  VISION_RECOVERY_HELP_ID = 70;
+  VISION_RECOVERY_HELP_ID = 70,
+  viewHelpId = new Map([
+    ["CalabashLevelUpTabView", CALABASH_LEVEL_UP_HELP_ID],
+    ["CalabashCollectTabView", CALABASH_COLLECT_HELP_ID],
+    ["VisionRecoveryTabView", VISION_RECOVERY_HELP_ID],
+  ]);
 class CalabashRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -29,7 +34,7 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
       (this.Dvt = !1),
       (this.t5e = 0),
       (this.Rvt = () => {
-        this.CloseMe();
+        this.Qdc() || this.CloseMe();
       }),
       (this.dpt = () => {
         HelpController_1.HelpController.OpenHelpById(this.t5e);
@@ -57,17 +62,6 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
             }),
           this.Ivt.SelectToggleByIndex(t);
       }),
-      (this.Pvt = () => {
-        this.Ivt?.HideItem();
-      }),
-      (this.xvt = () => {
-        this.Ivt?.ShowItem();
-      }),
-      (this.wvt = (e) => {
-        e
-          ? this.UiViewSequence.PlaySequence("SwitchA")
-          : this.UiViewSequence.PlaySequence("SwitchB");
-      }),
       (this.fqe = (e) => new CalabashTabItem_1.CalabashTabItem()),
       (this.pqe = (e) => {
         var t = this.yvt[e],
@@ -75,15 +69,9 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
           e = this.Ivt.GetTabItemByIndex(e),
           a = i === this.Lvt?.TabViewName ? this.Lvt?.Param : void 0;
         this.Tvt.ToggleCallBack(t, i, e, a),
-          this.Lvt && (this.Lvt.Param = void 0);
-        let s = !1;
-        "CalabashLevelUpTabView" === i
-          ? ((this.t5e = CALABASH_LEVEL_UP_HELP_ID), (s = !0))
-          : "CalabashCollectTabView" === i
-            ? ((this.t5e = CALABASH_COLLECT_HELP_ID), (s = !0))
-            : "VisionRecoveryTabView" === i &&
-              ((this.t5e = VISION_RECOVERY_HELP_ID), (s = !0)),
-          this.Ivt.SetHelpButtonShowState(s),
+          this.Lvt && (this.Lvt.Param = void 0),
+          (this.t5e = viewHelpId.get(i) ?? -1),
+          this.Ivt.SetHelpButtonShowState(0 < this.t5e),
           this.GetItem(3)?.SetUIActive("CalabashCollectTabView" === i);
       }),
       (this.yqe = (e) => {
@@ -95,6 +83,17 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
       }),
       (this.Bvt = (e) => {
         ModelManager_1.ModelManager.CalabashModel.SaveIfSimpleState(!e);
+      }),
+      (this.Pvt = () => {
+        this.Ivt?.HideItem();
+      }),
+      (this.xvt = () => {
+        this.Ivt?.ShowItem();
+      }),
+      (this.wvt = (e) => {
+        e
+          ? this.UiViewSequence.PlaySequence("SwitchA")
+          : this.UiViewSequence.PlaySequence("SwitchB");
       });
   }
   OnRegisterComponent() {
@@ -200,14 +199,15 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
       this.Ivt.SelectToggleByIndex(e);
   }
   K8e() {
-    var e = this.yvt.findIndex(
-      (e) => "CalabashLevelUpTabView" === e.ChildViewName,
-    );
-    0 <= e && this.Ivt.GetTabItemByIndex(e)?.BindRedDot("CalabashTab"),
-      0 <=
-        (e = this.yvt.findIndex(
-          (e) => "VisionRecoveryTabView" === e.ChildViewName,
-        )) && this.Ivt.GetTabItemByIndex(e)?.BindRedDot("VisionRecovery");
+    this.Xdc("CalabashLevelUpTabView", "CalabashTab", !0),
+      this.Xdc("VisionRecoveryTabView", "VisionRecovery", !0),
+      this.Xdc("VisionRefineTabView", "VisionRefine", !0);
+  }
+  Xdc(t, e, i) {
+    var a = this.yvt.findIndex((e) => e.ChildViewName === t);
+    0 <= a &&
+      ((a = this.Ivt.GetTabItemByIndex(a)),
+      i ? a?.BindRedDot(e) : a?.UnBindRedDot());
   }
   OnBeforeShow() {
     this.Dvt ? this.Nvt() : this.Tvt.SetCurrentTabViewState(!0),
@@ -222,10 +222,9 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
     void 0 !== e && e.RemoveAllVisionItemOutside();
   }
   Ovt() {
-    var e = this.yvt.findIndex(
-      (e) => "CalabashLevelUpTabView" === e.ChildViewName,
-    );
-    this.Ivt.GetTabItemByIndex(e)?.UnBindRedDot();
+    this.Xdc("CalabashLevelUpTabView", "CalabashTab", !1),
+      this.Xdc("VisionRecoveryTabView", "VisionRecovery", !1),
+      this.Xdc("VisionRefineTabView", "VisionRefine", !1);
   }
   OnBeforeDestroy() {
     this.Ivt.Destroy(), this.Tvt.DestroyTabViewComponent();
@@ -237,10 +236,15 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
     ).GetRootItem();
     if (i) return [i, i];
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         e,
       ]);
+  }
+  Qdc() {
+    if (this.Tvt && "VisionRefineTabView" === this.Tvt.GetCurrentTabViewName())
+      return this.Tvt.GetCurrentTabView()?.OnClickCloseRoot();
+    return !1;
   }
 }
 exports.CalabashRootView = CalabashRootView;

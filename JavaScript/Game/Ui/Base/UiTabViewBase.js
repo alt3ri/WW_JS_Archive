@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiTabViewBase = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
-  PerformanceController_1 = require("../../../Core/Performance/PerformanceController"),
   TickSystem_1 = require("../../../Core/Tick/TickSystem"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -19,11 +18,7 @@ class UiTabViewBase extends UiPanelBase_1.UiPanelBase {
       (this.UiViewSequence = void 0),
       (this._ur = void 0),
       (this.uur = (e) => {
-        var i = PerformanceController_1.PerformanceController.StartMonitor(
-          "UiTabViewBase.TickHandler",
-        );
-        this.OnTickUiTabViewBase(e),
-          PerformanceController_1.PerformanceController.EndMonitor(i);
+        this.OnTickUiTabViewBase(e);
       });
   }
   SetTabViewName(e) {
@@ -68,7 +63,7 @@ class UiTabViewBase extends UiPanelBase_1.UiPanelBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiTabModule",
-            11,
+            10,
             "功能模块添加重复,查看是否重复添加",
           )
         : ((i = new e()), this.lur.set(e, i)),

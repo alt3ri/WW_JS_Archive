@@ -11,25 +11,36 @@ class TeleportModel extends ModelBase_1.ModelBase {
       (this.QIo = void 0),
       (this.XIo = void 0),
       (this.$Io = void 0),
+      (this.StartGravityDirectCache = void 0),
       (this.YIo = void 0),
       (this.JIo = void 0),
+      (this.TargetGravityDirectCache = void 0),
+      (this.pml = !0),
       (this.TeleportMode = 1),
       (this.TeleportCameraFadeStatus = void 0),
       (this.CallSource = void 0),
       (this.CheckStreamingCompletedTimerId = void 0),
       (this.CheckPhysicsCompletedTimerId = void 0),
       (this.zIo = void 0),
+      (this.DisableAutoFade = !1),
       (this.x$s = void 0),
       (this.eTo = void 0),
       (this.tTo = void 0),
+      (this.shh = void 0),
+      (this.AllowTeleport = !0),
+      (this.TeleportEntityCreatureDataId = 0),
       (this.IsInSeamlessTeleport = !1),
       (this.Treadmill = void 0),
+      (this.PostProcess = void 0),
       (this.SeamlessConfig = void 0),
       (this.SeamlessEffectData = void 0),
       (this.SeamlessEndHandle = void 0),
-      (this.wea = void 0),
       (this.Bea = void 0),
-      (this.bea = void 0);
+      (this.ch1 = void 0),
+      (this.uh1 = void 0),
+      (this.dh1 = void 0),
+      (this.mh1 = void 0),
+      (this.fh1 = void 0);
   }
   get IsTeleport() {
     return this.QIo;
@@ -49,6 +60,12 @@ class TeleportModel extends ModelBase_1.ModelBase {
   set StartRotation(t) {
     this.$Io = t;
   }
+  get StartGravityDirect() {
+    return this.StartGravityDirectCache;
+  }
+  set StartGravityDirect(t) {
+    this.StartGravityDirectCache = t;
+  }
   get TargetPosition() {
     return this.YIo;
   }
@@ -60,6 +77,18 @@ class TeleportModel extends ModelBase_1.ModelBase {
   }
   set TargetRotation(t) {
     this.JIo = t;
+  }
+  get TargetGravityDirect() {
+    return this.TargetGravityDirectCache;
+  }
+  set TargetGravityDirect(t) {
+    this.TargetGravityDirectCache = t;
+  }
+  get NeedRestoreCamera() {
+    return this.pml;
+  }
+  set NeedRestoreCamera(t) {
+    this.pml = t;
   }
   get StreamingCompleted() {
     return this.zIo;
@@ -73,14 +102,26 @@ class TeleportModel extends ModelBase_1.ModelBase {
   get CgTeleportCompleted() {
     return this.tTo;
   }
-  get SeamlessAssetLoaded() {
-    return this.wea;
+  get TeleportWaitRequest() {
+    return this.shh;
+  }
+  get TreadmillLoaded() {
+    return this.ch1;
+  }
+  get TreadmillLeastTimeFinished() {
+    return this.uh1;
   }
   get EffectFillScreen() {
     return this.Bea;
   }
-  get TransitionMapUnloaded() {
-    return this.bea;
+  get TreadmillDisappeared() {
+    return this.dh1;
+  }
+  get PostProcessBlendedIn() {
+    return this.mh1;
+  }
+  get PostProcessBlendedOut() {
+    return this.fh1;
   }
   OnInit() {
     return (
@@ -88,6 +129,8 @@ class TeleportModel extends ModelBase_1.ModelBase {
       (this.YIo = Vector_1.Vector.Create()),
       (this.$Io = Rotator_1.Rotator.Create()),
       (this.JIo = Rotator_1.Rotator.Create()),
+      (this.StartGravityDirectCache = Vector_1.Vector.Create()),
+      (this.TargetGravityDirectCache = Vector_1.Vector.Create()),
       !(this.TeleportCameraFadeStatus = !1)
     );
   }
@@ -97,26 +140,39 @@ class TeleportModel extends ModelBase_1.ModelBase {
       (this.YIo = void 0),
       (this.$Io = void 0),
       (this.JIo = void 0),
+      (this.StartGravityDirectCache = void 0),
+      (this.TargetGravityDirectCache = void 0),
       !(this.TeleportCameraFadeStatus = !1)
     );
+  }
+  OnLeaveLevel() {
+    return (this.AllowTeleport = !0);
   }
   CreatePromise() {
     (this.zIo = new GameModePromise_1.GameModePromise()),
       (this.x$s = new GameModePromise_1.GameModePromise()),
       (this.eTo = new GameModePromise_1.GameModePromise()),
       (this.tTo = new GameModePromise_1.GameModePromise()),
-      (this.wea = new GameModePromise_1.GameModePromise()),
       (this.Bea = new GameModePromise_1.GameModePromise()),
-      (this.bea = new GameModePromise_1.GameModePromise());
+      (this.ch1 = new GameModePromise_1.GameModePromise()),
+      (this.uh1 = new GameModePromise_1.GameModePromise()),
+      (this.dh1 = new GameModePromise_1.GameModePromise()),
+      (this.mh1 = new GameModePromise_1.GameModePromise()),
+      (this.fh1 = new GameModePromise_1.GameModePromise()),
+      (this.shh = new GameModePromise_1.GameModePromise());
   }
   ResetPromise() {
     (this.zIo = void 0),
       (this.x$s = void 0),
       (this.eTo = void 0),
       (this.tTo = void 0),
-      (this.wea = void 0),
       (this.Bea = void 0),
-      (this.bea = void 0);
+      (this.ch1 = void 0),
+      (this.uh1 = void 0),
+      (this.dh1 = void 0),
+      (this.mh1 = void 0),
+      (this.fh1 = void 0),
+      (this.shh = void 0);
   }
 }
 exports.TeleportModel = TeleportModel;

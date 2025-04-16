@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MailModel = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../Core/Common/Log"),
+const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -13,6 +12,7 @@ const UE = require("ue"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   MailInstance_1 = require("./MailInstance"),
   MailAttachmentData_1 = require("./Views/MailAttachmentData"),
@@ -112,7 +112,7 @@ class MailModel extends ModelBase_1.ModelBase {
         i.set(e.s5n, t);
       }),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Mail", 28, "邮件数据：领取邮件奖励", ["key", r]),
+          Log_1.Log.Info("Mail", 27, "邮件数据：领取邮件奖励", ["key", r]),
         this.SetMailStatusByStatusCode(e[r], a);
     }
     i.forEach((e, t) => {
@@ -133,7 +133,9 @@ class MailModel extends ModelBase_1.ModelBase {
     this.Byi = e;
   }
   OpenWebBrowser(e) {
-    e && "" !== e && UE.KismetSystemLibrary.LaunchURL(e);
+    e &&
+      "" !== e &&
+      ControllerHolder_1.ControllerHolder.KuroSdkController.OpenExternalUrl(e);
   }
   ReloadMailList() {
     (this.wyi.length = 0),
@@ -167,7 +169,7 @@ class MailModel extends ModelBase_1.ModelBase {
   AddMail(e, t = !0) {
     this.kQ.size >= this.GetMailCapacity() &&
       Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Mail", 28, "后端新增邮件时超出容量！"),
+      Log_1.Log.Error("Mail", 27, "后端新增邮件时超出容量！"),
       this.Fyi(e),
       t && this.ReloadMailList();
   }
@@ -176,7 +178,7 @@ class MailModel extends ModelBase_1.ModelBase {
       ModelManager_1.ModelManager.MailModel.GetMailListLength() >=
         ModelManager_1.ModelManager.MailModel.GetMailCapacity() &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Mail", 28, "[MailError]MailBox is fulfilled");
+        Log_1.Log.Error("Mail", 27, "[MailError]MailBox is fulfilled");
       var t = new Protocol_1.Aki.Protocol.L5s(i);
       this.AddMail(t, !1);
     }
@@ -206,7 +208,7 @@ class MailModel extends ModelBase_1.ModelBase {
   }
   Fyi(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Mail", 28, "邮件数据：创建邮件 ", [
+      Log_1.Log.Info("Mail", 27, "邮件数据：创建邮件 ", [
         "mailInformation.Proto_Id",
         e.s5n,
       ]);
@@ -222,8 +224,7 @@ class MailModel extends ModelBase_1.ModelBase {
       (i.Title = e.tbs),
       i.SetText(e.P8n),
       (i.Sender = e.ibs),
-      (i.ValidTime = e.rbs),
-      (i.FinishValidTime = e.obs),
+      (i.ExpiryTime = Number(MathUtils_1.MathUtils.LongToBigInt(e.jb_))),
       (i.AttachmentInfos = e.nbs),
       (i.ReadTime = MathUtils_1.MathUtils.LongToNumber(e.ebs)),
       this.jyi(i),
@@ -232,7 +233,7 @@ class MailModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件数据：创建邮件成功： ",
           ["newMail.Id", i.Id],
           ["title", i.Title],
@@ -289,7 +290,7 @@ class MailModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件数据：邮件状态改变",
           ["SetMailStatusByStatusCode:", a],
           ["id:", t.Id],

@@ -6,13 +6,12 @@ const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
-  constructor(e) {
-    super(e),
+  constructor() {
+    super(...arguments),
       (this.fgt = 0),
       (this.Tsr = ""),
       (this.Lsr = void 0),
-      (this.Dsr = Vector_1.Vector.Create()),
-      (this.StateType = "BePrecasting");
+      (this.Dsr = Vector_1.Vector.Create());
   }
   SetDirection(e) {
     this.fgt = e;
@@ -52,10 +51,12 @@ class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.S
     return Vector_1.Vector.Create(e);
   }
   Rsr() {
-    var e = Vector_1.Vector.Create();
-    (this.Lsr =
-      Global_1.Global.BaseCharacter?.CharacterActorComponent?.ActorForwardProxy),
-      this.Lsr.CrossProduct(Vector_1.Vector.UpVectorProxy, e),
+    var e = Vector_1.Vector.Create(),
+      t =
+        ((this.Lsr =
+          Global_1.Global.BaseCharacter?.CharacterActorComponent?.ActorForwardProxy),
+        Global_1.Global.BaseCharacter?.CharacterActorComponent?.ActorUpProxy);
+    this.Lsr.CrossProduct(t, e),
       e.CrossProduct(this.Lsr, this.Dsr),
       this.Dsr.Normalize();
   }

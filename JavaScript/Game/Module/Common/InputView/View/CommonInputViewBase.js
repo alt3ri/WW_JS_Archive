@@ -8,6 +8,7 @@ const puerts_1 = require("puerts"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  Platform_1 = require("../../../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
@@ -36,13 +37,18 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       (this.qAt = () => {
         var t = this.InputText.GetText(),
           i = StringUtils_1.StringUtils.GetStringRealCount(t);
-        i > this.GetMaxLimit()
-          ? (this.RefreshTips(2), (this.j3 = 0))
-          : 0 === i && this.InputData.IsCheckNone
-            ? (this.RefreshTips(1), (this.j3 = 0))
-            : i < this.GetMinLimit()
-              ? (this.RefreshTips(3), (this.j3 = 0))
-              : this.ExtraConfirmCheck(i, t) && this.ExecuteInputConfirm(t);
+        void 0 !== this.InputData.NeedCheckBlank &&
+        this.InputData.NeedCheckBlank &&
+        0 < t.length &&
+        StringUtils_1.StringUtils.CheckIsOnlyBlank(t)
+          ? this.RefreshTips(5)
+          : i > this.GetMaxLimit()
+            ? (this.RefreshTips(2), (this.j3 = 0))
+            : 0 === i && this.InputData.IsCheckNone
+              ? (this.RefreshTips(1), (this.j3 = 0))
+              : i < this.GetMinLimit()
+                ? (this.RefreshTips(3), (this.j3 = 0))
+                : this.ExtraConfirmCheck(i, t) && this.ExecuteInputConfirm(t);
       }),
       (this.GAt = () => {
         this.SetTipsVisible(!1),
@@ -65,6 +71,9 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.VAt = () => {
         this.OAt("PrefabTextItem_Textillegality_Text", 0);
+      }),
+      (this.vY_ = () => {
+        this.OAt("PrefabTextItem_TextNull_Text", 0);
       }),
       (this.CdKeyErrorText =
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CDKey_Error")),
@@ -139,7 +148,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       },
       () => {
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("UiCommon", 11, "通用输入框执行出现未知错误");
+          Log_1.Log.Error("UiCommon", 10, "通用输入框执行出现未知错误");
       },
     );
   }
@@ -151,8 +160,9 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
         2: this.kAt,
         3: this.FAt,
         4: this.VAt,
-        5: this.HAt,
-        6: this.WAt,
+        5: this.vY_,
+        6: this.HAt,
+        7: this.WAt,
       });
   }
   OAt(t, i, ...e) {
@@ -174,9 +184,11 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     this.YAt(), this.mGe(), this.RefreshTips(0), this.InitExtraParam();
   }
   SetClearOrPaste() {
-    "" === this.InputText.GetText()
-      ? (this.wAt.RefreshSprite("SP_Paste"), this.wAt.BindCallback(this.QAt))
-      : (this.wAt.RefreshSprite("SP_Clear"), this.wAt.BindCallback(this.KAt));
+    this.wAt &&
+      ("" === this.InputText.GetText()
+        ? (this.wAt.RefreshSprite("SP_Paste"), this.wAt.BindCallback(this.QAt))
+        : (this.wAt.RefreshSprite("SP_Clear"),
+          this.wAt.BindCallback(this.KAt)));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -210,17 +222,28 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       (this.ConfirmButton = void 0);
   }
   YAt() {
-    (this.wAt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(7))),
-      this.GetItem(7).SetUIActive(this.InputData.NeedFunctionButton),
-      (this.ConfirmButton = this.GetButton(4)),
-      (this.InputText = this.GetInputText(5)),
-      (this.InputText.bAllowMultiLine = this.IsAllowMultiLine()),
-      this.InputText.OnTextChange.Bind(this.OnTextChange),
-      this.InputText.SetText(this.InputData.InputText, !0),
-      this.GetText(6).SetText(this.InputData.DefaultText),
-      this.SetClearOrPaste(),
-      this.SetTipsVisible(!1),
-      this.SetBottomTipsShowState(!1);
+    var t = !Platform_1.Platform.IsPs5Platform(),
+      t =
+        (t &&
+          (this.wAt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(
+            this.GetItem(7),
+          )),
+        this.GetItem(7).SetUIActive(t && this.InputData.NeedFunctionButton),
+        (this.ConfirmButton = this.GetButton(4)),
+        (this.InputText = this.GetInputText(5)),
+        (this.InputText.bAllowMultiLine = this.IsAllowMultiLine()),
+        this.InputText.OnTextChange.Bind(this.OnTextChange),
+        this.InputText.SetText(this.InputData.InputText, !0),
+        this.GetText(6).SetText(this.InputData.DefaultText),
+        this.SetClearOrPaste(),
+        this.SetTipsVisible(!1),
+        this.InputData.BottomTipsText),
+      t =
+        (void 0 !== t && "" !== t
+          ? (this.SetBottomTipsShowState(!0), this.GetText(8).SetText(t))
+          : this.SetBottomTipsShowState(!1),
+        this.InputData.BottomTipsColor);
+    void 0 !== t && "" !== t && this.GetText(8).SetColor(UE.Color.FromHex(t));
   }
   SetTipsVisible(t) {
     this.GetItem(1).SetUIActive(t);

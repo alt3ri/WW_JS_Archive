@@ -5,6 +5,7 @@ class TsAnimNotifyEnableEntity extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.IsEnable = !1);
   }
+  Constructor() {}
   K2_Notify(t, e) {
     return !0;
   }

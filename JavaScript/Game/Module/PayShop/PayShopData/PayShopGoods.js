@@ -136,6 +136,12 @@ class PayShopGoods {
       TimeUtil_1.TimeUtil.GetServerTime() >= Number(this.Pe.BeginTime)
     );
   }
+  WillSell() {
+    return (
+      !this.EFi &&
+      TimeUtil_1.TimeUtil.GetServerTime() < Number(this.Pe.BeginTime)
+    );
+  }
   GetDiscountTimeData() {
     var t,
       e = this.Pe.GetPromotionText();
@@ -225,11 +231,15 @@ class PayShopGoods {
     if (this.IsLimitGoods() && this.IsSoldOut())
       return ConfigManager_1.ConfigManager.TextConfig.GetTextById("SoldOut");
     if (!this.IfCanBuy()) {
-      if (this.GetGoodsData().GetItemConfig().ShowTypes.includes(30))
+      var t =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          this.GetGoodsData().ItemId,
+        );
+      if (this.GetGoodsData().GetItemConfig().ShowTypes.includes(30) || 1 === t)
         return ConfigManager_1.ConfigManager.TextConfig.GetTextById(
           "Text_Shop_Role_Text",
         );
-      var t = this.GetConditionTextId();
+      t = this.GetConditionTextId();
       if (!StringUtils_1.StringUtils.IsEmpty(t))
         return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t);
     }
@@ -239,20 +249,31 @@ class PayShopGoods {
     return this.Pe.GetIfCanBuy() ? "" : this.Pe.GetUnFinishConditionText();
   }
   GetExtraLimitText() {
-    var t;
-    return this.CheckIfMonthCardItem()
-      ? "Text_MonthlyCardMax_Text"
-      : this.IfCanBuy()
-        ? void 0
-        : this.GetGoodsData().GetItemConfig().ShowTypes.includes(30)
-          ? ((t = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
-              this.GetGoodsData().ItemId,
-            )[0]),
-            void 0 ===
-            ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(t)
-              ? "DontHaveRole"
-              : "RoleBrenchItemMax")
-          : this.GetConditionTextId();
+    if (this.CheckIfMonthCardItem()) return "Text_MonthlyCardMax_Text";
+    if (!this.IfCanBuy()) {
+      var t =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+          this.GetGoodsData().ItemId,
+        );
+      if (
+        this.GetGoodsData().GetItemConfig().ShowTypes.includes(30) ||
+        1 === t
+      ) {
+        let t = 0;
+        return (
+          (t = this.GetGoodsData().GetItemConfig().ShowTypes.includes(30)
+            ? ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
+                this.GetGoodsData().ItemId,
+              )[0]
+            : this.GetGoodsData().ItemId),
+          void 0 ===
+          ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(t)
+            ? "DontHaveRole"
+            : "RoleBrenchItemMax"
+        );
+      }
+      return this.GetConditionTextId();
+    }
   }
   GetIfNeedExtraLimitText() {
     return this.CheckIfMonthCardItem()
@@ -310,10 +331,11 @@ class PayShopGoods {
           (i = this.GetTimeRemainData(this.Pe.UpdateTime)?.RemainingTime))),
       t ||
         (this.HasDiscount() &&
-          !this.IsPermanentDiscount() &&
-          ((t = this.GetDiscountTimeData()),
-          (e = 1),
-          (i = this.GetTimeRemainData(this.Pe.EndPromotionTime).RemainingTime)),
+          0 <
+            (i = this.GetTimeRemainData(
+              this.Pe.EndPromotionTime,
+            ).RemainingTime) &&
+          ((t = this.GetDiscountTimeData()), (e = 1)),
         t) ||
         ((t = this.GetEndTimeRemainData()),
         (e = 3),
@@ -481,7 +503,14 @@ class PayShopGoods {
     return this.Pe.GetIfCanBuy();
   }
   IsSoldOut() {
-    return !!this.Pe.HasBuyLimit() && this.Pe.BoughtCount === this.Pe.BuyLimit;
+    if (this.Pe.HasBuyLimit()) return this.Pe.BoughtCount === this.Pe.BuyLimit;
+    var t = this.GetRewardRoleSkinId();
+    if (
+      0 < t &&
+      !ModelManager_1.ModelManager.RoleSkinModel.GetRoleSkinData(t).IsLocked()
+    )
+      return !0;
+    return !1;
   }
   GetGoodsId() {
     return this.Pe.Id;
@@ -502,9 +531,9 @@ class PayShopGoods {
     return this.GetGoodsData().CheckIfMonthCardItem();
   }
   GetIfNeedRemind() {
-    return !(!this.vYa() && !this.MYa());
+    return !(!this.HZa() && !this.jZa());
   }
-  vYa() {
+  HZa() {
     return (
       !(
         this.IsLocked() ||
@@ -515,7 +544,7 @@ class PayShopGoods {
       ) && 0 === this.GetPriceData().NowPrice
     );
   }
-  MYa() {
+  jZa() {
     return (
       !(!this.IfCanBuy() || this.IsSoldOut() || !this.CheckGoodIfShow()) &&
       this.Pe.GetIfNeedRemind()
@@ -550,6 +579,71 @@ class PayShopGoods {
         EventDefine_1.EEventName.RefreshPayShopTabRedDot,
         this.GetTabId(),
       ));
+  }
+  CheckIfGiftPackage() {
+    var e = this.GetGoodsData().ItemId,
+      e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
+    if (e && e.Parameters) {
+      let t = e.Parameters.get(ItemDefines_1.EItemFunctionType.ManualOpenGift);
+      return (t =
+        t || e.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenGift))
+        ? !0
+        : !1;
+    }
+    return !1;
+  }
+  GetPackageRewardId() {
+    var e = this.GetGoodsData().ItemId,
+      e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
+    if (e && e.Parameters) {
+      let t = e.Parameters.get(ItemDefines_1.EItemFunctionType.ManualOpenGift);
+      return (t =
+        t || e.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenGift))
+        ? t
+        : 0;
+    }
+    return 0;
+  }
+  GetRewardRoleSkinId() {
+    var t = this.GetGoodsData().ItemId,
+      t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(t);
+    if (t && t.Parameters) {
+      if (!this.CheckIfGiftPackage()) return 0;
+      t = ConfigManager_1.ConfigManager.GiftPackageConfig.GetGiftPackageConfig(
+        this.GetPackageRewardId(),
+      );
+      if (!t) return 0;
+      for (const i of t.Content) {
+        var e = i[0];
+        if (
+          11 ===
+          ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
+            e,
+          )
+        )
+          return e;
+      }
+    }
+    return 0;
+  }
+  CheckIfRoleSkinGoods() {
+    return 0 !== this.GetRewardRoleSkinId();
+  }
+  HasCloudGameInfo() {
+    return 0 < this.Pe.CloudGameTime;
+  }
+  GetCloudGameDesc() {
+    return this.HasCloudGameInfo()
+      ? StringUtils_1.StringUtils.Format(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            this.Pe.CloudGameDesc,
+          ),
+          this.Pe.CloudGameTime.toString(),
+        )
+      : StringUtils_1.EMPTY_STRING;
+  }
+  GetCloudGameIcon() {
+    return this.Pe.CloudGameIcon;
   }
 }
 exports.PayShopGoods = PayShopGoods;

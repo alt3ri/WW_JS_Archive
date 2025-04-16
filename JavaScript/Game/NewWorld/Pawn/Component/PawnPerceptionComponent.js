@@ -43,7 +43,6 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
       (this.Ihn = void 0),
       (this.Thn = void 0),
       (this.Lhn = void 0),
-      (this.Dhn = void 0),
       (this.vzr = () => {
         this.Shn &&
           ((this.Shn = !1),
@@ -69,13 +68,12 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
     this.rzr.SetLogicRange(Math.max(t + INTERACT_LOGIC_OFFSET, e)),
       this.Ihn
         ? this.Ihn.UpdateDistance(t, 0 === e ? t : e)
-        : ((this.Ihn = this.rzr.CreatePerceptionEvent()),
-          this.Ihn.Init(
+        : (this.Ihn = this.rzr.CreatePerceptionEvent(
             t,
             this.Entity?.GameBudgetManagedToken,
             () => {
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Interaction", 37, "进入交互范围", [
+                Log_1.Log.Debug("Interaction", 36, "进入交互范围", [
                   "EntityId",
                   this.Entity.Id,
                 ]),
@@ -83,7 +81,7 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
             },
             () => {
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Interaction", 37, "离开交互范围", [
+                Log_1.Log.Debug("Interaction", 36, "离开交互范围", [
                   "EntityId",
                   this.Entity.Id,
                 ]),
@@ -99,8 +97,7 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
     this.rzr.SetLogicRange(t),
       this.Thn
         ? this.Thn.UpdateDistance(t)
-        : ((this.Thn = this.rzr.CreatePerceptionEvent()),
-          this.Thn.Init(
+        : (this.Thn = this.rzr.CreatePerceptionEvent(
             t,
             this.Entity?.GameBudgetManagedToken,
             () => {
@@ -115,13 +112,16 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
     this.rzr.SetLogicRange(t),
       this.Lhn
         ? this.Lhn.UpdateDistance(t)
-        : ((this.Lhn = this.rzr.CreatePerceptionEvent()),
-          this.Lhn.Init(t, this.Entity?.GameBudgetManagedToken, () => {
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnGuideRangeEnter,
-              this.Entity.Id,
-            );
-          }));
+        : (this.Lhn = this.rzr.CreatePerceptionEvent(
+            t,
+            this.Entity?.GameBudgetManagedToken,
+            () => {
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.OnGuideRangeEnter,
+                this.Entity.Id,
+              );
+            },
+          ));
   }
   OnInitData() {
     return (
@@ -131,7 +131,7 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
     );
   }
   OnInit() {
-    return (this.rzr = this.Entity.GetComponent(109)), !0;
+    return (this.rzr = this.Entity.GetComponent(119)), !0;
   }
   OnStart() {
     var t = this.Entity.GetComponent(0),
@@ -160,15 +160,14 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
   OnActivate() {
     var t,
       e,
-      i = this.Entity.GetComponent(147);
+      i = this.Entity.GetComponent(158);
     return (
       i &&
         ((t = i.ShowRange),
         (e = i.HideRange),
         (this.NearbyEnable = i.EnableTracking),
         (this.Shn = !1),
-        (this.Dhn = this.rzr.CreatePerceptionEvent()),
-        this.Dhn.Init(
+        this.rzr.CreatePerceptionEvent(
           t,
           this.Entity?.GameBudgetManagedToken,
           () => {
@@ -214,7 +213,6 @@ let PawnPerceptionComponent = class PawnPerceptionComponent extends EntityCompon
       (this.Ihn = void 0),
       (this.Thn = void 0),
       (this.Lhn = void 0),
-      (this.Dhn = void 0),
       this.yhn.Empty(),
       !0
     );
@@ -234,7 +232,7 @@ InteractRangeInfo:
   }
 };
 (PawnPerceptionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(107)],
+  [(0, RegisterComponent_1.RegisterComponent)(117)],
   PawnPerceptionComponent,
 )),
   (exports.PawnPerceptionComponent = PawnPerceptionComponent);

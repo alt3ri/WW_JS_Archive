@@ -101,7 +101,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        MoonChasingController.Ifa,
+        MoonChasingController.Mfa,
       );
   }
   static OnRemoveEvents() {
@@ -119,22 +119,22 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        MoonChasingController.Ifa,
+        MoonChasingController.Mfa,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(22999, MoonChasingController.pRn),
-      Net_1.Net.Register(25762, MoonChasingController.hOn),
-      Net_1.Net.Register(16218, MoonChasingController.T7s),
-      Net_1.Net.Register(15167, MoonChasingController.iMa),
-      Net_1.Net.Register(17373, MoonChasingController.aRa);
+    Net_1.Net.Register(21893, MoonChasingController.pRn),
+      Net_1.Net.Register(21952, MoonChasingController.hOn),
+      Net_1.Net.Register(25095, MoonChasingController.T7s),
+      Net_1.Net.Register(18292, MoonChasingController.Wva),
+      Net_1.Net.Register(19774, MoonChasingController.$Aa);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(22999),
-      Net_1.Net.UnRegister(25762),
-      Net_1.Net.UnRegister(16218),
-      Net_1.Net.UnRegister(15167),
-      Net_1.Net.UnRegister(17373);
+    Net_1.Net.UnRegister(21893),
+      Net_1.Net.UnRegister(21952),
+      Net_1.Net.UnRegister(25095),
+      Net_1.Net.UnRegister(18292),
+      Net_1.Net.UnRegister(19774);
   }
   static async TrackMoonAllDataRequest() {
     await Promise.all([
@@ -145,7 +145,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
   }
   static async l2e() {
     var e = Protocol_1.Aki.Protocol.ifs.create(),
-      e = await Net_1.Net.CallAsync(28121, e);
+      e = await Net_1.Net.CallAsync(15606, e);
     e &&
       ModelManager_1.ModelManager.MoonChasingBusinessModel.SetAllDelegationData(
         e.ZGs,
@@ -153,7 +153,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
   }
   static async h2e() {
     var e = Protocol_1.Aki.Protocol.hfs.create(),
-      e = await Net_1.Net.CallAsync(18617, e);
+      e = await Net_1.Net.CallAsync(18493, e);
     e &&
       ModelManager_1.ModelManager.MoonChasingBuildingModel.SetAllBuildingData(
         e.tOs,
@@ -161,7 +161,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
   }
   static async _2e() {
     var e = Protocol_1.Aki.Protocol.ofs.create(),
-      e = await Net_1.Net.CallAsync(23674, e);
+      e = await Net_1.Net.CallAsync(22961, e);
     e &&
       ModelManager_1.ModelManager.MoonChasingBusinessModel.SetAllEditTeamData(
         e.eOs,
@@ -171,17 +171,17 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
     var e = Protocol_1.Aki.Protocol.Qgs.create();
     e.W6n = o;
     const n = ModelManager_1.ModelManager.MoonChasingModel.GetPopularityValue();
-    Net_1.Net.Call(25997, e, (e) => {
+    Net_1.Net.Call(25080, e, (e) => {
       e &&
         (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              28871,
+              20217,
             )
           : (ModelManager_1.ModelManager.MoonChasingBuildingModel.LevelUpBuildingData(
               e.HGs,
               n,
-              e.$va,
+              e.XL_,
             ),
             MoonChasingController.OpenBuildingLevelUpView(!0, o)));
     });
@@ -190,31 +190,31 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
     var e = Protocol_1.Aki.Protocol._fs.create();
     e.W6n = o;
     const n = ModelManager_1.ModelManager.MoonChasingModel.GetPopularityValue();
-    Net_1.Net.Call(20043, e, (e) => {
+    Net_1.Net.Call(25657, e, (e) => {
       e &&
         (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              19440,
+              22882,
             )
           : (ModelManager_1.ModelManager.MoonChasingBuildingModel.UnlockBuildingData(
               o,
               n,
-              e.$va,
+              e.XL_,
             ),
             MoonChasingController.OpenBuildingLevelUpView(!1, o)));
     });
   }
   static BuildingBuildFlowRequest(e, n) {
-    var o = Protocol_1.Aki.Protocol.feh.create();
+    var o = Protocol_1.Aki.Protocol.pm_.create();
     (o.W6n = e),
-      Net_1.Net.Call(25983, o, (o) => {
+      Net_1.Net.Call(19071, o, (o) => {
         if (o) {
           let e = !0;
           o.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               o.Q4n,
-              19440,
+              22882,
             ),
             (e = !1)),
             n(e);
@@ -234,13 +234,13 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
         );
       t.push(o.Level);
     }
-    Net_1.Net.Call(24117, e, (e) => {
+    Net_1.Net.Call(15761, e, (e) => {
       var o, n;
       e
         ? e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              19139,
+              27718,
             ),
             ModelManager_1.ModelManager.MoonChasingBusinessModel.SetIsInDelegate(
               !1,
@@ -285,12 +285,12 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
         ConfigManager_1.ConfigManager.BusinessConfig.GetCoinItemId());
     const s =
       ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(o);
-    Net_1.Net.Call(17124, e, (e) => {
+    Net_1.Net.Call(17092, e, (e) => {
       if (e)
         if (e.Q4n === Protocol_1.Aki.Protocol.Q4n.Proto_ErrTrackMoonTrigger)
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            19337,
+            16231,
           ),
             ModelManager_1.ModelManager.MoonChasingBusinessModel.SetIsInDelegate(
               !1,
@@ -300,7 +300,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
         else if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            19337,
+            16231,
           );
         else if (0 === i) {
           const n =
@@ -314,7 +314,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
           o && o.SetBestEvaluateLevel(e.WGs);
           const n =
             ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData();
-          (n.BaseGold = e.$rh),
+          (n.BaseGold = e.KL_),
             (n.Gold = e.XGs),
             (n.OriginGold = s),
             (n.CostGold = i),
@@ -341,16 +341,16 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.MoonChasingBusinessModel.DeepCopyEditTeamData(
         a,
       );
-    Net_1.Net.Call(16160, e, (e) => {
+    Net_1.Net.Call(24468, e, (e) => {
       e &&
         (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              16279,
+              25638,
             )
           : ((e = {
               RoleId: o,
-              IsMoreSuccessful: e.Wua,
+              IsMoreSuccessful: e._ca,
               TrainType: n,
               LastData: i,
             }),
@@ -372,7 +372,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
   static TrackMoonHandbookRewardRequest(e) {
     var o = Protocol_1.Aki.Protocol.q7s.create();
     (o.BVn = e),
-      Net_1.Net.Call(16961, o, (e) => {
+      Net_1.Net.Call(15257, o, (e) => {
         if (e) {
           for (const n of e.BVn) {
             var o =
@@ -389,12 +389,12 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
   }
   static async TrackMoonMemoryInfoRequest() {
     var e = Protocol_1.Aki.Protocol.b7s.create(),
-      e = await Net_1.Net.CallAsync(16366, e);
+      e = await Net_1.Net.CallAsync(29419, e);
     return e
       ? e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            26476,
+            17082,
           ),
           [])
         : ModelManager_1.ModelManager.MoonChasingModel.GetMemoryInfo(e)
@@ -421,7 +421,7 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.MoonChasingRefreshQuestRedDot,
       );
   }),
-  (MoonChasingController.Ifa = (e) => {
+  (MoonChasingController.Mfa = (e) => {
     ModelManager_1.ModelManager.MoonChasingBuildingModel.CheckPlotInfoValid(
       e,
     ) &&
@@ -478,22 +478,22 @@ class MoonChasingController extends UiControllerBase_1.UiControllerBase {
       EventDefine_1.EEventName.TrackMoonHandbookUpdate,
     );
   }),
-  (MoonChasingController.iMa = (e) => {
+  (MoonChasingController.Wva = (e) => {
     for (const o of e.exs)
       ModelManager_1.ModelManager.MoonChasingBusinessModel.SetEditTeamData(o);
   }),
-  (MoonChasingController.aRa = (e) => {
-    ModelManager_1.ModelManager.MoonChasingRewardModel.TargetGetCount = e.jrh;
+  (MoonChasingController.$Aa = (e) => {
+    ModelManager_1.ModelManager.MoonChasingRewardModel.TargetGetCount = e.YL_;
   }),
   (MoonChasingController.TrackMoonTargetRewardRequest = (o) => {
     var e = Protocol_1.Aki.Protocol.Wfs.create();
     (e.s5n = o),
-      Net_1.Net.Call(21539, e, (e) => {
+      Net_1.Net.Call(25106, e, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                16279,
+                25638,
               )
             : ModelManager_1.ModelManager.MoonChasingRewardModel.TakenRewardTargetData(
                 o,

@@ -37,7 +37,7 @@ let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComp
   }
   OnStart() {
     return (
-      (this.cen = this.Entity.GetComponent(120)),
+      (this.cen = this.Entity.GetComponent(131)),
       (this.men = new Array()),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
@@ -46,7 +46,7 @@ let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComp
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
-        EventDefine_1.EEventName.OnSceneItemStatePrechangeInSequence,
+        EventDefine_1.EEventName.OnSceneItemStatePreChangeInSequence,
         this.gen,
       ),
       this.Cen(),
@@ -65,7 +65,7 @@ let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComp
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
-        EventDefine_1.EEventName.OnSceneItemStatePrechangeInSequence,
+        EventDefine_1.EEventName.OnSceneItemStatePreChangeInSequence,
         this.gen,
       ),
       !(this.men = void 0)
@@ -88,7 +88,7 @@ let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComp
   }
 };
 (DungeonEntranceComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(75)],
+  [(0, RegisterComponent_1.RegisterComponent)(82)],
   DungeonEntranceComponent,
 )),
   (exports.DungeonEntranceComponent = DungeonEntranceComponent);

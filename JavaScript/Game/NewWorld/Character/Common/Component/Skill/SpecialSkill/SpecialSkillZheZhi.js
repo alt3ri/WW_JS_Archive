@@ -17,59 +17,67 @@ const puerts_1 = require("puerts"),
   HE_ACTIVE_DIS = 3e3,
   BLACKBOARD_KEY = "FlyTargetHe",
   activeTag = -1285044114,
-  markCueId = 1105001040n,
-  lineCueId = 1105001041n;
+  MARK_CUE_ID = 1105001040,
+  LINE_CUE_ID = 1105001041;
 class SpecialSkillZheZhi extends SpecialSkillBase_1.SpecialSkillBase {
   constructor() {
     super(...arguments),
-      (this.Fqa = void 0),
+      (this.f2a = void 0),
       (this.n$t = void 0),
-      (this.Hqa = new Map()),
-      (this.jqa = new Set()),
+      (this.M2a = new Map()),
+      (this.S2a = new Set()),
       (this.Xte = void 0),
-      (this.Wqa = void 0),
-      (this.Qqa = !1),
-      (this.Kqa = void 0),
-      (this.$qa = 0),
+      (this.E2a = void 0),
+      (this.y2a = !1),
+      (this.I2a = void 0),
+      (this.T2a = 0),
       (this.gU = !1),
       (this.fii = (0, puerts_1.$ref)(void 0)),
-      (this.Xqa = Vector2D_1.Vector2D.Create()),
-      (this.l2a = (0, puerts_1.$ref)(0)),
-      (this._2a = (0, puerts_1.$ref)(0)),
-      (this.Yqa = 0),
-      (this.zqa = 0);
+      (this.L2a = Vector2D_1.Vector2D.Create()),
+      (this.N2a = (0, puerts_1.$ref)(0)),
+      (this.F2a = (0, puerts_1.$ref)(0)),
+      (this.D2a = 0),
+      (this.A2a = 0);
   }
   OnStart() {
-    (this.Fqa = this.SpecialSkillComponent.Entity),
-      (this.n$t = this.Fqa.GetComponent(3));
-    var t = this.Fqa.GetComponent(0);
+    (this.f2a = this.SpecialSkillComponent.Entity),
+      (this.n$t = this.f2a.GetComponent(3));
+    var e = this.f2a.GetComponent(0);
     if (
-      t.GetPlayerId() ===
+      e.GetPlayerId() ===
       ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
     ) {
-      this.Xte = this.Fqa?.GetComponent(190);
+      this.Xte = this.f2a?.GetComponent(203);
       for (let t = 1; t < HE_MAX_COUNT + 1; t++) {
-        const i = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
-          this.Fqa,
+        const s = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+          this.f2a,
           Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantCustom,
           t,
         );
-        if (!i)
+        if (!s)
           return void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 4, "折枝伴生物初始化失败")
+            Log_1.Log.Error(
+              "Battle",
+              4,
+              "折枝伴生物初始化失败",
+              ["CurGetPosition", t],
+              ["ZhezhiEntityId", this.f2a.Id],
+              ["ZhezhiCreatureDataId", e?.GetCreatureDataId()],
+              ["CustomServerEntityIds", e?.CustomServerEntityIds],
+            )
           );
-        this.Hqa.set(t, i);
-        var e = i.Entity.GetComponent(109);
-        e.SetLogicRange(HE_ACTIVE_DIS),
-          e.CreatePerceptionEvent().Init(
+        this.M2a.set(t, s);
+        var i = s.Entity.GetComponent(119);
+        i.SetLogicRange(HE_ACTIVE_DIS),
+          i.CreatePerceptionEvent(
             HE_ACTIVE_DIS,
-            i.Entity?.GameBudgetManagedToken,
+            s.Entity?.GameBudgetManagedToken,
             () => {
-              this.jqa.add(i);
+              this.S2a.add(s);
             },
             () => {
-              this.jqa.has(i) && this.jqa.delete(i);
+              this.S2a.has(s) && this.S2a.delete(s);
             },
           );
       }
@@ -77,106 +85,105 @@ class SpecialSkillZheZhi extends SpecialSkillBase_1.SpecialSkillBase {
     }
   }
   OnDisable() {
-    this.Jqa();
+    this.R2a();
   }
   OnTick(t) {
-    this.gU && this.Zqa();
+    this.gU && this.U2a();
   }
-  Zqa() {
-    if (this.Hqa) {
+  U2a() {
+    if (this.M2a) {
       let r = Number.MAX_VALUE,
         h = 0,
         a = Number.MAX_VALUE,
         o = 0;
-      this.u2a(),
-        this.Hqa.forEach((t, e) => {
+      this.V2a(),
+        this.M2a.forEach((t, e) => {
           var i = t.Entity,
-            s = i?.GetComponent(190);
+            s = i?.GetComponent(203);
           i &&
             i.Active &&
-            this.jqa.has(t) &&
+            this.S2a.has(t) &&
             s?.HasTag(activeTag) &&
             ((t = i.GetComponent(3)),
-            (s = UE.GameplayStatics.ProjectWorldToScreen(
+            (s = UE.GameplayStatics.D_ProjectWorldToScreen(
               Global_1.Global.CharacterController,
               t.ActorLocationProxy.ToUeVector(),
               this.fii,
               !0,
             )),
             (i = (0, puerts_1.$unref)(this.fii)),
-            s && 0 < i.X && i.X < this.Yqa && 0 < i.Y && i.Y < this.zqa
-              ? (this.Xqa.Set(i.X - this.Yqa / 2, (i.Y - this.zqa / 2) / 10),
-                (s = this.Xqa.SizeSquared()) < r && ((h = e), (r = s)))
+            s && 0 < i.X && i.X < this.D2a && 0 < i.Y && i.Y < this.A2a
+              ? (this.L2a.Set(i.X - this.D2a / 2, (i.Y - this.A2a / 2) / 10),
+                (s = this.L2a.SizeSquared()) < r && ((h = e), (r = s)))
               : (i = Vector_1.Vector.DistSquared(
                   t.ActorLocationProxy,
                   this.n$t.ActorLocationProxy,
                 )) < a && ((o = e), (a = i)));
         });
       var t = 0 < h ? h : o;
-      0 === t && 0 !== this.$qa && this.Jqa(),
-        0 !== t && (this.$qa === t ? this.e2a() : this.t2a(t));
+      0 === t && 0 !== this.T2a && this.R2a(),
+        0 !== t && (this.T2a === t ? this.x2a() : this.P2a(t));
     }
   }
-  u2a() {
-    Global_1.Global.CharacterController?.GetViewportSize(this.l2a, this._2a),
-      (this.Yqa = (0, puerts_1.$unref)(this.l2a)),
-      (this.zqa = (0, puerts_1.$unref)(this._2a));
+  V2a() {
+    Global_1.Global.CharacterController?.GetViewportSize(this.N2a, this.F2a),
+      (this.D2a = (0, puerts_1.$unref)(this.N2a)),
+      (this.A2a = (0, puerts_1.$unref)(this.F2a));
   }
-  t2a(t) {
-    var e = this.Hqa.get(t),
+  P2a(t) {
+    var e = this.M2a.get(t),
       e =
         (e &&
-          (this.i2a(e),
-          this.c2a(e),
+          (this.w2a(e),
+          this.H2a(e),
           BlackboardController_1.BlackboardController.SetIntValueByEntity(
-            this.Fqa.Id,
+            this.f2a.Id,
             BLACKBOARD_KEY,
             e.Entity.Id,
           )),
         this.Xte?.HasTag(activeTag) || this.Xte?.AddTag(activeTag),
-        this.Fqa.GetComponent(34));
-    e?.Valid && e.CallAnimBreakPoint(), (this.$qa = t);
+        this.f2a.GetComponent(39));
+    e?.Valid && e.CallAnimBreakPoint(), (this.T2a = t);
   }
-  Jqa() {
-    0 !== this.$qa &&
+  R2a() {
+    0 !== this.T2a &&
       (BlackboardController_1.BlackboardController.SetIntValueByEntity(
-        this.Fqa.Id,
+        this.f2a.Id,
         BLACKBOARD_KEY,
         0,
       ),
       this.Xte?.HasTag(activeTag) && this.Xte?.RemoveTag(activeTag),
-      this.Wqa?.Destroy(),
-      this.Kqa?.Destroy(),
-      (this.$qa = 0));
+      this.E2a?.Destroy(),
+      this.I2a?.Destroy(),
+      (this.T2a = 0));
   }
-  i2a(t) {
-    this.Wqa?.Destroy();
-    var t = t.Entity.GetComponent(19),
-      e = t.CreateGameplayCue(markCueId);
-    this.Wqa = t.GetCueByHandle(e);
+  w2a(t) {
+    this.E2a?.Destroy();
+    var t = t.Entity.GetComponent(21),
+      e = t.AddCue(MARK_CUE_ID);
+    this.E2a = t.GetCueByHandle(e);
   }
-  c2a(t) {
-    this.Kqa?.Destroy();
-    var e = this.Fqa.GetComponent(19),
-      t = e.CreateGameplayCue(lineCueId, { Instigator: t });
-    this.Kqa = e.GetCueByHandle(t);
+  H2a(t) {
+    this.I2a?.Destroy();
+    var e = this.f2a.GetComponent(21),
+      t = e.AddCue(LINE_CUE_ID, { Instigator: t });
+    this.I2a = e.GetCueByHandle(t);
   }
-  e2a() {
+  x2a() {
     var t;
-    this.Wqa &&
-      EffectSystem_1.EffectSystem.IsValid(this.Wqa.EffectViewHandle) &&
-      (t = EffectSystem_1.EffectSystem.GetEffectActor(
-        this.Wqa.EffectViewHandle,
+    this.E2a &&
+      EffectSystem_1.EffectSystem.IsValid(this.E2a.EffectViewHandle) &&
+      (t = EffectSystem_1.EffectSystem.GetSureEffectActor(
+        this.E2a.EffectViewHandle,
       ))?.IsValid() &&
-      t instanceof UE.Actor &&
       ((t = t.WasRecentlyRenderedOnScreen()),
-      !this.Qqa &&
+      !this.y2a &&
         t &&
         EffectSystem_1.EffectSystem.ReplayEffect(
-          this.Wqa.EffectViewHandle,
+          this.E2a.EffectViewHandle,
           "UpdateHeSelectMark",
         ),
-      (this.Qqa = t));
+      (this.y2a = t));
   }
 }
 exports.SpecialSkillZheZhi = SpecialSkillZheZhi;

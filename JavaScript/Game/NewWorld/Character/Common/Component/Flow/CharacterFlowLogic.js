@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFlowLogic = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
-  MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   ObjectUtils_1 = require("../../../../../../Core/Utils/ObjectUtils"),
   StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
+  PublicUtil_1 = require("../../../../../Common/PublicUtil"),
   Global_1 = require("../../../../../Global"),
   LevelGeneralContextDefine_1 = require("../../../../../LevelGamePlay/LevelGeneralContextDefine"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
@@ -30,22 +30,33 @@ class CharacterFlowLogic {
       (this.DynamicFlowData = void 0),
       (this.IsPause = !0),
       (this.EnableUpdate = !1),
-      (this.IsExecuteFlowEnd = !0),
+      (this.IsExecuteFlowEndInternal = !0),
       (this.WaitSecondsRemain = 0),
+      (this.IsWaitForDialogueUi = !1),
       (this.ActorComp = t),
-      (this.HeadInfoComp = t.Entity.GetComponent(73)),
+      (this.HeadInfoComp = t.Entity.GetComponent(80)),
       (this.TempFlowInfoList = new Array()),
       (this.HYo = this.ActorComp.CreatureData.GetPbDataId()),
       i && ((this.EntityList = i.NpcIds), (this.FlowInfoList = i.Flows));
   }
+  get IsExecuteFlowEnd() {
+    return this.IsExecuteFlowEndInternal;
+  }
+  set IsExecuteFlowEnd(t) {
+    this.IsExecuteFlowEndInternal !== t &&
+      ((this.IsExecuteFlowEndInternal = t),
+      this.HeadInfoComp?.UpdateDialogUseState(!t));
+  }
   Tick(t) {
-    this.EnableUpdate &&
-      ((this.WaitSecondsRemain -= t), this.WaitSecondsRemain <= 0) &&
-      (this.IsExecuteFlowEnd
-        ? this.IsPause
-          ? (this.EnableUpdate = !1)
-          : this.StartFlow()
-        : this.PlayTalk(this.CurrentTalkId + 1));
+    !this.EnableUpdate ||
+      this.IsWaitForDialogueUi ||
+      ((this.WaitSecondsRemain -= t),
+      this.WaitSecondsRemain <= 0 &&
+        (this.IsExecuteFlowEnd
+          ? this.IsPause
+            ? (this.EnableUpdate = !1)
+            : this.StartFlow()
+          : this.PlayTalk(this.CurrentTalkId + 1)));
   }
   get IsPlaying() {
     return !this.IsExecuteFlowEnd;
@@ -60,13 +71,13 @@ class CharacterFlowLogic {
       (e = this.DynamicFlowData
         ? this.DynamicFlowData.EntityIds
         : this.EntityList) &&
-      2 < e.length
+      2 <= e.length
     )
       for (let t = 0, i = e.length; t < i; t++) {
-        var o = this.GetEntity(e[t]);
-        o && o.GetComponent(28).RemoveFlowActions();
+        var s = this.GetEntity(e[t]);
+        s && s.GetComponent(31).RemoveFlowActions();
       }
-    else this.ActorComp.Entity.GetComponent(28).RemoveFlowActions();
+    else this.ActorComp.Entity.GetComponent(31).RemoveFlowActions();
   }
   PlayFlow() {
     if (this.CurrentFlowInfo || this.DynamicFlowData) {
@@ -105,69 +116,69 @@ class CharacterFlowLogic {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Level",
-            51,
+            50,
             "[CharacterFlowLogic] 冒泡演出结束",
             ["PbDataId", this.ActorComp.CreatureData.GetPbDataId()],
             ["WaitTime", this.WaitSecondsRemain],
           );
     else {
-      var o = this.DynamicFlowData
+      var s = this.DynamicFlowData
           ? this.DynamicFlowData.Flow
           : this.CurrentFlowInfo?.Flow.FlowIndex,
-        r = this.DynamicFlowData
+        o = this.DynamicFlowData
           ? this.DynamicFlowData.EntityIds
           : this.EntityList,
         e = e[i];
       let t = this.ActorComp.Entity;
-      if (r && 2 <= r?.length) {
-        var s =
+      if (o && 2 <= o?.length) {
+        var r =
           SimpleNpcFlowConditionChecker_1.SimpleNpcFlowConditionChecker.GetFlowActorIndex(
             e.WhoId,
           );
-        if (-1 === s)
+        if (-1 === r)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Level",
-                51,
+                50,
                 "请配置演出目标",
                 ["PbDataId", this.ActorComp.CreatureData.GetPbDataId()],
-                ["FlowName", o?.FlowListName],
-                ["FlowId", o?.FlowId],
-                ["StateId", o?.StateId],
+                ["FlowName", s?.FlowListName],
+                ["FlowId", s?.FlowId],
+                ["StateId", s?.StateId],
                 ["TalkId", i],
               ),
             void this.PlayTalk(i + 1)
           );
-        if (s >= r.length)
+        if (r >= o.length)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Level",
-                51,
+                50,
                 "演出目标索引越界",
                 ["PbDataId", this.ActorComp.CreatureData.GetPbDataId()],
-                ["FlowName", o?.FlowListName],
-                ["FlowId", o?.FlowId],
-                ["StateId", o?.StateId],
-                ["Index", s],
+                ["FlowName", s?.FlowListName],
+                ["FlowId", s?.FlowId],
+                ["StateId", s?.StateId],
+                ["Index", r],
               ),
             void this.PlayTalk(i + 1)
           );
-        var r = r[s];
-        if (!(t = this.GetEntity(r)))
+        var o = o[r];
+        if (!(t = this.GetEntity(o)))
           return (
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Level",
-                51,
+                50,
                 "播放多人冒泡时找不到演员,停止冒泡",
                 ["MasterPbDataId", this.ActorComp.CreatureData.GetPbDataId()],
-                ["ActorPbDataId", r],
-                ["FlowName", o?.FlowListName],
-                ["FlowId", o?.FlowId],
-                ["StateId", o?.StateId],
-                ["Index", s],
+                ["ActorPbDataId", o],
+                ["FlowName", s?.FlowListName],
+                ["FlowId", s?.FlowId],
+                ["StateId", s?.StateId],
+                ["Index", r],
               ),
             void this.HandleFlowEnd()
           );
@@ -176,15 +187,15 @@ class CharacterFlowLogic {
         ? ((this.IsExecuteFlowEnd = !1),
           this.WaitSecondsRemain <= 0 &&
             (this.WaitSecondsRemain = this.GetWaitSeconds(e)),
-          (r = this.ActorComp.CreatureData.GetPbDataId()),
-          (o = this.GetFlowText(e.TidTalk)),
+          (o = this.ActorComp.CreatureData.GetPbDataId()),
+          (s = this.GetFlowText(e.TidTalk)),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Level",
-              51,
+              50,
               "[CharacterFlowLogic] 播放对话框文本",
-              ["PbDataId", r],
-              ["DialogText", o],
+              ["PbDataId", o],
+              ["DialogText", s],
               ["WaitTime", this.WaitSecondsRemain],
             ))
         : this.PlayTalk(i + 1);
@@ -193,18 +204,30 @@ class CharacterFlowLogic {
   HandleTalkAction(t, i) {
     if (!t) return !1;
     let e = !1;
-    t = this.GetFlowText(i.TidTalk);
+    var s = this.GetFlowText(i.TidTalk);
     return (
-      t &&
+      s &&
         ((e = !0),
-        (i = this.GetWaitSeconds(i, 0.05)),
-        this.HeadInfoComp.SetDialogueText(t, i)),
+        (this.WaitSecondsRemain = this.GetWaitSeconds(i)),
+        (i = this.WaitSecondsRemain + 0.05),
+        (this.IsWaitForDialogueUi = !0),
+        t
+          .GetComponent(80)
+          .SetDialogueText(s, i)
+          .finally(() => {
+            this.IsWaitForDialogueUi = !1;
+          })),
       e
     );
   }
   HandleFlowEnd() {
-    if (((this.IsExecuteFlowEnd = !0), this.DynamicFlowData)) {
-      this.WaitSecondsRemain = DEFAULT_LOOP_TIME;
+    if (
+      ((this.IsExecuteFlowEnd = !0),
+      (this.IsWaitForDialogueUi = !1),
+      this.DynamicFlowData)
+    ) {
+      this.WaitSecondsRemain =
+        this.DynamicFlowData.WaitTime || DEFAULT_LOOP_TIME;
       var i = this.ActorComp.CreatureData.GetPbDataId(),
         i =
           DynamicFlowController_1.DynamicFlowController.GetDynamicFlowByMasterActor(
@@ -246,9 +269,6 @@ class CharacterFlowLogic {
   HasValidFlow() {
     return !!this.FlowInfoList.length;
   }
-  GetUiRootItemState() {
-    return this.HeadInfoComp.GetRootItemState();
-  }
   GetEntity(t) {
     return ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t)
       ?.Entity;
@@ -259,7 +279,7 @@ class CharacterFlowLogic {
   }
   GetFlowText(t) {
     if (t && !StringUtils_1.StringUtils.IsEmpty(t))
-      return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t);
+      return PublicUtil_1.PublicUtil.GetFlowConfigLocalText(t);
   }
   hRi(t) {
     var i = new LogReportDefine_1.PlayFlowLogData(),
@@ -281,7 +301,7 @@ class CharacterFlowLogic {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Plot",
-          43,
+          42,
           "播放冒泡埋点",
           ["EntityConfigId", this.HYo],
           ["FlowListName", t.FlowListName],
@@ -290,6 +310,9 @@ class CharacterFlowLogic {
           ["IsDynamicMultiFlow", void 0 !== this.DynamicFlowData],
         ),
       LogReportController_1.LogReportController.LogReport(i);
+  }
+  HideDialogueText() {
+    (this.IsWaitForDialogueUi = !1), this.HeadInfoComp?.HideDialogueText();
   }
   HasDynamicFlow() {
     return void 0 !== this.DynamicFlowData;

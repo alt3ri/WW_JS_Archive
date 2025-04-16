@@ -1,8 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.beginActorPickerMode =
-    exports.isInActorPickerMode =
-    exports.copyRotatorToTransformInUeClipboard =
+  (exports.copyRotatorToTransformInUeClipboard =
     exports.copyVectorInfoToTransformInUeClipboard =
     exports.getVectorInfoFromTransformInClipboard =
     exports.getRotatorFromTransformInUeClipboard =
@@ -26,7 +24,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.toTransform =
     exports.toScale =
     exports.toRotation =
+    exports.toVectorDouble =
     exports.toVector =
+    exports.transformToPosAndRot =
     exports.transformToPosA =
     exports.toPosA =
     exports.toTransformInfo =
@@ -51,7 +51,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.loadClass =
     exports.isValidActor =
       void 0),
-  (exports.isFileInUse = exports.endActorPickerMode = void 0);
+  (exports.isFileInUse =
+    exports.endActorPickerMode =
+    exports.beginActorPickerMode =
+    exports.isInActorPickerMode =
+      void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   ue_1 = require("ue"),
@@ -60,36 +64,36 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../Misc/Log"),
   Util_1 = require("../Misc/Util"),
   Action_1 = require("../Operation/Action");
-function isValidActor(t) {
-  let o = !1;
+function isValidActor(o) {
+  let t = !1;
   try {
-    t.GetTransform();
-  } catch (t) {
-    o = !0;
+    o.GetTransform();
+  } catch (o) {
+    t = !0;
   }
-  return !o;
+  return !t;
 }
-function loadClass(t) {
-  return t.includes("/") ? ue_1.Class.Load(t) : UE[t].StaticClass();
+function loadClass(o) {
+  return o.includes("/") ? ue_1.Class.Load(o) : UE[o].StaticClass();
 }
-function sendMessageToCommandService(t, o) {
-  ue_1.EditorRuntimeOperations.SendMessage(t, "127.0.0.1", o);
+function sendMessageToCommandService(o, t) {
+  ue_1.EditorRuntimeOperations.SendMessage(o, "127.0.0.1", t);
 }
-function sendTextObjToCommandService(t, o) {
+function sendTextObjToCommandService(o, t) {
   try {
-    var e = JSON.parse(t);
-    sendMessageToCommandService(JSON.stringify(e), o);
-  } catch (t) {}
+    var e = JSON.parse(o);
+    sendMessageToCommandService(JSON.stringify(e), t);
+  } catch (o) {}
 }
-function sendObjToCommandService(t, o) {
-  sendMessageToCommandService(JSON.stringify(t), o);
+function sendObjToCommandService(o, t) {
+  sendMessageToCommandService(JSON.stringify(o), t);
 }
-function isChildOfClass(t, o) {
-  return UE.KismetMathLibrary.ClassIsChildOf(t, o);
+function isChildOfClass(o, t) {
+  return UE.KismetMathLibrary.ClassIsChildOf(o, t);
 }
-function isObjChildOfClass(t, o) {
-  t = t.GetClass();
-  return UE.KismetMathLibrary.ClassIsChildOf(t, o);
+function isObjChildOfClass(o, t) {
+  o = o.GetClass();
+  return UE.KismetMathLibrary.ClassIsChildOf(o, t);
 }
 (exports.isValidActor = isValidActor),
   (exports.loadClass = loadClass),
@@ -99,207 +103,222 @@ function isObjChildOfClass(t, o) {
   (exports.isChildOfClass = isChildOfClass),
   (exports.isObjChildOfClass = isObjChildOfClass);
 let ueArrayId = 0;
-function toUeArray(t, o) {
-  const e = UE.NewArray(o);
+function toUeArray(o, t) {
+  const e = UE.NewArray(t);
   return (
-    t.forEach((t) => {
-      e.Add(t);
+    o.forEach((o) => {
+      e.Add(o);
     }),
     (e.id = ueArrayId++),
     e
   );
 }
-function toUeSet(t, o) {
-  const e = UE.NewSet(o);
+function toUeSet(o, t) {
+  const e = UE.NewSet(t);
   return (
-    t.forEach((t) => {
-      e.Add(t);
+    o.forEach((o) => {
+      e.Add(o);
     }),
     e
   );
 }
 function getTotalSecond() {
-  var t = ue_1.KismetMathLibrary.UtcNow(),
-    o = ue_1.KismetMathLibrary.GetDayOfYear(t),
-    e = ue_1.KismetMathLibrary.GetHour(t),
-    r = ue_1.KismetMathLibrary.GetMinute(t);
-  return ue_1.KismetMathLibrary.GetSecond(t) + 60 * r + 3600 * e + 86400 * o;
+  var o = ue_1.KismetMathLibrary.UtcNow(),
+    t = ue_1.KismetMathLibrary.GetDayOfYear(o),
+    e = ue_1.KismetMathLibrary.GetHour(o),
+    r = ue_1.KismetMathLibrary.GetMinute(o);
+  return ue_1.KismetMathLibrary.GetSecond(o) + 60 * r + 3600 * e + 86400 * t;
 }
-function calUpRotatorByPoints(t, o) {
-  o = o.op_Subtraction(t);
-  return (o.Z = 0), o.Rotation();
+function calUpRotatorByPoints(o, t) {
+  t = t.op_Subtraction(o);
+  return (t.Z = 0), t.Rotation();
 }
-function toTsArray(o) {
+function toTsArray(t) {
   var e = [];
-  for (let t = 0; t < o.Num(); t++) e.push(o.Get(t));
+  for (let o = 0; o < t.Num(); o++) e.push(t.Get(o));
   return e;
 }
-function toTsMap(o) {
+function toTsMap(t) {
   var e = new Map();
-  for (let t = 0; t < o.Num(); t++) {
-    var r = o.GetKey(t),
-      n = o.Get(r);
+  for (let o = 0; o < t.Num(); o++) {
+    var r = t.GetKey(o),
+      n = t.Get(r);
     e.set(r, n);
   }
   return e;
 }
-function toVectorInfo(t, o) {
-  o = o ?? Action_1.defaultVec;
-  var e = (0, Action_1.eqn)(t.X, o.X) ? void 0 : (0, Action_1.toFloat2)(t.X),
-    r = (0, Action_1.eqn)(t.Y, o.Y) ? void 0 : (0, Action_1.toFloat2)(t.Y),
-    o = (0, Action_1.eqn)(t.Z, o.Z) ? void 0 : (0, Action_1.toFloat2)(t.Z);
-  return void 0 === e && void 0 === r && void 0 === o
+function toVectorInfo(o, t) {
+  t = t ?? Action_1.defaultVec;
+  var e = (0, Action_1.eqn)(o.X, t.X) ? void 0 : (0, Action_1.toFloat2)(o.X),
+    r = (0, Action_1.eqn)(o.Y, t.Y) ? void 0 : (0, Action_1.toFloat2)(o.Y),
+    t = (0, Action_1.eqn)(o.Z, t.Z) ? void 0 : (0, Action_1.toFloat2)(o.Z);
+  return void 0 === e && void 0 === r && void 0 === t
     ? {}
-    : { X: e, Y: r, Z: o };
+    : { X: e, Y: r, Z: t };
 }
-function toVectorInfo2(t, o) {
-  o = o ?? Action_1.defaultVec;
-  var e = (0, Action_1.eqn)(t.X || 0, o.X)
+function toVectorInfo2(o, t) {
+  t = t ?? Action_1.defaultVec;
+  var e = (0, Action_1.eqn)(o.X || 0, t.X)
       ? void 0
-      : (0, Action_1.toFloat2)(t.X ?? 0),
-    r = (0, Action_1.eqn)(t.Y || 0, o.Y)
+      : (0, Action_1.toFloat2)(o.X ?? 0),
+    r = (0, Action_1.eqn)(o.Y || 0, t.Y)
       ? void 0
-      : (0, Action_1.toFloat2)(t.Y ?? 0),
-    o = (0, Action_1.eqn)(t.Z || 0, o.Z)
+      : (0, Action_1.toFloat2)(o.Y ?? 0),
+    t = (0, Action_1.eqn)(o.Z || 0, t.Z)
       ? void 0
-      : (0, Action_1.toFloat2)(t.Z ?? 0);
-  return void 0 === e && void 0 === r && void 0 === o
+      : (0, Action_1.toFloat2)(o.Z ?? 0);
+  return void 0 === e && void 0 === r && void 0 === t
     ? {}
-    : { X: e, Y: r, Z: o };
+    : { X: e, Y: r, Z: t };
 }
-function toRequiredVectorInfo(t) {
+function toRequiredVectorInfo(o) {
   return {
-    X: (0, Action_1.toFloat2)(t.X),
-    Y: (0, Action_1.toFloat2)(t.Y),
-    Z: (0, Action_1.toFloat2)(t.Z),
+    X: (0, Action_1.toFloat2)(o.X),
+    Y: (0, Action_1.toFloat2)(o.Y),
+    Z: (0, Action_1.toFloat2)(o.Z),
   };
 }
-function toRequiredVectorInfoWithFloat6(t) {
+function toRequiredVectorInfoWithFloat6(o) {
   return {
-    X: (0, Action_1.toFloat6)(t.X),
-    Y: (0, Action_1.toFloat6)(t.Y),
-    Z: (0, Action_1.toFloat6)(t.Z),
+    X: (0, Action_1.toFloat6)(o.X),
+    Y: (0, Action_1.toFloat6)(o.Y),
+    Z: (0, Action_1.toFloat6)(o.Z),
   };
 }
-function toRotationInfoQuat(t) {
-  return toVectorInfo(t.Euler(), Action_1.defaultRot);
+function toRotationInfoQuat(o) {
+  return toVectorInfo(o.Euler(), Action_1.defaultRot);
 }
-function toRotationInfo(t) {
-  return toVectorInfo(t.Euler(), Action_1.defaultRot);
+function toRotationInfo(o) {
+  return toVectorInfo(o.Euler(), Action_1.defaultRot);
 }
-function toScaleInfo(t) {
-  return toVectorInfo(t, Action_1.defaultScale);
+function toScaleInfo(o) {
+  return toVectorInfo(o, Action_1.defaultScale);
 }
-function toTransformInfo(t) {
+function toTransformInfo(o) {
   return {
-    Pos: toVectorInfo(t.GetLocation()),
-    Rot: toRotationInfoQuat(t.GetRotation()),
-    Scale: toScaleInfo(t.GetScale3D()),
+    Pos: toVectorInfo(o.GetLocation()),
+    Rot: toRotationInfoQuat(o.GetRotation()),
+    Scale: toScaleInfo(o.GetScale3D()),
   };
 }
-function toPosA(t, o) {
-  return { ...toVectorInfo(t), A: o };
+function toPosA(o, t) {
+  return { ...toVectorInfo(o), A: t };
 }
-function transformToPosA(t) {
-  return { ...toVectorInfo(t.GetLocation()), A: t.GetRotation().Euler().Z };
+function transformToPosA(o) {
+  return { ...toVectorInfo(o.GetLocation()), A: o.GetRotation().Euler().Z };
 }
-function toVector(t, o) {
+function transformToPosAndRot(o) {
+  return {
+    ...toVectorInfo(o.GetLocation()),
+    A: o.GetRotation().Euler().Z,
+    Roll: o.GetRotation().Euler().X,
+    Pitch: o.GetRotation().Euler().Y,
+  };
+}
+function toVector(o, t) {
   return (
-    (o = o ?? Action_1.defaultVec),
-    (t = t || o),
-    new ue_1.Vector(t.X ?? o.X, t.Y ?? o.Y, t.Z ?? o.Z)
+    (t = t ?? Action_1.defaultVec),
+    (o = o || t),
+    new ue_1.Vector(o.X ?? t.X, o.Y ?? t.Y, o.Z ?? t.Z)
   );
 }
-function toRotation(t) {
-  return ue_1.Rotator.MakeFromEuler(toVector(t, Action_1.defaultRot));
+function toVectorDouble(o, t) {
+  return (
+    (t = t ?? Action_1.defaultVec),
+    (o = o || t),
+    new ue_1.VectorDouble(o.X ?? t.X, o.Y ?? t.Y, o.Z ?? t.Z)
+  );
 }
-function toScale(t) {
-  return toVector(t, Action_1.defaultScale);
+function toRotation(o) {
+  return ue_1.Rotator.MakeFromEuler(toVector(o, Action_1.defaultRot));
 }
-function toTransform(t) {
+function toScale(o) {
+  return toVector(o, Action_1.defaultScale);
+}
+function toTransform(o) {
   return new ue_1.Transform(
-    toRotation(t.Rot),
-    toVector(t.Pos),
-    toScale(t.Scale),
+    toRotation(o.Rot),
+    toVector(o.Pos),
+    toScale(o.Scale),
   );
 }
-function angleToRotation(t) {
-  return ue_1.Rotator.MakeFromEuler(new ue_1.Vector(0, 0, t));
+function angleToRotation(o) {
+  return ue_1.Rotator.MakeFromEuler(new ue_1.Vector(0, 0, o));
 }
-function posaToTransform(t) {
+function posaToTransform(o) {
   return (
-    (t = t || Action_1.defaultPosA),
+    (o = o || Action_1.defaultPosA),
     new ue_1.Transform(
-      angleToRotation(t.A ?? 0),
-      toVector(t),
+      angleToRotation(o.A ?? 0),
+      toVector(o),
       toVector(Action_1.defaultScale),
     )
   );
 }
-function findWpActorGuidByLabels(t) {
-  var t = toUeSet(t, ue_1.BuiltinString),
-    o = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString),
-    o = (0, puerts_1.$ref)(o);
+function findWpActorGuidByLabels(o) {
+  var o = toUeSet(o, ue_1.BuiltinString),
+    t = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString),
+    t = (0, puerts_1.$ref)(t);
   return (
-    ue_1.EditorOperations.FindWpEditorActorGuidsByLabel(t, o),
-    toTsMap((0, puerts_1.$unref)(o))
+    ue_1.EditorOperations.FindWpEditorActorGuidsByLabel(o, t),
+    toTsMap((0, puerts_1.$unref)(t))
   );
 }
-function getWpActorsByGuids(t) {
-  var o = (0, puerts_1.$ref)(void 0);
+function getWpActorsByGuids(o) {
+  var t = (0, puerts_1.$ref)(void 0);
   return (
     ue_1.EditorOperations.GetWpEditorActorsByGuids(
-      toUeArray(t, ue_1.BuiltinString),
-      o,
+      toUeArray(o, ue_1.BuiltinString),
+      t,
     ),
-    toTsArray((0, puerts_1.$unref)(o))
+    toTsArray((0, puerts_1.$unref)(t))
   );
 }
-function getWpActorsByPathNames(t) {
-  var o = [];
-  for (const r of t) {
+function getWpActorsByPathNames(o) {
+  var t = [];
+  for (const r of o) {
     var e = ue_1.EditorOperations.GetWpEditorActorGuidByPathName(r);
-    e && o.push(e);
+    e && t.push(e);
   }
-  return 0 < o.length ? getWpActorsByGuids(o) : [];
+  return 0 < t.length ? getWpActorsByGuids(t) : [];
 }
-function getWpActorsByLabels(t) {
-  t = findWpActorGuidByLabels(t);
-  return t.size <= 0
+function getWpActorsByLabels(o) {
+  o = findWpActorGuidByLabels(o);
+  return o.size <= 0
     ? []
-    : getWpActorsByGuids(Array.from(t.keys())).filter((t) => void 0 !== t);
+    : getWpActorsByGuids(Array.from(o.keys())).filter((o) => void 0 !== o);
 }
-function loadWpActorsByGuids(t, o) {
+function loadWpActorsByGuids(o, t) {
   ue_1.EditorOperations.LoadWpEditorActorsByGuids(
-    toUeArray(t, ue_1.BuiltinString),
-    o,
+    toUeArray(o, ue_1.BuiltinString),
+    t,
   );
 }
-function loadWpActorsByPathNames(t, o) {
+function loadWpActorsByPathNames(o, t) {
   var e = [];
-  for (const n of t) {
+  for (const n of o) {
     var r = ue_1.EditorOperations.GetWpEditorActorGuidByPathName(n);
     r && e.push(r);
   }
-  0 < e.length && loadWpActorsByGuids(e, o);
+  0 < e.length && loadWpActorsByGuids(e, t);
 }
-function loadWpActorsByLabels(t, o) {
-  t = findWpActorGuidByLabels(t);
-  t.size <= 0 || loadWpActorsByGuids(Array.from(t.keys()), o);
+function loadWpActorsByLabels(o, t) {
+  o = findWpActorGuidByLabels(o);
+  o.size <= 0 || loadWpActorsByGuids(Array.from(o.keys()), t);
 }
-function execPythonCommand(t, o, e) {
-  return ue_1.PythonScriptLibrary.ExecutePythonCommandEx(t, o, e);
+function execPythonCommand(o, t, e) {
+  return ue_1.PythonScriptLibrary.ExecutePythonCommandEx(o, t, e);
 }
-function getFileMd5(t) {
-  if (!(0, File_1.existFile)(t))
-    return (0, Log_1.error)(`get file md5 failed: file not found. (${t})`), "";
-  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+function getFileMd5(o) {
+  if (!(0, File_1.existFile)(o))
+    return (0, Log_1.error)(`get file md5 failed: file not found. (${o})`), "";
+  var t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
     e = (0, puerts_1.$ref)("");
   if (
     !execPythonCommand(
       [
         "import hashlib",
-        `with open(r"${t}", "rb") as f:`,
+        `with open(r"${o}", "rb") as f:`,
         "   file_hash = hashlib.md5()",
         "   chunk = f.read(8192)",
         "   while chunk:",
@@ -308,65 +327,65 @@ function getFileMd5(t) {
         "   print(file_hash.hexdigest())",
       ].join("\n"),
       e,
-      o,
+      t,
     )
   )
-    return (0, Log_1.error)("get file md5 failed: " + t), "";
-  t = (0, puerts_1.$unref)(o);
+    return (0, Log_1.error)("get file md5 failed: " + o), "";
+  o = (0, puerts_1.$unref)(t);
   let r = (0, puerts_1.$unref)(e);
-  return (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r);
+  return (r = (!r || "None" === r) && 0 < o.Num() ? o.Get(0).Output : r);
 }
-function getStringMd5(t) {
-  if (!t)
+function getStringMd5(o) {
+  if (!o)
     return (0, Log_1.error)("get string md5 failed: input is undefined."), "";
-  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+  var t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
     e = (0, puerts_1.$ref)(""),
-    t = [
+    o = [
       "import hashlib",
-      `text = '''${t}'''`,
+      `text = '''${o}'''`,
       "print(hashlib.md5(text.encode('utf-8')).hexdigest())",
     ].join("\n");
-  if (!execPythonCommand(t, e, o))
-    return (0, Log_1.error)("get file md5 failed. pyLogic=" + t), "";
-  t = (0, puerts_1.$unref)(o);
+  if (!execPythonCommand(o, e, t))
+    return (0, Log_1.error)("get file md5 failed. pyLogic=" + o), "";
+  o = (0, puerts_1.$unref)(t);
   let r = (0, puerts_1.$unref)(e);
-  return (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r);
+  return (r = (!r || "None" === r) && 0 < o.Num() ? o.Get(0).Output : r);
 }
-function isTextFile(t) {
-  if (!(0, File_1.existFile)(t)) return !1;
-  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+function isTextFile(o) {
+  if (!(0, File_1.existFile)(o)) return !1;
+  var t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
     e = (0, puerts_1.$ref)("");
   if (
     !execPythonCommand(
       [
         "try:",
-        `    with open(r"${t}", encoding = "utf-8") as f:`,
+        `    with open(r"${o}", encoding = "utf-8") as f:`,
         "        content = f.read()",
         '        print("True")',
         "except:",
         '    print("False")',
       ].join("\n"),
       e,
-      o,
+      t,
     )
   )
     return !1;
-  t = (0, puerts_1.$unref)(o);
+  o = (0, puerts_1.$unref)(t);
   let r = (0, puerts_1.$unref)(e);
   return (
-    "True" === (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r)
+    "True" === (r = (!r || "None" === r) && 0 < o.Num() ? o.Get(0).Output : r)
   );
 }
-function sendHttpRequest(t, o, e, r, n) {
+function sendHttpRequest(o, t, e, r, n) {
   var e = e ?? { "Content-Type": "application/json" },
     i = (0, ue_1.NewMap)(ue_1.BuiltinString, ue_1.BuiltinString);
-  for (const u of Object.entries(e)) i.Add(u[0], u[1]);
-  const s = (t, o, e) => {
-    n && n(t, o, e), (0, puerts_1.releaseManualReleaseDelegate)(s);
+  for (const c of Object.entries(e)) i.Add(c[0], c[1]);
+  const s = (o, t, e) => {
+    n && n(o, t, e), (0, puerts_1.releaseManualReleaseDelegate)(s);
   };
   ue_1.EditorRuntimeOperations.SendHttpRequest(
-    t,
     o,
+    t,
     i,
     r ?? "",
     (0, puerts_1.toManualReleaseDelegate)(s),
@@ -388,7 +407,9 @@ function sendHttpRequest(t, o, e, r, n) {
   (exports.toTransformInfo = toTransformInfo),
   (exports.toPosA = toPosA),
   (exports.transformToPosA = transformToPosA),
+  (exports.transformToPosAndRot = transformToPosAndRot),
   (exports.toVector = toVector),
+  (exports.toVectorDouble = toVectorDouble),
   (exports.toRotation = toRotation),
   (exports.toScale = toScale),
   (exports.toTransform = toTransform),
@@ -407,17 +428,17 @@ function sendHttpRequest(t, o, e, r, n) {
   (exports.isTextFile = isTextFile),
   (exports.sendHttpRequest = sendHttpRequest);
 const actorPathNameCache = new Map();
-function findActorInEditorWorld(o) {
-  let e = actorPathNameCache.get(o);
+function findActorInEditorWorld(t) {
+  let e = actorPathNameCache.get(t);
   if (!e || !e.IsValid()) {
     var r = ue_1.EditorOperations.GetAllLevelActors();
-    for (let t = 0; t < r.Num(); t++) {
-      var n = r.Get(t),
+    for (let o = 0; o < r.Num(); o++) {
+      var n = r.Get(o),
         i = UE.KismetSystemLibrary.GetPathName(n),
         s = actorPathNameCache.get(i);
       (s && s.IsValid()) ||
         (ue_1.EditorOperations.IsActorLoaded(n) &&
-          (actorPathNameCache.set(i, n), i === o) &&
+          (actorPathNameCache.set(i, n), i === t) &&
           (e = n));
     }
   }
@@ -426,7 +447,7 @@ function findActorInEditorWorld(o) {
 function isInPieOrPkg() {
   return (0, Util_1.isInPie)() || Config_1.Config.IsPkgRunning;
 }
-function getVectorInfoFromTransformInUeClipboard(t = !1, o) {
+function getVectorInfoFromTransformInUeClipboard(o = !1, t) {
   var e = (0, puerts_1.$ref)(""),
     e = (ue_1.EditorOperations.ClipboardPaste(e), (0, puerts_1.$unref)(e)),
     e =
@@ -440,92 +461,56 @@ function getVectorInfoFromTransformInUeClipboard(t = !1, o) {
   if (r && n && i)
     return (
       (r = {
-        X: (0, Util_1.parseFloatSafe)(r, o),
-        Y: (0, Util_1.parseFloatSafe)(n, o),
-        Z: (0, Util_1.parseFloatSafe)(i, o),
+        X: (0, Util_1.parseFloatSafe)(r, t),
+        Y: (0, Util_1.parseFloatSafe)(n, t),
+        Z: (0, Util_1.parseFloatSafe)(i, t),
       }),
-      t && void 0 !== e && (r.A = (0, Util_1.parseFloatSafe)(e, o)),
+      o && void 0 !== e && (r.A = (0, Util_1.parseFloatSafe)(e, t)),
       r
     );
 }
 function getRotatorFromTransformInUeClipboard() {
-  var t = (0, puerts_1.$ref)(""),
-    t = (ue_1.EditorOperations.ClipboardPaste(t), (0, puerts_1.$unref)(t)),
-    t =
+  var o = (0, puerts_1.$ref)(""),
+    o = (ue_1.EditorOperations.ClipboardPaste(o), (0, puerts_1.$unref)(o)),
+    o =
       /\(Pitch=(?<Pitch>-?\d+\.?\d*),Yaw=(?<Yaw>-?\d+\.?\d*),Roll=(?<Roll>-?\d+\.?\d*)\)/.exec(
-        t,
+        o,
       ),
-    o = t?.groups?.Roll,
-    e = t?.groups?.Pitch,
-    t = t?.groups?.Yaw;
-  if (o && e && t)
+    t = o?.groups?.Roll,
+    e = o?.groups?.Pitch,
+    o = o?.groups?.Yaw;
+  if (t && e && o)
     return {
-      X: (0, Util_1.parseFloatSafe)(o),
+      X: (0, Util_1.parseFloatSafe)(t),
       Y: (0, Util_1.parseFloatSafe)(e),
-      Z: (0, Util_1.parseFloatSafe)(t),
+      Z: (0, Util_1.parseFloatSafe)(o),
     };
 }
 function getVectorInfoFromTransformInClipboard() {
-  var t = (0, puerts_1.$ref)("");
-  ue_1.EditorOperations.ClipboardPaste(t);
-  t = (0, puerts_1.$unref)(t).split(",");
-  if (t.length < 2) throw new Error();
+  var o = (0, puerts_1.$ref)("");
+  ue_1.EditorOperations.ClipboardPaste(o);
+  o = (0, puerts_1.$unref)(o).split(",");
+  if (o.length < 2) throw new Error();
   return {
-    X: (0, Util_1.parseFloatSafe)(t[0]),
-    Y: (0, Util_1.parseFloatSafe)(t[1]),
-    Z: (0, Util_1.parseFloatSafe)(t[2]),
+    X: (0, Util_1.parseFloatSafe)(o[0]),
+    Y: (0, Util_1.parseFloatSafe)(o[1]),
+    Z: (0, Util_1.parseFloatSafe)(o[2]),
   };
 }
-function copyVectorInfoToTransformInUeClipboard(t) {
-  var o = t.X ?? 0,
-    e = t.Y ?? 0,
-    r = t.Z ?? 0,
-    t = `(${void 0 === t.A ? "" : `Pitch=0,Yaw=${t.A},Roll=0,`}X=${o},Y=${e},Z=${r})`;
-  ue_1.EditorOperations.ClipboardCopy(t);
+function copyVectorInfoToTransformInUeClipboard(o) {
+  var t = o.X ?? 0,
+    e = o.Y ?? 0,
+    r = o.Z ?? 0,
+    o = `(${void 0 === o.A ? "" : `Pitch=0,Yaw=${o.A},Roll=0,`}X=${t},Y=${e},Z=${r})`;
+  ue_1.EditorOperations.ClipboardCopy(o);
 }
-function copyRotatorToTransformInUeClipboard(t) {
-  var o = t.X ?? 0,
-    t = `(Pitch=${t.Y ?? 0},Yaw=${t.Z ?? 0},Roll=${o})`;
-  ue_1.EditorOperations.ClipboardCopy(t);
+function copyRotatorToTransformInUeClipboard(o) {
+  var t = o.X ?? 0,
+    o = `(Pitch=${o.Y ?? 0},Yaw=${o.Z ?? 0},Roll=${t})`;
+  ue_1.EditorOperations.ClipboardCopy(o);
 }
 function isInActorPickerMode() {
   return ue_1.EditorOperations.IsInActorPickerMode();
-}
-function beginActorPickerMode(o, e) {
-  isInActorPickerMode() ||
-    ue_1.EditorOperations.BeginActorPickerMode(
-      (0, puerts_1.toManualReleaseDelegate)((t) => {
-        o?.(t);
-      }),
-      (0, puerts_1.toManualReleaseDelegate)((t) => !e || e(t)),
-    );
-}
-function endActorPickerMode() {
-  isInActorPickerMode() && ue_1.EditorOperations.EndActorPickerMode();
-}
-function isFileInUse(t) {
-  if (!(0, File_1.existFile)(t)) return !1;
-  var o = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
-    e = (0, puerts_1.$ref)("");
-  if (
-    !execPythonCommand(
-      [
-        "try:",
-        `    with open('${t}', 'r+'):`,
-        '        print("False")',
-        "except IOError:",
-        '    print("True")',
-      ].join("\n"),
-      e,
-      o,
-    )
-  )
-    return !1;
-  t = (0, puerts_1.$unref)(o);
-  let r = (0, puerts_1.$unref)(e);
-  return (
-    "True" === (r = (!r || "None" === r) && 0 < t.Num() ? t.Get(0).Output : r)
-  );
 }
 (exports.findActorInEditorWorld = findActorInEditorWorld),
   (exports.isInPieOrPkg = isInPieOrPkg),
@@ -539,8 +524,62 @@ function isFileInUse(t) {
     copyVectorInfoToTransformInUeClipboard),
   (exports.copyRotatorToTransformInUeClipboard =
     copyRotatorToTransformInUeClipboard),
-  (exports.isInActorPickerMode = isInActorPickerMode),
-  (exports.beginActorPickerMode = beginActorPickerMode),
+  (exports.isInActorPickerMode = isInActorPickerMode);
+let onActorPickFunc = void 0,
+  onShouldFilterActorFunc = void 0;
+function releaseActorPickerModeCallback() {
+  onActorPickFunc &&
+    ((0, puerts_1.releaseManualReleaseDelegate)(onActorPickFunc),
+    (onActorPickFunc = void 0)),
+    onShouldFilterActorFunc &&
+      ((0, puerts_1.releaseManualReleaseDelegate)(onShouldFilterActorFunc),
+      (onShouldFilterActorFunc = void 0));
+}
+function setupActorPickerModeCallback(t, e) {
+  (onActorPickFunc = (o) => {
+    t?.(o);
+  }),
+    (onShouldFilterActorFunc = (o) => !e || e(o));
+}
+function beginActorPickerMode(o, t) {
+  isInActorPickerMode() ||
+    (releaseActorPickerModeCallback(),
+    setupActorPickerModeCallback(o, t),
+    ue_1.EditorOperations.BeginActorPickerMode(
+      (0, puerts_1.toManualReleaseDelegate)(onActorPickFunc),
+      (0, puerts_1.toManualReleaseDelegate)(onShouldFilterActorFunc),
+    ));
+}
+function endActorPickerMode() {
+  isInActorPickerMode() &&
+    (ue_1.EditorOperations.EndActorPickerMode(),
+    releaseActorPickerModeCallback());
+}
+function isFileInUse(o) {
+  if (!(0, File_1.existFile)(o)) return !1;
+  var t = (0, puerts_1.$ref)((0, ue_1.NewArray)(ue_1.PythonLogOutputEntry)),
+    e = (0, puerts_1.$ref)("");
+  if (
+    !execPythonCommand(
+      [
+        "try:",
+        `    with open('${o}', 'r+'):`,
+        '        print("False")',
+        "except IOError:",
+        '    print("True")',
+      ].join("\n"),
+      e,
+      t,
+    )
+  )
+    return !1;
+  o = (0, puerts_1.$unref)(t);
+  let r = (0, puerts_1.$unref)(e);
+  return (
+    "True" === (r = (!r || "None" === r) && 0 < o.Num() ? o.Get(0).Output : r)
+  );
+}
+(exports.beginActorPickerMode = beginActorPickerMode),
   (exports.endActorPickerMode = endActorPickerMode),
   (exports.isFileInUse = isFileInUse);
 //# sourceMappingURL=Util.js.map

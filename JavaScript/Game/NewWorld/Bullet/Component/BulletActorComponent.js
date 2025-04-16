@@ -67,34 +67,51 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
             e.GetParentActor() === this.ActorInternal &&
             e.K2_DetachFromActor(1, 1, 1);
       var t = this.Entity?.GetBulletInfo(),
-        o = t?.CollisionInfo?.CollisionComponent;
+        o = t?.CollisionInfo?.CollisionComponent,
+        o =
+          (o &&
+            (t.IsCollisionRelativeLocationZero ||
+              o.D_K2_SetRelativeLocation(
+                Vector_1.Vector.ZeroVectorDouble,
+                !1,
+                void 0,
+                !0,
+              ),
+            t.IsCollisionRelativeRotationModify &&
+              o.K2_SetRelativeRotation(
+                Rotator_1.Rotator.ZeroRotator,
+                !1,
+                void 0,
+                !0,
+              ),
+            o.bHiddenInGame ||
+              (o.SetHiddenInGame(!0),
+              Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Bullet", 20, "子弹碰撞盒显隐被修改", [
+                  "Bullet",
+                  t.BulletRowName,
+                ]))),
+          t?.CollisionInfo?.RegionComponent);
       o &&
         (t.IsCollisionRelativeLocationZero ||
-          o.K2_SetRelativeLocation(Vector_1.Vector.ZeroVector, !1, void 0, !0),
-        t.IsCollisionRelativeRotationModify &&
-          o.K2_SetRelativeRotation(
-            Rotator_1.Rotator.ZeroRotator,
+          o.D_K2_SetRelativeLocation(
+            Vector_1.Vector.ZeroVectorDouble,
             !1,
             void 0,
             !0,
           ),
-        o.bHiddenInGame ||
-          (o.SetHiddenInGame(!0),
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Bullet", 21, "子弹碰撞盒显隐被修改", [
-              "Bullet",
-              t.BulletRowName,
-            ]))),
+        t.IsCollisionRelativeRotationModify) &&
+        o.K2_SetRelativeRotation(Rotator_1.Rotator.ZeroRotator, !1, void 0, !0),
         GlobalData_1.GlobalData.IsPlayInEditor &&
           (this.NeedDetach ||
-            Vector_1.Vector.OneVector.Equals(
-              this.ActorInternal.GetActorScale3D(),
+            Vector_1.Vector.OneVectorDouble.Equals(
+              this.ActorInternal.D_GetActorScale3D(),
               MathCommon_1.MathCommon.KindaSmallNumber,
             ) ||
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Bullet",
-                18,
+                17,
                 "子弹回收时发现子弹缩放值异常",
                 ["EntityId", this.Entity?.Id],
                 ["BulletRowName", t?.BulletRowName],
@@ -104,7 +121,7 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
-            18,
+            17,
             "子弹回收时发现子弹仍Attach在别的实体上",
             ["EntityId", this.Entity?.Id],
             ["BulletRowName", t?.BulletRowName],
@@ -135,7 +152,7 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
   }
 };
 (BulletActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(155)],
+  [(0, RegisterComponent_1.RegisterComponent)(167)],
   BulletActorComponent,
 )),
   (exports.BulletActorComponent = BulletActorComponent);

@@ -16,11 +16,12 @@ class TsAnimNotifyStateSubMeshControl extends UE.KuroAnimNotifyState {
       (this.结束特效 = void 0),
       (this.结束延迟时间 = 0);
   }
+  Constructor() {}
   K2_NotifyBegin(t, s, i) {
     var t = t?.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-      !!(t = t.GetEntityNoBlueprint()?.GetComponent(205)) &&
+      !!(t = t.GetEntityNoBlueprint()?.GetComponent(220)) &&
       (t.SetSubMeshOrder(
         this.MeshName,
         this.开始是否可见,
@@ -35,7 +36,7 @@ class TsAnimNotifyStateSubMeshControl extends UE.KuroAnimNotifyState {
     var t = t?.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-      !!(t = t.GetEntityNoBlueprint()?.GetComponent(205)) &&
+      !!(t = t.GetEntityNoBlueprint()?.GetComponent(220)) &&
       (t.SetSubMeshOrder(
         this.MeshName,
         this.结束是否可见,

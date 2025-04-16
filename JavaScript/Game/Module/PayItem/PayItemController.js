@@ -10,7 +10,6 @@ const Info_1 = require("../../../Core/Common/Info"),
   PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  SdkViewData_1 = require("../../KuroSdk/View/SdkViewData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
@@ -19,10 +18,11 @@ const Info_1 = require("../../../Core/Common/Info"),
   FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
   LogReportDefine_1 = require("../LogReport/LogReportDefine"),
-  ReconnectDefine_1 = require("../ReConnect/ReconnectDefine");
+  ReconnectDefine_1 = require("../ReConnect/ReconnectDefine"),
+  SdkViewData_1 = require("../SdkUI/SdkViewData");
 class PayItemController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(20497, (e) => {
+    Net_1.Net.Register(28243, (e) => {
       e = { PayItemId: e.s5n, OrderId: e.CBs, ItemId: e.L8n, ItemCount: e.n9n };
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnPayItemSuccess,
@@ -31,10 +31,10 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
         PayItemController.KOi(),
         ModelManager_1.ModelManager.PayItemModel.CleanPayingItemName();
     }),
-      Net_1.Net.Register(24533, PayItemController.QOi);
+      Net_1.Net.Register(25341, PayItemController.QOi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(24533), Net_1.Net.UnRegister(20497);
+    Net_1.Net.UnRegister(25341), Net_1.Net.UnRegister(28243);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -51,22 +51,22 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
   static OnClear() {
     return this.KOi(), !0;
   }
-  static aka(t) {
+  static _Fa(t) {
     var e = Protocol_1.Aki.Protocol.Whs.create();
     (e.s5n = t),
       (e.K7n = ModelManager_1.ModelManager.PayItemModel.Version),
       ModelManager_1.ModelManager.PayItemModel.UpdatePayingItemName(t),
-      Net_1.Net.Call(27232, e, (e) => {
+      Net_1.Net.Call(26159, e, (e) => {
         var r, o;
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              27626,
+              19865,
             )
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Shop",
-                11,
+                10,
                 "PayShop:ShopItem 充值请求成功,调用SDK接口",
                 ["Id", t],
               ),
@@ -103,13 +103,13 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
     var e = Protocol_1.Aki.Protocol.Hhs.create(),
       e =
         ((e.K7n = ModelManager_1.ModelManager.PayItemModel.Version),
-        await Net_1.Net.CallAsync(24911, e));
+        await Net_1.Net.CallAsync(28790, e));
     return !(
       !e ||
       (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
           e.Q4n,
-          21666,
+          26603,
         ),
       !e.K7n) ||
       !e.OUs ||
@@ -124,7 +124,7 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Pay",
-            17,
+            16,
             "QueryProductInfoAsync failed, productIds is null",
           ),
         !1
@@ -152,7 +152,7 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Pay",
-                17,
+                16,
                 "QueryProductInfoAsync failed, data is null",
               ),
           !1
@@ -165,60 +165,66 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
     )
       return (
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Pay", 28, "查询失败", ["productIds", e]),
+          Log_1.Log.Debug("Pay", 27, "查询失败", ["productIds", e]),
         !1
       );
     return !0;
   }
   static SdkPayNew(e) {
-    var r;
-    this.hka
+    var r, o;
+    this.uFa
       ? Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Pay", 17, "SdkPayNew failed, duplicate pay request")
-      : (e =
+        Log_1.Log.Warn("Pay", 16, "SdkPayNew failed, duplicate pay request")
+      : (r =
             ModelManager_1.ModelManager.PayItemModel.GetProductLabelByGoodsId(
               e,
             ))
-        ? (r =
-            PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().OpenCheckoutDialog(
+        ? ((o =
+            ModelManager_1.ModelManager.PayItemModel.GetProductChannelGoodsIdByGoodsId(
               e,
+            )),
+          (e =
+            PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().OpenCheckoutDialog(
+              r,
+              e,
+              o ?? "",
             ))
-          ? (this.hka = TimerSystem_1.TimerSystem.Forever(() => {
-              switch (
-                PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().PollCheckoutDialogResult()
-              ) {
-                case 2:
-                  this.RequestSdkCheckout(),
-                    TimerSystem_1.TimerSystem.Remove(this.hka),
-                    (this.hka = void 0),
-                    EventSystem_1.EventSystem.Emit(
-                      EventDefine_1.EEventName.SdkPayEnd,
-                      2,
-                    );
-                  break;
-                case 1:
-                  break;
-                default:
-                  TimerSystem_1.TimerSystem.Remove(this.hka),
-                    (this.hka = void 0),
-                    EventSystem_1.EventSystem.Emit(
-                      EventDefine_1.EEventName.SdkPayEnd,
-                      0,
-                    );
-              }
-            }, 500))
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Pay",
-              17,
-              "SdkPayNew failed, OpenCheckoutDialog failed",
-              ["psnProductId", e],
-              ["result", r],
-            )
+            ? (this.uFa = TimerSystem_1.TimerSystem.Forever(() => {
+                switch (
+                  PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().PollCheckoutDialogResult()
+                ) {
+                  case 2:
+                    this.RequestSdkCheckout(1),
+                      TimerSystem_1.TimerSystem.Remove(this.uFa),
+                      (this.uFa = void 0),
+                      EventSystem_1.EventSystem.Emit(
+                        EventDefine_1.EEventName.SdkPayEnd,
+                        2,
+                      );
+                    break;
+                  case 1:
+                    break;
+                  default:
+                    TimerSystem_1.TimerSystem.Remove(this.uFa),
+                      (this.uFa = void 0),
+                      EventSystem_1.EventSystem.Emit(
+                        EventDefine_1.EEventName.SdkPayEnd,
+                        0,
+                      );
+                }
+              }, 500))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Pay",
+                16,
+                "SdkPayNew failed, OpenCheckoutDialog failed",
+                ["psnProductId", r],
+                ["result", e],
+              ))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Pay",
-            17,
+            16,
             "SdkPayNew failed, psnProductLabel is null",
           );
   }
@@ -262,8 +268,8 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
             UiManager_1.UiManager.OpenView("SdkPayProductInformationView", o))
           : this.SdkPayNew(r)
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Pay", 17, "SdkPay failed, productId is null")
-      : this.aka(e);
+          Log_1.Log.Error("Pay", 16, "SdkPay failed, productId is null")
+      : this._Fa(e);
   }
   static ISe() {
     return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
@@ -272,20 +278,22 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
         ? ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId().toString()
         : "";
   }
-  static RequestSdkCheckout() {
-    var e;
+  static RequestSdkCheckout(e) {
+    var r;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn &&
-      ((e = {
+      "" !== ModelManager_1.ModelManager.LoginModel.SdkAccessToken &&
+      "" !== (r = this.ISe().toString()) &&
+      ((r = {
         AccessToken: ModelManager_1.ModelManager.LoginModel.SdkAccessToken,
         ServerId: ModelManager_1.ModelManager.LoginModel.GetServerId(),
         ServerName: ModelManager_1.ModelManager.LoginModel.GetServerName(),
-        RoleId: this.ISe().toString(),
+        RoleId: r,
         RoleName: ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
       }),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Pay", 17, "RequestSdkCheckout SDK销单", ["param", e]),
+        Log_1.Log.Info("Pay", 16, "RequestSdkCheckout SDK销单", ["param", r]),
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().RequestCheckoutProduct(
-        e,
+        r,
         (e, r, o) => {
           o ||
             (r
@@ -301,11 +309,12 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
                   o,
                 ))
               : Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("Pay", 17, "RequestSdkCheckout SDK销单", [
+                Log_1.Log.Warn("Pay", 16, "RequestSdkCheckout SDK销单", [
                   "msg",
                   e,
                 ]));
         },
+        e,
       ));
   }
 }
@@ -313,10 +322,10 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
   ((_a = PayItemController).CurrentBlockIosPayState = !1),
   (PayItemController.CurrentBlockBetaState = !0),
   (PayItemController.gSe = () => {
-    _a.RequestSdkCheckout();
+    _a.RequestSdkCheckout(0);
   }),
   (PayItemController.QOi = (e) => {
     ModelManager_1.ModelManager.PayItemModel.ResetSpecialBonus(e.BVn);
   }),
-  (PayItemController.hka = void 0);
+  (PayItemController.uFa = void 0);
 //# sourceMappingURL=PayItemController.js.map

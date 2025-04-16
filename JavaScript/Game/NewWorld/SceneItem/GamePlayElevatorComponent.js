@@ -33,6 +33,7 @@ const UE = require("ue"),
   TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  GameSettingsDefine_1 = require("../../GameSettings/GameSettingsDefine"),
   GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
@@ -83,7 +84,7 @@ let GamePlayElevatorComponent =
         (this.mun = void 0),
         (this.dun = 1),
         (this.Cun = 1),
-        (this.P3a = 0),
+        (this.u6a = 0),
         (this.gun = !1),
         (this.fun = !1),
         (this.pun = !1),
@@ -108,7 +109,7 @@ let GamePlayElevatorComponent =
         (this.xun = (t, i) => {
           var e,
             i = i.Entity;
-          i.GetComponent(143) &&
+          i.GetComponent(154) &&
             ((i = i.GetComponent(1)),
             (e = this.yun.indexOf(i.Owner)),
             t
@@ -121,9 +122,9 @@ let GamePlayElevatorComponent =
           var i, e;
           this.IsMove() &&
             ((e = void 0), (i = Global_1.Global.BaseCharacter)) &&
-            (e = i.CharacterActorComponent.Entity.GetComponent(160)) &&
+            (e = i.CharacterActorComponent.Entity.GetComponent(172)) &&
             (t
-              ? ((t = i.K2_GetActorLocation().Z),
+              ? ((t = i.D_K2_GetActorLocation().Z),
                 this.Entity.GetComponent(1)?.ActorLocationProxy.Z < t &&
                   (e.AddBuff(CharacterBuffIds_1.buffId.ElevatorBuff, {
                     InstigatorId: e.CreatureDataId,
@@ -143,13 +144,13 @@ let GamePlayElevatorComponent =
         (this.bun = (t, i) => {
           var e = ActorUtils_1.ActorUtils.GetEntityByActor(i);
           e &&
-            e.Entity.GetComponent(143) &&
+            e.Entity.GetComponent(154) &&
             -1 === this.Sun.indexOf(i) &&
             (this.IsMove() && -1 !== this.yun.indexOf(i) && this.qun(i),
             this.Sun.push(i));
         }),
         (this.OnSceneInteractionLoadCompleted = () => {
-          var t = this.Entity.GetComponent(187),
+          var t = this.Entity.GetComponent(200),
             t =
               SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
                 t.GetSceneInteractionLevelHandleId(),
@@ -159,7 +160,7 @@ let GamePlayElevatorComponent =
           )),
             this.Iun &&
               (Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Temp", 32, "111", [
+                Log_1.Log.Debug("Temp", 31, "111", [
                   "111",
                   this.Iun.GetCollisionProfileName().toString(),
                 ]),
@@ -224,11 +225,11 @@ let GamePlayElevatorComponent =
     OnStart() {
       return (
         this.V6o(),
-        (this.vtn = this.Entity.GetComponent(77)),
+        (this.vtn = this.Entity.GetComponent(84)),
         this.vtn &&
           (this.vtn.AddOnPlayerOverlapCallback(this.wun),
           this.vtn.AddOnEntityOverlapCallback(this.xun)),
-        (this._un = this.Entity.GetComponent(118)),
+        (this._un = this.Entity.GetComponent(128)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
@@ -295,10 +296,10 @@ let GamePlayElevatorComponent =
         (this.lun = 0),
         (this.fun = !1),
         (this.gun = !1),
-        0 === this.P3a && this.Oun(this.Cun, !1),
+        0 === this.u6a && this.Oun(this.Cun, !1),
         (this.dun = this.Cun),
-        0 < this.P3a
-          ? (this.dun !== this.P3a && (this.Cun = this.P3a), (this.P3a = 0))
+        0 < this.u6a
+          ? (this.dun !== this.u6a && (this.Cun = this.u6a), (this.u6a = 0))
           : (this.Cun = 0),
         this.Vun(),
         this.vun && (this.pun = !0),
@@ -379,14 +380,14 @@ let GamePlayElevatorComponent =
       var i, e;
       t < 1 || t > this.mun.length || this.Cun === t
         ? Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("SceneItem", 36, "SetTargetFloor Wrong Floor", [
+          Log_1.Log.Warn("SceneItem", 35, "SetTargetFloor Wrong Floor", [
             "targetFloor",
             t,
           ])
         : 0 !== this.Cun
           ? (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("SceneItem", 36, "Elevator Running"),
-            (this.P3a = t))
+              Log_1.Log.Warn("SceneItem", 35, "Elevator Running"),
+            (this.u6a = t))
           : ((this.Cun = t),
             this.Vun(),
             this.vun && this.Oun(t, !0),
@@ -409,7 +410,7 @@ let GamePlayElevatorComponent =
         var i = Global_1.Global.BaseCharacter;
         if (
           (i &&
-            ((i = i.CharacterActorComponent.Entity), (t = i.GetComponent(160))),
+            ((i = i.CharacterActorComponent.Entity), (t = i.GetComponent(172))),
           0 === this.Cun)
         ) {
           if (
@@ -426,7 +427,9 @@ let GamePlayElevatorComponent =
               TimerSystem_1.TimerSystem.Next(() => {
                 this.Qun(e);
               });
-          GameSettingsManager_1.GameSettingsManager.ReApply(65);
+          GameSettingsManager_1.GameSettingsManager.ReApply(
+            GameSettingsDefine_1.EFunction.MOTIONBLUR,
+          );
         } else if (
           (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
@@ -471,7 +474,7 @@ let GamePlayElevatorComponent =
         (this._un.IsMoving = !0);
     }
     Tun() {
-      return this.Entity.GetComponent(181).HasTag(-662723379);
+      return this.Entity.GetComponent(194).HasTag(-662723379);
     }
     Dun() {
       if (!this.vtn) return !1;
@@ -496,8 +499,8 @@ let GamePlayElevatorComponent =
           t.Z < s.Z - 100 &&
           !e &&
           (r.Entity ===
-            Global_1.Global.BaseCharacter.CharacterActorComponent.Entity &&
-            r.Entity.GetComponent(57)?.StopManipualte(),
+            Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity &&
+            r.Entity?.GetComponent(64)?.StopManipulate(),
           this.Yun(r.Entity),
           (o = !0));
       return o;
@@ -554,7 +557,7 @@ let GamePlayElevatorComponent =
                   )),
                   n.TeleportAndFindStandLocation(r),
                   l.EnableCollision(a))
-                : ((n = i.GetComponent(143)) && n.TryEnableTick(!0),
+                : ((n = i.GetComponent(154)) && n.TryEnableTick(!0),
                   l.SetActorLocation(
                     r.ToUeVector(),
                     this.constructor.name,
@@ -595,9 +598,9 @@ let GamePlayElevatorComponent =
     qun(t) {
       var i = ActorUtils_1.ActorUtils.GetEntityByActor(t);
       i &&
-        (i = i.Entity.GetComponent(143)) &&
+        (i = i.Entity.GetComponent(154)) &&
         (i.TryDisableTick("[GamePlayElevator.AttachToElevator] 上电梯关闭Tick"),
-        (i = this.Entity.GetComponent(187)),
+        (i = this.Entity.GetComponent(200)),
         ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
           t,
           i.Owner,
@@ -620,12 +623,12 @@ let GamePlayElevatorComponent =
         1,
       );
       var t = ActorUtils_1.ActorUtils.GetEntityByActor(t);
-      t && (t = t.Entity.GetComponent(143)) && t.TryEnableTick(!0);
+      t && (t = t.Entity.GetComponent(154)) && t.TryEnableTick(!0);
     }
     OnActivate() {
       !Info_1.Info.EnableForceTick &&
         this.Active &&
-        ComponentForceTickController_1.ComponentForceTickController.RegisterPreTick(
+        ComponentForceTickController_1.ComponentForceTickController.RegisterPreMoveTick(
           this,
           this.KHr,
         );
@@ -633,7 +636,7 @@ let GamePlayElevatorComponent =
     OnEnable() {
       !Info_1.Info.EnableForceTick &&
         this.Entity?.IsInit &&
-        ComponentForceTickController_1.ComponentForceTickController.RegisterPreTick(
+        ComponentForceTickController_1.ComponentForceTickController.RegisterPreMoveTick(
           this,
           this.KHr,
         );
@@ -641,22 +644,22 @@ let GamePlayElevatorComponent =
     OnEnd() {
       return (
         Info_1.Info.EnableForceTick ||
-          ComponentForceTickController_1.ComponentForceTickController.UnregisterPreTick(
-            this.KHr,
+          ComponentForceTickController_1.ComponentForceTickController.UnregisterPreMoveTick(
+            this,
           ),
         !0
       );
     }
     OnDisable(t) {
       Info_1.Info.EnableForceTick ||
-        ComponentForceTickController_1.ComponentForceTickController.UnregisterPreTick(
-          this.KHr,
+        ComponentForceTickController_1.ComponentForceTickController.UnregisterPreMoveTick(
+          this,
         );
     }
   });
 (GamePlayElevatorComponent = GamePlayElevatorComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(126)],
+    [(0, RegisterComponent_1.RegisterComponent)(137)],
     GamePlayElevatorComponent,
   )),
   (exports.GamePlayElevatorComponent = GamePlayElevatorComponent);

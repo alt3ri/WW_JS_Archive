@@ -39,11 +39,21 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.X9i = new Array()),
       (this.b9i = 0),
       (this.mCo = !1),
+      (this.Wl_ = () => {
+        this.pCo(!0);
+      }),
       (this.dCo = () => {
         this.CCo = !1;
       }),
       (this.gCo = () => {
         this.$9t();
+      }),
+      (this.Ql_ = () => {
+        this.Kl_();
+      }),
+      (this.Kl_ = () => {
+        var i = this.d1o.GetCurSelectRoleId();
+        this.pCo(!0), UiManager_1.UiManager.OpenView("VisionAssembleView", i);
       }),
       (this.CCo = !1),
       (this.OnChangeRole = (i) => {
@@ -64,7 +74,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
           s = this.x9i.length;
         for (let i = 0; i < s; i++) {
           var h = e.length > i ? e[i] : void 0;
-          this.x9i[i].UpdateItem(h), this.X9i[i].Refresh(h, t.IsTrialRole());
+          this.x9i[i].UpdateItem(h, t), this.X9i[i].Refresh(h, t.IsTrialRole());
         }
         this.RGt();
       }),
@@ -189,8 +199,13 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       [6, UE.UIButtonComponent],
       [7, UE.UIItem],
       [8, UE.UIText],
+      [9, UE.UIButtonComponent],
+      [10, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[6, this.gCo]]);
+      (this.BtnBindInfo = [
+        [6, this.gCo],
+        [9, this.Ql_],
+      ]);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -212,6 +227,10 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ResetRoleFlag,
         this.dCo,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.HideVisionTabRole,
+        this.Wl_,
       );
   }
   RemoveEventListener() {
@@ -234,6 +253,10 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ResetRoleFlag,
         this.dCo,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.HideVisionTabRole,
+        this.Wl_,
       );
   }
   async $9t() {
@@ -248,7 +271,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
     (this.d1o = this.ExtraParams),
       void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleVisionTabView",
           ])
@@ -270,8 +293,8 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionDragCurveTime());
   }
   async vCo() {
-    for (let i = 0; i <= 4; i++) {
-      var t = this.d1o.GetCurSelectRoleId();
+    var t = this.d1o?.GetCurSelectRoleData();
+    for (let i = 0; i <= 4; i++)
       this.x9i.push(
         new RoleVisionDragHeadItem_1.RoleVisionDragHeadItem(
           this.GetItem(i),
@@ -280,7 +303,6 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
           !0,
         ),
       );
-    }
     await Promise.all([...this.x9i.map(async (i) => i.Init())]),
       this.x9i.forEach((i) => {
         var t = new VisionCommonDragItem_1.VisionCommonDragItem(
@@ -325,10 +347,17 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.k9i = INVALIDINDEX),
       this.I7i();
     var i = this.d1o.GetCurSelectRoleId();
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.RefreshVisionEquipRedPoint,
-      i,
-    );
+    this.$l_(),
+      this.Xl_(),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RefreshVisionEquipRedPoint,
+        i,
+      );
+  }
+  $l_() {
+    var i =
+      ModelManager_1.ModelManager.VisionEquipGroupModel.GetVisionGroupFirstOpenState();
+    this.GetItem(10).SetUIActive(i);
   }
   Og() {
     this.RefreshPhantom();
@@ -371,6 +400,11 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   OnBeforeHide() {
     UiLayer_1.UiLayer.SetShowMaskLayer("playBackToStartPositionAnimation", !1),
       UiLayer_1.UiLayer.SetShowMaskLayer("OnEquipVision", !1);
+  }
+  Xl_() {
+    var i = this.d1o.GetCurSelectRoleData().IsTrialRole(),
+      t = ModelManager_1.ModelManager.FunctionModel.IsOpen(10075);
+    this.GetButton(9).RootUIComp.SetUIActive(t && !i);
   }
   MCo() {
     var t = this.x9i.length;

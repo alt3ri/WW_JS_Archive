@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, n, i) {
+  function (t, e, i, n) {
     var s,
       o = arguments.length,
       r =
         o < 3
           ? e
-          : null === i
-            ? (i = Object.getOwnPropertyDescriptor(e, n))
-            : i;
+          : null === n
+            ? (n = Object.getOwnPropertyDescriptor(e, i))
+            : n;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, e, n, i);
+      r = Reflect.decorate(t, e, i, n);
     else
       for (var h = t.length - 1; 0 <= h; h--)
-        (s = t[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(e, n, r) : s(e, n)) || r);
-    return 3 < o && r && Object.defineProperty(e, n, r), r;
+        (s = t[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(e, i, r) : s(e, i)) || r);
+    return 3 < o && r && Object.defineProperty(e, i, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnSensoryInfoComponent = void 0);
@@ -35,7 +35,7 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
       (this.bhn = !1),
       (this.qhn = Number.MAX_VALUE),
       (this.Ghn = void 0),
-      (this.fBa = new Set()),
+      (this.wBa = new Set()),
       (this.Nhn = void 0),
       (this.Ohn = () => {
         (this.Bhn = !0),
@@ -63,35 +63,70 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
       (this.khn = () => {
         this.bhn ||
           ((this.bhn = !0),
-          EventSystem_1.EventSystem.EmitWithTarget(
-            this.Entity,
-            EventDefine_1.EEventName.EnterPresentationInitRange,
-          ),
           this.Ghn &&
             (this.DeletePerceptionEvent(this.Ghn), (this.Ghn = void 0)));
       });
   }
-  CreatePerceptionEvent() {
-    var t =
+  OnEnable() {
+    super.OnEnable(),
+      0 < this.wBa.size &&
+        this.Entity.GameBudgetManagedToken &&
+        cpp_1.FKuroPerceptionInterface.MarkElementDisable(
+          this.Entity.GameBudgetManagedToken,
+          !1,
+        );
+  }
+  OnDisable(t) {
+    super.OnDisable(t),
+      0 < this.wBa.size &&
+        this.Entity.GameBudgetManagedToken &&
+        cpp_1.FKuroPerceptionInterface.MarkElementDisable(
+          this.Entity.GameBudgetManagedToken,
+          !0,
+        );
+  }
+  CreatePerceptionEvent(
+    t,
+    e,
+    i = void 0,
+    n = void 0,
+    s = void 0,
+    o = void 0,
+    r = -1,
+    h = void 0,
+  ) {
+    var v =
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent();
-    return this.fBa.add(t), t;
+    return (
+      this.wBa.add(v),
+      v.Init(t, e, i, n, s, o, r, h),
+      e &&
+        cpp_1.FKuroPerceptionInterface.MarkElementDisable(
+          e,
+          !this.Entity.Active,
+        ),
+      v
+    );
   }
   DeletePerceptionEvent(t) {
-    this.fBa.delete(t),
+    this.wBa.delete(t),
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
         t,
       );
   }
-  pBa() {
-    for (const t of this.fBa)
+  BBa() {
+    for (const t of this.wBa)
       EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
         t,
       );
-    this.fBa.clear();
+    this.wBa.clear();
   }
   RegisterPerceptionEvent() {
     var t = this.Entity.GameBudgetManagedToken;
-    if (t) for (const e of this.fBa) e.IsValid() || e.Register(t);
+    if (t) {
+      for (const e of this.wBa) e.IsValid() || e.Register(t);
+      cpp_1.FKuroPerceptionInterface.MarkElementDisable(t, !this.Entity.Active);
+    }
   }
   OnActivate() {
     var t = this.Entity.GetComponent(0),
@@ -101,12 +136,19 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
         ? this.khn()
         : (this.Ghn &&
             (this.DeletePerceptionEvent(this.Ghn), (this.Ghn = void 0)),
-          (this.Ghn = this.CreatePerceptionEvent()),
-          this.Ghn.Init(PERCEPTION_SEARCH_RANGE, e, this.khn)),
+          (this.Ghn = this.CreatePerceptionEvent(
+            PERCEPTION_SEARCH_RANGE,
+            e,
+            this.khn,
+          ))),
       !this.Nhn &&
         0 < this.whn &&
-        ((this.Nhn = this.CreatePerceptionEvent()),
-        this.Nhn.Init(this.whn, e, this.Ohn, this.Fhn)),
+        (this.Nhn = this.CreatePerceptionEvent(
+          this.whn,
+          e,
+          this.Ohn,
+          this.Fhn,
+        )),
       !0
     );
   }
@@ -117,14 +159,13 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
       this.Nhn
         ? this.Nhn.UpdateDistance(t)
         : (e = this.Entity?.GameBudgetManagedToken) &&
-          ((this.Nhn = this.CreatePerceptionEvent()),
-          this.Nhn.Init(t, e, this.Ohn, this.Fhn)));
+          (this.Nhn = this.CreatePerceptionEvent(t, e, this.Ohn, this.Fhn)));
   }
   OnEnd() {
     return (
       (this.Nhn = void 0),
       (this.Ghn = void 0),
-      this.pBa(),
+      this.BBa(),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Entity,
         EventDefine_1.EEventName.LeaveLogicRange,
@@ -166,7 +207,7 @@ LogicRangeInfo:
   }
 };
 (PawnSensoryInfoComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(109)],
+  [(0, RegisterComponent_1.RegisterComponent)(119)],
   PawnSensoryInfoComponent,
 )),
   (exports.PawnSensoryInfoComponent = PawnSensoryInfoComponent);

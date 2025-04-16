@@ -13,6 +13,9 @@ class LogicDataShakeScreen extends LogicDataBase_1.default {
       (this.OuterRadius = 0),
       (this.Shake = void 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataShakeScreen;
 //# sourceMappingURL=LogicDataShakeScreen.js.map

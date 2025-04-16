@@ -13,8 +13,8 @@ class TowerDefensePhantomIconItem extends SmallItemGrid_1.SmallItemGrid {
   constructor() {
     super(...arguments),
       (this.UZs = TowerDefenceDefine_1.DEFAULT_ID),
-      (this.zWa = void 0),
-      (this.JWa = void 0),
+      (this.yXa = void 0),
+      (this.EXa = void 0),
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
@@ -26,10 +26,10 @@ class TowerDefensePhantomIconItem extends SmallItemGrid_1.SmallItemGrid {
       });
   }
   Clear() {
-    this.zWa?.Destroy(),
-      (this.zWa = void 0),
-      this.JWa?.Destroy(),
-      (this.JWa = void 0);
+    this.yXa?.Destroy(),
+      (this.yXa = void 0),
+      this.EXa?.Destroy(),
+      (this.EXa = void 0);
   }
   OnSelected(e) {}
   OnDeselected(e) {}
@@ -50,32 +50,32 @@ class TowerDefensePhantomIconItem extends SmallItemGrid_1.SmallItemGrid {
       (this.BtnBindInfo = [[7, this.eTt]]);
   }
   async OnBeforeStartAsync() {
-    (this.zWa = new TowerDefensePhantomIconCornerMark()),
-      (this.JWa = new TowerDefensePhantomUnavailableMask()),
+    (this.yXa = new TowerDefensePhantomIconCornerMark()),
+      (this.EXa = new TowerDefensePhantomUnavailableMask()),
       await Promise.all([
-        this.zWa.CreateThenShowByResourceIdAsync(
+        this.yXa.CreateThenShowByResourceIdAsync(
           "UiItem_ItemBVisionPoint",
-          this.GetItem(6),
+          this.GetItem(5),
         ),
-        this.JWa.CreateThenShowByResourceIdAsync(
+        this.EXa.CreateThenShowByResourceIdAsync(
           "UiItem_ItemBDark",
-          this.GetItem(6),
+          this.GetItem(5),
         ),
       ]);
   }
   Refresh(e, t, i) {
-    this.ZWa(e, t, i);
+    this.IXa(e, t, i);
   }
-  async ZWa(e, t, i) {
+  async IXa(e, t, i) {
     var n = e.Data;
     (this.UZs = n.ConfigId),
       this.ApplyPhantomSmallItemGrid(e),
       this.SetSelected(n.IsChosen),
-      this.zWa?.RefreshColor(n.HexColorPath),
-      this.JWa?.SetUiActive(n.IsOccupied),
-      await this.eQa(n.IsLocked);
+      this.yXa?.RefreshColor(n.HexColorPath),
+      this.EXa?.SetUiActive(n.IsOccupied),
+      await this.TXa(n.IsLocked);
   }
-  async eQa(e) {
+  async TXa(e) {
     var t = this.GetItemGridComponent(
       SmallItemGridLockBlackComponent_1.SmallItemGridLockBlackComponent,
     );

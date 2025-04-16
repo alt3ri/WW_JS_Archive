@@ -8,18 +8,16 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   ItemTipsComponent_1 = require("../../Common/ItemTips/ItemTipsComponent"),
   ItemTipsUtilTool_1 = require("../../Common/ItemTips/ItemTipsUtilTool"),
-  PowerTipsData_1 = require("../../Power/SubViews/PowerTipsData"),
+  PersonalCardPreviewComponent_1 = require("../../Personal/View/PersonalCardPreviewComponent"),
   PowerTipsItem_1 = require("../../Power/SubViews/PowerTipsItem");
 class ItemTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.IncId = 0),
       (this.ConfigId = 0),
-      (this.ItemTipsComponent = void 0),
-      (this.kXs = void 0),
-      (this.Jvt = () => {
-        this.CloseMe();
-      }),
+      (this.ExtraParam = void 0),
+      (this.UiTipsType = "ItemTipsComponent"),
+      (this.TipsProxy = void 0),
       (this.DoCloseMe = () => {
         this.CloseMe();
       });
@@ -29,49 +27,60 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.Jvt]]);
+      (this.BtnBindInfo = [[0, this.DoCloseMe]]);
   }
   async OnBeforeStartAsync() {
-    var e = this.OpenParam;
-    (this.IncId = e?.ItemUid),
-      (this.ConfigId = e.ItemId),
-      ConfigManager_1.ConfigManager.PowerConfig.GetPowerCurrencyIds().includes(
-        this.ConfigId,
-      )
-        ? ((this.kXs = new PowerTipsItem_1.PowerTipsItem()),
-          await this.kXs.CreateByResourceIdAsync(
-            "UiItem_ItemTips1",
-            this.GetItem(1),
-          ),
-          this.kXs.SetBackBackCallBack(this.DoCloseMe),
-          this.AddChild(this.kXs))
-        : ((this.ItemTipsComponent =
-            new ItemTipsComponent_1.ItemTipsComponent()),
-          await this.ItemTipsComponent.CreateByResourceIdAsync(
-            "UiItem_TipsScreenTips",
-            this.GetItem(1),
-          ),
-          this.AddChild(this.ItemTipsComponent)),
-      this.Og();
+    var e = this.OpenParam,
+      i =
+        ((this.IncId = e?.ItemUid),
+        (this.ConfigId = e.ItemId),
+        (this.ExtraParam = e.ExtraParam),
+        ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataByPram(e));
+    if (i)
+      switch (
+        ((this.UiTipsType =
+          ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsUiType(
+            i.ItemType,
+          )),
+        this.UiTipsType)
+      ) {
+        case "ItemTipsComponent":
+          await this.DDl(i);
+          break;
+        case "PowerTipsItem":
+          await this.ADl(i);
+          break;
+        case "PersonalCardPreviewComponent":
+          await this.xDl(i);
+      }
   }
-  Og() {
-    var e,
-      i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.ConfigId,
-      ).ItemType,
-      t = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(
-        this.ConfigId,
-        this.IncId,
-      );
-    ConfigManager_1.ConfigManager.PowerConfig.GetPowerCurrencyIds().includes(
-      this.ConfigId,
-    )
-      ? (((e = new PowerTipsData_1.PowerTipsData()).ItemId = this.ConfigId),
-        this.kXs.RefreshByData(e))
-      : (this.ItemTipsComponent.Refresh(t),
-        void 0 === this.IncId &&
-          this.ItemTipsComponent.SetTipsComponentLockButton(!1),
-        0 === i && this.ItemTipsComponent.SetTipsNumShow(!1));
+  async DDl(e) {
+    var i = new ItemTipsComponent_1.ItemTipsComponent(),
+      e =
+        (await i.CreateByResourceIdAsync(
+          "UiItem_TipsScreenTips",
+          this.GetItem(1),
+        ),
+        (this.TipsProxy = i).Refresh(e),
+        void 0 === this.IncId && i.SetTipsComponentLockButton(!1),
+        ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+          this.ConfigId,
+        ).ItemType);
+    0 === e && i.SetTipsNumShow(!1);
+  }
+  async ADl(e) {
+    var i = new PowerTipsItem_1.PowerTipsItem();
+    await i.CreateByResourceIdAsync("UiItem_ItemTips1", this.GetItem(1)),
+      (this.TipsProxy = i).SetBackBackCallBack(this.DoCloseMe),
+      i.Refresh(e);
+  }
+  async xDl(e) {
+    var i = new PersonalCardPreviewComponent_1.PersonalCardPreviewComponent();
+    await i.CreateByResourceIdAsync("UiView_CardPreview", this.GetItem(1)),
+      (this.TipsProxy = i).Refresh(e);
+  }
+  OnBeforeShow() {
+    this.TipsProxy?.SetActive(!0);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -86,18 +95,14 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforeDestroy() {
-    var e = this.OpenParam;
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.CloseItemTips,
-      e.ItemId,
-      e.ItemUid,
+      this.ConfigId,
+      this.IncId,
     );
   }
-  async OnBeforeHideAsync() {
-    await this.ItemTipsComponent?.PlayCloseSequence(),
-      await this.kXs?.PlayCloseSequence(),
-      this.ItemTipsComponent?.SetActive(!1),
-      this.kXs?.SetActive(!1);
+  async OnPlayingCloseSequenceAsync() {
+    await this.TipsProxy?.PlayCloseSequence(), this.TipsProxy?.SetActive(!1);
   }
 }
 exports.ItemTipsView = ItemTipsView;

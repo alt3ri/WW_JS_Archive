@@ -1,43 +1,49 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionChangeEntityState = void 0);
-const Log_1 = require("../../../../Core/Common/Log"),
-  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
   IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
   LevelGeneralCommons_1 = require("../../../LevelGamePlay/LevelGeneralCommons"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask"),
   FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionChangeEntityState extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
-    const t = this.ActionInfo.Params;
-    let o = void 0;
-    switch (t.Type) {
+    var e = this.ActionInfo.Params;
+    let a = void 0,
+      o = [];
+    switch (e.Type) {
       case IAction_1.EChangeEntityState.Directly:
-        var e = t;
-        o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e.State);
+        (a = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e.State)),
+          (o = [e.EntityId]);
+        break;
+      case IAction_1.EChangeEntityState.BatchDirectly:
+        (a = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e.State)),
+          (o = e.EntityIds);
         break;
       case IAction_1.EChangeEntityState.Loop:
-      case IAction_1.EChangeEntityState.BatchDirectly:
-        return;
+        ControllerHolder_1.ControllerHolder.FlowController.LogError(
+          "不支持的切换实体状态",
+        );
     }
-    o &&
-      WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(t.EntityId, (e) => {
-        e
-          ? (LevelGeneralCommons_1.LevelGeneralCommons.PrechangeStateTag(
-              t.EntityId,
-              o,
-              "ShowInPlotSequence",
-            ),
-            this.FinishExecute(!0))
-          : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Level",
-                32,
-                "[ChangePerformanceTag] 等待Entity加载超时",
-                ["pbDataId", t.EntityId],
-              ),
-            this.FinishExecute(!1));
-      });
+    void 0 !== a
+      ? WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
+          "FlowActionChangeEntityState.OnExecute",
+          o,
+          (e) => {
+            for (const t of o)
+              ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t)
+                ?.IsInit &&
+                LevelGeneralCommons_1.LevelGeneralCommons.PrechangeStateTag(
+                  t,
+                  a,
+                  "ShowInPlotSequence",
+                );
+            this.FinishExecute(!0);
+          },
+        )
+      : this.FinishExecute(!0);
   }
 }
 exports.FlowActionChangeEntityState = FlowActionChangeEntityState;

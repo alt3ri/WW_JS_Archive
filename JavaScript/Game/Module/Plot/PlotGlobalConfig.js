@@ -43,6 +43,8 @@ class PlotGlobalConfig {
       (this.AudioEndWaitTimePrompt = 0),
       (this.DefaultDurationPrompt = 0),
       (this.ProtectOptionTime = 0),
+      (this.AudioEndDelay = 0),
+      (this.BubbleAudioEndDelay = 0),
       (this.gU = !1);
   }
   Init() {
@@ -91,6 +93,8 @@ class PlotGlobalConfig {
       (this.ProtectOptionTime =
         this.xYi("Plot.ProtectOptionTime") *
         TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.AudioEndDelay = this.xYi("Plot.AudioEndDelay")),
+      (this.BubbleAudioEndDelay = this.xYi("Plot.BubbleAudioEndDelay")),
       (this.gU = !0));
   }
   BYi() {
@@ -117,7 +121,7 @@ class PlotGlobalConfig {
       GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(t);
     if (i) return i.Value;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Plot", 18, "已经使用的全局配置字段不能乱删！！！", [
+      Log_1.Log.Error("Plot", 17, "已经使用的全局配置字段不能乱删！！！", [
         "被删掉的全局配置字段",
         t,
       ]);

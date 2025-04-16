@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowTemplateData = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class FlowTemplateData {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -29,11 +30,11 @@ class FlowTemplateData {
   get CameraData() {
     return this.cameradata();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
   }
-  static getRootAsFlowTemplateData(t, r) {
-    return (r || new FlowTemplateData()).__init(
+  static getRootAsFlowTemplateData(t, e) {
+    return (e || new FlowTemplateData()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -43,8 +44,14 @@ class FlowTemplateData {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   amount() {
     var t = this.J7.__offset(this.z7, 8);
@@ -55,20 +62,44 @@ class FlowTemplateData {
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   template(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   cameratype(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 14),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   actordataarray(t) {
-    var r = this.J7.__offset(this.z7, 16);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 16),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   cameradata(t) {
-    var r = this.J7.__offset(this.z7, 18);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 18),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
 }
 exports.FlowTemplateData = FlowTemplateData;

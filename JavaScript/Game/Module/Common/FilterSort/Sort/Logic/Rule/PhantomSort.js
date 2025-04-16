@@ -51,12 +51,12 @@ class PhantomSort extends CommonSort_1.CommonSort {
               break;
             }
         }
-        if (i) n = t.GetExp();
+        if (i) n = i.GetExp();
         else {
           var m =
               ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
-            _ = m.length;
-          for (let t = 0; t < _; t++)
+            f = m.length;
+          for (let t = 0; t < f; t++)
             if (m[t].ItemId === a.GetConfigId()) {
               n = m[t].Exp;
               break;
@@ -293,7 +293,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
       (this.HRt = (t, i, s) => {
-        (t = this.lRt(t.SubPropMap, 16)), (i = this.lRt(i.MainPropMap, 16));
+        (t = this.lRt(t.SubPropMap, 13)), (i = this.lRt(i.SubPropMap, 13));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
       (this.jRt = (t, i, s) => {
@@ -372,8 +372,8 @@ class PhantomSort extends CommonSort_1.CommonSort {
           n = i.IsLock ? 1 : 0;
         return h !== n ? -1 * (h - n) : 0;
       }),
-      (this.wWa = (t, i, s) => this.o3a(t, i, s)),
-      (this.BWa = (t, i, s) => -1 * this.o3a(t, i, s)),
+      (this.Z$a = (t, i, s) => this.q5a(t, i, s)),
+      (this.eXa = (t, i, s) => -1 * this.q5a(t, i, s)),
       (this.QRt = (t, i, s) => {
         if (
           (t instanceof ItemViewData_1.ItemViewData &&
@@ -425,9 +425,49 @@ class PhantomSort extends CommonSort_1.CommonSort {
       (this.dVs = (t, i, s) => {
         (t = this.lRt(t.SubPropMap, 10)), (i = this.lRt(i.SubPropMap, 10));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
+      }),
+      (this.aM1 = (t, i, s) => this.KDt(t, i, !1)),
+      (this.hM1 = (t, i, s) => {
+        var e = this.oRt(t, i, !0);
+        return 0 !== e ? e : this.Xmc(t, i, !0);
+      }),
+      (this.Xmc = (t, i, s) => {
+        var e = t,
+          a = i,
+          t = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
+            e.GetUniqueId(),
+          ),
+          i = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
+            a.GetUniqueId(),
+          );
+        let h = 0,
+          n = 0;
+        if (t) h = t.GetEatFullExp();
+        else {
+          var r =
+              ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
+            o = r.length;
+          for (let t = 0; t < o; t++)
+            if (r[t].ItemId === e.GetConfigId()) {
+              h = r[t].Exp;
+              break;
+            }
+        }
+        if (i) n = i.GetEatFullExp();
+        else {
+          var m =
+              ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomExpItemList(),
+            f = m.length;
+          for (let t = 0; t < f; t++)
+            if (m[t].ItemId === a.GetConfigId()) {
+              n = m[t].Exp;
+              break;
+            }
+        }
+        return h !== n ? (n - h) * (s ? -1 : 1) : 0;
       });
   }
-  o3a(t, i, s) {
+  q5a(t, i, s) {
     if (
       (t instanceof ItemViewData_1.ItemViewData &&
         i instanceof ItemViewData_1.ItemViewData) ||
@@ -499,8 +539,11 @@ class PhantomSort extends CommonSort_1.CommonSort {
       this.SortMap.set(48, this.cVs),
       this.SortMap.set(49, this.mVs),
       this.SortMap.set(50, this.dVs),
-      this.SortMap.set(51, this.wWa),
-      this.SortMap.set(52, this.BWa);
+      this.SortMap.set(51, this.Z$a),
+      this.SortMap.set(52, this.eXa),
+      this.SortMap.set(53, this.aM1),
+      this.SortMap.set(54, this.hM1),
+      this.SortMap.set(55, this.Xmc);
   }
 }
 exports.PhantomSort = PhantomSort;

@@ -23,7 +23,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
     return (
       void 0 === l &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 11, "当前选中的技能配置为空", ["id", e]),
+        Log_1.Log.Error("Role", 10, "当前选中的技能配置为空", ["id", e]),
       l
     );
   }
@@ -38,7 +38,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Role",
-          11,
+          10,
           "技能配置为空",
           ["skillLevelGroupId", e],
           ["level", l],
@@ -64,7 +64,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
     return (
       void 0 === l &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 44, "技能树配置为空，Id = ", ["nodeId", e]),
+        Log_1.Log.Error("Role", 43, "技能树配置为空，Id = ", ["nodeId", e]),
       l
     );
   }
@@ -82,7 +82,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Role",
-          44,
+          43,
           "技能树配置为空，NodeGroup = " + e + ", NodeIndex = " + l,
         ),
       i
@@ -97,7 +97,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
     return (
       void 0 === l &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 44, "技能条件配置为空，Id = ", [
+        Log_1.Log.Error("Role", 43, "技能条件配置为空，Id = ", [
           "skillConditionId",
           e,
         ]),
@@ -122,7 +122,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
     return (
       void 0 === l &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 44, "技能描述配置为空，Id = ", ["id", e]),
+        Log_1.Log.Error("Role", 43, "技能描述配置为空，Id = ", ["id", e]),
       l
     );
   }
@@ -134,7 +134,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
     return (
       void 0 === l &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 38, "技能描述配置为空", ["GroupId", e]),
+        Log_1.Log.Error("Role", 37, "技能描述配置为空", ["GroupId", e]),
       l
     );
   }
@@ -143,7 +143,7 @@ class RoleSkillConfig extends ConfigBase_1.ConfigBase {
     return (
       void 0 === l &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 44, "技能出招表配置为空，Id = ", [
+        Log_1.Log.Error("Role", 43, "技能出招表配置为空，Id = ", [
           "skillInputId",
           e,
         ]),

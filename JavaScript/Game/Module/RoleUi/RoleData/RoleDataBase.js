@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleDataBase = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
+  FormationPropertyById_1 = require("../../../../Core/Define/ConfigQuery/FormationPropertyById"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   AttrListScrollData_1 = require("../View/ViewData/AttrListScrollData"),
   RoleAttributeData_1 = require("./Module/RoleAttributeData"),
@@ -25,10 +27,11 @@ class RoleDataBase {
         RoleAudioData_1.RoleAudioData,
         RoleFavorData_1.RoleFavorData,
       ]),
-      (this.SortAttrList = (e, a) => {
-        var t = 0 !== e.Priority,
-          r = 0 !== a.Priority;
-        return t && r ? e.Priority - a.Priority : t ? -1 : r ? 1 : e.Id - a.Id;
+      (this.BIl = -1),
+      (this.SortAttrList = (e, t) => {
+        var a = 0 !== e.Priority,
+          r = 0 !== t.Priority;
+        return a && r ? e.Priority - t.Priority : a ? -1 : r ? 1 : e.Id - t.Id;
       }),
       (this.Id = e),
       (this.Name = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
@@ -38,7 +41,7 @@ class RoleDataBase {
   }
   o_o() {
     var e = this.GetRoleId();
-    for (const a of this.i_o) this.t_o.set(a, new a(e));
+    for (const t of this.i_o) this.t_o.set(t, new t(e));
   }
   GetLevelData() {
     return this.t_o.get(RoleLevelData_1.RoleLevelData);
@@ -60,6 +63,12 @@ class RoleDataBase {
   }
   GetFavorData() {
     return this.t_o.get(RoleFavorData_1.RoleFavorData);
+  }
+  SetRoleSkinId(e) {
+    this.BIl = e;
+  }
+  GetRoleSkinId() {
+    return this.BIl <= 0 ? this.GetRoleConfig().SkinId : this.BIl;
   }
   GetElementInfo() {
     var e = this.GetRoleConfig();
@@ -91,20 +100,20 @@ class RoleDataBase {
     return this.Id;
   }
   GetShowAttrList() {
-    var t = new Array(),
-      e =
-        ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexList();
+    let a = new Array();
+    var e =
+      ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexList();
     if (e) {
-      var a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(this.Id, {
+      var t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(this.Id, {
           ParamType: 0,
           OnlyMyRole: !0,
         }),
-        r = a ? a.EntityHandle.Entity.GetComponent(159) : void 0;
+        r = t ? t.EntityHandle.Entity.GetComponent(171) : void 0;
       for (const i of e)
         if (i.IsShow) {
           let e = 0,
-            a = 0;
-          a = r
+            t = 0;
+          t = r
             ? ((e = r.GetBaseValue(i.Id) ?? 0),
               r.GetCurrentValue(i.Id) - e ?? 0)
             : ((o = this.GetAttributeData()),
@@ -113,60 +122,90 @@ class RoleDataBase {
           var o = new AttrListScrollData_1.AttrListScrollData(
             i.Id,
             e,
-            a,
+            t,
             i.Priority,
             !1,
             0,
           );
-          t.push(o);
+          a.push(o);
         }
-      t.sort(this.SortAttrList);
+      t = this.y3l();
+      (a = a.concat(t)).sort(this.SortAttrList);
     }
-    return t;
+    return a;
+  }
+  y3l() {
+    var e,
+      t,
+      a = FormationPropertyById_1.configFormationPropertyById.GetConfig(10);
+    return ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
+      a.Condition.toString(),
+      void 0,
+    )
+      ? ((e = new Array()),
+        (t = ModelManager_1.ModelManager.FormationAttributeModel.GetData(10)),
+        (a =
+          ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
+            a.PropertyIndex,
+          )),
+        t &&
+          ((t = new AttrListScrollData_1.AttrListScrollData(
+            a.Id,
+            t.BaseMax / 100,
+            0,
+            a.Priority,
+            !1,
+            0,
+          )),
+          e.push(t)),
+        e)
+      : [];
   }
   GetShowAttributeValueById(e) {
-    var a,
-      t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(this.Id, {
+    var t,
+      a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(this.Id, {
         ParamType: 0,
         OnlyMyRole: !0,
       }),
-      t = t ? t.EntityHandle.Entity.GetComponent(159) : void 0;
+      a = a ? a.EntityHandle?.Entity?.GetComponent(171) : void 0;
     let r = 0;
     return (
-      t
-        ? 0 === (r = t.GetCurrentValue(e)) &&
+      a
+        ? 0 === (r = a.GetCurrentValue(e)) &&
           Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Character", 44, "角色界面获取实体属性值为0", [
+          Log_1.Log.Warn("Character", 43, "角色界面获取实体属性值为0", [
             "id",
             e,
           ])
-        : ((a = (t = this.GetAttributeData()).GetRoleBaseAttr(e)),
-          (t = t.GetRoleAddAttr(e)),
-          0 === (r = a + t) &&
+        : ((t = (a = this.GetAttributeData()).GetRoleBaseAttr(e)),
+          (a = a.GetRoleAddAttr(e)),
+          0 === (r = t + a) &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Character",
-              44,
+              43,
               "角色界面从服务器获取的属性值为0",
               ["id", e],
-              ["baseAttr", a],
-              ["addAttr", t],
+              ["baseAttr", t],
+              ["addAttr", a],
             )),
       r
     );
   }
   GetBaseAttributeValueById(e) {
-    var a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(this.Id, {
+    var t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(this.Id, {
         ParamType: 0,
         OnlyMyRole: !0,
       }),
-      a = a ? a.EntityHandle.Entity.GetComponent(159) : void 0;
-    let t = 0;
-    return (t = a
-      ? a.GetBaseValue(e)
+      t = t ? t.EntityHandle.Entity.GetComponent(171) : void 0;
+    let a = 0;
+    return (a = t
+      ? t.GetBaseValue(e)
       : this.GetAttributeData().GetRoleBaseAttr(e));
   }
-  TryRemoveNewFlag() {}
+  TryRemoveNewFlag() {
+    return !1;
+  }
 }
 exports.RoleDataBase = RoleDataBase;
 //# sourceMappingURL=RoleDataBase.js.map

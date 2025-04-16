@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeLimit = void 0);
 class TimeLimit {
-  constructor() {
-    (this.FY = 0), (this.VY = 0), (this.cY = !0);
+  constructor(t) {
+    (this.FY = 0), (this.VY = 0), (this.cY = !0), t && (this.VY = t);
   }
   SetEnable(t) {
     this.cY = t;

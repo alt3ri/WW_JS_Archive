@@ -136,7 +136,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
           ))
           ? this.sso(i)
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Quest", 19, "找不到信号破译配置", [
+            Log_1.Log.Error("Quest", 18, "找不到信号破译配置", [
               "id",
               this.qEo,
             ]));
@@ -223,7 +223,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
           )),
           this.GEo.push(s)))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Quest", 19, "找不到信号1", ["id", this.qEo]);
+        Log_1.Log.Error("Quest", 18, "找不到信号1", ["id", this.qEo]);
   }
   eSo(i) {
     var t, e, s;
@@ -238,12 +238,12 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
             ))
           ? (this.rSo(s), this.nSo(s), this.sSo(e), this.aSo(e, s), this.hSo())
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Quest", 19, "找不到信号破译页签的颜色配置", [
+            Log_1.Log.Error("Quest", 18, "找不到信号破译页签的颜色配置", [
               "tabIndex",
               i,
             ])
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 19, "找不到信号谱面配置", ["id", t]));
+          Log_1.Log.Error("Quest", 18, "找不到信号谱面配置", ["id", t]));
   }
   rSo(i) {
     for (const t of this.GEo) t.UpdateColor(i), t.OnProcess(this.jEo);

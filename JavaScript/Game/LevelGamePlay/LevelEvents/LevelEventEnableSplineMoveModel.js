@@ -35,7 +35,7 @@ class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase 
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "LevelEvent",
-          40,
+          39,
           "EnableSplineMoveModel: Trigger触发",
           ["TargetType", n.Target.Type],
           ["SplineMoveType", n.Type],
@@ -93,10 +93,10 @@ class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase 
             void this.FinishExecute(!1)
           );
       }
-      var o = e?.GetComponent(98);
+      var o = e?.GetComponent(105);
       o?.Valid
         ? ("Open" === n.Type
-            ? o.StartSplineMove(n.SplineEntityId, n)
+            ? o.StartSplineMove(n.SplineEntityId, n.Pattern)
             : o.EndSplineMove(n.SplineEntityId),
           this.FinishExecute(!0))
         : this.FinishExecute(!1);

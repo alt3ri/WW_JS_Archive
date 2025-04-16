@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Info = void 0);
 const cpp_1 = require("cpp"),
   UE = require("ue"),
+  Platform_1 = require("../../Launcher/Platform/Platform"),
   Macro_1 = require("../Preprocessor/Macro"),
   InfoDefine_1 = require("./InfoDefine"),
   Log_1 = require("./Log");
@@ -17,8 +18,8 @@ class Info {
     (this.f8 = t),
       (this.Environment = 1),
       (this.p8 = UE.KuroStaticLibrary.IsEditor(t)),
-      (this.v8 = cpp_1.FKuroUtilityForPuerts.IsBuildShipping()),
-      (this.M8 = cpp_1.FKuroUtilityForPuerts.IsBuildTest()),
+      (this.v8 = cpp_1.KuroApplication.IsBuildShipping()),
+      (this.M8 = cpp_1.KuroApplication.IsBuildTest()),
       (this.E8 = !this.v8 && !this.M8),
       (this.S8 =
         this.p8 &&
@@ -27,11 +28,11 @@ class Info {
             "r.Kuro.Movie.EnableCGMovieRendering",
           )),
       Macro_1.NOT_SHIPPING_ENVIRONMENT && this.p8
-        ? (this.B3a =
+        ? (this.m6a =
             UE.KuroRenderingEditorBPPluginBPLibrary.IsSimulateInEditorInProgress())
-        : (this.B3a = !1),
+        : (this.m6a = !1),
       this.y8(),
-      this.uXi();
+      this.uXi(Platform_1.Platform.CloudGamePlatform);
   }
   static get IsPlayInEditor() {
     return this.p8;
@@ -51,17 +52,22 @@ class Info {
   static IsInCg() {
     return this.S8;
   }
+  static SetInCg(t) {
+    this.S8 !== t &&
+      ((this.S8 = t),
+      cpp_1.FEffectSystem.OnIsInEditorTickChange(this.IsInEditorTick()));
+  }
   static IsInEditorTick() {
-    return this.B3a || this.S8;
+    return this.m6a || this.S8;
   }
   static get PlatformType() {
     return this.sXi;
   }
   static get InputControllerType() {
-    return this.tEa;
+    return this.rEa;
   }
   static get InputControllerMainType() {
-    return this.iEa;
+    return this.oEa;
   }
   static get OperationType() {
     return this.aXi;
@@ -96,7 +102,7 @@ class Info {
         this.sXi = 0;
     }
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Platform", 25, "初始化平台类型", [
+      Log_1.Log.Info("Platform", 24, "初始化平台类型", [
         "PlatformType",
         this.sXi,
       ]);
@@ -104,55 +110,54 @@ class Info {
     void 0 !== t
       ? this.SwitchInputControllerType(t, "InitializePlatformType")
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Platform", 11, "找不到平台默认对应的输入类型", [
+        Log_1.Log.Error("Platform", 10, "找不到平台默认对应的输入类型", [
           "PlatformType",
           this.sXi,
         ]);
   }
-  static uXi() {
-    (this.lXi =
-      UE.KismetSystemLibrary.GetCommandLine()?.includes("-CloudGame") ?? !1),
-      this.lXi &&
-        (this.SwitchInputControllerType(5, "InitCloudGame"),
-        Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("Platform", 17, "初始化云游戏");
+  static uXi(t) {
+    Platform_1.Platform.IsCloudGame() &&
+      ("Android" === t || "IOS" === t
+        ? Info.SwitchInputControllerType(5, "InitCloudGame Mobile")
+        : ("Mac" !== t && "Windows" != t) ||
+          Info.SwitchInputControllerType(1, "InitCloudGame Desktop"));
   }
   static cXi(t, i) {
     var s;
-    this.tEa !== t &&
+    this.rEa !== t &&
       (1 === t &&
-        5 === this.tEa &&
+        5 === this.rEa &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Platform",
-          8,
+          10,
           "[PlatformDebug]从Touch输入方式切换成了键鼠的输入方式",
-          ["lastInputController", this.tEa],
+          ["lastInputController", this.rEa],
           ["inputController", t],
         ),
-      (s = this.tEa),
-      (this.tEa = t),
-      this.nEa(),
-      Info.Sya?.(s, this.tEa),
+      (s = this.rEa),
+      (this.rEa = t),
+      this.aEa(),
+      Info.Iya?.(s, this.rEa),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Platform",
-        17,
+        16,
         "设置输入方式",
         ["lastInputController", s],
-        ["InputController", this.tEa],
+        ["InputController", this.rEa],
         ["Reason", i],
       );
   }
-  static sEa(t) {
+  static hEa(t) {
     var i,
       t = InfoDefine_1.showTypeAndInputControllerMap[t];
-    t !== this.aXi && ((i = this.aXi), (this.aXi = t), Info.Eya?.(i, t));
+    t !== this.aXi && ((i = this.aXi), (this.aXi = t), Info.Tya?.(i, t));
   }
-  static nEa() {
+  static aEa() {
     var t,
-      i = InfoDefine_1.inputControllerMainTypeMap[this.tEa];
-    i !== this.iEa && ((t = this.iEa), (this.iEa = i), Info.yya?.(t, i));
+      i = InfoDefine_1.inputControllerMainTypeMap[this.rEa];
+    i !== this.oEa && ((t = this.oEa), (this.oEa = i), Info.Lya?.(t, i));
   }
   static IsPcOrGamepadPlatform() {
     return this.IsPcPlatform() || this.IsGamepadPlatform();
@@ -163,11 +168,23 @@ class Info {
   static IsMobilePlatform() {
     return 1 === this.sXi || 2 === this.sXi;
   }
+  static IsIosPlatform() {
+    return 1 === this.sXi;
+  }
   static IsGamepadPlatform() {
     return 6 === this.sXi || 7 === this.sXi || 8 === this.sXi;
   }
   static IsPs5Platform() {
     return 8 === this.sXi;
+  }
+  static IsMacPlatform() {
+    return 4 === this.sXi;
+  }
+  static IsWindowsPlatform() {
+    return 3 === this.sXi;
+  }
+  static IsAndroidPlatform() {
+    return 2 === this.sXi;
   }
   static IsInKeyBoard() {
     return 1 === this.InputControllerMainType;
@@ -187,34 +204,65 @@ class Info {
       (3 === this.InputControllerType || 4 === this.InputControllerType)
     );
   }
+  static IsBackBoneGamepad() {
+    return this.IsInGamepad() && 6 === this.InputControllerType;
+  }
+  static CheckIsBackBoneGamepad(t) {
+    return 6 === t;
+  }
+  static CheckIsPsGamepad(t) {
+    return 3 === t || 4 === t;
+  }
+  static IsMobileInputModel() {
+    return (
+      !!Info.IsMobilePlatform() ||
+      !(
+        3 !== this.sXi ||
+        !Platform_1.Platform.IsCloudGame() ||
+        ("Android" !== Platform_1.Platform.CloudGamePlatform &&
+          "IOS" !== Platform_1.Platform.CloudGamePlatform)
+      )
+    );
+  }
+  static IsPcInputModel() {
+    return (
+      4 === this.sXi ||
+      5 === this.sXi ||
+      (3 === this.sXi &&
+        (!Platform_1.Platform.IsCloudGame() ||
+          "Mac" === Platform_1.Platform.CloudGamePlatform ||
+          "Windows" === Platform_1.Platform.CloudGamePlatform))
+    );
+  }
   static SwitchInputControllerType(t, i) {
     0 === t
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Platform", 11, "传入了EInputControllerType.None类型", [
+        Log_1.Log.Error("Platform", 10, "传入了EInputControllerType.None类型", [
           "Reason",
           i,
         ])
       : this.IsGmLockGamepad ||
-        (this.IsMobilePlatform() && 1 === t) ||
-        (this.cXi(t, i), this.sEa(t));
+        (this.IsMobileInputModel() && 1 === t) ||
+        (this.IsPcInputModel() && 5 === t) ||
+        (this.cXi(t, i), this.hEa(t));
   }
   static SetInputTypeChangeFunc(t) {
-    Info.Sya = t;
+    Info.Iya = t;
   }
   static ClearInputTypeChangeFunc() {
-    Info.Sya = void 0;
+    Info.Iya = void 0;
   }
   static SetShowTypeChangeFunc(t) {
-    Info.Eya = t;
+    Info.Tya = t;
   }
   static ClearShowTypeChangeFunc() {
-    Info.Eya = void 0;
+    Info.Tya = void 0;
   }
   static SetInputMainTypeChangeFunc(t) {
-    Info.yya = t;
+    Info.Lya = t;
   }
   static ClearInputMainTypeChangeFunc() {
-    Info.yya = void 0;
+    Info.Lya = void 0;
   }
 }
 ((exports.Info = Info).Version = "1.0.0"),
@@ -227,14 +275,13 @@ class Info {
   (Info.S8 = !1),
   (Info.UseFastInputCallback = !0),
   (Info.AxisInputOptimize = !0),
-  (Info.B3a = !1),
+  (Info.m6a = !1),
   (Info.sXi = 0),
-  (Info.tEa = 0),
-  (Info.iEa = 0),
+  (Info.rEa = 0),
+  (Info.oEa = 0),
   (Info.aXi = 0),
   (Info.IsGmLockGamepad = !1),
-  (Info.lXi = !1),
-  (Info.Sya = void 0),
-  (Info.Eya = void 0),
-  (Info.yya = void 0);
+  (Info.Iya = void 0),
+  (Info.Tya = void 0),
+  (Info.Lya = void 0);
 //# sourceMappingURL=Info.js.map

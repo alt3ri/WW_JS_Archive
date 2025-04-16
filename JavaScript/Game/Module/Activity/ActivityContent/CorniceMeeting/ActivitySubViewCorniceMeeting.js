@@ -12,8 +12,8 @@ const UE = require("ue"),
 class ActivitySubViewCorniceMeeting extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
-      (this.m4a = void 0),
-      (this.d4a = () => {
+      (this.Q6a = void 0),
+      (this.K6a = () => {
         var e;
         this.ActivityBaseData?.IsUnLock()
           ? (e =
@@ -44,28 +44,30 @@ class ActivitySubViewCorniceMeeting extends ActivitySubViewBase_1.ActivitySubVie
       [1, UE.UIButtonComponent],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.d4a]]);
+      (this.BtnBindInfo = [[1, this.K6a]]);
   }
   async OnBeforeStartAsync() {
-    (this.m4a = new ActivitySubViewGeneralInfo_1.ActivitySubViewGeneralInfo()),
-      this.m4a.SetData(this.ActivityBaseData),
-      this.m4a.SetClickFunc(this.eje),
-      await this.m4a.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
+    (this.Q6a = new ActivitySubViewGeneralInfo_1.ActivitySubViewGeneralInfo()),
+      this.Q6a.SetData(this.ActivityBaseData),
+      this.Q6a.SetClickFunc(this.eje),
+      await this.Q6a.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
   }
   OnBeforeShow() {
     0 < this.ActivityBaseData.GetUnFinishPreGuideQuestId()
-      ? this.m4a.SetBtnText("ActivityCorniceMeetingGoToQuest")
-      : this.m4a.SetBtnText("PrefabTextItem_2701983798_Text");
-    var e =
-      ConfigManager_1.ConfigManager.ActivityCorniceMeetingConfig?.GetCorniceMeetingQuest(
-        this.ActivityBaseData.Id,
-      );
-    RedDotController_1.RedDotController.BindRedDot(
-      "QuestViewItem",
-      this.GetItem(2),
-      void 0,
-      e.QuestId,
-    );
+      ? this.Q6a.SetBtnText("ActivityCorniceMeetingGoToQuest")
+      : this.Q6a.SetBtnText("PrefabTextItem_2701983798_Text");
+    var e = this.ActivityBaseData;
+    e.NeedTailQuest &&
+      ((e =
+        ConfigManager_1.ConfigManager.ActivityCorniceMeetingConfig?.GetCorniceMeetingQuest(
+          this.ActivityBaseData.Id,
+        )),
+      RedDotController_1.RedDotController.BindRedDot(
+        "QuestViewItem",
+        this.GetItem(2),
+        void 0,
+        e.QuestId,
+      ));
   }
   OnBeforeHide() {
     RedDotController_1.RedDotController.UnBindGivenUi(
@@ -76,7 +78,7 @@ class ActivitySubViewCorniceMeeting extends ActivitySubViewBase_1.ActivitySubVie
   OnRefreshView() {
     var e = this.ActivityBaseData,
       i = e.GetUnFinishPreGuideQuestId();
-    this.m4a?.SetFunctionRedDotVisible(e.RedPointShowState),
+    this.Q6a?.SetFunctionRedDotVisible(e.RedPointShowState),
       this.GetButton(1)?.RootUIComp.SetUIActive(
         e.IsUnlockTailQuest() && e.IsUnLock() && i <= 0,
       );

@@ -21,9 +21,9 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
       (this.U$o = Rotator_1.Rotator.Create()),
       (this.A$o = !1),
       (this.P$o = !1),
-      (this.e9a = !1),
+      (this.JHa = !1),
       (this.x$o = Rotator_1.Rotator.Create()),
-      (this.t9a = Rotator_1.Rotator.Create()),
+      (this.ZHa = Rotator_1.Rotator.Create()),
       (this.w$o = 0),
       (this.B$o = void 0),
       (this.b$o = 0),
@@ -32,18 +32,6 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
   }
   OnInit() {
     super.OnInit(),
-      this.SocketTransform.FromUeTransform(
-        this.TargetMesh.GetSocketTransform(this.TargetSocket),
-      ),
-      this.RelativeTransform.ComposeTransforms(
-        this.SocketTransform,
-        this.TargetTransform,
-      ),
-      this.L$o.FromUeVector(this.ActorInternal.K2_GetActorLocation()),
-      (this.q$o = Vector_1.Vector.Dist2D(
-        this.TargetTransform.GetLocation(),
-        this.L$o,
-      )),
       (this.A$o = this.CueConfig.bLockRevolution),
       (this.w$o = this.CueConfig.InterpSpeed),
       (this.B$o = Vector_1.Vector.Create(
@@ -59,35 +47,50 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
     );
     (this.P$o = !t.IsZero()),
       t.Rotation(this.x$o),
-      (this.e9a = this.CueConfig.LockCamera);
+      (this.JHa = this.CueConfig.LockCamera);
   }
   OnTick(t) {
-    super.OnTick(t), this.i9a(t);
+    super.OnTick(t), this.eja(t);
   }
   AttachEffect() {
-    this.i9a();
+    this.eja();
   }
-  i9a(t) {
+  SetTargetMeshAndSocket() {
+    super.SetTargetMeshAndSocket(),
+      this.SocketTransform.FromUeTransform(
+        this.TargetMesh.D_GetSocketTransform(this.TargetSocket),
+      ),
+      this.RelativeTransform.ComposeTransforms(
+        this.SocketTransform,
+        this.TargetTransform,
+      ),
+      this.L$o.FromUeVector(this.ActorInternal.D_K2_GetActorLocation()),
+      (this.q$o = Vector_1.Vector.Dist2D(
+        this.TargetTransform.GetLocation(),
+        this.L$o,
+      ));
+  }
+  eja(t) {
     if (EffectSystem_1.EffectSystem.IsValid(this.EffectViewHandle)) {
-      var i = EffectSystem_1.EffectSystem.GetEffectActor(this.EffectViewHandle);
+      var s = EffectSystem_1.EffectSystem.GetEffectActor(this.EffectViewHandle);
       if (
-        (this.I1e.FromUeVector(i.K2_GetActorLocation()),
-        this.oAo.FromUeRotator(i.K2_GetActorRotation()),
+        (this.I1e.FromUeVector(s.D_K2_GetActorLocation()),
+        this.oAo.FromUeRotator(s.K2_GetActorRotation()),
         this.A$o
           ? (this.Due.FromUeVector(
-              this.TargetMesh.GetSocketLocation(this.TargetSocket),
+              this.TargetMesh.D_GetSocketLocation(this.TargetSocket),
             ),
             this.Due.AdditionEqual(this.RelativeTransform.GetLocation()),
             this.U$o.FromUeRotator(
               this.TargetMesh.GetSocketRotation(this.TargetSocket),
             ))
           : (this.SocketTransform.FromUeTransform(
-              this.TargetMesh.GetSocketTransform(this.TargetSocket),
+              this.TargetMesh.D_GetSocketTransform(this.TargetSocket),
             ),
-            this.e9a &&
-              ((this.t9a.Yaw =
+            this.JHa &&
+              ((this.ZHa.Yaw =
                 CameraController_1.CameraController.CameraRotator.Yaw),
-              this.SocketTransform.SetRotation(this.t9a.Quaternion())),
+              this.SocketTransform.SetRotation(this.ZHa.Quaternion())),
             this.RelativeTransform.ComposeTransforms(
               this.SocketTransform,
               this.TargetTransform,
@@ -96,10 +99,10 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
             (this.U$o = this.TargetTransform.GetRotation().Rotator())),
         t)
       ) {
-        var s = Vector_1.Vector.Distance(this.I1e, this.Due);
-        if (s < MAGIC_NUMBER) return void (this._Ke = !1);
+        var i = Vector_1.Vector.Distance(this.I1e, this.Due);
+        if (i < MAGIC_NUMBER) return void (this._Ke = !1);
         this.N$o(this.I1e, this.Due),
-          this.O$o(this.I1e, this.Due, this.oAo, this.U$o, s),
+          this.O$o(this.I1e, this.Due, this.oAo, this.U$o, i),
           MathUtils_1.MathUtils.VectorInterpTo(
             this.I1e,
             this.Due,
@@ -115,7 +118,7 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
             this.U$o,
           );
       }
-      this.L$o.FromUeVector(this.ActorInternal.K2_GetActorLocation()),
+      this.L$o.FromUeVector(this.ActorInternal.D_K2_GetActorLocation()),
         !this.oAo.Equals(this.U$o, MAGIC_NUMBER) &&
           Vector_1.Vector.Dist2D(this.Due, this.L$o) < this.q$o &&
           ((this.L$o.Z = this.Due.Z),
@@ -123,7 +126,7 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
           this.fgt.Normalize(),
           this.fgt.MultiplyEqual(this.q$o),
           this.L$o.Addition(this.fgt, this.Due)),
-        i.K2_SetActorLocationAndRotation(
+        s.D_K2_SetActorLocationAndRotation(
           this.Due.ToUeVector(),
           (this.P$o ? this.x$o : this.U$o).ToUeRotator(),
           !1,
@@ -132,37 +135,37 @@ class GameplayCueFollow extends GameplayCueEffect_1.GameplayCueEffect {
         );
     }
   }
-  N$o(t, i) {
-    var s, h;
+  N$o(t, s) {
+    var i, h;
     !this._Ke &&
-      ((i.X = MathUtils_1.MathUtils.Clamp(
+      ((s.X = MathUtils_1.MathUtils.Clamp(
         t.X,
-        i.X - this.B$o.X,
-        i.X + this.B$o.X,
+        s.X - this.B$o.X,
+        s.X + this.B$o.X,
       )),
-      (s = i.X !== t.X),
-      (i.Y = MathUtils_1.MathUtils.Clamp(
+      (i = s.X !== t.X),
+      (s.Y = MathUtils_1.MathUtils.Clamp(
         t.Y,
-        i.Y - this.B$o.Y,
-        i.Y + this.B$o.Y,
+        s.Y - this.B$o.Y,
+        s.Y + this.B$o.Y,
       )),
-      (h = i.Y !== t.Y),
-      (i.Z = MathUtils_1.MathUtils.Clamp(
+      (h = s.Y !== t.Y),
+      (s.Z = MathUtils_1.MathUtils.Clamp(
         t.Z,
-        i.Z - this.B$o.Z,
-        i.Z + this.B$o.Z,
+        s.Z - this.B$o.Z,
+        s.Z + this.B$o.Z,
       )),
-      (i = i.Z !== t.Z),
-      s || h || i) &&
+      (s = s.Z !== t.Z),
+      i || h || s) &&
       (this._Ke = !0);
   }
-  O$o(t, i, s, h, e) {
+  O$o(t, s, i, h, e) {
     e = this.b$o / Math.max(e, MAGIC_NUMBER);
     e < 1 &&
-      (Vector_1.Vector.Lerp(i, t, e, this.D$o),
-      Rotator_1.Rotator.Lerp(h, s, e, this.R$o),
+      (Vector_1.Vector.Lerp(s, t, e, this.D$o),
+      Rotator_1.Rotator.Lerp(h, i, e, this.R$o),
       t.DeepCopy(this.D$o),
-      s.DeepCopy(this.R$o));
+      i.DeepCopy(this.R$o));
   }
 }
 exports.GameplayCueFollow = GameplayCueFollow;

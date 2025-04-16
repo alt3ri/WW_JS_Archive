@@ -77,14 +77,14 @@ class EffectActorPool extends CustomObjectPool {
   OnSpawn(t, e, ...i) {
     e?.SetActorHiddenInGame(!1),
       e?.K2_DetachFromActor(1, 1, 1),
-      t && ((t = i[1]), e?.K2_SetActorTransform(t, !1, void 0, !0));
+      t && ((t = i[1]), e?.D_K2_SetActorTransform(t, !1, void 0, !0));
   }
   OnDeSpawn(t) {
     if (!this.qCe?.IsValid()) {
       if (
         ((this.qCe = ActorSystem_1.ActorSystem.Get(
           UE.TsEffectActor_C.StaticClass(),
-          new UE.Transform(),
+          new UE.TransformDouble(),
         )),
         void 0 === this.qCe)
       )

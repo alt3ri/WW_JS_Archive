@@ -25,40 +25,42 @@ class CameraSequencePlayer {
       (this.sye = !1),
       (this.uYi = !1),
       (this.cYi = (t) => {
-        var e, i;
+        var i, s;
         (this._Yi = ResourceSystem_1.ResourceSystem.InvalidId),
           t &&
             ObjectUtils_1.ObjectUtils.IsValid(t) &&
-            ((e = ActorSystem_1.ActorSystem.Spawn(
+            ((i = ActorSystem_1.ActorSystem.Spawn(
               UE.LevelSequenceActor.StaticClass(),
-              new UE.Transform(),
+              new UE.TransformDouble(),
               void 0,
             )),
-            (this.lYi = e),
+            (this.lYi = i),
             this.lYi.SetSequence(t),
             this.uYi &&
               ((t =
-                ControllerHolder_1.ControllerHolder.CameraController.SequenceCamera.DisplayComponent.CineCamera.GetTransform()),
+                ControllerHolder_1.ControllerHolder.CameraController.SequenceCamera.DisplayComponent.CineCamera.D_GetTransform()),
               (this.lYi.bOverrideInstanceData = !0),
-              (this.lYi.DefaultInstanceData.TransformOrigin = t)),
-            (t = UE.NewArray(UE.Actor)),
-            (i =
+              (s = this.lYi.DefaultInstanceData),
+              (t = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(t)),
+              (s.TransformOrigin = t)),
+            (s = UE.NewArray(UE.Actor)),
+            (t =
               ModelManager_1.ModelManager.CameraModel.SequenceCamera
                 .DisplayComponent.CineCamera),
-            t.Add(i),
-            i.ResetSeqCineCamSetting(),
-            this.lYi.SetBindingByTag(SequenceDefine_1.CAMERA_TAG, t, !1, !0),
-            e.SequencePlayer.OnStop.Add(this.mYi),
-            e.SequencePlayer.Play());
+            s.Add(t),
+            t.ResetSeqCineCamSetting(),
+            this.lYi.SetBindingByTag(SequenceDefine_1.CAMERA_TAG, s, !1, !0),
+            i.SequencePlayer.OnStop.Add(this.mYi),
+            i.SequencePlayer.Play());
       }),
       (this.mYi = () => {
         this.Stop();
       });
   }
-  Play(t, e) {
+  Play(t, i) {
     this.sye && this.Stop(),
       (this.sye = !0),
-      (this.uYi = e),
+      (this.uYi = i),
       (this._Yi = ResourceSystem_1.ResourceSystem.LoadAsync(
         t,
         UE.LevelSequence,
@@ -75,14 +77,36 @@ class CameraSequencePlayer {
         (this.lYi.SequencePlayer.OnStop.Clear(),
         this.lYi.SequencePlayer.Stop(),
         this.lYi.ResetBindings(),
-        ActorSystem_1.ActorSystem.Put(this.lYi)),
+        ActorSystem_1.ActorSystem.Put("CameraSequencePlayer.Stop", this.lYi)),
       (this.lYi = void 0));
+  }
+}
+class CameraParam {
+  constructor() {
+    (this.Aperture = void 0),
+      (this.FocalLength = 0),
+      (this.FocusDistance = 0),
+      (this.FocalRegion = 0);
+  }
+  get ApertureEnable() {
+    return void 0 !== this.Aperture;
+  }
+  get FocalLengthEnable() {
+    return void 0 !== this.FocalLength && 0 !== this.FocalLength;
+  }
+  get FocusDistanceEnable() {
+    return void 0 !== this.FocusDistance;
+  }
+  get FocalRegionEnable() {
+    return void 0 !== this.FocalRegion;
   }
 }
 class CameraCurvePlayer {
   constructor() {
     (this.dYi = void 0),
       (this.fDe = void 0),
+      (this.Qih = new CameraParam()),
+      (this.Kih = new CameraParam()),
       (this.CYi = Transform_1.Transform.Create()),
       (this.gYi = 0),
       (this.zZt = 0),
@@ -103,12 +127,26 @@ class CameraCurvePlayer {
       )),
       (this.gYi = t.Duration * TimeUtil_1.TimeUtil.InverseMillisecond),
       this.CYi.SetScale3D(Vector_1.Vector.OneVectorProxy),
-      ControllerHolder_1.ControllerHolder.CameraController.SequenceCamera.DisplayComponent.CineCamera.K2_SetActorTransform(
-        this.dYi.ToUeTransform(),
-        !1,
-        void 0,
-        !0,
-      );
+      (this.Qih.Aperture = t.Start.Aperture),
+      (this.Qih.FocalLength = t.Start.FocalLength),
+      (this.Qih.FocusDistance = t.Start.FocusDistance),
+      (this.Qih.FocalRegion = t.Start.FocalRegion),
+      (this.Kih.Aperture = t.End.Aperture),
+      (this.Kih.FocalLength = t.End.FocalLength),
+      (this.Kih.FocusDistance = t.End.FocusDistance),
+      (this.Kih.FocalRegion = t.End.FocalRegion);
+    var t =
+        ControllerHolder_1.ControllerHolder.CameraController.SequenceCamera
+          .DisplayComponent.CineCamera,
+      i = t.CameraComponent;
+    t.D_K2_SetActorTransform(this.dYi.ToUeTransform(), !1, void 0, !0),
+      this.Qih.ApertureEnable && (i.CurrentAperture = this.Qih.Aperture),
+      this.Qih.FocalLengthEnable &&
+        (i.CurrentFocalLength = this.Qih.FocalLength),
+      this.Qih.FocusDistanceEnable &&
+        (i.FocusSettings.ManualFocusDistance = this.Qih.FocusDistance),
+      this.Qih.FocalRegionEnable &&
+        (i.CurrentFocalRegion = this.Qih.FocalRegion);
   }
   Stop() {
     this.sye &&
@@ -120,32 +158,70 @@ class CameraCurvePlayer {
       (this.sye = !1));
   }
   OnTick(t) {
-    var e, i, s;
+    var i, s, e, h;
     this.sye &&
-      ((e =
+      ((i = (h =
         ControllerHolder_1.ControllerHolder.CameraController.SequenceCamera
-          .DisplayComponent.CineCamera),
+          .DisplayComponent.CineCamera).CameraComponent),
       (this.zZt += t),
       this.zZt > this.gYi
-        ? (e.K2_SetActorTransform(this.fDe.ToUeTransform(), !1, void 0, !0),
+        ? (h.D_K2_SetActorTransform(this.fDe.ToUeTransform(), !1, void 0, !0),
+          this.Kih.ApertureEnable && (i.CurrentAperture = this.Kih.Aperture),
+          this.Kih.FocalLengthEnable &&
+            (i.CurrentFocalLength = this.Kih.FocalLength),
+          this.Kih.FocusDistanceEnable &&
+            (i.FocusSettings.ManualFocusDistance = this.Kih.FocusDistance),
+          this.Kih.FocalRegionEnable &&
+            (i.CurrentFocalRegion = this.Kih.FocalRegion),
           this.Stop())
         : ((t = this.zZt / this.gYi),
           (t = MathUtils_1.MathUtils.GetCubicValue(t)),
-          (i = this.CYi.GetLocation()),
-          (s = this.CYi.GetRotation()),
+          (s = this.CYi.GetLocation()),
+          (e = this.CYi.GetRotation()),
           Vector_1.Vector.Lerp(
             this.dYi.GetLocation(),
             this.fDe.GetLocation(),
             t,
-            i,
+            s,
           ),
           Quat_1.Quat.Slerp(
             this.dYi.GetRotation(),
             this.fDe.GetRotation(),
             t,
-            s,
+            e,
           ),
-          e.K2_SetActorTransform(this.CYi.ToUeTransform(), !1, void 0, !0)));
+          h.D_K2_SetActorTransform(this.CYi.ToUeTransform(), !1, void 0, !0),
+          this.Qih.ApertureEnable &&
+            this.Kih.ApertureEnable &&
+            (i.CurrentAperture = MathUtils_1.MathUtils.Lerp(
+              this.Qih.Aperture,
+              this.Kih.Aperture,
+              t,
+            )),
+          this.Qih.FocalLengthEnable &&
+            this.Kih.FocalLengthEnable &&
+            ((s = MathUtils_1.MathUtils.Lerp(
+              this.Qih.FocalLength,
+              this.Kih.FocalLength,
+              t,
+            )),
+            (i.CurrentFocalLength = s)),
+          this.Qih.FocusDistanceEnable &&
+            this.Kih.FocusDistanceEnable &&
+            ((e = MathUtils_1.MathUtils.Lerp(
+              this.Qih.FocusDistance,
+              this.Kih.FocusDistance,
+              t,
+            )),
+            (i.FocusSettings.ManualFocusDistance = e)),
+          this.Qih.FocalRegionEnable &&
+            this.Kih.FocalRegionEnable &&
+            ((h = MathUtils_1.MathUtils.Lerp(
+              this.Qih.FocalRegion,
+              this.Kih.FocalRegion,
+              t,
+            )),
+            (i.CurrentFocalRegion = h))));
   }
 }
 class CameraShakePlayer {
@@ -190,27 +266,27 @@ class MovingShotManager {
   Play(t) {
     switch ((this.Stop(), t.Type)) {
       case IAction_1.EShowTalkCameraMotionType.Preset:
-        var e = t;
-        StringUtils_1.StringUtils.IsEmpty(e.Sequence) ||
-          this.$pt.Play(e.Sequence, !0),
-          e.CamShake && this.MYi.Play(e.CamShake),
+        var i = t;
+        StringUtils_1.StringUtils.IsEmpty(i.Sequence) ||
+          this.$pt.Play(i.Sequence, !0),
+          i.CamShake && this.MYi.Play(i.CamShake),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Plot",
-              27,
+              26,
               "剧情预设运镜开始",
-              ["path", e.Sequence],
-              ["shake", e.CamShake?.CameraShakeBp],
+              ["path", i.Sequence],
+              ["shake", i.CamShake?.CameraShakeBp],
             );
         break;
       case IAction_1.EShowTalkCameraMotionType.Tween:
-        e = t;
-        this.vYi.Play(e),
-          e.CamShake && this.MYi.Play(e.CamShake),
+        i = t;
+        this.vYi.Play(i),
+          i.CamShake && this.MYi.Play(i.CamShake),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "剧情插值运镜开始", [
+            Log_1.Log.Debug("Plot", 26, "剧情插值运镜开始", [
               "shake",
-              e.CamShake?.CameraShakeBp,
+              i.CamShake?.CameraShakeBp,
             ]);
     }
   }

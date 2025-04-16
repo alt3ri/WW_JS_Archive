@@ -49,7 +49,7 @@ class AlterMark extends UiPanelBase_1.UiPanelBase {
       (this.B$e = 0),
       GlobalData_1.GlobalData.World &&
         (this.CreateThenShowByResourceIdAsync("UiItem_SneakItem_Prefab", t),
-        (this.M$e = i ? i.ToUeVector() : new UE.Vector()),
+        (this.M$e = i ? i.ToUeVector() : new UE.VectorDouble()),
         (this.E$e = s),
         (t = UiLayer_1.UiLayer.UiRootItem),
         (this.y$e = Math.min(MAX_A, ((t?.GetWidth() ?? 0) - MARGIN_A) / 2)),
@@ -115,19 +115,23 @@ class AlterMark extends UiPanelBase_1.UiPanelBase {
   }
   b$e() {
     return ObjectUtils_1.ObjectUtils.IsValid(this.E$e)
-      ? this.E$e.K2_GetActorLocation()
+      ? this.E$e.D_K2_GetActorLocation()
       : this.M$e;
   }
   q$e(t) {
-    return t.K2_GetActorLocation();
+    return t.D_K2_GetActorLocation();
   }
   G$e(t) {
-    if (UE.GameplayStatics.ProjectWorldToScreen(this.R$e, t, this.S$e)) {
+    if (UE.GameplayStatics.D_ProjectWorldToScreen(this.R$e, t, this.S$e)) {
       const i = (0, puerts_1.$unref)(this.S$e);
       return this.O$e(i, !0);
     }
     t = this.k$e(t);
-    UE.GameplayStatics.ProjectWorldToScreen(this.R$e, t.ToUeVector(), this.S$e);
+    UE.GameplayStatics.D_ProjectWorldToScreen(
+      this.R$e,
+      t.ToUeVector(),
+      this.S$e,
+    );
     const i = (0, puerts_1.$unref)(this.S$e);
     return this.O$e(i, !1);
   }
@@ -164,7 +168,7 @@ class AlterMark extends UiPanelBase_1.UiPanelBase {
     var t = this.j$e(),
       i = this.W$e(this.Due),
       s = this.K$e(),
-      s = UE.KismetMathLibrary.ProjectVectorOnToVector(
+      s = UE.KismetMathLibrary.D_ProjectVectorOnToVector(
         i.ToUeVector(),
         s,
       ).op_Multiply(2);
@@ -187,12 +191,12 @@ class AlterMark extends UiPanelBase_1.UiPanelBase {
     return t.Subtraction(i, this.P$e), this.P$e;
   }
   K$e() {
-    return this.x$e.GetCameraRotation().Vector();
+    return this.x$e.GetCameraRotation().VectorDouble();
   }
   N$e() {
     var t = ActorUtils_1.ActorUtils.GetEntityByActor(
       this.E$e,
-    ).Entity.GetComponent(40).AiController.AiAlert.AlertValue;
+    ).Entity.GetComponent(46).AiController.AiAlert.AlertValue;
     this.D$e.SetFillAmount(START_FILL_AMOUNT + t / MAX_ALERT / 2),
       this.L$e.SetFillAmount(START_FILL_AMOUNT + t / MAX_ALERT / 2),
       t < 50

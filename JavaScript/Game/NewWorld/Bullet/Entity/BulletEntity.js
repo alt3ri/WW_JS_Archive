@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletEntity = void 0);
-const Entity_1 = require("../../../../Core/Entity/Entity"),
+const Time_1 = require("../../../../Core/Common/Time"),
+  Entity_1 = require("../../../../Core/Entity/Entity"),
   GameBudgetAllocatorConfigCreator_1 = require("../../../World/Define/GameBudgetAllocatorConfigCreator"),
   BulletActionLogicComponent_1 = require("../../Bullet/Component/BulletActionLogicComponent"),
   BulletActorComponent_1 = require("../Component/BulletActorComponent"),
@@ -36,6 +37,9 @@ class BulletEntity extends Entity_1.Entity {
       ) &&
       (this.RegisterToGameBudgetController(void 0), !0)
     );
+  }
+  OnStart() {
+    return this.SetTimeDilation(Time_1.Time.TimeDilation), !0;
   }
   OnClear() {
     return this.LAe.Clear(), !0;

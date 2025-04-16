@@ -108,7 +108,7 @@ class DamageUiManager {
         ? Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Battle",
-            8,
+            17,
             "[DamageText]产生伤害飘字时，伤害飘字Id无效",
             ["textId", i],
             ["elementId", a.ElementId],
@@ -131,23 +131,23 @@ class DamageUiManager {
                 a.DamageText,
               )
             : Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Battle", 8, "找不到对应的伤害飘字配置", [
+              Log_1.Log.Warn("Battle", 17, "找不到对应的伤害飘字配置", [
                 "伤害飘字Id",
                 i,
               ])));
   }
   static Tick(a) {
-    for (const r of DamageUiManager.$2t) r.Tick(a);
-    for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.W2t.Empty; a++) {
-      var e = this.W2t.Pop();
-      this.K2t(e), this.j2t.push(e);
-    }
-    if (this.Kka) {
-      var i = ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity;
-      if (i?.Valid) {
-        var t = i.Entity?.GetComponent(165)?.CurrentTimeScale ?? 1;
-        for (const g of DamageUiManager.$2t) g.SetTimeScale(t);
+    if (this.YFa) {
+      var e = ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity;
+      if (e?.Valid) {
+        var i = e.Entity?.GetComponent(177)?.CurrentTimeScale ?? 1;
+        for (const r of DamageUiManager.$2t) r.SetTimeScale(i);
       }
+    }
+    for (const g of DamageUiManager.$2t) g.Tick(a);
+    for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.W2t.Empty; a++) {
+      var t = this.W2t.Pop();
+      this.K2t(t), this.j2t.push(t);
     }
   }
   static Q2t(a, e, i, t = -1) {
@@ -165,7 +165,7 @@ class DamageUiManager {
   }
   static ProjectWorldLocationToScreenPosition(a) {
     var e = Global_1.Global.CharacterController;
-    if (UE.GameplayStatics.ProjectWorldToScreen(e, a, this.Y2t, !1)) {
+    if (UE.GameplayStatics.D_ProjectWorldToScreen(e, a, this.Y2t, !1)) {
       e = (0, puerts_1.$unref)(this.Y2t);
       if (e) {
         var a = e.X,
@@ -199,8 +199,14 @@ class DamageUiManager {
     for (const e of DamageUiManager.V2t) e.RefreshFontSize();
   }
   static SetDamageTimeScaleEnable(a) {
-    if (((this.Kka = a), !this.Kka))
+    if (((this.YFa = a), !this.YFa))
       for (const e of DamageUiManager.$2t) e.SetTimeScale(1);
+  }
+  static SetDamageViewVisible(a) {
+    this.H2t = a;
+  }
+  static GetDamageViewVisible() {
+    return this.H2t;
   }
   static OnLeaveLevel() {
     for (const a of DamageUiManager.$2t) a.ClearData(), a.Destroy();
@@ -228,5 +234,5 @@ class DamageUiManager {
   (DamageUiManager.DamagePositionCache = void 0),
   (DamageUiManager.k2t = void 0),
   (DamageUiManager.Y2t = (0, puerts_1.$ref)(void 0)),
-  (DamageUiManager.Kka = !1);
+  (DamageUiManager.YFa = !1);
 //# sourceMappingURL=DamageUiManager.js.map

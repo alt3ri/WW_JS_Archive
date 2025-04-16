@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.RewardPreviewListItem = void 0);
+  (exports.RewardPreviewListItem = exports.RewardItem = void 0);
 const UE = require("ue"),
   DropPackageById_1 = require("../../../../../Core/Define/ConfigQuery/DropPackageById"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
@@ -54,6 +54,7 @@ class RewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
     );
   }
 }
+exports.RewardItem = RewardItem;
 class RewardPreviewListItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),

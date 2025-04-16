@@ -57,7 +57,7 @@ class InputAxisMapping {
           t,
         ))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("InputSettings", 8, "设置Axis按键时，找不到对应Axis", [
+        Log_1.Log.Warn("InputSettings", 10, "设置Axis按键时，找不到对应Axis", [
           "AxisName",
           e,
         ]);
@@ -72,7 +72,7 @@ class InputAxisMapping {
           t,
         ))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("InputSettings", 8, "设置Axis按键时，找不到对应Axis", [
+        Log_1.Log.Warn("InputSettings", 10, "设置Axis按键时，找不到对应Axis", [
           "AxisName",
           e,
         ]);
@@ -87,7 +87,7 @@ class InputAxisMapping {
           t,
         ))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("InputSettings", 8, "添加Axis按键时，找不到对应Axis", [
+        Log_1.Log.Warn("InputSettings", 10, "添加Axis按键时，找不到对应Axis", [
           "AxisName",
           e,
         ]);
@@ -102,7 +102,7 @@ class InputAxisMapping {
           t,
         ))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("InputSettings", 8, "删除Axis按键时，找不到对应Axis", [
+        Log_1.Log.Warn("InputSettings", 10, "删除Axis按键时，找不到对应Axis", [
           "AxisName",
           e,
         ]);
@@ -119,7 +119,7 @@ class InputAxisMapping {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "InputSettings",
-          8,
+          10,
           "删除Axis中符合条件的按键映射，找不到对应Axis",
           ["AxisName", e],
         );

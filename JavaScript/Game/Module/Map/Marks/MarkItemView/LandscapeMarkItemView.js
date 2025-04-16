@@ -11,6 +11,9 @@ class LandscapeMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   OnInitialize() {
     super.OnInitialize(), this.fRi();
   }
+  OnReset() {
+    super.OnReset(), this.d8_(), this.fRi();
+  }
   GetInteractiveFlag() {
     return !1;
   }
@@ -26,10 +29,13 @@ class LandscapeMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
         ? (e.bAdaptPosAndSizeChanged = !1)
         : (e.bAdaptPosAndSizeChanged = !0));
   }
-  OnBeforeDestroy() {
+  d8_() {
     this.gRi &&
-      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.gRi.GetOwner(), !0),
-      super.OnBeforeDestroy();
+      (UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.gRi.GetOwner(), !0),
+      (this.gRi = void 0));
+  }
+  OnBeforeDestroy() {
+    this.d8_(), super.OnBeforeDestroy();
   }
   SetScale(e) {}
 }

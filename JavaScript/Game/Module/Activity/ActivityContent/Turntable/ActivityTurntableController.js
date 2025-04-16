@@ -30,10 +30,21 @@ class ActivityTurntableController extends ActivityControllerBase_1.ActivityContr
         ).forEach((e) => {
           e.OnCommonItemCountAnyChange(t, r);
         });
+      }),
+      (this.ZTl = (t) => {
+        ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
+          Protocol_1.Aki.Protocol.uks.Proto_TurnTableActivity,
+        ).forEach((e) => {
+          t.zS_ && e.RefreshTask(t.zS_, !1);
+        });
       });
   }
-  OnRegisterNetEvent() {}
-  OnUnRegisterNetEvent() {}
+  OnRegisterNetEvent() {
+    Net_1.Net.Register(25611, this.ZTl);
+  }
+  OnUnRegisterNetEvent() {
+    Net_1.Net.UnRegister(25611);
+  }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnQuestStateChange,
@@ -76,12 +87,12 @@ class ActivityTurntableController extends ActivityControllerBase_1.ActivityContr
   static RequestTurntableRun(a) {
     var e = new Protocol_1.Aki.Protocol.sfs();
     (e.w6n = a),
-      Net_1.Net.Call(18578, e, (e) => {
+      Net_1.Net.Call(18606, e, (e) => {
         if (e) {
           e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              29528,
+              23531,
             );
           var t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(a);
           if (t) {

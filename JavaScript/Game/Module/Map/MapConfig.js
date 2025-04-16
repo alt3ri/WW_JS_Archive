@@ -2,29 +2,32 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MapConfig = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  MapMark_1 = require("../../../Core/Define/Config/MapMark"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   AreaByLevel_1 = require("../../../Core/Define/ConfigQuery/AreaByLevel"),
   BlockSwitchById_1 = require("../../../Core/Define/ConfigQuery/BlockSwitchById"),
   CustomMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/CustomMarkByMarkId"),
+  DynamicMapMarkAll_1 = require("../../../Core/Define/ConfigQuery/DynamicMapMarkAll"),
   DynamicMapMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/DynamicMapMarkByMarkId"),
   EnrichmentAreaConfigByEnrichmentId_1 = require("../../../Core/Define/ConfigQuery/EnrichmentAreaConfigByEnrichmentId"),
   EnrichmentAreaConfigByItemId_1 = require("../../../Core/Define/ConfigQuery/EnrichmentAreaConfigByItemId"),
   FogBlockAll_1 = require("../../../Core/Define/ConfigQuery/FogBlockAll"),
   FogBlockByBlockAndMapId_1 = require("../../../Core/Define/ConfigQuery/FogBlockByBlockAndMapId"),
   FogTextureConfigAll_1 = require("../../../Core/Define/ConfigQuery/FogTextureConfigAll"),
-  FogTextureConfigByBlockAndMapId_1 = require("../../../Core/Define/ConfigQuery/FogTextureConfigByBlockAndMapId"),
   FogTextureConfigByMapId_1 = require("../../../Core/Define/ConfigQuery/FogTextureConfigByMapId"),
   LevelEntityConfigByMapIdAndEntityId_1 = require("../../../Core/Define/ConfigQuery/LevelEntityConfigByMapIdAndEntityId"),
   MapBorderAll_1 = require("../../../Core/Define/ConfigQuery/MapBorderAll"),
-  MapBorderByBorderIdAndMapId_1 = require("../../../Core/Define/ConfigQuery/MapBorderByBorderIdAndMapId"),
+  MapMarkAll_1 = require("../../../Core/Define/ConfigQuery/MapMarkAll"),
+  MapMarkByEntityConfigId_1 = require("../../../Core/Define/ConfigQuery/MapMarkByEntityConfigId"),
+  MapMarkByInstanceDungeonId_1 = require("../../../Core/Define/ConfigQuery/MapMarkByInstanceDungeonId"),
   MapMarkByMapId_1 = require("../../../Core/Define/ConfigQuery/MapMarkByMapId"),
-  MapMarkByMarkId_1 = require("../../../Core/Define/ConfigQuery/MapMarkByMarkId"),
+  MapMarkByRelativeId_1 = require("../../../Core/Define/ConfigQuery/MapMarkByRelativeId"),
   MapMarkRelativeSubTypeAll_1 = require("../../../Core/Define/ConfigQuery/MapMarkRelativeSubTypeAll"),
   MapMarkRelativeSubTypeByFunctionId_1 = require("../../../Core/Define/ConfigQuery/MapMarkRelativeSubTypeByFunctionId"),
   MapMarkRelativeSubTypeById_1 = require("../../../Core/Define/ConfigQuery/MapMarkRelativeSubTypeById"),
+  MonsterDetectionAll_1 = require("../../../Core/Define/ConfigQuery/MonsterDetectionAll"),
   MultiMapAll_1 = require("../../../Core/Define/ConfigQuery/MultiMapAll"),
   MultiMapAreaConfigAll_1 = require("../../../Core/Define/ConfigQuery/MultiMapAreaConfigAll"),
-  MultiMapAreaConfigByBlock_1 = require("../../../Core/Define/ConfigQuery/MultiMapAreaConfigByBlock"),
   MultiMapByGroupId_1 = require("../../../Core/Define/ConfigQuery/MultiMapByGroupId"),
   MultiMapById_1 = require("../../../Core/Define/ConfigQuery/MultiMapById"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
@@ -38,15 +41,24 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiResourceById_1 = require("../../../Core/Define/ConfigQuery/UiResourceById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  DEFAULT_CONFIG_ID = 1;
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  MapLogger_1 = require("./Misc/MapLogger");
 class MapConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
+      (this.At1 = new Map()),
       (this.pDi = void 0),
       (this.vDi = void 0),
-      (this.E5a = void 0),
-      (this.ZQa = void 0),
-      (this.eKa = void 0);
+      (this.aVa = void 0),
+      (this.vSl = void 0),
+      (this.MSl = void 0),
+      (this.rO_ = void 0),
+      (this.vYa = void 0),
+      (this.MYa = void 0),
+      (this.NCc = []),
+      (this.mlh = new Map()),
+      (this.nUl = new Set()),
+      (this.IC1 = new Map());
   }
   OnInit() {
     (this.pDi = new Map()), (this.vDi = new Map());
@@ -57,35 +69,74 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     if (e) for (const i of e) this.vDi.set(i.Block + "_" + i.MapId, !0);
     e = TaskMarkAll_1.configTaskMarkAll.GetConfigList();
     if (e) {
-      this.E5a = new Map();
-      for (const a of e) this.E5a.set(a.QuestId, a);
+      this.aVa = new Map();
+      for (const a of e) this.aVa.set(a.QuestId, a);
     }
-    return this.tKa(), !0;
+    e = MonsterDetectionAll_1.configMonsterDetectionAll.GetConfigList();
+    if (e) {
+      this.rO_ = new Map();
+      for (const t of e) this.rO_.set(t.MarkId, t);
+    }
+    e = MapMarkAll_1.configMapMarkAll.GetConfigList();
+    if (e) {
+      this.vSl = new Map();
+      for (const o of e) this.vSl.set(o.MarkId, o);
+    }
+    e = DynamicMapMarkAll_1.configDynamicMapMarkAll.GetConfigList();
+    if (e) {
+      this.MSl = new Map();
+      for (const n of e) this.MSl.set(n.MarkId, n);
+    }
+    return this.SYa(), this.Pt1(), this.TC1(), !0;
   }
   OnClear() {
     return (
       this.pDi?.clear(),
       this.vDi?.clear(),
-      this.E5a?.clear(),
+      this.aVa?.clear(),
+      this.vSl?.clear(),
+      this.MSl?.clear(),
       this.WorldMapNavigateAreaMap?.clear(),
       this.WorldMapNavigateCountryMap?.clear(),
+      this.rO_?.clear(),
+      this.mlh.clear(),
+      this.nUl.clear(),
+      this.At1?.clear(),
       (this.pDi = void 0),
-      !(this.vDi = void 0)
+      (this.vDi = void 0),
+      this.IC1.clear(),
+      !0
     );
   }
-  tKa() {
-    (this.ZQa = new Map()), (this.eKa = new Map());
+  SYa() {
+    (this.vYa = new Map()), (this.MYa = new Map());
     var e = AreaByLevel_1.configAreaByLevel.GetConfigList(2);
     e
-      ? this.iKa(e)
+      ? this.yYa(e)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Map",
-          64,
+          63,
           "[地图系统]->不存在1级区域配置，请联系策划检查q.区域配置!",
         );
   }
-  iKa(e) {
+  Pt1() {
+    var e = this.GetAllTileConfig();
+    if (e)
+      for (const i of e) {
+        var r = this.xt1(i.Block, i.MapId, i.GravityFlip);
+        this.At1.set(r, i);
+      }
+  }
+  TC1() {
+    var e = this.GetMapBorderConfigList();
+    if (e)
+      for (const i of e) {
+        var r = this.bC1(i.BorderId, i.MapId);
+        this.IC1.set(r, i);
+      }
+  }
+  yYa(e) {
     e.forEach((e) => {
       var r = {
         AreaId: e.AreaId,
@@ -94,11 +145,23 @@ class MapConfig extends ConfigBase_1.ConfigBase {
         MarkId: e.DeliveryMarkId,
         MarkType: e.DeliveryMarkType,
       };
-      this.ZQa.set(e.AreaId, r);
-      let i = this.eKa.get(e.CountryId);
+      this.vYa.set(e.AreaId, r);
+      let i = this.MYa.get(e.CountryId);
       void 0 === i &&
         ((i = { StateMap: void 0, AreaNavigateList: [] }),
-        this.eKa.set(e.CountryId, i));
+        this.MYa.set(e.CountryId, i),
+        (e = { CountryId: e.CountryId, NavigateCountry: i }),
+        this.NCc.push(e),
+        this.NCc.sort((e, r) => {
+          return (
+            (ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(
+              e.CountryId,
+            )?.SortIndex ?? 0) -
+            (ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(
+              r.CountryId,
+            )?.SortIndex ?? 0)
+          );
+        }));
       e = r.StateId;
       0 !== e &&
         (void 0 === i.StateMap && (i.StateMap = new Map()),
@@ -109,62 +172,84 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     });
   }
   get WorldMapNavigateAreaMap() {
-    return this.ZQa;
+    return this.vYa;
   }
   get WorldMapNavigateCountryMap() {
-    return this.eKa;
+    return this.MYa;
+  }
+  get WorldMapNavigateCountryList() {
+    return this.NCc;
   }
   GetTaskMarkConfig(e) {
     return TaskMarkByMarkId_1.configTaskMarkByMarkId.GetConfig(e);
   }
   GetTaskMarkConfigByQuestId(e) {
-    return this.E5a?.get(e);
+    return this.aVa?.get(e);
   }
   GetTaskMarkIdByQuestId(e) {
     e = this.GetTaskMarkConfigByQuestId(e);
     if (e) return e.MarkId;
+  }
+  GetMonsterDetectionConfig(e) {
+    return this.rO_?.get(e);
   }
   GetConfigMarks(e) {
     var r = MapMarkByMapId_1.configMapMarkByMapId.GetConfigList(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 64, "找不到MapMark表", ["mapId", e])),
+          Log_1.Log.Error("Map", 63, "找不到MapMark表", ["mapId", e])),
       r
     );
   }
   GetConfigMark(e) {
-    return MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(e);
+    return this.vSl.get(e);
   }
   GetDynamicConfigMark(e) {
     var r = DynamicMapMarkByMarkId_1.configDynamicMapMarkByMarkId.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 64, "找不到DynamicMapMark表", ["markId", e])),
+          Log_1.Log.Error("Map", 63, "找不到DynamicMapMark表", ["markId", e])),
       r
     );
   }
-  SearchGetMarkConfig(e) {
-    return this.GetConfigMark(e) ?? this.GetDynamicConfigMark(e);
+  SearchMarkConfig(e) {
+    return this.vSl.has(e)
+      ? this.vSl.get(e)
+      : this.MSl.has(e)
+        ? this.MSl.get(e)
+        : void MapLogger_1.MapLogger.ErrorOnce(
+            e,
+            63,
+            "查询标记配置失败->MapMark和DynamicMark配置都不存在相关配置",
+            ["MarkId", e],
+          );
+  }
+  SearchMapConfigByType(e, r) {
+    var i = this.vSl.get(e);
+    return (i && i.ObjectType === r) ||
+      ((i = this.MSl.get(e)) && i.ObjectType === r)
+      ? i
+      : void 0;
+  }
+  SearchMarkInstanceDungeonId(e, r) {
+    if (9 !== r)
+      return (e = this.SearchMapConfigByType(e, r)) instanceof MapMark_1.MapMark
+        ? e.RelativeDungeonId
+        : e?.InstanceDungeonId;
   }
   GetTeleportConfigById(e) {
     var r = TeleporterById_1.configTeleporterById.GetConfig(e);
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 19, "找不到Teleporter表的配置,Id = ", [
+          Log_1.Log.Error("Map", 18, "找不到Teleporter表的配置,Id = ", [
             "teleportId",
             e,
           ])),
       r
     );
-  }
-  GetDefaultDetectorMarkConfigId() {
-    return DEFAULT_CONFIG_ID;
-  }
-  GetDefaultTemporaryTeleportMarkConfigId() {
-    return DEFAULT_CONFIG_ID;
   }
   GetTemporaryTeleportMarkConfigById(e) {
     var r =
@@ -176,18 +261,19 @@ class MapConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Map",
-            50,
+            49,
             "找不到TemporaryTeleportMark表的配置,Id = ",
             ["markId", e],
           )),
       r
     );
   }
-  GetTileConfig(e, r) {
-    return FogTextureConfigByBlockAndMapId_1.configFogTextureConfigByBlockAndMapId.GetConfig(
-      e,
-      r,
-    );
+  xt1(e, r, i) {
+    return e + `_${r}_` + i;
+  }
+  GetTileConfig(e, r, i) {
+    e = this.xt1(e, r, i);
+    return this.At1.get(e);
   }
   GetAllTileConfig() {
     return FogTextureConfigAll_1.configFogTextureConfigAll.GetConfigList();
@@ -201,7 +287,13 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     return MultiMapByGroupId_1.configMultiMapByGroupId.GetConfigList(e);
   }
   GetSubMapConfigById(e) {
-    return MultiMapById_1.configMultiMapById.GetConfig(e);
+    var r;
+    if (!this.nUl.has(e))
+      return (
+        void 0 === (r = MultiMapById_1.configMultiMapById.GetConfig(e)) &&
+          this.nUl.add(e),
+        r
+      );
   }
   GetUnlockMapTileConfigById(e) {
     return BlockSwitchById_1.configBlockSwitchById.GetConfig(e);
@@ -218,7 +310,7 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 19, "找不到CustomMark表的配置", [
+          Log_1.Log.Error("Map", 18, "找不到CustomMark表的配置", [
             "MarkId",
             e,
           ])),
@@ -236,16 +328,24 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e) ?? "";
   }
   GetEntityConfigByMapIdAndEntityId(e, r) {
-    return LevelEntityConfigByMapIdAndEntityId_1.configLevelEntityConfigByMapIdAndEntityId.GetConfig(
-      e,
-      r,
-    );
+    var i = e + "-" + r;
+    if (!this.mlh.has(i))
+      return (
+        void 0 ===
+          (e =
+            LevelEntityConfigByMapIdAndEntityId_1.configLevelEntityConfigByMapIdAndEntityId.GetConfig(
+              e,
+              r,
+            )) && this.mlh.set(i, !0),
+        e
+      );
+  }
+  bC1(e, r) {
+    return e + "_" + r;
   }
   GetMapBorderConfig(e, r) {
-    return MapBorderByBorderIdAndMapId_1.configMapBorderByBorderIdAndMapId.GetConfig(
-      e,
-      r,
-    );
+    e = this.bC1(e, r);
+    return this.IC1.get(e);
   }
   GetMapBorderConfigList() {
     return MapBorderAll_1.configMapBorderAll.GetConfigList();
@@ -260,7 +360,7 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 50, "找不到SoundBoxMark表的配置", [
+          Log_1.Log.Error("Map", 49, "找不到SoundBoxMark表的配置", [
             "MarkId",
             e,
           ])),
@@ -273,7 +373,7 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 50, "找不到TreasureBoxMark表的配置", [
+          Log_1.Log.Error("Map", 49, "找不到TreasureBoxMark表的配置", [
             "MarkId",
             e,
           ])),
@@ -288,7 +388,7 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     return (
       r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 50, "找不到TreasureBoxDetectorMark表的配置", [
+          Log_1.Log.Error("Map", 49, "找不到TreasureBoxDetectorMark表的配置", [
             "MarkId",
             e,
           ])),
@@ -307,17 +407,17 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetUiResourcePathById(e) {
+    var r;
     return StringUtils_1.StringUtils.IsEmpty(e)
       ? ""
-      : UiResourceById_1.configUiResourceById.GetConfig(e).Path;
+      : (r = UiResourceById_1.configUiResourceById.GetConfig(e))
+        ? r.Path
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Map", 63, "找不到UiResource表的配置", ["key", e]),
+          "");
   }
   GetMultiMapAreaConfigList() {
     return MultiMapAreaConfigAll_1.configMultiMapAreaConfigAll.GetConfigList();
-  }
-  GetMultiMapAreaConfigById(e) {
-    return MultiMapAreaConfigByBlock_1.configMultiMapAreaConfigByBlock.GetConfig(
-      e,
-    );
   }
   GetEnrichmentAreaConfigByItemId(e) {
     return EnrichmentAreaConfigByItemId_1.configEnrichmentAreaConfigByItemId.GetConfigList(
@@ -330,6 +430,17 @@ class MapConfig extends ConfigBase_1.ConfigBase {
         e,
       );
     if (e) return e[0];
+  }
+  GetMapMarkByRelativeId(e, r) {
+    return MapMarkByRelativeId_1.configMapMarkByRelativeId.GetConfig(e, r);
+  }
+  GetMapMarkByEntityConfigId(e) {
+    return MapMarkByEntityConfigId_1.configMapMarkByEntityConfigId.GetConfig(e);
+  }
+  GetMapMarkListByInstanceDungeonId(e) {
+    return MapMarkByInstanceDungeonId_1.configMapMarkByInstanceDungeonId.GetConfigList(
+      e,
+    );
   }
 }
 exports.MapConfig = MapConfig;

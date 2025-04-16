@@ -12,6 +12,9 @@ class LogicDataRebound extends LogicDataBase_1.default {
       (this.CameraModified = void 0),
       (this.ReboundBitMask = 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataRebound;
 //# sourceMappingURL=LogicDataRebound.js.map

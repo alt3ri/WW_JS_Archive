@@ -110,7 +110,7 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (1 !== e.length)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+        Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
           "configParams",
           e,
         ]);

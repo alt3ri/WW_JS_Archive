@@ -6,9 +6,6 @@ class SceneGameplayMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView 
   constructor(e) {
     super(e);
   }
-  OnInitialize() {
-    super.OnInitialize(), this.OnIconPathChanged(this.Holder.IconPath);
-  }
 }
 exports.SceneGameplayMarkItemView = SceneGameplayMarkItemView;
 //# sourceMappingURL=SceneGameplayMarkItemView.js.map

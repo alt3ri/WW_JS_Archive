@@ -5,6 +5,7 @@ class ItemMaterialDataMap extends UE.Actor {
   constructor() {
     super(...arguments), (this.Map = new UE.TMap());
   }
+  Constructor() {}
 }
 exports.default = ItemMaterialDataMap;
 //# sourceMappingURL=ItemMaterialDataMap.js.map

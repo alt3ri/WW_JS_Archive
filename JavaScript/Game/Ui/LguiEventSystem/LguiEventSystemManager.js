@@ -26,7 +26,10 @@ class LguiEventSystemManager {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.LoadLguiEventSystemActor,
       ),
-      LguiEventSystemManager.Odr.InitializeLguiEventSystemActor();
+      LguiEventSystemManager.Odr.InitializeLguiEventSystemActor(),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.InitializeLguiEventSystemActor,
+      );
   }
   static Clear() {
     EventSystem_1.EventSystem.Emit(
@@ -71,6 +74,9 @@ class LguiEventSystemManager {
   }
   static InputWheelAxis(e, t) {
     LguiEventSystemManager.Odr?.InputScroll(t);
+  }
+  static InputWheelAxisByGamepad(e) {
+    LguiEventSystemManager.Odr?.InputScrollByGamepad(e);
   }
   static InputTouchTrigger(e, t, n) {
     LguiEventSystemManager.Odr?.InputTouchTrigger(e, t, n);

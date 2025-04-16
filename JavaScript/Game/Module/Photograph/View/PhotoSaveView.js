@@ -7,7 +7,9 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   ShareRewardById_1 = require("../../../../Core/Define/ConfigQuery/ShareRewardById"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   LocalStorage_1 = require("../../../Common/LocalStorage"),
@@ -21,6 +23,8 @@ const puerts_1 = require("puerts"),
   UiLayerType_1 = require("../../../Ui/Define/UiLayerType"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  Spring25SharePanel_1 = require("../../Activity/ActivityContent/Spring25/View/Spring25SharePanel"),
+  VersionPreheatSharePanel_1 = require("../../Activity/ActivityContent/VersionPreheat/View/VersionPreheatSharePanel"),
   ChannelController_1 = require("../../Channel/ChannelController"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   FragmentMemoryShareView_1 = require("../../FragmentMemory/FragmentMemoryShareView"),
@@ -28,6 +32,7 @@ const puerts_1 = require("puerts"),
   GachaShareTenPanel_1 = require("../../Gacha/GachaResultView/GachaShareTenPanel"),
   LoadingController_1 = require("../../Loading/LoadingController"),
   ScreenShotManager_1 = require("../../ScreenShot/ScreenShotManager"),
+  RoleSkinShareView_1 = require("../../Skin/RoleSkinShareView"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   PhotographController_1 = require("../PhotographController"),
@@ -39,53 +44,64 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.jWi = void 0),
       (this.WWi = !0),
+      (this.x4_ = !1),
       (this.KWi = ""),
       (this.QWi = void 0),
       (this.XWi = void 0),
       (this.tBn = void 0),
+      (this.dyl = void 0),
+      (this.aul = void 0),
+      (this.o5l = void 0),
       (this.$Wi = 1),
       (this.IAr = 0),
       (this.TAr = 0),
       (this.LAr = void 0),
+      (this.f5_ = 0),
+      (this.g5_ = 0),
+      (this.C5_ = void 0),
+      (this.U4_ = void 0),
+      (this.p5_ = !1),
       (this.YWi = () => {
         var e = new PhotoShareBtnItem_1.PhotoShareBtnItem();
         return e.SetClickCallBack(this.JWi), e;
       }),
-      (this.JWi = (o) => {
-        Log_1.Log.CheckInfo() && Log_1.Log.Info("Photo", 8, "点击分享截图按钮"),
+      (this.JWi = (r, o) => {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Photo", 58, "点击分享截图按钮"),
           this.zWi(!1, (e, t, i) => {
-            var r = (0, puerts_1.$ref)(void 0),
-              r =
+            var h = (0, puerts_1.$ref)(void 0),
+              h =
                 (UE.KuroGameScreenshotBPLibrary.CompressConvertColorsToBitmap(
                   e,
                   t,
                   i,
-                  r,
+                  h,
                 ),
-                (0, puerts_1.$unref)(r));
+                (0, puerts_1.$unref)(h));
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Photo",
-                8,
+                58,
                 "截图完成，压缩截图结果进行分享",
                 ["width", e],
                 ["height", t],
                 ["ColorSize", i?.Num()],
-                ["bitMapSize", r?.Num()],
+                ["bitMapSize", h?.Num()],
               ),
               ChannelController_1.ChannelController.ShareChannel(
-                o,
                 r,
+                h,
                 this.$Wi,
+                o,
               );
           });
       }),
       (this.ZWi = () => {
         var e;
-        Log_1.Log.CheckInfo() && Log_1.Log.Info("Photo", 8, "点击保存截图按钮"),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Photo", 58, "点击保存截图按钮"),
           ControllerHolder_1.ControllerHolder.KuroSdkController.CheckPhotoPermission()
-            ? ((e = Info_1.Info.IsMobilePlatform()),
-              this.zWi(!e, this.eKi, this.DAr))
+            ? this.zWi(!1, this.eKi, this.DAr, this.MJl)
             : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                 169,
               )).FunctionMap.set(1, this.tKi),
@@ -109,7 +125,7 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
               ));
       }),
       (this.iKi = (e) => {
-        e ? this.zWi(!0, this.eKi, this.DAr) : this.tKi();
+        e ? this.zWi(!1, this.eKi, this.DAr) : this.tKi();
       }),
       (this.tKi = () => {
         switch (Info_1.Info.PlatformType) {
@@ -126,13 +142,16 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
       }),
       (this.eKi = (e, t, i) => {
         switch (
-          ((this.IAr = e),
-          (this.TAr = t),
-          (this.LAr = i),
+          (this.LAr
+            ? this.p5_ &&
+              ((this.LAr = this.C5_),
+              (this.IAr = this.f5_),
+              (this.TAr = this.g5_))
+            : ((this.IAr = e), (this.TAr = t), (this.LAr = i)),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Photo",
-              8,
+              58,
               "截图完成，截图结果进行保存",
               ["width", e],
               ["height", t],
@@ -141,24 +160,24 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
           Info_1.Info.PlatformType)
         ) {
           case 2:
-            var r = (0, puerts_1.$ref)(void 0),
-              r =
+            var h = (0, puerts_1.$ref)(void 0),
+              h =
                 (UE.KuroGameScreenshotBPLibrary.ConvertColorsToBitmap(
-                  e,
-                  t,
-                  i,
-                  r,
+                  this.IAr,
+                  this.TAr,
+                  this.LAr,
+                  h,
                 ),
-                (0, puerts_1.$unref)(r));
+                (0, puerts_1.$unref)(h));
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Photo", 8, "截图保存至Android相册", [
+              Log_1.Log.Info("Photo", 58, "截图保存至Android相册", [
                 "bitmapSize",
-                r?.Num(),
+                h?.Num(),
               ]),
               UE.KuroGameScreenshotBPLibrary.SaveColorArrayToAndroidAlbum(
-                e,
-                t,
-                r,
+                this.IAr,
+                this.TAr,
+                h,
               ),
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "SaveGalleryPathTips",
@@ -170,39 +189,64 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Photo",
-                    8,
+                    58,
                     "没有获得IOS相册权限，请求权限，请求完成后再次尝试截图",
                   ),
                 void ScreenShotManager_1.ScreenShotManager.RequestIOSPhotoLibraryAuthorization()
               );
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Photo", 8, "截图保存至IOS相册", [
+              Log_1.Log.Info("Photo", 58, "截图保存IOS相册", [
                 "colors",
-                i?.Num(),
+                this.LAr?.Num(),
               ]),
-              UE.KuroGameScreenshotBPLibrary.SaveColorArrayToIosAlbum(e, t, i),
+              UE.KuroGameScreenshotBPLibrary.SaveColorArrayToIosAlbum(
+                this.IAr,
+                this.TAr,
+                this.LAr,
+              ),
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "SaveGalleryPathTips",
               );
             break;
+          case 8:
+            break;
           default:
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Photo", 8, "截图保存至游戏安装文件夹", [
-                "path",
-                this.KWi,
-              ]),
-              ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-                "SavePathTips",
-                this.KWi,
-              );
+            (h = this.EJl()),
+              (h =
+                ((this.KWi = this.fKi(h)),
+                UE.BlueprintPathsLibrary.ProjectUserDir())),
+              (h = h + this.KWi);
+            UE.KuroGameScreenshotBPLibrary.SaveScreenshot(
+              h,
+              this.IAr,
+              this.TAr,
+              this.LAr,
+            ),
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("Photo", 58, "截图保存至游戏安装文件夹", [
+                  "path",
+                  this.KWi,
+                ]),
+              Platform_1.Platform.IsCloudGame() ||
+                ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                  "SavePathTips",
+                  this.KWi,
+                );
         }
         this.oKi();
+      }),
+      (this.MJl = (e) => {
+        var t;
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Photo", 58, "PS Test OnPhotoCompressed"),
+          8 === Info_1.Info.PlatformType &&
+            ((t = this.EJl()), UE.GameplayStatics.ExportPngPhotoFromData(e, t));
       }),
       (this.DAr = (e) => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Photo",
-            8,
+            58,
             "允许权限后重新截图",
             ["isGranted", e],
             ["width", this.IAr],
@@ -227,7 +271,10 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
         this.WWi ? this.oKi() : this.CloseMe();
       }),
       (this.rKi = () => {
-        this.CloseMe();
+        PhotographController_1.PhotographController.UpdateMissionOptionToFinished(
+          !1,
+        ),
+          this.CloseMe();
       }),
       (this.nKi = (e) => {
         LocalStorage_1.LocalStorage.SetGlobal(
@@ -235,7 +282,8 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
             .PhotoAndShareShowPlayerName,
           e,
         ),
-          this.QWi?.SetNameVisible(e);
+          (this.p5_ = e),
+          this.QWi?.SetUiActive(e);
       }),
       (this.sKi = (e) => {
         PhotographController_1.PhotographController.CheckIfInMission()
@@ -262,7 +310,7 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
       }),
       (this.lKi = () => {
         var e =
-          1 !== PhotographController_1.PhotographController.CameraCaptureType &&
+          !PhotographController_1.PhotographController.CheckIfInEntityCamera() &&
           ModelManager_1.ModelManager.ChannelModel.CouldGetShareReward(
             this.$Wi,
           );
@@ -323,6 +371,7 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
       [34, UE.UIExtendToggle],
       [35, UE.UIExtendToggle],
       [36, UE.UIItem],
+      [37, UE.UITexture],
     ]),
       (this.BtnBindInfo = [
         [6, this.ZWi],
@@ -333,39 +382,71 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
+    this.GetItem(7)?.SetUIActive(!1);
     var e = this.OpenParam,
       t =
         ((this.WWi = void 0 === e.HandBookPhotoData),
-        (this.QWi = new PhotoSaveMarkItem_1.PhotoSaveMarkItem()),
-        this.AddChild(this.QWi),
-        [
-          this.QWi.OnlyCreateByActorAsync(
-            this.GetItem(this.WWi ? 21 : 22).GetOwner(),
-          ),
-        ]),
+        (this.x4_ = e.PrepareFullScreenShot),
+        []),
       t =
-        (e.GachaData && t.push(this._Ki(e.GachaData)),
+        ((this.QWi = new PhotoSaveMarkItem_1.PhotoSaveMarkItem()),
+        e.LogoConfigName && (this.QWi.LogoConfigName = e.LogoConfigName),
+        e.DateText
+          ? (this.GetItem(21).SetUIActive(!1),
+            (this.QWi.DateText = e.DateText),
+            t.push(
+              this.QWi.CreateThenShowByResourceIdAsync(
+                "UiItem_PhotoSharePlayerInfoNew",
+                this.GetTexture(0),
+              ),
+            ))
+          : t.push(
+              this.QWi.CreateThenShowByActorAsync(
+                this.GetItem(this.WWi ? 21 : 22).GetOwner(),
+              ),
+            ),
+        e.GachaData && t.push(this._Ki(e.GachaData)),
         e.FragmentMemory && t.push(this.iBn(e.FragmentMemory)),
+        e.RoleSkinData && t.push(this.Cyl(e.RoleSkinData)),
+        e.VersionPreheat &&
+          (await this.SetTextureAsync(
+            e.VersionPreheat.PhotoPath,
+            this.GetTexture(0),
+          ),
+          t.push(this.lul(e.VersionPreheat))),
+        e.Spring25Data && t.push(this.n5l(e.Spring25Data)),
         await Promise.all(t),
-        LocalStorage_1.LocalStorage.GetGlobal(
+        e.ExternalTexture),
+      t =
+        (t && t.IsValid()
+          ? (this.GetTexture(37).SetUIActive(!0),
+            this.GetTexture(37).SetTexture(t))
+          : this.GetTexture(37).SetUIActive(!1),
+        (this.p5_ = LocalStorage_1.LocalStorage.GetGlobal(
           LocalStorageDefine_1.ELocalStorageGlobalKey
             .PhotoAndShareShowPlayerName,
           !0,
         )),
-      t = t ? 1 : 0,
+        this.p5_ ? 1 : 0),
       i = this.WWi ? 34 : 35;
     this.GetExtendToggle(i)?.SetToggleState(t),
-      this.WWi
-        ? e.GachaData
-          ? 1 !== e.GachaData.length
-            ? (this.$Wi = 5)
-            : ((i = ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(
-                e.GachaData[0].e9n.L8n,
-              )),
-              (this.$Wi = 2 === i ? 4 : 3))
-          : (this.$Wi = 1)
-        : (this.$Wi = 2),
-      this.WWi ? this.uKi() : this.cKi(e.HandBookPhotoData),
+      e.ShareId && 0 < e.ShareId
+        ? (this.$Wi = e.ShareId)
+        : this.WWi
+          ? e.GachaData
+            ? 1 !== e.GachaData.length
+              ? (this.$Wi = 5)
+              : ((i = ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(
+                  e.GachaData[0].e9n.L8n,
+                )),
+                (this.$Wi = 2 === i ? 4 : 3))
+            : (this.$Wi = 1)
+          : (this.$Wi = 2),
+      e.Spring25Data
+        ? this._U_()
+        : this.WWi
+          ? this.uKi()
+          : this.cKi(e.HandBookPhotoData),
       this.lKi(),
       e.ScreenShot &&
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSceneColorShotNow();
@@ -395,26 +476,54 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
     await this.tBn.OnlyCreateByPathAsync(e, this.GetItem(36)),
       this.AddChild(this.tBn);
   }
+  async Cyl(e) {
+    (this.dyl = new RoleSkinShareView_1.RoleSkinShareView()),
+      (this.dyl.OpenParam = e);
+    e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+      "UiItem_ObtainSkinShare",
+    );
+    await this.dyl.OnlyCreateByPathAsync(e, this.GetItem(36)),
+      this.AddChild(this.dyl);
+  }
+  async lul(e) {
+    (this.aul = new VersionPreheatSharePanel_1.VersionPreheatSharePanel()),
+      (this.aul.OpenParam = e);
+    e =
+      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        "UiItem_MemoryShare",
+      );
+    await this.aul.OnlyCreateByPathAsync(e, this.GetItem(36)),
+      this.AddChild(this.aul);
+  }
+  async n5l(e) {
+    (this.o5l = new Spring25SharePanel_1.Spring25SharePanel()),
+      (this.o5l.OpenParam = e);
+    e =
+      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        "UiItem_MemoryShare",
+      );
+    await this.o5l.OnlyCreateByPathAsync(e, this.GetItem(36)),
+      this.AddChild(this.o5l);
+  }
   uKi() {
     this.GetItem(14).SetUIActive(!0), this.GetItem(15).SetUIActive(!1);
     var e = this.GetItem(13),
       t = this.GetItem(7),
       i = this.GetText(10),
-      r = UE.WidgetLayoutLibrary.GetViewportSize(GlobalData_1.GlobalData.World),
-      o = UE.WidgetLayoutLibrary.GetViewportScale(
+      h = UE.WidgetLayoutLibrary.GetViewportSize(GlobalData_1.GlobalData.World),
+      r = UE.WidgetLayoutLibrary.GetViewportScale(
         GlobalData_1.GlobalData.World,
       );
     1 === this.$Wi
-      ? (e.SetWidth(r.X / (o * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)),
-        e.SetHeight(r.Y / (o * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)))
+      ? (e.SetWidth(h.X / (r * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)),
+        e.SetHeight(h.Y / (r * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)))
       : (e.SetWidth(PhotographDefine_1.DEFAULT_SHARE_WIDTH),
         e.SetHeight(PhotographDefine_1.DEFAULT_SHARE_HEIGHT)),
-      0 === PhotographController_1.PhotographController.CameraCaptureType
+      PhotographController_1.PhotographController.CheckIfInNormalCamera()
         ? (i.SetUIActive(!1), t.SetUIActive(!1), this.mKi())
-        : 1 === PhotographController_1.PhotographController.CameraCaptureType
+        : PhotographController_1.PhotographController.CheckIfInEntityCamera()
           ? (i.SetUIActive(!0), t.SetUIActive(!0), this.aKi())
-          : 2 ===
-              PhotographController_1.PhotographController.CameraCaptureType &&
+          : PhotographController_1.PhotographController.CheckIfInTogetherCamera() &&
             (i.SetUIActive(!1), t.SetUIActive(!1), this.mKi()),
       this.vNn();
   }
@@ -441,6 +550,54 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
       this.GetTexture(19).SetUIActive(void 0 !== e.TextureList),
       e.TextureList &&
         this.SetTextureByPath(e.TextureList[t], this.GetTexture(19));
+  }
+  D4_(e) {
+    var t = this.GetItem(14),
+      i =
+        (t.SetUIActive(!0), this.GetItem(15).SetUIActive(!1), this.GetItem(13)),
+      h = UE.WidgetLayoutLibrary.GetViewportSize(GlobalData_1.GlobalData.World),
+      r = UE.WidgetLayoutLibrary.GetViewportScale(
+        GlobalData_1.GlobalData.World,
+      );
+    e
+      ? (i.SetWidth(h.X / r),
+        i.SetHeight(h.Y / r),
+        (this.U4_ = t.K2_GetComponentScale()),
+        (e = new UE.Vector(1, 1, 1)),
+        t.SetUIItemScale(e),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnPreparePhotoScreenShot,
+          !1,
+        ))
+      : (i.SetWidth(h.X / (r * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)),
+        i.SetHeight(h.Y / (r * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)),
+        t.SetUIItemScale(this.U4_),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnPreparePhotoScreenShot,
+          !0,
+        ));
+  }
+  v5_(e) {
+    e ? this.QWi?.SetUiActive(!this.p5_) : this.QWi?.SetUiActive(this.p5_);
+  }
+  _U_() {
+    this.GetItem(14).SetUIActive(!0), this.GetItem(15).SetUIActive(!1);
+    var e = this.GetItem(13),
+      t = this.GetItem(7),
+      i = this.GetText(10),
+      h = UE.WidgetLayoutLibrary.GetViewportSize(GlobalData_1.GlobalData.World),
+      r = UE.WidgetLayoutLibrary.GetViewportScale(
+        GlobalData_1.GlobalData.World,
+      );
+    1 === this.$Wi
+      ? (e.SetWidth(h.X / (r * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)),
+        e.SetHeight(h.Y / (r * PhotographDefine_1.SCREEN_SHOT_TEXTURE_SCALE)))
+      : (e.SetWidth(PhotographDefine_1.DEFAULT_SHARE_WIDTH),
+        e.SetHeight(PhotographDefine_1.DEFAULT_SHARE_HEIGHT)),
+      i.SetUIActive(!1),
+      t.SetUIActive(!1),
+      this.mKi(),
+      this.vNn();
   }
   dKi() {
     return !BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip();
@@ -494,7 +651,20 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
       );
   }
   OnAfterShow() {
-    this.CKi();
+    this.x4_
+      ? (this.D4_(!0),
+        this.v5_(!0),
+        TimerSystem_1.TimerSystem.Next(() => {
+          this.B4_(!0, () => {
+            this.v5_(!1),
+              TimerSystem_1.TimerSystem.Next(() => {
+                this.B4_(!1, () => {
+                  this.D4_(!1), this.CKi();
+                });
+              });
+          });
+        }))
+      : this.CKi();
   }
   OnBeforeDestroy() {
     UE.KuroRenderingRuntimeBPPluginBPLibrary.ReleaseGetSceneColorShotBefore(),
@@ -506,15 +676,44 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
     var e = this.GetItem(this.WWi ? 11 : 23),
       t = this.GetItem(this.WWi ? 12 : 24),
       e = e.GetPositionInViewPort(!0),
-      t = t.GetPositionInViewPort(!0);
-    return [e.X, e.Y, t.X, t.Y];
+      t = t.GetPositionInViewPort(!0),
+      i = UE.WidgetLayoutLibrary.GetViewportSize(GlobalData_1.GlobalData.World);
+    return [
+      e.X < 0 ? 0 : e.X,
+      e.Y < 0 ? 0 : e.Y,
+      (t.X < i.X ? t : i).X,
+      (t.Y < i.Y ? t : i).Y,
+    ];
   }
   CKi() {
     this.UiViewSequence?.PlaySequence("ScreenShot");
   }
-  zWi(e, t, i) {
-    var r = TimeUtil_1.TimeUtil.GetServerTime(),
-      r = TimeUtil_1.TimeUtil.DateFormatString2(r) + ".png",
+  EJl() {
+    var e = TimeUtil_1.TimeUtil.GetServerTime();
+    return TimeUtil_1.TimeUtil.DateFormatString2(e) + ".png";
+  }
+  B4_(h, r) {
+    var e = this.gKi(),
+      e = ScreenShotManager_1.ScreenShotManager.PrepareTakeScreenshot(
+        "",
+        e[0],
+        e[1],
+        e[2],
+        e[3],
+        !1,
+      );
+    e &&
+      (e.OnTakeScreenshotCapturedDelegate.Clear(),
+      e.OnTakeScreenshotCapturedDelegate.Add((e, t, i) => {
+        (this.p5_ && h) || (!this.p5_ && !h)
+          ? ((this.LAr = i), (this.IAr = e), (this.TAr = t))
+          : ((this.C5_ = i), (this.f5_ = e), (this.g5_ = t)),
+          r();
+      }),
+      e.TakeScreenshot());
+  }
+  zWi(e, t, i, h) {
+    var r = this.EJl(),
       o = this.gKi(),
       r = ((this.KWi = this.fKi(r)), UE.BlueprintPathsLibrary.ProjectUserDir()),
       r = r + this.KWi,
@@ -529,16 +728,15 @@ class PhotoSaveView extends UiViewBase_1.UiViewBase {
     r &&
       (r.OnTakeScreenshotCapturedDelegate.Add(t),
       i && r.OnIOSPhotoLibraryAuthorizationCompletedDelegate.Add(i),
+      h && r.OnTakeScreenshotCompressedDelegate.Add(h),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Photo", 8, "开始截图", ["isSaveFile", e]),
+        Log_1.Log.Info("Photo", 58, "开始截图", ["isSaveFile", e]),
       r.TakeScreenshot());
   }
   oKi() {
-    1 === PhotographController_1.PhotographController.CameraCaptureType
-      ? (PhotographController_1.PhotographController.IsLastChecked &&
-          PhotographController_1.PhotographController.SubmitQuest(),
-        UiManager_1.UiManager.CloseView("PhotoSaveView"),
-        PhotographController_1.PhotographController.ClosePhotograph())
+    PhotographController_1.PhotographController.CheckIfInEntityCamera()
+      ? (UiManager_1.UiManager.CloseView("PhotoSaveView"),
+        PhotographController_1.PhotographController.ClosePhotograph(!0))
       : UiManager_1.UiManager.CloseView("PhotoSaveView");
   }
   fKi(e) {

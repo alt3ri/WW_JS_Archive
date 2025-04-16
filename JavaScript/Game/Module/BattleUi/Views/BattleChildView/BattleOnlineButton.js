@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleOnlineButton = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -132,10 +133,16 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
       this.SetSpriteByPath(t, this.QYe, !0);
   }
   RefreshButtonState() {
+    var e;
     this.QYe &&
-      (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
-        ? this.SetOtherHide(!0)
-        : (this.SetOtherHide(!1), this.eJe()));
+      (!ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
+      ((e = ModelManager_1.ModelManager.GameModeModel.IsMulti),
+      1 ===
+        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() ||
+        e ||
+        !Info_1.Info.IsInGamepad())
+        ? (this.SetOtherHide(!1), this.eJe())
+        : this.SetOtherHide(!0));
   }
 }
 exports.BattleOnlineButton = BattleOnlineButton;

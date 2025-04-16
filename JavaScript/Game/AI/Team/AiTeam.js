@@ -5,7 +5,7 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
-  BlackboardController_1 = require("../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   AiScheduleGroup_1 = require("./AiScheduleGroup");
 class AiTeam {
   constructor() {
@@ -66,7 +66,7 @@ class AiTeam {
             r.CreatureData.GetEntityType() !==
             Protocol_1.Aki.Protocol.kks.Proto_Player
           )
-            BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetBooleanValueByEntity(
               t.CharAiDesignComp.Entity.Id,
               "TeamAttacker",
               !0,

@@ -8,9 +8,9 @@ const puerts_1 = require("puerts"),
   Global_1 = require("../../Global"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../Ui/UiManager"),
-  Vocal_Audio_Bus_Volume = new UE.FName("Vocal_Audio_Bus_Volume"),
-  Music_Audio_Bus_Volume = new UE.FName("Music_Audio_Bus_Volume"),
-  SFX_Audio_Bus_Volume = new UE.FName("SFX_Audio_Bus_Volume");
+  Vocal_Audio_Bus_Volume = new UE.FName("volume_voice"),
+  Music_Audio_Bus_Volume = new UE.FName("volume_music"),
+  SFX_Audio_Bus_Volume = new UE.FName("volume_sfx");
 class VolumeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -80,7 +80,7 @@ class VolumeView extends UiViewBase_1.UiViewBase {
           (this.uOo = 0),
           (this.cOo = 0),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Audio", 22, "开始进行音频播放检测!!!"),
+            Log_1.Log.Info("Audio", 21, "开始进行音频播放检测!!!"),
           this.COo();
       }),
       (this.gOo = void 0);
@@ -131,7 +131,7 @@ class VolumeView extends UiViewBase_1.UiViewBase {
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Audio",
-          22,
+          21,
           "音频播放检测完毕!!!",
           ["总数", this.gOo.Num().toString()],
           ["实际检测总数", this.uOo.toString()],
@@ -141,11 +141,11 @@ class VolumeView extends UiViewBase_1.UiViewBase {
   XZi(i) {
     const t = Global_1.Global.BaseCharacter;
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Audio", 22, "当前播放音频路径", ["name", i]),
+      Log_1.Log.Debug("Audio", 21, "当前播放音频路径", ["name", i]),
       AudioController_1.AudioController.GetAudioEvent(i, !1)
         ? (0 === AudioController_1.AudioController.PlayAudioByEventPath(i, t) &&
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Audio", 22, "音频播放失败!!!", ["name", i]),
+              Log_1.Log.Error("Audio", 21, "音频播放失败!!!", ["name", i]),
             this.cOo++),
           AudioController_1.AudioController.StopAudio(t),
           this.COo())
@@ -153,7 +153,7 @@ class VolumeView extends UiViewBase_1.UiViewBase {
             0 ===
               AudioController_1.AudioController.PlayAudioByEventPath(i, t) &&
               (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Audio", 22, "音频播放失败!!!", ["name", i]),
+                Log_1.Log.Error("Audio", 21, "音频播放失败!!!", ["name", i]),
               this.cOo++),
               AudioController_1.AudioController.StopAudio(t),
               this.COo();

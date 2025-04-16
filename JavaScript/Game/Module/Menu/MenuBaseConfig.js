@@ -15,7 +15,7 @@ class MenuBaseConfig extends ConfigBase_1.ConfigBase {
     var e = MenuConfigAll_1.configMenuConfigAll.GetConfigList();
     if (e && 0 < e.length) return e;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Menu", 8, "没有基础配置文件，请检查配置表是否缺失");
+      Log_1.Log.Error("Menu", 64, "没有基础配置文件，请检查配置表是否缺失");
   }
   GetMainConfig() {
     var e = MainTypeAll_1.configMainTypeAll.GetConfigList();
@@ -27,7 +27,7 @@ class MenuBaseConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Menu",
-        8,
+        64,
         "没有对应的主类型基础配置，请检查配置表是否缺失",
       );
   }
@@ -36,6 +36,11 @@ class MenuBaseConfig extends ConfigBase_1.ConfigBase {
   }
   GetMenuConfigByFunctionId(e) {
     return MenuConfigByFunctionId_1.configMenuConfigByFunctionId.GetConfig(e);
+  }
+  GetMenuConfigListByFunctionId(e) {
+    return MenuConfigByFunctionId_1.configMenuConfigByFunctionId.GetConfigList(
+      e,
+    );
   }
   GetAllKeyTypeConfig() {
     return KeyTypeAll_1.configKeyTypeAll.GetConfigList();

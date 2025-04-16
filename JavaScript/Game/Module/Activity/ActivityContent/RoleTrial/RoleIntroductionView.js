@@ -8,11 +8,14 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
   BigElementItem_1 = require("../../../Common/BigElementItem"),
   RoleSkillInputItem_1 = require("../../../RoleUi/RoleSkill/RoleSkillInputItem"),
   SimpleGenericLayout_1 = require("../../../Util/Layout/SimpleGenericLayout"),
-  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
+  GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView"),
+  RoleSkinTrialController_1 = require("../RoleSkinTrail/RoleSkinTrialController"),
+  ActivityRoleTrialController_1 = require("./ActivityRoleTrialController");
 class RoleIntroductionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -83,22 +86,31 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
         });
       var i = e.DescList,
         t = new StringBuilder_1.StringBuilder();
-      for (const s of i)
-        t.Append(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s)),
+      for (const o of i)
+        t.Append(MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o)),
           t.Append("\n");
       t.RemoveLast(1), this.GetText(6).SetText(t.ToString());
-      (i = e.SkillInputIdList),
-        (e =
-          (this.CFe.RefreshByData(i),
-          ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
-            this.dFe,
-          )));
-      e &&
-        (StringUtils_1.StringUtils.IsEmpty(e?.InstanceText)
-          ? this.GetItem(9).SetUIActive(!1)
-          : (this.GetText(8).ShowTextNew(e.InstanceText),
-            this.GetItem(9).SetUIActive(!0)));
+      i = e.SkillInputIdList;
+      this.CFe.RefreshByData(i), this.C4e();
     }
+  }
+  C4e() {
+    let e = "";
+    if (
+      !RoleSkinTrialController_1.RoleSkinTrialController.CheckIfInRoleSkinTrialInstance()
+    ) {
+      var i = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+      for (const r of ActivityRoleTrialController_1.ActivityRoleTrialController.GetCurrentActivityDataList()) {
+        var t = r.GetConfigByRoleAndInstance(this.dFe, i);
+        if (t) {
+          e = t.InstanceText;
+          break;
+        }
+      }
+    }
+    StringUtils_1.StringUtils.IsEmpty(e)
+      ? this.GetItem(9).SetUIActive(!1)
+      : (this.GetText(8).ShowTextNew(e), this.GetItem(9).SetUIActive(!0));
   }
   OnBeforeHide() {
     EventSystem_1.EventSystem.Emit(
@@ -106,7 +118,12 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforeDestroy() {
-    this.CFe.ClearChildren();
+    this.CFe.ClearChildren(), this.A7l();
+  }
+  A7l() {
+    RoleSkinTrialController_1.RoleSkinTrialController.CheckIfInRoleSkinTrialInstance()
+      ? RoleSkinTrialController_1.RoleSkinTrialController.RequestRoleSkinTrialUiEndPush()
+      : ActivityRoleTrialController_1.ActivityRoleTrialController.PushRoleIntroductionViewDone();
   }
 }
 exports.RoleIntroductionView = RoleIntroductionView;

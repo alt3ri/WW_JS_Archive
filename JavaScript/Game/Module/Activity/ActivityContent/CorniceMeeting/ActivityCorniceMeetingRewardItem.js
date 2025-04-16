@@ -57,7 +57,8 @@ class ActivityCorniceMeetingRewardItem extends UiPanelBase_1.UiPanelBase {
   mGe() {
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(0),
-      "ActivityCorniceMeetingPointNeed",
+      ActivityCorniceMeetingController_1.ActivityCorniceMeetingController.GetCurrentActivityData()
+        .TaskTitleTextId,
       this.HFe.toString(),
     );
   }

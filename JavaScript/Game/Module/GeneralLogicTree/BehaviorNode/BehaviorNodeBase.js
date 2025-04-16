@@ -18,8 +18,10 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
       (this.NodeType = void 0),
       (this.Blackboard = void 0),
       (this.TrackTarget = void 0),
+      (this.ShowTipBeforeEnterActions = !1),
       (this.TrackTextConfig = void 0),
       (this.MultiTrackText = void 0),
+      (this.NavigationStyle = 0),
       (this.TrackTextRuleInner = 0),
       (this.CreateContext = (e, t) =>
         LevelGeneralContextDefine_1.GeneralLogicTreeContext.Create(

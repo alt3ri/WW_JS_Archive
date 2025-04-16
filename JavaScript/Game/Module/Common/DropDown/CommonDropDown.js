@@ -68,7 +68,8 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       }),
       (this.RLt = () => {
         var t, i, s;
-        this.cLt &&
+        this.rPr &&
+          this.cLt &&
           (0 !== this.uLt &&
           (1 === this.uLt ||
             ((t = (s = this.GetButton(0).RootUIComp).GetRootCanvas()),
@@ -76,7 +77,7 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
               UiLayerType_1.ELayerType.Pop,
             )),
             (i = Transform_1.Transform.Create(
-              i.K2_GetComponentToWorld().Inverse(),
+              i.D_K2_GetComponentToWorld().Inverse(),
             )),
             this.mLt.FromUeTransform(this.rPr),
             this.mLt.ComposeTransforms(i, this.mLt),
@@ -132,7 +133,7 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       ((this.lLt = new DynamicMaskButton_1.DynamicMaskButton()),
       this.lLt.SetButtonFunction(this.vLt),
       await this.lLt.Init()),
-      (this.rPr = this.RootActor.RootComponent.K2_GetComponentToWorld()),
+      (this.rPr = this.RootActor.RootComponent.D_K2_GetComponentToWorld()),
       this.lLt.SetAttachChildItem(this.RootItem),
       this.lLt.SetActive(!0);
   }

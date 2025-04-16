@@ -4,35 +4,36 @@ var AnimalPerformComponent_1,
     (this && this.__decorate) ||
     function (t, e, i, s) {
       var r,
-        n = arguments.length,
-        o =
-          n < 3
+        o = arguments.length,
+        h =
+          o < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
               : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        o = Reflect.decorate(t, e, i, s);
+        h = Reflect.decorate(t, e, i, s);
       else
-        for (var h = t.length - 1; 0 <= h; h--)
-          (r = t[h]) &&
-            (o = (n < 3 ? r(o) : 3 < n ? r(e, i, o) : r(e, i)) || o);
-      return 3 < n && o && Object.defineProperty(e, i, o), o;
+        for (var n = t.length - 1; 0 <= n; n--)
+          (r = t[n]) &&
+            (h = (o < 3 ? r(h) : 3 < o ? r(e, i, h) : r(e, i)) || h);
+      return 3 < o && h && Object.defineProperty(e, i, h), h;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AnimalPerformComponent = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
-  EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   Global_1 = require("../../../../Global"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ActorUtils_1 = require("../../../../Utils/ActorUtils"),
   CharacterNameDefines_1 = require("../../Common/CharacterNameDefines"),
@@ -60,6 +61,8 @@ let AnimalPerformComponent =
         (this.XBr = -1),
         (this.$Br = !1),
         (this.tBr = void 0),
+        (this.VTl = void 0),
+        (this.HTl = void 0),
         (this.YBr = !1),
         (this.PendingDestroy = !0),
         (this.JBr = (t, e) => {
@@ -78,13 +81,11 @@ let AnimalPerformComponent =
                 ),
                 TimerSystem_1.TimerSystem.Delay(() => {
                   this.Entity &&
-                    EventSystem_1.EventSystem.Emit(
-                      EventDefine_1.EEventName.DelayRemoveEntityFinished,
+                    ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
                       this.Entity,
                     );
                 }, DESTROY_DISAPPEAR_TIME))
-              : EventSystem_1.EventSystem.Emit(
-                  EventDefine_1.EEventName.DelayRemoveEntityFinished,
+              : ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
                   this.Entity,
                 ));
         }),
@@ -113,16 +114,17 @@ let AnimalPerformComponent =
               : this.obr());
         }),
         (this.rbr = (e) => {
-          if (e.BulletDataMain.Base.DamageId !== BigInt(0)) {
+          if (0 !== e.CollisionInfo.DamageId) {
             let t = !1;
-            var e = e.Attacker,
-              i = e.GetComponent(0);
+            e = e.Attacker.GetComponent(0);
             (t =
-              i?.IsRole() ||
-              i?.IsVision() ||
-              ((i = e.GetComponent(49)) &&
-                EntitySystem_1.EntitySystem.Get(i.RoleId)
-                  ?.GetComponent(0)
+              e?.IsRole() ||
+              e?.IsVision() ||
+              (e &&
+                ModelManager_1.ModelManager.CreatureModel.GetEntity(
+                  e.GetSummonerId(),
+                )
+                  ?.Entity?.GetComponent(0)
                   ?.IsRole())
                 ? !0
                 : t) && this.WBr.AddTag(GAMEPLAY_TAG_ON_HIT);
@@ -149,35 +151,46 @@ let AnimalPerformComponent =
     }
     HandlePendingDestroy() {
       this.PendingDestroy
-        ? this.Entity.GetComponent(190).AddTag(-1000614969)
-        : EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DelayRemoveEntityFinished,
+        ? this.Entity.GetComponent(203).AddTag(-1000614969)
+        : ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
             this.Entity,
           );
     }
     OnInitData(t) {
-      t = t.GetParam(AnimalPerformComponent_1)[0];
-      return (
-        (this.KBr = (t || void 0)?.IsStare ?? !1), (this.tBr = new Map()), !0
-      );
+      var t = t.GetParam(AnimalPerformComponent_1)[0],
+        t = t || void 0,
+        e = this.Entity.GetComponent(0);
+      if (
+        ((this.KBr = t?.IsStare ?? !1),
+        (this.tBr = new Map()),
+        "CollectAnimal" === t?.SpecialAnimalConfig?.Type)
+      ) {
+        (this.VTl = new Map()), (this.HTl = new Map());
+        for (const i of t.SpecialAnimalConfig.PartsMap)
+          this.VTl.set(i.Slot, i.Skeleton),
+            this.HTl.set(i.Slot, !!e.PbAnimalInitialPartIds?.includes(i.Slot));
+      }
+      return !0;
     }
     OnStart() {
-      if (((this.Hte = this.Entity.GetComponent(3)), !this.Hte))
+      if (
+        (super.OnStart(), (this.Hte = this.Entity.GetComponent(3)), !this.Hte)
+      )
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Animal",
-              30,
+              29,
               "[AnimalPerformComponent] 初始化失败 Actor Component Undefined",
             ),
           !1
         );
-      if (((this.AnimComp = this.Entity.GetComponent(163)), !this.AnimComp))
+      if (((this.AnimComp = this.Entity.GetComponent(175)), !this.AnimComp))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Animal",
-              30,
+              29,
               "[AnimalPerformComponent] 初始化失败 Animation Component Undefined",
               ["CreatureDataId", this.Hte.CreatureData.GetCreatureDataId()],
               ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -198,7 +211,7 @@ let AnimalPerformComponent =
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Animal",
-                30,
+                29,
                 "[AnimalPerformComponent] 材质GameplayTag不符合规范",
                 ["CreatureDataId", this.Hte.CreatureData.GetCreatureDataId()],
                 ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -206,12 +219,12 @@ let AnimalPerformComponent =
               );
         }
       }
-      if (((this.jBr = this.Entity.GetComponent(107)), !this.jBr))
+      if (((this.jBr = this.Entity.GetComponent(117)), !this.jBr))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Animal",
-              30,
+              29,
               "[AnimalPerformComponent] 初始化失败 Perception Component Undefined",
               ["CreatureDataId", this.Hte.CreatureData.GetCreatureDataId()],
               ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -221,14 +234,14 @@ let AnimalPerformComponent =
         );
       if (
         (this.jBr.SetSightRange(DEFAULT_SIGHT_RANGE),
-        (this.WBr = this.Entity.GetComponent(190)),
+        (this.WBr = this.Entity.GetComponent(203)),
         !this.WBr)
       )
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Animal",
-              30,
+              29,
               "[AnimalPerformComponent] 初始化失败 GameplayTag Component Undefined",
               ["CreatureDataId", this.Hte.CreatureData.GetCreatureDataId()],
               ["PbDataId", this.Hte.CreatureData.GetPbDataId()],
@@ -236,8 +249,8 @@ let AnimalPerformComponent =
             ),
           !1
         );
-      for (const n of this.tBr)
-        this.WBr.AddTagAddOrRemoveListener(n[0], this.ZBr);
+      for (const o of this.tBr)
+        this.WBr.AddTagAddOrRemoveListener(o[0], this.ZBr);
       return (
         this.WBr.AddTagAddOrRemoveListener(-1000614969, this.zBr),
         this.WBr.AddTagAddOrRemoveListener(1008164187, this.JBr),
@@ -248,8 +261,9 @@ let AnimalPerformComponent =
     OnActivate() {
       this.Entity.GetComponent(0).GetEntityType() !==
         Protocol_1.Aki.Protocol.kks.Proto_Monster &&
-        ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        (this.Hte.SetAutonomous(!0), this.ibr());
+        (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
+          (this.Hte.SetAutonomous(!0), this.ibr()),
+        this.jTl());
     }
     OnTick(t) {
       this.KBr &&
@@ -339,7 +353,7 @@ let AnimalPerformComponent =
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Animal",
-            30,
+            29,
             "开启系统UI失败，系统UI已开启",
             ["ConfigID", this.Hte.CreatureData.GetPbDataId()],
             ["已开启系统UI", t],
@@ -392,10 +406,36 @@ let AnimalPerformComponent =
         ),
         (this.$Br = !1));
     }
+    GetIsPartShow(t) {
+      return this.HTl?.get(t) ?? !1;
+    }
+    jTl() {
+      if (this.HTl && this.VTl)
+        for (var [t, e] of this.HTl) {
+          t = FNameUtil_1.FNameUtil.GetDynamicFName(this.VTl.get(t));
+          t && this.WTl(t, !e);
+        }
+    }
+    ShowPart(t) {
+      var e = FNameUtil_1.FNameUtil.GetDynamicFName(this.VTl?.get(t));
+      e && (this.WTl(e, !1), this.HTl?.set(t, !0));
+    }
+    HidePart(t) {
+      var e = FNameUtil_1.FNameUtil.GetDynamicFName(this.VTl?.get(t));
+      e && (this.WTl(e, !0), this.HTl?.set(t, !1));
+    }
+    WTl(t, e) {
+      this.Hte?.Actor?.Mesh?.IsValid() &&
+        t &&
+        this.Hte.Actor.Mesh.IsBoneHiddenByName(t) !== e &&
+        (e
+          ? this.Hte.Actor.Mesh.HideBoneByName(t, 0)
+          : this.Hte.Actor.Mesh.UnHideBoneByName(t));
+    }
   });
 (AnimalPerformComponent = AnimalPerformComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(157)],
+    [(0, RegisterComponent_1.RegisterComponent)(169)],
     AnimalPerformComponent,
   )),
   (exports.AnimalPerformComponent = AnimalPerformComponent);

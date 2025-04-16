@@ -19,7 +19,7 @@ class OpenSystemRoleDescription extends OpenSystemBase_1.OpenSystemBase {
               i.RoleId,
             ))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Quest", 36, "角色入队界面参数有误", [
+          Log_1.Log.Error("Quest", 35, "角色入队界面参数有误", [
             "BoardId",
             e.BoardId,
           ]),

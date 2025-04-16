@@ -6,6 +6,7 @@ const UE = require("ue"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiActorPool_1 = require("../../../Ui/UiActorPool"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LOAD_LIMIT_TIME = 2e3;
 class SliderItem extends UiPanelBase_1.UiPanelBase {
@@ -55,7 +56,7 @@ class SliderItem extends UiPanelBase_1.UiPanelBase {
 }
 exports.SliderItem = SliderItem;
 class ListSliderControl {
-  constructor(t, i, s, h, e, o, r = 1, a = void 0, n = void 0) {
+  constructor(t, i, s, h, e, o, r = 1, a = void 0, n = void 0, d = 0) {
     (this.l0i = void 0),
       (this._0i = void 0),
       (this.eGe = void 0),
@@ -66,6 +67,7 @@ class ListSliderControl {
       (this.C0i = 0),
       (this.g0i = 0),
       (this.f0i = void 0),
+      (this.zi_ = void 0),
       (this.p0i = 0),
       (this.v0i = 0),
       (this.M0i = 0),
@@ -79,6 +81,8 @@ class ListSliderControl {
       (this.I0i = void 0),
       (this.T0i = void 0),
       (this.hn = 0),
+      (this.NPt = void 0),
+      (this.tR1 = []),
       (this.l0i = t),
       (this.u0i = i),
       (this.c0i = this.u0i.GetHeight()),
@@ -92,7 +96,7 @@ class ListSliderControl {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ItemHint",
-            9,
+            8,
             "ListSliderControl错误, getMaxCount回调不能为undefined",
           )
         : ((this.wOt = s),
@@ -100,12 +104,16 @@ class ListSliderControl {
           (this.s0i = e),
           (this.I0i = o),
           (this.f0i = r),
+          (this.zi_ = d),
           (this.p0i = 0),
           (this.C0i =
             a ?? ConfigManager_1.ConfigManager.RewardConfig.GetShowTime()),
           (this.g0i =
             n ?? ConfigManager_1.ConfigManager.RewardConfig.GetSliderTime()),
           (this.y0i = s()));
+  }
+  SetDynamicLoadResourceId(t) {
+    this.NPt = t;
   }
   DisEnableParentLayout() {
     this._0i
@@ -114,13 +122,13 @@ class ListSliderControl {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ItemHint",
-            9,
+            8,
             "ListSliderControl错误, 父节点不包含UIVerticalLayout组件",
           )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ItemHint",
-          9,
+          8,
           "ListSliderControl错误, ParentUiItem为undefined",
         );
   }
@@ -155,7 +163,7 @@ class ListSliderControl {
                 (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "ItemHint",
-                    11,
+                    10,
                     "[ListSliderControl::Tick]检查不到下个对象,执行缓存对象逻辑,到None",
                   ),
                 this.T0i.SetActive(!0),
@@ -190,7 +198,7 @@ class ListSliderControl {
                       Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "ItemHint",
-                          11,
+                          10,
                           "[ListSliderControl::Tick]异步加载格子失败,到None",
                         );
                   },
@@ -204,7 +212,7 @@ class ListSliderControl {
     var t = this._0i.IsUIActiveInHierarchy();
     if (t !== this.E0i) {
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("ItemHint", 9, "滑动状态变化", ["activeStatus", t]),
+        Log_1.Log.Debug("ItemHint", 8, "滑动状态变化", ["activeStatus", t]),
         (this.E0i = t);
       for (const i of this.m0i) i.ActiveStatusChange(t);
     }
@@ -216,7 +224,7 @@ class ListSliderControl {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "ItemHint",
-          11,
+          10,
           "[ListSliderControl::Tick]最大数量发生变化",
         ),
       (this.y0i = t),
@@ -235,8 +243,8 @@ class ListSliderControl {
   }
   SliderItemTick(t, i, s) {
     t.Tick(i),
-      2 === t.Status && (t.AddShowTime += i),
-      (0 !== this.f0i && 0 !== s) ||
+      (1 === this.zi_ && 0 !== s) ||
+        (2 === t.Status && (t.AddShowTime += i), 0 !== this.f0i && 0 !== s) ||
         (4 === t.Status
           ? (t.Status = 5)
           : 2 === t.Status &&
@@ -245,16 +253,40 @@ class ListSliderControl {
             (this.p0i--, this.w0i()));
   }
   async x0i() {
-    let t = void 0;
-    var i;
-    return (
-      0 < this.d0i.length
-        ? (t = this.d0i.shift())
-        : ((i = LguiUtil_1.LguiUtil.CopyItem(this.u0i, this._0i)),
-          await (t = new this.l0i()).CreateByActorAsync(i.GetOwner())),
-      this.m0i.push(t),
-      t
-    );
+    let i = void 0;
+    if (0 < this.d0i.length) i = this.d0i.shift();
+    else {
+      let t = void 0;
+      var s;
+      void 0 === this.NPt
+        ? ((t = LguiUtil_1.LguiUtil.CopyItem(this.u0i, this._0i)),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("ItemHint", 10, "测试代码,拷贝Item", [
+              "length",
+              this.m0i.length + 1,
+            ]))
+        : (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "ItemHint",
+              10,
+              "测试代码,池子拿Item",
+              ["length", this.m0i.length + 1],
+              ["ResourceId", this.NPt],
+            ),
+          (s = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+            this.NPt,
+          )),
+          (s = await UiActorPool_1.UiActorPool.GetAsync(
+            s,
+            this._0i,
+          )).UiItem.SetAnchorHAlign(1),
+          s.UiItem.SetAnchorVAlign(1),
+          s.UiItem.SetUIActive(!1),
+          this.tR1.push(s),
+          (t = s.UiItem)),
+        await (i = new this.l0i()).CreateByActorAsync(t.GetOwner());
+    }
+    return this.m0i.push(i), i;
   }
   U0i(t) {
     this.M0i <= 0 ||
@@ -277,9 +309,7 @@ class ListSliderControl {
   }
   DestroyMe() {
     this.eGe && this.eGe.SetEnable(!0);
-    for (const t of this.m0i) t.Destroy();
-    this.m0i = void 0;
-    for (const i of this.d0i) i.Destroy();
+    for (const t of this.tR1) UiActorPool_1.UiActorPool.RecycleAsync(t, t.Path);
     this.d0i = void 0;
   }
   P0i() {

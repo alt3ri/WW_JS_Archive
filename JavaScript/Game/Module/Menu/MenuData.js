@@ -2,117 +2,125 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MenuData = void 0);
 const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
-  FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate"),
-  MenuTool_1 = require("./MenuTool");
+  GameSettingsDefine_1 = require("../../GameSettings/GameSettingsDefine"),
+  GameSettingsDeviceRender_1 = require("../../GameSettings/GameSettingsDeviceRender"),
+  GameSettingsManager_1 = require("../../GameSettings/GameSettingsManager"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class MenuData {
-  constructor() {
-    (this.ConfigId = 0),
-      (this.SubType = 0),
-      (this.SubName = void 0),
-      (this.FunctionName = void 0),
-      (this.Platform = 0),
-      (this.FunctionSort = 0),
-      (this.SubSort = 0),
-      (this.FunctionId = 0),
-      (this.SetType = 0),
-      (this.SliderRange = []),
-      (this.SliderDefault = 0),
-      (this.SliderDigits = 0),
-      (this.OptionsDefault = 0),
-      (this.OptionsNameListInternal = []),
-      (this.OptionsValueListInternal = []),
-      (this.SubImage = void 0),
-      (this.FunctionImage = void 0),
-      (this.ButtonTextId = void 0),
-      (this.ButtonViewName = void 0),
-      (this.RelationFuncIds = []),
-      (this.YO = 0),
-      (this.AffectedValueSet = new Set()),
-      (this.AffectedFunction = new Map()),
-      (this.DisableValueSet = new Set()),
-      (this.DisableFunction = []),
-      (this.vq = !0),
-      (this.ValueTipsMap = new Map()),
-      (this.ClickedTipsMap = new Map()),
-      (this.ClickedTips = void 0),
-      (this.mVa = !1),
-      (this.dVa = void 0);
+  constructor(e) {
+    (this.rSl = e), (this.aHa = !1), (this.h0c = new Map());
   }
-  Initialize(t) {
-    (this.ConfigId = t.Id),
-      (this.SubType = t.SubType),
-      (this.SubName = t.SubName),
-      (this.FunctionName = t.Name),
-      (this.Platform = t.Platform),
-      (this.FunctionSort = t.FunctionSort),
-      (this.SubSort = t.SubSort),
-      (this.FunctionId = t.FunctionId),
-      (this.SetType = t.SetType),
-      (this.SliderRange = t.SliderRange),
-      (this.SliderDefault = t.SliderDefault),
-      (this.SliderDigits = t.Digits),
-      (this.OptionsDefault = t.OptionsDefault),
-      (this.OptionsNameListInternal = t.OptionsName),
-      (this.OptionsValueListInternal = t.OptionsValue),
-      (this.SubImage = t.SubImage),
-      (this.FunctionImage = t.FunctionImage),
-      (this.ButtonTextId = t.ButtonText),
-      (this.ButtonViewName = t.OpenView),
-      (this.YO = t.ConditionGroup),
-      (this.AffectedFunction = t.AffectedFunction),
-      (this.DisableFunction = t.DisableFunction),
-      (this.ValueTipsMap = t.ValueTipsMap),
-      (this.ClickedTipsMap = t.ClickedTipsMap),
-      (this.ClickedTips = t.ClickedTips),
-      (this.RelationFuncIds = t.RelationFunction),
-      (this.dVa = t.DetailText);
-    for (const i of t.AffectedValue) this.AffectedValueSet.add(i);
-    for (const e of t.DisableValue) this.DisableValueSet.add(e);
-    this.OnInitialize(t);
+  get ConfigId() {
+    return this.rSl.Id;
   }
-  OnInitialize(t) {}
-  SetEnable(t) {
-    this.vq = t;
+  get SubType() {
+    return this.rSl.SubType;
+  }
+  get SubName() {
+    return this.rSl.SubName;
+  }
+  get FunctionName() {
+    return this.rSl.Name;
+  }
+  get FunctionSort() {
+    return this.rSl.FunctionSort;
+  }
+  get SubSort() {
+    return this.rSl.SubSort;
+  }
+  get FunctionId() {
+    return this.rSl.FunctionId;
+  }
+  get SetType() {
+    return this.rSl.SetType;
+  }
+  get SliderRange() {
+    return this.rSl.SliderRange;
+  }
+  get SliderRangeDisplay() {
+    return 0 < this.rSl.SliderRangeDisplay?.length
+      ? this.rSl.SliderRangeDisplay
+      : this.rSl.SliderRange;
+  }
+  get SliderDefault() {
+    return this.rSl.SliderDefault;
+  }
+  get SliderDigits() {
+    return this.rSl.Digits;
+  }
+  get OptionsDefault() {
+    return this.rSl.OptionsDefault;
+  }
+  get OptionsNameListInternal() {
+    return this.rSl.OptionsName;
+  }
+  get OptionsValueListInternal() {
+    return this.rSl.OptionsValue;
+  }
+  get SubImage() {
+    return this.rSl.SubImage;
+  }
+  get FunctionImage() {
+    return this.rSl.FunctionImage;
+  }
+  get ButtonTextId() {
+    return this.rSl.ButtonText;
+  }
+  get ButtonViewName() {
+    return this.rSl.OpenView;
+  }
+  get RelationFuncIds() {
+    return this.rSl.RelationFunction;
+  }
+  get AffectedValue() {
+    return this.rSl.AffectedValue;
+  }
+  get AffectedFunction() {
+    return this.rSl.AffectedFunction;
+  }
+  get DisableValue() {
+    return this.rSl.DisableValue;
+  }
+  get DisableFunction() {
+    return this.rSl.DisableFunction;
+  }
+  get ValueTipsMap() {
+    return this.rSl.ValueTipsMap;
+  }
+  get ClickedTipsMap() {
+    return this.rSl.ClickedTipsMap;
+  }
+  get ClickedTips() {
+    return this.rSl.ClickedTips;
+  }
+  get hHa() {
+    return this.rSl.DetailText;
   }
   GetEnable() {
-    return this.vq;
+    if (this.FunctionId === GameSettingsDefine_1.EFunction.MobileGamepadMode)
+      return (
+        1 ===
+        GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+          GameSettingsDefine_1.EFunction.MobileGamepadMode,
+        )
+      );
+    for (var [e, t] of this.h0c) {
+      e = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(e);
+      if (void 0 !== e && t.includes(e)) return !1;
+    }
+    return !0;
   }
-  CheckCondition() {
-    var t;
-    return !(
-      (0 < this.YO &&
-        !ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
-          this.YO.toString(),
-          void 0,
-        )) ||
-      ((t = MenuData.pNn.get(this.FunctionId)) && t.Check())
-    );
+  CacheDisableState(e, t) {
+    this.h0c.set(e, t);
   }
-  CanAffectedFunction(t) {
-    return !!this.AffectedValueSet.has(t) && 0 < this.AffectedFunction.size;
+  ResetDisableStateCache() {
+    this.h0c.clear();
   }
-  IsAffectedDisable(t) {
-    return this.DisableValueSet.has(t);
+  CanAffectedFunction(e) {
+    return !!this.AffectedValue.includes(e) && 0 < this.AffectedFunction.size;
   }
   HasDisableFunction() {
     return 0 < this.DisableFunction.length;
-  }
-  OnSet(t) {}
-  OnApply() {}
-  OnSave() {}
-  CheckPlatform() {
-    return MenuTool_1.MenuTool.CheckPlatform(this.Platform);
-  }
-  CheckDeviceHardware() {
-    return (
-      !ModelManager_1.ModelManager.MenuModel.IsCheckDeviceVendor ||
-      MenuTool_1.MenuTool.CheckDeviceVendor(this.FunctionId)
-    );
-  }
-  CheckIosReviewShield() {
-    return MenuTool_1.MenuTool.CheckIosReviewShield(this.ConfigId);
   }
   get OptionsNameList() {
     return this.OptionsNameListInternal;
@@ -121,24 +129,29 @@ class MenuData {
     return this.OptionsValueListInternal;
   }
   HasDetailText() {
-    var t = this.dVa;
-    return !!t && !StringUtils_1.StringUtils.IsBlank(t);
+    var e = this.hHa;
+    return !!e && !StringUtils_1.StringUtils.IsBlank(e);
   }
   GetDetailTextId() {
-    return this.dVa;
+    return this.hHa;
   }
-  SetDetailTextVisible(t) {
-    this.mVa = t;
+  SetDetailTextVisible(e) {
+    this.aHa = e;
   }
   GetIsDetailTextVisible() {
-    return this.mVa;
+    return this.aHa;
+  }
+  IsRecommendIndex(e) {
+    var t;
+    return (
+      this.FunctionId === GameSettingsDefine_1.EFunction.IMAGEQUALITY &&
+      !ModelManager_1.ModelManager.MenuModel.IsImageQualityCustom &&
+      void 0 !==
+        (t =
+          GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetRecommendQualityLv()) &&
+      this.OptionsValueList.indexOf(t) === e
+    );
   }
 }
-(exports.MenuData = MenuData).pNn = new Map([
-  [
-    112,
-    FeatureRestrictionTemplate_1.FeatureRestrictionTemplate
-      .TemplateForPioneerClient,
-  ],
-]);
+exports.MenuData = MenuData;
 //# sourceMappingURL=MenuData.js.map

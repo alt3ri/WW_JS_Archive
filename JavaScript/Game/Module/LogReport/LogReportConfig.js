@@ -12,7 +12,7 @@ class LogReportConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LogReport",
-            9,
+            8,
             "新手打点表分表BeginnerGuide配置找不到",
             ["Id", e],
           )),

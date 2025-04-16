@@ -7,6 +7,9 @@ class TutorialConfig extends ConfigBase_1.ConfigBase {
   GetTutorial(e) {
     return GuideTutorialById_1.configGuideTutorialById.GetConfig(e);
   }
+  HasUnlockReward(e) {
+    return !1 === this.GetTutorial(e)?.DisableDropReward;
+  }
 }
 exports.TutorialConfig = TutorialConfig;
 //# sourceMappingURL=TutorialConfig.js.map

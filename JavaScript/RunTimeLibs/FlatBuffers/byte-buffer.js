@@ -4,7 +4,9 @@ exports.ByteBuffer = void 0;
 const constants_js_1 = require("./constants");
 const utils_js_1 = require("./utils");
 const encoding_js_1 = require("./encoding");
-const encoding_1 = require("./../text-encoding/encoding");
+// const encoding_1 = require("./../text-encoding/encoding"); // Kuro delete
+const kuro_encoding = require("./../KuroTextEncoding/kuro-text-encoding"); // Kuro add
+
 class ByteBuffer {
   /**
    * Create a new ByteBuffer with a given array of bytes (`Uint8Array`)
@@ -12,7 +14,8 @@ class ByteBuffer {
   constructor(bytes_) {
     this.bytes_ = bytes_;
     this.position_ = 0;
-    this.text_decoder_ = new encoding_1.TextDecoder();
+    // this.text_decoder_ = new encoding_1.TextDecoder(); // Kuro delete
+    this.text_decoder_ = new kuro_encoding.TextDecoder(); // Kuro add
   }
   /**
    * Create and allocate a new ByteBuffer with a given size.

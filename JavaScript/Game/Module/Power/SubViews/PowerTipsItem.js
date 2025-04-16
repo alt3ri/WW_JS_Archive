@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerTipsItem = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -12,7 +13,6 @@ const UE = require("ue"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   PayShopItem_1 = require("../../PayShop/PayShopTab/TabItem/PayShopItem"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   GAP = 1e3;
 class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
@@ -65,7 +65,7 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), "Energy_Text"),
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
     var e = this.GetItem(2);
-    this.i4i.GetRootItem().SetUIParent(e), this.dde();
+    this.i4i.GetOriginalItem().SetUIParent(e), this.dde();
   }
   OnBeforeShow() {
     this.PlayStartSequence();
@@ -90,17 +90,17 @@ class PowerTipsItem extends UiPanelBase_1.UiPanelBase {
       );
     });
   }
-  RefreshByData(e) {
+  Refresh(e) {
     (this.$8i = e),
       (this.eYs =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          this.$8i.ItemId,
+          this.$8i.ConfigId,
         )),
       (this.ZXs = ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
-        this.$8i.ItemId,
+        this.$8i.ConfigId,
       )),
       this.i4i.HideExchangePopViewElement(),
-      this.i4i.Refresh(e.ConvertToPayShopGoods(), !1, 0),
+      this.i4i.Refresh(this.$8i.ConvertToPayShopGoods(), !1, 0),
       (this.Xbe = TimerSystem_1.TimerSystem.Forever(() => {
         this.q7e();
       }, GAP)),

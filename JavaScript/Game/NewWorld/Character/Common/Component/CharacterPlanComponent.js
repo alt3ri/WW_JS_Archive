@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, n) {
-    var r,
-      s = arguments.length,
+    var s,
+      r = arguments.length,
       o =
-        s < 3
+        r < 3
           ? t
           : null === n
             ? (n = Object.getOwnPropertyDescriptor(t, i))
@@ -14,8 +14,8 @@ var __decorate =
       o = Reflect.decorate(e, t, i, n);
     else
       for (var h = e.length - 1; 0 <= h; h--)
-        (r = e[h]) && (o = (s < 3 ? r(o) : 3 < s ? r(t, i, o) : r(t, i)) || o);
-    return 3 < s && o && Object.defineProperty(t, i, o), o;
+        (s = e[h]) && (o = (r < 3 ? s(o) : 3 < r ? s(t, i, o) : s(t, i)) || o);
+    return 3 < r && o && Object.defineProperty(t, i, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPlanComponent = void 0);
@@ -51,8 +51,8 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
       (this.sxr = void 0),
       (this.DisableAiHandle = void 0),
       (this.EFr = new Map()),
-      (this.C$a = (e, t) => {
-        if (this.g$a(e, t))
+      (this.Nza = (e, t) => {
+        if (this.Fza(e, t))
           switch ((0, IVar_1.getVarTypeByIndex)(t.iTs)) {
             case "Boolean":
               this.wjr?.SetBooleanWorldState(e, t.rTs);
@@ -93,7 +93,11 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
       !this.OPt?.States)
     )
       return !(this.bjr = !1);
-    if (BehaviorTreeDefines_1.BehaviorTreeDefines.UseLevelAiBehaviorTree)
+    if (
+      BehaviorTreeDefines_1.BehaviorTreeDefines.CanUseLevelAiBehaviorTree(
+        this.Entity,
+      )
+    )
       return !(this.bjr = !1);
     (this.wjr = new LevelAiWorldState_1.LevelAiWorldState()),
       (this.DisableAiHandle = new BaseActorComponent_1.DisableEntityHandle(
@@ -104,19 +108,17 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     if (e) {
       for (const i of e.Vars)
         "Int" === i.Type &&
-          ((t = i.Value),
-          BehaviorTreeDefines_1.BehaviorTreeDefines.UseLevelAiBehaviorTree ||
-            this.wjr.SetIntWorldState(i.Name, t));
+          ((t = i.Value), this.wjr.SetIntWorldState(i.Name, t));
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.EntityVarUpdate,
-        this.C$a,
+        this.Nza,
       );
     } else
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "LevelAi",
-          43,
+          42,
           "实体未勾选VarComponent组件，请检查是否确定不使用配置变量。",
           ["实体ID", this.ConfigId],
         );
@@ -143,7 +145,7 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
   }
   OnActivate() {
     this.bjr &&
-      this.Entity.GetComponent(39)?.InLevelAiControl() &&
+      this.Entity.GetComponent(45)?.InLevelAiControl() &&
       this.StartLevelAi();
   }
   OnTick(e) {
@@ -153,11 +155,16 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     return (
       this.bjr &&
         (this.xjr.Stop(),
+        EventSystem_1.EventSystem.HasWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.EntityVarUpdate,
+          this.Nza,
+        )) &&
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.EntityVarUpdate,
-          this.C$a,
-        )),
+          this.Nza,
+        ),
       !0
     );
   }
@@ -175,7 +182,7 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "LevelAi",
-              51,
+              50,
               "[CharacterPlanComponent] 重复使用关闭Ai的Key",
               ["entity", this.constructor.name],
               ["PbDataId", this.ConfigId],
@@ -209,7 +216,7 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "LevelAi",
-              51,
+              50,
               "[CharacterPlanComponent] 开启Ai使用了未定义的Key",
               ["entity", this.constructor.name],
               ["PbDataId", this.ConfigId],
@@ -247,30 +254,27 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
         n = new LevelAiNodeBehaviourActions_1.LevelAiNodeBehaviourActions();
       n.Serialize(this, this.u1t, "状态" + t),
         (n.Actions = e.Behaviour.Actions);
-      for (const s of e.Condition.Conditions) {
-        var r = new (i.FindDecoratorCtor(s.Type))();
-        r.Serialize(this, this.u1t, "状态" + t, s), n.Decorators.push(r);
+      for (const r of e.Condition.Conditions) {
+        var s = new (i.FindDecoratorCtor(r.Type))();
+        s.Serialize(this, this.u1t, "状态" + t, r), n.Decorators.push(s);
       }
       (n.Cost = t), this.Pjr.StartNodes.push(n);
     }
   }
   Ojr(e, t) {
-    if (
-      "Spline" === e.Behaviour.Type &&
-      void 0 !== e.Behaviour.SplineEntityId
-    ) {
+    if ("Spline" === e.Behaviour.Type && e.Behaviour.SplineEntityId) {
       var i = LevelAiRegistry_1.LevelAiRegistry.Instance(),
         n = new LevelAiNodeBehaviourSpline_1.LevelAiNodeBehaviourSpline();
       n.Serialize(this, this.u1t, "状态" + t),
         (n.SplineId = e.Behaviour.SplineEntityId);
-      for (const s of e.Condition.Conditions) {
-        var r = new (i.FindDecoratorCtor(s.Type))();
-        r.Serialize(this, this.u1t, "状态" + t, s), n.Decorators.push(r);
+      for (const r of e.Condition.Conditions) {
+        var s = new (i.FindDecoratorCtor(r.Type))();
+        s.Serialize(this, this.u1t, "状态" + t, r), n.Decorators.push(s);
       }
       (n.Cost = t), this.Pjr.StartNodes.push(n);
     }
   }
-  g$a(e, t) {
+  Fza(e, t) {
     var i = this.Entity?.GetComponent(0);
     if (i?.IsNpc() || i?.IsAnimal()) {
       i = i.GetPbEntityInitData();
@@ -278,8 +282,8 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
         i = (0, IComponent_1.getComponent)(i.ComponentsData, "VarComponent");
         if (i) {
           var n = (0, IVar_1.getVarTypeByIndex)(t.iTs);
-          for (const r of i.Vars)
-            if (e === r.Name) return !!r.IsClient && r.Type === n;
+          for (const s of i.Vars)
+            if (e === s.Name) return !!s.IsClient && s.Type === n;
         }
       }
     }
@@ -287,7 +291,7 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
   }
 };
 (CharacterPlanComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(65)],
+  [(0, RegisterComponent_1.RegisterComponent)(72)],
   CharacterPlanComponent,
 )),
   (exports.CharacterPlanComponent = CharacterPlanComponent);

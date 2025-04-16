@@ -17,25 +17,27 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configSkillIconByTag.Init"),
-  getConfigStat = Stats_1.Stat.Create("configSkillIconByTag.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph("configSkillIconByTag.Init"),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configSkillIconByTag.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configSkillIconByTag.GetConfig(";
 exports.configSkillIconByTag = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var i = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       t =
-        (i.Start(),
+        (i?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (n) {
@@ -43,15 +45,15 @@ exports.configSkillIconByTag = {
         const g = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (g)
           return (
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
       }
       if (
         (t =
-          ConfigCommon_1.ConfigCommon.BindString(handleId, 1, o, ...logPair) &&
+          ConfigCommon_1.ConfigCommon.BindInt(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Tag",
@@ -76,8 +78,8 @@ exports.configSkillIconByTag = {
               ((t = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, g)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             g
           );
@@ -85,8 +87,8 @@ exports.configSkillIconByTag = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    i.Stop(),
-      getConfigStat.Stop(),
+    i?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

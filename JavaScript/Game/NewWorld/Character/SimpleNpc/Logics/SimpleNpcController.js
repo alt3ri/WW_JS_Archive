@@ -25,7 +25,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("UiCommon", 28, "初始化SimpleNpcController"),
+        Log_1.Log.Debug("UiCommon", 27, "初始化SimpleNpcController"),
       this.OnAddEvents(),
       !0
     );
@@ -224,10 +224,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
     return i;
   }
   static Zir() {
-    for (const t of this.Gir)
-      t.FilterFlowWorldState(
-        ModelManager_1.ModelManager.WorldModel.WorldStateMap,
-      );
+    for (const t of this.Gir) t.FilterFlowWorldState();
   }
   static Qir() {
     for (const t of this.Gir) this.Vir(t);

@@ -11,29 +11,29 @@ class CircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   RecalculateMoveOffset(t) {
     return t;
   }
-  ReloadItems(t, e) {
+  ReloadItems(t, e, i = 0) {
     if (t < this.ShowItemNum)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiCommon", 28, "组件数据长度需要大于等于展示长度");
+        Log_1.Log.Error("UiCommon", 27, "组件数据长度需要大于等于展示长度");
     else {
-      var i,
-        s = this.Items.length;
-      for (let t = 0; t < s; t++) this.Items[t].SetUiActive(!1);
+      var s,
+        r = this.Items.length;
+      for (let t = 0; t < r; t++) this.Items[t].SetUiActive(!1);
       for (let t = 0; t < this.ShowItemNum + 1; t++)
         t >= this.Items.length &&
-          ((i = LguiUtil_1.LguiUtil.DuplicateActor(
+          ((s = LguiUtil_1.LguiUtil.DuplicateActor(
             this.SourceActor,
             this.ControllerItem,
           )),
-          (i = this.CreateItemFunction(i, t, this.ShowItemNum)).SetSourceView(
+          (s = this.CreateItemFunction(s, t, this.ShowItemNum)).SetSourceView(
             this,
           ),
-          this.Items.push(i)),
+          this.Items.push(s)),
           this.Items[t].SetItemIndex(t),
           this.Items[t].SetUiActive(!0),
           this.Items[t].SetData(e),
           this.Items[t].InitItem();
-      this.RefreshItems(), this.ForceUnSelectItems(), this.AttachToIndex(0, !0);
+      this.RefreshItems(), this.ForceUnSelectItems(), this.AttachToIndex(i, !0);
     }
   }
   FindNextDirectionItem(t) {

@@ -53,15 +53,17 @@ class ClickBtnInsideComponent extends HotKeyComponent_1.HotKeyComponent {
     var e = this.GetBindButtonTag();
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
       i = i.GetFocusListener();
-      if (i) {
-        let t =
-          UiNavigationNewController_1.UiNavigationNewController.GetFocusListenerInsideListenerByTag(
-            i,
-            e,
-          );
-        (t = t || i.GetChildListenerByTag(e)),
-          this.SetVisibleMode(2, t?.IsListenerActive() ?? !1);
-      } else this.SetVisibleMode(2, !1);
+      if (i)
+        if (this.IsLinkListener(i.GetOwner())) {
+          let t =
+            UiNavigationNewController_1.UiNavigationNewController.GetFocusListenerInsideListenerByTag(
+              i,
+              e,
+            );
+          (t = t || i.GetChildListenerByTag(e)),
+            this.SetVisibleMode(2, t?.IsListenerActive() ?? !1);
+        } else this.SetVisibleMode(2, !1);
+      else this.SetVisibleMode(2, !1);
     }
   }
 }

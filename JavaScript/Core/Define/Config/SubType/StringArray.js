@@ -26,10 +26,14 @@ class StringArray {
     return this.arraystring(t);
   }
   arraystring(t, r) {
-    var s = this.J7.__offset(this.z7, 4);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r)
-      : null;
+    var s = this.J7.__offset(this.z7, 4),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   arraystringLength() {
     var t = this.J7.__offset(this.z7, 4);

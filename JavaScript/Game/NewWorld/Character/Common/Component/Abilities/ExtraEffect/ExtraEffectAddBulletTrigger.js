@@ -18,7 +18,7 @@ class AddBulletTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
   OnExecute() {
     var e = this.GetEffectTarget()?.GetEntity(),
       t = e?.CheckGetComponent(3)?.ActorTransform,
-      r = this.InstigatorBuffComponent?.ActorComponent?.Actor;
+      r = this.InstigatorBuffComponent?.ActorComponent?.Entity;
     if (e && r && t) {
       var s = this.Buff.MessageId;
       for (const i of this.BulletIds)
@@ -26,7 +26,7 @@ class AddBulletTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
           r,
           String(i),
           t,
-          { SyncType: 1, DtType: this.BulletDtType },
+          { SyncType: 1, DtType: this.BulletDtType, CreateOnAuthority: !1 },
           s,
         );
     }

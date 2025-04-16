@@ -15,10 +15,10 @@ class MowingRiskInstanceDetailView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.nvt = void 0),
-      (this.J6a = void 0),
-      (this.Vja = void 0),
+      (this.q9a = void 0),
+      (this.s$a = void 0),
       (this.fuo = void 0),
-      (this.Z6a = () => {
+      (this.O9a = () => {
         UiManager_1.UiManager.OpenView(
           "InstanceDungeonMonsterPreView",
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel
@@ -48,18 +48,18 @@ class MowingRiskInstanceDetailView extends UiPanelBase_1.UiPanelBase {
       [10, UE.UIItem],
       [11, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[4, this.Z6a]]);
+      (this.BtnBindInfo = [[4, this.O9a]]);
   }
   async OnBeforeStartAsync() {
     (this.nvt = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(5),
       this.mvt,
     )),
-      (this.J6a = new ButtonItem_1.ButtonItem(this.GetItem(7))),
-      (this.Vja = new ButtonItem_1.ButtonItem(this.GetItem(8))),
-      this.J6a.SetFunction(this.qLn),
-      this.Vja.SetFunction(this.GLn),
-      this.Vja.SetLocalTextNew("PrefabTextItem_2770983895_Text");
+      (this.q9a = new ButtonItem_1.ButtonItem(this.GetItem(7))),
+      (this.s$a = new ButtonItem_1.ButtonItem(this.GetItem(8))),
+      this.q9a.SetFunction(this.qLn),
+      this.s$a.SetFunction(this.GLn),
+      this.s$a.SetLocalTextNew("PrefabTextItem_2770983895_Text");
     var t = new MowingRiskInstanceDetailLockItem();
     await t.CreateByActorAsync(this.GetItem(9).GetOwner()),
       (this.fuo = t),
@@ -70,10 +70,10 @@ class MowingRiskInstanceDetailView extends UiPanelBase_1.UiPanelBase {
   }
   NFe(t) {
     t
-      ? (this.Vja.SetUiActive(!1),
+      ? (this.s$a.SetUiActive(!1),
         this.fuo.SetUiActive(!0),
         this.fuo.RefreshExternalByData(t))
-      : (this.Vja.SetUiActive(!0), this.fuo.SetUiActive(!1));
+      : (this.s$a.SetUiActive(!0), this.fuo.SetUiActive(!1));
   }
   async RefreshExternalByDataAsync(t) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.TitleTextId),

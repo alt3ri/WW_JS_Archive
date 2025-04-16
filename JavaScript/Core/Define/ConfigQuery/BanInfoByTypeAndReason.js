@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configBanInfoByTypeAndReason.Init"),
-  getConfigStat = Stats_1.Stat.Create("configBanInfoByTypeAndReason.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configBanInfoByTypeAndReason.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configBanInfoByTypeAndReason.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configBanInfoByTypeAndReason.GetConfig(";
 exports.configBanInfoByTypeAndReason = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (n, o, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var i = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${n}#${o})`),
+      getConfigStat?.Start();
+    var i = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${n}#${o})`),
       a =
-        (i.Start(),
+        (i?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (a) {
       if (e) {
@@ -43,8 +47,8 @@ exports.configBanInfoByTypeAndReason = {
         const f = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (f)
           return (
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -81,8 +85,8 @@ exports.configBanInfoByTypeAndReason = {
               ((a = KEY_PREFIX + `#${n}#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(a, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            i.Stop(),
-            getConfigStat.Stop(),
+            i?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -90,8 +94,8 @@ exports.configBanInfoByTypeAndReason = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    i.Stop(),
-      getConfigStat.Stop(),
+    i?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

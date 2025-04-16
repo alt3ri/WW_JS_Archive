@@ -2,11 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffItemContainer = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   BuffItemInfo_1 = require("../BuffItemInfo"),
   BuffItem_1 = require("./BuffItem"),
-  MAX_ITEM_COUNT = 6;
+  MAX_ITEM_COUNT = 6,
+  TICK_INTERVAL_FRAME_AT_MORE = 2;
 class BuffItemContainer {
   constructor() {
     (this.dkn = []),
@@ -17,40 +19,50 @@ class BuffItemContainer {
       (this.unt = []),
       (this.pkn = void 0),
       (this.aa = 0),
+      (this.rJl = !1),
+      (this.YLe = !1),
       (this.m1t = void 0),
-      (this.vkn = void 0);
+      (this.vkn = void 0),
+      (this.PGl = 0);
   }
-  Init(t, i = MAX_ITEM_COUNT) {
-    (this.pkn = t), (this.aa = i);
+  Init(t, i = MAX_ITEM_COUNT, s = !1, e = !1) {
+    (this.pkn = t), (this.aa = i), (this.rJl = s), (this.YLe = e);
   }
   Tick(i) {
-    for (const e of this.dkn) {
-      var t = e.BuffItem;
-      if (!t) break;
-      t.Tick(i);
-    }
-    for (let t = this._nt.length - 1; 0 <= t; t--) {
-      var s = this._nt[t];
-      s.TickHiding(i) ||
-        (this._nt.splice(t, 1),
-        s.GetRootItem().SetHierarchyIndex(this.dkn.length + this._nt.length),
-        this.unt.push(s));
+    var t = Time_1.Time.Frame;
+    if (!(t < this.PGl)) {
+      this.dkn.length > MAX_ITEM_COUNT &&
+        (this.PGl = t + TICK_INTERVAL_FRAME_AT_MORE);
+      for (const h of this.dkn) {
+        var s = h.BuffItem;
+        if (!s) break;
+        s.Tick(i);
+      }
+      for (let t = this._nt.length - 1; 0 <= t; t--) {
+        var e = this._nt[t];
+        e.TickHiding(i) ||
+          (this._nt.splice(t, 1),
+          e.GetRootItem().SetHierarchyIndex(this.dkn.length + this._nt.length),
+          this.unt.push(e));
+      }
     }
   }
   RefreshBuff(t) {
     this.ClearAll(),
       t?.IsInit
-        ? ((this.m1t = t.Entity.GetComponent(160)),
-          (this.vkn = t.Entity.GetComponent(175)),
-          (t = t.Entity.GetComponent(19)),
-          this.xZa(t),
-          (t =
-            ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
-              ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-            )?.GetComponent(208)) && this.xZa(t))
+        ? ((this.m1t = t.Entity.GetComponent(172)),
+          (this.vkn = t.Entity.GetComponent(188)),
+          (t = t.Entity.GetComponent(21)),
+          this.Fah(t),
+          this.YLe &&
+            (t =
+              ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
+                ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+              )?.GetComponent(223)) &&
+            this.Fah(t))
         : ((this.m1t = void 0), (this.vkn = void 0));
   }
-  xZa(t) {
+  Fah(t) {
     for (const s of t.GetAllCurrentCueRef()) {
       var i = s.CueConfig;
       (2 !== i.CueType && 14 !== i.CueType) ||
@@ -61,20 +73,24 @@ class BuffItemContainer {
     var t,
       h = i.CueType;
     if (2 === h)
-      this.Ckn.has(s) ||
-        ((f = this.Skn(s)) &&
-          (((t = this.Mkn(i)).SingleBuff = f),
-          this.Ckn.set(s, t),
-          this.Ekn(t, e)));
-    else if (14 === h) {
-      var f = i.Id;
-      let t = this.gkn.get(f);
+      this.oJl(i) &&
+        !this.Ckn.has(s) &&
+        (r = this.Skn(s)) &&
+        (((t = this.Mkn(i)).SingleBuff = r),
+        this.Ckn.set(s, t),
+        this.Ekn(t, e));
+    else if (14 === h && this.oJl(i)) {
+      var r = i.Id;
+      let t = this.gkn.get(r);
       if (t)
         return t.BuffHandleSet.has(s) ? void 0 : void t.BuffHandleSet.add(s);
       (t = this.Mkn(i)).BuffHandleSet.add(s),
-        this.gkn.set(f, t),
+        this.gkn.set(r, t),
         this.Ekn(t, e);
     }
+  }
+  oJl(t) {
+    return !(this.rJl && 4 < t.Parameters.length && "1" === t.Parameters[4]);
   }
   RemoveBuffByCue(t, i, s = !1) {
     var e,
@@ -128,7 +144,7 @@ class BuffItemContainer {
         (this.DeactivateBuffItem(t, i), this.dkn.length >= this.aa) &&
         ((s = this.dkn[this.aa - 1]).BuffItem &&
           Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "有残留的buffItem引用", [
+          Log_1.Log.Error("Battle", 17, "有残留的buffItem引用", [
             "cueId",
             s.BuffCueConfig?.Id,
           ]),
@@ -157,7 +173,7 @@ class BuffItemContainer {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              18,
+              17,
               "要插入的buff图标前面的buff没有buffItem",
             );
   }
@@ -181,7 +197,7 @@ class BuffItemContainer {
     for (const i of this._nt) i.Deactivate(), i.DestroyCompatible();
     this._nt.length = 0;
     for (const s of this.unt) s.DestroyCompatible();
-    this.unt.length = 0;
+    (this.unt.length = 0), (this.PGl = 0);
   }
 }
 exports.BuffItemContainer = BuffItemContainer;

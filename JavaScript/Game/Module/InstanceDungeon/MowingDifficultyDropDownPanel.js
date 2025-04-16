@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.MowingDifficultyDropDownPanel = void 0);
+  (exports.MowingDifficultyDropDownPanel =
+    exports.DropDownTitle =
+    exports.DropDownItem =
+      void 0);
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   KillMonstersScoresByInstanceID_1 = require("../../../Core/Define/ConfigQuery/KillMonstersScoresByInstanceID"),
@@ -34,6 +37,7 @@ class DropDownItem extends DropDownItemBase_1.DropDownItemBase {
     return this.GetExtendToggle(0);
   }
 }
+exports.DropDownItem = DropDownItem;
 class DropDownTitle extends TitleItemBase_1.TitleItemBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
@@ -49,6 +53,7 @@ class DropDownTitle extends TitleItemBase_1.TitleItemBase {
     this.GetText(0).SetText(i + "•" + t);
   }
 }
+exports.DropDownTitle = DropDownTitle;
 class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -78,9 +83,9 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
                 e.Id,
               ))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Activity", 38, "当前没有割草活动副本数据")
+              Log_1.Log.Error("Activity", 37, "当前没有割草活动副本数据")
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Activity", 38, "当前没有割草活动数据");
+            Log_1.Log.Error("Activity", 37, "当前没有割草活动数据");
       });
   }
   OnRegisterComponent() {
@@ -105,7 +110,7 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
       await this.c_i.Init();
   }
   OnStart() {
-    this.GetItem(1).SetUIActive(!1), this.AddChild(this.c_i);
+    this.GetItem(1).SetUIActive(!1);
   }
   v_i() {
     var t =
@@ -135,7 +140,7 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
           t.GetLevelDiffIndex(this.NUe),
         )
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Activity", 38, "当前没有割草活动数据");
+        Log_1.Log.Error("Activity", 37, "当前没有割草活动数据");
   }
 }
 exports.MowingDifficultyDropDownPanel = MowingDifficultyDropDownPanel;

@@ -55,6 +55,15 @@ class OnlineHallData {
   get PlayerCard() {
     return this.kGi.ESs;
   }
+  get PlayerTitleId() {
+    return this.kGi.gsc;
+  }
+  get PlayerTitleStarLevel() {
+    return this.kGi.Csc;
+  }
+  get Sex() {
+    return this.kGi.v7n;
+  }
   get PlayerDetails() {
     return this.kGi;
   }
@@ -65,22 +74,26 @@ class OnlineHallData {
     return MathUtils_1.MathUtils.LongToNumber(this.kGi.fSs);
   }
   get PlayerPsAccountId() {
-    return this.kGi.hwa;
+    return this.kGi.ywa;
   }
   GetIfCanShowInHallList(t = void 0) {
-    return !t || void 0 === t.get(this.PlayerPsAccountId);
+    return !(
+      (PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.PlayOnly() &&
+        "" === this.PlayerPsAccountId) ||
+      (t && void 0 !== t.get(this.PlayerPsAccountId))
+    );
   }
 }
 exports.OnlineHallData = OnlineHallData;
 class OnlineApplyData {
-  constructor(t, e, r, s, i, n) {
+  constructor(t, e, r, i, s, a) {
     (this.PlayStationOnlineId = ""),
       (this.FGi = t),
       (this.VGi = e),
       (this.OGi = r),
-      (this.HGi = s),
-      (this.jGi = i),
-      (this.PlayStationOnlineId = n);
+      (this.HGi = i),
+      (this.jGi = s),
+      (this.PlayStationOnlineId = a);
   }
   get ApplyTimeLeftTime() {
     return (
@@ -106,20 +119,26 @@ class OnlineApplyData {
 }
 exports.OnlineApplyData = OnlineApplyData;
 class OnlineTeamData {
-  constructor(t, e, r, s, i, n, o, a) {
-    (this.CardUnlockList = []),
+  constructor(t, e, r, i, s, a, n, h, l, o, u) {
+    (this.F0c = 0),
+      (this.N0c = 0),
+      (this.uc1 = 0),
+      (this.CardUnlockList = []),
       (this.WGi = 0),
       (this.FGi = t),
       (this.VGi = e),
       (this.jGi = r),
-      (this.HGi = s),
-      (this.KGi = i),
-      (this.PlayerNumber = n),
-      (this.kGi = o),
-      (this.QGi = Protocol_1.Aki.Protocol.r7s.Proto_GREAT);
-    for (const h of o.SSs)
+      (this.HGi = i),
+      (this.KGi = s),
+      (this.PlayerNumber = a),
+      (this.kGi = n),
+      (this.QGi = Protocol_1.Aki.Protocol.r7s.Proto_GREAT),
+      (this.F0c = l),
+      (this.N0c = o),
+      (this.uc1 = u);
+    for (const g of n.SSs)
       this.CardUnlockList.push(
-        new PersonalDefine_1.PersonalCardData(h, !0, !0),
+        new PersonalDefine_1.PersonalCardData(g, !0, !0),
       );
   }
   get PlayerId() {
@@ -143,14 +162,39 @@ class OnlineTeamData {
   set Name(t) {
     this.FGi = t;
   }
+  get PlayerTitleId() {
+    return this.F0c;
+  }
+  get PlayerTitleStarLevel() {
+    return this.N0c;
+  }
+  get Sex() {
+    return this.uc1;
+  }
+  set Sex(t) {
+    this.uc1 = t;
+  }
+  SetPlayerTitleInfo(t) {
+    0 !== t.length &&
+      ((t = t.split("_")),
+      (this.F0c = parseInt(t[0])),
+      (t = 2 === t.length ? parseInt(t[1]) : 0),
+      (this.N0c = t));
+  }
   get PlayerName() {
     return this.GetFormationName();
+  }
+  GetRawName() {
+    return this.FGi;
+  }
+  GetOnlineName() {
+    return this.PlayerDetails.Qxa;
   }
   GetFormationName() {
     if (
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
     ) {
-      var t = this.PlayerDetails.Vxa;
+      var t = this.PlayerDetails.Qxa;
       if (void 0 !== t && "" !== t) return t;
     }
     return this.FGi;
@@ -185,13 +229,18 @@ class OnlineTeamData {
     this.kGi = t;
   }
   GetIfCanShowInHallList(t = void 0) {
-    return !t || void 0 === t.get(this.kGi.hwa);
+    return !t || void 0 === t.get(this.kGi.ywa);
   }
 }
 exports.OnlineTeamData = OnlineTeamData;
 class WorldTeamPlayerFightInfo {
-  constructor(t, e, r, s) {
-    (this.FGi = t), (this.VGi = e), (this.XGi = s), (this.$Gi = r);
+  constructor(t, e, r, i, s, a) {
+    (this.FGi = t),
+      (this.VGi = e),
+      (this.XGi = a),
+      (this.$Gi = r),
+      (this.dIl = s),
+      (this.bSl = i);
   }
   get PlayerId() {
     return this.VGi;
@@ -217,50 +266,31 @@ class WorldTeamPlayerFightInfo {
   set Name(t) {
     this.FGi = t;
   }
-  get IsSelf() {
-    return (
-      this.PlayerId === ModelManager_1.ModelManager.PlayerInfoModel.GetId()
-    );
+  get ThirdPartyOnlineName() {
+    return this.bSl;
   }
-  GetIsDiffRoleList(t) {
-    if (t.length !== this.XGi.length) return !0;
-    for (const e of t) {
-      let t = !1;
-      for (const r of this.XGi) e.Q6n === r.RoleId && (t = !0);
-      if (!t) return !0;
-    }
-    return !1;
-  }
-  GetRoleLength() {
-    return this.XGi.length;
+  get ThirdPartyAccountId() {
+    return this.dIl;
   }
 }
 exports.WorldTeamPlayerFightInfo = WorldTeamPlayerFightInfo;
 class WorldTeamRoleInfo {
-  constructor(t, e) {
-    (this.YGi = 0),
-      (this.RoleCurHp = 1),
-      (this.RoleMaxHp = 1),
+  constructor(t, e, r) {
+    (this.JGi = 0),
+      (this.aTl = 0),
+      (this.zGi = 0),
       (this.JGi = t),
-      (this.zGi = e);
+      (this.aTl = e),
+      (this.zGi = r);
   }
   get RoleId() {
     return this.JGi;
   }
-  set RoleId(t) {
-    this.JGi = t;
+  get RoleSkinId() {
+    return this.aTl;
   }
   get RoleLevel() {
     return this.zGi;
-  }
-  set RoleLevel(t) {
-    this.zGi = t;
-  }
-  get RoleIndex() {
-    return this.YGi;
-  }
-  set RoleIndex(t) {
-    this.YGi = t;
   }
 }
 exports.WorldTeamRoleInfo = WorldTeamRoleInfo;

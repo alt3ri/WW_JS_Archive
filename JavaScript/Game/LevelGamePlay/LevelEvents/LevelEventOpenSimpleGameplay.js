@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventOpenSimpleGameplay = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
-  SignalDecodeController_1 = require("../../Module/SignalDecode/SignalDecodeController"),
   UiManager_1 = require("../../Ui/UiManager"),
-  CipherController_1 = require("../Cipher/CipherController"),
+  FishingQteController_1 = require("../FishingQte/FishingQteController"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
   LevelGeneralNetworks_1 = require("../LevelGeneralNetworks"),
   SignalDeviceController_1 = require("../SignalDeviceControl/SignalDeviceController");
@@ -24,16 +24,16 @@ class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
       });
   }
   ExecuteNew(e, i) {
-    var r = e;
-    if (r) {
-      var t = i;
-      if (t)
-        switch (r.GameplayConfig.Type) {
+    var t = e;
+    if (t) {
+      var r = i;
+      if (r)
+        switch (t.GameplayConfig.Type) {
           case "Cipher":
             TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
               "CipherView",
             ),
-              this.jDe(r.GameplayConfig.CipherId);
+              this.jDe(t.GameplayConfig.CipherId);
             break;
           case "SignalBreak":
             TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
@@ -41,7 +41,7 @@ class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
             ),
               UiManager_1.UiManager.OpenView(
                 "SignalDecodeView",
-                r.GameplayConfig.SignalBreakId,
+                t.GameplayConfig.SignalBreakId,
               );
             break;
           case "SundialPuzzle":
@@ -51,26 +51,26 @@ class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
               UiManager_1.UiManager.OpenView("SundialControlView");
             break;
           case "SignalDevice":
-            this.VDe = r.FinishSendSelfEvent;
-            var n = EntitySystem_1.EntitySystem.Get(t.EntityId);
+            this.VDe = t.FinishSendSelfEvent;
+            var n = EntitySystem_1.EntitySystem.Get(r.EntityId);
             (this.E0 = n.GetComponent(0).GetCreatureDataId()),
               TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
                 "SignalDeviceView",
               ),
               SignalDeviceController_1.SignalDeviceController.OpenGameplay(
-                r.GameplayConfig.Config,
+                t.GameplayConfig.Config,
                 this.HDe,
               );
             break;
           case "SignalDevice2":
-            this.VDe = r.FinishSendSelfEvent;
-            n = EntitySystem_1.EntitySystem.Get(t.EntityId);
+            this.VDe = t.FinishSendSelfEvent;
+            n = EntitySystem_1.EntitySystem.Get(r.EntityId);
             (this.E0 = n.GetComponent(0).GetCreatureDataId()),
               TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
                 "SignalDeviceChasingMoonView",
               ),
               SignalDeviceController_1.SignalDeviceController.OpenGameplayChasingMoon(
-                r.GameplayConfig.Config,
+                t.GameplayConfig.Config,
                 this.HDe,
               );
             break;
@@ -78,16 +78,74 @@ class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
             TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
               "SignalDecodeView",
             ),
-              SignalDecodeController_1.SignalDecodeController.Open(
-                r.GameplayConfig.MorseCodeId,
+              ControllerHolder_1.ControllerHolder.SignalDecodeController.Open(
+                t.GameplayConfig.MorseCodeId,
               );
+            break;
+          case "RenjuChess":
+            ControllerHolder_1.ControllerHolder.LevelPickInteractController.EnterPickInteractModel(
+              t.GameplayConfig,
+            );
+            break;
+          case "LifePoint":
+            var n = {
+                Config: t.GameplayConfig,
+                EntityId: r.EntityId,
+                Callback: this.HDe,
+              },
+              o =
+                ((this.VDe = t.FinishSendSelfEvent),
+                EntitySystem_1.EntitySystem.Get(r.EntityId));
+            (this.E0 = o.GetComponent(0).GetCreatureDataId()),
+              TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
+                "LifePointView",
+              ),
+              UiManager_1.UiManager.OpenView("LifePointView", n);
+            break;
+          case "BrokenRock":
+            6 !== i.Type
+              ? Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "Event",
+                  29,
+                  "大个布偶坚固岩石玩法开启失败：只能由行为中打开",
+                )
+              : ((this.VDe = t.FinishSendSelfEvent),
+                TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
+                  "BigStuffedDollView",
+                ),
+                ControllerHolder_1.ControllerHolder.BigStuffedDollController.Open(
+                  t.GameplayConfig.Id,
+                  i.TreeConfigId,
+                  this.HDe,
+                ));
+            break;
+          case "FishingRoulette":
+            this.VDe = t.FinishSendSelfEvent;
+            o = EntitySystem_1.EntitySystem.Get(r.EntityId);
+            (this.E0 = o.GetComponent(0).GetCreatureDataId()),
+              FishingQteController_1.FishingQteController.OpenGameplay(
+                o,
+                (e) => {
+                  e &&
+                    TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
+                      "FishingQteView",
+                    );
+                },
+              );
+            break;
+          case "DaolingAuthentication":
+            TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
+              "LiuLiDaoLingView",
+            ),
+              UiManager_1.UiManager.OpenView("LiuLiDaoLingView");
         }
       else
-        Log_1.Log.CheckError() && Log_1.Log.Error("Event", 30, "上下文不合法");
-    } else Log_1.Log.CheckError() && Log_1.Log.Error("Event", 30, "参数不合法");
+        Log_1.Log.CheckError() && Log_1.Log.Error("Event", 29, "上下文不合法");
+    } else Log_1.Log.CheckError() && Log_1.Log.Error("Event", 29, "参数不合法");
   }
   jDe(e) {
-    CipherController_1.CipherController.OpenCipherView(e);
+    ControllerHolder_1.ControllerHolder.CipherController.OpenCipherView(e);
   }
 }
 exports.LevelEventOpenSimpleGameplay = LevelEventOpenSimpleGameplay;

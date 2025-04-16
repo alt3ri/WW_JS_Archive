@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
@@ -11,6 +11,12 @@ class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
     super(...arguments),
       (this.BlackboardKeyActor = ""),
       (this.TurnSpeed = 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsBlackboardKeyActor = ""),
+      (this.TsTurnSpeed = 0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsBlackboardKeyActor = ""),
       (this.TsTurnSpeed = 0);
@@ -25,18 +31,19 @@ class TsTaskTurnToTarget extends TsTaskAbortImmediatelyBase_1.default {
     this.InitTsVariables();
     var s = t.AiController;
     if (s) {
-      var o = s.CharActorComp;
+      var i = s.CharActorComp;
       let t = s.AiHateList.GetCurrentTarget()?.Entity?.GetComponent(3);
       (t =
         this.TsBlackboardKeyActor &&
-        (s = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-          s.CharAiDesignComp.Entity.Id,
-          this.TsBlackboardKeyActor,
-        ))
+        (s =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+            s.CharAiDesignComp.Entity.Id,
+            this.TsBlackboardKeyActor,
+          ))
           ? EntitySystem_1.EntitySystem.GetComponent(s, 3)
           : t)
         ? (AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
-            o,
+            i,
             t.ActorLocationProxy,
             this.TsTurnSpeed,
           ),

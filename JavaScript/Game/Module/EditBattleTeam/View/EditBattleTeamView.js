@@ -14,6 +14,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  ActivityManager_1 = require("../../Activity/ActivityManager"),
   BuffItemControl_1 = require("../../BuffItem/BuffItemControl"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   MiniElementItem_1 = require("../../Common/MiniElementItem"),
@@ -59,21 +60,22 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       }),
       (this.M4t = (e) => this.E4t(e)),
       (this.S4t = (e) => {
-        var t, o, r;
+        var t, r, o, n;
         return this.E4t(e)
           ? (BuffItemControl_1.BuffItemControl.TryUseResurrectionItem(e), !1)
-          : ((o = (t = ModelManager_1.ModelManager.EditBattleTeamModel)
+          : ((r = (t = ModelManager_1.ModelManager.EditBattleTeamModel)
               .GetCurrentEditRoleSlotData),
-            -1 !== (r = t.GetParentRolePositionInEditBattleTeam((e = e))) &&
-            r !== o.GetPosition
+            (o = this.K4t((e = e))),
+            (n = t.GetParentRolePositionInEditBattleTeam(e)),
+            2 !== o && -1 !== n && n !== r.GetPosition
               ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "SameRole",
                 ),
                 !1)
               : !(
                   t.IsMultiInstanceDungeon &&
-                  o?.GetRoleConfigId === e &&
-                  t.GetPlayerRoleNumber(o?.GetRoleData?.PlayerId) < 2 &&
+                  r?.GetRoleConfigId === e &&
+                  t.GetPlayerRoleNumber(r?.GetRoleData?.PlayerId) < 2 &&
                   (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                     "BattleTeamCanNotDownAllRole",
                   ),
@@ -86,53 +88,56 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       (this.I4t = (e) => {
         this.RefreshEnterButton(), this.f4t(), this.T4t(e);
       }),
-      (this.lze = (r) => {
-        var i = r.TargetPlayerId;
+      (this.lze = (o) => {
+        var n = o.TargetPlayerId;
         if (
-          !ModelManager_1.ModelManager.FriendModel.HasBlockedPlayer(i) &&
-          r.IsVisible
+          !ModelManager_1.ModelManager.FriendModel.HasBlockedPlayer(n) &&
+          o.IsVisible
         ) {
-          var n = 1 === r.ContentChatRoomType;
-          let e = r.SenderPlayerName;
-          n &&
-            (i = ModelManager_1.ModelManager.FriendModel.GetFriendById(i)) &&
-            (e = i.PlayerName),
+          var i = 1 === o.ContentChatRoomType;
+          let e = o.SenderPlayerName;
+          i &&
+            (n = ModelManager_1.ModelManager.FriendModel.GetFriendById(n)) &&
+            (e = n.PlayerName),
             this.m4t ||
               (this.GetItem(9).SetUIActive(!0),
               this.SPe.PlayLevelSequenceByName("NoticeIn"),
               (this.m4t = !0)),
             this.SPe.PlayLevelSequenceByName("NewMassageIn");
-          var i = this.GetText(10),
+          var n = this.GetText(10),
             a =
               ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
-              r.SenderPlayerId;
+              o.SenderPlayerId;
           let t = void 0,
-            o = r.Content;
-          if (r.ContentType === Protocol_1.Aki.Protocol.p8n.DIs)
-            t = n
+            r = o.Content;
+          if (o.ContentType === Protocol_1.Aki.Protocol.p8n.DIs)
+            t = i
               ? a
                 ? "Text_TalkToFriend_Text"
                 : "Text_FriendTalkToMe_Text"
               : "Text_TeamTalk_Text";
-          else if (r.ContentType === Protocol_1.Aki.Protocol.p8n.Proto_Emoji) {
-            var r = Number(r.Content),
+          else if (o.ContentType === Protocol_1.Aki.Protocol.p8n.Proto_Emoji) {
+            var o = Number(o.Content),
               l =
-                ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(r);
+                ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(o);
             if (!l)
               return void (
                 Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("Formation", 49, "表情缺少配置", ["表情Id", r])
+                Log_1.Log.Warn("Formation", 48, "表情缺少配置", ["表情Id", o])
               );
-            LguiUtil_1.LguiUtil.SetLocalTextNew(i, l.Name),
-              (o = i.GetText()),
-              (t = n
+            LguiUtil_1.LguiUtil.SetLocalTextNew(n, l.Name),
+              (r = n.GetText()),
+              (t = i
                 ? a
                   ? "Text_TalkToFriend_Text_Match"
                   : "Text_FriendTalkToMe_Text_Match"
                 : "Text_TeamTalk_Text_Match");
           }
-          LguiUtil_1.LguiUtil.SetLocalTextNew(i, t, e, o);
+          LguiUtil_1.LguiUtil.SetLocalTextNew(n, t, e, r);
         }
+      }),
+      (this.fR1 = () => {
+        this.f4t();
       }),
       (this.Ozs = () => {
         this.f4t();
@@ -156,13 +161,13 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       (this.U4t = () => {
         var e = ModelManager_1.ModelManager.EditBattleTeamModel,
           t = e.GetLeaderIsSelf,
-          o = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
-          r = e.GetOwnRoleCountInRoleSlot;
-        0 === r
+          r = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+          o = e.GetOwnRoleCountInRoleSlot;
+        0 === o
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "NoRole",
             )
-          : e.IsInLimitRoleCount(r)
+          : e.IsInLimitRoleCount(o)
             ? e.IsMultiInstanceDungeon
               ? t
                 ? ModelManager_1.ModelManager.InstanceDungeonEntranceModel
@@ -176,51 +181,61 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
                         .EditBattleTeamMatching,
                     ))
                   : e.GetIsAllReady
-                    ? e.HasSameRole &&
-                      !TowerDefenceController_1.TowerDefenseController.CheckInUiFlow()
-                      ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                          "SameRole",
-                        )
-                      : e.GetAllRoleCanAddToTeam().CanAdd
+                    ? !e.HasSameRole ||
+                      TowerDefenceController_1.TowerDefenseController.CheckInUiFlow() ||
+                      ModelManager_1.ModelManager.DangoAbyssModel.CheckInAbyssEditFormationState()
+                      ? e.GetAllRoleCanAddToTeam().CanAdd
                         ? e.IsAllRoleDie
                           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                               "AllRoleDie",
                             )
                           : ModelManager_1.ModelManager.InstanceDungeonModel.MatchingPlayerCount() <=
                               2
-                            ? ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                                102,
-                              )).FunctionMap.set(2, () => {
-                                this.A4t();
-                              }),
-                              ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                                r,
-                              ))
+                            ? ModelManager_1.ModelManager.EditBattleTeamModel
+                                .IsMatchingTeamLackConfirmBoxCanEnterInstance
+                              ? ((o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                                  102,
+                                )).FunctionMap.set(2, () => {
+                                  this.A4t();
+                                }),
+                                ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                                  o,
+                                ))
+                              : ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                                  269,
+                                )),
+                                ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                                  t,
+                                ))
                             : this.A4t()
-                        : ((t = e.GetCurrentFightFormation.Content),
-                          (r =
+                        : ((o = e.GetCurrentFightFormation.Content),
+                          (t =
                             MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-                              t,
+                              o,
                             )),
                           ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
-                            r,
+                            t,
                           ))
+                      : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                          "SameRole",
+                        )
                     : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                         "NoReady",
                       )
-                : (t = e.GetSelfIsReady) ||
+                : (o = e.GetSelfIsReady) ||
                     !e.HasSameRole ||
-                    TowerDefenceController_1.TowerDefenseController.CheckInUiFlow()
+                    TowerDefenceController_1.TowerDefenseController.CheckInUiFlow() ||
+                    ModelManager_1.ModelManager.DangoAbyssModel.CheckInAbyssEditFormationState()
                   ? (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Formation",
-                        8,
+                        48,
                         "[EditBattleTeam]玩家{PlayerId} 请求准备游戏,是否准备:{SelfIsReady}",
-                        ["{PlayerId}", o],
-                        ["{SelfIsReady}", !t],
+                        ["{PlayerId}", r],
+                        ["{SelfIsReady}", !o],
                       ),
                     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchChangeReadyRequest(
-                      !t,
+                      !o,
                     ))
                   : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                       "SameRole",
@@ -243,26 +258,16 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
                             ModelManager_1.ModelManager.EditBattleTeamModel
                               .GetOwnRoleConfigIdList[0],
                           )
-                        : ModelManager_1.ModelManager.EditBattleTeamModel
-                              .NeedEntrance
-                          ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.ContinueEntranceFlow()
-                          : ((ModelManager_1.ModelManager.EditBattleTeamModel.NeedEntrance =
-                              !0),
+                        : ModelManager_1.ModelManager.WeeklyRogueModel.IsWeeklyRogueOpen()
+                          ? ((t =
+                              ActivityManager_1.ActivityManager.GetActivityController(
+                                Protocol_1.Aki.Protocol.uks.Proto_RogueWeekly,
+                              )),
                             (r =
                               ModelManager_1.ModelManager.EditBattleTeamModel
                                 .GetOwnRoleConfigIdList[0]),
-                            InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-                              ModelManager_1.ModelManager
-                                .InstanceDungeonEntranceModel.InstanceId,
-                              r,
-                              0,
-                              0,
-                              ModelManager_1.ModelManager
-                                .InstanceDungeonEntranceModel.TransitionOption,
-                              ModelManager_1.ModelManager.TowerDefenseModel.GetProtocolPhantomIdList(
-                                r,
-                              ),
-                            ))
+                            t?.RogueWeeklyStartRequest(r))
+                          : this.$oh()
                       : ((o = e.GetCurrentFightFormation.Content),
                         (t =
                           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -336,11 +341,11 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
             );
       }),
       (this.b4t = () => {
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsMowingInstanceDungeon()
+        ModelManager_1.ModelManager.EditBattleTeamModel.IsEditBattleTeamForMowingInstance()
           ? UiManager_1.UiManager.OpenView(
               "InstanceDungeonMonsterPreView",
-              ModelManager_1.ModelManager.InstanceDungeonEntranceModel
-                .SelectInstanceId,
+              ModelManager_1.ModelManager.EditBattleTeamModel
+                .GetInstanceDungeonId,
             )
           : UiManager_1.UiManager.OpenView("TowerFloorDetailView");
       }),
@@ -355,52 +360,58 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         if (!UiManager_1.UiManager.IsViewOpen("QuickRoleSelectView")) {
           var e = ModelManager_1.ModelManager.EditBattleTeamModel,
             t = new Array(),
-            o = e.GetAllRoleSlotData;
-          if (o)
-            for (const i of o) {
-              var r = i.GetRoleData;
-              r && t.push(r.ConfigId);
+            r = e.GetAllRoleSlotData;
+          if (r)
+            for (const n of r) {
+              var o = n.GetRoleData;
+              o && t.push(o.ConfigId);
             }
-          (o = ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation()
-            ? 29
-            : 4),
-            (e = e.GetRoleList()),
-            (o = new QuickRoleSelectView_1.QuickRoleSelectViewData(o, t, e));
-          (o.OnConfirm = this.N4t),
-            (o.CanConfirm = this.M1a),
-            (o.OnBack = this.O4t),
-            (o.OnHideFinish = this.P4t),
-            UiManager_1.UiManager.OpenView("QuickRoleSelectView", o),
+          (r = e.GetRoleList()),
+            (e = new QuickRoleSelectView_1.QuickRoleSelectViewData(
+              this.GetUseWay(),
+              t,
+              r,
+            ));
+          (e.OnConfirm = this.N4t),
+            (e.CanConfirm = this.M1a),
+            (e.OnBack = this.O4t),
+            (e.OnHideFinish = this.P4t),
+            UiManager_1.UiManager.OpenView("QuickRoleSelectView", e),
             this.k4t(!1);
         }
       }),
       (this.N4t = (t) => {
         this.k4t(!0);
-        var o = ModelManager_1.ModelManager.EditBattleTeamModel;
+        var r = ModelManager_1.ModelManager.EditBattleTeamModel;
+        for (const e of r.SelfRoleSlotDataRoleIdList)
+          t.includes(e) ||
+            ModelManager_1.ModelManager.TowerDefenseModel.ResetPhantomOwnerDataByConfigId(
+              e,
+            );
         for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-          var r,
-            i = o.GetRoleSlotData(e);
-          i.IsProhibit
-            ? i.ResetRoleData()
+          var o,
+            n = r.GetRoleSlotData(e);
+          n.IsProhibit
+            ? n.ResetRoleData()
             : e > t.length
-              ? i.ResetRoleData()
-              : ((r = t[e - 1]),
-                (r = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(r)),
-                (r = o.CreateRoleDataFromRoleInstance(r)),
-                i.SetRoleData(r));
+              ? n.ResetRoleData()
+              : ((o = t[e - 1]),
+                (o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o)),
+                (o = r.CreateRoleDataFromRoleInstance(o)),
+                n.SetRoleData(o));
         }
         this.f4t();
       }),
       (this.M1a = (e) => {
         var t = ModelManager_1.ModelManager.EditBattleTeamModel;
-        for (const r of e)
-          if (t.IsTrialRole(r)) {
-            var o =
+        for (const o of e)
+          if (t.IsTrialRole(o)) {
+            var r =
               ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
-                r,
+                o,
               ).ParentId;
-            for (const i of e)
-              if (o === i)
+            for (const n of e)
+              if (r === n)
                 return (
                   ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                     "SameRole",
@@ -413,11 +424,11 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       (this.F4t = () => {
         if (!UiManager_1.UiManager.IsViewShow("ExitSkillView")) {
           var e = new ExitSkillView_1.ExitSkillViewData();
-          for (const i of this.l4t) {
-            var t = i.GetConfigId(),
-              o = i.GetOnlineIndex(),
-              r = i.GetPlayer();
-            e.AddData(t, o, r);
+          for (const n of this.l4t) {
+            var t = n.GetConfigId(),
+              r = n.GetOnlineIndex(),
+              o = n.GetPlayer();
+            e.AddData(t, r, o);
           }
           UiManager_1.UiManager.OpenView("ExitSkillView", e);
         }
@@ -430,34 +441,34 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         var t = ModelManager_1.ModelManager.EditBattleTeamModel;
         if (t.GetCurrentFightFormation.ChooseRole) {
           t.SetCurrentEditPosition(e);
-          var o,
-            r = t.GetRoleSlotData(e);
-          if (r) {
-            const i = r?.GetRoleData;
-            if (i) {
+          var r,
+            o = t.GetRoleSlotData(e);
+          if (o) {
+            const n = o?.GetRoleData;
+            if (n) {
               if (
                 ModelManager_1.ModelManager.EditBattleTeamModel
                   .IsMultiInstanceDungeon &&
                 ModelManager_1.ModelManager.InstanceDungeonModel.IsMatchTeamHost() &&
-                !i.IsSelf
+                !n.IsSelf
               )
                 return (
-                  (o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                  (r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                     101,
                   )).FunctionMap.set(2, () => {
                     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.KickMatchTeamPlayerRequest(
-                      i.PlayerId,
+                      n.PlayerId,
                     );
                   }),
                   void ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                    o,
+                    r,
                   )
                 );
-              if (!r.CanEditRoleSlot)
+              if (!o.CanEditRoleSlot)
                 return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "BattleTeamNotMyRole",
                 );
-              if (!t.GetLeaderIsSelf && i?.IsReady)
+              if (!t.GetLeaderIsSelf && n?.IsReady)
                 return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "BattleTeamReadyRole",
                 );
@@ -470,7 +481,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
                 return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "BattleTeamNotMyRole",
                 );
-              if (r.IsProhibit)
+              if (o.IsProhibit)
                 return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "BattleTeamPositionCanNotEdit",
                 );
@@ -484,7 +495,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       }),
       (this.W4t = (e) => {
         var t = ModelManager_1.ModelManager.EditBattleTeamModel,
-          o = t.GetCurrentEditRoleSlotData.GetRoleData;
+          r = t.GetCurrentEditRoleSlotData.GetRoleData;
         if (!t.CanAddRoleToEditTeam(e) && e <= RoleDefine_1.ROBOT_DATA_MIN_ID)
           return !1;
         switch (this.K4t(e)) {
@@ -492,7 +503,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
           case 1:
             return !0;
           case 3:
-            return !!o;
+            return !!r;
           default:
             return !0;
         }
@@ -501,14 +512,14 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         if (e) {
           if (this.E4t(e)) return "EditBattleTeamRevive";
           var t = ModelManager_1.ModelManager.EditBattleTeamModel,
-            o = t.GetCurrentEditRoleSlotData;
+            r = t.GetCurrentEditRoleSlotData;
           if (!t.CanAddRoleToEditTeam(e) && e <= RoleDefine_1.ROBOT_DATA_MIN_ID)
             return "JoinText";
           switch (this.K4t(e)) {
             case 2:
               return "GoDownText";
             case 1:
-              return o.HasRole ? "ChangeText" : "JoinText";
+              return r.HasRole ? "ChangeText" : "JoinText";
             case 3:
               return "ChangeText";
             default:
@@ -518,13 +529,13 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       }),
       (this.X4t = (e) => {
         var t = ModelManager_1.ModelManager.EditBattleTeamModel,
-          o = t.GetCurrentEditRoleSlotData,
-          r = o.GetRoleData;
-        if (r && !r.IsSelf)
+          r = t.GetCurrentEditRoleSlotData,
+          o = r.GetRoleData;
+        if (o && !o.IsSelf)
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Formation",
-              8,
+              48,
               "[EditBattleTeam]无法改变别的玩家的角色",
             ),
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -532,22 +543,26 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
             );
         else {
           this.k4t(!0);
-          var i = e;
-          const s = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i);
-          if (s && (s.IsTrialRole() || t.CanAddRoleToEditTeam(i))) {
-            switch (this.K4t(i)) {
+          var n = e;
+          const _ = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(n);
+          if (_ && (_.IsTrialRole() || t.CanAddRoleToEditTeam(n))) {
+            switch (this.K4t(n)) {
               case 2:
-                o.ResetRoleData();
+                o &&
+                  ModelManager_1.ModelManager.TowerDefenseModel.ResetPhantomOwnerDataByConfigId(
+                    o.ConfigId,
+                  ),
+                  r.ResetRoleData();
                 break;
               case 3:
-                if (o) {
-                  var n = t.GetSlotDataByConfigId(i);
-                  if (!n) return;
-                  var a = n.GetRoleData;
+                if (r) {
+                  var i = t.GetSlotDataByConfigId(n);
+                  if (!i) return;
+                  var a = i.GetRoleData;
                   if (!a) return;
-                  var l = o.GetRoleData;
-                  if (!l) return void n.ResetRoleData();
-                  n.SetRoleData(l), o.SetRoleData(a);
+                  var l = r.GetRoleData;
+                  if (!l) return void i.ResetRoleData();
+                  i.SetRoleData(l), r.SetRoleData(a);
                   break;
                 }
                 return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -556,24 +571,30 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
               case 4:
                 return;
               default: {
-                const s =
-                  ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i);
-                n = s.GetLevelData();
-                let e = o.GetRoleData;
-                ((e = e || t.CreateRoleDataFromRoleInstance(s)).ConfigId = i),
-                  (e.Level = n.GetLevel()),
-                  o.SetRoleData(e);
+                const _ =
+                  ModelManager_1.ModelManager.RoleModel.GetRoleDataById(n);
+                i = _.GetLevelData();
+                let e = r.GetRoleData;
+                e
+                  ? ModelManager_1.ModelManager.TowerDefenseModel.ResetPhantomOwnerDataByConfigId(
+                      e.ConfigId,
+                    )
+                  : (e = t.CreateRoleDataFromRoleInstance(_)),
+                  (e.ConfigId = n),
+                  (e.Level = i.GetLevel()),
+                  (e.SkinId = _.GetRoleSkinId()),
+                  r.SetRoleData(e);
                 break;
               }
             }
             t.IsMultiInstanceDungeon
-              ? ((r = t.GetOwnRoleConfigIdList),
+              ? ((e = t.GetOwnRoleConfigIdList),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Formation",
-                    8,
+                    48,
                     "[EditBattleTeam]请求改变战前编队角色:RoleConfigList",
-                    ["RoleConfigList", r],
+                    ["RoleConfigList", e],
                   ),
                 InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchChangeRoleRequest(
                   t.GetOwnRoleConfigIdList[0],
@@ -596,13 +617,13 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         var t = EditFormationDefine_1.FORMATION_SPRITES[e],
           t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t),
           e = e + 1,
-          o =
+          r =
             ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
               "TeamText",
             ),
           t = new CommonTabData_1.CommonTabData(
             t,
-            new CommonTabTitleData_1.CommonTabTitleData(o, e),
+            new CommonTabTitleData_1.CommonTabTitleData(r, e),
           );
         return (
           t.SetSmallIcon(
@@ -624,21 +645,25 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
                   e,
                 ]),
               ModelManager_1.ModelManager.EditBattleTeamModel),
-            o = ModelManager_1.ModelManager.RoleModel,
-            r =
+            r = ModelManager_1.ModelManager.RoleModel,
+            o =
               ModelManager_1.ModelManager.EditFormationModel.GetFormationData(
                 e,
               )?.GetRoleIdList;
+          for (const a of t.SelfRoleSlotDataRoleIdList)
+            ModelManager_1.ModelManager.TowerDefenseModel.ResetPhantomOwnerDataByConfigId(
+              a,
+            );
           for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-            var i,
-              n = t.GetRoleSlotData(e);
-            r
-              ? !n.IsProhibit && (i = r[e - 1])
-                ? ((i = o.GetRoleDataById(i)),
-                  (i = t.CreateRoleDataFromRoleInstance(i)),
-                  n.SetRoleData(i))
-                : n.ResetRoleData()
-              : n.ResetRoleData();
+            var n,
+              i = t.GetRoleSlotData(e);
+            o
+              ? !i.IsProhibit && (n = o[e - 1])
+                ? ((n = r.GetRoleDataById(n)),
+                  (n = t.CreateRoleDataFromRoleInstance(n)),
+                  i.SetRoleData(n))
+                : i.ResetRoleData()
+              : i.ResetRoleData();
           }
           this.g4t(),
             this.f4t(),
@@ -692,18 +717,30 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         [20, this.G4t],
       ]);
   }
+  GetExtraResourceId() {
+    var e =
+      ModelManager_1.ModelManager.EditBattleTeamModel.GetInstanceDungeonId;
+    if (
+      void 0 !== e &&
+      33 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          ?.InstSubType
+    )
+      return "UiView_CelebrationBattleTeam";
+    return "UiView_BattleTeam";
+  }
   async OnBeforeStartAsync() {
     var e = ModelManager_1.ModelManager.EditBattleTeamModel,
       e = (e.InitAllRoleSlotData(), e.IsMultiInstanceDungeon),
       t = ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation(),
-      o =
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsMowingInstanceDungeon();
-    this.GetButton(20).RootUIComp.SetUIActive(!e),
+      r =
+        ModelManager_1.ModelManager.EditBattleTeamModel.IsEditBattleTeamForMowingInstance();
+    this._C1(),
       this.GetButton(8).RootUIComp.SetUIActive(e),
-      this.GetItem(12).SetUIActive(!e && !t && !o),
-      this.GetButton(14).RootUIComp.SetUIActive(t || o),
+      this.GetItem(12).SetUIActive(!e && !t && !r),
+      this.GetButton(14).RootUIComp.SetUIActive(t || r),
       this.GetButton(15).RootUIComp.SetUIActive(t),
-      this.GetItem(13).SetUIActive(t || o),
+      this.GetItem(13).SetUIActive(t || r),
       e
         ? (this.GetItem(12).SetUIActive(!1), this.GetItem(9).SetUIActive(!1))
         : t
@@ -723,10 +760,27 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       this.p4t(),
       (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
+  _C1() {
+    var e = this.GetButton(20);
+    if (e) {
+      var t =
+        ModelManager_1.ModelManager.EditBattleTeamModel.GetInstanceDungeonId;
+      if (void 0 !== t)
+        if (
+          33 ===
+          ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t)
+            ?.InstSubType
+        )
+          return void e.RootUIComp.SetUIActive(!1);
+      e.RootUIComp.SetUIActive(
+        !ModelManager_1.ModelManager.EditBattleTeamModel.IsMultiInstanceDungeon,
+      );
+    }
+  }
   OnBeforeDestroy() {
     for (const t of this.l4t) t.Destroy();
     this.l4t.length = 0;
-    for (const o of this._4t) o.Destroy();
+    for (const r of this._4t) r.Destroy();
     this._4t.splice(0, this._4t.length),
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SetEditBattleTeamMatching(
         !1,
@@ -741,13 +795,23 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
     ModelManager_1.ModelManager.EditBattleTeamModel.IsMultiInstanceDungeon ||
       e ||
       InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RevertEntranceFlowStep(),
+      ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter &&
+        (ModelManager_1.ModelManager.EditBattleTeamModel.InstanceMultiEnter =
+          !1),
       this.Ivt && (this.Ivt.Destroy(), (this.Ivt = void 0)),
       this.kre(),
       this.SPe?.Clear(),
       (this.SPe = void 0),
-      (this.d4t = !1);
+      (this.d4t = !1),
+      ModelManager_1.ModelManager.EditBattleTeamModel.IsFormTeleportAction &&
+        ((ModelManager_1.ModelManager.EditBattleTeamModel.IsFormTeleportAction =
+          !1),
+        InstanceDungeonController_1.InstanceDungeonController.TeleportDungeonRequest(
+          [],
+          !1,
+        ));
   }
-  OnBeforeShow() {
+  OnStart() {
     var e;
     this.Ivt &&
       ((e =
@@ -755,12 +819,22 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       this.Ivt.SelectToggleByIndex(e - 1),
       this.Ivt.GetTabItemByIndex(e - 1).ShowTeamBattleTips());
   }
+  OnBeforeShow() {
+    UiManager_1.UiManager.IsViewOpen("OnlineInstanceMatchTips") &&
+      UiManager_1.UiManager.CloseView("OnlineInstanceMatchTips");
+  }
   GetGuideUiItemAndUiItemForShowEx(t) {
-    if (!(t.length < 1) && t[0].includes("FirstSelf")) {
-      var o = ModelManager_1.ModelManager.EditBattleTeamModel;
-      for (let e = 0; e < 3; e++)
-        if (o.GetRoleSlotData(e + 1)?.GetRoleData?.IsSelf)
-          return this.l4t[e].GetGuideUiItemAndUiItemForShowEx(t);
+    if (!(t.length < 1)) {
+      var e = t[0];
+      if (e.includes("FirstSelf")) {
+        var r = ModelManager_1.ModelManager.EditBattleTeamModel;
+        for (let e = 0; e < 3; e++)
+          if (r.GetRoleSlotData(e + 1)?.GetRoleData?.IsSelf)
+            return this.l4t[e]?.GetGuideUiItemAndUiItemForShowEx(t);
+      }
+      return e.includes("FirstDangoSlot")
+        ? this.l4t[0]?.GetGuideUiItemAndUiItemForShowEx(t)
+        : void 0;
     }
   }
   Ore() {
@@ -791,6 +865,10 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TowerDefensePhantomChanged,
         this.Ozs,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnAbyssDangoSelect,
+        this.fR1,
       );
   }
   kre() {
@@ -821,6 +899,10 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TowerDefensePhantomChanged,
         this.Ozs,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnAbyssDangoSelect,
+        this.fR1,
       );
   }
   j4t(e) {
@@ -833,64 +915,74 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         ),
       UiManager_1.UiManager.OpenView("TeamRoleSelectView", e));
   }
+  GetUseWay() {
+    let e = 4;
+    return (
+      ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation()
+        ? (e = 29)
+        : ModelManager_1.ModelManager.WeeklyRogueModel.IsWeeklyRogueOpen() &&
+          (e = 39),
+      e
+    );
+  }
   z4t(e) {
     var t = ModelManager_1.ModelManager.EditBattleTeamModel,
-      o = t.GetRoleList(),
-      r = t.GetRoleSlotData(e)?.GetRoleData?.ConfigId,
-      r = new TeamRoleSelectView_1.TeamRoleSelectViewData(
-        ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation() ? 29 : 4,
-        r,
+      r = t.GetRoleList(),
+      o = t.GetRoleSlotData(e)?.GetRoleData?.ConfigId,
+      o = new TeamRoleSelectView_1.TeamRoleSelectViewData(
+        this.GetUseWay(),
         o,
+        r,
         this.X4t,
         this.O4t,
         e,
       ),
-      i =
-        (r.SetGetConfirmButtonEnableFunction(this.W4t),
-        r.SetGetConfirmButtonTextFunction(this.Q4t),
-        r.SetHideFinishCallBack(this.P4t),
+      n =
+        (o.SetGetConfirmButtonEnableFunction(this.W4t),
+        o.SetGetConfirmButtonTextFunction(this.Q4t),
+        o.SetHideFinishCallBack(this.P4t),
         ModelManager_1.ModelManager.EditBattleTeamModel
           .IsMultiInstanceDungeon &&
-          r.SetOtherTeamSlotData(
+          o.SetOtherTeamSlotData(
             ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData,
           ),
-        r.SetConfirmCheckFunction(this.S4t),
-        (r.IsNeedRevive = this.M4t),
-        (r.CanJoinTeam = this.v4t),
+        o.SetConfirmCheckFunction(this.S4t),
+        (o.IsNeedRevive = this.M4t),
+        (o.CanJoinTeam = this.v4t),
         new Array());
     for (const a of t.GetAllRoleSlotData) {
-      var n = a.GetRoleData;
-      !n ||
+      var i = a.GetRoleData;
+      !i ||
         (t.IsMultiInstanceDungeon &&
-          n.PlayerId !==
+          i.PlayerId !==
             ModelManager_1.ModelManager.CreatureModel.GetPlayerId()) ||
-        i.push(n.ConfigId);
+        n.push(i.ConfigId);
     }
-    return (r.FormationRoleList = i), r;
+    return (o.FormationRoleList = n), o;
   }
   T4t(e) {
     if (e) {
       var e = ModelManager_1.ModelManager.EditBattleTeamModel,
-        o = e.GetAllRoleSlotData,
-        r = new Array(),
-        i = e.GetLeaderPlayerId;
+        r = e.GetAllRoleSlotData,
+        o = new Array(),
+        n = e.GetLeaderPlayerId;
       let t = !1;
       for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-        var n = o[e - 1],
+        var i = r[e - 1],
           a = this.Z4t(e);
-        n &&
+        i &&
           a &&
-          ((n = n.GetRoleData)
-            ? n.PlayerId === i && (t ? r.push(a) : (t = !0))
-            : r.push(a));
+          ((i = i.GetRoleData)
+            ? i.PlayerId === n && (t ? o.push(a) : (t = !0))
+            : o.push(a));
       }
       var l =
         ModelManager_1.ModelManager.InstanceDungeonModel.GetNeedMatchSize();
       const M = ModelManager_1.ModelManager.InstanceDungeonEntranceModel;
-      var s = M.MatchingTime;
+      var _ = M.MatchingTime;
       for (let e = 0; e < l; e++) {
-        var _ = r.pop();
-        _?.SetMatchState(!0), _?.SetMatchTime(s);
+        var s = o.pop();
+        s?.SetMatchState(!0), s?.SetMatchTime(_);
       }
       (M.MatchingTime = 0),
         (M.OnStopTimer = () => !M.EditBattleTeamMatching),
@@ -899,11 +991,38 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         );
     } else for (const t of this.l4t) t.SetMatchState(!1);
   }
+  $oh() {
+    var e;
+    ModelManager_1.ModelManager.EditBattleTeamModel.NeedEntrance
+      ? InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.ContinueEntranceFlow()
+      : ((ModelManager_1.ModelManager.EditBattleTeamModel.NeedEntrance = !0),
+        (e =
+          ModelManager_1.ModelManager.EditBattleTeamModel
+            .GetOwnRoleConfigIdList[0]),
+        ModelManager_1.ModelManager.EditBattleTeamModel.IsFormTeleportAction
+          ? ((ModelManager_1.ModelManager.EditBattleTeamModel.IsFormTeleportAction =
+              !1),
+            InstanceDungeonController_1.InstanceDungeonController.TeleportDungeonRequest(
+              e,
+            ))
+          : InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
+              ModelManager_1.ModelManager.InstanceDungeonEntranceModel
+                .InstanceId,
+              e,
+              0,
+              0,
+              ModelManager_1.ModelManager.InstanceDungeonEntranceModel
+                .TransitionOption,
+              ModelManager_1.ModelManager.TowerDefenseModel.GetProtocolPhantomIdList(
+                e,
+              ),
+            ));
+  }
   A4t() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Formation",
-        8,
+        48,
         "[EditBattleTeam]队长{PlayerId} 请求进入副本",
         ["{PlayerId}", ModelManager_1.ModelManager.PlayerInfoModel.GetId()],
       ),
@@ -918,121 +1037,124 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
   RefreshEnterButton() {
     var e = this.GetText(5),
       t = this.GetButton(6).RootUIComp,
-      o = this.GetButton(7).RootUIComp,
-      r = ModelManager_1.ModelManager.EditBattleTeamModel;
-    if (r.IsMultiInstanceDungeon) {
-      var i = ModelManager_1.ModelManager.InstanceDungeonModel;
-      if (i.IsMatchTeamHost()) {
-        var n =
+      r = this.GetButton(7).RootUIComp,
+      o = ModelManager_1.ModelManager.EditBattleTeamModel;
+    if (o.IsMultiInstanceDungeon) {
+      var n = ModelManager_1.ModelManager.InstanceDungeonModel;
+      if (n.IsMatchTeamHost()) {
+        var i =
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel
             .EditBattleTeamMatching;
-        const a = n ? "EditBattleTeamCancelMatch" : "MatchingButtonLeader";
+        const a = i ? "EditBattleTeamCancelMatch" : "MatchingButtonLeader";
         LguiUtil_1.LguiUtil.SetLocalText(e, a);
-        (n = i.IsTeamNotFull() && !n),
-          (n = (t.SetUIActive(n), !i.IsAllPlayerInMatchTeam()));
-        o.SetUIActive(n);
+        (i = n.IsTeamNotFull() && !i),
+          (i = (t.SetUIActive(i), !n.IsAllPlayerInMatchTeam()));
+        r.SetUIActive(i);
       } else {
-        const a = r.GetSelfIsReady
+        const a = o.GetSelfIsReady
           ? "MatchingButtonMemberCancel"
           : "MatchingButtonMember";
         LguiUtil_1.LguiUtil.SetLocalText(e, a),
           t.SetUIActive(!1),
-          void o.SetUIActive(!1);
+          void r.SetUIActive(!1);
       }
     } else
       LguiUtil_1.LguiUtil.SetLocalText(e, "MatchingButtonLeader"),
         t.SetUIActive(!1),
-        o.SetUIActive(!1);
+        r.SetUIActive(!1);
   }
   async Uua() {
     var e = this.GetItem(0),
       t = this.GetItem(1),
-      o = this.GetItem(2);
+      r = this.GetItem(2);
     await this.e5t(e, 1),
       await this.e5t(t, 2),
-      await this.e5t(o, 3),
+      await this.e5t(r, 3),
       this.GetButton(18).RootUIComp.SetUIActive(!1);
   }
   async e5t(e, t) {
-    var o = new FormationRoleView_1.FormationRoleView(t);
-    o.BindOnSelectRole(this.H4t),
-      await o.CreateThenShowByActorAsync(e.GetOwner()),
-      this.l4t.push(o),
+    var r = new FormationRoleView_1.FormationRoleView(t);
+    r.BindOnSelectRole(this.H4t),
+      await r.CreateThenShowByActorAsync(e.GetOwner()),
+      this.l4t.push(r),
       this.t5t(t),
-      o.SetCanAddRole(!0);
+      r.SetCanAddRole(!0);
   }
   g4t() {
     var t = ModelManager_1.ModelManager.EditBattleTeamModel,
-      o = (t.RefreshAllEmptySlotData(), this.GetButton(18).RootUIComp),
-      r = t.GetAllRoleSlotData;
-    if (r) {
+      r = (t.RefreshAllEmptySlotData(), this.GetButton(18).RootUIComp),
+      o = t.GetAllRoleSlotData;
+    if (o) {
       let e = !1;
-      for (const M of r)
-        if (M.GetRoleData) {
+      for (const g of o)
+        if (g.GetRoleData) {
           e = !0;
           break;
         }
-      o.SetUIActive(e);
+      r.SetUIActive(e);
       for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
-        var i,
-          n,
+        var n,
+          i,
           a,
           l,
+          _,
           s,
-          _ = r[e - 1];
-        _ &&
-          (i = this.Z4t(e)) &&
-          (_.IsProhibit
-            ? (this.t5t(e), i.SetCanAddRole(!1))
-            : (i.SetCanAddRole(!0),
-              (n =
+          M = o[e - 1];
+        M &&
+          (n = this.Z4t(e)) &&
+          (M.IsProhibit
+            ? (this.t5t(e), n.SetCanAddRole(!1))
+            : (n.SetCanAddRole(!0),
+              (i =
                 ModelManager_1.ModelManager.EditBattleTeamModel
                   .IsMultiInstanceDungeon),
-              (_ = _.GetRoleData)
-                ? ((a = _.ConfigId),
-                  (l = _.Level),
+              (M = M.GetRoleData)
+                ? ((a = M.ConfigId),
+                  (l = M.Level),
+                  (_ = M.SkinId),
                   (s = ModelManager_1.ModelManager.RoleModel.GetRoleName(a)),
-                  n
+                  i
                     ? (this.t5t(
                         e,
                         a,
+                        _,
                         l,
-                        _.GetName(),
-                        _.OnlineIndex ?? 1,
-                        _.PlayerId,
+                        M.GetName(),
+                        M.OnlineIndex ?? 1,
+                        M.PlayerId,
                       ),
-                      this.tQa(e, _.ThirdPartyOnlineId),
-                      i.RefreshPrepareState())
-                    : this.t5t(e, a, l, s, 0, 0))
-                : (this.t5t(e), n && i.RefreshPrepareState())));
+                      this.LXa(e, M.ThirdPartyOnlineId),
+                      n.RefreshPrepareState())
+                    : this.t5t(e, a, _, l, s, 0, 0))
+                : (this.t5t(e), i && n.RefreshPrepareState())));
       }
       t =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel
           .EditBattleTeamMatching;
       this.T4t(t), this.p4t();
-    } else o.SetUIActive(!1);
+    } else r.SetUIActive(!1);
   }
-  tQa(e, t) {
+  LXa(e, t) {
     e = this.Z4t(e);
     e && e.RefreshPlayStationItem(t);
   }
-  t5t(t, o = 0, r = 0, i = "", n = 0, a = 0) {
-    var l = t - 1,
+  t5t(t, r = 0, o = 0, n = 0, i = "", a = 0, l = 0) {
+    var _ = t - 1,
       t = this.Z4t(t);
     if (t) {
-      const s = this.GetUiSpriteTransition(this.u4t[l]);
+      const s = this.GetUiSpriteTransition(this.u4t[_]);
       let e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "SP_TeamRoleSkillNone",
       );
-      if (o) {
-        t.Refresh(o, r, i, n, a);
-        l = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o)?.SkillId;
-        if (l)
-          for (const _ of ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
-            l,
+      if (r) {
+        t.Refresh(r, o, n, i, a, l, "");
+        _ = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(r)?.SkillId;
+        if (_)
+          for (const M of ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
+            _,
           ))
-            if (_.SkillType === EditFormationDefine_1.EXIT_SKILL_TYPE) {
-              e = _.Icon;
+            if (M.SkillType === EditFormationDefine_1.EXIT_SKILL_TYPE) {
+              e = M.Icon;
               break;
             }
       } else t.ResetRole();
@@ -1049,9 +1171,9 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
   f4t() {
     var e,
       t = this.GetButton(4),
-      o = ModelManager_1.ModelManager.EditBattleTeamModel;
+      r = ModelManager_1.ModelManager.EditBattleTeamModel;
     if (
-      o.IsMultiInstanceDungeon &&
+      r.IsMultiInstanceDungeon &&
       ModelManager_1.ModelManager.InstanceDungeonModel.IsMatchTeamHost()
     )
       if (
@@ -1059,7 +1181,7 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
           .EditBattleTeamMatching
       )
         t.SetSelfInteractive(!0);
-      else if (o.GetIsAllReady) {
+      else if (r.GetIsAllReady) {
         if (
           TowerDefenceController_1.TowerDefenseController.CheckInUiFlow() &&
           !TowerDefenceController_1.TowerDefenseController.CheckAllPhantomsReady()
@@ -1068,48 +1190,70 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Formation",
-                65,
+                64,
                 "[EditBattleTeam] 塔防队伍声骸数不足",
+              ),
+            void t.SetSelfInteractive(!1)
+          );
+        if (
+          ModelManager_1.ModelManager.DangoAbyssModel.CheckInAbyssEditFormationState() &&
+          !ModelManager_1.ModelManager.DangoAbyssModel.CheckAllDangoReady()
+        )
+          return (
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Formation",
+                27,
+                "[EditBattleTeam] 团子深渊队伍团子数不足",
               ),
             void t.SetSelfInteractive(!1)
           );
         t.SetSelfInteractive(!0);
       } else
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Formation", 49, "[EditBattleTeam] 有玩家未准备"),
+          Log_1.Log.Info("Formation", 48, "[EditBattleTeam] 有玩家未准备"),
           t.SetSelfInteractive(!1);
     else
       !ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation() &&
-      o.IsAllRoleDie
+      r.IsAllRoleDie
         ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Formation", 49, "[EditBattleTeam] 全角色已死亡"),
+            Log_1.Log.Info("Formation", 48, "[EditBattleTeam] 全角色已死亡"),
           t.SetSelfInteractive(!1))
-        : o.GetAllRoleCanAddToTeam()
-          ? ((e = o.GetRoleCountInRoleSlot()),
-            (!o.IsMultiInstanceDungeon &&
+        : r.GetAllRoleCanAddToTeam()
+          ? ((e = r.GetRoleCountInRoleSlot()),
+            (!r.IsMultiInstanceDungeon &&
               !TowerDefenceController_1.TowerDefenseController.CheckInUiFlow()) ||
-            o.IsInLimitRoleCount(e)
+            r.IsInLimitRoleCount(e)
               ? TowerDefenceController_1.TowerDefenseController.CheckInUiFlow() &&
                 !TowerDefenceController_1.TowerDefenseController.CheckAllPhantomsReady()
                 ? (Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Formation",
-                      65,
+                      64,
                       "[EditBattleTeam] 塔防队伍声骸数不足",
                     ),
                   t.SetSelfInteractive(!1))
-                : t.SetSelfInteractive(!0)
+                : ModelManager_1.ModelManager.DangoAbyssModel.CheckInAbyssEditFormationState() &&
+                    !ModelManager_1.ModelManager.DangoAbyssModel.CheckAllDangoReady()
+                  ? (Log_1.Log.CheckInfo() &&
+                      Log_1.Log.Info(
+                        "Formation",
+                        27,
+                        "[EditBattleTeam] 团子深渊队伍团子数不足",
+                      ),
+                    t.SetSelfInteractive(!1))
+                  : t.SetSelfInteractive(!0)
               : (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Formation",
-                    49,
+                    48,
                     "[EditBattleTeam] 角色人数不符合要求",
                   ),
                 t.SetSelfInteractive(!1)))
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Formation",
-                49,
+                48,
                 "[EditBattleTeam] 未通过副本条件检测",
               ),
             t.SetSelfInteractive(!1));
@@ -1139,19 +1283,31 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
         : 0
       : 4;
   }
+  hu1() {
+    var e =
+      ModelManager_1.ModelManager.EditBattleTeamModel.GetInstanceDungeonId;
+    if (
+      void 0 !== e &&
+      33 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          ?.InstSubType
+    )
+      return !0;
+    e =
+      ModelManager_1.ModelManager.EditBattleTeamModel.GetCurrentFightFormation;
+    return ModelManager_1.ModelManager.GameModeModel.IsMulti || !e.ChooseRole;
+  }
   async Y4t() {
-    var e = this.GetItem(11),
-      t =
-        ModelManager_1.ModelManager.EditBattleTeamModel
-          .GetCurrentFightFormation;
-    ModelManager_1.ModelManager.GameModeModel.IsMulti || !t.ChooseRole
+    var e,
+      t = this.GetItem(11);
+    this.hu1()
       ? this.GetItem(12).SetUIActive(!1)
-      : ((t = new CommonTabComponentData_1.CommonTabComponentData(
+      : ((e = new CommonTabComponentData_1.CommonTabComponentData(
           this.R6e,
           this.$4t,
           this.yqe,
         )),
-        (this.Ivt = new TabComponentWithTitle_1.TabComponentWithTitle(e, t)),
+        (this.Ivt = new TabComponentWithTitle_1.TabComponentWithTitle(t, e)),
         await this.Ivt.RefreshTabItemAsync(MAX_FORMATION_ID - 1));
   }
   E4t(e) {
@@ -1174,32 +1330,32 @@ class EditBattleTeamView extends UiViewBase_1.UiViewBase {
   }
   mGe(e) {
     var t = ModelManager_1.ModelManager.EditBattleTeamModel,
-      o = this.GetText(16);
-    let r = void 0;
+      r = this.GetText(16);
+    let o = void 0;
     e
       ? ((e = ModelManager_1.ModelManager.TowerModel.CurrentSelectFloor),
-        (i = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e)),
+        (n = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e)),
         (e =
           ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerAreaName(e)),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(16),
           "Text_TowerAreaFloor_Text",
           e,
-          i.Floor,
+          n.Floor,
         ),
-        (r = i.RecommendElement))
+        (o = n.RecommendElement))
       : (e = t.GetCurrentDungeonConfig) &&
-        (LguiUtil_1.LguiUtil.SetLocalTextNew(o, e.MapName),
-        (r = e.RecommendElement));
-    var i = this.GetItem(23);
-    if (!r || r.length <= 0) i.SetUIActive(!1);
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(r, e.MapName),
+        (o = e.RecommendElement));
+    var n = this.GetItem(23);
+    if (!o || o.length <= 0) n.SetUIActive(!1);
     else {
-      i.SetUIActive(!0);
-      var n = this.GetItem(21),
+      n.SetUIActive(!0);
+      var i = this.GetItem(21),
         a = this.GetItem(22);
-      for (const s of r) {
-        var l = LguiUtil_1.LguiUtil.CopyItem(a, n),
-          l = new MiniElementItem_1.MiniElementItem(s, l, l.GetOwner());
+      for (const _ of o) {
+        var l = LguiUtil_1.LguiUtil.CopyItem(a, i),
+          l = new MiniElementItem_1.MiniElementItem(_, l, l.GetOwner());
         this._4t.push(l);
       }
       a.SetUIActive(!1);

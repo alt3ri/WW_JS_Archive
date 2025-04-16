@@ -47,7 +47,7 @@ class UiCameraAnimationHandle {
   Activate(a, i = !0, e = !0) {
     (this.$Ao = a),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("CameraAnimation", 8, "激活界面镜头状态", [
+        Log_1.Log.Info("CameraAnimation", 58, "激活界面镜头状态", [
           "HandleData",
           this.$Ao.ToString(),
         ]);
@@ -57,7 +57,7 @@ class UiCameraAnimationHandle {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
-            8,
+            58,
             "激活界面镜头状态时，激活了一个空状态",
             ["HandleData", this.$Ao.ToString()],
           ),
@@ -84,7 +84,7 @@ class UiCameraAnimationHandle {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "CameraAnimation",
-                8,
+                58,
                 "激活界面镜头状态时，填了BlendInCameraSequence，但是目标Actor无法找到，直接休眠UI相机状态",
                 ["HandleData", this.$Ao.ToString()],
               ),
@@ -98,7 +98,7 @@ class UiCameraAnimationHandle {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "CameraAnimation",
-                8,
+                58,
                 "激活界面镜头状态时，填了BlendInCameraSequence，会直接播放Sequence而不会进行其他线性变化计算",
                 ["HandleData", this.$Ao.ToString()],
               ),
@@ -123,6 +123,7 @@ class UiCameraAnimationHandle {
               ),
               this.oPo(this.$Ao.GetTargetArmCollisionTest()),
               this.SetCameraFieldOfView(this.$Ao.GetTargetFieldOfView()),
+              this.SetCameraFocalRegion(this.$Ao.GetTargetFocalRegion()),
               this.SetCameraPostProcessBlendWeight(
                 this.$Ao.GetTargetPostProcessBlendWeight(),
               ),
@@ -143,7 +144,7 @@ class UiCameraAnimationHandle {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "CameraAnimation",
-                  8,
+                  58,
                   "激活界面镜头状态时，当前界面在加载中，过渡到模糊镜头效果",
                   ["HandleData", this.$Ao.ToString()],
                 ),
@@ -160,7 +161,7 @@ class UiCameraAnimationHandle {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "CameraAnimation",
-                  8,
+                  58,
                   "激活界面镜头状态时，当前界面不在加载中，所以停止模糊效果",
                   ["HandleData", this.$Ao.ToString()],
                 ),
@@ -190,7 +191,7 @@ class UiCameraAnimationHandle {
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "CameraAnimation",
-                8,
+                58,
                 "激活界面镜头状态时，找不到对应位置或旋转，可能是对应目标无法找到",
                 ["HandleData", this.$Ao.ToString()],
                 ["ReplaceCameraTag", this.$Ao.ReplaceCameraTag],
@@ -246,7 +247,7 @@ class UiCameraAnimationHandle {
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "CameraAnimation",
-              8,
+              58,
               "还原界面镜头状态时，填了BlendOutCameraSequence，会直接播放Sequence而不会进行其他线性变化计算",
               ["HandleData", this.$Ao.ToString()],
             )
@@ -258,7 +259,7 @@ class UiCameraAnimationHandle {
             (s = this.XAo.bBlendOutSequenceReverse),
             (m = this.XAo.BlendOutPlayRate),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("CameraAnimation", 8, "还原镜头至战斗镜头", [
+              Log_1.Log.Info("CameraAnimation", 58, "还原镜头至战斗镜头", [
                 "HandleData",
                 this.$Ao.ToString(),
               ]),
@@ -283,7 +284,7 @@ class UiCameraAnimationHandle {
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "CameraAnimation",
-            8,
+            58,
             "找不到镜头配置，强制还原镜头至战斗镜头",
             ["HandleData", this.$Ao.ToString()],
           ),
@@ -295,7 +296,7 @@ class UiCameraAnimationHandle {
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
-            8,
+            58,
             "界面镜头状态 Revert(BlendOut) 完成",
             ["HandleData", this.$Ao.ToString()],
           ),
@@ -304,7 +305,7 @@ class UiCameraAnimationHandle {
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "CameraAnimation",
-          8,
+          58,
           "界面镜头状态 Revert(BlendOut) 完成时已被重置",
         );
   }
@@ -406,6 +407,11 @@ class UiCameraAnimationHandle {
       a,
     );
   }
+  SetCameraFocalRegion(a) {
+    UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraPostEffectComponent.SetCameraFocalRegion(
+      a,
+    );
+  }
   SetCameraPostProcessBlendWeight(a) {
     UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraPostEffectComponent.SetCameraPostProcessBlendWeight(
       a,
@@ -414,7 +420,7 @@ class UiCameraAnimationHandle {
   SetWidgetCameraAttachToAnimationActor() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.CameraActorAttachToSpringActor(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.SetCameraActorRelativeLocation(
-        Vector_1.Vector.ZeroVector,
+        Vector_1.Vector.ZeroVectorDouble,
       );
   }
   SetWidgetCameraDetachFromAnimationActor() {
@@ -431,6 +437,11 @@ class UiCameraAnimationHandle {
           t,
         )
       );
+  }
+  DeepCopyCameraInfo(a) {
+    this.SetUiCameraAnimationRotation(a.K2_GetActorRotation()),
+      this.SetUiCameraAnimationLocation(a.D_K2_GetActorLocation()),
+      this.SetCameraFieldOfView(a.CameraComponent.FieldOfView);
   }
 }
 exports.UiCameraAnimationHandle = UiCameraAnimationHandle;

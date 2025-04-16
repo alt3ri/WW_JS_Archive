@@ -128,7 +128,7 @@ class BattleUiExploreModeData {
   }
   oXe(e) {
     return (
-      e.EntityHandle.Entity.GetComponent(161).DirectionState ===
+      e.EntityHandle.Entity.GetComponent(173).DirectionState ===
       CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
     );
   }

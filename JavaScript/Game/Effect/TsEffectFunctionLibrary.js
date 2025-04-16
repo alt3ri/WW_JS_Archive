@@ -7,19 +7,20 @@ const puerts_1 = require("puerts"),
   EffectParameterNiagara_1 = require("./EffectParameter/EffectParameterNiagara"),
   EffectSystem_1 = require("./EffectSystem");
 class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
-  static SpawnEffect(e, t, f, c, n, a) {
+  Constructor() {}
+  static SpawnEffect(e, t, f, c, n, a, o = !1) {
     if (t?.IsValid())
       if (n) {
-        var o;
+        var i;
         if (!(n.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT))
           return (
-            (o = `[蓝图:${t.GetName()}] ` + n),
+            (i = `[蓝图:${t.GetName()}] ` + n),
             EffectSystem_1.EffectSystem.SpawnEffect(
               e,
               c,
               f,
-              o,
-              new EffectContext_1.EffectContext(void 0, t),
+              i,
+              new EffectContext_1.EffectContext(void 0, t, o),
             ) ?? 0
           );
         Log_1.Log.CheckError() &&
@@ -94,27 +95,23 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
           ["Reason", n],
         );
   }
-  static SpawnEffectWithActor(e, t, f, c, n, a, o) {
-    var i = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(e);
-    if (2 === i || 4 === i)
+  static SpawnEffectWithActor(e, t, f, c, n, a, o, i = !1) {
+    var r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(e);
+    if (2 === r || 4 === r)
       if (f?.IsValid())
         if (t?.IsValid())
           if (n) {
             if (!(n.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT))
               return (
-                (i = `[蓝图:${t.GetName()}] ` + n),
+                (r = `[蓝图:${t.GetName()}] ` + n),
                 EffectSystem_1.EffectSystem.SpawnEffectWithActor(
                   e,
-                  void 0,
                   f,
                   c,
-                  i,
+                  r,
                   !0,
-                  new EffectContext_1.EffectContext(void 0, t),
-                  void 0,
-                  void 0,
+                  new EffectContext_1.EffectContext(void 0, t, i),
                   !1,
-                  void 0,
                   o.valueOf(),
                 )
               );
@@ -157,7 +154,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderEffect",
-          30,
+          29,
           "TsEffectFunctionLibrary.SpawnEffectWithActor仅能于编辑时调用",
           ["Path", c],
           ["Reason", n],
@@ -293,12 +290,12 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
         }
       }
       if (n) {
-        var S = (0, puerts_1.$unref)(n),
-          L = S.Num();
-        if (0 < L) {
+        var L = (0, puerts_1.$unref)(n),
+          S = L.Num();
+        if (0 < S) {
           o.MaterialParameterFloat = [];
-          for (let e = 0; e < L; ++e)
-            o.MaterialParameterFloat.push([S.Get(e).Name, S.Get(e).Value]);
+          for (let e = 0; e < S; ++e)
+            o.MaterialParameterFloat.push([L.Get(e).Name, L.Get(e).Value]);
         }
       }
       if (a) {
@@ -313,7 +310,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
       EffectSystem_1.EffectSystem.SetEffectParameterNiagara(e, o);
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderEffect", 26, "特效句柄无效");
+        Log_1.Log.Error("RenderEffect", 25, "特效句柄无效");
   }
   static EditorTickHandle(e, t) {
     EffectSystem_1.EffectSystem.TickHandleInEditor(e, t);
@@ -357,12 +354,9 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static SetEffectActorRelativeLocation(e, t, f, c) {
     EffectSystem_1.EffectSystem.IsValid(e) &&
-      EffectSystem_1.EffectSystem.GetEffectActor(e).K2_SetActorRelativeLocation(
-        t,
-        f,
-        void 0,
-        c,
-      );
+      EffectSystem_1.EffectSystem.GetEffectActor(
+        e,
+      ).D_K2_SetActorRelativeLocation(t, f, void 0, c);
   }
   static SetEffectHiddenInGame(e, t) {
     EffectSystem_1.EffectSystem.IsValid(e)
@@ -374,7 +368,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",
-          46,
+          45,
           "设置EffectHiddenInGame,但找不到对应",
           ["handle", e],
         );
@@ -385,7 +379,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "RenderEffect",
-          37,
+          36,
           "设置EffectIgnoreVisibilityOptimize，句柄失效",
           ["handle", e],
         );
@@ -394,7 +388,7 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
     EffectSystem_1.EffectSystem.IsValid(e)
       ? EffectSystem_1.EffectSystem.SetEffectStoppingTime(e, t)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("RenderEffect", 37, "设置EffectStoppingTime，句柄失效", [
+        Log_1.Log.Warn("RenderEffect", 36, "设置EffectStoppingTime，句柄失效", [
           "handle",
           e,
         ]);
@@ -402,12 +396,8 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SetGlobalStoppingTime(e, t) {
     EffectSystem_1.EffectSystem.SetGlobalStoppingTime(e, t);
   }
-  static SetPublicToSequence(e, t) {
-    EffectSystem_1.EffectSystem.SetPublicToSequence(e, t);
-  }
-  static SetSimulateFromSequence(e, t) {
-    EffectSystem_1.EffectSystem.SetSimulateFromSequence(e, t);
-  }
+  static SetPublicToSequence(e, t) {}
+  static SetSimulateFromSequence(e, t) {}
 }
 exports.default = TsEffectFunctionLibrary;
 //# sourceMappingURL=TsEffectFunctionLibrary.js.map

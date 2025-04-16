@@ -27,6 +27,7 @@ const UE = require("ue"),
 class TutorialView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
+      (this.IsOpenedByGuide = !1),
       (this.Ivt = void 0),
       (this.JPt = void 0),
       (this.tPe = void 0),
@@ -72,10 +73,17 @@ class TutorialView extends UiViewBase_1.UiViewBase {
             ModelManager_1.ModelManager.TutorialModel.GetUnlockedTutorialDataByType(
               t,
             ));
-        this.JPt.RefreshByData(t),
+        let i = -1;
+        -1 < this.hRl &&
+        ((i = t.findIndex((t) => t.SavedData?.TutorialId === this.hRl)),
+        (this.hRl = -1) < i)
+          ? (t[i].Selected = !0)
+          : (t[0].Selected = !0),
+          this.JPt.RefreshByData(t),
           t.length
-            ? TimerSystem_1.TimerSystem.Next(() => {
-                this.JPt?.GetScrollItemFromIndex(0).OnSelected(!0);
+            ? -1 < i &&
+              TimerSystem_1.TimerSystem.Next(() => {
+                this.JPt?.ScrollToItemIndex(i);
               })
             : this.FRo(),
           this.GetItem(5).SetUIActive(!t.length),
@@ -93,6 +101,19 @@ class TutorialView extends UiViewBase_1.UiViewBase {
           i,
           new CommonTabTitleData_1.CommonTabTitleData(t),
         );
+      }),
+      (this.hRl = -1),
+      (this._Rl = () => {
+        var t, i;
+        this.OpenParam &&
+        ((t = this.OpenParam),
+        (i = ModelManager_1.ModelManager.TutorialModel?.GetSavedDataById(t))
+          ?.TutorialData)
+          ? ((i = i.TutorialData.TutorialType),
+            (this.hRl = t),
+            this.Ivt.SelectToggleByIndex(i),
+            (this.hRl = -1))
+          : this.Ivt.SelectToggleByIndex(0);
       }),
       (this.HRo = (t, i, e) => {
         var s = new TutorialDataItem_1.TutorialDataItem();
@@ -211,6 +232,11 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       )),
       this.FRo();
   }
+  async RefreshItemDetailWhenNeed(t) {
+    await TimerSystem_1.TimerSystem.Wait(TimerSystem_1.MIN_TIME),
+      -1 < t && (await this.JPt?.ScrollToItemIndex(t)),
+      this.JPt?.GetScrollItemFromIndex(-1 < t ? t : 0).OnSelected(!0);
+  }
   FRo() {
     this.GetItem(4).SetUIActive(!1), (this.fGt = void 0);
   }
@@ -222,9 +248,7 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       s === TutorialDefine_1.ETutorialType.All &&
         ((e[t].RedDotName = "TutorialTypeNew"), (e[t].RedDotUid = s));
     }
-    this.Ivt.RefreshTabItem(e, () => {
-      this.Ivt.SelectToggleByIndex(0);
-    });
+    this.Ivt.RefreshTabItem(e, this._Rl);
   }
   OnAfterHide() {
     this.JPt.ClearChildren(), this.FRo(), (this.NRo = void 0);
@@ -236,6 +260,11 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       this.JPt?.ClearChildren(),
       (this.JPt = void 0),
       (this.s8e = []),
+      this.IsOpenedByGuide &&
+        (ModelManager_1.ModelManager.GuideModel?.ClipTipState(),
+        ModelManager_1.ModelManager.GuideModel?.RemoveCurrentTutorialInfo(),
+        ModelManager_1.ModelManager.GuideModel?.TryShowTutorial(),
+        (this.IsOpenedByGuide = !1)),
       TutorialController_1.TutorialController.TryOpenAwardUiViewPending();
   }
   FTt(t) {

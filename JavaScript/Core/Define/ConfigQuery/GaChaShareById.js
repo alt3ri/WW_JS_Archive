@@ -17,25 +17,27 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configGaChaShareById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configGaChaShareById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph("configGaChaShareById.Init"),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGaChaShareById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configGaChaShareById.GetConfig(";
 exports.configGaChaShareById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var a = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       e =
-        (a.Start(),
+        (a?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (n) {
@@ -43,8 +45,8 @@ exports.configGaChaShareById = {
         const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (t)
           return (
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -76,8 +78,8 @@ exports.configGaChaShareById = {
               ((e = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -85,8 +87,8 @@ exports.configGaChaShareById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    a.Stop(),
-      getConfigStat.Stop(),
+    a?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

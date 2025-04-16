@@ -4,10 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../Common/TimeUtil"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -18,7 +20,7 @@ const UE = require("ue"),
 class TowerDefenceReviveView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.L6a = void 0),
+      (this.pIl = void 0),
       (this.YNi = () => {
         var e;
         ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
@@ -27,21 +29,26 @@ class TowerDefenceReviveView extends UiTickViewBase_1.UiTickViewBase {
               108,
             )).FunctionMap.set(1, this.rsa),
             e.FunctionMap.set(2, this.osa),
+            e.SetCloseFunction(this.PNo),
+            (e.FinishOpenFunction = this.jSl),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               e,
-            ),
-            this.GetButton(7).SetSelfInteractive(!1),
-            this.Hide());
+            ));
       }),
-      (this.rsa = () => {
-        this.GetButton(7).SetSelfInteractive(!0), this.Show();
-      }),
+      (this.rsa = () => {}),
       (this.osa = () => {
-        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().then(
-          (e) => {
-            e && this.CloseMe();
-          },
-        );
+        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
+      }),
+      (this.jSl = (e, i) => {
+        UiManager_1.UiManager.IsViewOpen("TowerDefenceReviveView") && e
+          ? (this.pIl = i)
+          : ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseNetWorkConfirmBoxView(
+              i,
+            );
+      }),
+      (this.PNo = () => {
+        UiManager_1.UiManager.IsViewOpen("TowerDefenceReviveView") &&
+          (this.pIl = void 0);
       }),
       (this.o1a = () => {
         this.CloseMe();
@@ -60,10 +67,9 @@ class TowerDefenceReviveView extends UiTickViewBase_1.UiTickViewBase {
       (this.BtnBindInfo = [[7, this.YNi]]);
   }
   async OnBeforeStartAsync() {
-    void 0 !== this.OpenParam && (this.L6a = this.OpenParam),
-      await new TowerDefenceReviveItem().CreateThenShowByActorAsync(
-        this.GetButton(7).RootUIComp.GetOwner(),
-      );
+    await new TowerDefenceReviveItem().CreateThenShowByActorAsync(
+      this.GetButton(7).RootUIComp.GetOwner(),
+    );
   }
   OnBeforeShow() {
     this.GetButton(1).RootUIComp.SetUIActive(!1),
@@ -73,29 +79,22 @@ class TowerDefenceReviveView extends UiTickViewBase_1.UiTickViewBase {
       this.GetItem(3).SetUIActive(!1);
   }
   OnStart() {
-    this.L6a
-      ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-          this.GetText(0),
-          TIPS_TEXT_ID_NEW,
-          Math.round(this.L6a.RemainTime),
-        )
-      : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), TIPS_TEXT_ID),
+    this.B2t(),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(8),
         TIPS_UNDER_BUTTON_TEXT_ID,
       );
   }
+  OnBeforeDestroy() {
+    (ModelManager_1.ModelManager.TowerDefenseModel.SelfReviveTargetTimestampForUi =
+      void 0) !== this.pIl &&
+      ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseNetWorkConfirmBoxView(
+        this.pIl,
+      ),
+      (this.pIl = void 0);
+  }
   OnTick(e) {
-    this.L6a &&
-      (0 !== this.L6a.RemainTime &&
-        LguiUtil_1.LguiUtil.SetLocalTextNew(
-          this.GetText(0),
-          TIPS_TEXT_ID_NEW,
-          Math.round(this.L6a.RemainTime),
-        ),
-      0 < this.L6a.RemainTime
-        ? (this.L6a.RemainTime = this.L6a.RemainTime - 0.001 * e)
-        : (this.L6a.RemainTime = 0));
+    this.B2t();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -108,6 +107,25 @@ class TowerDefenceReviveView extends UiTickViewBase_1.UiTickViewBase {
       EventDefine_1.EEventName.TowerDefenseOnTowerDefenseBattleEndNotify,
       this.o1a,
     );
+  }
+  B2t() {
+    var e,
+      i =
+        ModelManager_1.ModelManager.TowerDefenseModel
+          .SelfReviveTargetTimestampForUi;
+    void 0 === i
+      ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), TIPS_TEXT_ID)
+      : i < (e = TimeUtil_1.TimeUtil.GetServerStopTimeStamp())
+        ? this.GetText(0)?.SetUIActive(!1)
+        : (this.GetText(0)?.SetUIActive(!0),
+          (i = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat3(
+            0.5 + TimeUtil_1.TimeUtil.Millisecond * (i - e),
+          )),
+          LguiUtil_1.LguiUtil.SetLocalTextNew(
+            this.GetText(0),
+            TIPS_TEXT_ID_NEW,
+            i.CountDownText,
+          ));
   }
 }
 exports.TowerDefenceReviveView = TowerDefenceReviveView;

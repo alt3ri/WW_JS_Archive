@@ -9,24 +9,25 @@ const UE = require("ue"),
   tmpVector2D = new UE.Vector2D(),
   tmpVector = Vector_1.Vector.Create();
 class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static GetMoveVectorCache(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveVectorCache();
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 61).GetMoveVectorCache();
     return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetMoveDirectionCache(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveDirectionCache();
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 61).GetMoveDirectionCache();
     return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetWorldMoveDirectionCache(t) {
     t = EntitySystem_1.EntitySystem.GetComponent(
       t,
-      54,
+      61,
     ).GetWorldMoveDirectionCache();
     return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetMoveVector(t) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveVector(tmpVector),
+      EntitySystem_1.EntitySystem.GetComponent(t, 61).GetMoveVector(tmpVector),
       (tmpVector2D.X = tmpVector.X),
       (tmpVector2D.Y = tmpVector.Y),
       tmpVector2D
@@ -34,7 +35,7 @@ class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetMoveDirection(t) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 54).GetMoveDirection(
+      EntitySystem_1.EntitySystem.GetComponent(t, 61).GetMoveDirection(
         tmpVector,
       ),
       (tmpVector2D.X = tmpVector.X),
@@ -66,9 +67,9 @@ class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     EntitySystem_1.EntitySystem.GetComponent(t, 3).UseControllerRotation = e;
   }
   static SetBpInputComponent(t, e) {
-    var o = EntitySystem_1.EntitySystem.GetComponent(t, 54),
+    var o = EntitySystem_1.EntitySystem.GetComponent(t, 61),
       t = EntitySystem_1.EntitySystem.GetComponent(t, 3);
-    (o.BpInputComp = e).OwnerActor = t.Actor;
+    o.SetBpInputComp(e), (e.OwnerActor = t.Actor);
   }
 }
 exports.default = TsControlBlueprintFunctionLibrary;

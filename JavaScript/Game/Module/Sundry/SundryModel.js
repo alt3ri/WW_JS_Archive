@@ -21,7 +21,8 @@ class SundryModel extends ModelBase_1.ModelBase {
       (this.IsBlockTips = !1),
       (this.eIn = 0),
       (this.ModuleDebugLevelMap = new Map()),
-      (this.TipsActorDataMap = void 0);
+      (this.TipsActorDataMap = void 0),
+      (this.SkeletalTestActors = new Array());
   }
   set BlockTpDungeonCount(e) {
     this.eIn = e < 0 ? 0 : e;

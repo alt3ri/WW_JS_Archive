@@ -107,8 +107,8 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
                   UE.Rotator.MakeFromEuler(new UE.Vector(0, -90, 0)),
                   !0,
                 ),
-                this.ohr.K2_SetActorRelativeLocation(
-                  new UE.Vector(0, 0, -i.CapsuleHalfHeight),
+                this.ohr.D_K2_SetActorRelativeLocation(
+                  new UE.VectorDouble(0, 0, -i.CapsuleHalfHeight),
                   !1,
                   void 0,
                   !0,
@@ -117,7 +117,7 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
             (this.DecalShadowEnabled = !0),
             this.SetDecalShadowOpacity(this.shr))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Render", 26, "Decal Shadow找不到胶囊体", [
+            Log_1.Log.Error("Render", 25, "Decal Shadow找不到胶囊体", [
               "Actor: ",
               t.GetName(),
             ])));
@@ -130,16 +130,22 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
   }
   EnableRealtimeShadow() {
     if (!this.RealtimeShadowEnabled) {
-      for (const e of this.ihr.values()) e.SetCastShadow(!0);
-      (this.RealtimeShadowEnabled = !0),
-        this.SetRealtimeShadowOpacity(this.shr);
+      for (const t of this.ihr.values()) t.SetCastShadow(!0);
+      this.RealtimeShadowEnabled = !0;
+      var e = this.GetRenderingComponent().GetComponent(
+        RenderConfig_1.RenderConfig.IdBodyEffect,
+      );
+      e && e.SetCastShadow(!0), this.SetRealtimeShadowOpacity(this.shr);
     }
   }
   DisableRealtimeShadow() {
     if (this.RealtimeShadowEnabled) {
-      for (const e of this.ihr.values()) e.SetCastShadow(!1);
-      (this.RealtimeShadowEnabled = !1),
-        this.SetRealtimeShadowOpacity(this.shr);
+      for (const t of this.ihr.values()) t.SetCastShadow(!1);
+      this.RealtimeShadowEnabled = !1;
+      var e = this.GetRenderingComponent().GetComponent(
+        RenderConfig_1.RenderConfig.IdBodyEffect,
+      );
+      e && e.SetCastShadow(!1), this.SetRealtimeShadowOpacity(this.shr);
     }
   }
   DisableAllShadow() {
@@ -173,7 +179,7 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
       this.rhr.SetDecalMaterial(this.nhr);
     var a = 25 * e.DecalBoxScaleHori,
       i = i * e.DecalBoxScaleVerti;
-    this.rhr.SetWorldScale3D(new UE.Vector(i, a, a));
+    this.rhr.D_SetWorldScale3D(new UE.VectorDouble(i, a, a));
   }
   GetStatName() {
     return "CharDecalShadow";

@@ -25,11 +25,12 @@ class PerformActionChangeMaterial extends (exports.PerformAction =
     super(...arguments),
       (this.Type = 2),
       (this.DaPath = ""),
+      (this.Handle = 0),
       (this.NpcMatController = void 0);
   }
   Register(t) {
     this.IsRegister = !0;
-    t = t.GetComponent(172);
+    t = t.GetComponent(185);
     this.NpcMatController = t.MaterialController;
   }
   UnRegister() {
@@ -38,12 +39,13 @@ class PerformActionChangeMaterial extends (exports.PerformAction =
   Begin() {
     this.IsRegister &&
       "" !== this.DaPath &&
-      this.NpcMatController.ApplySimpleMaterialEffect(this.DaPath);
+      (this.Handle = this.NpcMatController.ApplyMaterialEffect(this.DaPath));
   }
   End() {
     this.IsRegister &&
       "" !== this.DaPath &&
-      this.NpcMatController.RemoveSimpleMaterialEffect();
+      (this.NpcMatController.RemoveMaterialEffect(this.Handle),
+      (this.Handle = 0));
   }
 }
 exports.PerformActionChangeMaterial = PerformActionChangeMaterial;
@@ -88,22 +90,22 @@ class PerformGroupController {
     var o = this.Entity.GetComponent(0),
       r = o.GetPbEntityInitData();
     if (r?.ComponentsData) {
-      var e,
+      var s,
         r = (0, IComponent_1.getComponent)(
           r.ComponentsData,
           "NpcPerformComponent",
         )?.NpcPerformState;
       if (r) {
         for (const n of r.Configs) {
-          var s = new PerformGroup(),
-            i = ((s.SwitchKey = n.State), new PerformActionChangeMaterial());
+          var e = new PerformGroup(),
+            i = ((e.SwitchKey = n.State), new PerformActionChangeMaterial());
           (i.DaPath = n.MaterialDa ?? ""),
-            s.ActionList.push(i),
-            this.AddPerformGroup(s);
+            e.ActionList.push(i),
+            this.AddPerformGroup(e);
         }
         for (const h of ICommon_1.npcPerformStateConfig[r.InitState.Type])
           this.PerformStateMap.has(h) ||
-            ((e = new PerformGroup()), this.AddPerformGroup(e));
+            ((s = new PerformGroup()), this.AddPerformGroup(s));
         let t = o.ComponentDataMap.get("cla")?.cla?.Y4n;
         (t = t || r.InitState.State), this.SwitchPerformState(t);
       }
@@ -165,7 +167,7 @@ class PerformGroupController {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "NPC",
-          51,
+          50,
           "表现组开启",
           ["Id", t.Id],
           ["Key", t.SwitchKey],
@@ -178,7 +180,7 @@ class PerformGroupController {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "NPC",
-          51,
+          50,
           "表现组关闭",
           ["Id", t.Id],
           ["Key", t.SwitchKey],

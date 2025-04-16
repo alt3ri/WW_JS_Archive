@@ -35,7 +35,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
       (this.ShowMaterialDa = void 0),
       (this.HideMaterialDa = void 0),
       (this.Debug = !1),
-      (this.SelectedTargetLocation = void 0),
+      (this.SelectedTargetLocation = Vector_1.Vector.Create()),
       (this.FoundPath = !1),
       (this.NavigationPath = void 0),
       (this.CurrentNavigationIndex = 0),
@@ -60,7 +60,36 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsShowMaterialDa = ""),
       (this.TsHideMaterialDa = ""),
       (this.TsDebug = !1),
-      (this.CacheVector = void 0);
+      (this.CacheVector = Vector_1.Vector.Create());
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.SelectedTargetLocation = Vector_1.Vector.Create()),
+      (this.FoundPath = !1),
+      (this.NavigationPath = void 0),
+      (this.CurrentNavigationIndex = 0),
+      (this.NavigationEndTime = -0),
+      (this.InBlink = !1),
+      (this.StopTimeCount = 0),
+      (this.BlinkTimeCount = 0),
+      (this.PreLocation = void 0),
+      (this.ShowMaterialData = void 0),
+      (this.HideMaterialData = void 0),
+      (this.MoveStateActural = 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsRandomRadius = 0),
+      (this.TsMinWanderDistance = 0),
+      (this.TsMaxNavigationMillisecond = 0),
+      (this.TsMoveStateForWanderOrReset = !1),
+      (this.TsMaxStopTime = 0),
+      (this.TsBlinkTime = 0),
+      (this.TsUsePatrolPointPriority = !1),
+      (this.TsShowEffectDa = ""),
+      (this.TsHideEffectDa = ""),
+      (this.TsShowMaterialDa = ""),
+      (this.TsHideMaterialDa = ""),
+      (this.TsDebug = !1),
+      (this.CacheVector = Vector_1.Vector.Create());
   }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
@@ -89,11 +118,12 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
         ? this.HideMaterialDa.AssetPathName.toString()
         : NONE_PATH),
       (this.TsDebug = this.Debug),
+      (this.SelectedTargetLocation = Vector_1.Vector.Create()),
       (this.CacheVector = Vector_1.Vector.Create()));
   }
-  ReceiveExecuteAI(i, t) {
+  ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
-    var s = i.AiController;
+    var s = t.AiController;
     if (s) {
       var e,
         h = s.AiWanderInfos?.AiWander,
@@ -126,7 +156,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
         (e = s.AiPatrol.GetLastPatrolPoint())
           ? o.DeepCopy(e)
           : o.DeepCopy(s.CharActorComp.GetInitLocation()),
-        this.FindNavPoint(i, o, r),
+        this.FindNavPoint(t, o, r),
         this.CheckPreLocationDistance(r, 0),
         this.MoveStateActural)
       ) {
@@ -134,15 +164,15 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
         case 2:
           if (
             (this.NavigationPath || (this.NavigationPath = new Array()),
-            this.CacheVector.DeepCopy(r.ActorLocationProxy),
-            r.Entity.GetComponent(92)?.PositionState ===
-              CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
-              (this.CacheVector.Z -= r.HalfHeight),
+            r.Entity.GetComponent(99)?.PositionState ===
+            CharacterUnifiedStateTypes_1.ECharPositionState.Ground
+              ? this.CacheVector.DeepCopy(r.FloorLocation)
+              : this.CacheVector.DeepCopy(r.ActorLocationProxy),
             (this.FoundPath =
               AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
-                i,
+                t,
                 this.CacheVector.ToUeVector(),
-                this.SelectedTargetLocation,
+                this.SelectedTargetLocation.ToUeVector(),
                 this.NavigationPath,
               )),
             !this.FoundPath)
@@ -153,16 +183,16 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
                 Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "BehaviorTree",
-                  58,
+                  57,
                   "[TsTaskWander]AiWander怪物复位寻路失败",
-                  ["Type", i.GetClass().GetName()],
+                  ["Type", t.GetClass().GetName()],
                 )
               );
           }
           (this.CurrentNavigationIndex = 1),
             (this.NavigationEndTime =
               Time_1.Time.WorldTime + this.TsMaxNavigationMillisecond);
-          var a = r.Entity.CheckGetComponent(92);
+          var a = r.Entity.CheckGetComponent(99);
           if (a.Valid)
             switch (this.MoveStateActural) {
               case 1:
@@ -187,46 +217,69 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
           "BehaviorTree",
           6,
           "[TsTaskWander]错误的Controller类型",
-          ["Type", i.GetClass().GetName()],
+          ["Type", t.GetClass().GetName()],
         ),
         (this.FoundPath = !1);
   }
-  FindNavPoint(i, t, s) {
-    let e = 5;
-    for (; 0 < e; --e) {
-      var h = (0, puerts_1.$ref)(this.SelectedTargetLocation),
-        r = UE.NavigationSystemV1.K2_GetRandomLocationInNavigableRadius(
-          i,
-          t.ToUeVector(),
-          h,
-          this.TsRandomRadius,
-        );
+  FindNavPoint(i, s, e) {
+    let t = 5;
+    for (var h = e.MoveComp, r = !h || h.IsStandardGravity; 0 < t; --t) {
+      var o = (0, puerts_1.$ref)(void 0);
+      let t = !1;
       if (
-        ((this.SelectedTargetLocation = (0, puerts_1.$unref)(h)),
-        r &&
-          UE.Vector.DistSquared(this.SelectedTargetLocation, s.ActorLocation) >
+        (r
+          ? ((t = UE.NavigationSystemV1.D_K2_GetRandomLocationInNavigableRadius(
+              i,
+              s.ToUeVector(),
+              o,
+              this.TsRandomRadius,
+            )),
+            this.SelectedTargetLocation.FromUeVector((0, puerts_1.$unref)(o)))
+          : ((t = !0),
+            (o = MathUtils_1.MathUtils.GetRandomFloatNumber(0, 2 * Math.PI)),
+            this.SelectedTargetLocation.Set(Math.cos(o), Math.sin(o), 0),
+            e.ActorQuatProxy.RotateVector(
+              this.SelectedTargetLocation,
+              this.SelectedTargetLocation,
+            ),
+            (o = Math.sqrt(
+              MathUtils_1.MathUtils.GetRandomFloatNumber(
+                this.TsMinWanderDistance * this.TsMinWanderDistance,
+                this.TsRandomRadius * this.TsRandomRadius,
+              ),
+            )),
+            this.SelectedTargetLocation.MultiplyEqual(o),
+            this.SelectedTargetLocation.AdditionEqual(e.FloorLocation)),
+        t &&
+          Vector_1.Vector.DistSquared(
+            this.SelectedTargetLocation,
+            e.ActorLocationProxy,
+          ) >
             this.TsMinWanderDistance * this.TsMinWanderDistance)
       )
         break;
     }
-    let o = !1;
-    (o =
-      UE.Vector.DistSquared(this.SelectedTargetLocation, s.ActorLocation) <=
+    let a = !1;
+    (a =
+      Vector_1.Vector.DistSquared(
+        this.SelectedTargetLocation,
+        e.ActorLocationProxy,
+      ) <=
       this.TsRandomRadius * this.TsRandomRadius
         ? !0
-        : o) ||
+        : a) ||
       ((this.FoundPath = !1),
       (this.NavigationPath = void 0),
-      Vector_1.Vector.VectorCopy(t, this.SelectedTargetLocation));
+      this.SelectedTargetLocation.DeepCopy(s));
   }
-  SetAiSceneEnable(i, t) {
-    this.TsMoveStateForWanderOrReset || i.AiPerception.SetAllAiSenseEnable(t);
+  SetAiSceneEnable(t, i) {
+    this.TsMoveStateForWanderOrReset || t.AiPerception.SetAllAiSenseEnable(i);
   }
-  ReceiveTickAI(i, t, s) {
+  ReceiveTickAI(t, i, s) {
     var e,
       h,
       r,
-      o = i.AiController;
+      o = t.AiController;
     o
       ? this.FoundPath || this.InBlink
         ? ((e = o.CharActorComp),
@@ -238,9 +291,9 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
                 (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "BehaviorTree",
-                    58,
+                    57,
                     "[TsTaskWander]AiWander怪物复位超时，瞬移回目标点",
-                    ["Type", i.GetClass().GetName()],
+                    ["Type", t.GetClass().GetName()],
                   ),
                 this.BlinkMoveBegin(e, !0))) ||
               ((h = Vector_1.Vector.Create(
@@ -263,16 +316,16 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
                     (Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn(
                         "BehaviorTree",
-                        58,
+                        57,
                         "[TsTaskWander]AiWander怪物游荡卡住超时，瞬移回目标点",
-                        ["Type", i.GetClass().GetName()],
+                        ["Type", t.GetClass().GetName()],
                       ),
                     this.BlinkMoveBegin(e, !0)))))
         : this.Finish(!1)
       : this.FinishExecute(!1);
   }
   OnClear() {
-    var i;
+    var t;
     this.AIOwner instanceof TsAiController_1.default &&
       (AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
       this.SetAiSceneEnable(this.AIOwner.AiController, !0),
@@ -283,7 +336,7 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
         Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(
           "BehaviorTree",
-          58,
+          57,
           "[TsTaskWander]AiWander[OnClear]怪物闪烁导致Actor碰撞为True",
           ["Actor:", this.AIOwner.AiController.CharActorComp.Actor.GetName()],
         ),
@@ -300,9 +353,9 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
         ),
         this.AIOwner.AiController.CharActorComp.Actor.CharRenderingComponent.ResetAllRenderingState()),
       this.TsMoveStateForWanderOrReset ||
-        ((i = this.AIOwner.AiController.CharActorComp.Entity),
+        ((t = this.AIOwner.AiController.CharActorComp.Entity),
         EventSystem_1.EventSystem.EmitWithTarget(
-          i,
+          t,
           EventDefine_1.EEventName.AiTaskWanderForResetEnd,
         ))),
       (this.NavigationPath = void 0),
@@ -313,67 +366,67 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
       (this.HideMaterialData = void 0),
       (this.ShowMaterialData = void 0);
   }
-  CheckPreLocationDistance(i, t) {
+  CheckPreLocationDistance(t, i) {
     var s;
     return this.PreLocation
-      ? ((s = i.ActorLocationProxy),
+      ? ((s = t.ActorLocationProxy),
         Vector_1.Vector.DistSquared(this.PreLocation, s) <
         MathUtils_1.MathUtils.MillisecondToSecond
-          ? (this.StopTimeCount += t)
+          ? (this.StopTimeCount += i)
           : (this.StopTimeCount = 0),
         this.PreLocation.DeepCopy(s),
         !(this.StopTimeCount > this.TsMaxStopTime))
-      : ((this.PreLocation = Vector_1.Vector.Create(i.ActorLocation)),
+      : ((this.PreLocation = Vector_1.Vector.Create(t.ActorLocation)),
         !(this.StopTimeCount = 0));
   }
-  BlinkMoveBegin(t, i = !1) {
+  BlinkMoveBegin(i, t = !1) {
     return !(
-      (this.MoveStateActural !== BLINK_STATE && !i) ||
-      (i && (this.MoveStateActural = BLINK_STATE),
+      (this.MoveStateActural !== BLINK_STATE && !t) ||
+      (t && (this.MoveStateActural = BLINK_STATE),
       (this.InBlink = !0),
       (this.BlinkTimeCount = 0),
       (this.ShowMaterialData = void 0),
       (this.HideMaterialData = void 0),
-      t.Actor.SetActorEnableCollision(!1),
+      i.Actor.SetActorEnableCollision(!1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "BehaviorTree",
-          58,
+          57,
           "[TsTaskWander]AiWander[BlinkMoveBegin]怪物闪烁导致Actor碰撞为False",
-          ["Actor:", t.Actor.GetName()],
+          ["Actor:", i.Actor.GetName()],
         ),
       "" !== this.TsHideEffectDa &&
-        ((i = EffectSystem_1.EffectSystem.SpawnEffect(
+        ((t = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           this.TsHideEffectDa,
           "[TsTaskWander.BlinkMoveBegin] hideEffect",
-          new EffectContext_1.EffectContext(t.Entity.Id),
+          new EffectContext_1.EffectContext(i.Entity.Id),
         )),
-        (i = EffectSystem_1.EffectSystem.GetEffectActor(i))
-          ? i.K2_SetActorLocation(t.ActorLocation, !1, void 0, !1)
+        (t = EffectSystem_1.EffectSystem.GetEffectActor(t))
+          ? t.D_K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "BehaviorTree",
-              58,
+              57,
               "[TsTaskWander]AiWander瞬移隐藏特效生成失败",
-              ["Type", t.Actor.GetName()],
+              ["Type", i.Actor.GetName()],
             )),
       "" !== this.TsHideMaterialDa
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             this.TsHideMaterialDa,
             UE.PD_CharacterControllerData_C,
-            (i) => {
-              i
+            (t) => {
+              t
                 ? (this.HideMaterialData =
-                    t.Actor.CharRenderingComponent.AddMaterialControllerData(i))
+                    i.Actor.CharRenderingComponent.AddMaterialControllerData(t))
                 : ((this.HideMaterialData = 0),
                   Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "BehaviorTree",
-                      58,
+                      57,
                       "[TsTaskWander]AiWander瞬移隐藏材质生成失败",
-                      ["Type", t.Actor.GetName()],
+                      ["Type", i.Actor.GetName()],
                     ));
             },
           )
@@ -381,45 +434,45 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
       0)
     );
   }
-  BlinkMoveTick(t, i) {
-    this.BlinkTimeCount += i;
+  BlinkMoveTick(i, t) {
+    this.BlinkTimeCount += t;
     this.BlinkTimeCount >= this.TsBlinkTime - 1 &&
       void 0 === this.ShowMaterialData &&
-      (t.SetActorLocation(
-        this.SelectedTargetLocation,
+      (i.SetActorLocation(
+        this.SelectedTargetLocation.ToUeVector(),
         "脱战节点.执行瞬移重置位置",
         !1,
       ),
-      t.FixBornLocation("脱战节点.修正角色地面位置", !0, void 0, !1),
-      t.Actor.SetActorEnableCollision(!0),
+      i.FixBornLocation("脱战节点.修正角色地面位置", !0, void 0, !1),
+      i.Actor.SetActorEnableCollision(!0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "BehaviorTree",
-          58,
+          57,
           "[TsTaskWander]AiWander[BlinkMoveTick]怪物闪烁导致Actor碰撞为True",
-          ["Actor:", t.Actor.GetName()],
+          ["Actor:", i.Actor.GetName()],
         ),
-      this.ResetAiInfo(t),
+      this.ResetAiInfo(i),
       "" !== this.TsShowEffectDa &&
-        ((i = EffectSystem_1.EffectSystem.SpawnEffect(
+        ((t = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           this.TsShowEffectDa,
           "[TsTaskWander.BlinkMoveTick] showEffect",
-          new EffectContext_1.EffectContext(t.Entity.Id),
+          new EffectContext_1.EffectContext(i.Entity.Id),
         )),
-        (i = EffectSystem_1.EffectSystem.GetEffectActor(i))
-          ? i.K2_SetActorLocation(t.ActorLocation, !1, void 0, !1)
+        (t = EffectSystem_1.EffectSystem.GetEffectActor(t))
+          ? t.D_K2_SetActorLocation(i.ActorLocation, !1, void 0, !1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "BehaviorTree",
-              58,
+              57,
               "[TsTaskWander]AiWander瞬移显示特效生成失败",
-              ["Type", t.Actor.GetName()],
+              ["Type", i.Actor.GetName()],
             )),
       this.HideMaterialData &&
         0 <= this.HideMaterialData &&
-        (t.Actor.CharRenderingComponent.RemoveMaterialControllerData(
+        (i.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.HideMaterialData,
         ),
         (this.HideMaterialData = void 0)),
@@ -427,84 +480,82 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             this.TsShowMaterialDa,
             UE.PD_CharacterControllerData_C,
-            (i) => {
-              i
+            (t) => {
+              t
                 ? (this.ShowMaterialData =
-                    t.Actor.CharRenderingComponent.AddMaterialControllerData(i))
+                    i.Actor.CharRenderingComponent.AddMaterialControllerData(t))
                 : ((this.ShowMaterialData = -1),
                   Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "BehaviorTree",
-                      58,
+                      57,
                       "[TsTaskWander]AiWander瞬移显示材质生成失败",
-                      ["Type", t.Actor.GetName()],
+                      ["Type", i.Actor.GetName()],
                     ));
             },
           )
         : (this.ShowMaterialData = -1),
-      t.SetInputDirect(Vector_1.Vector.ZeroVector)),
-      this.BlinkTimeCount >= this.TsBlinkTime && this.BlinkMoveEnd(t);
+      i.SetInputDirect(Vector_1.Vector.ZeroVector)),
+      this.BlinkTimeCount >= this.TsBlinkTime && this.BlinkMoveEnd(i);
   }
-  BlinkMoveEnd(i) {
+  BlinkMoveEnd(t) {
     return (
       !!this.InBlink &&
       ((this.InBlink = !1),
-      i.Actor.bActorEnableCollision ||
+      t.Actor.bActorEnableCollision ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "BehaviorTree",
-            58,
+            57,
             "[TsTaskWander]AiWander[BlinkMoveEnd]怪物闪烁此刻Actor碰撞不应该为False,查看[BlinkMoveTick]是否置为True",
-            ["Actor:", i.Actor.GetName()],
+            ["Actor:", t.Actor.GetName()],
           )),
       this.ShowMaterialData &&
         0 <= this.ShowMaterialData &&
-        (i.Actor.CharRenderingComponent.RemoveMaterialControllerData(
+        (t.Actor.CharRenderingComponent.RemoveMaterialControllerData(
           this.ShowMaterialData,
         ),
         (this.ShowMaterialData = void 0)),
-      i.Actor.CharRenderingComponent.ResetAllRenderingState(),
+      t.Actor.CharRenderingComponent.ResetAllRenderingState(),
       this.Finish(!0),
       !0)
     );
   }
-  UseSkill(i, t) {
-    var i = i.Entity.GetComponent(34);
-    i.Valid
-      ? ((i = i.BeginSkill(t.MoveStateGA, {
-          Context: "TsTaskWander.UseSkill",
-        })),
-        this.Finish(i))
+  UseSkill(t, i) {
+    var t = t.Entity.GetComponent(39);
+    t.Valid
+      ? ((t = t.BeginSkill(i.MoveStateGA, { Reason: "TsTaskWander.UseSkill" })),
+        this.Finish(t))
       : this.Finish(!1);
   }
-  ResetAiInfo(i) {
-    var t = i.Entity.GetComponent(0)?.GetRotation();
-    i.SetActorRotation(t, "脱战节点.重置为基础方法", !1);
+  ResetAiInfo(t) {
+    var i = t.Entity.GetComponent(0)?.GetRotation();
+    t.SetActorRotation(i, "脱战节点.重置为基础方法", !1);
   }
-  DrawDebugPath(t) {
+  DrawDebugPath(i) {
     var s = this.NavigationPath.length;
     if (0 !== s) {
-      let i = 0;
-      UE.KismetSystemLibrary.DrawDebugSphere(
-        t.Actor,
-        this.SelectedTargetLocation,
+      let t = 0;
+      UE.KismetSystemLibrary.D_DrawDebugSphere(
+        i.Actor,
+        this.SelectedTargetLocation.ToUeVector(),
         40,
         10,
         ColorUtils_1.ColorUtils.LinearGreen,
         0,
         2,
       ),
-        UE.KismetSystemLibrary.DrawDebugLine(
-          t.Actor,
-          t.ActorLocation,
-          this.SelectedTargetLocation,
+        UE.KismetSystemLibrary.D_DrawDebugLine(
+          i.Actor,
+          i.ActorLocation,
+          this.SelectedTargetLocation.ToUeVector(),
           ColorUtils_1.ColorUtils.LinearGreen,
           0,
           2,
         );
       for (const e of this.NavigationPath)
-        UE.KismetSystemLibrary.DrawDebugSphere(
-          t.Actor,
+        UE.KismetSystemLibrary.D_DrawDebugSphere(
+          i.Actor,
           e.ToUeVector(),
           30,
           10,
@@ -512,11 +563,11 @@ class TsTaskWander extends TsTaskAbortImmediatelyBase_1.default {
           0,
           2,
         ),
-          ++i < s &&
-            UE.KismetSystemLibrary.DrawDebugLine(
-              t.Actor,
+          ++t < s &&
+            UE.KismetSystemLibrary.D_DrawDebugLine(
+              i.Actor,
               e.ToUeVector(),
-              this.NavigationPath[i].ToUeVector(),
+              this.NavigationPath[t].ToUeVector(),
               ColorUtils_1.ColorUtils.LinearRed,
               0,
               2,

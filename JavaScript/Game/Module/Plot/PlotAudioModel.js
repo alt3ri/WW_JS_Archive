@@ -6,103 +6,100 @@ const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
   LauncherLanguageLib_1 = require("../../../Launcher/Util/LauncherLanguageLib"),
-  ModelManager_1 = require("../../Manager/ModelManager");
+  ModelManager_1 = require("../../Manager/ModelManager"),
+  GLOBAL = "gl";
 class PlotAudioModel extends ModelBase_1.ModelBase {
   static GetExternalSourcesMediaName(e) {
-    let a = !1,
+    var a = new StringBuilder_1.StringBuilder();
+    let r = !1,
       n = "";
     switch (LanguageSystem_1.LanguageSystem.PackageAudio) {
       case CommonDefine_1.CHINESE_ISO639_1:
-        a = e.CheckGenderZh;
+        r = e.CheckGenderZh;
         break;
       case LauncherLanguageLib_1.ENGLISH_ISO639_1:
-        a = e.CheckGenderEn;
+        r = e.CheckGenderEn;
         break;
       case CommonDefine_1.JAPANESE_ISO639_1:
-        a = e.CheckGenderJa;
+        r = e.CheckGenderJa;
         break;
       case LauncherLanguageLib_1.KOREAN_ISO639_1:
-        a = e.CheckGenderKo;
+        r = e.CheckGenderKo;
     }
+    let i = LanguageSystem_1.LanguageSystem.PackageAudio;
     return (
-      a &&
+      e.GlobalLanguage && (i = GLOBAL),
+      r &&
         (n =
           0 === ModelManager_1.ModelManager.PlayerInfoModel?.GetPlayerGender()
             ? "_F"
             : "_M"),
-      new StringBuilder_1.StringBuilder(
-        LanguageSystem_1.LanguageSystem.PackageAudio,
-        "_",
-        e.FileName,
-        n,
-        ".wem",
-      ).ToString()
+      a.Append(i, "_", e.FileName, n, ".wem"),
+      a.ToString()
     );
   }
   static GetAudioMouthAnimName(e) {
-    let a = !1,
+    var a = new StringBuilder_1.StringBuilder();
+    let r = !1,
       n = "";
     switch (LanguageSystem_1.LanguageSystem.PackageAudio) {
       case CommonDefine_1.CHINESE_ISO639_1:
-        a = e.CheckGenderZh;
+        r = e.CheckGenderZh;
         break;
       case LauncherLanguageLib_1.ENGLISH_ISO639_1:
-        a = e.CheckGenderEn;
+        r = e.CheckGenderEn;
         break;
       case CommonDefine_1.JAPANESE_ISO639_1:
-        a = e.CheckGenderJa;
+        r = e.CheckGenderJa;
         break;
       case LauncherLanguageLib_1.KOREAN_ISO639_1:
-        a = e.CheckGenderKo;
+        r = e.CheckGenderKo;
     }
-    a &&
-      (n =
-        0 === ModelManager_1.ModelManager.PlayerInfoModel?.GetPlayerGender()
-          ? "_F"
-          : "_M");
-    var r = new StringBuilder_1.StringBuilder(
-        LanguageSystem_1.LanguageSystem.PackageAudio,
-        "_",
-        e.FileName,
-        n,
-      ),
-      i = r.ToString();
+    let i = LanguageSystem_1.LanguageSystem.PackageAudio;
+    e.GlobalLanguage && (i = GLOBAL),
+      r &&
+        (n =
+          0 === ModelManager_1.ModelManager.PlayerInfoModel?.GetPlayerGender()
+            ? "_F"
+            : "_M"),
+      a.Append(i, "_", e.FileName, n);
+    var u = a.ToString();
     return (
-      r.Clear(),
-      r.Append(
+      a.Clear(),
+      a.Append(
         "/Game/Aki/Sequence/SequenceAnim/VoiceMouth/",
         LanguageSystem_1.LanguageSystem.PackageAudio,
         "/",
-        i,
+        u,
         ".",
-        i,
+        u,
       ),
-      r.ToString()
+      a.ToString()
     );
   }
   static GetExternalSourcesMediaNameForEditor(e, a) {
-    let n = !1,
-      r = "";
+    let r = !1,
+      n = "";
     switch (LanguageSystem_1.LanguageSystem.PackageAudio) {
       case CommonDefine_1.CHINESE_ISO639_1:
-        n = e.CheckGenderZh;
+        r = e.CheckGenderZh;
         break;
       case LauncherLanguageLib_1.ENGLISH_ISO639_1:
-        n = e.CheckGenderEn;
+        r = e.CheckGenderEn;
         break;
       case CommonDefine_1.JAPANESE_ISO639_1:
-        n = e.CheckGenderJa;
+        r = e.CheckGenderJa;
         break;
       case LauncherLanguageLib_1.KOREAN_ISO639_1:
-        n = e.CheckGenderKo;
+        r = e.CheckGenderKo;
     }
-    n && (r = a ? "_F" : "_M");
+    r && (n = a ? "_F" : "_M");
     a = LanguageSystem_1.LanguageSystem.PackageAudio;
     return new StringBuilder_1.StringBuilder(
       a,
       "_",
       e.FileName,
-      r,
+      n,
       ".wem",
     ).ToString();
   }

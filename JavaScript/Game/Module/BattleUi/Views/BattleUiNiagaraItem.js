@@ -10,7 +10,8 @@ class BattleUiNiagaraItem {
         (this.IRe = void 0), this.Oot();
       }),
       (this.Item = t),
-      (this.Duration = DEFAULT_DURATION);
+      (this.Duration = DEFAULT_DURATION),
+      (this.Item.bIsAlphaZeroClip = !1);
   }
   Play() {
     this.Item.SetUIActive(!0),

@@ -25,7 +25,9 @@ class ObjectSystem {
       s =
         (!Stats_1.Stat.Enable ||
           (e = this.sY.get(t)) ||
-          ((e = Stats_1.Stat.Create("ObjectSystem.Create." + t.name)),
+          ((e = Stats_1.Stat.CreateNoFlameGraph(
+            "ObjectSystem.Create." + t.name,
+          )),
           this.sY.set(t, e)),
         void 0),
       i = 0,

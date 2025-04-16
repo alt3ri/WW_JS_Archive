@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpaceUtils = void 0);
-const Quat_1 = require("./Math/Quat"),
+const Log_1 = require("../Common/Log"),
+  Quat_1 = require("./Math/Quat"),
   Vector_1 = require("./Math/Vector"),
   MathUtils_1 = require("./MathUtils"),
   boundPoints = [
@@ -21,45 +22,63 @@ class SpaceUtils {
   static Ez(t) {
     this.Mz.push(...t), (t.length = 0);
   }
-  static IsComponentInRingArea(t, s, i) {
-    var h = i.Bounds,
-      e =
-        (this.Sz.FromUeVector(h.Origin),
-        this.yz.FromUeVector(h.BoxExtent),
-        s.X * s.X);
-    if (e < this.yz.X * this.yz.X || e < this.yz.Y * this.yz.Y)
+  static IsComponentInRingArea(t, i, s, h = void 0) {
+    var e = s.D_GetComponentBounds(),
+      r =
+        (this.Sz.FromUeVector(e.Origin),
+        this.yz.FromUeVector(e.BoxExtent),
+        i.X * i.X);
+    if (r < this.yz.X * this.yz.X || r < this.yz.Y * this.yz.Y)
       return (
         (this.Sz.Z = 0),
         (this.yz.Z = 0),
         this.q9s.Set(t.X, t.Y, 0),
-        this.G9s(this.Sz, this.yz, this.q9s, s.X)
+        this.G9s(this.Sz, this.yz, this.q9s, i.X)
       );
-    this.Iz.FromUeQuat(i.K2_GetComponentQuaternion()),
+    this.Iz.FromUeQuat(s.K2_GetComponentQuaternion()),
       this.Sz.Subtraction(t, this.Tz);
-    var r = s.Z,
-      a = s.Y * s.Y;
-    let o = 0,
-      c = 0;
-    for (const _ of boundPoints) {
-      this.yz.Multiply(_, this.Lz),
+    var o,
+      a,
+      c = i.Z,
+      n = i.Y * i.Y;
+    let _ = 0,
+      u = 0;
+    for (const l of boundPoints)
+      if (
+        (this.yz.Multiply(l, this.Lz),
         this.Iz.RotateVector(this.Lz, this.Lz),
         this.Lz.AdditionEqual(this.Tz),
-        3 !== c &&
-          (this.Lz.Z > r ? (c |= 1) : -this.Lz.Z > r ? (c |= 2) : (c = 3));
-      var n = this.Lz.SizeSquared2D();
-      if (
-        (3 !== o && (e < n ? (o |= 1) : n < a ? (o |= 2) : (o = 3)),
-        3 === c && 3 === o)
+        h
+          ? ((o = this.Lz.DotProduct(h)),
+            3 !== u && (c < o ? (u |= 1) : c < -o ? (u |= 2) : (u = 3)))
+          : 3 !== u &&
+            (this.Lz.Z > c ? (u |= 1) : -this.Lz.Z > c ? (u |= 2) : (u = 3)),
+        h
+          ? (Vector_1.Vector.VectorPlaneProject(this.Lz, h, this.fHo),
+            (o = this.fHo.SizeSquared()),
+            3 !== _ && (r < o ? (_ |= 1) : o < n ? (_ |= 2) : (_ = 3)))
+          : ((a = this.Lz.SizeSquared2D()),
+            3 !== _ && (r < a ? (_ |= 1) : a < n ? (_ |= 2) : (_ = 3))),
+        3 === u && 3 === _)
       )
         return !0;
-    }
-    return !1;
+    return (
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Bullet",
+          20,
+          "无法命中",
+          ["inHeight", u],
+          ["inDist", _],
+        ),
+      !1
+    );
   }
-  static G9s(t, s, i, h) {
-    i.Subtraction(t, this.O9s),
+  static G9s(t, i, s, h) {
+    s.Subtraction(t, this.O9s),
       this.O9s.X < 0 && (this.O9s.X = -this.O9s.X),
       this.O9s.Y < 0 && (this.O9s.Y = -this.O9s.Y),
-      this.O9s.SubtractionEqual(s);
+      this.O9s.SubtractionEqual(i);
     let e = !1;
     if ((this.O9s.X < 0 && ((this.O9s.X = 0), (e = !0)), this.O9s.Y < 0)) {
       if (e) return !0;
@@ -67,18 +86,20 @@ class SpaceUtils {
     }
     return this.O9s.DotProduct(this.O9s) <= h * h;
   }
-  static IsComponentInSectorArea(t, s, i, h) {
-    var e = h.Bounds,
-      r =
-        (this.Sz.FromUeVector(e.Origin),
-        this.yz.FromUeVector(e.BoxExtent),
-        this.Iz.FromUeQuat(h.K2_GetComponentQuaternion()),
-        this.Sz.Subtraction(t, this.Tz),
-        i.Inverse(this.Dz),
-        s.X * s.X),
-      a = MathUtils_1.MathUtils.DegToRad * s.Y * 0.5,
-      o = a < 0.5 * Math.PI,
-      c = s.Z;
+  static UAc(t) {
+    return this.yz.X > t || this.yz.Y > t;
+  }
+  static IsComponentInSectorArea(t, i, s, h) {
+    var e = h.D_GetComponentBounds();
+    if ((this.yz.FromUeVector(e.BoxExtent), this.UAc(i.X))) return !0;
+    this.Sz.FromUeVector(e.Origin),
+      this.Iz.FromUeQuat(h.K2_GetComponentQuaternion()),
+      this.Sz.Subtraction(t, this.Tz),
+      s.Inverse(this.Dz);
+    var r = i.X * i.X,
+      o = MathUtils_1.MathUtils.DegToRad * i.Y * 0.5,
+      a = o < 0.5 * Math.PI,
+      c = i.Z;
     let n = 0,
       _ = 0,
       u = 0;
@@ -94,18 +115,18 @@ class SpaceUtils {
         p = (3 !== n && p <= r && (n = 3), Math.atan2(this.Lz.Y, this.Lz.X));
       if (
         (3 !== u &&
-          (o
-            ? a < p
+          (a
+            ? o < p
               ? ((l = this.vz()).DeepCopy(this.Lz), this.Rz.push(l))
-              : a < -p
+              : o < -p
                 ? ((l = this.vz()).DeepCopy(this.Lz), this.Uz.push(l))
                 : (u = 3)
-            : Math.abs(p) <= a && (u = 3)),
+            : Math.abs(p) <= o && (u = 3)),
         3 === _ && 3 === n && 3 === u)
       )
-        return o && (this.Ez(this.Uz), this.Ez(this.Rz)), !0;
+        return a && (this.Ez(this.Uz), this.Ez(this.Rz)), !0;
     }
-    if (o) {
+    if (a) {
       if (3 === _ && 3 === n && this.Az())
         return this.Ez(this.Uz), this.Ez(this.Rz), !0;
       this.Ez(this.Uz), this.Ez(this.Rz);
@@ -114,25 +135,25 @@ class SpaceUtils {
   }
   static Az() {
     for (const t of this.Uz)
-      for (const s of this.Rz)
+      for (const i of this.Rz)
         if (
-          !(Math.abs(s.Y - t.Y) < MathUtils_1.MathUtils.SmallNumber) &&
-          0 <= s.X - ((s.X - t.X) / (s.Y - t.Y)) * s.Y
+          !(Math.abs(i.Y - t.Y) < MathUtils_1.MathUtils.SmallNumber) &&
+          0 <= i.X - ((i.X - t.X) / (i.Y - t.Y)) * i.Y
         )
           return !0;
     return !1;
   }
-  static IsLocationInSideBullet(t, s) {
-    var i = Vector_1.Vector.DistSquared(t.CollisionLocation, s),
-      s = t.BulletDataMain.Base,
-      h = s.Size;
-    switch (s.Shape) {
+  static IsLocationInSideBullet(t, i) {
+    var s = Vector_1.Vector.DistSquared(t.GetCollisionLocation(), i),
+      i = t.BulletDataMain.Base,
+      h = i.Size;
+    switch (i.Shape) {
       case 0:
-        return i < h.X * h.X && i < h.Y * h.Y && i < h.Z * h.Z ? !0 : !1;
+        return s < h.X * h.X && s < h.Y * h.Y && s < h.Z * h.Z ? !0 : !1;
       case 1:
-        return i < h.X * h.X ? !0 : !1;
+        return s < h.X * h.X ? !0 : !1;
       case 3:
-        return i < h.Y * h.Y ? !0 : !1;
+        return s < h.Y * h.Y ? !0 : !1;
       default:
         return !1;
     }
@@ -143,6 +164,7 @@ class SpaceUtils {
   (SpaceUtils.Iz = Quat_1.Quat.Create()),
   (SpaceUtils.Lz = Vector_1.Vector.Create()),
   (SpaceUtils.Tz = Vector_1.Vector.Create()),
+  (SpaceUtils.fHo = Vector_1.Vector.Create()),
   (SpaceUtils.Dz = Quat_1.Quat.Create()),
   (SpaceUtils.Mz = new Array()),
   (SpaceUtils.Uz = new Array()),

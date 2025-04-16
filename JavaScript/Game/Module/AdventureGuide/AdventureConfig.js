@@ -14,12 +14,41 @@ const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   MonsterDetectionAll_1 = require("../../../Core/Define/ConfigQuery/MonsterDetectionAll"),
   MonsterDetectionById_1 = require("../../../Core/Define/ConfigQuery/MonsterDetectionById"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  PreOpenDetectionAll_1 = require("../../../Core/Define/ConfigQuery/PreOpenDetectionAll"),
+  PreOpenDetectionById_1 = require("../../../Core/Define/ConfigQuery/PreOpenDetectionById"),
   SecondaryGuideDataById_1 = require("../../../Core/Define/ConfigQuery/SecondaryGuideDataById"),
   SilentAreaDetectionAll_1 = require("../../../Core/Define/ConfigQuery/SilentAreaDetectionAll"),
   SilentAreaDetectionById_1 = require("../../../Core/Define/ConfigQuery/SilentAreaDetectionById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class AdventureGuideConfig extends ConfigBase_1.ConfigBase {
+  constructor() {
+    super(...arguments), (this.KQl = new Map());
+  }
+  OnInit() {
+    var e = this.GetPreOpenDetectionConfAll();
+    if (e)
+      for (const n of e)
+        this.KQl.has(n.DetectionId) || this.KQl.set(n.DetectionId, []),
+          this.KQl.get(n.DetectionId).push(n);
+    return !0;
+  }
+  GetPreOpenDetectionConfListByDetectionId(e, n) {
+    var e = this.KQl.get(e),
+      r = [];
+    if (e) for (const t of e) t.SoundAreaType === n && r.push(t);
+    return r;
+  }
+  GetPreOpenDetectionConfList(e, n, r) {
+    e = this.GetPreOpenDetectionConfListByDetectionId(e, n);
+    return (
+      0 === e.length &&
+        0 !== r &&
+        (n = this.GetPreOpenDetectionConfById(r)) &&
+        e.push(n),
+      e
+    );
+  }
   GetAdventureTaskConfig(e) {
     return AdventureTaskById_1.configAdventureTaskById.GetConfig(e);
   }
@@ -104,6 +133,12 @@ class AdventureGuideConfig extends ConfigBase_1.ConfigBase {
   GetLocalFilterTextById(e) {
     e = SecondaryGuideDataById_1.configSecondaryGuideDataById.GetConfig(e);
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Text) ?? "";
+  }
+  GetPreOpenDetectionConfById(e) {
+    return PreOpenDetectionById_1.configPreOpenDetectionById.GetConfig(e);
+  }
+  GetPreOpenDetectionConfAll() {
+    return PreOpenDetectionAll_1.configPreOpenDetectionAll.GetConfigList();
   }
 }
 exports.AdventureGuideConfig = AdventureGuideConfig;

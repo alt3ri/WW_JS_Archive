@@ -49,7 +49,7 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
         );
     }
     let r = void 0;
-    var o = this.PZa(t);
+    var o = this.thh(t);
     (r =
       "Player" === e.Target.Type
         ? Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
@@ -57,16 +57,16 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            51,
+            50,
             "进入滑雪模式",
             ["Type", t.Type],
             ["ContextSource", o],
           ),
-        r.GetComponent(32)?.EnterSkiMode(e))
+        r.GetComponent(35)?.EnterSkiMode(e))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelEvent",
-          51,
+          50,
           "目前仅Role支持触发滑雪模式",
           ["ContextType", t.Type],
           ["ContextSource", o],
@@ -90,7 +90,7 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
         );
     }
     let r = void 0;
-    var o = this.PZa(t);
+    var o = this.thh(t);
     (r =
       "Player" === e.Target.Type
         ? Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
@@ -98,16 +98,16 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
-            51,
+            50,
             "退出滑雪模式",
             ["Type", t.Type],
             ["ContextSource", o],
           ),
-        r.GetComponent(32)?.ExitSkiMode())
+        r.GetComponent(35)?.ExitSkiMode())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelEvent",
-          51,
+          50,
           "目前仅Role支持关闭滑雪模式",
           ["ContextType", t.Type],
           ["ContextSource", o],
@@ -117,7 +117,7 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
     t instanceof LevelGeneralContextDefine_1.TriggerContext
       ? EntitySystem_1.EntitySystem.GetComponent(
           t.OtherEntityId,
-          32,
+          35,
         )?.SetSkiAccel(e)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -127,7 +127,7 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
           ["ContextType", t.Type],
         );
   }
-  PZa(e) {
+  thh(e) {
     let t = "";
     switch (e.Type) {
       case 1:

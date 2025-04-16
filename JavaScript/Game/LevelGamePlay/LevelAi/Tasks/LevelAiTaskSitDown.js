@@ -39,7 +39,7 @@ class LevelAiTaskSitDown extends LevelAiTask_1.LevelAiTask {
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i)),
           this.jTe)
         ) {
-          var t = this.jTe.Entity.GetComponent(182);
+          var t = this.jTe.Entity.GetComponent(195);
           if (t) {
             var t = t.GetSubEntityInteractLogicController(),
               s = this.CreatureDataComponent.Entity.GetComponent(1),
@@ -156,14 +156,14 @@ class LevelAiTaskSitDown extends LevelAiTask_1.LevelAiTask {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LevelAi",
-                51,
+                50,
                 `[LevelAiTaskSitDown] Item Entity ${i} has no PawnInteractNewComponent`,
               );
         } else
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelAi",
-              51,
+              50,
               "[LevelAiTaskSitDown] Cannot Find Corresponding Item Entity for: " +
                 i,
             );

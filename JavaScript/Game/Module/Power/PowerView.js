@@ -78,7 +78,7 @@ class PowerView extends UiTickViewBase_1.UiTickViewBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "PowerModule",
-              50,
+              49,
               `补充时打印体力${ModelManager_1.ModelManager.PowerModel.PowerCount}/` +
                 this.Doo,
             ),

@@ -33,21 +33,21 @@ class UiCamera {
           : (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "UiCamera",
-                8,
+                58,
                 "初始化界面摄像机时，CameraActor不可用",
               ),
             !1)
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "UiCamera",
-              8,
+              58,
               "初始化界面摄像机时，找不到 WidgetCameraDisplayComponent 组件",
             ),
           !1)
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCamera",
-            8,
+            58,
             "初始化界面摄像机时，找不到 widgetCamera 组件",
           ),
         !1);
@@ -60,7 +60,7 @@ class UiCamera {
   }
   SetWorldLocation(e) {
     this.CameraActor?.IsValid() &&
-      this.CameraActor.K2_SetActorLocation(e, !1, void 0, !1);
+      this.CameraActor.D_K2_SetActorLocation(e, !1, void 0, !1);
   }
   SetWorldRotation(e) {
     this.CameraActor?.IsValid() && this.CameraActor.K2_SetActorRotation(e, !1);
@@ -72,7 +72,7 @@ class UiCamera {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCamera",
-          8,
+          58,
           "进入Ui相机",
           ["blendTime", e],
           ["blendFunction", t],
@@ -88,7 +88,7 @@ class UiCamera {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCamera",
-          8,
+          58,
           "退出Ui相机",
           ["blendTime", e],
           ["blendFunction", t],
@@ -105,7 +105,7 @@ class UiCamera {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCamera",
-            46,
+            45,
             "PushStructure:",
             [
               "this.UiCameraStructureStack.Peek()?.constructor.name",
@@ -117,7 +117,7 @@ class UiCamera {
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "UiCamera",
-                46,
+                45,
                 "PushStructure时，已经有相同的UiCameraStructure，直接返回此UiCameraStructure:",
                 ["Name", this.YRo.Peek()?.constructor.name],
               ),

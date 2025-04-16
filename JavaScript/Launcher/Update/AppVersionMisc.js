@@ -6,14 +6,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AppVersionMisc =
       void 0);
 const UE = require("ue"),
+  BaseDefine_1 = require("../BaseConfig/BaseDefine"),
   UrlPrefixDownload_1 = require("../Download/UrlPrefixDownload"),
+  Platform_1 = require("../Platform/Platform"),
   RemoteConfig_1 = require("../RemoteConfig"),
   LauncherLanguageLib_1 = require("../Util/LauncherLanguageLib"),
   LauncherLog_1 = require("../Util/LauncherLog"),
   LauncherStorageLib_1 = require("../Util/LauncherStorageLib"),
   AppPathMisc_1 = require("./AppPathMisc"),
-  ResourceUpdate_1 = require("./ResourceUpdate"),
-  BaseDefine_1 = require("../BaseConfig/BaseDefine");
+  ResourceUpdate_1 = require("./ResourceUpdate");
 class AppVersionMisc {
   constructor() {
     (this.PackageVersion = ""),
@@ -33,11 +34,11 @@ class AppVersionMisc {
   Init(e) {
     (this.PackageVersion = UE.KuroLauncherLibrary.GetAppVersion()),
       this.SetVersions(
-        LauncherStorageLib_1.LauncherStorageLib.GetGlobalString(
+        LauncherStorageLib_1.LauncherStorageLib.GetDeviceSavedString(
           this.GetUpdateVersionKey(),
           this.PackageVersion,
         ),
-        LauncherStorageLib_1.LauncherStorageLib.GetGlobalString(
+        LauncherStorageLib_1.LauncherStorageLib.GetDeviceSavedString(
           this.GetSaveUpdateVersionKey(),
           this.PackageVersion,
         ),
@@ -71,8 +72,8 @@ class AppVersionMisc {
       this.LatestVersion = r;
       var [s, c] = BaseDefine_1.VersionInfo.TryParse(r),
         [i, L] = BaseDefine_1.VersionInfo.TryParse(a),
-        [_, d] = BaseDefine_1.VersionInfo.TryParse(u);
-      if (!s || !i || !_)
+        [l, _] = BaseDefine_1.VersionInfo.TryParse(u);
+      if (!s || !i || !l)
         throw (
           (LauncherLog_1.LauncherLog.Error(
             "转版本号失败",
@@ -93,16 +94,16 @@ class AppVersionMisc {
         }
       } else (a = this.PackageVersion), (n = [a]), (e = !0);
       if (BaseDefine_1.VersionInfo.PackageEquals(c, L)) {
-        if (c.Patch < d.Patch) {
+        if (c.Patch < _.Patch) {
           this.lIr = !0;
-          for (let e = c.Patch + 1; e <= d.Patch; e++)
+          for (let e = c.Patch + 1; e <= _.Patch; e++)
             this._Ir.add(`${c.Major}.${c.Minor}.` + e);
         }
       } else (u = this.PackageVersion), (o = [u]), (t = !0);
       if (this.lIr) {
         this.LocalResourceVersions = new Array();
-        for (const l of n)
-          this._Ir.has(l) || this.LocalResourceVersions.push(l);
+        for (const d of n)
+          this._Ir.has(d) || this.LocalResourceVersions.push(d);
         (this.LocalResourceVersion =
           this.LocalResourceVersions[this.LocalResourceVersions.length - 1]),
           (this.LocalSaveResourceVersions = new Array());
@@ -172,7 +173,7 @@ class AppVersionMisc {
   UpdateVersion(e, t = !1) {
     if (t) {
       const s = this.LocalResourceVersions.join(",");
-      LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+      LauncherStorageLib_1.LauncherStorageLib.SetDeviceSavedString(
         this.GetUpdateVersionKey(),
         s,
       ),
@@ -187,7 +188,7 @@ class AppVersionMisc {
             this.LatestVersion) &&
           this.LocalResourceVersions.push(this.LatestVersion);
       const s = this.LocalResourceVersions.join(",");
-      LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+      LauncherStorageLib_1.LauncherStorageLib.SetDeviceSavedString(
         this.GetUpdateVersionKey(),
         s,
       );
@@ -201,7 +202,7 @@ class AppVersionMisc {
         ["Type", this.GetResType()],
         ["Versions", s],
       ),
-        LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+        LauncherStorageLib_1.LauncherStorageLib.SetDeviceSavedString(
           this.GetSaveUpdateVersionKey(),
           s,
         ),
@@ -222,21 +223,21 @@ class AppVersionMisc {
         ["Type", this.GetResType()],
         ["Versions", s],
       ),
-        LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+        LauncherStorageLib_1.LauncherStorageLib.SetDeviceSavedString(
           this.GetSaveUpdateVersionKey(),
           s,
         );
     }
   }
   ClearAllPatchVersion(e) {
-    LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(
+    LauncherStorageLib_1.LauncherStorageLib.DeleteDeviceSavedString(
       this.GetUpdateVersionKey(),
     ),
-      LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(
+      LauncherStorageLib_1.LauncherStorageLib.DeleteDeviceSavedString(
         this.GetSaveUpdateVersionKey(),
       ),
       "Launcher" === this.GetResType() &&
-        LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(
+        LauncherStorageLib_1.LauncherStorageLib.DeleteDeviceSavedString(
           "__kr_blvr__",
         );
   }
@@ -378,7 +379,9 @@ class LanguageVersionMisc extends AppVersionMisc {
   }
   ClearAllPatchVersion(e) {
     super.ClearAllPatchVersion(e),
-      LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(this.$Ja());
+      LauncherStorageLib_1.LauncherStorageLib.DeleteDeviceSavedString(
+        this.Lnh(),
+      );
   }
   HasMountFile() {
     var e = this.GetMountFilePath();
@@ -417,11 +420,12 @@ class LanguageVersionMisc extends AppVersionMisc {
   NeedUpdate() {
     var e;
     return (
+      !!Platform_1.Platform.IsCloudGame() ||
       this.LanguageCode ===
         LauncherLanguageLib_1.LauncherLanguageLib.GetPackageAudioLanguage() ||
       (void 0 !==
-        (e = LauncherStorageLib_1.LauncherStorageLib.GetGlobalString(
-          this.$Ja(),
+        (e = LauncherStorageLib_1.LauncherStorageLib.GetDeviceSavedString(
+          this.Lnh(),
           "",
         ).trim()) &&
         0 < e.length) ||
@@ -433,17 +437,22 @@ class LanguageVersionMisc extends AppVersionMisc {
     return !1;
   }
   DeleteSavedVersion(e) {
-    LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+    LauncherStorageLib_1.LauncherStorageLib.SetDeviceSavedString(
       this.GetSaveUpdateVersionKey(),
       this.PackageVersion,
     ),
-      LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(this.$Ja());
+      LauncherStorageLib_1.LauncherStorageLib.DeleteDeviceSavedString(
+        this.Lnh(),
+      );
   }
-  $Ja() {
+  Lnh() {
     return "UseLanguage_" + this.LanguageCode;
   }
   SetUseLanguagePackage() {
-    LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(this.$Ja(), "1");
+    LauncherStorageLib_1.LauncherStorageLib.SetDeviceSavedString(
+      this.Lnh(),
+      "1",
+    );
   }
 }
 exports.LanguageVersionMisc = LanguageVersionMisc;

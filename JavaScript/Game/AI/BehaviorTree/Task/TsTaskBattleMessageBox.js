@@ -7,6 +7,9 @@ class TsTaskBattleMessageBox extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments), (this.BoardId = 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
   ReceiveExecuteAI(e, s) {
     e.AiController
       ? (0 < this.BoardId &&

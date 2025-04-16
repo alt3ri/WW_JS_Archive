@@ -18,6 +18,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     super(...arguments),
       (this.GroupName = ""),
       (this.TagArray = void 0),
+      (this.ExitTagPriority = 0),
       (this.ShieldHotKeyIndexArray = void 0),
       (this.ScrollViewActor = void 0),
       (this.GridBaseActor = void 0),
@@ -32,6 +33,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       (this.OpenAdsorbed = !1),
       (this.AdsorbedDistance = 0),
       (this.AdsorbedPivot = new UE.Vector2D(0.5, 0.5)),
+      (this.IsUsePool = !1),
       (this.ScrollView = void 0),
       (this.LayoutBase = void 0),
       (this.TextChangeComponent = void 0),
@@ -51,6 +53,24 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       (this.Cursor = void 0),
       (this.CursorModule = void 0);
   }
+  Constructor() {
+    (this.ScrollView = void 0),
+      (this.LayoutBase = void 0),
+      (this.TextChangeComponent = void 0),
+      (this.PanelConfig = void 0),
+      (this.InNavigation = !1),
+      (this.ChildTagMap = void 0),
+      (this.NavigationComponent = void 0),
+      (this.IsAwakeCalled = !1),
+      (this.IsStartCalled = !1),
+      (this.IsInitLayout = !1),
+      (this.IsInitScroll = !1),
+      (this.IsFocusScrollbar = !1),
+      (this.AnimController = void 0),
+      (this.IsInitAnimController = !1),
+      (this.ModeModule = void 0),
+      (this.CursorModule = void 0);
+  }
   AwakeBP() {
     GlobalData_1.GlobalData.GameInstance && this.AwakeInit();
   }
@@ -68,17 +88,25 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     !GlobalData_1.GlobalData.GameInstance ||
       StringUtils_1.StringUtils.IsBlank(this.GroupName) ||
       (this.PanelConfig?.IsAllowNavigate() &&
-        this.NavigationComponent.HandlePointerSelect(i) &&
-        this.SetListenerInNavigation());
+        (this.NavigationComponent.HandlePointerSelect(i)
+          ? this.SetListenerInNavigation()
+          : UiNavigationLogic_1.UiNavigationLogic.UpdateSameNavigationListener(
+              this,
+            )));
   }
   OnCheckCanSetNavigationBP() {
-    return (
-      (!this.ScrollView ||
-        !(this.ScrollView instanceof UE.UILoopScrollViewComponent) ||
-        -1 === this.ScrollView.NavigationIndex ||
-        this.ScrollView.NavigationIndex !== this.LoopScrollViewGridIndex) &&
-      this.InNavigation
-    );
+    return !(
+      this.ScrollView &&
+      this.ScrollView instanceof UE.UILoopScrollViewComponent &&
+      -1 !== this.ScrollView.NavigationIndex
+    )
+      ? this.InNavigation
+      : UiNavigationGlobalData_1.UiNavigationGlobalData
+            .IsAllowLoopScrollInteractHighlight
+        ? this.ScrollView.NavigationIndex === this.LoopScrollViewGridIndex &&
+          this.InNavigation
+        : this.ScrollView.NavigationIndex !== this.LoopScrollViewGridIndex &&
+          this.InNavigation;
   }
   OnCheckLoopScrollChangeNavigationBP() {
     return (
@@ -89,7 +117,8 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
   }
   OnEnableBP() {
     GlobalData_1.GlobalData.GameInstance &&
-      (UiNavigationViewManager_1.UiNavigationViewManager.RefreshCurrentHotKey(),
+      (this.TryReStartInit(),
+      UiNavigationViewManager_1.UiNavigationViewManager.RefreshCurrentHotKey(),
       this.RefreshPanelConfig(),
       this.TryFindScrollbar());
   }
@@ -102,7 +131,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     GlobalData_1.GlobalData.GameInstance &&
       (this.NavigationComponent.SetIsInteractive(!0),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("UiNavigation", 11, "导航对象可交互", [
+        Log_1.Log.Debug("UiNavigation", 10, "导航对象可交互", [
           "name",
           this.RootUIComp.displayName,
         ]),
@@ -112,7 +141,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     GlobalData_1.GlobalData.GameInstance &&
       (this.NavigationComponent.SetIsInteractive(!1),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("UiNavigation", 11, "导航对象不可交互", [
+        Log_1.Log.Debug("UiNavigation", 10, "导航对象不可交互", [
           "name",
           this.RootUIComp.displayName,
         ]),
@@ -139,6 +168,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
         new UiNavigationCursorModule_1.UiNavigationCursorModule(this.Cursor)),
       (this.ChildTagMap = new Map()),
       this.CreateNavigationComponent(),
+      this.RegisterListenerToPanel(),
       (this.IsAwakeCalled = !0));
   }
   StartInit() {
@@ -151,6 +181,25 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       UiNavigationViewManager_1.UiNavigationViewManager.RefreshCurrentHotKey(),
       this.RefreshPanelConfig(),
       (this.IsStartCalled = !0));
+  }
+  TryReStartInit() {
+    !this.IsUsePool ||
+      !this.IsStartCalled ||
+      !this.PanelConfig ||
+      (this.PanelConfig.IsValid() && this.PanelConfig.RootUIComp?.IsValid()) ||
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiNavigation",
+          10,
+          "可能存在从对象池获取的情况[TsUiNavigationBehaviorListener]",
+          ["GroupName", this.GroupName],
+          ["Name", this.RootUIComp.displayName],
+        ),
+      (this.IsStartCalled = !1),
+      (this.IsInitScroll = !1),
+      (this.IsInitLayout = !1),
+      (this.PanelConfig = void 0),
+      this.StartInit());
   }
   InitScrollViewAndLayout() {
     this.InitScrollView(), this.InitLayout();
@@ -179,7 +228,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       (this.IsInitScroll = !0),
       this.ScrollView) ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiNavigation", 11, "找不到滚动列表组件", [
+        Log_1.Log.Error("UiNavigation", 10, "找不到滚动列表组件", [
           "节点",
           this.RootUIComp.displayName,
         ]));
@@ -193,7 +242,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       (this.IsInitLayout = !0),
       this.LayoutBase) ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiNavigation", 11, "找不到循环滚动列表组件", [
+        Log_1.Log.Error("UiNavigation", 10, "找不到循环滚动列表组件", [
           "节点",
           this.RootUIComp.displayName,
         ]));
@@ -221,8 +270,8 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
   }
   RegisterChildListener(s) {
     for (let i = 0, t = s.TagArray.Num(); i < t; ++i) {
-      var e = s.TagArray.Get(i);
-      this.ChildTagMap.set(e, s);
+      var h = s.TagArray.Get(i);
+      this.ChildTagMap.set(h, s);
     }
     this.NotifyParentListener(s);
   }
@@ -242,6 +291,13 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       ((i = this.GetSelectableComponent()),
       this.ScrollView.UnBindParentUIItem(i));
   }
+  HasNormalScrollView() {
+    return (
+      !!this.ScrollView &&
+      !this.HasLoopScrollView() &&
+      !this.HasDynamicScrollView()
+    );
+  }
   HasLoopScrollView() {
     return (
       !!this.ScrollView &&
@@ -255,13 +311,14 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     );
   }
   RegisterListenerToPanel() {
-    (this.PanelConfig =
-      UiNavigationLogic_1.UiNavigationLogic.FindUiNavigationPanelConfig(
-        this.GetOwner(),
-      )),
+    this.PanelConfig ||
+      ((this.PanelConfig =
+        UiNavigationLogic_1.UiNavigationLogic.FindUiNavigationPanelConfig(
+          this.GetOwner(),
+        )),
       this.PanelConfig &&
         (this.PanelConfig.RegisterNavigationListener(this),
-        this.PanelConfig.DynamicListenerConfigHandle(this));
+        this.PanelConfig.DynamicListenerConfigHandle(this)));
   }
   UnRegisterListenerToPanel() {
     this.PanelConfig && this.PanelConfig.UnRegisterNavigationListener(this);
@@ -317,6 +374,23 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
   IsInScrollOrLayoutAnimation() {
     return this.InitAnimController(), this.AnimController?.IsPlaying() ?? !1;
   }
+  IsInNormalScrollDisplayByGridActor() {
+    var i, t;
+    return (
+      !this.HasNormalScrollView() ||
+      !this.GridBaseActor ||
+      ((i = (0, puerts_1.$ref)(3)),
+      (t = (0, puerts_1.$ref)(3)),
+      this.ScrollView.GetOutOfBottomBoundsType(
+        this.GridBaseActor.GetUIItem(),
+        i,
+        t,
+      ),
+      this.ScrollView.Vertical
+        ? 0 === (0, puerts_1.$unref)(i)
+        : 0 === (0, puerts_1.$unref)(t))
+    );
+  }
   IsInLoopScrollDisplay() {
     var i;
     return (
@@ -326,41 +400,46 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     );
   }
   IsInLoopScrollDisplayByGridActor() {
-    var i, t, s;
+    if (!this.HasLoopScrollView()) return !0;
+    var i = this.ScrollView,
+      t = (0, puerts_1.$ref)(3),
+      s = (0, puerts_1.$ref)(3),
+      h = this.GetErrorTolerance(i.Vertical);
+    let e = void 0;
     return (
-      !this.GridBaseActor ||
-      !this.HasLoopScrollView() ||
-      ((i = this.ScrollView),
-      (t = (0, puerts_1.$ref)(3)),
-      (s = (0, puerts_1.$ref)(3)),
-      i.GetOutOfBottomBoundsType(this.GridBaseActor.GetUIItem(), t, s),
-      i.Vertical
-        ? 0 === (0, puerts_1.$unref)(t)
-        : 0 === (0, puerts_1.$unref)(s))
+      (e = this.GridBaseActor
+        ? this.GridBaseActor.GetUIItem()
+        : this.RootUIComp),
+      i.GetOutOfBottomBoundsType(e, t, s, h),
+      i.Vertical ? 0 === (0, puerts_1.$unref)(t) : 0 === (0, puerts_1.$unref)(s)
     );
   }
-  GetDynErrorTolerance(i) {
-    var t = this.RootUIComp.RelativeScale3D;
-    let s = MathUtils_1.MathUtils.KindaSmallNumber;
+  GetErrorTolerance(i) {
+    var t,
+      s = this.RootUIComp.RelativeScale3D;
+    let h = MathUtils_1.MathUtils.KindaSmallNumber;
     return (
-      i
-        ? ((i = t.Y - 1), (s += (i * this.RootUIComp.Height) / 2))
-        : ((i = t.X - 1), (s += (i * this.RootUIComp.Width) / 2)),
-      s
+      i && 1 < s.Y
+        ? ((t = s.Y - 1), (h += (t * this.RootUIComp.Height) / 2))
+        : !i &&
+          1 < s.X &&
+          ((t = s.X - 1), (h += (t * this.RootUIComp.Width) / 2)),
+      h
     );
   }
   IsInDynScrollDisplay() {
-    var i, t, s, e;
+    if (!this.HasDynamicScrollView()) return !0;
+    var i = this.ScrollView,
+      t = (0, puerts_1.$ref)(3),
+      s = (0, puerts_1.$ref)(3),
+      h = this.GetErrorTolerance(i.Vertical);
+    let e = void 0;
     return (
-      !this.HasDynamicScrollView() ||
-      ((i = this.ScrollView),
-      (t = (0, puerts_1.$ref)(3)),
-      (s = (0, puerts_1.$ref)(3)),
-      (e = this.GetDynErrorTolerance(i.Vertical)),
-      i.GetOutOfBottomBoundsType(this.RootUIComp, t, s, e),
-      i.Vertical
-        ? 0 === (0, puerts_1.$unref)(t)
-        : 0 === (0, puerts_1.$unref)(s))
+      (e = this.GridBaseActor
+        ? this.GridBaseActor.GetUIItem()
+        : this.RootUIComp),
+      i.GetOutOfBottomBoundsType(e, t, s, h),
+      i.Vertical ? 0 === (0, puerts_1.$unref)(t) : 0 === (0, puerts_1.$unref)(s)
     );
   }
   IsInScrollOrLayoutCanFocus() {
@@ -387,12 +466,14 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
   ResetNavigationState() {
     (this.InNavigation = !1),
       this.UpdateNavigationState(),
-      this.UpdateLoopNavigationIndex(-1);
+      this.UpdateLoopNavigationIndex(-1),
+      this.NotifyUnFocusListener();
   }
   ActiveNavigationState() {
     (this.InNavigation = !0),
       this.UpdateNavigationState(),
-      this.UpdateLoopNavigationIndex(this.LoopScrollViewGridIndex);
+      this.UpdateLoopNavigationIndex(this.LoopScrollViewGridIndex),
+      this.NotifyFocusListener();
   }
   UpdateNavigationState() {
     var i = this.GetBehaviorComponent();
@@ -404,6 +485,14 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
     this.ScrollViewActor &&
       this.ScrollView instanceof UE.UILoopScrollViewComponent &&
       this.ScrollView.SetNavigationIndex(i);
+  }
+  NotifyUnFocusListener() {
+    var i = this.GetBehaviorComponent();
+    i instanceof UE.UISelectableComponent && i.NotifyUnFocusListener();
+  }
+  NotifyFocusListener() {
+    var i = this.GetBehaviorComponent();
+    i instanceof UE.UISelectableComponent && i.NotifyFocusListener();
   }
   SetListenerInNavigation() {
     UiNavigationGlobalData_1.UiNavigationGlobalData.IsAllowCrossNavigationGroup

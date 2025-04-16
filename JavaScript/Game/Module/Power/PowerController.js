@@ -27,12 +27,12 @@ const Log_1 = require("../../../Core/Common/Log"),
   CHECKPOWERGAP = 500;
 class PowerController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(21384, (e) => {
+    Net_1.Net.Register(23662, (e) => {
       ModelManager_1.ModelManager.PowerModel.UpdatePowerData(e._Xs);
     });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(21384);
+    Net_1.Net.UnRegister(23662);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -60,11 +60,11 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.PowerModel.CreateConfirmBoxData(e, r),
       ModelManager_1.ModelManager.FunctionModel.IsOpen(10017) &&
         !UiManager_1.UiManager.IsViewOpen("PowerView") &&
-        this.JGa();
+        this.ZNa();
   }
-  static async JGa() {
+  static async ZNa() {
     var e;
-    await this.ZGa(),
+    await this.eFa(),
       ModelManager_1.ModelManager.PowerModel.ConfirmBoxData &&
         ((e = new UiPopViewData_1.UiPopViewData()),
         UiManager_1.UiManager.OpenView("PowerView", e));
@@ -72,7 +72,7 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
   static async TryExchangePowerItem(r, e = 1) {
     var o;
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10017)
-      ? (await this.ZGa(),
+      ? (await this.eFa(),
         (o = ModelManager_1.ModelManager.PowerModel.GetPowerItemInfos(r)),
         ModelManager_1.ModelManager.PowerModel.PowerCount + o.RenewValue * e >
         ConfigManager_1.ConfigManager.PowerConfig.GetPowerChargeLimit()
@@ -91,7 +91,7 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
           "Function_notopen_tili",
         );
   }
-  static async ZGa() {
+  static async eFa() {
     await ShopController_1.ShopController.SendShopInfoRequest(
       ModelManager_1.ModelManager.ShopModel.VersionId,
     );
@@ -241,17 +241,17 @@ class PowerController extends UiControllerBase_1.UiControllerBase {
   }),
   (PowerController.SendUpdatePowerRequest = (e) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("PowerModule", 28, "体力拉取", ["itemList", e]);
+      Log_1.Log.Debug("PowerModule", 27, "体力拉取", ["itemList", e]);
     var r = Protocol_1.Aki.Protocol.YZn.create();
     (r.BVn = e),
       (_a.Mea = TimeUtil_1.TimeUtil.GetServerTime()),
-      Net_1.Net.Call(19739, r, (e) => {
+      Net_1.Net.Call(18822, r, (e) => {
         e &&
           (e.G9n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? ModelManager_1.ModelManager.PowerModel.UpdatePowerData(e.uXs)
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.G9n,
-                29167,
+                19380,
               ));
       });
   });

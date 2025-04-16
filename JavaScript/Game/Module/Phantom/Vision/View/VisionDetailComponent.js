@@ -9,16 +9,17 @@ const UE = require("ue"),
   VisionDetailInfoComponent_1 = require("./VisionDetailInfoComponent"),
   VisionDetailUnderComponent_1 = require("./VisionDetailUnderComponent");
 class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
-  constructor(e) {
+  constructor(t) {
     super(),
       (this.H8i = !1),
       (this.dFe = 0),
+      (this.i6 = 0),
       (this.j8i = void 0),
       (this.wqe = void 0),
       (this.W8i = void 0),
       (this.K8i = void 0),
       (this.OnClickMainItem = () => {}),
-      (this.wqe = e);
+      (this.wqe = t);
   }
   async Init() {
     await this.CreateByActorAsync(this.wqe.GetOwner());
@@ -41,24 +42,25 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
     )),
       this.K8i.SetClickCallBack(this.OnClickMainItem);
   }
-  GetTxtItemByIndex(e) {
-    return this.K8i?.GetTxtItemByIndex(e);
+  GetTxtItemByIndex(t) {
+    return this.K8i?.GetTxtItemByIndex(t);
   }
-  SetUnderLeftButtonText(e) {
-    this.W8i.RefreshLeftButtonText(e);
+  SetUnderLeftButtonText(t) {
+    this.W8i.RefreshLeftButtonText(t);
   }
-  Update(e, t, i = !1) {
-    (this.j8i = e),
-      (this.dFe = t),
-      (this.H8i = i),
+  Update(t, e, i, s = !1) {
+    (this.j8i = t),
+      (this.dFe = e),
+      (this.i6 = i),
+      (this.H8i = s),
       this.Q8i(),
-      this.W8i.Update(e);
+      this.W8i.Update(t);
   }
   Q8i() {
-    var e = this.H8i ? 1 : 0,
-      e = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(e);
-    const t = new VisionDetailInfoComponent_1.VisionDetailInfoComponentData();
-    t.DataBase = this.j8i;
+    var t = this.H8i ? 1 : 0,
+      t = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(t);
+    const e = new VisionDetailInfoComponent_1.VisionDetailInfoComponentData();
+    (e.DataBase = this.j8i), (e.RoleId = this.dFe), (e.Cost = this.i6);
     let i = -1;
     this.H8i ||
       (i =
@@ -77,8 +79,8 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
         0 === i || -1 === i,
         o,
         this.j8i.GetQuality(),
-      ).forEach((e) => {
-        t.AddDescData(e);
+      ).forEach((t) => {
+        e.AddDescData(t);
       }),
       VisionDetailDescComponent_1.VisionDetailDesc.ConvertVisionFetterDataToDetailDescData(
         s,
@@ -89,27 +91,27 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
             this.dFe,
           );
         },
-      ).forEach((e) => {
-        t.AddDescData(e);
+      ).forEach((t) => {
+        e.AddDescData(t);
       }),
       this.H8i &&
-        t.DescData?.forEach((e) => {
-          (e.AnimationState = !1), (e.CompareState = this.H8i);
+        e.DescData?.forEach((t) => {
+          (t.AnimationState = !1), (t.CompareState = this.H8i);
         }),
       n &&
         VisionDetailDescComponent_1.VisionDetailDesc.CreateSameMonsterTips().forEach(
-          (e) => {
-            t.AddDescData(e);
+          (t) => {
+            e.AddDescData(t);
           },
         ),
-      this.K8i.Refresh(t, this.H8i, e),
+      this.K8i.Refresh(e, this.H8i, t),
       this.K8i.SetActive(!0);
   }
-  SetButtonPanelShowState(e) {
-    this.W8i.SetActive(e);
+  SetButtonPanelShowState(t) {
+    this.W8i.SetActive(t);
   }
-  RefreshViewByCompareState(e) {
-    this.W8i.RefreshViewByCompareState(e);
+  RefreshViewByCompareState(t) {
+    this.W8i.RefreshViewByCompareState(t);
   }
   GetDetailUnderComponent() {
     return this.W8i;

@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
-  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
@@ -23,17 +22,19 @@ class SpecialEnergyBarInfo {
   constructor() {
     (this.Id = 0),
       (this.PrefabType = 0),
+      (this.ExtraType = 0),
       (this.SlotNum = 0),
       (this.ExtraFloatParams = []),
       (this.PrefabPath = ""),
       (this.AttributeId = 0),
       (this.MaxAttributeId = 0),
-      (this.BuffId = 0n),
+      (this.BuffId = 0),
       (this.KeyEnableTagId = 0),
       (this.TagEnergyBarIdMap = void 0),
       (this.EffectColor = void 0),
       (this.OtherEffectColorList = []),
       (this.PointColor = void 0),
+      (this.PointColorList = []),
       (this.IconPath = void 0),
       (this.EnableIconPath = void 0),
       (this.FrontIconPath = void 0),
@@ -46,31 +47,34 @@ class SpecialEnergyBarInfo {
   Init(t, i) {
     (this.Id = t),
       (this.PrefabType = i.PrefabType),
+      (this.ExtraType = i.ExtraType),
       (this.SlotNum = i.SlotNum),
       this.C$e(i.ExtraFloatParams, this.ExtraFloatParams),
       (this.PrefabPath = i.PrefabPath.ToAssetPathName()),
       (this.AttributeId = i.AttributeId),
       (this.MaxAttributeId = i.MaxAttributeId),
-      (this.BuffId = i.BuffId),
+      (this.BuffId = Number(i.BuffId)),
       (this.TagEnergyBarIdMap = this.g$e(i.TagEnergyBarIdMap)),
       i.EffectColor
         ? ((t = i.EffectColor.split("#")),
           (this.EffectColor = t.shift()),
           (this.OtherEffectColorList = t))
         : (this.EffectColor = void 0),
-      (this.PointColor = StringUtils_1.StringUtils.IsEmpty(i.PointColor)
-        ? void 0
-        : i.PointColor),
-      (this.IconPath = i.IconPath.ToAssetPathName()),
-      (this.EnableIconPath = i.EnableIconPath.ToAssetPathName()),
-      (this.FrontIconPath = i.FrontIconPath.ToAssetPathName()),
+      StringUtils_1.StringUtils.IsEmpty(i.PointColor)
+        ? (this.PointColor = void 0)
+        : ((t = i.PointColor.split("#")),
+          (this.PointColor = t[0]),
+          (this.PointColorList = t)),
+      (this.IconPath = i.TexturePath.ToAssetPathName()),
+      (this.EnableIconPath = i.EnableTexturePath.ToAssetPathName()),
+      (this.FrontIconPath = i.FrontTexturePath.ToAssetPathName()),
       this.ANn(i.NiagaraList, this.NiagaraPathList),
       (this.KeyEnableNiagaraIndex = i.KeyEnableNiagaraIndex),
       this.KeyEnableNiagaraIndex >= this.NiagaraPathList.length &&
         ((this.KeyEnableNiagaraIndex = -1), Log_1.Log.CheckError()) &&
         Log_1.Log.Error(
           "Battle",
-          18,
+          17,
           "能量条配置错误, 可用时粒子特效索引超出粒子数组长度",
           ["", i.Name],
           ["索引", this.KeyEnableNiagaraIndex],
@@ -84,15 +88,13 @@ class SpecialEnergyBarInfo {
       this.f$e(i.KeyInfoList);
   }
   f$e(i) {
-    if (2 === Info_1.Info.OperationType) {
-      var s = i.Num();
-      for (let t = 0; t < s; t++) {
-        var e = i.Get(t),
-          r = new SpecialEnergyBarKeyInfo();
-        (r.Action = e.Action),
-          (r.ActionType = e.ActionType),
-          this.KeyInfoList.push(r);
-      }
+    var s = i.Num();
+    for (let t = 0; t < s; t++) {
+      var e = i.Get(t),
+        r = new SpecialEnergyBarKeyInfo();
+      (r.Action = e.Action),
+        (r.ActionType = e.ActionType),
+        this.KeyInfoList.push(r);
     }
   }
   g$e(i) {

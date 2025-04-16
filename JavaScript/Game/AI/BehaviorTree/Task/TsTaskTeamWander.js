@@ -29,15 +29,36 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsWalkOff = !1),
       (this.CurrentMoveDirect = 4),
       (this.NextDetectAllyTime = -0),
-      (this.Destination = void 0),
-      (this.LastDestination = void 0),
-      (this.TmpDestinationToTarget = void 0),
-      (this.TmpSelfToTarget = void 0),
-      (this.TmpDirection = void 0),
-      (this.TmpVector = void 0),
-      (this.TmpVector2 = void 0),
-      (this.TmpQuat = void 0),
-      (this.BlockDirectionsCache = void 0),
+      (this.Destination = Vector_1.Vector.Create()),
+      (this.LastDestination = Vector_1.Vector.Create()),
+      (this.TmpDestinationToTarget = Vector_1.Vector.Create()),
+      (this.TmpSelfToTarget = Vector_1.Vector.Create()),
+      (this.TmpDirection = Vector_1.Vector.Create()),
+      (this.TmpVector = Vector_1.Vector.Create()),
+      (this.TmpVector2 = Vector_1.Vector.Create()),
+      (this.TmpQuat = Quat_1.Quat.Create()),
+      (this.BlockDirectionsCache = new Set()),
+      (this.NextTriggerTime = -0),
+      (this.FirstFrame = !1),
+      (this.NavigationInterval = 0);
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsAllyDetect = 0),
+      (this.TsTurnSpeed = 0),
+      (this.TsWalkOff = !1),
+      (this.CurrentMoveDirect = 4),
+      (this.NextDetectAllyTime = -0),
+      (this.Destination = Vector_1.Vector.Create()),
+      (this.LastDestination = Vector_1.Vector.Create()),
+      (this.TmpDestinationToTarget = Vector_1.Vector.Create()),
+      (this.TmpSelfToTarget = Vector_1.Vector.Create()),
+      (this.TmpDirection = Vector_1.Vector.Create()),
+      (this.TmpVector = Vector_1.Vector.Create()),
+      (this.TmpVector2 = Vector_1.Vector.Create()),
+      (this.TmpQuat = Quat_1.Quat.Create()),
+      (this.BlockDirectionsCache = new Set()),
       (this.NextTriggerTime = -0),
       (this.FirstFrame = !1),
       (this.NavigationInterval = 0);
@@ -55,8 +76,8 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
       t instanceof TsAiController_1.default &&
         ((t = t.AiController),
         this.TsWalkOff ||
-          t.CharActorComp.Entity.GetComponent(38)?.SetWalkOffLedgeRecord(!1),
-        t.CharActorComp.Entity.CheckGetComponent(161).SetMoveState(
+          t.CharActorComp.Entity.GetComponent(44)?.SetWalkOffLedgeRecord(!1),
+        t.CharActorComp.Entity.CheckGetComponent(173).SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
         ),
         this.Destination ||
@@ -90,9 +111,9 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
               this.TmpSelfToTarget,
             ),
               this.TmpDirection.DeepCopy(this.TmpSelfToTarget);
-            const n = s.CharActorComp.Entity.GetComponent(38);
+            const l = s.CharActorComp.Entity.GetComponent(44);
             void (
-              (n && n.MoveController.IsMovingToLocation()) ||
+              (l && l.MoveController.IsMovingToLocation()) ||
               this.SetInputParams(
                 s.CharActorComp,
                 this.TmpSelfToTarget,
@@ -119,37 +140,57 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
                   (h.CachedControllerYaw + h.AngleCenter) *
                   MathUtils_1.MathUtils.DegToRad,
                 a =
-                  ((this.Destination.X =
-                    h.CachedTargetLocation.X + Math.cos(a) * h.DistanceCenter),
-                  (this.Destination.Y =
-                    h.CachedTargetLocation.Y + Math.sin(a) * h.DistanceCenter),
-                  (this.Destination.Z = r.ActorLocationProxy.Z),
+                  (this.TmpVector.Set(
+                    Math.cos(a) * h.DistanceCenter,
+                    Math.sin(a) * h.DistanceCenter,
+                    0,
+                  ),
+                  h.Group.GravityQuat.RotateVector(
+                    this.TmpVector,
+                    this.Destination,
+                  ),
+                  this.Destination.AdditionEqual(h.CachedTargetLocation),
+                  GravityUtils_1.GravityUtils.SetZnInGravityForActor(
+                    r,
+                    this.Destination,
+                    GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+                      r,
+                      r.ActorLocationProxy,
+                    ),
+                  ),
                   o.Subtraction(
                     s.CharActorComp.ActorLocationProxy,
                     this.TmpSelfToTarget,
                   ),
                   this.TmpDirection.DeepCopy(this.TmpSelfToTarget),
                   o.Subtraction(this.Destination, this.TmpDestinationToTarget),
-                  this.TmpSelfToTarget.Size2D()),
-                o = this.TmpDestinationToTarget.Size2D(),
-                l =
-                  (0 < a
-                    ? this.TmpSelfToTarget.DivisionEqual(a)
-                    : r.ActorForwardProxy.Multiply(-1, this.TmpSelfToTarget),
-                  (this.TmpSelfToTarget.Z = 0) < o
-                    ? this.TmpDestinationToTarget.DivisionEqual(o)
-                    : r.ActorForwardProxy.Multiply(
+                  GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+                    r,
+                    this.TmpSelfToTarget,
+                  ),
+                  GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+                    r,
+                    this.TmpDestinationToTarget,
+                  ),
+                  this.TmpSelfToTarget.Size()),
+                o = this.TmpDestinationToTarget.Size(),
+                _ =
+                  (a < MathUtils_1.MathUtils.KindaSmallNumber
+                    ? r.ActorForwardProxy.Multiply(-1, this.TmpSelfToTarget)
+                    : this.TmpSelfToTarget.DivisionEqual(a),
+                  o < MathUtils_1.MathUtils.KindaSmallNumber
+                    ? r.ActorForwardProxy.Multiply(
                         -1,
                         this.TmpDestinationToTarget,
-                      ),
-                  (this.TmpDestinationToTarget.Z = 0),
-                  this.TmpSelfToTarget.DotProduct(this.TmpDestinationToTarget));
-              let t = Math.acos(l);
-              (l =
-                this.TmpSelfToTarget.X * this.TmpDestinationToTarget.Y -
-                this.TmpSelfToTarget.Y * this.TmpDestinationToTarget.X),
-                (a = a - o),
-                (o = o * (t = 0 < l ? -t : t));
+                      )
+                    : this.TmpDestinationToTarget.DivisionEqual(o),
+                  GravityUtils_1.GravityUtils.GetAngleOffsetInGravityForActor(
+                    r,
+                    this.TmpDestinationToTarget,
+                    this.TmpSelfToTarget,
+                  ) * MathUtils_1.MathUtils.DegToRad),
+                a = a - o,
+                o = o * _;
               if (
                 (Time_1.Time.Now > this.NextDetectAllyTime &&
                   ((this.NextDetectAllyTime =
@@ -176,14 +217,14 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
                 )
                   return;
                 Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("AI", 43, "TeamWander 寻路失败", [
+                  Log_1.Log.Debug("AI", 42, "TeamWander 寻路失败", [
                     "EntityId",
                     r.Entity.Id,
                   ]),
                   this.StopMoveToLocation(s.CharActorComp);
               }
-              const n = r.Entity.GetComponent(38);
-              (n && n.MoveController.IsMovingToLocation()) ||
+              const l = r.Entity.GetComponent(44);
+              (l && l.MoveController.IsMovingToLocation()) ||
                 this.SetInputParams(r, this.TmpSelfToTarget, this.TmpDirection);
             }
           }
@@ -230,7 +271,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   StopMoveToLocation(t) {
-    t = t.Entity.GetComponent(38);
+    t = t.Entity.GetComponent(44);
     t &&
       t.MoveController.IsMovingToLocation() &&
       t?.MoveController.StopMoveToLocation(),
@@ -238,7 +279,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
   }
   SetMoveToLocation(t, i, s) {
     this.TmpVector2.DeepCopy(t);
-    t = i.Entity.GetComponent(38);
+    t = i.Entity.GetComponent(44);
     if (!t) return !1;
     if (
       (!this.LastDestination.IsNearlyZero() ||
@@ -265,12 +306,12 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     4 === this.CurrentMoveDirect
       ? AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner)
       : (this.TmpVector.DeepCopy(s),
-        GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravity(
+        GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravityForActor(
           t,
           this.TmpVector,
           this.CurrentMoveDirect,
         ),
-        t.Entity.GetComponent(92)?.MoveState !==
+        t.Entity.GetComponent(99)?.MoveState !==
         CharacterUnifiedStateTypes_1.ECharMoveState.Walk
           ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               t,
@@ -317,9 +358,9 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          38,
+          44,
         ))?.MoveController.StopMoveToLocation(),
-      this.LastDestination?.Reset(),
+      this.LastDestination.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
       this.TsWalkOff || t?.SetWalkOffLedgeRecord(!0));
   }

@@ -20,7 +20,7 @@ class ShopConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Shop", 19, "查表ShopInfo错误", ["Id", e])),
+          Log_1.Log.Error("Shop", 18, "查表ShopInfo错误", ["Id", e])),
       o
     );
   }
@@ -29,7 +29,7 @@ class ShopConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Shop", 19, "表ShopFixed配置找不到", ["ShopId", e])),
+          Log_1.Log.Error("Shop", 18, "表ShopFixed配置找不到", ["ShopId", e])),
       o
     );
   }
@@ -43,7 +43,7 @@ class ShopConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Shop",
-            19,
+            18,
             "表ShopFixed配置找不到",
             ["ShopId", e],
             ["Id", o],

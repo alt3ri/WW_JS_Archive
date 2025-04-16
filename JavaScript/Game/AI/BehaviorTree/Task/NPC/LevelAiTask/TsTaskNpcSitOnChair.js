@@ -5,7 +5,6 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
   GlobalData_1 = require("../../../../../GlobalData"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
-  BasePerformComponent_1 = require("../../../../../NewWorld/Character/Common/Component/BasePerformComponent"),
   GravityUtils_1 = require("../../../../../Utils/GravityUtils"),
   AiContollerLibrary_1 = require("../../../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase"),
@@ -22,11 +21,30 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
       (this.MontagePath = ""),
       (this.LoopDuration = 0),
       (this.RepeatTimes = 0),
-      (this.PlayingMontageId = 0),
-      (this.IsPlayLoop = !1),
-      (this.LoopMontage = !1),
+      (this.PlayingMontage = -1),
       (this.PhaseInternal = 0),
-      (this.HasAborted = !1),
+      (this.IsExecuteMoveNearby = !1),
+      (this.IsExecuteMoveClose = !1),
+      (this.IsExecuteTurnTo = !1),
+      (this.IsExecutePlayMontage = !1),
+      (this.IsExecuteMoveAway = !1),
+      (this.Entity = void 0),
+      (this.Character = void 0),
+      (this.MoveComp = void 0),
+      (this.ChairController = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsChairEntityId = 0),
+      (this.TsMontagePath = ""),
+      (this.TsLoopDuration = 0),
+      (this.TsRepeatTimes = 0),
+      (this.ChairNearbyPos = void 0),
+      (this.TempVec = void 0);
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.MovementMode = 0),
+      (this.PlayingMontage = -1),
+      (this.PhaseInternal = 0),
       (this.IsExecuteMoveNearby = !1),
       (this.IsExecuteMoveClose = !1),
       (this.IsExecuteTurnTo = !1),
@@ -50,7 +68,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
   set Phase(t) {
     this.PhaseInternal !== t &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("NPC", 51, "[TsTaskNpcSitOnChair] 切换阶段", [
+        Log_1.Log.Debug("NPC", 50, "[TsTaskNpcSitOnChair] 切换阶段", [
           "Phase",
           t,
         ]),
@@ -72,14 +90,14 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
     s
       ? ((this.Entity = s.CharAiDesignComp.Entity),
         (this.Character = this.Entity.GetComponent(3)),
-        (this.MoveComp = this.Entity.GetComponent(38)),
+        (this.MoveComp = this.Entity.GetComponent(44)),
         this.MoveComp?.CharacterMovement?.IsValid()
           ? ((s = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
               this.TsChairEntityId,
             )),
             (this.ChairController =
               s?.Entity?.GetComponent(
-                182,
+                195,
               )?.GetSubEntityInteractLogicController()),
             this.ChairController &&
             this.ChairController.IsSceneInteractionLoadCompleted()
@@ -87,7 +105,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
                 ? (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "BehaviorTree",
-                      51,
+                      50,
                       "[TsTaskSitOnChair]无效的Montage路径",
                       ["Type", t.GetClass().GetName()],
                       ["PbDataId", this.Character.CreatureData.GetPbDataId()],
@@ -98,7 +116,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "BehaviorTree",
-                51,
+                50,
                 "[TsTaskSitOnChair]MoveComp不合法",
                 ["Type", t.GetClass().GetName()],
                 ["PbDataId", this.Character.CreatureData.GetPbDataId()],
@@ -143,22 +161,22 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "BehaviorTree",
-            51,
+            50,
             "[TsTaskTurnAndSit] 阶段切换出错",
             ["CurPhase", this.Phase],
           );
     }
   }
   OnAbort() {
+    var t;
     2 === this.Phase || 3 === this.Phase || 6 === this.Phase
       ? this.MoveComp?.StopMove(!0)
       : 4 === this.Phase
         ? this.Character?.ClearInput()
         : 5 === this.Phase &&
-          ((this.HasAborted = !0),
-          this.Entity?.GetComponent(39)?.ClearAndStopMontage(
-            this.PlayingMontageId,
-          ));
+          ((t = this.Entity?.GetComponent(45)), -1 !== this.PlayingMontage) &&
+          (t?.VolatileMontageStopByLoad(3, this.PlayingMontage, 0),
+          (this.PlayingMontage = -1));
   }
   OnClear() {
     (this.Character = void 0),
@@ -239,31 +257,20 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
       ));
   }
   ExecutePlayMontage() {
-    var t, i;
+    var t;
     this.IsExecutePlayMontage ||
       ((this.IsExecutePlayMontage = !0),
-      (this.IsPlayLoop =
-        void 0 !== this.TsLoopDuration && 0 !== this.TsLoopDuration),
-      (this.LoopMontage =
-        -1 === this.TsLoopDuration || -1 === this.TsRepeatTimes),
-      (t = this.Entity.GetComponent(39)),
-      (i = new BasePerformComponent_1.PlayMontageConfig(
-        this.TsRepeatTimes,
-        this.TsLoopDuration,
-        this.IsPlayLoop,
-        this.LoopMontage,
-      )),
-      (this.HasAborted = !1),
-      (this.PlayingMontageId = t.LoadAndPlayMontage(
+      (t = this.Entity.GetComponent(45)),
+      (this.PlayingMontage = t.VolatileMontagePlayByLoad(
+        3,
         this.TsMontagePath,
-        i,
         void 0,
-        () => {
-          this.HasAborted || (this.Phase = 6);
+        (t) => {
+          t ? (this.Phase = 6) : this.FinishExecute(!0);
         },
-        () => !this.HasAborted,
-      )),
-      this.PlayingMontageId < 0 && this.Finish(!0));
+        this.TsLoopDuration,
+        this.TsRepeatTimes,
+      )));
   }
   ExecuteMoveAway() {
     var t;

@@ -8,15 +8,15 @@ const UE = require("ue"),
   ScrollViewDelegate_1 = require("./ScrollViewDelegate"),
   IS_DEBUG = !1;
 class OperationParam {
-  constructor(t = void 0, i = !1, s = void 0, e = !1) {
-    (this.Data = t),
-      (this.KeepContentPosition = i),
+  constructor(i = void 0, t = !1, s = void 0, e = !1) {
+    (this.Data = i),
+      (this.KeepContentPosition = t),
       (this.CallBack = s),
       (this.PlayGridAnim = e);
   }
 }
 class LoopScrollView {
-  constructor(t, i, s, e = !1) {
+  constructor(i, t, s, e = !1) {
     (this.cNo = void 0),
       (this.uGo = void 0),
       (this.cGo = void 0),
@@ -28,18 +28,19 @@ class LoopScrollView {
       (this.fNo = !1),
       (this.pjt = !1),
       (this.gWt = new Queue_1.Queue()),
-      (this.fAa = !1),
-      (this.pNo = (t, i) => {
-        this.uGo.CreateGridProxy(t, i);
+      (this.znl = void 0),
+      (this.HDa = !1),
+      (this.pNo = (i, t) => {
+        this.uGo.CreateGridProxy(i, t);
       }),
-      (this.vNo = (t, i) => {
-        const s = this.uGo.CreateGridProxyAsync(t, i);
-        this.fAa
+      (this.vNo = (i, t) => {
+        const s = this.uGo.CreateGridProxyAsync(i, t);
+        this.HDa
           ? this.mNo.push(s)
           : (this.mNo.push(s),
             s.then(() => {
-              var t = this.mNo.indexOf(s);
-              this.mNo.splice(t, 1);
+              var i = this.mNo.indexOf(s);
+              this.mNo.splice(i, 1);
             }));
       }),
       (this.MNo = (e, r) => {
@@ -52,30 +53,30 @@ class LoopScrollView {
             l = this.NCi,
             G = this.IGo,
             p = r - e + 1;
-          for (let t = d; t <= l; ++t)
-            t < 0 ||
-              t >= this.dNo ||
-              ((h = t % G),
-              (o = t % p),
-              t >= e && t <= r && t <= l && h == o) ||
-              this.uGo.ClearGridProxy(t, this.ENo(t));
+          for (let i = d; i <= l; ++i)
+            i < 0 ||
+              i >= this.dNo ||
+              ((h = i % G),
+              (o = i % p),
+              i >= e && i <= r && i <= l && h == o) ||
+              this.uGo.ClearGridProxy(i, this.ENo(i));
           (this.Iei = e), (this.NCi = r);
-          let i = -1,
+          let t = -1,
             s = -1;
-          for (let t = e; t <= r; ++t)
-            t < 0 ||
-              t >= this.dNo ||
-              ((a = t % G),
-              (n = t % p),
-              0 <= d && t >= d && t <= l && a == n) ||
-              (this.SNo(t), IS_DEBUG && (i < 0 && (i = t), (s = t)));
+          for (let i = e; i <= r; ++i)
+            i < 0 ||
+              i >= this.dNo ||
+              ((a = i % G),
+              (n = i % p),
+              0 <= d && i >= d && i <= l && a == n) ||
+              (this.SNo(i), IS_DEBUG && (t < 0 && (t = i), (s = i)));
           IS_DEBUG &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LoopScrollView",
-              17,
+              16,
               "更新格子",
-              ["起始Index", i],
+              ["起始Index", t],
               ["终止Index", s],
               ["展示中数量", this.IGo],
             );
@@ -83,28 +84,28 @@ class LoopScrollView {
       }),
       (this.pGo = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("LoopScrollView", 25, "LoopScrollView.OnDestroy"),
+          Log_1.Log.Debug("LoopScrollView", 24, "LoopScrollView.OnDestroy"),
           this.cNo.OnDestroyCallBack.Unbind(),
           this.cNo.OnGridsUpdate.Unbind(),
           this.cNo.OnGridCreate.Unbind(),
           this.cGo && this.cGo.Clear(),
           this.uGo.Destroy();
       }),
-      i
-        ? (i.GetUIItem().SetUIActive(!1),
-          t.SetTickableWhenPaused(!0),
-          t.OnDestroyCallBack.Bind(this.pGo),
-          e ? t.OnGridCreate.Bind(this.vNo) : t.OnGridCreate.Bind(this.pNo),
-          t.OnGridsUpdate.Bind(this.MNo),
-          (this.cNo = t),
-          (this.fGo = i),
+      t
+        ? (t.GetUIItem().SetUIActive(!1),
+          i.SetTickableWhenPaused(!0),
+          i.OnDestroyCallBack.Bind(this.pGo),
+          e ? i.OnGridCreate.Bind(this.vNo) : i.OnGridCreate.Bind(this.pNo),
+          i.OnGridsUpdate.Bind(this.MNo),
+          (this.cNo = i),
+          (this.fGo = t),
           (this.uGo = new ScrollViewDelegate_1.ScrollViewDelegate(s)),
           (this.cGo = new InTurnGridAppearAnimation_1.InTurnGridAppearAnimation(
             this,
           )),
           this.cGo.RegisterAnimController())
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LoopScrollView", 17, "设置格子模板错误，grid为空!");
+          Log_1.Log.Error("LoopScrollView", 16, "设置格子模板错误，grid为空!");
   }
   get IGo() {
     return this.CN ? 0 : this.NCi - this.Iei + 1;
@@ -112,14 +113,14 @@ class LoopScrollView {
   get Iei() {
     return this.CNo;
   }
-  set Iei(t) {
-    this.CNo = t;
+  set Iei(i) {
+    this.CNo = i;
   }
   get NCi() {
     return this.gNo;
   }
-  set NCi(t) {
-    this.gNo = t;
+  set NCi(i) {
+    this.gNo = i;
   }
   get CN() {
     return -1 === this.NCi && -1 === this.Iei;
@@ -134,15 +135,15 @@ class LoopScrollView {
     this.pjt = !0;
   }
   Jft() {
-    var t;
+    var i;
     (this.pjt = !1),
       this.gWt.Empty ||
-        ((t = this.gWt.Pop()),
+        ((i = this.gWt.Pop()),
         this.RefreshByData(
-          t.Data,
-          t?.KeepContentPosition,
-          t.CallBack,
-          t.PlayGridAnim,
+          i.Data,
+          i?.KeepContentPosition,
+          i.CallBack,
+          i.PlayGridAnim,
         ));
   }
   GetDisplayGridNum() {
@@ -167,194 +168,200 @@ class LoopScrollView {
     this.cNo.SetInAnimation(!0);
   }
   NotifyAnimationEnd() {
-    this.cNo.SetInAnimation(!1);
+    this.cNo.SetInAnimation(!1), this.znl?.();
   }
-  GetGrid(t) {
-    t = this.cNo.GetGrid(t);
-    if (t) return t.GetUIItem();
+  SetAnimFinishDelegate(i) {
+    this.znl = i;
   }
-  GetGridByDisplayIndex(t) {
-    var i = this.cNo.GridArray.Get(t);
+  GetGrid(i) {
+    i = this.cNo.GetGrid(i);
     if (i) return i.GetUIItem();
+  }
+  GetGridByDisplayIndex(i) {
+    var t = this.cNo.GridArray.Get(i);
+    if (t) return t.GetUIItem();
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("ScrollViewGrid", 25, "Grid is NULL!", [
+      Log_1.Log.Error("ScrollViewGrid", 24, "Grid is NULL!", [
         "DisplayIndex",
-        t,
+        i,
       ]);
   }
-  UnsafeGetGridProxy(t, i = !1) {
-    var s = this.ENo(t, !0);
+  UnsafeGetGridProxy(i, t = !1) {
+    var s = this.ENo(i, !0);
     if (-1 !== s) {
       if (!this.cGo || this.cGo.IsGridControlValid())
         return this.uGo.GetGridProxy(s);
-      i &&
+      t &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ScrollViewGrid",
-          25,
-          "动画还在播放时非法获取格子, gridIndex: " + t,
+          24,
+          "动画还在播放时非法获取格子, gridIndex: " + i,
         );
     }
   }
-  ReloadGrids(t) {
-    t !== this.uGo.GetDataLength() && this.MGo(t, !1);
+  ReloadGrids(i) {
+    i !== this.uGo.GetDataLength() && this.MGo(i, !1);
   }
-  ReloadProxyData(t, i, s = !0, e = !1) {
-    this.uGo.ClearSelectInfo(), this.uGo.SetDataProxy(t, i, s), this.MGo(i, e);
+  ReloadProxyData(i, t, s = !0, e = !1) {
+    this.uGo.ClearSelectInfo(), this.uGo.SetDataProxy(i, t, s), this.MGo(t, e);
   }
-  ReloadData(t, i = !1) {
-    t.length === this.uGo.GetDataLength()
-      ? (this.UpdateData(t), this.cGo?.PlayGridAnim(this.IGo, !0))
+  ReloadData(i, t = !1) {
+    i.length === this.uGo.GetDataLength()
+      ? (this.UpdateData(i), this.cGo?.PlayGridAnim(this.IGo, !0))
       : (this.uGo.ClearSelectInfo(),
-        this.uGo.SetData(t),
-        this.MGo(t.length, i));
+        this.uGo.SetData(i),
+        this.MGo(i.length, t));
   }
-  UpdateData(t) {
-    t.length !== this.uGo.GetDataLength()
+  UpdateData(i) {
+    i.length !== this.uGo.GetDataLength()
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ScrollViewGrid",
-          25,
-          `UpdateData要求新的数据长度必须跟旧的数据长度相等. 新长度: ${t.length}, 旧长度：` +
+          24,
+          `UpdateData要求新的数据长度必须跟旧的数据长度相等. 新长度: ${i.length}, 旧长度：` +
             this.uGo.GetDataLength(),
         )
-      : (this.uGo.SetData(t), this.RefreshAllGridProxies());
+      : (this.uGo.SetData(i), this.RefreshAllGridProxies());
   }
   RefreshAllGridProxies() {
     if (!this.CN)
-      for (let t = this.Iei; t <= this.NCi; ++t) this.RefreshGridProxy(t);
+      for (let i = this.Iei; i <= this.NCi; ++i) this.RefreshGridProxy(i);
   }
-  RefreshGridProxy(t) {
-    var i;
-    t >= this.Iei &&
-      t <= this.NCi &&
-      ((i = this.ENo(t)), this.uGo.RefreshGridProxy(t, i));
+  RefreshGridProxy(i) {
+    var t;
+    i >= this.Iei &&
+      i <= this.NCi &&
+      ((t = this.ENo(i)), this.uGo.RefreshGridProxy(i, t));
   }
   ClearGridProxies() {
     this.uGo.ClearData();
-    for (let t = this.Iei; t <= this.NCi; ++t)
-      this.uGo.ClearGridProxy(t, this.ENo(t));
+    for (let i = this.Iei; i <= this.NCi; ++i)
+      this.uGo.ClearGridProxy(i, this.ENo(i));
   }
   ClearSelectInfo() {
     this.uGo.ClearSelectInfo();
   }
-  TryGetCachedData(t) {
-    return this.uGo.TryGetCachedData(t);
+  TryGetCachedData(i) {
+    return this.uGo.TryGetCachedData(i);
   }
-  SelectGridProxy(t, i = !1) {
-    this.uGo.SelectGridProxy(t, this.ENo(t), i);
+  SelectGridProxy(i, t = !1) {
+    this.uGo.SelectGridProxy(i, this.ENo(i), t);
   }
-  DeselectCurrentGridProxy(t = !1) {
-    this.uGo.DeselectCurrentGridProxy(t);
+  DeselectCurrentGridProxy(i = !1) {
+    this.uGo.DeselectCurrentGridProxy(i);
   }
   GetSelectedGridIndex() {
     return this.uGo.GetSelectedGridIndex();
   }
-  BindLateUpdate(t) {
-    this.cNo.OnLateUpdate.Bind(t);
+  BindLateUpdate(i) {
+    this.cNo.OnLateUpdate.Bind(i);
   }
   UnBindLateUpdate() {
     this.cNo.OnLateUpdate.Unbind();
   }
-  MGo(t, i) {
+  MGo(i, t) {
     var s;
     this.cNo
       ? (s = this.fGo)
         ? ((this.Iei = -1),
           (this.NCi = -1),
-          (this.dNo = t),
-          this.cNo.RefreshByData(s, t, i),
+          (this.dNo = i),
+          this.cNo.RefreshByData(s, i, t),
           (this.fNo = !0),
           this.cGo && this.cGo.PlayGridAnim(this.IGo, !0))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LoopScrollView",
-            17,
+            16,
             "更新数据错误，TemplateGrid为空!",
           )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LoopScrollView",
-          17,
+          16,
           "更新数据错误，UILoopScrollViewComponent组件为空!",
         );
   }
-  RefreshByData(t, i = !1, s, e = !1) {
+  RefreshByData(i, t = !1, s, e = !1) {
     var r;
     this.Rjt
-      ? ((r = new OperationParam(t, i, s)), this.gWt.Push(r))
+      ? ((r = new OperationParam(i, t, s)), this.gWt.Push(r))
       : (this.Ujt(),
-        this.RefreshByDataAsync(t, i, e).finally(() => {
+        this.RefreshByDataAsync(i, t, e).finally(() => {
           s?.(), this.Jft();
         }));
   }
-  async RefreshByDataAsync(t, i = !1, s = !1) {
-    t.length === this.uGo.GetDataLength()
-      ? this.UpdateData(t)
+  async RefreshByDataAsync(i, t = !1, s = !1) {
+    i.length === this.uGo.GetDataLength()
+      ? this.UpdateData(i)
       : (this.uGo.ClearSelectInfo(),
-        this.uGo.SetData(t),
-        await this.yNo(t.length, i)),
+        this.uGo.SetData(i),
+        await this.yNo(i.length, t)),
       s && this.cGo && this.cGo.PlayGridAnim(this.IGo, !0);
   }
-  async yNo(t, i) {
+  async yNo(i, t) {
     var s;
     this.cNo
       ? (s = this.fGo)
         ? ((this.Iei = -1),
           (this.NCi = -1),
-          (this.dNo = t),
-          (this.fAa = !0),
+          (this.dNo = i),
+          (this.HDa = !0),
           (this.mNo.length = 0),
-          this.cNo.RefreshByData(s, t, i),
+          this.cNo.RefreshByData(s, i, t),
           await Promise.all(this.mNo),
           0 < this.mNo.length &&
-            ((this.mNo.length = 0), this.cNo.RefreshByData(s, t, i)),
-          (this.fAa = !1),
+            ((this.mNo.length = 0), this.cNo.RefreshByData(s, i, t)),
+          (this.HDa = !1),
           (this.fNo = !0))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LoopScrollView",
-            44,
+            43,
             "更新数据错误，TemplateGrid为空!",
           )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LoopScrollView",
-          44,
+          43,
           "更新数据错误，UILoopScrollViewComponent组件为空!",
         );
   }
-  IsGridDisplaying(t) {
-    t = this.ENo(t, !1);
-    return 0 <= t && t < this.IGo;
+  IsGridDisplaying(i) {
+    i = this.ENo(i, !1);
+    return 0 <= i && i < this.IGo;
   }
-  ScrollToGridIndex(t, i = !0) {
-    this.cNo.ScrollToGridIndex(t), i && this.ResetGridController();
+  ScrollToGridIndex(i, t = !0) {
+    this.cNo.ScrollToGridIndex(i), t && this.ResetGridController();
   }
-  SNo(t) {
-    var i = this.ENo(t);
-    this.uGo.OnGridsUpdate(t, i, this.Iei, this.NCi);
+  ScrollToGridIndexWithTween(i, t = !0) {
+    this.cNo.ScrollToGridIndex(i, !0), t && this.ResetGridController();
   }
-  ENo(t, i = !1) {
+  SNo(i) {
+    var t = this.ENo(i);
+    this.uGo.OnGridsUpdate(i, t, this.Iei, this.NCi);
+  }
+  ENo(i, t = !1) {
     return this.Iei < 0 || this.IGo <= 0
-      ? (i &&
+      ? (t &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LoopScrollView",
-            17,
+            16,
             "GetGridDisplayIndex: 未初始化",
             ["this.StartGridIndex", this.Iei],
             ["this.DisplayGridNum", this.IGo],
           ),
         -1)
-      : t < this.Iei || t >= this.Iei + this.IGo
-        ? (i &&
+      : i < this.Iei || i >= this.Iei + this.IGo
+        ? (t &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LoopScrollView",
-              17,
+              16,
               "GetGridDisplayIndex: 未处于展示中",
-              ["gridIndex", t],
+              ["gridIndex", i],
               ["this.StartGridIndex", this.Iei],
               [
                 "this.StartGridIndex + this.DisplayGridNum",
@@ -362,30 +369,30 @@ class LoopScrollView {
               ],
             ),
           -1)
-        : t % this.IGo;
+        : i % this.IGo;
   }
-  BindOnScrollValueChanged(t) {
-    this.cNo.OnScrollValueChange.Bind(t);
+  BindOnScrollValueChanged(i) {
+    this.cNo.OnScrollValueChange.Bind(i);
   }
   GetGridAndScrollToByJudge(s, e) {
     if (this.DataInited) {
-      let t = 0,
-        i = !1;
+      let i = 0,
+        t = !1;
       for (const r of this.uGo.GetDatas()) {
         if (e(s, r)) {
-          i = !0;
+          t = !0;
           break;
         }
-        t++;
+        i++;
       }
-      return i || (t = 0), this.ScrollToGridIndex(t), this.GetGrid(t);
+      return t || (i = 0), this.ScrollToGridIndex(i), this.GetGrid(i);
     }
   }
-  ScrollToNextLine(t = !0) {
-    this.cNo.ScrollToNextLine(t);
+  ScrollToNextLine(i = !0) {
+    this.cNo.ScrollToNextLine(i);
   }
-  SetTargetRootComponentActive(t) {
-    this.cNo.GetRootComponent().SetUIActive(t);
+  SetTargetRootComponentActive(i) {
+    this.cNo.GetRootComponent().SetUIActive(i);
   }
   ResetGridController() {
     this.cGo && this.cGo.PlayGridAnim(this.IGo, !0);

@@ -60,14 +60,14 @@ class InsideInterfaceData {
     return this.Fgi
       ? this.Fgi.GetMaxCount()
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("ItemHint", 9, "里列表当前单元无效!"),
+          Log_1.Log.Error("ItemHint", 8, "里列表当前单元无效!"),
         0);
   }
   GetAddItemTime() {
     return this.Fgi
       ? this.Fgi.GetAddItemTime()
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("ItemHint", 9, "里列表当前单元无效!"),
+          Log_1.Log.Error("ItemHint", 8, "里列表当前单元无效!"),
         0);
   }
   PostBattleViewOpen() {
@@ -85,14 +85,14 @@ class InsideInterfaceData {
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "ItemHint",
-            9,
+            8,
             "里列表关闭时, 还有数据在队列中未开始播放!",
           ),
         this.Vgi.shift(),
         (this.Fgi = void 0),
         this.Wgi())
       : Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("ItemHint", 11, "里列表关闭时没有数据可以拿");
+        Log_1.Log.Info("ItemHint", 10, "里列表关闭时没有数据可以拿");
   }
   InsertItemRewardInfo(t) {
     var e = this.Kgi();
@@ -190,7 +190,7 @@ class ItemHintModel extends ModelBase_1.ModelBase {
         ((e.m9n = 1),
         (e.L8n = 21010014),
         (e.W9n = 3),
-        t.O9n.push(e),
+        (t.gws = { 0: { O9n: [e] } }),
         new ItemRewardData());
     (e.ItemReward = t), this.$gi.push(e);
   }

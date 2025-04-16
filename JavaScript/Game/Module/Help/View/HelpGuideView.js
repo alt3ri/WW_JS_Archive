@@ -94,9 +94,12 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
       [10, UE.UIItem],
       [11, UE.UIItem],
       [12, UE.UIItem],
+      [13, UE.UIButtonComponent],
+      [14, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [2, this.lPe],
+        [13, this.lPe],
         [7, this.nPe],
         [8, this.aPe],
       ]);
@@ -135,7 +138,7 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
       this.GetItem(4).SetUIActive(t);
   }
   OnStart() {
-    this.Og(0);
+    this.Og(0), this.GetItem(14).SetUIActive(!1);
   }
   OnBeforeShow() {
     this.UiViewSequence.PlaySequence("StartAtOnce"),

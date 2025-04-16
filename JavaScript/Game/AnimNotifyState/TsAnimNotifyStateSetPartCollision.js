@@ -11,25 +11,28 @@ class TsAnimNotifyStateSetPartCollision extends UE.KuroAnimNotifyState {
       (this.IsBulletDetect = !1),
       (this.IsBlockCamera = !1);
   }
+  Constructor() {}
   K2_NotifyBegin(t, s, i) {
     var e = t.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
-      this.SetPartCollisionSwitch(
-        e,
-        this.CompName,
-        this.IsBlockPawn,
-        this.IsBulletDetect,
-        this.IsBlockCamera,
-      );
-      for (let t = 0; t < this.CompNames.Num(); t++) {
-        var r = this.CompNames.Get(t);
+      this.CompName &&
         this.SetPartCollisionSwitch(
           e,
-          r,
+          this.CompName,
           this.IsBlockPawn,
           this.IsBulletDetect,
           this.IsBlockCamera,
         );
+      for (let t = 0; t < this.CompNames.Num(); t++) {
+        var r = this.CompNames.Get(t);
+        r &&
+          this.SetPartCollisionSwitch(
+            e,
+            r,
+            this.IsBlockPawn,
+            this.IsBulletDetect,
+            this.IsBlockCamera,
+          );
       }
       return !0;
     }
@@ -39,23 +42,25 @@ class TsAnimNotifyStateSetPartCollision extends UE.KuroAnimNotifyState {
     var i = t.GetOwner();
     if (i instanceof TsBaseCharacter_1.default) {
       t = i.CharacterActorComponent.GetPartConf(this.CompName);
-      this.SetPartCollisionSwitch(
-        i,
-        this.CompName,
-        t.IsBlockPawn,
-        t.IsBulletDetect,
-        t.IsBlockCamera,
-      );
+      t &&
+        this.SetPartCollisionSwitch(
+          i,
+          this.CompName,
+          t.IsBlockPawn,
+          t.IsBulletDetect,
+          t.IsBlockCamera,
+        );
       for (let t = 0; t < this.CompNames.Num(); t++) {
         var e = this.CompNames.Get(t),
           r = i.CharacterActorComponent.GetPartConf(e);
-        this.SetPartCollisionSwitch(
-          i,
-          e,
-          r.IsBlockPawn,
-          r.IsBulletDetect,
-          r.IsBlockCamera,
-        );
+        r &&
+          this.SetPartCollisionSwitch(
+            i,
+            e,
+            r.IsBlockPawn,
+            r.IsBulletDetect,
+            r.IsBlockCamera,
+          );
       }
       return !0;
     }

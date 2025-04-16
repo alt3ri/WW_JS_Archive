@@ -1,16 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableMatchOutletState = void 0);
-const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+const FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   SceneItemDynamicAttachTargetComponent_1 = require("../Common/Component/SceneItemDynamicAttachTargetComponent"),
   SceneItemManipulableBaseState_1 = require("./SceneItemManipulableBaseState");
 class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
-  constructor(t) {
-    super(t), (this.StateType = "MatchingOutlet");
-  }
   OnEnter() {
     this.SceneItem.ClearCastDestroyTimer(),
       this.SceneItem.TryAddTagById(1370513573),
+      FNameUtil_1.FNameUtil.IsNothing(
+        this.SceneItem.ManipulateBaseConfig.待机状态碰撞预设,
+      ) ||
+        this.SceneItem.ActorComp.GetPrimitiveComponent().SetCollisionProfileName(
+          this.SceneItem.ManipulateBaseConfig.待机状态碰撞预设,
+        ),
       (this.SceneItem.IsCanBeHeld = !0),
       this.OpenPhysicsSplit(),
       (this.PropComp.IsMoving = !1),
@@ -26,7 +30,7 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
     var t,
       e,
       a,
-      i = this.SceneItem.Entity.GetComponent(113),
+      i = this.SceneItem.Entity.GetComponent(123),
       s = this.SceneItem.ActivatedOutlet;
     i &&
       s?.GetIsNeedAttach() &&
@@ -48,7 +52,7 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
       ));
   }
   Isr() {
-    var t = this.SceneItem.Entity.GetComponent(113);
+    var t = this.SceneItem.Entity.GetComponent(123);
     t && t.UnRegTarget("[MatchOutletState] TryDetachFromOutlet");
   }
 }

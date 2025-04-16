@@ -9,7 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   SliderComponent_1 = require("./SliderComponent"),
-  INTERVAL = 0.05;
+  INTERVAL = 0.05,
+  SLIDER_DEAD_AREA = 0.4;
 class SliderInsideComponent extends SliderComponent_1.SliderComponent {
   SetValue(e) {
     UiNavigationNewController_1.UiNavigationNewController.SliderInsideComponentSetValue(
@@ -36,7 +37,7 @@ class SliderIncreaseInsideComponent extends (exports.SliderInsideComponent =
     this.SetValue(INTERVAL);
   }
   OnInputAxis(e, n) {
-    n <= 0 || this.SetValue(n * INTERVAL);
+    n <= SLIDER_DEAD_AREA || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderIncreaseInsideComponent = SliderIncreaseInsideComponent;
@@ -45,7 +46,7 @@ class SliderReduceInsideComponent extends SliderInsideComponent {
     this.SetValue(-INTERVAL);
   }
   OnInputAxis(e, n) {
-    0 <= n || this.SetValue(n * INTERVAL);
+    n >= -SLIDER_DEAD_AREA || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderReduceInsideComponent = SliderReduceInsideComponent;

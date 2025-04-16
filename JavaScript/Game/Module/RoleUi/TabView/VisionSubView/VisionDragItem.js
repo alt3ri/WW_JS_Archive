@@ -107,7 +107,7 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
         this.Fgo(),
           this.Vgo(),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
+            Log_1.Log.Debug("UiCommon", 27, "OnPointUp", [
               "OnPointUp",
               this.Xy,
             ]),
@@ -117,13 +117,13 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
             (ModelManager_1.ModelManager.PhantomBattleModel.ClearCurrentDragIndex(),
             this.$8i
               ? (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
+                  Log_1.Log.Debug("UiCommon", 27, "OnPointUp", [
                     "this.IfBeginDrag",
                     this.cgo,
                   ]),
                 (i = this.Uqe < CLICKTIME),
                 Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
+                  Log_1.Log.Debug("UiCommon", 27, "OnPointUp", [
                     "timeState",
                     i,
                   ]),

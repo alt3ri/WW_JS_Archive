@@ -176,7 +176,7 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
         : 2 === t
           ? (i.RootUIComp.SetUIActive(!0), e.SetUIActive(!1))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("InfluenceReputation", 11, "出现未知关系类型", [
+            Log_1.Log.Error("InfluenceReputation", 10, "出现未知关系类型", [
               "Relation",
               t,
             ]);

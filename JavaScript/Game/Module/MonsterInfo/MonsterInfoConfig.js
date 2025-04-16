@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MonsterInfoConfig = void 0);
-const MonsterBodyTypeConfigById_1 = require("../../../Core/Define/ConfigQuery/MonsterBodyTypeConfigById"),
+const EffectCsvConfigById_1 = require("../../../Core/Define/ConfigQuery/EffectCsvConfigById"),
+  MonsterBodyTypeConfigById_1 = require("../../../Core/Define/ConfigQuery/MonsterBodyTypeConfigById"),
   MonsterInfoById_1 = require("../../../Core/Define/ConfigQuery/MonsterInfoById"),
   MonsterPerchById_1 = require("../../../Core/Define/ConfigQuery/MonsterPerchById"),
   MonsterRarityById_1 = require("../../../Core/Define/ConfigQuery/MonsterRarityById"),
@@ -47,6 +48,10 @@ class MonsterInfoConfig extends ConfigBase_1.ConfigBase {
   GetMonsterBodyTypeConfig(e) {
     e =
       MonsterBodyTypeConfigById_1.configMonsterBodyTypeConfigById.GetConfig(e);
+    if (e) return e;
+  }
+  GetMonsterDeathEffectConfig(e) {
+    e = EffectCsvConfigById_1.configEffectCsvConfigById.GetConfig(e);
     if (e) return e;
   }
 }

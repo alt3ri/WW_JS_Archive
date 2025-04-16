@@ -2,9 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.getBuffExecutionClass = exports.getBuffEffectClass = void 0);
 const ExtraEffectAbnormal_1 = require("./ExtraEffectAbnormal"),
+  ExtraEffectAddBattleFlag_1 = require("./ExtraEffectAddBattleFlag"),
   ExtraEffectAddBuffOnChangeTeam_1 = require("./ExtraEffectAddBuffOnChangeTeam"),
   ExtraEffectAddBuffTrigger_1 = require("./ExtraEffectAddBuffTrigger"),
   ExtraEffectAddBulletTrigger_1 = require("./ExtraEffectAddBulletTrigger"),
+  ExtraEffectAddSkillLimitCount_1 = require("./ExtraEffectAddSkillLimitCount"),
   ExtraEffectAttributeEvent_1 = require("./ExtraEffectAttributeEvent"),
   ExtraEffectBehaviorControl_1 = require("./ExtraEffectBehaviorControl"),
   ExtraEffectDamageAccumulation_1 = require("./ExtraEffectDamageAccumulation"),
@@ -13,6 +15,7 @@ const ExtraEffectAbnormal_1 = require("./ExtraEffectAbnormal"),
   ExtraEffectDamageImmune_1 = require("./ExtraEffectDamageImmune"),
   ExtraEffectDamageModifier_1 = require("./ExtraEffectDamageModifier"),
   ExtraEffectDamageShare_1 = require("./ExtraEffectDamageShare"),
+  ExtraEffectDestroyBullet_1 = require("./ExtraEffectDestroyBullet"),
   ExtraEffectFormationAttribute_1 = require("./ExtraEffectFormationAttribute"),
   ExtraEffectLevelBuff_1 = require("./ExtraEffectLevelBuff"),
   ExtraEffectMisc_1 = require("./ExtraEffectMisc"),
@@ -93,6 +96,10 @@ function getBuffEffectClass(e) {
       return ExtraEffectFormationAttribute_1.FormationLockUpperBound;
     case 51:
       return ExtraEffectFormationAttribute_1.FormationLockLowerBound;
+    case 53:
+      return ExtraEffectAddBuffOnChangeTeam_1.BindBuffToTeam;
+    case 55:
+      return ExtraEffectAttributeEvent_1.AttributeConvert;
     case 1001:
       return ExtraEffectAbnormal_1.AbnormalWind;
     case 1002:
@@ -105,8 +112,32 @@ function getBuffEffectClass(e) {
       return ExtraEffectAbnormal_1.AbnormalLight;
     case 1006:
       return ExtraEffectAbnormal_1.AbnormalDark;
+    case 1101:
+      return ExtraEffectMisc_1.PreventReduceStack;
+    case 70:
+      return ExtraEffectMisc_1.ExtraEffectModifyBuffMaxStack;
     case 49:
       return ExtraEffectModifyCd_1.ModifyCd;
+    case 59:
+      return ExtraEffectDestroyBullet_1.ExtraEffectDestroyBullet;
+    case 62:
+      return ExtraEffectFormationAttribute_1.ModifyFormationAttributeMax;
+    case 60:
+      return ExtraEffectMisc_1.ModifyBuffDurationOrPeriod;
+    case 63:
+      return ExtraEffectSnapModifier_1.ModifyDamageElement;
+    case 68:
+      return ExtraEffectMisc_1.ModifyBuffDurationOrPeriodByInstigator;
+    case 71:
+      return ExtraEffectAddSkillLimitCount_1.ExtraEffectAddSkillLimitCount;
+    case 72:
+      return ExtraEffectMisc_1.AdditionBulletSize;
+    case 73:
+      return ExtraEffectMisc_1.AdditionBulletDuration;
+    case 74:
+      return ExtraEffectMisc_1.AdditionBulletInterval;
+    case 76:
+      return ExtraEffectAddBattleFlag_1.AddBattleFlag;
     default:
       return;
   }
@@ -121,6 +152,8 @@ function getBuffExecutionClass(e) {
       return ExtraExecutionEffect_1.ExecuteAddBuffByStackCount;
     case 29:
       return ExtraExecutionEffect_1.ExecuteAddBulletByStackCount;
+    case 75:
+      return ExtraExecutionEffect_1.ExecuteAddBulletByTagStackCount;
     case 13:
       return ExtraExecutionEffect_1.CdReduceExecution;
     case 101:
@@ -135,10 +168,18 @@ function getBuffExecutionClass(e) {
       return ExtraExecutionEffect_1.AddFormationAttributeExecution;
     case 102:
       return ExtraExecutionEffect_1.AddEnergyExecution;
-    case 48:
-      return ExtraExecutionEffect_1.PredictLockOnExecution;
     case 52:
       return ExtraExecutionEffect_1.QteExecution;
+    case 58:
+      return ExtraExecutionEffect_1.PeriodAddBuffToAdjacentEntity;
+    case 1102:
+      return ExtraEffectAbnormal_1.ConvertAbnormalLight;
+    case 65:
+      return ExtraExecutionEffect_1.ConvertBuffToAnother;
+    case 67:
+      return ExtraExecutionEffect_1.InvokePeriod;
+    case 69:
+      return ExtraExecutionEffect_1.StartBattleQte;
     default:
       return;
   }

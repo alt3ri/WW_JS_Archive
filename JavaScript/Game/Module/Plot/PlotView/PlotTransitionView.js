@@ -79,21 +79,23 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            46,
+            45,
             "PlotTransitionView:OnUpdatePlotCenterText",
           );
         var i,
           t,
           e = ModelManager_1.ModelManager.PlotModel.CenterText;
-        (this.AZi = e).Text &&
-          ((i = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(
-            e.Text,
-          )),
-          (t = this.GetText(0)).SetText(i),
-          t.SetUIActive(!0),
-          this.WZi(),
-          this.KZi(),
-          this.QZi(i.length)),
+        (this.AZi = e).Text
+          ? ((i =
+              ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(
+                e.Text,
+              )),
+            (t = this.GetText(0)).SetText(i),
+            t.SetUIActive(!0),
+            this.WZi(),
+            this.KZi(),
+            this.QZi(i.length))
+          : this.GetText(0)?.SetUIActive(!1),
           e.Config?.BgImageId &&
             ((t =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -124,7 +126,15 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.PlotModel.CenterText.Clear();
       }),
       (this.$Zi = () => {
-        void 0 === this.UZi && this.qZi && ((this.qZi = void 0), this.YZi());
+        void 0 !== this.UZi ||
+          (this.qZi && ((this.qZi = void 0), this.YZi()), !this.DZi) ||
+          (1 !== this.PZi && 2 !== this.PZi) ||
+          (void 0 !== this.DZi && TimerSystem_1.TimerSystem.Remove(this.DZi),
+          (this.DZi = void 0),
+          this.JZi(),
+          this.GetText(0).SetUIActive(!1),
+          this.GetTexture(2).SetUIActive(!1),
+          this.ExecuteCallBack());
       });
   }
   OnRegisterComponent() {
@@ -140,7 +150,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Plot", 46, "PlotTransitionView:OnStart"),
+      Log_1.Log.Debug("Plot", 45, "PlotTransitionView:OnStart"),
       (this.XYt = this.GetText(0)
         .GetOwner()
         .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass())),
@@ -221,7 +231,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Plot",
-          27,
+          26,
           "通用语气配置无法获取，策划检查配置",
           ["timberId", i],
           ["universalToneId", t],
@@ -248,11 +258,11 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
           (t =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e)) ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "实体不存在", ["entityId", e])),
+              Log_1.Log.Error("Event", 26, "实体不存在", ["entityId", e])),
           (t = t.Entity.GetComponent(1)?.Owner)?.IsValid()
             ? AudioSystem_1.AudioSystem.PostEvent(i, t)
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "未能获取到该实体对应的有效Actor", [
+              Log_1.Log.Error("Event", 26, "未能获取到该实体对应的有效Actor", [
                 "entityId",
                 e,
               ])));
@@ -298,9 +308,9 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         ),
       i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(i);
     AudioController_1.AudioController.PostEventByExternalSourcesByUi(
-      t.AudioEventPath,
+      t.SubtitleEvent,
       i,
-      t.ExternalSrcName,
+      t.SubtitleSrc,
       this.lZi,
       void 0,
       PLAY_FLAG,
@@ -361,6 +371,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
     }
   }
   QZi(i) {
+    this.RZi && TimerSystem_1.TimerSystem.Remove(this.RZi);
     var t = this.AZi,
       e = t.Config?.TextStyle?.ShowAnim;
     if (e) {
@@ -451,7 +462,7 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       for (let i = 0; i < this.bZi.Num(); i++) {
         var e = this.bZi.Get(i);
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "LineNumArray", ["element", e]);
+          Log_1.Log.Debug("Temp", 35, "LineNumArray", ["element", e]);
       }
     }
     return this.bZi.Num();

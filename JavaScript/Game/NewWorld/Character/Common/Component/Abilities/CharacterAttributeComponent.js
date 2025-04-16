@@ -19,26 +19,20 @@ var __decorate =
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAttributeComponent = void 0);
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+const UE = require("ue"),
+  Time_1 = require("../../../../../../Core/Common/Time"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
-  FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController"),
   CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
   BaseAttributeComponent_1 = require("./BaseAttributeComponent"),
-  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
-  energyAttrIds = [
-    CharacterAttributeTypes_1.EAttributeId.Proto_Energy,
-    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy1,
-    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy2,
-    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy3,
-    CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy4,
-  ];
+  CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
 let CharacterAttributeComponent = class CharacterAttributeComponent extends BaseAttributeComponent_1.BaseAttributeComponent {
   constructor() {
     super(...arguments),
-      (this.m1t = void 0),
+      (this.BuffComponent = void 0),
       (this.qbr = (e, t, r) => {
         (CharacterAttributeTypes_1.stateAttributeIds.has(e) ||
           [...CharacterAttributeTypes_1.attributeIdsWithMax.values()].some(
@@ -81,7 +75,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
         this.Nbr,
       ),
       this.AddListener(CharacterAttributeTypes_1.EAttributeId.l5n, this.Obr),
-      this.AddListeners(energyAttrIds, this.kbr),
+      this.AddListeners(CharacterAttributeTypes_1.energyAttrIds, this.kbr),
       this.AddGeneralListener(this.qbr),
       !0
     );
@@ -102,16 +96,15 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
           a = n.pna ?? 0;
         0 !== a ? e.set(s, a) : r.push(s),
           (this.BaseValues[s] = o),
-          i || (this.CurrentValues[s] = o + a);
+          (this.CurrentValues[s] = o + a);
       }
       if (i) for (const h of r) this.UpdateCurrentValue(h);
-      this.m1t?.Init() && this.m1t.UpdateSysGrowBuff(e);
     }
   }
   static AttributeChangedNotify(t, e) {
     var r = MathUtils_1.MathUtils.LongToNumber(e.s5n),
       r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r),
-      i = r?.Entity?.GetComponent(159);
+      i = r?.Entity?.GetComponent(171);
     if (r && i) {
       for (const s of e.GSs)
         CharacterAttributeTypes_1.stateAttributeIds.has(s.tSs) &&
@@ -129,22 +122,26 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
       i =
         ModelManager_1.ModelManager.CreatureModel.GetEntity(
           r,
-        )?.Entity?.GetComponent(159);
+        )?.Entity?.GetComponent(171);
     if (i) {
       var s =
-        FormationAttributeController_1.FormationAttributeController.GetPredictedServerStopTime() -
+        Time_1.Time.ServerCombatStopTime -
         Number(MathUtils_1.MathUtils.LongToBigInt(e.S6n));
       for (const o of e.GSs)
         i.SyncRecoverPropFromServer(o.E6n, o.y6n, o.I6n, o.L6n, Number(s));
     }
   }
   OnInit() {
-    return (this.m1t = this.Entity.CheckGetComponent(160)), !0;
+    return (
+      super.OnInit(),
+      (this.BuffComponent = this.Entity.CheckGetComponent(172)),
+      !0
+    );
   }
   OnStart() {
     this.Koa();
-    var t = this.Entity.CheckGetComponent(3);
-    this.Gbr = t?.Actor.AbilitySystemComponent;
+    var t = this.Entity.CheckGetComponent(1)?.Owner;
+    t && t instanceof UE.BaseCharacter && (this.Gbr = t.AbilitySystemComponent);
     for (const e of CharacterAttributeTypes_1.attributeIdsWithMax.values())
       this.Gbr?.InternalApplyModToAttribute(e, 3, this.GetCurrentValue(e));
     for (const r of CharacterAttributeTypes_1.stateAttributeIds.values())
@@ -158,7 +155,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
         this.Nbr,
       ),
       this.RemoveListener(CharacterAttributeTypes_1.EAttributeId.l5n, this.Obr),
-      this.RemoveListeners(energyAttrIds, this.kbr),
+      this.RemoveListeners(CharacterAttributeTypes_1.energyAttrIds, this.kbr),
       this.RemoveGeneralListener(this.qbr),
       !0
     );
@@ -168,19 +165,19 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("OFn")],
+  [CombatMessage_1.CombatNet.Listen("OFn", !0)],
   CharacterAttributeComponent,
   "AttributeChangedNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("v3n")],
+    [CombatMessage_1.CombatNet.Listen("v3n", !0)],
     CharacterAttributeComponent,
     "RecoverPropChangedNotify",
     null,
   ),
   (CharacterAttributeComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(159)],
+    [(0, RegisterComponent_1.RegisterComponent)(171)],
     CharacterAttributeComponent,
   )),
   (exports.CharacterAttributeComponent = CharacterAttributeComponent);

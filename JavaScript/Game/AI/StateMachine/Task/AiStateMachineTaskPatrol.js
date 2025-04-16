@@ -33,9 +33,9 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
     (this.$ie = this.JLn.GetConfig()),
     this.$ie)
       ? ((this.Jh = this.Bte.CharAiDesignComp.Entity),
-        (this.Gce = this.Jh.GetComponent(38)),
-        (this.mBe = this.Jh.GetComponent(92)),
-        (this.zLn = this.Jh.GetComponent(41)),
+        (this.Gce = this.Jh.GetComponent(44)),
+        (this.mBe = this.Jh.GetComponent(99)),
+        (this.zLn = this.Jh.GetComponent(47)),
         (this.Hte = this.Bte.CharActorComp),
         this.ZLn())
       : this.$ne();
@@ -98,7 +98,10 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
   ZLn() {
     this.$ie.ContainZ &&
       this.Gce &&
-      this.Gce.CharacterMovement.SetMovementMode(5),
+      this.Hte?.Actor.KuroSetMovementMode({
+        Mode: 5,
+        Context: "[AiStateMachineTaskPatrol.BeginPatrol]",
+      }),
       this.tDn(),
       this.JLn?.PatrolPoint
         ? (this.oDn(),

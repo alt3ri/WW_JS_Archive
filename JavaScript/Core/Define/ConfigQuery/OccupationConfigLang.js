@@ -17,26 +17,28 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = Stats_1.Stat.Create("configOccupationConfigLang.Init"),
-  getLocalTextStat = Stats_1.Stat.Create(
+  initStat = Stats_1.Stat.CreateNoFlameGraph("configOccupationConfigLang.Init"),
+  getLocalTextStat = Stats_1.Stat.CreateNoFlameGraph(
     "configOccupationConfigLang.GetLocalText",
   ),
   LOCAL_TEXT_STAT_PREFIX = "configOccupationConfigLang.GetLocalText(";
 exports.configOccupationConfigLang = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetLocalText: (o, n = void 0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getLocalTextStat.Start();
-    var t = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + o + `, ${n})`);
-    if ((t.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
+      getLocalTextStat?.Start();
+    var t = Stats_1.Stat.CreateNoFlameGraph(
+      "" + LOCAL_TEXT_STAT_PREFIX + o + `, ${n})`,
+    );
+    if ((t?.Start(), LanguageSystem_1.LanguageSystem.GmShowLanguageKey))
       return (
         (e = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(n)),
-        t.Stop(),
-        getLocalTextStat.Stop(),
+        t?.Stop(),
+        getLocalTextStat?.Stop(),
         ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         TABLE + `|${o}|` + e
       );
@@ -46,8 +48,8 @@ exports.configOccupationConfigLang = {
     let a = i.get(e);
     if (a)
       return (
-        t.Stop(),
-        getLocalTextStat.Stop(),
+        t?.Stop(),
+        getLocalTextStat?.Stop(),
         ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
         a
       );
@@ -96,8 +98,8 @@ exports.configOccupationConfigLang = {
           return (
             (a = m.Value),
             ConfigCommon_1.ConfigCommon.Reset(g),
-            t.Stop(),
-            getLocalTextStat.Stop(),
+            t?.Stop(),
+            getLocalTextStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             StringUtils_1.StringUtils.IsEmpty(a) &&
               n !== CommonDefine_1.CHS &&
@@ -114,8 +116,8 @@ exports.configOccupationConfigLang = {
       }
     }
     ConfigCommon_1.ConfigCommon.Reset(g),
-      t.Stop(),
-      getLocalTextStat.Stop(),
+      t?.Stop(),
+      getLocalTextStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

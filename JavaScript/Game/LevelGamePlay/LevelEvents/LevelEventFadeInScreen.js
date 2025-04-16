@@ -6,8 +6,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
@@ -17,20 +17,20 @@ class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
         this.FinishExecute(!0);
       });
   }
-  ExecuteNew(t, n) {
+  ExecuteNew(t, r) {
     if (t) {
       let e = void 0;
       if (
         (t.KeepFadeAfterTreeEnd && (this.SDe = t.KeepFadeAfterTreeEnd),
         !this.SDe &&
-          n &&
-          6 === n.Type &&
-          (n = n) &&
-          n.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay &&
-          ((e = n.TreeConfigId), Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info("BlackScreen", 46, "玩法内开启黑幕：", [
+          r &&
+          6 === r.Type &&
+          (r = r) &&
+          r.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay &&
+          ((e = r.TreeConfigId), Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info("BlackScreen", 45, "玩法内开启黑幕：", [
             "treeId",
-            n.TreeConfigId,
+            r.TreeConfigId,
           ]),
         (ModelManager_1.ModelManager.PlotModel.IsFadeIn = !0),
         ModelManager_1.ModelManager.CameraModel?.FightCamera?.LogicComponent?.ExitCameraHook(
@@ -50,7 +50,7 @@ class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
           case IAction_1.EFadeInScreenShowType.Black:
             ModelManager_1.ModelManager.LoadingModel.ScreenEffect = 1;
         }
-        LevelLoadingController_1.LevelLoadingController.OpenLoading(
+        ControllerHolder_1.ControllerHolder.LevelLoadingController.OpenLoading(
           0,
           3,
           () => {

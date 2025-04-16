@@ -9,7 +9,7 @@ class PlatformRuntime extends Interface_1.Platform {
     var r = (0, puerts_1.$ref)("");
     return UE.KuroStaticLibrary.LoadFileToString(r, e), (0, puerts_1.$unref)(r);
   }
-  OUa(e, r) {
+  VUa(e, r) {
     const t = UE.NewArray(r);
     return (
       e.forEach((e) => {
@@ -18,35 +18,35 @@ class PlatformRuntime extends Interface_1.Platform {
       t
     );
   }
-  kUa(r) {
+  HUa(r) {
     var t = [];
     for (let e = 0; e < r.Num(); e++) t.push(r.Get(e));
     return t;
   }
   async ReadFileAsync(r) {
     return new Promise((t, e) => {
-      const o = (e, r) => {
-        (0, puerts_1.releaseManualReleaseDelegate)(o),
+      const s = (e, r) => {
+        (0, puerts_1.releaseManualReleaseDelegate)(s),
           t({ IsSuccess: e, FileContent: r });
       };
       UE.EditorRuntimeOperations.ReadFileAsync(
         r,
-        (0, puerts_1.toManualReleaseDelegate)(o),
+        (0, puerts_1.toManualReleaseDelegate)(s),
       );
     });
   }
   async ReadBatchFilesAsync(r) {
-    return new Promise((o, e) => {
-      const s = (r, e) => {
-        (0, puerts_1.releaseManualReleaseDelegate)(s);
+    return new Promise((s, e) => {
+      const o = (r, e) => {
+        (0, puerts_1.releaseManualReleaseDelegate)(o);
         var t = new Map();
         for (let e = 0; e < r.Num(); e++)
           t.set(r.Get(e).FilePath, r.Get(e).FileContent);
-        o({ FileMap: t, FailedFiles: this.kUa(e) });
+        s({ FileMap: t, FailedFiles: this.HUa(e) });
       };
       UE.EditorRuntimeOperations.ReadBatchFilesAsync(
-        this.OUa(r, UE.BuiltinString),
-        (0, puerts_1.toManualReleaseDelegate)(s),
+        this.VUa(r, UE.BuiltinString),
+        (0, puerts_1.toManualReleaseDelegate)(o),
       );
     });
   }
@@ -82,25 +82,25 @@ class PlatformRuntime extends Interface_1.Platform {
     );
   }
   ListFiles(e, r, t) {
-    let o = void 0;
+    let s = void 0;
     if (
-      (o = t
+      (s = t
         ? ((t = (r = r?.startsWith(".") ? r.substring(1) : r) ? "*." + r : "*"),
           UE.KuroStaticLibrary.GetFilesRecursive(e, t, !0, !1))
         : (void 0 === r && (r = ""), UE.KuroStaticLibrary.GetFiles(e, r)))
     ) {
-      var s = [];
-      for (let e = 0; e < o.Num(); e++) s.push(o.Get(e));
-      return s;
+      var o = [];
+      for (let e = 0; e < s.Num(); e++) o.push(s.Get(e));
+      return o;
     }
     return [];
   }
   ListDirs(e, r) {
     var t = [],
-      o = UE.KuroStaticLibrary.GetDirectories(e);
-    for (let e = 0; e < o.Num(); e++) {
-      var s = o.Get(e);
-      t.push(s), r && ((s = this.ListDirs(s, r)), t.push(...s));
+      s = UE.KuroStaticLibrary.GetDirectories(e);
+    for (let e = 0; e < s.Num(); e++) {
+      var o = s.Get(e);
+      t.push(o), r && ((o = this.ListDirs(o, r)), t.push(...o));
     }
     return t;
   }
@@ -116,15 +116,15 @@ class PlatformRuntime extends Interface_1.Platform {
     return UE.KismetSystemLibrary.ConvertToAbsolutePath(e);
   }
   CopyDir(e, r, t) {
-    for (const s of this.ListFiles(e, void 0, !0)) {
-      var o = this.GetRelativePathToDir(s, e);
-      this.CopyFile(s, r + "/" + o);
+    for (const o of this.ListFiles(e, void 0, !0)) {
+      var s = this.GetRelativePathToDir(o, e);
+      this.CopyFile(o, r + "/" + s);
     }
   }
   CopyFile(e, r) {
     var t = r.replace(/\\/g, "/"),
-      o = t.lastIndexOf("/"),
-      t = t.substring(0, o);
+      s = t.lastIndexOf("/"),
+      t = t.substring(0, s);
     this.ExistDir(t) || this.CreateDir(t), UE.KuroStaticLibrary.CopyFile(e, r);
   }
   GetFileModifyTick(e) {
@@ -160,7 +160,7 @@ class PlatformRuntime extends Interface_1.Platform {
   GetPlatformType() {
     return 2;
   }
-  ConvertExcelToCsv(e, r, t, o) {
+  ConvertExcelToCsv(e, r, t, s) {
     throw new Error("Method not implemented.");
   }
   CheckFileIsInUse(e) {
@@ -177,14 +177,14 @@ class PlatformRuntime extends Interface_1.Platform {
   }
   async DoJsonHttpReq(e, r, t) {
     const i = UE.NewMap(UE.BuiltinString, UE.BuiltinString);
-    for (const o of Object.entries({ "Content-Type": "application/json" }))
-      i.Add(o[0], o[1]);
-    return new Promise((o, s) => {
+    for (const s of Object.entries({ "Content-Type": "application/json" }))
+      i.Add(s[0], s[1]);
+    return new Promise((s, o) => {
       const n = (e, r, t) => {
         (0, puerts_1.releaseManualReleaseDelegate)(n),
           e
-            ? o({ Status: r, Data: t ? JSON.parse(t) : void 0 })
-            : s(new Error(`Http request failed, code: ${r}, response: ` + t));
+            ? s({ Status: r, Data: t ? JSON.parse(t) : void 0 })
+            : o(new Error(`Http request failed, code: ${r}, response: ` + t));
       };
       UE.EditorRuntimeOperations.SendHttpRequest(
         e,
@@ -198,8 +198,17 @@ class PlatformRuntime extends Interface_1.Platform {
   GetProcessImagePathsByName(e) {
     return [];
   }
+  GetProcessPathAndCommandLine(e) {
+    return [];
+  }
+  GetProcessImagePathsByPort(e) {
+    return [];
+  }
   async ExecAsync(e) {
     throw new Error("Method not implemented.");
+  }
+  IsAssetRedirector(e) {
+    return !1;
   }
 }
 (exports.PlatformRuntime = PlatformRuntime),

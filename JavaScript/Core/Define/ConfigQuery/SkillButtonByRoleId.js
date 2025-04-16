@@ -17,27 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configSkillButtonByRoleId.Init"),
-  getConfigListStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configSkillButtonByRoleId.Init",
+  ),
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configSkillButtonByRoleId.GetConfigList",
   ),
   CONFIG_LIST_STAT_PREFIX = "configSkillButtonByRoleId.GetConfigList(";
 exports.configSkillButtonByRoleId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (o, t = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      getConfigListStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_LIST_STAT_PREFIX + `#${o})`),
       i =
-        (n.Start(),
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (t) {
@@ -45,8 +47,8 @@ exports.configSkillButtonByRoleId = {
         const C = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (C)
           return (
-            n.Stop(),
-            getConfigListStat.Stop(),
+            n?.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -76,8 +78,8 @@ exports.configSkillButtonByRoleId = {
           )
             return (
               ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-              n.Stop(),
-              getConfigListStat.Stop(),
+              n?.Stop(),
+              getConfigListStat?.Stop(),
               void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
           l = SkillButton_1.SkillButton.getRootAsSkillButton(
@@ -90,16 +92,16 @@ exports.configSkillButtonByRoleId = {
             ((e = KEY_PREFIX + `#${o})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(e, C, C.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          n.Stop(),
-          getConfigListStat.Stop(),
+          n?.Stop(),
+          getConfigListStat?.Stop(),
           ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           C
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigListStat.Stop(),
+    n?.Stop(),
+      getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

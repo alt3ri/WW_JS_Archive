@@ -5,18 +5,16 @@ const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
-  CameraController_1 = require("../../Camera/CameraController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
-  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
   UiManager_1 = require("../../Ui/UiManager"),
-  TimeTrackController_1 = require("../TimeTrackControl/TimeTrackController"),
   CAMERA_TAG = new UE.FName("SequenceCamera");
 class SimpleLevelSequenceActor {
-  constructor(e) {
+  constructor(t) {
     (this.bPe = void 0),
       (this.qPe = void 0),
       (this.GPe = UE.NewArray(UE.Actor)),
@@ -32,6 +30,11 @@ class SimpleLevelSequenceActor {
       (this.QPe = !1),
       (this.XPe = !1),
       (this.$Pe = ""),
+      (this.mv1 = !1),
+      (this.fv1 = -1),
+      (this.gv1 = 1),
+      (this.Cv1 = void 0),
+      (this.pv1 = 0),
       (this.YPe = !1),
       (this.JPe = !1),
       (this.zPe = 0),
@@ -42,36 +45,36 @@ class SimpleLevelSequenceActor {
       (this.rxe = !1),
       (this.nxe = 1),
       (this.sxe = !1),
-      (this.axe = () => {
-        CameraController_1.CameraController.SequenceCamera.GetComponent(
+      (this.vv1 = () => {
+        ControllerHolder_1.ControllerHolder.CameraController.SequenceCamera.GetComponent(
           10,
         )?.GetIsInCinematic()
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("UiCore", 46, "DoPlayToMark在Cinematic因此跳过"),
+              Log_1.Log.Info("UiCore", 45, "DoPlayToMark在Cinematic因此跳过"),
             (this.XPe = !0),
-            this.PlayLevelsequence(this.$Pe, this.XPe))
+            this.PlayLevelSequence())
           : this.sxe
-            ? this.PlayLevelsequence(this.$Pe, this.XPe)
+            ? this.PlayLevelSequence()
             : this.XPe || !this.hxe
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "UiCore",
-                    46,
+                    45,
                     "DoPlayToMark为JumpToEnd或者没有camera轨道",
                     [
                       "CameraMode",
                       ModelManager_1.ModelManager.CameraModel?.CameraMode,
                     ],
                   ),
-                this.PlayLevelsequence(this.$Pe, this.XPe))
+                this.PlayLevelSequence())
               : (this.YPe
                   ? Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info("UiCore", 46, "DoPlayToMark非首次绑定", [
+                    Log_1.Log.Info("UiCore", 45, "DoPlayToMark非首次绑定", [
                       "CameraMode",
                       ModelManager_1.ModelManager.CameraModel?.CameraMode,
                     ])
                   : Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info("UiCore", 46, "DoPlayToMark首次绑定", [
+                    Log_1.Log.Info("UiCore", 45, "DoPlayToMark首次绑定", [
                       "CameraMode",
                       ModelManager_1.ModelManager.CameraModel?.CameraMode,
                     ]),
@@ -85,68 +88,70 @@ class SimpleLevelSequenceActor {
                         this._xe();
                       },
                       () => {
-                        this.PlayLevelsequence(this.$Pe, this.XPe);
+                        this.PlayLevelSequence();
                       },
                     )
                   : this._xe(() => {
-                      this.PlayLevelsequence(this.$Pe, this.XPe);
+                      this.PlayLevelSequence();
                     }));
       }),
       (this.B_e = () => {
         (this.exe = void 0),
-          CameraController_1.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
+          ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
             this,
           ),
           (this.rxe = !1),
-          LevelLoadingController_1.LevelLoadingController.CloseLoading(9),
+          ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
+            8,
+          ),
           this.JPe ||
             ModelManager_1.ModelManager.StaticSceneModel.IsForceKeepUi ||
-            CameraController_1.CameraController.SceneCamera.DisplayComponent.SetUiActive(
+            ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.DisplayComponent.SetUiActive(
               !0,
             );
       }),
-      (this.bPe = e).HasBindingTag(CAMERA_TAG, !0) && (this.hxe = !0),
+      (this.bPe = t).HasBindingTag(CAMERA_TAG, !0) && (this.hxe = !0),
       this.mxe();
   }
-  UpdateSettings(e) {
-    this.JPe = e ?? !1;
+  UpdateSettings(t) {
+    this.JPe = t ?? !1;
   }
-  ForceSwitchSceneCamera(e) {
+  ForceSwitchSceneCamera(t) {
     return this.qPe?.IsValid()
       ? this.hxe
         ? ((this.sxe = !0),
-          e
+          t
             ? ((this.txe = !0),
               this._xe(() => {
                 UiManager_1.UiManager.OpenView(
                   "TimeTrackControlView",
                   void 0,
-                  (e) => {
-                    e
-                      ? CameraController_1.CameraController.Model.IsToSceneCameraMode() ||
+                  (t) => {
+                    t
+                      ? ControllerHolder_1.ControllerHolder.CameraController.Model.IsToSceneCameraMode() ||
                         (Log_1.Log.CheckInfo() &&
                           Log_1.Log.Info(
                             "SceneGameplay",
-                            46,
+                            45,
                             "时间控制装置启动请求:失败，IsToSceneCameraMode",
                           ),
                         TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
+                        ControllerHolder_1.ControllerHolder.TimeTrackController.HandleTimeTrackControlViewClose(),
                         UiManager_1.UiManager.GetViewByName(
                           "TimeTrackControlView",
                         )?.CloseMe(),
-                        TimeTrackController_1.TimeTrackController.FinishCallback(
+                        ControllerHolder_1.ControllerHolder.TimeTrackController.FinishCallback(
                           !1,
                         ))
                       : (Log_1.Log.CheckInfo() &&
                           Log_1.Log.Info(
                             "SceneGameplay",
-                            46,
+                            45,
                             "时间控制装置启动请求:失败，OpenView(EUiViewName.TimeTrackControlView",
                           ),
                         TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
-                        TimeTrackController_1.TimeTrackController.FinishCallback(
+                        ControllerHolder_1.ControllerHolder.TimeTrackController.HandleTimeTrackControlViewClose(),
+                        ControllerHolder_1.ControllerHolder.TimeTrackController.FinishCallback(
                           !1,
                         ));
                   },
@@ -157,153 +162,262 @@ class SimpleLevelSequenceActor {
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "SceneGameplay",
-              46,
+              45,
               "时间控制装置启动请求:失败，!this.HasCameraTrack",
             ),
           !1)
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneGameplay",
-            46,
+            45,
             "时间控制装置启动请求:失败，!this.Director?.IsValid()",
           ),
         !1);
   }
-  PlayToMarkOld(e, t, i, s) {
-    this.Cxe(e) &&
-      ((this.$Pe = e),
-      (this.NPe = t),
-      (this.FPe = i),
+  PlayToMarkOld(t, i, e, s) {
+    this.Cxe(t) &&
+      ((this.$Pe = t),
+      (this.NPe = i),
+      (this.FPe = e),
       (this.XPe = s),
       (this.zPe = 0),
       this.gxe());
   }
-  PlayToMark(e, t, i, s) {
-    if (this.Cxe(e)) {
-      if (((this.$Pe = e), t))
-        switch (((this.jPe = t.TransitType), this.jPe)) {
+  PlayToMark(t, i, e, s, h) {
+    if (this.Cxe(t)) {
+      if (((this.$Pe = t), i))
+        switch (((this.jPe = i.TransitType), this.jPe)) {
           case 0:
-            (this.VPe = t.Duration ?? 0),
-              (this.NPe = t.Duration ?? 0),
+            (this.VPe = i.Duration ?? 0),
+              (this.NPe = i.Duration ?? 0),
               (this.OPe = 0),
-              (this.KPe = t.IsValid ?? !1);
+              (this.KPe = i.IsValid ?? !1);
             break;
           case 1:
-            (this.VPe = t.Duration ?? 0),
-              (this.NPe = t.TransitFadeIn ?? 0),
-              (this.OPe = t.TransitFadeOut ?? 0),
-              (this.KPe = t.IsValid ?? !1),
-              (this.ixe = t.Mask);
+            (this.VPe = i.Duration ?? 0),
+              (this.NPe = i.TransitFadeIn ?? 0),
+              (this.OPe = i.TransitFadeOut ?? 0),
+              (this.KPe = i.IsValid ?? !1),
+              (this.ixe = i.Mask);
         }
-      if (i)
-        switch (((this.WPe = i.TransitType), this.WPe)) {
+      if (e)
+        switch (((this.WPe = e.TransitType), this.WPe)) {
           case 0:
-            (this.HPe = i.Duration ?? 0),
+            (this.HPe = e.Duration ?? 0),
               (this.kPe = 0),
-              (this.FPe = i.Duration ?? 0),
-              (this.QPe = i.IsValid ?? !1);
+              (this.FPe = e.Duration ?? 0),
+              (this.QPe = e.IsValid ?? !1);
             break;
           case 1:
-            (this.HPe = i.Duration ?? 0),
-              (this.kPe = i.TransitFadeIn ?? 0),
-              (this.FPe = i.TransitFadeOut ?? 0),
-              (this.QPe = i.IsValid ?? !1),
-              (this.oxe = i.Mask);
+            (this.HPe = e.Duration ?? 0),
+              (this.kPe = e.TransitFadeIn ?? 0),
+              (this.FPe = e.TransitFadeOut ?? 0),
+              (this.QPe = e.IsValid ?? !1),
+              (this.oxe = e.Mask);
         }
-      (this.XPe = s), (this.zPe = 0), this.gxe();
+      (this.XPe = h), (this.Cv1 = s), (this.zPe = 0), this.gxe();
     }
+  }
+  PlayLoop(t, i, e, s, h) {
+    if (((this.$Pe = ""), e))
+      switch (((this.jPe = e.TransitType), this.jPe)) {
+        case 0:
+          (this.VPe = e.Duration ?? 0),
+            (this.NPe = e.Duration ?? 0),
+            (this.OPe = 0),
+            (this.KPe = e.IsValid ?? !1);
+          break;
+        case 1:
+          (this.VPe = e.Duration ?? 0),
+            (this.NPe = e.TransitFadeIn ?? 0),
+            (this.OPe = e.TransitFadeOut ?? 0),
+            (this.KPe = e.IsValid ?? !1),
+            (this.ixe = e.Mask);
+      }
+    if (s)
+      switch (((this.WPe = s.TransitType), this.WPe)) {
+        case 0:
+          (this.HPe = s.Duration ?? 0),
+            (this.kPe = 0),
+            (this.FPe = s.Duration ?? 0),
+            (this.QPe = s.IsValid ?? !1);
+          break;
+        case 1:
+          (this.HPe = s.Duration ?? 0),
+            (this.kPe = s.TransitFadeIn ?? 0),
+            (this.FPe = s.TransitFadeOut ?? 0),
+            (this.QPe = s.IsValid ?? !1),
+            (this.oxe = s.Mask);
+      }
+    (this.Cv1 = h), (this.mv1 = t), (this.fv1 = i), (this.zPe = 2), this.gxe();
   }
   gxe() {
     ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed
-      ? this.axe()
+      ? this.vv1()
       : EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-          this.axe,
+          this.vv1,
         );
   }
-  PlayLevelsequence(e, t) {
+  PlayLevelSequence() {
+    switch (this.zPe) {
+      case 0:
+      case 1:
+        this.yv1(this.$Pe, this.XPe);
+        break;
+      case 2:
+        this.Sv1(this.mv1, this.fv1);
+    }
+  }
+  yv1(t, i) {
     if (this.qPe?.IsValid()) {
-      var i = this.qPe.SequencePlayer;
-      if (i?.IsValid()) {
-        if (t)
-          i.Play(),
-            i.SetPlaybackPosition(
+      this.qPe.bOverrideInstanceData = !0;
+      var e = this.qPe.SequencePlayer;
+      if (e?.IsValid()) {
+        if (
+          (this.pv1 &&
+            (UE.KuroSequenceRuntimeFunctionLibrary.StopEasingPlayRate(
+              this.qPe,
+              this.pv1,
+            ),
+            (this.pv1 = 0)),
+          i)
+        )
+          e.Play(),
+            e.SetPlaybackPosition(
               new UE.MovieSceneSequencePlaybackParams(
                 new UE.FrameTime(),
                 0,
-                e,
+                t,
                 2,
                 1,
               ),
             ),
-            i.Pause();
+            (this.gv1 = this.Cv1?.PlayRateAbs ?? 1),
+            this.qPe.SequencePlayer?.SetPlayRate(this.nxe * this.gv1),
+            e.Pause();
         else
           switch (this.zPe) {
             case 0:
-              i.PlayTo(
+              e.PlayTo(
                 new UE.MovieSceneSequencePlaybackParams(
                   new UE.FrameTime(),
                   0,
-                  e,
+                  t,
                   2,
                   0,
                 ),
-              );
+              ),
+                (this.gv1 = this.Cv1?.PlayRateAbs ?? 1),
+                this.Cv1?.EaseDuration
+                  ? (this.pv1 =
+                      UE.KuroSequenceRuntimeFunctionLibrary.EasePlayRateTo(
+                        this.qPe,
+                        this.nxe * this.gv1,
+                        this.Cv1.EaseType,
+                        this.Cv1.EaseDuration,
+                        this.Cv1.EaseExponent,
+                      ))
+                  : this.qPe.SequencePlayer?.SetPlayRate(this.nxe * this.gv1);
               break;
             case 1:
-              i.PlayTo_Circle(
+              e.PlayTo_Circle(
                 new UE.MovieSceneSequencePlaybackParams(
                   new UE.FrameTime(),
                   0,
-                  e,
+                  t,
                   2,
                   0,
                 ),
                 !0,
-              );
+              ),
+                (this.gv1 = this.Cv1?.PlayRateAbs ?? 1),
+                this.Cv1?.EaseDuration
+                  ? (this.pv1 =
+                      UE.KuroSequenceRuntimeFunctionLibrary.EasePlayRateTo(
+                        this.qPe,
+                        this.nxe * this.gv1,
+                        this.Cv1.EaseType,
+                        this.Cv1.EaseDuration,
+                        this.Cv1.EaseExponent,
+                      ))
+                  : this.qPe.SequencePlayer?.SetPlayRate(this.nxe * this.gv1);
           }
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Interaction",
-            34,
+            33,
             "LevelSequence播放至对应mark",
             ["levelSequence", this.bPe.GetName()],
-            ["mark", e],
+            ["mark", t],
           );
       }
     }
   }
+  Sv1(t, i) {
+    var e;
+    this.qPe?.IsValid() &&
+      ((this.qPe.bOverrideInstanceData = !0),
+      (e = this.qPe.SequencePlayer)?.IsValid()) &&
+      (this.pv1 &&
+        (UE.KuroSequenceRuntimeFunctionLibrary.StopEasingPlayRate(
+          this.qPe,
+          this.pv1,
+        ),
+        (this.pv1 = 0)),
+      2 === this.zPe &&
+        (t ? e.PlayReverseLooping(i) : e.PlayLooping(i),
+        (this.gv1 = this.Cv1?.PlayRateAbs ?? 1),
+        this.Cv1?.EaseDuration
+          ? (this.pv1 = UE.KuroSequenceRuntimeFunctionLibrary.EasePlayRateTo(
+              this.qPe,
+              this.nxe * this.gv1,
+              this.Cv1.EaseType,
+              this.Cv1.EaseDuration,
+              this.Cv1.EaseExponent,
+            ))
+          : this.qPe.SequencePlayer?.SetPlayRate(this.nxe * this.gv1)),
+      Log_1.Log.CheckInfo()) &&
+      Log_1.Log.Info(
+        "Interaction",
+        39,
+        "LevelSequence循环播放",
+        ["levelSequence", this.bPe.GetName()],
+        ["bReverse", t],
+        ["numLoops", i],
+      );
+  }
   mxe() {
-    var e = new UE.MovieSceneSequencePlaybackSettings(),
-      e =
-        ((e.bDisableMovementInput = !1),
-        (e.bDisableLookAtInput = !1),
+    var t = new UE.MovieSceneSequencePlaybackSettings(),
+      t =
+        ((t.bDisableMovementInput = !1),
+        (t.bDisableLookAtInput = !1),
         (this.qPe = ActorSystem_1.ActorSystem.Get(
           UE.LevelSequenceActor.StaticClass(),
-          new UE.Transform(),
+          new UE.TransformDouble(),
           void 0,
           !1,
         )),
-        (this.qPe.PlaybackSettings = e),
+        (this.qPe.PlaybackSettings = t),
         this.qPe.SetSequence(this.bPe),
         this.qPe.SequencePlayer);
-    e?.IsValid()
-      ? (e.OnPause.Add(this.pxe.bind(this)),
-        e.OnStop.Add(this.vxe.bind(this)),
-        e.OnFinished.Add(this.Mxe.bind(this)))
+    t?.IsValid()
+      ? (t.OnPause.Add(this.pxe.bind(this)),
+        t.OnStop.Add(this.vxe.bind(this)),
+        t.OnFinished.Add(this.Mxe.bind(this)))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Level", 46, "SimpleLevelSequenceActor 没找到Player");
+        Log_1.Log.Debug("Level", 45, "SimpleLevelSequenceActor 没找到Player");
   }
   vxe() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Level", 34, "SimpleLevelSequenceActor OnSequenceStop", [
+      Log_1.Log.Info("Level", 33, "SimpleLevelSequenceActor OnSequenceStop", [
         "levelSequence",
         this.bPe.GetName(),
       ]);
   }
   pxe() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Level", 34, "SimpleLevelSequenceActor OnSequencePause", [
+      Log_1.Log.Info("Level", 33, "SimpleLevelSequenceActor OnSequencePause", [
         "levelSequence",
         this.bPe.GetName(),
       ]),
@@ -316,7 +430,7 @@ class SimpleLevelSequenceActor {
               this.kPe,
               this.FPe,
               () => {
-                CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
+                ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
                   this.exe,
                   void 0,
                   this.WPe,
@@ -331,7 +445,7 @@ class SimpleLevelSequenceActor {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Level",
-        34,
+        33,
         "SimpleLevelSequenceActor OnSequenceFinish",
         ["levelSequence", this.bPe.GetName()],
       ),
@@ -344,7 +458,7 @@ class SimpleLevelSequenceActor {
               this.kPe,
               this.FPe,
               () => {
-                CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
+                ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
                   this.exe,
                   void 0,
                   this.WPe,
@@ -364,12 +478,12 @@ class SimpleLevelSequenceActor {
         this.sxe ||
         this.dxe();
   }
-  Cxe(t) {
-    var i = this.bPe.GetMovieScene();
+  Cxe(i) {
+    var e = this.bPe.GetMovieScene();
     let s = !1;
-    if (i)
-      for (let e = 0; e < i.MarkedFrames.Num(); e++)
-        if (i.MarkedFrames.Get(e).Label === t) {
+    if (e)
+      for (let t = 0; t < e.MarkedFrames.Num(); t++)
+        if (e.MarkedFrames.Get(t).Label === i) {
           s = !0;
           break;
         }
@@ -378,35 +492,35 @@ class SimpleLevelSequenceActor {
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Interaction",
-          34,
+          33,
           "mark配置不合法",
           ["levelSequence", this.bPe.GetName()],
-          ["mark", t],
+          ["mark", i],
         ),
       !1)
     );
   }
-  _xe(e = () => {}) {
-    var t;
+  _xe(t = () => {}) {
+    var i;
     this.qPe?.IsValid()
       ? ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot()
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Camera",
-              46,
+              45,
               "SimpleLevelSeqeunce:演出中触发了场景镜头切换 请检查配置",
             ),
-          e())
-        : ((t = this.qPe.SequencePlayer.IsPlaying()),
+          t())
+        : ((i = this.qPe.SequencePlayer.IsPlaying()),
           this.JPe ||
             ModelManager_1.ModelManager.StaticSceneModel.IsForceKeepUi ||
-            t ||
-            CameraController_1.CameraController.SceneCamera.DisplayComponent.SetUiActive(
+            i ||
+            ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.DisplayComponent.SetUiActive(
               !1,
             ),
           this.exe?.IsBinding ||
             ((this.exe =
-              CameraController_1.CameraController.SceneCamera.DisplayComponent.GetUnBoundSceneCamera(
+              ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.DisplayComponent.GetUnBoundSceneCamera(
                 0,
               )),
             (this.exe.IsKeepUi = this.JPe),
@@ -422,71 +536,56 @@ class SimpleLevelSequenceActor {
           3 === ModelManager_1.ModelManager.CameraModel.CameraMode
             ? ((this.YPe = !0),
               (this.exe.IsBinding = !0),
-              CameraController_1.CameraController.SceneCamera.PlayerComponent.EnterSceneSubCamera(
+              ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.PlayerComponent.EnterSceneSubCamera(
                 this.exe,
               ),
-              e())
+              t())
             : this.sxe
               ? 1 === this.jPe
                 ? this.lxe(this.ixe, this.VPe, this.NPe, this.OPe, () => {
-                    CameraController_1.CameraController.EnterCameraMode(
+                    ControllerHolder_1.ControllerHolder.CameraController.EnterCameraMode(
                       3,
                       0,
                       0,
                       0,
                       () => {
-                        CameraController_1.CameraController.Model.IsToSceneCameraMode()
-                          ? e()
+                        ControllerHolder_1.ControllerHolder.CameraController.Model.IsToSceneCameraMode()
+                          ? t()
                           : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                            TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
+                            ControllerHolder_1.ControllerHolder.TimeTrackController.HandleTimeTrackControlViewClose());
                       },
                       !0,
                     );
                   })
-                : CameraController_1.CameraController.EnterCameraMode(
+                : ControllerHolder_1.ControllerHolder.CameraController.EnterCameraMode(
                     3,
                     this.NPe ?? 1,
                     0,
                     0,
                     () => {
-                      CameraController_1.CameraController.Model.IsToSceneCameraMode()
-                        ? e()
+                      ControllerHolder_1.ControllerHolder.CameraController.Model.IsToSceneCameraMode()
+                        ? t()
                         : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                          TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
+                          ControllerHolder_1.ControllerHolder.TimeTrackController.HandleTimeTrackControlViewClose());
                     },
                     !0,
                   )
-              : (this.YPe
-                  ? Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info(
-                      "Level",
-                      34,
-                      "EnterSceneCamera CameraBindFinished为True",
-                      ["levelSequence", this.bPe.GetName()],
-                    )
-                  : Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info(
-                      "Level",
-                      34,
-                      "EnterSceneCamera CameraBindFinished为False",
-                      ["levelSequence", this.bPe.GetName()],
-                    ),
-                CameraController_1.CameraController.EnterCameraMode(
+              : (ControllerHolder_1.ControllerHolder.CameraController.EnterCameraMode(
                   3,
                   1 === this.jPe ? 0 : (this.NPe ?? 1),
                   0,
                   0,
-                  e,
-                ) || e(),
+                ),
+                t(),
                 (this.YPe = !0),
                 (this.exe.IsBinding = !0)))
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            46,
+            45,
             "SimpleLevelSeqeunce:EnterSceneCamera Director为空",
           ),
-        e());
+        t());
   }
   dxe() {
     this.qPe.ResetBindings(),
@@ -496,171 +595,185 @@ class SimpleLevelSequenceActor {
           ? 1 === this.WPe
             ? this.lxe(this.ixe, this.VPe, this.NPe, this.OPe, () => {
                 (this.exe.FadeOut = 0),
-                  CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
+                  ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
                     this.exe,
                     this.B_e,
                     this.WPe,
                   );
               })
             : ((this.exe.FadeOut = 0 !== this.FPe ? this.FPe : this.HPe),
-              CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
+              ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
                 this.exe,
                 this.B_e,
                 this.WPe,
               ))
           : 1 === this.WPe
             ? this.B_e()
-            : CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
+            : ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
                 this.exe,
                 this.B_e,
                 this.WPe,
               )
         : this.B_e();
   }
-  lxe(e, t, i, s, h = () => {}, r = () => {}) {
-    CameraController_1.CameraController.FightCamera.LogicComponent.CameraInputController.Lock(
+  lxe(t, i, e, s, h = () => {}, r = () => {}) {
+    ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraInputController.Lock(
       this,
     ),
       (this.rxe = !0),
-      LevelLoadingController_1.LevelLoadingController.OpenLoading(
-        9,
+      ControllerHolder_1.ControllerHolder.LevelLoadingController.OpenLoading(
+        8,
         3,
         () => {
           h && h(),
-            t <= 0
-              ? LevelLoadingController_1.LevelLoadingController.CloseLoading(
-                  9,
-                  () => {
-                    r && r();
-                  },
+            i <= 0
+              ? (r && r(),
+                ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
+                  8,
+                  void 0,
                   s ?? 0,
-                )
+                ))
               : TimerSystem_1.TimerSystem.Delay(
                   () => {
-                    LevelLoadingController_1.LevelLoadingController.CloseLoading(
-                      9,
-                      () => {
-                        r && r();
-                      },
-                      s ?? 0,
-                    );
+                    r && r(),
+                      ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
+                        8,
+                        void 0,
+                        s ?? 0,
+                      );
                   },
-                  1e3 * t ?? 0,
+                  1e3 * (i ?? 0),
                 );
         },
-        i ?? 0,
-        0 === e
+        e ?? 0,
+        0 === t
           ? IAction_1.EFadeInScreenShowType.Black
           : IAction_1.EFadeInScreenShowType.White,
       );
   }
-  SetSequenceData(e) {
-    e !== this.bPe && ((this.bPe = e), this.qPe.SetSequence(e));
+  SetSequenceData(t) {
+    t !== this.bPe && ((this.bPe = t), this.qPe.SetSequence(t));
   }
   Clear() {
     if (
       (EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        this.axe,
+        this.vv1,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-          this.axe,
+          this.vv1,
         ),
       this.exe &&
         (this.exe.IsBinding &&
           (this.JPe ||
             ModelManager_1.ModelManager.StaticSceneModel.IsForceKeepUi ||
             this.txe ||
-            CameraController_1.CameraController.SceneCamera.DisplayComponent.SetUiActive(
+            ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.DisplayComponent.SetUiActive(
               !0,
             ),
-          CameraController_1.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
+          ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.PlayerComponent.ExitSceneSubCamera(
             this.exe,
           )),
-        CameraController_1.CameraController.SceneCamera.DisplayComponent.RemoveBoundSceneCamera(
+        ControllerHolder_1.ControllerHolder.CameraController.SceneCamera.DisplayComponent.RemoveBoundSceneCamera(
           this.exe,
         )),
+      this.pv1 &&
+        (UE.KuroSequenceRuntimeFunctionLibrary.StopEasingPlayRate(
+          this.qPe,
+          this.pv1,
+        ),
+        (this.pv1 = 0)),
       this.qPe?.IsValid())
     ) {
-      const e = this.qPe;
-      e.SequencePlayer?.Stop(),
+      const t = this.qPe;
+      t.SequencePlayer?.Stop(),
         TimerSystem_1.TimerSystem.Next(() => {
-          ActorSystem_1.ActorSystem.Put(e);
+          ActorSystem_1.ActorSystem.Put("SimpleLevelSequenceActor.Clear", t);
         }),
         (this.qPe = void 0);
     }
     this.rxe &&
-      (CameraController_1.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
+      (ControllerHolder_1.ControllerHolder.CameraController.FightCamera.LogicComponent.CameraInputController.Unlock(
         this,
       ),
       (this.rxe = !1));
   }
-  PlayToMarkByCheckWay(e, t, i, s) {
-    if (this.Cxe(e)) {
-      if (((this.$Pe = e), t))
-        switch (((this.jPe = t.TransitType), this.jPe)) {
+  PlayToMarkByCheckWay(t, i, e, s, h) {
+    if (this.Cxe(t)) {
+      if (((this.$Pe = t), i))
+        switch (((this.jPe = i.TransitType), this.jPe)) {
           case 0:
-            (this.VPe = t.Duration ?? 0),
-              (this.NPe = t.Duration ?? 0),
+            (this.VPe = i.Duration ?? 0),
+              (this.NPe = i.Duration ?? 0),
               (this.OPe = 0),
-              (this.KPe = t.IsValid ?? !1);
+              (this.KPe = i.IsValid ?? !1);
             break;
           case 1:
-            (this.VPe = t.Duration ?? 0),
-              (this.NPe = t.TransitFadeIn ?? 0),
-              (this.OPe = t.TransitFadeOut ?? 0),
-              (this.KPe = t.IsValid ?? !1),
-              (this.ixe = t.Mask);
+            (this.VPe = i.Duration ?? 0),
+              (this.NPe = i.TransitFadeIn ?? 0),
+              (this.OPe = i.TransitFadeOut ?? 0),
+              (this.KPe = i.IsValid ?? !1),
+              (this.ixe = i.Mask);
         }
-      if (i)
-        switch (((this.WPe = i.TransitType), this.WPe)) {
+      if (e)
+        switch (((this.WPe = e.TransitType), this.WPe)) {
           case 0:
-            (this.HPe = i.Duration ?? 0),
+            (this.HPe = e.Duration ?? 0),
               (this.kPe = 0),
-              (this.FPe = i.Duration ?? 0),
-              (this.QPe = i.IsValid ?? !1);
+              (this.FPe = e.Duration ?? 0),
+              (this.QPe = e.IsValid ?? !1);
             break;
           case 1:
-            (this.HPe = i.Duration ?? 0),
-              (this.kPe = i.TransitFadeIn ?? 0),
-              (this.FPe = i.TransitFadeOut ?? 0),
-              (this.QPe = i.IsValid ?? !1),
-              (this.oxe = i.Mask);
+            (this.HPe = e.Duration ?? 0),
+              (this.kPe = e.TransitFadeIn ?? 0),
+              (this.FPe = e.TransitFadeOut ?? 0),
+              (this.QPe = e.IsValid ?? !1),
+              (this.oxe = e.Mask);
         }
-      (this.XPe = s), this.CheckLatestWay(), this.gxe();
+      (this.XPe = h), (this.Cv1 = s), this.CheckLatestWay(), this.gxe();
     }
   }
-  GetMarkValue(t) {
-    var i = this.bPe.GetMovieScene();
-    for (let e = 0; e < i.MarkedFrames.Num(); e++)
-      if (i.MarkedFrames.Get(e).Label === t)
-        return this.Sxe(i.MarkedFrames.Get(e).FrameNumber.Value);
+  GetMarkValue(i) {
+    var e = this.bPe.GetMovieScene();
+    for (let t = 0; t < e.MarkedFrames.Num(); t++)
+      if (e.MarkedFrames.Get(t).Label === i)
+        return this.Sxe(e.MarkedFrames.Get(t).FrameNumber.Value);
   }
   CheckLatestWay() {
-    var e, t, i, s;
+    var t, i, e, s;
     this.bPe.GetMovieScene()
       ? ((s = this.qPe.SequencePlayer),
-        (e = this.GetMarkValue(this.$Pe)),
-        (t = s.GetStartTime().Time.FrameNumber.Value),
-        (i = s.GetEndTime().Time.FrameNumber.Value),
+        (t = this.GetMarkValue(this.$Pe)),
+        (i = s.GetStartTime().Time.FrameNumber.Value),
+        (e = s.GetEndTime().Time.FrameNumber.Value),
         (s = s.GetCurrentTime().Time.FrameNumber.Value),
-        Math.abs(e - s) > Math.abs(i - t - Math.abs(e - s))
+        Math.abs(t - s) > Math.abs(e - i - Math.abs(t - s))
           ? (this.zPe = 1)
           : (this.zPe = 0))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Interaction", 46, "检查最短路径，但movieScene为空");
+        Log_1.Log.Debug("Interaction", 45, "检查最短路径，但movieScene为空");
   }
-  Sxe(e) {
-    var t = this.bPe.GetMovieScene();
-    return (e * t.DisplayRate.Numerator) / t.TickResolution.Numerator;
+  Sxe(t) {
+    var i = this.bPe.GetMovieScene();
+    return (t * i.DisplayRate.Numerator) / i.TickResolution.Numerator;
   }
-  SetTimeDilation(e) {
-    this.nxe !== e && ((this.nxe = e), this.yxe());
+  SetTimeDilation(t) {
+    this.nxe !== t && ((this.nxe = t), this.yxe());
   }
   yxe() {
-    var e = this.nxe;
-    this.qPe.SequencePlayer.SetPlayRate(e);
+    this.pv1 &&
+      (UE.KuroSequenceRuntimeFunctionLibrary.StopEasingPlayRate(
+        this.qPe,
+        this.pv1,
+      ),
+      (this.pv1 = 0)),
+      this.qPe.SequencePlayer.SetPlayRate(this.nxe * this.gv1);
+  }
+  GetCurrentFrame() {
+    return this.qPe
+      ? this.qPe.SequencePlayer.GetCurrentTime().Time.FrameNumber.Value
+      : 0;
   }
 }
 exports.default = SimpleLevelSequenceActor;

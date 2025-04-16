@@ -46,7 +46,7 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
     return (
       ActivityUniversalController.MFe(),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Activity", 38, "初始化通用活动"),
+        Log_1.Log.Debug("Activity", 37, "初始化通用活动"),
       !0
     );
   }
@@ -80,7 +80,7 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Activity",
-          38,
+          37,
           "通用活动功能触发",
           ["Type", e.FunctionType],
           ["Params", t],
@@ -111,7 +111,7 @@ class ActivityUniversalController extends ActivityControllerBase_1.ActivityContr
       return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
         "FunctionDisable",
       );
-    r = { MarkId: e ? Number(e[0]) : void 0, MarkType: 0, OpenAreaId: 0 };
+    r = { MarkId: e ? Number(e[0]) : void 0, MarkType: 0, OpenFogId: 0 };
     WorldMapController_1.WorldMapController.OpenView(2, !1, r);
   }),
   (ActivityUniversalController.IFe = (e) => {

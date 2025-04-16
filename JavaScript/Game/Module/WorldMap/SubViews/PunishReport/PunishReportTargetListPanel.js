@@ -5,7 +5,7 @@ const GenericLayoutAdd_1 = require("../../../Util/GenericLayoutAdd"),
   PunishReportTargetListItemPanel_1 = require("./PunishReportTargetListItemPanel");
 class PunishReportTargetListPanel {
   constructor() {
-    (this.cVa = void 0),
+    (this.J7a = void 0),
       (this.OnLayoutRefresh = (e, t, i, r) => {
         var s =
           new PunishReportTargetListItemPanel_1.PunishReportTargetListItemPanel();
@@ -13,23 +13,21 @@ class PunishReportTargetListPanel {
       });
   }
   Initialize(e) {
-    this.cVa = new GenericLayoutAdd_1.GenericLayoutAdd(e, this.OnLayoutRefresh);
+    this.J7a = new GenericLayoutAdd_1.GenericLayoutAdd(e, this.OnLayoutRefresh);
   }
   AddItemByKey(e) {
-    var t = this.cVa.GetLayoutItemByKey(e);
+    var t = this.J7a.GetLayoutItemByKey(e);
     return (
       t ||
-        (this.cVa.AddItemToLayout([e]),
-        (t = this.cVa.GetLayoutItemByKey(e)).SetDescTxt(""),
+        (this.J7a.AddItemToLayout([e]),
+        (t = this.J7a.GetLayoutItemByKey(e)).SetDescTxt(""),
         t.SetNumTxt(""),
-        t.SetLockActive(!0),
-        t.SetToggleEmptyActive(!1),
-        t.SetToggleSelectedActive(!1)),
+        t.SetState(0)),
       t
     );
   }
   Clear() {
-    this.cVa.ClearChildren();
+    this.J7a.ClearChildren();
   }
 }
 exports.PunishReportTargetListPanel = PunishReportTargetListPanel;

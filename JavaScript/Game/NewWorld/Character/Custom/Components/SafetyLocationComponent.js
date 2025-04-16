@@ -33,12 +33,12 @@ let SafetyLocationComponent =
     constructor() {
       super(...arguments),
         (this.R0n = void 0),
-        (this.Lya = !1),
-        (this.Dya = (t) => {
-          this.Lya = t;
+        (this.Rya = !1),
+        (this.Aya = (t) => {
+          this.Rya = t;
           var e =
             Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()?.GetComponent(
-              88,
+              95,
             );
           e &&
             (t
@@ -55,7 +55,7 @@ let SafetyLocationComponent =
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
-          this.Dya,
+          this.Aya,
         ),
         !0
       );
@@ -65,16 +65,16 @@ let SafetyLocationComponent =
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
-          this.Dya,
+          this.Aya,
         ),
-        this.Lya && this.Dya(!1),
+        this.Rya && this.Aya(!1),
         !0
       );
     }
   });
 (SafetyLocationComponent = SafetyLocationComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(211)],
+    [(0, RegisterComponent_1.RegisterComponent)(245)],
     SafetyLocationComponent,
   )),
   (exports.SafetyLocationComponent = SafetyLocationComponent);

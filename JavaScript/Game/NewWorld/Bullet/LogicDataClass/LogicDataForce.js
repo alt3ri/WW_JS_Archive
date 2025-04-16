@@ -21,6 +21,9 @@ class LogicDataForce extends LogicDataBase_1.default {
       (this.Group = 0),
       (this.ImmuneStopDuration = 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataForce;
 //# sourceMappingURL=LogicDataForce.js.map

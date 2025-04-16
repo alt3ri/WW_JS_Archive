@@ -82,7 +82,7 @@ class FoleySynthHandlerBase {
   SYo() {
     for (let t = 0; t < this.FoleySynthModelConfigs.length; ++t) {
       var i = this.FoleySynthModelConfigs[t],
-        i = this.ActorComp.Actor.Mesh.GetSocketTransform(i.BoneName, 2);
+        i = this.ActorComp.Actor.Mesh.D_GetSocketTransform(i.BoneName, 2);
       this.PreModelBoneComponentLocations[t].DeepCopy(i.GetTranslation());
     }
   }
@@ -91,7 +91,7 @@ class FoleySynthHandlerBase {
     var s = this.GetPreRecordIndex(1);
     for (let t = 0; t < this.FoleySynthModelConfigs.length; ++t) {
       var h = this.FoleySynthModelConfigs[t],
-        e = this.ActorComp.Actor.Mesh.GetSocketLocation(h.BoneName),
+        e = this.ActorComp.Actor.Mesh.D_GetSocketLocation(h.BoneName),
         e =
           (this.TempBoneLocation.DeepCopy(e),
           this.TempBoneLocation.SubtractionEqual(
@@ -165,7 +165,7 @@ class FoleySynthHandlerBase {
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Audio",
-        58,
+        57,
         "-------------Ak[FoleySynth] Debug信息",
         ["Actor", this.ActorComp.Actor.GetName()],
         ["Info", t],

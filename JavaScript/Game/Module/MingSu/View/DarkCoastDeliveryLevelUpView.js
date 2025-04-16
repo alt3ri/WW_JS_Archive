@@ -9,8 +9,8 @@ const UE = require("ue"),
 class DarkCoastDeliveryLevelUpView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.SHa = void 0),
-      (this.yHa = () =>
+      (this.EQa = void 0),
+      (this.IQa = () =>
         new DarkCoastDeliveryLevelUpItem_1.DarkCoastDeliveryLevelUpItem()),
       (this.Jvt = () => {
         this.CloseMe();
@@ -30,13 +30,13 @@ class DarkCoastDeliveryLevelUpView extends UiViewBase_1.UiViewBase {
       i = this.OpenParam;
     void 0 === i
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("MingSuTi", 59, "DarkCoastDeliveryLevelUpView 无效输入")
-      : ((this.SHa = new GenericLayout_1.GenericLayout(
+        Log_1.Log.Error("MingSuTi", 58, "DarkCoastDeliveryLevelUpView 无效输入")
+      : ((this.EQa = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(3),
-          this.yHa,
+          this.IQa,
         )),
         (e = i.GetLevelDataList()),
-        await this.SHa.RefreshByDataAsync(e),
+        await this.EQa.RefreshByDataAsync(e),
         (e = i.GetLevelTexture(i.PreLevel)),
         (i = i.GetLevelTexture(i.CurLevel)),
         this.SetTextureShowUntilLoaded(e, this.GetTexture(1)),

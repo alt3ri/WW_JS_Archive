@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   EntityDebugUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/EntityDebugUtils");
 class TsEntityDebugInfoManager extends UE.Object {
+  Constructor() {}
   static GetInstance() {
     return (
       (this.Instance && this.Instance.IsValid()) ||

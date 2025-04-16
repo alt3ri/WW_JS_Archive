@@ -49,23 +49,23 @@ class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
       }
   }
   OnRemoved(e) {
-    for (const t of this.LXo)
-      switch (t) {
-        case 0:
-          if (!this.InstigatorEntity?.Valid) return;
-          EventSystem_1.EventSystem.RemoveWithTarget(
-            this.InstigatorEntity.Entity,
-            EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
-            this.DXo,
-          );
-          break;
-        case 1:
-          EventSystem_1.EventSystem.RemoveWithTarget(
-            this.InstigatorEntity,
-            EventDefine_1.EEventName.RemoveEntity,
-            this.RXo,
-          );
-      }
+    if (this.InstigatorEntity?.Valid)
+      for (const t of this.LXo)
+        switch (t) {
+          case 0:
+            EventSystem_1.EventSystem.RemoveWithTarget(
+              this.InstigatorEntity.Entity,
+              EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
+              this.DXo,
+            );
+            break;
+          case 1:
+            EventSystem_1.EventSystem.RemoveWithTarget(
+              this.InstigatorEntity,
+              EventDefine_1.EEventName.RemoveEntity,
+              this.RXo,
+            );
+        }
   }
   OnExecute() {}
 }

@@ -112,6 +112,9 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
   OnHandleLoadScene() {
     this.InitRole();
   }
+  OnBeforeShow() {
+    UiSceneManager_1.UiSceneManager.SetSceneFloorReflection(!0, !1);
+  }
   InitRole() {
     UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()
       .Model?.CheckGetComponent(1)
@@ -165,6 +168,7 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
         : i.SetUIActive(!1),
       ControllerHolder_1.ControllerHolder.RoleController.OnSelectedRoleChange(
         this.nVi,
+        e.GetRoleConfig().SkinId,
       ),
       ControllerHolder_1.ControllerHolder.RoleController.PlayRoleMontage(
         3,

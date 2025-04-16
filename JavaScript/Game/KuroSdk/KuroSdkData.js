@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.KuroSdkControllerTool =
+  (exports.NoticeReadData =
+    exports.NoticeContentData =
+    exports.NoticeData =
+    exports.PostWebViewEntryPointData =
+    exports.KuroSdkControllerTool =
     exports.AndroidGlobalProductContentPriceData =
     exports.GlobalProductContentData =
     exports.GlobalProductData =
@@ -11,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SetFontParamWindows =
     exports.SetFontParamAndroid =
     exports.QueryProductInfoParamWindows =
+    exports.CloudSDKPayResult =
     exports.QueryProductInfoParamAndroid =
     exports.RoleInfoWindows =
     exports.AndroidSdkPayRole =
@@ -18,14 +23,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SdkPayObject =
     exports.PayInfoWindowsGlobal =
     exports.PayInfoWindows =
-    exports.PayInfoIosGlobal =
+    exports.PayInfoMacIosGlobal =
+    exports.PayInfoCloudIos =
     exports.PayInfoMacIos =
     exports.PayInfoAndroid =
     exports.OpenWebViewParamWindows =
     exports.OpenSdkUrlWndParamWindows =
     exports.OpenSdkUrlWndParam =
     exports.OpenPostWebViewParam =
+    exports.OpenWebViewParamCloudGame =
     exports.OpenCustomerServiceParamWindows =
+    exports.OpenCustomerServiceParamMac =
     exports.OpenCustomerServiceParamIos =
     exports.OpenCustomerServiceParamAndroid =
     exports.InitializePostWebViewParam =
@@ -33,6 +41,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Info_1 = require("../../Core/Common/Info"),
   Json_1 = require("../../Core/Common/Json"),
   Log_1 = require("../../Core/Common/Log"),
+  CloudGameManager_1 = require("../Manager/CloudGameManager"),
   ModelManager_1 = require("../Manager/ModelManager");
 class InitializePostWebViewParam extends Json_1.JsonObjBase {
   constructor() {
@@ -59,7 +68,7 @@ class OpenCustomerServiceParamIos extends Json_1.JsonObjBase {
     super(...arguments),
       (this.islogin = 0),
       (this.from = 0),
-      (this.RoleId = 0),
+      (this.RoleId = ""),
       (this.RoleName = ""),
       (this.ServerId = ""),
       (this.ServerName = ""),
@@ -73,12 +82,32 @@ class OpenCustomerServiceParamIos extends Json_1.JsonObjBase {
   }
 }
 exports.OpenCustomerServiceParamIos = OpenCustomerServiceParamIos;
+class OpenCustomerServiceParamMac extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments), (this.islogin = 0), (this.from = 0);
+  }
+}
+exports.OpenCustomerServiceParamMac = OpenCustomerServiceParamMac;
 class OpenCustomerServiceParamWindows extends Json_1.JsonObjBase {
   constructor() {
-    super(...arguments), (this.islogin = !1), (this.from = 0);
+    super(...arguments),
+      (this.islogin = !1),
+      (this.from = 0),
+      (this.roleId = "");
   }
 }
 exports.OpenCustomerServiceParamWindows = OpenCustomerServiceParamWindows;
+class OpenWebViewParamCloudGame extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments),
+      (this.title = ""),
+      (this.url = ""),
+      (this.isLandscape = !1),
+      (this.transparent = !1),
+      (this.webAccelerated = !1);
+  }
+}
+exports.OpenWebViewParamCloudGame = OpenWebViewParamCloudGame;
 class OpenPostWebViewParam extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments),
@@ -144,12 +173,23 @@ class PayInfoMacIos extends Json_1.JsonObjBase {
       (this.GoodsCurrency = "");
   }
 }
-class PayInfoIosGlobal extends (exports.PayInfoMacIos = PayInfoMacIos) {
+exports.PayInfoMacIos = PayInfoMacIos;
+class PayInfoCloudIos {
+  constructor() {
+    (this.RoleId = ""),
+      (this.RoleName = ""),
+      (this.ServerId = ""),
+      (this.ServerName = ""),
+      (this.CpOrder = "");
+  }
+}
+exports.PayInfoCloudIos = PayInfoCloudIos;
+class PayInfoMacIosGlobal extends PayInfoMacIos {
   constructor() {
     super(...arguments), (this.ExtraParams = "");
   }
 }
-exports.PayInfoIosGlobal = PayInfoIosGlobal;
+exports.PayInfoMacIosGlobal = PayInfoMacIosGlobal;
 class PayInfoWindowsBase extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments),
@@ -250,6 +290,17 @@ class QueryProductInfoParamAndroid extends Json_1.JsonObjBase {
   }
 }
 exports.QueryProductInfoParamAndroid = QueryProductInfoParamAndroid;
+class CloudSDKPayResult extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments),
+      (this.paymentType = 0),
+      (this.sdkOrderId = ""),
+      (this.cpOrderId = ""),
+      (this.msg = ""),
+      (this.extraParams = "");
+  }
+}
+exports.CloudSDKPayResult = CloudSDKPayResult;
 class QueryProductInfoParamWindows extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments), (this.goodsIds = ""), (this.payChannel = "");
@@ -329,36 +380,41 @@ exports.AndroidGlobalProductContentPriceData =
   AndroidGlobalProductContentPriceData;
 class KuroSdkControllerTool {
   static GetCreateRoleInfo() {
-    var s = ModelManager_1.ModelManager.LoginModel,
-      t = new RoleInfoSdk(),
-      s =
-        ((t.RoleId = this.ISe()),
-        (t.RoleName = s.GetPlayerName() ? s.GetPlayerName() : ""),
-        (t.ServerId = s.GetServerId() ? s.GetServerId() : ""),
-        (t.ServerName = s.GetServerName() ? s.GetServerName() : ""),
-        (t.RoleLevel = "1"),
-        (t.VipLevel = "0"),
-        (t.PartyName = " "),
-        (t.RoleCreateTime = s.GetCreatePlayerTime()
-          ? s.GetCreatePlayerTime()
-          : ""),
-        (t.BalanceLevelOne = "0"),
-        (t.BalanceLevelTwo = "0"),
-        (t.SumPay = "0"),
-        (t.gameName = "AKI"),
-        (t.gameVersion = "0.0.0"),
-        (t.RoleAvatar = ""),
-        (t.ChannelUserId = s.GetSdkLoginConfig()?.Uid
-          ? s.GetSdkLoginConfig().Uid.toString()
-          : "0"),
-        (t.GameUserId = s.GetSdkLoginConfig()?.UserName
-          ? s.GetSdkLoginConfig().UserName.toString()
-          : "0"),
-        Json_1.Json.Stringify(t) ?? "");
+    var s = this.GetCreateRoleInfoData(),
+      s = Json_1.Json.Stringify(s) ?? "";
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 28, "SdkGetRoleInfo", ["data", s]),
+        Log_1.Log.Debug("KuroSdk", 27, "SdkGetRoleInfo", ["data", s]),
       s
+    );
+  }
+  static GetCreateRoleInfoData() {
+    var s = ModelManager_1.ModelManager.LoginModel,
+      t = new RoleInfoSdk();
+    return (
+      (t.RoleId = this.ISe()),
+      (t.RoleName = s.GetPlayerName() ? s.GetPlayerName() : ""),
+      (t.ServerId = s.GetServerId() ? s.GetServerId() : ""),
+      (t.ServerName = s.GetServerName() ? s.GetServerName() : ""),
+      (t.RoleLevel = "1"),
+      (t.VipLevel = "0"),
+      (t.PartyName = " "),
+      (t.RoleCreateTime = s.GetCreatePlayerTime()
+        ? s.GetCreatePlayerTime()
+        : ""),
+      (t.BalanceLevelOne = "0"),
+      (t.BalanceLevelTwo = "0"),
+      (t.SumPay = "0"),
+      (t.gameName = "AKI"),
+      (t.gameVersion = "0.0.0"),
+      (t.RoleAvatar = ""),
+      (t.ChannelUserId = s.GetSdkLoginConfig()?.Uid
+        ? s.GetSdkLoginConfig().Uid.toString()
+        : "0"),
+      (t.GameUserId = s.GetSdkLoginConfig()?.UserName
+        ? s.GetSdkLoginConfig().UserName.toString()
+        : "0"),
+      t
     );
   }
   static ISe() {
@@ -368,73 +424,78 @@ class KuroSdkControllerTool {
         ? ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId().toString()
         : "";
   }
-  static GetRoleInfo() {
+  static GetRoleInfoData() {
     var s = ModelManager_1.ModelManager.FunctionModel,
       t = ModelManager_1.ModelManager.LoginModel,
-      o = new RoleInfoSdk(),
-      s =
-        ((o.RoleId = this.ISe()),
-        (o.RoleName = s.GetPlayerName() ? s.GetPlayerName() : ""),
-        (o.ServerId = t.GetServerId() ? t.GetServerId() : ""),
-        (o.ServerName = t.GetServerName() ? t.GetServerName() : ""),
-        (o.RoleLevel = s.GetPlayerLevel()
-          ? s.GetPlayerLevel().toString()
-          : "1"),
-        (o.VipLevel = "0"),
-        (o.PartyName = " "),
-        (o.RoleCreateTime = ""),
-        (o.BalanceLevelOne = s.GetPlayerCashCoin()),
-        (o.BalanceLevelTwo = "0"),
-        (o.SumPay = "0"),
-        (o.gameName = "AKI"),
-        (o.gameVersion = "0.0.0"),
-        (o.RoleAvatar = ""),
-        (o.ChannelUserId = t.GetSdkLoginConfig()?.Uid
-          ? t.GetSdkLoginConfig().Uid.toString()
-          : "0"),
-        (o.GameUserId = t.GetSdkLoginConfig()?.UserName
-          ? t.GetSdkLoginConfig().UserName.toString()
-          : "0"),
-        Json_1.Json.Stringify(o) ?? "");
+      e = new RoleInfoSdk();
+    return (
+      (e.RoleId = this.ISe()),
+      (e.RoleName = s.GetPlayerName() ? s.GetPlayerName() : ""),
+      (e.ServerId = t.GetServerId() ? t.GetServerId() : ""),
+      (e.ServerName = t.GetServerName() ? t.GetServerName() : ""),
+      (e.RoleLevel = s.GetPlayerLevel() ? s.GetPlayerLevel().toString() : "1"),
+      (e.VipLevel = "0"),
+      (e.PartyName = " "),
+      (e.RoleCreateTime = ""),
+      (e.BalanceLevelOne = s.GetPlayerCashCoin()),
+      (e.BalanceLevelTwo = "0"),
+      (e.SumPay = "0"),
+      (e.gameName = "AKI"),
+      (e.gameVersion = "0.0.0"),
+      (e.RoleAvatar = ""),
+      (e.ChannelUserId = t.GetSdkLoginConfig()?.Uid
+        ? t.GetSdkLoginConfig().Uid.toString()
+        : "0"),
+      (e.GameUserId = t.GetSdkLoginConfig()?.UserName
+        ? t.GetSdkLoginConfig().UserName.toString()
+        : "0"),
+      e
+    );
+  }
+  static GetRoleInfo() {
+    var s = this.GetRoleInfoData(),
+      s = Json_1.Json.Stringify(s) ?? "";
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 28, "SdkGetRoleInfo", ["data", s]),
+        Log_1.Log.Debug("KuroSdk", 27, "SdkGetRoleInfo", ["data", s]),
       s
     );
   }
   static GetPaymentInfo(s, t) {
-    var o;
-    return 4 === Info_1.Info.PlatformType || 1 === Info_1.Info.PlatformType
-      ? (((o = new PayInfoMacIos()).RoleId = t.roleId.toString()),
-        (o.RoleName = t.roleName.toString()),
-        (o.ServerId = t.serverId.toString()),
-        (o.ServerName = t.serverName.toString()),
-        (o.CpOrder = s.cpOrderId.toString()),
-        (o.CallbackUrl = s.callbackUrl.toString()),
-        (o.GamePropID = s.product_id.toString()),
-        (o.GoodsName = s.goodsName.toString()),
-        (o.GoodsDesc = s.goodsDesc.toString()),
-        (o.Price = s.price.toString()),
-        (o.GoodsCurrency = ""),
-        Json_1.Json.Stringify(o) ?? "")
-      : (((o = new SdkPayObject()).RoleInfo = t),
-        (o.OrderInfo = s),
-        (t = Json_1.Json.Stringify(o)),
+    var e;
+    return 4 === Info_1.Info.PlatformType ||
+      1 === Info_1.Info.PlatformType ||
+      CloudGameManager_1.CloudGameManager.IsCloudGame
+      ? (((e = new PayInfoMacIos()).RoleId = t.roleId.toString()),
+        (e.RoleName = t.roleName.toString()),
+        (e.ServerId = t.serverId.toString()),
+        (e.ServerName = t.serverName.toString()),
+        (e.CpOrder = s.cpOrderId.toString()),
+        (e.CallbackUrl = s.callbackUrl.toString()),
+        (e.GamePropID = s.product_id.toString()),
+        (e.GoodsName = s.goodsName.toString()),
+        (e.GoodsDesc = s.goodsDesc.toString()),
+        (e.Price = s.price.toString()),
+        (e.GoodsCurrency = ""),
+        Json_1.Json.Stringify(e) ?? "")
+      : (((e = new SdkPayObject()).RoleInfo = t),
+        (e.OrderInfo = s),
+        (t = Json_1.Json.Stringify(e)),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("KuroSdk", 28, "SdkJson", ["sdkJson", t]),
+          Log_1.Log.Info("KuroSdk", 27, "SdkJson", ["sdkJson", t]),
         t ?? "");
   }
-  static GetSdkPayProduct(s, t, o, e, r) {
-    var n = ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString(),
-      i = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(s);
+  static GetSdkPayProduct(s, t, e, o, r) {
+    var i = ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString(),
+      a = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(s);
     return {
       product_id:
         ModelManager_1.ModelManager.RechargeModel.GetPayIdProductId(s),
       cpOrderId: t,
-      price: i,
-      goodsName: o,
-      goodsDesc: e,
-      extraParams: n,
+      price: a,
+      goodsName: e,
+      goodsDesc: o,
+      extraParams: i,
       callbackUrl: r,
       currency: "",
     };
@@ -455,14 +516,49 @@ class KuroSdkControllerTool {
     };
   }
   static GetSdkOpenUrlWndInfo(s, t) {
-    var o = new OpenSdkUrlWndParam(),
-      s = ((o.title = s), (o.wndUrl = t), Json_1.Json.Stringify(o));
+    var e = new OpenSdkUrlWndParam(),
+      s = ((e.title = s), (e.wndUrl = t), Json_1.Json.Stringify(e));
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("KuroSdk", 28, "SdkJson", ["sdkJson", s ?? ""]),
+        Log_1.Log.Info("KuroSdk", 27, "SdkJson", ["sdkJson", s ?? ""]),
       s
     );
   }
 }
 exports.KuroSdkControllerTool = KuroSdkControllerTool;
+class PostWebViewEntryPointData extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments),
+      (this.h5AppUrl = []),
+      (this.contentUrl = []),
+      (this.apiUrl = "");
+  }
+}
+exports.PostWebViewEntryPointData = PostWebViewEntryPointData;
+class NoticeData extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments), (this.game = []), (this.activity = []);
+  }
+}
+exports.NoticeData = NoticeData;
+class NoticeContentData extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments),
+      (this.id = ""),
+      (this.red = 0),
+      (this.platform = []),
+      (this.channel = []),
+      (this.whiteList = []),
+      (this.startTimeMs = 0),
+      (this.endTimeMs = 0),
+      (this.permanent = 0);
+  }
+}
+exports.NoticeContentData = NoticeContentData;
+class NoticeReadData extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments), (this.code = 0), (this.message = ""), (this.data = []);
+  }
+}
+exports.NoticeReadData = NoticeReadData;
 //# sourceMappingURL=KuroSdkData.js.map

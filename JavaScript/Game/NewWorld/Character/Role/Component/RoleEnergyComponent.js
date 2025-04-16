@@ -38,7 +38,7 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
   OnStart() {
     return (
       (this.n$t = this.Entity.CheckGetComponent(3)),
-      (this.$te = this.Entity.CheckGetComponent(159)),
+      (this.$te = this.Entity.CheckGetComponent(171)),
       this.$te.AddListeners(energyAttrIds, this.Qin, "RoleEnergyComponent"),
       this.Qin(),
       !0
@@ -49,7 +49,7 @@ let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.En
   }
 };
 (RoleEnergyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(83)],
+  [(0, RegisterComponent_1.RegisterComponent)(90)],
   RoleEnergyComponent,
 )),
   (exports.RoleEnergyComponent = RoleEnergyComponent);

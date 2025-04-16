@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.innerGroupType =
+  (exports.CHANGING_ROLE_TIMEOUT =
+    exports.AUTO_ROLE_OFFSET_DISTANCE =
+    exports.needFixLocationTagList =
+    exports.innerGroupType =
     exports.beHitTagList =
     exports.CHECK_ROLE_INTERVAL =
     exports.EFFECT_DELAY_QUIT =
@@ -14,9 +17,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SPECIAL_CHANGE_ANGLE_LAND =
     exports.SPECIAL_CHANGE_DIS_AIR =
     exports.SPECIAL_CHANGE_DIS_LAND =
+    exports.DATA_LAYER_CHANGE_RADIUS =
     exports.SCENE_TEAM_MAX_NUM =
       void 0),
   (exports.SCENE_TEAM_MAX_NUM = 4),
+  (exports.DATA_LAYER_CHANGE_RADIUS = 2e4),
   (exports.SPECIAL_CHANGE_DIS_LAND = 200),
   (exports.SPECIAL_CHANGE_DIS_AIR = 150),
   (exports.SPECIAL_CHANGE_ANGLE_LAND = 80),
@@ -33,5 +38,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.beHitTagList = [
     -1989694637, -648310348, -1654460638, 2060652336, 31862857,
   ]),
-  (exports.innerGroupType = [-1, 3]);
+  (exports.innerGroupType = [-1, 3]),
+  (exports.needFixLocationTagList = [-1898186757, 457513750, 1502279607]),
+  (exports.AUTO_ROLE_OFFSET_DISTANCE = 150),
+  (exports.CHANGING_ROLE_TIMEOUT = 2e3);
 //# sourceMappingURL=SceneTeamDefine.js.map

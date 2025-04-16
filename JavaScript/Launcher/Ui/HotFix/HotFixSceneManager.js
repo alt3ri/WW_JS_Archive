@@ -27,10 +27,10 @@ class HotFixSceneManager {
     this.DKt();
   }
   static SpawnCamera(e) {
-    e = UE.KuroRenderingRuntimeBPPluginBPLibrary.SpawnActorFromClass(
+    e = UE.KuroRenderingRuntimeBPPluginBPLibrary.D_SpawnActorFromClass(
       e,
       UE.CineCameraActor.StaticClass(),
-      new UE.Transform(),
+      new UE.TransformDouble(),
     );
     (e.CameraComponent.bConstrainAspectRatio = !1),
       e.GetCineCameraComponent().SetFilmbackPresetByName("16:9 DSLR"),

@@ -1,6 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.RemoteInfo = exports.RemoteConfig = exports.VersionItem = void 0);
+  (exports.RemoteInfo =
+    exports.RemoteVersionConfig =
+    exports.ResVersion =
+    exports.RemoteConfig =
+    exports.VersionItem =
+      void 0);
 class VersionItem {
   constructor(t) {
     (this.Name = ""),
@@ -49,6 +54,39 @@ class RemoteConfig {
   }
 }
 exports.RemoteConfig = RemoteConfig;
-class RemoteInfo {}
-exports.RemoteInfo = RemoteInfo;
+class ResVersion {
+  constructor() {
+    (this.Name = ""), (this.Version = ""), (this.IndexSha1 = "");
+  }
+}
+exports.ResVersion = ResVersion;
+class RemoteVersionConfig {
+  constructor(t) {
+    (this.PackageVersion = ""),
+      (this.ChangeList = ""),
+      (this.UpdateTime = 0),
+      (this.ResVersions = void 0),
+      (this.PackageVersion = t.PackageVersion),
+      (this.UpdateTime = t.UpdateTime),
+      (this.ChangeList = t.ChangeList),
+      (this.ResVersions = new Map()),
+      t.ResVersions &&
+        Object.entries(t.ResVersions).forEach((t) => {
+          var s = t[0];
+          this.ResVersions.set(s, new VersionItem(t[1]));
+        });
+  }
+}
+exports.RemoteVersionConfig = RemoteVersionConfig;
+class RemoteInfo {
+  static get NewConfig() {
+    return RemoteInfo.XIc;
+  }
+  static set NewConfig(t) {
+    RemoteInfo.XIc = t;
+  }
+}
+((exports.RemoteInfo = RemoteInfo).XIc = void 0),
+  (RemoteInfo.Config = void 0),
+  (RemoteInfo.PreVerConfig = void 0);
 //# sourceMappingURL=RemoteConfig.js.map

@@ -10,12 +10,13 @@ class TsAnimNotifyStateHideBone extends UE.KuroAnimNotifyState {
       (this.BoneName = ""),
       (this.IgnoreTsBaseCharacter = "");
   }
+  Constructor() {}
   K2_NotifyBegin(e, t, s) {
     return (
       this.IgnoreTsBaseCharacter
         ? MeshComponentUtils_1.MeshComponentUtils.HideBone(e, this.BoneName, !0)
         : (e = e.GetOwner()) instanceof TsBaseCharacter_1.default &&
-          e.CharacterActorComponent.Entity.GetComponent(163)?.HideBone(
+          e.CharacterActorComponent.Entity.GetComponent(175)?.HideBone(
             FNameUtil_1.FNameUtil.GetDynamicFName(this.BoneName),
             !0,
             !1,
@@ -28,7 +29,7 @@ class TsAnimNotifyStateHideBone extends UE.KuroAnimNotifyState {
       this.IgnoreTsBaseCharacter
         ? MeshComponentUtils_1.MeshComponentUtils.HideBone(e, this.BoneName, !1)
         : (e = e.GetOwner()) instanceof TsBaseCharacter_1.default &&
-          e.CharacterActorComponent.Entity.GetComponent(163)?.HideBone(
+          e.CharacterActorComponent.Entity.GetComponent(175)?.HideBone(
             FNameUtil_1.FNameUtil.GetDynamicFName(this.BoneName),
             !1,
             !1,

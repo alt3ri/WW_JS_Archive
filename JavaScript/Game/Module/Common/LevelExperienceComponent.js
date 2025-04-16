@@ -152,7 +152,7 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelExperienceComponent",
-            11,
+            10,
             "Unregistered SetMaxExpFunction CallBack",
           ),
         0

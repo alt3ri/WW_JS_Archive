@@ -6,6 +6,7 @@ const MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  CameraUtility_1 = require("../CameraUtility"),
   FightCameraLogicComponent_1 = require("../FightCameraLogicComponent"),
   CameraControllerBase_1 = require("./CameraControllerBase");
 class CameraSidestepController extends CameraControllerBase_1.CameraControllerBase {
@@ -29,7 +30,12 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
       (this.InputRecoverArmLengthLimit = 0),
       (this.InputRecoverArmLengthCurve = void 0),
       (this.Dce = Vector_1.Vector.Create()),
-      (this.Rce = Vector_1.Vector.Create());
+      (this.Rce = Vector_1.Vector.Create()),
+      (this.y6l = Vector_1.Vector.Create()),
+      (this.S6l = Vector_1.Vector.Create()),
+      (this.cie = Rotator_1.Rotator.Create()),
+      (this.pme = Rotator_1.Rotator.Create()),
+      (this.cz = Vector_1.Vector.Create());
   }
   Name() {
     return "SidestepController";
@@ -56,12 +62,14 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
       (this.Uce(t), this.Lce <= 0 || (this.Ace(t), this.Pce(t), this.xce(t)));
   }
   Uce(t) {
-    var i = Rotator_1.Rotator.Create(0, this.Camera.PlayerRotator.Yaw, 0),
-      h = Rotator_1.Rotator.Create(
-        0,
-        this.Camera.CurrentCamera.ArmRotation.Yaw,
-        0,
+    this.Camera.GetCameraTargetRotator(this.cie),
+      CameraUtility_1.CameraUtility.GetRotatorInGravity(this.cie, this.cie),
+      CameraUtility_1.CameraUtility.GetRotatorInGravity(
+        this.Camera.CurrentCamera.ArmRotation,
+        this.pme,
       );
+    var i = Rotator_1.Rotator.Create(0, this.cie.Yaw, 0),
+      h = Rotator_1.Rotator.Create(0, this.pme.Yaw, 0);
     i.Vector(this.Rce),
       h.Vector(this.Dce),
       this.Camera.IsModifiedArmRotationPitch ||
@@ -78,21 +86,38 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
           )));
   }
   Ace(t) {
-    var t = this.Dce.SineAngle2D(this.Rce) * t * this.Tce,
-      i = this.Camera.DesiredCamera.ArmRotation;
-    (i.Yaw = (i.Yaw + t) % 360), (this.Camera.IsModifiedArmRotationYaw = !0);
+    var i,
+      t = this.Dce.SineAngle2D(this.Rce) * t * this.Tce;
+    this.Camera.IsInNormalGravityMode()
+      ? ((i = this.Camera.DesiredCamera.ArmRotation).Yaw = (i.Yaw + t) % 360)
+      : CameraUtility_1.CameraUtility.AddYawInGravity(
+          this.Camera.DesiredCamera.ArmRotation,
+          t,
+          this.Camera.DesiredCamera.ArmRotation,
+        ),
+      (this.Camera.IsModifiedArmRotationYaw = !0);
   }
   Pce(t) {
     var i, h, s;
     this.Lce < this.MoveDurationThreshold ||
-      ((s = this.Camera.CharacterEntityHandle?.Entity?.GetComponent(163)) &&
-        ((s = s.MovementTerrainNormal),
-        (s = Vector_1.Vector.Create(0, 0, 1)
-          .CrossProductEqual(this.Dce)
-          .CrossProductEqual(s)),
-        (i = MathUtils_1.MathUtils.WrapAngle(
-          this.Camera.DesiredCamera.ArmRotation.Pitch,
-        )),
+      ((i = this.Camera.CharacterEntityHandle?.Entity?.GetComponent(175))
+        ?.Valid &&
+        (s = this.Camera.CharacterEntityHandle?.Entity?.GetComponent(176))
+          ?.Valid &&
+        (this.Camera.CharacterDriveVehicleComponent?.IsOnVehicle &&
+        this.Camera.VehicleAnimationComponent?.Valid
+          ? (this.y6l.FromUeVector(this.Camera.VehicleMoveComponent.GravityUp),
+            this.S6l.FromUeVector(
+              this.Camera.VehicleAnimationComponent.MovementNormal,
+            ))
+          : (this.y6l.FromUeVector(s.GravityUp),
+            this.S6l.FromUeVector(i.MovementTerrainNormal)),
+        CameraUtility_1.CameraUtility.GetVectorInGravity(this.y6l, this.y6l),
+        CameraUtility_1.CameraUtility.GetVectorInGravity(this.S6l, this.S6l),
+        (s = this.cz),
+        this.y6l.CrossProduct(this.Dce, s),
+        s.CrossProduct(this.S6l, s),
+        (i = this.Camera.CameraRotationInGravity.Pitch),
         (s =
           MathUtils_1.MathUtils.Clamp(
             Math.atan2(
@@ -112,29 +137,41 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
           t,
           this.PitchAccelerate,
         )),
-        (this.Camera.DesiredCamera.ArmRotation.Pitch =
-          i + MathUtils_1.MathUtils.Clamp(this.yce * t, -h, h)),
+        this.Camera.IsInNormalGravityMode()
+          ? (this.Camera.DesiredCamera.ArmRotation.Pitch =
+              i + MathUtils_1.MathUtils.Clamp(this.yce * t, -h, h))
+          : CameraUtility_1.CameraUtility.AddPitchInGravity(
+              this.Camera.DesiredCamera.ArmRotation,
+              MathUtils_1.MathUtils.Clamp(this.yce * t, -h, h),
+              this.Camera.DesiredCamera.ArmRotation,
+            ),
         (this.Camera.IsModifiedArmRotationPitch = !0)));
   }
   IsCharacterMoving() {
     var t;
     return (
       !!this.Camera.Character &&
-      void 0 !==
-        (t = this.Camera.CharacterEntityHandle.Entity.GetComponent(164)) &&
-      t.Valid &&
-      t.Speed > FightCameraLogicComponent_1.CLEAN_TARGET_SPEED_THRESHOLD &&
       !this.Camera.ContainsTag(-1371021686) &&
-      !this.Camera.ContainsTag(1008164187)
+      !this.Camera.ContainsTag(1008164187) &&
+      (this.Camera.CharacterDriveVehicleComponent?.IsOnVehicle &&
+      this.Camera.VehicleMoveComponent?.Valid
+        ? this.Camera.VehicleMoveComponent.Speed >
+          FightCameraLogicComponent_1.CLEAN_TARGET_SPEED_THRESHOLD
+        : !!(t = this.Camera.CharacterEntityHandle.Entity.GetComponent(176))
+            ?.Valid &&
+          t.Speed > FightCameraLogicComponent_1.CLEAN_TARGET_SPEED_THRESHOLD)
     );
   }
   xce(i) {
-    var h =
-      this.Camera.Character?.CharacterActorComponent.Entity.GetComponent(164);
-    if (h && h.HasMoveInput) {
+    if (
+      this.Camera.Character?.CharacterActorComponent.Entity.GetComponent(176)
+        ?.HasMoveInput ||
+      !this.Camera.CharacterDriveVehicleComponent?.IsOnVehicle ||
+      this.Camera.VehicleMoveComponent?.HasMoveInput
+    ) {
       let t = 0;
-      var s,
-        h = this.Camera.GetArmLengthWithSettingAndZoom(
+      var h,
+        s = this.Camera.GetArmLengthWithSettingAndZoom(
           this.Camera.CurrentCamera,
         ),
         e = this.Camera.GetArmLengthWithSetting(this.Camera.CurrentCamera),
@@ -142,28 +179,28 @@ class CameraSidestepController extends CameraControllerBase_1.CameraControllerBa
         r = this.InputRecoverArmLengthMin + r,
         e = Math.max(e, this.InputRecoverArmLengthMax),
         e =
-          (h < r
-            ? ((r = r - h),
-              (s = MathUtils_1.MathUtils.Lerp(
+          (s < r
+            ? ((r = r - s),
+              (h = MathUtils_1.MathUtils.Lerp(
                 this.InputRecoverArmLengthSpeedMin,
                 this.InputRecoverArmLengthSpeedMax,
                 this.InputRecoverArmLengthCurve.GetCurrentValue(
                   r / this.InputRecoverArmLengthLimit,
                 ),
               )),
-              (t = Math.min(s * i, r)))
-            : e < h &&
-              ((s = h - e),
+              (t = Math.min(h * i, r)))
+            : e < s &&
+              ((h = s - e),
               (r = MathUtils_1.MathUtils.Lerp(
                 this.InputRecoverArmLengthSpeedMin,
                 this.InputRecoverArmLengthSpeedMax,
                 this.InputRecoverArmLengthCurve.GetCurrentValue(
-                  s / this.InputRecoverArmLengthLimit,
+                  h / this.InputRecoverArmLengthLimit,
                 ),
               )),
-              (t = -Math.min(r * i, s))),
-          h + t),
-        r = h / this.Camera.DesiredCamera.ZoomModifier;
+              (t = -Math.min(r * i, h))),
+          s + t),
+        r = s / this.Camera.DesiredCamera.ZoomModifier;
       this.Camera.DesiredCamera.ZoomModifier = e / r;
     }
   }

@@ -52,7 +52,7 @@ class PersonalOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
           );
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 44, "个性化弹窗配置找不到,id为", [
+        Log_1.Log.Error("Role", 43, "个性化弹窗配置找不到,id为", [
           "config!.Id",
           e.Id,
         ]);
@@ -66,7 +66,7 @@ class PersonalOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.GetItem(3),
         )
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Role", 44, "个性化弹窗配置找不到,id为", [
+        Log_1.Log.Error("Role", 43, "个性化弹窗配置找不到,id为", [
           "config!.Id",
           e.Id,
         ]);

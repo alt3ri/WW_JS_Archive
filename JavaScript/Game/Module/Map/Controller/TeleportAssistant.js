@@ -53,8 +53,8 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
                 "TeleporterUnlock",
               ),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 39, "Close PlotView And Open WorldMapView"),
-          (e = { MarkType: 0, MarkId: 0, OpenAreaId: this._Di.FogId }),
+            Log_1.Log.Debug("Plot", 38, "Close PlotView And Open WorldMapView"),
+          (e = { MarkType: 0, MarkId: 0, OpenFogId: this._Di.FogId }),
           this._Di.ShowWorldMap
             ? (EventSystem_1.EventSystem.Once(
                 EventDefine_1.EEventName.WorldMapViewOpened,
@@ -81,10 +81,10 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
       (this.xK = void 0);
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(27418, this.dDi);
+    Net_1.Net.Register(22405, this.dDi);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(27418);
+    Net_1.Net.UnRegister(22405);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -130,25 +130,14 @@ class TeleportAssistant extends ControllerAssistantBase_1.ControllerAssistantBas
   }
   async RequestTeleportData() {
     var e = Protocol_1.Aki.Protocol.cCs.create(),
-      e = await Net_1.Net.CallAsync(22883, e);
+      e = await Net_1.Net.CallAsync(23756, e);
     e &&
       (e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.G9n,
-            22228,
+            25339,
           )
         : ModelManager_1.ModelManager.MapModel.UnlockTeleports(e.BVn, !0));
-  }
-  RequestUnlockTeleport(t) {
-    var e = Protocol_1.Aki.Protocol.gCs.create({ s5n: t });
-    Net_1.Net.Call(23705, e, (e) => {
-      e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
-        ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.Q4n,
-            21719,
-          )
-        : ModelManager_1.ModelManager.MapModel.UnlockTeleport(t);
-    });
   }
 }
 exports.TeleportAssistant = TeleportAssistant;

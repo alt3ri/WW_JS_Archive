@@ -7,7 +7,7 @@ class SmallItemGridReceivedComponent extends SmallItemGridVisibleComponent_1.Sma
     return "UiItem_ItemBReceived";
   }
   GetLayoutLevel() {
-    return 1;
+    return 0;
   }
 }
 exports.SmallItemGridReceivedComponent = SmallItemGridReceivedComponent;

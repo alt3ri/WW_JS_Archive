@@ -9,7 +9,8 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
-  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
+  SplashScreenController_1 = require("../../SplashScreen/SplashScreenController");
 class MonthCardRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -21,7 +22,15 @@ class MonthCardRewardView extends UiViewBase_1.UiViewBase {
           e =
             (r.push(e),
             ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardRewardId());
-        ItemRewardController_1.ItemRewardController.OpenCommonRewardView(e, r),
+        const t = this.OpenParam;
+        ItemRewardController_1.ItemRewardController.OpenCommonRewardView(
+          e,
+          r,
+          () => {
+            t &&
+              SplashScreenController_1.SplashScreenController.FinishCurTask(1);
+          },
+        ),
           UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
       (this.JSi = () => {

@@ -1,8 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ConfigCommon = exports.ConfigBase = exports.dataRef = void 0);
-const cpp_1 = require("cpp"),
-  puerts_1 = require("puerts"),
+  (exports.ConfigCommon =
+    exports.toNumberTemp =
+    exports.ConfigBase =
+    exports.dataRef =
+      void 0);
+const puerts_1 = require("puerts"),
   UE = require("ue"),
   LanguageSystem_1 = require("../Common/LanguageSystem"),
   Log_1 = require("../Common/Log"),
@@ -14,7 +17,10 @@ class ConfigBase {
     this.RowId = 0;
   }
 }
-exports.ConfigBase = ConfigBase;
+function toNumberTemp(o) {
+  return Number(o);
+}
+(exports.ConfigBase = ConfigBase), (exports.toNumberTemp = toNumberTemp);
 class ConfigCommon {
   static SetLruCapacity(o) {
     this.G9.Capacity = o;
@@ -188,6 +194,24 @@ class ConfigCommon {
       t
     );
   }
+  static BindFloat64(o, n, t, ...i) {
+    ConfigCommon.mtl.Start();
+    t = UE.KuroPrepareStatementLib.SetBindingValueFloat64(o, n, t);
+    return (
+      t ||
+        (Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Config",
+            62,
+            "绑定参数 float64 失败",
+            ["handleId", o],
+            ["bindingIndex", n],
+            ...i,
+          )),
+      ConfigCommon.mtl.Stop(),
+      t
+    );
+  }
   static BindBool(o, n, t, ...i) {
     ConfigCommon.W9.Start();
     t = UE.KuroPrepareStatementLib.SetBindingValueBool(o, n, t);
@@ -243,38 +267,31 @@ class ConfigCommon {
     );
   }
   static Step(o, n = !1, ...t) {
-    var i = cpp_1.KuroTime.GetMilliseconds64(),
-      e = UE.KuroPrepareStatementLib.Step(o),
-      i = cpp_1.KuroTime.GetMilliseconds64() - i;
-    cpp_1.FKuroPerfSightHelper.PostValueFloat1(
-      "CustomPerformance",
-      "SQL_Step",
-      i,
-    );
-    let C = "";
-    switch (e) {
+    var i = UE.KuroPrepareStatementLib.Step(o);
+    let e = "";
+    switch (i) {
       case 0:
-        C = n
+        e = n
           ? "配置表中没有该数据，请确认该问题，或修改为合理的查询！"
           : void 0;
         break;
       case -1:
-        C = "找不到创建的语句，确认语句是否已调用过销毁，但业务还持有着句柄！";
+        e = "找不到创建的语句，确认语句是否已调用过销毁，但业务还持有着句柄！";
         break;
       case -2:
-        C = "创建的语句无效或已被释放！";
+        e = "创建的语句无效或已被释放！";
         break;
       case -3:
-        C = "事务繁忙中，查询失败！";
+        e = "事务繁忙中，查询失败！";
         break;
       case -4:
-        C = "执行查询出错！";
+        e = "执行查询出错！";
     }
     return (
-      C &&
+      e &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Config", 2, C, ["handleId", o], ...t),
-      e
+        Log_1.Log.Error("Config", 2, e, ["handleId", o], ...t),
+      i
     );
   }
   static GetValue(o, n, ...t) {
@@ -305,6 +322,7 @@ class ConfigCommon {
   (ConfigCommon.j9 = Stats_1.Stat.Create("ConfigCommon.BindFloat")),
   (ConfigCommon.W9 = Stats_1.Stat.Create("ConfigCommon.BindBool")),
   (ConfigCommon.K9 = Stats_1.Stat.Create("ConfigCommon.BindString")),
+  (ConfigCommon.mtl = Stats_1.Stat.Create("ConfigCommon.BindFloat64Stat")),
   (ConfigCommon.Q9 = Stats_1.Stat.Create("ConfigCommon.GetValue")),
   (ConfigCommon.AllConfigStatementStat = Stats_1.Stat.Create(
     "ConfigCommon.AllConfig",

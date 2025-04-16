@@ -27,7 +27,7 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
     this.lwn(e.FBs);
   }
   OnPhotoMemoryUpdate(e) {
-    this.HQa(e.FBs),
+    this._Ya(e.FBs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFragmentMemoryDataUpdate,
       );
@@ -40,7 +40,7 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
       ),
       (this.CurrentTrackMapMarkId = 0));
   }
-  HQa(e) {
+  _Ya(e) {
     for (const r of e) {
       var t = r.s5n,
         o = this.hwn.get(t),
@@ -93,7 +93,7 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
     let o = this.awn.get(t);
     o ||
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("FragmentMemory", 28, "记忆历程数据刷新时找不到数据", [
+        Log_1.Log.Info("FragmentMemory", 27, "记忆历程数据刷新时找不到数据", [
           "id",
           t,
         ]),
@@ -113,11 +113,14 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
   }
   GetTopicDataById(e) {
     e = this.hwn.get(e);
-    if (e) return e;
+    if (e && e.GetUnlockState()) return e;
   }
   GetRedDotState() {
-    for (var [, e] of this.hwn) if (e.GetRedDotState()) return !0;
-    return !1;
+    var e = this.GetAllFragmentTopic();
+    return (
+      0 !== e.length &&
+      ((e = e[e.length - 1].Id), this.hwn.get(e)?.GetRedDotState() ?? !1)
+    );
   }
   GetTopicFirstOpenRedDotState(e) {
     var t = LocalStorage_1.LocalStorage.GetPlayer(

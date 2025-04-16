@@ -6,16 +6,13 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
-  GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   rotatorAngles = [90, 45, 0, -45, -90, -135, -180];
 class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.yot = -1),
       (this.Iot = Rotator_1.Rotator.Create()),
-      (this.Tot = void 0),
-      (this.vot = new Map()),
-      (this.Lot = () => new ItemUseComponent());
+      (this.vot = new Map());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -23,14 +20,11 @@ class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
       [1, UE.UISprite],
       [2, UE.UIItem],
       [3, UE.UIText],
-      [4, UE.UIHorizontalLayout],
+      [4, UE.UIItem],
+      [5, UE.UIText],
     ];
   }
   OnStart() {
-    this.Tot = new GenericLayout_1.GenericLayout(
-      this.GetHorizontalLayout(4),
-      this.Lot,
-    );
     for (const t of this.vot.values()) t();
   }
   OnBeforeDestroy() {
@@ -86,18 +80,15 @@ class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
     };
     this.InAsyncLoading() ? this.vot.set("UpdateNumPanel", i) : i();
   }
-  UpdatePointPanel(i, s, r) {
+  UpdatePointPanel(e, i, s) {
     var t = () => {
-      var t, e;
-      this.GetHorizontalLayout(4).RootUIComp.SetUIActive(i),
-        !i ||
+      var t;
+      this.GetItem(4).SetUIActive(e),
+        !e ||
+          void 0 === i ||
           void 0 === s ||
-          void 0 === r ||
-          s < r ||
-          ((e = new Array(s - r).fill(!0)),
-          (t = new Array(r).fill(!1)),
-          (e = e.concat(t)),
-          this.Tot.RefreshByData(e));
+          i < s ||
+          ((t = s + "/" + i), this.GetText(5)?.SetText(t));
     };
     this.InAsyncLoading() ? this.vot.set("UpdatePointPanel", t) : t();
   }

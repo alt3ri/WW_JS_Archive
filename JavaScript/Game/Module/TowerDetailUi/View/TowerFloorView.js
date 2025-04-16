@@ -87,6 +87,7 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
       [10, UE.UIItem],
       [12, UE.UIItem],
       [13, UE.UIHorizontalLayout],
+      [14, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [6, this.ODo],
@@ -161,14 +162,16 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
         this.NDo,
       ));
     let i = void 0;
-    i =
-      e === TowerData_1.LOW_RISK_DIFFICULTY
-        ? "Text_LowRisk_Text"
-        : e === TowerData_1.HIGH_RISK_DIFFICULTY
-          ? "Text_HighRisk_Text"
-          : "Text_Variation_Text";
+    e === TowerData_1.LOW_RISK_DIFFICULTY
+      ? (i = "Text_LowRisk_Text")
+      : e === TowerData_1.HIGH_RISK_DIFFICULTY
+        ? (i = "Text_HighRisk_Text")
+        : e === TowerData_1.VARIATION_RISK_DIFFICULTY
+          ? (i = "Text_Variation_Text")
+          : e === TowerData_1.OVERLOCK_RISK_DIFFICULTY &&
+            (i = "Text_OverLock_Text");
     e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerAreaName(t[0]);
-    this.gLt.RefreshText(i, e),
+    this.gLt.RefreshText(i ?? "", e),
       this.Og(ModelManager_1.ModelManager.TowerModel.DefaultFloor, !1),
       ModelManager_1.ModelManager.TowerModel.NeedOpenConfirmView &&
         UiManager_1.UiManager.OpenView("TowerApplyFloorDataView");
@@ -189,7 +192,9 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
     var i = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e),
       r =
         (this.UDo.RefreshByData(i.ShowBuffs),
-        this.H1i.RefreshByData(i.ShowMonsters),
+        this.H1i.RefreshByData(i.ShowMonsters, () => {
+          this.GetItem(14).SetAnchorOffsetY(0);
+        }),
         0 < i.RecommendElement?.length
           ? (this.GetItem(12)?.SetUIActive(!0),
             this.Mli.RefreshByData(i.RecommendElement))
@@ -197,11 +202,11 @@ class TowerFloorView extends UiViewBase_1.UiViewBase {
         []),
       o = ModelManager_1.ModelManager.TowerModel.GetFloorStarsIndex(e);
     for (let e = 0; e < TowerModel_1.FLOOR_STAR; e++) {
-      var s = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTargetConfig(
+      var a = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTargetConfig(
           i.TargetConfig[e],
         ),
-        s = [!(!o || !o.includes(e)), s];
-      r.push(s);
+        a = [!(!o || !o.includes(e)), a];
+      r.push(a);
     }
     this.ADo.RefreshByData(r),
       this.GetText(5).SetText("" + i.Cost),

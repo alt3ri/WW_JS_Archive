@@ -14,7 +14,7 @@ class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
       (this.Xea = void 0),
       (this.lqe = void 0),
       (this.Yea = 0),
-      (this.LMa = new Map()),
+      (this.gMa = new Map()),
       (this.Jea = []),
       (this.zea = void 0),
       (this.JGt = void 0),
@@ -22,7 +22,7 @@ class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.CPi = () => {
-        this.zea?.ChangeKeyModeRowData && this.JGt && this.JGt(this.LMa),
+        this.zea?.ChangeKeyModeRowData && this.JGt && this.JGt(this.gMa),
           this.CloseMe();
       }),
       (this.Exi = () => {
@@ -39,7 +39,7 @@ class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
         t &&
           (this.zea?.SetSelected(!1),
           (this.zea = i),
-          this.LMa.set(this.Yea, t.Index));
+          this.gMa.set(this.Yea, t.Index));
       });
   }
   OnRegisterComponent() {
@@ -68,7 +68,7 @@ class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
         i.ChangeKeyModeGroupList);
     for (let i = 0; i < t.length; i++) {
       var s = t[i].DefaultKeyModeRowIndex;
-      this.LMa.set(i, s);
+      this.gMa.set(i, s);
     }
     (this.JGt = i.OnConfirmCallback),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
@@ -78,16 +78,19 @@ class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
       h = (i.SetUIActive(!1), i.GetOwner()),
       e = this.GetItem(6),
       r = [];
-    for (const n of this.Xea.GetChangeKeyModeGroupDataList()[
+    for (const u of this.Xea.GetChangeKeyModeGroupDataList()[
       this.Yea
     ].GetChangeKeyModeRowDataList()) {
       var a = LguiUtil_1.LguiUtil.DuplicateActor(h, e),
         o = new ChangeModeRowView_1.ChangeModeRowView(),
-        a = (o.BindOnSelected(this.Zea), o.CreateThenShowByActorAsync(a, n));
+        a = (o.BindOnSelected(this.Zea), o.CreateThenShowByActorAsync(a, u));
       this.Jea.push(o), r.push(a);
     }
     await Promise.all(r);
-    i = Platform_1.Platform.IsPs5Platform();
+    var i = Platform_1.Platform.IsPs5Platform(),
+      n = Platform_1.Platform.IsAndroidPlatform(),
+      v = Platform_1.Platform.IsIOSPlatform(),
+      i = i || n || v;
     this.GetButton(2)?.RootUIComp.SetUIActive(!i),
       this.GetButton(4)?.RootUIComp.SetUIActive(!i);
   }
@@ -114,7 +117,7 @@ class ChangeModeTipsView extends UiViewBase_1.UiViewBase {
     this.zea?.SetSelected(!1),
       this.Xea &&
         this.Xea.GetChangeKeyModeGroupDataList()[this.Yea] &&
-        ((i = this.LMa.get(this.Yea) ?? 0),
+        ((i = this.gMa.get(this.Yea) ?? 0),
         (i = this.Jea[i]),
         (this.zea = i)?.SetSelected(!0));
   }

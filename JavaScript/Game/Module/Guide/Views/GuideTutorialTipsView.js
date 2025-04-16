@@ -24,7 +24,7 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
       (this.SZt = (i, e = 1) => {
         e &&
           this.RootItem?.bIsUIActive &&
-          !UiManager_1.UiManager.IsViewOpen("LoadingView") &&
+          !ModelManager_1.ModelManager.LoadingModel.IsLoadingView &&
           (this.TutorialInfo.ClickToPopState(),
           this.UiViewSequence.PlaySequence("CloseTips", !0));
       }),
@@ -37,7 +37,9 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
       (this.yZt = () => {
         2 === this.TutorialInfo.TipState
           ? this.CloseMe(() => {
-              ModelManager_1.ModelManager.GuideModel.TryShowGuideTutorialView();
+              ModelManager_1.ModelManager.GuideModel.TryShowGuideTutorialView(
+                !0,
+              );
             })
           : this.IZt();
       }),
@@ -73,7 +75,7 @@ class GuideTutorialTipsView extends UiTickViewBase_1.UiTickViewBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             `图文教程引导组${this.TutorialInfo.OwnerStep.Id}的教程分类组id不合法，找不到对应图标`,
             ["不合法的分类组Id", i],
           ),

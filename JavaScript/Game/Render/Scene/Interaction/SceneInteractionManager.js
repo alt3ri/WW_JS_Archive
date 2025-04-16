@@ -89,7 +89,7 @@ class SceneInteractionManager {
     if (!a)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderScene", 12, "错误，获取不到World"),
+          Log_1.Log.Error("RenderScene", 11, "错误，获取不到World"),
         -1
       );
     let c = e;
@@ -97,7 +97,14 @@ class SceneInteractionManager {
     var e = this.UniqueLevelInstanceId,
       h = (0, puerts_1.$ref)(!1),
       l = "KuroSceneInteraction_" + e,
-      a = UE.LevelStreamingDynamic.LoadLevelInstance(a, c, i, r, h, l);
+      a = UE.LevelStreamingDynamic.LoadLevelInstance(
+        a,
+        c,
+        i.op_ToVector(),
+        r,
+        h,
+        l,
+      );
     return (0, puerts_1.$unref)(h) && a
       ? ((l = new SceneInteractionLevel_1.SceneInteractionLevel()).Init(
           a,
@@ -157,9 +164,9 @@ class SceneInteractionManager {
     e = this.AllSceneInteractionInfos.get(e);
     return !!e && e.IsStreamingComplete();
   }
-  ToggleSceneInteractionVisible(e, t, i = !1, r = void 0) {
+  ToggleSceneInteractionVisible(e, t, i = !1, r = void 0, n = "") {
     e = this.AllSceneInteractionInfos.get(e);
-    e && e.ToggleLevelVisible(t, i, r);
+    e && e.ToggleLevelVisible(t, i, r, n);
   }
   GetSceneInteractionLevelName(e) {
     e = this.AllSceneInteractionInfos.get(e);
@@ -260,6 +267,14 @@ class SceneInteractionManager {
     e = this.AllSceneInteractionInfos.get(e);
     e && e.ResumeActiveTagSequence(t, i);
   }
+  GetIsActiveTagSequencePlayReverseFromConfig(e, t) {
+    e = this.AllSceneInteractionInfos.get(e);
+    if (e) return e.GetIsActiveTagSequencePlayReverseFromConfig(t);
+  }
+  PlayActiveTagSequenceTo(e, t, i, r = !1) {
+    e = this.AllSceneInteractionInfos.get(e);
+    e && e.PlayActiveTagSequenceTo(t, i, r);
+  }
   RegisterWaterEffectObject(e) {
     this.WaterObjects.push(e), e.AfterRegistered();
   }
@@ -269,7 +284,7 @@ class SceneInteractionManager {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            26,
+            25,
             "要移除的SceneObjectWaterEffect不存在队列中",
           ),
         t && t.BeforeUnregistered())
@@ -287,7 +302,7 @@ class SceneInteractionManager {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            32,
+            31,
             "要移除的SceneObjectAirWallEffect不存在队列中",
           ),
         t && t.BeforeUnregistered())
@@ -299,6 +314,10 @@ class SceneInteractionManager {
   PlayExtraEffectByTag(e, t, i) {
     e = this.AllSceneInteractionInfos.get(e);
     e && e.PlayExtraEffect(t, i);
+  }
+  PlayKuroSkeletalMeshDestruction(e, t, i = !1) {
+    e = this.AllSceneInteractionInfos.get(e);
+    e && e.PlayKuroSkeletalMeshDestruction(t, i);
   }
   StopExtraEffectByTag(e, t) {
     e = this.AllSceneInteractionInfos.get(e);
@@ -331,7 +350,7 @@ class SceneInteractionManager {
       this.TempCacheIds.push(t);
     for (const r of this.TempCacheIds) {
       var e = this.AllSceneInteractionInfos.get(r);
-      e && !e.IsInfoDestroyed() && e.Update();
+      e && !e.IsInfoDestroyed() && e.Update(i);
     }
     RenderModuleConfig_1.RenderStats.StatSceneInteractionOthers.Stop();
   }

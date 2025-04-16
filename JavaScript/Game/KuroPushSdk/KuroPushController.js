@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KuroPushController = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  Application_1 = require("../../Core/Application/Application"),
   Info_1 = require("../../Core/Common/Info"),
   LanguageSystem_1 = require("../../Core/Common/LanguageSystem"),
   Log_1 = require("../../Core/Common/Log"),
@@ -13,7 +12,7 @@ const puerts_1 = require("puerts"),
   LauncherStorageLib_1 = require("../../Launcher/Util/LauncherStorageLib"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  GameSettingsManager_1 = require("../GameSettings/GameSettingsManager"),
+  GameSettingsDefine_1 = require("../GameSettings/GameSettingsDefine"),
   ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ConfirmBoxDefine_1 = require("../Module/ConfirmBox/ConfirmBoxDefine"),
   SELFDEFINESN = "push";
@@ -29,7 +28,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       this.BindCurrentLanguageTag(),
       this.nSe(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Push", 28, "current push clientId", [
+        Log_1.Log.Info("Push", 27, "current push clientId", [
           "clientId",
           this.GetClientId(),
         ]),
@@ -52,28 +51,28 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
         !0,
       ),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Push", 28, "KuroPush:检查安卓初次权限"),
+        Log_1.Log.Info("Push", 27, "KuroPush:检查安卓初次权限"),
       UE.AndroidPermissionFunctionLibrary.CheckPermission(
         "android.permission.POST_NOTIFICATIONS",
       )) ||
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Push", 28, "KuroPush:安卓没有推送权限，尝试获取"),
+        Log_1.Log.Info("Push", 27, "KuroPush:安卓没有推送权限，尝试获取"),
       (t = UE.NewArray(UE.BuiltinString)).Add(
         "android.permission.POST_NOTIFICATIONS",
       ),
       0 < (await this.HSr(t)).length
         ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Push", 28, "KuroPush:安卓推送权限获取失败"),
+            Log_1.Log.Info("Push", 27, "KuroPush:安卓推送权限获取失败"),
           this.TurnOffPush())
         : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Push", 28, "KuroPush:安卓推送权限获取成功"),
+            Log_1.Log.Info("Push", 27, "KuroPush:安卓推送权限获取成功"),
           await this.TurnOnPush(!1)));
   }
   static async HSr(e) {
     return new Promise((t) => {
       const n = UE.AndroidPermissionFunctionLibrary.AcquirePermissions(e),
-        a = (e, r) => {
-          n.OnPermissionsGrantedDynamicDelegate.Remove(a);
+        u = (e, r) => {
+          n.OnPermissionsGrantedDynamicDelegate.Remove(u);
           var o = new Array(),
             s = e.Num();
           for (let t = 0; t < s; t++) {
@@ -82,32 +81,28 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
           }
           t(o);
         };
-      n.OnPermissionsGrantedDynamicDelegate.Add(a);
+      n.OnPermissionsGrantedDynamicDelegate.Add(u);
     });
   }
   static BindCurrentLanguageTag() {
     var t = LanguageSystem_1.LanguageSystem.PackageLanguage;
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Push", 28, "current push Language Tag", ["Tag", t]),
+      Log_1.Log.Info("Push", 27, "current push Language Tag", ["Tag", t]),
       UE.KuroPushSdkStaticLibrary.SetTag(t, SELFDEFINESN);
   }
   static nSe() {
-    var t = this.GetPushState() ? 1 : 0,
-      e =
-        (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("KuroSdk", 8, "刷新推送状态", ["result", t]),
-        GameSettingsManager_1.GameSettingsManager.Get(121));
-    e?.Set(t),
-      e?.RefreshCurrentValue(),
+    var t = this.GetPushState() ? 1 : 0;
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("KuroSdk", 27, "刷新推送状态", ["result", t]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshMenuSetting,
-        121,
+        GameSettingsDefine_1.EFunction.PushMode,
       );
   }
   static async rSe() {
     this.IfCanUsePush() &&
       ((await this.GetPushNotiPermissionEnableState())
-        ? this.TurnOnPush()
+        ? this.TurnOnPush(!1)
         : this.TurnOffPush());
   }
   static oSe() {
@@ -116,10 +111,6 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       puerts_1.toManualReleaseDelegate)(KuroPushController.aSe)),
       UE.KuroPushSdkStaticLibrary.GetPushObject()?.PushSdkMessageBluePrintDelegate.Add(
         KuroPushController.aSe,
-      ),
-      Application_1.Application.AddApplicationHandler(
-        4,
-        KuroPushController.hSe,
       )),
       (this.sSe = !0);
   }
@@ -143,7 +134,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
     this.IfCanUsePush()
       ? UE.KuroPushSdkStaticLibrary.OpenNotification()
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Push", 28, " Not OpenNotification");
+        Log_1.Log.Debug("Push", 27, " Not OpenNotification");
   }
   static async GetPushNotiPermissionEnableState() {
     return (
@@ -154,7 +145,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
             r,
           ),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Push", 28, "当前推送权限状态", ["state", t]),
+              Log_1.Log.Debug("Push", 27, "当前推送权限状态", ["state", t]),
             e(t);
         };
         UE.KuroPushSdkStaticLibrary.GetPushObject()?.AllowedNotificationsDelegate.Add(
@@ -193,20 +184,20 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
     );
     return void 0 !== t && t;
   }
+  static OnClear() {
+    return this.RemovePushDelegate(), !0;
+  }
 }
 (exports.KuroPushController = KuroPushController),
   ((_a = KuroPushController).sSe = !1),
   (KuroPushController.lSe = void 0),
   (KuroPushController.PushFunctionDelegate = void 0),
-  (KuroPushController.hSe = () => {
-    _a.RemovePushDelegate();
-  }),
   (KuroPushController.aSe = (t, e) => {
     _a.lSe?.(t, e),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Push",
-          28,
+          27,
           "接收到push回调信息",
           ["functionName", t],
           ["result", e],

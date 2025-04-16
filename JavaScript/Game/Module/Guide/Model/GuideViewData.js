@@ -37,7 +37,7 @@ class GuideStepViewData {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "引导步骤id找不到引导类型数据, 清检查配置",
             ["this.Owner!.Id", this.OQt.Id],
           )),
@@ -58,7 +58,7 @@ class GuideStepViewData {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Guide",
-          17,
+          16,
           `引导步骤 ${this.OQt.Id} 的界面类型不是聚焦引导, 无法添加依附的Ui节点`,
         )
       : (this.mzt = t);
@@ -68,7 +68,7 @@ class GuideStepViewData {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Guide",
-          17,
+          16,
           `引导步骤 ${this.OQt.Id} 的界面类型不是聚焦引导, 无法添加依附的Ui节点(显示用)`,
         )
       : (this.dzt = t);

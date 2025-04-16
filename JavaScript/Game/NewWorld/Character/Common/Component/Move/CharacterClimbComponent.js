@@ -14,8 +14,8 @@ var CharacterClimbComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         o = Reflect.decorate(t, i, s, h);
       else
-        for (var _ = t.length - 1; 0 <= _; _--)
-          (e = t[_]) &&
+        for (var a = t.length - 1; 0 <= a; a--)
+          (e = t[a]) &&
             (o = (r < 3 ? e(o) : 3 < r ? e(i, s, o) : e(i, s)) || o);
       return 3 < r && o && Object.defineProperty(i, s, o), o;
     };
@@ -50,8 +50,9 @@ const puerts_1 = require("puerts"),
   GravityUtils_1 = require("../../../../../Utils/GravityUtils"),
   BlackboardController_1 = require("../../../../../World/Controller/BlackboardController"),
   WorldGlobal_1 = require("../../../../../World/WorldGlobal"),
-  CharacterController_1 = require("../../../CharacterController"),
+  LocomotionUtils_1 = require("../../../LocomotionUtils"),
   RoleAudioController_1 = require("../../../Role/RoleAudioController"),
+  CharacterNameDefines_1 = require("../../CharacterNameDefines"),
   CharacterUnifiedStateTypes_1 = require("../Abilities/CharacterUnifiedStateTypes"),
   CustomMovementDefine_1 = require("./CustomMovementDefine"),
   PROFILE_KEY = "CharacterClimbComponent_DetectClimbFromTop",
@@ -64,15 +65,13 @@ const puerts_1 = require("puerts"),
   CACHE_TIME_FROM_TOP = 400,
   CACHE_TIME_UP_ARRIVE = 300,
   EXIT_CLIMB_CACHE_TIME = 300,
-  FIVE_HUNDRED = 500,
+  INPUT_ADD_LENGTH = 500,
   DOUBLE_HALFHEIGHT = 2,
   ONE_POINT_FIVE_HALFHRIGHT = 1.5,
   KINDA_LESS_THAN_ONE = 0.85,
   STRENGTH_THREADHOLD = 10,
   THREADHOLD_FORWARD_BLOCK = -0.707,
   THREADHOLD_MODEL_BUFFER = 0.9,
-  traceColor = new UE.LinearColor(1, 0, 0, 1),
-  traceSuccessColor = new UE.LinearColor(0, 1, 0, 1),
   NORMAL_GROUP_ID = 1,
   SHORT_DRAW_TIME = 0.1,
   LONG_DRAW_TIME = 5,
@@ -86,6 +85,8 @@ const puerts_1 = require("puerts"),
   ENTER_SPINT_VAULT_ANGLE = 45,
   DEFAULT_DETECT_LENGTH = 150,
   EXIT_CLIMB_TIME = 800,
+  traceColor = new UE.LinearColor(1, 0, 0, 1),
+  traceSuccessColor = new UE.LinearColor(0, 1, 0, 1),
   canEnterClimbAirStates = new Set([
     CharacterUnifiedStateTypes_1.ECharMoveState.Other,
     CharacterUnifiedStateTypes_1.ECharMoveState.Flying,
@@ -162,7 +163,7 @@ let CharacterClimbComponent =
         (this.I3r = (t, i) => {
           i ||
             (t?.Valid &&
-              (i = t.GetComponent(31))?.Valid &&
+              (i = t.GetComponent(34))?.Valid &&
               (i.G$r.ContainsNaN() &&
                 (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
@@ -178,6 +179,7 @@ let CharacterClimbComponent =
               (this.k$r = i.k$r),
               (this.F$r = i.F$r),
               (this.V$r = i.V$r),
+              this.y5a.DeepCopy(i.y5a),
               this.SetClimbState(i.H$r),
               this.SetEnterClimbType(i.j$r),
               this.SetExitClimbType(i.W$r),
@@ -187,13 +189,19 @@ let CharacterClimbComponent =
               this.Hte.ResetCachedVelocityTime()));
         }),
         (this.ero = (t, i, s) => {
-          i = this.Entity.GetComponent(34).GetSkillInfo(i);
-          NORMAL_GROUP_ID !== i.GroupId ||
+          6 !== this.Gce.CharacterMovement?.MovementMode ||
+            this.Gce.CharacterMovement?.CustomMovementMode !==
+              CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_CLIMB ||
+            ((i = this.Entity.GetComponent(39).GetSkillInfo(i)),
+            NORMAL_GROUP_ID !== i.GroupId) ||
             (this.HBr.MoveState !==
               CharacterUnifiedStateTypes_1.ECharMoveState.NormalClimb &&
               this.HBr.MoveState !==
                 CharacterUnifiedStateTypes_1.ECharMoveState.FastClimb) ||
-            this.Gce.CharacterMovement.SetMovementMode(1);
+            this.Hte?.Actor.KuroSetMovementMode({
+              Mode: 1,
+              Context: "[CharacterClimbComponent.OnUseSkill]",
+            });
         }),
         (this.Hte = void 0),
         (this.Gce = void 0),
@@ -227,7 +235,7 @@ let CharacterClimbComponent =
         (this._Yr = 0),
         (this.uYr = void 0),
         (this.cYr = void 0),
-        (this.t3a = Vector_1.Vector.Create()),
+        (this.y5a = Vector_1.Vector.Create()),
         (this.DVr = (t, i) => {
           var s;
           if (t !== i)
@@ -237,7 +245,7 @@ let CharacterClimbComponent =
                 4 !== this.W$r &&
                 10 !== this.W$r &&
                 1 <
-                  (s = GravityUtils_1.GravityUtils.GetZnInGravity(
+                  (s = GravityUtils_1.GravityUtils.GetZnInGravityForActor(
                     this.Hte,
                     this.Hte.ActorVelocityProxy,
                   )) &&
@@ -251,7 +259,7 @@ let CharacterClimbComponent =
                     ["动作", this.oRe.MainAnimInstance.GetMainAnimsDebugText()],
                   ),
                 this.Lz.DeepCopy(this.Hte.ActorVelocityProxy),
-                GravityUtils_1.GravityUtils.AddZnInGravity(
+                GravityUtils_1.GravityUtils.AddZnInGravityForActor(
                   this.Hte,
                   this.Lz,
                   -s,
@@ -281,14 +289,13 @@ let CharacterClimbComponent =
                 (t = this.oRe.GetMeshTransform()),
                 this.Hte.IsDefaultCapsule ||
                   (2 ===
-                  (s =
-                    CharacterController_1.CharacterController.FindSpaceForExitClimb(
-                      this.Hte,
-                      this.Hte.DefaultHalfHeight,
-                      this.Hte.DefaultRadius,
-                      CLIMBING_CAPSULE_SIZE,
-                      this.Lz,
-                    ))
+                  (s = LocomotionUtils_1.LocomotionUtils.FindSpaceForExitClimb(
+                    this.Hte,
+                    this.Hte.DefaultHalfHeight,
+                    this.Hte.DefaultRadius,
+                    CLIMBING_CAPSULE_SIZE,
+                    this.Lz,
+                  ))
                     ? (this.Hte.SetActorLocation(
                         this.Lz.ToUeVector(),
                         "ExitClimb Capsule Safety",
@@ -303,10 +310,10 @@ let CharacterClimbComponent =
                           6,
                           "ExitClimb Capsule NotSafety",
                           ["CurrentLocation", this.Hte?.ActorLocationProxy],
-                          ["Last", this.t3a],
+                          ["Last", this.y5a],
                         ),
                       this.Hte.SetActorLocation(
-                        this.t3a.ToUeVector(),
+                        this.y5a.ToUeVector(),
                         "ExitClimb Capsule NotSafety",
                         !1,
                       ),
@@ -330,7 +337,7 @@ let CharacterClimbComponent =
         (this.dYr = Vector_1.Vector.Create()),
         (this.CYr = void 0),
         (this.gYr = -0),
-        (this.fYr = Vector_1.Vector.Create()),
+        (this.W6c = Vector_1.Vector.Create()),
         (this.Lz = Vector_1.Vector.Create()),
         (this.Tz = Vector_1.Vector.Create()),
         (this.fHo = Vector_1.Vector.Create()),
@@ -391,7 +398,7 @@ let CharacterClimbComponent =
         (this.jYr = Stats_1.Stat.Create("ClimbingExitPositionFix3"));
     }
     static get Dependencies() {
-      return [3, 164];
+      return [3, 176];
     }
     get ClimbBlocking() {
       return this.lYr;
@@ -431,14 +438,14 @@ let CharacterClimbComponent =
       );
     }
     OnInit() {
-      return (this.Xte = this.Entity.GetComponent(190)), !0;
+      return (this.Xte = this.Entity.GetComponent(203)), !0;
     }
     OnStart() {
       if (
         ((this.Hte = this.Entity.CheckGetComponent(3)),
-        (this.Gce = this.Entity.CheckGetComponent(164)),
-        (this.oRe = this.Entity.GetComponent(163)),
-        (this.HBr = this.Entity.CheckGetComponent(161)),
+        (this.Gce = this.Entity.CheckGetComponent(176)),
+        (this.oRe = this.Entity.GetComponent(175)),
+        (this.HBr = this.Entity.CheckGetComponent(173)),
         (this.k$r = !0),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -476,7 +483,7 @@ let CharacterClimbComponent =
       this.Q$r = UE.NewObject(UE.KuroClimbObject.StaticClass(), this.Hte.Actor);
       var t = UE.NewArray(UE.Vector);
       for (const h of this.X$r.ClimbDetectPoints)
-        t.Add(WorldGlobal_1.WorldGlobal.ToUeVector(h));
+        t.Add(WorldGlobal_1.WorldGlobal.ToUeVectorOld(h));
       this.Q$r.InitBase(
         this.Hte.Actor.CapsuleComponent,
         QueryTypeDefine_1.KuroCollisionChannel.Climb,
@@ -490,12 +497,16 @@ let CharacterClimbComponent =
           MAX_ROLE_HALF_HEIGHT,
           MAX_SAFETY_DIST,
         ),
-        (this.$$r = WorldGlobal_1.WorldGlobal.ToUeVector(this.X$r.ClimbVault)),
-        (this.Y$r = WorldGlobal_1.WorldGlobal.ToUeVector(this.X$r.ClimbOnTop)),
-        (this.J$r = WorldGlobal_1.WorldGlobal.ToUeVector(
+        (this.$$r = WorldGlobal_1.WorldGlobal.ToUeVectorOld(
+          this.X$r.ClimbVault,
+        )),
+        (this.Y$r = WorldGlobal_1.WorldGlobal.ToUeVectorOld(
+          this.X$r.ClimbOnTop,
+        )),
+        (this.J$r = WorldGlobal_1.WorldGlobal.ToUeVectorOld(
           this.X$r.ClimbFromTop,
         )),
-        (this.rYr = WorldGlobal_1.WorldGlobal.ToUeVector(
+        (this.rYr = WorldGlobal_1.WorldGlobal.ToUeVectorOld(
           this.X$r.ClimbSprintVault,
         )),
         (this.z$r = new UE.SClimbInfo(
@@ -536,12 +547,12 @@ let CharacterClimbComponent =
           ENTER_SPINT_VAULT_ANGLE,
         ),
         this.Q$r.InitBlockUps(
-          WorldGlobal_1.WorldGlobal.ToUeVector(this.X$r.BlockUpOffset),
+          WorldGlobal_1.WorldGlobal.ToUeVectorOld(this.X$r.BlockUpOffset),
           this.X$r.BlockUpDetectRadius,
           this.X$r.BlockUpDetectDistance,
           this.X$r.BlockUpBackDistance,
           this.X$r.BlockUpBackMinDist,
-          WorldGlobal_1.WorldGlobal.ToUeVector(this.X$r.BlockUpFinalMove),
+          WorldGlobal_1.WorldGlobal.ToUeVectorOld(this.X$r.BlockUpFinalMove),
           this.X$r.BlockUpVerticalRange.Min,
           this.X$r.BlockUpVerticalRange.Max,
         ),
@@ -554,6 +565,7 @@ let CharacterClimbComponent =
             )),
           this.Xte.ListenForTagAnyCountChanged(1448371427, this.IYr),
           this.Xte.ListenForTagAnyCountChanged(-866600078, this.LYr)),
+        this.y5a.DeepCopy(this.Hte.ActorLocationProxy),
         !0
       );
     }
@@ -679,16 +691,24 @@ let CharacterClimbComponent =
         this.HBr.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Climb;
       s
-        ? 0 < this.K$r &&
-          ((this.K$r -= t), this.K$r <= 0) &&
-          (this.OnExitClimb(), (s = !1))
-        : (this.K$r = 0),
-        !s &&
-          !this.O$r &&
-          this.Gce.HasMoveInput &&
-          (this.Xte.HasTag(-1462404775) ||
+        ? 3 !== this.H$r &&
+          this.y5a.FromUeVector(this.Q$r.D_GetSafetyLocation())
+        : this.y5a.DeepCopy(this.Hte.ActorLocationProxy),
+        s
+          ? 0 < this.K$r &&
+            ((this.K$r -= t), this.K$r <= 0) &&
+            (this.OnExitClimb(), (s = !1))
+          : (this.K$r = 0),
+        s ||
+          this.O$r ||
+          (!this.Gce.HasMoveInput &&
+            this.HBr?.MoveState !==
+              CharacterUnifiedStateTypes_1.ECharMoveState.Soar) ||
+          !(
+            this.Xte.HasTag(-1462404775) ||
             MathUtils_1.MathUtils.DotProduct(i, this.Hte.ActorForwardProxy) >
-              THREADHOLD_ENTER_CLIMB_FORWARD_NEED) &&
+              THREADHOLD_ENTER_CLIMB_FORWARD_NEED
+          ) ||
           (this.SetClimbState(0), this.KYr(t)),
         this.UYr.Stop(),
         this.AYr.Start(),
@@ -699,12 +719,9 @@ let CharacterClimbComponent =
           3 !== this.H$r &&
           !this.Xte.HasTag(-976785652) &&
           this.TYr(),
-        s
-          ? 3 !== this.H$r &&
-            this.t3a.FromUeVector(this.Q$r.GetSafetyLocation())
-          : this.t3a.DeepCopy(this.Hte.ActorLocationProxy),
         (this.O$r = s),
-        this.AYr.Stop();
+        this.AYr.Stop(),
+        CharacterClimbComponent_1.DebugLogController && s && this.SMc();
     }
     GetExitClimbType() {
       return this.W$r;
@@ -715,12 +732,14 @@ let CharacterClimbComponent =
         ((i = this.QYr()) &&
           this.HBr.MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Glide &&
+          this.HBr.MoveState !==
+            CharacterUnifiedStateTypes_1.ECharMoveState.Soar &&
           (this.wYr.Start(), this.XYr(), this.wYr.Stop(), 0 !== this.H$r)) ||
         (i || this.Xte.HasTag(400631093)
           ? (this.PYr.Start(),
             this.$Yr(!0),
             this.PYr.Stop(),
-            (i = this.Hte?.Entity?.GetComponent(34)),
+            (i = this.Hte?.Entity?.GetComponent(39)),
             0 !== this.H$r &&
               (this.xYr.Start(),
               i.StopGroup1Skill("攀爬打断技能"),
@@ -733,21 +752,35 @@ let CharacterClimbComponent =
           this.YYr(t);
           break;
         case CharacterUnifiedStateTypes_1.ECharPositionState.Air:
-          canEnterClimbAirStates.has(this.HBr.MoveState) &&
+          if (canEnterClimbAirStates.has(this.HBr.MoveState))
             this.JYr() &&
-            (this.zYr(), 0 === this.H$r) &&
-            this.ZYr(t ? 4 : this.Gce.IsJump ? 2 : 0);
+              (this.zYr(), 0 === this.H$r) &&
+              this.ZYr(t ? 4 : this.Gce.IsJump ? 2 : 0);
+          else {
+            if (
+              this.HBr.MoveState !==
+              CharacterUnifiedStateTypes_1.ECharMoveState.Soar
+            )
+              break;
+            if ((this.zYr(), 0 !== this.H$r)) return;
+            this.W6c.FromUeVector(this.Hte.ActorVelocityProxy),
+              GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+                this.Hte,
+                this.W6c,
+              ),
+              this.sJr(t ? 4 : 0, this.W6c);
+          }
           break;
         case CharacterUnifiedStateTypes_1.ECharPositionState.Water:
           this.JYr() &&
-            this.Entity.GetComponent(69).CheckCanEnterClimbFromSwim() &&
+            this.Entity.GetComponent(76).CheckCanEnterClimbFromSwim() &&
             (this.zYr(), 0 === this.H$r) &&
             this.ZYr(1);
       }
     }
     zYr() {
       this.BYr.Start();
-      var t = this.Q$r.TryUpArrives(
+      var t = this.Q$r.D_TryUpArrives(
         this.Hte.ActorForward,
         this.eJr(this.vYr),
         this.uYr,
@@ -780,12 +813,15 @@ let CharacterClimbComponent =
     TYr() {
       var t, i;
       0 <
-        GravityUtils_1.GravityUtils.GetZnInGravity(
+        GravityUtils_1.GravityUtils.GetZnInGravityForActor(
           this.Hte,
           this.Hte.ActorVelocityProxy,
         ) &&
         (this.Lz.DeepCopy(this.Hte.ActorVelocityProxy),
-        GravityUtils_1.GravityUtils.ConvertToPlanarVector(this.Hte, this.Lz),
+        GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+          this.Hte,
+          this.Lz,
+        ),
         this.Gce.SetForceSpeed(this.Lz)),
         2 === this.H$r && this.oJr(),
         this.HBr.MoveState ===
@@ -805,7 +841,10 @@ let CharacterClimbComponent =
               ),
               (i = this.Hte.ActorTransform).SetRotation(this.az.ToUeQuat()),
               this.SetCharacterTransformAndBuffer(i, EXIT_CLIMB_CACHE_TIME)))),
-        this.Gce.CharacterMovement.SetMovementMode(3);
+        this.Hte.Actor.KuroSetMovementMode({
+          Mode: 3,
+          Context: "[CharacterClimbComponent.NormalExitClimb]",
+        });
     }
     ClimbPress(t) {
       this.HBr.PositionState ===
@@ -816,9 +855,16 @@ let CharacterClimbComponent =
     rJr(t, i) {
       return (
         this.Lz.DeepCopy(i),
-        GravityUtils_1.GravityUtils.ConvertToPlanarVector(this.Hte, this.Lz),
+        GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+          this.Hte,
+          this.Lz,
+        ),
         this.Lz.Normalize(),
-        GravityUtils_1.GravityUtils.GetAngleOffsetInGravity(this.Hte, i, t)
+        GravityUtils_1.GravityUtils.GetAngleOffsetInGravityForActor(
+          this.Hte,
+          i,
+          t,
+        )
       );
     }
     NeedProcessTransform() {
@@ -843,7 +889,10 @@ let CharacterClimbComponent =
         this.Lz.FromUeVector(
           this.Gce.CharacterMovement.Kuro_GetBlockDirectWhenMove(),
         ),
-        GravityUtils_1.GravityUtils.ConvertToPlanarVector(this.Hte, this.Lz),
+        GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+          this.Hte,
+          this.Lz,
+        ),
         !(
           !this.Lz.Normalize() ||
           this.Hte.InputDirectProxy.DotProduct(this.Lz) >
@@ -861,10 +910,11 @@ let CharacterClimbComponent =
             Protocol_1.Aki.Protocol.t8s.Proto_ClimbTop,
           ),
         s &&
-          this.Gce.CharacterMovement.SetMovementMode(
-            6,
-            CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_CLIMB,
-          ),
+          this.Hte?.Actor.KuroSetMovementMode({
+            Mode: 6,
+            CustomMode: CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_CLIMB,
+            Context: "[CharacterClimbComponent.UpArrive]",
+          }),
         this.SetClimbState(3),
         (this.K$r = EXIT_CLIMB_TIME),
         this.SetExitClimbType(t),
@@ -882,19 +932,23 @@ let CharacterClimbComponent =
               (s = i.TransformPosition(this.Lz.ToUeVector())),
               i.SetLocation(s))),
         this.V$r.FromUeVector(i.GetLocation());
-      var s = GravityUtils_1.GravityUtils.GetZnInGravity(
+      var s = GravityUtils_1.GravityUtils.GetZnInGravityForActor(
         this.Hte,
         this.Hte.ActorForwardProxy,
       );
       s <= 0
         ? (i.SetLocation(this.Hte.ActorLocation),
           this.V$r.Subtraction(this.Hte.ActorLocationProxy, this.Lz),
-          GravityUtils_1.GravityUtils.AddZnInGravity(this.Hte, this.Lz, 2))
-        : (this.Lz.DeepCopy(this.V$r),
-          GravityUtils_1.GravityUtils.SetZnInGravity(
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
             this.Hte,
             this.Lz,
-            GravityUtils_1.GravityUtils.GetZnInGravity(
+            2,
+          ))
+        : (this.Lz.DeepCopy(this.V$r),
+          GravityUtils_1.GravityUtils.SetZnInGravityForActor(
+            this.Hte,
+            this.Lz,
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(
               this.Hte,
               this.Hte.ActorLocationProxy,
             ),
@@ -902,10 +956,13 @@ let CharacterClimbComponent =
           i.SetLocation(this.Lz.ToUeVector()),
           this.Lz.Reset(),
           this.V$r.Subtraction(this.Hte.ActorLocationProxy, this.Tz),
-          GravityUtils_1.GravityUtils.AddZnInGravity(
+          GravityUtils_1.GravityUtils.AddZnInGravityForActor(
             this.Hte,
             this.Lz,
-            GravityUtils_1.GravityUtils.GetZnInGravity(this.Hte, this.Tz) + 2,
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(
+              this.Hte,
+              this.Tz,
+            ) + 2,
           )),
         BlackboardController_1.BlackboardController.SetVectorValueByEntity(
           this.Entity.Id,
@@ -971,67 +1028,92 @@ let CharacterClimbComponent =
             CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
           this.Xte.HasTag(-1371021686)
         )
-          this.Lz.DeepCopy(this.Hte.InputDirectProxy);
+          this.W6c.DeepCopy(this.Hte.InputDirectProxy);
         else {
           var i = this.Hte.ActorVelocityProxy;
           if (
-            GravityUtils_1.GravityUtils.GetZnInGravity(this.Hte, i) <
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(this.Hte, i) <
             THREAHOLD_ENTER_CLIMB_MIN_Z_SPEED
           )
             return void this.NYr.Stop();
-          this.Hte.InputDirectProxy.Multiply(FIVE_HUNDRED, this.Lz),
-            this.Lz.AdditionEqual(i);
+          this.Hte.InputDirectProxy.Multiply(INPUT_ADD_LENGTH, this.W6c),
+            this.W6c.AdditionEqual(i);
         }
         this.NYr.Stop(),
           this.OYr.Start(),
-          this.sJr(t, this.Lz),
+          this.sJr(t, this.W6c),
           this.OYr.Stop();
       }
     }
-    sJr(t, i) {
-      var s;
-      this.kYr || (this.kYr = Transform_1.Transform.Create()),
-        this.kYr.SetLocation(this.Hte.ActorLocationProxy),
-        this.kYr.SetScale3D(this.Hte.ActorScaleProxy),
-        MathUtils_1.MathUtils.LookRotationForwardFirst(
-          i,
-          this.Gce.GravityUp,
-          this.kYr.GetRotation(),
-        ),
-        this.Q$r.TryStartClimb(
-          this.kYr.ToUeTransform(),
-          this.eJr(this.pYr),
-          this.uYr,
-        ) &&
-          ((s = (0, puerts_1.$unref)(this.uYr)),
-          Math.abs(
-            MathUtils_1.MathUtils.WrapAngle(
-              s.Rotator().Yaw - MathUtils_1.MathUtils.GetAngleByVector2D(i),
-            ),
-          ) > ENTER_CLIMB_ANGLE ||
-            (this.Gce.CharacterMovement.SetMovementMode(
-              6,
-              CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_CLIMB,
-            ),
-            this.Xte.HasTag(388142570)
-              ? this.SetClimbState(2)
-              : this.SetClimbState(1),
-            this.SetEnterClimbType(t),
-            4 === t
-              ? (this.HBr.SwitchFastClimb(!0),
-                (i = Vector_1.Vector.Create(
-                  s.GetRotation().GetForwardVector(),
-                )).Normalize(MathUtils_1.MathUtils.SmallNumber),
-                (this._Yr = this.rJr(this.Hte.ActorForwardProxy, i)))
-              : (this._Yr = 0),
-            this.nJr(s, NORMAL_CACHE_TIME),
-            (this.hYr = !0)));
+    sJr(i, t, s = !1) {
+      if (t.Normalize())
+        if (
+          (this.kYr || (this.kYr = Transform_1.Transform.Create()),
+          this.kYr.SetLocation(this.Hte.ActorLocationProxy),
+          this.kYr.SetScale3D(this.Hte.ActorScaleProxy),
+          MathUtils_1.MathUtils.LookRotationForwardFirst(
+            t,
+            this.Gce.GravityUp,
+            this.kYr.GetRotation(),
+          ),
+          this.Q$r.D_TryStartClimb(
+            this.kYr.ToUeTransform(),
+            this.eJr(this.pYr),
+            this.uYr,
+          ))
+        ) {
+          const h = (0, puerts_1.$unref)(this.uYr);
+          this.az.FromUeQuat(h.GetRotation()),
+            this.az.GetForwardVector(this.Lz),
+            GravityUtils_1.GravityUtils.GetAngleOffsetInGravityAbsForActor(
+              this.Hte,
+              this.Lz,
+              t,
+            ) > ENTER_CLIMB_ANGLE
+              ? s &&
+                Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug("Character", 42, "超过一定角度则不允许进入攀爬")
+              : this.Hte.Actor.KuroSetMovementMode({
+                  Mode: 6,
+                  CustomMode: CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_CLIMB,
+                  Context:
+                    "CharacterClimbComponent.DetectEnterClimbWithDirectInternal",
+                  Callback: () => {
+                    var t;
+                    this.Xte.HasTag(388142570)
+                      ? this.SetClimbState(2)
+                      : this.SetClimbState(1),
+                      this.SetEnterClimbType(i),
+                      4 === i
+                        ? (this.HBr.SwitchFastClimb(!0),
+                          (t = Vector_1.Vector.Create(
+                            h.GetRotation().GetForwardVector(),
+                          )).Normalize(MathUtils_1.MathUtils.SmallNumber),
+                          (this._Yr = this.rJr(this.Hte.ActorForwardProxy, t)))
+                        : (this._Yr = 0),
+                      this.nJr(h, NORMAL_CACHE_TIME),
+                      (this.hYr = !0),
+                      s &&
+                        Log_1.Log.CheckDebug() &&
+                        Log_1.Log.Debug("Character", 42, "成功进入攀爬状态");
+                  },
+                });
+        } else
+          s &&
+            Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Character",
+              42,
+              "TryStartClimb检测非法，进入攀爬失败",
+            );
     }
     aJr() {
       this.TYr();
     }
     XYr() {
-      switch (this.Q$r.TrySprintVault(this.eJr(this.vYr), this.uYr, this.cYr)) {
+      switch (
+        this.Q$r.D_TrySprintVault(this.eJr(this.vYr), this.uYr, this.cYr)
+      ) {
         case 1:
           this.tJr(9, (0, puerts_1.$unref)(this.uYr));
           break;
@@ -1059,7 +1141,7 @@ let CharacterClimbComponent =
     }
     DealClimbUpStart() {}
     DealClimbUpFinish() {
-      var t = CharacterController_1.CharacterController.FindSpaceForExitClimb(
+      var t = LocomotionUtils_1.LocomotionUtils.FindSpaceForExitClimb(
         this.Hte,
         this.Hte.DefaultHalfHeight,
         this.Hte.DefaultRadius,
@@ -1085,10 +1167,10 @@ let CharacterClimbComponent =
               6,
               "DealClimbUpFinish NotSafety",
               ["CurrentLocation", this.Hte?.ActorLocationProxy],
-              ["Last", this.t3a],
+              ["Last", this.y5a],
             ),
           this.Z_e.Set(
-            this.t3a,
+            this.y5a,
             this.Hte.ActorQuatProxy,
             this.Hte.ActorScaleProxy,
           ),
@@ -1135,7 +1217,7 @@ let CharacterClimbComponent =
           this.gYr > this.CYr && (this.CYr = void 0);
       }
       if (
-        this.Q$r.ProcessClimbing(
+        this.Q$r.D_ProcessClimbing(
           this.Lz.ToUeVector(),
           i,
           t,
@@ -1149,14 +1231,14 @@ let CharacterClimbComponent =
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Test", 6, "ProcessClimbing Success", [
               "Location",
-              this.Hte.Actor.K2_GetActorLocation(),
+              this.Hte.Actor.D_K2_GetActorLocation(),
             ]),
           this.Hte.ResetLocationCachedTime(),
           CharacterClimbComponent_1.wz.Stop(),
           t)
         ) {
           CharacterClimbComponent_1.Bz.Start();
-          i = this.Q$r.TryClimbingArrives(
+          i = this.Q$r.D_TryClimbingArrives(
             this.Hte.InputDirect,
             this.eJr(this.MYr),
             this.uYr,
@@ -1186,7 +1268,7 @@ let CharacterClimbComponent =
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Test", 6, "ProcessClimbing Failed", [
             "Location",
-            this.Hte.Actor.K2_GetActorLocation(),
+            this.Hte.Actor.D_K2_GetActorLocation(),
           ]),
           this.TYr(),
           CharacterClimbComponent_1.wz.Stop();
@@ -1237,7 +1319,7 @@ let CharacterClimbComponent =
     }
     FinishClimbDown() {
       (this.hYr = !0),
-        this.Q$r.TryStartClimb(this.Hte.ActorTransform, 0, this.uYr)
+        this.Q$r.D_TryStartClimb(this.Hte.ActorTransform, 0, this.uYr)
           ? this.nJr((0, puerts_1.$unref)(this.uYr))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -1245,7 +1327,10 @@ let CharacterClimbComponent =
                 6,
                 "下爬动作完成后停留在了一个不太适合攀爬的地点",
               ),
-            this.Gce.CharacterMovement.SetMovementMode(3));
+            this.Hte?.Actor.KuroSetMovementMode({
+              Mode: 3,
+              Context: "[CharacterClimbComponent.FinishClimbDown]",
+            }));
     }
     SetCharacterTransformAndBuffer(t, i, s = void 0, h = !0) {
       (this.CYr = void 0),
@@ -1356,10 +1441,16 @@ let CharacterClimbComponent =
           case 3:
           case 6:
           case 9:
-            this.Gce.CharacterMovement.SetMovementMode(1);
+            this.Hte?.Actor.KuroSetMovementMode({
+              Mode: 1,
+              Context: "[CharacterClimbComponent.OnExitClimb] Walking",
+            });
             break;
           default:
-            this.Gce.CharacterMovement.SetMovementMode(3);
+            this.Hte?.Actor.KuroSetMovementMode({
+              Mode: 3,
+              Context: "[CharacterClimbComponent.OnExitClimb] Falling",
+            });
         }
         this.CYr &&
           (Log_1.Log.CheckError() &&
@@ -1382,40 +1473,61 @@ let CharacterClimbComponent =
         CharacterUnifiedStateTypes_1.ECharPositionState.Climb &&
         (this.G$r.X < THREAHOLD_JUMP_LEAVE
           ? this.KickWallExit()
-          : (t = this.Entity.GetComponent(163)).Valid && t.ClimbDash());
+          : (t = this.Entity.GetComponent(175)).Valid && t.ClimbDash());
     }
     GetClimbRadius() {
       return this.X$r ? this.X$r.ClimbRadius : 0;
     }
-    DetectClimbWithDirect(t, i) {
+    DetectClimbWithDirect(t, i, s = !1) {
       if (
         !this.Active ||
         this.HBr.PositionState ===
           CharacterUnifiedStateTypes_1.ECharPositionState.Climb
       )
-        return !1;
+        return (
+          s &&
+            Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Character",
+              42,
+              "已处于攀爬状态，进入攀爬检测失败",
+            ),
+          !1
+        );
       switch (
         (this.SetClimbState(0),
-        this.Q$r.TryUpArrives(i, this.eJr(this.pYr), this.uYr))
+        this.Q$r.D_TryUpArrives(i, this.eJr(this.pYr), this.uYr))
       ) {
         case 1:
-          return this.tJr(2, (0, puerts_1.$unref)(this.uYr)), !0;
+          return (
+            this.tJr(2, (0, puerts_1.$unref)(this.uYr)),
+            s &&
+              Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Character", 42, "到顶退出，进入攀爬失败"),
+            !0
+          );
         case 2:
-          return this.tJr(7, (0, puerts_1.$unref)(this.uYr)), !0;
+          return (
+            this.tJr(7, (0, puerts_1.$unref)(this.uYr)),
+            s &&
+              Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Character", 42, "地面登上，进入攀爬失败"),
+            !0
+          );
       }
       return (
-        this.fYr.FromUeVector(i),
-        this.sJr(t ? 4 : this.Gce.IsJump ? 2 : 0, this.fYr),
+        this.W6c.FromUeVector(i),
+        this.sJr(t ? 4 : this.Gce.IsJump ? 2 : 0, this.W6c, s),
         0 !== this.H$r
       );
     }
     oJr() {
       this.VYr.Start(),
-        this.Tz.FromUeVector(this.Q$r.GetSafetyLocation()),
+        this.Tz.FromUeVector(this.Q$r.D_GetSafetyLocation()),
         this.Hte.ActorLocationProxy.Subtraction(this.Tz, this.Lz);
       var t = this.Hte.DefaultHalfHeight - this.Hte.DefaultRadius,
         t = MAX_ROLE_CYLINDER_HALF_HEIGHT - t;
-      let i = GravityUtils_1.GravityUtils.ConvertToPlanarVector(
+      let i = GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
         this.Hte,
         this.Lz,
       );
@@ -1426,7 +1538,11 @@ let CharacterClimbComponent =
         ? this.Lz.Reset()
         : h * h < s && ((h = h / Math.sqrt(s)), this.Lz.MultiplyEqual(h)),
         t <= 0 ? (i = 0) : i > t ? (i = t) : i < -t && (i = -t),
-        GravityUtils_1.GravityUtils.AddZnInGravity(this.Hte, this.Lz, i),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this.Hte,
+          this.Lz,
+          i,
+        ),
         this.Lz.AdditionEqual(this.Tz),
         MathUtils_1.MathUtils.LookRotationUpFirst(
           this.Hte.ActorForwardProxy,
@@ -1448,13 +1564,48 @@ let CharacterClimbComponent =
     QYr() {
       return this.Xte.HasTag(388142570) && !this.Xte.HasTag(1098729489);
     }
+    SMc() {
+      var s = this.Entity.GetComponent(175).MainAnimInstance;
+      if (
+        UE.KuroStaticLibrary.IsObjectClassByName(
+          s,
+          CharacterNameDefines_1.CharacterNameDefines.ABP_BASEROLE,
+        )
+      ) {
+        var h = s.LogicParams.ClimbInfoRef.ClimbInput;
+        let t = (180 / Math.PI) * Math.atan2(h.Y, h.X),
+          i =
+            (t < 0 && (t += 360), (t += s.LogicParams.ClimbOnWallAngleRef), 0);
+        (i = t < 90 ? t / 90 : t < 180 ? 1 : t < 270 ? -1 : (t - 360) / 90),
+          (i = MathUtils_1.MathUtils.Clamp(i, -1, 1)),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Movement",
+              42,
+              "CalculateClimbDirection",
+              ["ClimbInput", h],
+              ["ClimbOnWallAngle", s.LogicParams.ClimbOnWallAngleRef],
+              ["Angle", t],
+              ["TmpClimbLR", i],
+              ["FastClimbMix", s.FastClimbMix],
+              ["ClimbBrakeMix", s.ClimbBrakeMix],
+              ["ClimbDirection", s.ClimbDirection],
+              ["LocationProxy", s.LocationProxy],
+              ["Velocity", s.Velocity],
+              ["ActorForward", s.ActorForward],
+              ["Acceleration", s.Acceleration],
+              ["LowerBodyRotator", s.LowerBodyRotator],
+            );
+      }
+    }
   });
 (CharacterClimbComponent.wz = Stats_1.Stat.Create("ClimbStat1")),
   (CharacterClimbComponent.Bz = Stats_1.Stat.Create("ClimbStat2")),
   (CharacterClimbComponent.bz = Stats_1.Stat.Create("ClimbStat3")),
+  (CharacterClimbComponent.DebugLogController = !1),
   (CharacterClimbComponent = CharacterClimbComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(31)],
+      [(0, RegisterComponent_1.RegisterComponent)(34)],
       CharacterClimbComponent,
     )),
   (exports.CharacterClimbComponent = CharacterClimbComponent);

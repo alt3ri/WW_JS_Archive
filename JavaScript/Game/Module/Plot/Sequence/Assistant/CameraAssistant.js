@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraAssistant = void 0);
-const puerts_1 = require("puerts"),
-  UE = require("ue"),
+const UE = require("ue"),
   ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../../../Core/Common/Log"),
   CameraBlueprintFunctionLibrary_1 = require("../../../../Camera/CameraBlueprintFunctionLibrary"),
@@ -30,13 +29,13 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.dYs ||
         (this.dYs = ActorSystem_1.ActorSystem.Spawn(
           UE.BP_StreamingSourceActor_C.StaticClass(),
-          new UE.Transform(),
+          new UE.TransformDouble(),
           void 0,
         )),
       this.CYs ||
         ((this.CYs = ActorSystem_1.ActorSystem.Spawn(
           UE.BP_StreamingSourceActor_C.StaticClass(),
-          new UE.Transform(),
+          new UE.TransformDouble(),
           void 0,
         )),
         (e =
@@ -57,7 +56,7 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         !1,
         !0,
       ),
-      CameraController_1.CameraController.SequenceCamera.DisplayComponent.CineCamera.K2_SetActorTransform(
+      CameraController_1.CameraController.SequenceCamera.DisplayComponent.CineCamera.D_K2_SetActorTransform(
         ModelManager_1.ModelManager.CameraModel.CameraTransform,
         !1,
         void 0,
@@ -68,17 +67,17 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     var e,
       r,
       a,
-      t =
+      o =
         ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent
           .CineCamera;
     this.Model.Config.KeepCamera &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "剧情Seq结束时相机状态: KeepCamera"),
+        Log_1.Log.Debug("Plot", 26, "剧情Seq结束时相机状态: KeepCamera"),
       (this.aio = !1),
       (e = ModelManager_1.ModelManager.CameraModel).SaveSeqCamera(),
       (e = e.GetSavedSeqCameraThings()) ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Camera", 8, "读取Sequence相机信息时，信息不存在")),
+          Log_1.Log.Error("Camera", 58, "读取Sequence相机信息时，信息不存在")),
       (r = UiCameraManager_1.UiCameraManager.Get()).SetWorldLocation(
         e.CameraLocation,
       ),
@@ -90,7 +89,7 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       a.SetCameraFieldOfView(e.FieldOfView),
       CameraController_1.CameraController.ExitCameraMode(1),
       r.Enter()),
-      t.ResetSeqCineCamSetting();
+      o.ResetSeqCineCamSetting();
   }
   AllStop() {
     var e;
@@ -98,10 +97,10 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       !this.Model.Config.KeepCamera &&
       (this.Model.Config.ResetCamera
         ? (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "剧情Seq结束时相机状态: ResetCamera"),
+            Log_1.Log.Debug("Plot", 26, "剧情Seq结束时相机状态: ResetCamera"),
           CameraBlueprintFunctionLibrary_1.default.ResetFightCameraPitchAndArmLength())
         : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "剧情Seq结束时相机状态: 继承seq相机"),
+            Log_1.Log.Debug("Plot", 26, "剧情Seq结束时相机状态: 继承seq相机"),
           ((e =
             CameraController_1.CameraController.SequenceCamera.DisplayComponent.CineCamera.K2_GetActorRotation()).Roll =
             0),
@@ -122,51 +121,7 @@ class CameraAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.CYs &&
         this.CYs.WorldPartitionStreamingSource?.DisableStreamingSource();
   }
-  CalcPreloadLocation() {
-    if (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsPreStreaming) {
-      this.CYs?.WorldPartitionStreamingSource?.EnableStreamingSource();
-      var a =
-        this.Model.CurLevelSeqActor.SequencePlayer.GetCurrentTime().Time
-          .FrameNumber.Value;
-      let e = SequenceDefine_1.MAX_FRAME,
-        r = !1;
-      for (const i of this.Model.CurShotStartFrames)
-        if (i > a) {
-          (e = i + 1), (r = !0);
-          break;
-        }
-      var t = this.Model.CurLevelSeqActor?.GetSequence(),
-        o = (0, puerts_1.$ref)(void 0);
-      r &&
-      UE.KuroSequenceRuntimeFunctionLibrary.GetFrameTransformByTag(
-        t,
-        SequenceDefine_1.CAMERA_TAG,
-        e,
-        o,
-      )
-        ? (this.dYs?.K2_SetActorTransform(
-            (0, puerts_1.$unref)(o),
-            !1,
-            void 0,
-            !0,
-          ),
-          this.dYs?.WorldPartitionStreamingSource?.EnableStreamingSource(),
-          Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug(
-              "Plot",
-              39,
-              "演出相机预流送",
-              ["CurFrame", a],
-              ["TarFrame", e],
-              [
-                "curPos",
-                ModelManager_1.ModelManager.CameraModel.SequenceCamera.DisplayComponent.CineCamera.K2_GetActorLocation(),
-              ],
-              ["tarPos", this.dYs?.K2_GetActorLocation()],
-            ))
-        : this.dYs?.WorldPartitionStreamingSource?.DisableStreamingSource();
-    }
-  }
+  CalcPreloadLocation() {}
 }
 exports.CameraAssistant = CameraAssistant;
 //# sourceMappingURL=CameraAssistant.js.map

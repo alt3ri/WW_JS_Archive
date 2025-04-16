@@ -73,6 +73,20 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
       (this.StartLocation = void 0),
       (this.EndLocation = void 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.SelfForward = void 0),
+      (this.SelfRight = void 0),
+      (this.SelfUp = void 0),
+      (this.AngleLimit = void 0),
+      (this.ActorAngleInSelf = void 0),
+      (this.TmpResultLocation = void 0),
+      (this.ActorFinalUp = void 0),
+      (this.TmpLocation = void 0),
+      (this.TmpRotator = void 0),
+      (this.StartLocation = void 0),
+      (this.EndLocation = void 0);
+  }
   OnBeginPlay() {
     (this.SelfForward = Vector_1.Vector.Create()),
       (this.SelfRight = Vector_1.Vector.Create()),
@@ -168,7 +182,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
           this.TmpLocation,
           this.EndLocation,
         ),
-        UE.KismetSystemLibrary.DrawDebugLine(
+        UE.KismetSystemLibrary.D_DrawDebugLine(
           this,
           this.StartLocation.ToUeVector(),
           this.EndLocation.ToUeVector(),
@@ -178,7 +192,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
         ),
         0 === t
           ? (r.DeepCopy(this.StartLocation), o.DeepCopy(this.EndLocation))
-          : (UE.KismetSystemLibrary.DrawDebugLine(
+          : (UE.KismetSystemLibrary.D_DrawDebugLine(
               this,
               _.ToUeVector(),
               this.StartLocation.ToUeVector(),
@@ -186,7 +200,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
               DRAW_TIME,
               DEFAULT_THICKNESS,
             ),
-            UE.KismetSystemLibrary.DrawDebugLine(
+            UE.KismetSystemLibrary.D_DrawDebugLine(
               this,
               a.ToUeVector(),
               this.EndLocation.ToUeVector(),
@@ -198,7 +212,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
         a.DeepCopy(this.EndLocation),
         (e += h);
     180 <= this.Angle &&
-      (UE.KismetSystemLibrary.DrawDebugLine(
+      (UE.KismetSystemLibrary.D_DrawDebugLine(
         this,
         _.ToUeVector(),
         r.ToUeVector(),
@@ -206,7 +220,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
         DRAW_TIME,
         DEFAULT_THICKNESS,
       ),
-      UE.KismetSystemLibrary.DrawDebugLine(
+      UE.KismetSystemLibrary.D_DrawDebugLine(
         this,
         a.ToUeVector(),
         o.ToUeVector(),
@@ -228,7 +242,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
           this.TmpLocation,
           this.EndLocation,
         ),
-        UE.KismetSystemLibrary.DrawDebugArrow(
+        UE.KismetSystemLibrary.D_DrawDebugArrow(
           this,
           this.StartLocation.ToUeVector(),
           this.EndLocation.ToUeVector(),
@@ -250,7 +264,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
       r = this.Intro ? this.CylinderRadius - h : this.CylinderRadius + h;
     if (r <= 0) e.Success = !1;
     else if (
-      (this.ActorLocation.FromUeVector(t.K2_GetActorLocation()),
+      (this.ActorLocation.FromUeVector(t.D_K2_GetActorLocation()),
       this.ActorLocation.Subtraction(this.SelfLocation, this.SelfToActor),
       this.MoveOffset.FromUeVector(i),
       this.CalAngleLimit(r))
@@ -316,7 +330,7 @@ class TsSimpleInteractCylinder extends TsSimpleInteractBase_1.default {
         )),
         (this.LineTrace.WorldContextObject = void 0),
         e.Success) &&
-        ((e.Location = this.TmpResultLocation.ToUeVector()),
+        ((e.Location = this.TmpResultLocation.ToUeVectorOld()),
         (e.SquaredOffsetLength = s),
         this.Intro
           ? this.TmpResultLocation.Subtraction(

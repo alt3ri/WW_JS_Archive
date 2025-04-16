@@ -7,6 +7,7 @@ class TsAnimNotifyBattleMessageBox extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.BoardId = 0);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     return (
       0 < this.BoardId &&

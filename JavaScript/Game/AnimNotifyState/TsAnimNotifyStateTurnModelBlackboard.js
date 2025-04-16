@@ -4,7 +4,7 @@ const UE = require("ue"),
   Quat_1 = require("../../Core/Utils/Math/Quat"),
   Rotator_1 = require("../../Core/Utils/Math/Rotator"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  BlackboardController_1 = require("../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   tmpQuat = Quat_1.Quat.Create();
 class TurnModelBlackboardParams {
   constructor() {
@@ -23,6 +23,9 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
       (this.Absolute = !1),
       (this.ParamsMap = new Map());
   }
+  Constructor() {
+    this.ParamsMap = new Map();
+  }
   Init() {
     this.ParamsMap || (this.ParamsMap = new Map());
   }
@@ -31,46 +34,47 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var a = t.CharacterActorComponent.Entity;
-    if (!a.GetComponent(163)?.Valid) return !1;
+    if (!a.GetComponent(175)?.Valid) return !1;
     a = a.Id;
     if (!this.TurnModelKey) return !1;
-    a = BlackboardController_1.BlackboardController.GetRotatorValueByEntity(
-      a,
-      this.TurnModelKey,
-    );
+    a =
+      ControllerHolder_1.ControllerHolder.BlackboardController.GetRotatorValueByEntity(
+        a,
+        this.TurnModelKey,
+      );
     if (!a) return !1;
     this.Absolute &&
-      ((i = t.CharacterActorComponent?.ActorRotationProxy),
-      (a.Pitch -= i?.Pitch ?? 0),
-      (a.Yaw -= i?.Yaw ?? 0),
-      (a.Roll -= i?.Roll ?? 0));
-    var i = new TurnModelBlackboardParams();
+      ((s = t.CharacterActorComponent?.ActorRotationProxy),
+      (a.Pitch -= s?.Pitch ?? 0),
+      (a.Yaw -= s?.Yaw ?? 0),
+      (a.Roll -= s?.Roll ?? 0));
+    var s = new TurnModelBlackboardParams();
     return (
-      (i.TotalDuration = e),
-      i.TurnModel.FromUeRotator(a),
-      i.TurnModel.Quaternion(i.TurnModelQuat),
-      (i.RunTime = 0),
-      this.ParamsMap.set(t, i),
+      (s.TotalDuration = e),
+      s.TurnModel.FromUeRotator(a),
+      s.TurnModel.Quaternion(s.TurnModelQuat),
+      (s.RunTime = 0),
+      this.ParamsMap.set(t, s),
       !0
     );
   }
   K2_NotifyTick(t, r, e) {
     t = t.GetOwner();
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    var a = t.CharacterActorComponent.Entity.GetComponent(163);
+    var a = t.CharacterActorComponent.Entity.GetComponent(175);
     if (!a?.Valid) return !1;
     t = this.ParamsMap.get(t);
     if (!t) return !1;
-    var i = t.TotalDuration,
-      s = t.TurnModelQuat,
+    var s = t.TotalDuration,
+      i = t.TurnModelQuat,
       o = t.RunTime,
       n = o + e;
     let u = 0;
     return (
       (u = this.Curve
-        ? this.Curve.GetFloatValue(n / i) - this.Curve.GetFloatValue(o / i)
-        : e / i),
-      Quat_1.Quat.Slerp(Quat_1.Quat.IdentityProxy, s, u, tmpQuat),
+        ? this.Curve.GetFloatValue(n / s) - this.Curve.GetFloatValue(o / s)
+        : e / s),
+      Quat_1.Quat.Slerp(Quat_1.Quat.IdentityProxy, i, u, tmpQuat),
       a.AddModelQuat(tmpQuat, !0),
       (t.RunTime = n),
       !0
@@ -81,16 +85,16 @@ class TsAnimNotifyStateTurnModelBlackboard extends UE.KuroAnimNotifyState {
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var e = t.CharacterActorComponent,
       a = t.CharacterActorComponent.Entity,
-      i = this.ParamsMap.get(t);
-    if (!i) return !1;
+      s = this.ParamsMap.get(t);
+    if (!s) return !1;
     this.ParamsMap.delete(t),
       this.TurnActorOnEnd &&
         e.AddActorLocalRotation(
-          i.TurnModel.ToUeRotator(),
+          s.TurnModel.ToUeRotator(),
           "TsAnimNotifyStateTurnModelBlackboard",
           !1,
         );
-    t = a.GetComponent(163);
+    t = a.GetComponent(175);
     return !!t && (t.ResetModelQuat(), !0);
   }
   GetNotifyName() {

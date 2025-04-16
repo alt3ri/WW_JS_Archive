@@ -9,14 +9,14 @@ class AiStateMachineActionCue extends AiStateMachineAction_1.AiStateMachineActio
   }
   OnInit(t) {
     this.Vre = [];
-    for (const i of t.ActionCue.CueIds) this.Vre.push(BigInt(i));
+    for (const e of t.ActionCue.CueIds) this.Vre.push(e);
     return !0;
   }
   DoAction() {
     this.Node.BuffComponent.AddGameplayCue(this.Vre, 0, "状态机");
   }
-  ToString(t, i = 0) {
-    (0, AiStateMachine_1.appendDepthSpace)(t, i);
+  ToString(t, e = 0) {
+    (0, AiStateMachine_1.appendDepthSpace)(t, e);
   }
 }
 exports.AiStateMachineActionCue = AiStateMachineActionCue;

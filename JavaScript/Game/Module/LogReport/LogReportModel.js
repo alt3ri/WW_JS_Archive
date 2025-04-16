@@ -8,23 +8,23 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   RECORD_HANG_UP_OFFSET = 30;
 class LogReportModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.qba = new Map());
+    super(...arguments), (this.Jba = new Map());
   }
   OnInit() {
     return (
-      this.qba.set(
+      this.Jba.set(
         "1012",
         new LogReportDefine_1.ExploreToolAssemblyLogData("1001"),
       ),
-      this.qba.set(
+      this.Jba.set(
         "1013",
         new LogReportDefine_1.ExploreToolAssemblyLogData("1003"),
       ),
-      this.qba.set(
+      this.Jba.set(
         "1014",
         new LogReportDefine_1.ExploreToolAssemblyLogData("1004"),
       ),
-      this.qba.set(
+      this.Jba.set(
         "1025",
         new LogReportDefine_1.ExploreToolAssemblyLogData("1013"),
       ),
@@ -50,10 +50,10 @@ class LogReportModel extends ModelBase_1.ModelBase {
       (this.Hvi = r);
   }
   GetTimerAssemblyLogData(e) {
-    return this.qba.get(e);
+    return this.Jba.get(e);
   }
   GetAllTimerAssemblyLogData() {
-    return Array.from(this.qba.values());
+    return Array.from(this.Jba.values());
   }
 }
 ((exports.LogReportModel = LogReportModel).Hvi = 0),

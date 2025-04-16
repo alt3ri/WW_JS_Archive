@@ -81,25 +81,47 @@ class RougePopularEntrie {
       : null;
   }
   icon(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   title(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   describe(t) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetDescriptionparamAt(t) {
     return this.descriptionparam(t);
   }
   descriptionparam(t, s) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   descriptionparamLength() {
     var t = this.J7.__offset(this.z7, 18);

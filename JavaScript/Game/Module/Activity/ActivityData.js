@@ -15,21 +15,25 @@ const Log_1 = require("../../../Core/Common/Log"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  ActivityCommonDefine_1 = require("./ActivityCommonDefine"),
   ACTIVITYFORCECLOSETIME = -1;
 class ActivityBaseData {
   constructor() {
     (this.FFe = 0),
       (this.R4e = void 0),
+      (this.Bel = 0),
       (this.U4e = -0),
       (this.EndShowTimeInternal = -0),
       (this.WFe = -0),
       (this.EndOpenTimeInternal = -0),
       (this.P4e = !1),
+      (this.Dk_ = !1),
       (this.x4e = !1),
       (this.w4e = 0),
       (this.B4e = new Array()),
       (this.b4e = 0),
-      (this.x4a = []),
+      (this.Bk_ = 0),
+      (this._8a = []),
       (this.q4e = ""),
       (this.LocalConfig = void 0);
   }
@@ -41,6 +45,9 @@ class ActivityBaseData {
   }
   get Type() {
     return this.R4e;
+  }
+  get TimeType() {
+    return this.Bel;
   }
   get Sort() {
     return this.w4e;
@@ -57,20 +64,86 @@ class ActivityBaseData {
   get EndOpenTime() {
     return this.EndOpenTimeInternal;
   }
-  get RedPointShowState() {
-    return !!(
-      this.CheckIfInShowTime() &&
-      (this.x4e || (this.P4e && this.GetExDataRedPointShowState()))
+  get FinishShowState() {
+    if (!this.LocalConfig) return !1;
+    if (!this.LocalConfig.ShowTabFinish) return !1;
+    try {
+      if (!this.GetExDataFinishShowState()) return !1;
+    } catch (t) {
+      ModelManager_1.ModelManager.ActivityModel.OpenActivityErrorConfirmBox(
+        this.Id,
+        this.Type,
+      ),
+        t instanceof Error
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.ErrorWithStack(
+              "Activity",
+              37,
+              "[Activity] 活动完成状态异常",
+              t,
+              ["id", this.Id],
+              ["error", t.message],
+            )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Activity", 37, "[Activity] 活动完成状态异常", [
+              "id",
+              this.Id,
+            ]);
+    }
+    return !0;
+  }
+  get FinishSinkState() {
+    return (
+      !!this.LocalConfig &&
+      this.LocalConfig.SinkTabFinish &&
+      this.FinishShowState
     );
+  }
+  get RedPointShowState() {
+    if (this.CheckIfInShowTime()) {
+      if (this.x4e) return !0;
+      var t = this.Dk_ && this.HasPreOpenCondition();
+      if (this.P4e || t)
+        try {
+          if (this.GetExDataRedPointShowState()) return !0;
+        } catch (t) {
+          ModelManager_1.ModelManager.ActivityModel.OpenActivityErrorConfirmBox(
+            this.Id,
+            this.Type,
+          ),
+            t instanceof Error
+              ? Log_1.Log.CheckError() &&
+                Log_1.Log.ErrorWithStack(
+                  "Activity",
+                  37,
+                  "[Activity] 活动红点异常",
+                  t,
+                  ["id", this.Id],
+                  ["error", t.message],
+                )
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Activity", 37, "[Activity] 活动红点异常", [
+                  "id",
+                  this.Id,
+                ]);
+        }
+    }
+    return !1;
   }
   get ConditionGroupId() {
     return this.b4e;
   }
+  get PreOpenConditionGroupId() {
+    return this.Bk_;
+  }
   get FinishedConditionIdList() {
-    return this.x4a;
+    return this._8a;
+  }
+  get BgTexturePath() {
+    return this.LocalConfig.BgResource;
   }
   IsActivityConditionFinished(t) {
-    return !!this.IsUnLock() || this.x4a.includes(t);
+    return !!this.IsUnLock() || this._8a.includes(t);
   }
   CheckIfInShowTime() {
     return this.CheckIfInTimeInterval(this.U4e, this.EndShowTimeInternal);
@@ -79,41 +152,43 @@ class ActivityBaseData {
     return (
       (this.WFe === ACTIVITYFORCECLOSETIME &&
         this.EndOpenTimeInternal === ACTIVITYFORCECLOSETIME) ||
-      !this.CheckIfInOpenTime()
+      (!this.CheckIfInOpenTime() && !this.CheckIfInShowTime())
     );
   }
   CheckIfInOpenTime() {
     return this.CheckIfInTimeInterval(this.WFe, this.EndOpenTimeInternal);
   }
-  CheckIfInTimeInterval(t, e) {
+  CheckIfInTimeInterval(t, i) {
     return (
-      (t !== ACTIVITYFORCECLOSETIME || e !== ACTIVITYFORCECLOSETIME) &&
-      ((0 === t && 0 === e) ||
-        (t <= (t = TimeUtil_1.TimeUtil.GetServerTime()) && t <= e))
+      (t !== ACTIVITYFORCECLOSETIME || i !== ACTIVITYFORCECLOSETIME) &&
+      ((0 === t && 0 === i) ||
+        (t <= (t = TimeUtil_1.TimeUtil.GetServerTime()) && t <= i))
     );
   }
   GetPreviewReward(t = this.LocalConfig.PreviewDrop) {
-    var e = [];
+    var i = [];
     if (0 !== t) {
-      var i =
+      var e =
         ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
           t,
         )?.DropPreview;
-      if (i)
-        for (var [r, s] of i) {
+      if (e)
+        for (var [r, s] of e) {
           r = [{ IncId: 0, ItemId: r }, s];
-          e.push(r);
+          i.push(r);
         }
       else
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Activity", 28, "找不到奖励配置", ["id", t]);
+          Log_1.Log.Debug("Activity", 27, "找不到奖励配置", ["id", t]);
     }
-    return e;
+    return i;
   }
   GetTitle() {
-    return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-      this.LocalConfig.Title,
-    );
+    return void 0 === this.LocalConfig
+      ? ""
+      : (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          this.LocalConfig.Title,
+        ) ?? "");
   }
   GetHelpId() {
     return this.LocalConfig.HelpId;
@@ -121,55 +196,66 @@ class ActivityBaseData {
   IsUnLock() {
     return !!this.P4e;
   }
+  CanPreOpen() {
+    return !!this.IsUnLock() || this.Dk_;
+  }
+  HasPreOpenCondition() {
+    return 0 < this.Bk_;
+  }
   GetPreGuideQuestFinishState() {
-    var e = this.B4e,
-      i = e.length;
-    for (let t = 0; t < i; t++)
+    var i = this.B4e,
+      e = i.length;
+    for (let t = 0; t < e; t++)
       if (
-        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
-        Protocol_1.Aki.Protocol.hTs.Proto_Finish
+        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i[t]) <
+        Protocol_1.Aki.Protocol.hTs.a3_
       )
         return !1;
     return !!this.P4e;
   }
   GetUnFinishPreGuideQuestId() {
-    var e = this.B4e,
-      i = e.length;
-    for (let t = 0; t < i; t++)
+    var i = this.B4e,
+      e = i.length;
+    for (let t = 0; t < e; t++)
       if (
-        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
-        Protocol_1.Aki.Protocol.hTs.Proto_Finish
+        ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i[t]) <
+        Protocol_1.Aki.Protocol.hTs.a3_
       )
-        return e[t];
+        return i[t];
     return 0;
   }
   GetPreShowGuideQuestName() {
-    var e = new StringBuilder_1.StringBuilder(),
-      i = new Array(),
+    var i = new StringBuilder_1.StringBuilder(),
+      e = new Array(),
       r = this.B4e;
     let s = r.length;
     for (let t = 0; t < s; t++)
       ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(r[0]) ||
-        i.push(r[t]);
-    s = i.length;
+        e.push(r[t]);
+    s = e.length;
     for (let t = 0; t < s; t++) {
       var h = PublicUtil_1.PublicUtil.GetConfigTextByKey(
-        ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(i[t]).TidName,
+        ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(e[t]).TidName,
       );
-      e.Append(h), t !== s - 1 && e.Append(",");
+      i.Append(h), t !== s - 1 && i.Append(",");
     }
-    return e.ToString();
+    return i.ToString();
   }
   GetIfFirstOpen() {
     return this.x4e;
   }
   SetFirstOpenFalse() {
     this.x4e &&
-      ((this.x4e = !1),
+      (this.OnSetFirstOpenFalse(),
+      (this.x4e = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.FFe,
       ));
+  }
+  OnSetFirstOpenFalse() {}
+  GetExDataFinishShowState() {
+    return !1;
   }
   GetExDataRedPointShowState() {
     return !1;
@@ -193,6 +279,7 @@ class ActivityBaseData {
         )),
       this.LocalConfig &&
         ((this.b4e = this.LocalConfig.PreConditionGroupId),
+        (this.Bk_ = this.LocalConfig.PreOpenCondition),
         (this.w4e = this.LocalConfig.Sort),
         (this.B4e = this.LocalConfig.PreShowGuideQuest)),
       ModelManager_1.ModelManager.QuestNewModel.SetActivityQuestData(
@@ -208,8 +295,10 @@ class ActivityBaseData {
         MathUtils_1.MathUtils.LongToBigInt(t.Ups),
       )),
       (this.P4e = t.K6n),
+      (this.Dk_ = t.lk_),
       (this.x4e = t.qps),
-      (this.x4a = t.uih),
+      (this._8a = t.qS_),
+      (this.Bel = ActivityCommonDefine_1.timeTypeStateResolver[t.OS_]),
       this.OnInit(t);
   }
   Phrase(t) {
@@ -222,18 +311,19 @@ class ActivityBaseData {
         MathUtils_1.MathUtils.LongToBigInt(t.Ups),
       )),
       (this.P4e = t.K6n),
+      (this.Dk_ = t.lk_),
       (this.x4e = t.qps),
-      (this.x4a = t.uih);
-    var e = new StringBuilder_1.StringBuilder();
-    e.Append(t.s5n),
-      e.Append("_"),
-      e.Append(this.WFe),
-      (this.q4e = e.ToString()),
+      (this._8a = t.qS_);
+    var i = new StringBuilder_1.StringBuilder();
+    i.Append(t.s5n),
+      i.Append("_"),
+      i.Append(this.WFe),
+      (this.q4e = i.ToString()),
       this.PhraseEx(t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Activity",
-          38,
+          37,
           "活动数据刷新",
           ["Id", this.FFe],
           ["Type", this.R4e],

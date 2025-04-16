@@ -10,47 +10,48 @@ class TsAnimNotifyStateBurst extends UE.KuroAnimNotifyState {
       (this.不能切人 = !0),
       (this.是否无敌 = !0);
   }
-  K2_NotifyBegin(e, t, r) {
-    e = e.GetOwner();
-    if (e instanceof TsBaseCharacter_1.default) {
-      var s = e.CharacterActorComponent?.Entity;
+  Constructor() {}
+  K2_NotifyBegin(t, e, r) {
+    t = t.GetOwner();
+    if (t instanceof TsBaseCharacter_1.default) {
+      var s = t.CharacterActorComponent?.Entity;
       if (s)
         return (
-          (s = s.GetComponent(190)) &&
+          (s = s.GetComponent(203)) &&
             (this.不能切人 && s.TagContainer.UpdateExactTag(2, -1697149502, 1),
             this.是否无敌) &&
             s.TagContainer.UpdateExactTag(2, 501201e3, 1),
-          (e.CharacterMovement.HitPriority = this.HitPriority),
+          (t.CharacterMovement.HitPriority = this.HitPriority),
           !0
         );
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Test", 21, "No Entity for TsBaseCharacter", [
+        Log_1.Log.Warn("Test", 20, "No Entity for TsBaseCharacter", [
           "Name",
-          e.GetName(),
+          t.GetName(),
         ]);
     }
     return !1;
   }
-  K2_NotifyEnd(e, t) {
-    e = e.GetOwner();
-    if (e instanceof TsBaseCharacter_1.default) {
-      var r = e.CharacterActorComponent?.Entity;
+  K2_NotifyEnd(t, e) {
+    t = t.GetOwner();
+    if (t instanceof TsBaseCharacter_1.default) {
+      var r = t.CharacterActorComponent?.Entity;
       if (r)
         return (
-          (r = r.GetComponent(190)) &&
+          (r = r.GetComponent(203)) &&
             (this.不能切人 && r.TagContainer.UpdateExactTag(2, -1697149502, -1),
             this.是否无敌) &&
             r.TagContainer.UpdateExactTag(2, 501201e3, -1),
-          e
+          t
             .GetEntityNoBlueprint()
-            .GetComponent(164)
+            .GetComponent(176)
             .ResetHitPriorityAndGoThrough(),
           !0
         );
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Test", 21, "No Entity for TsBaseCharacter", [
+        Log_1.Log.Warn("Test", 20, "No Entity for TsBaseCharacter", [
           "Name",
-          e.GetName(),
+          t.GetName(),
         ]);
     }
     return !1;

@@ -17,10 +17,11 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
     return this.UiSceneOffsetTransform;
   }
   static GetKuroUiSceneLoadOffset() {
-    var e = RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger();
-    return e
-      ? (((e = e.K2_GetActorLocation()).Z += 3e5), e)
-      : new UE.Vector(3e5, 3e5, 0);
+    if (this.IsDynamicOffset) {
+      var e = RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger();
+      if (e?.IsValid()) return ((e = e.D_K2_GetActorLocation()).Z += 5e4), e;
+    }
+    return new UE.VectorDouble(15e4, 15e4, 15e4);
   }
   static SetWorldPartitionDataLayerState(e, t) {
     UE.KuroRenderingRuntimeBPPluginBPLibrary.SetWorldPartitionDataLayerState(
@@ -110,8 +111,8 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
       RenderModuleConfig_1.RenderStats.Init(),
-      (this.DebugUiSceneLoadOffset = new UE.Vector()),
-      (this.UiSceneOffsetTransform = new UE.Transform()),
+      (this.DebugUiSceneLoadOffset = new UE.VectorDouble()),
+      (this.UiSceneOffsetTransform = new UE.TransformDouble()),
       (this.tZ = !0),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBossFight,
@@ -176,6 +177,7 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
   (RenderModuleController.UiSceneOffsetTransform = void 0),
   (RenderModuleController.DebugStartShowingUiSceneRendering = !1),
   (RenderModuleController.DebugInUiSceneRendering = !1),
+  (RenderModuleController.IsDynamicOffset = !1),
   (RenderModuleController.N1r = (e) => {
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
       GlobalData_1.GlobalData.World,

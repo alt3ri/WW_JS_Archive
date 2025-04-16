@@ -17,10 +17,11 @@ class VisionEquipmentDropDownTitleItem extends TitleItemBase_1.TitleItemBase {
     ];
   }
   ShowTemp(e, t) {
-    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
-      this.GetItem(1),
-    )),
-      this.bxt.Init().finally(() => {});
+    this.bxt ||
+      ((this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+        this.GetItem(1),
+      )),
+      this.bxt.Init().finally(() => {}));
     var i = e;
     let r = "";
     (r =

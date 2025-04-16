@@ -21,6 +21,7 @@ class CharRenderBase {
   Update() {}
   LateUpdate() {}
   Destroy() {}
+  OnResetRenderState() {}
   GetDeltaTime() {
     return this.RenderComponent.GetDeltaTime();
   }

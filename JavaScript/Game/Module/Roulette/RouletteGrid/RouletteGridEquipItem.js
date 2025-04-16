@@ -9,7 +9,7 @@ const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   RouletteController_1 = require("../RouletteController"),
   RouletteGridBase_1 = require("./RouletteGridBase");
 class RouletteGridEquipItem extends RouletteGridBase_1.RouletteGridBase {
-  Init() {
+  async Init() {
     var e, t, o;
     (this.Data.ShowNum = !1),
       this.IsDataValid()
@@ -20,7 +20,7 @@ class RouletteGridEquipItem extends RouletteGridBase_1.RouletteGridBase {
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Phantom",
-                38,
+                37,
                 "[FuncMenuWheel]轮盘道具格子对应ItemId不存在",
                 ["ItemId", o],
               )),
@@ -33,32 +33,31 @@ class RouletteGridEquipItem extends RouletteGridBase_1.RouletteGridBase {
             (this.Data.DataNum = t)),
           (this.Data.Name = e.Name),
           (this.IsIconTexture = !0),
-          this.LoadIconByItemId(this.Data.Id))
+          await this.LoadIconByItemId(this.Data.Id))
         : ((this.Data.Name = "ExploreTools_10001_Name"),
           (this.IsIconTexture = !1),
           (o = CommonParamById_1.configCommonParamById.GetStringConfig(
             "Roulette_EmptyItem_Sprite",
           )),
-          this.LoadSpriteIcon(o)),
-      1 === this.Data.State && this.IsForbiddenState() && (this.Data.State = 0);
-  }
-  IsForbiddenState() {
-    return !1;
+          await this.LoadSpriteIcon(o));
   }
   OnSelect(e) {
     e &&
+      1 === this.Data.State &&
       (0 === this.Data.Id
         ? RouletteController_1.RouletteController.OpenEmptyTips()
         : this.IsDataValid() &&
+          ((e = this.Data.Id),
+          ModelManager_1.ModelManager.ExploreModel.SetExploreSkillId(e),
           RouletteController_1.RouletteController.EquipItemSetRequest(
-            this.Data.Id,
+            e,
             (e) => {
               e &&
                 AudioSystem_1.AudioSystem.PostEvent(
                   "play_ui_fx_spl_roulette_new_equip",
                 );
             },
-          ));
+          )));
   }
 }
 exports.RouletteGridEquipItem = RouletteGridEquipItem;

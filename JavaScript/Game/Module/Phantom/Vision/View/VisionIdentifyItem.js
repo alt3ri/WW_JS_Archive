@@ -21,6 +21,7 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.bPe = void 0),
       (this.DHi = void 0),
       (this.oMt = void 0),
+      (this.C0t = void 0),
       (this.nqe = () => {
         UiManager_1.UiManager.IsViewShow("VisionIntensifyView")
           ? EventSystem_1.EventSystem.Emit(
@@ -55,6 +56,7 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       [6, UE.UITextTransition],
       [7, UE.UISpriteTransition],
       [8, UE.UITextTransition],
+      [9, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[5, this.nqe]]);
   }
@@ -81,10 +83,11 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.AHi(e),
       this.PHi(e),
       this.qwt(e),
-      this.xHi(e));
+      this.xHi(e),
+      this.Yo_(this.C0t));
   }
   Update(e, t) {
-    var i = e.Data;
+    var i = (this.C0t = e).Data;
     (this.THi = t),
       (this.oMt = e.CurrentVisionData),
       (this.$8i = i),
@@ -94,7 +97,8 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.AHi(i),
         this.PHi(i),
         this.qwt(i),
-        this.xHi(i));
+        this.xHi(i),
+        this.Yo_(e));
   }
   PHi(e) {
     this.GetButton(5).RootUIComp.SetRaycastTarget(
@@ -147,6 +151,9 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
     var t = 3 === e.SlotState;
     this.GetText(1).SetUIActive(t),
       t && this.GetText(1).SetText(e.GetAttributeValueString());
+  }
+  Yo_(e) {
+    this.GetItem(9).SetUIActive(e.NeedHighLight);
   }
   wHi() {
     return (

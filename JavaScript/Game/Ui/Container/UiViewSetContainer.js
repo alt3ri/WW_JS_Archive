@@ -32,7 +32,7 @@ class UiViewSetContainer extends UiViewContainer_1.UiViewContainer {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiCore",
-          17,
+          16,
           "此类型容器不支持预打开界面",
           ["name", e.Info.Name],
           ["type", e.Info.Type],
@@ -45,7 +45,7 @@ class UiViewSetContainer extends UiViewContainer_1.UiViewContainer {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiCore",
-          17,
+          16,
           "此类型容器不支持预打开界面",
           ["name", e.Info.Name],
           ["type", e.Info.Type],

@@ -17,30 +17,30 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBattlePassRewardByBattlePassId.Init",
   ),
-  getConfigListStat = Stats_1.Stat.Create(
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBattlePassRewardByBattlePassId.GetConfigList",
   ),
   CONFIG_LIST_STAT_PREFIX =
     "configBattlePassRewardByBattlePassId.GetConfigList(";
 exports.configBattlePassRewardByBattlePassId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (t, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start();
-    var a = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${t})`),
+      getConfigListStat?.Start();
+    var a = Stats_1.Stat.CreateNoFlameGraph(CONFIG_LIST_STAT_PREFIX + `#${t})`),
       e =
-        (a.Start(),
+        (a?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (e) {
       if (o) {
@@ -48,8 +48,8 @@ exports.configBattlePassRewardByBattlePassId = {
         const s = ConfigCommon_1.ConfigCommon.GetConfig(n);
         if (s)
           return (
-            a.Stop(),
-            getConfigListStat.Stop(),
+            a?.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             s
           );
@@ -79,8 +79,8 @@ exports.configBattlePassRewardByBattlePassId = {
           )
             return (
               ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-              a.Stop(),
-              getConfigListStat.Stop(),
+              a?.Stop(),
+              getConfigListStat?.Stop(),
               void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
           i = BattlePassReward_1.BattlePassReward.getRootAsBattlePassReward(
@@ -93,16 +93,16 @@ exports.configBattlePassRewardByBattlePassId = {
             ((n = KEY_PREFIX + `#${t})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(n, s, s.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          a.Stop(),
-          getConfigListStat.Stop(),
+          a?.Stop(),
+          getConfigListStat?.Stop(),
           ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           s
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    a.Stop(),
-      getConfigListStat.Stop(),
+    a?.Stop(),
+      getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

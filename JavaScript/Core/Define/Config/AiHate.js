@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiHate = void 0);
-const FloatRange_1 = require("./SubType/FloatRange");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  FloatRange_1 = require("./SubType/FloatRange");
 class AiHate {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -138,12 +139,24 @@ class AiHate {
     return t ? this.J7.readFloat32(this.z7 + t) : -1;
   }
   excludetag(t) {
-    var e = this.J7.__offset(this.z7, 30);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 30),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   swornhatredtag(t) {
-    var e = this.J7.__offset(this.z7, 32);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 32),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
 }
 exports.AiHate = AiHate;

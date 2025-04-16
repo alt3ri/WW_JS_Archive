@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GamePlayScan = void 0);
-const Vector_1 = require("./SubType/Vector");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  Vector_1 = require("./SubType/Vector");
 class GamePlayScan {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -24,11 +25,11 @@ class GamePlayScan {
   get Color() {
     return this.color();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
   }
-  static getRootAsGamePlayScan(t, r) {
-    return (r || new GamePlayScan()).__init(
+  static getRootAsGamePlayScan(t, e) {
+    return (e || new GamePlayScan()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -38,25 +39,37 @@ class GamePlayScan {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   iconpath(t) {
-    var r = this.J7.__offset(this.z7, 6);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   interval() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readFloat32(this.z7 + t) : 8;
   }
   offset(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r
+    var e = this.J7.__offset(this.z7, 10);
+    return e
       ? (t || new Vector_1.Vector()).__init(
-          this.J7.__indirect(this.z7 + r),
+          this.J7.__indirect(this.z7 + e),
           this.J7,
         )
       : null;
   }
   resourcepath(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   color() {
     var t = this.J7.__offset(this.z7, 14);

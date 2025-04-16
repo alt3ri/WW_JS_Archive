@@ -11,7 +11,7 @@ class AddBuffTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
     e = e.ExtraEffectParameters;
     (this.EventType = Number(e[0])),
       (this.TargetType = Number(e[1])),
-      (this.BuffIds = e[2].split("#").map((e) => BigInt(e)));
+      (this.BuffIds = e[2].split("#").map((e) => Number(e)));
   }
   OnExecute() {
     var e = this.GetEffectTarget(),
@@ -26,6 +26,7 @@ class AddBuffTrigger extends ExtraEffectPassiveEffects_1.PassiveEffects {
             void 0,
             !0,
             `因为触发其它buff额外效果而添加（前置buff Id=${this.BuffId}, handle=${this.ActiveHandleId}）`,
+            this.ExecuteContext?.BulletMessageId,
           );
     }
   }

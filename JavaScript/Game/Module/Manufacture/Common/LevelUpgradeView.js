@@ -10,6 +10,7 @@ const UE = require("ue"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiManager_1 = require("../../../Ui/UiManager"),
   LoopScrollSmallItemGrid_1 = require("../../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
@@ -25,7 +26,7 @@ class StarItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 class LevelRewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
-  OnRefresh(e, t, o) {
+  OnRefresh(e, t, i) {
     e = {
       Data: e,
       Type: 4,
@@ -52,12 +53,12 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       (this.OGt = void 0),
       (this.UOt = !0),
       (this.$be = void 0),
-      (this.kGt = (e, t, o) => {
-        var r = new StarItem();
+      (this.kGt = (e, t, i) => {
+        var n = new StarItem();
         return (
-          r.CreateThenShowByActor(t.GetOwner()),
-          r.SetState(e),
-          { Key: o, Value: r }
+          n.CreateThenShowByActor(t.GetOwner()),
+          n.SetState(e),
+          { Key: i, Value: n }
         );
       }),
       (this.FGt = () => {
@@ -65,6 +66,14 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       }),
       (this.VGt = () => {
         0 !== this.OGt.length && this.Cl();
+      }),
+      (this.YHt = (e) => {
+        "WorldMapView" === e && this.CloseMe();
+      }),
+      (this.hu_ = () => {
+        this.CloseMe(),
+          UiManager_1.UiManager.IsViewOpen("ItemTipsView") &&
+            UiManager_1.UiManager.CloseView("ItemTipsView");
       }),
       (this.eTt = () => {
         this.GetButton(4).GetSelfInteractive()
@@ -84,6 +93,9 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
           CommonManager_1.CommonManager.GetSelectedLevel() + 1,
         ),
           this.bl();
+      }),
+      (this.YP = () => {
+        this.CloseMe();
       });
   }
   OnRegisterComponent() {
@@ -102,11 +114,15 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       [10, UE.UIItem],
       [12, UE.UIText],
       [13, UE.UIItem],
+      [14, UE.UIButtonComponent],
+      [15, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
         [4, this.eTt],
         [5, this.XGt],
         [6, this.$Gt],
+        [14, this.YP],
+        [15, this.YP],
       ]);
   }
   OnBeforeDestroy() {
@@ -149,13 +165,29 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpgradeComposeLevel,
       this.VGt,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OpenView,
+        this.YHt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SwitchComposeType,
+        this.hu_,
+      );
   }
   OnRemoveEventListener() {
     this.UOt ||
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpgradeComposeLevel,
         this.VGt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OpenView,
+        this.YHt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SwitchComposeType,
+        this.hu_,
       );
   }
   Cl() {
@@ -231,17 +263,17 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
   M3e() {
     var e = CommonManager_1.CommonManager.GetComposeMaxLevel(),
       t = CommonManager_1.CommonManager.GetCurrentRewardLevel(),
-      o = CommonManager_1.CommonManager.GetSelectedLevel(),
-      r = this.GetButton(4).GetOwner();
-    r.GetUIItem().SetUIActive(!0),
-      e <= t || e <= o || o < t
-        ? r.GetUIItem().SetUIActive(!1)
-        : ((o =
+      i = CommonManager_1.CommonManager.GetSelectedLevel(),
+      n = this.GetButton(4).GetOwner();
+    n.GetUIItem().SetUIActive(!0),
+      e <= t || e <= i || i < t
+        ? n.GetUIItem().SetUIActive(!1)
+        : ((i =
             CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency()),
-          (r = CommonManager_1.CommonManager.GetSumExpByLevel(
+          (n = CommonManager_1.CommonManager.GetSumExpByLevel(
             CommonManager_1.CommonManager.GetSelectedLevel(),
           )),
-          this.GetButton(4).SetSelfInteractive(r <= o && t < e));
+          this.GetButton(4).SetSelfInteractive(n <= i && t < e));
   }
   KGt() {
     this.OGt.length = 0;

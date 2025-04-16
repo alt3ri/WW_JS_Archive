@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleBuffSelectView = exports.RoleBuffSelectItem = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  Net_1 = require("../../../../Core/Net/Net"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
@@ -14,9 +16,7 @@ const UE = require("ue"),
   RogueSelectResult_1 = require("../Define/RogueSelectResult"),
   RoguelikeController_1 = require("../RoguelikeController"),
   RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
-  TopPanel_1 = require("./TopPanel"),
-  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
-  Net_1 = require("../../../../Core/Net/Net");
+  TopPanel_1 = require("./TopPanel");
 class RoleBuffSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -80,7 +80,7 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
           ? (((e = new Protocol_1.Aki.Protocol.c_s()).RHn =
               this.ulo?.Index ?? 0),
             (e.AHn = ModelManager_1.ModelManager.RoguelikeModel.CurRoomCount),
-            Net_1.Net.Call(16693, e, () => {
+            Net_1.Net.Call(24581, e, () => {
               UiManager_1.UiManager.CloseView(
                 this.Info.Name,
                 this.ulo?.CallBack,
@@ -93,7 +93,7 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
                 3,
               ))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Roguelike", 9, "当前没有选中的角色Buff");
+              Log_1.Log.Error("Roguelike", 8, "当前没有选中的角色Buff");
       }),
       (this.RefreshBtnEnableClick = () => {
         var e;
@@ -143,15 +143,23 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
     (this.clo = new TopPanel_1.TopPanel()),
       this.AddChild(this.clo),
       await this.clo.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
-    var e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
-    e &&
-      ((e =
-        ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
-          e.ConfigId,
-        )),
-      (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.RoleId)),
-      this.SetTextureByPath(e.RolePortrait, this.GetTexture(1)),
-      this.SetTextureByPath(e.RolePortrait, this.GetTexture(5)));
+    var t = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
+    if (t) {
+      t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
+        t.ConfigId,
+      );
+      let e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+        t.RoleId,
+      ).RolePortrait;
+      var t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
+        t.RoleId,
+      ).GetRoleSkinId();
+      -1 !== t &&
+        ((t = ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(t)),
+        (e = t.RolePortrait)),
+        this.SetTextureByPath(e, this.GetTexture(1)),
+        this.SetTextureByPath(e, this.GetTexture(5));
+    }
   }
   OnStart() {
     (ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry = void 0),

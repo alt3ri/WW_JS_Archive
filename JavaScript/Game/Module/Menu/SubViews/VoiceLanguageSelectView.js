@@ -3,10 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VoiceLanguageSelectToggle = exports.VoiceLanguageSelectView =
     void 0);
 const LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager"),
+  GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
+  GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  MenuTool_1 = require("../MenuTool"),
   LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
@@ -15,20 +16,24 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
         this.CloseMe();
       }),
       (this.GBi = () => {
-        switch (this.SelectedToggle.Updater.Status) {
-          case 2:
-            (this.IsConfirm = !0), this.bBi();
-            break;
-          case 0:
-          case 1:
-            UiManager_1.UiManager.OpenView("VoiceLanguageDownloadView", [
-              ModelManager_1.ModelManager.MenuModel.GetMenuDataByFunctionId(
-                53,
-              )[0],
-              void 0,
-            ]),
-              this.bBi();
-        }
+        if (void 0 === this.SelectedToggle) this.bBi();
+        else
+          switch (this.SelectedToggle.Updater.Status) {
+            case 2:
+              (this.IsConfirm = !0), this.bBi();
+              break;
+            case 0:
+            case 1:
+              (LanguageSettingViewBase_1.LanguageSettingViewBase.BackToPrevLangSettingViewName =
+                "VoiceLanguageSelectView"),
+                UiManager_1.UiManager.OpenView("VoiceLanguageDownloadView", [
+                  ModelManager_1.ModelManager.MenuModel.GetMenuDataByFunctionId(
+                    GameSettingsDefine_1.EFunction.VOICEPACKMANAGER,
+                  ),
+                  void 0,
+                ]),
+                this.bBi();
+          }
       });
   }
   InitScrollViewData() {
@@ -44,6 +49,7 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
     return i.Initialize(e, a, t), i;
   }
   OnRefreshView(e) {
+    super.OnRefreshView(e);
     var a = this.MenuDataIns.OptionsNameList[e.GetIndex()];
     e.SetMainText(a);
   }
@@ -63,10 +69,15 @@ class VoiceLanguageSelectToggle extends LanguageSettingViewBase_1.LanguageToggle
   }
   OnStart() {
     super.OnStart();
-    var e = MenuTool_1.MenuTool.GetAudioCodeById(this.Index),
+    var e = GameSettingsManager_1.GameSettingsManager.GetAudioCodeById(
+        this.Index,
+      ),
       e =
         ((this.Updater =
           LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(e)),
+        this.Updater.CalculateDownloadStatus(
+          "VoiceLanguageSelectToggle OnStart before set ui",
+        ),
         this.GetText(2));
     e.SetUIActive(!0),
       this.PreToggled
@@ -74,7 +85,9 @@ class VoiceLanguageSelectToggle extends LanguageSettingViewBase_1.LanguageToggle
         : 2 !== this.Updater.Status
           ? LguiUtil_1.LguiUtil.SetLocalText(e, "NotDownloaded")
           : e.SetText(""),
-      this.Updater.CalculateDownloadStatus();
+      this.Updater.CalculateDownloadStatus(
+        "VoiceLanguageSelectToggle OnStart after set ui",
+      );
   }
 }
 exports.VoiceLanguageSelectToggle = VoiceLanguageSelectToggle;

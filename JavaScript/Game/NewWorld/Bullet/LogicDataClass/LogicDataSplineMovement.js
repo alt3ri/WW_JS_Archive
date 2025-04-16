@@ -20,6 +20,9 @@ class LogicDataSplineMovement extends LogicDataBase_1.default {
       (this.SplineTrace = void 0),
       (this.UseTargetLocation = !1);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataSplineMovement;
 //# sourceMappingURL=LogicDataSplineMovement.js.map

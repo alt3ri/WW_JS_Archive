@@ -16,7 +16,9 @@ class WorldMapSubMapItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.MultiMapConfigId = 0),
       (this.OnToggleStateChange = (e) => {
         1 === e &&
-          (EventSystem_1.EventSystem.Emit(
+          ((ModelManager_1.ModelManager.WorldMapModel.WorldMapCurrentMultiMapId =
+            this.MultiMapConfigId),
+          EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.WorldMapSelectMultiMap,
             this.MultiMapConfigId,
           ),

@@ -118,7 +118,7 @@ class PanelQteModel extends ModelBase_1.ModelBase {
     return (
       t ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("PanelQte", 18, "找不到界面QTE配置", ["qteId", e])),
+          Log_1.Log.Error("PanelQte", 17, "找不到界面QTE配置", ["qteId", e])),
       t
     );
   }

@@ -22,6 +22,7 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
     [0]: "OnlineDisabledByNonOnlineQuest",
     1: "OnlineDisabledByNonOnlinePlay",
     2: "OnlineDisabledByTrialRole",
+    3: "OnlineDisabledByGravity",
   });
 class OnlineModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -48,15 +49,16 @@ class OnlineModel extends ModelBase_1.ModelBase {
       (this.fNi = new Map()),
       (this.CachePlayerData = void 0),
       (this.HallViewIsShowSearching = !1),
-      (this.Ffa = (e, t) => {
+      (this.Ofa = (e, t) => {
         var i = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel;
         return (e.PlayerOriginWorldLevel > i && t.PlayerOriginWorldLevel > i) ||
           (e.PlayerOriginWorldLevel <= i && t.PlayerOriginWorldLevel <= i)
           ? t.PlayerLastOfflineTime - e.PlayerLastOfflineTime
           : e.PlayerOriginWorldLevel - t.PlayerOriginWorldLevel;
       }),
-      (this.X2a = new Map()),
-      (this.OtherScenePlayerDataList = []);
+      (this.$Ga = new Map()),
+      (this.OtherScenePlayerDataList = []),
+      (this.xa1 = !0);
   }
   OnInit() {
     return (
@@ -108,12 +110,12 @@ class OnlineModel extends ModelBase_1.ModelBase {
       (this.dNi = -1),
       (this.CNi = -1),
       (this.gNi = !0),
-      this.X2a.clear(),
+      this.$Ga.clear(),
       !0
     );
   }
   OnChangeMode() {
-    return this.X2a.clear(), !0;
+    return this.$Ga.clear(), !0;
   }
   ClearOnlineTeamMap() {
     this.hNi && this.hNi.clear();
@@ -206,7 +208,7 @@ class OnlineModel extends ModelBase_1.ModelBase {
     this.ZGi.push(e);
   }
   SortWorldList(e) {
-    (e ? this.eNi : this.ZGi)?.sort(this.Ffa);
+    (e ? this.eNi : this.ZGi)?.sort(this.Ofa);
   }
   PushCurrentApplyList(e) {
     this.oNi.set(e.PlayerId, e), -1 === this.rNi && (this.rNi = e.PlayerId);
@@ -283,11 +285,21 @@ class OnlineModel extends ModelBase_1.ModelBase {
     for (const t of this.hNi) e.push(t[1]);
     return e.sort((e, t) => e.PlayerNumber - t.PlayerNumber);
   }
-  DisableOnline(e, t, i = 0) {
-    t ? this.cNi?.set(i, e) : this.cNi?.delete(i),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnlineDisableStateChange,
-      );
+  DisableOnline(t, e, i = 0, r = 0) {
+    if (e) {
+      let e = !1;
+      for (var [s] of this.cNi)
+        s.TreeId === i &&
+          s.NodeId === r &&
+          s.Type === t &&
+          (this.cNi?.set(s, t), (e = !0));
+      e || this.cNi?.set({ Type: t, TreeId: i, NodeId: r }, t);
+    } else
+      for (var [n] of this.cNi)
+        n.TreeId === i && n.NodeId === r && n.Type === t && this.cNi?.delete(n);
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnlineDisableStateChange,
+    );
   }
   IsOnlineDisabled() {
     return !!this.cNi && 0 < this.cNi.size;
@@ -326,16 +338,12 @@ class OnlineModel extends ModelBase_1.ModelBase {
           if (-1 === s.GVn) {
             var i = new Array();
             for (const n of s.dUs)
-              i.push(new OnlineHallData_1.WorldTeamRoleInfo(n.Q6n, n.F6n));
+              i.push(
+                new OnlineHallData_1.WorldTeamRoleInfo(n.Q6n, n.eI_, n.F6n),
+              );
             t.RoleInfos = i;
           }
     }
-    this.WorldTeamPlayerResetIndex();
-  }
-  WorldTeamPlayerResetIndex() {
-    let e = 0;
-    for (const t of this.WorldTeamPlayerFightInfo)
-      for (const i of t.RoleInfos) i.RoleIndex = e++;
   }
   ResetContinuingChallengeConfirmState() {
     this.mNi.clear();
@@ -371,27 +379,34 @@ class OnlineModel extends ModelBase_1.ModelBase {
   ClearPlayerTeleportState() {
     this.fNi.clear();
   }
-  SetRoleActivated(e, t) {
-    let i = this.X2a.get(e);
-    if (t && i) {
-      for (const r of i) {
-        const s =
-          ModelManager_1.ModelManager.CreatureModel.GetEntityById(r)?.Entity;
-        s?.Valid && s.EnableByKey(0, !0);
+  SetRoleActivated(t, i) {
+    let r = this.$Ga.get(t);
+    if (i) {
+      if (r) {
+        for (const e of r) {
+          const s =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityById(e)?.Entity;
+          s?.Valid && s.EnableByKey(0, !0);
+        }
+        this.$Ga.delete(t);
       }
-      this.X2a.delete(e);
     } else {
-      const s = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(e, {
+      let e = void 0;
+      i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(t, {
         ParamType: 2,
         IsControl: !0,
-      })?.EntityHandle?.Entity;
-      s?.Valid &&
-        (i || ((i = new Set()), this.X2a.set(e, i)),
-        i.has(s.Id) || (s.DisableByKey(0, !0), i.add(s.Id)));
+      });
+      (e = i
+        ? ModelManager_1.ModelManager.CreatureModel.GetEntity(
+            i.GetCreatureDataId(),
+          )?.Entity
+        : e)?.Valid &&
+        (r || ((r = new Set()), this.$Ga.set(t, r)),
+        r.has(e.Id) || (e.DisableByKey(0, !0), r.add(e.Id)));
     }
   }
   RemovePlayerDisableHandles(e) {
-    this.X2a.delete(e);
+    this.$Ga.delete(e);
   }
   GetGameJoinTypeToPlayStationJoinType() {
     let e = 0;
@@ -423,11 +438,20 @@ class OnlineModel extends ModelBase_1.ModelBase {
         );
   }
   PushOtherScenePlayerDataList(e) {
-    this.OtherScenePlayerDataList.push(e);
+    this.OtherScenePlayerDataList.push(e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.ScenePlayerChanged,
+      );
   }
   GetOtherScenePlayerDataByPlayerId(e) {
     for (const t of this.OtherScenePlayerDataList)
       if (t.PlayerId === e) return t;
+  }
+  SetPlayerGravityIsNormal(e) {
+    e && (0 !== e.X || 0 !== e.Y || -1 !== e.Z)
+      ? (this.xa1 = !1)
+      : (this.xa1 = !0),
+      this.DisableOnline(3, !this.xa1);
   }
 }
 exports.OnlineModel = OnlineModel;

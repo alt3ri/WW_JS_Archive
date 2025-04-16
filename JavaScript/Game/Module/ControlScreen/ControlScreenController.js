@@ -110,7 +110,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
                   Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Input",
-                    8,
+                    10,
                     "[InputLog][InputController]当开始触摸时，手指没有触摸在空白部分",
                     ["fingerIndex", n],
                     ["enterComponent", r?.GetOwner()?.GetName()],
@@ -120,7 +120,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
                   Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Input",
-                    8,
+                    10,
                     "[InputLog][InputController]当开始触摸时，PointerEventData不存在",
                     ["fingerIndex", n],
                   )))
@@ -151,7 +151,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
             : (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Input",
-                  8,
+                  10,
                   "[InputLog][InputController]尝试旋转镜头失败，失败原因，对应手指开始触摸时，没有触摸在空白部分",
                   ["fingerIndex", e],
                 ),
@@ -159,7 +159,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Input",
-                8,
+                10,
                 "[InputLog][InputController]尝试旋转镜头失败，失败原因，对应手指触摸数据没有触摸",
                 ["fingerIndex", e],
               ),
@@ -167,7 +167,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Input",
-              8,
+              10,
               "[InputLog][InputController]尝试旋转镜头失败，失败原因，找不到对应手指触摸数据",
               ["fingerIndex", e],
             ),
@@ -176,7 +176,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Input",
-            8,
+            10,
             "[InputLog][InputController]尝试旋转镜头失败，失败原因，当前状态不允许控制摄像机",
           ),
         !1);

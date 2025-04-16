@@ -1,22 +1,28 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PublicUtil = exports.getConfigPath = void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue"),
   Json_1 = require("../../Core/Common/Json"),
   Log_1 = require("../../Core/Common/Log"),
+  CommonParamById_1 = require("../../Core/Define/ConfigCommon/CommonParamById"),
   MultiTextLang_1 = require("../../Core/Define/ConfigQuery/MultiTextLang"),
   DataTableUtil_1 = require("../../Core/Utils/DataTableUtil"),
   Rotator_1 = require("../../Core/Utils/Math/Rotator"),
   Transform_1 = require("../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
   StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
+  StringUtils_1 = require("../../Core/Utils/StringUtils"),
   BaseConfigController_1 = require("../../Launcher/BaseConfig/BaseConfigController"),
   IGlobal_1 = require("../../UniverseEditor/Interface/IGlobal"),
   GlobalData_1 = require("../GlobalData"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager"),
   CdnServerDebugConfig_1 = require("../Module/Debug/CdnServerDebugConfig"),
   MultiTextCsvModule_1 = require("./MultiText/MultiTextCsvModule"),
   MultiTextDefine_1 = require("./MultiText/MultiTextDefine"),
+  TimeUtil_1 = require("./TimeUtil"),
   PACKAGENAME = "com.kurogame.aki.internal",
   LOGIN_NOTICE = "LoginNotice.json",
   SCROLLTEXT_NOTICE = "ScrollTextNotice.json";
@@ -29,15 +35,15 @@ class PublicUtil {
     if (void 0 === t) return !0;
     if (0 !== t.length) {
       var e = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString)),
-        i =
+        r =
           (UE.KuroStaticLibrary.GetLocalHostAddresses(e),
           (0, puerts_1.$unref)(e)),
-        r = new Array();
-      for (let t = 0; t < i.Num(); t++) {
-        var o = i.Get(t);
-        r.push(o);
+        i = new Array();
+      for (let t = 0; t < r.Num(); t++) {
+        var o = r.Get(t);
+        i.push(o);
       }
-      for (const a of t) for (const l of r) if (l === a) return !0;
+      for (const a of t) for (const l of i) if (l === a) return !0;
     }
     return !1;
   }
@@ -50,13 +56,13 @@ class PublicUtil {
   static GetGameId() {
     return PublicUtil.GetIfGlobalSdk() ? "G153" : "G152";
   }
-  static GetLoginNoticeUrl2(t, e, i) {
-    var r = PublicUtil.GetNoticeBaseUrl();
-    if (r) return r + `/gm/loginNotice/${t}/${i}/${e}.json`;
+  static GetLoginNoticeUrl2(t, e, r) {
+    var i = PublicUtil.GetNoticeBaseUrl();
+    if (i) return i + `/gm/loginNotice/${t}/${r}/${e}.json`;
   }
   static GetMarqueeUrl2(t, e) {
-    var i = PublicUtil.GetNoticeBaseUrl();
-    if (i) return i + `/gm/scrollTextNotice/${t}/${e}/notice.json`;
+    var r = PublicUtil.GetNoticeBaseUrl();
+    if (r) return r + `/gm/scrollTextNotice/${t}/${e}/notice.json`;
   }
   static GetLoginNoticeUrl() {
     var t = PublicUtil.GetNoticeBaseUrl();
@@ -81,31 +87,84 @@ class PublicUtil {
         t,
       );
     GlobalData_1.GlobalData.IsPlayInEditor ||
-      ((t = UE.KuroLauncherLibrary.GetAppReleaseType()),
+      ((t = cpp_1.KuroApplication.GetAppReleaseType()),
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("PublicUtil", 9, "找不到cdn", ["Apptype", t]));
+        Log_1.Log.Error("PublicUtil", 8, "找不到cdn", ["Apptype", t]));
   }
-  static GetGARUrl(t, e, i, r, o) {
+  static GetGARUrl(t, e, r, i, o) {
     var a = BaseConfigController_1.BaseConfigController.GetGARUrl();
     if (a)
       return (
         a +
-        `/UserRegion/GetUserInfo?loginType=${t}&userId=${e}&token=${r}&area=${o}&userName=` +
-        i
+        `/UserRegion/GetUserInfo?loginType=${t}&userId=${e}&token=${i}&area=${o}&userName=` +
+        r
       );
+  }
+  static GetPublicInfo() {
+    var t =
+        CommonParamById_1.configCommonParamById.GetStringConfig(
+          "mail_question_key",
+        ),
+      e = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      r = encodeURIComponent(
+        ModelManager_1.ModelManager.FunctionModel.GetPlayerName() ?? "",
+      ),
+      i = ModelManager_1.ModelManager.LoginModel.GetServerId(),
+      o = ModelManager_1.ModelManager.LoginModel?.GetSdkLoginConfig(),
+      a = o?.Token ?? "",
+      o = o?.Uid ?? "",
+      l = TimeUtil_1.TimeUtil.GetServerTime(),
+      t = e + `;${i};${(a = UE.KuroStaticLibrary.Base64Encode(a))};${l};` + t;
+    return (
+      `playerId=${e}&playerName=${r}&serverId=${i}&token=${a}&timestamp=${l}&sign=${UE.KuroStaticLibrary.HashStringWithSHA1(t)}&playerUid=` +
+      o
+    );
+  }
+  static GetExternalUrl(t, e) {
+    if (
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("PublicUtil", 8, "GetExternalUrl", ["rootUrl", t]),
+      !StringUtils_1.StringUtils.IsEmpty(t) &&
+        !StringUtils_1.StringUtils.IsBlank(t))
+    ) {
+      var r = this.GetPublicInfo();
+      switch (e) {
+        case 0:
+          return (
+            t +
+            `?${r}&channelId=` +
+            ControllerHolder_1.ControllerHolder.KuroSdkController.GetChannelId()
+          );
+        case 1:
+          return (
+            t +
+            `?${r}&packageId=` +
+            (PublicUtil.OverridePackageId ??
+              ControllerHolder_1.ControllerHolder.KuroSdkController.GetPackageId())
+          );
+        default:
+          return;
+      }
+    }
+  }
+  static GetExtendExternalUrl(t, e = !0) {
+    return StringUtils_1.StringUtils.IsEmpty(t) ||
+      StringUtils_1.StringUtils.IsBlank(t)
+      ? ""
+      : t + "&isInternalBrowser=" + (e ? 1 : 0);
   }
   static GetLocalHost() {
     var t = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinString)),
       e =
         (UE.KuroStaticLibrary.GetLocalHostAddresses(t),
         (0, puerts_1.$unref)(t));
-    let i = "127.0.0.1";
-    0 < e.Num() && (i = e.Get(0));
+    let r = "127.0.0.1";
+    0 < e.Num() && (r = e.Get(0));
     for (let t = 0; t < e.Num(); t++) {
-      var r = e.Get(t);
-      r.startsWith("10.0.") && (i = r);
+      var i = e.Get(t);
+      i.startsWith("10.0.") && (r = i);
     }
-    return i;
+    return r;
   }
   static GetConfigTextByKey(t) {
     return PublicUtil.UseDbConfig()
@@ -127,50 +186,51 @@ class PublicUtil {
       ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t)
       : this.xde.GetLocalText(t);
   }
-  static RegisterEditorLocalConfig() {
+  static RegisterEditorLocalConfig(t = !1) {
     PublicUtil.UseDbConfig() ||
       this.xde.RegisterTextLocalConfig(
         getConfigPath(IGlobal_1.globalConfig.TidTextTempPath),
+        t,
       );
   }
   static RegisterFlowTextLocalConfig(t) {
-    var e, i;
+    var e, r;
     PublicUtil.UseDbConfig() ||
       ((e =
         "" +
         UE.KismetSystemLibrary.GetProjectDirectory() +
         MultiTextDefine_1.MULTI_TEXT_LANG_PLOT_PATH),
       (t = `文本库_${t}.csv`),
-      0 === (i = UE.KuroStaticLibrary.GetFilesRecursive(e, t, !0, !1)).Num()
+      0 === (r = UE.KuroStaticLibrary.GetFilesRecursive(e, t, !0, !1)).Num()
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "MultiTextCsvModule",
-            11,
+            10,
             "无法找到对应文本库表格",
             ["文本库表格名字", t],
             ["目录路径", e],
           )
-        : this.xde.RegisterTextLocalConfig(i.Get(0), !0));
+        : this.xde.RegisterTextLocalConfig(r.Get(0), !0));
   }
   static GetFlowListInfo(t) {
     if (!PublicUtil.UseDbConfig()) {
       var e,
-        i = getConfigPath(IGlobal_1.globalConfig.FlowListDir),
-        i = UE.KuroStaticLibrary.GetFilesRecursive(i, t + ".json", !0, !1);
-      if (0 !== i.Num())
+        r = getConfigPath(IGlobal_1.globalConfig.FlowListDir),
+        r = UE.KuroStaticLibrary.GetFilesRecursive(r, t + ".json", !0, !1);
+      if (0 !== r.Num())
         return (
-          (i = i.Get(0)),
+          (r = r.Get(0)),
           (e = (0, puerts_1.$ref)(void 0)),
-          UE.KuroStaticLibrary.LoadFileToString(e, i),
-          (i = (0, puerts_1.$unref)(e)),
-          (e = JSON.parse(i)),
+          UE.KuroStaticLibrary.LoadFileToString(e, r),
+          (r = (0, puerts_1.$unref)(e)),
+          (e = JSON.parse(r)),
           Object.assign({}, e)
         );
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Level",
-          19,
-          "[PlotController.StartPlotNetwork] 无法找到对应剧情资源",
+          18,
+          "[ControllerHolder.PlotController.StartPlotNetwork] 无法找到对应剧情资源",
           ["flowListName", t],
         );
     }
@@ -211,18 +271,18 @@ class PublicUtil {
   static Bde() {
     var t,
       e,
-      i =
+      r =
         UE.BlueprintPathsLibrary.ProjectDir() +
         "../Config/Raw/Tables/k.可视化编辑/__Temp__/EditorStartConfig.json";
-    !UE.BlueprintPathsLibrary.FileExists(i) ||
+    !UE.BlueprintPathsLibrary.FileExists(r) ||
     ((t = ((e = ""), puerts_1.$ref)("")),
-    !UE.KuroStaticLibrary.LoadFileToString(t, i)) ||
-    ((e = (0, puerts_1.$unref)(t)), void 0 === (i = Json_1.Json.Parse(e)))
+    !UE.KuroStaticLibrary.LoadFileToString(t, r)) ||
+    ((e = (0, puerts_1.$unref)(t)), void 0 === (r = Json_1.Json.Parse(e)))
       ? (this.wde = !1)
-      : ((this.wde = i.UseTemp),
-        (this.bde = i.IsOpenDebugService),
-        (this.qde = i.GameClientGmPort),
-        (this.Gde = i.EditorPort));
+      : ((this.wde = r.UseTemp),
+        (this.bde = r.IsOpenDebugService),
+        (this.qde = r.GameClientGmPort),
+        (this.Gde = r.EditorPort));
   }
   static TestLoadEditorConfigData() {
     var t =
@@ -234,53 +294,53 @@ class PublicUtil {
         (e = (0, puerts_1.$unref)(e)), (e = Json_1.Json.Parse(e));
         if (void 0 !== e) return e;
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Temp", 43, "读取本地文件配置失败, 反序列化失败");
+          Log_1.Log.Error("Temp", 42, "读取本地文件配置失败, 反序列化失败");
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Temp", 43, "读取本地文件配置失败", ["path", t]);
+          Log_1.Log.Error("Temp", 42, "读取本地文件配置失败", ["path", t]);
     }
   }
   static TestSaveEditorConfigData(t = void 0) {
     var e,
-      i = void 0;
+      r = void 0;
     if (t)
       return (
-        (i = t),
-        void 0 === (t = Json_1.Json.Stringify(i))
+        (r = t),
+        void 0 === (t = Json_1.Json.Stringify(r))
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Temp", 43, "IEditorConfig反序列化失败")
+            Log_1.Log.Error("Temp", 42, "IEditorConfig反序列化失败")
           : ((e =
               UE.BlueprintPathsLibrary.ProjectConfigDir() +
               "../Saved/Editor/JsonConfig/EditorConfig.json"),
             UE.KuroStaticLibrary.SaveStringToFile(t, e)),
-        i
+        r
       );
   }
   static MapToObj(t) {
     var e,
-      i,
-      r = {};
-    for ([e, i] of t) r[e] = i;
-    return r;
+      r,
+      i = {};
+    for ([e, r] of t) i[e] = r;
+    return i;
   }
   static MapToObjEx(t) {
     var e,
-      i,
-      r = {};
-    for ([e, i] of t) r[e] = this.MapToObj(i);
-    return r;
+      r,
+      i = {};
+    for ([e, r] of t) i[e] = this.MapToObj(r);
+    return i;
   }
   static ObjToMap(t) {
     var e = new Map();
-    for (const r in t) {
-      var i = Number(r);
-      isNaN(i) ? e.set(r, t[r]) : e.set(i, t[r]);
+    for (const i in t) {
+      var r = Number(i);
+      isNaN(r) ? e.set(i, t[i]) : e.set(r, t[i]);
     }
     return e;
   }
   static ObjToMapEx(t) {
     var e = new Map();
-    for (const i in t) e.set(i, this.ObjToMap(t[i]));
+    for (const r in t) e.set(r, this.ObjToMap(t[r]));
     return e;
   }
   static UseDbConfig() {
@@ -292,12 +352,12 @@ class PublicUtil {
   static GetIsSilentLogin() {
     return this.Nde;
   }
-  static CreateTransformFromConfig(t, e, i) {
-    var r = Transform_1.Transform.Create(),
+  static CreateTransformFromConfig(t, e, r) {
+    var i = Transform_1.Transform.Create(),
       t = Vector_1.Vector.Create(t?.X ?? 0, t?.Y ?? 0, t?.Z ?? 0),
       e = Rotator_1.Rotator.Create(e?.Y ?? 0, e?.Z ?? 0, e?.X ?? 0),
-      i = Vector_1.Vector.Create(i?.X ?? 0, i?.Y ?? 0, i?.Z ?? 0);
-    return r.SetLocation(t), r.SetRotation(e.Quaternion()), r.SetScale3D(i), r;
+      r = Vector_1.Vector.Create(r?.X ?? 0, r?.Y ?? 0, r?.Z ?? 0);
+    return i.SetLocation(t), i.SetRotation(e.Quaternion()), i.SetScale3D(r), i;
   }
 }
 ((exports.PublicUtil = PublicUtil).wde = void 0),
@@ -305,5 +365,6 @@ class PublicUtil {
   (PublicUtil.Gde = void 0),
   (PublicUtil.qde = void 0),
   (PublicUtil.xde = new MultiTextCsvModule_1.MultiTextCsvModule()),
+  (PublicUtil.OverridePackageId = void 0),
   (PublicUtil.Nde = !1);
 //# sourceMappingURL=PublicUtil.js.map

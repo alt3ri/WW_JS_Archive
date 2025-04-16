@@ -121,7 +121,7 @@ class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
         this.s8e[this.NOe],
         this.P2i,
       ),
-      this.M2t.ReloadData(this.P2i));
+      this.M2t.RefreshByData(this.P2i, !1, void 0, !0));
   }
   OnBeforeDestroy() {
     this.M2t && (this.M2t.ClearGridProxies(), (this.M2t = void 0)),

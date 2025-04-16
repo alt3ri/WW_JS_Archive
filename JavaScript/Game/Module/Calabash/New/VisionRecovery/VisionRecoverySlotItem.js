@@ -9,7 +9,7 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
   constructor(i, t = !0) {
     super(),
       (this.oMt = void 0),
-      (this.$Va = void 0),
+      (this.VHa = void 0),
       (this.rMt = void 0),
       (this.nMt = !1),
       (this.sMt = () => {
@@ -30,6 +30,8 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIButtonComponent],
       [5, UE.UIButtonComponent],
       [6, UE.UIItem],
+      [7, UE.UIItem],
+      [8, UE.UIText],
     ]),
       (this.BtnBindInfo = [
         [4, this.sMt],
@@ -37,15 +39,15 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.$Va = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+    (this.VHa = new VisionFetterSuitItem_1.VisionFetterSuitItem(
       this.GetItem(6),
     )),
-      await this.$Va.Init();
+      await this.VHa.Init();
   }
   OnStart() {
     this.RefreshUi(this.oMt);
     var i = void 0 !== this.rMt;
-    this.GetUiSpriteTransition(0).SetEnable(i);
+    this.GetUiSpriteTransition(0).SetEnable(i), this.GetItem(7).SetUIActive(!1);
   }
   RefreshUi(i) {
     void 0 === (this.oMt = i) ? this.RefreshEmpty() : this.RefreshByData(i);
@@ -55,7 +57,8 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
       this.GetTexture(2).SetUIActive(!1),
       this.GetSprite(3).SetUIActive(!1),
       this.GetButton(5).RootUIComp.SetUIActive(!1),
-      this.$Va.SetUiActive(!1);
+      this.VHa.SetUiActive(!1),
+      this.GetItem(7).SetUIActive(!1);
   }
   RefreshByData(t) {
     const s = this.GetTexture(2),
@@ -70,15 +73,22 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
         }),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           t.GetConfigId(),
-        ));
-    this.SetTextureByPath(e.IconMiddle, s, void 0, () => {
-      s.SetUIActive(!0),
-        this.GetItem(1).SetUIActive(!1),
-        this.GetButton(5).RootUIComp.SetUIActive(this.nMt);
-      var i = t.GetFetterGroupConfig();
-      void 0 !== i && this.$Va.Update(i),
-        this.$Va.SetUiActive(!this.nMt && void 0 !== i);
-    });
+        )),
+      e =
+        (this.SetTextureByPath(e.IconMiddle, s, void 0, () => {
+          s.SetUIActive(!0),
+            this.GetItem(1).SetUIActive(!1),
+            this.GetButton(5).RootUIComp.SetUIActive(this.nMt);
+          var i = t.GetFetterGroupConfig();
+          void 0 !== i && this.VHa.Update(i),
+            this.VHa.SetUiActive(!this.nMt && void 0 !== i);
+        }),
+        t.GetConfig().Rarity),
+      e =
+        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomRareConfig(
+          e,
+        ).Cost;
+    this.GetItem(7).SetUIActive(!0), this.GetText(8).SetText(e.toString());
   }
 }
 exports.VisionRecoverySlotItem = VisionRecoverySlotItem;

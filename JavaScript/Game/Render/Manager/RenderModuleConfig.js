@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderModuleConfig = exports.RenderStats = void 0);
-const Stats_1 = require("../../../Core/Common/Stats"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Stats_1 = require("../../../Core/Common/Stats"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class RenderStats {
   static Init() {
-    this.gU ||
+    !this.gU &&
+      Info_1.Info.IsGameRunning() &&
       ((this.gU = !0),
       (this.StatRenderModuleModelAddTickable = Stats_1.Stat.Create(
         "Render_RenderModuleModel_AddTickable",
@@ -160,7 +162,57 @@ class RenderStats {
         )));
   }
 }
-(exports.RenderStats = RenderStats).gU = !1;
+((exports.RenderStats = RenderStats).gU = !1),
+  (RenderStats.StatRenderModuleModelAddTickable = void 0),
+  (RenderStats.StatRenderModuleModelTickTickable = void 0),
+  (RenderStats.StatRenderModuleModelTickRenderShell = void 0),
+  (RenderStats.StatBadSignalUpdate = void 0),
+  (RenderStats.StatComplexBrokenUpdate = void 0),
+  (RenderStats.StatCharRenderingComponentAddData = void 0),
+  (RenderStats.StatCharRenderingComponentDataCache = void 0),
+  (RenderStats.StatCharRenderingComponentInit = void 0),
+  (RenderStats.StatCharRenderingComponentUpdate = void 0),
+  (RenderStats.StatCharRenderingComponentDataGroupBeforeUpdate = void 0),
+  (RenderStats.StatCharRenderingComponentDataGroupAfterUpdate = void 0),
+  (RenderStats.StatCharRenderingComponentUpdateInner = void 0),
+  (RenderStats.StatCharRenderingComponentLateUpdate = void 0),
+  (RenderStats.StatCharRenderingComponentRuntimeDataUpdateState = void 0),
+  (RenderStats.StatCharRenderingComponentRuntimeDataUpdateEffect = void 0),
+  (RenderStats.StatCharRenderingComponentRuntimeDataSetSpecified = void 0),
+  (RenderStats.StatCharRenderShellTick = void 0),
+  (RenderStats.StatRenderBillboardTick = void 0),
+  (RenderStats.StatEffectBaseActorTick = void 0),
+  (RenderStats.StatEffectBaseActorInit = void 0),
+  (RenderStats.StatEffectBaseActorComplete = void 0),
+  (RenderStats.StatEffectBaseActorUpdateTime = void 0),
+  (RenderStats.StatEffectBaseActorUpdateNiagara = void 0),
+  (RenderStats.StatEffectBaseActorUpdateTsUpdate = void 0),
+  (RenderStats.StatSceneCharLimbTick = void 0),
+  (RenderStats.StatSceneInteractionManagerTick = void 0),
+  (RenderStats.StatSceneInteractionPc = void 0),
+  (RenderStats.StatSceneInteractionGrass = void 0),
+  (RenderStats.StatSceneInteractionWater = void 0),
+  (RenderStats.StatSceneInteractionOthers = void 0),
+  (RenderStats.StatRenderDataManagerTick = void 0),
+  (RenderStats.StatItemMaterialManagerTick = void 0),
+  (RenderStats.StatItemMaterialControllerCollectParameter = void 0),
+  (RenderStats.StatEffectTick = void 0),
+  (RenderStats.StatFoliageClusteredEffectTick = void 0),
+  (RenderStats.StatAudioVisualizationManagerTick = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateRim = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateDissolve = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateOutline = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateModifyOtherParameters = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateSampleTexture = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateTransfer = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateMotionOffset = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateAbsorbed = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateStripMask = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateDither = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateCustomMaterialEffect = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateHairReplace = void 0),
+  (RenderStats.StatCharMaterialControllerUpdateMaterialReplace = void 0),
+  (RenderStats.StatSceneInteractionActor = void 0);
 class RenderModuleConfig extends ConfigBase_1.ConfigBase {}
 exports.RenderModuleConfig = RenderModuleConfig;
 //# sourceMappingURL=RenderModuleConfig.js.map

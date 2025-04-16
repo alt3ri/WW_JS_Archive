@@ -2,12 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletActionInitCollision = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   GlobalData_1 = require("../../../GlobalData"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  CombatLog_1 = require("../../../Utils/CombatLog"),
   BulletConstant_1 = require("../BulletConstant"),
   BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil"),
   BulletActionBase_1 = require("./BulletActionBase");
@@ -24,41 +26,70 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
       i =
         ((this.CollisionInfo.StageInterval = 1),
         (this.CollisionInfo.AllowedEnergy = !0),
-        t.Base.CollisionActiveDelay * TimeUtil_1.TimeUtil.InverseMillisecond);
-    (this.CollisionInfo.ActiveDelayMs = 0 < i ? i : 0),
-      (this.CollisionInfo.IsPassDelay = this.CollisionInfo.ActiveDelayMs <= 0),
-      (this.CollisionInfo.IntervalMs =
-        t.Base.Interval * TimeUtil_1.TimeUtil.InverseMillisecond),
+        t.Base.CollisionActiveDelay * TimeUtil_1.TimeUtil.InverseMillisecond),
+      i =
+        ((this.CollisionInfo.ActiveDelayMs = 0 < i ? i : 0),
+        (this.CollisionInfo.ActiveLengthMs =
+          t.Base.CollisionActiveDuration *
+          TimeUtil_1.TimeUtil.InverseMillisecond),
+        (this.CollisionInfo.IsPassDelay =
+          this.CollisionInfo.ActiveDelayMs <= 0),
+        (this.CollisionInfo.IntervalMs =
+          t.Base.Interval * TimeUtil_1.TimeUtil.InverseMillisecond),
+        this.BulletInfo.AdditionInfo);
+    i?.Valid && (this.CollisionInfo.IntervalMs *= i.IntervalScale),
       (this.CollisionInfo.IsProcessOpen = this.CollisionInfo.IsPassDelay),
       this.CollisionInfo.FinalScale.FromUeVector(t.Scale.SizeScale),
+      (this.CollisionInfo.DamageId = t.Base.DamageId),
+      (this.CollisionInfo.BeHitEffect = t.Base.BeHitEffect),
+      (this.CollisionInfo.WeaknessBeHitEffect = t.Base.HitEffectWeakness),
       (this.CollisionInfo.NeedHitObstacles =
         t.Logic.DestroyOnHitObstacle ||
         this.BulletInfo.ChildInfo?.HaveSpecialChildrenBullet ||
         t.Render.EffectOnHit.has(2) ||
         this.BulletInfo.ActionLogicComponent.ObstaclesDetect),
-      this.CollisionInfo.NeedHitObstacles &&
+      Info_1.Info.IsPlayInEditor &&
+        this.CollisionInfo.NeedHitObstacles &&
         t.Base.IsOversizeForTrace &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "子弹尺寸过大，不会开启射线检测", [
-          "BulletRowName",
-          this.BulletInfo.BulletRowName,
-        ]),
+        CombatLog_1.CombatLog.Error(
+          "Bullet",
+          void 0,
+          "子弹尺寸过大，不会开启射线检测, 请用子弹检测工具查看具体原因",
+          ["BulletId", this.BulletInfo.BulletRowName],
+        ),
       this.k5o(t.Base.Shape, t.Base.Size),
       this.BulletInfo.CloseCollision || 4 === t.Base.Shape
         ? (this.BulletInfo.IsCollisionRelativeLocationZero = !0)
         : (this.F5o(),
           this.BulletInfo.IsCollisionRelativeRotationModify &&
-            this.CollisionInfo.CollisionComponent.K2_SetRelativeRotation(
-              t.Base.Rotator.ToUeRotator(),
-              !1,
-              void 0,
-              !0,
-            ),
+            (this.CollisionInfo.CollisionComponent
+              ? this.CollisionInfo.CollisionComponent.K2_SetRelativeRotation(
+                  t.Base.Rotator.ToUeRotator(),
+                  !1,
+                  void 0,
+                  !0,
+                )
+              : this.CollisionInfo.RegionComponent &&
+                this.CollisionInfo.RegionComponent.K2_SetRelativeRotation(
+                  t.Base.Rotator.ToUeRotator(),
+                  !1,
+                  void 0,
+                  !0,
+                )),
           (this.CollisionInfo.HasObstaclesCollision = 0 < t.Obstacle.Radius),
           this.V5o()),
       this.CollisionInfo.LastFramePosition.FromUeVector(
-        this.BulletInfo.CollisionLocation,
+        this.BulletInfo.GetCollisionLocation(!1),
       ),
+      BulletConstant_1.BulletConstant.OpenMoveLog &&
+        Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Bullet",
+          20,
+          "BulletActionInitCollision",
+          ["Bullet", this.BulletInfo?.BulletRowName],
+          ["Location", this.CollisionInfo.LastFramePosition],
+        ),
       this.CollisionInfo.ActiveDelayMs <= 0 &&
         (this.CollisionInfo.IsStartup = !0);
   }
@@ -224,11 +255,11 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           MathUtils_1.MathUtils.DefaultTransform,
           s,
         ),
-      h =
+      o =
         ((this.CollisionInfo.RegionDetectComponent = e),
         i.GetComponentByClass(t)),
       t =
-        h ??
+        o ??
         i.AddComponentByClass(t, !1, MathUtils_1.MathUtils.DefaultTransform, s);
     (this.CollisionInfo.RegionComponent = t),
       e.RegionMap.Set(BulletConstant_1.BulletConstant.RegionKey, t),
@@ -236,7 +267,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
         (l ||
           ((e.CreationMethod = 3),
           i.FinishAddComponent(e, !1, MathUtils_1.MathUtils.DefaultTransform)),
-        h ||
+        o ||
           ((t.CreationMethod = 3),
           i.FinishAddComponent(t, !1, MathUtils_1.MathUtils.DefaultTransform)));
   }
@@ -251,7 +282,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Bullet",
-              18,
+              17,
               "出于性能考虑，大球体的中心位置偏移不会生效",
             ),
           l.Reset()),
@@ -261,20 +292,20 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           ? l.IsZero()
             ? (this.BulletInfo.IsCollisionRelativeLocationZero = !0)
             : i
-              ? i.K2_SetRelativeLocation(l.ToUeVector(), !1, void 0, !0)
-              : s && s.K2_SetRelativeLocation(l.ToUeVector(), !1, void 0, !0)
+              ? i.D_K2_SetRelativeLocation(l.ToUeVector(), !1, void 0, !0)
+              : s && s.D_K2_SetRelativeLocation(l.ToUeVector(), !1, void 0, !0)
           : 360 <= e.Y
             ? (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Bullet",
-                  18,
+                  17,
                   "扇形子弹的角度超过360！请使用柱形",
                   ["ID", this.BulletInfo.BulletRowName],
                 ),
               (e.Y = 360))
             : e.Y <= 0 &&
               (Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Bullet", 18, "扇形子弹的角度小于0！请检查", [
+                Log_1.Log.Error("Bullet", 17, "扇形子弹的角度小于0！请检查", [
                   "ID",
                   this.BulletInfo.BulletRowName,
                 ]),
@@ -298,6 +329,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
     this.BulletInfo.Actor.SetActorHiddenInGame(!1);
     var i = this.CollisionInfo?.CollisionComponent;
     if (i) {
+      (i.bAsyncOverlap = !0), (i.bKuroOverlapNotify = !1);
       var s = this.CollisionInfo.NeedHitObstacles,
         l = this.BulletInfo.BulletDataMain.Base.IsOversizeForTrace;
       let t = !1;

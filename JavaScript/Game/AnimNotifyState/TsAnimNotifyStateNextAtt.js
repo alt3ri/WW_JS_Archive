@@ -4,26 +4,29 @@ const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   CharacterBuffIds_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
 class TsAnimNotifyStateNextAtt extends UE.KuroAnimNotifyState {
-  K2_NotifyBegin(e, t, r) {
-    var e = e.GetOwner();
+  Constructor() {}
+  K2_NotifyBegin(t, e, r) {
+    var t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-      ((e = e.CharacterActorComponent?.Entity?.GetComponent(34))?.Valid &&
-        (e.SetSkillAcceptInput(!0), e.CallAnimBreakPoint()),
+      t instanceof TsBaseCharacter_1.default &&
+      ((t = t.CharacterActorComponent?.Entity?.GetComponent(39))?.Valid &&
+        !t?.IsSkillMontageInvalid(e.GetName()) &&
+        (t.SetSkillAcceptInput(!0), t.CallAnimBreakPoint()),
       !0)
     );
   }
-  K2_NotifyEnd(e, t) {
+  K2_NotifyEnd(t, e) {
     var r,
-      e = e.GetOwner();
+      t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-      ((r = e.CharacterActorComponent?.Entity?.GetComponent(34)),
-      (e = e.CharacterActorComponent?.Entity?.GetComponent(160)),
-      r?.Valid && r.SetSkillAcceptInput(!1),
-      e?.Valid &&
-        e.HasBuffAuthority() &&
-        e.RemoveBuff(
+      t instanceof TsBaseCharacter_1.default &&
+      ((r = t.CharacterActorComponent?.Entity?.GetComponent(39)),
+      (t = t.CharacterActorComponent?.Entity?.GetComponent(172)),
+      !r?.IsSkillMontageInvalid(e.GetName())) &&
+      (r?.Valid && r.SetSkillAcceptInput(!1),
+      t?.Valid &&
+        t.HasBuffAuthority() &&
+        t.RemoveBuff(
           CharacterBuffIds_1.buffId.GoDown,
           -1,
           "从TsAnimNotifyStateNextAtt移除Buff",

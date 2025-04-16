@@ -29,7 +29,7 @@ class LoginQueueTipsView extends UiTickViewBase_1.UiTickViewBase {
       ModelManager_1.ModelManager.LoginModel.FinishAutoLoginPromise(!1);
   }
   OnStart() {
-    switch (((this.vSi = this.GetViewParam()), this.vSi?.K9n)) {
+    switch (((this.vSi = this.OpenParam), this.vSi?.K9n)) {
       case 0:
         this.GetText(0).ShowTextNew("NormalWaitTipsText"),
           LguiUtil_1.LguiUtil.SetLocalTextNew(

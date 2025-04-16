@@ -17,29 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBlackCoastThemeTaskReByTaskId.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBlackCoastThemeTaskReByTaskId.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configBlackCoastThemeTaskReByTaskId.GetConfig(";
 exports.configBlackCoastThemeTaskReByTaskId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var a = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       t =
-        (a.Start(),
+        (a?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (e) {
@@ -47,8 +47,8 @@ exports.configBlackCoastThemeTaskReByTaskId = {
         const i = ConfigCommon_1.ConfigCommon.GetConfig(n);
         if (i)
           return (
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -81,8 +81,8 @@ exports.configBlackCoastThemeTaskReByTaskId = {
               ((t = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -90,8 +90,8 @@ exports.configBlackCoastThemeTaskReByTaskId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    a.Stop(),
-      getConfigStat.Stop(),
+    a?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

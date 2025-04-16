@@ -13,14 +13,21 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   SeqBaseAssistant_1 = require("./SeqBaseAssistant");
 class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
-    super(...arguments), (this.hio = void 0), (this.lio = void 0);
+    super(...arguments),
+      (this.hio = void 0),
+      (this.lio = void 0),
+      (this.Tvl = void 0);
   }
-  Load(o) {
+  Load(i) {
     var e = this._io(this.Model.Config.FrameEvents);
     this.SetFrameEvents(this.Model.Config.FrameEvents),
-      (this.hio = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(e, (e) => {
-        (this.hio = void 0), o(e ?? !1);
-      }));
+      (this.hio = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
+        "FunctionAssistant.Load",
+        e,
+        (e) => {
+          (this.hio = void 0), i(e ?? !1);
+        },
+      ));
   }
   PreAllPlay() {
     (this.lio = void 0),
@@ -38,96 +45,170 @@ class FunctionAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       this.Model.FrameEvents.clear();
   }
   _io(e) {
-    var o = new Array();
+    var i = new Array();
     if (e?.length)
-      for (const i of e)
-        if (i.EventActions?.length)
-          for (const r of i.EventActions) {
+      for (const t of e)
+        if (t.EventActions?.length)
+          for (const r of t.EventActions) {
             let e = void 0;
             switch (r.Name) {
               case "AwakeEntity":
-                var t = r.Params;
-                e = t.EntityIds;
+                var o = r.Params;
+                e = o.EntityIds;
                 break;
               case "ChangeEntityState":
-                t = r.Params;
+                o = r.Params;
                 e =
-                  t.Type !== IAction_1.EChangeEntityState.BatchDirectly
-                    ? [t.EntityId]
-                    : [...t.EntityIds];
+                  o.Type !== IAction_1.EChangeEntityState.BatchDirectly
+                    ? [o.EntityId]
+                    : [...o.EntityIds];
             }
-            if (e && 0 < e.length) for (const a of e) o.push(a);
+            if (e && 0 < e.length) for (const a of e) i.push(a);
           }
-    return o;
+    return i;
   }
   SetFrameEvents(e) {
     if (e && 0 !== e.length)
-      for (const o of e)
-        this.Model.FrameEvents.set(o.EventKey, o.EventActions),
-          this.Model.ActionQueue.Push(o.EventKey);
+      for (const i of e)
+        this.Model.FrameEvents.set(i.EventKey, i.EventActions),
+          this.Model.ActionQueue.Push(i.EventKey);
   }
-  RunSequenceFrameEvents(e) {
-    var o;
-    5 !== this.Model.State &&
-      ((o = this.Model.GetFrameEvents(e)),
-      !this.Model.ActionQueue || this.Model.ActionQueue.Size <= 0
-        ? Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 46, "ActionQueue为空")
-        : (this.Model.ActionQueue.Pop() !== e &&
-            Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn(
-              "Plot",
-              27,
-              "编辑器与Seq帧事件顺序不一致，可能会导致跳过的表现错误",
-            ),
-          o && 0 !== o.length
-            ? ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
-                o,
-                () => {},
-              )
-            : ControllerHolder_1.ControllerHolder.FlowController.LogError(
-                "没有找到对应的帧事件",
-                ["key", e],
-              )));
+  RunSequenceFrameEvents(t) {
+    if (5 !== this.Model.State) {
+      var e = this.Model.GetFrameEvents(t);
+      if (!this.Model.ActionQueue || this.Model.ActionQueue.Size <= 0)
+        Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 45, "ActionQueue为空");
+      else if (
+        (this.Model.ActionQueue.Pop() !== t &&
+          Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "Plot",
+            26,
+            "编辑器与Seq帧事件顺序不一致，可能会导致跳过的表现错误",
+          ),
+        e && 0 !== e.length)
+      ) {
+        ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
+          e,
+          () => {},
+          !0,
+        );
+        let o = void 0;
+        this.Model.FrameEventsMap.forEach((e, i) => {
+          e.has(t) && (o = i);
+        }),
+          o && this.Model.FrameEventsMap.delete(o);
+      } else
+        ControllerHolder_1.ControllerHolder.FlowController.LogError(
+          "没有找到对应的帧事件",
+          ["key", t],
+        );
+    }
   }
   ShowLogo(e) {
     e *= CommonDefine_1.MILLIONSECOND_PER_SECOND;
     e < TimerSystem_1.MIN_TIME
       ? Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Plot", 27, "展示logo时间过短，不展示")
+        Log_1.Log.Warn("Plot", 26, "展示logo时间过短，不展示")
       : (UiManager_1.UiManager.OpenView("PlotLogoView"),
         (this.lio = TimerSystem_1.TimerSystem.Delay(() => {
           UiManager_1.UiManager.CloseView("PlotLogoView"), (this.lio = void 0);
         }, e)));
   }
-  async OpenBackgroundImage(e, o) {
-    var t = PlotController_1.PlotController.GetCurrentViewName();
-    t && UiManager_1.UiManager.IsViewShow(t)
-      ? await UiManager_1.UiManager.GetViewByName(t).OpenBackgroundUi(e, o)
+  async OpenBackgroundImage(e, i, o = !0) {
+    var t,
+      r = PlotController_1.PlotController.GetCurrentViewName();
+    r && UiManager_1.UiManager.IsViewShow(r)
+      ? ((t = UiManager_1.UiManager.GetViewByName(r)),
+        await (this.Tvl = t).OpenBackgroundUi(e, i, o))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Plot", 46, "Ui预览图:尝试打开预览图但PlotView未打开", [
+        Log_1.Log.Warn("Plot", 45, "Ui预览图:尝试打开预览图但PlotView未打开", [
+          "viewName",
+          r,
+        ]);
+  }
+  async OpenBackgroundImageInArray(e, i) {
+    var o,
+      t = PlotController_1.PlotController.GetCurrentViewName();
+    t && UiManager_1.UiManager.IsViewShow(t)
+      ? ((o = UiManager_1.UiManager.GetViewByName(t)),
+        await (this.Tvl = o).OpenBackgroundUiForSeekSpine(e, i))
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("Plot", 45, "Ui预览图:尝试打开预览图但PlotView未打开", [
           "viewName",
           t,
         ]);
   }
   async PlayUiLevelSequence(e) {
-    var o = PlotController_1.PlotController.GetCurrentViewName();
-    o && UiManager_1.UiManager.IsViewShow(o)
-      ? await UiManager_1.UiManager.GetViewByName(o).PlayUiLevelSeq(e)
+    var i = PlotController_1.PlotController.GetCurrentViewName();
+    i && UiManager_1.UiManager.IsViewShow(i)
+      ? await UiManager_1.UiManager.GetViewByName(i).PlayUiLevelSeq(e)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Plot", 46, "Ui预览图:尝试打开预览图但PlotView未打开", [
+        Log_1.Log.Warn("Plot", 45, "Ui预览图:尝试打开预览图但PlotView未打开", [
           "viewName",
-          o,
+          i,
         ]);
   }
   async CloseBackgroundImage() {
     var e = PlotController_1.PlotController.GetCurrentViewName();
     e && UiManager_1.UiManager.IsViewShow(e)
-      ? await UiManager_1.UiManager.GetViewByName(e).CloseBackgroundUi()
+      ? (await UiManager_1.UiManager.GetViewByName(e).CloseBackgroundUi(),
+        (this.Tvl = void 0))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Plot", 46, "Ui预览图:尝试打开预览图但PlotView未打开", [
+        Log_1.Log.Warn("Plot", 45, "Ui预览图:尝试打开预览图但PlotView未打开", [
           "viewName",
           e,
         ]);
+  }
+  PlaySpineAnim(e, i = !0) {
+    this.Tvl && e
+      ? this.Tvl.PlaySonUiSpine(e, i)
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Plot",
+          45,
+          "Ui预览图:this.NowView不存在或者名字为空所以返回",
+          ["spineName", e],
+        );
+  }
+  PlaySpineAnimInArray(e) {
+    !this.Tvl || e.Num() <= 0
+      ? Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Plot",
+          45,
+          "Ui预览图:this.NowView不存在或者数组为空所以返回",
+        )
+      : this.Tvl.PlaySonUiSpineInArray(e);
+  }
+  CloseSpineAnimation(e) {
+    var i = PlotController_1.PlotController.GetCurrentViewName();
+    i && UiManager_1.UiManager.IsViewShow(i)
+      ? UiManager_1.UiManager.GetViewByName(i).CloseSpineAnimation(e)
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Plot",
+          45,
+          "Ui预览图:尝试关闭某个Spine动画但PlotView未打开",
+          ["viewName", i],
+        );
+  }
+  CloseSpineAnimationInArray(i) {
+    var e = PlotController_1.PlotController.GetCurrentViewName();
+    if (e && UiManager_1.UiManager.IsViewShow(e)) {
+      var o = UiManager_1.UiManager.GetViewByName(e);
+      if (i.Num() <= 0)
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Plot", 45, "Ui预览图:未填入数组，关闭失败");
+      else for (let e = 0; e < i.Num(); e++) o.CloseSpineAnimation(i.Get(e));
+    } else
+      Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Plot",
+          45,
+          "Ui预览图:尝试关闭某个Spine动画但PlotView未打开",
+          ["viewName", e],
+        );
   }
 }
 exports.FunctionAssistant = FunctionAssistant;

@@ -12,7 +12,7 @@ class InteractNavigation {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Interaction",
-          9,
+          8,
           "设置lookUp阈值和zoomThreshold阈值错误!",
           ["lookUpThreshold", t],
           ["zoomThreshold", s],

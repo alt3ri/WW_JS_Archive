@@ -20,7 +20,7 @@ class SpecialPanelHandleBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiNavigation",
-          11,
+          10,
           "找不到导航组信息",
           ["导航组名字", t.GroupName],
           ["导航监听对象", t.RootUIComp.displayName],
@@ -28,6 +28,9 @@ class SpecialPanelHandleBase {
   }
   GetNavigationGroup(t) {
     if (!StringUtils_1.StringUtils.IsEmpty(t)) return this.Npo.get(t);
+  }
+  Init() {
+    this.OnInit();
   }
   SetGroupMap(t) {
     this.Npo = t;
@@ -102,6 +105,7 @@ class SpecialPanelHandleBase {
   GetType() {
     return this.E9;
   }
+  OnInit() {}
   OnClear() {}
 }
 exports.SpecialPanelHandleBase = SpecialPanelHandleBase;

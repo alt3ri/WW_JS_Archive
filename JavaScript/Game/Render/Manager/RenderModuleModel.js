@@ -6,9 +6,13 @@ const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   TickSystem_1 = require("../../../Core/Tick/TickSystem"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  CameraController_1 = require("../../Camera/CameraController"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
+  Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  PreloadControllerClassPart1_1 = require("../../Preload/PreloadControllerClassPart1"),
   WorldGlobal_1 = require("../../World/WorldGlobal"),
   CharRenderShell_1 = require("../Character/Manager/CharRenderShell"),
   RenderDataManager_1 = require("../Data/RenderDataManager"),
@@ -29,7 +33,62 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
       (this.K1r = 5),
       (this.Q1r = !1),
       (this.X1r = !1),
-      (this.$1r = 0);
+      (this.$1r = 0),
+      (this.Enl = () => {
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.StopSomeWeatherBeforeTeleport(
+          GlobalData_1.GlobalData.World,
+        );
+      }),
+      (this.Inl = () => {
+        TimerSystem_1.TimerSystem.Delay(() => {
+          UE.KuroRenderingRuntimeBPPluginBPLibrary.ResumeSomeWeatherAfterTeleport(
+            GlobalData_1.GlobalData.World,
+          );
+        }, 100);
+      }),
+      (this.cKl = !1),
+      (this.Yyn = (e) => {
+        e &&
+          !this.cKl &&
+          (UE.KuroRenderingRuntimeBPPluginBPLibrary.SetDisableEffectPostProcessVolume(
+            GlobalData_1.GlobalData.World,
+            !0,
+            4,
+          ),
+          (this.cKl = !0),
+          Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info("Render", 25, "进入大招禁用特效后处理"),
+          !e &&
+            this.cKl &&
+            (UE.KuroRenderingRuntimeBPPluginBPLibrary.SetDisableEffectPostProcessVolume(
+              GlobalData_1.GlobalData.World,
+              !1,
+              1,
+            ),
+            (this.cKl = !1),
+            Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info("Render", 25, "退出大招启用特效后处理"),
+          e ||
+            TimerSystem_1.TimerSystem.Next(() => {
+              Global_1.Global.BaseCharacter?.CharRenderingComponent?.RefreshMaterialController();
+            });
+      }),
+      (this.BPr = (e) => {
+        !e &&
+          this.cKl &&
+          (UE.KuroRenderingRuntimeBPPluginBPLibrary.SetDisableEffectPostProcessVolume(
+            GlobalData_1.GlobalData.World,
+            !1,
+            1,
+          ),
+          (this.cKl = !1),
+          Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info("Render", 25, "退出镜头启用特效后处理"),
+          e ||
+            TimerSystem_1.TimerSystem.Next(() => {
+              Global_1.Global.BaseCharacter?.CharRenderingComponent?.RefreshMaterialController();
+            });
+      });
   }
   GetCurrentKeyState(e) {
     return e === this.j1r ? this.W1r : 0;
@@ -37,19 +96,19 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
   GetIdleClearAtmosphere(e) {
     return e === this.j1r && this.Q1r;
   }
-  SetBattleState(e, r, t = !1) {
+  SetBattleState(e, t, r = !1) {
     (this.j1r = e),
-      (this.W1r = r),
-      (this.K1r = r),
+      (this.W1r = t),
+      (this.K1r = t),
       4 === this.W1r ? ((this.Q1r = !0), (this.W1r = 0)) : (this.Q1r = !1),
-      (this.X1r = t),
+      (this.X1r = r),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "RenderBattle",
-          12,
+          11,
           "BOSS战设置战斗状态Inner",
           ["key", e],
-          ["state", r],
+          ["state", t],
         );
   }
   IsStateInstantTransition() {
@@ -70,15 +129,15 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
   }
   GetWuYinQuBattleDebugInfo() {
     var e = UE.NewArray(UE.BuiltinString);
-    const r = new Array();
+    const t = new Array();
     return (
-      r.push(this.GetCurrentBattleKey() + "," + this.Y1r(this.K1r)),
+      t.push(this.GetCurrentBattleKey() + "," + this.Y1r(this.K1r)),
       this.H1r.forEach((e) => {
         UE.KismetSystemLibrary.IsValid(e) &&
           ((e = e.GetKey() + "," + this.Y1r(e.GetCurrentBattleState())),
-          r.push(e));
+          t.push(e));
       }),
-      WorldGlobal_1.WorldGlobal.ToUeStringArray(r, e),
+      WorldGlobal_1.WorldGlobal.ToUeStringArray(t, e),
       e
     );
   }
@@ -99,29 +158,30 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
   }
   DecBattleReference() {
     this.$1r--,
-      this.$1r <= 0 && this.SetStreamingSourceState(new UE.Vector(0, 0, 0), !1);
+      this.$1r <= 0 &&
+        this.SetStreamingSourceState(new UE.VectorDouble(0, 0, 0), !1);
   }
-  SetStreamingSourceState(e, r) {}
+  SetStreamingSourceState(e, t) {}
   GetWuYinQuBattleActorByName(e) {
     if (this.H1r.has(e)) return this.H1r.get(e);
   }
   AddWuYinQuBattleActor(e) {
-    var r;
+    var t;
     return UE.KismetSystemLibrary.IsValid(e)
-      ? ((r = e.GetKey()),
+      ? ((t = e.GetKey()),
         !e.IsInitialize() &&
-          void 0 === this.GetWuYinQuBattleActorByName(r) &&
+          void 0 === this.GetWuYinQuBattleActorByName(t) &&
           !!e.Init() &&
-          (this.H1r.set(r, e), !0))
+          (this.H1r.set(t, e), !0))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderBattle", 12, "无音区actor添加失败1"),
+          Log_1.Log.Error("RenderBattle", 11, "无音区actor添加失败1"),
         !1);
   }
   RemoveWuYinQuBattleActor(e) {
     return UE.KismetSystemLibrary.IsValid(e)
       ? ((e = e.GetKey()), !!this.H1r.has(e) && (this.H1r.delete(e), !0))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderBattle", 12, "无音区actor移除失败1"),
+          Log_1.Log.Error("RenderBattle", 11, "无音区actor移除失败1"),
         !1);
   }
   AddTickableObject(e) {
@@ -137,24 +197,24 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
         : ((this.F1r[e] = this.F1r[this.F1r.length - 1]), this.F1r.pop()));
   }
   AddCharRenderShell(e) {
-    var r = new CharRenderShell_1.CharRenderShell();
-    r.Init(e), this.V1r.set(e, r);
+    var t = new CharRenderShell_1.CharRenderShell();
+    t.Init(e), this.V1r.set(e, t);
   }
   RemoveCharRenderShell(e) {
     return this.V1r.get(e)?.Clear(), this.V1r.delete(e);
   }
-  Tick(t) {
-    const r = 0.001 * t;
+  Tick(r) {
+    const t = 0.001 * r;
     RenderModuleConfig_1.RenderStats.StatRenderModuleModelTickTickable?.Start(),
       this.F1r.forEach((e) => {
         try {
-          e.Tick(r);
+          e.Tick(t);
         } catch (e) {
           e instanceof Error &&
             Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "Render",
-              26,
+              25,
               "TickableObject Tick执行异常",
               e,
               ["error", e.message],
@@ -167,13 +227,13 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
         ? (RenderModuleConfig_1.RenderStats.StatRenderModuleModelTickRenderShell?.Start(),
           this.V1r.forEach((e) => {
             try {
-              e.Tick(r);
+              e.Tick(t);
             } catch (e) {
               e instanceof Error &&
                 Log_1.Log.CheckError() &&
                 Log_1.Log.ErrorWithStack(
                   "Render",
-                  26,
+                  25,
                   "RenderShell Tick执行异常",
                   e,
                   ["error", e.message],
@@ -184,18 +244,18 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
         : Info_1.Info.IsGameRunning() &&
           (GlobalData_1.GlobalData.IsUiSceneOpen ||
             GlobalData_1.GlobalData.IsUiSceneLoading ||
-            PreloadControllerClassPart1_1.CameraController.IsSequenceCameraInCinematic() ||
+            CameraController_1.CameraController.IsSequenceCameraInCinematic() ||
             ModelManager_1.ModelManager.PlotModel?.IsInPlot) &&
           (RenderModuleConfig_1.RenderStats.StatRenderModuleModelTickRenderShell?.Start(),
           this.V1r.forEach((e) => {
             try {
-              e.IsAlwaysTick && e.Tick(r);
+              e.IsAlwaysTick && e.Tick(t);
             } catch (e) {
               e instanceof Error &&
                 Log_1.Log.CheckError() &&
                 Log_1.Log.ErrorWithStack(
                   "Render",
-                  26,
+                  25,
                   "RenderShell Tick执行异常",
                   e,
                   ["error", e.message],
@@ -204,40 +264,40 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
           }),
           RenderModuleConfig_1.RenderStats.StatRenderModuleModelTickRenderShell?.Stop()),
       TickSystem_1.TickSystem.IsPaused ||
-        this.H1r.forEach((r) => {
+        this.H1r.forEach((t) => {
           try {
             var e;
-            UE.KismetSystemLibrary.IsValid(r) &&
-              ((e = r.Key?.toString()),
+            UE.KismetSystemLibrary.IsValid(t) &&
+              ((e = t.Key?.toString()),
               this.j1r === e
-                ? this.W1r !== r.GetCurrentBattleState() &&
-                  r.ChangeState(this.W1r, this.IsStateInstantTransition())
-                : 0 !== r.GetCurrentBattleState() &&
-                  r.ChangeState(0, this.IsStateInstantTransition()),
-              r.Tick(t));
+                ? this.W1r !== t.GetCurrentBattleState() &&
+                  t.ChangeState(this.W1r, this.IsStateInstantTransition())
+                : 0 !== t.GetCurrentBattleState() &&
+                  t.ChangeState(0, this.IsStateInstantTransition()),
+              t.Tick(r));
           } catch (e) {
             e instanceof Error &&
               Log_1.Log.CheckError() &&
               Log_1.Log.ErrorWithStack(
                 "Render",
-                26,
+                25,
                 "WuYinQuBattleActor 执行异常",
                 e,
                 ["error", e.message],
-                ["object", r.GetName()],
+                ["object", t.GetName()],
               );
           }
         });
     try {
-      RenderDataManager_1.RenderDataManager.Get().TickForce(t),
+      RenderDataManager_1.RenderDataManager.Get().TickForce(r),
         TickSystem_1.TickSystem.IsPaused ||
-          RenderDataManager_1.RenderDataManager.Get().Tick(t);
+          RenderDataManager_1.RenderDataManager.Get().Tick(r);
     } catch (e) {
       e instanceof Error &&
         Log_1.Log.CheckError() &&
         Log_1.Log.ErrorWithStack(
           "Render",
-          26,
+          25,
           "RenderDataManager Tick执行异常",
           e,
           ["error", e.message],
@@ -245,26 +305,26 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     }
     try {
       TickSystem_1.TickSystem.IsPaused ||
-        SceneInteractionManager_1.SceneInteractionManager.Tick(t);
+        SceneInteractionManager_1.SceneInteractionManager.Tick(r);
     } catch (e) {
       e instanceof Error &&
         Log_1.Log.CheckError() &&
         Log_1.Log.ErrorWithStack(
           "Render",
-          26,
+          25,
           "SceneInteractionManager Tick执行异常",
           e,
           ["error", e.message],
         );
     }
     try {
-      ItemMaterialManager_1.ItemMaterialManager.Tick(t);
+      ItemMaterialManager_1.ItemMaterialManager.Tick(r);
     } catch (e) {
       e instanceof Error &&
         Log_1.Log.CheckError() &&
         Log_1.Log.ErrorWithStack(
           "Render",
-          26,
+          25,
           "ItemMaterialManager Tick执行异常",
           e,
           ["error", e.message],
@@ -272,13 +332,13 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     }
     try {
       TickSystem_1.TickSystem.IsPaused ||
-        DebugDrawManager_1.DebugDrawManager.Tick(t);
+        DebugDrawManager_1.DebugDrawManager.Tick(r);
     } catch (e) {
       e instanceof Error &&
         Log_1.Log.CheckError() &&
         Log_1.Log.ErrorWithStack(
           "Render",
-          26,
+          25,
           "DebugDrawManager Tick执行异常",
           e,
           ["error", e.message],
@@ -294,12 +354,28 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
       (this.j1r = void 0),
       (this.W1r = 0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderBattle", 12, "初始化BOSS战渲染模块"),
+        Log_1.Log.Info("RenderBattle", 11, "初始化BOSS战渲染模块"),
       RenderDataManager_1.RenderDataManager.Get(),
       EffectManagerBusinessProxy_1.EffectManagerBusinessProxy.Get(),
       SceneInteractionManager_1.SceneInteractionManager.Initialize(),
       ItemMaterialManager_1.ItemMaterialManager.Initialize(),
       DebugDrawManager_1.DebugDrawManager.Initialize(),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.TeleportStart,
+        this.Enl,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.TeleportComplete,
+        this.Inl,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
+        this.Yyn,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnSequenceCameraStatus,
+        this.BPr,
+      ),
       !0
     );
   }
@@ -312,9 +388,25 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
       (this.j1r = void 0),
       (this.W1r = 0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderBattle", 12, "清理BOSS战渲染模块"),
+        Log_1.Log.Info("RenderBattle", 11, "清理BOSS战渲染模块"),
       RenderDataManager_1.RenderDataManager.Get().Destroy(),
       DebugDrawManager_1.DebugDrawManager.Destroy(),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TeleportStart,
+        this.Enl,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TeleportComplete,
+        this.Inl,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
+        this.Yyn,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnSequenceCameraStatus,
+        this.BPr,
+      ),
       !0
     );
   }
@@ -322,7 +414,7 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     return (
       this.J1r(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderBattle", 12, "BOSS战渲染模块离开关卡"),
+        Log_1.Log.Info("RenderBattle", 11, "BOSS战渲染模块离开关卡"),
       !0
     );
   }
@@ -337,9 +429,9 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
   EnableGlobalData(e) {
     return -1;
   }
-  EnableActorData(e, r) {
-    return r && e
-      ? ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(r, e)
+  EnableActorData(e, t) {
+    return t && e
+      ? ItemMaterialManager_1.ItemMaterialManager.AddMaterialData(t, e)
       : -1;
   }
   DisableGlobal(e) {}
@@ -354,16 +446,6 @@ class RenderModuleModel extends ModelBase_1.ModelBase {
     ItemMaterialParameterCollectionController_1.ItemMaterialParameterCollectionController.UpdateMaterialParameterCollection(
       e,
       RenderDataManager_1.RenderDataManager.Get().GetSceneInteractionMaterialParameterCollection(),
-    );
-  }
-  static OnStartTeleport() {
-    UE.KuroRenderingRuntimeBPPluginBPLibrary.StopSomeWeatherBeforeTeleport(
-      GlobalData_1.GlobalData.World,
-    );
-  }
-  static OnCompleteTeleport() {
-    UE.KuroRenderingRuntimeBPPluginBPLibrary.ResumeSomeWeatherAfterTeleport(
-      GlobalData_1.GlobalData.World,
     );
   }
 }

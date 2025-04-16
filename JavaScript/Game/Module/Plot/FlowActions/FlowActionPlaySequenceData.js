@@ -8,6 +8,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   TeleportController_1 = require("../../Teleport/TeleportController"),
+  FlowNetworks_1 = require("../Flow/FlowNetworks"),
   PlotController_1 = require("../PlotController"),
   SequenceController_1 = require("../Sequence/SequenceController"),
   FlowActionBase_1 = require("./FlowActionBase");
@@ -16,7 +17,7 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
     super(...arguments),
       (this.owt = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "PlaySequenceData Seq开始播放允许跳过"),
+          Log_1.Log.Debug("Plot", 26, "PlaySequenceData Seq开始播放允许跳过"),
           ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!0);
       }),
       (this.Mxe = () => {
@@ -44,19 +45,25 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
           : "LevelB" ===
               ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
             (ModelManager_1.ModelManager.SequenceModel.Type = 1),
-        EventSystem_1.EventSystem.Once(
-          EventDefine_1.EEventName.PlotSequencePlay,
-          this.owt,
-        ),
-        SequenceController_1.SequenceController.Play(
-          e,
-          [],
-          this.Mxe,
-          !0,
-          !0,
-          this.Context.IsWaitRenderData,
-          1,
-        ));
+        this.Context.IsBackground
+          ? SequenceController_1.SequenceController.LoadData(e, () => {
+              this.Q$i().finally(() => {
+                this.FinishExecute(!0);
+              });
+            })
+          : (EventSystem_1.EventSystem.Once(
+              EventDefine_1.EEventName.PlotSequencePlay,
+              this.owt,
+            ),
+            SequenceController_1.SequenceController.Play(
+              e,
+              [],
+              this.Mxe,
+              !0,
+              !0,
+              this.Context.IsWaitRenderData,
+              1,
+            )));
   }
   OnInterruptExecute() {
     ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
@@ -72,6 +79,9 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
         this.FinishExecute(!0);
       });
   }
+  OnBackgroundExecute() {
+    this.OnExecute();
+  }
   async Q$i() {
     var e = ModelManager_1.ModelManager.SequenceModel.IsFadeEnd.length - 1,
       e =
@@ -85,16 +95,22 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
     0 < e &&
       !t &&
       Log_1.Log.CheckWarn() &&
-      Log_1.Log.Warn("Plot", 27, "SequenceData内缺失FinalPos"),
+      Log_1.Log.Warn("Plot", 26, "SequenceData内缺失FinalPos"),
       SequenceController_1.SequenceController.ManualFinish(),
       await PlotController_1.PlotController.CheckFormation(),
       t &&
+        !ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode() &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "SaveFinalPos", ["transform", t]),
+          Log_1.Log.Debug("Plot", 26, "SaveFinalPos", ["transform", t]),
         await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
           t.GetLocation().ToUeVector(),
           t.GetRotation().Rotator().ToUeRotator(),
           "FlowActionPlaySequenceData.OnInterruptExecute",
+        ),
+        FlowNetworks_1.FlowNetworks.RequestSeqEndPosition(
+          this.Context,
+          t.GetLocation(),
+          t.GetRotation().Rotator(),
         ));
   }
 }

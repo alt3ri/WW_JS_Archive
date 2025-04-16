@@ -8,11 +8,15 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   CharacterNameDefines_1 = require("../Common/CharacterNameDefines"),
   TRIGGER_HALF_HEIGHT_DEVIATION = 0;
 class RoleTriggerController extends ControllerBase_1.ControllerBase {
   static GetMyRoleTrigger() {
+    return this.Lir;
+  }
+  static GetMyRoleTriggerOrUndefined() {
     return this.Lir;
   }
   static DebugTestWorldDone() {
@@ -21,7 +25,6 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
       (this.IsInitTrigger = !1),
-      (this.Uir = !1),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ClearWorld,
         this.uMe,
@@ -57,19 +60,23 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
   }
   static Pir() {
     (this.IsInitTrigger = !1),
-      (this.Uir = !1),
       this.Lir?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.Lir), (this.Lir = void 0)),
+        (ModelManager_1.ModelManager.GameModeModel.DetachStreamingSourceFromActor(),
+        ActorSystem_1.ActorSystem.Put(
+          "RoleTriggerController.ClearMyRoleTrigger",
+          this.Lir,
+        ),
+        (this.Lir = void 0)),
       (this.xir = void 0);
   }
-  static SJa() {
+  static Koh() {
     if (!RoleTriggerController.IsInitTrigger && Global_1.Global.BaseCharacter) {
       RoleTriggerController.IsInitTrigger = !0;
       let e = void 0,
         r = 77 + TRIGGER_HALF_HEIGHT_DEVIATION,
         o = 25;
       Global_1.Global.BaseCharacter &&
-        ((e = Global_1.Global.BaseCharacter.GetTransform()),
+        ((e = Global_1.Global.BaseCharacter.D_GetTransform()),
         (r =
           Global_1.Global.BaseCharacter.CapsuleComponent.CapsuleHalfHeight +
           TRIGGER_HALF_HEIGHT_DEVIATION),
@@ -78,6 +85,8 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
           UE.Actor.StaticClass(),
           e,
         )),
+        GlobalData_1.GlobalData.IsPlayInEditor &&
+          RoleTriggerController.Lir?.SetActorLabel("RoleTrigger"),
         (RoleTriggerController.xir =
           RoleTriggerController.Lir.AddComponentByClass(
             UE.CapsuleComponent.StaticClass(),
@@ -93,6 +102,9 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
           !1,
         ),
         RoleTriggerController.OnTick(0),
+        ModelManager_1.ModelManager.GameModeModel?.AttachStreamingSourcesToActor(
+          RoleTriggerController.Lir,
+        ),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RoleTriggerInit,
         );
@@ -102,39 +114,57 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
     this.IsInitTrigger &&
       this.Lir?.IsValid() &&
       Global_1.Global.BaseCharacter &&
-      this.Lir.K2_SetActorTransform(
-        Global_1.Global.BaseCharacter.GetTransform(),
+      this.UpdateTransform();
+  }
+  static UpdateRoleTriggerHalfHeightAndRadius(e, r, o) {
+    RoleTriggerController.sxl &&
+      ((RoleTriggerController.xir && RoleTriggerController.xir.IsValid()) ||
+        (RoleTriggerController.IsInitTrigger = !1),
+      RoleTriggerController.IsInitTrigger
+        ? (RoleTriggerController.xir.SetCapsuleRadius(e, o),
+          RoleTriggerController.xir.SetCapsuleHalfHeight(r, o))
+        : RoleTriggerController.Koh());
+  }
+  static UpdateTransform() {
+    this.IsInitTrigger &&
+      this.Lir?.IsValid() &&
+      Global_1.Global.BaseCharacter &&
+      this.Lir.D_K2_SetActorTransform(
+        Global_1.Global.BaseCharacter.D_GetTransform(),
         !1,
         void 0,
         !0,
       );
   }
-  static OnChangeMode() {
-    return (
-      this.IsInitTrigger &&
-        this.Lir?.IsValid() &&
-        Global_1.Global.BaseCharacter &&
-        ((RoleTriggerController.Uir = !0),
-        RoleTriggerController.xir.SetCollisionEnabled(0)),
-      !0
-    );
+  static UpdateOverlaps() {
+    this.IsInitTrigger &&
+      this.Lir?.IsValid() &&
+      Global_1.Global.BaseCharacter &&
+      RoleTriggerController.xir?.IsValid() &&
+      RoleTriggerController.xir?.SetCapsuleRadius(
+        RoleTriggerController.xir.CapsuleRadius,
+        !0,
+      );
   }
 }
 ((exports.RoleTriggerController = RoleTriggerController).IsInitTrigger = !1),
-  (RoleTriggerController.Uir = !1),
   (RoleTriggerController.Lir = void 0),
   (RoleTriggerController.xir = void 0),
+  (RoleTriggerController.sxl = !1),
   (RoleTriggerController.uMe = () => {
-    RoleTriggerController.Pir();
+    RoleTriggerController.Pir(), (RoleTriggerController.sxl = !1);
   }),
   (RoleTriggerController.nye = () => {
     RoleTriggerController.IsInitTrigger
       ? RoleTriggerController.OnTick(0)
-      : RoleTriggerController.SJa();
+      : RoleTriggerController.Koh(),
+      (RoleTriggerController.sxl = !0);
   }),
   (RoleTriggerController.xie = (e, r) => {
-    ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-      (RoleTriggerController.IsInitTrigger || RoleTriggerController.SJa(),
+    RoleTriggerController.sxl &&
+      ((RoleTriggerController.xir && RoleTriggerController.xir.IsValid()) ||
+        (RoleTriggerController.IsInitTrigger = !1),
+      RoleTriggerController.IsInitTrigger || RoleTriggerController.Koh(),
       e?.Valid) &&
       (e = e.Entity.GetComponent(3)?.Actor)?.IsValid() &&
       (RoleTriggerController.xir?.SetCapsuleHalfHeight(
@@ -144,9 +174,6 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
       RoleTriggerController.xir?.SetCapsuleRadius(
         e.CapsuleComponent.CapsuleRadius,
         !1,
-      ),
-      RoleTriggerController.Uir) &&
-      ((RoleTriggerController.Uir = !1),
-      RoleTriggerController.xir?.SetCollisionEnabled(1));
+      ));
   });
 //# sourceMappingURL=RoleTriggerController.js.map

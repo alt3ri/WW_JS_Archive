@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ActionInteractFan =
+  (exports.ActionInteractGravityFlip =
+    exports.ActionInteractFan =
     exports.ActionTimeTrackControl =
     exports.ActionBtGm =
     exports.ActionOpenAdvice =
@@ -59,9 +60,11 @@ class CommonInteractOption {
       (this.UniequenessType = IAction_1.EInteractUniqueness.Closest),
       (this.OptionContentId = 0),
       (this.SortWeight = 0),
-      (this.DelayRemove = !1);
+      (this.DelayRemove = !1),
+      (this.ConditionCheck = !1),
+      (this.LockTips = void 0);
   }
-  Init(t, o, s, i, e, c, r = 0, n = 0, h = !1) {
+  Init(t, o, s, i, e, c, r = 0, n = 0, h = !1, a) {
     (this.InstanceId = t),
       (this.Guid = o.Guid),
       (this.Type = o.Type),
@@ -75,6 +78,8 @@ class CommonInteractOption {
       (this.CustomOptionType = r),
       (this.ContentType = n),
       (this.DelayRemove = h),
+      (this.LockTips = a),
+      (this.ConditionCheck = !1),
       o.UniquenessTest
         ? ((this.IsUniqueness = !0), (this.UniequenessType = o.UniquenessTest))
         : (this.IsUniqueness = !1);
@@ -205,4 +210,10 @@ class ActionInteractFan {
   }
 }
 exports.ActionInteractFan = ActionInteractFan;
+class ActionInteractGravityFlip {
+  constructor() {
+    this.EntityId = 0;
+  }
+}
+exports.ActionInteractGravityFlip = ActionInteractGravityFlip;
 //# sourceMappingURL=LevelGameplayActionsDefine.js.map

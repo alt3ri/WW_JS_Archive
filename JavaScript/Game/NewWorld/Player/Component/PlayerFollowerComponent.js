@@ -27,26 +27,31 @@ const Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask");
+  WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask"),
+  followerPriorityMap = new Map([
+    [0, 100],
+    [1, 102],
+    [2, 101],
+  ]);
 let PlayerFollowerComponent = class PlayerFollowerComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
       (this.j8 = 0),
-      (this.FVa = new Map()),
-      (this.HYa = 0),
-      (this.VVa = void 0),
-      (this.HVa = void 0),
-      (this.jVa = void 0);
+      (this.qHa = new Map()),
+      (this.qeh = 0),
+      (this.OHa = void 0),
+      (this.GHa = void 0),
+      (this.kHa = void 0);
   }
   OnInitData() {
     var e = this.Entity.CheckGetComponent(0),
       e =
         ((this.j8 = e?.GetPlayerId() ?? 0),
-        e?.ComponentDataMap.get("Wih")?.Wih?.Yih);
+        e?.ComponentDataMap.get("nI_")?.nI_?.OI_);
     return e && this.UpdateFollowers(e), !0;
   }
   OnClear() {
-    return (this.j8 = 0), this.WVa(), this.FVa.clear(), !0;
+    return (this.j8 = 0), this.NHa(), this.qHa.clear(), !0;
   }
   UpdateFollowers(e) {
     for (const s of e) {
@@ -54,83 +59,95 @@ let PlayerFollowerComponent = class PlayerFollowerComponent extends EntityCompon
       switch (s.h5n) {
         case Protocol_1.Aki.Protocol.Summon.tJs
           .Proto_EPlayerFollowerExploreSkill:
-          e = 100;
+          e = 0;
           break;
         case Protocol_1.Aki.Protocol.Summon.tJs.Proto_EPlayerFollowerAuxiliary:
-          e = 101;
+          e = 1;
+          break;
+        case Protocol_1.Aki.Protocol.Summon.tJs
+          .Proto_EPlayerFollowerSpecialItem:
+          e = 2;
       }
       var t;
-      e
-        ? (t = MathUtils_1.MathUtils.LongToNumber(s.F4n)) <= 0
-          ? this.FVa.delete(e)
-          : this.FVa.set(e, t)
-        : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Battle", 49, "Follower类型异常", ["Type", s.h5n]);
+      void 0 === e
+        ? Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("Battle", 48, "Follower类型异常", ["Type", s.h5n])
+        : (t = MathUtils_1.MathUtils.LongToNumber(s.F4n)) <= 0
+          ? this.qHa.delete(e)
+          : this.qHa.set(e, t);
     }
     var o,
       i,
       r = [-1, 0];
-    for ([o, i] of this.FVa) o > r[0] && ((r[0] = o), (r[1] = i));
+    for ([o, i] of this.qHa)
+      this.Fh_(o) > this.Fh_(r[0]) && ((r[0] = o), (r[1] = i));
     r[0] < 0
-      ? this.WVa()
-      : (e = r[1]) !== this.HYa && (this.WVa(), (this.HYa = e), this.QVa());
+      ? this.NHa()
+      : (e = r[1]) !== this.qeh && (this.NHa(), (this.qeh = e), this.FHa());
+  }
+  Fh_(e) {
+    return followerPriorityMap.get(e) ?? -1;
   }
   OnFollowerAdd(e) {
-    e === this.HYa && this.QVa();
+    e === this.qeh && this.FHa();
   }
-  QVa() {
-    var e,
-      t = this.HYa;
-    const o = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
+  FHa() {
+    const t = this.qeh,
+      o = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     o?.Valid &&
-      o.Id !== this.VVa?.Id &&
-      !this.jVa &&
-      ((e = (e) => {
-        (this.jVa = void 0),
-          e &&
-            (e = o.Entity?.GetComponent(204)) &&
-            ((this.VVa = o),
-            (this.HVa = e),
-            this.j8 ===
-              ModelManager_1.ModelManager.CreatureModel.GetPlayerId()) &&
-            (e.Possess(),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnPlayerFollowerCreate,
-              o,
-            ));
-      }),
+      o.Id !== this.OHa?.Id &&
+      (this.kHa?.Cancel(),
+      (this.kHa = void 0),
       o.IsInit
-        ? e(!0)
-        : (this.jVa = WaitEntityTask_1.WaitEntityTask.Create(t, e, -1)));
+        ? this.vGl(t, o)
+        : (this.kHa = WaitEntityTask_1.WaitEntityTask.Create(
+            "PlayerFollowerComponent.PossessFollower",
+            t,
+            (e) => {
+              e && this.vGl(t, o);
+            },
+            -1,
+          )));
   }
-  WVa() {
-    this.jVa?.Cancel(),
-      (this.jVa = void 0),
-      this.HVa &&
+  async vGl(e, t) {
+    var o = t.Entity?.GetComponent(219);
+    o &&
+      (await o.LoadConfigPromise?.Promise, t.Valid) &&
+      e === this.qeh &&
+      ((this.OHa = t),
+      (this.GHa = o),
+      this.j8 === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()) &&
+      (o.Possess(),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnPlayerFollowerCreate,
+        t,
+      ));
+  }
+  NHa() {
+    this.kHa?.Cancel(),
+      (this.kHa = void 0),
+      this.GHa &&
         this.j8 === ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
-        (this.HVa.UnPossess(),
+        (this.GHa.UnPossess(),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnPlayerFollowerDestroy,
         )),
-      (this.HYa = 0),
-      (this.VVa = void 0),
-      (this.HVa = void 0);
+      (this.qeh = 0),
+      (this.OHa = void 0),
+      (this.GHa = void 0);
   }
   SetFollowerEnable(e) {
-    this.HVa?.SetEnable(e);
+    this.GHa?.SetEnable(e);
   }
   GetFollower() {
-    return this.VVa;
+    return this.OHa;
   }
   IsFollowerEnable() {
-    return this.HVa?.IsEnable ?? !1;
-  }
-  IsFollowerNeedInput(e, t) {
-    return this.HVa?.IsNeedInput(e, t) ?? !1;
+    return this.GHa?.IsEnable ?? !1;
   }
 };
 (PlayerFollowerComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(206)],
+  [(0, RegisterComponent_1.RegisterComponent)(221)],
   PlayerFollowerComponent,
 )),
   (exports.PlayerFollowerComponent = PlayerFollowerComponent);

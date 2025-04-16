@@ -29,7 +29,7 @@ class FoleySynthModel1Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Audio",
-                  58,
+                  57,
                   "-------------Ak[FoleySynth][ParseBoneSpeedForAudio] Debug信息",
                   ["Model", this.constructor?.name],
                   ["Actor", this.ActorComp.Actor.GetName()],
@@ -47,7 +47,7 @@ class FoleySynthModel1Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Audio",
-                58,
+                57,
                 "-------------Ak[FoleySynth][ParseBoneSpeedForAudio] Debug信息",
                 ["Model", this.constructor?.name],
                 ["Actor", this.ActorComp.Actor.GetName()],
@@ -69,7 +69,7 @@ class FoleySynthModel1Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Audio",
-                  58,
+                  57,
                   "-------------Ak[FoleySynth][ParseBoneSpeedForAudio] Debug信息",
                   ["Model", this.constructor?.name],
                   ["Actor", this.ActorComp.Actor.GetName()],
@@ -91,7 +91,7 @@ class FoleySynthModel1Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Audio",
-                  58,
+                  57,
                   "-------------Ak[FoleySynth][ParseBoneSpeedForAudio] Debug信息",
                   ["Model", this.constructor?.name],
                   ["Actor", this.ActorComp.Actor.GetName()],
@@ -106,7 +106,7 @@ class FoleySynthModel1Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Audio",
-        58,
+        57,
         "-------------Ak[FoleySynth][ParseBoneSpeedForAudio] Debug信息",
         ["Model", this.constructor?.name],
         ["Actor", this.ActorComp.Actor.GetName()],
@@ -140,7 +140,7 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Audio",
-                58,
+                57,
                 "-------------Ak[FoleySynth][ParseBoneSpeedForAudio] Debug信息",
                 ["Model", this.constructor?.name],
                 ["Actor", this.ActorComp.Actor.GetName()],
@@ -171,7 +171,7 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Audio",
-                58,
+                57,
                 "-------------Ak[FoleySynth][ParseBoneSpeedForAudio] Debug信息",
                 ["Model", this.constructor?.name],
                 ["Actor", this.ActorComp.Actor.GetName()],

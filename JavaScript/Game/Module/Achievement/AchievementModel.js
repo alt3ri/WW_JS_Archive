@@ -27,6 +27,8 @@ class AchievementModel extends ModelBase_1.ModelBase {
       (this.Tbe = new Map()),
       (this.Lbe = new Array()),
       (this.Dbe = new Array()),
+      (this.Eth = 0),
+      (this.Ith = 0),
       (this.Rbe = (e, t) => t.GetFinishTime() - e.GetFinishTime());
   }
   Ube(e) {
@@ -90,10 +92,11 @@ class AchievementModel extends ModelBase_1.ModelBase {
   }
   PhraseBaseData(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Achievement", 28, "Achievement PhraseBaseData response"),
+      Log_1.Log.Info("Achievement", 27, "Achievement PhraseBaseData response"),
       (this.Lbe = new Array()),
       (this.Dbe = new Array()),
       this.Ibe.clear(),
+      this.Ebe.clear(),
       e.hvs.forEach((e) => {
         this.GetAchievementGroupData(e.svs.s5n).Phrase(e.svs),
           e.avs.forEach((e) => {
@@ -104,12 +107,17 @@ class AchievementModel extends ModelBase_1.ModelBase {
                 : 2 === t.GetFinishState() && this.wbe(t);
           });
       }),
+      (this.Eth = e.oS_),
+      (this.Ith = e.nS_),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAchievementDataNotify,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshAchievementRedPoint,
       );
+  }
+  PhraseUpdateData(e) {
+    for (const t of e.avs) this.GetAchievementData(t.s5n).Phrase(t);
   }
   OnAchievementProgressNotify(e) {
     var t = this.GetAchievementData(e.s5n),
@@ -119,7 +127,7 @@ class AchievementModel extends ModelBase_1.ModelBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Achievement",
-          28,
+          27,
           "OnAchievementGroupProgressNotify",
           ["id", t.GetId()],
           ["currentState", e],
@@ -154,7 +162,7 @@ class AchievementModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Achievement",
-        28,
+        27,
         "OnAchievementGroupProgressNotify",
         ["id", t.GetId()],
         ["currentState", e],
@@ -163,6 +171,9 @@ class AchievementModel extends ModelBase_1.ModelBase {
         EventDefine_1.EEventName.OnAchievementGroupDataNotify,
         t.GetId(),
       );
+  }
+  OnAchievementCountChangeNotify(e) {
+    (this.Ith = e.nS_), (this.Eth = e.oS_);
   }
   GetGroupAchievements(e, t = !0) {
     let i = this.Ebe.get(e);
@@ -174,28 +185,31 @@ class AchievementModel extends ModelBase_1.ModelBase {
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Achievement",
-            28,
+            27,
             "GetGroupAchievements not Show",
             ["id", i[e].GetId()],
             ["MaxProgress", i[e].GetMaxProgress()],
           );
     return r;
   }
+  GetGroupAchievementsIsRedDot(e) {
+    return this.GetGroupAchievements(e, !1).some((e) => e.RedPoint());
+  }
   GetAchievementCategoryIndex(t) {
     return this.GetAchievementCategoryArray().findIndex(
       (e) => e.GetId() === t.GetId(),
     );
   }
-  GetAchievementCategoryGroups(e) {
-    let t = this.ybe.get(e);
-    t || (this.Abe(e), (t = this.ybe.get(e)));
-    const i = new Array();
+  GetAchievementCategoryGroups(e, t = !0) {
+    let i = this.ybe.get(e);
+    if ((i || (this.Abe(e), (i = this.ybe.get(e))), !t)) return i ?? [];
+    const r = new Array();
     return (
-      t.forEach((e) => {
-        e.GetShowState() && i.push(e);
+      i.forEach((e) => {
+        e.GetShowState() && r.push(e);
       }),
-      i.sort((e, t) => e.GetSort() - t.GetSort()),
-      i
+      r.sort((e, t) => e.GetSort() - t.GetSort()),
+      r
     );
   }
   GetAchievementData(t) {
@@ -205,12 +219,12 @@ class AchievementModel extends ModelBase_1.ModelBase {
       } catch (e) {
         e instanceof Error
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.ErrorWithStack("Achievement", 59, "成就初始化异常", e, [
+            Log_1.Log.ErrorWithStack("Achievement", 58, "成就初始化异常", e, [
               "id",
               t,
             ])
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Achievement", 59, "成就初始化异常", ["error", e]);
+            Log_1.Log.Error("Achievement", 58, "成就初始化异常", ["error", e]);
       }
     return this.Ibe.get(t);
   }
@@ -265,17 +279,14 @@ class AchievementModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetAchievementRedPointState() {
-    var t = this.GetAchievementCategoryArray();
-    for (let e = 0; e < t.length; e++)
-      if (this.GetCategoryRedPointState(t[e].GetId())) return !0;
-    return !1;
+    return this.GetAchievementCategoryArray().some((e) =>
+      this.GetCategoryRedPointState(e.GetId()),
+    );
   }
   GetCategoryRedPointState(e) {
-    var t = this.GetAchievementCategoryGroups(e);
-    if (t)
-      for (let e = 0; e < t.length; e++)
-        if (t[e].SmallItemRedPoint()) return !0;
-    return !1;
+    return this.GetAchievementCategoryGroups(e, !1).some((e) =>
+      e.SmallItemRedPoint(),
+    );
   }
   GetCategoryStarNum(e) {
     let t = 0;
@@ -283,72 +294,11 @@ class AchievementModel extends ModelBase_1.ModelBase {
       for (const r of this.GetGroupAchievements(i.GetId())) t += r.GetMaxStar();
     return t;
   }
-  GetCategoryObtainStarNum(e) {
-    let t = 0;
-    for (const i of this.GetAchievementCategoryGroups(e))
-      for (const r of this.GetGroupAchievements(i.GetId()))
-        t += r.GetFinishedStar();
-    return t;
-  }
-  GetAllObtainStarNum() {
-    var e = this.GetAchievementCategoryArray();
-    if (void 0 === e) return 0;
-    let t = 0;
-    for (const i of e) t += this.GetCategoryObtainStarNum(i.GetId());
-    return t;
-  }
   GetFinishedAchievementNum() {
-    let t = 0;
-    return (
-      this.Dbe.forEach((e) => {
-        (e = this.GetAchievementGroupData(e.GetGroupId())),
-          (e =
-            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
-              e.GetCategory(),
-            ));
-        showFunctionList.includes(e) && t++;
-      }),
-      this.Lbe.forEach((e) => {
-        (e = this.GetAchievementGroupData(e.GetGroupId())),
-          (e =
-            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
-              e.GetCategory(),
-            ));
-        showFunctionList.includes(e) && t++;
-      }),
-      t
-    );
-  }
-  GetAchievementAllStar() {
-    let t = 0;
-    return (
-      this.GetAchievementCategoryArray().forEach((e) => {
-        t += this.GetCategoryStarNum(e.GetId());
-      }),
-      t
-    );
+    return this.Ith;
   }
   GetAchievementFinishedStar() {
-    let i = 0;
-    return (
-      this.Dbe.forEach((e) => {
-        var t = this.GetAchievementGroupData(e.GetGroupId()),
-          t =
-            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
-              t.GetCategory(),
-            );
-        showFunctionList.includes(t) && (i += e.GetAchievementConfigStar());
-      }),
-      this.Lbe.forEach((e) => {
-        var t = this.GetAchievementGroupData(e.GetGroupId()),
-          t =
-            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
-              t.GetCategory(),
-            );
-        showFunctionList.includes(t) && (i += e.GetAchievementConfigStar());
-      }),
-      i
-    );
+    return this.Eth;
   }
   RefreshSearchResult() {
     var e = this.GetAchievementCategoryArray();
@@ -384,7 +334,7 @@ class AchievementModel extends ModelBase_1.ModelBase {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Achievement",
-              28,
+              27,
               "成就分类找不到名称",
               ["id", e.GetId()],
               ["title", e.GetTitle()],

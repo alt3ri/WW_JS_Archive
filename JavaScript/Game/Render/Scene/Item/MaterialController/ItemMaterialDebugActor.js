@@ -18,6 +18,11 @@ class ItemMaterialDebugActor extends UE.KuroEffectActor {
       (this.GlobalItemMaterialController = void 0),
       (this.Controllers = []);
   }
+  Constructor() {
+    (this.GlobalNum = 0),
+      (this.GlobalItemMaterialController = void 0),
+      (this.Controllers = []);
+  }
   EditorTick(t) {
     ItemMaterialManager_1.ItemMaterialManager.Tick(
       t * CommonDefine_1.MILLIONSECOND_PER_SECOND,

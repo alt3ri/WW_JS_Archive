@@ -7,6 +7,7 @@ const cpp_1 = require("cpp"),
   Log_1 = require("../Common/Log"),
   Stats_1 = require("../Common/Stats"),
   PriorityQueue_1 = require("../Container/PriorityQueue"),
+  EffectEnvironment_1 = require("../Effect/EffectEnvironment"),
   TickSystem_1 = require("../Tick/TickSystem"),
   ActorPoolGuard_1 = require("./ActorPoolGuard"),
   ActorSystemDebugger_1 = require("./ActorSystemDebugger"),
@@ -23,7 +24,7 @@ class Entry {
       (this.t6 = 0),
       (this.i6 = 0),
       (this.Score = 0),
-      (this.Values = new Set());
+      (this.Values = new Map());
   }
   Touch(t = void 0) {
     (this.t6 += 1),
@@ -51,7 +52,9 @@ class Entry {
 class ActorSystem {
   static Initialize() {
     UE.KuroActorManager.InitActorManager(),
-      this.SetBudget(UE.TsEffectActor_C.StaticClass(), 100),
+      EffectEnvironment_1.EffectEnvironment.OpenCppOptimize
+        ? this.SetBudget(UE.EffectSystemActor.StaticClass(), 100)
+        : this.SetBudget(UE.TsEffectActor_C.StaticClass(), 100),
       TickSystem_1.TickSystem.Add(ActorSystem.r6, "ActorSystem.Tick", 2, !0);
   }
   static get Size() {
@@ -90,10 +93,10 @@ class ActorSystem {
       let e = ActorSystem.ve.get(r);
       if (!e) {
         e = new Entry(r, ActorSystem.C6.get(r) ?? 0);
-        const y = cpp_1.KuroTime.GetMilliseconds64(),
+        const i = cpp_1.KuroTime.GetMilliseconds64(),
           t = ActorSystem.g6(r, o, s);
         return (
-          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - y),
+          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - i),
           ActorSystem.mp.Push(e),
           ActorSystem.ve.set(r, e),
           (ActorSystem.h6 = ActorSystem.h6 * ActorSystem.a6),
@@ -117,24 +120,31 @@ class ActorSystem {
       var m = e.Values;
       let t = void 0;
       for (; m.size; ) {
-        var A = m.values().next();
-        if (((t = A.value), m.delete(t), --ActorSystem.n6, t)) {
+        var A = m.keys().next(),
+          A = ((t = A.value), m.values().next()),
+          A = A.value,
+          y = (m.delete(t), --ActorSystem.n6, ActorSystem.pLe.get(A));
+        if (t) {
           if (t.IsValid()) {
             t.OnEndPlay.Remove(ActorSystem.hbn);
-            A = t.GetWorld();
-            if (A && A.IsValid()) {
+            var a = t.GetWorld();
+            if (a && a.IsValid()) {
               if (c) {
                 if (
                   !ActorPoolGuard_1.ActorPoolGuard.PrepareActorBeforeDePool(t)
                 ) {
                   Log_1.Log.CheckWarn() &&
-                    Log_1.Log.Warn("ActorSystem", 1, "Actor出池重置失败", [
-                      "ueClass",
-                      r.GetName(),
-                    ]),
+                    Log_1.Log.Warn(
+                      "ActorSystem",
+                      1,
+                      "Actor出池重置失败",
+                      ["ueClass", r.GetName()],
+                      ["Reason", y],
+                    ),
                     ActorSystem.f6.push({
                       Actor: t,
                       Klass: t.GetClass().GetName(),
+                      ReasonId: A,
                     }),
                     (t = void 0);
                   continue;
@@ -142,16 +152,25 @@ class ActorSystem {
                 t.OnDestroyed.Remove(ActorSystem._Tn),
                   t.OnDestroyed.Add(ActorSystem._Tn);
               }
-              o && t.K2_SetActorTransform(o, !1, void 0, !0),
+              ActorSystem.Kml.delete(t),
+                ActorSystem.pLe.delete(A),
+                o && t.D_K2_SetActorTransform(o, !1, void 0, !0),
                 s && t.SetOwner(s);
               break;
             }
             Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("ActorSystem", 1, "Actor所属World无效", [
-                "ueClass",
-                r.GetName(),
-              ]),
-              ActorSystem.f6.push({ Actor: t, Klass: t.GetClass().GetName() });
+              Log_1.Log.Warn(
+                "ActorSystem",
+                1,
+                "Actor所属World无效",
+                ["ueClass", r.GetName()],
+                ["Reason", y],
+              ),
+              ActorSystem.f6.push({
+                Actor: t,
+                Klass: t.GetClass().GetName(),
+                ReasonId: A,
+              });
           } else
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -160,6 +179,7 @@ class ActorSystem {
                 "对象无效",
                 ["Target", t],
                 ["ueClass", r.GetName()],
+                ["Reason", y],
               );
           t = void 0;
         } else
@@ -170,6 +190,7 @@ class ActorSystem {
               "对象不存在",
               ["Target", t],
               ["ueClass", r.GetName()],
+              ["Reason", y],
             );
       }
       if (t)
@@ -191,9 +212,9 @@ class ActorSystem {
               PendingKillNum: ActorSystem.f6.length,
             });
       else {
-        const y = cpp_1.KuroTime.GetMilliseconds64();
+        const i = cpp_1.KuroTime.GetMilliseconds64();
         (t = ActorSystem.g6(r, o, s)),
-          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - y),
+          e.Touch(cpp_1.KuroTime.GetMilliseconds64() - i),
           ActorSystem.mp.Update(e),
           (ActorSystem.h6 = ActorSystem.h6 * ActorSystem.a6),
           (ActorSystem.l6 = ActorSystem.l6 * ActorSystem.a6 + 1),
@@ -215,70 +236,101 @@ class ActorSystem {
     }
     ActorSystem.u6.Stop();
   }
-  static Put(e, r) {
-    if ((ActorSystem.p6.Start(), !e || !e.IsValid()))
+  static Put(e, r, o) {
+    if ((ActorSystem.p6.Start(), !r || !r.IsValid()))
       return (
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("ActorSystem", 1, "对象不存在", ["Target", e]),
+          Log_1.Log.Warn(
+            "ActorSystem",
+            1,
+            "对象不存在",
+            ["Target", r],
+            ["Reason", e],
+          ),
         ActorSystem.p6.Stop(),
         !1
       );
     if (ActorSystem.Enable && 1 === ActorSystem.State) {
-      if (!UE.KuroActorManager.IsPooledActor(e))
+      if (!UE.KuroActorManager.IsPooledActor(r))
+        return UE.KuroActorManager.DestroyActor(r), ActorSystem.p6.Stop(), !1;
+      var s = r.GetClass();
+      if (!r.GetWorld() || !r.GetWorld().IsValid())
         return (
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("ActorSystem", 1, "非池化对象", ["Target", e]),
-          UE.KuroActorManager.DestroyActor(e),
+            Log_1.Log.Warn(
+              "ActorSystem",
+              1,
+              "World无效或者World发生改变",
+              ["ueClass", s.GetName()],
+              ["Reason", e],
+            ),
+          UE.KuroActorManager.DestroyActor(r),
           ActorSystem.p6.Stop(),
           !1
         );
-      var o = e.GetClass();
-      if (!e.GetWorld() || !e.GetWorld().IsValid())
-        return (
-          Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("ActorSystem", 1, "World无效或者World发生改变", [
-              "ueClass",
-              o.GetName(),
-            ]),
-          UE.KuroActorManager.DestroyActor(e),
-          ActorSystem.p6.Stop(),
-          !1
-        );
-      var s = ActorSystem.m6(ActorSystem.v6, o, "ActorSystem.Put.");
+      var c = ActorSystem.m6(ActorSystem.v6, s, "ActorSystem.Put.");
       if (
-        (s?.Start(),
-        !ActorPoolGuard_1.ActorPoolGuard.CleanActorBeforeEnPool(e, r))
+        (c?.Start(),
+        !ActorPoolGuard_1.ActorPoolGuard.CleanActorBeforeEnPool(r, o))
       )
         return (
-          UE.KuroActorManager.DestroyActor(e),
-          s?.Stop(),
+          UE.KuroActorManager.DestroyActor(r),
+          c?.Stop(),
           ActorSystem.p6.Stop(),
           !1
         );
-      e.OnDestroyed.Add(ActorSystem._Tn), e.OnEndPlay.Add(ActorSystem.hbn);
-      let t = ActorSystem.ve.get(o);
+      if (
+        (r.OnDestroyed.Add(ActorSystem._Tn),
+        r.OnEndPlay.Add(ActorSystem.hbn),
+        ActorSystem.Kml.has(r))
+      )
+        return (
+          (o = ActorSystem.Kml.get(r)),
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "ActorSystem",
+              9,
+              "Actor被重复入池！",
+              ["ueClass", s.GetName()],
+              ["OldReason", o],
+              ["Reason", e],
+            ),
+          c?.Stop(),
+          ActorSystem.p6.Stop(),
+          !1
+        );
+      var S,
+        o = ++ActorSystem.iao;
+      ActorSystem.pLe.set(o, e), ActorSystem.Kml.set(r, o);
+      let t = ActorSystem.ve.get(s);
       if (t) {
-        if (t.Values.has(e))
+        if (t.Values.has(r))
           return (
+            (S = t.Values.get(r)),
+            (S = ActorSystem.pLe.get(S)),
             Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("ActorSystem", 10, "Actor被重复入池！", [
-                "ueClass",
-                o.GetName(),
-              ]),
-            s?.Stop(),
+              Log_1.Log.Warn(
+                "ActorSystem",
+                9,
+                "Actor被重复入池！",
+                ["ueClass", s.GetName()],
+                ["OldReason", S],
+                ["Reason", e],
+              ),
+            c?.Stop(),
             ActorSystem.p6.Stop(),
             !1
           );
-        t.Values.add(e), t.Touch(), ActorSystem.mp.Update(t);
+        t.Values.set(r, o), t.Touch(), ActorSystem.mp.Update(t);
       } else
-        (t = new Entry(o, ActorSystem.C6.get(o) ?? 0)).Values.add(e),
+        (t = new Entry(s, ActorSystem.C6.get(s) ?? 0)).Values.set(r, o),
           t.Touch(),
           ActorSystem.mp.Push(t),
-          ActorSystem.ve.set(o, t);
+          ActorSystem.ve.set(s, t);
       for (
         Info_1.Info.IsBuildDevelopmentOrDebug &&
           ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
-            ClassName: o.GetName(),
+            ClassName: s.GetName(),
             GetOrPut: "Put",
             Hit: !1,
             HitRate: ActorSystem.HitRate,
@@ -292,8 +344,8 @@ class ActorSystem {
 
       )
         ActorSystem._6();
-      s?.Stop();
-    } else UE.KuroActorManager.DestroyActor(e);
+      c?.Stop();
+    } else UE.KuroActorManager.DestroyActor(r);
     return ActorSystem.p6.Stop(), !0;
   }
   static Clear() {
@@ -341,21 +393,31 @@ class ActorSystem {
   static _6() {
     var t,
       e,
-      r = ActorSystem.mp.Top;
-    return r
-      ? (0 === (t = r.Values).size
-          ? (ActorSystem.mp.Pop(), ActorSystem.ve.delete(r.Class))
-          : ((e = t.values().next().value),
-            t.delete(e),
+      r,
+      o = ActorSystem.mp.Top;
+    return o
+      ? (0 === (r = o.Values).size
+          ? (ActorSystem.mp.Pop(), ActorSystem.ve.delete(o.Class))
+          : ((t = r.keys().next().value),
+            (e = r.values().next().value),
+            r.delete(t),
             --ActorSystem.n6,
-            r.Touch(),
-            ActorSystem.mp.Update(r),
-            e?.IsValid() &&
-              (e.OnEndPlay.Remove(ActorSystem.hbn),
-              ActorSystem.f6.push({ Actor: e, Klass: e.GetClass().GetName() })),
+            o.Touch(),
+            ActorSystem.mp.Update(o),
+            t?.IsValid()
+              ? (t.OnEndPlay.Remove(ActorSystem.hbn),
+                ActorSystem.f6.push({
+                  Actor: t,
+                  Klass: t.GetClass().GetName(),
+                  ReasonId: e,
+                }))
+              : (ActorSystem.pLe.delete(e), ActorSystem.Kml.delete(t)),
             Info_1.Info.IsBuildShipping ||
+              ((r = UE.KismetSystemLibrary.IsValid(t)
+                ? t.GetClass().GetName()
+                : "InvalidClass"),
               ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
-                ClassName: e?.GetClass()?.GetName(),
+                ClassName: r,
                 GetOrPut: "Evict",
                 Hit: !1,
                 TimeStamp: new Date().getTime(),
@@ -363,7 +425,7 @@ class ActorSystem {
                 HitRate: ActorSystem.HitRate,
                 CurrentTotal: ActorSystem.Size,
                 PendingKillNum: ActorSystem.f6.length,
-              })),
+              }))),
         !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("ActorSystem", 1, "队列为空"),
@@ -374,7 +436,7 @@ class ActorSystem {
     var o = ActorSystem.m6(ActorSystem.y6, t, "ActorSystem.Spawn."),
       e =
         (o?.Start(),
-        UE.KuroActorManager.SpawnActor(Info_1.Info.World, t, e, 1, r));
+        UE.KuroActorManager.D_SpawnActor(Info_1.Info.World, t, e, 1, r));
     return (
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
@@ -397,7 +459,7 @@ class ActorSystem {
     var o = ActorSystem.m6(ActorSystem.y6, t, "ActorSystem.SpawnAsPoolActor."),
       t =
         (o?.Start(),
-        UE.KuroActorManager.SpawnActor(
+        UE.KuroActorManager.D_SpawnActor(
           Info_1.Info.World,
           t,
           e,
@@ -411,7 +473,11 @@ class ActorSystem {
   static m6(e, r, o) {
     if (Stats_1.Stat.Enable) {
       let t = e.get(r);
-      return t || ((t = Stats_1.Stat.Create(o + r.GetName())), e.set(r, t)), t;
+      return (
+        t ||
+          ((t = Stats_1.Stat.CreateNoFlameGraph(o + r.GetName())), e.set(r, t)),
+        t
+      );
     }
   }
   static uTn(t) {
@@ -424,7 +490,7 @@ class ActorSystem {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "ActorSystem",
-            17,
+            16,
             "增加类型引用计数",
             ["ueClass", t],
             ["newCount", r],
@@ -432,7 +498,7 @@ class ActorSystem {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ActorSystem",
-          17,
+          16,
           "增加类型引用计数 时错误, Actor非法",
         );
   }
@@ -442,7 +508,7 @@ class ActorSystem {
       ((e = ActorSystem.cTn.get(t)) && 0 < e) ||
       (UE.KuroActorManager.ResetClassPropertyCache(t),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("ActorSystem", 17, "释放类型缓存", ["ueClass", t]));
+        Log_1.Log.Debug("ActorSystem", 16, "释放类型缓存", ["ueClass", t]));
   }
 }
 ((exports.ActorSystem = ActorSystem).Enable = !0),
@@ -454,9 +520,12 @@ class ActorSystem {
   (ActorSystem.cTn = new Map()),
   (ActorSystem.C6 = new Map()),
   (ActorSystem.f6 = new Array()),
+  (ActorSystem.pLe = new Map()),
+  (ActorSystem.Kml = new Map()),
   (ActorSystem.a6 = 1 - 1 / ActorSystem.s6),
   (ActorSystem.h6 = 0),
   (ActorSystem.l6 = 0),
+  (ActorSystem.iao = 0),
   (ActorSystem.u6 = Stats_1.Stat.Create("ActorSystem.Get")),
   (ActorSystem.p6 = Stats_1.Stat.Create("ActorSystem.Put")),
   (ActorSystem.S6 = Stats_1.Stat.Create("ActorSystem.Spawn")),
@@ -470,14 +539,19 @@ class ActorSystem {
   (ActorSystem.r6 = () => {
     for (ActorSystem.I6.Start(); ActorSystem.f6.length; ) {
       var t = ActorSystem.f6.pop(),
-        e = t.Actor;
-      if (e && e.IsValid()) {
-        var r = ActorSystem.m6(
+        e = t.Actor,
+        r = ActorSystem.pLe.get(t.ReasonId);
+      if (
+        (ActorSystem.pLe.delete(t.ReasonId),
+        ActorSystem.Kml.delete(e),
+        e && e.IsValid())
+      ) {
+        var o = ActorSystem.m6(
           ActorSystem.T6,
           e.GetClass(),
           "ActorSystem.Destroy.",
         );
-        r?.Start(),
+        o?.Start(),
           UE.KuroActorManager.DestroyActor(e),
           Info_1.Info.IsBuildShipping ||
             ActorSystemDebugger_1.ActorSystemDebugger.RecordGetPut({
@@ -490,19 +564,31 @@ class ActorSystem {
               CurrentTotal: ActorSystem.Size,
               PendingKillNum: ActorSystem.f6.length,
             }),
-          r?.Stop();
+          o?.Stop();
         break;
       }
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("ActorSystem", 1, "Tick删除对象时对象非法", [
-          "className",
-          t.Klass,
-        ]);
+        Log_1.Log.Warn(
+          "ActorSystem",
+          1,
+          "Tick删除对象时对象非法",
+          ["className", t.Klass],
+          ["Reason", r],
+        );
     }
     ActorSystem.I6.Stop();
   }),
   (ActorSystem.hbn = (t, e) => {
-    switch (e) {
+    let r = void 0;
+    var o;
+    switch (
+      (t &&
+        (o = ActorSystem.Kml.get(t)) &&
+        ((r = ActorSystem.pLe.get(o)),
+        ActorSystem.pLe.delete(o),
+        ActorSystem.Kml.delete(t)),
+      e)
+    ) {
       case 2:
       case 4:
       case 1:
@@ -514,7 +600,8 @@ class ActorSystem {
         3,
         "ActorSystem的Actor意外删除",
         ["ActorName", t?.GetName()],
-        ["Reason", e],
+        ["EEndPlayReason", e],
+        ["Reason", r],
       );
   }),
   (ActorSystem._Tn = (t) => {
@@ -527,7 +614,7 @@ class ActorSystem {
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "ActorSystem",
-            17,
+            16,
             "减少类型引用计数",
             ["ueClass", t],
             ["newCount", r],
@@ -535,7 +622,7 @@ class ActorSystem {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ActorSystem",
-          17,
+          16,
           "减少类型引用计数 时错误, Actor非法",
         );
   });

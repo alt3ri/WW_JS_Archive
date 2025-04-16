@@ -84,11 +84,11 @@ class BusinessViewController {
       (this.JumpByConfigCondition = (i) => {
         i = ConfigManager_1.ConfigManager.BusinessConfig.GetDelegationConfig(i);
         1 === i.JumpType
-          ? this.Fpa(i.JumpParam)
+          ? this.Vpa(i.JumpParam)
           : 2 === i.JumpType
-            ? this.Vpa(i.JumpParam)
+            ? this.Hpa(i.JumpParam)
             : 3 === i.JumpType
-              ? this.Hpa(i.JumpParam)
+              ? this.jpa(i.JumpParam)
               : ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
                   "Moonfiesta_EntrustLock",
                 );
@@ -128,7 +128,7 @@ class BusinessViewController {
   BackToState(i) {
     this.tke.BackToState(i);
   }
-  Fpa(i) {
+  Vpa(i) {
     var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(199),
       e = ConfigManager_1.ConfigManager.TaskConfig.GetMainLineTaskById(i),
       e = ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(e.TaskId),
@@ -139,7 +139,7 @@ class BusinessViewController {
       }),
       ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(t);
   }
-  Vpa(i) {
+  Hpa(i) {
     var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(199),
       e = ConfigManager_1.ConfigManager.TaskConfig.GetBranchLineTaskById(i),
       e = ModelManager_1.ModelManager.QuestNewModel.GetQuestConfig(e.TaskId),
@@ -150,7 +150,7 @@ class BusinessViewController {
       }),
       ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(t);
   }
-  Hpa(i) {
+  jpa(i) {
     var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(196),
       e = ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingById(i),
       e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Name);

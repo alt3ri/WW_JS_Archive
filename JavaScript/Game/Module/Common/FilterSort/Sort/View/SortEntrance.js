@@ -65,10 +65,10 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.UpdateDataListFunction = i),
       (this.hDt = void 0),
-      (this.bfa = !1),
+      (this.Ufa = !1),
       (this._Dt = 1),
       (this.Mne = 0),
-      (this.Wka = void 0),
+      (this.$Fa = void 0),
       (this.vUt = 1),
       (this.ypt = []),
       (this.lDt = []),
@@ -135,16 +135,16 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     this.lLt?.Destroy(),
-      this.Qka(),
+      this.XFa(),
       ModelManager_1.ModelManager.SortModel.DeleteSortResultData(this.Mne);
   }
-  Qka() {
+  XFa() {
     var t;
-    this.Wka &&
+    this.$Fa &&
       0 !== this._Dt &&
       ((t = this.hDt.ConvertToStorageData()),
       ModelManager_1.ModelManager.SortModel.SetSortConfigData(
-        this.Wka,
+        this.$Fa,
         this._Dt,
         t,
       ));
@@ -152,7 +152,7 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
   mDt(t, i) {
     (this._Dt = t),
       (this.Mne = ConfigManager_1.ConfigManager.SortConfig.GetSortId(t)),
-      (this.Wka = i ?? void 0);
+      (this.$Fa = i ?? void 0);
   }
   VUt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
@@ -167,7 +167,7 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
       ((this.hDt = ModelManager_1.ModelManager.SortModel.GetSortResultData(
         this.Mne,
       )),
-      !this.hDt || this.bfa)
+      !this.hDt || this.Ufa)
     ) {
       var i = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne),
         i = t?.SelectBaseSort ?? i.BaseSortList[0];
@@ -202,14 +202,14 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
           this.hDt,
         );
       }
-      this.bfa &&
+      this.Ufa &&
         ((s = this.hDt.GetSelectBaseSort()) &&
           ((i = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
             s[0],
             this.vUt,
           )),
           (s[1] = i)),
-        (this.bfa = !1));
+        (this.Ufa = !1));
     }
   }
   OUt(t) {
@@ -290,7 +290,7 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
         this.qpt(!0));
   }
   UpdateDataWithConfig(t, i, s, ...e) {
-    this.Qka(),
+    this.XFa(),
       this.mDt(t, i),
       this.WUt(),
       this.Mne <= 0 ||
@@ -309,7 +309,7 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
         this.qpt(!0));
   }
   SetResultDataDirty() {
-    this.bfa = !0;
+    this.Ufa = !0;
   }
   SetSortToggleState(t) {
     t = t ? 1 : 0;

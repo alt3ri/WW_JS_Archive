@@ -63,12 +63,12 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
           ? (e = SpeakerById_1.configSpeakerById.GetConfig(i.Talker))
             ? (this.uqt(e), this.cqt(e))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Quest", 19, "找不到通讯对话人配置", [
+              Log_1.Log.Error("Quest", 18, "找不到通讯对话人配置", [
                 "talkerId",
                 i.Talker,
               ])
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Quest", 19, "找不到通讯配置", [
+            Log_1.Log.Error("Quest", 18, "找不到通讯配置", [
               "communicateId",
               this.sqt,
             ]));

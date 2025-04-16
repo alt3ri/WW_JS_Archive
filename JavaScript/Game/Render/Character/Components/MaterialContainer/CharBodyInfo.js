@@ -36,8 +36,8 @@ class CharBodyInfo {
       (this.Uhr = void 0),
       (this.LastUpdateCounter = 0);
   }
-  Init(t, e, i, s, h) {
-    (this.Uhr = h),
+  Init(t, e, i, s, h = !1) {
+    (this.Uhr = s),
       (this.ActorName = t),
       (this.BodyName = e),
       (this.BodyType = RenderConfig_1.RenderConfig.GetBodyTypeByName(e)),
@@ -52,50 +52,45 @@ class CharBodyInfo {
       a = r.Num();
     this.MaterialSlotList = new Array(a);
     for (let e = 0; e < a; e++) {
-      var o =
-        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSkeletalMaterialInterface(
-          i.SkeletalMesh,
-          e,
-        );
-      if (
-        ((this.MaterialSlotList[e] = new CharMaterialInfo_1.CharMaterialSlot()),
-        o?.IsValid())
-      ) {
-        let t = void 0;
-        if (
-          (t =
-            s && o instanceof UE.MaterialInstanceDynamic
-              ? o
-              : i.CreateDynamicMaterialInstance(e, o))?.IsValid()
-        )
-          switch (
-            (this.MaterialSlotList[e].Init(e, r.Get(e).toString(), t),
-            this.SpecifiedSlotList[0].push(e),
-            this.MaterialSlotList[e].SlotType)
-          ) {
-            case 1:
-            case 4:
-              this.SpecifiedSlotList[2].push(e),
-                this.SpecifiedSlotList[1].push(e);
-              break;
-            case 2:
-              this.SpecifiedSlotList[3].push(e),
-                this.SpecifiedSlotList[1].push(e);
-          }
-        else
+      let t = void 0;
+      if (!h) {
+        var o =
+          UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSkeletalMaterialInterface(
+            i.SkeletalMesh,
+            e,
+          );
+        if (!o?.IsValid()) {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "RenderCharacter",
-              41,
+              40,
+              "CharBodyInfo.Init: originalMat is not valid",
+            );
+          continue;
+        }
+        if (!(t = i.CreateDynamicMaterialInstance(e, o))?.IsValid()) {
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "RenderCharacter",
+              40,
               "CharBodyInfo.Init: dynamicMaterial is not valid",
             );
-      } else
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "RenderCharacter",
-            41,
-            "CharBodyInfo.Init: originalMat is not valid",
-          );
+          continue;
+        }
+      }
+      switch (
+        ((this.MaterialSlotList[e] = new CharMaterialInfo_1.CharMaterialSlot()),
+        this.MaterialSlotList[e].Init(e, r.Get(e).toString(), t),
+        this.SpecifiedSlotList[0].push(e),
+        this.MaterialSlotList[e].SlotType)
+      ) {
+        case 1:
+        case 4:
+          this.SpecifiedSlotList[2].push(e), this.SpecifiedSlotList[1].push(e);
+          break;
+        case 2:
+          this.SpecifiedSlotList[3].push(e), this.SpecifiedSlotList[1].push(e);
+      }
     }
     var n = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCharacterSectionCount(
       this.SkeletalMesh,
@@ -126,21 +121,21 @@ class CharBodyInfo {
       (this.Ohr = 0),
       (this.khr = 0),
       (this.Fhr = 0);
-    h = this.ActorName + "_" + this.BodyName;
-    (this.Khr = Stats_1.Stat.Create(
-      ["Render_CharBodyInfo_UpdateMaterial_", h].join(),
+    s = this.ActorName + "_" + this.BodyName;
+    (this.Khr = Stats_1.Stat.CreateNoFlameGraph(
+      ["Render_CharBodyInfo_UpdateMaterial_", s].join(),
     )),
-      (this.Qhr = Stats_1.Stat.Create(
-        ["Render_CharBodyInfo_UpdateAlphaTest_", h].join(),
+      (this.Qhr = Stats_1.Stat.CreateNoFlameGraph(
+        ["Render_CharBodyInfo_UpdateAlphaTest_", s].join(),
       )),
-      (this.Yhr = Stats_1.Stat.Create(
-        ["Render_CharBodyInfo_UpdateOutlineStencil_", h].join(),
+      (this.Yhr = Stats_1.Stat.CreateNoFlameGraph(
+        ["Render_CharBodyInfo_UpdateOutlineStencil_", s].join(),
       )),
-      (this.Xhr = Stats_1.Stat.Create(
-        ["Render_CharBodyInfo_UpdateBattle_", h].join(),
+      (this.Xhr = Stats_1.Stat.CreateNoFlameGraph(
+        ["Render_CharBodyInfo_UpdateBattle_", s].join(),
       )),
-      (this.$hr = Stats_1.Stat.Create(
-        ["Render_CharBodyInfo_UpdateBattleMask_", h].join(),
+      (this.$hr = Stats_1.Stat.CreateNoFlameGraph(
+        ["Render_CharBodyInfo_UpdateBattleMask_", s].join(),
       ));
   }
   UseBattleMaskCommon() {
@@ -150,7 +145,7 @@ class CharBodyInfo {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "Battle类型引用异常，检查UseBattleMask调用情况",
             ["Battle Mask Reference Count", this.Fhr],
             ["Actor", this.ActorName],
@@ -166,7 +161,7 @@ class CharBodyInfo {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "BattleMask类型引用异常，检查UseBattleMask调用情况",
             ["Battle Mask Reference Count", this.Whr[t]],
             ["Actor", this.ActorName],
@@ -174,7 +169,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "UseBattleMask索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -191,7 +186,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "RevertBattleMask索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -205,7 +200,7 @@ class CharBodyInfo {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "Battle类型引用异常，检查UseBattleCommon调用情况",
             ["Battle Reference Count", this.khr],
             ["Actor", this.ActorName],
@@ -221,7 +216,7 @@ class CharBodyInfo {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderCharacter",
-              14,
+              13,
               "Battle类型引用异常，检查UseBattle调用情况",
               ["Battle Reference Count", this.jhr[t]],
               ["Actor", this.ActorName],
@@ -230,7 +225,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "UseBattle索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -247,7 +242,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "RevertBattle索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -261,7 +256,7 @@ class CharBodyInfo {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "AlphaTest类型引用异常，检查UseAlphaTest调用情况",
           ["AlphaTest Reference Count", this.Nhr],
           ["Actor", this.ActorName],
@@ -276,7 +271,7 @@ class CharBodyInfo {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "AlphaTestMask类型引用异常，检查UseAlphaTest调用情况",
             ["AlphaTest Reference Count", this.Vhr[t]],
             ["Actor", this.ActorName],
@@ -284,7 +279,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "UseAlphaTestMask索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -301,7 +296,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "RevertAlphaTestMask索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -315,7 +310,7 @@ class CharBodyInfo {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "StencilOutline类型引用异常，检查UseAlphaTest调用情况",
           ["StencilOutline Reference Count", this.Nhr],
           ["Actor", this.ActorName],
@@ -330,7 +325,7 @@ class CharBodyInfo {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            14,
+            13,
             "StencilOutlineMask类型引用异常，检查UseStencilOutline调用情况",
             ["StencilOutline Reference Count", this.Hhr[t]],
             ["Actor", this.ActorName],
@@ -338,7 +333,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "UseStencilOutlineMask索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -356,7 +351,7 @@ class CharBodyInfo {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          14,
+          13,
           "RevertOutlineStencilMask索引超过最大值",
           ["索引", t],
           ["最大值", e - 1],
@@ -399,6 +394,9 @@ class CharBodyInfo {
   SetStarScarEnergy(e) {
     var i = this.MaterialSlotList.length;
     for (let t = 0; t < i; t++) this.MaterialSlotList[t].SetStarScarEnergy(e);
+  }
+  SetNoWater(t) {
+    this.SkeletalComp?.IsValid() && this.SkeletalComp.SetDisableWaterForToon(t);
   }
   Update(t = void 0) {
     this.Khr.Start(),

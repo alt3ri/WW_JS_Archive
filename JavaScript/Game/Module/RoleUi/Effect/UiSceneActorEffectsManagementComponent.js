@@ -10,10 +10,10 @@ const UE = require("ue"),
 class UiSceneActorEffectsManagementComponent {
   constructor() {
     (this.u1o = new Array()),
-      (this.c1o = new UE.Transform(
+      (this.c1o = new UE.TransformDouble(
         new UE.Rotator(0, 0, 0),
-        new UE.Vector(0, 0, 0),
-        new UE.Vector(1, 1, 1),
+        new UE.VectorDouble(0, 0, 0),
+        new UE.VectorDouble(1, 1, 1),
       )),
       (this.m1o = CharacterNameDefines_1.CharacterNameDefines.ROOT);
   }

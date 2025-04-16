@@ -8,51 +8,52 @@ class TsAnimNotifyStateEnterWaterMoveOffset extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.EnterWaterVelocityZ = 800);
   }
-  K2_NotifyBegin(e, t, r) {
-    e = e.GetOwner();
-    if (e instanceof TsBaseCharacter_1.default) {
-      var a = e.CharacterActorComponent?.Entity;
+  Constructor() {}
+  K2_NotifyBegin(t, e, r) {
+    t = t.GetOwner();
+    if (t instanceof TsBaseCharacter_1.default) {
+      var a = t.CharacterActorComponent?.Entity;
       if (a)
         return (
-          e.SetAnimRootMotionTranslationScale(
+          t.SetAnimRootMotionTranslationScale(
             MathUtils_1.MathUtils.Clamp(
-              Math.abs(e.CharacterMovement.Velocity.Z) /
+              Math.abs(t.CharacterMovement.Velocity.Z) /
                 this.EnterWaterVelocityZ,
               0.7,
               1,
             ),
           ),
-          a.GetComponent(69)?.SetEnterWaterState(!0),
+          a.GetComponent(76)?.SetEnterWaterState(!0),
           !0
         );
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Test",
-          58,
+          57,
           "No Entity for TsBaseCharacter",
-          ["Name", e.GetName()],
-          ["location", e.K2_GetActorLocation()],
+          ["Name", t.GetName()],
+          ["location", t.D_K2_GetActorLocation()],
         );
     }
     return !1;
   }
-  K2_NotifyEnd(e, t) {
-    e = e.GetOwner();
-    if (e instanceof TsBaseCharacter_1.default) {
-      var r = e.CharacterActorComponent?.Entity;
+  K2_NotifyEnd(t, e) {
+    t = t.GetOwner();
+    if (t instanceof TsBaseCharacter_1.default) {
+      var r = t.CharacterActorComponent?.Entity;
       if (r)
         return (
-          e.SetAnimRootMotionTranslationScale(1),
-          r.GetComponent(69)?.SetEnterWaterState(!1),
+          t.SetAnimRootMotionTranslationScale(1),
+          r.GetComponent(76)?.SetEnterWaterState(!1),
           !0
         );
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Test",
-          58,
+          57,
           "No Entity for TsBaseCharacter",
-          ["Name", e.GetName()],
-          ["location", e.K2_GetActorLocation()],
+          ["Name", t.GetName()],
+          ["location", t.D_K2_GetActorLocation()],
         );
     }
     return !1;

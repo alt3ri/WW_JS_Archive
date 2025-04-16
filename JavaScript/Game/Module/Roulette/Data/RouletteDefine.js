@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ROULETTE_NUM =
+  (exports.ROULETTE_FUNCTION_IN_USE =
+    exports.ROULETTE_EXPLORE_IN_USE =
+    exports.ROULETTE_NUM =
     exports.DEFAULT_ITEM_ROULETTE_GRID_INDEX =
     exports.ROULETTE_TEXT_EMPTY =
     exports.AssemblyTipsData =
@@ -70,5 +72,7 @@ class AssemblyTipsData {
 (exports.AssemblyTipsData = AssemblyTipsData),
   (exports.ROULETTE_TEXT_EMPTY = "Text_ProbeToolFunctionNotice2_Text"),
   (exports.DEFAULT_ITEM_ROULETTE_GRID_INDEX = 6),
-  (exports.ROULETTE_NUM = 8);
+  (exports.ROULETTE_NUM = 8),
+  (exports.ROULETTE_EXPLORE_IN_USE = 6),
+  (exports.ROULETTE_FUNCTION_IN_USE = 8);
 //# sourceMappingURL=RouletteDefine.js.map

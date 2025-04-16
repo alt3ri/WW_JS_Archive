@@ -9,6 +9,7 @@ const UE = require("ue"),
   UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
+  DifficultUnlockTipView_1 = require("../../../InstanceDungeon/DifficultUnlockTipView"),
   ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
   GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
   LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView");
@@ -22,9 +23,9 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
         return new BossRushMainViewScrollItem();
       }),
       (this.lRo = () => {
-        UiManager_1.UiManager.OpenView(
-          "ActivityRewardPopUpView",
-          this.pyn.GetRewardPopUpViewData(),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RequestChangeBossRushView,
+          "BossRushRewardView",
         );
       });
   }
@@ -48,7 +49,8 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
         this.GetItem(3).GetOwner(),
         this.I2i,
       )),
-      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.Eyn();
   }
   K8e() {
     var e = this.GetItem(4);
@@ -89,6 +91,14 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
         (e = this.vVt.UnsafeGetGridProxy(e).GetButtonItem()) ? [e, e] : void 0
       );
   }
+  Eyn() {
+    var e;
+    this.pyn.GetNewUnlockState() &&
+      (this.pyn.CacheNewUnlock(),
+      ((e = new DifficultUnlockTipView_1.DifficultUnlockTipsData()).Text =
+        "BossRushUnlockTips"),
+      UiManager_1.UiManager.OpenView("DifficultUnlockTipView", e));
+  }
 }
 exports.BossRushSelectView = BossRushSelectView;
 class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
@@ -126,6 +136,7 @@ class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
       [4, UE.UIText],
       [5, UE.UIButtonComponent],
       [6, UE.UITexture],
+      [7, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[5, this.nqe]]);
   }
@@ -143,7 +154,12 @@ class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(1).SetUIActive(e), this.GetItem(2).SetUIActive(!e);
   }
   l3e(e) {
-    e.GetUnLockState() && this.GetText(3).SetText(e.GetScore().toString());
+    var i, t;
+    e.GetUnLockState() &&
+      ((i = 0 < (e = e.GetScore())),
+      (t = this.GetText(3)).SetUIActive(i),
+      t.SetText(e.toString()),
+      this.GetItem(7).SetUIActive(!i));
   }
   vyn(e) {
     e.GetUnLockState() || this.GetText(4).SetText(e.GetUnlockTimeText());

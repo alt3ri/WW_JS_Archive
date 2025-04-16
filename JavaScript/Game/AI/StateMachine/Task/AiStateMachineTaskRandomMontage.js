@@ -38,64 +38,56 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
     return (
       (this.MontageNames = Array.from(t.TaskRandomMontage.MontageNames)),
       (this.Ine = t.TaskRandomMontage.HideOnLoading),
-      (this.ose = t.TaskRandomMontage.BlendInTime),
+      (this.ose = 0.001 * t.TaskRandomMontage.BlendInTime),
       !0
     );
   }
   OnEnter(t) {
-    this.Node.SkillComponent.StopGroup1Skill(
-      "AiStateMachineTaskRandomMontage.OnEnter",
-    ),
-      (this.Node.TaskFinish = !1),
-      (this.Dne = !0),
-      (this.Playing = !1),
-      (this.MontageIndex = this.Node.Owner.GetBlackboard(1)),
-      CombatLog_1.CombatLog.Info(
-        "StateMachineNew",
-        this.Node.Entity,
-        "随机Montage",
-        ["MontageIndex", this.MontageIndex],
+    if (this.Node.TagComponent.HasTag(1008164187)) this.Node.TaskFinish = !0;
+    else {
+      this.Node.SkillComponent.StopGroup1Skill(
+        "AiStateMachineTaskRandomMontage.OnEnter",
       ),
-      (void 0 === this.MontageIndex ||
-        this.MontageIndex < 0 ||
-        this.MontageIndex >= this.MontageNames.length) &&
-        (CombatLog_1.CombatLog.Error(
+        (this.Node.TaskFinish = !1),
+        (this.Dne = !0),
+        (this.Playing = !1),
+        (this.MontageIndex = this.Node.Owner.GetBlackboard(1)),
+        CombatLog_1.CombatLog.Info(
           "StateMachineNew",
           this.Node.Entity,
-          "播放随机Montage失败，MontageIndex非法",
+          "随机Montage",
           ["MontageIndex", this.MontageIndex],
         ),
-        (this.MontageIndex = 0));
-    let i = "";
-    if (!this.rse) {
-      this.Ine &&
-        !this.Rne &&
-        (this.Rne = this.Node.ActorComponent.DisableActor("状态机加载动作"));
-      for (let t = 0; t < this.MontageNames.length; t++) {
-        var s = (this.MontageIndex + t) % this.MontageNames.length;
-        if (
-          ((i = this.MontageNames[s]),
-          (this.rse = this.Node.MontageComponent.PlayMontageAsync(
-            i,
-            this.Une,
-            this.nse,
-            !1,
-            this.ose,
-          )),
-          this.rse)
-        )
-          break;
+        (void 0 === this.MontageIndex ||
+          this.MontageIndex < 0 ||
+          this.MontageIndex >= this.MontageNames.length) &&
+          (CombatLog_1.CombatLog.Error(
+            "StateMachineNew",
+            this.Node.Entity,
+            "播放随机Montage失败，MontageIndex非法",
+            ["MontageIndex", this.MontageIndex],
+          ),
+          (this.MontageIndex = 0));
+      var i = this.Node.MontageComponent;
+      if (!this.rse) {
+        this.Ine &&
+          !this.Rne &&
+          (this.Rne = this.Node.ActorComponent.DisableActor("状态机加载动作"));
+        for (let t = 0; t < this.MontageNames.length; t++) {
+          var s = (this.MontageIndex + t) % this.MontageNames.length,
+            s = this.MontageNames[s];
+          if (
+            ((this.rse = i.CreateTaskWithName(s, this.Une, this.nse, this.ose)),
+            this.rse)
+          )
+            break;
+        }
       }
+      this.rse
+        ? ((this.Playing = !0),
+          i.PlayMontageTaskWhenReady(this.rse, this.Node.ElapseTime / 1e3, t))
+        : (this.Node.TaskFinish = !0);
     }
-    this.rse
-      ? ((this.Playing = !0),
-        this.Node.MontageComponent.PlayMontageTaskAndRequest(
-          this.rse,
-          this.Node.ElapseTime / 1e3,
-          i,
-          t,
-        ))
-      : (this.Node.TaskFinish = !0);
   }
   OnExit(t) {
     this.Ine &&
@@ -116,6 +108,9 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
   }
   GetTimeRemaining() {
     return this.Node.MontageComponent.GetMontageTimeRemaining(this.rse);
+  }
+  GetTimeElapsing() {
+    return this.Node.MontageComponent.GetMontageTimeElapsing(this.rse);
   }
   ToString(t, i = 0) {
     (0, AiStateMachine_1.appendDepthSpace)(t, i);

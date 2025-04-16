@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Time_1 = require("../../../../Core/Common/Time"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskWait extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -11,6 +11,14 @@ class TsTaskWait extends TsTaskAbortImmediatelyBase_1.default {
       (this.TimeMillisecond = 0),
       (this.BlackboardKeyTime = ""),
       (this.RandomTime = 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsTimeMillisecond = 0),
+      (this.TsBlackboardKeyTime = ""),
+      (this.TsRandomTime = 0),
+      (this.EndTime = -0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsTimeMillisecond = 0),
       (this.TsBlackboardKeyTime = ""),
@@ -30,10 +38,11 @@ class TsTaskWait extends TsTaskAbortImmediatelyBase_1.default {
     var t = t.AiController;
     t &&
       this.TsBlackboardKeyTime &&
-      (t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-        t.CharAiDesignComp.Entity.Id,
-        this.TsBlackboardKeyTime,
-      )) &&
+      (t =
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
+          t.CharAiDesignComp.Entity.Id,
+          this.TsBlackboardKeyTime,
+        )) &&
       (e = t),
       (this.EndTime =
         Time_1.Time.Now +

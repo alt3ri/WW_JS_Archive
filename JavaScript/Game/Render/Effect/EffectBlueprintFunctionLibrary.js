@@ -15,83 +15,53 @@ const UE = require("ue"),
   EffectGlobal_1 = require("./EffectGlobal"),
   ScreenEffectSystem_1 = require("./ScreenEffectSystem/ScreenEffectSystem");
 class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static SetMaterialControllerDataSync(e, t, a) {
     if (!(t.length <= 0 || "None" === t)) {
-      e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
-      const c = e?.Entity?.GetComponent(3)?.Actor?.CharRenderingComponent;
-      a
-        ? ResourceSystem_1.ResourceSystem.LoadAsync(
-            t,
-            UE.PD_CharacterControllerDataGroup_C,
-            (e) => {
-              e
-                ? c?.AddMaterialControllerDataGroup(e)
-                : Log_1.Log.CheckError() &&
-                  Log_1.Log.Error("Battle", 4, "无法找到材质效果组", [
-                    "materialDataPath",
-                    t,
-                  ]);
-            },
-          )
-        : ResourceSystem_1.ResourceSystem.LoadAsync(
-            t,
-            UE.PD_CharacterControllerData_C,
-            (e) => {
-              e
-                ? c?.AddMaterialControllerData(e)
-                : Log_1.Log.CheckError() &&
-                  Log_1.Log.Error("Battle", 4, "无法找到材质效果", [
-                    "materialDataPath",
-                    t,
-                  ]);
-            },
-          );
-      var r = Protocol_1.Aki.Protocol.O3n.create();
-      (r.sVn = new Protocol_1.Aki.Protocol.sVn()),
-        (r.sVn.nVn = t),
-        (r.sVn.aVn = a),
-        CombatMessage_1.CombatNet.Call(29796, e.Entity, r, () => {});
+      var r,
+        o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e)?.Entity;
+      const c = o?.GetComponent(3)?.Actor?.CharRenderingComponent;
+      c
+        ? (a
+            ? ResourceSystem_1.ResourceSystem.LoadAsync(
+                t,
+                UE.PD_CharacterControllerDataGroup_C,
+                (e) => {
+                  e
+                    ? c?.AddMaterialControllerDataGroup(e)
+                    : Log_1.Log.CheckError() &&
+                      Log_1.Log.Error("Battle", 4, "无法找到材质效果组", [
+                        "materialDataPath",
+                        t,
+                      ]);
+                },
+              )
+            : ResourceSystem_1.ResourceSystem.LoadAsync(
+                t,
+                UE.PD_CharacterControllerData_C,
+                (e) => {
+                  e
+                    ? c?.AddMaterialControllerData(e)
+                    : Log_1.Log.CheckError() &&
+                      Log_1.Log.Error("Battle", 4, "无法找到材质效果", [
+                        "materialDataPath",
+                        t,
+                      ]);
+                },
+              ),
+          ((r = Protocol_1.Aki.Protocol.ae_.create()).sVn =
+            new Protocol_1.Aki.Protocol.sVn()),
+          (r.sVn.nVn = t),
+          (r.sVn.aVn = a),
+          CombatMessage_1.CombatNet.Send(21610, o, r))
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Battle", 19, "无法找到角色渲染组件", [
+            "entityId",
+            e,
+          ]);
     }
   }
   static RecycleEffect(e) {}
-  static RefreshEffectStatisticsData(e) {}
-  static GetEffectStatisticsCurrentCount() {
-    return 0;
-  }
-  static GetEffectStatisticsTickCount() {
-    return 0;
-  }
-  static GetEffectStatisticsRegisteredInterval() {
-    return 0;
-  }
-  static GetEffectStatisticsReleasedInterval() {
-    return 0;
-  }
-  static GetEffectStatisticsEntryCount() {
-    return 0;
-  }
-  static GetEffectStatisticsEntry(e) {}
-  static GetNumEffectAll() {
-    return 0;
-  }
-  static GetNumEffectTickThisFrame() {
-    return 0;
-  }
-  static GetNumEffectUpdateNonRearrange() {
-    return 0;
-  }
-  static GetNumEffectUpdateArbitrary() {
-    return 0;
-  }
-  static GetNumEffectUpdateHigh() {
-    return 0;
-  }
-  static GetNumEffectUpdateLow() {
-    return 0;
-  }
-  static GetNumEffectUpdateNearlyPaused() {
-    return 0;
-  }
   static AddDebugLineFromPlayer(e, t, a) {
     return DebugDrawManager_1.DebugDrawManager.AddDebugLineFromPlayer(
       Vector_1.Vector.Create(e),
@@ -102,25 +72,11 @@ class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static ClearDebugDraw() {
     DebugDrawManager_1.DebugDrawManager.ClearDebugDraw();
   }
-  static TickClusteredStuff(e, t) {}
-  static EditorManualTickClusteredStuffEffects(e, t) {}
-  static SetClusteredStuffDensities(e, t, a, r) {}
-  static EnableGlobalInteractionEffect(e) {}
-  static DisableGlobalInteractionEffect() {}
   static ValidateKuroAnimNotify(e) {
     return e.K2_ValidateAssets();
   }
   static ValidateKuroAnimNotifyState(e) {
     return e.K2_ValidateAssets();
-  }
-  static AudioVisualizationInstanceStart(e) {
-    e.Start();
-  }
-  static AudioVisualizationInstanceEnd(e) {
-    e.End();
-  }
-  static AudioVisualizationInstanceCallback(e, t, a, r) {
-    e.CallBack(t, a, r);
   }
   static SetVisualizeCharacterWaterEffectTrace(e) {
     SceneCharacterInteraction_1.default.SetTraceDebug(e);
@@ -158,6 +114,36 @@ class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetScreenEffectSystem() {
     return ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
+  }
+  static ChangeMaterialTextures(a, e) {
+    a &&
+      ResourceSystem_1.ResourceSystem.LoadAsync(
+        e,
+        UE.KuroChangeMaterialsTextures,
+        (t) => {
+          if (t?.IsValid()) {
+            let e = a.GetComponentByClass(
+              UE.KuroChangeSkeletalMaterialsComponent.StaticClass(),
+            );
+            (e =
+              e ||
+              a.AddComponentByClass(
+                UE.KuroChangeSkeletalMaterialsComponent.StaticClass(),
+                !1,
+                void 0,
+                !1,
+              )).ChangeMaterialsWithDataAsset(t);
+          } else
+            Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "RenderCharacter",
+                25,
+                "ChangeMaterialTextures失败，因为asset无效",
+                ["Path", e],
+                ["actor", a?.GetName()],
+              );
+        },
+      );
   }
 }
 exports.default = EffectBlueprintFunctionLibrary;

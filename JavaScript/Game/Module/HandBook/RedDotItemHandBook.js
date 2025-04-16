@@ -6,9 +6,6 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   RedDotBase_1 = require("../../RedDot/RedDotBase");
 class RedDotItemHandBook extends RedDotBase_1.RedDotBase {
-  OnGetParentName() {
-    return "ItemHandBook";
-  }
   IsMultiple() {
     return !0;
   }

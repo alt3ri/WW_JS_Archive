@@ -25,12 +25,12 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
         (a.C9n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
         (a.b5n = e.NodeId),
         (a.k9n = r),
-        Net_1.Net.Call(21182, a, (e) => {
+        Net_1.Net.Call(24784, a, (e) => {
           e
             ? e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.BEs,
-                  27172,
+                  29734,
                 ),
                 t && t(!1))
               : t && t(!0)
@@ -44,12 +44,12 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
       (a.m9n = 1),
         (a.L8n = r),
         (a.m9n = t),
-        Net_1.Net.Call(27909, a, (e) => {
+        Net_1.Net.Call(22564, a, (e) => {
           e
             ? e.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   e.G9n,
-                  18061,
+                  20953,
                 ),
                 o && o(!1))
               : (o && o(!0),

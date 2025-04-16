@@ -7,6 +7,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -18,6 +19,7 @@ const UE = require("ue"),
   GuideConfig_1 = require("../../Guide/GuideConfig"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   InteractionDefine_1 = require("../InteractionDefine"),
+  FishTipItem_1 = require("./FishTipItem"),
   InteractionGuide_1 = require("./InteractionGuide"),
   InteractionHint_1 = require("./InteractionHint"),
   LONG_PRESS_SHOW_TIME = 100;
@@ -42,6 +44,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.Bui = void 0),
       (this.bui = void 0),
       (this.qui = void 0),
+      (this.ai_ = void 0),
       (this.xut = 0),
       (this.Gui = !1),
       (this.Nui = 0),
@@ -54,7 +57,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.IsHoverHint = !1),
       (this.Wui = !1),
       (this.YJs = !1),
-      (this.XHa = !1),
+      (this.XQa = !1),
       (this.Kui = !1),
       (this.nla = !1),
       (this.lqt = () => {
@@ -87,7 +90,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Test",
-            8,
+            36,
             "[InteractionView]自动拾取-----当ExtendToggle状态改变时，会打断自动拾取",
           ),
           (this.Gui = !1),
@@ -102,21 +105,23 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.rci = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Test", 8, "[InteractionView]自动拾取-----成功拾取", [
-            "IsAutoPicked",
-            this.Gui,
-          ]),
+          Log_1.Log.Debug(
+            "Test",
+            36,
+            "[InteractionView]自动拾取-----成功拾取",
+            ["IsAutoPicked", this.Gui],
+          ),
           this.Gui ? this.nci() : (this.wui = !1);
       }),
       (this.sci = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Test", 8, "[InteractionView]刷新交互选项时"),
+          Log_1.Log.Debug("Test", 36, "[InteractionView]刷新交互选项时"),
           (this.wui = !1),
           this.wui
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Test",
-                8,
+                36,
                 "[InteractionView]刷新交互选项 - 自动拾取中",
                 ["Count", this.Pui?.length],
               )
@@ -124,21 +129,21 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
               ? Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Test",
-                  8,
+                  36,
                   "[InteractionView]刷新交互选项 - 下一帧会刷新交互选项",
                 )
-              : (this.bui = TimerSystem_1.TimerSystem.Next(this.h5a));
+              : (this.bui = TimerSystem_1.TimerSystem.Next(this.K8a));
       }),
-      (this.h5a = () => {
+      (this.K8a = () => {
         this.aci(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Test",
-              8,
+              36,
               "[InteractionView]刷新交互选项 - 开始刷新交互选项",
               ["Count", this.Pui?.length],
             ),
-          this._5a(this.Pui).then(
+          this.$8a(this.Pui).then(
             () => {
               this.vci(), this.lci();
             },
@@ -390,10 +395,13 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
     (this.xut =
       t.AutoLongPressTime + t.ShowLongPressTime + LONG_PRESS_SHOW_TIME),
       this.aci(),
-      await this._5a(this.Pui);
+      await this.$8a(this.Pui);
+  }
+  async OnShowAsyncImplementImplement() {
+    this.Lri(), await super.OnShowAsyncImplementImplement();
   }
   OnAfterShow() {
-    this.lci(), this.Lri(), this.Oei(0);
+    this.lci(), this.hi_(), this.Oei(0);
   }
   OnAfterHide() {
     this.Hui = void 0;
@@ -409,7 +417,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       ? t.SaveTriggerMobileGuide(!0)
       : t.SaveTriggerDesktopGuide(!0),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Test", 8, "[InteractionView]自动拾取-----开始", [
+        Log_1.Log.Debug("Test", 36, "[InteractionView]自动拾取-----开始", [
           "AutoPickLength",
           this.kui,
         ]),
@@ -422,7 +430,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (ModelManager_1.ModelManager.InteractionModel.CanAutoPickUp(t) ||
         (this.Nui++, this.nci()),
       this.InteractPawn(this.Nui)
-        ? (this.Pui.splice(this.Nui, 1), this._5a(this.Pui))
+        ? (this.Pui.splice(this.Nui, 1), this.$8a(this.Pui))
         : (this.Nui++, this.nci()),
       this.Oui >= this.kui)) &&
       this.Cci();
@@ -430,18 +438,18 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   Cci() {
     this.aci(),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Test", 8, "[InteractionView]自动拾取-----结束", [
+        Log_1.Log.Debug("Test", 36, "[InteractionView]自动拾取-----结束", [
           "InteractLength",
           this.Pui.length,
         ]),
-      this._5a(this.Pui),
+      this.$8a(this.Pui),
       (this.wui = !1);
   }
   InteractPawn(t, i = !1) {
     if (this.YJs) return !1;
     var e = this.Pui[t];
     if (!e?.Valid) return !1;
-    e = e.GetComponent(106);
+    e = e.GetComponent(116);
     if (!e?.IsPawnInteractive()) return !1;
     if (this.Hui)
       if (i) {
@@ -480,6 +488,8 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeDestroy() {
     this.Sui && (this.Sui.ClearChildren(), (this.Sui = void 0)),
+      this.ai_?.Destroy(),
+      (this.ai_ = void 0),
       this.qui?.Destroy(),
       (this.qui = void 0),
       (this.Hui = void 0),
@@ -489,10 +499,9 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       (this.Eui = 0),
       (this.xqe = void 0),
       (this.wui = !1),
-      (this.qui = void 0),
       (this.Pui.length = 0),
       (this.Fui = !1),
-      (this.XHa = !1),
+      (this.XQa = !1),
       this.Zui(),
       this.gci();
   }
@@ -501,7 +510,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       TimerSystem_1.TimerSystem.Has(this.bui) &&
       (TimerSystem_1.TimerSystem.Remove(this.bui), (this.bui = void 0));
   }
-  async _5a(t) {
+  async $8a(t) {
     var i;
     await this.Sui.RefreshByDataAsync(t),
       this.Sui &&
@@ -542,11 +551,11 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Test",
-        8,
+        36,
         "[InteractionView]自动拾取-----当玩家按下通用交互，会打断自动拾取",
       ),
       (this.Gui = !1),
-      (this.XHa = !0),
+      (this.XQa = !0),
       this.Hui &&
         !Info_1.Info.IsInTouch() &&
         this.ici() &&
@@ -562,8 +571,8 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   $ui() {
     var t;
     this.Zui(),
-      this.XHa &&
-        ((this.XHa = !1),
+      this.XQa &&
+        ((this.XQa = !1),
         this.Gui ||
           ModelManager_1.ModelManager.InteractionModel.InInteractCd() ||
           (this.GetActive() &&
@@ -649,6 +658,40 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         ? this.qui.Refresh("MobileAutoPickUpText")
         : this.qui.Refresh("DesktopAutoPickUpText"));
   }
+  hi_() {
+    for (const s of this.Pui)
+      if (s && s.Valid) {
+        var t =
+          ModelManager_1.ModelManager.InteractionModel.GetInteractController(s);
+        if (!t) return;
+        var i = t.GetInteractAdditionalInfoType();
+        if ("FishingPoint" === i) {
+          ModelManager_1.ModelManager.GameAudioModel?.PlayFishingAudio(
+            IAction_1.EGondolaVoiceTriggeredType.NearFishingPoint,
+          );
+          var i = t.CreatureData,
+            e = i?.GetPbDataId() ?? 0,
+            i = i?.GetCreatureDataId() ?? 0,
+            t =
+              t.CreatureData?.GetBaseInfo()?.Category?.FishingMechanismType ??
+              "FishingPoint";
+          this.li_(e, i, t);
+          break;
+        }
+      }
+  }
+  async li_(t, i, e) {
+    var s = this.GetItem(5);
+    return (
+      (this.ai_ = new FishTipItem_1.FishTipItem()),
+      await this.ai_.CreateThenShowByResourceIdAsync("UiItem_FishTips", s, !1),
+      "FishingPoint" === e
+        ? this.ai_.RefreshByFishingPoint(t)
+        : "DynamicFishingPoint" === e &&
+          this.ai_.RefreshByDynamicFishingPoint(i),
+      this.ai_
+    );
+  }
   ici() {
     return 0 < this.xui;
   }
@@ -659,7 +702,7 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         ? void 0
         : [(i = i[0].GetButtonForGuide()), i];
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         t,
       ]);

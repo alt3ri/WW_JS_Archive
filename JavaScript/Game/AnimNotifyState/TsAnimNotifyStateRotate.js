@@ -35,12 +35,15 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
       (this.ParamsMap = void 0),
       (this.IsInitialize = !1);
   }
+  Constructor() {
+    (this.ParamsMap = void 0), (this.IsInitialize = !1);
+  }
   K2_NotifyBegin(t, i, s) {
     this.Initialize();
     t = t.GetOwner();
     if (
       t instanceof TsBaseCharacter_1.default &&
-      !t.AbilitySystemComponent.HasAnyGameplayTag(this.屏蔽标签列表)
+      !t.AbilitySystemComponent?.HasAnyGameplayTag(this.屏蔽标签列表)
     ) {
       t = t.CharacterActorComponent?.Entity;
       if (!t?.Valid) return !1;
@@ -50,10 +53,10 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
           : this.ParamsMap.set(t.Id, new AnsRotateParam(s)),
         this.在横板模式中禁用)
       ) {
-        if (t.GetComponent(98)?.Active) return !1;
+        if (t.GetComponent(106)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!t.GetComponent(98)?.Active) return !1;
-      var e = t.GetComponent(34);
+        if (!t.GetComponent(106)?.Active) return !1;
+      var e = t.GetComponent(39);
       if (!e?.Valid) return !1;
       if (
         (e.SetSkillCanRotate(!0),
@@ -95,10 +98,10 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
       if (!a) return !1;
       var n = a.NowTime;
       if (((a.NowTime += r), this.在横板模式中禁用)) {
-        if (h.GetComponent(98)?.Active) return !1;
+        if (h.GetComponent(106)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!h.GetComponent(98)?.Active) return !1;
-      h = h.GetComponent(34);
+        if (!h.GetComponent(106)?.Active) return !1;
+      h = h.GetComponent(39);
       if (!h?.Valid) return !1;
       let s = this.旋转速度;
       if (this.是否平滑旋转) {
@@ -122,14 +125,14 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
       i = i.GetSkillRotateDirect();
     return !i || s.IsNearlyZero() || i.IsNearlyZero()
       ? MathUtils_1.PI_DEG
-      : GravityUtils_1.GravityUtils.GetAngleOffsetInGravityAbs(t, s, i);
+      : GravityUtils_1.GravityUtils.GetAngleOffsetInGravityAbsForActor(t, s, i);
   }
   K2_NotifyEnd(t, i) {
     var t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
         (this.ParamsMap?.delete(t.CharacterActorComponent?.Entity.Id ?? 0),
-        (t = t.CharacterActorComponent?.Entity?.GetComponent(34))?.Valid) &&
+        (t = t.CharacterActorComponent?.Entity?.GetComponent(39))?.Valid) &&
         (t.SetSkillCanRotate(!1), t.SetRotateTarget(void 0, 0)),
       !1
     );

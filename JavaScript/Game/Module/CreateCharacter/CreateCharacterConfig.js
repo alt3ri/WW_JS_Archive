@@ -11,7 +11,7 @@ class CreateCharacterConfig extends ConfigBase_1.ConfigBase {
     return (
       2 !== e.length &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("CreateCharacter", 9, "初始化角色数量错误, 应该为2", [
+        Log_1.Log.Error("CreateCharacter", 8, "初始化角色数量错误, 应该为2", [
           "count",
           e.length,
         ]),

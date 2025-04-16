@@ -17,41 +17,44 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configTowerBuffById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configTowerBuffById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph("configTowerBuffById.Init"),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configTowerBuffById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configTowerBuffById.GetConfig(";
 exports.configTowerBuffById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
-    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var e = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
-      f =
-        (e.Start(),
+    "bigint" == typeof o && (o = (0, ConfigCommon_1.toNumberTemp)(o)),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat?.Start();
+    var f = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (f?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
-    if (f) {
+    if (i) {
       if (n) {
         var t = KEY_PREFIX + `#${o})`;
-        const i = ConfigCommon_1.ConfigCommon.GetConfig(t);
-        if (i)
+        const e = ConfigCommon_1.ConfigCommon.GetConfig(t);
+        if (e)
           return (
-            e.Stop(),
-            getConfigStat.Stop(),
+            f?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
-            i
+            e
           );
       }
       if (
-        (f =
-          ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 1, o, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindFloat64(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
@@ -60,33 +63,33 @@ exports.configTowerBuffById = {
       ) {
         t = void 0;
         if (
-          (([f, t] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          f)
+          i)
         ) {
-          const i = TowerBuff_1.TowerBuff.getRootAsTowerBuff(
+          const e = TowerBuff_1.TowerBuff.getRootAsTowerBuff(
             new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
             n &&
-              ((f = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(f, i)),
+              ((i = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            e.Stop(),
-            getConfigStat.Stop(),
+            f?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
-            i
+            e
           );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    e.Stop(),
-      getConfigStat.Stop(),
+    f?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

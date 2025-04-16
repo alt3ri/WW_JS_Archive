@@ -7,9 +7,9 @@ const InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDi
 class BattleViewCameraComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor(t) {
     super(t),
-      (this.X0a = !1),
+      (this.P0a = !1),
       (this.RZe = (t, e) => {
-        (this.X0a = 0 === e), this.SetVisibleMode(2, this.X0a);
+        (this.P0a = 0 === e), this.SetVisibleMode(2, this.P0a);
       }),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.组合主键,
@@ -23,7 +23,7 @@ class BattleViewCameraComponent extends HotKeyComponent_1.HotKeyComponent {
     );
   }
   OnRefreshSelfHotKeyState(t) {
-    this.SetVisibleMode(2, this.X0a);
+    this.SetVisibleMode(2, this.P0a);
   }
   OnIsOccupancyFightInput() {
     return !1;

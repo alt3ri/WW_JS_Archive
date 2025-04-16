@@ -18,13 +18,13 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiImageSetting",
-              11,
+              10,
               "该界面不允许同步加载,Sprite改为异步加载",
               ["ViewName", o],
             ),
           this.SetSpriteByPathAsync(e, t, i, n))
         : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiImageSetting", 11, "同步设置Sprite接口", [
+            Log_1.Log.Debug("UiImageSetting", 10, "同步设置Sprite接口", [
               "ViewName",
               o,
             ]),
@@ -50,7 +50,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
                 : (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "UiImageSetting",
-                      11,
+                      10,
                       "设置Sprite失败，图片加载失败",
                       ["图片路径", t],
                     ),
@@ -76,7 +76,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
                 : Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "UiImageSetting",
-                    11,
+                    10,
                     "设置Sprite失败，图片加载失败",
                     ["图片路径", t],
                   ));
@@ -128,7 +128,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
-                11,
+                10,
                 "配置的表格字段查询到的资源路径不是字符串类型",
                 ["配置的表格字段", i],
               ),
@@ -151,13 +151,13 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiImageSetting",
-              11,
+              10,
               "该界面不允许同步加载,Texture改为异步加载",
               ["ViewName", i],
             ),
           this.SetTextureByPathAsync(e, t, o))
         : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiImageSetting", 11, "同步设置Texture接口", [
+            Log_1.Log.Debug("UiImageSetting", 10, "同步设置Texture接口", [
               "ViewName",
               i,
             ]),
@@ -180,7 +180,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
                 : (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "UiImageSetting",
-                      11,
+                      10,
                       "设置Texture失败，图片加载失败",
                       ["图片路径", t],
                     ),
@@ -206,7 +206,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
                 : Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "UiImageSetting",
-                    11,
+                    10,
                     "设置Texture失败，图片加载失败",
                     ["图片路径", t],
                   ));
@@ -234,6 +234,26 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
       this.SetResourceId(i, e), await n.Promise;
     }
   }
+  async SetExtendToggleTextureTransitionByPath(e, i, o = 9) {
+    if (GlobalData_1.GlobalData.World && i && i.IsValid()) {
+      this.CancelResource(i);
+      const n = new CustomPromise_1.CustomPromise();
+      e = ResourceSystem_1.ResourceSystem.LoadAsync(
+        e,
+        UE.Texture,
+        (e, t) => {
+          n.SetResult(),
+            this.DeleteResourceHandle(i),
+            i.IsValid() &&
+              (9 === o
+                ? i.SetAllTransitionStateTexture(e)
+                : i.SetTargetStateTexture(o, e));
+        },
+        102,
+      );
+      this.SetResourceId(i, e), await n.Promise;
+    }
+  }
   _Cr(e, t) {
     var i,
       t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t),
@@ -249,7 +269,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
-                11,
+                10,
                 "配置的表格字段查询到的资源路径不是字符串类型",
                 ["配置的表格字段", e],
               ),
@@ -282,7 +302,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
-                11,
+                10,
                 "配置的表格字段查询到的资源路径不是字符串类型",
                 ["配置的表格字段", i],
               ),
@@ -291,6 +311,38 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
   }
   SetRoleIconSync(e, t, i, o, n) {
     e = this.uCr(e, t, i);
+    this.SetTextureByPathSync(e, t, o, n);
+  }
+  vbl(e, t, i) {
+    var t = t.ComponentTags;
+    return 0 === t.Num() ||
+      void 0 ===
+        (i = ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(i))
+      ? e
+      : ((e = t.Get(0).toString()),
+        "string" !=
+        typeof i[
+          (t =
+            ConfigManager_1.ConfigManager.ComponentConfig.GetRoleSkinConfigParam(
+              e,
+            ))
+        ]
+          ? (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "UiImageSetting",
+                10,
+                "配置的表格字段查询到的资源路径不是字符串类型",
+                ["配置的表格字段", e],
+              ),
+            "")
+          : i[t]);
+  }
+  SetRoleSkinIconAsync(e, t, i, o) {
+    e = this.vbl(e, t, i);
+    this.SetTextureByPathAsync(e, t, o);
+  }
+  SetRoleSkinIconSync(e, t, i, o, n) {
+    e = this.vbl(e, t, i);
     this.SetTextureByPathSync(e, t, o, n);
   }
   SetRoleIconAsync(e, t, i, o) {
@@ -314,7 +366,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiImageSetting",
-                11,
+                10,
                 "配置的表格字段查询到的资源路径不是字符串类型",
                 ["配置的表格字段", i],
               ),
@@ -348,7 +400,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LguiUtil",
-                11,
+                10,
                 "配置的表格字段查询到的资源路径不是字符串类型",
                 ["配置的表格字段", t],
               ),
@@ -383,7 +435,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           ? (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "LguiUtil",
-                11,
+                10,
                 "配置的表格字段查询到的资源路径不是字符串类型",
                 ["配置的表格字段", t],
               ),
@@ -415,7 +467,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
                 : (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "UiImageSetting",
-                      11,
+                      10,
                       "设置Texture失败，图片加载失败",
                       ["图片路径", t],
                     ),
@@ -433,13 +485,13 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiImageSetting",
-              11,
+              10,
               "该界面不允许同步加载,Texture改为异步加载",
               ["ViewName", n],
             ),
           this.SetNiagaraTextureAsync(e, t, i, o, a))
         : (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiImageSetting", 11, "同步设置Texture接口", [
+            Log_1.Log.Debug("UiImageSetting", 10, "同步设置Texture接口", [
               "ViewName",
               n,
             ]),

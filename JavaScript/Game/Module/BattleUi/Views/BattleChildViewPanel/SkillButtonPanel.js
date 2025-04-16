@@ -19,6 +19,7 @@ const UE = require("ue"),
   ITEM_WIDTH = 144,
   MOBILE_INDEX_EXPLORE_ITEM = 3,
   actionNameList = [
+    InputMappingsDefine_1.actionMappings.攻击,
     InputMappingsDefine_1.actionMappings.大招,
     InputMappingsDefine_1.actionMappings.幻象1,
     InputMappingsDefine_1.actionMappings.幻象2,
@@ -90,6 +91,10 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         t = this.GetBattleSkillItemByButtonType(t);
         t && t.RefreshSkillCoolDown();
       }),
+      (this.lvl = (t) => {
+        t = this.GetBattleSkillItemByButtonType(t);
+        t && (t.RefreshSkillButtonLongPress(), t.RefreshConfigLongPress());
+      }),
       (this.DZe = (t) => {
         t = this.Uet(t);
         t && t.RefreshVisible();
@@ -115,7 +120,8 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           : (this.SetVisible(5, !0), this.cZe(), this.Aet());
       }),
       (this.bet = (t) => {
-        ModelManager_1.ModelManager.SkillButtonUiModel.IsNormalButtonTypeList &&
+        ModelManager_1.ModelManager.SkillButtonUiModel.CurSkillButtonIndexData
+          .IsNormalButtonTypeList &&
           !ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()?.IsPhantom() &&
           this.$Qe !== t &&
           this.qet(t, !0);
@@ -312,7 +318,7 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     var t,
       e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e?.Valid &&
-      ((e = e.Entity.GetComponent(161).DirectionState),
+      ((e = e.Entity.GetComponent(173).DirectionState),
       (t = this.Uet(101)) &&
         (e === CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
           ? t.SetBehaviorToggleState(1)
@@ -369,6 +375,10 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonCdRefresh,
         this.TZe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnSkillButtonLongPressRefresh,
+        this.lvl,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBehaviorButtonVisibleRefresh,
@@ -462,6 +472,10 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.TZe,
       ),
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnSkillButtonLongPressRefresh,
+        this.lvl,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBehaviorButtonVisibleRefresh,
         this.DZe,
       ),
@@ -511,7 +525,8 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     var t =
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetIsInExploreMode();
     if (
-      ModelManager_1.ModelManager.SkillButtonUiModel.IsNormalButtonTypeList ||
+      ModelManager_1.ModelManager.SkillButtonUiModel.CurSkillButtonIndexData
+        .IsNormalButtonTypeList ||
       ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()?.IsPhantom()
     )
       return this.$Qe === t && Info_1.Info.IsInTouch()

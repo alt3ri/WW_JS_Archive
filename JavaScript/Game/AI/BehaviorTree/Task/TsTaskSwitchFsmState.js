@@ -6,6 +6,9 @@ class TsTaskSwitchFsmState extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
     super(...arguments), (this.States = void 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
   ReceiveTickAI(e, s, t) {
     e.AiController ||
       (Log_1.Log.CheckError() &&

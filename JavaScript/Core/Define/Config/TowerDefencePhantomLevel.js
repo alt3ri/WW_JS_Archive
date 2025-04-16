@@ -57,21 +57,41 @@ class TowerDefencePhantomLevel {
   }
   skillid(t) {
     var e = this.J7.__offset(this.z7, 10);
-    return e
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + e) + 8 * t)
-      : BigInt(0);
+    return e ? this.J7.readFloat64(this.J7.__vector(this.z7 + e) + 8 * t) : 0;
   }
   skillidLength() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  skillidArray() {
+    var t = this.J7.__offset(this.z7, 10);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   title(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   description(t) {
-    var e = this.J7.__offset(this.z7, 14);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 14),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   explevel() {
     var t = this.J7.__offset(this.z7, 16);

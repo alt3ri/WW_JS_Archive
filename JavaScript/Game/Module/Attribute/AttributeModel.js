@@ -8,25 +8,34 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   AttributeDefine_1 = require("./AttributeDefine");
 class AttributeModel extends ModelBase_1.ModelBase {
   GetFormatAttributeValueString(e, t, r = !1) {
-    var i = t;
+    var o = t;
     return ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
       e,
     ).IsPercent
-      ? MathUtils_1.MathUtils.GetFloatPointFloorString(i / 100, 1) + "%"
+      ? MathUtils_1.MathUtils.GetFloatPointFloorString(o / 100, 1) + "%"
       : r
-        ? MathUtils_1.MathUtils.GetFloatPointFloorString(100 * i, 1) + "%"
+        ? MathUtils_1.MathUtils.GetFloatPointFloorString(100 * o, 1) + "%"
         : Math.floor(t).toString();
+  }
+  GetFormatAttributeValueByAddType(e, t) {
+    return 1 === t
+      ? "" + TipsDataTool.GetPropRatioValue(e, !1).toString()
+      : 2 === t
+        ? TipsDataTool.GetPropRatioValue(e, !0).toString() + "%"
+        : 3 === t
+          ? e.toString() + "s"
+          : e.toString();
   }
 }
 exports.AttributeModel = AttributeModel;
 class TipsDataTool {
-  static GetCommonTipsAttributeData(e, t, r, i) {
+  static GetCommonTipsAttributeData(e, t, r, o) {
     e = TipsDataTool.GetAttributeValue(e, t, r);
-    return new CommonComponentDefine_1.TipsAttributeData(i, e, r);
+    return new CommonComponentDefine_1.TipsAttributeData(o, e, r);
   }
   static GetAttributeValue(e, t, r) {
-    let i = 0;
-    return (i = r
+    let o = 0;
+    return (o = r
       ? (e / AttributeDefine_1.TEN_THOUSANDTH_RATIO) *
         (t / AttributeDefine_1.TEN_THOUSANDTH_RATIO)
       : e * (t / AttributeDefine_1.TEN_THOUSANDTH_RATIO));

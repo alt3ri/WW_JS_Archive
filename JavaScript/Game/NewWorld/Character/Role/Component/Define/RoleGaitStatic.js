@@ -16,7 +16,7 @@ class RoleGaitStatic {
       (RoleGaitStatic.IsInit = !0));
   }
   static SetWalkOrRunRateForRocker(t) {
-    RoleGaitStatic.Mir = t;
+    RoleGaitStatic.Mir = Math.min(t, 0.99);
   }
   static GetWalkOrRunRate() {
     return RoleGaitStatic.Mir;

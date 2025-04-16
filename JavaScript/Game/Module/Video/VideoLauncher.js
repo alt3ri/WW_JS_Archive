@@ -3,34 +3,46 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VideoLauncher = void 0);
 const AudioController_1 = require("../../../Core/Audio/AudioController"),
+  CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   UiManager_1 = require("../../Ui/UiManager");
 class VideoLauncher {
-  static ShowVideoCg(e, i, o, a) {
-    e ? VideoLauncher.ShowVideoCgAsync(e, i, o, a) : i();
+  static ShowVideoCg(e, i, o, a, r = !1) {
+    e ? VideoLauncher.ShowVideoCgAsync(e, i, o, a, r) : i();
   }
-  static async ShowVideoCgAsync(e, i, o, a) {
+  static async AsyncShowVideoCg(e, i, o, a, r = !1) {
+    e ? await VideoLauncher.ShowVideoCgAsync(e, i, o, a, r) : i();
+  }
+  static async ShowVideoCgAsync(e, i, o, a, r) {
     this.PNo = i;
     var n = ConfigManager_1.ConfigManager.VideoConfig.GetVideoData(e);
-    n
-      ? ((this.pDe = {
+    if (n)
+      if (
+        ((this.pDe = {
           VideoDataConf: n,
           VideoCloseCb: this.Bto,
           BackgroundColor: o,
           RemainViewWhenEnd: a,
         }),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Video", 39, "打开视频播放界面", ["视频配置", e]),
-        UiManager_1.UiManager.IsViewShow("VideoView")
-          ? EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.PlayVideo,
-              this.pDe,
-            )
-          : await UiManager_1.UiManager.OpenViewAsync("VideoView", this.pDe))
-      : i?.();
+          Log_1.Log.Info("Video", 38, "打开视频播放界面", ["视频配置", e]),
+        UiManager_1.UiManager.IsViewShow("VideoView"))
+      )
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.PlayVideo,
+          this.pDe,
+        );
+      else if (r) {
+        const t = new CustomPromise_1.CustomPromise();
+        UiManager_1.UiManager.OpenViewByPlot("VideoView", this.pDe, () => {
+          t.SetResult();
+        }),
+          await t.Promise;
+      } else await UiManager_1.UiManager.OpenViewAsync("VideoView", this.pDe);
+    else i?.();
   }
   static CloseVideoCg(e) {
     (this.PNo = void 0), UiManager_1.UiManager.CloseView("VideoView", e);

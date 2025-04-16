@@ -11,7 +11,11 @@ class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
       (this.ShowMaterialController = !0),
       (this.HideEffect = !0),
       (this.Transform = void 0),
+      (this.HangSocketName = void 0),
       (this.UiWeaponAnsContext = void 0);
+  }
+  Constructor() {
+    this.UiWeaponAnsContext = void 0;
   }
   K2_NotifyBegin(e, t, o) {
     e = e.GetOwner();
@@ -24,13 +28,14 @@ class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
                 this.ShowMaterialController,
                 this.HideEffect,
                 this.Transform,
+                this.HangSocketName,
               )),
             e.Model?.CheckGetComponent(6).AddAns(
               "UiWeaponAnsContext",
               this.UiWeaponAnsContext,
             ))
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Character", 44, "UI武器显隐配置的索引不合法", [
+            Log_1.Log.Error("Character", 43, "UI武器显隐配置的索引不合法", [
               "index",
               this.WeaponIndex,
             ])),
@@ -46,7 +51,7 @@ class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Weapon",
-                44,
+                43,
                 "TsAnimNotifyStateShowUiWeapon未成对，UiWeaponAnsContext为空",
               ),
             !1
@@ -57,7 +62,7 @@ class TsAnimNotifyStateShowUiWeapon extends UE.KuroAnimNotifyState {
         );
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Character", 44, "UI武器显隐配置的索引不合法", [
+          Log_1.Log.Error("Character", 43, "UI武器显隐配置的索引不合法", [
             "index",
             this.WeaponIndex,
           ]);

@@ -61,14 +61,14 @@ class LevelAiPlanInstance {
                   (Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "LevelAi",
-                      30,
+                      29,
                       "[OnPlanningTaskFinished] 执行规划失败",
                     ),
                   this.Stop())
                 : (Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "LevelAi",
-                      30,
+                      29,
                       "[OnPlanningTaskFinished] 没有有效的规划",
                     ),
                   this.Stop())));
@@ -95,7 +95,7 @@ class LevelAiPlanInstance {
   Start() {
     1 === this.DIe
       ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("LevelAi", 30, "[Start] 执行中，忽略开始调用")
+        Log_1.Log.Debug("LevelAi", 29, "[Start] 执行中，忽略开始调用")
       : ((this.DIe = 1),
         (this.bIe = void 0),
         this.NIe(),
@@ -113,13 +113,13 @@ class LevelAiPlanInstance {
   Stop() {
     1 !== this.DIe
       ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("LevelAi", 30, "[Stop] 未执行，忽略停止调用")
+        Log_1.Log.Debug("LevelAi", 29, "[Stop] 未执行，忽略停止调用")
       : (this.CancelActivePlanning(), this.AbortCurrentPlan());
   }
   Pause() {
     1 !== this.DIe
       ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("LevelAi", 30, "[Pause] 未执行，忽略Pause调用")
+        Log_1.Log.Debug("LevelAi", 29, "[Pause] 未执行，忽略Pause调用")
       : (!this.IsPlanning() && this.HasActiveTasks() && (this.bIe = this.xIe),
         this.CancelActivePlanning(),
         this.AbortCurrentPlan());
@@ -127,7 +127,7 @@ class LevelAiPlanInstance {
   Resume() {
     1 === this.DIe
       ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("LevelAi", 30, "[Resume] 执行中，忽略Resume调用")
+        Log_1.Log.Debug("LevelAi", 29, "[Resume] 执行中，忽略Resume调用")
       : ((this.DIe = 1),
         this.NIe(),
         this.CancelActivePlanning(),
@@ -152,7 +152,7 @@ class LevelAiPlanInstance {
   RePlan() {
     1 !== this.DIe
       ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("LevelAi", 30, "[RePlan] 未执行，忽略RePlan调用")
+        Log_1.Log.Debug("LevelAi", 29, "[RePlan] 未执行，忽略RePlan调用")
       : (this.AbortCurrentPlan(), this.IsPlanning() || this.OIe());
   }
   AbortCurrentPlan() {
@@ -174,7 +174,7 @@ class LevelAiPlanInstance {
   OIe() {
     this.IsPlanning()
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("LevelAi", 30, "[StartPlanning] 规划中，重复调用")
+        Log_1.Log.Error("LevelAi", 29, "[StartPlanning] 规划中，重复调用")
       : this.RIe &&
         this.RIe.GetCurrentLevelAiAsset() &&
         ((this.wIe = new LevelAiPlanner_1.LevelAiPlanner()),
@@ -190,7 +190,7 @@ class LevelAiPlanInstance {
         !this.RIe.GetCurrentLevelAiAsset() ||
         (LevelAiDefines_1.LEVEL_AI_DEBUG_MODE &&
           Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("LevelAi", 30, "Start Execute Plan"),
+          Log_1.Log.Debug("LevelAi", 29, "Start Execute Plan"),
         this.QIe(t),
         this.RecheckCurrentPlan()
           ? ((t =
@@ -214,19 +214,19 @@ class LevelAiPlanInstance {
     if (!this.HasPlan())
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelAi", 30, "[StartExecuteTask] 当前没有规划"),
+          Log_1.Log.Error("LevelAi", 29, "[StartExecuteTask] 当前没有规划"),
         1
       );
     var t = this.xIe.GetStep(i).Node;
     if (!t)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelAi", 30, "[StartExecuteTask] 执行了非Task节点"),
+          Log_1.Log.Error("LevelAi", 29, "[StartExecuteTask] 执行了非Task节点"),
         1
       );
     LevelAiDefines_1.LEVEL_AI_DEBUG_MODE &&
       Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("LevelAi", 30, "Start Execute Task");
+      Log_1.Log.Debug("LevelAi", 29, "Start Execute Task");
     var e = new Array();
     this.JIe(e, i);
     for (let t = e.length - 1; 0 <= t; --t) {
@@ -264,7 +264,7 @@ class LevelAiPlanInstance {
       e = (this.UIe.splice(e, 1), this.UIe.push(t), i.WrappedAbortTask());
     2 !== e
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("LevelAi", 30, "[AbortExecutingPlanStep] 失败")
+        Log_1.Log.Error("LevelAi", 29, "[AbortExecutingPlanStep] 失败")
       : 2 === e && this.OnTaskFinished(i, t, e);
   }
   OnTaskFinished(t, i, e) {
@@ -284,9 +284,9 @@ class LevelAiPlanInstance {
                 this.HasActiveTasks() || this.KIe())
               : this.AbortCurrentPlan())
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelAi", 30, "[OnTaskFinished] Plan无效")
+          Log_1.Log.Error("LevelAi", 29, "[OnTaskFinished] Plan无效")
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("LevelAi", 30, "[OnTaskFinished] Task无效");
+        Log_1.Log.Error("LevelAi", 29, "[OnTaskFinished] Task无效");
   }
   NotifyEventBasedDecoratorCondition(t, i) {
     return (
@@ -320,7 +320,7 @@ class LevelAiPlanInstance {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelAi",
-          30,
+          29,
           "[OnPlanningTaskFinished] 初始化规划失败，当前规划正在运行",
         );
     else {
@@ -433,7 +433,7 @@ class LevelAiPlanInstance {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelAi",
-          30,
+          29,
           "[StartSubNodesInSubNodeGroup] 错误的调用，子节点执行中",
         );
     else {
@@ -455,7 +455,7 @@ class LevelAiPlanInstance {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelAi",
-            30,
+            29,
             "[FinishSubNodesAtPlanStep] 错误的调用，结束时节点状态为InProgress",
           );
     }
@@ -472,7 +472,7 @@ class LevelAiPlanInstance {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelAi",
-          30,
+          29,
           "[FinishSubNodesInSubNodeGroup] 错误的调用，子节点非执行中",
         );
   }

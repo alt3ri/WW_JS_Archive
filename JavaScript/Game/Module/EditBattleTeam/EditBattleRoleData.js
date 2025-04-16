@@ -7,6 +7,7 @@ const PlatformSdkManagerNew_1 = require("../../../Launcher/Platform/PlatformSdk/
 class EditBattleRoleData {
   constructor() {
     (this.ConfigId = 0),
+      (this.SkinId = 0),
       (this.OnlineIndex = void 0),
       (this.PlayerName = void 0),
       (this.Level = 0),
@@ -15,14 +16,15 @@ class EditBattleRoleData {
       (this.PlayerId = 0),
       (this.ThirdPartyOnlineId = void 0);
   }
-  Init(t, e, i, a, r, s, o) {
+  Init(t, e, i, a, r, s, o, h) {
     (this.PlayerId = t),
       (this.ConfigId = e),
-      (this.OnlineIndex = i),
-      (this.PlayerName = a),
-      (this.Level = r),
-      (this.IsSelf = s),
-      (this.IsReady = o);
+      (this.SkinId = i),
+      (this.OnlineIndex = a),
+      (this.PlayerName = r),
+      (this.Level = s),
+      (this.IsSelf = o),
+      (this.IsReady = h);
   }
   GetName() {
     if (

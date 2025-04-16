@@ -11,7 +11,7 @@ class LevelConditionCheckFightEnergyBall extends LevelGeneralBase_1.LevelConditi
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -20,14 +20,14 @@ class LevelConditionCheckFightEnergyBall extends LevelGeneralBase_1.LevelConditi
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的能量球状态只能是0，1`,
             ),
           !1)
         : ((r = (e =
             ModelManager_1.ModelManager.SceneTeamModel
-              .GetCurrentEntity)?.Entity?.GetComponent(82)?.RoleElementEnergy),
-          (e = e?.Entity?.GetComponent(82)?.RoleElementEnergyMax),
+              .GetCurrentEntity)?.Entity?.GetComponent(89)?.RoleElementEnergy),
+          (e = e?.Entity?.GetComponent(89)?.RoleElementEnergyMax),
           (0 === r && 0 === n) ||
             (0 < r && r < e && 2 === n) ||
             (e <= r && 1 === n));

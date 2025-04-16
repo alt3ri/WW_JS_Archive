@@ -45,7 +45,7 @@ class LockExecutionUnit extends HudUnitBase_1.HudUnitBase {
       this.Wti &&
         (this.uat &&
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 18, "重复调用隐藏"),
+            Log_1.Log.Error("Battle", 17, "重复调用隐藏"),
           this.uat.SetResult()),
         (this.uat = new CustomPromise_1.CustomPromise()),
         (this._at = TimerSystem_1.TimerSystem.Delay(this.dat, CLOSE_ANIM_TIME)),

@@ -17,6 +17,12 @@ class TsHotPatchPanelConfig extends UE.LGUIBehaviour {
       (this.RegisterAxisMap = void 0),
       (this.TextureList = void 0);
   }
+  Constructor() {
+    (this.InputAction = void 0),
+      (this.InputAxis = void 0),
+      (this.RegisterActionMap = void 0),
+      (this.RegisterAxisMap = void 0);
+  }
   AwakeBP() {
     (this.InputAction = (t, i) => {
       for (const e of this.RegisterActionMap.get(i))

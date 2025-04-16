@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SignalItemBase = void 0);
 const UiComponentsAction_1 = require("../../../../Ui/Base/UiComponentsAction");
 class SignalItemBase extends UiComponentsAction_1.UiComponentsAction {
-  constructor(t, s, i) {
+  constructor(t, s, i, e) {
     super(),
       (this.Type = 0),
       (this.GameplayType = 2),
@@ -15,9 +15,11 @@ class SignalItemBase extends UiComponentsAction_1.UiComponentsAction {
       (this.IsCatchBtnDown = !1),
       (this.RelativeXWhenCatchDown = 0),
       (this.RelativeXWhenCatchUp = 0),
+      (this.RootHalfWidth = 0),
       (this.Type = t),
-      (this.StartDecisionSize = s),
-      (this.EndDecisionSize = i);
+      (this.RootHalfWidth = s),
+      (this.StartDecisionSize = i),
+      (this.EndDecisionSize = e);
   }
   Reset() {
     (this.CurrentRelativeX = 0), this.OnReset();
@@ -40,7 +42,18 @@ class SignalItemBase extends UiComponentsAction_1.UiComponentsAction {
       (this.RelativeXWhenCatchUp = this.CurrentRelativeX);
   }
   OnReset() {}
-  OnUpdate() {}
+  OnUpdate() {
+    var t;
+    return (
+      !!this.RootHalfWidth &&
+      ((t = this.CurrentRelativeX - this.Width),
+      (t =
+        this.CurrentRelativeX >= -this.RootHalfWidth &&
+        t <= this.RootHalfWidth),
+      this.RootItem?.SetUIActive(t),
+      t)
+    );
+  }
   TestCanBtnDown() {
     return !1;
   }

@@ -22,7 +22,7 @@ class RewardExploreToggle extends UiPanelBase_1.UiPanelBase {
     this.Afi = void 0;
   }
   Refresh(e) {
-    this.Afi.OnStateChange.Add(e.OnToggleClick),
+    e.OnToggleClick && this.Afi.OnStateChange.Add(e.OnToggleClick),
       StringUtils_1.StringUtils.IsEmpty(e.DescriptionTextId) ||
         this.Ubt(e.DescriptionTextId);
   }
@@ -30,6 +30,9 @@ class RewardExploreToggle extends UiPanelBase_1.UiPanelBase {
     var t;
     StringUtils_1.StringUtils.IsEmpty(e) ||
       ((t = this.GetText(0)), LguiUtil_1.LguiUtil.SetLocalTextNew(t, e));
+  }
+  GetToggleState() {
+    return this.Afi?.GetToggleState();
   }
 }
 exports.RewardExploreToggle = RewardExploreToggle;

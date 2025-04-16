@@ -21,13 +21,16 @@ const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssi
   FlowActionFinishTalk_1 = require("../FlowActions/FlowActionFinishTalk"),
   FlowActionHideByRangeInFlow_1 = require("../FlowActions/FlowActionHideByRangeInFlow"),
   FlowActionJumpTalk_1 = require("../FlowActions/FlowActionJumpTalk"),
+  FlowActionLeisureInteract_1 = require("../FlowActions/FlowActionLeisureInteract"),
   FlowActionLevelSyncAction_1 = require("../FlowActions/FlowActionLevelSyncAction"),
   FlowActionLockTodTime_1 = require("../FlowActions/FlowActionLockTodTime"),
   FlowActionOpenQuestChapterView_1 = require("../FlowActions/FlowActionOpenQuestChapterView"),
   FlowActionOpenSystemBoard_1 = require("../FlowActions/FlowActionOpenSystemBoard"),
   FlowActionPlayMovie_1 = require("../FlowActions/FlowActionPlayMovie"),
   FlowActionPlaySequenceData_1 = require("../FlowActions/FlowActionPlaySequenceData"),
+  FlowActionPlaySpine_1 = require("../FlowActions/FlowActionPlaySpine"),
   FlowActionServerAction_1 = require("../FlowActions/FlowActionServerAction"),
+  FlowActionSetAudioState_1 = require("../FlowActions/FlowActionSetAudioState"),
   FlowActionSetCameraAnim_1 = require("../FlowActions/FlowActionSetCameraAnim"),
   FlowActionSetEntityVisible_1 = require("../FlowActions/FlowActionSetEntityVisible"),
   FlowActionSetFlowTemplate_1 = require("../FlowActions/FlowActionSetFlowTemplate"),
@@ -211,6 +214,20 @@ class FlowActionCenter extends ControllerAssistantBase_1.ControllerAssistantBase
       this.SXi(
         "SwitchSubLevels",
         FlowActionSwitchSubLevels_1.FlowActionSwitchSubLevels,
+      ),
+      this.SXi(
+        "LeisureInteract",
+        FlowActionLeisureInteract_1.FlowActionLeisureInteract,
+      ),
+      this.SXi(
+        "SetSpineAnimation",
+        FlowActionPlaySpine_1.FlowActionPlaySpine,
+        !0,
+      ),
+      this.SXi(
+        "SetAudioState",
+        FlowActionSetAudioState_1.FlowActionSetAudioState,
+        !0,
       );
   }
   SXi(t, o, e = !1) {

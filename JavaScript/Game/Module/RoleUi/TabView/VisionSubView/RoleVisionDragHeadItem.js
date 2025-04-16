@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleVisionDragHeadItem = void 0);
 const UE = require("ue"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   RedDotController_1 = require("../../../../RedDot/RedDotController"),
   LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
   VisionFetterSuitItem_1 = require("../../../Phantom/Vision/View/VisionFetterSuitItem"),
@@ -18,6 +17,8 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
       (this.SPe = void 0),
       (this.bCo = ""),
       (this.qCo = void 0),
+      (this.nZ_ = void 0),
+      (this.Yl_ = !0),
       (this.Lke = () => !1);
   }
   GetPlusItem() {
@@ -57,6 +58,8 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
       [11, UE.UIItem],
       [12, UE.UIItem],
       [13, UE.UIItem],
+      [14, UE.UIItem],
+      [15, UE.UIText],
     ]),
       (this.BtnBindInfo = [[0, this.OnClickVision]]);
   }
@@ -80,6 +83,7 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
   OnDragBegin() {
     this.bxt.GetRootItem().SetUIActive(!1),
       this.GetItem(4).SetUIActive(!1),
+      this.GetItem(14)?.SetUIActive(!1),
       this.GCo(!0);
   }
   OnDragEnd() {
@@ -97,7 +101,15 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
       this.Ovt(),
       this.K8e(t),
       this.GCo(void 0 === t),
+      this.Olt(t),
       this.GetItem(12)?.SetUIActive(!1);
+  }
+  Olt(t) {
+    t &&
+      this.Yl_ &&
+      ((t = t.GetPhantomLevel()),
+      this.GetItem(14)?.SetUIActive(!0),
+      this.GetText(15)?.SetText("+" + t.toString()));
   }
   GCo(t) {
     this.GetItem(10)?.SetUIActive(t), this.GetItem(13)?.SetUIActive(t);
@@ -108,9 +120,11 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
   NCo() {
     !this.AnimationState && this.CurrentData
       ? (this.GetItem(4).SetUIActive(!0),
-        this.bxt.GetRootItem().SetUIActive(!0))
+        this.bxt.GetRootItem().SetUIActive(!0),
+        this.Yl_ && this.GetItem(14)?.SetUIActive(!0))
       : (this.bxt.GetRootItem().SetUIActive(!1),
-        this.GetItem(4).SetUIActive(!1));
+        this.GetItem(4).SetUIActive(!1),
+        this.GetItem(14)?.SetUIActive(!1));
   }
   OnScrollToScrollViewEvent() {
     this.GetItem(12)?.SetUIActive(!0), this.GCo(!1);
@@ -132,19 +146,18 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
   }
   K8e(t) {
     var i;
-    ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
-      this.RoleId,
-    ).IsTrialRole()
+    !this.RoleData || this.RoleData.IsTrialRole()
       ? this.GetItem(8)?.SetUIActive(!1)
       : !this.wCo && this.NeedRedDot && void 0 === t
         ? ((this.wCo = !0),
           RedDotController_1.RedDotController.BindRedDot(
-            "VisionOneKeyEquip",
+            "VisionGridRedDot",
             this.GetItem(8),
             void 0,
-            this.RoleId,
+            this.RoleData.GetRoleId(),
           ),
-          (this.BCo = 0))
+          (this.BCo = 0),
+          (this.nZ_ = this.RoleData))
         : !this.wCo &&
           this.NeedRedDot &&
           t &&
@@ -164,9 +177,9 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
       ((this.wCo = !1),
       0 === this.BCo
         ? RedDotController_1.RedDotController.UnBindGivenUi(
-            "VisionOneKeyEquip",
+            "VisionGridRedDot",
             this.GetItem(8),
-            this.RoleId,
+            this.nZ_.GetRoleId(),
           )
         : RedDotController_1.RedDotController.UnBindGivenUi(
             "IdentifyTab",
@@ -198,6 +211,9 @@ class RoleVisionDragHeadItem extends RoleVisionCommonItem_1.RoleVisionCommonItem
   }
   OnBeforeClearComponent() {
     this.Ovt();
+  }
+  SetLevelItemShowState(t) {
+    this.Yl_ = t;
   }
 }
 exports.RoleVisionDragHeadItem = RoleVisionDragHeadItem;

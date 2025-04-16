@@ -19,11 +19,13 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
   }
   InitChildType(i = 0) {
     (this.ChildType = i),
-      (this.ChildViewData =
-        ModelManager_1.ModelManager.BattleUiModel.ChildViewData),
-      (this.BaseVisible = this.ChildViewData.GetChildVisible(i)),
-      (this.InnerVisibleState = 1),
-      this.ChildViewData.AddCallback(i, this.iJe);
+      25 === this.ChildType
+        ? ((this.BaseVisible = !0), (this.InnerVisibleState = 1))
+        : ((this.ChildViewData =
+            ModelManager_1.ModelManager.BattleUiModel.ChildViewData),
+          (this.BaseVisible = this.ChildViewData.GetChildVisible(i)),
+          (this.InnerVisibleState = 1),
+          this.ChildViewData.AddCallback(i, this.iJe));
   }
   ShowBattleVisibleChildView() {
     (this.IsEnable = !0), this.rJe(0, !0);
@@ -44,12 +46,17 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
         (this.ChildViewData = void 0)),
       super.Reset();
   }
+  ClearChildViewData() {
+    this.ChildViewData &&
+      (this.ChildViewData.RemoveCallback(this.ChildType, this.iJe),
+      (this.ChildViewData = void 0));
+  }
   SetActive(i) {
     this.GetVisible() !== i
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Battle",
-          18,
+          17,
           "战斗子界面不要直接调用SetActive, 请调用SetVisible",
         )
       : super.SetActive(i);

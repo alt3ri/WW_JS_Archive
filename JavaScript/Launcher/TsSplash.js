@@ -7,8 +7,10 @@ const UE = require("ue"),
   LauncherGameSettingLib_1 = require("./Util/LauncherGameSettingLib"),
   LauncherLanguageLib_1 = require("./Util/LauncherLanguageLib"),
   LauncherResourceLib_1 = require("./Util/LauncherResourceLib"),
-  LauncherStorageLib_1 = require("./Util/LauncherStorageLib");
+  LauncherStorageLib_1 = require("./Util/LauncherStorageLib"),
+  CloudGameManagerLauncher_1 = require("./Platform/CloudGameManagerLauncher");
 class TsSplash extends UE.Object {
+  Constructor() {}
   Init(e) {
     UE.KismetSystemLibrary.GetCommandLine().includes("-SkipSplash")
       ? UE.GameplayStatics.OpenLevel(
@@ -27,12 +29,6 @@ class TsSplash extends UE.Object {
   ChangeToPhaseOne() {
     (TsSplash.CurrentPhase = 0),
       TsSplash.KuroSplashVideo.PlayAnimationLogo(() => {
-        this.ChangeToPhaseTwo();
-      });
-  }
-  ChangeToPhaseTwo() {
-    (TsSplash.CurrentPhase = 1),
-      TsSplash.KuroSplashVideo.PlayWuthering(() => {
         LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage() ===
         LauncherLanguageLib_1.KOREAN_ISO639_1
           ? this.ChangeToPhaseSpecial()
@@ -67,6 +63,7 @@ class TsSplash extends UE.Object {
   }
   static DoInit(e) {
     AppUtil_1.AppUtil.SetWorldContext(e),
+      CloudGameManagerLauncher_1.CloudGameManagerLauncher.Init(),
       LauncherStorageLib_1.LauncherStorageLib.Initialize(),
       LauncherResourceLib_1.LauncherResourceLib.Initialize(),
       LauncherConfigLib_1.LauncherConfigLib.Initialize(),

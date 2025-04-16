@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.getSetEntityVisibleWhiteList =
+  (exports.getMinMaxAlertValue =
+    exports.getAllAlertAreaIds =
+    exports.getSetEntityVisibleWhiteList =
     exports.getLevelRewardWhiteList =
     exports.getDefaultLevelId =
     exports.getEntityPathNew =
@@ -25,10 +27,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getLevelConfigById =
     exports.getLevels =
     exports.getLevelsConfig =
+    exports.onlineLevelIds =
     exports.getMapConfigFromCsv =
       void 0);
 const IGlobal_1 = require("../../Interface/IGlobal"),
   Init_1 = require("../../Interface/Init"),
+  AlertAreaCsv_1 = require("../CsvConfig/AlertAreaCsv"),
   CsvRegistry_1 = require("../CsvConfig/CsvRegistry"),
   DungeonRewardWhiteListCsv_1 = require("../CsvConfig/DungeonRewardWhiteListCsv"),
   LevelsConfigCsv_1 = require("../CsvConfig/LevelsConfigCsv"),
@@ -54,7 +58,10 @@ function getMapConfigFromCsv() {
     { Levels: t }
   );
 }
-exports.getMapConfigFromCsv = getMapConfigFromCsv;
+(exports.getMapConfigFromCsv = getMapConfigFromCsv),
+  (exports.onlineLevelIds = getMapConfigFromCsv()
+    .Levels.filter((e) => !e.IsTest)
+    .map((e) => e.Id));
 class LevelsConfigManager {
   constructor() {
     this.Init();
@@ -193,11 +200,11 @@ function getEntityPath(e, t) {
     `/${e}/${t}.json`
   );
 }
-function getEntityPathByIdAndName(e, t, n) {
+function getEntityPathByIdAndName(e, t, r) {
   e = "string" == typeof e ? levelNameToId(e) : e;
   return (
     (0, File_1.getProjectPath)(IGlobal_1.globalConfig.LevelsDir) +
-    `/${e}/${(0, SegmentIdGenerator_1.getCreatorById)(t)}/${t}_${n}.json`
+    `/${e}/${(0, SegmentIdGenerator_1.getCreatorById)(t)}/${t}_${r}.json`
   );
 }
 function getLevelIdByEntityPath(e) {
@@ -211,14 +218,15 @@ function getEntityPathNew(e, t) {
 function getDefaultLevelId() {
   return (0, Init_1.isUe5)() ? 1 : 8;
 }
-function getLevelRewardWhiteList(t) {
+function getLevelRewardWhiteList(t, r = 0) {
   const n = new Set(),
     i = new Set();
   return (
     CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
       DungeonRewardWhiteListCsv_1.DungeonRewardWhiteListCsv,
     ).forEach((e) => {
-      e.LevelId === t &&
+      e.LevelId !== t ||
+        (isWpLevelByLevelId(t) && e.LevelPlayId !== r) ||
         (e.RewardList?.forEach((e) => {
           n.add(e);
         }),
@@ -233,6 +241,24 @@ function getSetEntityVisibleWhiteList() {
   return CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
     SetEntityVisibleWhiteListCsv_1.SetEntityVisibleWhiteListCsv,
   ).map((e) => e.EntityUid);
+}
+function getAllAlertAreaIds() {
+  var e = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
+    AlertAreaCsv_1.AlertAreaCsv,
+  );
+  const t = [];
+  return (
+    e.forEach((e) => {
+      t.push(e.Id);
+    }),
+    t
+  );
+}
+function getMinMaxAlertValue(t, e) {
+  var r = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
+    AlertAreaCsv_1.AlertAreaCsv,
+  ).find((e) => Number(e.Id) === t);
+  if (r) return e ? r.MinValue : r.MaxValue;
 }
 (exports.getLevelsConfig = getLevelsConfig),
   (exports.getLevels = getLevels),
@@ -258,5 +284,7 @@ function getSetEntityVisibleWhiteList() {
   (exports.getEntityPathNew = getEntityPathNew),
   (exports.getDefaultLevelId = getDefaultLevelId),
   (exports.getLevelRewardWhiteList = getLevelRewardWhiteList),
-  (exports.getSetEntityVisibleWhiteList = getSetEntityVisibleWhiteList);
+  (exports.getSetEntityVisibleWhiteList = getSetEntityVisibleWhiteList),
+  (exports.getAllAlertAreaIds = getAllAlertAreaIds),
+  (exports.getMinMaxAlertValue = getMinMaxAlertValue);
 //# sourceMappingURL=Level.js.map

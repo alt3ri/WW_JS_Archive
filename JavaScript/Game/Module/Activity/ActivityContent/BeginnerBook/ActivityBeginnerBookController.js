@@ -36,7 +36,7 @@ class ActivityBeginnerBookController extends ActivityControllerBase_1.ActivityCo
     var e = Protocol_1.Aki.Protocol.Uhs.create(),
       e =
         ((e.B6n = i.AllBeginnerTargetList),
-        await Net_1.Net.CallAsync(18237, e));
+        await Net_1.Net.CallAsync(25757, e));
     for (const r of e.eBs)
       i.UnLockBeginnerMap.set(r.Jbs, r.zbs),
         i.FinishBeginnerMap.set(r.Jbs, r.Zbs);

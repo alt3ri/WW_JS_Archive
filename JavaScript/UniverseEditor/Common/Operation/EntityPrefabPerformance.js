@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.getAllPerformanceAttributeTagsByType =
+  (exports.getAllSceneItemAttributeTagsByType =
     exports.getAllPerformanceAttributeTypes =
     exports.EntityPrefabPerformanceUtil =
       void 0);
@@ -57,7 +57,7 @@ function getAllPerformanceAttributeTypes() {
     e
   );
 }
-function getAllPerformanceAttributeTagsByType(e) {
+function getAllSceneItemAttributeTagsByType(e) {
   var t = CsvRegistry_1.CsvRegistry.Instance.GetAllCsvRows(
     EntityPerformanceAttributeCsv_1.EntityPerformanceAttributeCsv,
   ).find((t) => t.Type === e);
@@ -67,6 +67,6 @@ function getAllPerformanceAttributeTagsByType(e) {
   Object.keys(IAction_1.entityPrefabPerformanceConfig)),
   (EntityPrefabPerformanceUtil.ue = new Map()),
   (exports.getAllPerformanceAttributeTypes = getAllPerformanceAttributeTypes),
-  (exports.getAllPerformanceAttributeTagsByType =
-    getAllPerformanceAttributeTagsByType);
+  (exports.getAllSceneItemAttributeTagsByType =
+    getAllSceneItemAttributeTagsByType);
 //# sourceMappingURL=EntityPrefabPerformance.js.map

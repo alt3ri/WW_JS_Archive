@@ -87,14 +87,14 @@ class UseBuffItemRoleData {
         var a,
           n,
           h = BigInt(I),
-          f = i.GetDamageConfig(e.Id, h);
+          f = i.GetDamageConfig(e.Id, Number(h));
         f
           ? ((a = this.J0t(e, f.RelatedProperty)),
             void 0 === (n = f.CureBaseValue[0])
               ? Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "BuffItem",
-                  8,
+                  37,
                   "计算Buff道具治疗生命数值时，结算表对应行的CureBaseValue为空",
                   ["Buff配置", t],
                 )
@@ -104,7 +104,7 @@ class UseBuffItemRoleData {
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "BuffItem",
-              8,
+              37,
               "计算Buff道具治疗生命数值时，找不到结算表对应配置",
               ["结算表Id", h],
               ["Buff配置", t],
@@ -112,7 +112,7 @@ class UseBuffItemRoleData {
       }
     else if (101 === o) {
       if (s.length < 2) return r;
-      var o = e.GetComponent(159),
+      var o = e.GetComponent(171),
         _ = Number(s[0]) / TEN_THOUSANDTH_RATIO,
         o = o.GetCurrentValue(EAttributeId.l5n);
       r += _ * o + Number(s[1]);
@@ -120,7 +120,7 @@ class UseBuffItemRoleData {
     return r;
   }
   J0t(t, e) {
-    return t.GetComponent(159).GetCurrentValue(e);
+    return t.GetComponent(171).GetCurrentValue(e);
   }
 }
 exports.UseBuffItemRoleData = UseBuffItemRoleData;

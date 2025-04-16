@@ -35,17 +35,17 @@ class AppLinksController extends ControllerBase_1.ControllerBase {
   ((_a = AppLinksController)._2n = (e, r) => {
     _a.iVe()
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Functional", 22, "打开抽卡界面"),
+          Log_1.Log.Debug("Functional", 21, "打开抽卡界面"),
         FunctionController_1.FunctionController.OpenFunctionRelateView(10009))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Functional", 22, "未完成游戏登录");
+        Log_1.Log.Debug("Functional", 21, "未完成游戏登录");
   }),
   (AppLinksController.y4e = (e, r) => {
     _a.iVe()
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Functional", 22, "打开活动界面"),
+          Log_1.Log.Debug("Functional", 21, "打开活动界面"),
         FunctionController_1.FunctionController.OpenFunctionRelateView(10053))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Functional", 22, "未完成游戏登录");
+        Log_1.Log.Debug("Functional", 21, "未完成游戏登录");
   });
 //# sourceMappingURL=AppLinksController.js.map

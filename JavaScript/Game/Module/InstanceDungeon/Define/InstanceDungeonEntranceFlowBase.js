@@ -15,7 +15,7 @@ class InstanceDungeonEntranceFlowBase {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "InstanceDungeon",
-            17,
+            16,
             "副本进入流程执行失败，当前步数与总步数不匹配！",
             ["CurrentStep", this.Dai],
           )

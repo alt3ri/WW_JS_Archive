@@ -73,10 +73,12 @@ class DailyAdventureRewardItem extends UiPanelBase_1.UiPanelBase {
           a = this.sOe[e];
         s &&
           ((r = { Item: i[e], HasClaimed: 2 === this.Data.RewardState }),
-          a.Refresh(r)),
-          a.SetActive(s),
-          a.SetReceivableVisible(0 === this.Data.RewardState),
-          a.SetLockVisible(1 === this.Data.RewardState);
+          a.Refresh(
+            r,
+            0 === this.Data.RewardState,
+            1 === this.Data.RewardState,
+          )),
+          a.SetActive(s);
       }
       this.GetText(2).SetText(t.NeedPt.toString()), this._Oe(e.RewardState);
     }

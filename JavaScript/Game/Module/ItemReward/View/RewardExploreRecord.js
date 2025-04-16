@@ -17,7 +17,9 @@ class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
         this.Lfi(e.toString());
       }),
       (this.Zna = () => {
-        this.asa?.Kill(), (this.asa = void 0);
+        (0, puerts_1.releaseManualReleaseDelegate)(this.hsa),
+          this.asa?.Kill(),
+          (this.asa = void 0);
       });
   }
   OnRegisterComponent() {
@@ -32,19 +34,19 @@ class RewardExploreRecord extends UiPanelBase_1.UiPanelBase {
     super.OnBeforeDestroy(), this.Zna(), this.n1a();
   }
   Refresh(e) {
-    var i = e.TitleTextId,
-      t = !StringUtils_1.StringUtils.IsEmpty(i);
-    t && this.Ubt(i),
-      this.mfi(t),
+    var t = e.TitleTextId,
+      i = !StringUtils_1.StringUtils.IsEmpty(t);
+    i && this.Ubt(t),
+      this.mfi(i),
       this.Dfi(e.IsNewRecord),
       void 0 !== e.RecordRollingTo
         ? this.lsa(e.RecordRollingTo)
         : this.Lfi(e.Record);
   }
   Ubt(e) {
-    var i = this.GetText(0);
+    var t = this.GetText(0);
     StringUtils_1.StringUtils.IsEmpty(e) ||
-      LguiUtil_1.LguiUtil.SetLocalTextNew(i, e);
+      LguiUtil_1.LguiUtil.SetLocalTextNew(t, e);
   }
   mfi(e) {
     this.GetText(0).SetUIActive(e);

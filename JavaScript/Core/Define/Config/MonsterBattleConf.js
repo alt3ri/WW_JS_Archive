@@ -9,6 +9,9 @@ class MonsterBattleConf {
   get Id() {
     return this.id();
   }
+  get RoleMappingId() {
+    return this.rolemappingid();
+  }
   get ExecutionId() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.executionidLength(),
@@ -25,6 +28,12 @@ class MonsterBattleConf {
   get MonsterSizeId() {
     return this.monstersizeid();
   }
+  get MonsterPerformanceId() {
+    return this.monsterperformanceid();
+  }
+  get FixedLocation() {
+    return this.fixedlocation();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -38,19 +47,23 @@ class MonsterBattleConf {
     var t = this.J7.__offset(this.z7, 4);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
+  rolemappingid() {
+    var t = this.J7.__offset(this.z7, 6);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
   GetExecutionidAt(t) {
     return this.executionid(t);
   }
   executionid(t) {
-    var i = this.J7.__offset(this.z7, 6);
+    var i = this.J7.__offset(this.z7, 8);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   executionidLength() {
-    var t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   executionidArray() {
-    var t = this.J7.__offset(this.z7, 6);
+    var t = this.J7.__offset(this.z7, 8);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -60,16 +73,24 @@ class MonsterBattleConf {
       : null;
   }
   executionradius() {
-    var t = this.J7.__offset(this.z7, 8);
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 3;
   }
   forcelockoncoefficient() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   monstersizeid() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
+  }
+  monsterperformanceid() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  fixedlocation() {
+    var t = this.J7.__offset(this.z7, 18);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.MonsterBattleConf = MonsterBattleConf;

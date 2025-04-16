@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaWeaponTransform = void 0);
-const Vector_1 = require("./SubType/Vector");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  Vector_1 = require("./SubType/Vector");
 class GachaWeaponTransform {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -95,8 +96,14 @@ class GachaWeaponTransform {
       : null;
   }
   weapontypetexture(t) {
-    var r = this.J7.__offset(this.z7, 20);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var r = this.J7.__offset(this.z7, 20),
+      r = r ? this.J7.__string(this.z7 + r, t) : null;
+    return (
+      "string" == typeof r &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(r),
+      r
+    );
   }
 }
 exports.GachaWeaponTransform = GachaWeaponTransform;

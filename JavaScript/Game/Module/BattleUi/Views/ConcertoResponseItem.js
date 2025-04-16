@@ -7,8 +7,8 @@ const UE = require("ue"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   BattleUiRoleData_1 = require("../BattleUiRoleData"),
-  BattleChildView_1 = require("./BattleChildView/BattleChildView");
-class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
+  BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView");
+class ConcertoResponseItem extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
       (this.Wst = void 0),
@@ -18,7 +18,7 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
       (this.Xst = void 0),
       (this.hJ = 0),
       (this.o$e = (e) => {
-        e === this.E0 && this.vTa();
+        e === this.E0 && this.yTa();
       }),
       (this.Yst = (e, t, i) => {
         e === this.E0 && this.RefreshVisible();
@@ -31,7 +31,7 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
     ];
   }
   Initialize(e) {
-    super.Initialize(e), this.Ore();
+    super.Initialize(e), this.InitChildType(25), this.Ore();
   }
   OnBeforeDestroy() {
     this.Refresh(void 0);
@@ -49,14 +49,14 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
           (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.hJ),
           (this.hJ = 0)),
         this.Jst(this.Wst.ElementType),
-        this.vTa(),
+        this.yTa(),
         this.RefreshVisible())
       : ((this.Wst = void 0),
         (this.E0 = void 0),
         (this.Kst = void 0),
         (this.Xst = void 0),
         (this.Qst = void 0),
-        this.SetActive(!1));
+        this.SetVisible(1, !1));
   }
   GetEntityId() {
     return this.E0;
@@ -85,9 +85,9 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
     if (this.Wst)
       if (ModelManager_1.ModelManager.FunctionModel.IsOpen(10036)) {
         for (const e of BattleUiRoleData_1.BattleUiRoleData.HideElementTagList)
-          if (this.Kst.HasTag(e)) return void this.SetActive(!1);
-        this.SetActive(!0);
-      } else this.SetActive(!1);
+          if (this.Kst.HasTag(e)) return void this.SetVisible(1, !1);
+        this.SetVisible(1, !0);
+      } else this.SetVisible(1, !1);
   }
   Jst(e) {
     var t, i, s;
@@ -100,7 +100,7 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
       s.SetColor(this.Wst.ElementColor),
       (this.Xst = e));
   }
-  vTa() {
+  yTa() {
     this.GetSprite(0).SetFillAmount(this.GetElementPercent());
   }
   GetElementPercent() {

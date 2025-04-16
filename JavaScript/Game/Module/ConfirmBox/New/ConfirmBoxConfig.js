@@ -13,7 +13,7 @@ class ConfirmBoxConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ConfirmBox",
-            11,
+            10,
             "原因:确认框.xlsx表格查找不到对应的配置id 解决:策划查看是否有配置对应的id",
             ["配置id", e],
           )),

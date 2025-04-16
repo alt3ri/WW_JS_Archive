@@ -11,6 +11,7 @@ const ue_1 = require("ue"),
   PerfSight_1 = require("../../../Core/PerfSight/PerfSight"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  CloudGameManager_1 = require("../../Manager/CloudGameManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   LoginDefine_1 = require("../Login/Data/LoginDefine"),
@@ -18,11 +19,11 @@ const ue_1 = require("ue"),
   WorldLevelController_1 = require("../WorldLevel/WorldLevelController");
 class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(17467, PlayerInfoController.dXi),
-      Net_1.Net.Register(25394, PlayerInfoController.CXi);
+    Net_1.Net.Register(29267, PlayerInfoController.dXi),
+      Net_1.Net.Register(23148, PlayerInfoController.CXi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(17467), Net_1.Net.UnRegister(25394);
+    Net_1.Net.UnRegister(29267), Net_1.Net.UnRegister(23148);
   }
   static gXi() {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(9);
@@ -39,13 +40,13 @@ class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
     if (void 0 !== r) {
       r.SetId(e.s5n), LogAnalyzer_1.LogAnalyzer.SetPlayerId(e.s5n);
       var o = new Map(),
-        n = new Map();
-      for (const a of e.GSs)
-        a.HSs === Protocol_1.Aki.Protocol.TNs.Proto_Int32
-          ? o.set(a.Z4n, a.jSs)
-          : n.set(a.Z4n, a.j8n);
+        a = new Map();
+      for (const n of e.GSs)
+        n.HSs === Protocol_1.Aki.Protocol.TNs.Proto_Int32
+          ? o.set(n.Z4n, n.jSs)
+          : a.set(n.Z4n, n.j8n);
       r.SetNumberProp(o),
-        r.SetStringProp(n),
+        r.SetStringProp(a),
         (r.RandomSeed = e.lHn),
         ModelManager_1.ModelManager.MingSuModel.UpdateDragonPoolInfoMap(e.kSs),
         ModelManager_1.ModelManager.FunctionModel.SetPlayerId(e.s5n),
@@ -53,7 +54,7 @@ class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
           o,
         ),
         ModelManager_1.ModelManager.FunctionModel.UpdatePlayerAttributeStringInfo(
-          n,
+          a,
         ),
         ModelManager_1.ModelManager.PersonalModel.SetRoleShowList(e.MSs),
         ModelManager_1.ModelManager.PersonalModel.SetCurCardId(e.NSs),
@@ -74,15 +75,25 @@ class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.PersonalModel.SetHeadPhotoId(r),
         PlayerInfoController.gXi(),
         LoginController_1.LoginController.SetIfFirstTimeLogin(),
+        CloudGameManager_1.CloudGameManager.IsCloudGame &&
+          (ue_1.KuroStaticLibrary.SetThreadAffinity("GameThread", 65535, 65280),
+          ue_1.KuroStaticLibrary.SetThreadAffinity(
+            "RenderThread",
+            65535,
+            65520,
+          ),
+          ue_1.KuroStaticLibrary.SetThreadAffinity("RHIThread", 65535, 65520),
+          Log_1.Log.CheckInfo()) &&
+          Log_1.Log.Info("Game", 24, "IsCloudGame affinity set"),
         2 === Info_1.Info.PlatformType && e.s5n % 10 == 1
           ? ((r = ue_1.KuroStaticLibrary.GetDeviceCPU()).includes("SM8475") ||
               r.includes("SM8550") ||
               r.includes("SM8650")) &&
             (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Game", 25, "Disable affinity set", ["cpu", r]),
+              Log_1.Log.Info("Game", 24, "Disable affinity set", ["cpu", r]),
             ue_1.KuroStaticLibrary.SetThreadAffinity(
               "GameThread",
-              1048575,
+              65535,
               65535,
             ),
             ue_1.KuroStaticLibrary.SetThreadAffinity(
@@ -107,16 +118,16 @@ class PlayerInfoController extends UiControllerBase_1.UiControllerBase {
       var r = ModelManager_1.ModelManager.PlayerInfoModel;
       if (void 0 !== r) {
         var o = new Map(),
-          n = new Map();
-        for (const a of e.GSs)
-          a.HSs === Protocol_1.Aki.Protocol.TNs.Proto_Int32
-            ? (r.ChangeNumberProp(a.Z4n, a.jSs), o.set(a.Z4n, a.jSs))
-            : (r.ChangeStringProp(a.Z4n, a.j8n), n.set(a.Z4n, a.j8n));
+          a = new Map();
+        for (const n of e.GSs)
+          n.HSs === Protocol_1.Aki.Protocol.TNs.Proto_Int32
+            ? (r.ChangeNumberProp(n.Z4n, n.jSs), o.set(n.Z4n, n.jSs))
+            : (r.ChangeStringProp(n.Z4n, n.j8n), a.set(n.Z4n, n.j8n));
         ModelManager_1.ModelManager.FunctionModel.UpdatePlayerAttributeNumberInfo(
           o,
         ),
           ModelManager_1.ModelManager.FunctionModel.UpdatePlayerAttributeStringInfo(
-            n,
+            a,
           );
       }
     }

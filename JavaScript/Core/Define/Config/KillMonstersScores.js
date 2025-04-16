@@ -82,8 +82,14 @@ class KillMonstersScores {
       : null;
   }
   desc(t) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
 }
 exports.KillMonstersScores = KillMonstersScores;

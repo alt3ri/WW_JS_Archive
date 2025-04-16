@@ -22,14 +22,15 @@ class NewSoundLordItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(3)?.SetUIActive(!1);
   }
   Update(e) {
+    e = e.DetectRecordData;
     if (0 !== e.Type) {
       var r = e.Conf,
         t = this.GetText(0),
         t =
           (LguiUtil_1.LguiUtil.SetLocalTextNew(t, r.Name), this.GetTexture(1));
-      if (e.IsLock) this.SetTextureByPath(r.LockBigIcon, t);
+      if (e.IsLock) this.SetTextureShowUntilLoaded(r.LockBigIcon, t);
       else {
-        this.SetTextureByPath(r.BigIcon, t);
+        this.SetTextureShowUntilLoaded(r.BigIcon, t);
         const i = r.AdditionalId;
         LordGymController_1.LordGymController.LordGymInfoRequest().finally(
           () => {

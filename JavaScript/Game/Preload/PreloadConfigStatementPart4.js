@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.configNewbieCourseById =
+  (exports.configNewOccupationConfigAll =
+    exports.configNewbieCourseById =
     exports.configNewbieCourseAll =
     exports.configMultiTextLang =
     exports.configMultiMapById =
     exports.configMultiMapByGroupId =
-    exports.configMultiMapAreaConfigByBlock =
     exports.configMultiMapAreaConfigAll =
     exports.configMultiMapAll =
     exports.configMotionByRoleIdAndType =
@@ -51,7 +51,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.configMapBorderByBorderId =
     exports.configMapBorderAll =
       void 0),
-  (exports.configPhantomMainPropertyById =
+  (exports.configPhantomMainPropItemById =
+    exports.configPhantomMainPropertyById =
     exports.configPhantomLevelByGroupIdAndLevel =
     exports.configPhantomLevelByGroupId =
     exports.configPhantomItemByMonsterId =
@@ -100,9 +101,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.configNpcSystemBackgroundById =
     exports.configNpcHeadInfoById =
     exports.configNewOccupationConfigById =
-    exports.configNewOccupationConfigAll =
       void 0),
-  (exports.configQuestTypeAll =
+  (exports.configQuestTypeById =
+    exports.configQuestTypeAll =
     exports.configQuestNodeDataByKey =
     exports.configQuestMainTypeById =
     exports.configQuestDataById =
@@ -151,7 +152,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.configPhantomSkillById =
     exports.configPhantomRarityByRare =
     exports.configPhantomQualityByQuality =
-    exports.configPhantomMainPropItemById =
       void 0),
   (exports.configRoleInfluenceById =
     exports.configRoleInfluenceAll =
@@ -200,7 +200,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.configRecordConfigById =
     exports.configQuickChatAll =
     exports.configQuestTypeByMainId =
-    exports.configQuestTypeById =
       void 0);
 var MapBorderAll_1 = require("../../Core/Define/ConfigQuery/MapBorderAll"),
   MapBorderByBorderId_1 =
@@ -555,19 +554,11 @@ var MapBorderAll_1 = require("../../Core/Define/ConfigQuery/MapBorderAll"),
       },
     }),
     require("../../Core/Define/ConfigQuery/MultiMapAreaConfigAll")),
-  MultiMapAreaConfigByBlock_1 =
+  MultiMapByGroupId_1 =
     (Object.defineProperty(exports, "configMultiMapAreaConfigAll", {
       enumerable: !0,
       get: function () {
         return MultiMapAreaConfigAll_1.configMultiMapAreaConfigAll;
-      },
-    }),
-    require("../../Core/Define/ConfigQuery/MultiMapAreaConfigByBlock")),
-  MultiMapByGroupId_1 =
-    (Object.defineProperty(exports, "configMultiMapAreaConfigByBlock", {
-      enumerable: !0,
-      get: function () {
-        return MultiMapAreaConfigByBlock_1.configMultiMapAreaConfigByBlock;
       },
     }),
     require("../../Core/Define/ConfigQuery/MultiMapByGroupId")),

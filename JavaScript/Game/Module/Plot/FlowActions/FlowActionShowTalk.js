@@ -37,20 +37,20 @@ class FlowActionShowTalk extends FlowActionBase_1.FlowActionBase {
   hYi() {
     var e = this.ActionInfo.Params,
       t = this.Context,
-      s = this.Runner;
-    this.FinishExecute(!0, !1), s.FlowShowTalk.Start(e, t);
+      a = this.Runner;
+    this.FinishExecute(!0, !1), a.FlowShowTalk.Start(e, t);
   }
   aYi() {
-    var e, t, s;
-    this.Context.IsBackground
-      ? this.hYi()
-      : (e = this.ActionInfo.Params)?.SequenceDataAsset
-        ? ((t = this.Runner),
-          (s = this.Context),
-          this.FinishExecute(!0, !1),
-          t.FlowSequence.Init(e, s),
-          t.FlowSequence.Start())
-        : this.FinishExecute(!0);
+    var e,
+      t,
+      a = this.ActionInfo.Params;
+    a?.SequenceDataAsset
+      ? ((e = this.Runner),
+        (t = this.Context),
+        this.FinishExecute(!0, !1),
+        e.FlowSequence.Init(a, t),
+        e.FlowSequence.Start())
+      : this.FinishExecute(!0);
   }
   OnBackgroundExecute() {
     this.OnExecute();

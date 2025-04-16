@@ -40,6 +40,9 @@ class TaskMark {
   get Scale() {
     return this.scale();
   }
+  get FxScale() {
+    return this.fxscale();
+  }
   __init(t, s) {
     return (this.z7 = t), (this.J7 = s), this;
   }
@@ -58,24 +61,48 @@ class TaskMark {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   markpic(t) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   markacceptablepic(t) {
-    var s = this.J7.__offset(this.z7, 10);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 10),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   npctaskicon(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 12),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   icondistant() {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 2e4;
   }
   tracktextstarteffectcolor(t) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 16),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetShowrangeAt(t) {
     return this.showrange(t);
@@ -104,6 +131,10 @@ class TaskMark {
   }
   scale() {
     var t = this.J7.__offset(this.z7, 22);
+    return t ? this.J7.readFloat32(this.z7 + t) : 1;
+  }
+  fxscale() {
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readFloat32(this.z7 + t) : 1;
   }
 }

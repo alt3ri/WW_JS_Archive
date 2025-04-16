@@ -21,10 +21,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPartScanComponent = void 0);
 const UE = require("ue"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   EffectContext_1 = require("../../../../Effect/EffectContext/EffectContext"),
   EffectSystem_1 = require("../../../../Effect/EffectSystem"),
-  GlobalData_1 = require("../../../../GlobalData"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+  GlobalData_1 = require("../../../../GlobalData");
 let CharacterPartScanComponent = class CharacterPartScanComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
@@ -34,7 +34,7 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
   }
   OnInit() {
     return (
-      (this.ljr = this.Entity.GetComponent(61)),
+      (this.ljr = this.Entity.GetComponent(68)),
       (this.n$t = this.Entity.GetComponent(3)),
       (this._jr = this.n$t.Actor.CharRenderingComponent),
       !0
@@ -48,7 +48,7 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
           "None" !== e?.ScanEffect &&
           ((t = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.GameInstance,
-            new UE.Transform(),
+            new UE.TransformDouble(),
             e.ScanEffect,
             "[CharacterPartScanComponent.ShowScanEffect]",
             new EffectContext_1.EffectContext(this.Entity.Id),
@@ -71,7 +71,7 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
   }
 };
 (CharacterPartScanComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(62)],
+  [(0, RegisterComponent_1.RegisterComponent)(69)],
   CharacterPartScanComponent,
 )),
   (exports.CharacterPartScanComponent = CharacterPartScanComponent);

@@ -11,6 +11,7 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
+  LguiUtil_1 = require("../../Util/LguiUtil"),
   MarqueeController_1 = require("../MarqueeController"),
   TARGETPOSITIONOFFSET = 10;
 class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
@@ -67,12 +68,12 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
   OnTick() {
     var e = ModelManager_1.ModelManager.MarqueeModel.CurMarquee;
     if (e && MarqueeController_1.MarqueeController.CheckCurMarqueeValid(e)) {
-      e.Content !== this.sPi?.Content && this.T2e(e);
+      e.UseLocalTextKey || e.Content === this.sPi?.Content || this.T2e(e);
       var i = TimeUtil_1.TimeUtil.GetServerTime(),
         t = ModelManager_1.ModelManager.MarqueeModel.GetNextMarquee();
       if (t && t.BeginTime <= i)
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Marquee", 9, "下一条跑马灯到播放时间"),
+          Log_1.Log.Info("Marquee", 8, "下一条跑马灯到播放时间"),
           MarqueeController_1.MarqueeController.CloseMarqueeView();
       else {
         if (
@@ -98,20 +99,24 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
       }
     } else MarqueeController_1.MarqueeController.CloseMarqueeView();
   }
-  T2e(i) {
-    let t = (this.sPi = i).Content.replace(/\r\n/g, " ");
-    if (t.includes("{EndTime}")) {
-      var i =
-          ModelManager_1.ModelManager.MarqueeModel.GetMarqueeDataLeftTime(i),
-        i = Math.ceil(i / 60),
-        r =
-          ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
-            "ShopMinuteText",
-          );
-      let e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r);
-      (e = e.replace("{0}", i.toString())), (t = t.replace("{EndTime}", e));
+  T2e(t) {
+    if ((this.sPi = t).UseLocalTextKey)
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.iPi, t.LocalTextKey);
+    else {
+      let i = t.Content.replace(/\r\n/g, " ");
+      if (i.includes("{EndTime}")) {
+        var t =
+            ModelManager_1.ModelManager.MarqueeModel.GetMarqueeDataLeftTime(t),
+          t = Math.ceil(t / 60),
+          r =
+            ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
+              "ShopMinuteText",
+            );
+        let e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r);
+        (e = e.replace("{0}", t.toString())), (i = i.replace("{EndTime}", e));
+      }
+      this.iPi.SetText(i);
     }
-    this.iPi.SetText(t);
   }
 }
 exports.MarqueeView = MarqueeView;

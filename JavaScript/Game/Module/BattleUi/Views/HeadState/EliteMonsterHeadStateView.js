@@ -5,15 +5,15 @@ const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
+  BuffItemContainer_1 = require("../BuffItemContainer"),
   VisibleAnimMachine_1 = require("../State/VisibleAnimMachine"),
   HeadStateViewBase_1 = require("./HeadStateViewBase"),
-  RageBufferStateMachine_1 = require("./RageBufferStateMachine"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
-  BuffItemContainer_1 = require("../BuffItemContainer");
+  RageBufferStateMachine_1 = require("./RageBufferStateMachine");
 var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const SCALE_TOLERATION = 0.003,
   FALL_DOWN_DISAPPEAR_PERCENT = 0.8,
@@ -47,11 +47,11 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
           ? (this.t1t.GetHit(0, this.i1t), this.nst(), this.sst(!0))
           : this.sst(!1);
       }),
-      (this.OnAddOrRemoveBuff = (t, i, s, e) => {
+      (this.OnAddOrRemoveBuff = (t, i, e, s) => {
         this.HeadStateData.GetEntityId() === t &&
-          (s
-            ? this.mkn.AddBuffByCue(i, e, !0)
-            : this.mkn.RemoveBuffByCue(i, e, !0));
+          (e
+            ? this.mkn.AddBuffByCue(i, s, !0)
+            : this.mkn.RemoveBuffByCue(i, s, !0));
       }),
       (this.OnShieldChanged = (t) => {
         this.RefreshHpAndShield(!0);
@@ -59,8 +59,9 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.OnHardnessHideChanged = (t) => {
         this.Jnt(), this.znt();
       }),
-      (this.OnHardnessChanged = (t, i, s) => {
-        t === this.HardnessAttributeId && this.Znt();
+      (this.OnHardnessChanged = (t, i, e) => {
+        (t !== this.HardnessAttributeId && t !== this.MaxHardnessAttributeId) ||
+          this.Znt();
       }),
       (this.VulnerabilityActivated = (t) => {
         this.Dnt = t;
@@ -69,13 +70,13 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
           this.Dnt
             ? (([t] = this.GetHpAndShieldPercent()),
               i.SetFillAmount(t),
-              this.SPe.PlaySequencePurely("Flicker"))
-            : this.SPe.StopSequenceByKey("Flicker");
+              this.SPe?.PlaySequencePurely("Flicker"))
+            : this.SPe?.StopSequenceByKey("Flicker");
       }),
-      (this.OnLevelChanged = (t, i, s) => {
+      (this.OnLevelChanged = (t, i, e) => {
         this.Olt();
       }),
-      (this.OnRoleLevelChange = (t, i, s) => {
+      (this.OnRoleLevelChange = (t, i, e) => {
         this.Olt();
       }),
       (this.OnChangeTeam = () => {
@@ -83,27 +84,51 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       }),
       (this.wnt = (t) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "狂暴条刷新", ["visible", t]),
+          Log_1.Log.Debug("Battle", 17, "狂暴条刷新", ["visible", t]),
           this.GetItem(8).SetUIActive(t);
       }),
       (this.Bnt = (t) => {
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "播放狂暴条动画", ["visible", t]),
-          t ? this.bnt(21) : this.bnt(24);
+        t
+          ? (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Battle",
+                17,
+                "[EliteHeadState]播放狂暴条Start动画",
+              ),
+            this.bnt(21))
+          : (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Battle",
+                17,
+                "[EliteHeadState]播放狂暴条Close动画",
+              ),
+            this.bnt(24));
       }),
       (this.qnt = (t) => {
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Battle", 18, "停止狂暴条动画", ["visible", t]),
-          t ? this.Gnt(21) : this.Gnt(24);
+        t
+          ? (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Battle",
+                17,
+                "[EliteHeadState]停止狂暴条Start动画",
+              ),
+            this.Gnt(21))
+          : (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Battle",
+                17,
+                "[EliteHeadState]停止狂暴条Close动画",
+              ),
+            this.Gnt(24));
       }),
-      (this.Nnt = (t, i, s) => {
-        var e;
+      (this.Nnt = (t, i, e) => {
+        var s;
         t <= i
           ? this.Ont()
-          : ((e = this.GetSprite(14)).SetUIActive(!0),
-            e.SetStretchRight(this.vnt * (1 - t)),
-            e.SetStretchLeft(this.vnt * i),
-            s && this.bnt(22));
+          : ((s = this.GetSprite(14)).SetUIActive(!0),
+            s.SetStretchRight(this.vnt * (1 - t)),
+            s.SetStretchLeft(this.vnt * i),
+            e && this.bnt(22));
       }),
       (this.knt = (t, i) => {
         this.bnt(20);
@@ -145,13 +170,15 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.ScaleToleration = SCALE_TOLERATION);
   }
   ActiveBattleHeadState(t) {
-    super.ActiveBattleHeadState(t),
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Battle", 17, "[EliteHeadState]激活血条"),
+      super.ActiveBattleHeadState(t),
       (this.Mnt = this.GetItem(8).bIsUIActive),
       (this.Tnt = this.GetItem(5).bIsUIActive),
       (this.Snt = this.GetSprite(12).bIsUIActive),
-      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.rnt.InitVisible(this.Mnt),
       this.GetItem(8).SetAlpha(1),
+      (this.Ent = t.HasFallDownTag),
       this.o1t(),
       this.RefreshHpAndShield(),
       this.Olt(),
@@ -169,6 +196,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   }
   OnStart() {
     this.Qnt(),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       (this.nnt =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "HitLargeBufferPercent",
@@ -178,15 +206,17 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.vnt = this.GetSprite(14).GetParentAsUIItem().GetWidth()),
       (this.rnt = new VisibleAnimMachine_1.VisibleAnimMachine()),
       this.rnt.InitCallback(this.wnt, this.Bnt, this.qnt),
-      this.mkn.Init(this.GetItem(9));
+      this.mkn.Init(this.GetItem(9), void 0, !0);
   }
   OnBeforeDestroy() {
-    this.SPe.Clear(),
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Battle", 17, "[EliteHeadState]销毁血条"),
+      this.SPe.Clear(),
       (this.SPe = void 0),
       this.Ont(),
       this.est(),
       this.t1t.Reset(),
-      this.rnt.Reset(),
+      this.rnt.Deactivate(),
       (this.rnt = void 0);
   }
   ResetBattleHeadState() {
@@ -195,13 +225,13 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   GetResourceId() {
     return "UiItem_EliteMonsterState_Prefab";
   }
-  OnRefresh(t, i, s) {
-    super.OnRefresh(t, i, s),
+  OnRefresh(t, i, e) {
+    super.OnRefresh(t, i, e),
       this.klt(),
       this.Flt(),
       this.Vlt(),
-      this.jlt(s),
-      this.t1t.Update(s),
+      this.jlt(e),
+      this.t1t.Update(e),
       this.nst();
   }
   tst() {
@@ -238,9 +268,9 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
       (this.NeedCorrectionOutside = !0);
   }
   RefreshHpAndShield(t = !1) {
-    var [i, s] = this.GetHpAndShieldPercent();
+    var [i, e] = this.GetHpAndShieldPercent();
     this.Cst(i),
-      this.gst(s),
+      this.gst(e),
       t
         ? (i < this.CurrentBarPercent &&
             (this.CurrentBarPercent - i < this.nnt
@@ -275,41 +305,54 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   OnHardnessAttributeChanged() {
     super.OnHardnessAttributeChanged(), this.Znt();
   }
-  OnHealthChanged(t) {
-    this.HeadStateData.GetEntityId() === t && this.RefreshHpAndShield(!0);
+  OnHealthChanged() {
+    this.RefreshHpAndShield(!0);
   }
   Olt() {
-    var t, i, s;
+    var t, i, e;
     this.HeadStateData &&
       ((t = this.GetLevel()),
       (i = this.GetText(4)),
-      (s = ConfigManager_1.ConfigManager.BattleUiConfig.GetThreadColor(
+      (e = ConfigManager_1.ConfigManager.BattleUiConfig.GetThreadColor(
         t,
         this.HeadStateData.Camp,
       )),
-      i.SetColor(UE.Color.FromHex(s)),
+      i.SetColor(UE.Color.FromHex(e)),
       LguiUtil_1.LguiUtil.SetLocalText(i, "LevelShow", t));
+  }
+  RefreshOnCampChanged() {
+    this.Olt(), this.Hlt();
   }
   znt() {
     var t = this.Ent || this.ynt;
     this.Mnt !== t &&
-      ((this.Mnt = t), this.rnt.SetVisible(t, TOUGH_ANIM_TIME), t) &&
+      ((this.Mnt = t),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Battle",
+          17,
+          "[EliteHeadState]ToughItemVisible改变",
+          ["visible", this.Mnt],
+          ["EntityId", this.HeadStateData?.GetEntityId()],
+        ),
+      this.rnt.SetVisible(t, TOUGH_ANIM_TIME),
+      t) &&
       this.GetItem(8).SetAlpha(1);
   }
   Znt() {
-    var t, i, s;
+    var t, i, e;
     this.HardnessAttributeId === EAttributeId.Proto_Rage &&
       ((t = this.HeadStateData.GetAttributeCurrentValueById(
         this.MaxHardnessAttributeId,
       )),
-      (s =
+      (e =
         (i = this.HeadStateData.GetAttributeCurrentValueById(
           this.HardnessAttributeId,
         )) / t),
-      this.GetSprite(10).SetFillAmount(s),
-      this.t1t.GetHit(s, this.i1t),
+      this.GetSprite(10).SetFillAmount(e),
+      this.t1t.GetHit(e, this.i1t),
       (this.i1t = i / t),
-      this.vst(s));
+      this.vst(e));
   }
   vst(t) {
     t < 1
@@ -326,6 +369,14 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
     this.Mst(),
       this.Tnt !== this.ynt &&
         ((this.Tnt = this.ynt),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "Battle",
+            17,
+            "[EliteHeadState]白条Visible改变",
+            ["visible", this.Tnt],
+            ["EntityId", this.HeadStateData?.GetEntityId()],
+          ),
         this.GetItem(5).SetUIActive(this.Tnt),
         this.Tnt) &&
         this.Lnt &&
@@ -355,6 +406,14 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   Ynt() {
     this.Ent !== this.Snt &&
       ((this.Snt = this.Ent),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Battle",
+          17,
+          "[EliteHeadState]倒地条Visible改变",
+          ["visible", this.Snt],
+          ["EntityId", this.HeadStateData?.GetEntityId()],
+        ),
       this.GetSprite(12).SetUIActive(this.Snt),
       this.Snt ? this.bnt(23) : this.Gnt(23));
   }
@@ -367,9 +426,9 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
             fallDownMaxAttributeId,
           );
       if (0 <= i && i <= 1) {
-        var s = this.GetSprite(12);
+        var e = this.GetSprite(12);
         this.Rnt || (this.Rnt = this.GetItem(11).GetWidth()),
-          s.SetStretchRight(this.Rnt * i);
+          e.SetStretchRight(this.Rnt * i);
         let t = 1;
         i > FALL_DOWN_DISAPPEAR_PERCENT &&
           (t = (1 - i) * FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR),
@@ -381,7 +440,7 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   }
   Hlt() {
     var t = this.GetHpColor();
-    t && ((t = UE.Color.FromHex(t)), this.GetSprite(0).SetColor(t));
+    t && ((t = UE.Color.FromHex(t)), this.GetSprite(0)?.SetColor(t));
   }
   Qnt() {
     this.Est(19),
@@ -393,11 +452,11 @@ class EliteMonsterHeadStateView extends HeadStateViewBase_1.HeadStateViewBase {
   }
   Est(t) {
     var i = [],
-      s = this.GetItem(t)
+      e = this.GetItem(t)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
-      e = s.Num();
-    for (let t = 0; t < e; t++) i.push(s.Get(t));
+      s = e.Num();
+    for (let t = 0; t < s; t++) i.push(e.Get(t));
     this.Hnt.set(t, i);
   }
   bnt(t) {

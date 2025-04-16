@@ -85,8 +85,14 @@ class TrackMoonActivity {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   stagequesttips(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   stagequestid() {
     var t = this.J7.__offset(this.z7, 18);

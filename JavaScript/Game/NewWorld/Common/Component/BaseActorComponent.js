@@ -32,7 +32,9 @@ const Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../GlobalData"),
-  ModelManager_1 = require("../../../Manager/ModelManager");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  BaseActorForbidSettingLocAndRotConfig_1 = require("../../Setting/BaseActorForbidSettingLocAndRotConfig");
 class DisableEntityHandle {
   constructor(t) {
     (this.E9 = t), (this.vW = 0), (this.DW = new Map());
@@ -92,6 +94,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   constructor() {
     super(...arguments),
       (this.MoveComp = void 0),
+      (this.VehicleMoveComp = void 0),
       (this.ActorInternal = void 0),
       (this.CachedActorTransform = void 0),
       (this.CachedActorLocation = Vector_1.Vector.Create()),
@@ -101,6 +104,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.CachedActorForward = Vector_1.Vector.Create(1, 0, 0)),
       (this.CachedActorRight = Vector_1.Vector.Create(0, 1, 0)),
       (this.CachedActorUp = Vector_1.Vector.Create(0, 0, 1)),
+      (this.CachedActorGravityDirect = Vector_1.Vector.Create(0, 0, -1)),
+      (this.CachedActorInitNotStandardGravity = void 0),
+      (this.CachedActorInitGravityRotation = void 0),
       (this.CachedLocationTime = -1),
       (this.CachedForwardTime = -1),
       (this.CachedScaleTime = -1),
@@ -108,6 +114,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.CachedTransformTime = -1),
       (this.CachedRightTime = -1),
       (this.CachedUpTime = -1),
+      (this.CachedVelocityTime = -1),
+      (this.CachedGravityDirectTime = -1),
       (this.CachedDesiredActorLocation = Vector_1.Vector.Create()),
       (this.IsChangingLocation = !1),
       (this.CreatureDataInternal = void 0),
@@ -123,7 +131,10 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.Hrn = void 0),
       (this.jrn = void 0),
       (this.LastActorLocation = Vector_1.Vector.Create()),
-      (this.vJ = void 0);
+      (this.vJ = void 0),
+      (this.I3c = new Set()),
+      (this.T3c = new Set()),
+      (this.OwnedBasePlatform = void 0);
   }
   get IsAutonomousProxy() {
     return this.Nrn;
@@ -157,7 +168,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   }
   OnStart() {
     return (
-      (this.MoveComp = this.Entity.GetComponent(38)),
+      (this.MoveComp = this.Entity.GetComponent(44)),
+      (this.VehicleMoveComp = this.Entity.GetComponent(233)),
       (this.vJ = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
         this.Entity.Id,
       )),
@@ -178,6 +190,12 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   }
   SetMoveAutonomous(t, i = 0) {
     (this.Orn = t), this.ActorInternal?.Kuro_SetRole(this.Orn ? 2 : 1);
+  }
+  SetMoveControlled(t, i = 0, e = "") {
+    this.SetMoveAutonomous(t, e);
+  }
+  ResetMoveControlled(t = "") {
+    this.SetMoveAutonomous(this.IsAutonomousProxy, t);
   }
   InitCreatureData() {
     return (
@@ -227,7 +245,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         this.ActorInternal?.IsValid() &&
         ((this.CachedScaleTime = 1),
         this.CachedActorScale.FromUeVector(
-          this.ActorInternal.GetActorScale3D(),
+          this.ActorInternal.D_GetActorScale3D(),
         )),
       this.CachedActorScale
     );
@@ -240,7 +258,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       this.CachedTransformTime < Time_1.Time.Frame &&
         this.ActorInternal?.IsValid() &&
         ((this.CachedTransformTime = Time_1.Time.Frame),
-        (this.CachedActorTransform = this.ActorInternal.GetTransform())),
+        (this.CachedActorTransform = this.ActorInternal.D_GetTransform())),
       this.CachedActorTransform
     );
   }
@@ -255,7 +273,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
           ((this.CachedLocationTime = Time_1.Time.Frame),
           this.Krn(!0),
           this.CachedActorLocation.FromUeVector(
-            this.ActorInternal.K2_GetActorLocation(),
+            this.ActorInternal.D_K2_GetActorLocation(),
           ),
           this.Krn(!1)),
         this.CachedActorLocation);
@@ -319,6 +337,71 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   get ActorUp() {
     return this.ActorUpProxy.ToUeVector();
   }
+  get ActorGravityDirectProxy() {
+    var t;
+    return (
+      this.CachedGravityDirectTime < Time_1.Time.Frame &&
+        ((this.CachedGravityDirectTime = Time_1.Time.Frame),
+        this.MoveComp
+          ? this.CachedActorGravityDirect.DeepCopy(this.MoveComp.GravityDirect)
+          : (t = this.CreatureData.GetInitGravityDirection()) &&
+            this.CachedActorGravityDirect.FromConfigVector(t)),
+      this.CachedActorGravityDirect
+    );
+  }
+  get ActorGravityDirection() {
+    return this.ActorGravityDirectProxy.ToUeVector();
+  }
+  get ActorInitNotStandardGravity() {
+    return (
+      void 0 === this.CachedActorInitNotStandardGravity && this.kec(),
+      this.CachedActorInitNotStandardGravity
+    );
+  }
+  get ActorInitGravityRotationProxy() {
+    return (
+      void 0 === this.CachedActorInitGravityRotation && this.kec(),
+      this.CachedActorInitGravityRotation
+    );
+  }
+  get ActorInitGravityRotation() {
+    return (
+      void 0 === this.CachedActorInitGravityRotation && this.kec(),
+      this.CachedActorInitGravityRotation.ToUeRotator()
+    );
+  }
+  kec() {
+    var t = this.CreatureData.GetInitGravityDirection();
+    if (t) {
+      var i,
+        e = Vector_1.Vector.Create();
+      if (
+        (e.FromConfigVector(t),
+        e.Normalize() && !MathUtils_1.MathUtils.IsNearlyEqual(t.Z, -1))
+      )
+        return (
+          (t = Vector_1.Vector.Create()),
+          (i = Quat_1.Quat.Create()),
+          e.UnaryNegation(t),
+          Math.abs(t.DotProduct(Vector_1.Vector.ForwardVectorProxy)) <
+          1 - MathUtils_1.MathUtils.KindaSmallNumber
+            ? MathUtils_1.MathUtils.LookRotationUpFirst(
+                Vector_1.Vector.ForwardVectorProxy,
+                t,
+                i,
+              )
+            : MathUtils_1.MathUtils.LookRotationUpFirst(
+                Vector_1.Vector.UpVectorProxy,
+                t,
+                i,
+              ),
+          (this.CachedActorInitNotStandardGravity = !0),
+          void (this.CachedActorInitGravityRotation = i.Rotator())
+        );
+    }
+    (this.CachedActorInitNotStandardGravity = !1),
+      (this.CachedActorInitGravityRotation = Rotator_1.Rotator.Create(0, 0, 0));
+  }
   GetRadius() {
     return 0;
   }
@@ -350,8 +433,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       this.ActorInternal?.IsValid() &&
         (this.CachedDesiredActorLocation.FromUeVector(t),
         (this.IsChangingLocation = !0),
-        (s = this.ActorInternal.K2_SetActorLocation(t, e, void 0, !0)),
+        (s = this.ActorInternal.D_K2_SetActorLocation(t, e, void 0, !0)),
         (this.IsChangingLocation = !1),
+        this.CheckIsForbidSettingLocAndRot(!0),
         this.DebugMovementComp) &&
         this.DebugMovementComp.MarkDebugRecord(i + ".SetActorLocation", 1),
       this.ResetLocationCachedTime(),
@@ -361,7 +445,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Test",
-          58,
+          57,
           "[SetActorLocation]",
           ["location:", t],
           ["owner", this?.Owner.GetName()],
@@ -390,8 +474,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       this.ActorInternal?.IsValid() &&
         (this.CachedDesiredActorLocation.FromUeVector(t),
         (this.IsChangingLocation = !0),
-        (s = this.ActorInternal.K2_KuroTeleportTo(t, i)),
+        (s = this.ActorInternal.D_K2_KuroTeleportTo(t, i)),
         (this.IsChangingLocation = !1),
+        this.CheckIsForbidSettingLocAndRot(!0, !0),
         this.DebugMovementComp) &&
         this.DebugMovementComp.MarkDebugRecord(e + ".TeleportTo", 1, !0),
       this.ResetLocationCachedTime(),
@@ -401,7 +486,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Test",
-          58,
+          57,
           "[TeleportTo]",
           ["location:", t],
           ["owner", this?.Owner],
@@ -417,6 +502,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     return (
       this.ActorInternal?.IsValid() &&
         ((s = this.ActorInternal.K2_KuroSetActorRotation(t, e, !1)),
+        this.CheckIsForbidSettingLocAndRot(!1, !0),
         this.DebugMovementComp) &&
         this.DebugMovementComp.MarkDebugRecord(i + ".SetActorRotation", 1),
       this.Qrn(),
@@ -436,7 +522,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       ? ((o = !1),
         this.CachedDesiredActorLocation.FromUeVector(t),
         (this.IsChangingLocation = !0),
-        (o = this.ActorInternal.K2_SetActorLocationAndRotation(
+        (o = this.ActorInternal.D_K2_SetActorLocationAndRotation(
           t,
           i,
           s,
@@ -446,6 +532,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         (this.IsChangingLocation = !1),
         this.ResetTransformCachedTime(),
         this.OnTeleport(),
+        this.CheckIsForbidSettingLocAndRot(!0, !0),
         this.DebugMovementComp &&
           this.DebugMovementComp.MarkDebugRecord(
             e + ".SetActorLocationAndRotation",
@@ -455,7 +542,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Test",
-            58,
+            57,
             "[SetActorLocationAndRotation]",
             ["location:", t],
             ["rotation:", i],
@@ -480,8 +567,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         this.ActorLocationProxy.Equals(this.CachedDesiredActorLocation)
           ? (s = this.SetActorRotation(t.GetRotation().Rotator(), i, e))
           : ((this.IsChangingLocation = !0),
-            (s = this.ActorInternal.K2_SetActorTransform(t, e, void 0, !0)),
+            (s = this.ActorInternal.D_K2_SetActorTransform(t, e, void 0, !0)),
             (this.IsChangingLocation = !1)),
+        this.CheckIsForbidSettingLocAndRot(!0, !0),
         this.DebugMovementComp &&
           this.DebugMovementComp.MarkDebugRecord(i + ".SetActorTransform", 1),
         this.ResetTransformCachedTime(),
@@ -499,25 +587,29 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         !1);
   }
   AddActorWorldOffset(t, i = "unknown", e = !0) {
-    this.ActorInternal.K2_AddActorWorldOffset(t, e, void 0, !1),
+    this.ActorInternal.D_K2_AddActorWorldOffset(t, e, void 0, !1),
+      this.CheckIsForbidSettingLocAndRot(!0),
       this.DebugMovementComp &&
         this.DebugMovementComp.MarkDebugRecord(i + ".AddActorWorldOffset", 1),
       this.ResetLocationCachedTime();
   }
   AddActorLocalOffset(t, i = "unknown", e = !0) {
-    this.ActorInternal.K2_AddActorLocalOffset(t, e, void 0, !1),
+    this.ActorInternal.D_K2_AddActorLocalOffset(t, e, void 0, !1),
+      this.CheckIsForbidSettingLocAndRot(!0),
       this.DebugMovementComp &&
         this.DebugMovementComp.MarkDebugRecord(i + ".AddActorLocalOffset", 1),
       this.ResetLocationCachedTime();
   }
   AddActorWorldRotation(t, i = "unknown", e = !1) {
     this.ActorInternal.K2_AddActorWorldRotation(t, e, void 0, !1),
+      this.CheckIsForbidSettingLocAndRot(!1, !0),
       this.DebugMovementComp &&
         this.DebugMovementComp.MarkDebugRecord(i + ".AddActorWorldRotation", 1),
       this.Qrn();
   }
   AddActorLocalRotation(t, i = "unknown", e = !1) {
     this.ActorInternal.K2_AddActorLocalRotation(t, e, void 0, !1),
+      this.CheckIsForbidSettingLocAndRot(!1, !0),
       this.DebugMovementComp &&
         this.DebugMovementComp.MarkDebugRecord(i + ".AddActorLocalRotation", 1),
       this.Qrn();
@@ -528,7 +620,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.CachedRotationTime = 0),
       (this.CachedUpTime = 0),
       (this.CachedRightTime = 0),
-      (this.CachedForwardTime = 0);
+      (this.CachedForwardTime = 0),
+      (this.CachedGravityDirectTime = 0);
   }
   ResetAllCachedTime() {
     (this.CachedTransformTime = -1),
@@ -536,7 +629,58 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.CachedRotationTime = -1),
       (this.CachedUpTime = -1),
       (this.CachedRightTime = -1),
-      (this.CachedForwardTime = -1);
+      (this.CachedForwardTime = -1),
+      (this.CachedVelocityTime = -1),
+      (this.CachedGravityDirectTime = -1);
+  }
+  ResetCachedVelocityTime() {
+    this.CachedVelocityTime = -1;
+  }
+  ResetGravityRelatedCachedTime() {
+    this.CachedGravityDirectTime = -1;
+  }
+  b3c(t, i, e) {
+    t ? e.add(i) : e.delete(i);
+  }
+  SetForbidSettingLocAndRot(t, i) {
+    switch (
+      BaseActorForbidSettingLocAndRotConfig_1.ForbidSettingLocAndRotTypeDefines[
+        i
+      ]
+    ) {
+      case 1:
+        this.b3c(t, i, this.I3c);
+        break;
+      case 2:
+        this.b3c(t, i, this.T3c);
+        break;
+      case 4:
+        this.b3c(t, i, this.I3c), this.b3c(t, i, this.T3c);
+    }
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "Test",
+        50,
+        "[BaseActorComp] SetForbidSettingLocation",
+        ["PbDataId", this.CreatureData.GetPbDataId()],
+        ["CreatureId", this.CreatureData.GetCreatureDataId()],
+        ["Forbid", t],
+        ["Reason", i],
+      );
+  }
+  CheckIsForbidSettingLocAndRot(t = !1, i = !1) {
+    (i = !!this.T3c.size && i), (t = !!this.I3c.size && t);
+    (i || t) &&
+      Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "Test",
+        50,
+        "[BaseActorComp] 检测到异常的设置位置或旋转行为",
+        ["PbDataId", this.CreatureData.GetPbDataId()],
+        ["CreatureId", this.CreatureData.GetCreatureDataId()],
+        ["TargetLoc", this.ActorLocationProxy],
+        ["TargetRot", this.ActorRotationProxy],
+      );
   }
   OnSetActorActive(t, i) {
     t
@@ -556,7 +700,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   DisableActor(t) {
     var i = this.DisableActorHandle.Disable(t, this.constructor.name);
     return (
-      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+        this.CreatureData?.GetEntityType(),
+      ) &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
@@ -588,7 +734,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   DisableCollision(t) {
     var i = this.DisableCollisionHandle.Disable(t, this.constructor.name);
     return (
-      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+        this.CreatureData?.GetEntityType(),
+      ) &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
@@ -606,7 +754,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     );
   }
   EnableActor(t) {
-    ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+    ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+      this.CreatureData?.GetEntityType(),
+    ) &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Entity",
@@ -616,39 +766,41 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         ["PbDataId", this.CreatureData?.GetPbDataId()],
         ["Handle", t],
       );
-    t = this.DisableActorHandle.Enable(t, this.constructor.name);
-    if (
+    var i,
+      t = this.DisableActorHandle.Enable(t, this.constructor.name);
+    return (
       t &&
-      this.ActorInternal?.IsValid() &&
-      this.ActorInternal.bHidden !== !this.DisableActorHandle.Empty
-    ) {
-      const i = () => {
-        var t = this.DisableActorHandle.Empty;
-        this.ActorInternal.SetActorHiddenInGame(!t),
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.OnSetActorHidden,
+        this.ActorInternal?.IsValid() &&
+        this.ActorInternal.bHidden !== !this.DisableActorHandle.Empty &&
+        ((i = this.DisableActorHandle.Empty),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnSetActorHidden,
+          this.Entity.Id,
+          i,
+        ),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          ModelManager_1.ModelManager.CreatureModel.GetEntityById(
             this.Entity.Id,
-            t,
           ),
-          EventSystem_1.EventSystem.EmitWithTarget(
-            ModelManager_1.ModelManager.CreatureModel.GetEntityById(
-              this.Entity.Id,
-            ),
-            EventDefine_1.EEventName.OnSetActorHidden,
-            this.Entity.Id,
-            t,
-          );
-      };
-      this.Entity.GetComponent(102)
-        ? TimerSystem_1.TimerSystem.Next(() => {
-            this.ActorInternal?.IsValid() && i();
-          })
-        : i();
-    }
-    return t;
+          EventDefine_1.EEventName.OnSetActorHidden,
+          this.Entity.Id,
+          i,
+        ),
+        this.Entity.GetComponent(112)
+          ? TimerSystem_1.TimerSystem.Next(() => {
+              this.ActorInternal?.IsValid() &&
+                this.ActorInternal.SetActorHiddenInGame(
+                  !this.DisableActorHandle.Empty,
+                );
+            })
+          : this.ActorInternal.SetActorHiddenInGame(!i)),
+      t
+    );
   }
   EnableCollision(t) {
-    ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+    ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+      this.CreatureData?.GetEntityType(),
+    ) &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Entity",
@@ -677,7 +829,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     return this.DisableCollisionHandle.DumpDisableInfo();
   }
   DumpDisableTickInfo() {
-    var t = this.Entity.GetComponent(99);
+    var t = this.Entity.GetComponent(109);
     return t ? t.DumpDisableTickInfo() : "";
   }
   SetActorVisible(t, i) {
@@ -693,10 +845,10 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   SetTickEnable(t, i) {
     t
       ? this.Vrn &&
-        (this.Entity.GetComponent(99)?.EnableTickWithLog(this.Vrn, i),
+        (this.Entity.GetComponent(109)?.EnableTickWithLog(this.Vrn, i),
         (this.Vrn = void 0))
       : this.Vrn ||
-        (this.Vrn = this.Entity.GetComponent(99)?.DisableTickWithLog(i));
+        (this.Vrn = this.Entity.GetComponent(109)?.DisableTickWithLog(i));
   }
   OnClear() {
     return (
@@ -715,6 +867,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   }
   GetSocketLocation(t) {
     return this.ActorLocation;
+  }
+  GetWatchedPoint() {
+    return this.ActorLocationProxy;
   }
 };
 (BaseActorComponent = __decorate(

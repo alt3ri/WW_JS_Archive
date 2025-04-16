@@ -36,12 +36,12 @@ let PlayerAttributeComponent = class PlayerAttributeComponent extends BaseAttrib
       this.PlayerId,
     ))
       ModelManager_1.ModelManager.CreatureModel.GetEntity(t.GetCreatureDataId())
-        ?.Entity?.GetComponent(158)
+        ?.Entity?.GetComponent(170)
         ?.UpdateCurrentValue(e);
   }
 };
 (PlayerAttributeComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(183)],
+  [(0, RegisterComponent_1.RegisterComponent)(196)],
   PlayerAttributeComponent,
 )),
   (exports.PlayerAttributeComponent = PlayerAttributeComponent);

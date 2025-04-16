@@ -25,7 +25,7 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.ItemId = i),
       (this.psa = 0),
-      (this.ZLa = 0),
+      (this.rDa = 0),
       (this.qte = 0),
       (this.CurrentValueDelegate = void 0),
       (this.ExpTweener = void 0),
@@ -33,7 +33,7 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
       (this.Msa = (i) => {
         this.GetText(1)?.SetText(i.toString());
       }),
-      (this.eDa = () => {
+      (this.oDa = () => {
         this.KillExpTweener(),
           AudioSystem_1.AudioSystem.PostEvent("play_ui_figure_up_2"),
           this.$pt
@@ -43,7 +43,7 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
                 ((this.ExpTweener = UE.LTweenBPLibrary.IntTo(
                   GlobalData_1.GlobalData.World,
                   this.CurrentValueDelegate,
-                  this.ZLa,
+                  this.rDa,
                   this.qte,
                   TWEEN_TIME,
                 )),
@@ -95,16 +95,16 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
   }
   async ShowAddValue() {
     this.GetText(2)?.SetUIActive(!0),
-      this.GetText(2)?.SetText("+" + this.ZLa),
-      await this.OCa();
+      this.GetText(2)?.SetText("+" + this.rDa),
+      await this.kCa();
   }
-  async OCa() {
+  async kCa() {
     await this.$pt.PlaySequenceAsync(
       "Addition01",
       new CustomPromise_1.CustomPromise(),
     ),
       this.IsDestroyOrDestroying ||
-        (this.qte === this.ZLa
+        (this.qte === this.rDa
           ? ((this.ExpTweener = UE.LTweenBPLibrary.IntTo(
               GlobalData_1.GlobalData.World,
               this.CurrentValueDelegate,
@@ -117,10 +117,10 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
               GlobalData_1.GlobalData.World,
               this.CurrentValueDelegate,
               this.psa,
-              this.ZLa,
+              this.rDa,
               TWEEN_TIME,
             )),
-            this.ExpTweener.OnCompleteCallBack.Bind(this.eDa)));
+            this.ExpTweener.OnCompleteCallBack.Bind(this.oDa)));
   }
   Tsa(i) {
     this.GetItem(4)?.SetUIActive(i),
@@ -130,7 +130,7 @@ class RewardItem extends UiPanelBase_1.UiPanelBase {
         this.GetText(5)?.SetText(i.Ratio + "%"));
   }
   UpdateItem(i, e, t) {
-    (this.qte = i), (this.ZLa = e), this.ysa(), this.Tsa(t);
+    (this.qte = i), (this.rDa = e), this.ysa(), this.Tsa(t);
   }
 }
 class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
@@ -160,7 +160,7 @@ class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
           t,
         );
       }),
-      (this.pwa = (i, e) => {
+      (this.Bwa = (i, e) => {
         "New01" === e &&
           ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData()
             .IsBest &&
@@ -186,7 +186,7 @@ class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
       e = ConfigManager_1.ConfigManager.BusinessConfig.GetWishItemId();
     await this.CaptionItem.SetCurrencyItemList([i, e]);
   }
-  Wpa() {
+  Qpa() {
     var i;
     ModelManager_1.ModelManager.MoonChasingBusinessModel.GetResultData()
       .EvaluationLevel < BusinessDefine_1.SPECIAL_LEVEL &&
@@ -194,8 +194,8 @@ class BusinessTipsFinishView extends UiViewBase_1.UiViewBase {
       this.UiViewSequence?.SetSequenceName(i));
   }
   async OnBeforeStartAsync() {
-    this.RootActor?.OnSequencePlayEvent.Bind(this.pwa),
-      this.Wpa(),
+    this.RootActor?.OnSequencePlayEvent.Bind(this.Bwa),
+      this.Qpa(),
       this.GetButton(6)?.RootUIComp.SetUIActive(!1),
       (this.CharacterListModule = new CharacterListModule_1.CharacterListModule(
         this.dke,

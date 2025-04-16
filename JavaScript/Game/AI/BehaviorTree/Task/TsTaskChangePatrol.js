@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskChangePatrol extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -13,26 +13,32 @@ class TsTaskChangePatrol extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsPatrolIndex = 0),
       (this.TsPatrolIdBlackboardKey = "");
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsPatrolIndex = 0),
+      (this.TsPatrolIdBlackboardKey = "");
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsPatrolIndex = this.PatrolIndex),
       (this.TsPatrolIdBlackboardKey = this.PatrolIdBlackboardKey));
   }
-  ReceiveExecuteAI(e, t) {
+  ReceiveExecuteAI(e, s) {
     this.InitTsVariables();
-    var s,
+    var t,
       r = e.AiController;
     r
-      ? ((s = r.CharActorComp.Entity.Id),
+      ? ((t = r.CharActorComp.Entity.Id),
         (r = r.AiPatrol),
         this.TsPatrolIdBlackboardKey
-          ? ((s =
-              BlackboardController_1.BlackboardController.GetIntValueByEntity(
-                s,
+          ? ((t =
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
+                t,
                 this.TsPatrolIdBlackboardKey,
               )),
-            r.ResetPatrolById(s))
+            r.ResetPatrolById(t))
           : r.ResetPatrol(this.TsPatrolIndex),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&

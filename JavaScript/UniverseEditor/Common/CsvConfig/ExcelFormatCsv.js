@@ -9,7 +9,7 @@ const CsvLoader_1 = require("./CsvLoader"),
       Type: "Int",
       Filter: "1",
       Condition: "notEmpty && unique",
-      RenderType: 18,
+      RenderType: 19,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "TargetPath",

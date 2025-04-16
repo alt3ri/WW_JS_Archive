@@ -18,29 +18,31 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configUiNormalConfigByViewNameIfNull.Init",
   ),
-  getConfigStat = Stats_1.Stat.Create(
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
     "configUiNormalConfigByViewNameIfNull.GetConfig",
   ),
   CONFIG_STAT_PREFIX = "configUiNormalConfigByViewNameIfNull.GetConfig(";
 exports.configUiNormalConfigByViewNameIfNull = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, i, n, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o}#${i}#${n})`),
+      getConfigStat?.Start();
+    var a = Stats_1.Stat.CreateNoFlameGraph(
+        CONFIG_STAT_PREFIX + `#${o}#${i}#${n})`,
+      ),
       m =
-        (a.Start(),
+        (a?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (m) {
       if (e) {
@@ -48,8 +50,8 @@ exports.configUiNormalConfigByViewNameIfNull = {
         const f = ConfigCommon_1.ConfigCommon.GetConfig(C);
         if (f)
           return (
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -89,8 +91,8 @@ exports.configUiNormalConfigByViewNameIfNull = {
               ((m = KEY_PREFIX + `#${o}#${i}#${n})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(m, f)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -98,8 +100,8 @@ exports.configUiNormalConfigByViewNameIfNull = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    a.Stop(),
-      getConfigStat.Stop(),
+    a?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

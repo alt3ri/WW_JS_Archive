@@ -10,18 +10,19 @@ const cpp_1 = require("cpp"),
   PerfSight_1 = require("../PerfSight/PerfSight"),
   SECOND_TO_MILLISECOND = 1e3;
 class Ticker {
-  constructor(t, i, e, s, r = 0, c = !1) {
+  constructor(t, e, i, s, r, c = 0, o = !1) {
     (this.Id = t),
-      (this.Handle = i),
-      (this.Group = e),
-      (this.Name = s),
-      (this.TickIntervalMs = r),
-      (this.TickEvenPaused = c),
+      (this.Handle = e),
+      (this.Group = i),
+      (this.Priority = s),
+      (this.Name = r),
+      (this.TickIntervalMs = c),
+      (this.TickEvenPaused = o),
       (this.Count = 0),
       (this.CoolDown = 0),
       (this.Pause = !1),
       (this.StatObj = void 0),
-      (this.StatObj = Stats_1.Stat.Create("In TickSystem." + s));
+      (this.StatObj = Stats_1.Stat.CreateNoFlameGraph("In TickSystem." + r));
   }
 }
 exports.Ticker = Ticker;
@@ -46,89 +47,105 @@ class TickSystem {
   static Has(t) {
     return 0 < t && this.gJ.has(t);
   }
-  static Add(t, i, e = 0, r = !1) {
-    if (t) {
-      var c = ++this.o6,
-        i = new Ticker(c, t, e, i, 0, r);
-      this.gJ.set(c, i);
-      let s = this.fJ.get(e);
+  static Add(e, i, r = 0, c = !1, o = 0) {
+    if (e) {
+      var a = ++this.o6,
+        i = new Ticker(a, e, r, o, i, 0, c);
+      this.gJ.set(a, i);
+      let t = this.fJ.get(r);
+      for (t || ((t = []), this.fJ.set(r, t)); t.length <= o; ) t.push(void 0);
+      let s = t[o];
       return (
         s
           ? s.add(i)
           : ((s = new Set()).add(i),
-            this.fJ.set(e, s),
+            (t[o] = s),
             this.pJ.set(
-              e,
-              (r = (t) => {
-                var i = t * SECOND_TO_MILLISECOND;
-                for (const e of s)
-                  (this.IsPaused && !e.TickEvenPaused) || this.vJ(e, i);
+              r,
+              (c = (t) => {
+                var e = t * SECOND_TO_MILLISECOND;
+                for (const i of s)
+                  (this.IsPaused && !i.TickEvenPaused) || this.vJ(i, e);
               }),
             ),
-            this.CJ.AddTick(e, (0, puerts_1.toManualReleaseDelegate)(r))),
+            this.CJ.AddTick(r, (0, puerts_1.toManualReleaseDelegate)(c), o)),
         i
       );
     }
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Tick", 1, "处理方法不存在", ["handle", t]);
+      Log_1.Log.Error("Tick", 1, "处理方法不存在", ["handle", e]);
   }
   static Remove(t) {
-    var i = this.gJ.get(t);
-    if (!i)
+    var e = this.gJ.get(t);
+    if (!e)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Tick", 1, "编号不存在", ["id", t]),
         !1
       );
     this.gJ.delete(t);
-    var e = this.fJ.get(i.Group);
-    return e
-      ? (e.delete(i),
-        0 === e.size &&
-          (this.fJ.delete(i.Group),
-          (e = this.pJ.get(i.Group)),
-          this.pJ.delete(i.Group),
-          this.CJ.RemoveTick(i.Group),
-          (0, puerts_1.releaseManualReleaseDelegate)(e)),
-        !0)
+    var i = this.fJ.get(e.Group);
+    return i
+      ? i.length <= e.Priority || !i[e.Priority]
+        ? (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Tick",
+              6,
+              "优先级不存在",
+              ["id", t],
+              ["group", e.Group],
+              ["priority", e.Priority],
+            ),
+          !1)
+        : ((i = i[e.Priority]).delete(e),
+          0 === i.size &&
+            (this.fJ.delete(e.Group),
+            (i = this.pJ.get(e.Group)),
+            this.pJ.delete(e.Group),
+            this.CJ.RemoveTick(e.Group),
+            (0, puerts_1.releaseManualReleaseDelegate)(i)),
+          !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Tick",
             1,
             "分组不存在",
             ["id", t],
-            ["group", i.Group],
+            ["group", e.Group],
           ),
         !1);
   }
   static Pause(t) {
-    var i = this.gJ.get(t);
-    return i
-      ? (i.Pause = !0)
+    var e = this.gJ.get(t);
+    return e
+      ? (e.Pause = !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Tick", 1, "编号不存在", ["id", t]),
         !1);
   }
   static Resume(t) {
-    var i = this.gJ.get(t);
-    return i
-      ? !(i.Pause = !1)
+    var e = this.gJ.get(t);
+    return e
+      ? !(e.Pause = !1)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Tick", 1, "编号不存在", ["id", t]),
         !1);
   }
-  static vJ(i, e) {
-    if (!i.Pause) {
-      let t = e;
-      if (0 < i.TickIntervalMs) {
-        if (((i.CoolDown += e), i.CoolDown < i.TickIntervalMs)) return;
-        e = i.CoolDown % i.TickIntervalMs;
-        (t = i.CoolDown - e), (i.CoolDown = e);
+  static vJ(e, i) {
+    if (!e.Pause) {
+      let t = i;
+      if (0 < e.TickIntervalMs) {
+        if (((e.CoolDown += i), e.CoolDown < e.TickIntervalMs)) return;
+        i = e.CoolDown % e.TickIntervalMs;
+        (t = e.CoolDown - i), (e.CoolDown = i);
       }
-      (i.Count += 1), i.StatObj?.Start();
-      var e = cpp_1.KuroTime.GetMilliseconds64();
+      (e.Count += 1), e.StatObj?.Start();
+      var s,
+        r,
+        c,
+        i = cpp_1.KuroTime.GetMilliseconds64();
       try {
-        i.Handle(t);
+        e.Handle(t);
       } catch (t) {
         t instanceof Error
           ? Log_1.Log.CheckError() &&
@@ -137,7 +154,7 @@ class TickSystem {
               1,
               "处理方法执行异常",
               t,
-              ["id", i.Id],
+              ["id", e.Id],
               ["error", t.message],
             )
           : Log_1.Log.CheckError() &&
@@ -145,39 +162,78 @@ class TickSystem {
               "Tick",
               1,
               "处理方法执行异常",
-              ["id", i.Id],
+              ["id", e.Id],
               ["error", t],
             );
       }
       PerfSight_1.PerfSight.IsEnable &&
-        0 === i.Group &&
-        ((e = cpp_1.KuroTime.GetMilliseconds64() - e),
-        "Core" === i.Name
+        0 === e.Group &&
+        ((c = 1e3 / UE.KuroRenderingRuntimeBPPluginBPLibrary.GetMaxFps()),
+        (s = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetGameThreadTime()),
+        (r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRenderThreadTime()),
+        2 * c < s || 2 * c < r) &&
+        ((c = cpp_1.KuroTime.GetMilliseconds64() - i),
+        "Core" === e.Name
           ? cpp_1.FKuroPerfSightHelper.PostValueFloat1(
               "CustomPerformance",
               "[PrePhysics]TickSystem_Core",
-              e,
+              c,
             )
-          : "Game" === i.Name &&
-            cpp_1.FKuroPerfSightHelper.PostValueFloat1(
+          : "Game" === e.Name &&
+            (cpp_1.FKuroPerfSightHelper.PostValueFloat1(
               "CustomPerformance",
               "[PrePhysics]TickSystem_Game",
-              e,
-            )),
-        i.StatObj?.Stop();
+              c,
+            ),
+            cpp_1.FKuroPerfSightHelper.PostValueFloat1(
+              "CustomPerformance",
+              "[PrePhysics]TickSystem_GameThreadTime",
+              s,
+            ),
+            cpp_1.FKuroPerfSightHelper.PostValueFloat1(
+              "CustomPerformance",
+              "[PrePhysics]TickSystem_RenderThreadTime",
+              r,
+            ),
+            cpp_1.FKuroPerfSightHelper.PostValueFloat1(
+              "CustomPerformance",
+              "[PrePhysics]TickSystem_RHIThreadTime",
+              UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIThreadTime(),
+            ),
+            cpp_1.FKuroPerfSightHelper.PostValueFloat1(
+              "CustomPerformance",
+              "[PrePhysics]TickSystem_PresentTime",
+              UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSwapBufferTime(),
+            ))),
+        e.StatObj?.Stop();
     }
   }
-  static AddTickPrerequisite(t, i) {
-    this.CJ.AddPrerequisiteActorComponent(t, i);
+  static AddTickPrerequisiteActor(t, e, i) {
+    this.CJ.AddPrerequisiteActor(t, e, i);
   }
-  static RemoveTickPrerequisite(t, i) {
-    this.CJ.RemovePrerequisiteActorComponent(t, i);
+  static RemoveTickPrerequisiteActor(t, e, i) {
+    this.CJ.RemovePrerequisiteActor(t, e, i);
   }
-  static SetSkeletalMeshProxyTickFunction(t, i) {
-    this.CJ.SetSkeletalMeshProxyTickFunction(t, i);
+  static AddTickPrerequisiteActorComp(t, e, i) {
+    this.CJ.AddPrerequisiteActorComponent(t, e, i);
+  }
+  static RemoveTickPrerequisiteActorComp(t, e, i) {
+    this.CJ.RemovePrerequisiteActorComponent(t, e, i);
+  }
+  static SetSkeletalMeshProxyTickFunction(t, e, i) {
+    this.CJ.SetSkeletalMeshProxyTickFunction(t, e, i);
   }
   static CleanSkeletalMeshProxyTickFunction(t) {
     this.CJ.CleanSkeletalMeshProxyTickFunction(t);
+  }
+  static SetMovementProxyTickFunction(t, e, i) {
+    this.CJ.SetCharacterMovementProxyTickFunction(t, e, i);
+  }
+  static CleanMovementProxyTickFunction(t) {
+    this.CJ.CleanCharacterMovementProxyTickFunction(t);
+  }
+  static SetTickFunctionCompletionCallbackInMainThread(t, e) {
+    this.CJ.SetTickFunctionCompletionCallbackInMainThread(t, e);
   }
 }
 ((exports.TickSystem = TickSystem).InvalidId = -1),

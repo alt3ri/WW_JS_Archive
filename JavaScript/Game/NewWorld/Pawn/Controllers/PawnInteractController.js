@@ -8,6 +8,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
   IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
@@ -22,6 +23,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ChildQuestNodeBase_1 = require("../../../Module/GeneralLogicTree/BehaviorNode/ChildQuestNode/ChildQuestNodeBase"),
   GeneralLogicTreeUtil_1 = require("../../../Module/GeneralLogicTree/GeneralLogicTreeUtil"),
+  InteractionModel_1 = require("../../../Module/Interaction/InteractionModel"),
   TsInteractionUtils_1 = require("../../../Module/Interaction/TsInteractionUtils"),
   PlotController_1 = require("../../../Module/Plot/PlotController"),
   SceneTeamController_1 = require("../../../Module/SceneTeam/SceneTeamController"),
@@ -44,6 +46,8 @@ class InteractEntity {
       (this.grr = -9999),
       (this.DirectOptionInstanceIds = []),
       (this.DirectOptionNames = []),
+      (this.DirectOptionConditionIcon = []),
+      (this.DirectOptionGray = []),
       (this.Jh = t),
       (this.EntityId = t?.Id),
       (this.IsAdvice = void 0 !== t.GetComponent(0).GetAdviceInfo()),
@@ -87,6 +91,7 @@ class PawnInteractController {
       (this.LocationOffset = void 0),
       (this.Lrr = -0),
       (this.Drr = "Option"),
+      (this._i_ = void 0),
       (this.IsTurnAround = !1),
       (this.IsTurnRecoveryImmediately = !1),
       (this.IsWaitTurnComplete = !1),
@@ -193,7 +198,9 @@ class PawnInteractController {
               .FaceEachOtherWithRecoveryImmediately &&
             (this.IsTurnRecoveryImmediately = !0);
         }
-        (this.a$t = e.MatchRoleOption), this.Brr(e);
+        e.InteractAdditionalInfo && (this._i_ = e.InteractAdditionalInfo.Type),
+          (this.a$t = e.MatchRoleOption),
+          this.Brr(e);
       } else this.Lrr = this.Irr;
       i = t.ComponentDataMap.get("Tys")?.Tys;
       this.brr(i, e?.RandomInteract, t.GetPbDataId()),
@@ -220,58 +227,94 @@ class PawnInteractController {
             LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
               r.cvs,
             );
-        this.AddDynamicInteractOption(i, e, r.DIs, r.eCa, !1);
+        this.AddDynamicInteractOption(i, e, r.DIs, r.XCa, !1);
       }
   }
   ClearDirectOptions() {
     this.InteractEntity &&
       ((this.InteractEntity.DirectOptionInstanceIds.length = 0),
-      (this.InteractEntity.DirectOptionNames.length = 0));
+      (this.InteractEntity.DirectOptionNames.length = 0),
+      (this.InteractEntity.DirectOptionConditionIcon.length = 0),
+      (this.InteractEntity.DirectOptionGray.length = 0));
   }
-  UpdateDirectOptions(t = !0, i = !1) {
-    if (this.prr && this.Hte) {
-      var e = this.Hte.Owner;
+  UpdateDirectOptions(t, i = !0, e = !1) {
+    if (!this.prr) return !1;
+    if (!this.Hte) return !1;
+    var r, n;
+    if (!this.Hte.Owner) return !1;
+    if (!this.InteractEntity) return !1;
+    if (
+      ((this.TempDirectOptionInstances.length = 0),
+      (this.InteractEntity.DirectOptionInstanceIds.length = 0),
+      (this.InteractEntity.DirectOptionNames.length = 0),
+      (this.InteractEntity.DirectOptionConditionIcon.length = 0),
+      (this.InteractEntity.DirectOptionGray.length = 0),
+      this.HasDynamicOption)
+    )
+      return !0;
+    let o = !1;
+    for (const h of this.prr)
+      h.Disabled ||
+        ("Direct" !== h.DoIntactType
+          ? (o = !0)
+          : (e && "Flow" !== h.Type.Type) ||
+            (1 !== h.CustomOptionType &&
+              this.Nrr(h) &&
+              !!this.InteractEntity.EntityId &&
+              ModelManager_1.ModelManager.InteractionModel.CheckOptionUniqueness(
+                this.InteractEntity.EntityId,
+                h,
+                t,
+              ) &&
+              (this.TempDirectOptionInstances.push(h),
+              this.InteractEntity.DirectOptionInstanceIds.push(h.InstanceId),
+              (r = h.TidContent
+                ? PublicUtil_1.PublicUtil.GetConfigTextByKey(h.TidContent)
+                : void 0) &&
+              !h.ConditionCheck &&
+              h.LockTips?.TidAppendText
+                ? ((n = PublicUtil_1.PublicUtil.GetConfigTextByKey(
+                    h.LockTips.TidAppendText,
+                  )),
+                  (n = new StringBuilder_1.StringBuilder(
+                    r,
+                    InteractionModel_1.COLOR_PREFIX,
+                    n,
+                    InteractionModel_1.COLOR_SUFFIX,
+                  )),
+                  this.InteractEntity.DirectOptionNames.push(n.ToString()))
+                : this.InteractEntity.DirectOptionNames.push(r),
+              h.LockTips
+                ? this.InteractEntity.DirectOptionConditionIcon.push(
+                    h.ConditionCheck
+                      ? InteractionModel_1.UNLOCK_TEXTURE
+                      : InteractionModel_1.LOCK_TEXTURE,
+                  )
+                : this.InteractEntity.DirectOptionConditionIcon.push(void 0),
+              this.InteractEntity.DirectOptionGray.push(!h.ConditionCheck))));
+    let s = !1;
+    if (i) {
       if (
-        e &&
-        this.InteractEntity &&
-        ((this.TempDirectOptionInstances.length = 0),
-        (this.InteractEntity.DirectOptionInstanceIds.length = 0),
-        (this.InteractEntity.DirectOptionNames.length = 0),
-        !this.HasDynamicOption)
+        this.PreDirectOptionInstances.length ===
+        this.TempDirectOptionInstances.length
       ) {
-        for (const r of this.prr)
-          r.Disabled ||
-            "Direct" !== r.DoIntactType ||
-            (i && "Flow" !== r.Type.Type) ||
-            (1 !== r.CustomOptionType &&
-              this.Nrr(r) &&
-              (this.TempDirectOptionInstances.push(r),
-              this.InteractEntity.DirectOptionInstanceIds.push(r.InstanceId),
-              this.InteractEntity.DirectOptionNames.push(r.TidContent)));
-        if (t) {
-          let i = !1;
+        for (let t = 0; t < this.TempDirectOptionInstances.length; t++)
           if (
-            this.PreDirectOptionInstances.length ===
-            this.TempDirectOptionInstances.length
+            this.TempDirectOptionInstances[t] !==
+            this.PreDirectOptionInstances[t]
           ) {
-            for (let t = 0; t < this.TempDirectOptionInstances.length; t++)
-              if (
-                this.TempDirectOptionInstances[t] !==
-                this.PreDirectOptionInstances[t]
-              ) {
-                i = !0;
-                break;
-              }
-          } else i = !0;
-          if (i) {
-            TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView(),
-              (this.PreDirectOptionInstances.length = 0);
-            for (const n of this.TempDirectOptionInstances)
-              this.PreDirectOptionInstances.push(n);
+            s = !0;
+            break;
           }
-        }
+      } else s = !0;
+      if (s) {
+        TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView(),
+          (this.PreDirectOptionInstances.length = 0);
+        for (const a of this.TempDirectOptionInstances)
+          this.PreDirectOptionInstances.push(a);
       }
     }
+    return o || 0 < this.InteractEntity.DirectOptionInstanceIds.length;
   }
   brr(t, i, e) {
     if (t && t.PIs && t.PIs.length)
@@ -283,7 +326,7 @@ class PawnInteractController {
         }
       else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Interaction", 19, "找不到随机交互组件的配置", [
+          Log_1.Log.Error("Interaction", 18, "找不到随机交互组件的配置", [
             "实体配置Id",
             e,
           ]);
@@ -311,33 +354,34 @@ class PawnInteractController {
   }
   IsInSectorRange() {
     if (!this.SectorRange) return !0;
-    var e = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.Begin),
-      r = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.End),
-      n = Global_1.Global.BaseCharacter?.CharacterActorComponent;
-    if (n) {
+    var e = Global_1.Global.BaseCharacter?.CharacterActorComponent;
+    if (e) {
+      if (e.MoveComp && !e.MoveComp.IsStandardGravity) return this.$Mc();
+      var r = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.Begin),
+        n = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.End);
       let t = void 0;
-      var s = this.Hte.CreatureData.GetEntityType(),
-        s =
+      var o = this.Hte.CreatureData.GetEntityType(),
+        o =
           ((t =
-            s === Protocol_1.Aki.Protocol.kks.Proto_SceneItem
+            o === Protocol_1.Aki.Protocol.kks.Proto_SceneItem
               ? this.Hte.ActorRightProxy
               : this.Hte.ActorForwardProxy),
           PawnInteractController.cz),
-        o = PawnInteractController.fz,
-        n =
-          (n.ActorLocationProxy.Subtraction(this.GetInteractPoint(), s),
-          (s.Z = 0),
-          s.Normalize(),
-          s.DotProduct(t));
-      let i = Math.acos(n) * MathUtils_1.MathUtils.RadToDeg;
+        s = PawnInteractController.fz,
+        e =
+          (e.ActorLocationProxy.Subtraction(this.GetInteractPoint(), o),
+          (o.Z = 0),
+          o.Normalize(),
+          o.DotProduct(t));
+      let i = Math.acos(e) * MathUtils_1.MathUtils.RadToDeg;
       if (
-        (s.CrossProduct(t, o),
-        0 < o.Z && (i *= -1),
+        (o.CrossProduct(t, s),
+        0 < s.Z && (i *= -1),
         (i = MathCommon_1.MathCommon.WrapAngle(i)),
-        r < e)
+        n < r)
       ) {
-        if (i > e || i < r) return !0;
-      } else if (i > e && i < r) return !0;
+        if (i > r || i < n) return !0;
+      } else if (i > r && i < n) return !0;
     }
     return !1;
   }
@@ -350,6 +394,7 @@ class PawnInteractController {
       this.PlayerInteractiveRange.End === MathUtils_1.PI_DEG
     )
       return !0;
+    if (t.MoveComp && !t.MoveComp.IsStandardGravity) return this.WMc();
     var i = PawnInteractController.cz,
       e = PawnInteractController.fz,
       t =
@@ -365,6 +410,84 @@ class PawnInteractController {
       0 < e.Z && (n *= -1),
       n > this.PlayerInteractiveRange.Begin &&
         n < this.PlayerInteractiveRange.End
+    );
+  }
+  $Mc() {
+    if (!this.SectorRange) return !0;
+    var e = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.Begin),
+      r = MathCommon_1.MathCommon.WrapAngle(this.SectorRange.End),
+      n = Global_1.Global.BaseCharacter?.CharacterActorComponent;
+    if (n) {
+      let t = void 0;
+      var o = this.Hte.CreatureData.GetEntityType(),
+        o =
+          ((t =
+            o === Protocol_1.Aki.Protocol.kks.Proto_SceneItem
+              ? this.Hte.ActorRightProxy
+              : this.Hte.ActorForwardProxy),
+          PawnInteractController.pz),
+        s =
+          (this.Hte.ActorInitGravityRotationProxy.Quaternion().RotateVector(
+            Vector_1.Vector.UpVectorProxy,
+            o,
+          ),
+          PawnInteractController.QMc),
+        h = (t.CrossProduct(o, s), PawnInteractController.cz),
+        a = PawnInteractController.fz,
+        n =
+          (n.ActorLocationProxy.Subtraction(this.GetInteractPoint(), h),
+          h.Normalize(),
+          h.DotProduct(t)),
+        l = h.DotProduct(s),
+        n =
+          (t.Multiply(n, a),
+          s.Multiply(l, h),
+          h.AdditionEqual(a),
+          h.Normalize(),
+          h.DotProduct(t));
+      let i = Math.acos(n) * MathUtils_1.MathUtils.RadToDeg;
+      if (
+        (0 !== i && (h.CrossProduct(t, a), 0 < a.DotProduct(o)) && (i *= -1),
+        (i = MathCommon_1.MathCommon.WrapAngle(i)),
+        r < e)
+      ) {
+        if (i > e || i < r) return !0;
+      } else if (i > e && i < r) return !0;
+    }
+    return !1;
+  }
+  WMc() {
+    var t = Global_1.Global.BaseCharacter?.CharacterActorComponent;
+    if (!t) return !1;
+    if (!this.PlayerInteractiveRange) return !0;
+    if (
+      this.PlayerInteractiveRange.Begin === -MathUtils_1.PI_DEG &&
+      this.PlayerInteractiveRange.End === MathUtils_1.PI_DEG
+    )
+      return !0;
+    var i = PawnInteractController.cz,
+      e = PawnInteractController.fz,
+      r =
+        (i.FromUeVector(this.Hte.ActorLocationProxy),
+        i.SubtractionEqual(t.ActorLocationProxy),
+        i.Normalize(),
+        t.ActorForwardProxy),
+      n = t.ActorRightProxy,
+      o = i.DotProduct(r),
+      s = i.DotProduct(n),
+      o =
+        (r.Multiply(o, e),
+        n.Multiply(s, i),
+        i.AdditionEqual(e),
+        i.Normalize(),
+        i.DotProduct(r));
+    let h = Math.acos(o) * MathUtils_1.MathUtils.RadToDeg;
+    return (
+      0 !== h &&
+        (i.CrossProduct(r, e), 0 < e.DotProduct(t.ActorUpProxy)) &&
+        (h *= -1),
+      h > this.PlayerInteractiveRange.Begin &&
+        h < this.PlayerInteractiveRange.End
     );
   }
   IsMatchRoleOption() {
@@ -418,30 +541,45 @@ class PawnInteractController {
       }
     }
   }
-  Orr(t, i, e, r = 0, n = 0, s = !1) {
-    var o = t.Range || this.Irr;
+  Orr(t, i, e, r = 0, n = 0, o = !1) {
+    var s = t.Range || this.Irr;
     let h = this.Drr;
     t.DoIntactType && (h = t.DoIntactType);
     var a = new LevelGameplayActionsDefine_1.CommonInteractOption();
-    return a.Init(++this.NUe, t, e, o, h, i, r, n, s), a;
+    return a.Init(++this.NUe, t, e, s, h, i, r, n, o, t.OptionLockTip), a;
   }
   AddDynamicInteractOption(t, i, e, r = !1, n = !0) {
-    if (!this.prr) return -1;
-    let s = 0,
-      o = 0;
+    if (!this.prr)
+      return (
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Interaction",
+            36,
+            "AddDynamicInteractOption failed. Controller is not init",
+            ["PbDataId", this.GetPbDataId()],
+          ),
+        -1
+      );
+    let o = 0,
+      s = 0;
     i &&
       (i instanceof LevelGeneralContextDefine_1.QuestContext
-        ? ((o = 1), (s = i.QuestId))
+        ? ((s = 1), (o = i.QuestId))
         : i instanceof LevelGeneralContextDefine_1.GeneralLogicTreeContext &&
           i.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
-          ((o = 1), (s = i.TreeConfigId)));
-    t = this.Orr(t, 1, i, 0, o, r);
+          ((s = 1), (o = i.TreeConfigId)));
+    t = this.Orr(t, 1, i, 0, s, r);
     return (
-      (t.OptionContentId = s),
+      (t.OptionContentId = o),
       void 0 !== e && (t.TidContent = e),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Interaction", 36, "AddDynamicInteractOption success", [
+          "PbDataId",
+          this.GetPbDataId(),
+        ]),
       this.prr.push(t),
       this.Mrr.push(t),
-      1 === o && (this.Err.push(t), this.Vrr()),
+      1 === s && (this.Err.push(t), this.Vrr()),
       i &&
         ((r = this.Hrr(t.Context)),
         this.ChangeOptionDisabled(t.InstanceId, !r)),
@@ -500,10 +638,18 @@ class PawnInteractController {
           this.frr.Entity,
           EventDefine_1.EEventName.OnRemoveDynamicOption,
         ),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Interaction",
+          36,
+          "RemoveDynamicInteractOption success",
+          ["PbDataId", this.GetPbDataId()],
+          ["IsMatch", n],
+        ),
       n
     );
   }
-  AddClientInteractOption(t, i, e = "Option", r, n, s = 0, o, h) {
+  AddClientInteractOption(t, i, e = "Option", r, n, o = 0, s, h) {
     var a = new LevelGameplayActionsDefine_1.CommonActionInfo(),
       t = ((a.Params = t), new Array()),
       a = (t.push(a), new LevelGameplayActionsDefine_1.CommonInteractActions()),
@@ -516,9 +662,9 @@ class PawnInteractController {
       (t.DoIntactType = e),
       r && (t.Range = r),
       n && (t.TidContent = n),
-      o && (this.LocationOffset = o),
+      s && (this.LocationOffset = s),
       this.prr
-        ? ((a = this.Orr(t, 3, void 0, s)),
+        ? ((a = this.Orr(t, 3, void 0, o)),
           this.prr.push(a),
           this.Grr(),
           void 0 !== h && (this.IsPlayerTurnAround = h),
@@ -569,6 +715,9 @@ class PawnInteractController {
         e.Disabled || this.vrr.push(e);
       }
     return this.vrr;
+  }
+  get QuestOptionList() {
+    return this.Err;
   }
   get ShowOptions() {
     var e = new Array();
@@ -627,11 +776,13 @@ class PawnInteractController {
   }
   Nrr(t) {
     if (
-      !ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
-        t.Condition,
-        this.Hte.Owner,
-        LevelGeneralContextDefine_1.EntityContext.Create(this.Hte.Entity.Id),
-      )
+      ((t.ConditionCheck =
+        ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
+          t.Condition,
+          this.Hte.Owner,
+          LevelGeneralContextDefine_1.EntityContext.Create(this.Hte.Entity.Id),
+        )),
+      !t.ConditionCheck && !t.LockTips)
     )
       return !1;
     if (3 === t.OptionType && 1 === t.CustomOptionType) {
@@ -655,7 +806,7 @@ class PawnInteractController {
     var t,
       i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity,
       e = i.Entity.GetComponent(3),
-      i = i.Entity.GetComponent(26)?.ExecutionTrace;
+      i = i.Entity.GetComponent(29)?.ExecutionTrace;
     return i
       ? (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
           i,
@@ -693,7 +844,7 @@ class PawnInteractController {
             PROFILE_DETECT_VISIBLE_BLOCK,
           )))
       : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Interaction", 37, "ExecutionTrace is undefined"),
+          Log_1.Log.Warn("Interaction", 36, "ExecutionTrace is undefined"),
         !1);
   }
   HandlePreInterativeLogic() {
@@ -737,7 +888,7 @@ class PawnInteractController {
     return !1;
   }
   GetPbDataId() {
-    return this.Hte.CreatureData.GetPbDataId();
+    return this.Hte?.CreatureData.GetPbDataId() ?? 0;
   }
   GetOptionByIndex(t) {
     if (this.prr) {
@@ -756,7 +907,7 @@ class PawnInteractController {
       (WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
         this.frr.Entity.Id,
       ) === Protocol_1.Aki.Protocol.kks.Proto_Npc &&
-        this.frr.Entity.GetComponent(38)?.MoveToLocationLogic?.PushMoveInfo(),
+        this.frr.Entity.GetComponent(44)?.MoveToLocationLogic?.PushMoveInfo(),
       this.frr.SetInteractionState(!1, "发送交互请求"),
       InputDistributeController_1.InputDistributeController.RefreshInputTag()),
       this.OnInteractActionEnd && this.OnInteractActionEnd();
@@ -767,7 +918,7 @@ class PawnInteractController {
       this.frr.SetInteractionState(!0, "接收交互应答")),
       t !== Protocol_1.Aki.Protocol.Q4n.KRs
         ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Interaction", 37, "交互失败", ["errorCode", t]),
+            Log_1.Log.Info("Interaction", 36, "交互失败", ["errorCode", t]),
           this.frr.SetServerLockInteract(!1, "交互失败"),
           t !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrSceneEntityNotExist &&
             t !== Protocol_1.Aki.Protocol.Q4n.Proto_ErrInteractRange &&
@@ -779,12 +930,12 @@ class PawnInteractController {
               Protocol_1.Aki.Protocol.Q4n.Proto_ErrInteractIsNotParticipant &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t,
-              29153,
+              15986,
             ),
           !ModelManager_1.ModelManager.PlotModel.IsInPlot &&
             UiManager_1.UiManager.IsViewShow("PlotView") &&
             PlotController_1.PlotController.EndInteraction(!1, !0))
-        : ((i = this.Hte?.Entity?.GetComponent(128)) && i.CloseAllCollisions(),
+        : ((i = this.Hte?.Entity?.GetComponent(139)) && i.CloseAllCollisions(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnInteractDropItemSuccess,
           ));
@@ -823,6 +974,9 @@ class PawnInteractController {
     }
     return i;
   }
+  GetInteractAdditionalInfoType() {
+    return this._i_;
+  }
   GetInteractionDebugInfos() {
     if (this.prr && 0 < this.prr?.length) {
       let t = "";
@@ -855,5 +1009,7 @@ class PawnInteractController {
 }
 ((exports.PawnInteractController = PawnInteractController).cz =
   Vector_1.Vector.Create()),
-  (PawnInteractController.fz = Vector_1.Vector.Create());
+  (PawnInteractController.fz = Vector_1.Vector.Create()),
+  (PawnInteractController.pz = Vector_1.Vector.Create()),
+  (PawnInteractController.QMc = Vector_1.Vector.Create());
 //# sourceMappingURL=PawnInteractController.js.map

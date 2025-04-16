@@ -16,6 +16,8 @@ const UE = require("ue");
     "9bdae7",
     "e3aee1",
     "fff7a0",
+    "ffa8a8",
+    "ffffff",
   ]),
   (exports.INTERACT_GUIDE_MAX_TEXT_WIDTH = 760);
 //# sourceMappingURL=InteractionDefine.js.map

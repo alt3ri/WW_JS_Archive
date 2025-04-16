@@ -29,7 +29,7 @@ class CurveUtils {
       return e.FloatCurve
         ? new FloatCurve_1.FloatCurve(e.FloatCurve)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Core", 58, "浮点曲线参数不合法"),
+            Log_1.Log.Error("Core", 57, "浮点曲线参数不合法"),
           this.DefaultLinear);
     switch (e.CurveType) {
       case 0:
@@ -87,5 +87,6 @@ class CurveUtils {
 }
 ((exports.CurveUtils = CurveUtils).DefaultLinear =
   new LinearCurve_1.LinearCurve()),
-  (CurveUtils.DefaultPara = new SquaredCurve_1.SquaredCurve(2));
+  (CurveUtils.DefaultPara = new SquaredCurve_1.SquaredCurve(2)),
+  (CurveUtils.DefaultCubic = new CubicCurve_1.CubicCurve(0));
 //# sourceMappingURL=CurveUtils.js.map

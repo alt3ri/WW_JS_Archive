@@ -9,12 +9,16 @@ const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
   AppUtil_1 = require("../../../../Launcher/Update/AppUtil"),
   LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager"),
   LauncherTextLib_1 = require("../../../../Launcher/Util/LauncherTextLib"),
+  GameSettingsDefine_1 = require("../../../GameSettings/GameSettingsDefine"),
+  GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   GlobalData_1 = require("../../../GlobalData"),
+  CloudGameManager_1 = require("../../../Manager/CloudGameManager"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
-  MenuTool_1 = require("../MenuTool"),
   LanguageSettingViewBase_1 = require("./LanguageSettingViewBase");
 class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
@@ -24,7 +28,22 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
         this.RefreshUiBySelect(this.SelectedToggle);
       }),
       (this.bBi = () => {
-        this.CloseMe();
+        const t =
+          LanguageSettingViewBase_1.LanguageSettingViewBase
+            .BackToPrevLangSettingViewName;
+        void 0 !== t
+          ? this.CloseMe((e) => {
+              e &&
+                (UiManager_1.UiManager.OpenView(t, [
+                  ModelManager_1.ModelManager.MenuModel.GetMenuDataByFunctionId(
+                    GameSettingsDefine_1.EFunction.VOICELANGUAGE,
+                  ),
+                  void 0,
+                ]),
+                (LanguageSettingViewBase_1.LanguageSettingViewBase.BackToPrevLangSettingViewName =
+                  void 0));
+            })
+          : this.CloseMe();
       }),
       (this.qBi = () => {
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -33,66 +52,68 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
       }),
       (this.GBi = () => {
         let e = void 0;
-        switch (this.SelectedToggle.Updater.Status) {
-          case 2:
-            (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(72)).SetTextArgs(
-              this.SelectedToggle.GetMainText(),
-            ),
-              e.FunctionMap.set(2, () => {
-                this.SelectedToggle.Updater.Delete(
-                  GlobalData_1.GlobalData.World,
-                ),
-                  this.RefreshUiBySelect(this.SelectedToggle);
-              });
-            break;
-          case 0:
-          case 1:
-            var t;
-            this.SelectedToggle.Updater.IsDownloading
-              ? (this.SelectedToggle.Updater.Pause(),
-                this.RefreshUiBySelect(this.SelectedToggle))
-              : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                  AppUtil_1.AppUtil.GetNetworkConnectionType() ===
-                  NetworkDefine_1.ENetworkType.Cell
-                    ? 70
-                    : 71,
-                )),
-                (t =
-                  this.SelectedToggle.Updater.TotalDiskSize -
-                  this.SelectedToggle.Updater.LocalDiskSize),
-                (t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(t)),
-                e.SetTextArgs(this.SelectedToggle.GetMainText(), t),
+        if (void 0 !== this.SelectedToggle) {
+          switch (this.SelectedToggle.Updater.Status) {
+            case 2:
+              (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(72)).SetTextArgs(
+                this.SelectedToggle.GetMainText(),
+              ),
                 e.FunctionMap.set(2, () => {
-                  this.SelectedToggle.Updater.Update(
-                    this.SelectedToggle,
+                  this.SelectedToggle.Updater.Delete(
                     GlobalData_1.GlobalData.World,
-                  ).then(
-                    () => {
-                      Log_1.Log.CheckInfo() &&
-                        Log_1.Log.Info(
-                          "HotPatch",
-                          31,
-                          `Language ${this.SelectedToggle.Updater.LanguageCode} download success`,
-                        ),
-                        this.RefreshUiBySelect(this.SelectedToggle);
-                    },
-                    () => {
-                      Log_1.Log.CheckInfo() &&
-                        Log_1.Log.Info(
-                          "HotPatch",
-                          31,
-                          `Language ${this.SelectedToggle.Updater.LanguageCode} download fail`,
-                        ),
-                        this.RefreshUiBySelect(this.SelectedToggle);
-                    },
                   ),
                     this.RefreshUiBySelect(this.SelectedToggle);
-                }));
+                });
+              break;
+            case 0:
+            case 1:
+              var t;
+              this.SelectedToggle.Updater.IsDownloading
+                ? (this.SelectedToggle.Updater.Pause(),
+                  this.RefreshUiBySelect(this.SelectedToggle))
+                : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                    AppUtil_1.AppUtil.GetNetworkConnectionType() ===
+                    NetworkDefine_1.ENetworkType.Cell
+                      ? 70
+                      : 71,
+                  )),
+                  (t =
+                    this.SelectedToggle.Updater.TotalDiskSize -
+                    this.SelectedToggle.Updater.LocalDiskSize),
+                  (t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(t)),
+                  e.SetTextArgs(this.SelectedToggle.GetMainText(), t),
+                  e.FunctionMap.set(2, () => {
+                    this.SelectedToggle.Updater.Update(
+                      this.SelectedToggle,
+                      GlobalData_1.GlobalData.World,
+                    ).then(
+                      () => {
+                        Log_1.Log.CheckInfo() &&
+                          Log_1.Log.Info(
+                            "HotPatch",
+                            30,
+                            `Language ${this.SelectedToggle.Updater.LanguageCode} download success`,
+                          ),
+                          this.RefreshUiBySelect(this.SelectedToggle);
+                      },
+                      () => {
+                        Log_1.Log.CheckInfo() &&
+                          Log_1.Log.Info(
+                            "HotPatch",
+                            30,
+                            `Language ${this.SelectedToggle.Updater.LanguageCode} download fail`,
+                          ),
+                          this.RefreshUiBySelect(this.SelectedToggle);
+                      },
+                    ),
+                      this.RefreshUiBySelect(this.SelectedToggle);
+                  }));
+          }
+          e &&
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+              e,
+            );
         }
-        e &&
-          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-            e,
-          );
       });
   }
   OnRegisterComponent() {
@@ -101,7 +122,10 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
   OnStart() {
     super.OnStart(),
       this.CancelButton.SetFunction(this.bBi),
-      this.ConfirmButton.SetFunction(this.GBi);
+      this.ConfirmButton.SetFunction(this.GBi),
+      CloudGameManager_1.CloudGameManager.IsCloudGame &&
+        this.ConfirmButton.SetUiActive(!1),
+      this.ChildPopView?.PopItem?.OverrideBackBtnCallBack(this.bBi);
   }
   OnBeforeDestroy() {
     this.wBi = !0;
@@ -111,6 +135,7 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
     return a.Initialize(e, t, i), a;
   }
   OnRefreshView(e) {
+    super.OnRefreshView(e);
     var t = this.MenuDataIns.OptionsNameList[e.GetIndex()];
     e.SetMainText(t), e.SetDownloadStatusCallback(this.BBi);
   }
@@ -153,7 +178,10 @@ class LanguageDownloadTips extends ResourceUpdateView_1.ResourceUpdateViewBase {
   UpdatePatchProgress(e, t, i, a) {
     this.OBi
       ? t === i &&
-        (this.OBi.CalculateDownloadStatus(), 2 === this.OBi.Status) &&
+        (this.OBi.CalculateDownloadStatus(
+          "LanguageDownloadTips UpdatePatchProgress",
+        ),
+        2 === this.OBi.Status) &&
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "LanguageDownloadFinished",
           this.kBi,
@@ -161,7 +189,7 @@ class LanguageDownloadTips extends ResourceUpdateView_1.ResourceUpdateViewBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "HotPatch",
-          8,
+          64,
           "UpdatePatchProgress时，找不到对应的LanguageUpdater",
         );
   }
@@ -192,11 +220,15 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   UpdatePatchProgress(e, t, i, a) {
     this.Updater
       ? (this.VBi(t, i, a),
-        t === i && (this.Updater.CalculateDownloadStatus(), this.FBi?.()))
+        t === i &&
+          (this.Updater.CalculateDownloadStatus(
+            "VoiceLanguageToggle UpdatePatchProgress",
+          ),
+          this.FBi?.()))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "HotPatch",
-          8,
+          64,
           "UpdatePatchProgress时，找不到对应的LanguageUpdater",
           ["languageCode", this.IRn],
         );
@@ -208,8 +240,10 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
     var i,
       a,
       s = this.GetText(2);
-    if (this.Updater) {
-      if ((s.SetUIActive(!0), !this.Updater.IsDownloading)) {
+    if (this.Updater)
+      if ((s.SetUIActive(!0), this.Updater.IsDownloading))
+        s.SetText(StringUtils_1.EMPTY_STRING);
+      else {
         let e = StringUtils_1.EMPTY_STRING,
           t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(
             this.Updater.TotalDiskSize,
@@ -239,11 +273,11 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
           this.ProgressBuilder.Append(e, StringUtils_1.TAB_STRING, t),
           s.SetText(this.ProgressBuilder.ToString());
       }
-    } else
+    else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "HotPatch",
-          8,
+          64,
           "RefreshUi时，找不到对应的LanguageUpdater",
           ["languageCode", this.IRn],
         ),
@@ -254,40 +288,44 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   }
   OnStart() {
     super.OnStart(),
-      (this.IRn = MenuTool_1.MenuTool.GetAudioCodeById(this.Index)),
+      (this.IRn = GameSettingsManager_1.GameSettingsManager.GetAudioCodeById(
+        this.Index,
+      )),
       this.IRn
         ? ((this.Updater =
             LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(this.IRn)),
           this.Updater
             ? (this.Updater.UpdateView.SetImplement(this),
-              this.Updater.CalculateDownloadStatus(),
+              this.Updater.CalculateDownloadStatus(
+                "VoiceLanguageToggle OnStart",
+              ),
               this.RefreshUi())
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "HotPatch",
-                8,
+                64,
                 "创建VoiceLanguageToggle时，找不到对应的LanguageUpdater",
                 ["languageCode", this.IRn],
               ))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "HotPatch",
-            8,
+            64,
             "创建VoiceLanguageToggle时，找不到对应的语言配置",
             ["Index", this.Index],
           );
   }
   GetUpdater() {
-    var e = MenuTool_1.MenuTool.GetAudioCodeById(this.Index);
+    var e = GameSettingsManager_1.GameSettingsManager.GetAudioCodeById(
+      this.Index,
+    );
     return LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(e);
   }
   VBi(e, t, i) {
     (e = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(e)),
-      (t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(t)),
-      (i = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(i)),
-      (e = StringUtils_1.StringUtils.Format(e, StringUtils_1.SLASH_STRING, t));
+      (t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(t));
     this.ProgressBuilder.Clear(),
-      this.ProgressBuilder.Append(i, StringUtils_1.SLASH_STRING, e),
+      this.ProgressBuilder.Append(e, StringUtils_1.SLASH_STRING, t),
       this.GetText(2).SetText(this.ProgressBuilder.ToString());
   }
   OnBeforeDestroy() {
@@ -299,7 +337,7 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "HotPatch",
-          8,
+          64,
           "销毁VoiceLanguageToggle时，找不到对应的LanguageUpdater",
           ["languageCode", this.IRn],
         );

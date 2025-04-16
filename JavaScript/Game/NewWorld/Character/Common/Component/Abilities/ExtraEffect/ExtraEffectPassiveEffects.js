@@ -41,8 +41,8 @@ class PassiveEffects extends ExtraEffectBase_1.BuffEffect {
   }
   GetBuffHolderSkillTarget() {
     var e =
-      this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(34)?.SkillTarget;
-    return e ? e.Entity.CheckGetComponent(194) : this.OwnerBuffComponent;
+      this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(39)?.SkillTarget;
+    return e ? e.Entity.CheckGetComponent(207) : this.OwnerBuffComponent;
   }
 }
 exports.PassiveEffects = PassiveEffects;

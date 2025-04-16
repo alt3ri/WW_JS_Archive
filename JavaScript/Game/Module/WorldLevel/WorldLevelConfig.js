@@ -10,7 +10,7 @@ class WorldLevelConfig extends ConfigBase_1.ConfigBase {
     var o = WorldLevelById_1.configWorldLevelById.GetConfig(e);
     if (o) return o;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("WorldLevel", 19, "找不到worldLevel = 的配置", [
+      Log_1.Log.Error("WorldLevel", 18, "找不到worldLevel = 的配置", [
         "worldLevel",
         e,
       ]);

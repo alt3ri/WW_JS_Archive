@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue");
 class TsAnimNotifyStateStopRotateBoneToLocation extends UE.KuroAnimNotifyState {
+  Constructor() {}
   K2_NotifyBegin(t, e, o) {
     t = t.GetAnimInstance();
     return (

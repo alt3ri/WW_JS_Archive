@@ -14,7 +14,7 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.hno = ""),
       (this.lno = ""),
-      (this.rSa = ""),
+      (this.KMa = ""),
       (this.$mt = BigInt(0)),
       (this.YP = () => {
         var e =
@@ -36,7 +36,7 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
         ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationResourceName(
           e.ResourceName,
         )),
-      (this.rSa =
+      (this.KMa =
         ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationType(
           e.ResourceName,
         )),
@@ -58,7 +58,7 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
     let e = "";
     var t =
       (e =
-        "Area" === this.rSa
+        "Area" === this.KMa
           ? (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               "Text_OccupiedArea",
             ) ?? "")

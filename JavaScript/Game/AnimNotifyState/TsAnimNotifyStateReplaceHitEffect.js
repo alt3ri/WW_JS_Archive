@@ -7,17 +7,18 @@ class TsAnimNotifyStateReplaceHitEffect extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.Setting = void 0);
   }
+  Constructor() {}
   K2_NotifyBegin(e, t, r) {
-    var a,
+    var s,
       e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
       (this.Setting
-        ? !!(a = e.CharacterActorComponent?.Entity)?.Valid &&
-          !!(a = a.GetComponent(53))?.Valid &&
-          (a.ReplaceHitEffect(this.Setting), !0)
+        ? !!(s = e.CharacterActorComponent?.Entity)?.Valid &&
+          !!(s = s.GetComponent(60))?.Valid &&
+          (s.ReplaceHitEffect(this.Setting), !0)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Battle", 18, "替换受击效果的ANS缺少配置", [
+            Log_1.Log.Error("Battle", 17, "替换受击效果的ANS缺少配置", [
               "",
               e?.GetName(),
             ]),
@@ -29,7 +30,7 @@ class TsAnimNotifyStateReplaceHitEffect extends UE.KuroAnimNotifyState {
     return (
       e instanceof TsBaseCharacter_1.default &&
       !!(e = e.CharacterActorComponent?.Entity)?.Valid &&
-      !!(e = e.GetComponent(53))?.Valid &&
+      !!(e = e.GetComponent(60))?.Valid &&
       (e.RemoveHitEffectReplaced(), !0)
     );
   }

@@ -98,10 +98,13 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
               ?.BreakUpEventList[t]);
         i &&
           (AudioSystem_1.AudioSystem.PostEvent(i), Log_1.Log.CheckDebug()) &&
-          Log_1.Log.Debug("Audio", 57, "[Game.RoleBreachView] PostEvent", [
+          Log_1.Log.Debug("Audio", 56, "[Game.RoleBreachView] PostEvent", [
             "Event",
             i,
           ]);
+      }),
+      (this.qdi = () => {
+        this.FTt();
       });
   }
   OnRegisterComponent() {
@@ -157,19 +160,27 @@ class RoleBreachView extends UiViewBase_1.UiViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleBreakUp,
       this.N1o,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleBreakUp,
       this.N1o,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnCommonItemCountAnyChange,
+        this.qdi,
+      );
   }
   OnHandleReleaseScene() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Character",
-        59,
+        58,
         "RoleBreachView HandleReleaseScene 隐藏模型",
       ),
       UiSceneManager_1.UiSceneManager.HideRoleSystemRoleActor();

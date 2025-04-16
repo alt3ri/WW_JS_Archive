@@ -22,6 +22,12 @@ class Area {
   get AreaName() {
     return this.areaname();
   }
+  get MapConfigId() {
+    return this.mapconfigid();
+  }
+  get DungeonId() {
+    return this.dungeonid();
+  }
   get Title() {
     return this.title();
   }
@@ -76,11 +82,39 @@ class Area {
   get SortIndex() {
     return this.sortindex();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  get EnterAreaTags() {
+    return GameUtils_1.GameUtils.ConvertToMap(
+      this.enterareatagsLength(),
+      this.enterareatagsKey,
+      this.enterareatagsValue,
+      this,
+    );
   }
-  static getRootAsArea(t, r) {
-    return (r || new Area()).__init(
+  enterareatagsKey(t) {
+    return this.enterareatags(t)?.key();
+  }
+  enterareatagsValue(t) {
+    return this.enterareatags(t)?.value();
+  }
+  get LeaveAreaTags() {
+    return GameUtils_1.GameUtils.ConvertToMap(
+      this.leaveareatagsLength(),
+      this.leaveareatagsKey,
+      this.leaveareatagsValue,
+      this,
+    );
+  }
+  leaveareatagsKey(t) {
+    return this.leaveareatags(t)?.key();
+  }
+  leaveareatagsValue(t) {
+    return this.leaveareatags(t)?.value();
+  }
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
+  }
+  static getRootAsArea(t, e) {
+    return (e || new Area()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -102,30 +136,50 @@ class Area {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   areaname(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
+  }
+  mapconfigid() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 8;
+  }
+  dungeonid() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.readInt32(this.z7 + t) : 8;
   }
   title(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 18),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   father() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetTagAt(t) {
     return this.tag(t);
   }
   tag(t) {
-    var r = this.J7.__offset(this.z7, 18);
-    return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
+    var e = this.J7.__offset(this.z7, 22);
+    return e ? this.J7.readInt32(this.J7.__vector(this.z7 + e) + 4 * t) : 0;
   }
   tagLength() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   tagArray() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 22);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -135,56 +189,94 @@ class Area {
       : null;
   }
   record() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   tips() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   isinitactived() {
-    var t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 28);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
-  GetWorldmonsterlevelmaxAt(t, r) {
+  GetWorldmonsterlevelmaxAt(t, e) {
     return this.worldmonsterlevelmax(t);
   }
-  worldmonsterlevelmax(t, r) {
-    var i = this.J7.__offset(this.z7, 26);
-    return i
-      ? (r || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+  worldmonsterlevelmax(t, e) {
+    var r = this.J7.__offset(this.z7, 30);
+    return r
+      ? (e || new DicIntInt_1.DicIntInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;
   }
   worldmonsterlevelmaxLength() {
-    var t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   wuyinquid() {
-    var t = this.J7.__offset(this.z7, 28);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  stateid() {
-    var t = this.J7.__offset(this.z7, 30);
-    return t ? this.J7.readInt32(this.z7 + t) : 0;
-  }
-  atmosphereid() {
     var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  edgewallname(t) {
-    var r = this.J7.__offset(this.z7, 34);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+  stateid() {
+    var t = this.J7.__offset(this.z7, 34);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  deliverymarktype() {
+  atmosphereid() {
     var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  sortindex() {
-    var t = this.J7.__offset(this.z7, 38);
+  edgewallname(t) {
+    var e = this.J7.__offset(this.z7, 38),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
+  }
+  deliverymarktype() {
+    var t = this.J7.__offset(this.z7, 40);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  sortindex() {
+    var t = this.J7.__offset(this.z7, 42);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  GetEnterareatagsAt(t, e) {
+    return this.enterareatags(t);
+  }
+  enterareatags(t, e) {
+    var r = this.J7.__offset(this.z7, 44);
+    return r
+      ? (e || new DicIntInt_1.DicIntInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  enterareatagsLength() {
+    var t = this.J7.__offset(this.z7, 44);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  GetLeaveareatagsAt(t, e) {
+    return this.leaveareatags(t);
+  }
+  leaveareatags(t, e) {
+    var r = this.J7.__offset(this.z7, 46);
+    return r
+      ? (e || new DicIntInt_1.DicIntInt()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7,
+        )
+      : null;
+  }
+  leaveareatagsLength() {
+    var t = this.J7.__offset(this.z7, 46);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }
 exports.Area = Area;

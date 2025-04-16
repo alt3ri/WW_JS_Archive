@@ -16,7 +16,7 @@ class ComponentConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "LguiUtil",
-        11,
+        10,
         "[ComponentConfig.GetItemConfigParam]查找配置数据失败，数据为空",
         ["标签", e],
       );
@@ -27,7 +27,7 @@ class ComponentConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "LguiUtil",
-        11,
+        10,
         "[ComponentConfig.GetQualityConfigParam]查找配置数据失败，数据为空",
         ["标签", e],
       );
@@ -38,7 +38,18 @@ class ComponentConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "LguiUtil",
-        11,
+        10,
+        "[ComponentConfig.GetRoleConfigParam]查找配置数据失败，数据为空",
+        ["标签", e],
+      );
+  }
+  GetRoleSkinConfigParam(e) {
+    var o = RoleIconTagById_1.configRoleIconTagById.GetConfig(e);
+    if (o) return o.ConfigParam;
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "LguiUtil",
+        10,
         "[ComponentConfig.GetRoleConfigParam]查找配置数据失败，数据为空",
         ["标签", e],
       );
@@ -49,7 +60,7 @@ class ComponentConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "LguiUtil",
-        11,
+        10,
         "[ComponentConfig.GetElementIconTag]查找配置数据失败，数据为空",
         ["标签", e],
       );
@@ -60,7 +71,7 @@ class ComponentConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "LguiUtil",
-        11,
+        10,
         "[ComponentConfig.GetMonsterConfigParam]查找配置数据失败，数据为空",
         ["标签", e],
       );
@@ -71,7 +82,7 @@ class ComponentConfig extends ConfigBase_1.ConfigBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "LguiUtil",
-        11,
+        10,
         "[ComponentConfig.GetDungeonConfigParam]查找配置数据失败，数据为空",
         ["标签", e],
       );

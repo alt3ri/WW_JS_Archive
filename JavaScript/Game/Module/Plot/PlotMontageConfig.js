@@ -12,7 +12,7 @@ class PlotMontageConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Plot", 43, "找不到剧情蒙太奇配置", [
+          Log_1.Log.Error("Plot", 42, "找不到剧情蒙太奇配置", [
             "Montage ID",
             e,
           ])),
@@ -24,7 +24,7 @@ class PlotMontageConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Plot", 39, "找不到剧情ABP蒙太奇配置", [
+          Log_1.Log.Error("Plot", 38, "找不到剧情ABP蒙太奇配置", [
             "Montage ID",
             e,
           ])),
@@ -40,7 +40,7 @@ class PlotMontageConfig extends ConfigBase_1.ConfigBase {
     return (
       o ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Plot", 43, "找不到剧情叠加ABP蒙太奇配置", [
+          Log_1.Log.Error("Plot", 42, "找不到剧情叠加ABP蒙太奇配置", [
             "Montage ID",
             e,
           ])),

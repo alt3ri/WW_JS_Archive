@@ -19,9 +19,9 @@ class SwimConfig extends ConfigBase_1.ConfigBase {
   OnInit() {
     return (
       (this.UZo = new Map()),
-      (this.AZo = BigInt(0)),
-      (this.PZo = BigInt(0)),
-      (this.xZo = BigInt(0)),
+      (this.AZo = 0),
+      (this.PZo = 0),
+      (this.xZo = 0),
       this.InitSwimBuffConfig(),
       !0
     );
@@ -40,7 +40,7 @@ class SwimConfig extends ConfigBase_1.ConfigBase {
       e ||
       ((e = SwimById_1.configSwimById.GetConfig(i)) ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Movement", 58, "以下身高没有配置游泳", [
+          Log_1.Log.Error("Movement", 57, "以下身高没有配置游泳", [
             "RoleBody",
             i,
           ])),
@@ -54,26 +54,26 @@ class SwimConfig extends ConfigBase_1.ConfigBase {
   InitSwimBuffConfig() {
     var i = SwimBuffById_1.configSwimBuffById.GetConfig(NORMAL_SWIM_CONFIG_ID);
     i
-      ? ((this.AZo = BigInt(i.BuffId)),
+      ? ((this.AZo = i.BuffId),
         (i = SwimBuffById_1.configSwimBuffById.GetConfig(NO_INPUT_CONFIG_ID))
-          ? ((this.xZo = BigInt(i.BuffId)),
+          ? ((this.xZo = i.BuffId),
             (i =
               SwimBuffById_1.configSwimBuffById.GetConfig(FAST_SWIM_CONFIG_ID))
-              ? (this.PZo = BigInt(i.BuffId))
+              ? (this.PZo = i.BuffId)
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Movement",
-                  58,
+                  57,
                   "游泳Buff表没有配置Id为3的基础配置",
                 ))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Movement",
-              58,
+              57,
               "游泳Buff表没有配置Id为1的基础配置",
             ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Movement", 58, "游泳Buff表没有配置Id为0的基础配置");
+        Log_1.Log.Error("Movement", 57, "游泳Buff表没有配置Id为0的基础配置");
   }
 }
 exports.SwimConfig = SwimConfig;

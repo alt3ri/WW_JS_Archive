@@ -17,7 +17,7 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
     var a = CalabashLevelByLevel_1.configCalabashLevelByLevel.GetConfig(e);
     if (a) return a;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Calabash", 11, "获取鸣域终端配置失败，请检查配置表", [
+      Log_1.Log.Error("Calabash", 10, "获取鸣域终端配置失败，请检查配置表", [
         "level",
         e,
       ]);
@@ -41,7 +41,7 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Calabash",
-            11,
+            10,
             "获取鸣域终端养成奖励配置失败, 请检查配置表",
             ["MonsterId", e],
           )),
@@ -63,7 +63,7 @@ class CalabashConfig extends ConfigBase_1.ConfigBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Calabash",
-            11,
+            10,
             "获取鸣域终端养成条件配置失败, 请检查配置表",
             ["id", e],
           )),

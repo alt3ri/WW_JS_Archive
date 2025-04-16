@@ -13,37 +13,37 @@ class InputAxisBinding {
       (this.tEe = []),
       (this.iEe = []),
       (this.rEe = []),
-      (this.JXa = 0),
-      (this.ZXa = 0);
+      (this.Xih = 0),
+      (this.Yih = 0);
   }
   Initialize(t) {
     (this.sEe = t.AxisName),
       (this.Lo = t),
       (this.aEe = this.Lo.AxisType),
-      (this.JXa = t.KeyboardVersion),
-      (this.ZXa = t.GamepadVersion);
+      (this.Xih = t.KeyboardVersion),
+      (this.Yih = t.GamepadVersion);
   }
   Clear() {
     (this.sEe = void 0),
       (this.aEe = 0),
       (this.Lo = void 0),
-      (this.JXa = 0),
-      (this.ZXa = 0);
+      (this.Xih = 0),
+      (this.Yih = 0);
   }
   GetAxisName() {
     return this.sEe;
   }
   SetKeyboardVersion(t) {
-    this.JXa = t;
+    this.Xih = t;
   }
   GetKeyboardVersion() {
-    return this.JXa;
+    return this.Xih;
   }
   SetGamepadVersion(t) {
-    this.ZXa = t;
+    this.Yih = t;
   }
   GetGamepadVersion() {
-    return this.ZXa;
+    return this.Yih;
   }
   GetInputAxisKeyMap() {
     return InputSettings_1.InputSettings.GetInputAxisKeyMap(this.sEe);

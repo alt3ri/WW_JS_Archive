@@ -40,7 +40,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.InputSettingsController =
     exports.InputController =
     exports.CrashCollectionController =
-    exports.PackageConfigUtil =
     exports.CameraController =
     exports.TestModuleBridge =
     exports.AiModelController =
@@ -80,19 +79,11 @@ var ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
       },
     }),
     require("../Camera/CameraController")),
-  PackageConfigUtil_1 =
+  CrashCollectionController_1 =
     (Object.defineProperty(exports, "CameraController", {
       enumerable: !0,
       get: function () {
         return CameraController_1.CameraController;
-      },
-    }),
-    require("../Common/PackageConfigUtil")),
-  CrashCollectionController_1 =
-    (Object.defineProperty(exports, "PackageConfigUtil", {
-      enumerable: !0,
-      get: function () {
-        return PackageConfigUtil_1.PackageConfigUtil;
       },
     }),
     require("../CrashCollection/CrashCollectionController")),

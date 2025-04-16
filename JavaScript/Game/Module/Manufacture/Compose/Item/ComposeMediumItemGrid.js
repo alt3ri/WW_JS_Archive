@@ -13,48 +13,78 @@ class ComposeMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumI
     this.SetSelected(!1);
   }
   OnRefresh(e, o, r) {
-    var t = e.ItemId,
-      i =
-        ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(t),
-      s = 0 < e.IsUnlock;
-    let a = !0;
+    var t = e.ConfigId,
+      a = 0 < e.IsUnlock;
+    let i = 0,
+      s = !0;
     switch (e.MainType) {
       case 1:
-        a =
-          35 === e.SubType ||
+        var m =
+            ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+              e.ConfigId,
+            ),
+          m = ((i = m?.ItemId ?? 0), e);
+        s =
+          35 === m.SubType ||
           ComposeController_1.ComposeController.CheckCanReagentProduction(t);
         break;
       case 2:
-        var l = e;
-        a = ComposeController_1.ComposeController.CheckCanStructure(l.ItemId);
+        (m =
+          ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+            e.ConfigId,
+          )),
+          (m = ((i = m?.ItemId ?? 0), e));
+        s = ComposeController_1.ComposeController.CheckCanStructure(m.ConfigId);
         break;
       case 3:
-        l = e;
-        0 !==
+        (m =
+          ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+            e.ConfigId,
+          )),
+          (m = ((i = m?.ItemId ?? 0), e));
+        0 ===
         ModelManager_1.ModelManager.ComposeModel.GetPurificationDataById(
-          l.ItemId,
+          m.ConfigId,
         ).IsUnlock
-          ? (a = ComposeController_1.ComposeController.CheckCanPurification(
-              l.ItemId,
+          ? (s = !1)
+          : (s = ComposeController_1.ComposeController.CheckCanPurification(
+              m.ConfigId,
+            ));
+        break;
+      case 4:
+        i = e.ConfigId;
+        m = e;
+        0 !==
+        ModelManager_1.ModelManager.ComposeModel.GetExchangeDataById(m.ConfigId)
+          .IsUnlock
+          ? (s = ComposeController_1.ComposeController.CheckCanExchange(
+              m.ConfigId,
             ))
-          : (a = !1);
+          : (s = !1);
     }
-    var i = i.ItemId,
-      m = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(i);
-    m &&
-      ((i = {
+    var n,
+      l,
+      d = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(i);
+    d &&
+      ((l = e.IsLimitForever),
+      (n = {
+        IsLimitTimeItem: (n = 0 < e.TotalMakeCountInLimitTime) && l,
+        IsRefreshItem: n && !l,
+        BuffItem: d.ItemBuffType,
+      }),
+      (l = {
         Type: 4,
         Data: e,
         ItemConfigId: i,
-        StarLevel: m.QualityId,
-        BottomTextId: m.Name,
-        IsProhibit: !s,
+        StarLevel: d.QualityId,
+        BottomTextId: d.Name,
+        IsProhibit: !a,
         IsNewVisible: e.IsNew,
-        IsDisable: s && !a,
+        IsDisable: a && !s,
         IsOmitBottomText: !0,
-        IsTimeFlagVisible: 0 < e.ExistEndTime,
+        ComposeIconTag: a ? n : void 0,
       }),
-      this.Apply(i),
+      this.Apply(l),
       this.SetSelected(o));
   }
 }

@@ -5,6 +5,8 @@ const UE = require("ue"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Macro_1 = require("../../Core/Preprocessor/Macro"),
+  Vector2D_1 = require("../../Core/Utils/Math/Vector2D"),
+  ObjectUtils_1 = require("../../Core/Utils/ObjectUtils"),
   StringUtils_1 = require("../../Core/Utils/StringUtils"),
   LguiUtil_1 = require("../../Game/Module/Util/LguiUtil"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
@@ -60,7 +62,7 @@ class UiLayer {
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              11,
+              10,
               "索引大于生成单元节点列表,返回当前最大值节点",
             ),
           i[i.length])
@@ -68,9 +70,28 @@ class UiLayer {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "UiCore",
-        11,
+        10,
         "索引大于生成单元节点列表,返回当前最大值节点",
       );
+  }
+  static async pGl(i) {
+    var t = UiLayer.GetLayerRootUiItem(i),
+      e = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+        "UiItem_BattleViewUnitNode_Prefab",
+        t,
+      ),
+      e = LguiUtil_1.LguiUtil.DuplicateActor(e, t),
+      t = (LguiUtil_1.LguiUtil.SetActorIsPermanent(e, !0, !1), e.RootComponent);
+    Info_1.Info.IsPlayInEditor &&
+      (e.SetActorLabel((e = "Unit_PureMode")), t.SetDisplayName(e)),
+      t.SetUIActive(!1),
+      this.fGl.set(i, t);
+  }
+  static GetPureModeFloatUnit(i) {
+    var t = this.fGl.get(i);
+    if (t) return t;
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("UiCore", 17, "该层级没有纯净模式的节点", ["layer", i]);
   }
   static GetLayerRootUiItem(i) {
     var t = this.SCr.get(i);
@@ -78,7 +99,7 @@ class UiLayer {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "UiCore",
-        11,
+        10,
         "找不到对应的UiLayer, 此时UiLayer可能还未初始化",
         ["层级名称", UiLayerType_1.ELayerType[i]],
       );
@@ -93,13 +114,13 @@ class UiLayer {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiLayer",
-            11,
+            10,
             "有操作设置层级的显隐状态",
             ["层级类型", i],
             ["显示状态", t],
           ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("UiLayer", 11, "找不到对应的uiLayer：", ["type", i]);
+        Log_1.Log.Error("UiLayer", 10, "找不到对应的uiLayer：", ["type", i]);
   }
   static async Initialize() {
     UiLayer.ZCe ||
@@ -110,9 +131,11 @@ class UiLayer {
         this.DCr(),
         this.vCr(UiLayerType_1.ELayerType.BattleFloat),
         this.vCr(UiLayerType_1.ELayerType.Float),
+        this.pGl(UiLayerType_1.ELayerType.BattleFloat),
       ]));
   }
   static async ICr() {
+    var i;
     this.CCr
       ? Log_1.Log.CheckInfo() && Log_1.Log.Info("UiCore", 1, "界面根节点已存在")
       : ((this.CCr = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
@@ -122,10 +145,20 @@ class UiLayer {
         this.CCr &&
         ((this.gCr = this.CCr.GetComponentByClass(UE.UIItem.StaticClass())),
         this.gCr)
-          ? (this.CCr.OnDestroyed.Add(() => {
+          ? ((i = this.gCr.GetCanvasScaler())
+              ? i.OnViewportSizeChanged.Bind(this.BS1)
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "UiCore",
+                  17,
+                  "界面根节点获取不到canvasScaler, 无法监听ViewportSizeChanged",
+                ),
+            this.CCr.OnDestroyed.Add(() => {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("UiCore", 1, "UiRoot被销毁"),
-                this.SCr.clear(),
+                this.SCr.clear();
+              var i = this.gCr?.GetCanvasScaler();
+              i && i.OnViewportSizeChanged.Unbind(),
                 (this.CCr = void 0),
                 (this.gCr = void 0);
             }),
@@ -149,7 +182,7 @@ class UiLayer {
   static async RCr(t) {
     if (this.SCr.has(t))
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("UiLayer", 17, "重复加载UI层级", [
+        Log_1.Log.Warn("UiLayer", 16, "重复加载UI层级", [
           "层级类型",
           UiLayerType_1.ELayerType[t],
         ]);
@@ -278,13 +311,21 @@ class UiLayer {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "UiCore",
-          17,
+          16,
           "Mask遮罩",
           ["tag", i],
           ["show", t],
           ["size", e],
         ),
       a?.SetRaycastTarget(0 < e));
+  }
+  static GmClearMask() {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("UiCore", 10, "Gm执行Mask遮罩清除"),
+      UiLayer.ACr.clear(),
+      UiLayer.GetLayerRootUiItem(
+        UiLayerType_1.ELayerType.Mask,
+      )?.SetRaycastTarget(!1);
   }
   static IsInMask() {
     var i = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Mask);
@@ -301,12 +342,20 @@ class UiLayer {
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "UiCore",
-        17,
+        16,
         "设置Normal层点击遮罩",
         ["是否显示", i],
         ["上次来源", this.PCr],
         ["当前来源", t],
       );
+  }
+  static GetViewportSize() {
+    return ObjectUtils_1.ObjectUtils.IsValid(UiLayer.UiRootItem)
+      ? Vector2D_1.Vector2D.Create(
+          UiLayer.UiRootItem.GetWidth(),
+          UiLayer.UiRootItem.GetHeight(),
+        )
+      : Vector2D_1.Vector2D.Create();
   }
 }
 ((exports.UiLayer = UiLayer).ZCe = !1),
@@ -318,5 +367,13 @@ class UiLayer {
   (UiLayer.yCr = void 0),
   (UiLayer.SCr = new Map()),
   (UiLayer.ACr = new Set()),
-  (UiLayer.MCr = new Map());
+  (UiLayer.MCr = new Map()),
+  (UiLayer.fGl = new Map()),
+  (UiLayer.BS1 = (i) => {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("UiCore", 17, "UIRootItem OnViewPortSizeChange"),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.UIViewPortSizeChanged,
+      );
+  });
 //# sourceMappingURL=UiLayer.js.map

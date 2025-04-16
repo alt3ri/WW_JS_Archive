@@ -50,7 +50,7 @@ class CommonExchangeData extends UiPopViewData_1.UiPopViewData {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ItemExchange",
-          9,
+          8,
           "暂不支持消耗数量为1以上的道具兑换, 需要扩展!",
         ),
       this.Ugi.SetDataByItemId(t.Consume.keys().next()?.value),

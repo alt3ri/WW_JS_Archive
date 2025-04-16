@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityDoubleRewardController = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager"),
+const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   ActivityControllerBase_1 = require("../../ActivityControllerBase"),
   ActivityDoubleRewardData_1 = require("./ActivityDoubleRewardData"),
   ActivitySubViewDoubleReward_1 = require("./ActivitySubViewDoubleReward");
@@ -50,6 +51,11 @@ class ActivityDoubleRewardController extends ActivityControllerBase_1.ActivityCo
       e,
       t,
     )?.GetFullTip();
+  }
+  static HasAnyDoubleRewardActivityShowing() {
+    return ModelManager_1.ModelManager.ActivityModel.GetIsActivityShowingByType(
+      Protocol_1.Aki.Protocol.uks.Proto_DoubleInstanceRewardActivity,
+    );
   }
 }
 (exports.ActivityDoubleRewardController =

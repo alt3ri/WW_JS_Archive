@@ -25,14 +25,14 @@ class BlackScreenController extends UiControllerBase_1.UiControllerBase {
   }
   static AddBlackScreen(e, t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("BlackScreen", 11, "触发开始黑屏", ["标签", t]),
+      Log_1.Log.Info("BlackScreen", 10, "触发开始黑屏", ["标签", t]),
       0 === this.o0t.size && this.r0t.ShowTemp(e);
     e = this.o0t.get(t);
     e ? this.o0t.set(t, ++e) : this.o0t.set(t, 1);
   }
   static async AddBlackScreenAsync(e, t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("BlackScreen", 11, "触发开始黑屏async", ["标签", t]),
+      Log_1.Log.Info("BlackScreen", 10, "触发开始黑屏async", ["标签", t]),
       0 === this.o0t.size && this.r0t.ShowTemp(e);
     e = this.o0t.get(t);
     e ? this.o0t.set(t, ++e) : this.o0t.set(t, 1),
@@ -43,7 +43,7 @@ class BlackScreenController extends UiControllerBase_1.UiControllerBase {
     this.r0t &&
       (r = this.o0t.get(t)) &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("BlackScreen", 11, "触发结束黑屏", ["标签", t]),
+        Log_1.Log.Info("BlackScreen", 10, "触发结束黑屏", ["标签", t]),
       1 === r ? this.o0t.delete(t) : this.o0t.set(t, --r),
       0 === this.o0t.size) &&
       this.r0t.HideTemp(e);

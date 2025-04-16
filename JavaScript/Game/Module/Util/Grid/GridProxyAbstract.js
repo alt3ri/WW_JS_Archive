@@ -9,6 +9,7 @@ class GridProxyAbstract extends UiPanelBase_1.UiPanelBase {
       (this.GridIndex = 0),
       (this.DisplayIndex = 0);
   }
+  Refresh(e, s, t) {}
   Clear() {}
   OnSelected(e) {}
   OnDeselected(e) {}

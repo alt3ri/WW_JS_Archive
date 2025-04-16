@@ -19,7 +19,8 @@ var __decorate =
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelDataComponent = void 0);
-const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+const Log_1 = require("../../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
   UiModelComponentBase_1 = require("../UiModelComponentBase");
@@ -32,7 +33,7 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
       (this.ModelType = void 0),
       (this.Xwr = 0),
       (this.yne = !1),
-      (this.uSa = void 0),
+      (this.tSa = void 0),
       (this.$wr = 1),
       (this.kjs = !1);
   }
@@ -55,16 +56,24 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
     return this.yne;
   }
   GetLoadingVisible() {
-    return this.uSa;
+    return this.tSa;
   }
   ClearLoadingVisible() {
-    this.uSa = void 0;
+    this.tSa = void 0;
   }
   SetVisible(e) {
-    if (1 === this.Xwr) this.uSa = e;
+    if (1 === this.Xwr) this.tSa = e;
     else {
       if (this.yne === e) return !1;
       (this.yne = e),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "UiComponent",
+            58,
+            "设置Ui模型显隐",
+            ["ModelUseWay", this.Owner.UseWay],
+            ["Visible", e],
+          ),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Owner,
           EventDefine_1.EEventName.OnUiModelVisibleChange,

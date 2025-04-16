@@ -41,8 +41,17 @@ class GuideTutorial {
   get DropId() {
     return this.dropid();
   }
+  get DisableDropReward() {
+    return this.disabledropreward();
+  }
   get RequireReadAll() {
     return this.requirereadall();
+  }
+  get ExcludeFromWiki() {
+    return this.excludefromwiki();
+  }
+  get CopiedFrom() {
+    return this.copiedfrom();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -112,8 +121,14 @@ class GuideTutorial {
       : null;
   }
   groupname(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   tutorialtip() {
     var t = this.J7.__offset(this.z7, 18);
@@ -123,9 +138,21 @@ class GuideTutorial {
     var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 100001;
   }
-  requirereadall() {
+  disabledropreward() {
     var t = this.J7.__offset(this.z7, 22);
     return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  requirereadall() {
+    var t = this.J7.__offset(this.z7, 24);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  excludefromwiki() {
+    var t = this.J7.__offset(this.z7, 26);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  copiedfrom() {
+    var t = this.J7.__offset(this.z7, 28);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.GuideTutorial = GuideTutorial;

@@ -33,7 +33,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     return (
       e ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("TimeOfDay", 17, "时间流速比未配置"),
+        Log_1.Log.Error("TimeOfDay", 16, "时间流速比未配置"),
       0)
     );
   }
@@ -51,7 +51,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     if (0 === this.iTo.length && !this.InitDayStateTimeSpanList())
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("TimeOfDay", 17, "时间区间配置错误"),
+          Log_1.Log.Error("TimeOfDay", 16, "时间区间配置错误"),
         0
       );
     let r = 0;
@@ -62,7 +62,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
       ),
       4 <= r
         ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("TimeOfDay", 17, "时间区间配置超出范围"),
+            Log_1.Log.Error("TimeOfDay", 16, "时间区间配置超出范围"),
           0)
         : r
     );

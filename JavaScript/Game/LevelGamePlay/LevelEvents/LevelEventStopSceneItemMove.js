@@ -20,7 +20,7 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e
       ? ((this.OPt = e), (e = this.OPt.EntityIds), this.CreateWaitEntityTask(e))
-      : (Log_1.Log.CheckError() && Log_1.Log.Error("Event", 32, "参数配置错误"),
+      : (Log_1.Log.CheckError() && Log_1.Log.Error("Event", 31, "参数配置错误"),
         this.FinishExecute(!1));
   }
   ExecuteWhenEntitiesReady() {
@@ -35,7 +35,7 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
         var n = Protocol_1.Aki.Protocol.Sta.create(),
           i = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
         if (i?.Valid) {
-          var s = i.Entity.GetComponent(116);
+          var s = i.Entity.GetComponent(126);
           if (s?.Valid) {
             let e = void 0;
             r && (e = s.GetNextTarget());
@@ -62,23 +62,23 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Event",
-                32,
+                31,
                 "Entity找不到SceneItemMoveComponent",
                 ["entityId", a],
               );
         } else
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Event", 32, "实体不合法", ["entityId", a]);
+            Log_1.Log.Error("Event", 31, "实体不合法", ["entityId", a]);
       }
-      Net_1.Net.Call(29004, o, (e) => {
+      Net_1.Net.Call(25069, o, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            23314,
+            20985,
           );
       });
       for (const m of t) {
-        var _ = m.Entity.GetComponent(116),
+        var _ = m.Entity.GetComponent(126),
           c =
             (_.StopMove(),
             EventSystem_1.EventSystem.EmitWithTarget(

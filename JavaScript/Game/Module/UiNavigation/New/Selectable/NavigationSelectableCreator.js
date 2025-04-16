@@ -34,7 +34,7 @@ class NavigationSelectableCreator {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiNavigation",
-            11,
+            10,
             "监听组件挂载节点获取不到交互组件",
             ["节点名", e.displayName],
           )),

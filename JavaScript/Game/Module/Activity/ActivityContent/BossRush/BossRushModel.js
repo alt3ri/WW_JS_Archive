@@ -8,6 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager");
 class BossRushRoleInfo {
   constructor() {
@@ -20,7 +21,7 @@ class BossRushBuffInfo {
     (this.BuffId = 0),
       (this.Slot = 0),
       (this.ChangeAble = !0),
-      (this.State = Protocol_1.Aki.Protocol.Iks.Proto_Empty);
+      (this.State = Protocol_1.Aki.Protocol.Iks.Proto_BuffEmpty);
   }
 }
 exports.BossRushBuffInfo = BossRushBuffInfo;
@@ -31,6 +32,9 @@ class BossRushTeamInfo {
       (this.tyn = []),
       (this.cyn = []),
       (this.myn = []),
+      (this._ll = []),
+      (this.ull = []),
+      (this.cll = []),
       (this.dyn = []),
       (this.LevelInfo = void 0);
   }
@@ -43,41 +47,70 @@ class BossRushTeamInfo {
   GetPrepareSelectBuff() {
     return this.myn;
   }
+  GetCurrentSelectScoreBuff() {
+    return this._ll;
+  }
+  GetCurrentOptionScoreBuff() {
+    return this.ull;
+  }
+  GetPrepareSelectScoreBuff() {
+    return this.cll;
+  }
   GetCurrentTeamMembers() {
     return this.dyn;
   }
   SetCurrentSelectLevel(e) {
     this.uyn = e;
   }
-  InitLevelBuff(e, t, s) {
+  InitLevelBuff(e, t, s, r, o) {
     this.tyn = [];
-    for (const o of e) {
+    for (const n of e) {
       const e = new BossRushBuffInfo();
-      (e.BuffId = o.BuffId),
-        (e.Slot = o.Slot),
-        (e.ChangeAble = o.ChangeAble),
-        (e.State = o.State),
+      (e.BuffId = n.BuffId),
+        (e.Slot = n.Slot),
+        (e.ChangeAble = n.ChangeAble),
+        (e.State = n.State),
         this.tyn.push(e);
     }
-    for (const r of e) 0 < r.BuffId && this.cyn.push(r);
-    for (const i of t) 0 < i.BuffId && this.cyn.push(i);
-    for (const n of s) 0 < n.BuffId && this.cyn.push(n);
+    for (const i of e) 0 < i.BuffId && this.cyn.push(i);
+    for (const f of t) 0 < f.BuffId && this.cyn.push(f);
+    for (const h of s) 0 < h.BuffId && this.cyn.push(h);
+    for (const u of r) {
+      const e = new BossRushBuffInfo();
+      (e.BuffId = u.BuffId),
+        (e.Slot = u.Slot),
+        (e.ChangeAble = u.ChangeAble),
+        (e.State = u.State),
+        this._ll.push(e);
+    }
+    for (const a of o) 0 < a.BuffId && this.ull.push(a);
   }
   GetIndexBuff(e) {
     if (!(e >= this.tyn.length)) return this.tyn[e];
   }
   GetOptionBuff() {
     var e = [];
-    for (const t of this.cyn)
-      ((0 < t.BuffId && t.State === Protocol_1.Aki.Protocol.Iks.pBs) ||
-        t.Slot < 0) &&
-        -1 === e.findIndex((e) => e.BuffId === t.BuffId) &&
-        e.push(t);
+    if (
+      0 === ModelManager_1.ModelManager.BossRushModel.CurrentSelectBuffTabName
+    )
+      for (const t of this.cyn)
+        ((0 < t.BuffId &&
+          t.State === Protocol_1.Aki.Protocol.Iks.Proto_BuffLocked) ||
+          t.Slot < 0) &&
+          -1 === e.findIndex((e) => e.BuffId === t.BuffId) &&
+          e.push(t);
+    else
+      for (const s of this.ull)
+        -1 === e.findIndex((e) => e.BuffId === s.BuffId) && e.push(s);
     return e;
   }
   InitPrepareSelectBuff() {
     this.myn = [];
     for (const e of this.tyn) this.myn.push(e);
+  }
+  InitPrepareSelectScoreBuff() {
+    this.cll = [];
+    for (const e of this._ll) this.cll.push(e);
   }
   SetIndexPrepareSelectBuff(e, t) {
     this.myn[e] = t;
@@ -85,9 +118,16 @@ class BossRushTeamInfo {
   GetIndexPrepareSelectBuff(e) {
     return this.myn[e];
   }
+  GetIndexPrepareSelectScoreBuff(e) {
+    return this.cll[e];
+  }
   SetPrepareSelectBuff(e) {
     this.myn = [];
     for (const t of e) this.myn.push(t);
+  }
+  SetPrepareSelectScoreBuff(e) {
+    this.cll = [];
+    for (const t of e) this.cll.push(t);
   }
   GetBuffMaxCount() {
     return this.tyn.length;
@@ -113,17 +153,20 @@ class BossRushTeamInfo {
   GetIfLevelTooLow() {
     let e = 0,
       t = 0;
-    for (const o of this.dyn) {
-      var s = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(o),
+    for (const r of this.dyn) {
+      var s = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(r),
         s =
           (s && ((e += s.GetLevelData().GetLevel()), t++),
-          ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o));
+          ModelManager_1.ModelManager.RoleModel.GetRoleDataById(r));
       s && ((e += s.GetLevelData().GetLevel()), t++);
     }
     return e / t < this.GetRecommendLevel() || 0 === t;
   }
   Clear() {
     (this.tyn = []), (this.dyn = []);
+  }
+  ClearTeamInfo() {
+    this.dyn = [];
   }
 }
 exports.BossRushTeamInfo = BossRushTeamInfo;
@@ -137,7 +180,10 @@ class BossRushModel extends ModelBase_1.ModelBase {
       (this.CurrentOpenBossRushActivityIds = []),
       (this.CurrentSelectActivityId = 0),
       (this.gyn = new Map()),
-      (this.fyn = new Map());
+      (this.fyn = new Map()),
+      (this.CurrentSelectBuffTabName = 0),
+      (this.OnlyOpenRewardView = !1),
+      (this.ChoseBuffInGameHandleList = []);
   }
   GetFullScore(e) {
     let t = 0;
@@ -154,14 +200,23 @@ class BossRushModel extends ModelBase_1.ModelBase {
   GetHaveUnTakeRewardIds(e) {
     var t = this.GetFullScore(e),
       s = [];
-    for (const r of []) {
-      var o;
-      0 <= t && (o = this.fyn.get(e)) && !o.includes(r) && s.push(r);
+    for (const o of []) {
+      var r;
+      0 <= t && (r = this.fyn.get(e)) && !r.includes(o) && s.push(o);
     }
     return s;
   }
   GetLevelSelectRoleIds(e) {
     return e.GetCurrentTeamMembers();
+  }
+  CheckInBossRush() {
+    return (
+      20 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+          ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+        )?.InstSubType &&
+      ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+    );
   }
 }
 exports.BossRushModel = BossRushModel;

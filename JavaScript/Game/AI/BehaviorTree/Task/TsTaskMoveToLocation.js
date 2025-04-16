@@ -4,7 +4,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Time_1 = require("../../../../Core/Common/Time"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
@@ -18,6 +18,19 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
       (this.OpenDebugNode = !1),
       (this.LimitTime = 0),
       (this.IsFly = !1),
+      (this.IsInitTsVariables = !1),
+      (this.TsMoveState = 0),
+      (this.TsNavigationOn = !1),
+      (this.TsBlackboardLocation = ""),
+      (this.TsOpenDebugNode = !1),
+      (this.TsLimitTime = -0),
+      (this.TsIsFly = !1),
+      (this.EndTime = -0),
+      (this.MoveComp = void 0),
+      (this.HandleMoveEnd = void 0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsMoveState = 0),
       (this.TsNavigationOn = !1),
@@ -45,16 +58,17 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
       e = t.AiController;
     e
       ? ((e = e.CharActorComp.Entity),
-        (s = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
-          e.Id,
-          this.TsBlackboardLocation,
-        ))
+        (s =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
+            e.Id,
+            this.TsBlackboardLocation,
+          ))
           ? ((s = Vector_1.Vector.Create(s)),
             this.HandleMoveEnd ||
               (this.HandleMoveEnd = (t) => {
                 1 === t ? this.Finish(!0) : this.Finish(!1);
               }),
-            (this.MoveComp = e.GetComponent(38)),
+            (this.MoveComp = e.GetComponent(44)),
             (e = {
               Points: [{ Index: 0, Position: s, MoveState: this.TsMoveState }],
               Navigation: this.TsNavigationOn,

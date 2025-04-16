@@ -22,7 +22,7 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Plot",
-        27,
+        26,
         "服务器下发剧情",
         ["Type", r?.Type],
         ["FlowIncID", o],
@@ -65,7 +65,7 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Plot",
-          46,
+          45,
           "服务器跳过剧情，检查是否有黑幕",
           ["FlowListName", e.v5n],
           ["FlowId", e.M5n],

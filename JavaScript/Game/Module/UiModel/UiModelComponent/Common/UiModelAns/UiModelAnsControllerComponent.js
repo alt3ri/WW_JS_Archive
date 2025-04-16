@@ -70,18 +70,20 @@ let UiModelAnsControllerComponent = class UiModelAnsControllerComponent extends 
       ? (e = e.Has(t))
         ? (t = e.ExistCount) <= 0
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Character", 44, "Ans不成对,Ans数量为0,无法减少", [
+            Log_1.Log.Error("Character", 43, "Ans不成对,Ans数量为0,无法减少", [
               "AnsCount",
               t,
             ])
           : (this.Qwr(e), e.ExistCount--)
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Character", 44, "Ans不成对,查找不到对应的AnsContext")
+          Log_1.Log.Error("Character", 43, "Ans不成对,查找不到对应的AnsContext")
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Character", 44, "Ans不成对,Set不存在");
+        Log_1.Log.Error("Character", 43, "Ans不成对,Set不存在");
   }
   Qwr(e) {
-    this.Kwr.Has(e) || (this.Kwr.Add(e), (e.CacheCount = e.ExistCount));
+    this.Wwr.Has(e) ||
+      this.Kwr.Has(e) ||
+      (this.Kwr.Add(e), (e.CacheCount = e.ExistCount));
   }
   Tick(e) {
     var t = this.Wwr.AnsContextSet;
@@ -94,8 +96,9 @@ let UiModelAnsControllerComponent = class UiModelAnsControllerComponent extends 
           ? (o = this.jwr.get(i.constructor.name)) && o.OnBegin(i)
           : 0 < n &&
             0 === s &&
-            (o = this.jwr.get(i.constructor.name)) &&
-            o.OnEnd(i);
+            ((o = i.constructor.name),
+            (n = this.jwr.get(o)) && n.OnEnd(i),
+            this.Hwr.get(o)?.Delete(i));
       }
       this.Wwr.Clear();
     }

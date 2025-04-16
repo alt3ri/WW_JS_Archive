@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionFadeInScreen = void 0);
 const EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
-  FlowActionBase_1 = require("./FlowActionBase"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionFadeInScreen extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
@@ -37,11 +37,15 @@ class FlowActionFadeInScreen extends FlowActionBase_1.FlowActionBase {
             EventDefine_1.EEventName.PlotViewBgFadeBlackScreen,
             !0,
             this.yDe,
-          );
+          ),
+      this.RecordAction();
   }
   OnBackgroundExecute() {
     (ModelManager_1.ModelManager.PlotModel.IsFadeIn = !0),
       this.FinishExecute(!0);
+  }
+  OnRollback(e, o) {
+    LevelLoadingController_1.LevelLoadingController.CloseLoading(0);
   }
 }
 exports.FlowActionFadeInScreen = FlowActionFadeInScreen;

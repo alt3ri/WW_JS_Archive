@@ -6,6 +6,7 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   PhotographController_1 = require("../PhotographController");
 class PhotographValueSetup extends UiPanelBase_1.UiPanelBase {
@@ -13,18 +14,19 @@ class PhotographValueSetup extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.RKi = 0),
       (this.UKi = void 0),
-      (this.pQi = (t, e = 0) => {
+      (this.SPe = void 0),
+      (this.pQi = (e, t = 0) => {
         var i;
         this.UKi.IsReverseSet
           ? ((i = this.UKi.ValueRange),
-            (i = MathUtils_1.MathUtils.RangeClamp(t, i[0], i[1], i[1], i[0])),
+            (i = MathUtils_1.MathUtils.RangeClamp(e, i[0], i[1], i[1], i[0])),
             PhotographController_1.PhotographController.SetPhotographOption(
               this.UKi.ValueType,
               i,
             ))
           : PhotographController_1.PhotographController.SetPhotographOption(
               this.UKi.ValueType,
-              t,
+              e,
             );
       });
   }
@@ -36,13 +38,17 @@ class PhotographValueSetup extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.GetSlider(1).OnValueChangeCb.Bind(this.pQi);
+    this.GetSlider(1).OnValueChangeCb.Bind(this.pQi),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnBeforeDestroy() {
-    this.GetSlider(1).OnValueChangeCb.Unbind();
+    this.GetSlider(1).OnValueChangeCb.Unbind(), (this.SPe = void 0);
   }
-  Initialize(t) {
-    (this.RKi = t), this.Refresh();
+  OnBeforeShow() {
+    this.SPe?.PlayLevelSequenceByName("Start01");
+  }
+  Initialize(e) {
+    (this.RKi = e), this.Refresh();
   }
   Refresh() {
     if (
@@ -52,27 +58,27 @@ class PhotographValueSetup extends UiPanelBase_1.UiPanelBase {
         )),
       0 !== this.UKi.Type)
     ) {
-      var e = this.UKi.Name,
+      var t = this.UKi.Name,
         i = this.GetText(0),
-        i = (LguiUtil_1.LguiUtil.SetLocalTextNew(i, e), this.GetSlider(1)),
-        e = this.UKi.ValueRange;
-      i.SetMinValue(e[0], !1, !1), i.SetMaxValue(e[1], !1, !1);
-      let t = ModelManager_1.ModelManager.PhotographModel.GetPhotographOption(
+        i = (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t), this.GetSlider(1)),
+        t = this.UKi.ValueRange;
+      i.SetMinValue(t[0], !1, !1), i.SetMaxValue(t[1], !1, !1);
+      let e = ModelManager_1.ModelManager.PhotographModel.GetPhotographOption(
         this.RKi,
       );
       this.UKi.IsReverseSet &&
-        (t = MathUtils_1.MathUtils.RangeClamp(
-          t ?? e[2],
-          e[0],
-          e[1],
-          e[1],
-          e[0],
+        (e = MathUtils_1.MathUtils.RangeClamp(
+          e ?? t[2],
+          t[0],
+          t[1],
+          t[1],
+          t[0],
         )),
-        i.SetValue(t ?? e[2], !1);
+        i.SetValue(e ?? t[2], !1);
     }
   }
-  SetEnable(t) {
-    this.SetActive(t);
+  SetEnable(e) {
+    this.SetActive(e);
   }
   GetSetupId() {
     return this.RKi;

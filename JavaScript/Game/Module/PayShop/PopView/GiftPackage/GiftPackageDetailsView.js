@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GiftPackageDetailsView = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
@@ -13,16 +14,19 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
+  LguiResourceManager_1 = require("../../../../Ui/LguiResourceManager"),
   ItemDefines_1 = require("../../../Item/Data/ItemDefines"),
   ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   PayShopItem_1 = require("../../PayShopTab/TabItem/PayShopItem"),
+  PayShopSkinItem_1 = require("../../PayShopTab/TabItem/PayShopSkinItem"),
   GiftPackageMonthlyCardItem_1 = require("./GiftPackageMonthlyCardItem"),
   GiftPackageSupplyPackItem_1 = require("./GiftPackageSupplyPackItem");
 class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.i4i = void 0),
+      (this._yl = void 0),
+      (this.uyl = void 0),
       (this.Data = void 0),
       (this.Goods = void 0),
       (this.GoodsData = void 0),
@@ -109,6 +113,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       [6, UE.UIInteractionGroup],
       [8, UE.UIText],
       [7, UE.UIItem],
+      [9, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [4, this.bAt],
@@ -119,16 +124,16 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
     var e,
       i,
       t = this.OpenParam,
-      s =
+      t =
         ((this.Goods = t.PayShopGoods),
         (this.GoodsData = this.Goods.GetGoodsData()),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           this.GoodsData.ItemId,
         ));
     this.xe = void 0;
-    for ([e, i] of s.Parameters) {
-      var r = ItemDefines_1.EItemFunctionType[e];
-      if (!StringUtils_1.StringUtils.IsEmpty(r)) {
+    for ([e, i] of t.Parameters) {
+      var s = ItemDefines_1.EItemFunctionType[e];
+      if (!StringUtils_1.StringUtils.IsEmpty(s)) {
         (this.l4i = e), (this.xe = i);
         break;
       }
@@ -137,13 +142,43 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Config",
-          44,
+          43,
           "检查道具ID的参数（Parameters）字段 是否 表示为正确的指向道具id的参数",
           ["道具ID", this.GoodsData.ItemId],
-        )),
-      (this.i4i = new PayShopItem_1.PayShopItem()),
-      this.i4i.SetRootActorLoadInfo(t.ShopItemResource),
-      this.AddChild(this.i4i);
+        ));
+  }
+  async OnCreateAsync() {
+    await this.sGe(this.Goods);
+  }
+  async sGe(e) {
+    const i = new CustomPromise_1.CustomPromise();
+    var t = e.CheckIfRoleSkinGoods(),
+      e = this.cyl(e);
+    t
+      ? LguiResourceManager_1.LguiResourceManager.LoadPrefabByResourceId(
+          e,
+          void 0,
+          (e) => {
+            (this.uyl = new PayShopSkinItem_1.PayShopSkinItem()),
+              this.uyl.CreateByActorAsync(e).finally(() => {
+                i.SetResult(!0);
+              });
+          },
+        )
+      : LguiResourceManager_1.LguiResourceManager.LoadPrefabByResourceId(
+          e,
+          void 0,
+          (e) => {
+            (this._yl = new PayShopItem_1.PayShopItem()),
+              this._yl.CreateByActorAsync(e).finally(() => {
+                i.SetResult(!0);
+              });
+          },
+        ),
+      await i.Promise;
+  }
+  cyl(e) {
+    return e.CheckIfRoleSkinGoods() ? "UiItem_ShopSkinItem" : "UiItem_ShopItem";
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -174,19 +209,24 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
             e,
             this.Goods,
           )),
-      this.i4i.GetRootItem().SetUIParent(this.GetItem(0), !1));
+      this._yl?.GetOriginalItem()?.SetUIParent(this.GetItem(0), !1),
+      this.uyl?.GetOriginalItem()?.SetUIParent(this.GetItem(0), !1),
+      this._yl?.SetActive(!0),
+      this.uyl?.SetActive(!0));
   }
   OnBeforeShow() {
-    this.i4i.HidePackageViewElement(),
-      this.VGn(),
-      this.i4i.Refresh(this.Goods, !1, 0),
+    this._yl?.HidePackageViewElement(),
+      this.myl(),
+      this._yl?.Refresh(this.Goods, !1, 0),
+      this.uyl?.Refresh(this.Goods, !1, 0),
       this.SetInteractionGroup(),
       this.P3i(),
-      this.ITt();
+      this.ITt(),
+      this.kV_();
   }
-  VGn() {
+  myl() {
     var e = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
-    this.Goods?.GetGoodsId() === e && this.i4i.SetLeftTimeTextShowState(!0);
+    this.Goods?.GetGoodsId() === e && this._yl?.SetLeftTimeTextShowState(!0);
   }
   async ITt() {
     var e;
@@ -200,6 +240,11 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
           .forEach((e) => {
             e.SetBeforeButtonFunction(this.Pgi), e.SetToPayShopFunction();
           })));
+  }
+  kV_() {
+    this.GetItem(9).SetUIActive(
+      this.Goods.HasCloudGameInfo() && !this.Goods.GetIfNeedExtraLimitText(),
+    );
   }
   OnBeforeDestroy() {
     this._4i && this._4i.Destroy(), this.RemoveResellTimer();

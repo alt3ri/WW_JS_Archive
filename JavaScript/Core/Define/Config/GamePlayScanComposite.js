@@ -37,6 +37,9 @@ class GamePlayScanComposite {
   get ShowInteractionEffect() {
     return this.showinteractioneffect();
   }
+  get ClampToEllipse() {
+    return this.clamptoellipse();
+  }
   get ScanAudioEvent() {
     return this.scanaudioevent();
   }
@@ -78,20 +81,44 @@ class GamePlayScanComposite {
       : null;
   }
   itemmaterialdatapath(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   nearvoiceeffectpath(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   farvoiceeffectpath(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   scanconcealeffectpath(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   interactioneffectinterval() {
     var t = this.J7.__offset(this.z7, 16);
@@ -105,12 +132,22 @@ class GamePlayScanComposite {
     var t = this.J7.__offset(this.z7, 20);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
+  clamptoellipse() {
+    var t = this.J7.__offset(this.z7, 22);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
   scanaudioevent(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   triggerroleaudio() {
-    var t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 26);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }

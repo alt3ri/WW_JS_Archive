@@ -4,7 +4,7 @@ const UE = require("ue"),
   EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  BlackboardController_1 = require("../World/Controller/BlackboardController");
+  ControllerHolder_1 = require("../Manager/ControllerHolder");
 class AddLocationBlackboardParams {
   constructor() {
     (this.TotalDuration = -0),
@@ -23,10 +23,11 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
       (this.NeedChangeToFlying = !1),
       (this.黑板类型 = 0);
   }
-  K2_NotifyBegin(r, t, a) {
-    var e = r.GetOwner();
-    if (!(e instanceof TsBaseCharacter_1.default)) return !1;
-    var s = e.CharacterActorComponent.Entity.Id;
+  Constructor() {}
+  K2_NotifyBegin(t, r, e) {
+    var a = t.GetOwner();
+    if (!(a instanceof TsBaseCharacter_1.default)) return !1;
+    var s = a.CharacterActorComponent.Entity.Id;
     if (!this.AddLocationKey) return !1;
     let o = paramsMaps.get(this.AddLocationKey);
     o || ((o = new Map()), paramsMaps.set(this.AddLocationKey, o));
@@ -34,10 +35,10 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
       0 < paramsPool.length
         ? paramsPool.pop()
         : new AddLocationBlackboardParams();
-    switch (((i.TotalDuration = a), (i.RunTime = 0), this.黑板类型)) {
+    switch (((i.TotalDuration = e), (i.RunTime = 0), this.黑板类型)) {
       case 0:
         var n =
-          BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
             s,
             this.AddLocationKey,
           );
@@ -45,38 +46,39 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
         i.AddOffset.FromUeVector(n);
         break;
       case 1:
-        n = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
-          s,
-          this.AddLocationKey,
-        );
+        n =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
+            s,
+            this.AddLocationKey,
+          );
         if (!n) return !1;
         i.AddOffset.FromUeVector(n),
           i.AddOffset.SubtractionEqual(
-            e.CharacterActorComponent.ActorLocationProxy,
+            a.CharacterActorComponent.ActorLocationProxy,
           );
         break;
       case 2:
       case 3: {
-        let r = void 0;
+        let t = void 0;
         if (
-          !(r =
+          !(t =
             2 === this.黑板类型
-              ? BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+              ? ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
                   s,
                   this.AddLocationKey,
                 )
-              : BlackboardController_1.BlackboardController.GetIntValueByEntity(
+              : ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
                   s,
                   this.AddLocationKey,
                 ))
         )
           return !1;
-        n = EntitySystem_1.EntitySystem.Get(r);
+        n = EntitySystem_1.EntitySystem.Get(t);
         if (!n?.Valid) return !1;
         n = n.GetComponent(1);
         i.AddOffset.DeepCopy(n.ActorLocationProxy),
           i.AddOffset.SubtractionEqual(
-            e.CharacterActorComponent.ActorLocationProxy,
+            a.CharacterActorComponent.ActorLocationProxy,
           );
         break;
       }
@@ -86,44 +88,45 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
     return (
       o.set(s, i),
       this.NeedChangeToFlying &&
-        e.CharacterActorComponent.Entity.GetComponent(
-          164,
-        ).CharacterMovement.SetMovementMode(5),
+        a.KuroSetMovementMode({
+          Mode: 5,
+          Context: "[TsAnimNotifyStateAddLocationBlackboard.K2_NotifyBegin]",
+        }),
       !0
     );
   }
-  K2_NotifyTick(t, r, a) {
-    t = t.GetOwner();
-    if (!(t instanceof TsBaseCharacter_1.default)) return !1;
-    var t = t.CharacterActorComponent.Entity,
-      e = t.Id,
+  K2_NotifyTick(r, t, e) {
+    r = r.GetOwner();
+    if (!(r instanceof TsBaseCharacter_1.default)) return !1;
+    var r = r.CharacterActorComponent.Entity,
+      a = r.Id,
       s = paramsMaps.get(this.AddLocationKey);
     if (!s) return !1;
-    s = s.get(e);
+    s = s.get(a);
     if (!s) return !1;
     if (!(s.RunTime >= s.TotalDuration)) {
-      e = Math.min(s.TotalDuration, s.RunTime + a);
-      let r = 0;
-      r = this.Curve
-        ? this.Curve.GetFloatValue(e / s.TotalDuration) -
+      a = Math.min(s.TotalDuration, s.RunTime + e);
+      let t = 0;
+      t = this.Curve
+        ? this.Curve.GetFloatValue(a / s.TotalDuration) -
           this.Curve.GetFloatValue(s.RunTime / s.TotalDuration)
-        : (e - s.RunTime) / s.TotalDuration;
-      t = t.GetComponent(164);
-      s.AddOffset.Multiply(r, tmpVector),
-        t.MoveCharacter(tmpVector, a),
-        (s.RunTime = e);
+        : (a - s.RunTime) / s.TotalDuration;
+      r = r.GetComponent(176);
+      s.AddOffset.Multiply(t, tmpVector),
+        r.MoveCharacter(tmpVector, e),
+        (s.RunTime = a);
     }
     return !0;
   }
-  K2_NotifyEnd(r, t) {
-    var a,
-      e,
-      r = r.GetOwner();
+  K2_NotifyEnd(t, r) {
+    var e,
+      a,
+      t = t.GetOwner();
     return (
-      r instanceof TsBaseCharacter_1.default &&
-      !!(a = paramsMaps.get(this.AddLocationKey)) &&
-      ((r = r.CharacterActorComponent.Entity.Id),
-      (e = a.get(r)) && (paramsPool.push(e), a.delete(r)),
+      t instanceof TsBaseCharacter_1.default &&
+      !!(e = paramsMaps.get(this.AddLocationKey)) &&
+      ((t = t.CharacterActorComponent.Entity.Id),
+      (a = e.get(t)) && (paramsPool.push(a), e.delete(t)),
       !0)
     );
   }

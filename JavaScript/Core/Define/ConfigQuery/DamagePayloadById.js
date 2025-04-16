@@ -17,67 +17,72 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configDamagePayloadById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configDamagePayloadById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configDamagePayloadById.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configDamagePayloadById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configDamagePayloadById.GetConfig(";
 exports.configDamagePayloadById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, a = !0) => {
-    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
-      e =
-        (n.Start(),
+    "bigint" == typeof o && (o = (0, ConfigCommon_1.toNumberTemp)(o)),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat?.Start();
+    var n = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (n?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
-    if (e) {
+    if (i) {
       if (a) {
-        var i = KEY_PREFIX + `#${o})`;
-        const t = ConfigCommon_1.ConfigCommon.GetConfig(i);
+        var e = KEY_PREFIX + `#${o})`;
+        const t = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (t)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
       }
       if (
-        (e =
-          ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 1, o, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindFloat64(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
               o,
             ]))
       ) {
-        i = void 0;
+        e = void 0;
         if (
-          (([e, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, e] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          e)
+          i)
         ) {
           const t = DamagePayload_1.DamagePayload.getRootAsDamagePayload(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+            new byte_buffer_1.ByteBuffer(new Uint8Array(e.buffer)),
           );
           return (
             a &&
-              ((e = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(e, t)),
+              ((i = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, t)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            n?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             t
           );
@@ -85,8 +90,8 @@ exports.configDamagePayloadById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    n?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

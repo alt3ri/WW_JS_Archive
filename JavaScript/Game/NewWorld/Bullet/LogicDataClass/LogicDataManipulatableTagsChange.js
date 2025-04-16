@@ -9,6 +9,9 @@ class LogicDataManipulatableTagsChange extends LogicDataBase_1.default {
       (this.AddTags = void 0),
       (this.RemoveTags = void 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataManipulatableTagsChange;
 //# sourceMappingURL=LogicDataManipulatableTagsChange.js.map

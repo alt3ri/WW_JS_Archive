@@ -5,6 +5,7 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
@@ -13,8 +14,7 @@ const UE = require("ue"),
   TouchFingerManager_1 = require("../../../Ui/TouchFinger/TouchFingerManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
-  EditMobileBattleView_1 = require("./EditMobileBattleView"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  EditMobileBattleView_1 = require("./EditMobileBattleView");
 class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
@@ -69,7 +69,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
           s = this.GetItem(11);
         if (t === s.GetDisplayName()) {
           if (this.pgt) {
-            (t = i.dragComponent.GetOwner().GetActorScale3D()),
+            (t = i.dragComponent.GetOwner().D_GetActorScale3D()),
               (s = e.X - this.pgt.X),
               (i = e.Y - this.pgt.Y);
             if (0 == s || 0 == i) return;
@@ -88,11 +88,12 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.wgt = (i) => {
         this.SelectedPanelItem && this.SelectedPanelItem.SetSelected(!1);
-        var e = this.Cgt.GetPanelItem(i);
-        (this.SelectedPanelItem = e) && (e.SetSelected(!0), this.Bgt(i)),
-          this.bgt(e),
-          this.ggt.add(e),
-          e.ApplyTopIndex(),
+        var e = this.Cgt.GetPanel(i.PanelIndex),
+          t = e?.GetPanelItem(i.PanelItemIndex);
+        (this.SelectedPanelItem = t) && (t.SetSelected(!0), this.Bgt(i)),
+          this.bgt(t),
+          this.ggt.add(t),
+          e?.PanelData?.IsOnlyPanelEdit || t.ApplyTopIndex(),
           this.Cgt.RefreshHierarchyIndex();
       }),
       (this.qgt = (i) => {
@@ -343,7 +344,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
   }
   ClampBound(i) {
     var e = this.GetItem(11),
-      t = e.GetOwner().GetActorScale3D().X,
+      t = e.GetOwner().D_GetActorScale3D().X,
       s = e.GetPivot(),
       n = s.Y,
       s = s.X,
@@ -382,7 +383,8 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       (this.Xot.X = i),
       (this.Xot.Y = i),
       (this.Xot.Z = i),
-      this.SelectedPanelItem.GetRootItem().SetUIItemScale(this.Xot));
+      this.SelectedPanelItem.GetRootItem().SetUIItemScale(this.Xot),
+      this.SelectedPanelItem.RefreshRelativeLocation());
   }
   OnStart() {
     (this.vgt = this.GetItem(11).RelativeLocation),

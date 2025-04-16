@@ -12,8 +12,8 @@ const UE = require("ue"),
   DEFAULT_THICKNESS = 4,
   DEFAULT_ARROW_SIZE = 20,
   DRAW_LENGTH = 100,
-  forwardOffset = new UE.Vector(DRAW_LENGTH, 0, 0),
-  upOffset = new UE.Vector(0, 0, DRAW_LENGTH),
+  forwardOffset = new UE.VectorDouble(DRAW_LENGTH, 0, 0),
+  upOffset = new UE.VectorDouble(0, 0, DRAW_LENGTH),
   textColor = new UE.Color(255, 128, 128, 255),
   TEXT_SIZE = 80,
   PROFILE_KEY = "TsSimpleInteractPoint_GetBestTransform";
@@ -21,6 +21,11 @@ class TsSimpleInteractPoint extends TsSimpleInteractBase_1.default {
   constructor() {
     super(...arguments),
       (this.OnWall = !0),
+      (this.OutRotator = void 0),
+      (this.TmpLocation = void 0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.OutRotator = void 0),
       (this.TmpLocation = void 0);
   }
@@ -33,10 +38,10 @@ class TsSimpleInteractPoint extends TsSimpleInteractBase_1.default {
     return !0;
   }
   OnDraw() {
-    var t = this.K2_GetActorLocation(),
-      s = this.GetTransform();
+    var t = this.D_K2_GetActorLocation(),
+      s = this.D_GetTransform();
     this.OnWall
-      ? UE.KismetSystemLibrary.DrawDebugArrow(
+      ? UE.KismetSystemLibrary.D_DrawDebugArrow(
           this,
           t,
           s.TransformPosition(forwardOffset),
@@ -45,7 +50,7 @@ class TsSimpleInteractPoint extends TsSimpleInteractBase_1.default {
           DRAW_TIME,
           DEFAULT_THICKNESS,
         )
-      : UE.KismetSystemLibrary.DrawDebugArrow(
+      : UE.KismetSystemLibrary.D_DrawDebugArrow(
           this,
           t,
           s.TransformPosition(upOffset),
@@ -61,41 +66,41 @@ class TsSimpleInteractPoint extends TsSimpleInteractBase_1.default {
       this.Text.SetTextRenderColor(textColor),
       (this.Text.Text = "Point " + this.TypeId);
   }
-  OnGetBestTransform(t, s, i, e) {
+  OnGetBestTransform(t, s, i, h) {
     return (
       this.UpdateData(),
-      this.ActorLocation.FromUeVector(t.K2_GetActorLocation()),
+      this.ActorLocation.FromUeVector(t.D_K2_GetActorLocation()),
       this.ActorLocation.Subtraction(this.SelfLocation, this.SelfToActor),
       (this.OnWall &&
         MathUtils_1.MathUtils.DotProduct(
           this.SelfToActor,
           this.GetActorForwardVector(),
-        ) > e) ||
+        ) > h) ||
         (this.OnWall
-          ? ((this.TmpVector1.X = e),
+          ? ((this.TmpVector1.X = h),
             (this.TmpVector1.Y = 0),
             (this.TmpVector1.Z = 0))
           : ((this.TmpVector1.X = 0),
             (this.TmpVector1.Y = 0),
             (this.TmpVector1.Z = i)),
         this.SelfTransform.TransformPosition(this.TmpVector1, this.TmpLocation),
-        (this.TmpResult.Location = this.TmpLocation.ToUeVector()),
+        (this.TmpResult.Location = this.TmpLocation.ToUeVectorOld()),
         this.OnWall
-          ? (((e = this.LineTrace).WorldContextObject = t),
+          ? (((h = this.LineTrace).WorldContextObject = t),
             TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-              e,
+              h,
               this.ActorLocation,
             ),
             TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-              e,
+              h,
               this.TmpResult.Location,
             ),
             (this.TmpResult.Success =
               !TraceElementCommon_1.TraceElementCommon.LineTrace(
-                e,
+                h,
                 PROFILE_KEY,
               )),
-            (e.WorldContextObject = void 0),
+            (h.WorldContextObject = void 0),
             this.TmpResult.Success &&
               (this.MoveOffset.FromUeVector(s),
               this.SelfLocation.Subtraction(

@@ -1,13 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemInstanceFailure = void 0);
-const InstanceDungeonEntranceController_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceController"),
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemInstanceFailure extends OpenSystemBase_1.OpenSystemBase {
-  async ExecuteOpenView(e, n) {
-    return InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.OpenInstanceDungeonFailView();
+  async ExecuteOpenView(e, r) {
+    return ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.OpenInstanceDungeonFailView();
   }
-  GetViewName(e, n) {
+  GetViewName(e, r) {
     return "InstanceDungeonFailView";
   }
 }

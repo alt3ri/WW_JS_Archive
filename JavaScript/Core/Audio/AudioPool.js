@@ -27,7 +27,7 @@ class AudioPool {
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Audio",
-              22,
+              21,
               "GetAudioPool 没有找到对应路径的音效缓存！",
               ["path", e],
             );
@@ -39,7 +39,7 @@ class AudioPool {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Audio",
-        22,
+        21,
         "AddCallbackToLoad 没有找到对应路径的音效缓存！",
         ["path", o],
       );
@@ -56,7 +56,7 @@ class AudioPool {
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Audio",
-              34,
+              33,
               "LoadAndAddCallback 没有找到对应路径的音效缓存！",
               ["path", e],
             );
@@ -69,7 +69,7 @@ class AudioPool {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Audio",
-          22,
+          21,
           "DeleteCallback 没有找到对应路径的音效缓存！",
           ["path", o],
         );
@@ -81,7 +81,7 @@ class AudioPool {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Audio",
-          22,
+          21,
           "SetPlayFlag 没有找到对应路径的音效缓存！",
           ["path", o],
         );
@@ -108,7 +108,7 @@ class AudioPool {
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Audio",
-                22,
+                21,
                 "音效加载资源失败：",
                 ["eventPath: ", t],
                 ["time: ", Time_1.Time.Now],
@@ -127,7 +127,7 @@ class AudioPool {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
-          22,
+          21,
           "SetExternalSourcesPlayFlag 没有找到对应路径的ExternalSources音效缓存！",
           ["path", o],
         );

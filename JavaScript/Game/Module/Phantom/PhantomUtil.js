@@ -23,20 +23,20 @@ class PhantomUtil {
         Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
       );
       if (e?.Valid) {
-        e = e.Entity.GetComponent(35);
+        e = e.Entity.GetComponent(41);
         if (e?.IsInMultiSkill())
           return e?.CanSummonerStartNextMultiSkill()
             ? (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Battle",
-                  18,
+                  17,
                   "幻象可以使用下一段技能,SkillId返回200003",
                 ),
               VISION_MORPH_MULTI_SKILL_ID)
             : (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Battle",
-                  18,
+                  17,
                   "幻象还不能使用下一段技能,但是已经进入多段技能状态,SkillId返回0",
                 ),
               0);
@@ -94,17 +94,17 @@ class PhantomUtil {
     let n = 0;
     switch (t) {
       case ESummonType.Proto_ESummonTypeConcomitantCustom:
-        var i = o.CustomServerEntityIds;
-        if (0 === i.length) return;
-        if (r < 1 || r > i.length)
+        var a = o.CustomServerEntityIds;
+        if (0 === a.length) return;
+        if (r < 1 || r > a.length)
           return void CombatLog_1.CombatLog.Error(
             "Skill",
             e,
             "获取伴生物实体失败，位置参数错误",
             ["position", r],
-            ["serverEntityIds", i],
+            ["serverEntityIds", a],
           );
-        n = i[r - 1];
+        n = a[r - 1];
         break;
       case ESummonType.Proto_ESummonTypeConcomitantVision:
         n = o.VisionSkillServerEntityId;
@@ -114,21 +114,21 @@ class PhantomUtil {
     }
     return ModelManager_1.ModelManager.CreatureModel.GetEntity(n);
   }
-  static GetSummonedEntityByOwnerId(e, t, r = 0) {
+  static GetSummonedEntityByOwnerId(e, t, r = 1) {
     e = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);
     if (e?.Valid) {
       e = PhantomUtil.GetSummonedEntity(e.Entity, t, r);
       if (e?.Valid) return e;
     }
   }
-  static SetVisionEnable(e, t) {
+  static SetVisionEnable(e, t, r) {
     var e = e.GetComponent(0).VisionSkillServerEntityId;
     0 < e &&
-      (e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e)) &&
+      (e = ModelManager_1.ModelManager.CreatureModel?.GetEntity(e)) &&
       (ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
         e.Entity,
         t,
-        "PhantomUtil.SetVisionEnable",
+        r,
         !0,
       ),
       EventSystem_1.EventSystem.Emit(

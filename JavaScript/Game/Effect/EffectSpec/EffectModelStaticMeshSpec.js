@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelStaticMeshSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
   EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter"),
@@ -21,6 +22,18 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
       (this.CachedRotationCurve = void 0),
       (this.CachedScaleCurve = void 0);
   }
+  SetEffectParameterNiagara(t) {
+    if (this.sfe && this.EffectModel.AcceptExternalNiagaraParameter) {
+      if (t.MaterialParameterFloat)
+        for (var [i, s] of t.MaterialParameterFloat)
+          this.RemoveMaterialFloatCurveOrConst(i),
+            this.CollectMaterialFloatConst(i, s);
+      if (t.MaterialParameterColor)
+        for (var [h, e] of t.MaterialParameterColor)
+          this.RemoveMaterialLinearColorCurveOrConst(h),
+            this.CollectMaterialLinearColorConst(h, e);
+    }
+  }
   OnInit() {
     if (!this.EffectModel?.StaticMeshRef) return !1;
     if (
@@ -37,7 +50,8 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
     if (
       ((this.nfe =
         0 < this.EffectModel.MaterialFloatParameters.Num() ||
-        0 < this.EffectModel.MaterialColorParameters.Num()),
+        0 < this.EffectModel.MaterialColorParameters.Num() ||
+        this.EffectModel.AcceptExternalNiagaraParameter),
       this.nfe)
     ) {
       this.sfe = [];
@@ -136,7 +150,16 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
       this.nfe)
     )
       for (const i of this.sfe)
-        this.ModelParameter.Apply(i, this.LifeTime.PassTime, t);
+        t
+          ? this.ModelParameter.Apply(i, this.LifeTime.PassTime, !0)
+          : this.ModelParameter.Tick(i, this.LifeTime.PassTime);
+  }
+  OnEnd() {
+    return (
+      (this.sfe = void 0),
+      (this.rfe = void 0),
+      !(this.StaticMeshComponent = void 0)
+    );
   }
   OnStop() {
     this.StaticMeshComponent?.IsValid() &&
@@ -157,6 +180,38 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
       this.StaticMeshComponent.SetIsUIScenePrimitive(
         1 === this.GetEffectType(),
       );
+  }
+  HasMaterialParameters() {
+    return !0;
+  }
+  GetMaterialParameters() {
+    return this.ModelParameter;
+  }
+  IsOverrideTick() {
+    return !0;
+  }
+  RegisterToKuroEffectSystem() {
+    if (
+      this.Handle &&
+      this.StaticMeshComponent &&
+      this.EffectModel &&
+      this.sfe
+    ) {
+      var t = this.Handle.GetSureEffectActor();
+      if (t) {
+        this.HasInitTickOptimize = !0;
+        var i = UE.NewArray(UE.MaterialInstanceDynamic);
+        for (const s of this.sfe) i.Add(s);
+        cpp_1.FKuroEffectSystemInterface.RegisterEffectStaticMeshHandle(
+          this.Handle.Id,
+          this.Handle.Parent?.Id ?? 0,
+          this.EffectModel,
+          t,
+          this.StaticMeshComponent,
+          i,
+        );
+      }
+    }
   }
 }
 exports.EffectModelStaticMeshSpec = EffectModelStaticMeshSpec;

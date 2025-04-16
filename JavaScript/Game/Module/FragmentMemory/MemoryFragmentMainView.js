@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
-  Vector_1 = require("../../../Core/Utils/Math/Vector"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -44,19 +43,19 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
           i = this.Bwn.GetCollectDataList();
         let r = 0;
         for (let t = 0; t < e; t++) i[t].GetIfCanGetReward() && (r = t);
-        this.xqe?.ScrollToGridIndex(r);
+        this.xqe?.ScrollToGridIndexWithTween(r);
         var t = r !== this.b9i;
         (this.b9i = r), this.Og(), t && this.I3e();
       }),
       (this.UNn = () => {
         var t = this.kwn().GetQuestList();
         if (0 < t.length)
-          for (const r of t) {
+          for (const s of t) {
             var e =
-              ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(r);
+              ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(s);
             if (!e)
-              return ModelManager_1.ModelManager.QuestNewModel.GetQuest(r)
-                ? void UiManager_1.UiManager.OpenView("QuestView", r)
+              return ModelManager_1.ModelManager.QuestNewModel.GetQuest(s)
+                ? void UiManager_1.UiManager.OpenView("QuestView", s)
                 : void ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
                     MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                       "Text_FragmentQuest",
@@ -66,30 +65,28 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         ModelManager_1.ModelManager.FragmentMemoryModel.TryRemoveCurrentTrackEntity(),
           (this.DNn = 0);
         var t = this.kwn().GetTraceEntityId(),
-          i = this.kwn().GetTraceMarkId(),
-          t =
-            ModelManager_1.ModelManager.CreatureModel.GetEntityData(t)
-              ?.Transform?.Pos;
-        t
-          ? ((t = new MapDefine_1.DynamicMarkCreateInfo(
-              Vector_1.Vector.Create(t.X ?? 0, t.Y ?? 0, t.Z ?? 0),
-              i,
-              7,
-              void 0,
-              void 0,
-              !0,
-            )),
+          i = this.kwn().GetTrackMapId(),
+          r = this.kwn().GetTraceMarkId();
+        ModelManager_1.ModelManager.CreatureModel.GetEntityData(t, i)?.Transform
+          ?.Pos
+          ? ((t = new MapDefine_1.DynamicMarkCreateInfo({
+              TrackTarget: t,
+              MarkConfigId: r,
+              MarkType: 7,
+              DestroyOnUnTrack: !0,
+              MapAndDungeonInfo: { MapConfigId: i },
+            })),
             0 === this.DNn &&
               (this.DNn =
                 ModelManager_1.ModelManager.MapModel.CreateMapMark(t)),
-            (i = { MarkId: this.DNn, MarkType: 7 }),
-            WorldMapController_1.WorldMapController.OpenView(2, !1, i),
+            (r = { MarkId: this.DNn, MarkType: 7 }),
+            WorldMapController_1.WorldMapController.OpenView(2, !1, r),
             (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentTrackMapMarkId =
               this.DNn),
             (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentTrackFragmentId =
               this.kwn().GetId()))
           : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("FragmentMemory", 28, "没有找到实体");
+            Log_1.Log.Info("FragmentMemory", 27, "没有找到实体");
       }),
       (this.YGn = () => {
         var e = this.xqe.GetDisplayGridEndIndex(),
@@ -101,7 +98,7 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
             r = t;
             break;
           }
-        this.xqe?.ScrollToGridIndex(r);
+        this.xqe?.ScrollToGridIndexWithTween(r);
         e = r !== this.b9i;
         (this.b9i = r), this.Og(), e && this.I3e();
       }),
@@ -131,10 +128,12 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       (this.Fwn = () => {
         PhotographController_1.PhotographController.ScreenShot({
           ScreenShot: !0,
+          PrepareFullScreenShot: !1,
           IsHiddenBattleView: !1,
           HandBookPhotoData: void 0,
           GachaData: void 0,
           FragmentMemory: this.kwn(),
+          RoleSkinData: void 0,
         });
       }),
       (this.Vwn = () => {
@@ -242,7 +241,11 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
   OnAfterHide() {
     UE.LGUIBPLibrary.ResetGlobalBlurUIItem(
       GlobalData_1.GlobalData.GameInstance.GetWorld(),
-    );
+    ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.ChangeActivityViewNeedBlurState,
+        !0,
+      );
   }
   kwn() {
     return this.Bwn.GetCollectDataList()[this.b9i];
@@ -388,26 +391,28 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
     void 0 !== t && this.GetButton(13)?.RootUIComp.SetUIActive(t.GetIfUnlock());
   }
   OnTick(t) {
-    var e = this.xqe.GetDisplayGridStartIndex(),
-      i = this.xqe.GetDisplayGridEndIndex(),
-      r = this.Bwn.GetCollectDataList();
-    let s = !1;
-    for (let t = 0; t < e; t++)
-      if (r[t].GetIfCanGetReward()) {
-        s = !0;
-        break;
-      }
-    this.bwn !== s &&
-      (this.GetButton(15)?.RootUIComp.SetUIActive(s), (this.bwn = s));
-    let h = !1;
-    var o = r.length;
-    for (let t = i; t <= o - 1; t++)
-      if (r[t].GetIfCanGetReward() && t !== i) {
-        h = !0;
-        break;
-      }
-    this.qwn !== h &&
-      (this.GetButton(16)?.RootUIComp.SetUIActive(h), (this.qwn = h));
+    if (this.Bwn) {
+      var r = this.xqe.GetDisplayGridStartIndex(),
+        s = this.xqe.GetDisplayGridEndIndex(),
+        h = this.Bwn.GetCollectDataList();
+      let e = !1;
+      for (let t = 0; t < r; t++)
+        if (h[t].GetIfCanGetReward()) {
+          e = !0;
+          break;
+        }
+      this.bwn !== e &&
+        (this.GetButton(15)?.RootUIComp.SetUIActive(e), (this.bwn = e));
+      let i = !1;
+      var o = h.length;
+      for (let t = s; t <= o - 1; t++)
+        if (h[t].GetIfCanGetReward() && t !== s) {
+          i = !0;
+          break;
+        }
+      this.qwn !== i &&
+        (this.GetButton(16)?.RootUIComp.SetUIActive(i), (this.qwn = i));
+    }
   }
   H3i() {
     var t = this.kwn();

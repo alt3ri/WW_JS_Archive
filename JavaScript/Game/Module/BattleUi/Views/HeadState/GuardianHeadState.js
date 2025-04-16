@@ -23,12 +23,12 @@ class GuardianHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   GetResourceId() {
     return "UiItem_GuardianState_Prefab";
   }
-  OnHealthChanged(e) {
+  OnHealthChanged() {
     this.RefreshHp(!0);
   }
   RefreshHp(e = !1) {
-    var [t, i] = this.GetHpAndMaxHp(),
-      t = t / i;
+    var [t, s] = this.GetHpAndMaxHp(),
+      t = t / s;
     this.Cst(t), e ? this.PlayBarAnimation(t) : this.StopBarLerpAnimation();
   }
   Cst(e) {
@@ -54,7 +54,10 @@ class GuardianHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   }
   Hlt() {
     var e = this.GetHpColor();
-    e && ((e = UE.Color.FromHex(e)), this.GetSprite(0).SetColor(e));
+    e && ((e = UE.Color.FromHex(e)), this.GetSprite(0)?.SetColor(e));
+  }
+  RefreshOnCampChanged() {
+    this.Hlt();
   }
 }
 exports.GuardianHeadState = GuardianHeadState;

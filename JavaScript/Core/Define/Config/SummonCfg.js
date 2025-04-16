@@ -42,12 +42,29 @@ class SummonCfg {
   inheritsummonerattributeValue(t) {
     return this.inheritsummonerattribute(t)?.value();
   }
+  get UnCalculateBuffAttributes() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.uncalculatebuffattributesLength(),
+      this.uncalculatebuffattributes,
+      this,
+    );
+  }
+  get FollowSummonerAttr() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.followsummonerattrLength(),
+      this.followsummonerattr,
+      this,
+    );
+  }
   get BornBuffId() {
     return GameUtils_1.GameUtils.ConvertToArray(
       this.bornbuffidLength(),
       this.bornbuffid,
       this,
     );
+  }
+  get ShareDamage() {
+    return this.sharedamage();
   }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
@@ -63,8 +80,14 @@ class SummonCfg {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   blueprinttype(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   survivaltime() {
     var t = this.J7.__offset(this.z7, 8);
@@ -102,18 +125,72 @@ class SummonCfg {
     var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
+  GetUncalculatebuffattributesAt(t) {
+    return this.uncalculatebuffattributes(t);
+  }
+  uncalculatebuffattributes(t) {
+    var i = this.J7.__offset(this.z7, 20);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  uncalculatebuffattributesLength() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  uncalculatebuffattributesArray() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  GetFollowsummonerattrAt(t) {
+    return this.followsummonerattr(t);
+  }
+  followsummonerattr(t) {
+    var i = this.J7.__offset(this.z7, 22);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  followsummonerattrLength() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  followsummonerattrArray() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
   GetBornbuffidAt(t) {
     return this.bornbuffid(t);
   }
   bornbuffid(t) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    var i = this.J7.__offset(this.z7, 24);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   bornbuffidLength() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  bornbuffidArray() {
+    var t = this.J7.__offset(this.z7, 24);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  sharedamage() {
+    var t = this.J7.__offset(this.z7, 26);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.SummonCfg = SummonCfg;

@@ -1,39 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskUseSkill extends TsTaskAbortImmediatelyBase_1.default {
+  Constructor() {
+    super.Constructor();
+  }
   ReceiveTickAI(e, l, r) {
     var o = e.AiController;
     if (o) {
       var s = o.CharAiDesignComp.Entity.Id,
-        a = o.CharAiDesignComp.Entity.GetComponent(34);
-      if (a.Valid) {
+        t = o.CharAiDesignComp.Entity.GetComponent(39);
+      if (t.Valid) {
         let e =
-          BlackboardController_1.BlackboardController.GetStringValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetStringValueByEntity(
             s,
             "SkillId",
           );
         e = e || "0";
-        a = a.BeginSkill(Number(e), {
+        t = t.BeginSkill(Number(e), {
           Target: o.AiHateList.GetCurrentTarget()?.Entity,
-          Context: "TsTaskUseSkill.ReceiveTickAI",
+          Reason: "TsTaskUseSkill.ReceiveTickAI",
         });
-        this.FinishExecute(a),
-          a &&
+        this.FinishExecute(t),
+          t &&
             o.AiSkill &&
             o.AiSkill.SetSkillCdFromNow(
-              BlackboardController_1.BlackboardController.GetIntValueByEntity(
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
                 s,
                 "SkillInfoId",
               ),
             ),
-          BlackboardController_1.BlackboardController.RemoveValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
             s,
             "SkillId",
           ),
-          BlackboardController_1.BlackboardController.RemoveValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.RemoveValueByEntity(
             s,
             "SkillInfoId",
           );

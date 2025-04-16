@@ -18,6 +18,8 @@ const UE = require("ue"),
   TowerCostItem_1 = require("../../TowerDetailUi/View/TowerCostItem"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   EditFormationDefine_1 = require("../EditFormationDefine"),
+  RoleFormationLikeItem_1 = require("../RoleFormationLikeItem"),
+  UiPanelFormationRoleDangoExtension_1 = require("../UiPanelFormationRoleDangoExtension"),
   UiPanelFormationRolePhantomExtension_1 = require("../UiPanelFormationRolePhantomExtension");
 class FormationRoleView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
@@ -31,6 +33,8 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       (this.O5t = void 0),
       (this.k5t = void 0),
       (this.Nzs = void 0),
+      (this.Ygc = void 0),
+      (this.nRc = void 0),
       (this.SPe = void 0),
       (this.F5t = void 0),
       (this.V5t = void 0),
@@ -42,6 +46,12 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       }),
       (this.kzs = () => {
         this.Fzs();
+      }),
+      (this.iLc = (e) => {
+        var t = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+          t = void 0 !== this.q5t && this.q5t <= 0 ? t : this.q5t;
+        const i = this.Mne;
+        e.has(t) && -1 !== e.get(t).findIndex((e) => e === i) && this.Jgc();
       }),
       (this.cC = e);
   }
@@ -78,6 +88,9 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       [28, UE.UIItem],
       [30, UE.UIText],
       [29, UE.UIItem],
+      [31, UE.UIItem],
+      [32, UE.UIText],
+      [33, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[0, this.W5t]]);
   }
@@ -88,16 +101,24 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TowerDefensePhantomChanged,
       this.kzs,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.RefreshFormationDango,
+        this.iLc,
+      );
   }
   OnBeforeHide() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TowerDefensePhantomChanged,
       this.kzs,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.RefreshFormationDango,
+        this.iLc,
+      );
   }
   async OnBeforeStartAsync() {
-    await super.OnBeforeStartAsync(), await this.Vzs();
+    await super.OnBeforeStartAsync(), await this.Vzs(), await this.zgc();
   }
   OnStart() {
     (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
@@ -106,40 +127,53 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       this.GetTexture(6).SetAlpha(0);
   }
   OnBeforeDestroy() {
-    this.SPe?.Clear(), (this.SPe = void 0), (this.Nzs = void 0);
+    this.SPe?.Clear(),
+      (this.SPe = void 0),
+      (this.Nzs = void 0),
+      (this.Ygc = void 0);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var t;
-    return !this.Nzs ||
-      e.length < 2 ||
-      void 0 === (t = this.Nzs.GetGuideUiItemAndUiItemForShowEx(e))
-      ? void 0
-      : ("G" === e[1] && (t[1] = this.GetButton(0).RootUIComp), t);
+    return this.Nzs && e[0].includes("FirstSelf")
+      ? e.length < 2 ||
+        void 0 === (t = this.Nzs.GetGuideUiItemAndUiItemForShowEx(e))
+        ? void 0
+        : ("G" === e[1] && (t[1] = this.GetButton(0).RootUIComp), t)
+      : this.Ygc && e[0].includes("FirstDangoSlot")
+        ? this.Ygc.GetGuideUiItemAndUiItemForShowEx(e)
+        : void 0;
   }
-  Refresh(e, t, i, s, o) {
+  Refresh(e, t, i, s, o, h, n) {
     e &&
       this.Mne !== e &&
       (this.GetItem(5).SetUIActive(!0),
-      this.V5t?.StopSequenceByKey("PlayerOut", !1, !1),
-      this.F5t?.PlayLevelSequenceByName("PlayerIn")),
-      this.U5t(e, t, i, o),
+      this.V5t?.StopSequenceByKey("PlayerOut", !1, !1)),
+      this.U5t(e, t, i, s, h),
       this.RefreshTowerCost(e),
-      this.wyt(s, o),
-      this.RefreshPlayStationItem(void 0),
+      this.RefreshWeeklyRogueTag(),
+      this.wyt(o, h),
+      this.RefreshPlayStationItem(n),
       (this.H5t = !1),
       this.K5t(!1),
       this.Fzs(),
+      this.Jgc(),
       this.GetItem(14).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
       this.GetItem(3).SetUIActive(!0);
   }
   RefreshPlayStationItem(e) {
-    PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
+    var t =
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId(),
+      i =
+        ModelManager_1.ModelManager.EditBattleTeamModel
+          .IsMultiInstanceDungeon ||
+        ModelManager_1.ModelManager.GameModeModel.IsMulti;
+    t && i
       ? (this.GetItem(27)?.SetUIActive(!0),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Formation",
-            28,
+            27,
             "当前第三方信息",
             ["onlineId", e],
             ["playStationItem", this.GetItem(27)],
@@ -157,28 +191,38 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
         this.GetItem(29)?.SetUIActive(!1),
         this.GetItem(28)?.SetUIActive(!1));
   }
-  U5t(t, i, s, o) {
+  U5t(t, i, s, o, h) {
     this.Mne = t;
-    var h = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t);
-    if (h) {
-      var r = this.GetText(7),
-        r = (r && s && r.SetText(s), h.ElementId);
+    var n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t),
+      r = i
+        ? ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(i)
+        : void 0;
+    if (n) {
+      var a = this.GetText(7),
+        a =
+          (a &&
+            ("" === o ? a.SetUIActive(!1) : (a.SetUIActive(!0), a.SetText(o))),
+          n.ElementId);
       this.N5t ||
-        ((s = this.GetItem(9)) &&
+        ((o = this.GetItem(9)) &&
           (this.N5t = new MiniElementItem_1.MiniElementItem(
-            r,
-            s,
-            s.GetOwner(),
+            a,
+            o,
+            o.GetOwner(),
           ))),
-        this.N5t?.RefreshMiniElement(r);
-      const n = this.GetTexture(6);
-      n.SetAlpha(0),
-        this.SetRoleIcon(h.FormationRoleCard, n, t, void 0, () => {
-          n.SetAlpha(1);
-        });
-      (s = this.GetText(8)),
-        (r =
-          (s && LguiUtil_1.LguiUtil.SetLocalText(s, "LevelShow", i),
+        this.N5t?.RefreshMiniElement(a);
+      const l = this.GetTexture(6);
+      l.SetAlpha(0),
+        r
+          ? this.SetRoleSkinIcon(r.FormationRoleCard, l, i, void 0, () => {
+              l.SetAlpha(1);
+            })
+          : this.SetRoleIcon(n.FormationRoleCard, l, t, void 0, () => {
+              l.SetAlpha(1);
+            });
+      (o = this.GetText(8)),
+        (a =
+          (o && LguiUtil_1.LguiUtil.SetLocalText(o, "LevelShow", s),
           this.GetItem(24).SetUIActive(!1),
           !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
             !ModelManager_1.ModelManager.EditBattleTeamModel
@@ -186,15 +230,15 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
             ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
               t,
             ).IsTrialRole()));
-      this.GetItem(10).SetUIActive(r);
+      this.GetItem(10).SetUIActive(a);
       let e = !0;
       (ModelManager_1.ModelManager.GameModeModel.IsMulti ||
         ModelManager_1.ModelManager.EditBattleTeamModel
           .IsMultiInstanceDungeon) &&
-        (e = o === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+        (e = h === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
         (this.j5t = !1),
         !e ||
-          r ||
+          a ||
           ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation() ||
           (this.j5t =
             ModelManager_1.ModelManager.EditFormationModel.IsRoleDead(t)),
@@ -256,7 +300,8 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       this.GetItem(14).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
       this.GetItem(3).SetUIActive(!0),
-      this.GetItem(1).SetUIActive(!0);
+      this.GetItem(1).SetUIActive(!0),
+      this.Jgc();
   }
   RefreshPing(e) {
     let t = void 0;
@@ -287,14 +332,13 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       s = this.GetItem(23);
     if ((i.SetUIActive(!1), t.SetUIActive(!1), e))
       if (
-        ModelManager_1.ModelManager.EditBattleTeamModel.IsRoleConflict(
+        !ModelManager_1.ModelManager.EditBattleTeamModel.IsRoleConflict(
           this.q5t,
           this.Mne,
-        ) &&
-        !TowerDefenceController_1.TowerDefenseController.CheckInUiFlow()
-      )
-        s.SetUIActive(!1), i.SetUIActive(!0);
-      else {
+        ) ||
+        TowerDefenceController_1.TowerDefenseController.CheckInUiFlow() ||
+        ModelManager_1.ModelManager.DangoAbyssModel.CheckInAbyssEditFormationState()
+      ) {
         s.SetUIActive(this.j5t);
         e = ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo();
         if (e) {
@@ -322,7 +366,7 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
               this.G2e = Protocol_1.Aki.Protocol.G5s.Proto_Wait;
           }
         }
-      }
+      } else s.SetUIActive(!1), i.SetUIActive(!0);
   }
   SetMatchState(e) {
     this.H5t !== e &&
@@ -330,11 +374,12 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       this.Mne &&
         (e
           ? (this.F5t?.StopSequenceByKey("PlayerIn", !1, !1),
-            this.SPe?.StopSequenceByKey("LocationNotice", !1, !1),
+            this.SPe?.StopSequenceByKey("LocationNotice", !1, !0),
             this.V5t?.PlayLevelSequenceByName("PlayerOut"))
           : (this.V5t?.StopSequenceByKey("PlayerOut", !1, !1),
-            this.SPe?.StopSequenceByKey("LocationNotice", !1, !1),
-            this.F5t?.PlayLevelSequenceByName("PlayerIn"))),
+            this.SPe?.StopSequenceByKey("LocationNotice", !1, !0),
+            this.F5t?.IsPlayingSequence("PlayerIn") ||
+              this.F5t?.PlayLevelSequenceByName("PlayerIn"))),
       this.K5t(e));
   }
   K5t(e) {
@@ -342,12 +387,24 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
       this.GetItem(3).SetUIActive(!e),
       this.GetButton(0).SetSelfInteractive(!e),
       e
-        ? (this.V5t?.StopSequenceByKey("PlayerOut", !1, !0),
+        ? (this.F5t?.StopSequenceByKey("PlayerIn", !1, !0),
           this.SPe?.PlayLevelSequenceByName("Matching"))
-        : this.SPe?.StopSequenceByKey("Matching", !1, !0);
+        : (this.SPe?.StopSequenceByKey("Matching", !1, !0),
+          this.Mne &&
+            !this.F5t?.IsPlayingSequence("PlayerIn") &&
+            this.F5t?.PlayLevelSequenceByName("PlayerIn"));
   }
   SetMatchTime(e) {
     this.GetText(22).SetText(TimeUtil_1.TimeUtil.GetTimeString(e));
+  }
+  RefreshWeeklyRogueTag() {
+    ModelManager_1.ModelManager.WeeklyRogueModel.IsWeeklyRogueOpen() &&
+      (this.GetItem(31).SetUIActive(
+        ModelManager_1.ModelManager.WeeklyRogueModel.CheckIsRecommendRole(
+          this.Mne,
+        ),
+      ),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(32), "WeeklyRogueTag"));
   }
   RefreshTowerCost(e) {
     if (ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation()) {
@@ -387,6 +444,32 @@ class FormationRoleView extends UiPanelBase_1.UiPanelBase {
           ? o && this.k5t.Update(t)
           : (this.O5t.Update(t), this.k5t.Update(t - i));
     } else this.GetItem(17).SetUIActive(!1);
+  }
+  async zgc() {
+    var e,
+      t =
+        ModelManager_1.ModelManager.EditBattleTeamModel.GetCurrentDungeonConfig;
+    t &&
+      33 === t.InstSubType &&
+      ((t = this.GetItem(5)),
+      await (e =
+        new UiPanelFormationRoleDangoExtension_1.UiPanelFormationRoleDangoExtension()).CreateThenShowByActorAsync(
+        t.GetOwner(),
+      ),
+      e.SetRelativeUiActive(!0),
+      (this.Ygc = e),
+      (this.nRc = new RoleFormationLikeItem_1.RoleFormationLikeItem()),
+      await this.nRc.CreateThenShowByActorAsync(this.GetItem(33).GetOwner()),
+      this.nRc.SetActive(!1));
+  }
+  Jgc() {
+    var e;
+    this.Ygc &&
+      ((e = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+      (e = void 0 !== this.q5t && this.q5t <= 0 ? e : this.q5t),
+      this.Ygc.Refresh(this.cC, this.Mne ?? 0, e),
+      ModelManager_1.ModelManager.DangoAbyssModel.CheckIsInMatch()) &&
+      (this.nRc?.SetActive(!0), this.nRc?.Refresh(e));
   }
   async Vzs() {
     var e, t;

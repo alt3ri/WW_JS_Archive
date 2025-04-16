@@ -44,7 +44,7 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
       ? Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Calabash",
-          59,
+          58,
           "VisionRecoveryResultView responseData为空",
         )
       : ((this.Xvt = new VisionRecoverySlotPanel_1.VisionRecoverySlotPanel(
@@ -76,7 +76,7 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
       );
     e.length <= 0
       ? Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Calabash", 59, "VisionRecoveryResultView 主奖励为空")
+        Log_1.Log.Info("Calabash", 58, "VisionRecoveryResultView 主奖励为空")
       : this.$vt.RefreshUi(e[0]);
   }
   async tMt(e) {
@@ -91,7 +91,7 @@ class VisionRecoveryResultView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Calabash",
-            59,
+            58,
             "VisionRecoveryResultView 次奖励转换失败，返回空",
           ),
           i.SetUIActive(!1);

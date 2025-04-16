@@ -17,67 +17,70 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configGameplayCueById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configGameplayCueById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph("configGameplayCueById.Init"),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configGameplayCueById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configGameplayCueById.GetConfig(";
 exports.configGameplayCueById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
-  GetConfig: (o, e = !0) => {
-    ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var n = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
-      t =
-        (n.Start(),
+  GetConfig: (o, n = !0) => {
+    "bigint" == typeof o && (o = (0, ConfigCommon_1.toNumberTemp)(o)),
+      ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
+      getConfigStat?.Start();
+    var e = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
+      i =
+        (e?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
-    if (t) {
-      if (e) {
-        var i = KEY_PREFIX + `#${o})`;
-        const C = ConfigCommon_1.ConfigCommon.GetConfig(i);
+    if (i) {
+      if (n) {
+        var t = KEY_PREFIX + `#${o})`;
+        const C = ConfigCommon_1.ConfigCommon.GetConfig(t);
         if (C)
           return (
-            n.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
       }
       if (
-        (t =
-          ConfigCommon_1.ConfigCommon.BindBigInt(handleId, 1, o, ...logPair) &&
+        (i =
+          ConfigCommon_1.ConfigCommon.BindFloat64(handleId, 1, o, ...logPair) &&
           0 <
             ConfigCommon_1.ConfigCommon.Step(handleId, !0, ...logPair, [
               "Id",
               o,
             ]))
       ) {
-        i = void 0;
+        t = void 0;
         if (
-          (([t, i] = ConfigCommon_1.ConfigCommon.GetValue(
+          (([i, t] = ConfigCommon_1.ConfigCommon.GetValue(
             handleId,
             0,
             ...logPair,
             ["Id", o],
           )),
-          t)
+          i)
         ) {
           const C = GameplayCue_1.GameplayCue.getRootAsGameplayCue(
-            new byte_buffer_1.ByteBuffer(new Uint8Array(i.buffer)),
+            new byte_buffer_1.ByteBuffer(new Uint8Array(t.buffer)),
           );
           return (
-            e &&
-              ((t = KEY_PREFIX + `#${o})`),
-              ConfigCommon_1.ConfigCommon.SaveConfig(t, C)),
+            n &&
+              ((i = KEY_PREFIX + `#${o})`),
+              ConfigCommon_1.ConfigCommon.SaveConfig(i, C)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            n.Stop(),
-            getConfigStat.Stop(),
+            e?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             C
           );
@@ -85,8 +88,8 @@ exports.configGameplayCueById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    n.Stop(),
-      getConfigStat.Stop(),
+    e?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

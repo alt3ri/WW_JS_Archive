@@ -26,8 +26,14 @@ class PerfSight {
         e
           ? UE.PerfSightHelper.InitContext(APP_ID_GLOBAL)
           : UE.PerfSightHelper.InitContext(APP_ID_LOCAL),
-        cpp_1.FKuroPerfSightHelper.SetFlameGraphQueueSize(81920),
-        cpp_1.FKuroPerfSightHelper.RegisterOnFrameBegin("FrameTime")),
+        cpp_1.FKuroPerfSightHelper.SetFlameGraphQueueSize(20480),
+        cpp_1.FKuroPerfSightHelper.SetFlameGraphDropThresholds(
+          Info_1.Info.IsPlayInEditor ? 1e5 : 5e4,
+        ),
+        Info_1.Info.IsPlayInEditor ||
+          Info_1.Info.IsPs5Platform() ||
+          (cpp_1.FKuroPerfSightHelper.RegisterOnFrameBegin("FrameTime"),
+          cpp_1.FKuroPerfSightHelper.RegisterTickGroupEvent())),
       !0
     );
   }

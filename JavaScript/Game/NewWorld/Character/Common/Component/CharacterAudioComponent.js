@@ -1,147 +1,92 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, o, i) {
-    var r,
-      n = arguments.length,
-      _ =
-        n < 3
-          ? e
-          : null === i
-            ? (i = Object.getOwnPropertyDescriptor(e, o))
-            : i;
+  function (e, t, o, r) {
+    var i,
+      s = arguments.length,
+      n =
+        s < 3
+          ? t
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(t, o))
+            : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      _ = Reflect.decorate(t, e, o, i);
+      n = Reflect.decorate(e, t, o, r);
     else
-      for (var s = t.length - 1; 0 <= s; s--)
-        (r = t[s]) && (_ = (n < 3 ? r(_) : 3 < n ? r(e, o, _) : r(e, o)) || _);
-    return 3 < n && _ && Object.defineProperty(e, o, _), _;
+      for (var u = e.length - 1; 0 <= u; u--)
+        (i = e[u]) && (n = (s < 3 ? i(n) : 3 < s ? i(t, o, n) : i(t, o)) || n);
+    return 3 < s && n && Object.defineProperty(t, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAudioComponent = void 0);
-const AudioSystem_1 = require("../../../../../Core/Audio/AudioSystem"),
-  Log_1 = require("../../../../../Core/Common/Log"),
-  Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
-  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
-  SwitchRef_1 = require("../../../../../Core/Utils/Audio/SwitchRef"),
-  FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
-  ENTITY_TYPE_VOLUME_CONTROLS = [
-    [
-      Protocol_1.Aki.Protocol.kks.Proto_Animal,
-      "entity_type_volume_control_animal",
-    ],
-    [
-      Protocol_1.Aki.Protocol.kks.Proto_Custom,
-      "entity_type_volume_control_custom_other",
-    ],
-    [
-      Protocol_1.Aki.Protocol.kks.Proto_Monster,
-      "entity_type_volume_control_monster",
-    ],
-    [Protocol_1.Aki.Protocol.kks.Proto_Npc, "entity_type_volume_control_npc"],
-    [
-      Protocol_1.Aki.Protocol.kks.Proto_Player,
-      "entity_type_volume_control_player_role",
-    ],
-    [
-      Protocol_1.Aki.Protocol.kks.Proto_SceneItem,
-      "entity_type_volume_control_scene_item",
-    ],
-    [
-      Protocol_1.Aki.Protocol.kks.Proto_Vision,
-      "entity_type_volume_control_vision",
-    ],
-  ];
-let CharacterAudioComponent = class CharacterAudioComponent extends EntityComponent_1.EntityComponent {
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  Global_1 = require("../../../../Global"),
+  GameAudioController_1 = require("../../../../Module/Audio/GameAudioController"),
+  BaseAudioComponent_1 = require("./BaseAudioComponent");
+let CharacterAudioComponent = class CharacterAudioComponent extends BaseAudioComponent_1.BaseAudioComponent {
   constructor() {
-    super(...arguments),
-      (this.Priority = new SwitchRef_1.SwitchRef("char_p1orp3", "p1")),
-      (this.AkComponentMap = new Map()),
-      (this.CreatureData = void 0),
-      (this.ActorComponent = void 0);
-  }
-  static get Dependencies() {
-    return [0, 3];
+    super(...arguments), (this.SummonerId = 0), (this.ActorComp = void 0);
   }
   OnInit() {
     return (
-      (this.CreatureData = this.Entity.CheckGetComponent(0)),
-      (this.ActorComponent = this.Entity.CheckGetComponent(3)),
-      !0
+      super.OnInit(), (this.ActorComp = this.Entity.CheckGetComponent(3)), !0
     );
   }
   OnEnd() {
-    return this.AkComponentMap.clear(), !0;
-  }
-  OnStart() {
-    return !(
-      !this.ActorComponent?.Valid ||
-      !this.ActorComponent.Owner ||
-      (this.BindGameSyncs(this.ActorComponent.Owner),
-      (this.Priority.State =
-        this.ActorComponent.IsRoleAndCtrlByMe ||
-        this.ActorComponent.IsSummonsAndCtrlByMe
-          ? "p1"
-          : "p3"),
-      0)
+    return (
+      super.OnEnd(),
+      0 !== this.SummonerId &&
+        GameAudioController_1.GameAudioController.RemoveRolePrioritySummon(
+          this.SummonerId,
+          this.Entity.Id,
+        ),
+      !0
     );
   }
-  GetAkComponent(e) {
-    var o = this.ActorComponent?.Owner;
-    if (o?.IsValid()) {
-      let t = "None";
-      t =
-        "string" == typeof e
-          ? 0 < e.length
-            ? e
-            : "None"
-          : e && 0 < e.toString().length
-            ? e.toString()
-            : "None";
-      var i,
-        e = this.AkComponentMap.get(t);
-      return e?.IsValid()
-        ? e
-        : (e = AudioSystem_1.AudioSystem.GetAkComponent(o, {
-              SocketName: FNameUtil_1.FNameUtil.GetDynamicFName(t),
-            }))?.IsValid()
-          ? (((i = this.CreatureData?.GetEntityType()) !==
-              Protocol_1.Aki.Protocol.kks.Proto_Npc &&
-              i !== Protocol_1.Aki.Protocol.kks.Proto_Monster) ||
-              (e.bEnableOcclusion = !0),
-            this.BindGameSyncs(o),
-            this.Z3r(),
-            this.AkComponentMap.set(t, e),
-            e)
-          : void 0;
-    }
+  OnStart() {
+    return (
+      super.OnStart(),
+      !(!this.ActorComp?.Valid || !this.ActorComp.Owner || (this.Rvl(), 0))
+    );
   }
-  BindGameSyncs(t) {
-    this.Priority.Bind(t);
-  }
-  Z3r() {
-    const o = this.ActorComponent?.Owner,
-      i = this.CreatureData?.GetEntityType();
-    o
-      ? (ENTITY_TYPE_VOLUME_CONTROLS.forEach(([t, e]) => {
-          t = i === t ? 1 : 0;
-          AudioSystem_1.AudioSystem.SetRtpcValue(e, t, { Actor: o });
-        }),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Audio",
-            56,
-            "实体类型设置音量控制: SOLO此类型, 静音其他类型",
-            ["actor", o.GetName()],
-            ["entityType", i],
-          ))
-      : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Audio", 56, "实体类型设置音量控制: 无法获取角色Actor");
+  Rvl() {
+    var e;
+    this.ActorComp?.Owner &&
+      ((e = Global_1.Global.BaseCharacter?.EntityId ?? 0),
+      this.ActorComp.IsMyRoleAndCtrlByMe()
+        ? this.Entity.Id === e
+          ? GameAudioController_1.GameAudioController.SetRolePriority(
+              0,
+              this.ActorComp.Owner,
+            )
+          : GameAudioController_1.GameAudioController.SetRolePriority(
+              1,
+              this.ActorComp.Owner,
+            )
+        : this.ActorComp.IsMySummonsAndCtrlByMe()
+          ? ((this.SummonerId = this.ActorComp.GetSummonerId()),
+            this.SummonerId === e
+              ? GameAudioController_1.GameAudioController.SetRolePriority(
+                  0,
+                  this.ActorComp.Owner,
+                )
+              : GameAudioController_1.GameAudioController.SetRolePriority(
+                  1,
+                  this.ActorComp.Owner,
+                ),
+            GameAudioController_1.GameAudioController.AddRolePrioritySummon(
+              this.SummonerId,
+              this.Entity.Id,
+              this.ActorComp.Owner,
+            ))
+          : GameAudioController_1.GameAudioController.SetRolePriority(
+              2,
+              this.ActorComp.Owner,
+            ));
   }
 };
 (CharacterAudioComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(44)],
+  [(0, RegisterComponent_1.RegisterComponent)(50)],
   CharacterAudioComponent,
 )),
   (exports.CharacterAudioComponent = CharacterAudioComponent);

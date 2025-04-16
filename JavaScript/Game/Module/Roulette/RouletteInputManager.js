@@ -158,7 +158,7 @@ class RouletteInputTouch extends RouletteInputBase {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Phantom",
-            38,
+            37,
             "当前轮盘输入方式为触屏,未检测到对应触屏Id或初始位置",
           )
         );
@@ -167,7 +167,7 @@ class RouletteInputTouch extends RouletteInputBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Phantom",
-            38,
+            37,
             "[轮盘界面]触屏开启信息",
             ["TouchId", this.O0o],
             ["Pos", this.BeginPos],
@@ -203,7 +203,7 @@ class RouletteInputGamepad extends RouletteInputBase {
   constructor(t, i, s, e) {
     super(t, i),
       (this.k0o = Vector_1.Vector.Create()),
-      (this.aIa = 0.4),
+      (this.lIa = 0.4),
       (this.F0o = void 0),
       (this.V0o = (t, i) => {
         switch (t) {
@@ -218,7 +218,7 @@ class RouletteInputGamepad extends RouletteInputBase {
             this.k0o.X = i;
         }
       }),
-      (this.aIa = e ?? this.aIa);
+      (this.lIa = e ?? this.lIa);
   }
   OnInit() {
     this.k0o.Set(0, 0, 0);
@@ -247,8 +247,8 @@ class RouletteInputGamepad extends RouletteInputBase {
   InputTick(t) {
     (!this.NeedEmptyChoose && 0 === this.k0o.X && 0 === this.k0o.Y) ||
       (this.NeedEmptyChoose &&
-      Math.abs(this.k0o.X) <= this.aIa &&
-      Math.abs(this.k0o.Y) <= this.aIa
+      Math.abs(this.k0o.X) <= this.lIa &&
+      Math.abs(this.k0o.Y) <= this.lIa
         ? (this.AreaIndex = 0)
         : ((this.Angle = AngleCalculator.GetVectorAngle(
             this.ForwardVector,

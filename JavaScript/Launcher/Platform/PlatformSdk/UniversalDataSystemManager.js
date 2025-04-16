@@ -19,20 +19,20 @@ class UniversalDataSystemManager {
   constructor() {
     (this.nx = SCE_NP_UNIVERSAL_DATA_SYSTEM_INVALID_CONTEXT),
       (this.vJ = SCE_NP_UNIVERSAL_DATA_SYSTEM_INVALID_HANDLE),
-      (this.Dwa = UNIVERSAL_DATA_SYSTEM_MEMORY_POOL_SIZE),
-      (this.Awa = !1),
+      (this.Hwa = UNIVERSAL_DATA_SYSTEM_MEMORY_POOL_SIZE),
+      (this.jwa = !1),
       (this.tMi = void 0);
   }
   Initialize(e) {
     (this.tMi = e),
-      ue_1.KuroStaticPS5Library.InitNpUniversalDataSystem(this.Dwa),
-      (this.Awa = !1);
+      ue_1.KuroStaticPS5Library.InitNpUniversalDataSystem(this.Hwa),
+      (this.jwa = !1);
   }
   Start() {
-    this.Rwa(), this.pKo(), this.Uwa();
+    this.Wwa(), this.pKo(), this.Qwa();
   }
   Stop() {
-    this.xwa(), this.Pwa(), this.wwa();
+    this.Kwa(), this.$wa(), this.Xwa();
   }
   pKo() {
     var e, t;
@@ -48,7 +48,7 @@ class UniversalDataSystemManager {
           "UniversalDataSystemManager: CreateHandle Fail!!! UserId Is Empty",
         );
   }
-  xwa() {
+  Kwa() {
     var e = ue_1.KuroStaticPS5Library.AbortUdsHandle(this.vJ);
     e !== SCE_OK &&
       LauncherLog_1.LauncherLog.Debug(
@@ -56,7 +56,7 @@ class UniversalDataSystemManager {
         ["result", e],
       );
   }
-  Pwa() {
+  $wa() {
     var e = ue_1.KuroStaticPS5Library.DestroyUdsHandle(this.vJ);
     e !== SCE_OK
       ? LauncherLog_1.LauncherLog.Debug(
@@ -65,16 +65,16 @@ class UniversalDataSystemManager {
         )
       : (this.vJ = SCE_NP_UNIVERSAL_DATA_SYSTEM_INVALID_HANDLE);
   }
-  Uwa() {
+  Qwa() {
     var e = ue_1.KuroStaticPS5Library.RegisterUdsContext(this.nx, this.vJ);
     e !== SCE_OK
       ? LauncherLog_1.LauncherLog.Debug(
           "UniversalDataSystemManager: RegisterUdsContext Fail",
           ["result", e],
         )
-      : (this.Awa = !0);
+      : (this.jwa = !0);
   }
-  Rwa() {
+  Wwa() {
     var e, t;
     this.tMi
       ? ((e = (0, puerts_1.$ref)(this.nx)),
@@ -91,7 +91,7 @@ class UniversalDataSystemManager {
           "UniversalDataSystemManager: CreateUdsContext Fail!!! UserId Is Empty",
         );
   }
-  wwa() {
+  Xwa() {
     var e;
     this.nx === SCE_NP_UNIVERSAL_DATA_SYSTEM_INVALID_CONTEXT
       ? LauncherLog_1.LauncherLog.Debug(
@@ -103,19 +103,19 @@ class UniversalDataSystemManager {
             "UniversalDataSystemManager: DestroyUdsContext Fail",
             ["result", e],
           ),
-        (this.Awa = !1));
+        (this.jwa = !1));
   }
-  GBa(e) {
+  ZBa(e) {
     var t,
       a = (0, puerts_1.$ref)(e),
-      s = (0, puerts_1.$ref)(BigInt(0)),
       r = (0, puerts_1.$ref)(BigInt(0)),
-      a = ue_1.KuroStaticPS5Library.CreateUdsEvent(a, s, r);
+      s = (0, puerts_1.$ref)(BigInt(0)),
+      a = ue_1.KuroStaticPS5Library.CreateUdsEvent(a, r, s);
     if (a === SCE_OK)
       return (
         ((t = new EventData()).EventName = e),
-        (t.EventPtr = (0, puerts_1.$unref)(s)),
-        (t.ProPtr = (0, puerts_1.$unref)(r)),
+        (t.EventPtr = (0, puerts_1.$unref)(r)),
+        (t.ProPtr = (0, puerts_1.$unref)(s)),
         LauncherLog_1.LauncherLog.Debug(
           "UniversalDataSystemManager: CreateUdsEvent Success",
           ["eventName", e],
@@ -127,7 +127,7 @@ class UniversalDataSystemManager {
       ["result", a],
     );
   }
-  OBa(e) {
+  eba(e) {
     var t = ue_1.KuroStaticPS5Library.PostUdsEvent(
       this.nx,
       this.vJ,
@@ -156,16 +156,16 @@ class UniversalDataSystemManager {
           ["eventName", e.EventName],
         );
   }
-  kBa(e, t, a) {
-    var s = ue_1.KuroStaticPS5Library.UdsEventPropertyObjectSetString(
+  tba(e, t, a) {
+    var r = ue_1.KuroStaticPS5Library.UdsEventPropertyObjectSetString(
       e.ProPtr,
       (0, puerts_1.$ref)(t),
       (0, puerts_1.$ref)(a),
     );
-    s !== SCE_OK
+    r !== SCE_OK
       ? LauncherLog_1.LauncherLog.Debug(
           "UniversalDataSystemManager: EventPropertyObjectSetString Fail",
-          ["result", s],
+          ["result", r],
           ["key", t],
           ["value", a],
         )
@@ -176,16 +176,45 @@ class UniversalDataSystemManager {
           ["value", a],
         );
   }
+  TTl(e, t, a) {
+    var r = ue_1.KuroStaticPS5Library.UdsEventPropertyArraySetString(
+      e.ProPtr,
+      (0, puerts_1.$ref)(t),
+      (0, puerts_1.$ref)(a),
+    );
+    r !== SCE_OK
+      ? LauncherLog_1.LauncherLog.Debug(
+          "UniversalDataSystemManager: EventPropertyArraySetString Fail",
+          ["result", r],
+          ["key", t],
+          ["value", a],
+        )
+      : LauncherLog_1.LauncherLog.Debug(
+          "UniversalDataSystemManager: EventPropertyArraySetString Success",
+          ["eventName", e.EventName],
+          ["key", t],
+          ["value", a],
+        );
+  }
   StartActivity(e) {
-    var t = this.GBa("activityStart");
-    t && (this.kBa(t, "activityId", e), this.OBa(t), this.dre(t));
+    var t = this.ZBa("activityStart");
+    t && (this.tba(t, "activityId", e), this.eba(t), this.dre(t));
   }
   EndActivity(e, t = "completed") {
-    var a = this.GBa("activityEnd");
+    var a = this.ZBa("activityEnd");
     a &&
-      (this.kBa(a, "activityId", e),
-      this.kBa(a, "outcom", t),
-      this.OBa(a),
+      (this.tba(a, "activityId", e),
+      this.tba(a, "outcome", t),
+      this.eba(a),
+      this.dre(a));
+  }
+  ChangeActivityAvailability(e, t) {
+    var a = this.ZBa("activityAvailabilityChange");
+    a &&
+      (e && this.TTl(a, "availableActivities", e),
+      t && this.TTl(a, "unavailableActivities", t),
+      this.tba(a, "mode", "full"),
+      this.eba(a),
       this.dre(a));
   }
   GetHandle() {
@@ -195,7 +224,7 @@ class UniversalDataSystemManager {
     return this.nx;
   }
   GetIsRegistered() {
-    return this.Awa;
+    return this.jwa;
   }
 }
 exports.UniversalDataSystemManager = UniversalDataSystemManager;

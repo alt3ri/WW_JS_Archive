@@ -94,39 +94,63 @@ class PhantomSkill {
   }
   buffids(t) {
     var i = this.J7.__offset(this.z7, 8);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   buffidsLength() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  buffidsArray() {
+    var t = this.J7.__offset(this.z7, 8);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   GetSettleidsAt(t) {
     return this.settleids(t);
   }
   settleids(t) {
     var i = this.J7.__offset(this.z7, 10);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   settleidsLength() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  settleidsArray() {
+    var t = this.J7.__offset(this.z7, 10);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   GetBuffeffectsAt(t) {
     return this.buffeffects(t);
   }
   buffeffects(t) {
     var i = this.J7.__offset(this.z7, 12);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   buffeffectsLength() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  buffeffectsArray() {
+    var t = this.J7.__offset(this.z7, 12);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   chargeefficiency() {
     var t = this.J7.__offset(this.z7, 14);
@@ -141,12 +165,24 @@ class PhantomSkill {
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   descriptionex(t) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   simplydescription(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   ifcounterskill() {
     var t = this.J7.__offset(this.z7, 24);
@@ -156,10 +192,14 @@ class PhantomSkill {
     return this.curleveldescriptionex(t);
   }
   curleveldescriptionex(t, i) {
-    var s = this.J7.__offset(this.z7, 26);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 26),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   curleveldescriptionexLength() {
     var t = this.J7.__offset(this.z7, 26);
@@ -182,12 +222,24 @@ class PhantomSkill {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   battleviewicon(t) {
-    var i = this.J7.__offset(this.z7, 30);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 30),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   specialbattleviewicon(t) {
-    var i = this.J7.__offset(this.z7, 32);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 32),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.PhantomSkill = PhantomSkill;

@@ -1,7 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowController = exports.LOCAL_FLOWINCID = void 0);
-const ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
+const UiManager_1 = require("../../../Ui/UiManager"),
+  ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   FlowActionCenter_1 = require("./FlowActionCenter"),
   FlowActionRunner_1 = require("./FlowActionRunner"),
   FlowLaunchCenter_1 = require("./FlowLaunchCenter"),
@@ -64,8 +66,8 @@ class FlowController extends ControllerWithAssistantBase_1.ControllerWithAssista
   static IsInShowTalk() {
     return this.cYt(2).IsInShowTalk();
   }
-  static ExecuteSubActions(t, i) {
-    this.cYt(2).ExecuteSubActions(t, i);
+  static ExecuteSubActions(t, i, e = !1) {
+    this.cYt(2).ExecuteSubActions(t, i, e);
   }
   static GetInteractPoint() {
     return this.cYt(2).GetInteractPoint();
@@ -78,6 +80,33 @@ class FlowController extends ControllerWithAssistantBase_1.ControllerWithAssista
   }
   static SelectOption(t, i) {
     this.cYt(2).RecordOption(t, i);
+  }
+  static RecordTalkItem(t) {
+    this.cYt(2).RecordTalkItem(t);
+  }
+  static CreatePlotReviewViewData() {
+    var t,
+      i = [],
+      e = this.cYt(2).GetTalkHistory();
+    if (e && 0 < e.length)
+      for (const s of e)
+        s.IsOption
+          ? ((t = { TalkItem: s.TalkItem, OptionIndex: s.OptionIndex }),
+            i.push({ Type: 1, Data: t }))
+          : ((t = { TalkItem: s.TalkItem, IsPlaying: !1 }),
+            i.push({ Type: 0, Data: t }));
+    return { PlotReviewItemDataList: i };
+  }
+  static OpenPlotReviewView() {
+    var t = this.cYt(2)?.GetTalkHistory();
+    return t && 0 !== t.length
+      ? ((t = this.CreatePlotReviewViewData()),
+        UiManager_1.UiManager.OpenView("PlotReviewView", t),
+        !0)
+      : (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+          "PlotView_001",
+        ),
+        !1);
   }
   static get FlowSequence() {
     return this.cYt(2).FlowSequence;
@@ -102,6 +131,21 @@ class FlowController extends ControllerWithAssistantBase_1.ControllerWithAssista
   }
   static LogError(t, ...i) {
     this.cYt(2).LogError(t, ...i);
+  }
+  static GetFlowIncId() {
+    return this.cYt(2).GetFlowIncId();
+  }
+  static RequestPosition(t, i) {
+    this.cYt(2).RequestPosition(t, i);
+  }
+  static CheckViewControlBeginForC() {
+    return this.cYt(2).CheckViewControlBeginForC();
+  }
+  static GetNextNameAction(t) {
+    return this.cYt(2).GetNextNameAction(t);
+  }
+  static GetFlowName() {
+    return this.cYt(2).GetFlowName();
   }
   static StartFlowByRes(t) {}
   static StartFlow(t, i, e, s, r, o, n, a, c) {

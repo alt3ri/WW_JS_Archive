@@ -9,6 +9,8 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   PlatformSdkManagerNew_1 = require("../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   PlatformSdkServer_1 = require("../../Launcher/Platform/PlatformSdk/PlatformSdkServer"),
+  LauncherLanguageLib_1 = require("../../Launcher/Util/LauncherLanguageLib"),
+  AudioSystem_1 = require("../Audio/AudioSystem"),
   CommonDefine_1 = require("../Define/CommonDefine"),
   LanguageDefineByLanguageCode_1 = require("../Define/ConfigQuery/LanguageDefineByLanguageCode"),
   Info_1 = require("./Info"),
@@ -84,7 +86,8 @@ class LanguageSystem {
         UE.KismetInternationalizationLibrary.SetCurrentCulture(e, !0),
       e !== a && UE.UIText.OnTsLanguageChange(),
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.IsSdkOn &&
-        PlatformSdkServer_1.PlatformSdkServer.SetLanguage(e);
+        PlatformSdkServer_1.PlatformSdkServer.SetLanguage(e),
+      LauncherLanguageLib_1.LauncherLanguageLib.SetPackageLanguage(e);
   }
   static get PackageAudio() {
     return LanguageSystem.L8 ?? CommonDefine_1.CHS_AUDIO;
@@ -95,12 +98,13 @@ class LanguageSystem {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Config",
-          31,
+          30,
           "SetCurrentAudioCultureAsync",
           ["Success", e],
           ["Code", a],
         ),
-        (0, puerts_1.releaseManualReleaseDelegate)(n);
+        (0, puerts_1.releaseManualReleaseDelegate)(n),
+        e && AudioSystem_1.AudioSystem.SetState("language", a);
     };
     UE.AkGameplayStatics.SetCurrentAudioCultureAsync(
       a,
@@ -129,7 +133,7 @@ class LanguageSystem {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Config",
-              11,
+              10,
               "当前语种表格配置不允许生效",
               ["targetLanguage", t],
               ["currentCulture", a],
@@ -137,7 +141,7 @@ class LanguageSystem {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Config",
-            31,
+            30,
             "第一次设置语言",
             ["设备默认语言", a],
             ["查找不到时匹配默认语言", g],
@@ -148,7 +152,7 @@ class LanguageSystem {
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Config",
-            31,
+            30,
             "FirstTimeSetLanguage",
             ["Text", u.LanguageCode],
             ["Audio", u.AudioCode],
@@ -156,7 +160,7 @@ class LanguageSystem {
         (LanguageSystem.PackageLanguage = u.LanguageCode),
         this.SetPackageAudio(u.AudioCode, e))
       : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Config", 31, "设置系统找不到配置", [
+          Log_1.Log.Error("Config", 30, "设置系统找不到配置", [
             "语种识别码",
             t,
           ]),

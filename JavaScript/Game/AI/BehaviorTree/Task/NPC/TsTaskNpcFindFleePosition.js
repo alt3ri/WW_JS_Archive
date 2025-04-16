@@ -7,7 +7,7 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
   GlobalData_1 = require("../../../../GlobalData"),
-  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   TsAiController_1 = require("../../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
   PROFILE_KEY = "TsTaskNpcFindFleePosition_GetNoTargetDirectionList",
@@ -17,6 +17,14 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
     super(...arguments),
       (this.SearchRange = 0),
       (this.BlackboardKey = ""),
+      (this.TempEnemyList = void 0),
+      (this.TraceElement = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsSearchRange = 0),
+      (this.TsBlackboardKey = "");
+  }
+  Constructor() {
+    super.Constructor(),
       (this.TempEnemyList = void 0),
       (this.TraceElement = void 0),
       (this.IsInitTsVariables = !1),
@@ -36,7 +44,7 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
       t = t.AiController;
       const o = t.CharActorComp;
       var i = o.Entity.Id,
-        r = o.ActorLocationProxy,
+        s = o.ActorLocationProxy,
         t =
           (this.InitTraceElement(),
           t.AiPerception && this.FindEnemies(t.AiPerception),
@@ -44,32 +52,32 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
             this.TsSearchRange / 2,
             this.TsSearchRange,
           )),
-        s = this.GetNoTargetDirectionList(r, o);
-      if (0 < s.length) {
-        s = this.GetOptimalDirection(r, s).MultiplyEqual(t).AdditionEqual(r);
-        BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+        r = this.GetNoTargetDirectionList(s, o);
+      if (0 < r.length) {
+        r = this.GetOptimalDirection(s, r).MultiplyEqual(t).AdditionEqual(s);
+        ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
           i,
           this.TsBlackboardKey,
-          s.X,
-          s.Y,
-          s.Z,
+          r.X,
+          r.Y,
+          r.Z,
         );
       } else {
-        s = this.TempEnemyList.length;
-        if (!(0 < s)) return void this.FinishExecute(!1);
+        r = this.TempEnemyList.length;
+        if (!(0 < r)) return void this.FinishExecute(!1);
         {
-          s = Math.floor(MathUtils_1.MathUtils.GetRandomFloatNumber(0, s));
-          const o = this.TempEnemyList[s]?.GetComponent(1);
-          (s = Vector_1.Vector.Create(r).SubtractionEqual(
+          r = Math.floor(MathUtils_1.MathUtils.GetRandomFloatNumber(0, r));
+          const o = this.TempEnemyList[r]?.GetComponent(1);
+          (r = Vector_1.Vector.Create(s).SubtractionEqual(
             o.ActorLocationProxy,
           )),
-            (s = (s.Normalize(), s.MultiplyEqual(t).AdditionEqual(r)));
-          BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+            (r = (r.Normalize(), r.MultiplyEqual(t).AdditionEqual(s)));
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
             i,
             this.TsBlackboardKey,
-            s.X,
-            s.Y,
-            s.Z,
+            r.X,
+            r.Y,
+            r.Z,
           );
         }
       }
@@ -94,21 +102,21 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
   }
   GetNoTargetDirectionList(e, t) {
     var i = new Array(),
-      r = t.ActorForwardProxy,
-      s =
+      s = t.ActorForwardProxy,
+      r =
         (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
           this.TraceElement,
           e,
         ),
         MathUtils_1.PI_DEG_DOUBLE / CHECK_DEGREE_ADDITION);
-    for (let t = 0; t < s; t++) {
+    for (let t = 0; t < r; t++) {
       var o = t * CHECK_DEGREE_ADDITION,
-        l = Vector_1.Vector.Create(),
+        h = Vector_1.Vector.Create(),
         o =
-          (r.RotateAngleAxis(o, Vector_1.Vector.UpVectorProxy, l),
+          (s.RotateAngleAxis(o, Vector_1.Vector.UpVectorProxy, h),
           Vector_1.Vector.Create()),
         o =
-          (l.Multiply(this.TsSearchRange, o),
+          (h.Multiply(this.TsSearchRange, o),
           o.AdditionEqual(e),
           TraceElementCommon_1.TraceElementCommon.SetEndLocation(
             this.TraceElement,
@@ -118,32 +126,32 @@ class TsTaskNpcFindFleePosition extends TsTaskAbortImmediatelyBase_1.default {
             this.TraceElement,
             PROFILE_KEY,
           ));
-      (o && this.TraceElement.HitResult.bBlockingHit) || i.push(l);
+      (o && this.TraceElement.HitResult.bBlockingHit) || i.push(h);
     }
     return i;
   }
-  GetOptimalDirection(i, r) {
-    var s = this.TempEnemyList.length;
-    if (0 === s) {
+  GetOptimalDirection(i, s) {
+    var r = this.TempEnemyList.length;
+    if (0 === r) {
       const o = Math.floor(
-        MathUtils_1.MathUtils.GetRandomFloatNumber(0, r.length),
+        MathUtils_1.MathUtils.GetRandomFloatNumber(0, s.length),
       );
-      return r[o];
+      return s[o];
     }
     let o = 0,
-      l = 0;
-    for (let t = 0, e = r.length; t < e; t++) {
-      var a = Vector_1.Vector.Create(r[t]).MultiplyEqual(this.TsSearchRange);
-      a.AdditionEqual(i);
+      h = 0;
+    for (let t = 0, e = s.length; t < e; t++) {
+      var l = Vector_1.Vector.Create(s[t]).MultiplyEqual(this.TsSearchRange);
+      l.AdditionEqual(i);
       let e = 0;
-      for (let t = 0; t < s; t++) {
+      for (let t = 0; t < r; t++) {
         var n = this.TempEnemyList[t]?.GetComponent(1),
-          n = Vector_1.Vector.Dist(n.ActorLocationProxy, a);
+          n = Vector_1.Vector.Dist(n.ActorLocationProxy, l);
         e < n && (e = n);
       }
-      e > l && ((l = e), (o = t));
+      e > h && ((h = e), (o = t));
     }
-    return r[o];
+    return s[o];
   }
 }
 exports.default = TsTaskNpcFindFleePosition;

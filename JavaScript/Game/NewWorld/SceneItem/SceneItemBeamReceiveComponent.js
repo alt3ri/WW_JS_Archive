@@ -109,15 +109,15 @@ let SceneItemBeamReceiveComponent =
             this.Lo.Duration * BattleUiDefine_1.SECOND_TO_MILLISECOND),
           !0)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("SceneItem", 40, "[BeamReceiveComp] 组件配置缺失", [
+            Log_1.Log.Error("SceneItem", 39, "[BeamReceiveComp] 组件配置缺失", [
               "PbDataId",
               this.EIe?.GetPbDataId(),
             ]),
           !1);
     }
     OnActivate() {
-      (this.Hte = this.Entity.GetComponent(187)),
-        (this.Lie = this.Entity.GetComponent(181)),
+      (this.Hte = this.Entity.GetComponent(200)),
+        (this.Lie = this.Entity.GetComponent(194)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.BeamCastStart,
@@ -214,12 +214,12 @@ let SceneItemBeamReceiveComponent =
       var e = Protocol_1.Aki.Protocol.Cgs.create();
       (e.F4n = this.EIe.GetCreatureDataId()),
         (e.c6n = t),
-        Net_1.Net.Call(21896, e, (e) => {
+        Net_1.Net.Call(27527, e, (e) => {
           e?.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "SceneItem",
-              40,
+              39,
               "[BeamReceiveComp] 请求执行光线接收行为出错",
               ["PbDataId", this.EIe?.GetPbDataId()],
               ["CreatureDataId", this.EIe?.GetCreatureDataId()],
@@ -243,7 +243,7 @@ let SceneItemBeamReceiveComponent =
   });
 (SceneItemBeamReceiveComponent = SceneItemBeamReceiveComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(197)],
+    [(0, RegisterComponent_1.RegisterComponent)(210)],
     SceneItemBeamReceiveComponent,
   )),
   (exports.SceneItemBeamReceiveComponent = SceneItemBeamReceiveComponent);

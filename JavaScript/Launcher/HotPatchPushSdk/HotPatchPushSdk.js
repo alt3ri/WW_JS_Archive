@@ -24,9 +24,9 @@ class HotPatchPushSdk {
           BaseConfigController_1.BaseConfigController.GetPublicValue(
             "PushAppSecret",
           )),
-        LauncherLog_1.LauncherLog.Info("push appId" + e),
-        LauncherLog_1.LauncherLog.Info("push appKey" + r),
-        LauncherLog_1.LauncherLog.Info("push appSecret" + t),
+        LauncherLog_1.LauncherLog.Debug("push appId" + e),
+        LauncherLog_1.LauncherLog.Debug("push appKey" + r),
+        LauncherLog_1.LauncherLog.Debug("push appSecret" + t),
         UE.KuroPushSdkStaticLibrary.Init(),
         UE.KuroPushSdkStaticLibrary.RegistRemoteNotification(),
         UE.KuroPushSdkStaticLibrary.StartPushSdk(e, r, t),

@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiFloatConfig = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class UiFloatConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -23,6 +24,9 @@ class UiFloatConfig {
   get IsWaitNormal() {
     return this.iswaitnormal();
   }
+  get HideInPureMode() {
+    return this.hideinpuremode();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -33,12 +37,24 @@ class UiFloatConfig {
     );
   }
   viewname(t) {
-    var i = this.J7.__offset(this.z7, 4);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 4),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   area(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   priority() {
     var t = this.J7.__offset(this.z7, 8);
@@ -55,6 +71,10 @@ class UiFloatConfig {
   iswaitnormal() {
     var t = this.J7.__offset(this.z7, 14);
     return !t || !!this.J7.readInt8(this.z7 + t);
+  }
+  hideinpuremode() {
+    var t = this.J7.__offset(this.z7, 16);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.UiFloatConfig = UiFloatConfig;

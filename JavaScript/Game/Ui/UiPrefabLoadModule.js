@@ -14,7 +14,7 @@ class UiPrefabLoadModule {
     if (GlobalData_1.GlobalData.World) {
       const s = new CustomPromise_1.CustomPromise();
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("UiPrefabLoad", 11, "资源加载开始", ["路径", e]);
+        Log_1.Log.Debug("UiPrefabLoad", 10, "资源加载开始", ["路径", e]);
       var o = ResourceSystem_1.ResourceSystem.LoadAsync(
           e,
           UE.PrefabAsset,
@@ -26,7 +26,7 @@ class UiPrefabLoadModule {
             );
             s.SetResult(e),
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("UiPrefabLoad", 11, "资源加载完成", [
+                Log_1.Log.Debug("UiPrefabLoad", 10, "资源加载完成", [
                   "路径",
                   o,
                 ]);
@@ -44,7 +44,7 @@ class UiPrefabLoadModule {
     for (var [e, o] of this.ogr)
       ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("UiPrefabLoad", 11, "资源加载取消", ["路径", o]);
+          Log_1.Log.Debug("UiPrefabLoad", 10, "资源加载取消", ["路径", o]);
     this.ogr.clear();
   }
 }

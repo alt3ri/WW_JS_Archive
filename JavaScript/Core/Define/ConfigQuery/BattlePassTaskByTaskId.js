@@ -17,25 +17,29 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configBattlePassTaskByTaskId.Init"),
-  getConfigStat = Stats_1.Stat.Create("configBattlePassTaskByTaskId.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configBattlePassTaskByTaskId.Init",
+  ),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configBattlePassTaskByTaskId.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configBattlePassTaskByTaskId.GetConfig(";
 exports.configBattlePassTaskByTaskId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (t, o = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var a = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${t})`),
+      getConfigStat?.Start();
+    var a = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${t})`),
       n =
-        (a.Start(),
+        (a?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (n) {
       if (o) {
@@ -43,8 +47,8 @@ exports.configBattlePassTaskByTaskId = {
         const i = ConfigCommon_1.ConfigCommon.GetConfig(e);
         if (i)
           return (
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -76,8 +80,8 @@ exports.configBattlePassTaskByTaskId = {
               ((n = KEY_PREFIX + `#${t})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(n, i)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            a.Stop(),
-            getConfigStat.Stop(),
+            a?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             i
           );
@@ -85,8 +89,8 @@ exports.configBattlePassTaskByTaskId = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    a.Stop(),
-      getConfigStat.Stop(),
+    a?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

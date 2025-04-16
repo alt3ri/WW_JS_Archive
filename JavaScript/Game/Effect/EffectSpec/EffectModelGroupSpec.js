@@ -1,10 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelGroupSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
+  EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment"),
   EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
   EffectSystem_1 = require("../EffectSystem"),
   EffectSpec_1 = require("./EffectSpec");
@@ -33,9 +35,9 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   SetEffectParameterNiagara(t) {
     for (var [, s] of this.EffectSpecMap) s.SetEffectParameterNiagara(t);
   }
-  SetTimeScale(t, s = !1) {
-    super.SetTimeScale(t, s);
-    for (const e of this.EffectSpecMap.values()) e.SetTimeScale(t, s);
+  SetTimeScale(t, s = !1, e = !1) {
+    super.SetTimeScale(t, s, e);
+    for (const i of this.EffectSpecMap.values()) i.SetTimeScale(t, s, e);
   }
   SetExtraState(t) {
     for (const s of this.EffectSpecMap.values())
@@ -48,7 +50,8 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   }
   OnInit() {
     Stats_1.Stat.Enable &&
-      ((this.f0e = Stats_1.Stat.Create(
+      !EffectEnvironment_1.EffectEnvironment.CloseEffectSubStat &&
+      ((this.f0e = Stats_1.Stat.CreateNoFlameGraph(
         "[EffectModelGroupSpec.Tick] Path:" + this.Handle.Path,
       )),
       (this.p0e = Stats_1.Stat.Create("[EffectModelGroupSpec.Tick.SuperTick]")),
@@ -116,19 +119,23 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
                 var e = f.Get(h);
                 0 < e && (this.C0e.push([s, e]), this.d0e.add(s));
             }
-            o ||
-              (i
-                ? ((this.C0e.length = 0),
-                  this.d0e.clear(),
-                  this.InitPromise.SetResult(0))
-                : this.InitPromise.SetResult(5));
+            i
+              ? ((this.C0e.length = 0),
+                this.d0e.clear(),
+                this.InitPromise.SetResult(0))
+              : o || this.InitPromise.SetResult(5);
           },
         );
         EffectSystem_1.EffectSystem.IsValid(r?.Id ?? 0) &&
-          this.EffectSpecMap.set(r.Id, r);
+          (this.EffectSpecMap.set(r.Id, r),
+          this.Fo1(r),
+          r?.GetEffectSpec()?.OnParentInit());
       }
     } else this.InitPromise.SetResult(2);
     return !0;
+  }
+  Fo1(t) {
+    t && this.Handle?.IsFreeze && t.FreezeEffect(!0, !0);
   }
   OnStart() {
     let t = !1;
@@ -187,13 +194,8 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       this.v0e?.Start(), s.Tick(t), this.v0e?.Stop();
     this.f0e?.Stop();
   }
-  AlwaysTick(t) {
-    super.AlwaysTick(t);
-    for (const s of this.EffectSpecMap.values())
-      s.GetEffectSpec()?.AlwaysTick(t);
-  }
-  OnTick(s) {
-    if ((this.M0e?.Start(), 0 < this.g0e.length))
+  TickDelayPlay(s) {
+    if (0 < this.g0e.length)
       for (let t = 0; t < this.g0e.length; ++t) {
         var e = this.g0e[t],
           i = e[1] - s;
@@ -205,38 +207,45 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
           ),
           t--);
       }
-    this.HasTransformAnim &&
-      this.GroupComponent?.IsValid() &&
-      this.IsPlaying() &&
-      UE.KuroRenderingRuntimeBPPluginBPLibrary.UpdateEffectTransform(
-        this.GetPlayInEditor(),
-        this.GroupComponent,
-        this.CachedLocationCurve,
-        this.CachedRotationCurve,
-        this.CachedScaleCurve,
-        this.LifeTime.PassTime,
-      ),
+    return !(0 < this.g0e.length);
+  }
+  OnTick(t) {
+    this.M0e?.Start(),
+      this.TickDelayPlay(t),
+      this.HasTransformAnim &&
+        this.GroupComponent?.IsValid() &&
+        this.IsPlaying() &&
+        UE.KuroRenderingRuntimeBPPluginBPLibrary.UpdateEffectTransform(
+          this.GetPlayInEditor(),
+          this.GroupComponent,
+          this.CachedLocationCurve,
+          this.CachedRotationCurve,
+          this.CachedScaleCurve,
+          this.LifeTime.PassTime,
+        ),
       this.M0e?.Stop();
   }
-  OnBodyEffectChanged(t) {
-    for (const s of this.EffectSpecMap.values())
-      s.GetEffectSpec().UpdateBodyEffect(t, !0);
-  }
-  SetPlaying(t) {
-    super.SetPlaying(t);
-    for (const s of this.EffectSpecMap.values())
-      s.GetEffectSpec().SetPlaying(t);
+  OnBodyEffectChanged(t, s) {
+    for (const e of this.EffectSpecMap.values())
+      e.GetEffectSpec().UpdateBodyEffect(t, !0, s);
   }
   SetStopping(t) {
     super.SetStopping(t);
     for (const s of this.EffectSpecMap.values())
-      s.GetEffectSpec().SetStopping(t);
+      s.GetEffectSpec()?.SetStopping(t);
   }
   OnPlay(t) {
     for (var [s, e] of this.EffectSpecMap) this.d0e.has(s) || e.Play(t);
     if (this.C0e.length) {
       this.g0e.length = 0;
-      for (const i of this.C0e) this.g0e.push([i[0], i[1]]);
+      for (const o of this.C0e) {
+        var i;
+        this.g0e.push([o[0], o[1]]),
+          this.EffectSpecMap.has(o[0]) &&
+            (i = this.EffectSpecMap.get(o[0])) &&
+            (i = i.GetEffectSpec()) &&
+            i.OnBeginDelayPlay();
+      }
     }
     this.GroupComponent &&
       UE.KuroRenderingRuntimeBPPluginBPLibrary.UpdateEffectTransform(
@@ -247,11 +256,6 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
         this.CachedScaleCurve,
         this.LifeTime.PassTime,
       );
-  }
-  IsReallyPlaying() {
-    for (const t of this.EffectSpecMap.values())
-      if (t.GetEffectSpec()?.IsReallyPlaying()) return !0;
-    return !1;
   }
   OnReplay() {
     for (const t of this.EffectSpecMap.values()) t.Replay();
@@ -277,11 +281,6 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
     super.VisibilityChanged(t);
     for (const s of this.EffectSpecMap.values()) s.OnVisibilityChanged(t);
   }
-  ChaseFrame(t, s, e) {
-    super.ChaseFrame(t, s, e);
-    for (const i of this.EffectSpecMap.values())
-      i.GetEffectSpec()?.ChaseFrame(t, s, e);
-  }
   SeekTo(t, s, e) {
     super.SeekTo(t, s, e);
     for (const i of this.EffectSpecMap.values())
@@ -303,14 +302,6 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       if (t.GetEffectSpec()?.NeedAlwaysTick()) return !0;
     return !1;
   }
-  TickNeedAlwaysTick(t) {
-    for (const s of this.EffectSpecMap.values())
-      s.GetEffectSpec()?.TickNeedAlwaysTick(t);
-  }
-  SeekTimeWithoutAlwaysTick(t, s) {
-    for (const e of this.EffectSpecMap.values())
-      e.GetEffectSpec()?.SeekTimeWithoutAlwaysTick(t, s);
-  }
   IsVisible() {
     for (const t of this.EffectSpecMap.values())
       if (t.GetEffectSpec()?.IsVisible()) return !0;
@@ -323,7 +314,7 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   }
   FreezeEffect(t) {
     super.FreezeEffect(t);
-    for (const s of this.EffectSpecMap.values()) s.FreezeEffect(t);
+    for (const s of this.EffectSpecMap.values()) s.FreezeEffect(t, !0);
   }
   OnModifyEffectModel() {
     super.OnModifyEffectModel();
@@ -335,6 +326,39 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       if (0 !== t) return t;
     }
     return 0;
+  }
+  SetStoppingTime(t) {
+    if (this.StoppingTimeInternal !== t) {
+      super.SetStoppingTime(t);
+      for (const s of this.EffectSpecMap.values())
+        s.GetEffectSpec()?.SetStoppingTime(t);
+    }
+  }
+  IsOverrideTick() {
+    return !0;
+  }
+  RegisterToKuroEffectSystem() {
+    if (this.Handle && this.GroupComponent && this.EffectModel) {
+      var t = this.Handle.GetSureEffectActor();
+      if (t) {
+        this.HasInitTickOptimize = !0;
+        var s = UE.NewArray(UE.BuiltinInt);
+        for (const e of this.EffectSpecMap)
+          s.Add(e[0]), e[1].InitTickOptimize();
+        cpp_1.FKuroEffectSystemInterface.RegisterEffectGroupHandle(
+          this.Handle.Id,
+          this.Handle.Parent?.Id ?? 0,
+          this.EffectModel,
+          t,
+          this.GroupComponent,
+          s,
+        );
+      }
+    }
+  }
+  UnregisterToKuroEffectSystem() {
+    super.UnregisterToKuroEffectSystem();
+    for (const t of this.EffectSpecMap.values()) t.ClearTickOptimize();
   }
 }
 exports.EffectModelGroupSpec = EffectModelGroupSpec;

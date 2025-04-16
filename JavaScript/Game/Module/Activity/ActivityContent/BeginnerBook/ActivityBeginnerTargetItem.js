@@ -37,7 +37,7 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
                 ? ((r = {
                     MarkType: r.ObjectType,
                     MarkId: r.MarkId,
-                    OpenAreaId: 0,
+                    OpenFogId: 0,
                   }),
                   WorldMapController_1.WorldMapController.OpenView(1, !1, r))
                 : Log_1.Log.CheckError() &&

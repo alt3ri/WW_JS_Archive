@@ -11,15 +11,15 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiModel_1 = require("../UiModel");
 class UiViewContainer {
   constructor() {
-    this.OpenViewMask = new UiMask_1.UiMask("OpenView");
+    this.OpenViewMask = new UiMask_1.UiMask();
   }
   async OpenViewImplementAsync(i) {
     if (
-      (this.IsIgnoreOpenViewMask(i) || this.OpenViewMask.SetMask(!0),
+      (this.IsIgnoreOpenViewMask(i) || this.OpenViewMask.SetMask(i.MaskTag, !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiViewContainer",
-          17,
+          16,
           "OpenViewImplement 界面打开开始",
           ["ViewName", i.Info?.Name],
           ["path", i.Info.UiPath],
@@ -33,7 +33,7 @@ class UiViewContainer {
         i.GetViewId(),
       ),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiViewContainer", 17, "OpenViewImplement 界面Start", [
+          Log_1.Log.Info("UiViewContainer", 16, "OpenViewImplement 界面Start", [
             "ViewName",
             i.Info?.Name,
           ]),
@@ -43,7 +43,7 @@ class UiViewContainer {
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiViewContainer",
-              38,
+              37,
               "[OpenViewImplement] 界面打开中断显示,界面已开始关闭流程",
               ["ViewName", i.Info.Name],
               ["Id", i.GetViewId()],
@@ -54,7 +54,7 @@ class UiViewContainer {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiViewContainer",
-              38,
+              37,
               "[OpenViewImplement] 界面打开中断显示,父界面已开始关闭流程",
               ["ViewName", i.Info.Name],
               ["Id", i.GetViewId()],
@@ -64,16 +64,17 @@ class UiViewContainer {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiViewContainer",
-              17,
+              16,
               "OpenViewImplement 界面Show",
               ["ViewName", i.Info?.Name],
             ),
           await i.ShowAsync()),
-        this.IsIgnoreOpenViewMask(i) || this.OpenViewMask.SetMask(!1),
+        this.IsIgnoreOpenViewMask(i) ||
+          this.OpenViewMask.SetMask(i.MaskTag, !1),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiViewContainer",
-            17,
+            16,
             "OpenViewImplement 界面打开完成",
             ["ViewName", i.Info?.Name],
             ["path", i.Info.UiPath],
@@ -82,7 +83,7 @@ class UiViewContainer {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiViewContainer",
-          17,
+          16,
           "[OpenViewImplement] CreateAsync failed",
           ["ViewName", i.Info.Name],
         );
@@ -92,7 +93,7 @@ class UiViewContainer {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiViewContainer",
-          17,
+          16,
           "CloseViewImplement 界面关闭开始",
           ["ViewName", e.Info?.Name],
           ["path", e.Info.UiPath],
@@ -100,7 +101,7 @@ class UiViewContainer {
       e.IsShowOrShowing &&
         ((e.LastHide = !0),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiViewContainer", 17, "CloseViewImplement 界面Hide", [
+          Log_1.Log.Info("UiViewContainer", 16, "CloseViewImplement 界面Hide", [
             "ViewName",
             e.Info?.Name,
           ]),
@@ -108,7 +109,7 @@ class UiViewContainer {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiViewContainer",
-          17,
+          16,
           "CloseViewImplement 界面Destroy",
           ["ViewName", e.Info?.Name],
         ),
@@ -116,7 +117,7 @@ class UiViewContainer {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiViewContainer",
-          17,
+          16,
           "CloseViewImplement 界面关闭完成",
           ["ViewName", e.Info?.Name],
           ["path", e.Info.UiPath],
@@ -132,7 +133,7 @@ class UiViewContainer {
     );
   }
   OnContainerOpenView(e) {
-    var i = e.GetViewParam();
+    var i = e.OpenParam;
     i instanceof UiPopViewData_1.UiPopViewData &&
       (i.NotAddChildToTopStackView ||
         ((i = UiModel_1.UiModel.NormalStack.Peek()) && i.AddChild(e)));
@@ -142,7 +143,7 @@ class UiViewContainer {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiViewContainer",
-          11,
+          10,
           "[Clear] 尝试执行销毁的界面",
           ["Name", e.constructor.name],
           ["ComponentId", e.ComponentId],
@@ -153,7 +154,7 @@ class UiViewContainer {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.ErrorWithStack(
             "UiViewContainer",
-            11,
+            10,
             "界面同步关闭异常,业务变量可能未初始化完成,需要关注",
             e,
             ["error", e.message],
@@ -161,13 +162,13 @@ class UiViewContainer {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiViewContainer",
-            11,
+            10,
             "界面同步关闭异常,业务变量可能未初始化完成,需要关注",
             ["error", e],
           );
     }
   }
-  async BeforeClearContainerAsync() {}
+  async BeforeClearContainerAsync(e) {}
 }
 exports.UiViewContainer = UiViewContainer;
 //# sourceMappingURL=UiViewContainer.js.map

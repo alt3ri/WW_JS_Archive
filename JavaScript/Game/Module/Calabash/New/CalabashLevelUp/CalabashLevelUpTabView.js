@@ -72,24 +72,24 @@ class CalabashGrid extends AutoAttachItem_1.AutoAttachItem {
         ModelManager_1.ModelManager.CalabashModel.GetReceiveRewardStateByLevel(
           e,
         ),
-      s = e <= ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel(),
-      r =
-        (this.GetItem(2)?.SetUIActive(s),
-        this.GetItem(1)?.SetUIActive(!s),
+      r = e <= ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel(),
+      s =
+        (this.GetItem(2)?.SetUIActive(r),
+        this.GetItem(1)?.SetUIActive(!r),
         this.GetText(3)),
       e =
-        (r.SetText(e.toString()),
-        r.SetChangeColor(s, r.changeColor),
+        (s.SetText(e.toString()),
+        s.SetChangeColor(r, s.changeColor),
         this.GetItem(4).SetUIActive(2 === i),
         this.GetItem(10).SetUIActive(3 === i),
         this.GetItem(11).SetUIActive(0 < e && 3 !== i),
         t.IsMaxLevel
           ? this.GetItem(5).SetUIActive(!1)
           : (this.GetItem(5).SetUIActive(!0),
-            (s = t.MaxExp),
-            (r = t.OverFlowExp),
-            this.GetSprite(6).SetFillAmount(r / s),
-            this.GetSprite(7).SetFillAmount(t.LimitExp / s)),
+            (r = t.MaxExp),
+            (s = t.OverFlowExp),
+            this.GetSprite(6).SetFillAmount(s / r),
+            this.GetSprite(7).SetFillAmount(t.LimitExp / r)),
         this.GetItem(8)?.SetUIActive(t.HasOverFlowExpReach),
         this.GetItem(9)?.SetUIActive(!t.HasOverFlowExpReach),
         this.GetCurrentSelectedState());
@@ -236,16 +236,16 @@ class CalabashAttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
         )?.QualityDropWeight;
     this.GetItem(6)?.SetUIActive(!0),
       this.GetExtendToggle(0)?.RootUIComp.SetRaycastTarget(!0);
-    const s = new Array();
+    const r = new Array();
     t?.forEach((t, e) => {
       var i;
       0 < t &&
         (((i = new CalabashAttributeContentData()).Type = 2),
         (i.Key = e),
         (i.Value = t),
-        s.push(i));
+        r.push(i));
     }),
-      this.gNe?.RefreshByData(s);
+      this.gNe?.RefreshByData(r);
   }
   tvt() {
     this.Pe?.CurrentSelect
@@ -296,21 +296,21 @@ class CalabashAttributeContentItem extends GridProxyAbstract_1.GridProxyAbstract
     ];
   }
   Refresh(t, e, i) {
-    var s, r;
+    var r, s;
     0 === t.Type
       ? (this.GetText(0)?.SetText(t.StringKey),
         this.GetText(1)?.SetText(t.StringValue))
       : 2 === t.Type &&
-        ((s = t.Key),
+        ((r = t.Key),
         (t = t.Value),
-        (s = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(s)),
-        (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s.Name)),
-        this.GetText(0)?.SetText(r),
-        this.GetText(0)?.SetColor(UE.Color.FromHex(s.DropColor)),
+        (r = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(r)),
+        (s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r.Name)),
+        this.GetText(0)?.SetText(s),
+        this.GetText(0)?.SetColor(UE.Color.FromHex(r.DropColor)),
         this.GetText(1)?.SetText(
           StringUtils_1.StringUtils.Format("{0}%", t.toString()),
         ),
-        this.GetText(1)?.SetColor(UE.Color.FromHex(s.DropColor)));
+        this.GetText(1)?.SetColor(UE.Color.FromHex(r.DropColor)));
   }
 }
 exports.CalabashAttributeContentItem = CalabashAttributeContentItem;
@@ -334,12 +334,12 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
         );
       }),
       (this.uvt = (t, e, i) => {
-        var s = new CalabashGrid();
+        var r = new CalabashGrid();
         return (
-          s.CreateThenShowByActor(t),
-          (s.ButtonFunction = this.cvt),
-          (s.ItemCurve = this.hvt),
-          s
+          r.CreateThenShowByActor(t),
+          (r.ButtonFunction = this.cvt),
+          (r.ItemCurve = this.hvt),
+          r
         );
       }),
       (this.rOe = () =>
@@ -366,12 +366,12 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
             e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(i);
             if (e && e.Parameters) {
               let t = 0;
-              for (var [, s] of e.Parameters) {
-                t = s;
+              for (var [, r] of e.Parameters) {
+                t = r;
                 break;
               }
               if (0 !== t) {
-                var r,
+                var s,
                   e =
                     PropRewardConfById_1.configPropRewardConfById.GetConfig(t);
                 if (e) {
@@ -382,29 +382,38 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
                       break;
                     }
                   0 !== t &&
-                    ((r = {
+                    ((e =
+                      FormationAttributeController_1.FormationAttributeController.GetBaseMax(
+                        1,
+                      )),
+                    (s = {
+                      Name: (s =
+                        ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
+                          RoleDefine_1.STRENGTH_MAX_ID,
+                        )).Name,
+                      IconPath: s.Icon,
+                      ShowArrow: !0,
+                      PreText: Math.floor((e - t) / 100).toString(),
+                      CurText: Math.floor(e / 100).toString(),
+                    }),
+                    (e = {
                       Title: "PrefabTextItem_HuluStaminaUp_Text",
                       StrengthUpgradeData: {
-                        MaxStrength: (e =
-                          FormationAttributeController_1.FormationAttributeController.GetBaseMax(
-                            1,
-                          )),
+                        AttributeId: 1,
+                        SingleStrengthValue:
+                          CommonParamById_1.configCommonParamById.GetIntConfig(
+                            "SingleStrengthValue",
+                          ),
+                        MaxSingleStrengthItemCount:
+                          CommonParamById_1.configCommonParamById.GetIntConfig(
+                            "MaxSingleStrengthItemCount",
+                          ),
+                        MaxStrength: e,
                       },
-                      AttributeInfo: [
-                        {
-                          Name: (r =
-                            ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-                              RoleDefine_1.STRENGTH_MAX_ID,
-                            )).Name,
-                          IconPath: r.Icon,
-                          ShowArrow: !0,
-                          PreText: Math.floor((e - t) / 100).toString(),
-                          CurText: Math.floor(e / 100).toString(),
-                        },
-                      ],
+                      AttributeInfo: [s],
                     }),
                     RoleLevelUpSuccessController_1.RoleLevelUpSuccessController.OpenSuccessAttributeView(
-                      r,
+                      e,
                     ));
                 }
               }
@@ -538,14 +547,14 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
             this.lvt,
           ));
       let e = 0;
-      for (const s of t) {
+      for (const r of t) {
         let t = void 0;
         e < this.avt.length
           ? (t = this.avt[e])
           : ((t = new CalabashLevelUpRewardItemGrid_1.CalabashRewardItemData()),
             this.avt.push(t)),
           (t.ReceiveState = i),
-          (t.ItemData = [{ ItemId: s[0], IncId: 0 }, s[1]]),
+          (t.ItemData = [{ ItemId: r[0], IncId: 0 }, r[1]]),
           e++;
       }
       this.H3e?.RefreshByData(this.avt);
@@ -589,18 +598,18 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
       (i.Name = "PrefabTextItem_1948060625_Text"),
       (i.IsCost = !1),
       (i.IsUp = !1);
-    var s = ModelManager_1.ModelManager.CalabashModel.GetCatchGainByLevel(
+    var r = ModelManager_1.ModelManager.CalabashModel.GetCatchGainByLevel(
         this.lvt,
       ),
-      r =
+      s =
         ((i.Value = new LguiUtil_1.TableTextArgNew(
           "Text_ExplorationDegree_Text",
-          Math.ceil(s / 10),
+          Math.ceil(r / 10),
         )),
         e ||
-          ((r =
+          ((s =
             ModelManager_1.ModelManager.CalabashModel.GetCatchGainByLevel(t)),
-          (i.IsUp = r < s)),
+          (i.IsUp = s < r)),
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConfigByLevel(
           t,
         )),
@@ -613,8 +622,8 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
         (i.IsCost = !1),
         (i.IsUp = !1),
         t.TempCatchGain),
-      s =
-        (a <= s
+      r =
+        (a <= r
           ? (i.Value = new LguiUtil_1.TableTextArgNew(
               "PrefabTextItem_HuluTempCatchGainDisable_Text",
             ))
@@ -622,22 +631,22 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
               "Text_ExplorationDegree_Text",
               Math.ceil(a / 10),
             )),
-            e || ((s = r.TempCatchGain), (i.IsUp = s < a))),
+            e || ((r = s.TempCatchGain), (i.IsUp = r < a))),
         ((i = this.svt[2]).Type = 2),
         (i.Name = "PrefabTextItem_3681645418_Text"),
         (i.IsCost = !1),
         (i.IsUp = !1),
         t.QualityDescription),
-      s =
-        ((i.Value = new LguiUtil_1.TableTextArgNew(s)),
-        e || ((a = r.QualityDescription), (i.IsUp = s !== a)),
+      r =
+        ((i.Value = new LguiUtil_1.TableTextArgNew(r)),
+        e || ((a = s.QualityDescription), (i.IsUp = r !== a)),
         ((i = this.svt[3]).Type = 3),
         (i.Name = "PrefabTextItem_HuluCostLimit_Text"),
         (i.IsCost = !0),
         (i.IsUp = !1),
         t.Cost);
-    (i.CostCount = s),
-      e || ((a = r.Cost), (i.IsUp = a < s)),
+    (i.CostCount = r),
+      e || ((a = s.Cost), (i.IsUp = a < r)),
       this.svt.forEach((t) => {
         (t.ClickCallBack = this.gvt),
           (t.CurrentSelect = this._vt === t.Type),
@@ -650,43 +659,43 @@ class CalabashLevelUpTabView extends UiTabViewBase_1.UiTabViewBase {
     if (1 === t.length || isNaN(Number(t[0])))
       return (e = this.nvt?.GetItemByIndex(Number(t[0]))) ? [e, e] : void 0;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         t,
       ]);
   }
   vvt(t = !1) {
-    var r = ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel(),
+    var s = ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel(),
       a = ModelManager_1.ModelManager.CalabashModel.GetCurrentExp(),
       h = ModelManager_1.ModelManager.CalabashModel.GetCalabashMaxLevel();
     this.rvt || (this.rvt = new Array(h));
     let o = 0;
-    for (let s = 0; s <= h; s++) {
+    for (let r = 0; r <= h; r++) {
       var n =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConfigByLevel(
-          s,
+          r,
         ).LevelUpExp;
       let t = 0,
         e = 0,
         i =
-          (s < r
+          (r < s
             ? ((t = n), (e = n))
             : ((t = Math.min(n, a - o)), (e = 0), (o += n)),
-          this.rvt[s]);
-      i || ((i = new CalabashGridData()), (this.rvt[s] = i)),
-        (i.Level = s),
+          this.rvt[r]);
+      i || ((i = new CalabashGridData()), (this.rvt[r] = i)),
+        (i.Level = r),
         (i.OverFlowExp = t),
         (i.LimitExp = e),
         (i.MaxExp = n),
-        (i.IsMaxLevel = s === h),
-        0 === s
+        (i.IsMaxLevel = r === h),
+        0 === r
           ? (i.HasOverFlowExpReach = !0)
-          : ((n = this.rvt[s - 1]),
+          : ((n = this.rvt[r - 1]),
             (i.HasOverFlowExpReach = n.OverFlowExp === n.MaxExp));
     }
     if (t)
       this.ovt.ReloadView(this.rvt.length, this.rvt),
-        this.ovt.AttachToIndex(r, !0);
+        this.ovt.AttachToIndex(s, !0);
     else
       for (const e of this.ovt.GetItems()) e.SetData(this.rvt), e.RefreshItem();
   }

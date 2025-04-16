@@ -7,6 +7,7 @@ const AiStateMachineAction_1 = require("./Action/AiStateMachineAction"),
   AiStateMachineActionChangeInstState_1 = require("./Action/AiStateMachineActionChangeInstState"),
   AiStateMachineActionCue_1 = require("./Action/AiStateMachineActionCue"),
   AiStateMachineActionEnterFight_1 = require("./Action/AiStateMachineActionEnterFight"),
+  AiStateMachineActionExitHit_1 = require("./Action/AiStateMachineActionExitHit"),
   AiStateMachineActionRemoveBuff_1 = require("./Action/AiStateMachineActionRemoveBuff"),
   AiStateMachineActionResetPart_1 = require("./Action/AiStateMachineActionResetPart"),
   AiStateMachineActionResetStatus_1 = require("./Action/AiStateMachineActionResetStatus"),
@@ -16,10 +17,15 @@ const AiStateMachineAction_1 = require("./Action/AiStateMachineAction"),
   AiStateMachineConditionAttribute_1 = require("./Condition/AiStateMachineConditionAttribute"),
   AiStateMachineConditionAttributeRate_1 = require("./Condition/AiStateMachineConditionAttributeRate"),
   AiStateMachineConditionBuffStack_1 = require("./Condition/AiStateMachineConditionBuffStack"),
+  AiStateMachineConditionCheckGroupPatrol_1 = require("./Condition/AiStateMachineConditionCheckGroupPatrol"),
   AiStateMachineConditionCheckInstState_1 = require("./Condition/AiStateMachineConditionCheckInstState"),
+  AiStateMachineConditionCheckLastState_1 = require("./Condition/AiStateMachineConditionCheckLastState"),
+  AiStateMachineConditionCheckPositionState_1 = require("./Condition/AiStateMachineConditionCheckPositionState"),
   AiStateMachineConditionCheckState_1 = require("./Condition/AiStateMachineConditionCheckState"),
+  AiStateMachineConditionHasMoveInput_1 = require("./Condition/AiStateMachineConditionHasMoveInput"),
   AiStateMachineConditionHate_1 = require("./Condition/AiStateMachineConditionHate"),
   AiStateMachineConditionListenBeHit_1 = require("./Condition/AiStateMachineConditionListenBeHit"),
+  AiStateMachineConditionMontageTimeElapsing_1 = require("./Condition/AiStateMachineConditionMontageTimeElapsing"),
   AiStateMachineConditionMontageTimeRemaining_1 = require("./Condition/AiStateMachineConditionMontageTimeRemaining"),
   AiStateMachineConditionOr_1 = require("./Condition/AiStateMachineConditionOr"),
   AiStateMachineConditionPartLife_1 = require("./Condition/AiStateMachineConditionPartLife"),
@@ -43,6 +49,8 @@ const AiStateMachineAction_1 = require("./Action/AiStateMachineAction"),
   AiStateMachineStatePartPanelVisible_1 = require("./State/AiStateMachineStatePartPanelVisible"),
   AiStateMachineStateTag_1 = require("./State/AiStateMachineStateTag"),
   AiStateMachineTask_1 = require("./Task/AiStateMachineTask"),
+  AiStateMachineTaskBeHitMontage_1 = require("./Task/AiStateMachineTaskBeHitMontage"),
+  AiStateMachineTaskGroupPatrol_1 = require("./Task/AiStateMachineTaskGroupPatrol"),
   AiStateMachineTaskLeaveFight_1 = require("./Task/AiStateMachineTaskLeaveFight"),
   AiStateMachineTaskMontage_1 = require("./Task/AiStateMachineTaskMontage"),
   AiStateMachineTaskMoveToTarget_1 = require("./Task/AiStateMachineTaskMoveToTarget"),
@@ -83,6 +91,19 @@ class AiStateMachineFactory {
           break;
         case 104:
           t = new AiStateMachineTaskPatrol_1.AiStateMachineTaskPatrol(i, e);
+          break;
+        case 105:
+          t =
+            new AiStateMachineTaskBeHitMontage_1.AiStateMachineTaskBeHitMontage(
+              i,
+              e,
+            );
+          break;
+        case 106:
+          t = new AiStateMachineTaskGroupPatrol_1.AiStateMachineTaskGroupPatrol(
+            i,
+            e,
+          );
           break;
         default:
           t = new AiStateMachineTask_1.AiStateMachineTask(i, e);
@@ -257,6 +278,12 @@ error:` + t,
               e,
             );
           break;
+        case 103:
+          t = new AiStateMachineActionExitHit_1.AiStateMachineActionExitHit(
+            i,
+            e,
+          );
+          break;
         default:
           t = new AiStateMachineAction_1.AiStateMachineAction(i, e);
       }
@@ -384,6 +411,46 @@ error:` + t,
         case 103:
           t =
             new AiStateMachineConditionListenBeHit_1.AiStateMachineConditionListenBeHit(
+              i,
+              a,
+              e,
+            );
+          break;
+        case 108:
+          t =
+            new AiStateMachineConditionCheckPositionState_1.AiStateMachineConditionCheckPositionState(
+              i,
+              a,
+              e,
+            );
+          break;
+        case 104:
+          t =
+            new AiStateMachineConditionHasMoveInput_1.AiStateMachineConditionHasMoveInput(
+              i,
+              a,
+              e,
+            );
+          break;
+        case 105:
+          t =
+            new AiStateMachineConditionMontageTimeElapsing_1.AiStateMachineConditionMontageTimeElapsing(
+              i,
+              a,
+              e,
+            );
+          break;
+        case 106:
+          t =
+            new AiStateMachineConditionCheckGroupPatrol_1.AiStateMachineConditionCheckGroupPatrol(
+              i,
+              a,
+              e,
+            );
+          break;
+        case 31:
+          t =
+            new AiStateMachineConditionCheckLastState_1.AiStateMachineConditionCheckLastState(
               i,
               a,
               e,

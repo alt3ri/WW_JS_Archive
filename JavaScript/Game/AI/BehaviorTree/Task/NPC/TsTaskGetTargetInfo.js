@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const EntitySystem_1 = require("../../../../../Core/Entity/EntitySystem"),
   GlobalData_1 = require("../../../../GlobalData"),
-  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  CharacterAttributeTypes_1 = require("../../../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
   TsAiController_1 = require("../../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase");
 class TsTaskGetTargetInfo extends TsTaskAbortImmediatelyBase_1.default {
@@ -11,6 +12,13 @@ class TsTaskGetTargetInfo extends TsTaskAbortImmediatelyBase_1.default {
       (this.TargetKey = ""),
       (this.PositionKey = ""),
       (this.HpKey = ""),
+      (this.IsInitTsVariables = !1),
+      (this.TsTargetKey = ""),
+      (this.TsPositionKey = ""),
+      (this.TsHpKey = "");
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsTargetKey = ""),
       (this.TsPositionKey = ""),
@@ -27,24 +35,27 @@ class TsTaskGetTargetInfo extends TsTaskAbortImmediatelyBase_1.default {
     if ((this.InitTsVariables(), e instanceof TsAiController_1.default)) {
       let t = e.AiController.CharActorComp;
       if (this.TsTargetKey) {
-        e = BlackboardController_1.BlackboardController.GetIntValueByWorld(
-          this.TsTargetKey,
-        );
+        e =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByWorld(
+            this.TsTargetKey,
+          );
         if (!e) return void this.FinishExecute(!1);
         e = EntitySystem_1.EntitySystem.Get(e);
         t = e.GetComponent(3);
       }
       t
         ? ((e = t.ActorLocation),
-          BlackboardController_1.BlackboardController.SetVectorValueByGlobal(
+          ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByGlobal(
             this.TsPositionKey,
             e.X,
             e.Y,
             e.Z,
           ),
-          (e = t.Actor.AttributeSet) &&
-            ((e = e.Life.CurrentValue),
-            BlackboardController_1.BlackboardController.SetIntValueByWorld(
+          (e = t.Entity.GetComponent(170)) &&
+            ((e = e.GetCurrentValue(
+              CharacterAttributeTypes_1.EAttributeId.Proto_Life,
+            )),
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetIntValueByWorld(
               this.TsHpKey,
               e,
             )),

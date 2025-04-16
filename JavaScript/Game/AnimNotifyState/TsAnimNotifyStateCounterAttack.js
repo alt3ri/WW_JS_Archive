@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
   FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   BulletUtil_1 = require("../NewWorld/Bullet/BulletUtil");
@@ -10,24 +11,40 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
       (this.弹反摄像机预设 = void 0),
       (this.弹反特效预设 = void 0),
       (this.弹反设置 = void 0),
-      (this.生成子弹ID = void 0);
+      (this.生成子弹ID = void 0),
+      (this.AnMessageId = void 0);
   }
-  K2_NotifyBegin(t, i, s) {
+  Constructor() {
+    this.AnMessageId = void 0;
+  }
+  K2_NotifyBegin(t, i, e) {
     t = t.GetOwner();
-    if (t instanceof TsBaseCharacter_1.default) {
+    if (
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Battle", 20, "CounterAttack Begin", [
+          "Owner",
+          t?.GetName(),
+        ]),
+      t instanceof TsBaseCharacter_1.default)
+    ) {
       t = t.CharacterActorComponent?.Entity;
       if (!t?.Valid) return !1;
-      var e = t.GetComponent(34),
-        t = t.GetComponent(53);
-      if (!e?.Valid || !t?.Valid) return !1;
+      var s = t.GetComponent(207),
+        s =
+          ((this.AnMessageId = s?.CreateAnimNotifyContent(
+            i.GetName(),
+            this.exportIndex,
+          )),
+          t.GetComponent(39)),
+        i = t.GetComponent(60);
+      if (!s?.Valid || !i?.Valid) return !1;
       if (!this.弹反设置) return !1;
       if (
-        (e?.SetCurAnInfo(this.exportIndex, i.GetName()),
-        t.SetCounterAttackAnsInfo(this.exportIndex),
+        (i.SetCounterAttackAnsInfo(this.AnMessageId, this.exportIndex),
         this.弹反摄像机预设 || this.弹反特效预设)
       )
         return (
-          (e = new UE.SCounterAttack(
+          (t = new UE.SCounterAttack(
             this.弹反设置?.弹反部位,
             this.弹反设置?.无弹反动作效果,
             this.弹反设置?.有弹反动作效果,
@@ -43,69 +60,97 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
             this.弹反设置?.QTE弹刀忽略角度距离检测,
           )),
           this.弹反摄像机预设 &&
-            ((e.无弹反动作效果.摄像机设置 = this.弹反摄像机预设.CameraData),
-            (e.无弹反动作效果.攻击者顿帧 =
+            ((t.无弹反动作效果.摄像机设置 = this.弹反摄像机预设.CameraData),
+            (t.无弹反动作效果.攻击者顿帧 =
               this.弹反摄像机预设.AttackerTimeScale),
-            (e.无弹反动作效果.被击者顿帧 = this.弹反摄像机预设.VictimTimeScale),
-            (e.无弹反动作效果.震屏 = this.弹反摄像机预设.CameraShake),
-            (e.有弹反动作效果.摄像机设置 = this.弹反摄像机预设.CameraData),
-            (e.有弹反动作效果.攻击者顿帧 =
+            (t.无弹反动作效果.被击者顿帧 = this.弹反摄像机预设.VictimTimeScale),
+            (t.无弹反动作效果.震屏 = this.弹反摄像机预设.CameraShake),
+            (t.有弹反动作效果.摄像机设置 = this.弹反摄像机预设.CameraData),
+            (t.有弹反动作效果.攻击者顿帧 =
               this.弹反摄像机预设.AttackerTimeScale),
-            (e.有弹反动作效果.被击者顿帧 = this.弹反摄像机预设.VictimTimeScale),
-            (e.有弹反动作效果.震屏 = this.弹反摄像机预设.CameraShake)),
+            (t.有弹反动作效果.被击者顿帧 = this.弹反摄像机预设.VictimTimeScale),
+            (t.有弹反动作效果.震屏 = this.弹反摄像机预设.CameraShake)),
           this.弹反特效预设 &&
-            ((e.无弹反动作效果.特效DA = this.弹反特效预设.EffectDA),
-            (e.无弹反动作效果.特效Offset = this.弹反特效预设.Offset),
-            (e.无弹反动作效果.特效Scale = this.弹反特效预设.Scale),
-            (e.有弹反动作效果.特效DA = this.弹反特效预设.EffectDA),
-            (e.有弹反动作效果.特效Offset = this.弹反特效预设.Offset),
-            (e.有弹反动作效果.特效Scale = this.弹反特效预设.Scale)),
-          t.SetCounterAttackInfo(e),
-          t.SetCounterAttackEndTime(s),
+            ((t.无弹反动作效果.特效DA = this.弹反特效预设.EffectDA),
+            (t.无弹反动作效果.特效Offset = this.弹反特效预设.Offset),
+            (t.无弹反动作效果.特效Scale = this.弹反特效预设.Scale),
+            (t.有弹反动作效果.特效DA = this.弹反特效预设.EffectDA),
+            (t.有弹反动作效果.特效Offset = this.弹反特效预设.Offset),
+            (t.有弹反动作效果.特效Scale = this.弹反特效预设.Scale)),
+          i.SetCounterAttackInfo(t),
+          i.SetCounterAttackEndTime(e),
           !0
         );
-      t.SetCounterAttackInfo(this.弹反设置), t.SetCounterAttackEndTime(s);
+      i.SetCounterAttackInfo(this.弹反设置), i.SetCounterAttackEndTime(e);
     }
     return !0;
   }
   K2_NotifyEnd(t, i) {
-    var s = t.GetOwner();
-    if (s instanceof TsBaseCharacter_1.default) {
-      var e = s.CharacterActorComponent?.Entity;
-      if (!e?.Valid) return !1;
-      var r = e.GetComponent(34),
-        e = e.GetComponent(53);
-      if (!r?.Valid || !e?.Valid) return !1;
-      var h = e.IsTriggerCounterAttack;
-      if ((e.CounterAttackEnd(), !h)) {
+    var e = t.GetOwner();
+    if (
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Battle", 20, "CounterAttack End", [
+          "Owner",
+          e?.GetName(),
+        ]),
+      e instanceof TsBaseCharacter_1.default)
+    ) {
+      var s = e.CharacterActorComponent?.Entity;
+      if (!s?.Valid)
+        return (
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Battle",
+              20,
+              "CounterAttack End entity not valid",
+              ["Owner", e?.GetName()],
+            ),
+          !1
+        );
+      var r = s.GetComponent(39),
+        s = s.GetComponent(60);
+      if (!r?.Valid || !s?.Valid)
+        return (
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Battle",
+              20,
+              "CounterAttack End skillComp or hitComp not valid",
+              ["Owner", e?.GetName()],
+              ["SkillComp", r?.Valid],
+              ["HitComp", s?.Valid],
+            ),
+          !1
+        );
+      var h = s.IsTriggerCounterAttack;
+      if ((s.CounterAttackEnd(), !h)) {
         if (FNameUtil_1.FNameUtil.IsNothing(this.生成子弹ID)) return !1;
-        r?.SetCurAnInfo(this.exportIndex, i.GetName()),
-          BulletUtil_1.BulletUtil.CreateBulletFromAN(
-            s,
-            this.生成子弹ID.toString(),
-            void 0,
-            r.GetCurrentMontageCorrespondingSkillId().toString(),
-            !1,
-            void 0,
-          );
+        BulletUtil_1.BulletUtil.CreateBulletFromAN(
+          e,
+          this.生成子弹ID.toString(),
+          void 0,
+          r.GetCurrentMontageCorrespondingSkillId().toString(),
+          !1,
+          this.AnMessageId,
+        );
       }
       return !0;
     }
     return (
       FNameUtil_1.FNameUtil.IsNothing(this.生成子弹ID) ||
         (2 !==
-          (e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(
-            s.GetWorld(),
+          (s = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldType(
+            e.GetWorld(),
           )) &&
-          4 !== e) ||
+          4 !== s) ||
         ((h = UE.KismetSystemLibrary.GetOuterObject(this)),
-        (i = UE.KismetSystemLibrary.GetPathName(h)),
+        (r = UE.KismetSystemLibrary.GetPathName(h)),
         UE.BPL_BulletPreview_C.ShowBulletPreview(
-          i,
+          r,
           this.生成子弹ID,
-          s,
+          e,
           t,
-          s.GetWorld(),
+          e.GetWorld(),
           void 0,
         )),
       !1

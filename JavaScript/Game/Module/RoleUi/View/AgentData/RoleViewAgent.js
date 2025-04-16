@@ -9,7 +9,8 @@ class RoleViewAgent {
     (this.RoleIdList = []),
       (this.CurSelectTabName = void 0),
       (this.CurSelectRoleId = 0),
-      (this.RoleViewStateInternal = 0);
+      (this.RoleViewStateInternal = 0),
+      (this.TeamPositionType = void 0);
   }
   Init(e, t, r) {
     (this.RoleIdList = e),
@@ -21,26 +22,38 @@ class RoleViewAgent {
       ? ModelManager_1.ModelManager.RoleModel.GetRoleSystemRoleList()
       : this.RoleIdList;
   }
+  CheckMainRoleToIdList(e) {
+    var t;
+    this.RoleIdList.length &&
+      !this.RoleIdList.includes(e) &&
+      ModelManager_1.ModelManager.RoleModel?.IsMainRole(e) &&
+      -1 !==
+        (t = this.RoleIdList.findIndex((e) =>
+          ModelManager_1.ModelManager.RoleModel?.IsMainRole(e),
+        )) &&
+      (this.RoleIdList[t] = e);
+  }
   GetCurSelectRoleId() {
+    var e = this.GetRoleIdList().includes(this.CurSelectRoleId);
     return (
-      this.CurSelectRoleId <= 0 &&
+      (this.CurSelectRoleId <= 0 || !e) &&
         (this.CurSelectRoleId = this.GetDefaultSelectRoleId()),
       this.CurSelectRoleId
     );
   }
   GetDefaultSelectRoleId() {
-    var e;
+    var e, t;
     return 0 < this.RoleIdList.length
       ? this.RoleIdList[0]
-      : void 0 !==
-          (e = ModelManager_1.ModelManager.RoleModel.GetBattleTeamFirstRoleId())
-        ? e
-        : (e = ModelManager_1.ModelManager.RoleModel.GetRoleSystemRoleList())
-              .length <= 0
-          ? (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Role", 59, "取不到角色数据！"),
-            0)
-          : e[0];
+      : ((e = ModelManager_1.ModelManager.RoleModel.GetBattleTeamFirstRoleId()),
+        (t = ModelManager_1.ModelManager.RoleModel.GetRoleSystemRoleList()),
+        void 0 !== e && t.includes(e)
+          ? e
+          : t.length <= 0
+            ? (Log_1.Log.CheckError() &&
+                Log_1.Log.Error("Role", 58, "取不到角色数据！"),
+              0)
+            : t[0]);
   }
   SetCurSelectRoleId(e) {
     this.CurSelectRoleId = e;

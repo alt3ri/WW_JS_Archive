@@ -40,6 +40,12 @@ class LogicTreeContainer {
   GetCurrentActiveChildQuestNode() {
     return this.Tree?.GetCurrentActiveChildQuestNode();
   }
+  GetFirstNoHideTrackActiveChildQuestNode() {
+    return this.Tree?.GetFirstNoHideTrackActiveChildQuestNode();
+  }
+  GetCurrentActiveChildQuestNodes() {
+    return this.Tree?.GetCurrentActiveChildQuestNodes();
+  }
   GetActiveChildQuestNodesId() {
     return this.Tree?.GetActiveChildQuestNodesId();
   }
@@ -55,8 +61,8 @@ class LogicTreeContainer {
   GetTrackDistance(e) {
     return this.Tree?.GetTrackDistance(e);
   }
-  GetNodeDungeonId(e) {
-    return this.Tree.GetNodeDungeonId(e);
+  GetDungeonId() {
+    return this.Tree.GetBlackBoard().DungeonId;
   }
   HasValidTrackTarget(e) {
     return this.Tree.HasValidTrackTarget(e);
@@ -82,14 +88,14 @@ class LogicTreeContainer {
   CanShowInUiPanel() {
     return this.Tree?.CheckCanShow() ?? !1;
   }
+  CanShowTrackExpression() {
+    return this.Tree?.CanShowTrackExpression() ?? !1;
+  }
   StartTextExpress(e = 0) {
     this.Tree?.StartTextExpress(e);
   }
   EndTextExpress(e = 0) {
     this.Tree?.EndTextExpress(e);
-  }
-  GetSilentAreaShowInfo() {
-    return this.Tree?.GetSilentAreaShowInfo();
   }
   IsSuspend() {
     return this.Tree?.IsSuspend();
@@ -113,10 +119,10 @@ class LogicTreeContainer {
     return void 0 !== this.BehaviorTree;
   }
   CanShowGuideLine() {
-    return this.GetCurrentActiveChildQuestNode()?.ContainTag(4) ?? !1;
+    return this.GetCurrentActiveChildQuestNode()?.ContainTag(5) ?? !1;
   }
   IsAlwaysShowGuideLine() {
-    return this.GetCurrentActiveChildQuestNode()?.ContainTag(5) ?? !1;
+    return this.GetCurrentActiveChildQuestNode()?.ContainTag(6) ?? !1;
   }
 }
 exports.LogicTreeContainer = LogicTreeContainer;

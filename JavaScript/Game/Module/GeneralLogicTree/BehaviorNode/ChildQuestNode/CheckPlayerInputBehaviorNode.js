@@ -14,10 +14,10 @@ class CheckPlayerInputBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBa
       (this.CSo = "ChallengeAgain"),
       (this.ZMe = void 0),
       (this.bMe = (e, t) => {
-        1 === t && e === this.ZMe && this.OnChallengeAgain();
+        1 === t && this.OnChallengeAgain(e);
       }),
-      (this.OnChallengeAgain = () => {
-        this.RXt || this.SubmitNode();
+      (this.OnChallengeAgain = (e) => {
+        this.RXt || (this.ZMe === e && this.SubmitNode());
       }),
       (this.OnAfterSubmit = (e) => {
         this.RXt = !1;
@@ -25,14 +25,17 @@ class CheckPlayerInputBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBa
   }
   get CorrelativeEntities() {}
   OnCreate(e) {
-    return (
-      !!super.OnCreate(e) &&
-      (e = e.Condition).Type === IQuest_1.EChildQuest.CheckPlayerInput &&
-      ((this.CSo = e.CheckInput.ButtonType),
-      "ChallengeAgain" === this.CSo &&
-        (this.ZMe = InputMappingsDefine_1.actionMappings.重新挑战),
-      !0)
-    );
+    if (!super.OnCreate(e)) return !1;
+    e = e.Condition;
+    if (e.Type !== IQuest_1.EChildQuest.CheckPlayerInput) return !1;
+    switch (((this.CSo = e.CheckInput.ButtonType), this.CSo)) {
+      case "ChallengeAgain":
+        this.ZMe = InputMappingsDefine_1.actionMappings.重新挑战;
+        break;
+      case "ExitChallenge":
+        this.ZMe = InputMappingsDefine_1.actionMappings.玩法放弃;
+    }
+    return !0;
   }
   AddEventsOnChildQuestStart() {
     this.ZMe &&
@@ -48,7 +51,8 @@ class CheckPlayerInputBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBa
         EventDefine_1.EEventName.ChallengeAgain,
         this.OnChallengeAgain,
       ),
-      this.Blackboard.AddTag(14));
+      this.ZMe === InputMappingsDefine_1.actionMappings.重新挑战) &&
+      this.Blackboard.AddTag(15);
   }
   RemoveEventsOnChildQuestEnd() {
     this.ZMe &&
@@ -60,7 +64,8 @@ class CheckPlayerInputBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBa
         EventDefine_1.EEventName.ChallengeAgain,
         this.OnChallengeAgain,
       ),
-      this.Blackboard.RemoveTag(14));
+      this.ZMe === InputMappingsDefine_1.actionMappings.重新挑战) &&
+      this.Blackboard.RemoveTag(15);
   }
   OnBeforeSubmit() {
     this.RXt = !0;

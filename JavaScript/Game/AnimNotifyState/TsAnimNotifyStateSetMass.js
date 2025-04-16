@@ -6,20 +6,21 @@ class TsAnimNotifyStateSetMass extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.NewMass = -0), (this.OldMass = -0);
   }
-  K2_NotifyBegin(e, t, s) {
-    e = e.GetOwner();
+  Constructor() {}
+  K2_NotifyBegin(t, e, s) {
+    t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-      ((this.OldMass = e.CharacterMovement.Mass),
-      (e.CharacterMovement.Mass = this.NewMass),
+      t instanceof TsBaseCharacter_1.default &&
+      ((this.OldMass = t.CharacterMovement.Mass),
+      (t.CharacterMovement.Mass = this.NewMass),
       !0)
     );
   }
-  K2_NotifyEnd(e, t) {
-    e = e.GetOwner();
+  K2_NotifyEnd(t, e) {
+    t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-      ((e.CharacterMovement.Mass = this.OldMass), !0)
+      t instanceof TsBaseCharacter_1.default &&
+      ((t.CharacterMovement.Mass = this.OldMass), !0)
     );
   }
   GetNotifyName() {

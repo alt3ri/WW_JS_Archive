@@ -9,13 +9,17 @@ class SeamlessTravelContext {
       (this.EffectExpandTime = 0),
       (this.EffectCollapseTime = 0),
       (this.LeastTime = 0),
-      (this.FloorParams = void 0);
+      (this.FloorParams = void 0),
+      (this.IsTeleportInPlace = !1),
+      (this.TransitionWeatherDaPath = void 0);
   }
   ParseConfig(s) {
     (this.EffectPath = s.D$s),
       (this.EffectExpandTime = s.U$s),
       (this.EffectCollapseTime = Math.max(s.P$s, DEFAULT_EFFECT_COLLAPSE_TIME)),
       (this.LeastTime = s.A$s),
+      (this.IsTeleportInPlace = s.$n1),
+      (this.TransitionWeatherDaPath = s.Wn1),
       s.cta &&
         ((this.FloorParams = new SeamlessTravelFloorParams()),
         this.FloorParams.ParseFloorParams(s.dta));

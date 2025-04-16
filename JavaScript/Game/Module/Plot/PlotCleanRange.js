@@ -31,7 +31,7 @@ class PlotCleanRange {
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 剧情清场持续隐藏实体",
             ["pb", t.PbDataId],
             ["cd", t.CreatureDataId],
@@ -67,7 +67,7 @@ class PlotCleanRange {
       l.push([t.PbDataId, t.CreatureDataId]);
     }),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 剧情清场隐藏范围内实体", [
+        Log_1.Log.Info("Plot", 26, "[PlotCleanRange] 剧情清场隐藏范围内实体", [
           "list",
           l,
         ]);
@@ -86,7 +86,7 @@ class PlotCleanRange {
         this.QNn.clear(),
         (this.WNn = !1),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 恢复清场");
+          Log_1.Log.Info("Plot", 26, "[PlotCleanRange] 恢复清场");
     }
   }
   zNn(e) {
@@ -94,13 +94,13 @@ class PlotCleanRange {
       (e &&
         ((this.VYi = !0),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 演出清理SimpleNPC"),
+          Log_1.Log.Info("Plot", 26, "[PlotCleanRange] 演出清理SimpleNPC"),
         SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !0)));
   }
   ZNn() {
     this.VYi &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 演出恢复SimpleNPC"),
+        Log_1.Log.Info("Plot", 26, "[PlotCleanRange] 演出恢复SimpleNPC"),
       SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !1),
       (this.VYi = !1));
   }
@@ -111,7 +111,7 @@ class PlotCleanRange {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 实体失效 忽略",
             ["pb", e.PbDataId],
             ["cd", e.CreatureDataId],
@@ -124,7 +124,7 @@ class PlotCleanRange {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 拿不到CreatureData 忽略",
             ["pb", e.PbDataId],
             ["cd", e.CreatureDataId],
@@ -136,7 +136,7 @@ class PlotCleanRange {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 主角 忽略",
             ["pb", e.PbDataId],
             ["cd", e.CreatureDataId],
@@ -149,7 +149,7 @@ class PlotCleanRange {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 配置必显示 忽略",
             ["pb", e.PbDataId],
             ["cd", e.CreatureDataId],
@@ -162,20 +162,20 @@ class PlotCleanRange {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 行人 忽略",
             ["pb", e.PbDataId],
             ["cd", e.CreatureDataId],
           ),
         !1)
       );
-    if (e.Entity.GetComponent(196))
+    if (e.Entity.GetComponent(209))
       return (
         !this.$Nn ||
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 刷行人器 忽略",
             ["pb", e.PbDataId],
             ["cd", e.CreatureDataId],
@@ -185,15 +185,18 @@ class PlotCleanRange {
     n = e.Entity.GetComponent(1)?.ActorTransform;
     if (n) this.Lz.FromUeVector(n.GetLocation());
     else {
-      n = ModelManager_1.ModelManager.CreatureModel?.GetCompleteEntityData(
-        e.PbDataId,
-      )?.Transform;
+      n =
+        o.GetEntityConfigType() === Protocol_1.Aki.Protocol.rLs.F6n
+          ? ModelManager_1.ModelManager.CreatureModel?.GetCompleteEntityData(
+              e.PbDataId,
+            )?.Transform
+          : void 0;
       if (!n)
         return (
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Plot",
-              27,
+              26,
               "[PlotCleanRange] 拿不到坐标 忽略",
               ["pb", e.PbDataId],
               ["cd", e.CreatureDataId],
@@ -217,7 +220,7 @@ class PlotCleanRange {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotCleanRange] 忽略列表中 忽略",
             ["pb", e.PbDataId],
             ["cd", e.CreatureDataId],
@@ -228,7 +231,7 @@ class PlotCleanRange {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Plot",
-              27,
+              26,
               "[PlotCleanRange] 范围外 忽略",
               ["pb", e.PbDataId],
               ["cd", e.CreatureDataId],

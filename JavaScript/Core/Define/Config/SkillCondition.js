@@ -51,10 +51,10 @@ class SkillCondition {
     return this.conditionparam(t);
   }
   conditionparam(t, i) {
-    var n = this.J7.__offset(this.z7, 8);
-    return n
+    var s = this.J7.__offset(this.z7, 8);
+    return s
       ? (i || new DicIntInt_1.DicIntInt()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + n) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
@@ -64,8 +64,14 @@ class SkillCondition {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   description(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
 }
 exports.SkillCondition = SkillCondition;

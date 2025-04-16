@@ -20,7 +20,7 @@ class FlowActionShowCenterText extends FlowActionBase_1.FlowActionBase {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Plot",
-        27,
+        26,
         "黑屏白字行为不再维护，请策划使用ShowTalk形式的黑幕白字",
         ["id", this.Context.FormatId],
         ["action", this.ActionInfo.ActionId],

@@ -73,7 +73,9 @@ class UiCameraSequence {
   }
   SetTransformOrigin(e) {
     this.PUo &&
-      ((this.b2t.bOverrideInstanceData = !0), (this.PUo.TransformOrigin = e));
+      ((this.b2t.bOverrideInstanceData = !0),
+      (e = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(e)),
+      (this.PUo.TransformOrigin = e));
   }
   SetTransformOriginActor(e) {
     this.PUo &&

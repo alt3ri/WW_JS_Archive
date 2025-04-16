@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
     var a,
-      r = arguments.length,
-      h =
-        r < 3
+      h = arguments.length,
+      r =
+        h < 3
           ? i
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(i, e))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      h = Reflect.decorate(t, i, e, s);
+      r = Reflect.decorate(t, i, e, s);
     else
       for (var o = t.length - 1; 0 <= o; o--)
-        (a = t[o]) && (h = (r < 3 ? a(h) : 3 < r ? a(i, e, h) : a(i, e)) || h);
-    return 3 < r && h && Object.defineProperty(i, e, h), h;
+        (a = t[o]) && (r = (h < 3 ? a(r) : 3 < h ? a(i, e, r) : a(i, e)) || r);
+    return 3 < h && r && Object.defineProperty(i, e, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPartComponent = exports.CharacterPart = void 0);
@@ -61,12 +61,13 @@ class CharacterPart {
       (this.ScanEffect = ""),
       (this.ScanEffectSocketName = void 0),
       (this.ScanMaterialEffect = void 0),
+      (this.CombinePartSocketName = void 0),
       (this.IsWeaknessHit = !1),
       (this.HitBoneName = ""),
       (this.BaseEntity = t),
       (this.ActorComp = t.GetComponent(3)),
-      (this.TagComponent = t.GetComponent(190)),
-      (this.AttributeComp = t.GetComponent(159)),
+      (this.TagComponent = t.GetComponent(203)),
+      (this.AttributeComp = t.GetComponent(171)),
       (this.Index = i),
       (this.PartTag = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(
         e.部位标签.TagName,
@@ -91,7 +92,8 @@ class CharacterPart {
       (this.ScanEffectSocketName = FNameUtil_1.FNameUtil.GetDynamicFName(
         e.扫描特效绑定骨骼名,
       )),
-      (this.ScanMaterialEffect = e.扫描材质特效);
+      (this.ScanMaterialEffect = e.扫描材质特效),
+      (this.CombinePartSocketName = e.合体骨骼名);
     for (let t = 0; t < e.弱点攻击类型.Num(); t++)
       this.WeaknessTypeSet.add(e.弱点攻击类型.Get(t));
     for (let t = 0; t < e.属性快照Buff列表.Num(); t++)
@@ -128,16 +130,16 @@ class CharacterPart {
   }
   OnDamage(t, i, e, s = !0) {
     let a = !1;
-    var r = this.ActorComp.Actor,
-      h = this.RemainedLifeRate();
+    var h = this.ActorComp.Actor,
+      r = this.RemainedLifeRate();
     return (
       s &&
         ((this.Life -= t),
         (s = this.RemainedLifeRate()),
         GlobalData_1.GlobalData.BpEventManager.角色部位血量变化时.Broadcast(
-          r,
-          this.PartTag,
           h,
+          this.PartTag,
+          r,
           s,
         ),
         EventSystem_1.EventSystem.EmitWithTarget(
@@ -146,13 +148,13 @@ class CharacterPart {
           t,
           this,
         ),
-        0 < h) &&
+        0 < r) &&
         s <= 0 &&
         (a = !0),
       i &&
         ((t = e.GetComponent(3).Actor),
         GlobalData_1.GlobalData.BpEventManager.角色部位弱点打击时.Broadcast(
-          r,
+          h,
           this.PartTag,
           t,
         )),
@@ -200,6 +202,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
       (this.PartMapByTag = void 0),
       (this.WeaknessByBone = void 0),
       (this.GroupMapByBone = void 0),
+      (this.PartMapByCombineBone = void 0),
       (this.njr = void 0),
       (this.sjr = void 0),
       (this.ajr = !1);
@@ -222,7 +225,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
   }
   OnInit() {
     return (
-      (this.TagComponent = this.Entity.GetComponent(190)),
+      (this.TagComponent = this.Entity.GetComponent(203)),
       this.Entity.GetComponent(3).Actor?.DtCharacterPart && (this.ajr = !0),
       !0
     );
@@ -239,16 +242,16 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
       for (let t = 0; t < i.length; t++) {
         var s,
           a = i[t],
-          r = new CharacterPart(this.Entity, t, a),
-          h =
-            (this.Parts.push(r),
-            this.PartMapByBone.set(a.部位名, r),
+          h = new CharacterPart(this.Entity, t, a),
+          r =
+            (this.Parts.push(h),
+            this.PartMapByBone.set(a.部位名, h),
             a.骨骼名.Num()),
-          o = r.IsWeakness;
-        for (let t = 0; t < h; t++) {
+          o = h.IsWeakness;
+        for (let t = 0; t < r; t++) {
           var n = a.骨骼名.Get(t);
           this.GroupMapByBone.set(n, a.部位名),
-            o && this.WeaknessByBone.set(n, r);
+            o && this.WeaknessByBone.set(n, h);
         }
         this.TagComponent.RemoveTag(a.部位标签?.TagId),
           this.PartMapByTag.has(a.部位标签.TagName) &&
@@ -258,26 +261,30 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
               "部位标签重复注册",
               ["v", a.部位标签.TagName],
             ),
-          this.PartMapByTag.set(a.部位标签.TagName, r),
-          this.njr.push(this.hjr(r, a.部位激活标签)),
+          this.PartMapByTag.set(a.部位标签.TagName, h),
+          this.njr.push(this.hjr(h, a.部位激活标签)),
+          FNameUtil_1.FNameUtil.IsNothing(a.合体骨骼名) ||
+            (this.PartMapByCombineBone ||
+              (this.PartMapByCombineBone = new Map()),
+            this.PartMapByCombineBone.set(a.合体骨骼名.toString(), h)),
           e
-            ? (s = e.PTs[t]) && r.UpdatePartInfo(s)
+            ? (s = e.PTs[t]) && h.UpdatePartInfo(s)
             : (a.是否出生激活 &&
                 (this.TagComponent.HasTag(a.部位激活标签.TagId) &&
                   Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Character",
-                    21,
+                    20,
                     "部位勾选了[是否出生激活]，但是在蓝图中提前加了标签，会导致标签添加时无法触发从无到有事件，引起功能失效",
                     ["角色", this.BaseChar.GetName()],
                     ["部位", a.部位名],
                   ),
                 this.TagComponent.AddTag(a.部位激活标签?.TagId)),
-              ((s = Protocol_1.Aki.Protocol.lFs.create()).eWn = r.Life),
-              (s.l5n = r.LifeMax),
-              (s.jjn = r.Index),
+              ((s = Protocol_1.Aki.Protocol.lFs.create()).eWn = h.Life),
+              (s.l5n = h.LifeMax),
+              (s.jjn = h.Index),
               (s._5n = a.是否出生激活),
-              (s.WWn = r.PartTag.TagId));
+              (s.WWn = h.PartTag.TagId));
       }
     }
     return !0;
@@ -312,6 +319,9 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
       t,
     ]);
   }
+  GetPartByCombineBoneName(t) {
+    if (this.PartMapByCombineBone) return this.PartMapByCombineBone.get(t);
+  }
   hjr(e, t) {
     return this.TagComponent.ListenForTagAddOrRemove(t?.TagId, (t, i) => {
       e.SetActive(i);
@@ -321,7 +331,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
     var e = MathUtils_1.MathUtils.LongToNumber(i.F4n),
       e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
-      var s = e.Entity.GetComponent(61);
+      var s = e.Entity.GetComponent(68);
       for (const a of i.xTs) s.GetPartByIndex(a.jjn)?.UpdatePartInfo(a);
     }
   }
@@ -330,7 +340,7 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
       e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
       CombatLog_1.CombatLog.Info("Part", t, "PartComponentInitNotify");
-      var s = e.Entity.GetComponent(61);
+      var s = e.Entity.GetComponent(68);
       for (const a of i._ys.PTs) s.GetPartByIndex(a.jjn)?.UpdatePartInfo(a);
     }
   }
@@ -356,13 +366,13 @@ __decorate(
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.Handle("xFn")],
+    [CombatMessage_1.CombatNet.Listen("xFn", !1)],
     CharacterPartComponent,
     "PartComponentInitNotify",
     null,
   ),
   (CharacterPartComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(61)],
+    [(0, RegisterComponent_1.RegisterComponent)(68)],
     CharacterPartComponent,
   )),
   (exports.CharacterPartComponent = CharacterPartComponent);

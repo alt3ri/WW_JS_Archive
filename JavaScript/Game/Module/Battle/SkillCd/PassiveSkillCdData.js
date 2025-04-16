@@ -2,16 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldPassiveSkillCdData = exports.PassiveSkillCdData = void 0);
 const Time_1 = require("../../../../Core/Common/Time"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  TimeUtil_1 = require("../../../Common/TimeUtil"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   PassiveSkillCdInfo_1 = require("./PassiveSkillCdInfo");
 class PassiveSkillCdData {
   constructor() {
     (this.SkillCdInfoMap = new Map()), (this.ServerSkillCd = new Map());
-  }
-  Tick(i) {
-    for (const t of this.SkillCdInfoMap.values()) t.Tick(i);
   }
   Clear() {
     this.SkillCdInfoMap.clear();
@@ -29,85 +26,88 @@ class WorldPassiveSkillCdData {
       this.AllShareSkillCdData.Clear(),
       this.OffRoleSkillCdMap.clear();
   }
-  InitPassiveSkillCd(i, t) {
-    return this.InitSkillCdCommon(i, t.Id, t.CDTime, t.IsShareAllCdSkill);
+  InitPassiveSkillCd(i, s) {
+    let e = s.CdThreshold;
+    return (
+      e < 0 &&
+        (e =
+          CommonParamById_1.configCommonParamById.GetFloatConfig(
+            "PassiveSkillCdThreshold",
+          ) ?? 0),
+      this.InitSkillCdCommon(i, s.Id, s.CDTime, s.IsShareAllCdSkill, e)
+    );
   }
-  InitSkillCdCommon(i, t, s, e) {
+  InitSkillCdCommon(i, s, e, t, a) {
     let o = void 0;
-    var a, l, r;
-    e
+    var r, l, n;
+    t
       ? (o = this.AllShareSkillCdData)
-      : ((a = i.Id),
-        (r = void 0),
-        (o = this.EntitySkillCdMap.get(a)) ||
+      : ((r = i.Id),
+        (n = void 0),
+        (o = this.EntitySkillCdMap.get(r)) ||
           ((o =
             i.GetComponent(0).IsRole() &&
             ((l = i.GetComponent(0).GetPbDataId()),
-            (r = this.OffRoleSkillCdMap.get(l)))
-              ? (this.OffRoleSkillCdMap.delete(l), r)
+            (n = this.OffRoleSkillCdMap.get(l)))
+              ? (this.OffRoleSkillCdMap.delete(l), n)
               : new PassiveSkillCdData()),
-          this.EntitySkillCdMap.set(a, o)));
-    let n = o.SkillCdInfoMap.get(t);
+          this.EntitySkillCdMap.set(r, o)));
+    let d = o.SkillCdInfoMap.get(s);
     return (
-      n ||
-        (((n = new PassiveSkillCdInfo_1.PassiveSkillCdInfo()).SkillId = t),
-        (n.SkillCd = s),
-        (n.IsShareAllCdSkill = e),
-        (n.CurMaxCd = 0),
-        (n.CurRemainingCd = 0),
-        (l = o.ServerSkillCd.get(t)) &&
-          ((r = Time_1.Time.ServerTimeStamp) < l &&
-            (n.CurRemainingCd = (l - r) * TimeUtil_1.TimeUtil.Millisecond),
-          o.ServerSkillCd.delete(t)),
-        o.SkillCdInfoMap.set(t, n)),
-      n.EntityIds.add(i.Id),
-      n
+      d ||
+        (((d = new PassiveSkillCdInfo_1.PassiveSkillCdInfo()).SkillId = s),
+        (d.SkillCd = e),
+        void 0 !== a && (d.Threshold = a),
+        (d.IsShareAllCdSkill = t),
+        (d.CurMaxCd = 0),
+        (l = o.ServerSkillCd.get(s)) &&
+          ((n = Time_1.Time.ServerTimeStamp) < l &&
+            (d.SkillCdFinishStamp = Time_1.Time.FlowTime + (l - n)),
+          o.ServerSkillCd.delete(s)),
+        o.SkillCdInfoMap.set(s, d)),
+      d.EntityIds.add(i.Id),
+      d
     );
   }
   RemoveEntity(i) {
-    var t = i.Id,
-      s = this.EntitySkillCdMap.get(t);
-    if (s && (this.EntitySkillCdMap.delete(t), i.GetComponent(0).IsRole())) {
+    var s = i.Id,
+      e = this.EntitySkillCdMap.get(s);
+    if (e && (this.EntitySkillCdMap.delete(s), i.GetComponent(0).IsRole())) {
       i = i.GetComponent(0).GetPbDataId();
-      for (const e of s.SkillCdInfoMap.values()) e.EntityIds.clear();
-      this.OffRoleSkillCdMap.set(i, s);
+      for (const t of e.SkillCdInfoMap.values()) t.EntityIds.clear();
+      this.OffRoleSkillCdMap.set(i, e);
     }
-    for (const o of this.AllShareSkillCdData.SkillCdInfoMap.values())
-      o.EntityIds.delete(t);
-  }
-  Tick(i) {
-    for (const t of this.EntitySkillCdMap.values()) t.Tick(i);
-    this.AllShareSkillCdData.Tick(i);
-    for (const s of this.OffRoleSkillCdMap.values()) s.Tick(i);
+    for (const a of this.AllShareSkillCdData.SkillCdInfoMap.values())
+      a.EntityIds.delete(s);
   }
   HandlePassiveSkillNotify(i) {
-    var t = Time_1.Time.ServerTimeStamp;
-    for (const a of i.jBs) {
-      let i = this.nQe(a.Q6n);
+    var s = Time_1.Time.ServerTimeStamp;
+    for (const o of i.jBs) {
+      let i = this.nQe(o.Q6n);
       i ||
-        ((i = new PassiveSkillCdData()), this.OffRoleSkillCdMap.set(a.Q6n, i));
-      for (const l of a.HBs) {
-        var s,
-          e,
-          o = MathUtils_1.MathUtils.LongToNumber(l.$Bs);
-        o <= t ||
-          ((s = MathUtils_1.MathUtils.LongToBigInt(l.r5n)),
-          (e = i.SkillCdInfoMap.get(s))
-            ? (e.CurRemainingCd = (o - t) * TimeUtil_1.TimeUtil.Millisecond)
-            : i.ServerSkillCd.set(s, o));
+        ((i = new PassiveSkillCdData()), this.OffRoleSkillCdMap.set(o.Q6n, i));
+      for (const r of o.HBs) {
+        var e,
+          t,
+          a = MathUtils_1.MathUtils.LongToNumber(r.$Bs);
+        a <= s ||
+          ((e = MathUtils_1.MathUtils.LongToNumber(r.r5n)),
+          (t = i.SkillCdInfoMap.get(e))
+            ? (t.SkillCdFinishStamp = Time_1.Time.FlowTime + (a - s))
+            : i.ServerSkillCd.set(e, a));
       }
     }
   }
   nQe(i) {
-    const t = this.OffRoleSkillCdMap.get(i);
-    if (t) return t;
-    for (const [e, t] of this.EntitySkillCdMap) {
-      var s = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);
-      if (s?.Valid) {
-        s = s.Entity;
-        if (!t)
-          if (s.GetComponent(0).IsRole())
-            if (s.GetComponent(0).GetPbDataId() === i) return t;
+    const s = this.OffRoleSkillCdMap.get(i);
+    if (s) return s;
+    for (const [t, s] of this.EntitySkillCdMap) {
+      var e = ModelManager_1.ModelManager.CharacterModel?.GetHandle(t);
+      if (e?.Valid) {
+        e = e.Entity;
+        if (!s)
+          if (e.GetComponent(0).IsRole())
+            if (e.GetComponent(0).GetPbDataId() === i) return s;
       }
     }
   }

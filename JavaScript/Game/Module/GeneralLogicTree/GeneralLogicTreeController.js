@@ -7,6 +7,7 @@ const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LevelGeneralController_1 = require("../../LevelGamePlay/LevelGeneralController"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiManager_1 = require("../../Ui/UiManager"),
   ControllerWithAssistantBase_1 = require("./ControllerAssistant/ControllerWithAssistantBase"),
@@ -52,6 +53,10 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeRemove,
         GeneralLogicTreeController.HQe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.GeneralLogicTreeSuspend,
+        GeneralLogicTreeController.jro,
       );
   }
   static OnRemoveEvents() {
@@ -74,6 +79,10 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeRemove,
         GeneralLogicTreeController.HQe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.GeneralLogicTreeSuspend,
+        GeneralLogicTreeController.jro,
       ),
       super.OnRemoveEvents();
   }
@@ -119,17 +128,20 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
   static IsShowNodeTrackDistance(e, t) {
     return this.cYt(2).IsShowNodeTrackDistance(e, t);
   }
-  static GetTitleText(e, t) {
-    return this.cYt(2).GetTitleText(e, t);
+  static GetTitleText(e, t, r, s) {
+    return this.cYt(2).GetTitleText(e, t, r, s);
   }
   static GetNodeTrackText(e, t) {
     return this.cYt(2).GetNodeTrackText(e, t);
   }
-  static ApplyOccupyTreeExpression(e, t, r) {
-    this.cYt(2).ApplyOccupyTreeExpression(e, t, r);
+  static FormatStepTextByVarValue(e, t, r, s) {
+    return this.cYt(2).FormatStepTextByVarValueByKey(e, t, r, s);
   }
   static TryReleaseExpressionOccupation(e) {
     this.cYt(2).TryReleaseExpressionOccupation(e);
+  }
+  static OpenSystemBoardResultRequest(e, t) {
+    this.cYt(0).OpenSystemBoardResultRequest(e, t);
   }
 }
 ((exports.GeneralLogicTreeController = GeneralLogicTreeController).uYt =
@@ -180,11 +192,11 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
     o &&
       ((t = MathUtils_1.MathUtils.LongToBigInt(o.w5n)),
       (r = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t))
-        ? r.DoAction(s.fvs, o.b5n, e.W5n, e.w5n, e.K5n, e.mvs)
+        ? r.DoAction(s.fvs, o.b5n, e.W5n, e.w5n, e.K5n, e.mvs, e.sS_)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "GeneralLogicTree",
-            19,
+            18,
             "服务器通知执行行为时：对应的数据不存在，联系程序检查Bug",
             ["treeType", o.hps],
             ["treeId", t],
@@ -193,5 +205,13 @@ class GeneralLogicTreeController extends ControllerWithAssistantBase_1.Controlle
   }),
   (GeneralLogicTreeController.HQe = (e) => {
     ModelManager_1.ModelManager.GeneralLogicTreeModel.RemoveBehaviorTree(e);
+  }),
+  (GeneralLogicTreeController.jro = (e) => {
+    e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(e);
+    if (e) {
+      for (const t of e.GetBlackBoard().GetCurrentExecuteActions())
+        LevelGeneralController_1.LevelGeneralController.StopActionsExecute(t);
+      e.ExecuteTreeGuaranteeActions();
+    }
   });
 //# sourceMappingURL=GeneralLogicTreeController.js.map

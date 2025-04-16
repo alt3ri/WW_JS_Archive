@@ -65,6 +65,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.SlotOfCurrentRole = "SlotOfCurrentRole"),
       (e.PhantomTargetLevel = "PhantomTargetLevel"),
       (e.CheckClientQuest = "CheckClientQuest"),
+      (e.CheckClientQuestNode = "CheckClientQuestNode"),
       (e.PhantomMaxLevel = "PhantomMaxLevel"),
       (e.RoleTargetLevel = "RoleTargetLevel"),
       (e.RoleSkillTargetLevel = "RoleSkillTargetLevel"),
@@ -74,6 +75,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.ComboTeachingState = "ComboTeachingState"),
       (e.OnViewClose = "OnViewClose"),
       (e.OnPlayerUseSkill = "OnPlayerUseSkill"),
+      (e.OnSkillButtonDataRefresh = "OnSkillButtonDataRefresh"),
       (e.FinishGuideStepByEvent = "FinishGuideStepByEvent"),
       (e.PlayerRevive = "PlayerRevive"),
       (e.CheckTeamRoleCouldLevelUp = "CheckTeamRoleCouldLevelUp"),
@@ -104,8 +106,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.CheckHasFirstPhantomAtPosition = "CheckHasFirstPhantomAtPosition"),
       (e.CheckWorldMapSecondaryUiOpened = "CheckWorldMapSecondaryUiOpened"),
       (e.CheckHasUnlockAffixInBossRush = "CheckHasUnlockAffixInBossRush"),
+      (e.OnChangeBossRushBuff = "OnChangeBossRushBuff"),
+      (e.RoguelikeHasSelectEntryAndShow = "RoguelikeHasSelectEntryAndShow"),
       (e.CheckActivityOpen = "CheckActivityOpen"),
+      (e.CheckHasSkinInRoleSkinSubView = "CheckHasSkinInRoleSkinSubView"),
       (e.OnTakingPhoto = "OnTakingPhoto"),
+      (e.HasNotInvitedRoleInSpring25 = "HasNotInvitedRoleInSpring25"),
+      (e.CheckMapFocusByQuestId = "CheckMapFocusByQuestId"),
       (e.PickupInTowerDefenceBattle = "PickupInTowerDefenceBattle"),
       (e.CheckOnSelectMenuMainType = "CheckOnSelectMenuMainType"),
       (e.OnShowPhantomInFormation = "OnShowPhantomInFormation"),
@@ -120,8 +127,68 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.ForMoonChasingCheckMainlineTaskDone =
         "ForMoonChasingCheckMainlineTaskDone"),
       (e.ForMoonChasingOpenInteractive = "ForMoonChasingOpenInteractive"),
+      (e.CheckPureModeWhenBattleViewActive =
+        "CheckPureModeWhenBattleViewActive"),
+      (e.OnActivitySubViewDone = "OnActivitySubViewDone"),
       (e.CheckLockEnemyMode = "CheckLockEnemyMode"),
-      (e.CheckIsMulti = "CheckIsMulti");
+      (e.CheckIsShowProgressBarInMapExploreDetailView =
+        "CheckIsShowProgressBarInMapExploreDetailView"),
+      (e.CheckIsMulti = "CheckIsMulti"),
+      (e.CheckFishingRoleTechViewOpen = "CheckFishingRoleTechViewOpen"),
+      (e.CheckFishingDockyardItemTipsShown =
+        "CheckFishingDockyardItemTipsShown"),
+      (e.CheckShipTowerTeamOpen = "CheckShipTowerTeamOpen"),
+      (e.CheckDockyardWareHouseHasItem = "CheckDockyardWareHouseHasItem"),
+      (e.CheckFishingQteBtnHitValidArea = "CheckFishingQteBtnHitValidArea"),
+      (e.OnFishingQteScoreReachedMaximum = "OnFishingQteScoreReachedMaximum"),
+      (e.CheckFishingTechUnlock = "CheckFishingTechUnlock"),
+      (e.OnFishingBackpackBtnStateChange = "OnFishingBackpackBtnStateChange"),
+      (e.CheckFishingEntrustState = "CheckFishingEntrustState"),
+      (e.CheckFishingWareHouseItemListLength =
+        "CheckFishingWareHouseItemListLength"),
+      (e.CheckCurFishingEntrustAvailablePeriod =
+        "CheckCurFishingEntrustAvailablePeriod"),
+      (e.OnTreasureCompassUnitShow = "OnTreasureCompassUnitShow"),
+      (e.OnFishingBackpackQuickSellToggleShow =
+        "OnFishingBackpackQuickSellToggleShow"),
+      (e.HideSettingInCloudGame = "HideSettingInCloudGame"),
+      (e.OnPlayerTitleUnlock = "OnPlayerTitleUnlock"),
+      (e.CheckDangoMonopolyHasFinishedRound =
+        "CheckDangoMonopolyHasFinishedRound"),
+      (e.OnDangoMonopolyMoveStop = "OnDangoMonopolyMoveStop"),
+      (e.OnDangoMonopolyViewShowProcessEnd =
+        "OnDangoMonopolyViewShowProcessEnd"),
+      (e.OnDangoAbyssPluginRoleSelect = "OnDangoAbyssPluginRoleSelect"),
+      (e.CheckDangoMatchState = "CheckDangoMatchState"),
+      (e.CheckDangoMatchPlayerNumType = "CheckDangoMatchPlayerNumType"),
+      (e.OnEnterDangoMatchView = "OnEnterDangoMatchView"),
+      (e.OnDangoMonopolyViewStart = "OnDangoMonopolyViewStart"),
+      (e.OnCiacconaAvgInspirationChoiceShow =
+        "OnCiacconaAvgInspirationChoiceShow"),
+      (e.OnCiacconaChapterFirstStart = "OnCiacconaChapterFirstStart"),
+      (e.OnCiacconaChapterRestart = "OnCiacconaChapterRestart"),
+      (e.OnMovieRogueInfoRefreshWithMultipleEnds =
+        "OnMovieRogueInfoRefreshWithMultipleEnds"),
+      (e.CheckMovieRogueFinishedEndingCount =
+        "CheckMovieRogueFinishedEndingCount"),
+      (e.OnDangoAbyssEnterWithTeamExploreBtn =
+        "OnDangoAbyssEnterWithTeamExploreBtn"),
+      (e.OnDangoAbyssEquipPluginWithValidChange =
+        "OnDangoAbyssEquipPluginWithValidChange"),
+      (e.OnDangoAbyssEquipPluginWithInvalid =
+        "OnDangoAbyssEquipPluginWithInvalid"),
+      (e.OnMovieRogueLinkRefresh = "OnMovieRogueLinkRefresh"),
+      (e.OnMovieRogueMapMoveEnd = "OnMovieRogueMapMoveEnd"),
+      (e.OnMapRogueEventDetailShow = "OnMapRogueEventDetailShow"),
+      (e.CheckMapRogueEventDetailShow = "CheckMapRogueEventDetailShow"),
+      (e.OnDangoMonopolyCameraFocusOnMainDango =
+        "OnDangoMonopolyCameraFocusOnMainDango"),
+      (e.CheckDangoAbyssProgress = "CheckDangoAbyssProgress"),
+      (e.CheckDangoAbyssHasItemByType = "CheckDangoAbyssHasItemByType"),
+      (e.CheckDangoMatchFinalEnd = "CheckDangoMatchFinalEnd"),
+      (e.CheckGridHasExplored = "CheckGridHasExplored"),
+      (e.OnUiTabViewShow = "OnUiTabViewShow"),
+      (e.AlwaysFalse = "AlwaysFalse");
   })(
     (ELevelGeneralCondition =
       exports.ELevelGeneralCondition || (exports.ELevelGeneralCondition = {})),

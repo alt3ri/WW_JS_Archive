@@ -40,13 +40,13 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
           EntitySystem_1.EntitySystem.Get(t)?.CheckGetComponent(3)?.Actor),
         (this.F$o = e.Id))
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Battle", 49, "无法获取Buff施放者");
+        Log_1.Log.Warn("Battle", 48, "无法获取Buff施放者");
   }
   OnCreate() {
     this.k$o
       ? ((this.m$o = EffectSystem_1.EffectSystem.SpawnEffect(
           this.k$o,
-          new UE.Transform(),
+          new UE.TransformDouble(),
           this.CueConfig.Path,
           "[GameplayCueFromSummoned.OnCreate]",
           new EffectContext_1.EffectContext(this.F$o),
@@ -54,7 +54,7 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
         )),
         this.K$o(),
         1 === this.CueConfig.Comp && (this.W$o = !0))
-      : Log_1.Log.CheckWarn() && Log_1.Log.Warn("Battle", 49, "无法获取召唤物");
+      : Log_1.Log.CheckWarn() && Log_1.Log.Warn("Battle", 48, "无法获取召唤物");
   }
   OnTick(t) {
     this.W$o && this.K$o();
@@ -106,18 +106,20 @@ class GameplayCueFromSummoned extends GameplayCueBase_1.GameplayCueBase {
       t.IsValid() &&
       ((e = this.H$o.GetLocation()),
       0 < this.p$o.length
-        ? e.FromUeVector(this.k$o.Mesh.GetSocketLocation(this.p$o[0]))
+        ? e.FromUeVector(this.k$o.Mesh.D_GetSocketLocation(this.p$o[0]))
         : e.DeepCopy(this.k$o.CharacterActorComponent.ActorLocationProxy),
       (i = this.j$o.GetLocation()),
       1 < this.p$o.length
-        ? i.FromUeVector(this.ActorInternal.Mesh.GetSocketLocation(this.p$o[1]))
+        ? i.FromUeVector(
+            this.ActorInternal.Mesh.D_GetSocketLocation(this.p$o[1]),
+          )
         : i.DeepCopy(
             this.ActorInternal.CharacterActorComponent.ActorLocationProxy,
           ),
       (s = this.H$o.GetRotation()),
       i.SubtractionEqual(e).ToOrientationQuat(s),
       this.V$o.ComposeTransforms(this.H$o, this.j$o),
-      t.K2_SetActorLocationAndRotation(
+      t.D_K2_SetActorLocationAndRotation(
         this.j$o.GetLocation().ToUeVector(),
         this.j$o.GetRotation().Rotator().ToUeRotator(),
         !1,

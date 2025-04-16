@@ -80,7 +80,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
         this.Ino(e),
         this.UpdateFunctionIcon(e),
         this.Tno(e),
-        this.Vfa(e),
+        this.kfa(e),
         RedDotController_1.RedDotController.BindRedDot(
           "QuestViewItem",
           this.GetItem(6),
@@ -88,7 +88,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
           this.QuestId,
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Quest", 19, "任务界面任务Item更新时找不到任务", [
+        Log_1.Log.Error("Quest", 18, "任务界面任务Item更新时找不到任务", [
           "任务Id",
           this.QuestId,
         ]);
@@ -145,24 +145,24 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   Ino(e) {
     var t,
       i,
-      r,
-      o = this.GetText(3);
+      o,
+      r = this.GetText(3);
     e.IsSuspend() ||
-    !(t = e.GetCurrentActiveChildQuestNode()) ||
+    !(t = e.GetFirstNoHideTrackActiveChildQuestNode()) ||
     !GeneralLogicTreeController_1.GeneralLogicTreeController.IsShowNodeTrackDistance(
       e.TreeId,
       t.NodeId,
     ) ||
-    ((i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+    !(i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
       e.TreeId,
-    )),
-    (r = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
-    (i = i?.GetNodeDungeonId(t.NodeId) ?? 0),
-    MapUtil_1.MapUtil.IsDungeonDiffWorld(r, i)) ||
-    ((r = e.GetTrackDistance(t.NodeId)), e.IsInTrackRange()) ||
-    !r
-      ? o.SetUIActive(!1)
-      : (LguiUtil_1.LguiUtil.SetLocalText(o, "Meter", r), o.SetUIActive(!0));
+    )) ||
+    ((o = ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
+    (i = i.GetNodeDungeonId()),
+    MapUtil_1.MapUtil.IsDungeonDiffWorld(o, i)) ||
+    ((o = e.GetTrackDistance(t.NodeId)), e.IsInTrackRange()) ||
+    !o
+      ? r.SetUIActive(!1)
+      : (LguiUtil_1.LguiUtil.SetLocalText(r, "Meter", o), r.SetUIActive(!0));
   }
   UpdateFunctionIcon(e) {
     var t = this.GetTexture(8),
@@ -183,29 +183,31 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
     ).SetUIActive(!1);
   }
   Tno(i) {
-    this.qGn = !1;
-    var r = i.IsQuestCanPreShow(),
-      o = i.IsSuspend() ?? !1,
-      n = i.IsQuestHasRecommendPreQuest() ?? !1,
+    var o = ModelManager_1.ModelManager.QuestNewModel,
+      r = ((this.qGn = !1), i.IsQuestCanPreShow()),
+      o = i.LockByLackResource && o.IsLackQuestVideoResource,
+      n = i.IsSuspend() ?? !1,
+      a = i.IsQuestHasRecommendPreQuest() ?? !1,
       s = i.HasRefOccupiedEntity() ?? !1,
-      a = this.GetText(10),
-      _ = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
-        i.Id,
-      );
-    if (r || o || n || s || _) {
-      a.SetUIActive(!0);
+      l = this.GetText(10),
+      _ =
+        ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
+          i.Id,
+        ) + ModelManager_1.ModelManager.QuestNewModel.GetQuestActivityId(i.Id);
+    if (r || o || n || a || s || _) {
+      l.SetUIActive(!0);
       let e = "",
         t = "";
-      if (o)
+      if (n)
         (e = i.GetSuspendText()?.split("，")[0]),
-          a.SetText(e),
+          l.SetText(e),
           (t =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableColor",
             ) ?? "");
       else if (s)
         (e = i.GetRefOccupiedEntityText()?.split("，")[0]),
-          a.SetText(e),
+          l.SetText(e),
           (t =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableColor",
@@ -215,19 +217,29 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
           ModelManager_1.ModelManager.QuestNewModel.GetShowQuestConditionDescribe(
             i.Id,
           )),
-          a.SetText(e),
+          l.SetText(e),
           (t =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableColor",
             ) ?? "");
-      else if (n) {
+      else if (o)
+        (e =
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            "DownloadResource",
+          ) ?? "DownloadResource"),
+          l.SetText(e),
+          (t =
+            CommonParamById_1.configCommonParamById.GetStringConfig(
+              "TaskUnableColor",
+            ) ?? "");
+      else if (a) {
         _ = i.GetRecommendPreQuest();
         let e = "";
         _?.length &&
           (e =
             ModelManager_1.ModelManager.QuestNewModel.GetQuest(_[0])?.Name ??
             ""),
-          LguiUtil_1.LguiUtil.SetLocalText(a, "QuestRecommendTip", e),
+          LguiUtil_1.LguiUtil.SetLocalText(l, "QuestRecommendTip", e),
           (t =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskRemindColor",
@@ -239,71 +251,91 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskCountDownColor",
             ) ?? "");
-      o = UE.Color.FromHex(t);
-      a.SetColor(o);
-    } else a.SetUIActive(!1);
+      n = UE.Color.FromHex(t);
+      l.SetColor(n);
+    } else l.SetUIActive(!1);
   }
-  GGn(e, t) {
-    var i, r, o, n;
-    this.qGn &&
-      (ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.QuestId)
-        ? ((i = this.GetText(10)),
-          (o =
+  GGn(i, o) {
+    if (this.qGn)
+      if (ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.QuestId)) {
+        var r = this.GetText(10);
+        let e = 0,
+          t = void 0;
+        if (
+          0 ===
+          (e =
             ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
-              e,
-            )),
-          (o = ModelManager_1.ModelManager.ActivityModel.GetActivityById(o)) &&
-          o.LocalConfig?.IfShowQuestLeftTime &&
-          (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              i,
+            ))
+        ) {
+          if (
+            ((e =
+              ModelManager_1.ModelManager.QuestNewModel.GetQuestActivityId(i)),
+            !(t =
+              ModelManager_1.ModelManager.ActivityModel.GetActivityById(e)) ||
+              !ModelManager_1.ModelManager.QuestNewModel.GetQuestShowQuestLeftTime(
+                i,
+              ))
+          )
+            return void r.SetUIActive(!1);
+        } else if (
+          !(t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(e)) ||
+          !t.LocalConfig?.IfShowQuestLeftTime
+        )
+          return void r.SetUIActive(!1);
+        var n,
+          a = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "ActivityRemainingTime",
-          ))
-            ? o.CheckIfInOpenTime()
-              ? o.EndOpenTime
-                ? ((n = TimeUtil_1.TimeUtil.GetServerTime()),
-                  (o = o.EndOpenTime - n),
-                  (n =
-                    ModelManager_1.ModelManager.QuestNewModel.GetActivityGuideQuestRemainTimeText(
-                      o,
-                      r,
-                    )),
-                  i.SetText(n))
-                : i.SetUIActive(!1)
-              : t &&
-                (EventSystem_1.EventSystem.Emit(
-                  EventDefine_1.EEventName.ActivityQuestCountdownEnd,
-                  e,
-                ),
-                (this.qGn = !1))
-            : i.SetUIActive(!1))
-        : t &&
+          );
+        a
+          ? t.CheckIfInOpenTime()
+            ? t.EndOpenTime
+              ? ((n = TimeUtil_1.TimeUtil.GetServerTime()),
+                (n = t.EndOpenTime - n),
+                (n =
+                  ModelManager_1.ModelManager.QuestNewModel.GetActivityGuideQuestRemainTimeText(
+                    n,
+                    a,
+                  )),
+                r.SetText(n))
+              : r.SetUIActive(!1)
+            : o &&
+              (EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.ActivityQuestCountdownEnd,
+                i,
+              ),
+              (this.qGn = !1))
+          : r.SetUIActive(!1);
+      } else
+        o &&
           (EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ActivityQuestCountdownEnd,
-            e,
+            i,
           ),
-          (this.qGn = !1)));
+          (this.qGn = !1));
   }
-  Vfa(e) {
+  kfa(e) {
     var t,
       i,
-      r = this.GetItem(11);
-    r &&
+      o = this.GetItem(11);
+    o &&
       (e.TagId
         ? (t = QuestTagById_1.configQuestTagById.GetConfig(e.TagId))
           ? ((i = this.GetSprite(12)) &&
-              (this.SetSpriteByPath(t.BgSpritePath, i, !0), i.SetUIActive(!0)),
+              (this.SetSpriteByPath(t.BgSpritePath, i, !1), i.SetUIActive(!0)),
             (i = this.GetText(13)) &&
               (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t.Text),
               i.SetUIActive(!0)),
-            r.SetUIActive(!0))
+            o.SetUIActive(!0))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Quest",
-              19,
+              18,
               "找不到任务标签配置",
               ["questId", e.Id],
               ["TagId", e.TagId],
             )
-        : r.SetUIActive(!1));
+        : o.SetUIActive(!1));
   }
   SetSelected(e) {
     var t = e ? 1 : 0;

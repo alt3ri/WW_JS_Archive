@@ -94,11 +94,13 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
   }
   SetPromptHub(i) {
     this.ParamHub = i;
-    i = ConfigManager_1.ConfigManager.GenericPromptConfig;
+    var t = ConfigManager_1.ConfigManager.GenericPromptConfig;
     (this.e8 = 0),
-      (this.r1t = TimeUtil_1.TimeUtil.SetTimeMillisecond(
-        i.GetPromptTypeInfo(this.ParamHub.TypeId).Duration,
-      )),
+      i.Duration && 0 < i.Duration
+        ? (this.r1t = TimeUtil_1.TimeUtil.SetTimeMillisecond(i.Duration))
+        : (this.r1t = TimeUtil_1.TimeUtil.SetTimeMillisecond(
+            t.GetPromptTypeInfo(this.ParamHub.TypeId).Duration,
+          )),
       this.ZYt();
   }
   ZYt() {

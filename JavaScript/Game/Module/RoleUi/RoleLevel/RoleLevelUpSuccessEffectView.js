@@ -40,7 +40,7 @@ class RoleLevelUpSuccessEffectView extends UiViewBase_1.UiViewBase {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Role",
-          38,
+          37,
           "RoleLevelUpSuccessEffectView 打开失败,未传入界面数据",
         )
       : ((this.Pe = this.OpenParam), this.Dbt());

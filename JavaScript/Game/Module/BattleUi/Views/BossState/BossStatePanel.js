@@ -86,7 +86,10 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.Prt && this.Prt.Info === t && this.Prt.OnHealthChanged();
       }),
       (this.OnLanguageChange = () => {
-        this.Prt?.OnLanguageChange();
+        this.Art?.OnLanguageChange(), this.Prt?.OnLanguageChange();
+      }),
+      (this.cF_ = (t) => {
+        this.Art?.HideBossName(t);
       });
   }
   OnRegisterComponent() {
@@ -109,7 +112,16 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   }
   krt() {
     var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-    if (t) for (const e of t) e.IsInit && this.brt(e);
+    if (t)
+      for (const e of t)
+        e.IsInit &&
+          this.brt(e) &&
+          EventSystem_1.EventSystem.AddWithTargetUseHoldKey(
+            this,
+            e,
+            EventDefine_1.EEventName.RemoveEntity,
+            this.zpe,
+          );
   }
   async Frt() {
     this.Urt = new Map();
@@ -161,7 +173,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ((e = EntitySystem_1.EntitySystem.Get(this.Rrt))
         ? this.jrt(e, t)
         : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Battle", 8, "显示Boss状态条时找不到对应Boss实体"));
+          Log_1.Log.Warn("Battle", 17, "显示Boss状态条时找不到对应Boss实体"));
   }
   Vrt() {
     var t = this.Krt();
@@ -241,6 +253,10 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TextLanguageChange,
         this.OnLanguageChange,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.GmHideMissionAndBossName,
+        this.cF_,
       );
   }
   RemoveEvents() {
@@ -264,6 +280,10 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TextLanguageChange,
         this.OnLanguageChange,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.GmHideMissionAndBossName,
+        this.cF_,
       );
   }
   GetUiActorForGuide() {

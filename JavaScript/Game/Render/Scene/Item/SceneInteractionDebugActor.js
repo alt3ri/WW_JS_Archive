@@ -23,13 +23,16 @@ class SceneInteractionDebugActor extends UE.Actor {
       (this.DamageRadius = 0),
       (this.ImpluseFactor = 0);
   }
+  Constructor() {
+    (this.EffectKey = void 0), (this.InitState = void 0);
+  }
   ReceiveBeginPlay() {
     this.HandleId = -1;
   }
   ChangeState1() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state1"),
+        Log_1.Log.Info("RenderScene", 11, "change state1"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -41,7 +44,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   ChangeState2() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state2"),
+        Log_1.Log.Info("RenderScene", 11, "change state2"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -53,7 +56,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   ChangeState3() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state3"),
+        Log_1.Log.Info("RenderScene", 11, "change state3"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -65,7 +68,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   ChangeState4() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state4"),
+        Log_1.Log.Info("RenderScene", 11, "change state4"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -77,7 +80,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   ChangeState5() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state5"),
+        Log_1.Log.Info("RenderScene", 11, "change state5"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -89,7 +92,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   ChangeState6() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state6"),
+        Log_1.Log.Info("RenderScene", 11, "change state6"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -101,7 +104,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   ChangeState7() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state7"),
+        Log_1.Log.Info("RenderScene", 11, "change state7"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -113,7 +116,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   ChangeState8() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderScene", 12, "change state8"),
+        Log_1.Log.Info("RenderScene", 11, "change state8"),
       0 <= this.HandleId) &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
         this.HandleId,
@@ -124,7 +127,7 @@ class SceneInteractionDebugActor extends UE.Actor {
   }
   Create() {
     if (RenderModuleController_1.RenderModuleController.IsRuntime()) {
-      Log_1.Log.CheckInfo() && Log_1.Log.Info("RenderScene", 12, "create"),
+      Log_1.Log.CheckInfo() && Log_1.Log.Info("RenderScene", 11, "create"),
         0 <= this.HandleId && this.Remove();
       let e = this.LevelName;
       e.startsWith("World'") &&
@@ -133,18 +136,18 @@ class SceneInteractionDebugActor extends UE.Actor {
           SceneInteractionManager_1.SceneInteractionManager.Get().CreateSceneInteractionLevel(
             e,
             this.InitState,
-            this.K2_GetActorLocation(),
+            this.D_K2_GetActorLocation(),
             this.K2_GetActorRotation(),
             () => {
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("RenderScene", 12, "level streaming complete");
+                Log_1.Log.Info("RenderScene", 11, "level streaming complete");
             },
           ));
     }
   }
   Remove() {
     RenderModuleController_1.RenderModuleController.IsRuntime() &&
-      (Log_1.Log.CheckInfo() && Log_1.Log.Info("RenderScene", 12, "remove"),
+      (Log_1.Log.CheckInfo() && Log_1.Log.Info("RenderScene", 11, "remove"),
       0 <= this.HandleId) &&
       (SceneInteractionManager_1.SceneInteractionManager.Get().DestroySceneInteraction(
         this.HandleId,
@@ -157,7 +160,7 @@ class SceneInteractionDebugActor extends UE.Actor {
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderScene",
-          14,
+          13,
           "当前状态",
           [
             "状态",
@@ -168,7 +171,7 @@ class SceneInteractionDebugActor extends UE.Actor {
           ["Actor", this.GetName()],
         )
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("RenderScene", 14, "SceneInteractionActor未生成", [
+        Log_1.Log.Debug("RenderScene", 13, "SceneInteractionActor未生成", [
           "Actor",
           this.GetName(),
         ]);
@@ -180,7 +183,7 @@ class SceneInteractionDebugActor extends UE.Actor {
           this.EffectKey,
         )
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("RenderScene", 14, "SceneInteractionActor未生成", [
+        Log_1.Log.Debug("RenderScene", 13, "SceneInteractionActor未生成", [
           "Actor",
           this.GetName(),
         ]);
@@ -219,8 +222,8 @@ class SceneInteractionDebugActor extends UE.Actor {
         (r.BaseForce = this.BaseForce),
         (r.ImpluseFactor = this.ImpluseFactor),
         Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("RenderScene", 14, "ceshi1" + r.DamageRadius),
-        Log_1.Log.CheckDebug() && Log_1.Log.Debug("RenderScene", 14, "ceshi2");
+        Log_1.Log.Debug("RenderScene", 13, "ceshi1" + r.DamageRadius),
+        Log_1.Log.CheckDebug() && Log_1.Log.Debug("RenderScene", 13, "ceshi2");
     }
   }
 }

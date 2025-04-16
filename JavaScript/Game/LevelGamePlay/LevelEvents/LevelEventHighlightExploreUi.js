@@ -9,7 +9,7 @@ class LevelEventHighlightExploreUi extends LevelGeneralBase_1.LevelEventBase {
     var r,
       s =
         Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity?.GetComponent(
-          47,
+          53,
         );
     s &&
       ("Show" === (e = e).Type &&

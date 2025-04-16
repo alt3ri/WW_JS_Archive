@@ -16,7 +16,7 @@ class CipherController extends UiControllerBase_1.UiControllerBase {
     var e = Protocol_1.Aki.Protocol.wJn.create();
     (e.a5n = ModelManager_1.ModelManager.CipherModel.GetCipherConfigId()),
       (e.h5n = Protocol_1.Aki.Protocol.h3s.Proto_Cipher),
-      Net_1.Net.Call(28002, e, (e) => {});
+      Net_1.Net.Call(28624, e, (e) => {});
   }
 }
 exports.CipherController = CipherController;

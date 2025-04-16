@@ -240,9 +240,9 @@ class HandBookQuestPlotTalkAudioUtil {
         ),
       e = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(i);
     AudioController_1.AudioController.PostEventByExternalSourcesByUi(
-      t.AudioEventPath,
+      t.SubtitleEvent,
       e,
-      t.ExternalSrcName,
+      t.SubtitleSrc,
       this.lZi,
       void 0,
       PlotTextLogic_1.PLAY_FLAG,

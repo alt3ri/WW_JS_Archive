@@ -52,7 +52,7 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
     );
   }
   OnLeaveLevel() {
-    return !0;
+    return this.SetTrackLevelPlayId(0), !0;
   }
   InitLevelPlayConfig() {
     var e;

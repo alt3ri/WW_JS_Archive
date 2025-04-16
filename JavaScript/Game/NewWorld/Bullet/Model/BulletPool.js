@@ -24,13 +24,13 @@ class SimplePool {
   PreloadAdd(t) {
     t ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Pool", 18, "无效对象", ["target", t])),
+        Log_1.Log.Error("Pool", 17, "无效对象", ["target", t])),
       this.p7.push(t);
   }
   Release(t) {
     t ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Pool", 18, "无效对象", ["target", t])),
+        Log_1.Log.Error("Pool", 17, "无效对象", ["target", t])),
       this.p7.push(t);
   }
   Clear() {
@@ -129,14 +129,14 @@ class BulletPool {
   static CheckAtFrameEnd() {
     0 !== this.yjo &&
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "当前帧子弹申请的Vector没有回收", [
+        Log_1.Log.Error("Bullet", 17, "当前帧子弹申请的Vector没有回收", [
           "VectorCount",
           this.yjo,
         ]),
       (this.yjo = 0)),
       0 !== this.Ijo &&
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Bullet", 18, "当前帧子弹申请的Rotator没有回收", [
+          Log_1.Log.Error("Bullet", 17, "当前帧子弹申请的Rotator没有回收", [
             "RotatorCount",
             this.Ijo,
           ]),
@@ -145,7 +145,7 @@ class BulletPool {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
-            18,
+            17,
             "当前帧子弹申请的BulletHitTempResultCount没有回收",
             ["BulletHitTempResultCount", this.Tjo],
           ),

@@ -7,6 +7,7 @@ const UE = require("ue"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView"),
   ScanTrackedMarks_1 = require("./ScanTrackedMarks");
 class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
@@ -14,35 +15,44 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
     super(...arguments),
       (this.wmt = new Map()),
       (this.Bmt = new Set()),
-      (this.bmt = (t, e) => {
+      (this.bmt = (s, e) => {
         if (e && !(e.ScanInfos.length <= 0)) {
-          var i = EntitySystem_1.EntitySystem.Get(t);
-          if (i) {
-            this.Bmt.add(t);
-            const s = i.GetComponent(1)?.Owner,
-              r = e.ScanCompositeConfig.ShowDistance;
-            for (const n of e.ScanInfos) {
-              const a = n.Color;
-              if (0 !== n.IconPath.length) {
+          const r = EntitySystem_1.EntitySystem.Get(s);
+          if (r) {
+            this.Bmt.add(s);
+            const n = r.GetComponent(1)?.Owner,
+              a = e.ScanCompositeConfig.ShowDistance,
+              o = e.ScanCompositeConfig.ClampToEllipse;
+            for (const _ of e.ScanInfos) {
+              const c = _.Color;
+              if (0 !== _.IconPath.length) {
                 ResourceSystem_1.ResourceSystem.LoadAsync(
-                  n.IconPath,
+                  _.IconPath,
                   UE.LGUISpriteData_BaseObject,
                   (e) => {
+                    var t, i;
                     e &&
                       e.IsValid() &&
-                      s &&
-                      this.Bmt.has(t) &&
-                      this.qmt(
+                      n &&
+                      this.Bmt.has(s) &&
+                      ((t = Vector_1.Vector.Create(_.Offset)),
+                      (i = r.GetComponent(1)),
+                      GravityUtils_1.GravityUtils.RotatedVectorByActorInitGravity(
+                        i,
                         t,
+                      ),
+                      this.qmt(
+                        s,
                         e,
                         0,
                         "",
                         void 0,
-                        s,
-                        Vector_1.Vector.Create(n.Offset),
+                        n,
+                        Vector_1.Vector.Create(t),
+                        c,
                         a,
-                        r,
-                      );
+                        o,
+                      ));
                   },
                 );
                 break;
@@ -66,7 +76,7 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
   Update() {
     for (var [, e] of this.wmt) e.Update();
   }
-  qmt(e, t, i, s, r, n, a, o, _) {
+  qmt(e, t, i, s, r, n, a, o, _, c) {
     this.wmt.has(e) ||
       ((t = new ScanTrackedMarks_1.ScanTrackedMarks(
         this.RootItem,
@@ -78,6 +88,7 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
         a,
         o,
         _,
+        c,
       )),
       this.wmt.set(e, t));
   }

@@ -28,6 +28,9 @@ class GameplayAbilityVisionBase {
   ChangeVision() {
     this.OnChangeVision();
   }
+  HandlePress(t, e) {
+    return !1;
+  }
   OnCreate() {}
   OnDestroy() {}
   OnTick(t) {}
@@ -54,25 +57,28 @@ class GameplayAbilityVisionBase {
     return this.Entity.GetComponent(3);
   }
   get AttributeComponent() {
-    return this.Entity.GetComponent(159);
+    return this.Entity.GetComponent(171);
   }
   get GameplayTagComponent() {
-    return this.Entity.GetComponent(190);
+    return this.Entity.GetComponent(203);
   }
   get SkillComponent() {
-    return this.Entity.GetComponent(34);
+    return this.Entity.GetComponent(39);
   }
   get BuffComponent() {
-    return this.Entity.GetComponent(160);
+    return this.Entity.GetComponent(172);
   }
   get MoveComponent() {
-    return this.Entity.GetComponent(164);
+    return this.Entity.GetComponent(176);
   }
   get AudioComponent() {
-    return this.Entity.GetComponent(44);
+    return this.Entity.GetComponent(50);
   }
   get TeamComponent() {
-    return this.Entity.GetComponent(84);
+    return this.Entity.GetComponent(91);
+  }
+  get CueComponent() {
+    return this.Entity.GetComponent(21);
   }
 }
 exports.GameplayAbilityVisionBase = GameplayAbilityVisionBase;

@@ -11,6 +11,7 @@ class LoginServerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
+      (this.Xrc = ""),
       (this.ySi = (e) => {
         this.Pe &&
           ((ModelManager_1.ModelManager.LoginServerModel.CurrentUiSelectSeverData =
@@ -63,21 +64,21 @@ class LoginServerItem extends UiPanelBase_1.UiPanelBase {
     );
   }
   Update(e, t) {
-    (this.Pe = e), this.GetText(1).SetText(e.name);
-    var i =
-        ModelManager_1.ModelManager.LoginServerModel
-          .OnBeginSuggestServerData === this.Pe,
-      i =
-        (this.GetItem(7).SetUIActive(i),
-        ModelManager_1.ModelManager.LoginServerModel.GetLoginLevel(
-          ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
-          e.Region,
-        )),
-      e = 0 < i;
-    this.GetItem(4).SetUIActive(e),
-      e &&
-        LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "OverSeaServerLv", i),
-      this.Oqe();
+    (this.Pe = e), (this.Xrc = e.Region), this.GetText(1).SetText(e.name);
+    e =
+      ModelManager_1.ModelManager.LoginServerModel.OnBeginSuggestServerData ===
+      this.Pe;
+    this.GetItem(7).SetUIActive(e), this.UpdatePlayerInfo(), this.Oqe();
+  }
+  UpdatePlayerInfo() {
+    var e = ModelManager_1.ModelManager.LoginServerModel.GetLoginLevel(
+        ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
+        this.Xrc,
+      ),
+      t = 0 < e;
+    this.GetItem(4).SetUIActive(t),
+      t &&
+        LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "OverSeaServerLv", e);
   }
   OnBeforeDestroy() {
     this.Pe = void 0;

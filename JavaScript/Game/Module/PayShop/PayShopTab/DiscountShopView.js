@@ -26,6 +26,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       (this.LoopScrollView = void 0),
       (this.CurrentShopId = 0),
       (this.TDe = void 0),
+      (this.Uhh = !1),
       (this.t3i = (e, t, i) => {
         this.CurrentShopId === t &&
           this.CurrentSelectTabId === i &&
@@ -42,7 +43,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.pqe = (e) => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Shop", 11, "PayShop:TabView 点击刷新商品", [
+          Log_1.Log.Info("Shop", 10, "PayShop:TabView 点击刷新商品", [
             "ViewName",
             this.GetViewName(),
           ]);
@@ -53,7 +54,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
           this.RefreshLoopScroll(this.CurrentSelectTabId);
       }),
       (this.CheckIfNeedShowPlayStationStoreIcon = () => {
-        if (this.GetActive()) {
+        if (this.Uhh) {
           let e = !1;
           for (const t of this.PayShopGoodsList)
             if (
@@ -127,7 +128,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       this.GetItem(6).SetUIActive(!1),
       this.GetItem(8).SetUIActive(!1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Shop", 11, "PayShop:TabView 界面Start", [
+        Log_1.Log.Info("Shop", 10, "PayShop:TabView 界面Start", [
           "ViewName",
           this.GetViewName(),
         ]);
@@ -167,9 +168,9 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       this.UpdateTabs(e),
       this.kot(),
       this.OnDiscountShopAfterShow(),
-      this.KZa(),
+      this.Shh(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Shop", 11, "PayShop:TabView 界面AfterShow", [
+        Log_1.Log.Info("Shop", 10, "PayShop:TabView 界面AfterShow", [
           "ViewName",
           this.GetViewName(),
         ]);
@@ -196,7 +197,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Shop",
-        11,
+        10,
         "PayShop:TabView 页签数据",
         ["ViewName", this.GetViewName()],
         ["Data", s],
@@ -211,7 +212,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       this.TabGroup.SelectToggleByIndex(i, !0);
     }),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Shop", 11, "PayShop:TabView 选择页签", [
+        Log_1.Log.Info("Shop", 10, "PayShop:TabView 选择页签", [
           "ViewName",
           this.GetViewName(),
         ]);
@@ -219,13 +220,18 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
   RefreshView(e) {
     "number" != typeof e && this.RefreshLoopScroll(this.CurrentSelectTabId);
   }
+  OnShowUiTabViewFromToggle() {
+    (this.Uhh = !0), this.AfterShowUiTabViewFromToggle();
+  }
+  AfterShowUiTabViewFromToggle() {}
+  AfterHideTabViewBase(e) {}
   OnHideUiTabViewBase(e) {
-    this.xHe();
+    this.xHe(), (this.Uhh = !1), this.AfterHideTabViewBase(e);
   }
   OnBeforeDestroy() {
     this.TabGroup.Destroy(), this.LoopScrollView.ClearGridProxies();
   }
-  async KZa() {
+  async Shh() {
     var e =
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk().GetIfNeedQueryProductInfoForce();
     if (!e) {

@@ -10,28 +10,28 @@ class TsPureActionHandle {
   constructor() {
     (this.R$e = void 0),
       (this.ZMe = void 0),
-      (this._Da = void 0),
-      (this.uDa = void 0),
-      (this.cDa = void 0),
+      (this.dDa = void 0),
+      (this.CDa = void 0),
+      (this.gDa = void 0),
       (this.OnPressAction = (t) => {
-        this.uDa.Start(),
-          this._Da && this._Da(this.ZMe, !0, t),
-          this.uDa.Stop();
+        this.CDa.Start(),
+          this.dDa && this.dDa(this.ZMe, !0, t),
+          this.CDa.Stop();
       }),
       (this.OnReleaseAction = (t) => {
-        this.cDa.Start(),
-          this._Da && this._Da(this.ZMe, !1, t),
-          this.cDa.Stop();
+        this.gDa.Start(),
+          this.dDa && this.dDa(this.ZMe, !1, t),
+          this.gDa.Stop();
       });
   }
   Initialize(t) {
     (this.R$e = t),
-      (this.uDa = Stats_1.Stat.Create(
+      (this.CDa = Stats_1.Stat.Create(
         "TsPureActionHandle.OnPressAction",
         "",
         StatDefine_1.BATTLESTAT_GROUP,
       )),
-      (this.cDa = Stats_1.Stat.Create(
+      (this.gDa = Stats_1.Stat.Create(
         "TsPureActionHandle.OnReleaseAction",
         "",
         StatDefine_1.BATTLESTAT_GROUP,
@@ -40,7 +40,7 @@ class TsPureActionHandle {
   AddActionBinding(t, i) {
     i
       ? ((this.ZMe = t),
-        (this._Da = i),
+        (this.dDa = i),
         (i = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
         cpp_1.FKuroInputInterface.RegisterActionBinding(
           i,
@@ -57,13 +57,13 @@ class TsPureActionHandle {
           this.OnReleaseAction,
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Controller", 8, "添加Action输入绑定时，回调不存在", [
+        Log_1.Log.Error("Controller", 10, "添加Action输入绑定时，回调不存在", [
           "actionName",
           t,
         ]);
   }
   Reset() {
-    (this.R$e = void 0), (this.ZMe = void 0), (this._Da = void 0);
+    (this.R$e = void 0), (this.ZMe = void 0), (this.dDa = void 0);
   }
 }
 exports.TsPureActionHandle = TsPureActionHandle;

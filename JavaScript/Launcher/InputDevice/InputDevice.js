@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.InputDevice = void 0);
+  (exports.InputDevice = exports.deviceIdMap = void 0);
 const UE = require("ue"),
   Platform_1 = require("../Platform/Platform"),
   LauncherLog_1 = require("../Util/LauncherLog"),
@@ -16,20 +16,22 @@ const UE = require("ue"),
   xboxOneController = "1118_746",
   XboxOneSController = "1118_765",
   xboxWirelessAdapterForWindows = "1118_766",
-  deviceIdMap = new Map([
-    [dualSenseWirelessController, 3],
-    [dualSenseEdgeWirelessController, 3],
-    [dualShock4_Cuhzct1x, 3],
-    [dualShock4_Cuhzct2x, 3],
-    [xboxController, 2],
-    [xboxEliteSeries2Controller, 2],
-    [xboxOneController2015, 2],
-    [xboxOneWirelessController, 2],
-    [xboxOneEliteController, 2],
-    [xboxOneController, 2],
-    [XboxOneSController, 2],
-    [xboxWirelessAdapterForWindows, 2],
-  ]);
+  backboneOne = "13706_770";
+exports.deviceIdMap = new Map([
+  [dualSenseWirelessController, 3],
+  [dualSenseEdgeWirelessController, 3],
+  [dualShock4_Cuhzct1x, 3],
+  [dualShock4_Cuhzct2x, 3],
+  [xboxController, 2],
+  [xboxEliteSeries2Controller, 2],
+  [xboxOneController2015, 2],
+  [xboxOneWirelessController, 2],
+  [xboxOneEliteController, 2],
+  [xboxOneController, 2],
+  [XboxOneSController, 2],
+  [xboxWirelessAdapterForWindows, 2],
+  [backboneOne, 6],
+]);
 class InputDevice {
   static Initialize() {
     switch (Platform_1.Platform.Type) {
@@ -58,7 +60,7 @@ class InputDevice {
       "PlatformType",
       InputDevice.f8o,
     ]),
-      Platform_1.Platform.IsPcPlatform() || InputDevice.Oba();
+      Platform_1.Platform.IsPcPlatform() || InputDevice.eqa();
   }
   static cXi(e) {
     if (InputDevice.f8o !== e) {
@@ -69,48 +71,49 @@ class InputDevice {
           ["lastInputController", t],
           ["InputController", InputDevice.f8o],
         );
-      for (const r of InputDevice.kba) r(t, e);
+      for (const r of InputDevice.tqa) r(t, e);
     }
   }
-  static lEa() {
+  static uEa() {
     var t = UE.RawInputFunctionLibrary.GetRegisteredDevices();
     if (t && 0 !== t.Num()) {
       for (let e = 0; e < t.Num(); e++) {
         var r = t.Get(e),
-          r = r.VendorID + "_" + r.ProductID,
-          r = deviceIdMap.get(r);
-        if (r) return r;
+          n = r.VendorID,
+          r = r.ProductID,
+          n = exports.deviceIdMap.get(n + "_" + r);
+        if (n) return n;
       }
       return 2;
     }
   }
-  static Oba() {
-    if (Platform_1.Platform.IsPs5Platform()) return InputDevice.Nba(4), !0;
+  static eqa() {
+    if (Platform_1.Platform.IsPs5Platform()) return InputDevice.iqa(4), !0;
     if (Platform_1.Platform.IsPcPlatform()) {
-      var e = InputDevice.lEa();
-      if (e) return InputDevice.Nba(e), !0;
+      var e = InputDevice.uEa();
+      if (e) return InputDevice.iqa(e), !0;
     }
     return !1;
   }
-  static Nba(e) {
+  static iqa(e) {
     InputDevice.cXi(e);
   }
   static SwitchInputControllerTypeByKey(e) {
     UE.KismetInputLibrary.Key_IsGamepadKey(e)
-      ? InputDevice.Oba() || InputDevice.Nba(2)
+      ? InputDevice.eqa() || InputDevice.iqa(2)
       : UE.KismetInputLibrary.Key_IsKeyboardKey(e) ||
           UE.KismetInputLibrary.Key_IsMouseButton(e)
-        ? InputDevice.Nba(1)
-        : InputDevice.Nba(5);
+        ? InputDevice.iqa(1)
+        : InputDevice.iqa(5);
   }
   static SwitchInputControllerTypeByMouseMove() {
-    InputDevice.Nba(1);
+    InputDevice.iqa(1);
   }
   static RegisterInputChangeDelegate(e) {
-    InputDevice.kba.add(e);
+    InputDevice.tqa.add(e);
   }
   static UnRegisterInputChangeDelegate(e) {
-    InputDevice.kba.delete(e);
+    InputDevice.tqa.delete(e);
   }
   static IsInKeyBoard() {
     return 1 === InputDevice.f8o;
@@ -119,7 +122,11 @@ class InputDevice {
     return 5 === InputDevice.f8o;
   }
   static IsInGamepad() {
-    return InputDevice.IsPsGamepad() || InputDevice.IsXboxGamepad();
+    return (
+      InputDevice.IsPsGamepad() ||
+      InputDevice.IsXboxGamepad() ||
+      InputDevice.IsBackBoneGamepad()
+    );
   }
   static IsPsGamepad() {
     return 3 === InputDevice.f8o || 4 === InputDevice.f8o;
@@ -127,7 +134,10 @@ class InputDevice {
   static IsXboxGamepad() {
     return 2 === InputDevice.f8o;
   }
+  static IsBackBoneGamepad() {
+    return 6 === InputDevice.f8o;
+  }
 }
 ((exports.InputDevice = InputDevice).f8o = void 0),
-  (InputDevice.kba = new Set());
+  (InputDevice.tqa = new Set());
 //# sourceMappingURL=InputDevice.js.map

@@ -12,6 +12,12 @@ class TsTaskChangeSkillWeight extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsSkillInfoId = 0),
       (this.TsWeight = 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsSkillInfoId = 0),
+      (this.TsWeight = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),

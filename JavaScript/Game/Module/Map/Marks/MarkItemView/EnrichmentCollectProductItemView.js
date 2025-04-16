@@ -6,9 +6,6 @@ class EnrichmentCollectProductItemView extends ServerMarkItemView_1.ServerMarkIt
   constructor(e) {
     super(e);
   }
-  OnInitialize() {
-    super.OnInitialize(), this.OnIconPathChanged(this.Holder.IconPath);
-  }
   GetInteractiveFlag() {
     return !1;
   }

@@ -11,6 +11,7 @@ class TsAnimNotifyStateSetCollisionSize extends UE.KuroAnimNotifyState {
       (this.Radius = 30),
       (this.HalfHeight = 100);
   }
+  Constructor() {}
   K2_NotifyBegin(e, t) {
     e = e.GetOwner();
     if (!(e instanceof TsBaseCharacter_1.default)) return !1;

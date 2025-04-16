@@ -30,13 +30,13 @@ class SequenceNode extends LogicNodeBase_1.LogicNodeBase {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Event",
-                25,
+                24,
                 "SetRoleAsCameraToGameBudget: Current entity's actor is not valid!",
               )
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Event",
-              25,
+              24,
               "SetRoleAsCameraToGameBudget: ModelManager.FormationModel!.GetCurrentEntity is undefined!",
             ));
   }

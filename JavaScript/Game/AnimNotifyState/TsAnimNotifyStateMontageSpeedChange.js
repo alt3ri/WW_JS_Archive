@@ -5,6 +5,7 @@ class TsAnimNotifyStateMontageSpeedChange extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.MontagePlayRate = -0);
   }
+  Constructor() {}
   K2_NotifyBegin(e, t, o) {
     return (
       e.GetAnimInstance()?.Montage_SetPlayRate(void 0, this.MontagePlayRate), !0

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  LevelGeneralController_1 = require("../../../../LevelGamePlay/LevelGeneralController"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   SneakController_1 = require("../../../../World/Controller/SneakController"),
   BehaviorNodeBase_1 = require("../BehaviorNodeBase");
@@ -33,6 +34,13 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
       ((this.Blackboard.DungeonId = i.DungeonId),
       (this.Blackboard.ChangeDungeonIdNodeId = this.InnerNodeId)),
       i.DisableOnline && this.L$t(!0),
+      i.DisableTrackAnim &&
+        LevelGeneralController_1.LevelGeneralController.CheckConditionNew(
+          i.DisableTrackAnim.Condition,
+          void 0,
+          this.Context,
+        ) &&
+        this.Blackboard?.AddTag(16, this.NodeId.toString()),
       this.CustomUiConfig && this.AddTag(0),
       this.SuspendTrackText &&
         !StringUtils_1.StringUtils.IsEmpty(
@@ -62,11 +70,13 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
         (i = i.RewardConfig?.RewardId)) &&
         t.SetQuestStageReward(this.TreeConfigId, i),
       this.Config?.SpecialGamePlayConfig &&
-        SneakController_1.SneakController.StartSneaking();
+        SneakController_1.SneakController.StartSneaking(),
+      this.Config?.SaveConfig && (this.Blackboard.RollbackPoint = this.NodeId);
   }
   OnNodeDeActive(t) {
     var i;
     this.RemoveTag(0),
+      this.Blackboard?.RemoveTag(16, this.NodeId.toString()),
       this.SilentAreaInfoViewConfig &&
         this.Blackboard?.RemoveSilentShowInfo(this.NodeId),
       this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest &&
@@ -106,6 +116,7 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
           0,
           t,
           this.TreeConfigId,
+          this.NodeId,
         );
         break;
       case Protocol_1.Aki.Protocol.hps.Proto_BtTypeLevelPlay:
@@ -113,6 +124,7 @@ class LogicNodeBase extends BehaviorNodeBase_1.BehaviorNodeBase {
           1,
           t,
           this.TreeConfigId,
+          this.NodeId,
         );
     }
   }

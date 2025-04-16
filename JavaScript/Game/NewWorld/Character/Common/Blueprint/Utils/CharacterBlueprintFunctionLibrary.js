@@ -7,25 +7,29 @@ const UE = require("ue"),
   CameraController_1 = require("../../../../../Camera/CameraController"),
   Global_1 = require("../../../../../Global"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
+  CharacterUtils_1 = require("../../../CharacterUtils"),
   CharacterGasDebugComponent_1 = require("../../Component/Abilities/CharacterGasDebugComponent"),
   CharacterStatisticsComponent_1 = require("../../Component/Abilities/CharacterStatisticsComponent"),
+  GravityUtils_1 = require("../../../../../Utils/GravityUtils"),
   SAVE_PATH = "Statistics/FightDataRecord/";
 class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static SetPartCollisionSwitch(t, e, a, r, i) {
     t?.IsValid() && t.CharacterActorComponent?.Valid
       ? t.CharacterActorComponent.SetPartCollisionSwitch(e, a, r, i)
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Character", 21, "传入的character为空");
+        Log_1.Log.Error("Character", 20, "传入的character为空");
   }
   static ResetPartCollisionSwitch(t, e) {
     var t = t.CharacterActorComponent,
       a = t.GetPartConf(e);
-    t.SetPartCollisionSwitch(
-      e,
-      a.IsBlockPawn,
-      a.IsBulletDetect,
-      a.IsBlockCamera,
-    );
+    a &&
+      t.SetPartCollisionSwitch(
+        e,
+        a.IsBlockPawn,
+        a.IsBulletDetect,
+        a.IsBlockCamera,
+      );
   }
   static GetCharacterActorByEntityId(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
@@ -57,12 +61,12 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           !0,
         ) &&
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Test", 21, "OperationRecord写入完成"),
+          Log_1.Log.Debug("Test", 20, "OperationRecord写入完成"),
         CharacterBlueprintFunctionLibrary.SaveCharacterStatisticsData())
       )
         return !0;
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Test", 21, "OperationRecord写入失败");
+        Log_1.Log.Debug("Test", 20, "OperationRecord写入失败");
     }
     return !1;
   }
@@ -77,7 +81,7 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Test",
-          21,
+          20,
           "读取数据为空",
           ["A表为空", r],
           ["B表为空", a],
@@ -97,13 +101,13 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       if (a && t)
         return (
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Test", 21, "DamageRecord_B写入完成"),
+            Log_1.Log.Debug("Test", 20, "DamageRecord_B写入完成"),
           !0
         );
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Test",
-          21,
+          20,
           "DamageRecord_B写入失败",
           ["A", t],
           ["B", a],
@@ -123,14 +127,14 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     CharacterStatisticsComponent_1.CharacterStatisticsComponent.HalfLengthRecordSquared =
       Math.pow(t, 2);
   }
-  static SetCombatStarted(t, e, a, r, i, o, s, n, c) {
+  static SetCombatStarted(t, e, a, r, i, s, o, c, n) {
     var C = new Array();
     r && C.push(0),
       i && C.push(1),
-      o && C.push(2),
-      s && C.push(3),
-      n && C.push(4),
-      c && C.push(5),
+      s && C.push(2),
+      o && C.push(3),
+      c && C.push(4),
+      n && C.push(5),
       CharacterStatisticsComponent_1.CharacterStatisticsComponent.SetCombatStarted(
         t,
         C,
@@ -138,16 +142,16 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         a,
       );
   }
-  static SetTypeOpen(t, e, a, r, i, o) {
-    var s = new Array();
-    t && s.push(0),
-      e && s.push(1),
-      a && s.push(2),
-      r && s.push(3),
-      i && s.push(4),
-      o && s.push(5),
+  static SetTypeOpen(t, e, a, r, i, s) {
+    var o = new Array();
+    t && o.push(0),
+      e && o.push(1),
+      a && o.push(2),
+      r && o.push(3),
+      i && o.push(4),
+      s && o.push(5),
       CharacterStatisticsComponent_1.CharacterStatisticsComponent.SetTypeOpen(
-        s,
+        o,
       );
   }
   static GetAttackerCombatEntities() {
@@ -183,16 +187,46 @@ class CharacterBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return CharacterStatisticsComponent_1.CharacterStatisticsComponent.GetItemListViewCount();
   }
   static TestLeaveSplineMove(t) {
-    t.GetEntityNoBlueprint().GetComponent(98).EndSplineMove(1),
+    t.GetEntityNoBlueprint().GetComponent(106).EndSplineMove(1),
       CameraController_1.CameraController.FightCamera.LogicComponent.ExitCameraSpline();
   }
   static GetBaseCharacterTransform() {
     var t = Global_1.Global.BaseCharacter?.CharacterActorComponent;
-    return t ? t.ActorTransform : MathUtils_1.MathUtils.DefaultTransform;
+    return t ? t.ActorTransform : MathUtils_1.MathUtils.DefaultTransformDouble;
   }
   static SetActorExtraSkeletalMeshComponent(t, e) {
     var t = ModelManager_1.ModelManager.CharacterModel.GetHandle(t);
     t && (t = t.Entity?.GetComponent(3)) && t.AddExtraSkeletalMeshComponent(e);
+  }
+  static CanCharacterMonsterOrSummonedDisplayEffect(t) {
+    return (
+      !t ||
+      !(t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t.EntityId))
+        ?.Valid ||
+      !!CharacterUtils_1.CharacterUtils.CanCharacterMonsterOrSummonedDisplayEffect(
+        t,
+      )
+    );
+  }
+  static DetachFromHost(t, e, a) {
+    var t = EntitySystem_1.EntitySystem.Get(t);
+    t?.Valid && (t = t.GetComponent(178))?.Valid && t.DetachFromHost(e, a, !0);
+  }
+  static GetCharacterGravityDirect() {
+    return GravityUtils_1.GravityUtils.GetGravityDirectForActor(
+      Global_1.Global.BaseCharacter?.CharacterActorComponent,
+    ).ToUeVector();
+  }
+  static GetCharacterGravityUp() {
+    return GravityUtils_1.GravityUtils.GetGravityUpForActor(
+      Global_1.Global.BaseCharacter?.CharacterActorComponent,
+    ).ToUeVector();
+  }
+  static SetGravityDirect(t, e) {
+    var t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t);
+    t?.Valid &&
+      (t = t.Entity.GetComponent(176))?.Valid &&
+      t.SetGravityDirectByNumber(e.X, e.Y, e.Z);
   }
 }
 exports.default = CharacterBlueprintFunctionLibrary;

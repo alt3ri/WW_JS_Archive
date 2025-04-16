@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StrengthUpgradeBarItem = void 0);
 const UE = require("ue"),
-  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class StrengthUpgradeBarItem extends UiPanelBase_1.UiPanelBase {
@@ -27,12 +26,8 @@ class StrengthUpgradeBarItem extends UiPanelBase_1.UiPanelBase {
   Refresh() {
     var t, e, i;
     this.Pe &&
-      ((t = CommonParamById_1.configCommonParamById.GetIntConfig(
-        "SingleStrengthValue",
-      )),
-      (e = CommonParamById_1.configCommonParamById.GetIntConfig(
-        "MaxSingleStrengthItemCount",
-      )),
+      ((t = this.Pe.SingleStrengthValue),
+      (e = this.Pe.MaxSingleStrengthItemCount),
       (i = this.Pe.MaxStrength),
       (i = Math.min(Math.floor(i / t), e)),
       this.mco(i),
@@ -40,15 +35,15 @@ class StrengthUpgradeBarItem extends UiPanelBase_1.UiPanelBase {
   }
   mco(i) {
     if (this.cco) {
-      var r = this.GetItem(1),
-        s = r.GetParentAsUIItem();
+      var s = this.GetItem(1),
+        r = s.GetParentAsUIItem();
       for (let t = this.cco.length; t < i; t++)
-        this.cco.push(LguiUtil_1.LguiUtil.CopyItem(r, s));
-      var a = 360 / i;
+        this.cco.push(LguiUtil_1.LguiUtil.CopyItem(s, r));
+      var h = 360 / i;
       let e = 0;
       for (let t = 0; t < i; t++) {
-        var h = this.cco[t];
-        (this.gii.Yaw = e), h.SetUIRelativeRotation(this.gii), (e += a);
+        var a = this.cco[t];
+        (this.gii.Yaw = e), a.SetUIRelativeRotation(this.gii), (e += h);
       }
     }
   }

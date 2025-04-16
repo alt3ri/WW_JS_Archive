@@ -19,14 +19,14 @@ class ForgingSort extends CommonSort_1.CommonSort {
             ? 1
             : 0;
         if (1 == n && n == e) {
-          if (r.IsUnlock === t.IsUnlock) return 0;
+          if (r.IsUnlock === t.IsUnlock) return r.SortId - t.SortId;
           {
             const i = r.IsUnlock - t.IsUnlock;
             return i * (o ? -1 : 1);
           }
         }
         if (0 == n && n == e) {
-          if (r.IsUnlock === t.IsUnlock) return 0;
+          if (r.IsUnlock === t.IsUnlock) return r.SortId - t.SortId;
           {
             const i = t.IsUnlock - r.IsUnlock;
             return i * (o ? -1 : 1);
@@ -38,10 +38,12 @@ class ForgingSort extends CommonSort_1.CommonSort {
       (this.rje = (r, t, o) => {
         return t.WeaponType !== r.WeaponType
           ? (t.WeaponType - r.WeaponType) * (o ? -1 : 1)
-          : 0;
+          : r.SortId - t.SortId;
       }),
       (this.iRt = (r, t, o) => {
-        return r.ItemId !== t.ItemId ? (t.ItemId - r.ItemId) * (o ? -1 : 1) : 0;
+        return r.ItemId !== t.ItemId
+          ? (t.ItemId - r.ItemId) * (o ? -1 : 1)
+          : r.SortId - t.SortId;
       });
   }
   OnInitSortMap() {

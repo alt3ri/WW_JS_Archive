@@ -8,13 +8,13 @@ class OpenSystemGameSysOpen extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Functional", 11, "行为节点触发功能开启"),
+        Log_1.Log.Info("Functional", 10, "行为节点触发功能开启"),
       e.BoardId
         ? ControllerHolder_1.ControllerHolder.FunctionController.ManualOpenFunctionOpenView(
             e.BoardId,
           )
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Functional", 11, "手动打开功能开启界面参数有问题"),
+            Log_1.Log.Error("Functional", 10, "手动打开功能开启界面参数有问题"),
           !1)
     );
   }

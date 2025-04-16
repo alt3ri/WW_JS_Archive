@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (e, t, o, r) {
-    var n,
-      i = arguments.length,
+    var i,
+      n = arguments.length,
       s =
-        i < 3
+        n < 3
           ? t
           : null === r
             ? (r = Object.getOwnPropertyDescriptor(t, o))
@@ -14,8 +14,8 @@ var __decorate =
       s = Reflect.decorate(e, t, o, r);
     else
       for (var a = e.length - 1; 0 <= a; a--)
-        (n = e[a]) && (s = (i < 3 ? n(s) : 3 < i ? n(t, o, s) : n(t, o)) || s);
-    return 3 < i && s && Object.defineProperty(t, o, s), s;
+        (i = e[a]) && (s = (n < 3 ? i(s) : 3 < n ? i(t, o, s) : i(t, o)) || s);
+    return 3 < n && s && Object.defineProperty(t, o, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PasserbyGeneratorComponent = void 0);
@@ -29,7 +29,6 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
   Global_1 = require("../../../../Global"),
   GameSplineComponent_1 = require("../../../../LevelGamePlay/Common/GameSplineComponent"),
-  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager");
 class SplineStateInfo {
   constructor(e, t) {
@@ -72,7 +71,7 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "NPC",
-              51,
+              50,
               "行人生成器获取样条信息错误",
               ["PbDataId", this.EIe?.GetPbDataId()],
               ["SplinePbDataId", e],
@@ -87,7 +86,7 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
             ((t.InRange = !0),
             this.Uin(t.PbDataId, !0),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("NPC", 51, "进入生成范围", [
+              Log_1.Log.Debug("NPC", 50, "进入生成范围", [
                 "PbDataId",
                 this.EIe?.GetPbDataId(),
               ]))
@@ -95,7 +94,7 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
             ((t.InRange = !1),
             this.Uin(t.PbDataId, !1),
             Log_1.Log.CheckDebug()) &&
-            Log_1.Log.Debug("NPC", 51, "离开生成范围", [
+            Log_1.Log.Debug("NPC", 50, "离开生成范围", [
               "PbDataId",
               this.EIe?.GetPbDataId(),
             ]);
@@ -115,19 +114,24 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
       t < this.Lin
     );
   }
-  Uin(e, t) {
+  Uin(t, e) {
     var o = Protocol_1.Aki.Protocol.rts.create();
     (o.F4n = MathUtils_1.MathUtils.NumberToLong(
       this.Hte.CreatureData.GetCreatureDataId(),
     )),
-      (o.eKn = e),
-      (o.tKn = t),
-      Net_1.Net.Call(17028, o, (e) => {
+      (o.eKn = t),
+      (o.tKn = e),
+      Net_1.Net.Call(25831, o, (e) => {
         e &&
           e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
-          ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.Q4n,
-            23198,
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "NPC",
+            50,
+            "请求行人生成器生成NPC失败",
+            ["CreatureId", this.Hte?.CreatureData.GetCreatureDataId()],
+            ["SplineId", t],
+            ["ErrorCode", e.Q4n],
           );
       });
   }
@@ -135,20 +139,20 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
     var t = ModelManager_1.ModelManager.CreatureModel.ScenePlayerDataMap,
       o = ModelManager_1.ModelManager.SceneTeamModel;
     let r = void 0,
-      n = MathUtils_1.MathUtils.MaxFloat;
+      i = MathUtils_1.MathUtils.MaxFloat;
     for (const a of t) {
-      var i,
+      var n,
         s = o.GetTeamItem(a[0], { ParamType: 2, IsControl: !0 })?.EntityHandle;
       s &&
         (s.Entity.GetComponent(3).ActorLocationProxy.Subtraction(e, this.Xot),
-        (i = this.Xot.SizeSquared2D()) < n) &&
-        ((n = i), (r = s));
+        (n = this.Xot.SizeSquared2D()) < i) &&
+        ((i = n), (r = s));
     }
-    return { PlayerEntity: r, MinDistSquared: n };
+    return { PlayerEntity: r, MinDistSquared: i };
   }
 };
 (PasserbyGeneratorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(196)],
+  [(0, RegisterComponent_1.RegisterComponent)(209)],
   PasserbyGeneratorComponent,
 )),
   (exports.PasserbyGeneratorComponent = PasserbyGeneratorComponent);

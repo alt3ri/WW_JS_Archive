@@ -40,11 +40,11 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
       (this.dBr = void 0),
       (this.g1t = CharacterNameDefines_1.CharacterNameDefines.HULU_SOCKET_NAME),
       (this._ii = 0),
-      (this.mFa = void 0),
+      (this.D4a = void 0),
       (this.Twr = (e) => {
-        e || 2 !== this._ii || this.SetActive(!1), (this.mFa = e);
+        e || 2 !== this._ii || this.SetActive(!1), (this.D4a = e);
       }),
-      (this.CBr = () => {
+      (this.Ktc = () => {
         this.Refresh();
       }),
       (this.Dwr = (e) => {
@@ -54,10 +54,10 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
         this.gBr();
       }),
       (this.OnAnsBegin = (e) => {
-        var t = this.mFa ?? !0,
+        var t = this.D4a ?? !0,
           t =
             (this.SetActive(t),
-            (this.mFa = void 0),
+            (this.D4a = void 0),
             e.IsRotate && this.StartHuluRotate(),
             e.Socket);
         t && this.AttachHuluToRole(t);
@@ -67,7 +67,7 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
       });
   }
   OnInit() {
-    (this.mBr = this.Owner.CheckGetComponent(11)),
+    (this.mBr = this.Owner.CheckGetComponent(12)),
       (this.ywr = this.Owner.CheckGetComponent(0)),
       (this.n$t = this.Owner.CheckGetComponent(1)),
       (this.Jwr = this.Owner.CheckGetComponent(6)),
@@ -85,8 +85,8 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
     ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
-        EventDefine_1.EEventName.OnUiModelRoleConfigIdChange,
-        this.CBr,
+        EventDefine_1.EEventName.BeforeUiModelLoadStart,
+        this.Ktc,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
@@ -112,8 +112,8 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
     ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Owner,
-        EventDefine_1.EEventName.OnUiModelRoleConfigIdChange,
-        this.CBr,
+        EventDefine_1.EEventName.BeforeUiModelLoadStart,
+        this.Ktc,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Owner,
@@ -138,8 +138,10 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
         ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).PartyId *
           HULU_PARTY_ID +
         HULU_BASE_ID +
-        1;
-    this.dBr.Model.CheckGetComponent(2)?.LoadModelByModelId(e);
+        1,
+      t = this.dBr.Model;
+    e !== t.CheckGetComponent(0)?.ModelConfigId &&
+      t.CheckGetComponent(2)?.LoadModelByModelId(e);
   }
   SetActive(e) {
     (e && 2 === this._ii) ||
@@ -172,8 +174,8 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
         0,
         !1,
       ),
-      t?.Actor?.K2_SetActorRelativeTransform(
-        MathUtils_1.MathUtils.DefaultTransform,
+      t?.Actor?.D_K2_SetActorRelativeTransform(
+        MathUtils_1.MathUtils.DefaultTransformDouble,
         !1,
         void 0,
         !1,
@@ -181,7 +183,7 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
   }
 };
 (UiRoleHuluComponent = __decorate(
-  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(15)],
+  [(0, UiModelComponentDefine_1.RegisterUiModelComponent)(16)],
   UiRoleHuluComponent,
 )),
   (exports.UiRoleHuluComponent = UiRoleHuluComponent);

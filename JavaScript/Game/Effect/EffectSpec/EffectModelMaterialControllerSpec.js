@@ -48,10 +48,10 @@ class EffectModelMaterialControllerSpec extends EffectSpec_1.EffectSpec {
               CharRenderingComponent_1.default.StaticClass(),
             )) ||
               ((this.RenderActor =
-                UE.KuroRenderingRuntimeBPPluginBPLibrary.SpawnActorFromClass(
+                UE.KuroRenderingRuntimeBPPluginBPLibrary.D_SpawnActorFromClass(
                   i,
                   UE.BP_MaterialControllerRenderActor_C.StaticClass(),
-                  new UE.Transform(),
+                  new UE.TransformDouble(),
                 )),
               (t = this.RenderActor.CharRenderingComponent),
               GlobalData_1.GlobalData.IsUiSceneOpen ? t.Init(5) : t.Init(7),
@@ -68,7 +68,7 @@ class EffectModelMaterialControllerSpec extends EffectSpec_1.EffectSpec {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            26,
+            25,
             "EffectModelMaterialController未配置材质控制器或材质控制器组",
             ["EffectModelData", this.EffectModel.GetName()],
           )),
@@ -83,7 +83,7 @@ class EffectModelMaterialControllerSpec extends EffectSpec_1.EffectSpec {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            26,
+            25,
             "EffectModelMaterialController播放失败，找不到渲染组件或骨骼网格体",
             ["EffectModelData", this.EffectModel.GetName()],
           )),

@@ -36,37 +36,34 @@ class AiStateMachineTaskMontage extends AiStateMachineTask_1.AiStateMachineTask 
     return (
       (this.ise = t.TaskMontage.MontageName),
       (this.Ine = t.TaskMontage.HideOnLoading),
-      (this.ose = t.TaskMontage.BlendInTime),
+      (this.ose = 0.001 * t.TaskMontage.BlendInTime),
       !0
     );
   }
   OnEnter(t) {
-    this.Node.SkillComponent.StopGroup1Skill(
+    var i;
+    !this.Node.TagComponent.HasTag(1008164187) &&
+    (this.Node.SkillComponent.StopGroup1Skill(
       "AiStateMachineTaskMontage.OnEnter",
     ),
-      (this.Node.TaskFinish = !1),
-      (this.Dne = !0),
-      (this.Playing = !1),
-      this.rse ||
-        (this.Ine &&
-          !this.Rne &&
-          (this.Rne = this.Node.ActorComponent.DisableActor("状态机加载动作")),
-        (this.rse = this.Node.MontageComponent.PlayMontageAsync(
-          this.ise,
-          this.Une,
-          this.nse,
-          !1,
-          this.ose,
-        ))),
-      this.rse
-        ? ((this.Playing = !0),
-          this.Node.MontageComponent.PlayMontageTaskAndRequest(
-            this.rse,
-            this.Node.ElapseTime / 1e3,
-            this.ise,
-            t,
-          ))
-        : (this.Node.TaskFinish = !0);
+    (this.Node.TaskFinish = !1),
+    (this.Dne = !0),
+    (this.Playing = !1),
+    (i = this.Node.MontageComponent),
+    this.rse ||
+      (this.Ine &&
+        !this.Rne &&
+        (this.Rne = this.Node.ActorComponent.DisableActor("状态机加载动作")),
+      (this.rse = i.CreateTaskWithName(
+        this.ise,
+        this.Une,
+        this.nse,
+        this.ose,
+      ))),
+    this.rse)
+      ? ((this.Playing = !0),
+        i.PlayMontageTaskWhenReady(this.rse, this.Node.ElapseTime / 1e3, t))
+      : (this.Node.TaskFinish = !0);
   }
   OnExit(t) {
     this.Ine &&
@@ -87,6 +84,9 @@ class AiStateMachineTaskMontage extends AiStateMachineTask_1.AiStateMachineTask 
   }
   GetTimeRemaining() {
     return this.Node.MontageComponent.GetMontageTimeRemaining(this.rse);
+  }
+  GetTimeElapsing() {
+    return this.Node.MontageComponent.GetMontageTimeElapsing(this.rse);
   }
   ToString(t, i = 0) {
     (0, AiStateMachine_1.appendDepthSpace)(t, i);

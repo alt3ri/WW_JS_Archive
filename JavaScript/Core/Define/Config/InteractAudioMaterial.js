@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractAudioMaterial = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class InteractAudioMaterial {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -36,16 +37,28 @@ class InteractAudioMaterial {
     );
   }
   collisionmaterial(t) {
-    var i = this.J7.__offset(this.z7, 4);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 4),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   isactiveimpacter() {
     var t = this.J7.__offset(this.z7, 6);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   audioevent(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   impactmass() {
     var t = this.J7.__offset(this.z7, 10);

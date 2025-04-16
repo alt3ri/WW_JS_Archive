@@ -9,7 +9,7 @@ class BattleDungeonGuideButton extends BattleEntranceButton_1.BattleEntranceButt
   constructor() {
     super(...arguments),
       (this.SPe = void 0),
-      (this.eka = () => {
+      (this.rFa = () => {
         this.SPe.PlayLevelSequenceByName("Shouqi");
       });
   }
@@ -27,13 +27,13 @@ class BattleDungeonGuideButton extends BattleEntranceButton_1.BattleEntranceButt
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleIntroductionViewHide,
-      this.eka,
+      this.rFa,
     );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleIntroductionViewHide,
-      this.eka,
+      this.rFa,
     );
   }
 }

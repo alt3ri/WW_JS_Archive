@@ -13,10 +13,12 @@ exports.DoublyLinkedNode = DoublyLinkedNode;
 class DoublyLinkedList {
   constructor(t) {
     (this.t7 = void 0),
+      (this.i7 = void 0),
       (this.s7 = 0),
       (this.t7 = new DoublyLinkedNode(t)),
       (this.t7.Next = this.t7),
       (this.t7.Pre = this.t7),
+      (this.i7 = this.t7),
       (this.s7 = 1);
   }
   static From(t) {
@@ -51,6 +53,7 @@ class DoublyLinkedList {
         ((e.Next = t).Pre = e),
         (t.Next = s) && (s.Pre = t),
         this.s7++),
+      t.Next || (this.i7 = t),
       t
     );
   }
@@ -58,13 +61,15 @@ class DoublyLinkedList {
     var t = this.Find((t) => t === i);
     t &&
       (this.t7 === t && (this.t7 = t.Next),
+      t === this.i7 && (this.i7 = t?.Pre),
       t.Pre && (t.Pre.Next = t.Next),
       t.Next && (t.Next.Pre = t.Pre),
       this.s7--);
   }
   RemoveThis(t) {
     this.t7 !== t &&
-      (t.Pre && (t.Pre.Next = t.Next),
+      (t === this.i7 && (this.i7 = t.Pre),
+      t.Pre && (t.Pre.Next = t.Next),
       t.Next && (t.Next.Pre = t.Pre),
       this.s7--);
   }
@@ -73,15 +78,25 @@ class DoublyLinkedList {
       i = this.t7?.Pre,
       s = i?.Next;
     return (
-      i && (i.Next = t), (t.Pre = i), (t.Next = s) && (s.Pre = t), this.s7++, t
+      i && (i.Next = t),
+      (t.Pre = i),
+      (t.Next = s) && (s.Pre = t),
+      this.s7++,
+      (this.i7 = t)
     );
   }
   GetHeadNode() {
     return this.t7;
   }
+  GetTailNode() {
+    return this.i7;
+  }
   RemoveAllNodeWithoutHead() {
     this.t7 &&
-      ((this.t7.Next = this.t7), (this.t7.Pre = this.t7), (this.s7 = 1));
+      ((this.t7.Next = this.t7),
+      (this.t7.Pre = this.t7),
+      (this.i7 = this.t7),
+      (this.s7 = 1));
   }
 }
 exports.default = DoublyLinkedList;

@@ -6,6 +6,7 @@ const UE = require("ue"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
   UiManager_1 = require("../../../Ui/UiManager"),
@@ -40,7 +41,9 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.qha = () => {
-        UiManager_1.UiManager.OpenView("PersonalCardPreviewView", this.bha);
+        ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
+          this.bha.CardId,
+        );
       }),
       (this.Y5i = () => {
         var e = new PersonalCardItem_1.PersonalCardItem();
@@ -49,11 +52,11 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
       (this.Oha = (e, i) => {
         this.bha = i;
         var t,
-          s,
-          r = this.p5i.CardDataList,
-          o = r.length;
+          r,
+          s = this.p5i.CardDataList,
+          o = s.length;
         for (let e = 0; e < o; e++) {
-          var n = r[e];
+          var n = s[e];
           if (n.CardId === i.CardId && n.IsUnLock && !n.IsRead) {
             PersonalController_1.PersonalController.SendReadCardRequest(
               i.CardId,
@@ -63,10 +66,10 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
         }
         this.L0 ||
           ((t = this.p5i.CurCardId),
-          (s = PersonalController_1.PersonalController.CheckCardIsUnLock(
+          (r = PersonalController_1.PersonalController.CheckCardIsUnLock(
             i.CardId,
           )),
-          this.GetButton(9).RootUIComp.SetUIActive(t !== this.bha.CardId && s)),
+          this.GetButton(9).RootUIComp.SetUIActive(t !== this.bha.CardId && r)),
           this.RefreshCardInfo(i),
           this.xqe.SelectGridProxy(e);
       });
@@ -90,26 +93,26 @@ class PersonalCardView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    if (((this.p5i = this.OpenParam), this.p5i)) {
-      let e = this.p5i.CardDataList;
-      (e = e.filter((e) => e.IsUnLock)),
-        (this.xqe = new LoopScrollView_1.LoopScrollView(
-          this.GetLoopScrollViewComponent(0),
-          this.GetItem(1).GetOwner(),
-          this.Y5i,
-        )),
-        this.xqe.RefreshByData(e),
-        0 < e.length &&
-          ((this.bha = e[0]),
-          this.RefreshCardInfo(this.bha),
-          this.xqe.SelectGridProxy(0)),
-        (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(7))),
-        this.lqe.SetCloseCallBack(this.Jvt),
-        this.GetItem(6).SetUIActive(0 < e.length),
-        this.L0 || this.GetButton(9).RootUIComp.SetUIActive(!1);
-    } else
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Personal", 59, "PersonalCardView Invalid OpenParam");
+    var e;
+    (this.p5i = this.OpenParam),
+      this.p5i
+        ? ((e = this.p5i.GetCardList(!1)),
+          (this.xqe = new LoopScrollView_1.LoopScrollView(
+            this.GetLoopScrollViewComponent(0),
+            this.GetItem(1).GetOwner(),
+            this.Y5i,
+          )),
+          this.xqe.RefreshByData(e),
+          0 < e.length &&
+            ((this.bha = e[0]),
+            this.RefreshCardInfo(this.bha),
+            this.xqe.SelectGridProxy(0)),
+          (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(7))),
+          this.lqe.SetCloseCallBack(this.Jvt),
+          this.GetItem(6).SetUIActive(0 < e.length),
+          this.L0 || this.GetButton(9).RootUIComp.SetUIActive(!1))
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Personal", 58, "PersonalCardView Invalid OpenParam");
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(

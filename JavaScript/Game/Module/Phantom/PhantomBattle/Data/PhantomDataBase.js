@@ -13,6 +13,7 @@ const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/Commo
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   AttributeModel_1 = require("../../../Attribute/AttributeModel"),
+  CalabashDefine_1 = require("../../../Calabash/CalabashDefine"),
   CommonComponentDefine_1 = require("../../../Common/CommonComponentDefine"),
   ItemDefines_1 = require("../../../Item/Data/ItemDefines"),
   RoleLevelUpSuccessController_1 = require("../../../RoleUi/RoleLevel/RoleLevelUpSuccessController"),
@@ -40,7 +41,8 @@ class VisionSubPropViewData {
     (this.Data = void 0),
       (this.SourceView = ""),
       (this.IfPreCache = !1),
-      (this.CurrentVisionData = void 0);
+      (this.CurrentVisionData = void 0),
+      (this.NeedHighLight = !1);
   }
 }
 exports.VisionSubPropViewData = VisionSubPropViewData;
@@ -133,7 +135,8 @@ class PhantomDataBase {
       (this.SuspendSlot = void 0),
       (this.BVi = 0),
       (this.FetterGroupId = 0),
-      (this.bVi = 0);
+      (this.bVi = 0),
+      (this.X8_ = void 0);
   }
   SetPhantomLevel(t) {
     this.PhantomLevel = t;
@@ -146,6 +149,19 @@ class PhantomDataBase {
   }
   GetPhantomLevel() {
     return this.PhantomLevel;
+  }
+  GetVisionIfCanRecovery() {
+    return (
+      0 === this.GetPhantomLevel() && 0 === this.GetExp() && !this.GetIsLock()
+    );
+  }
+  GetVisionIfCanRefine() {
+    return (
+      0 === this.GetPhantomLevel() &&
+      0 === this.GetExp() &&
+      !this.GetIsLock() &&
+      this.GetQuality() >= CalabashDefine_1.VISION_REFINE_FILTER_QUALITY
+    );
   }
   IsMax() {
     return (
@@ -179,7 +195,7 @@ class PhantomDataBase {
     for (let t = 1; t <= this.GetPhantomLevel(); t++)
       e +=
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomLevelExpByGroupIdAndLevel(
-          this.b4a().PhantomItem.LevelUpGroupId,
+          this.d8a().PhantomItem.LevelUpGroupId,
           t,
         );
     return e + this.PhantomExp;
@@ -211,7 +227,7 @@ class PhantomDataBase {
   }
   GetSuspendAttributeData() {
     var t = this.SuspendSlot.Qws;
-    const i = new Array();
+    const n = new Array();
     return (
       t.forEach((t) => {
         var e =
@@ -222,44 +238,44 @@ class PhantomDataBase {
             ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
               t.Yws,
             ),
-          n = e.AddType === CommonComponentDefine_1.RATIO,
-          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, n);
-        i.push(
+          i = e.AddType === CommonComponentDefine_1.RATIO,
+          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, i);
+        n.push(
           new AttrListScrollData_1.AttrListScrollData(
             e.PropId,
             0,
             t,
             r.Priority,
-            n,
+            i,
             1,
           ),
         );
       }),
-      i
+      n
     );
   }
   GetSlotIndexAttributeData(t, e) {
-    var r, n, i, a;
+    var r, i, n, a;
     if (this.GetSlotIndexDataEx(t))
       return (
         (t = this.GetSlotIndexDataEx(t)),
         (r = new Array()),
-        (n =
+        (i =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
             t.Yws,
           )),
-        (i =
+        (n =
           ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
             t.Yws,
           )),
-        (a = n.AddType === CommonComponentDefine_1.RATIO),
+        (a = i.AddType === CommonComponentDefine_1.RATIO),
         (t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, a)),
         r.push(
           new AttrListScrollData_1.AttrListScrollData(
-            n.PropId,
+            i.PropId,
             0,
             t,
-            i.Priority,
+            n.Priority,
             a,
             e,
           ),
@@ -301,8 +317,8 @@ class PhantomDataBase {
   }
   qVi(t, e) {
     var r,
-      n,
-      i =
+      i,
+      n =
         ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
           e,
         ).GetIncrIdList();
@@ -310,89 +326,89 @@ class PhantomDataBase {
       (r =
         ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
           e,
-        ).GetIndexPhantomId(t)) === (n = this.GetIncrId())
-      ? i
-      : ((i = Array.from(
+        ).GetIndexPhantomId(t)) === (i = this.GetIncrId())
+      ? n
+      : ((n = Array.from(
           ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
             e,
           ).GetIncrIdList(),
         )),
         0 === r
-          ? (this.GetEquipRoleId() === e && (i[this.GetEquipRoleIndex()] = 0),
-            (i[t] = n))
-          : r !== n &&
+          ? (this.GetEquipRoleId() === e && (n[this.GetEquipRoleIndex()] = 0),
+            (n[t] = i))
+          : r !== i &&
             (this.GetEquipRoleId() === e &&
-              (i[this.GetEquipRoleIndex()] = i[t]),
-            (i[t] = n)),
-        i);
+              (n[this.GetEquipRoleIndex()] = n[t]),
+            (n[t] = i)),
+        n);
   }
   static CalculateFetterByPhantomBattleData(e) {
     var r = e.length,
-      n = new Map(),
-      i = new Map();
+      i = new Map(),
+      n = new Map();
     for (let t = 0; t < r; t++) {
       var a = e[t];
       if (a) {
         var o,
           s = a.GetFetterGroupId();
-        let t = i.get(s);
+        let t = n.get(s);
         (t = t || new Array()).includes(a.GetMonsterId()) ||
-          ((o = n.get(s) ?? 0), n.set(s, o + 1), t.push(a.GetMonsterId())),
-          i.set(s, t);
+          ((o = i.get(s) ?? 0), i.set(s, o + 1), t.push(a.GetMonsterId())),
+          n.set(s, t);
       }
     }
-    return n;
+    return i;
   }
   IfEquipSameNameMonsterOnRole(t, e, r) {
     t = this.qVi(t, e);
-    const n = new Array();
+    const i = new Array();
     t.forEach((t) => {
       t = ModelManager_1.ModelManager.PhantomBattleModel?.GetPhantomDataBase(t);
-      t && n.push(t.GetMonsterId());
+      t && i.push(t.GetMonsterId());
     });
-    e = new Set(n);
-    return n.length !== e.size;
+    e = new Set(i);
+    return i.length !== e.size;
   }
   GetPreviewShowFetterList(t, e) {
     const a = new Array();
-    var r =
-        ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupFetterDataById(
-          this.FetterGroupId,
-        ),
-      n = this.qVi(t, e);
-    const o =
-      ModelManager_1.ModelManager.PhantomBattleModel.GetRoleFetterData(e);
-    var i = n.length,
-      s = new Array();
-    for (let t = 0; t < i; t++) {
-      var h =
-        ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
-          n[t],
-        );
-      h && s.push(h);
-    }
-    const u = PhantomDataBase.CalculateFetterByPhantomBattleData(s),
-      l = o.length;
-    return (
+    if (!(this.FetterGroupId <= 0)) {
+      var r =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupFetterDataById(
+            this.FetterGroupId,
+          ),
+        i = this.qVi(t, e);
+      const h =
+        ModelManager_1.ModelManager.PhantomBattleModel.GetRoleFetterData(e);
+      var n = i.length,
+        o = new Array();
+      for (let t = 0; t < n; t++) {
+        var s =
+          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+            i[t],
+          );
+        s && o.push(s);
+      }
+      const u = PhantomDataBase.CalculateFetterByPhantomBattleData(o),
+        l = h.length;
       r.forEach((e, t) => {
         var r = new VisionFetterData(),
-          n =
+          i =
             ((r.FetterGroupId = this.FetterGroupId),
             (r.FetterId = e),
             (r.NeedActiveNum = t),
             (r.ActiveFetterGroupNum = u.get(this.FetterGroupId) ?? 0),
             (r.ActiveState = u.get(this.FetterGroupId) >= t),
             u.get(this.FetterGroupId) >= t);
-        let i = !1;
+        let n = !1;
         for (let t = 0; t < l; t++)
-          if (o[t].FetterId === e && o[t].ActiveState !== n && n) {
-            i = !0;
+          if (h[t].FetterId === e && h[t].ActiveState !== i && i) {
+            n = !0;
             break;
           }
-        i && (r.NewAdd = !0), a.push(r);
-      }),
-      a
-    );
+        n && (r.NewAdd = !0), a.push(r);
+      });
+    }
+    return a;
   }
   GetPreviewCurrentShowFetterList() {
     return new Array();
@@ -464,18 +480,18 @@ class PhantomDataBase {
   GetNewSubPropSuccessData(e) {
     var e = e.length,
       r = this.PhantomSubProp.length,
-      n = this.GetSubPropShowAttributeList(1),
-      i = new Array();
+      i = this.GetSubPropShowAttributeList(1),
+      n = new Array();
     for (let t = e; t < r; t++)
-      (n[t].AddValue = n[t].BaseValue), (n[t].BaseValue = 0), i.push(n[t]);
+      (i[t].AddValue = i[t].BaseValue), (i[t].BaseValue = 0), n.push(i[t]);
     const a = new Array();
     return (
-      i.forEach((t) => {
+      n.forEach((t) => {
         t =
           RoleLevelUpSuccessController_1.RoleLevelUpSuccessController.ConvertsAttrListScrollDataToAttributeInfo(
             t,
           );
-        (t.ShowArrow = !1), (t.PreText = ""), a.push(t);
+        (t.ShowArrow = !1), (t.PreText = void 0), a.push(t);
       }),
       {
         Title: "IdentifySuccess",
@@ -497,29 +513,29 @@ class PhantomDataBase {
   }
   GetSubPropIdentifyPreviewData(t, e) {
     var r = this.GetLevelSubPropData(t);
-    let n = 0;
-    var i = r.length;
-    for (let t = 0; t < i; t++)
-      1 === r[t].SlotState && 0 < e - n && ((r[t].SlotState = 5), n++);
+    let i = 0;
+    var n = r.length;
+    for (let t = 0; t < n; t++)
+      1 === r[t].SlotState && 0 < e - i && ((r[t].SlotState = 5), i++);
     return r;
   }
   GetLevelSubPropPreviewData(t, e) {
     var r = this.GetLevelSubPropData(t),
-      n = this.GetLevelSubPropData(e),
-      i = n.length;
-    for (let t = 0; t < i; t++)
-      0 !== n[t].SlotState && 0 === r[t].SlotState && (n[t].SlotState = 2);
-    return n;
+      i = this.GetLevelSubPropData(e),
+      n = i.length;
+    for (let t = 0; t < n; t++)
+      0 !== i[t].SlotState && 0 === r[t].SlotState && (i[t].SlotState = 2);
+    return i;
   }
   GetEquipmentViewPreviewData() {
     var e = this.GetLevelSubPropData(this.GetPhantomLevel()),
       r = e.length,
-      n = new Array();
-    let i = 0;
+      i = new Array();
+    let n = 0;
     for (let t = 0; t < r; t++)
-      3 === e[t].SlotState && n.push(e[t]),
-        1 === e[t].SlotState && 0 === i && (n.push(e[t]), (i += 1));
-    return n;
+      3 === e[t].SlotState && i.push(e[t]),
+        1 === e[t].SlotState && 0 === n && (i.push(e[t]), (n += 1));
+    return i;
   }
   GetIdentifyCostItemId() {
     return ItemDefines_1.EItemId.Gold;
@@ -593,7 +609,7 @@ class PhantomDataBase {
   GetCurrentCanIdentifyCount() {
     var t = this.GetLevelSubPropData(this.GetPhantomLevel());
     let e = 0,
-      n =
+      i =
         (t.forEach((t) => {
           1 === t.SlotState && e++;
         }),
@@ -605,31 +621,31 @@ class PhantomDataBase {
             e,
           );
         let r = 0;
-        (r = 0 < e.length ? Math.floor(e[0].GetCount() / t) : r) < n && (n = r);
+        (r = 0 < e.length ? Math.floor(e[0].GetCount() / t) : r) < i && (i = r);
       }),
-      n
+      i
     );
   }
   GetLevelUnlockSubPropSlotCount(e) {
     var r = this.GetMaxSubPropCount();
-    let n = 0;
-    for (let t = 0; t < r; t++) e >= this.GetSubPropUnlockLevel(t) && n++;
-    return n;
+    let i = 0;
+    for (let t = 0; t < r; t++) e >= this.GetSubPropUnlockLevel(t) && i++;
+    return i;
   }
   GetLevelSubPropData(e) {
     var r = this.GetMaxSubPropCount(),
-      n = new Array();
+      i = new Array();
     for (let t = 0; t < r; t++) {
-      var i,
+      var n,
         a = new VisionSubPropData(t, this);
       e >= this.GetSubPropUnlockLevel(t)
-        ? (i = this.GetSlotIndexDataEx(t))
-          ? ((a.SlotState = 3), (a.PhantomSubProp = i))
+        ? (n = this.GetSlotIndexDataEx(t))
+          ? ((a.SlotState = 3), (a.PhantomSubProp = n))
           : (a.SlotState = 1)
         : (a.SlotState = 0),
-        n.push(a);
+        i.push(a);
     }
-    return n;
+    return i;
   }
   GetIfHaveLockSubProp() {
     let t = !1;
@@ -693,40 +709,40 @@ class PhantomDataBase {
     var t = this.GetCurrentIdentifyCostValue(),
       e = this.GetCurrentIdentifyCostId(),
       r = this.GetCurrentIdentifyNum(),
-      n = new Map(),
+      i = new Map(),
       t = Math.floor(t * r * this.GetIdentifyBackRadio());
-    return 0 < t && n.set(e, t), n;
+    return 0 < t && i.set(e, t), i;
   }
   GetLevelSlotData(e) {
     var r = this.GetMaxSlotCount(),
-      n = new Array();
+      i = new Array();
     if (!(1 <= r && e < this.GetSlotUnlockLevel(0)))
       for (let t = 0; t < r; t++) {
-        var i = new VisionSlotData();
+        var n = new VisionSlotData();
         e >= this.GetSlotUnlockLevel(t)
           ? this.GetSlotIndexDataEx(t)
-            ? (i.SlotState = 3)
-            : (i.SlotState = 1)
-          : (i.SlotState = 0),
-          n.push(i);
+            ? (n.SlotState = 3)
+            : (n.SlotState = 1)
+          : (n.SlotState = 0),
+          i.push(n);
       }
-    return n;
+    return i;
   }
   GetCurrentSlotData() {
     return this.GetLevelSlotData(this.GetPhantomLevel());
   }
   GetPreviewSlotData(e) {
     var r,
-      n = this.GetCurrentSlotData(),
-      i = this.GetLevelSlotData(e),
-      a = i.length;
+      i = this.GetCurrentSlotData(),
+      n = this.GetLevelSlotData(e),
+      a = n.length;
     for (let t = 0; t < a; t++)
-      0 === n.length
-        ? ((r = this.GetSlotUnlockLevel(t)), (i[t].SlotState = r <= e ? 2 : 0))
-        : n.length > t &&
-          n[t].SlotState !== i[t].SlotState &&
-          (i[t].SlotState = 2);
-    return i;
+      0 === i.length
+        ? ((r = this.GetSlotUnlockLevel(t)), (n[t].SlotState = r <= e ? 2 : 0))
+        : i.length > t &&
+          i[t].SlotState !== n[t].SlotState &&
+          (n[t].SlotState = 2);
+    return n;
   }
   GetCurrentSkillId() {
     return this.GetPhantomInstanceWithSkinId().PhantomItem.SkillId;
@@ -768,9 +784,9 @@ class PhantomDataBase {
       ? ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
           t,
         )
-      : this.b4a();
+      : this.d8a();
   }
-  b4a() {
+  d8a() {
     return ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
       this.GetConfigId(),
     );
@@ -789,20 +805,20 @@ class PhantomDataBase {
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
               e,
             ),
-          n =
+          i =
             ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
               e.PropId,
             ),
-          i = e.AddType === CommonComponentDefine_1.RATIO,
-          r = AttributeModel_1.TipsDataTool.GetPropRatioValue(r, i),
-          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t, i);
+          n = e.AddType === CommonComponentDefine_1.RATIO,
+          r = AttributeModel_1.TipsDataTool.GetPropRatioValue(r, n),
+          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t, n);
         a.push(
           new AttrListScrollData_1.AttrListScrollData(
             e.PropId,
             r,
             t,
-            n.Priority,
-            i,
+            i.Priority,
+            n,
             1,
           ),
         );
@@ -815,22 +831,22 @@ class PhantomDataBase {
   }
   GetMainPropValueMapInTargetLevel(t) {
     var e = new Map();
-    for (const i of this.GetPhantomMainProp()) {
+    for (const n of this.GetPhantomMainProp()) {
       var r =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
-            i.Yws,
+            n.Yws,
           ),
-        n =
+        i =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomGrowthValueByGrowthIdAndLevel(
             r.GrowthId,
             t,
           ),
         r = AttributeModel_1.TipsDataTool.GetAttributeValue(
           r.StandardProperty,
-          n,
+          i,
           !1,
         );
-      e.set(i.Yws, Math.floor(r));
+      e.set(n.Yws, Math.floor(r));
     }
     return e;
   }
@@ -851,8 +867,13 @@ class PhantomDataBase {
     return t && e ? e : this.ItemId;
   }
   GetConfig() {
-    return ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
-      this.ItemId,
+    return (
+      this.X8_ ||
+        (this.X8_ =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
+            this.ItemId,
+          )),
+      this.X8_
     );
   }
   GetSkinConfig() {
@@ -881,41 +902,41 @@ class PhantomDataBase {
   GetMonsterName() {
     return (this.SkinId ? this.GetSkinConfig() : this.GetConfig())?.MonsterName;
   }
-  GetMainPropShowAttributeList(e) {
-    var r = new Array();
+  GetMainPropShowAttributeList(e, r = !1) {
+    var i = new Array();
     const n = new Map();
     this.PhantomMainProp.forEach((t) => {
       n.set(t.Yws, t.e5n);
     });
-    var i = Array.from(n.keys()),
-      a = i.length;
-    for (let t = 0; t < a; t++) {
-      var o =
+    var a = Array.from(n.keys()),
+      o = a.length;
+    for (let t = 0; t < o; t++) {
+      var s =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
-            i[t],
+            a[t],
           ),
-        s =
+        h =
           ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
-            o.PropId,
+            s.PropId,
           ),
-        h = AttributeModel_1.TipsDataTool.GetPropRatioValue(
-          n.get(i[t]),
-          o.AddType === CommonComponentDefine_1.RATIO,
+        u = AttributeModel_1.TipsDataTool.GetPropRatioValue(
+          n.get(a[t]),
+          s.AddType === CommonComponentDefine_1.RATIO,
         );
-      r.push(
+      i.push(
         new AttrListScrollData_1.AttrListScrollData(
-          o.PropId,
-          h,
-          0,
-          s.Priority,
-          o.AddType === CommonComponentDefine_1.RATIO,
+          s.PropId,
+          u,
+          r ? s.AddType : 0,
+          h.Priority,
+          s.AddType === CommonComponentDefine_1.RATIO,
           e,
         ),
       );
     }
-    return r;
+    return i;
   }
-  GetSubPropShowAttributeList(i) {
+  GetSubPropShowAttributeList(n) {
     const a = new Array();
     return (
       this.PhantomSubProp.forEach((t) => {
@@ -927,8 +948,8 @@ class PhantomDataBase {
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
               t.Yws,
             ),
-          n = r.AddType === CommonComponentDefine_1.RATIO,
-          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, n);
+          i = r.AddType === CommonComponentDefine_1.RATIO,
+          t = AttributeModel_1.TipsDataTool.GetPropRatioValue(t.e5n, i);
         a.push(
           new AttrListScrollData_1.AttrListScrollData(
             r.PropId,
@@ -936,25 +957,58 @@ class PhantomDataBase {
             0,
             e.Priority,
             r.AddType === CommonComponentDefine_1.RATIO,
-            i,
+            n,
           ),
         );
       }),
       a
     );
   }
+  CheckIfHaveSelectRecommendMainAttr() {
+    var t =
+      ModelManager_1.ModelManager.VisionRecommendModel
+        .CurrentSelectMainAttrArray;
+    if (0 === t.length) return !0;
+    for (const r of t)
+      for (const i of this.PhantomMainProp) {
+        var e =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
+            i.Yws,
+          );
+        if (e.AddType === r.AddType && e.PropId === r.AttrId) return !0;
+      }
+    return !1;
+  }
+  CheckIfHaveSelectRecommendSubAttr() {
+    for (const r of ModelManager_1.ModelManager.VisionRecommendModel
+      .CurrentSelectSubAttrArray) {
+      let t = !1;
+      for (const i of this.PhantomSubProp) {
+        var e =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
+            i.Yws,
+          );
+        if (e.AddType === r.AddType && e.PropId === r.AttrId) {
+          t = !0;
+          break;
+        }
+      }
+      if (!t) return !1;
+    }
+    return !0;
+  }
   GetPropShowAttributeList(e) {
     var r = new Array();
-    const n = new Map(),
-      i =
+    const i = new Map(),
+      n =
         (this.PhantomMainProp.forEach((t) => {
-          n.set(t.Yws, t.e5n);
+          i.set(t.Yws, t.e5n);
         }),
         new Map());
     this.PhantomSubProp.forEach((t) => {
-      i.set(t.Yws, t.e5n), n.has(t.Yws) || n.set(t.Yws, 0);
+      n.set(t.Yws, t.e5n), i.has(t.Yws) || i.set(t.Yws, 0);
     });
-    var a = Array.from(n.keys()),
+    var a = Array.from(i.keys()),
       o = a.length;
     for (let t = 0; t < o; t++) {
       var s =
@@ -964,8 +1018,8 @@ class PhantomDataBase {
       r.push(
         new AttrListScrollData_1.AttrListScrollData(
           a[t],
-          n.get(a[t]),
-          i.get(a[t]) ?? 0,
+          i.get(a[t]),
+          n.get(a[t]) ?? 0,
           s.Priority,
           !1,
           e,

@@ -1,22 +1,25 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GamePingController = void 0);
-const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
-  NetInfo_1 = require("../../../Core/Net/NetInfo"),
+const NetInfo_1 = require("../../../Core/Net/NetInfo"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  CloudGameManager_1 = require("../../Manager/CloudGameManager"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   UiManager_1 = require("../../Ui/UiManager"),
   REFRESH_PING_INTERVAL_MS = 100,
   MAX_PING_MS = 999,
   MIN_PING_MS = 1;
-class GamePingController extends ControllerBase_1.ControllerBase {
+class GamePingController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
-    return this.OnAddEvents(), this.P3e(), !0;
+    return this.P3e(), !0;
   }
   static OnClear() {
-    return this.OnRemoveEvents(), this.R6t(), !0;
+    return this.R6t(), !0;
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -28,6 +31,21 @@ class GamePingController extends ControllerBase_1.ControllerBase {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
       this.FWe,
+    );
+  }
+  static OnAddOpenViewCheckFunction() {
+    UiManager_1.UiManager.AddOpenViewCheckFunction(
+      "PingView",
+      GamePingController.iVe,
+      "GamePingController.CanOpenView",
+    );
+  }
+  static gTo() {
+    var e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+    return (
+      0 === e ||
+      !(e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)) ||
+      1 !== e.WorldDungeonSubType
     );
   }
   static P3e() {
@@ -42,9 +60,12 @@ class GamePingController extends ControllerBase_1.ControllerBase {
       (GamePingController.qKt = void 0));
   }
 }
-((exports.GamePingController = GamePingController).qKt = void 0),
+(exports.GamePingController = GamePingController),
+  ((_a = GamePingController).qKt = void 0),
+  (GamePingController.iVe = (e) => !!_a.gTo()),
   (GamePingController.FWe = () => {
-    UiManager_1.UiManager.OpenView("PingView");
+    CloudGameManager_1.CloudGameManager.IsCloudGame ||
+      UiManager_1.UiManager.OpenView("PingView");
   }),
   (GamePingController.GKt = () => {
     var e = Math.ceil(NetInfo_1.NetInfo.RttMs),

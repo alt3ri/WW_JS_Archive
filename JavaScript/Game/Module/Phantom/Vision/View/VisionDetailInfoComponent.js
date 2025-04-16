@@ -16,22 +16,25 @@ const UE = require("ue"),
   VisionNameText_1 = require("./VisionNameText");
 class VisionDetailInfoComponentData {
   constructor() {
-    (this.DataBase = void 0), (this.DescData = void 0);
+    (this.RoleId = 0),
+      (this.Cost = 0),
+      (this.DataBase = void 0),
+      (this.DescData = void 0);
   }
-  GetMainPropData() {
-    return this.DataBase.GetMainPropShowAttributeList(1);
+  GetMainPropData(t = !1) {
+    return this.DataBase.GetMainPropShowAttributeList(1, t);
   }
   GetSubPropData() {
     return this.DataBase.GetEquipmentViewPreviewData();
   }
-  AddDescData(i) {
+  AddDescData(t) {
     void 0 === this.DescData && (this.DescData = new Array()),
-      this.DescData.push(i);
+      this.DescData.push(t);
   }
 }
 exports.VisionDetailInfoComponentData = VisionDetailInfoComponentData;
 class VisionDetailInfoComponent extends UiPanelBase_1.UiPanelBase {
-  constructor(i) {
+  constructor(t) {
     super(),
       (this._9i = void 0),
       (this.$8i = void 0),
@@ -43,7 +46,7 @@ class VisionDetailInfoComponent extends UiPanelBase_1.UiPanelBase {
       (this.OnClickArrow = () => {
         this.d9i?.();
       }),
-      (this.wqe = i);
+      (this.wqe = t);
   }
   async Init() {
     await this.CreateByActorAsync(this.wqe.GetOwner());
@@ -71,36 +74,54 @@ class VisionDetailInfoComponent extends UiPanelBase_1.UiPanelBase {
     (this.u9i = new RoleVisionAttribute_1.RoleVisionAttribute(this.GetItem(1))),
       this.u9i.Init();
   }
-  SetClickCallBack(i) {
-    this.d9i = i;
+  SetClickCallBack(t) {
+    this.d9i = t;
   }
-  Refresh(i, t, e) {
-    (this.$8i = i),
+  Refresh(t, i, e) {
+    (this.$8i = t),
       this._9i.Update(this.$8i.DataBase),
       this._9i.SetActive(!0),
       this.C9i(),
       this.g9i(),
       this.f9i();
   }
-  GetTxtItemByIndex(i) {
-    return this.m9i?.GetTxtItemByIndex(i);
+  GetTxtItemByIndex(t) {
+    return this.m9i?.GetTxtItemByIndex(t);
   }
   f9i() {
     this.m9i.Refresh(this.$8i.DescData), this.m9i.SetActive(!0);
   }
   C9i() {
-    this.u9i.Refresh(this.$8i.GetMainPropData());
+    var t =
+        ModelManager_1.ModelManager.VisionRecommendModel.GetRoleCostAttrRecommendInfo(
+          this.$8i.RoleId,
+          this.$8i.Cost,
+        ),
+      e = this.$8i.GetMainPropData(),
+      s = this.$8i.GetMainPropData(!0),
+      n = s.length,
+      o = t?.GetMainAttrRecommendInfo();
+    for (let i = 0; i < n; i++)
+      if (t) {
+        var r = o.length;
+        for (let t = 0; t < r; t++)
+          s[i].AddValue === o[t].GetAddType() &&
+            s[i].Id === o[t].GetAttrId() &&
+            (e[i].NeedHighLight = !0);
+      }
+    this.u9i.Refresh(e);
   }
   g9i() {
-    var i = this.$8i.GetSubPropData();
-    0 < i.length
-      ? (this.c9i.Refresh(i, this.$8i?.DataBase), this.c9i.SetActive(!0))
+    var t = this.$8i.GetSubPropData();
+    0 < t.length
+      ? (this.c9i.Refresh(t, this.$8i?.DataBase, this.$8i),
+        this.c9i.SetActive(!0))
       : this.c9i.SetActive(!1);
   }
 }
 exports.VisionDetailInfoComponent = VisionDetailInfoComponent;
 class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
-  constructor(i) {
+  constructor(t) {
     super(),
       (this.$8i = void 0),
       (this.p9i = void 0),
@@ -118,20 +139,20 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
           !this.$8i.GetIsDeprecated(),
         );
       }),
-      (this.TNa = (i) => {
-        var t;
-        this.$8i?.GetUniqueId() === i &&
+      (this.R3a = (t) => {
+        var i;
+        this.$8i?.GetUniqueId() === t &&
           void 0 !==
-            (i =
+            (t =
               ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(
-                i,
+                t,
               )) &&
-          ((t = i.GetIsLock() ? 0 : 1),
-          this.GetExtendToggle(1).SetToggleState(t, !1),
-          (t = i.GetIsDeprecated() ? 1 : 0),
-          this.GetExtendToggle(6).SetToggleState(t, !1));
+          ((i = t.GetIsLock() ? 0 : 1),
+          this.GetExtendToggle(1).SetToggleState(i, !1),
+          (i = t.GetIsDeprecated() ? 1 : 0),
+          this.GetExtendToggle(6).SetToggleState(i, !1));
       }),
-      (this.wqe = i);
+      (this.wqe = t);
   }
   async Init() {
     await this.CreateByActorAsync(this.wqe.GetOwner());
@@ -162,30 +183,30 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
     (this.p9i = new VisionNameText_1.VisionNameText(this.GetText(0))),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.TNa,
+        this.R3a,
       );
   }
-  Update(i) {
-    (this.$8i = i),
-      this.p9i.Update(i),
-      this.GetText(4).SetText(i.GetCost().toString()),
+  Update(t) {
+    (this.$8i = t),
+      this.p9i.Update(t),
+      this.GetText(4).SetText(t.GetCost().toString()),
       this.GetText(2).SetText(
         StringUtils_1.StringUtils.Format(
           "+{0}",
-          i.GetPhantomLevel().toString(),
+          t.GetPhantomLevel().toString(),
         ),
       ),
       this.GetText(2).SetUIActive(!0);
-    var t = ModelManager_1.ModelManager.InventoryModel.GetPhantomItemData(
-        i.GetUniqueId(),
+    var i = ModelManager_1.ModelManager.InventoryModel.GetPhantomItemData(
+        t.GetUniqueId(),
       ),
-      t = (this.TNa(t.GetUniqueId()), i.GetFetterGroupConfig());
-    this.bxt.Update(t);
+      i = (this.R3a(i.GetUniqueId()), t.GetFetterGroupConfig());
+    this.bxt.Update(i);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnItemFuncValueChange,
-      this.TNa,
+      this.R3a,
     );
   }
 }

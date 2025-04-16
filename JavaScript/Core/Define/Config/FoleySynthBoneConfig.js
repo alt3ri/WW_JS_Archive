@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FoleySynthBoneConfig = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class FoleySynthBoneConfig {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -79,28 +80,52 @@ class FoleySynthBoneConfig {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   name(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   bonename(t) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model1ceil() {
     var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model1ceileventpath(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model1floor() {
     var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model1flooreventpath(t) {
-    var e = this.J7.__offset(this.z7, 16);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 16),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model1ceilinterpolation() {
     var t = this.J7.__offset(this.z7, 18);
@@ -111,40 +136,76 @@ class FoleySynthBoneConfig {
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model1rtpcpath(t) {
-    var e = this.J7.__offset(this.z7, 22);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 22),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model2ceil() {
     var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model2ceileventpath(t) {
-    var e = this.J7.__offset(this.z7, 26);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 26),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model2floor() {
     var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model2floorpath(t) {
-    var e = this.J7.__offset(this.z7, 30);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 30),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model2floorprecent() {
     var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.readFloat32(this.z7 + t) : 0;
   }
   model2rptcvelocitymax(t) {
-    var e = this.J7.__offset(this.z7, 34);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 34),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model2rptcaccelerationmax(t) {
-    var e = this.J7.__offset(this.z7, 36);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 36),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model2rptcvelocityduring(t) {
-    var e = this.J7.__offset(this.z7, 38);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 38),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   model2ceilinterpolation() {
     var t = this.J7.__offset(this.z7, 40);

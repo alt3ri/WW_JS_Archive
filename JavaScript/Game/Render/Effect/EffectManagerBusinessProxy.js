@@ -27,13 +27,13 @@ class EffectManagerBusinessProxy {
       (this.BJe = (e, t, s) => {
         this.d1r &&
           e === this.C1r &&
-          (e = this.d1r.GetComponent(34)?.GetSkillInfo(t)) &&
+          (e = this.d1r.GetComponent(39)?.GetSkillInfo(t)) &&
           3 === e.SkillGenre &&
           (this.c1r.Start(),
           this.m1r.forEach((e) => {
             EffectSystem_1.EffectSystem.IsValid(e) &&
               (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("RenderEffect", 26, "Effect Recycled By Burst", [
+                Log_1.Log.Info("RenderEffect", 25, "Effect Recycled By Burst", [
                   "path",
                   EffectSystem_1.EffectSystem.GetPath(e),
                 ]),

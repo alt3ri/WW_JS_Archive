@@ -6,6 +6,9 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ActorUtils_1 = require("../../../Utils/ActorUtils"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSneakStart extends TsTaskAbortImmediatelyBase_1.default {
+  Constructor() {
+    super.Constructor();
+  }
   ReceiveExecuteAI(e, t) {
     e.AiController
       ? ((t = ActorUtils_1.ActorUtils.GetEntityByActor(t)) &&

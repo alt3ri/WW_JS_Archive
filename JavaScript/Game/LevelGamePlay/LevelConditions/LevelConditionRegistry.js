@@ -8,9 +8,9 @@ const Log_1 = require("../../../Core/Common/Log"),
   GameplayTagUtils_1 = require("../../../Core/Utils/GameplayTagUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   LevelGeneralDefine_1 = require("../LevelGeneralDefine"),
-  LevelConditionCenter_1 = require("./LevelConditionCenter"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  LevelConditionCenter_1 = require("./LevelConditionCenter");
 class ConditionPassCallback {
   constructor(e, t) {
     (this.Callback = e), (this.Params = t);
@@ -23,7 +23,7 @@ class LevelConditionRegData {
       (this.nLe = void 0),
       (this.sLe = (...e) => {
         this.nLe ||
-          (this.nLe = Stats_1.Stat.Create(
+          (this.nLe = Stats_1.Stat.CreateNoFlameGraph(
             "OnEventInvokeCheckStat_" + this.ConditionConfig.Type,
           )),
           this.nLe.Start();
@@ -106,7 +106,7 @@ class LevelConditionGroupRegData {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelConditionRegistry",
-          17,
+          16,
           "初始化事件条件组时, 找不到条件组配置",
           ["条件组Id", this.ConditionGroupId],
         );
@@ -166,10 +166,10 @@ class LevelConditionRegistry {
     i &&
       ((t = i.GetPbDataId()),
       this.cLe.has(t)
-        ? e?.GetComponent(107)?.SetGuideRange(this.cLe.get(t))
+        ? e?.GetComponent(117)?.SetGuideRange(this.cLe.get(t))
         : (t = i.GetPbEntityInitData()?.BlueprintType) &&
           this.uLe.has(t) &&
-          e?.GetComponent(107)?.SetGuideRange(this.uLe.get(t)));
+          e?.GetComponent(117)?.SetGuideRange(this.uLe.get(t)));
   }
 }
 ((exports.LevelConditionRegistry = LevelConditionRegistry)._Le = new Map()),

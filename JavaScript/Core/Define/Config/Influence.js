@@ -54,6 +54,13 @@ class Influence {
       this,
     );
   }
+  get PartyTags() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.partytagsLength(),
+      this.partytags,
+      this,
+    );
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -68,24 +75,48 @@ class Influence {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   title(t) {
-    var i = this.J7.__offset(this.z7, 6);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 6),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   introduction(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   extradesc(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   showicon() {
     var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   logo(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   dailytaskshow() {
     var t = this.J7.__offset(this.z7, 16);
@@ -111,10 +142,10 @@ class Influence {
     return this.reputationitem(t);
   }
   reputationitem(t, i) {
-    var r = this.J7.__offset(this.z7, 26);
-    return r
+    var s = this.J7.__offset(this.z7, 26);
+    return s
       ? (i || new IntPair_1.IntPair()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
@@ -127,10 +158,10 @@ class Influence {
     return this.reputationreward(t);
   }
   reputationreward(t, i) {
-    var r = this.J7.__offset(this.z7, 28);
-    return r
+    var s = this.J7.__offset(this.z7, 28);
+    return s
       ? (i || new IntPair_1.IntPair()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
           this.J7,
         )
       : null;
@@ -138,6 +169,27 @@ class Influence {
   reputationrewardLength() {
     var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  GetPartytagsAt(t) {
+    return this.partytags(t);
+  }
+  partytags(t) {
+    var i = this.J7.__offset(this.z7, 30);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  partytagsLength() {
+    var t = this.J7.__offset(this.z7, 30);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  partytagsArray() {
+    var t = this.J7.__offset(this.z7, 30);
+    return t
+      ? new Int32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
 }
 exports.Influence = Influence;

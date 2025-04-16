@@ -8,6 +8,9 @@ class LogicDataSpeedReduce extends LogicDataBase_1.default {
       (this.IsNotThroughObstacles = !1),
       (this.MinSpeed = -0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataSpeedReduce;
 //# sourceMappingURL=LogicDataSpeedReduce.js.map

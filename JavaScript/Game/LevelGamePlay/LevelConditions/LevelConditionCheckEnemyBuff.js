@@ -12,18 +12,18 @@ class LevelConditionCheckEnemyBuff extends LevelGeneralBase_1.LevelConditionBase
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           );
       else {
-        var i = BigInt(e.LimitParams.get("BuffId"));
+        var i = Number(e.LimitParams.get("BuffId"));
         if (i) {
-          for (const t of o[0])
+          for (const r of o[0])
             if (
               0 <
-              (EntitySystem_1.EntitySystem.Get(t)
-                ?.GetComponent(160)
+              (EntitySystem_1.EntitySystem.Get(r)
+                ?.GetComponent(172)
                 ?.GetBuffTotalStackById(i) ?? 0)
             )
               return !0;
@@ -31,7 +31,7 @@ class LevelConditionCheckEnemyBuff extends LevelGeneralBase_1.LevelConditionBase
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的BuffId参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.CheckEnemyBuff}的定义`,
             );
       }

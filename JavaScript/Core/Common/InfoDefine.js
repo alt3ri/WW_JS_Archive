@@ -21,6 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     3: 2,
     4: 2,
     5: 1,
+    6: 2,
   }),
   (exports.inputControllerMainTypeMap = {
     [0]: 0,
@@ -29,5 +30,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     3: 2,
     4: 2,
     5: 3,
+    6: 2,
   });
 //# sourceMappingURL=InfoDefine.js.map

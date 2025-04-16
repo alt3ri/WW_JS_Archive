@@ -43,7 +43,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "MingSuTi",
-              8,
+              58,
               "当前等级: " +
                 this.CurrentShowLevel.toString() +
                 " left " +
@@ -58,7 +58,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "MingSuTi",
-              8,
+              58,
               "当前等级: " +
                 this.CurrentShowLevel.toString() +
                 " right " +
@@ -83,12 +83,12 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
                   this.PoolConfigId,
                 ),
                 Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("MingSuTi", 8, "可以升级"))
+                  Log_1.Log.Info("MingSuTi", 58, "可以升级"))
               : (EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnSubmitItemFail,
                 ),
                 Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("MingSuTi", 8, "不可升级!!!!"))
+                  Log_1.Log.Info("MingSuTi", 58, "不可升级!!!!"))
             : this.$bi());
       }),
       (this.tqi = () => {
@@ -102,7 +102,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
   }
   OnRegisterComponent() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("MingSuTi", 8, "创建鸣素体界面!!!!"),
+      Log_1.Log.Info("MingSuTi", 58, "创建鸣素体界面!!!!"),
       this.iqi();
   }
   OnBegined() {

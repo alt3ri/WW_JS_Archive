@@ -8,9 +8,9 @@ class LevelConditionCheckActivityOpen extends LevelGeneralBase_1.LevelConditionB
     return (
       !!e.LimitParams &&
       !!(e = Number(e.LimitParams.get("ActivityId"))) &&
-      !ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-        e,
-      ).CheckIfClose()
+      void 0 !==
+        (e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(e)) &&
+      !e.CheckIfClose()
     );
   }
 }

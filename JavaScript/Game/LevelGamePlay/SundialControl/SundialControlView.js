@@ -5,10 +5,9 @@ const UE = require("ue"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   LguiUtil_1 = require("../../Module/Util/LguiUtil"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
-  SundialControlController_1 = require("./SundialControlController"),
   TIPS_TEXT = "PrefabTextItem_2335089801_Text",
   RESET_TEXT = "PrefabTextItem_2335089802_Text",
   SWITCH_TEXT = "PrefabTextItem_2335089799_Text",
@@ -44,11 +43,11 @@ class SundialControlView extends UiViewBase_1.UiViewBase {
         this.Wxe();
       }),
       (this.Kxe = () => {
-        SundialControlController_1.SundialControlController.SwitchCurrentRing();
+        ControllerHolder_1.ControllerHolder.SundialControlController.SwitchCurrentRing();
       }),
       (this.Qxe = () => {
         this.Xxe(!1),
-          SundialControlController_1.SundialControlController.StartRotate(
+          ControllerHolder_1.ControllerHolder.SundialControlController.StartRotate(
             () => {
               this.Xxe(!0);
             },
@@ -95,7 +94,7 @@ class SundialControlView extends UiViewBase_1.UiViewBase {
       e =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(e, SWITCH_TEXT), this.GetText(7));
     LguiUtil_1.LguiUtil.SetLocalTextNew(e, ROTATE_TEXT),
-      SundialControlController_1.SundialControlController.SetOnFinishCallback(
+      ControllerHolder_1.ControllerHolder.SundialControlController.SetOnFinishCallback(
         () => {
           this.Fxe.RootUIComp.SetUIActive(!1),
             this.Vxe.RootUIComp.SetUIActive(!1),
@@ -105,7 +104,7 @@ class SundialControlView extends UiViewBase_1.UiViewBase {
       ),
       this.Yxe(),
       TimerSystem_1.TimerSystem.Delay(() => {
-        SundialControlController_1.SundialControlController.GenerateModel(
+        ControllerHolder_1.ControllerHolder.SundialControlController.GenerateModel(
           () => {
             this.Jxe();
           },
@@ -127,34 +126,38 @@ class SundialControlView extends UiViewBase_1.UiViewBase {
   async Yxe() {
     this.Xxe(!1),
       await this.HideAsync(),
-      await LevelLoadingController_1.LevelLoadingController.WaitOpenLoading(
-        6,
+      await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitOpenLoading(
+        5,
         3,
       );
   }
   async Jxe() {
-    await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(6),
+    await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitCloseLoading(
+      5,
+    ),
       await this.ShowAsync(),
       this.Xxe(!0),
-      SundialControlController_1.SundialControlController.UpdateViewTips();
+      ControllerHolder_1.ControllerHolder.SundialControlController.UpdateViewTips();
   }
   OnBeforeDestroy() {
-    SundialControlController_1.SundialControlController.SetOnFinishCallback(
+    ControllerHolder_1.ControllerHolder.SundialControlController.SetOnFinishCallback(
       void 0,
     ),
-      SundialControlController_1.SundialControlController.DestroyModel();
+      ControllerHolder_1.ControllerHolder.SundialControlController.DestroyModel();
   }
   async Wxe() {
     this.Xxe(!1),
       await this.HideAsync(),
-      await LevelLoadingController_1.LevelLoadingController.WaitOpenLoading(
-        6,
+      await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitOpenLoading(
+        5,
         3,
       ),
-      SundialControlController_1.SundialControlController.ResetAll(),
-      await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(6),
+      ControllerHolder_1.ControllerHolder.SundialControlController.ResetAll(),
+      await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitCloseLoading(
+        5,
+      ),
       await this.ShowAsync(),
-      SundialControlController_1.SundialControlController.UpdateViewTips(),
+      ControllerHolder_1.ControllerHolder.SundialControlController.UpdateViewTips(),
       this.Xxe(!0);
   }
   Xxe(e) {

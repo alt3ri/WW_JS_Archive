@@ -6,10 +6,10 @@ const UE = require("ue"),
   IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   UiComponentUtil_1 = require("../../Module/Util/UiComponentUtil"),
-  UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
-  TurntableControlController_1 = require("./TurntableControlController");
+  UiTimeDilation_1 = require("../../Ui/Base/UiTimeDilation"),
+  UiViewBase_1 = require("../../Ui/Base/UiViewBase");
 class TurntableControlView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -18,31 +18,31 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       (this.Hxe = void 0),
       (this.jxe = void 0),
       (this.Sqn = !1),
-      (this.jwe = (t) => {
-        "OnOpenTurntableControlViewBlackScreen" === t &&
+      (this.jwe = (e) => {
+        "OnOpenTurntableControlViewBlackScreen" === e &&
           ((this.Sqn = !0),
-          TurntableControlController_1.TurntableControlController.SelectRingByIndex(
+          ControllerHolder_1.ControllerHolder.TurntableControlController.SelectRingByIndex(
             0,
             !0,
           ),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "SceneItem",
-              40,
+              39,
               "[TurntableControlView] Seq触发黑幕进入事件，显示UI",
             ),
           this.GetRootItem().SetUIActive(!0));
       }),
-      (this.Wwe = (t, e) => {
-        e
+      (this.Wwe = (e, t) => {
+        t
           ? (this.Fxe.SetSelfInteractive(!1),
             this.Vxe.SetSelfInteractive(!1),
             this.Hxe.SetSelfInteractive(!1),
             this.jxe.SetSelfInteractive(!1))
-          : t
+          : e
             ? (this.Fxe.SetSelfInteractive(!1),
               this.Vxe.SetSelfInteractive(!0),
-              TurntableControlController_1.TurntableControlController.GetControlType() ===
+              ControllerHolder_1.ControllerHolder.TurntableControlController.GetControlType() ===
               IComponent_1.EControllerType.FixedAngle
                 ? this.Hxe.SetSelfInteractive(!1)
                 : this.Hxe.SetSelfInteractive(!0),
@@ -56,16 +56,16 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
         this.Wwe(!1, !0), this.Wxe();
       }),
       (this.Kxe = () => {
-        TurntableControlController_1.TurntableControlController.SwitchSelectedRing();
+        ControllerHolder_1.ControllerHolder.TurntableControlController.SwitchSelectedRing();
       }),
       (this.Qxe = () => {
-        TurntableControlController_1.TurntableControlController.StartRotateSelected();
+        ControllerHolder_1.ControllerHolder.TurntableControlController.StartRotateSelected();
       }),
       (this.Kwe = () => {
-        TurntableControlController_1.TurntableControlController.StartRotateSelected();
+        ControllerHolder_1.ControllerHolder.TurntableControlController.StartRotateSelected();
       }),
       (this.Qwe = () => {
-        TurntableControlController_1.TurntableControlController.StopAllRotate();
+        ControllerHolder_1.ControllerHolder.TurntableControlController.StopAllRotate();
       }),
       (this.LPe = () => {
         this.CloseMe();
@@ -83,7 +83,7 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
         [1, this.Kxe],
         [3, this.LPe],
       ]),
-      TurntableControlController_1.TurntableControlController.GetControlType() ===
+      ControllerHolder_1.ControllerHolder.TurntableControlController.GetControlType() ===
         IComponent_1.EControllerType.FixedAngle &&
         this.BtnBindInfo.push([2, this.Qxe]);
   }
@@ -92,14 +92,24 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       (this.Vxe = this.GetButton(1)),
       (this.Hxe = this.GetButton(2)),
       (this.jxe = this.GetButton(3)),
-      TurntableControlController_1.TurntableControlController.GetControlType() ===
+      ControllerHolder_1.ControllerHolder.TurntableControlController.GetControlType() ===
         IComponent_1.EControllerType.FreeAngle &&
         (this.Hxe.OnPointDownCallBack.Bind(this.Kwe),
         this.Hxe.OnPointUpCallBack.Bind(this.Qwe),
         UiComponentUtil_1.UiComponentUtil.BindAudioEvent(this.Hxe));
   }
+  OnBeforeShow() {
+    UiTimeDilation_1.UiTimeDilation.AddWaitSetTimeDilationTag(
+      "TurntableControl",
+    );
+  }
+  OnAfterHide() {
+    UiTimeDilation_1.UiTimeDilation.DeleteWaitSetTimeDilationTag(
+      "TurntableControl",
+    );
+  }
   OnBeforeDestroy() {
-    TurntableControlController_1.TurntableControlController.HandleTurntableControlViewClose(),
+    ControllerHolder_1.ControllerHolder.TurntableControlController.HandleTurntableControlViewClose(),
       this.Hxe.OnPointDownCallBack.IsBound() &&
         this.Hxe.OnPointDownCallBack.Unbind(),
       this.Hxe.OnPointUpCallBack.IsBound() &&
@@ -111,7 +121,7 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       (this.jxe = void 0);
   }
   OnAfterShow() {
-    TurntableControlController_1.TurntableControlController.IsAllRingsAtTarget() &&
+    ControllerHolder_1.ControllerHolder.TurntableControlController.IsAllRingsAtTarget() &&
       (this.Fxe.SetSelfInteractive(!1),
       this.Vxe.SetSelfInteractive(!1),
       this.Hxe.SetSelfInteractive(!1)),
@@ -119,22 +129,22 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            40,
+            39,
             "[TurntableControlView] Seq事件未触发过，初始隐藏UI",
           ),
         this.GetRootItem().SetUIActive(!1));
   }
   OnAddEventListener() {
-    var t =
-      TurntableControlController_1.TurntableControlController.GetControllerEntity();
-    t &&
+    var e =
+      ControllerHolder_1.ControllerHolder.TurntableControlController.GetControllerEntity();
+    e &&
       !EventSystem_1.EventSystem.HasWithTarget(
-        t,
+        e,
         EventDefine_1.EEventName.OnTurntableControllerBusyStateChange,
         this.Wwe,
       ) &&
       EventSystem_1.EventSystem.AddWithTarget(
-        t,
+        e,
         EventDefine_1.EEventName.OnTurntableControllerBusyStateChange,
         this.Wwe,
       ),
@@ -144,16 +154,16 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
       );
   }
   OnRemoveEventListener() {
-    var t =
-      TurntableControlController_1.TurntableControlController.GetControllerEntity();
-    t &&
+    var e =
+      ControllerHolder_1.ControllerHolder.TurntableControlController.GetControllerEntity();
+    e &&
       EventSystem_1.EventSystem.HasWithTarget(
-        t,
+        e,
         EventDefine_1.EEventName.OnTurntableControllerBusyStateChange,
         this.Wwe,
       ) &&
       EventSystem_1.EventSystem.RemoveWithTarget(
-        t,
+        e,
         EventDefine_1.EEventName.OnTurntableControllerBusyStateChange,
         this.Wwe,
       ),
@@ -166,27 +176,27 @@ class TurntableControlView extends UiViewBase_1.UiViewBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "SceneItem",
-        40,
+        39,
         "[TurntableControlView] 重置开始，隐藏UI",
       ),
       await this.HideAsync(),
-      await LevelLoadingController_1.LevelLoadingController.WaitOpenLoading(
-        5,
+      await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitOpenLoading(
+        4,
         3,
       ),
-      TurntableControlController_1.TurntableControlController.ResetRingsAngle(),
-      TurntableControlController_1.TurntableControlController.SelectRingByIndex(
+      ControllerHolder_1.ControllerHolder.TurntableControlController.ResetRingsAngle(),
+      ControllerHolder_1.ControllerHolder.TurntableControlController.SelectRingByIndex(
         0,
         !0,
       ),
-      await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(
-        5,
+      await ControllerHolder_1.ControllerHolder.LevelLoadingController.WaitCloseLoading(
+        4,
         void 0,
       ),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "SceneItem",
-          40,
+          39,
           "[TurntableControlView] 重置结束，显示UI",
         ),
       await this.ShowAsync(),

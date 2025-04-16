@@ -54,7 +54,7 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     var t;
     this.zxe &&
       void 0 !== this.Zxe &&
-      (t = this.zxe.Entity.GetComponent(121)) &&
+      (t = this.zxe.Entity.GetComponent(132)) &&
       (this.ewe = t.GetTimeTrackControlConfig(this.Zxe));
   }
   GetConfigStatesCounts() {
@@ -63,7 +63,7 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     return 0;
   }
   GetConfigSegmentTime() {
-    return this.ewe ? (this.ewe.SegmentTime ?? 0.5) : 0.5;
+    return (this.ewe && this.ewe.SegmentTime) || 0.5;
   }
   InitControlInfo(t) {
     (this.iwe = t.nps), (this.nwe = t.vGs), this.UpdatePointsUsable();

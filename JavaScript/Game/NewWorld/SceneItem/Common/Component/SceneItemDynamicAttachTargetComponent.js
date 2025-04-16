@@ -151,17 +151,17 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       });
   }
   static get Dependencies() {
-    return [187, 0];
+    return [200, 0];
   }
   OnInitData(t) {
     return (
       (this.EIe = this.Entity.GetComponent(0)),
-      (this.Hte = this.Entity.GetComponent(187)),
+      (this.Hte = this.Entity.GetComponent(200)),
       !!this.Hte ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SceneItem",
-            40,
+            39,
             "[DynamicAttachComp] Invalid ActorComp",
             ["PbDataId:", this.EIe?.GetPbDataId()],
           ),
@@ -222,6 +222,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         case Protocol_1.Aki.Protocol.kks.Proto_Monster:
         case Protocol_1.Aki.Protocol.kks.Proto_Player:
         case Protocol_1.Aki.Protocol.kks.Proto_Vision:
+        case Protocol_1.Aki.Protocol.kks.Proto_Npc:
           this.Dln(t);
       }
     else
@@ -235,7 +236,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         );
   }
   Lln(e) {
-    var i = e.Entity?.GetComponent(187);
+    var i = e.Entity?.GetComponent(200);
     if (i)
       if (this.rln && !i?.GetIsSceneInteractionLoadCompleted())
         EventSystem_1.EventSystem.HasWithTarget(
@@ -292,11 +293,12 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       if (!this.Tln) return;
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Tln);
     }
-    EventSystem_1.EventSystem.HasWithTarget(
-      t,
-      EventDefine_1.EEventName.RemoveEntity,
-      this._ln,
-    ) ||
+    t &&
+      !EventSystem_1.EventSystem.HasWithTarget(
+        t,
+        EventDefine_1.EEventName.RemoveEntity,
+        this._ln,
+      ) &&
       EventSystem_1.EventSystem.RemoveWithTargetUseKey(
         this,
         t,
@@ -314,7 +316,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
           this.cln,
         );
-    var e = t?.Entity?.GetComponent(187);
+    var e = t?.Entity?.GetComponent(200);
     let i = void 0;
     (i =
       this.rln && e?.GetIsSceneInteractionLoadCompleted()
@@ -352,18 +354,18 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "SceneItem",
-          40,
+          39,
           "[DynamicAttachComp] AttachToTargetActor: 开始",
           ["PbDataId", this.EIe?.GetPbDataId()],
           [
             "自身坐标",
-            Vector_1.Vector.Create(this.Hte.Owner.K2_GetActorLocation()),
+            Vector_1.Vector.Create(this.Hte.Owner.D_K2_GetActorLocation()),
           ],
           [
             "自身旋转",
             Rotator_1.Rotator.Create(this.Hte.Owner.K2_GetActorRotation()),
           ],
-          ["目标坐标", Vector_1.Vector.Create(s.K2_GetActorLocation())],
+          ["目标坐标", Vector_1.Vector.Create(s.D_K2_GetActorLocation())],
           ["目标旋转", Rotator_1.Rotator.Create(s.K2_GetActorRotation())],
           ["目标PathName", UE.KismetSystemLibrary.GetPathName(s)],
           ["AttachParam", this.Iln],
@@ -371,24 +373,25 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       var e = Vector_1.Vector.Create(Vector_1.Vector.ZeroVectorProxy),
         h = Rotator_1.Rotator.Create(Rotator_1.Rotator.ZeroRotatorProxy);
       if (
-        (0 === this.Iln.PosAttachType &&
-          e.FromUeVector(this.Hte.Owner.RootComponent.RelativeLocation),
-        0 === this.Iln.RotAttachType &&
-          h.FromUeRotator(this.Hte.Owner.RootComponent.RelativeRotation),
+        ((0 !== this.Iln.PosAttachType && 0 !== this.Iln.RotAttachType) ||
+          ((r = this.Hte.Owner.RootComponent.D_GetRelativeTransform()),
+          0 === this.Iln.PosAttachType && e.FromUeVector(r.GetLocation()),
+          0 === this.Iln.RotAttachType && h.FromUeRotator(r.Rotator())),
         (1 !== this.Iln.PosAttachType && 1 !== this.Iln.RotAttachType) ||
-          ((r = this.Hte.Owner.GetTransform().GetRelativeTransform(
-            s.GetTransform(),
+          ((r = this.Hte.Owner.D_GetTransform().GetRelativeTransform(
+            s.D_GetTransform(),
           )),
           1 === this.Iln.PosAttachType && e.FromUeVector(r.GetLocation()),
           1 === this.Iln.RotAttachType && h.FromUeRotator(r.Rotator())),
         3 === this.Iln.PosAttachType || 3 === this.Iln.RotAttachType)
       ) {
         var r = this.EIe.GetPbEntityInitData()?.Transform,
-          r = r ? this.Eln(r) : this.EIe.GetTransform();
+          r = r ? this.Eln(r) : this.EIe.D_GetTransform();
         let i = void 0;
         if (2 === this.yln) {
           var a = (0, puerts_1.$ref)(void 0);
-          this.aln.GetActorOriginalTransform(
+          this.aln.D_GetActorOriginalTransform(
+            GlobalData_1.GlobalData.World,
             FNameUtil_1.FNameUtil.GetDynamicFName(this.nln),
             a,
           ),
@@ -408,21 +411,22 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
             o = a?.GetComponent(1),
             a = a?.GetComponent(0),
             n = a?.GetPbEntityInitData()?.Transform,
-            n = n ? this.Eln(n) : a.GetTransform();
+            n = n ? this.Eln(n) : a.D_GetTransform();
           let e =
             this.rln?.length &&
             o instanceof SceneItemActorComponent_1.SceneItemActorComponent
               ? o?.GetActorInSceneInteractionOriginalRelTransform(s)
               : void 0;
           (e =
-            e || s.GetTransform().GetRelativeTransform(o.Owner.GetTransform())),
+            e ||
+            s.D_GetTransform().GetRelativeTransform(o.Owner.D_GetTransform())),
             (i = e.op_Multiply(n));
         }
         i ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneItem",
-              40,
+              39,
               "[SceneItemAttachTargetComponent] 目标初始坐标获取失败，使用自身初始坐标代替",
               ["PbDataId:", this.EIe?.GetPbDataId()],
             ),
@@ -439,52 +443,51 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "SceneItem",
-            40,
+            39,
             "[DynamicAttachComp] AttachToTargetActor: 计算相对关系",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["相对坐标", e],
             ["相对旋转", h],
-          ),
-        this.Hte.Owner.RootComponent.SetAbsolute(
-          this.Iln.PosAbsolute,
-          this.Iln.RotAbsolute,
-          !0,
-        );
+          );
       let t = this.Iln.AttachSocketName;
       t &&
         !FNameUtil_1.FNameUtil.IsEmpty(t) &&
         s.RootComponent.DoesSocketExist(t) &&
         (t = void 0);
-      o = s.GetComponentByClass(UE.MeshComponent.StaticClass());
-      t && o
-        ? this.Hte.Owner.K2_AttachRootComponentTo(o, t, 1, !0)
-        : (this.Hte.Owner.K2_AttachToActor(s, t, 1, 1, 1, !0),
-          this.Hte.Owner.K2_SetActorRelativeTransform(
-            new UE.Transform(
-              h.ToUeRotator(),
-              e.ToUeVector(),
-              Vector_1.Vector.OneVector,
-            ),
-            !1,
-            void 0,
-            !1,
-          )),
+      (o = s.GetComponentByClass(UE.MeshComponent.StaticClass())),
+        (n =
+          (t && o
+            ? this.Hte.Owner.K2_AttachRootComponentTo(o, t, 1, !0)
+            : this.Hte.Owner.K2_AttachToActor(s, t, 1, 1, 1, !0),
+          s.D_GetTransform().TransformPositionNoScale(e.ToUeVector()))),
+        (r = s.D_GetTransform().TransformRotation(h.Quaternion().ToUeQuat()));
+      this.Hte.Owner.RootComponent.SetAbsolute(
+        this.Iln.PosAbsolute,
+        this.Iln.RotAbsolute,
+        !0,
+      ),
+        this.Hte.Owner.D_K2_SetActorTransform(
+          new UE.TransformDouble(r, n, Vector_1.Vector.OneVectorDouble),
+          !1,
+          void 0,
+          !0,
+        ),
         s.OnDestroyed.Add(this.Cln),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "SceneItem",
-            40,
+            39,
             "[DynamicAttachComp] AttachToTargetActor: 完成",
             ["PbDataId", this.EIe?.GetPbDataId()],
             [
               "自身坐标",
-              Vector_1.Vector.Create(this.Hte.Owner.K2_GetActorLocation()),
+              Vector_1.Vector.Create(this.Hte.Owner.D_K2_GetActorLocation()),
             ],
             [
               "自身旋转",
               Rotator_1.Rotator.Create(this.Hte.Owner.K2_GetActorRotation()),
             ],
-            ["目标坐标", Vector_1.Vector.Create(s.K2_GetActorLocation())],
+            ["目标坐标", Vector_1.Vector.Create(s.D_K2_GetActorLocation())],
             ["目标旋转", Rotator_1.Rotator.Create(s.K2_GetActorRotation())],
             [
               "自身相对坐标",
@@ -503,7 +506,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SceneItem",
-          40,
+          39,
           "[DynamicAttachComp] AttachToTargetActor Failed",
           ["PbDataId", this.EIe?.GetPbDataId()],
           ["SelfActorValid", !!this.Hte?.Owner?.RootComponent?.IsValid()],
@@ -516,16 +519,18 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       t?.OnDestroyed.Remove(this.Cln));
   }
   Eln(t) {
-    var e = new UE.Transform();
+    var e = new UE.TransformDouble();
     return (
-      e.SetLocation(new UE.Vector(t.Pos.X ?? 0, t.Pos.Y ?? 0, t.Pos.Z ?? 0)),
+      e.SetLocation(
+        new UE.VectorDouble(t.Pos.X ?? 0, t.Pos.Y ?? 0, t.Pos.Z ?? 0),
+      ),
       e.SetRotation(
         UE.Rotator.MakeFromEuler(
           new UE.Vector(t.Rot?.X ?? 0, t.Rot?.Y ?? 0, t.Rot?.Z ?? 0),
         ).Quaternion(),
       ),
       e.SetScale3D(
-        new UE.Vector(t.Scale?.X ?? 1, t.Scale?.Y ?? 1, t.Scale?.Z ?? 1),
+        new UE.VectorDouble(t.Scale?.X ?? 1, t.Scale?.Y ?? 1, t.Scale?.Z ?? 1),
       ),
       e
     );
@@ -538,7 +543,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 注册Attach失败",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -550,7 +555,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 注册Attach成功",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -572,7 +577,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 注册Attach失败",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -584,7 +589,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 注册Attach成功",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -606,7 +611,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 注册Attach成功",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -623,7 +628,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 注册Attach失败",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -638,7 +643,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 反注册Attach失败",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -649,7 +654,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
-            40,
+            39,
             "[RegEntityTarget] 反注册Attach成功",
             ["PbDataId", this.EIe?.GetPbDataId()],
             ["CurrentRegTargetType", this.yln],
@@ -688,7 +693,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       (s.n6n.Pitch = i.Pitch),
       (s.n6n.Yaw = i.Yaw),
       (s.n6n.Roll = i.Roll),
-      Net_1.Net.Call(20384, s, () => {}));
+      Net_1.Net.Call(16843, s, () => {}));
   }
   RequestAttachEntity(t, e, i, s) {
     var h;
@@ -708,17 +713,17 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
       (h.n6n.Pitch = s.Pitch),
       (h.n6n.Yaw = s.Yaw),
       (h.n6n.Roll = s.Roll),
-      Net_1.Net.Call(20384, h, () => {}));
+      Net_1.Net.Call(16843, h, () => {}));
   }
   RequestDetach() {
     var t = Protocol_1.Aki.Protocol.fgs.create();
     (t.F4n = this.Hte.CreatureData.GetCreatureDataId()),
       (t.s6n = Protocol_1.Aki.Protocol.nFs.Proto_AttachTargetNone),
-      Net_1.Net.Call(20384, t, () => {});
+      Net_1.Net.Call(16843, t, () => {});
   }
 };
 (SceneItemDynamicAttachTargetComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(113)],
+  [(0, RegisterComponent_1.RegisterComponent)(123)],
   SceneItemDynamicAttachTargetComponent,
 )),
   (exports.SceneItemDynamicAttachTargetComponent =

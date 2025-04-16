@@ -6,7 +6,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UE = require("ue"),
   Info_1 = require("../../../../Core/Common/Info"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   RouletteDefine_1 = require("../Data/RouletteDefine"),
@@ -89,24 +88,31 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
     for (const a of t) {
       for (const u of a[0]) this.AreaIndexToGridIndex.set(u, e);
       var s = a[1],
-        r = a[2],
-        h = i.get(r),
-        o = ModelManager_1.ModelManager.RouletteModel.CreateGridData(h, r),
+        h = a[2],
+        r = i.get(h),
+        o = new RouletteGridData_1.RouletteData(),
         s =
-          ((o.GridIndex = e),
-          (o.DataIndex = h),
-          (o.GridType = r),
+          ((o.Id = this.GetGridId(r, h)),
+          (o.GridIndex = e),
+          (o.DataIndex = r),
+          (o.GridType = h),
           this.GetItem(s)),
-        n = new RouletteGridData_1.rouletteGridGenerator[r](),
-        s = (n.SetRootActor(s.GetOwner(), !0), this.GridDataDecorator(o)),
-        o = (n.RefreshGrid(s), this.IsCurrentEquippedId(s));
-      o && (this.CurrentEquipGridIndex = s.GridIndex),
-        n.SetGridEquipped(o),
+        n = new RouletteGridData_1.rouletteGridGenerator[h](),
+        s =
+          (n.SetRootActor(s.GetOwner(), !0),
+          this.GridDataDecorator(o),
+          n.RefreshGrid(o),
+          this.IsCurrentEquippedId(o));
+      s && (this.CurrentEquipGridIndex = o.GridIndex),
+        n.SetGridEquipped(s),
         this.InitGridEvent(n),
         this.RouletteGridList.push(n),
-        i.set(r, h + 1),
+        i.set(h, r + 1),
         e++;
     }
+  }
+  GetGridId(t, e) {
+    return 0;
   }
   GetRouletteInfoMap() {}
   InitGridEvent(t) {
@@ -142,18 +148,12 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
         ? this.GamepadReturnEmptyGrid()
         : ((this.CurrentGridIndex = -1), (this.IsEmptyChoose = !0));
   }
-  OnEmitCurrentGridSelectOn() {
-    this.GetCurrentGrid()?.SelectOnGrid(!0);
-  }
   GetCurrentGrid() {
     if (-1 !== this.CurrentGridIndex)
       return this.RouletteGridList[this.CurrentGridIndex];
   }
   SetAllGridToggleSelfInteractive(t) {
     for (const e of this.RouletteGridList) e.SetToggleSelfInteractive(t);
-  }
-  TryEmitCurrentGridSelectOn() {
-    this.OnEmitCurrentGridSelectOn();
   }
   GetCurrentIndexAndAngle() {
     return [this.AreaIndex, this.Angle];

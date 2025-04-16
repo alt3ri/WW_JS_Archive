@@ -20,7 +20,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
           this.BuildingId,
         );
       }),
-      (this.yca = (e) => {
+      (this.Rca = (e) => {
         "Close" === e &&
           ((e =
             ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
@@ -51,7 +51,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.$pt.BindSequenceCloseEvent(this.yca);
+      this.$pt.BindSequenceCloseEvent(this.Rca);
   }
   OnBeforeShow() {
     this.AddEventListener(), this.Refresh();
@@ -108,7 +108,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
   SetInteractive(e) {
     this.GetButton(6)?.SetSelfInteractive(e);
   }
-  yma() {
+  Dma() {
     var e =
         ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
           this.BuildingId,
@@ -125,7 +125,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
             )),
           this.SetTextureByPath(e, this.GetTexture(0))));
   }
-  Ima() {
+  Ama() {
     var e =
       ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
         this.BuildingId,
@@ -149,7 +149,7 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
     e = this.GetUiSpriteTransition(3);
     this.SetSpriteTransitionByPath(t, e, 0);
   }
-  Tma() {
+  Rma() {
     var e =
         ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
           this.BuildingId,
@@ -170,14 +170,14 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
       this.SetSpriteTransitionByPath(t.TipsSprite, i),
       (i.TransitionInfo.NormalTransition.Color = r);
   }
-  bBa() {
+  zBa() {
     var e =
       ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
         this.BuildingId,
       );
     this.GetUiSpriteTransition(2).RootUIComp.SetUIActive(!e.IsUnlock);
   }
-  Dma() {
+  xma() {
     var e =
       ModelManager_1.ModelManager.MoonChasingBuildingModel.GetBuildingDataById(
         this.BuildingId,
@@ -203,11 +203,11 @@ class BuildingItem extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.Name);
   }
   Refresh() {
-    this.yma(),
-      this.Tma(),
-      this.bBa(),
-      this.Ima(),
-      this.Dma(),
+    this.Dma(),
+      this.Rma(),
+      this.zBa(),
+      this.Ama(),
+      this.xma(),
       this.esi(),
       this.qWe();
   }

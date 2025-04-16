@@ -12,6 +12,8 @@ const UE = require("ue"),
   UiManager_1 = require("../../../Ui/UiManager"),
   BlackScreenController_1 = require("../../BlackScreen/BlackScreenController"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
+  GlobalData_1 = require("../../../GlobalData"),
+  Info_1 = require("../../../../Core/Common/Info"),
   SHOW_TIPS_DELAY = 2e3;
 class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
@@ -93,7 +95,7 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
                       UiManager_1.UiManager.OpenView("GachaScanView", e, () => {
                         UiManager_1.UiManager.CloseView(this.Info.Name);
                       });
-                  } else
+                  } else {
                     UiManager_1.UiManager.OpenView(
                       "GachaResultView",
                       this.OpenParam,
@@ -101,6 +103,12 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
                         UiManager_1.UiManager.CloseView(this.Info.Name);
                       },
                     );
+                    var e = UE.KuroCollectActorComponent.GetActorWithTag(
+                      FNameUtil_1.FNameUtil.GetDynamicFName("UpdateInteractBP"),
+                      0,
+                    );
+                    e?.EndGachaScene(), e?.SetTickableWhenPaused(!0);
+                  }
                 })
               : UiManager_1.UiManager.OpenView(
                   "GachaScanView",
@@ -152,7 +160,12 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
       )),
       this.InitGachaBp(e, i),
       this.InitAudioState(e, i),
-      (this.IsFirstShow = !1));
+      (this.IsFirstShow = !1)),
+      Info_1.Info.IsMacPlatform() &&
+        UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          GlobalData_1.GlobalData.World,
+          "r.AllowHardwareOcclusion 0",
+        );
   }
   OnStart() {
     this.GetButton(1).RootUIComp.SetUIActive(!0),

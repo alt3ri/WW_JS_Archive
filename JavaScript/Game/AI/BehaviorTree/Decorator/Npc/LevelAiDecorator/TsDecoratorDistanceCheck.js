@@ -23,6 +23,12 @@ class TsDecoratorDistanceCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsDistance = 0),
       (this.TsIgnoreZ = !1);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.TsCheckType = 0),
+      (this.TsSourcePbDataId = 0),
+      (this.TsTargetPbDataId = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -33,8 +39,8 @@ class TsDecoratorDistanceCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsIgnoreZ = this.IgnoreZ));
   }
   PerformConditionCheckAI(t, e) {
-    var r = t.AiController;
-    if (!r)
+    var s = t.AiController;
+    if (!s)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
@@ -44,25 +50,25 @@ class TsDecoratorDistanceCheck extends UE.BTDecorator_BlueprintBase {
         !1
       );
     this.InitTsVariables();
-    (t = this.GetActorCompByConfig(this.TsSourcePbDataId, r)),
-      (r = this.GetActorCompByConfig(this.TsTargetPbDataId, r));
-    if (!t || !r) return !1;
-    var s = this.TsIgnoreZ
-      ? Vector_1.Vector.Dist2D(t.ActorLocationProxy, r.ActorLocationProxy)
-      : Vector_1.Vector.Dist(t.ActorLocationProxy, r.ActorLocationProxy);
+    (t = this.GetActorCompByConfig(this.TsSourcePbDataId, s)),
+      (s = this.GetActorCompByConfig(this.TsTargetPbDataId, s));
+    if (!t || !s) return !1;
+    var r = this.TsIgnoreZ
+      ? Vector_1.Vector.Dist2D(t.ActorLocationProxy, s.ActorLocationProxy)
+      : Vector_1.Vector.Dist(t.ActorLocationProxy, s.ActorLocationProxy);
     switch (this.TsCheckType) {
       case 0:
-        return s === this.TsDistance;
+        return r === this.TsDistance;
       case 1:
-        return s !== this.TsDistance;
+        return r !== this.TsDistance;
       case 2:
-        return s < this.TsDistance;
+        return r < this.TsDistance;
       case 3:
-        return s <= this.TsDistance;
+        return r <= this.TsDistance;
       case 4:
-        return s > this.TsDistance;
+        return r > this.TsDistance;
       case 5:
-        return s >= this.TsDistance;
+        return r >= this.TsDistance;
       default:
         return !1;
     }

@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelSequencePlayer = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   UiLayer_1 = require("../../Ui/UiLayer");
 class SequenceData {
   constructor(e, t, i, s = void 0) {
@@ -54,7 +56,7 @@ class LevelSequencePlayer {
         ? (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "UiCore",
-              11,
+              10,
               "UI动画播放重播时已结束,重新调用播放逻辑",
               ["节点", this.Xxt.GetDisplayName()],
               ["关卡序列", this.Jxt],
@@ -63,12 +65,19 @@ class LevelSequencePlayer {
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "UiCore",
-              11,
+              10,
               "UI动画播放重播时在持续,修改播放帧",
               ["节点", this.Xxt.GetDisplayName()],
               ["关卡序列", this.Jxt],
             ),
           this.Qxt.SequenceJumpToSecondByKey(e, new UE.FrameTime())));
+  }
+  SequenceJumpToStartWhenPlaying(e) {
+    var t = this.Qxt.GetSequencePlayerByKey(e);
+    t?.IsValid() &&
+      (t = t.SequencePlayer)?.IsValid() &&
+      !t.IsStopped() &&
+      this.Qxt.SequenceJumpToSecondByKey(e, new UE.FrameTime());
   }
   ChangePlaybackDirection(e) {
     this.zxt.get(e) &&
@@ -91,7 +100,7 @@ class LevelSequencePlayer {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiCore",
-              11,
+              10,
               "异步加载暂停关卡序列",
               ["停止节点", this.Xxt.GetDisplayName()],
               ["关卡序列", this.Jxt],
@@ -105,7 +114,7 @@ class LevelSequencePlayer {
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiCore",
-              11,
+              10,
               "恢复关卡序列动画",
               ["停止节点", this.Xxt.GetDisplayName()],
               ["关卡序列", this.Jxt],
@@ -114,7 +123,7 @@ class LevelSequencePlayer {
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiCore",
-              11,
+              10,
               "异步恢复关卡序列动画",
               ["停止节点", this.Xxt.GetDisplayName()],
               ["关卡序列", this.Jxt],
@@ -123,7 +132,7 @@ class LevelSequencePlayer {
   }
   Clear() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("UiCore", 11, "关卡序列动画 Clear", [
+      Log_1.Log.Debug("UiCore", 10, "关卡序列动画 Clear", [
         "节点名称",
         this.Xxt.GetDisplayName(),
       ]);
@@ -136,6 +145,12 @@ class LevelSequencePlayer {
       (this.Qxt = void 0),
       (this.Xxt = void 0);
   }
+  StopPlayingSequence(e = !1, t = !0) {
+    for (const i of this.zxt.keys()) this.StopSequenceByKey(i, e, t);
+  }
+  IsPlayingSequence(e) {
+    return this.zxt.has(e);
+  }
   EndSequenceLastFrame(e) {
     var t;
     this.Qxt.GetUIItem().LevelSequences.Get(e) &&
@@ -145,20 +160,28 @@ class LevelSequencePlayer {
         t.SequencePlayer.GetDuration().Time,
       );
   }
-  PlayLevelSequenceByName(e, t = !1) {
-    this.PlaySequencePurely(e, t);
+  CheckSeqActorIsSeqPlaying(e) {
+    e = this.Zxt(e);
+    if (e?.IsValid()) {
+      e = e.SequencePlayer;
+      if (e?.IsValid() && e.IsPlaying()) return !0;
+    }
+    return !1;
   }
-  async PlaySequenceAsync(e, t, i = !1, s = !1) {
-    this.PlaySequencePurely(e, i, s, t), await t?.Promise;
+  PlayLevelSequenceByName(e, t = !1, i = void 0) {
+    this.PlaySequencePurely(e, t, void 0, void 0, i);
   }
-  PlaySequencePurely(e, t = !1, i = !1, s = void 0) {
-    var h = this.twt(e),
+  async PlaySequenceAsync(e, t, i = !1, s = !1, h = void 0) {
+    this.PlaySequencePurely(e, i, s, t, h), await t?.Promise;
+  }
+  PlaySequencePurely(e, t = !1, i = !1, s = void 0, h = void 0) {
+    var r = this.GetSequencePlayContext(e),
       o = this.Xxt.displayName,
       t =
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            11,
+            10,
             "播放的关卡序列",
             ["播放节点", o],
             ["关卡序列", e],
@@ -169,19 +192,22 @@ class LevelSequencePlayer {
       LevelSequencePlayer.ewt.add(this),
       LevelSequencePlayer.iwt
         ? (this.owt(e), this.vxe(e))
-        : h
-          ? ((h.bReverse = i), h.ExecutePlay(), this.owt(e))
+        : r
+          ? ((r.bReverse = i),
+            void 0 !== h && (r.PlayInfo.PlaySetting.PlayRate = h),
+            r.ExecutePlay(),
+            this.owt(e))
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "UiCore",
-                11,
+                10,
                 "关卡序列不存在",
                 ["播放节点", o],
                 ["关卡序列", e],
               ),
             this.vxe(e));
   }
-  twt(e) {
+  GetSequencePlayContext(e) {
     let t = this.Kxt.get(e);
     if (!t) {
       if (!(t = this.Qxt.GetSequencePlayContextOfKey(e))) return;
@@ -193,12 +219,15 @@ class LevelSequencePlayer {
     }
     return t;
   }
+  GetCurrentStopPromise(e) {
+    return this.zxt.get(e)?.StopPromise;
+  }
   owt(t) {
     var e = this.zxt.get(t);
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "UiCore",
-        17,
+        16,
         "播放UI动画",
         ["动画名称", t],
         ["sequenceData.Tag", e?.Tag],
@@ -208,7 +237,7 @@ class LevelSequencePlayer {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            11,
+            10,
             "打开动画遮罩",
             ["播放节点", e.Tag],
             ["关卡序列", t],
@@ -223,7 +252,7 @@ class LevelSequencePlayer {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "UiCore",
-        17,
+        16,
         "UI动画播放完成",
         ["动画名称", t],
         ["sequenceData.Tag", e?.Tag],
@@ -234,7 +263,7 @@ class LevelSequencePlayer {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
-            11,
+            10,
             "关闭动画遮罩",
             ["播放节点", e.Tag],
             ["关卡序列", t],
@@ -260,10 +289,12 @@ class LevelSequencePlayer {
     e && e.AddBindingByTag(t, i);
   }
   SetRelativeTransform(e, t) {
-    e = this.Zxt(e);
+    var e = this.Zxt(e);
     e &&
       ((e.bOverrideInstanceData = !0),
-      (e.DefaultInstanceData.TransformOrigin = t));
+      (e = e.DefaultInstanceData),
+      (t = UE.KismetMathLibrary.Conv_TransformDoubleToTransform(t)),
+      (e.TransformOrigin = t));
   }
   IsValid() {
     return this.Qxt?.IsValid() ?? !1;
@@ -273,7 +304,7 @@ class LevelSequencePlayer {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCore",
-          17,
+          16,
           "[LevelSequencePlayer.SetBanned] 设置禁用动画",
           ["value", e],
         ),
@@ -285,6 +316,10 @@ class LevelSequencePlayer {
           ? t.StopCurrentSequence(!0)
           : LevelSequencePlayer.ewt.delete(t);
     } else LevelSequencePlayer.iwt = !1;
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.LevelSequencePlayerBandStateChange,
+      e,
+    );
   }
 }
 ((exports.LevelSequencePlayer = LevelSequencePlayer).ewt = new Set()),

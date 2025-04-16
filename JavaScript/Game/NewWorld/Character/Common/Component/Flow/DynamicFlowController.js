@@ -17,13 +17,13 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
       this.jYo(),
-      Net_1.Net.Register(20817, DynamicFlowController.WYo),
-      Net_1.Net.Register(15410, DynamicFlowController.KYo),
+      Net_1.Net.Register(15666, DynamicFlowController.WYo),
+      Net_1.Net.Register(19190, DynamicFlowController.KYo),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(20817), Net_1.Net.UnRegister(15410), !0;
+    return Net_1.Net.UnRegister(15666), Net_1.Net.UnRegister(19190), !0;
   }
   static jYo() {
     this.QYo.set(1, 5),
@@ -41,32 +41,18 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
     for (const i of r.BubbleData.EntityIds)
       if (this.XYo.has(i)) {
         var e = this.GetDynamicFlowByActor(i);
-        if (t <= this.GetDynamicFlowPriority(e.Type))
-          return (
-            Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "NPC",
-                51,
-                "添加动态冒泡失败，演员已被占用",
-                ["PbDataId", i],
-                ["NewType", r.Type],
-                ["NewFlowName", r.BubbleData.Flow.FlowListName],
-                ["OldType", e.Type],
-                ["OldFlowName", e.BubbleData.Flow.FlowListName],
-              ),
-            !1
-          );
+        if (t <= this.GetDynamicFlowPriority(e.Type)) return !1;
       }
     var o = r.BubbleData.EntityIds[0],
       a = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(o);
-    a?.Entity?.IsInit && a.Entity?.GetComponent(28)?.PlayDynamicFlowBegin(r),
+    a?.Entity?.IsInit && a.Entity?.GetComponent(31)?.PlayDynamicFlowBegin(r),
       this.$Yo.set(o, r);
     for (const n of r.BubbleData.EntityIds) this.XYo.set(n, o);
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "NPC",
-          51,
+          50,
           "添加动态冒泡",
           ["PbDataId", o],
           ["Type", r.Type],
@@ -81,14 +67,14 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
     var t = this.$Yo.get(r);
     if (!t) return !1;
     var e = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(r);
-    e?.Entity?.IsInit && e.Entity?.GetComponent(28)?.PlayDynamicFlowEnd();
+    e?.Entity?.IsInit && e.Entity?.GetComponent(31)?.PlayDynamicFlowEnd();
     for (const o of t.BubbleData.EntityIds) this.XYo.delete(o);
     return (
       this.$Yo.delete(r),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "NPC",
-          51,
+          50,
           "移除动态冒泡",
           ["PbDataId", r],
           ["Type", t.Type],

@@ -2,12 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotModel =
     exports.PlotConfig =
+    exports.COLOR_BLACK =
+    exports.COLOR_WHITE =
+    exports.INVALID_NUM =
     exports.INTERLUDE_FADE_OUT =
     exports.INTERLUDE_FADE_IN =
       void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  AudioDefine_1 = require("../../../Core/Audio/AudioDefine"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
@@ -39,8 +41,11 @@ const puerts_1 = require("puerts"),
   AUDIO_STATE_PLOT_LEVEL_GROUP =
     ((exports.INTERLUDE_FADE_IN = 1),
     (exports.INTERLUDE_FADE_OUT = 1),
-    "plot_perform_level"),
-  AUDIO_STATE_NOT_PLOT = "not_plot",
+    (exports.INVALID_NUM = -1),
+    (exports.COLOR_WHITE = 0),
+    (exports.COLOR_BLACK = 1),
+    "plot_level"),
+  AUDIO_STATE_NOT_PLOT = "none",
   PLOT_END_AUDIO_EVENT = "plot_controller_end_plot",
   CAN_SKIP = !0,
   audioStatePlotLevel = {
@@ -118,7 +123,10 @@ class PlotConfig {
           (this.PauseTime = !e),
           (this.SkipTalkWhenFighting = !1),
           PlotController_1.PlotController.TogglePlotProtect(!0),
-          PlotController_1.PlotController.EnableViewControl(!0);
+          PlotController_1.PlotController.EnableViewControl(
+            ControllerHolder_1.ControllerHolder.FlowController.CheckViewControlBeginForC(),
+          ),
+          PlotController_1.PlotController.HideSummonedEntity();
         break;
       case "LevelD":
         (this.CameraMode = 1),
@@ -203,6 +211,10 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.InDigitalScreen = !1),
       (this.CanClick = !1),
       (this.CanControlView = !1),
+      (this.LastPlotColor = exports.INVALID_NUM),
+      (this.LastPlotAspect = exports.INVALID_NUM),
+      (this.BlackScreenNowAspect = exports.INVALID_NUM),
+      (this.BlackScreenLastAspect = exports.INVALID_NUM),
       (this.OnShowCenterTextFinished = () => {
         (this.PlayFlow = void 0),
           ModelManager_1.ModelManager.TeleportModel.CgTeleportCompleted &&
@@ -212,7 +224,7 @@ class PlotModel extends ModelBase_1.ModelBase {
             Log_1.Log.CheckInfo()) &&
             Log_1.Log.Info(
               "Teleport",
-              46,
+              45,
               "ModelManager.TeleportModel!.CgTeleportCompleted!.SetResult(true)",
             );
       });
@@ -243,7 +255,7 @@ class PlotModel extends ModelBase_1.ModelBase {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Plot",
-              27,
+              26,
               "打断当前DE级剧情",
               ["Level", this.PlotConfig.PlotLevel],
               ["FlowIncId", this.PlotResult.FlowIncId],
@@ -290,7 +302,7 @@ class PlotModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Plot",
-            27,
+            26,
             "缓存队列中的D级剧情被中断/后台播放",
             ["FlowIncId", i.FlowIncId],
             ["FlowListName", i.FlowListName],
@@ -309,7 +321,7 @@ class PlotModel extends ModelBase_1.ModelBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Plot",
-            27,
+            26,
             "缓存队列中的E级剧情被中断/后台播放",
             ["FlowIncId", i.FlowIncId],
             ["FlowListName", i.FlowListName],
@@ -324,7 +336,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Plot",
-          27,
+          26,
           "剧情被缓存",
           ["FlowIncId", e.FlowIncId],
           ["FlowListName", e.FlowListName],
@@ -345,17 +357,21 @@ class PlotModel extends ModelBase_1.ModelBase {
       ? e && e()
       : (this.FYi = t)
         ? LevelLoadingController_1.LevelLoadingController.OpenLoading(
-            11,
+            10,
             3,
             () => {
               PlotController_1.PlotController.ClearUi(),
-                UiManager_1.UiManager.OpenView("PlotTransitionView", void 0, e);
+                UiManager_1.UiManager.OpenViewByPlot(
+                  "PlotTransitionView",
+                  void 0,
+                  e,
+                );
             },
             0.5,
           )
         : UiManager_1.UiManager.CloseView("PlotTransitionView", () => {
             LevelLoadingController_1.LevelLoadingController.CloseLoading(
-              11,
+              10,
               e,
               0.5,
             );
@@ -435,7 +451,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Plot",
-          27,
+          26,
           "没有配置关闭模板，已做保底处理，请策划修改",
           ["FlowListName", this.PlotResult.FlowListName],
           ["FlowId", this.PlotResult.FlowId],
@@ -470,7 +486,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       Global_1.Global.BaseCharacter &&
       (t =
         Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity.GetComponent(
-          34,
+          39,
         ))?.Valid &&
       t.StopAllSkills("PlotModel.StopMainCharacterSkill");
   }
@@ -491,7 +507,8 @@ class PlotModel extends ModelBase_1.ModelBase {
           break;
         case 1:
           CameraController_1.CameraController.ExitDialogMode(),
-            CameraController_1.CameraController.ExitCameraMode(1, 0, 0, 0);
+            "LevelD" !== this.PlotConfig.PlotLevel &&
+              CameraController_1.CameraController.ExitCameraMode(1, 0, 0, 0);
           break;
         case 2:
           CameraController_1.CameraController.EnterDialogueMode(
@@ -505,18 +522,19 @@ class PlotModel extends ModelBase_1.ModelBase {
             CameraController_1.CameraController.SequenceCamera.PlayerComponent.StopSequence(),
             CameraController_1.CameraController.SequenceCamera.DisplayComponent.CineCamera.ResetSeqCineCamSetting(),
             CameraController_1.CameraController.ExitDialogMode(),
-            CameraController_1.CameraController.EnterCameraMode(1, 0, 0, 0);
+            CameraController_1.CameraController.EnterCameraMode(
+              1,
+              0,
+              0,
+              PlotTemplate_1.BEGIN_WAIT_TIME,
+            );
       }
   }
   QYi() {
     "LevelD" === this.PlotConfig.PlotLevel ||
     "Prompt" === this.PlotConfig.PlotLevel
       ? this.ResetAudioState()
-      : ((this.kYi = !0),
-        AudioSystem_1.AudioSystem.SetState(
-          AudioDefine_1.STATEGROUP,
-          AudioDefine_1.STATEINCUTSCENE,
-        )),
+      : (this.kYi = !0),
       this.PlotConfig.PlotLevel &&
         AudioSystem_1.AudioSystem.SetState(
           AUDIO_STATE_PLOT_LEVEL_GROUP,
@@ -524,12 +542,7 @@ class PlotModel extends ModelBase_1.ModelBase {
         );
   }
   ResetAudioState() {
-    this.kYi &&
-      ((this.kYi = !1),
-      AudioSystem_1.AudioSystem.SetState(
-        AudioDefine_1.STATEGROUP,
-        AudioDefine_1.STATENORMAL,
-      )),
+    this.kYi && (this.kYi = !1),
       AudioSystem_1.AudioSystem.SetState(
         AUDIO_STATE_PLOT_LEVEL_GROUP,
         AUDIO_STATE_NOT_PLOT,
@@ -547,7 +560,19 @@ class PlotModel extends ModelBase_1.ModelBase {
   CheckOptionCondition(t, e) {
     if (!t.PreCondition) return !0;
     let i = !1;
-    return (i = "PreOption" === t.PreCondition.Type ? this.YYi(t, e) : i);
+    switch (t.PreCondition.Type) {
+      case "PreOption":
+        i = this.YYi(t, e);
+        break;
+      case "Condition":
+        i =
+          ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
+            t.PreCondition.Conditions,
+            void 0,
+            this.CurContext,
+          );
+    }
+    return i;
   }
   YYi(t, e) {
     let i = !0;
@@ -569,7 +594,7 @@ class PlotModel extends ModelBase_1.ModelBase {
     this.JYi() &&
       ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       EntitySystem_1.EntitySystem.Get(t)
-        ?.GetComponent(190)
+        ?.GetComponent(203)
         ?.HasTag(-1150819426)) &&
       (this.GYi = !0);
   }
@@ -579,7 +604,7 @@ class PlotModel extends ModelBase_1.ModelBase {
   JYi() {
     var t = Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint();
     if (t) {
-      t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(29);
+      t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(32);
       if (t?.Valid) return t;
     }
   }
@@ -588,7 +613,6 @@ class PlotModel extends ModelBase_1.ModelBase {
   }
   HandlePlayMontage(t) {
     this.qYi || (this.qYi = new PlotMontage_1.PlotMontage()),
-      this.qYi.StopAllMontage(!1),
       this.qYi.StartPlayMontage(t);
   }
   FinishMontage() {

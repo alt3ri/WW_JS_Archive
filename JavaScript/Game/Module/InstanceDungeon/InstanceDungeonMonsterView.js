@@ -14,7 +14,8 @@ class InstanceDungeonMonsterView extends UiViewBase_1.UiViewBase {
       (this.Mli = void 0),
       (this.H1i = void 0),
       (this.j1i = () => {
-        return new InstanceDungeonMonsterGrid_1.InstanceDungeonMonsterGrid();
+        var e = new InstanceDungeonMonsterGrid_1.InstanceDungeonMonsterGrid();
+        return (e.CurrentInstanceId = this.yyn), e;
       }),
       (this.jli = () => {
         return new TowerElementItem_1.TowerElementItem();

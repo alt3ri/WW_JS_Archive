@@ -175,7 +175,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '慢速模式最大数量无法找到, 请检测c.参数字段"into_bag_list_low_count"',
         ),
       0 <= t ? t : 1
@@ -190,7 +190,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '快速模式最大数量无法找到, 请检测c.参数字段"into_bag_list_fast_count"',
         ),
       0 <= t ? t : 1
@@ -205,7 +205,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '慢速模式下一个物品进包时间无法找到, 请检测c.参数字段"into_bag_next_item_low_time"',
         ),
       0 <= t ? t : 1
@@ -220,7 +220,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '快速模式下一个物品进包时间无法找到, 请检测c.参数字段"into_bag_next_item_fast_time"',
         ),
       0 <= t ? t : 1
@@ -236,7 +236,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '外入包列表最大数量无法找到, 请检测c.参数字段"item_list_max_size"',
         ),
       0 <= t ? t : 1
@@ -252,7 +252,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '入包每个物品的显示时间无法找到, 请检测c.参数字段"into_bag_show_time"',
         ),
       0 <= t ? t : 3e3
@@ -267,7 +267,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '下一个物品添加进来的时间无法找到, 请检测c.参数字段"into_bag_next_item_time"',
         ),
       0 <= t ? t : 300
@@ -282,7 +282,7 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Reward",
-          9,
+          8,
           '上滑时间无法找到, 请检测c.参数字段"into_bag_slide_time"',
         ),
       0 <= t ? t : 200

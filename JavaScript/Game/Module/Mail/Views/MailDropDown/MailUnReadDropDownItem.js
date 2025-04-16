@@ -10,7 +10,7 @@ class MailUnReadDropDownItem extends MailDropDownItem_1.MailDropDownItem {
     var e = ModelManager_1.ModelManager.MailModel.GetUnScanMails();
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Mail", 28, "邮件界面：获取未读邮件", [
+        Log_1.Log.Info("Mail", 27, "邮件界面：获取未读邮件", [
           "length",
           e?.length,
         ]),

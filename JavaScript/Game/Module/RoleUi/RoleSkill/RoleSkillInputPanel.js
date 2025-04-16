@@ -19,9 +19,9 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
       (this.Wst = void 0),
       (this.CFe = void 0),
       (this.Tmo = void 0),
-      (this.fFe = (e, r, o) => {
-        r = new RoleSkillInputItem_1.RoleSkillInputItem(r);
-        return r.Update(e), r.SetBgActive(o % 2 == 0), { Key: o, Value: r };
+      (this.fFe = (e, o, r) => {
+        o = new RoleSkillInputItem_1.RoleSkillInputItem(o);
+        return o.Update(e), o.SetBgActive(r % 2 == 0), { Key: r, Value: o };
       }),
       (this.Lmo = () => {
         if (
@@ -44,15 +44,15 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
           var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
               this.Wst.GetRoleId(),
             ),
-            r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name);
+            o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name);
           const i = e.RoleGuide;
           0 === i
             ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "RoleGuideNotice02",
-                r,
+                o,
               )
             : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(94)).SetTextArgs(
-                r,
+                o,
               ),
               e.FunctionMap.set(2, () => {
                 var e =
@@ -64,20 +64,25 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
                       e,
                     )?.AutoRole;
                 if (0 < (e?.length ?? 0)) {
-                  var r = new Array();
-                  for (const o of e)
-                    r.push(
+                  var o = new Array();
+                  for (const r of e)
+                    o.push(
                       ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
-                        o,
+                        r,
                       ),
                     );
-                  InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-                    i,
-                    r,
-                  );
+                  e = { Q6n: this.Wst.GetRoleId() };
+                  (ModelManager_1.ModelManager.InstanceDungeonModel.InstanceEnterContentText.Hah =
+                    e),
+                    InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
+                      i,
+                      o,
+                      0,
+                      0,
+                    );
                 } else
                   Log_1.Log.CheckError() &&
-                    Log_1.Log.Error("Role", 44, "未配置出战人物");
+                    Log_1.Log.Error("Role", 43, "未配置出战人物");
               }),
               ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
                 e,
@@ -107,20 +112,20 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
   }
   RefreshUi(e) {
     this.Wst = e;
-    var r =
+    var o =
       ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
         e.GetRoleId(),
       );
-    if (r) {
-      var o = r.SkillInputIdList;
-      this.CFe.RefreshByData(o);
+    if (o) {
+      var r = o.SkillInputIdList;
+      this.CFe.RefreshByData(r);
       const l = this.GetTexture(1);
       l.SetUIActive(!1),
-        this.SetTextureByPath(r.Icon, this.GetTexture(1), void 0, () => {
+        this.SetTextureByPath(o.Icon, this.GetTexture(1), void 0, () => {
           l.SetUIActive(!0);
         });
-      var o = e.IsTrialRole(),
-        i = (this.GetItem(4).SetUIActive(!o), r.DescList);
+      var r = e.IsTrialRole(),
+        i = (this.GetItem(4).SetUIActive(!r), o.DescList);
       for (let e = 0; e < this.Tmo.length; e++) {
         var n = this.Tmo[e];
         e < i.length
@@ -128,9 +133,9 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
           : n.SetUIActive(!1);
       }
       (e = ModelManager_1.ModelManager.FunctionModel.IsShow(10043)),
-        (r = ModelManager_1.ModelManager.FunctionModel.IsOpen(10043));
-      e && r
-        ? this.GetItem(4).SetUIActive(!o)
+        (o = ModelManager_1.ModelManager.FunctionModel.IsOpen(10043));
+      e && o
+        ? this.GetItem(4).SetUIActive(!r)
         : this.GetItem(4).SetUIActive(!1);
     }
   }

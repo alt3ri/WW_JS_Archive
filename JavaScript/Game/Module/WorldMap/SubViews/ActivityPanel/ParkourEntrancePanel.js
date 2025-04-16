@@ -5,127 +5,95 @@ const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTex
   ParkourChallengeByMarkId_1 = require("../../../../../Core/Define/ConfigQuery/ParkourChallengeByMarkId"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
-  MapController_1 = require("../../../Map/Controller/MapController"),
-  WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
-  WorldMapDefine_1 = require("../../WorldMapDefine"),
-  MapTipsActivateTipPanel_1 = require("../Common/MapTipsActivateTipPanel"),
   TipsListView_1 = require("../TipsListView"),
+  WorldMapSecondaryUiLayoutA_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutA"),
+  WorldMapSecondaryUiLayoutHelper_1 = require("../WorldMapSecondaryUiLayout/WorldMapSecondaryUiLayoutHelper"),
   SCORE_KEY = "score",
   LINE_NUMBER_KEY = "line";
-class ParkourEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
+class ParkourEntrancePanel extends WorldMapSecondaryUiLayoutA_1.WorldMapSecondaryUiLayoutA {
   constructor() {
     super(...arguments),
       (this.u2o = void 0),
       (this.c2o = void 0),
-      (this.ZAt = void 0),
-      (this.oza = void 0),
-      (this.m2o = () => {
-        MapController_1.MapController.RequestTrackMapMark(
-          this.u2o.MarkType,
-          this.u2o.MarkId,
-          !this.u2o.IsTracked,
-        ),
-          this.Close();
+      (this.OnConfirmBtnClick = () => {
+        this.HandleTrack();
       });
   }
   GetResourceId() {
     return "UiView_Huodong_Prefab";
   }
-  OnRegisterComponent() {
-    this.ComponentRegisterInfos =
-      WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA;
-  }
-  async OnBeforeStartAsync() {
-    await super.OnBeforeStartAsync(),
-      (this.oza = new MapTipsActivateTipPanel_1.MapTipsActivateTipPanel()),
-      await this.oza.CreateByActorAsync(this.GetItem(31).GetOwner());
-  }
   OnStart() {
     (this.c2o = new TipsListView_1.TipsListView()),
       this.c2o.Initialize(this.GetVerticalLayout(5)),
-      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.ZAt.SetActive(!0),
-      this.ZAt.SetFunction(this.m2o),
-      this.GetItem(25).SetUIActive(!1),
-      this.GetItem(32).SetUIActive(!1),
-      this.oza.SetUiActive(!1),
-      this.GetItem(14).SetUIActive(!1);
+      super.OnStart();
   }
   OnBeforeDestroy() {
-    this.ZAt.Destroy(), this.c2o.Clear(), this.oza.Destroy();
+    this.c2o.Clear(), super.OnBeforeDestroy();
+  }
+  SetupWorldMapSecondaryUiLayout() {
+    super.SetupWorldMapSecondaryUiLayout(),
+      this.GetItem(14).SetUIActive(!1),
+      this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1);
   }
   OnShowWorldMapSecondaryUi(e) {
     (this.u2o = e),
-      this.mGe(),
-      this.d2o(),
-      this.Pqe(),
-      this.l_i(),
-      this.l3e(),
-      this.GetItem(9).SetUIActive(!1),
-      this.GetItem(12).SetUIActive(!1),
-      this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1);
+      (this.LayoutContext.MarkItem = e),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateIconAndTitle(
+        this.LayoutContext,
+      ),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateAreaTxtByConfigMarkItem(
+        this.LayoutContext,
+      ),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateDesc(
+        this.LayoutContext,
+      ),
+      WorldMapSecondaryUiLayoutHelper_1.WorldMapSecondaryUiLayoutHelper.UpdateConfirmButtonTextWithTrackStyle(
+        this.LayoutContext,
+      ),
+      this.l3e();
   }
   OnCloseWorldMapSecondaryUi() {
     this.c2o.Clear();
-  }
-  mGe() {
-    this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
-      this.GetText(1).ShowTextNew(this.u2o.MarkConfig.MarkTitle);
-  }
-  d2o() {
-    var e = this.u2o.GetAreaText();
-    e && this.GetText(3).SetText(e);
   }
   l3e() {
     var e =
         ModelManager_1.ModelManager.ActivityRunModel.GetChallengeDataByMarkId(
           this.u2o.MarkConfigId,
         ),
-      t = ParkourChallengeByMarkId_1.configParkourChallengeByMarkId.GetConfig(
+      r = ParkourChallengeByMarkId_1.configParkourChallengeByMarkId.GetConfig(
         this.u2o.MarkId,
       ),
-      i = this.c2o.AddItemByKey(LINE_NUMBER_KEY),
-      t =
-        (i.SetLeftText(
+      t = this.c2o.AddItemByKey(LINE_NUMBER_KEY),
+      r =
+        (t.SetLeftText(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CurrentLine") ??
             "",
         ),
         StringUtils_1.StringUtils.Format(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew("LineNumber") ??
             "",
-          t.Id.toString(),
+          r.Id.toString(),
         )),
-      t =
-        (i.SetRightText(t),
-        i.SetHelpButtonVisible(!1),
+      r =
+        (t.SetRightText(r),
+        t.SetHelpButtonVisible(!1),
         this.c2o.AddItemByKey(SCORE_KEY)),
-      i =
-        (t.SetHelpButtonVisible(!1),
+      t =
+        (r.SetHelpButtonVisible(!1),
         StringUtils_1.StringUtils.Format(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "Text_ActiveRunMaxPoint_Text",
           ) ?? "",
           "",
         ));
-    t.SetLeftText(i),
+    r.SetLeftText(t),
       0 === e.GetMiniTime()
-        ? t.SetRightText(
+        ? r.SetRightText(
             MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               "Text_ActivityRunNoPoint_Text",
             ) ?? "",
           )
-        : t.SetRightText(e.GetMaxScore().toString());
-  }
-  Pqe() {
-    this.GetText(4).ShowTextNew(this.u2o.MarkConfig.MarkDesc);
-  }
-  l_i() {
-    let e = "";
-    (e = this.u2o.IsTracked
-      ? "InstanceDungeonEntranceCancelTrack"
-      : "InstanceDungeonEntranceTrack"),
-      this.ZAt.SetLocalText(e);
+        : r.SetRightText(e.GetMaxScore().toString());
   }
 }
 exports.ParkourEntrancePanel = ParkourEntrancePanel;

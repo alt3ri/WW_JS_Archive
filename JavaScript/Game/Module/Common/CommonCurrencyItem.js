@@ -8,43 +8,52 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
-  LguiUtil_1 = require("../Util/LguiUtil");
+  LguiUtil_1 = require("../Util/LguiUtil"),
+  Log_1 = require("../../../Core/Common/Log");
 class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.ETt = 0),
+      (this.ItemId = 0),
       (this.SkipAutoAddEvent = !1),
-      (this.Gke = void 0),
+      (this._Y_ = void 0),
       (this.STt = void 0),
+      (this.cX_ = void 0),
       (this.ije = () => {
-        this.STt?.(), this.Gke?.(this.ETt);
+        this.STt?.(), this._Y_?.(this.ItemId);
       }),
       (this.yTt = () => {
-        ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          this.ETt,
-        );
+        (this.cX_ && !this.cX_(this.ItemId)) ||
+          ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
+            this.ItemId,
+          );
       }),
       (this.ITt = () => {
         this.RefreshCountText();
       }),
-      (this.TTt = (e) => {
-        for (const t of e)
-          if (this.ETt === t.s5n) return void this.RefreshCountText();
+      (this.TTt = (t) => {
+        for (const e of t)
+          if (this.ItemId === e.s5n) return void this.RefreshCountText();
       }),
-      (this.LTt = (e) => {
-        e.includes(this.ETt) && this.RefreshCountText();
+      (this.LTt = (t) => {
+        t.includes(this.ItemId) && this.RefreshCountText();
       }),
-      (this.DTt = (e, t, i) => {
-        this.ETt === e.s5n && this.RefreshCountText();
+      (this.DTt = (t, e, i) => {
+        this.ItemId === t.s5n && this.RefreshCountText();
       }),
-      (this.RTt = (e) => {
-        e === ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency()
+      (this.RTt = (t) => {
+        t === ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency()
           ? ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewToRecharge()
-          : e === ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency() &&
+          : t === ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency() &&
             ControllerHolder_1.ControllerHolder.ItemExchangeController.OpenExchangeViewByItemId(
-              e,
+              t,
             );
       });
+  }
+  set ButtonFunction(t) {
+    t !== this._Y_ &&
+      Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("WeeklyRogue", 34, "Test"),
+      (this._Y_ = t);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -114,57 +123,60 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   UTt() {
-    const e = this.GetTexture(0);
-    e.SetUIActive(!1),
-      this.SetItemIcon(this.GetTexture(0), this.ETt, void 0, () => {
-        this.ATt(), e.SetUIActive(!0);
+    const t = this.GetTexture(0);
+    t.SetUIActive(!1),
+      this.SetItemIcon(this.GetTexture(0), this.ItemId, void 0, () => {
+        this.ATt(), t.SetUIActive(!0);
       });
   }
   ATt() {
-    var e = this.GetUiTextureTransitionComponent(4);
-    e && e.SetAllStateTexture(this.GetTexture(0).GetTexture());
+    var t = this.GetUiTextureTransitionComponent(4);
+    t && t.SetAllStateTexture(this.GetTexture(0).GetTexture());
   }
-  RefreshTemp(e, t) {
-    this.ShowWithoutText(e), this.RefreshCountText(t);
+  RefreshTemp(t, e) {
+    this.ShowWithoutText(t), this.RefreshCountText(e);
   }
-  ShowWithoutText(e) {
-    (this.ETt = e), this.UTt();
+  ShowWithoutText(t) {
+    (this.ItemId = t), this.UTt();
   }
-  RefreshCountText(e) {
-    var t = this.GetText(1),
-      e =
-        e ??
+  RefreshCountText(t) {
+    var e = this.GetText(1),
+      t =
+        t ??
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          this.ETt,
+          this.ItemId,
         );
-    t?.SetText(e.toString());
+    e?.SetText(t.toString());
   }
-  SetCountText(e, ...t) {
-    LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), e, ...t);
+  SetCountText(t, ...e) {
+    LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), t, ...e);
   }
-  SetCountTextNew(e, ...t) {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e, ...t);
+  SetCountTextNew(t, ...e) {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t, ...e);
   }
-  SetButtonFunction(e) {
-    this.Gke = e;
+  SetButtonFunction(t) {
+    this.ButtonFunction = t;
   }
-  SetBeforeButtonFunction(e) {
-    this.STt = e;
+  SetBeforeButtonFunction(t) {
+    this.STt = t;
   }
-  SetButtonActive(e) {
-    this.GetButton(2).RootUIComp.SetUIActive(e);
+  SetTextureClickCheckFunction(t) {
+    this.cX_ = t;
   }
-  RefreshMaxItem(e) {
-    this.GetItem(8).SetUIActive(e);
+  SetButtonActive(t) {
+    this.GetButton(2).RootUIComp.SetUIActive(t);
+  }
+  RefreshMaxItem(t) {
+    this.GetItem(8).SetUIActive(t);
   }
   SetToPayShopFunction() {
-    this.Gke = this.RTt;
+    this.ButtonFunction = this.RTt;
   }
   RefreshAddButtonActive() {
-    var e = ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency(),
-      t = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency(),
+    var t = ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency(),
+      e = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency(),
       i = this.GetButton(2);
-    this.ETt !== e && this.ETt !== t
+    this.ItemId !== t && this.ItemId !== e
       ? i.RootUIComp.SetUIActive(!1)
       : i.RootUIComp.SetUIActive(!0);
   }

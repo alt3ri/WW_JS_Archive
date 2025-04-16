@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayItem = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class PayItem {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -59,8 +60,14 @@ class PayItem {
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   stageimage(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 14),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   bonusitemcount() {
     var t = this.J7.__offset(this.z7, 16);

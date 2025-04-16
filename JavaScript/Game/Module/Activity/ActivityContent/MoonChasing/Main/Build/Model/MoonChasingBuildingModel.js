@@ -11,7 +11,7 @@ const CommonParamById_1 = require("../../../../../../../../Core/Define/ConfigCom
   BuildingData_1 = require("./BuildingData");
 class MoonChasingBuildingModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.JOe = new Map()), (this.ofa = void 0);
+    super(...arguments), (this.JOe = new Map()), (this.efa = void 0);
   }
   OnInit() {
     var e = ConfigManager_1.ConfigManager.BuildingConfig.GetBuildingAll();
@@ -84,10 +84,10 @@ class MoonChasingBuildingModel extends ModelBase_1.ModelBase {
     this.SetPopularityUpData(a);
   }
   SetPopularityUpData(e) {
-    this.ofa = e;
+    this.efa = e;
   }
   GetPopularityUpData() {
-    return this.ofa;
+    return this.efa;
   }
   CheckAllBuildingRedDotState() {
     for (const e of this.JOe.values())

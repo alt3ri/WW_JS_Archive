@@ -6,11 +6,14 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ActivityDescriptionTypeA_1 = require("../../Activity/ActivityContent/UniversalComponents/Content/ActivityDescriptionTypeA"),
   ActivityRewardList_1 = require("../../Activity/ActivityContent/UniversalComponents/Content/ActivityRewardList"),
-  ActivityFunctionalArea_1 = require("../../Activity/ActivityContent/UniversalComponents/Functional/ActivityFunctionalArea"),
+  ActivityButtonItem_1 = require("../../Activity/ActivityContent/UniversalComponents/Functional/ActivityButtonItem"),
+  ActivityFunctionalTypeA_1 = require("../../Activity/ActivityContent/UniversalComponents/Functional/ActivityFunctionalTypeA"),
   ActivityTitleTypeA_1 = require("../../Activity/ActivityContent/UniversalComponents/Title/ActivityTitleTypeA"),
   ActivitySubViewBase_1 = require("../../Activity/View/SubView/ActivitySubViewBase"),
   DifficultUnlockTipView_1 = require("../../InstanceDungeon/DifficultUnlockTipView"),
@@ -23,6 +26,7 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
+      (this.sSc = void 0),
       (this.kZs = () => {
         var e;
         (ModelManager_1.ModelManager.TowerDefenseModel.IsEnterInActivityClicked =
@@ -32,20 +36,28 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
             this.ActivityBaseData.Id,
           ),
           this.ActivityBaseData.GetPreGuideQuestFinishState()
-            ? ((e = {
-                MarkId:
-                  TowerDefenceController_1.TowerDefenseController.GetMarkIdByActivityId(
-                    this.ActivityBaseData.Id,
-                  ),
-                MarkType: 0,
-                OpenAreaId: 0,
-              }),
-              WorldMapController_1.WorldMapController.OpenView(2, !1, e))
+            ? 0 !==
+              (e =
+                ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTowerDefenseConfigByActivityId(
+                  this.ActivityBaseData.Id,
+                )).EntranceId
+              ? ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.EnterEntrance(
+                  e.EntranceId,
+                )
+              : ((e = {
+                  MarkId:
+                    TowerDefenceController_1.TowerDefenseController.GetMarkIdByActivityId(
+                      this.ActivityBaseData.Id,
+                    ),
+                  MarkType: 0,
+                  OpenFogId: 0,
+                }),
+                WorldMapController_1.WorldMapController.OpenView(2, !1, e))
             : ((e = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
               UiManager_1.UiManager.OpenView("QuestView", e));
       }),
-      (this.XPa = () => {
-        this.ANe.SetRewardRedDotVisible(
+      (this.ZPa = () => {
+        this.sSc.SetRedDotVisible(
           TowerDefenceController_1.TowerDefenseController.CheckHasReward(),
         );
       });
@@ -56,19 +68,28 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       [1, UE.UIItem],
       [2, UE.UIItem],
       [3, UE.UIItem],
+      [4, UE.UIItem],
+      [5, UE.UIItem],
     ];
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-      this.XPa,
+      this.ZPa,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-      this.XPa,
+      this.ZPa,
     );
+  }
+  async aSc() {
+    var e =
+      ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        "UiItem_LordGymBg01",
+      );
+    await this.LoadPrefabAsync(e, this.GetItem(4));
   }
   async OnBeforeStartAsync() {
     var e = this.GetItem(0),
@@ -80,18 +101,23 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
         this.GetItem(2)),
       r =
         ((this.UNe = new ActivityRewardList_1.ActivityRewardList()),
-        this.GetItem(3));
-    (this.ANe = new ActivityFunctionalArea_1.ActivityFunctionalArea(
-      this.ActivityBaseData,
-    )),
+        this.GetItem(3)),
+      n =
+        ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA(
+          this.ActivityBaseData,
+        )),
+        this.GetItem(5));
+    (this.sSc = new ActivityButtonItem_1.ActivityButtonItem()),
       await Promise.all([
         this.LNe.CreateThenShowByActorAsync(e.GetOwner()),
         this.DNe.CreateThenShowByActorAsync(t.GetOwner()),
         this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.ANe.CreateThenShowByActorAsync(r.GetOwner()),
+        this.sSc.CreateThenShowByActorAsync(n.GetOwner()),
+        this.aSc(),
       ]),
       this.ANe.FunctionButton.SetFunction(this.kZs),
-      this.ANe.SetRewardButtonFunction(
+      this.sSc.SetFunction(
         TowerDefenceController_1.TowerDefenseController.HandleOnClickReward,
       );
   }
@@ -103,8 +129,8 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.jqe(),
       this.VNe(),
       this.Eyn(),
-      this.XPa(),
-      this.YPa());
+      this.ZPa(),
+      this.ewa());
   }
   OnTimer(e) {
     this.FNe(), this.VNe();
@@ -137,35 +163,38 @@ class TowerDefenseSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   jqe() {
     var e =
       TowerDefenceController_1.TowerDefenseController.GetActivityPreviewReward();
-    this.UNe.SetTitleByTextId("BossRushCollectReward"),
+    this.UNe.SetTitleByTextId("FragmentMemoryCollectReward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(e);
   }
   VNe() {
-    var e;
+    var e, t;
     TowerDefenceController_1.TowerDefenseController.CheckActivityUnlockByMulti()
       ? ((e =
           TowerDefenceController_1.TowerDefenseController.CheckActivityUnlockByCondition()),
         this.ANe.SetPanelConditionVisible(!e),
-        this.ANe.SetRewardButtonVisible(e),
-        this.ANe.SetFunctionButtonVisible(e),
+        this.ANe.FunctionButton.SetUiActive(e),
         e
-          ? ((e =
+          ? ((t =
               MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                 "BossRushEnterText",
               )),
-            this.ANe.FunctionButton.SetText(e))
+            this.ANe.FunctionButton.SetText(t))
           : this.ANe.SetPerformanceConditionLock(
               this.ActivityBaseData.ConditionGroupId,
               this.ActivityBaseData.Id,
-            ))
+            ),
+        (t =
+          ModelManager_1.ModelManager.TowerDefenseModel.GetPreviewRewardCount()),
+        this.sSc.SetText(t[0] + "/" + t[1]),
+        this.sSc.SetUiActive(e))
       : (this.ANe.SetPanelConditionVisible(!0),
         this.ANe.SetLockTextByTextId("TowerDefence_Cantplay"),
-        this.ANe.SetRewardButtonVisible(!1),
-        this.ANe.SetFunctionButtonVisible(!1));
+        this.sSc.SetUiActive(!1),
+        this.ANe.FunctionButton.SetUiActive(!1));
   }
-  YPa() {
-    this.ANe.FunctionButton.SetRedDotVisible(
+  ewa() {
+    this.ANe.SetFunctionRedDotVisible(
       TowerDefenceController_1.TowerDefenseController.CheckHasNewStage(),
     );
   }

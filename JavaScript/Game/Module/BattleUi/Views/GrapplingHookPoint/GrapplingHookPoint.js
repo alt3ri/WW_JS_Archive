@@ -17,9 +17,9 @@ const puerts_1 = require("puerts"),
   START_SEQUENCE_NAME = "Start",
   CLOST_SEQUENCE_NAME = "Close";
 class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
-  constructor(e, t) {
+  constructor(t, e) {
     super(),
-      (this.Due = new UE.Vector()),
+      (this.Due = new UE.VectorDouble()),
       (this.S$e = (0, puerts_1.$ref)(void 0)),
       (this.R$e = void 0),
       (this.jht = !1),
@@ -28,10 +28,10 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
       (this.Qht = void 0),
       (this.SPe = void 0),
       (this.Qtt = void 0),
-      (this.Xht = (e) => {
-        this.$ht();
+      (this.Xht = (t) => {
+        t && "LevelD" !== t.PlotLevel && "Prompt" !== t.PlotLevel && this.$ht();
       }),
-      (this.Yht = (e) => {
+      (this.Yht = (t) => {
         this.Jht();
       }),
       (this.zht = () => {
@@ -40,10 +40,10 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
           this.Qht && this.Qht();
       }),
       (this.R$e = Global_1.Global.CharacterController),
-      (this.Due.X = e.X),
-      (this.Due.Y = e.Y),
-      (this.Due.Z = e.Z),
-      this.CreateThenShowByResourceIdAsync("UiItem_Gousuo", t, !0);
+      (this.Due.X = t.X),
+      (this.Due.Y = t.Y),
+      (this.Due.Z = t.Z),
+      this.CreateThenShowByResourceIdAsync("UiItem_Gousuo", e, !0);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -56,11 +56,12 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
         this.ComponentRegisterInfos.push([4, UE.UIItem]);
   }
   async OnBeforeStartAsync() {
-    var e;
+    var t;
     Info_1.Info.IsInTouch() ||
-      ((e = this.GetItem(4)).SetUIActive(!1),
+      ((t = this.GetItem(4)).SetUIActive(!1),
       (this.Qtt = new CombineKeyItem_1.CombineKeyItem()),
-      await this.Qtt.CreateByActorAsync(e.GetOwner()),
+      (this.Qtt.SkipDestroyActor = !0),
+      await this.Qtt.CreateByActorAsync(t.GetOwner()),
       this.Qtt.RefreshAction(InputMappingsDefine_1.actionMappings.幻象1));
   }
   OnStart() {
@@ -99,6 +100,9 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
       (this.jht = !1),
       (this.Wht = !0);
   }
+  UpdateHookPointLocation(t) {
+    this.Due.Set(t.X, t.Y, t.Z);
+  }
   Interrupt() {
     this.GetItem(0).SetUIActive(!1),
       this.GetItem(1).SetUIActive(!1),
@@ -108,8 +112,8 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
         INTERRUPT_DELAY_TIME,
       ));
   }
-  BindOnInterruptCompleted(e) {
-    this.Qht = e;
+  BindOnInterruptCompleted(t) {
+    this.Qht = t;
   }
   GetIsActivateHook() {
     return this.jht;
@@ -119,6 +123,7 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     this.SPe && (this.SPe.Clear(), (this.SPe = void 0)),
+      this.Qtt && (this.Qtt.Destroy(), (this.Qtt = void 0)),
       (this.Wht = !1),
       (this.jht = !1),
       TimerSystem_1.TimerSystem.Has(this.Kht) &&
@@ -141,23 +146,23 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
         );
   }
   AfterTick() {
-    var e;
-    this.jht && (e = this.elt(this.Due)) && this.Ad(e);
+    var t;
+    this.jht && (t = this.elt(this.Due)) && this.Ad(t);
   }
-  Ad(e) {
-    this.RootItem.SetAnchorOffset(e);
+  Ad(t) {
+    this.RootItem.SetAnchorOffset(t);
   }
-  elt(e) {
-    if (UE.GameplayStatics.ProjectWorldToScreen(this.R$e, e, this.S$e))
+  elt(t) {
+    if (UE.GameplayStatics.D_ProjectWorldToScreen(this.R$e, t, this.S$e))
       return (
-        (e = (0, puerts_1.$unref)(this.S$e)),
+        (t = (0, puerts_1.$unref)(this.S$e)),
         UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(
-          e,
+          t,
         )
       );
   }
-  Zht(e) {
-    this.SPe.StopSequenceByKey(e);
+  Zht(t) {
+    this.SPe.StopSequenceByKey(t);
   }
 }
 exports.GrapplingHookPoint = GrapplingHookPoint;

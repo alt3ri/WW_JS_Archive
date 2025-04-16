@@ -7,6 +7,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   UiPlayItemById_1 = require("../../../Core/Define/ConfigQuery/UiPlayItemById"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   CipherController_1 = require("../../LevelGamePlay/Cipher/CipherController"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
@@ -14,14 +16,14 @@ const Log_1 = require("../../../Core/Common/Log"),
   CharacterAttributeTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterAttributeTypes"),
   UiManager_1 = require("../../Ui/UiManager"),
   AcquireData_1 = require("../Acquire/AcquireData"),
+  BirthdayController_1 = require("../Birthday/BirthdayController"),
   BuffItemControl_1 = require("../BuffItem/BuffItemControl"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
   ItemDefines_1 = require("../Item/Data/ItemDefines"),
   PowerController_1 = require("../Power/PowerController"),
   RoleDefine_1 = require("../RoleUi/RoleDefine"),
   ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
-  InventoryGiftController_1 = require("./InventoryGiftController"),
-  InventoryGiftData_1 = require("./InventoryGiftData");
+  InventoryGiftController_1 = require("./InventoryGiftController");
 class ItemUseLogic {
   static Imi(e, r = 1, o = 0) {
     var n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(o, {
@@ -33,7 +35,7 @@ class ItemUseLogic {
         "NoneRole",
       );
     else {
-      n = n?.EntityHandle?.Entity?.GetComponent(159);
+      n = n?.EntityHandle?.Entity?.GetComponent(171);
       if (!n) return !1;
       var t = Math.ceil(
         n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Proto_Life),
@@ -55,7 +57,7 @@ class ItemUseLogic {
       !!o &&
       (0 === o.Parameters.size
         ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Inventory", 38, "使用道具失败,使用参数为空", [
+            Log_1.Log.Error("Inventory", 37, "使用道具失败,使用参数为空", [
               "ItemId",
               e,
             ]),
@@ -198,18 +200,18 @@ class ItemUseLogic {
           f = [];
         const o = [{ IncId: 0, ItemId: n.Id }, a];
         if ((f.push(o), 1 < a)) {
-          const s = new AcquireData_1.AcquireData();
-          s.SetAcquireViewType(0),
-            s.SetAmount(1),
-            s.SetMaxAmount(a),
-            s.SetRemainItemCount(a),
-            s.SetItemData(f),
-            s.SetNameText(_),
-            s.SetRightButtonFunction(() => {
-              ItemUseLogic.Tmi(e, s.GetAmount());
+          const g = new AcquireData_1.AcquireData();
+          g.SetAcquireViewType(0),
+            g.SetAmount(1),
+            g.SetMaxAmount(a),
+            g.SetRemainItemCount(a),
+            g.SetItemData(f),
+            g.SetNameText(_),
+            g.SetRightButtonFunction(() => {
+              ItemUseLogic.Tmi(e, g.GetAmount());
             }),
             InventoryGiftController_1.InventoryGiftController.ShowAcquireView(
-              s,
+              g,
             );
         } else
           InventoryGiftController_1.InventoryGiftController.SendItemGiftUseRequest(
@@ -217,18 +219,43 @@ class ItemUseLogic {
             1,
             void 0,
           );
-      } else {
-        var g,
-          C,
-          u = [];
-        for ([g, C] of l.Content) {
-          var I = [{ IncId: 0, ItemId: g }, C];
-          u.push(I);
-        }
-        n = new InventoryGiftData_1.InventoryGiftData(e, u, l);
-        UiManager_1.UiManager.OpenView("InventoryGiftView", n);
-      }
+      } else
+        InventoryGiftController_1.InventoryGiftController.SendGiftPackPreviewRequest(
+          e,
+          l,
+          void 0,
+        );
     return !0;
+  }),
+  (ItemUseLogic.TryUseGiftItemWithSelectedItem = (e, r, o = 0) => {
+    var n = ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(e);
+    return (
+      !!n &&
+      11 === n.GetType() &&
+      !!(n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
+        e,
+      ).Parameters.get(ItemDefines_1.EItemFunctionType.ManualOpenGift)) &&
+      (n =
+        ConfigManager_1.ConfigManager.GiftPackageConfig.GetGiftPackageConfig(n))
+        .Type === GiftType_1.GiftType.Optional &&
+      (InventoryGiftController_1.InventoryGiftController.SendGiftPackPreviewRequest(
+        e,
+        n,
+        r,
+      ),
+      !0)
+    );
+  }),
+  (ItemUseLogic.TryUseShipTowerItem = (e) => {
+    e = ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(e);
+    return (
+      !!e &&
+      60005 === e.GetType() &&
+      (EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OpenActivityViewShipTower,
+      ),
+      !0)
+    );
   }),
   (ItemUseLogic.Tmi = (e, r) => {
     0 < r
@@ -240,5 +267,13 @@ class ItemUseLogic {
       : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "NotEnoughItem",
         );
+  }),
+  (ItemUseLogic.TryUseBirthdayItem = (e) => {
+    var r = ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(e);
+    return (
+      !!r &&
+      60007 === r.GetType() &&
+      (BirthdayController_1.BirthdayController.UseBirthdayItem(e), !0)
+    );
   });
 //# sourceMappingURL=ItemUseLogic.js.map

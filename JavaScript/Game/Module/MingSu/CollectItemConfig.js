@@ -17,7 +17,7 @@ class CollectItemConfig extends ConfigBase_1.ConfigBase {
     var e = DarkCoastDeliveryById_1.configDarkCoastDeliveryById.GetConfig(o);
     if (void 0 !== e) return e;
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("MingSuTi", 59, "DarkCoastDelivery表无当前id", [
+      Log_1.Log.Error("MingSuTi", 58, "DarkCoastDelivery表无当前id", [
         "id",
         o.toString(),
       ]);

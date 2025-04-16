@@ -79,7 +79,7 @@ let SceneItemConveyorBeltComponent =
                 this.kRe.AdditionEqual(this.cz),
                 r.SetActorLocation(this.kRe.ToUeVector()) ||
                   (Log_1.Log.CheckWarn() &&
-                    Log_1.Log.Warn("SceneItem", 36, "传送带设置位置失败", [
+                    Log_1.Log.Warn("SceneItem", 35, "传送带设置位置失败", [
                       "loc",
                       r.ActorLocationProxy,
                     ]));
@@ -133,8 +133,8 @@ let SceneItemConveyorBeltComponent =
           var o = i?.CreatureData.GetEntityType();
           if (o === Protocol_1.Aki.Protocol.kks.Proto_Player)
             (this.kdn = t)
-              ? ((this.qdn = e.GetComponent(164)),
-                (this.Gdn = e.GetComponent(92)),
+              ? ((this.qdn = e.GetComponent(176)),
+                (this.Gdn = e.GetComponent(99)),
                 (this.qdn.DeltaConveyBeltSpeed = this.iun.ToUeVector()))
               : ((this.qdn.DeltaConveyBeltSpeed = void 0),
                 (this.qdn = void 0),
@@ -145,12 +145,12 @@ let SceneItemConveyorBeltComponent =
             o === Protocol_1.Aki.Protocol.kks.Proto_Animal ||
             o === Protocol_1.Aki.Protocol.kks.Proto_Vision
           ) {
-            var s = e.GetComponent(38);
+            var s = e.GetComponent(44);
             s &&
               ((n = this.Odn.get(s)),
               t ? n || this.Odn.set(s, -1) : n && this.Odn.delete(s));
           } else if (o === Protocol_1.Aki.Protocol.kks.Proto_SceneItem)
-            if (e.GetComponent(143)) {
+            if (e.GetComponent(154)) {
               const i = e.GetComponent(1);
               var n = this.Ndn.indexOf(i);
               t
@@ -169,14 +169,14 @@ let SceneItemConveyorBeltComponent =
       if (2 < i || i < 1)
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("SceneItem", 36, "状态组配置数量不对", ["num", i]),
+            Log_1.Log.Error("SceneItem", 35, "状态组配置数量不对", ["num", i]),
           !1
         );
       this.bdn = e.StateGroups;
       for (let t = 0; t < i; t++) {
         var o = e.StateGroups[t];
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "s", [
+          Log_1.Log.Debug("Temp", 35, "s", [
             "configGroup.EntityState",
             o.EntityState,
           ]);
@@ -185,7 +185,7 @@ let SceneItemConveyorBeltComponent =
     }
     OnStart() {
       return (
-        (this.vtn = this.Entity.GetComponent(77)),
+        (this.vtn = this.Entity.GetComponent(84)),
         this.vtn && this.vtn.AddOnEntityOverlapCallback(this.Vdn),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -247,13 +247,13 @@ let SceneItemConveyorBeltComponent =
     }
     Kdn() {
       this.Bdn = void 0;
-      var t = this.Entity.GetComponent(120).State;
+      var t = this.Entity.GetComponent(131).State;
       let e = "";
       1 === t ? (e = "常态") : 2 === t && (e = "激活");
       for (const i of this.bdn) i.EntityState.includes(e) && (this.Bdn = i);
       this.Bdn ||
         (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("SceneItem", 36, "传送带静止"));
+          Log_1.Log.Warn("SceneItem", 35, "传送带静止"));
     }
     Wdn() {
       var t, e;
@@ -266,7 +266,7 @@ let SceneItemConveyorBeltComponent =
               (this.iun.X = e.X ?? 0),
               (this.iun.Y = e.Y ?? 0),
               (this.iun.Z = e.Z ?? 0),
-              (e = this.Entity.GetComponent(1).ActorRotation.RotateVector(
+              (e = this.Entity.GetComponent(1).ActorRotation.RotateVectorDouble(
                 this.iun.ToUeVector(),
               )),
               this.iun.FromUeVector(e),
@@ -278,7 +278,7 @@ let SceneItemConveyorBeltComponent =
   });
 (SceneItemConveyorBeltComponent = SceneItemConveyorBeltComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(134)],
+    [(0, RegisterComponent_1.RegisterComponent)(145)],
     SceneItemConveyorBeltComponent,
   )),
   (exports.SceneItemConveyorBeltComponent = SceneItemConveyorBeltComponent);

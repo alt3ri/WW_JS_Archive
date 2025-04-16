@@ -203,7 +203,9 @@ class LongShanView extends UiViewBase_1.UiViewBase {
     var e =
         ActivityLongShanController_1.ActivityLongShanController.GetActivityData(),
       i = e.StageIds[this.NOe],
-      i = LongShanStageById_1.configLongShanStageById.GetConfig(i);
+      i =
+        (e.SaveNewStageFlag(i),
+        LongShanStageById_1.configLongShanStageById.GetConfig(i));
     this.SetTextureByPath(i.Picture, this.GetTexture(9)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), i.TitleDetail),
       this.WOe(),

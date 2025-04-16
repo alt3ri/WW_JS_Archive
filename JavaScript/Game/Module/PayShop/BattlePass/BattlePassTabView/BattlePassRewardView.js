@@ -56,7 +56,8 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
         (this.p2i = !0),
           this.vVt.RefreshByData(
             ModelManager_1.ModelManager.BattlePassModel.RewardDataList,
-          );
+          ),
+          this.R2i();
       }),
       (this.R2i = () => {
         var e = this.vVt.NCi,

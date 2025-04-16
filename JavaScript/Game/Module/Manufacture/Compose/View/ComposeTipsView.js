@@ -40,14 +40,14 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
             35 === e.SubType
               ? ((i =
                   ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
-                    e.ItemId,
+                    e.ConfigId,
                   )),
                 ComposeController_1.ComposeController.SendSynthesisFormulaUnlockRequest(
                   i.Id,
                 ))
               : EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OpenCompose,
-                  e.ItemId,
+                  e.ConfigId,
                 );
             break;
           case 2:
@@ -55,20 +55,20 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
             37 === i.SubType
               ? ((e =
                   ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
-                    i.ItemId,
+                    i.ConfigId,
                   )),
                 ComposeController_1.ComposeController.SendSynthesisFormulaUnlockRequest(
                   e.Id,
                 ))
               : EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OpenCompose,
-                  i.ItemId,
+                  i.ConfigId,
                 );
             break;
           case 3:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OpenCompose,
-              this.fGt.ItemId,
+              this.fGt.ConfigId,
             );
         }
       }),
@@ -136,7 +136,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
   JTi(e) {
     var i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
-          e.ItemId,
+          e.ConfigId,
         ),
       t =
         (this.dOt(1),
@@ -146,7 +146,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
         ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name)),
       t =
         (this.gOt(t),
-        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId)),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ConfigId)),
       e =
         (this.fOt(t.Icon),
         ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
@@ -165,7 +165,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
   }
   LTi(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        e.ItemId,
+        e.ConfigId,
       ),
       t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
         i.ItemId,
@@ -195,9 +195,9 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
         (this.EOt(e.ComposeCount, t, s),
         ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making")),
       t = ComposeController_1.ComposeController.CheckCanReagentProduction(
-        e.ItemId,
+        e.ConfigId,
       );
-    this.M3e(i, t), this.MOt(t), this.SOt(e.ItemId);
+    this.M3e(i, t), this.MOt(t), this.SOt(e.ConfigId);
   }
   YTi() {
     this.GetText(3).SetUIActive(!0),
@@ -229,7 +229,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
   }
   RefreshStructure(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        e.ItemId,
+        e.ConfigId,
       ),
       t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
         i.ItemId,
@@ -256,13 +256,13 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
       t =
         (this.vOt(i),
         ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making")),
-      i = ComposeController_1.ComposeController.CheckCanStructure(e.ItemId);
-    this.M3e(t, i), this.MOt(i), this.SOt(e.ItemId);
+      i = ComposeController_1.ComposeController.CheckCanStructure(e.ConfigId);
+    this.M3e(t, i), this.MOt(i), this.SOt(e.ConfigId);
   }
   RefreshStructureMenu(e) {
     var i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaByFormulaItemId(
-          e.ItemId,
+          e.ConfigId,
         ),
       t =
         (this.dOt(1),
@@ -272,7 +272,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
         ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(i.Name)),
       t =
         (this.gOt(t),
-        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId)),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ConfigId)),
       e =
         (this.fOt(t.Icon),
         ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
@@ -313,7 +313,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
   }
   RefreshPurification(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        e.ItemId,
+        e.ConfigId,
       ),
       t = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
         i.ItemId,
@@ -343,7 +343,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
     1 === e.IsUnlock
       ? ((r = ConfigManager_1.ConfigManager.TextConfig.GetTextById("Making")),
         (a = ComposeController_1.ComposeController.CheckCanPurification(
-          e.ItemId,
+          e.ConfigId,
         )),
         this.MOt(a))
       : ((t = ConfigManager_1.ConfigManager.ComposeConfig.GetConditionInfo(
@@ -355,7 +355,7 @@ class ComposeTipsView extends UiPanelBase_1.UiPanelBase {
         (a = !1),
         this.MOt(!0)),
       this.M3e(r, a),
-      this.SOt(e.ItemId);
+      this.SOt(e.ConfigId);
   }
   SetPurificationHide() {
     this.GetText(3).SetUIActive(!0),

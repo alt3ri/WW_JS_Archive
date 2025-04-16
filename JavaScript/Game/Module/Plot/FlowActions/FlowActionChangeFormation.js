@@ -12,7 +12,7 @@ class FlowActionChangeFormation extends FlowActionServerAction_1.FlowActionServe
       ? (PlotController_1.PlotController.ChangeFormation(),
         this.RequestServerAction(!1))
       : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Plot", 27, "禁止在非Seq剧情中使用切编队"),
+          Log_1.Log.Warn("Plot", 26, "禁止在非Seq剧情中使用切编队"),
         this.FinishExecute(!0));
   }
   OnBackgroundExecute() {}

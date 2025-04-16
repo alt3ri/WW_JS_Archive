@@ -5,77 +5,84 @@ const puerts_1 = require("puerts"),
   RoleTriggerController_1 = require("../Character/Role/RoleTriggerController"),
   VALID_LEN = 3;
 class ReferenceTriggerVolumeLogic {
-  constructor(i) {
-    (this.Ksr = void 0),
-      (this.Qsr = void 0),
-      (this.Xsr = 0),
-      (this.$sr = void 0),
-      (this.Qsr = new Set());
-    for (const e of i) {
-      var t = e.PathName.split(".");
+  constructor(e) {
+    (this.Ksr = new Map()),
+      (this.Qsr = new Set()),
+      (this.nc1 = new Set()),
+      (this.$sr = []);
+    for (const i of e) {
+      var t = i.PathName.split(".");
       t?.length === VALID_LEN && this.Qsr.add(t[1] + "." + t[2]);
     }
-    (this.Ksr = new Map()), (this.$sr = []);
   }
-  AddVolume(i, t) {
-    this.Qsr.has(i) && (this.Vr(t), this.Ksr.set(i, t));
+  AddVolume(e, t) {
+    this.Qsr.has(e) && (this.Vr(e, t), this.Ksr.set(e, t));
   }
-  RemoveVolume(i) {
-    this.Qsr.has(i) && (this.kre(this.Ksr.get(i)), this.Ksr.delete(i));
+  RemoveVolume(e) {
+    this.Qsr.has(e) &&
+      (this.kre(e, this.Ksr.get(e)), this.Ksr.delete(e), this.nc1.delete(e));
   }
   Clear() {
-    for (const i of this.Ksr.values()) this.kre(i);
-    0 < this.Xsr && this.Ysr(!1),
-      (this.Xsr = 0),
+    for (var [e, t] of this.Ksr) this.kre(e, t);
+    this.nc1.size && (this.nc1.clear(), this.Ysr(!1)),
       this.Qsr.clear(),
-      this.Ksr.clear();
+      this.Ksr.clear(),
+      (this.$sr.length = 0);
   }
   Destroy() {
-    this.Clear(), (this.Qsr = void 0), (this.Ksr = void 0), (this.$sr = void 0);
+    this.Clear();
   }
-  AddOnPlayerOverlapCallback(i) {
-    this.Xsr && i(!0), this.$sr?.push(i);
+  IsPlayerOverlapped() {
+    return 0 < this.nc1.size;
   }
-  RemoveOnPlayerOverlapCallback(i) {
-    void 0 === this.$sr ||
-      (i = this.$sr.indexOf(i)) < 0 ||
-      this.$sr.splice(i, 1);
+  AddOnPlayerOverlapCallback(e, t = !1) {
+    this.$sr.push(e), this.nc1.size && t && e(!0);
   }
-  OnCollisionEnterFunc(i) {
-    this.Jsr(i) && (this.Xsr || this.Ysr(!0), this.Xsr++);
+  RemoveOnPlayerOverlapCallback(e) {
+    e = this.$sr.indexOf(e);
+    e < 0 || this.$sr.splice(e, 1);
   }
-  OnCollisionExitFunc(i) {
-    this.Jsr(i) && (this.Xsr--, this.Xsr || this.Ysr(!1));
+  OnCollisionEnterFunc(e, t) {
+    this.Jsr(t) && ((t = this.nc1.size), this.nc1.add(e), t || this.Ysr(!0));
   }
-  Jsr(i) {
+  OnCollisionExitFunc(e, t) {
+    this.Jsr(t) && (this.nc1.delete(e), this.nc1.size || this.Ysr(!1));
+  }
+  Jsr(e) {
     return (
-      i === RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger()
+      e === RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger()
     );
   }
-  Vr(i) {
-    if (i?.IsValid()) {
+  Vr(i, e) {
+    if (e?.IsValid()) {
       var t = (0, puerts_1.$ref)(void 0),
-        e = (i.GetOverlappingActors(t), (0, puerts_1.$unref)(t));
-      if (0 < e?.Num())
-        for (let i = 0, t = e.Num(); i < t; i++) {
-          var s = e.Get(i);
-          this.OnCollisionEnterFunc(s);
+        r = (e.GetOverlappingActors(t), (0, puerts_1.$unref)(t));
+      if (0 < r?.Num())
+        for (let e = 0, t = r.Num(); e < t; e++) {
+          var s = r.Get(e);
+          this.OnCollisionEnterFunc(i, s);
         }
-      i.OnActorBeginOverlap.Add((i, t) => {
-        this.OnCollisionEnterFunc(t);
+      e.OnActorBeginOverlap.Add((e, t) => {
+        this.OnCollisionEnterFunc(i, t);
       }),
-        i.OnActorEndOverlap.Add((i, t) => {
-          this.OnCollisionExitFunc(t);
+        e.OnActorEndOverlap.Add((e, t) => {
+          this.OnCollisionExitFunc(i, t);
         });
     }
   }
-  kre(i) {
-    i?.IsValid() &&
-      (i.OnActorBeginOverlap.Clear(), i.OnActorEndOverlap.Clear());
+  kre(e, t) {
+    t?.IsValid() &&
+      (this.nc1.has(e) &&
+        this.OnCollisionExitFunc(
+          e,
+          RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger(),
+        ),
+      t.OnActorBeginOverlap.Clear(),
+      t.OnActorEndOverlap.Clear());
   }
   Ysr(t) {
     if (this.$sr?.length)
-      for (let i = this.$sr.length - 1; 0 <= i; i--) (0, this.$sr[i])(t);
+      for (let e = this.$sr.length - 1; 0 <= e; e--) (0, this.$sr[e])(t);
   }
 }
 exports.ReferenceTriggerVolumeLogic = ReferenceTriggerVolumeLogic;

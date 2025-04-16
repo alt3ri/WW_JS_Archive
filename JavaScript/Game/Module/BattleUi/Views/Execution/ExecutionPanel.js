@@ -35,7 +35,7 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
         var t;
         this.sDe?.Valid
           ? (this.lat?.OnInputAction(),
-            (t = this.sDe.Entity.GetComponent(106))?.IsPawnInteractive() &&
+            (t = this.sDe.Entity.GetComponent(116))?.IsPawnInteractive() &&
               t.InteractPawn())
           : (this.m$e(), (this.sDe = void 0), this.Hide());
       }),
@@ -92,7 +92,7 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
     this.Gnt(1),
       this.uat &&
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Battle", 18, "重复调用隐藏"),
+          Log_1.Log.Error("Battle", 17, "重复调用隐藏"),
         this.uat.SetResult()),
       (this.uat = new CustomPromise_1.CustomPromise()),
       (this._at = TimerSystem_1.TimerSystem.Delay(this.dat, CLOSE_ANIM_TIME)),

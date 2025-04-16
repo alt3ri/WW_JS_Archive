@@ -49,7 +49,7 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Activity",
-          38,
+          37,
           "[ActivityMoonChasing] 活动配置不存在",
           ["Id", this.Id],
         );
@@ -60,7 +60,7 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
   GetExDataRedPointShowState() {
     return (
       (1 !== this.ActivityFlowState &&
-        (this.IsHasLimitTimeReward() || this.XLa() || this.YLa())) ||
+        (this.IsHasLimitTimeReward() || this.ZLa() || this.eDa())) ||
       this.IsHasMoonChasingRedDot()
     );
   }
@@ -90,7 +90,10 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
       a && i.push(a);
     }
     if (0 !== i.length)
-      return { DataPageList: [{ DataList: i.sort(this.SNe) }] };
+      return {
+        DataPageList: [{ DataList: i.sort(this.SNe) }],
+        Source: "MoonChasing",
+      };
   }
   tQs(e, n) {
     const s =
@@ -148,7 +151,7 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Activity",
-        38,
+        37,
         "[ActivityMoonChasing] 活动限时奖励配置无配置",
         ["RewardId", e],
       );
@@ -176,7 +179,7 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
         e,
       );
   }
-  XLa() {
+  ZLa() {
     return (
       !(!this.IsUnLock() || !this.GetPreGuideQuestFinishState()) &&
       (ModelManager_1.ModelManager.MoonChasingRewardModel.GetAllTaskDataRedDotState(
@@ -185,7 +188,7 @@ class ActivityMoonChasingData extends ActivityData_1.ActivityBaseData {
         ModelManager_1.ModelManager.MoonChasingRewardModel.GetShopRedDotState())
     );
   }
-  YLa() {
+  eDa() {
     return ModelManager_1.ModelManager.MoonChasingModel.HasHandbookRewardRedDot();
   }
   IsHasMoonChasingRedDot() {

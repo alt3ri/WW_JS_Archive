@@ -31,7 +31,7 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
       (this.uoe = void 0),
       (this._7o = 0),
       (this.u7o = 1),
-      (this.Hte = this.Bullet.GetComponent(155)),
+      (this.Hte = this.Bullet.GetComponent(167)),
       (this.a7o = this.Bullet.GetBulletInfo());
   }
   OnInit() {
@@ -46,16 +46,20 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
   }
   OnBulletDestroy() {
     this.zie &&
-      (ActorSystem_1.ActorSystem.Put(this.zie.GetOwner()), (this.zie = void 0));
+      (ActorSystem_1.ActorSystem.Put(
+        "BulletLogicCurveMovementController.OnBulletDestroy",
+        this.zie.GetOwner(),
+      ),
+      (this.zie = void 0));
   }
   c7o(t) {
     var e, i;
     this.Bullet?.Valid &&
       this.LogicController.SplineTrace &&
       ((i = (e = this.m7o())
-        ? UE.KismetMathLibrary.FindLookAtRotation(this.Hte.ActorLocation, e)
+        ? UE.KismetMathLibrary.D_FindLookAtRotation(this.Hte.ActorLocation, e)
         : void 0),
-      (i = UE.KismetMathLibrary.MakeTransform(
+      (i = UE.KismetMathLibrary.MakeTransformDouble(
         this.Hte.ActorLocation,
         e ? i : this.Hte.ActorRotation,
         Vector_1.Vector.OneVector,
@@ -65,36 +69,36 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
         ? t.IsA(UE.BP_BasePathLineBullet_C.StaticClass())
           ? ((this.zie = t.Spline),
             (i = this.zie.GetNumberOfSplinePoints()),
-            (t = this.zie.GetLocationAtSplinePoint(i - 1, 1)),
-            (i = this.zie.GetLocationAtSplinePoint(0, 1)),
-            (i = UE.Vector.DistSquared(i, t)),
+            (t = this.zie.D_GetLocationAtSplinePoint(i - 1, 1)),
+            (i = this.zie.D_GetLocationAtSplinePoint(0, 1)),
+            (i = UE.VectorDouble.DistSquared(i, t)),
             (t = e
-              ? UE.Vector.DistSquared(this.Hte.ActorLocation, e)
+              ? UE.VectorDouble.DistSquared(this.Hte.ActorLocation, e)
               : this.zie.GetSplineLength()),
             e &&
               ((this.u7o = Math.sqrt(t / i)),
               this.zie
                 .GetOwner()
-                .SetActorScale3D(
-                  Vector_1.Vector.OneVector.op_Multiply(this.u7o),
+                .D_SetActorScale3D(
+                  Vector_1.Vector.OneVectorDouble.op_Multiply(this.u7o),
                 )),
             (this.r1t = this.d7o()),
             (this.zie.Duration = this.r1t))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
-              21,
+              20,
               "加载的Spline不是BP_BasePathLineBullet_C类型",
             )
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Bullet", 21, "加载的Spline为空"));
+          Log_1.Log.Error("Bullet", 20, "加载的Spline为空"));
   }
   BulletLogicAction(t) {
     var e,
       i = this._7o;
     this.zie &&
       !this.a7o.NeedDestroy &&
-      ((e = this.zie.GetLocationAtTime(i, 1, !0)),
+      ((e = this.zie.D_GetLocationAtTime(i, 1, !0)),
       this.Hte.SetActorLocation(e),
       this.LogicController.IsForwardTangent &&
         ((e = this.zie.GetRotationAtTime(i, 1, !0)),
@@ -107,7 +111,7 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
           ((e = this.Hte.Owner),
           EffectSystem_1.EffectSystem.SpawnEffect(
             e,
-            e.GetTransform(),
+            e.D_GetTransform(),
             this.LogicController.EffectOnReach.ToAssetPathName(),
             "[BulletLogicCurveMovementController.BulletLogicAction]",
             new EffectContext_1.EffectContext(

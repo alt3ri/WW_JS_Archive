@@ -1,20 +1,20 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, i, s) {
-    var o,
+  function (e, t, i, o) {
+    var s,
       r = arguments.length,
       n =
         r < 3
           ? t
-          : null === s
-            ? (s = Object.getOwnPropertyDescriptor(t, i))
-            : s;
+          : null === o
+            ? (o = Object.getOwnPropertyDescriptor(t, i))
+            : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(e, t, i, s);
+      n = Reflect.decorate(e, t, i, o);
     else
       for (var h = e.length - 1; 0 <= h; h--)
-        (o = e[h]) && (n = (r < 3 ? o(n) : 3 < r ? o(t, i, n) : o(t, i)) || n);
+        (s = e[h]) && (n = (r < 3 ? s(n) : 3 < r ? s(t, i, n) : s(t, i)) || n);
     return 3 < r && n && Object.defineProperty(t, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -63,51 +63,56 @@ let UiModelLoadComponent = class UiModelLoadComponent extends UiModelComponentBa
     if (t) {
       var i = t.Num();
       if (0 < i) {
-        var s = new Array(i);
-        for (let e = 0; e < i; e++) s[e] = t.Get(e).ToAssetPathName();
-        return s;
+        var o = new Array(i);
+        for (let e = 0; e < i; e++) o[e] = t.Get(e).ToAssetPathName();
+        return o;
       }
     }
   }
-  LoadModelByModelId(e, t = !1, i) {
-    (this.UiModelDataComponent.ModelConfigId = e),
+  LoadModelByModelId(e, t = !1, i, o) {
+    e === this.UiModelDataComponent.ModelConfigId &&
+      Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Character", 43, "重复加载模型", ["modelId", e]),
+      (this.UiModelDataComponent.ModelConfigId = e),
       (this.LoadFinishCallBack = i),
-      this.LoadModel(t);
+      this.LoadModel(t, o);
   }
-  LoadModel(h) {
+  LoadModel(h, e, l = 0) {
     1 === this.UiModelDataComponent?.GetModelLoadState() &&
       (this.CancelLoad(), Log_1.Log.CheckWarn()) &&
-      Log_1.Log.Warn("Character", 44, "取消上一个模型加载"),
+      Log_1.Log.Warn("Character", 43, "取消上一个模型加载"),
       this.UiModelDataComponent?.ClearLoadingVisible(),
       h && this.UiModelDataComponent?.SetVisible(!1),
       this.UiModelDataComponent?.SetModelLoadState(1);
-    const l = this.GetMainMeshPath(),
-      a = this.GetAnimClassPath(),
-      d = this.GetChildMeshPathList();
-    var e = [];
+    const a = this.GetMainMeshPath(),
+      d = this.GetAnimClassPath(),
+      M = this.GetChildMeshPathList();
+    var t = [];
     if (
-      (l && !StringUtils_1.StringUtils.IsEmpty(l) && e.push(l),
-      a && !StringUtils_1.StringUtils.IsEmpty(a) && e.push(a),
-      d && 0 < d.length)
+      (a && !StringUtils_1.StringUtils.IsEmpty(a) && t.push(a),
+      d && !StringUtils_1.StringUtils.IsEmpty(d) && t.push(d),
+      M && 0 < M.length)
     )
-      for (const t of d) StringUtils_1.StringUtils.IsEmpty(t) || e.push(t);
+      for (const i of M) StringUtils_1.StringUtils.IsEmpty(i) || t.push(i);
+    if (e && 0 < e.length)
+      for (const o of e) StringUtils_1.StringUtils.IsEmpty(o) || t.push(o);
     this.LoadHandleId =
       UiModelResourcesManager_1.UiModelResourcesManager.LoadUiModelResources(
-        e,
+        t,
         (e, t) => {
           this.TNn(), (this.ResourceLoadCache = t);
           var i = UE.NewArray(UE.SkeletalMesh),
-            t = this.GetLoadedResource(l),
-            s = (i.Add(t), this.GetLoadedResource(a));
-          let o = void 0;
-          if (d) {
-            o = [];
-            for (const n of d) {
+            t = this.GetLoadedResource(a),
+            o = (i.Add(t), this.GetLoadedResource(d));
+          let s = void 0;
+          if (M) {
+            s = [];
+            for (const n of M) {
               var r = this.GetLoadedResource(n);
-              o.push(r), i.Add(r);
+              s.push(r), i.Add(r);
             }
           }
-          this.UiModelActorComponent?.ChangeMesh(t, s, o),
+          this.UiModelActorComponent?.ChangeMesh(t, o, s, l),
             h
               ? (this.ENn =
                   UiModelResourcesManager_1.UiModelResourcesManager.LoadMeshesComponentsBundleStreaming(
@@ -151,9 +156,9 @@ let UiModelLoadComponent = class UiModelLoadComponent extends UiModelComponentBa
           ((i = this.GetLoadedResource(i)), t.Add(i)),
         this.GetChildMeshPathList());
     if (i && 0 < i.length)
-      for (const s of i)
-        StringUtils_1.StringUtils.IsEmpty(s) ||
-          ((e = this.GetLoadedResource(s)), t.Add(e));
+      for (const o of i)
+        StringUtils_1.StringUtils.IsEmpty(o) ||
+          ((e = this.GetLoadedResource(o)), t.Add(e));
     return t;
   }
   TNn() {

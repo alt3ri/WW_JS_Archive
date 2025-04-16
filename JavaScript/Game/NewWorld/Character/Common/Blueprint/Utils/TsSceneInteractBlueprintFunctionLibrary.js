@@ -4,37 +4,38 @@ const UE = require("ue"),
   EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
   RewardController_1 = require("../../../../../Module/Reward/RewardController");
 class TsSceneInteractBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static GetSitDownState(t) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 26)?.GetSitDownState() ?? !1
+      EntitySystem_1.EntitySystem.GetComponent(t, 29)?.GetSitDownState() ?? !1
     );
   }
   static GetEnterSitDownIndex(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 26)?.EnterSitDownIndex;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 29)?.EnterSitDownIndex;
   }
   static GetLeaveSitDownIndex(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 26)?.LeaveSitDownIndex;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 29)?.LeaveSitDownIndex;
   }
   static PreLeaveSitDownAction(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 26)?.PreLeaveSitDownAction();
+    EntitySystem_1.EntitySystem.GetComponent(t, 29)?.PreLeaveSitDownAction();
   }
   static LeaveSitDownAction(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 26)?.LeaveSitDownAction();
+    EntitySystem_1.EntitySystem.GetComponent(t, 29)?.LeaveSitDownAction();
   }
   static GetGiantActor(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 26)?.Giant;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 29)?.Giant;
   }
   static EndCatapult(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 26)?.EndCatapult();
+    EntitySystem_1.EntitySystem.GetComponent(t, 29)?.EndCatapult();
   }
   static EndBounce(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 26)?.EndBounce();
+    EntitySystem_1.EntitySystem.GetComponent(t, 29)?.EndBounce();
   }
   static IsAiDriver(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 40)?.IsAiDriver ?? !1;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 46)?.IsAiDriver ?? !1;
   }
   static IsDropItem(t) {
-    return void 0 !== EntitySystem_1.EntitySystem.GetComponent(t, 136);
+    return void 0 !== EntitySystem_1.EntitySystem.GetComponent(t, 147);
   }
   static PickUpDropItem(t, e) {
     e = EntitySystem_1.EntitySystem.Get(e).GetComponent(0);
@@ -44,7 +45,7 @@ class TsSceneInteractBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrar
     );
   }
   static InteractSceneItem(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(e, 182)?.ExecuteInteractFromVision(
+    EntitySystem_1.EntitySystem.GetComponent(e, 195)?.ExecuteInteractFromVision(
       t,
     );
   }

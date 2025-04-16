@@ -37,11 +37,10 @@ const cpp_1 = require("cpp"),
   QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   GameBudgetInterfaceController_1 = require("../../../../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
-  Net_1 = require("../../../../../Core/Net/Net"),
+  JsModelManager_1 = require("../../../../../Core/Model/JsModelManager"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   CollisionUtils_1 = require("../../../../../Core/Utils/CollisionUtils"),
-  DataTableUtil_1 = require("../../../../../Core/Utils/DataTableUtil"),
   FNameUtil_1 = require("../../../../../Core/Utils/FNameUtil"),
   GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils"),
   Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
@@ -59,12 +58,16 @@ const cpp_1 = require("cpp"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
   CombatLog_1 = require("../../../../Utils/CombatLog"),
+  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
+  AoiController_1 = require("../../../../World/Controller/AoiController"),
   BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
   AimPartUtils_1 = require("../../../Common/AimPartUtils"),
   BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent"),
+  RoleTriggerController_1 = require("../../Role/RoleTriggerController"),
   FunctionRequestProxy_1 = require("./Actor/FunctionRequestProxy"),
   BaseCharacterComponent_1 = require("./BaseCharacterComponent"),
   CharacterLockOnComponent_1 = require("./LockOn/CharacterLockOnComponent"),
+  CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
   INIT_LOCATION_KEY = "InitLocation",
   MAX_NO_ROTATER_ANGLE = 10,
   PHYSIC_STREAMING_CHECK_PERIOD = 500,
@@ -135,7 +138,6 @@ let CharacterActorComponent =
         (this.OverrideTurnSpeed = 0),
         (this.DisableKey = void 0),
         (this.W2r = Vector_1.Vector.Create(0, 0, 0)),
-        (this.K2r = -1),
         (this.IsRoleAndCtrlByMe = !1),
         (this.IsSummonsAndCtrlByMe = !1),
         (this.Q2r = Vector_1.Vector.Create(0, 0, 0)),
@@ -154,7 +156,8 @@ let CharacterActorComponent =
         (this.IsPartHitInternal = !1),
         (this.eFr = !1),
         (this.NeedFixBornLocation = !0),
-        (this.tFr = new Map()),
+        (this.ReplaceEffectMap = new Map()),
+        (this.ReplaceMontageMap = new Map()),
         (this.v9e = () => {
           !this.CreatureDataInternal ||
             this.CreatureDataInternal.GetRemoveState() ||
@@ -188,6 +191,9 @@ let CharacterActorComponent =
         (this.hFr = void 0),
         (this.DisableMeshCollisionObjectTypeHandle = void 0),
         (this.MeshHandleForCollisionType = void 0),
+        (this._L1 = () => {
+          this.uL1();
+        }),
         (this.FNn = (t) => {
           1 === t && this.kNn
             ? (this.Entity.UnregisterFromGameBudgetController(),
@@ -350,39 +356,36 @@ let CharacterActorComponent =
         !!this.InitCreatureData()
       );
     }
+    static m6(t) {
+      this.d6 || (this.d6 = new Map());
+      let e = this.d6.get(t);
+      return e || ((e = Stats_1.Stat.Create(t)), this.d6.set(t, e)), e;
+    }
     OnInit() {
-      super.OnInit(),
-        (this.EntityType = this.CreatureData.GetEntityType()),
-        (this.SubEntityType = this.CreatureData.GetSubEntityType());
-      let t = 0;
-      var e = void 0;
-      if (this.EntityType === Protocol_1.Aki.Protocol.kks.Proto_Player)
-        t = this.CreatureDataInternal.GetRoleConfig().MeshId;
-      else {
-        var i = this.CreatureData.GetPbModelConfig();
-        if (!i)
-          return (
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Character",
-                3,
-                "[CharacterActorComponent.OnInit] 加载actor失败，无法找到pbModelConfig",
-                [
-                  "CreatureDataId",
-                  this.CreatureDataInternal.GetCreatureDataId(),
-                ],
-                ["ModelId", t],
-                ["PbDataId", this.CreatureData.GetPbDataId()],
-              ),
-            !1
-          );
-        t = i.ModelId;
-      }
-      if (
-        ((e = this.InitActorNew(t)),
-        this.lFr(),
-        !e || !UE.KismetSystemLibrary.IsValid(e))
-      )
+      var t = Stats_1.Stat.Enable
+          ? CharacterActorComponent_1.m6("CharacterActorComponent.SuperInit")
+          : void 0,
+        t =
+          (t?.Start(),
+          super.OnInit(),
+          t?.Stop(),
+          (this.EntityType = this.CreatureData.GetEntityType()),
+          (this.SubEntityType = this.CreatureData.GetSubEntityType()),
+          Stats_1.Stat.Enable
+            ? CharacterActorComponent_1.m6(
+                "CharacterActorComponent.GetModelConfig",
+              )
+            : void 0),
+        e = (t?.Start(), this.CreatureDataInternal.GetModelId()),
+        t =
+          (t?.Stop(),
+          Stats_1.Stat.Enable
+            ? CharacterActorComponent_1.m6(
+                "CharacterActorComponent.InitActorNew",
+              )
+            : void 0),
+        i = (t?.Start(), this.InitActorNew(e));
+      if ((t?.Stop(), !i || !UE.KismetSystemLibrary.IsValid(i)))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -390,36 +393,49 @@ let CharacterActorComponent =
               3,
               "[CharacterActorComponent.OnInit] 加载actor失败。",
               ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
-              ["ModelId", t],
+              ["ModelId", e],
               ["PbDataId", this.CreatureData.GetPbDataId()],
             ),
           !1
         );
-      if (!e.IsA(UE.TsBaseCharacter_C.StaticClass()))
+      if (!i.IsA(UE.TsBaseCharacter_C.StaticClass()))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
               6,
               "[CharacterActorComponent.OnInit] Actor不是TsBaseCharacter",
-              ["Name", e.GetName()],
-              ["Class", e.GetClass().GetName()],
+              ["Name", i.GetName()],
+              ["Class", i.GetClass().GetName()],
               ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
-              ["ModelId", t],
+              ["ModelId", e],
               ["PbDataId", this.CreatureData.GetPbDataId()],
             ),
           !1
         );
-      var s = e,
-        r =
+      var s = i,
+        t =
           (s.SetPrimitiveBlueprintTypeName(
             new UE.FName(this.CreatureDataInternal.EntityPbModelConfigId),
           ),
           this.SetCamp(s),
           (s.CharacterActorComponent = this),
-          (s.EntityId = this.Entity.Id),
-          this.InitDefaultController(e),
-          (this.ActorInternal = e),
+          s.SetEntityId(this.Entity.Id),
+          Stats_1.Stat.Enable
+            ? CharacterActorComponent_1.m6(
+                "CharacterActorComponent.InitDefaultController",
+              )
+            : void 0),
+        t =
+          (t?.Start(),
+          this.InitDefaultController(i),
+          t?.Stop(),
+          Stats_1.Stat.Enable
+            ? CharacterActorComponent_1.m6("CharacterActorComponent.InitOther")
+            : void 0),
+        r =
+          (t?.Start(),
+          (this.ActorInternal = i),
           this.ActorInternal.OnDestroyed.Add(this.v9e),
           (this.IsRoleAndCtrlByMe = !1),
           s.Mesh);
@@ -444,7 +460,7 @@ let CharacterActorComponent =
         case Protocol_1.Aki.Protocol.kks.Proto_Monster:
           (s.RenderType = 2),
             ModelManager_1.ModelManager.CreatureModel.GetPlayerId() ===
-              this.CreatureDataInternal.GetPlayerId() &&
+              this.CreatureDataInternal.GetSummonerPlayerId() &&
               (this.IsSummonsAndCtrlByMe = !0),
             !r ||
             (0 !== this.CreatureData.GetBaseInfo()?.Category.MonsterMatchType &&
@@ -455,14 +471,14 @@ let CharacterActorComponent =
                 (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Character",
-                    25,
+                    24,
                     "[CharacterActorComponent.OnInit] Monster Actor.Mesh不是SkeletalMeshComponent",
-                    ["Name", e.GetName()],
+                    ["Name", i.GetName()],
                     [
                       "CreatureDataId",
                       this.CreatureDataInternal.GetCreatureDataId(),
                     ],
-                    ["ModelId", t],
+                    ["ModelId", e],
                   ))
               : (r.SetEnableOverrideSkeletalMeshScreenSizeCullRatio(!0),
                 r.SetSkeletalMeshScreenSizeCullRatio(0.004));
@@ -470,7 +486,7 @@ let CharacterActorComponent =
         case Protocol_1.Aki.Protocol.kks.Proto_Vision:
           (s.RenderType = 4),
             ModelManager_1.ModelManager.CreatureModel.GetPlayerId() ===
-              this.CreatureDataInternal.GetPlayerId() &&
+              this.CreatureDataInternal.GetSummonerPlayerId() &&
               (this.IsSummonsAndCtrlByMe = !0);
           break;
         case Protocol_1.Aki.Protocol.kks.Proto_Animal:
@@ -480,14 +496,14 @@ let CharacterActorComponent =
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Character",
-                25,
+                24,
                 "[CharacterActorComponent.OnInit] Animal Actor.Mesh不是SkeletalMeshComponent",
-                ["Name", e.GetName()],
+                ["Name", i.GetName()],
                 [
                   "CreatureDataId",
                   this.CreatureDataInternal.GetCreatureDataId(),
                 ],
-                ["ModelId", t],
+                ["ModelId", e],
               );
           break;
         default:
@@ -499,45 +515,32 @@ let CharacterActorComponent =
           "[CharacterActorComponent.OnInit] 默认关闭碰撞",
         ),
         this.SetTickEnable(!1, "[CharacterActorComponent.OnInit] 默认关闭Tick"),
+        this.Actor.CharacterMovement?.SetKuroOnlyTickOutside(!0),
         (s.FightManager = GlobalData_1.GlobalData.BpFightManager),
         s.CharRenderingComponent.Init(s.RenderType),
         3 === s.RenderType &&
           s.CharRenderingComponent.UpdateNpcDitherComponent(),
         (s.AutoPossessAI = 3),
         this.SetInputFacing(this.ActorForwardProxy);
-      i = this.CreatureDataInternal.GetInitLocation();
+      var a = this.CreatureDataInternal.GetInitLocation();
       return (
-        i ? this.SetInitLocation(i) : this.SetInitLocation(this.ActorLocation),
+        a ? this.SetInitLocation(a) : this.SetInitLocation(this.ActorLocation),
         this.InitSizeInternal(),
+        t?.Stop(),
         !0
       );
     }
-    lFr() {
-      var t = this.CreatureDataInternal?.GetModelConfig();
-      if (t) {
-        t = t.特效替换表.ToAssetPathName();
-        if ("" !== t && "None" !== t) {
-          var e = ResourceSystem_1.ResourceSystem.Load(t, UE.DataTable);
-          if (e) {
-            var i,
-              t = new Array();
-            DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(
-              e,
-              t,
-            );
-            for (const s of t)
-              s &&
-                (i = DataTableUtil_1.DataTableUtil.GetDataTableRow(e, s)) &&
-                this.tFr.set(
-                  i.OldEffect.ToAssetPathName(),
-                  i.NewEffect.ToAssetPathName(),
-                );
-          }
-        }
-      }
-    }
     GetReplaceEffect(t) {
-      return this.tFr.get(t);
+      return this.ReplaceEffectMap.get(t);
+    }
+    SetReplaceEffect(t) {
+      this.ReplaceEffectMap = t;
+    }
+    GetReplaceMontage(t) {
+      return this.ReplaceMontageMap.get(t);
+    }
+    SetReplaceMontage(t) {
+      this.ReplaceMontageMap = t;
     }
     InitDefaultController(t) {
       (this.Oea = t.GetController()),
@@ -551,7 +554,7 @@ let CharacterActorComponent =
                 (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Character",
-                    58,
+                    57,
                     "Character初始化的默认Controller基类为非AiController",
                     [
                       "CreatureData",
@@ -568,7 +571,7 @@ let CharacterActorComponent =
                 (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Character",
-                    58,
+                    57,
                     "Character初始化的默认Controller基类为PlayerController,下场的人将会导致Movement不执行",
                     [
                       "CreatureData",
@@ -602,7 +605,7 @@ let CharacterActorComponent =
           this.CachedActorRotation.Quaternion(this.CachedActorQuat),
           e)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Entity", 31, "SetActorRotation NaN"),
+            Log_1.Log.Error("Entity", 30, "SetActorRotation NaN"),
           !1);
     }
     SetActorRotationWithPriority(t, e, i, s = !1, r = !1) {
@@ -615,7 +618,7 @@ let CharacterActorComponent =
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Entity",
-              58,
+              57,
               "[CharacterActorComponent.SetActorRotationWithPriority] 修改Rotation",
               ["EntityId", this.Entity.Id],
               ["module", e],
@@ -718,7 +721,7 @@ let CharacterActorComponent =
           this.OnTeleport(),
           o)
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Entity", 31, "SetActorLocationAndRotation NaN"),
+            Log_1.Log.Error("Entity", 30, "SetActorLocationAndRotation NaN"),
           !1);
     }
     SetActorTransform(t, e, i = !0, s = void 0) {
@@ -759,6 +762,7 @@ let CharacterActorComponent =
         (this.IsChangingLocation = !0),
         (t = this.Actor.SetActorTransformExceptSkelMesh(t, i, void 0, !0, !0)),
         (this.IsChangingLocation = !1),
+        this.CheckIsForbidSettingLocAndRot(!0, !0),
         this.DebugMovementComp &&
           this.DebugMovementComp.MarkDebugRecord(
             e + ".SetActorTransformExceptMesh",
@@ -782,6 +786,7 @@ let CharacterActorComponent =
           !0,
         )),
         (this.IsChangingLocation = !1),
+        this.CheckIsForbidSettingLocAndRot(!0, !0),
         this.DebugMovementComp &&
           this.DebugMovementComp.MarkDebugRecord(
             i + ".SetActorLocationAndRotationExceptMesh",
@@ -794,25 +799,40 @@ let CharacterActorComponent =
     KuroMoveAlongFloor(t, e, i = "unknown") {
       this.Actor.CharacterMovement.KuroMoveAlongFloor(t, e),
         this.ResetLocationCachedTime(),
+        this.CheckIsForbidSettingLocAndRot(!0),
         this.DebugMovementComp &&
           this.DebugMovementComp.MarkDebugRecord(i + ".KuroMoveAlongFloor", 1);
     }
     AddActorWorldOffset(t, e = "unknown", i = !0) {
       i
-        ? (this.DebugMovementComp &&
+        ? (this.CheckIsForbidSettingLocAndRot(!0),
+          this.DebugMovementComp &&
             this.DebugMovementComp.MarkDebugRecord(
               e + ".AddActorWorldOffset",
               1,
             ),
-          this.Actor.CharacterMovement.MoveAdjust(t))
+          this.Actor.CharacterMovement.D_MoveAdjust(t))
+        : super.AddActorWorldOffset(t, e, i);
+    }
+    AddActorWorldOffsetWithReset(t, e = "unknown", i = !0) {
+      i
+        ? (this.CheckIsForbidSettingLocAndRot(!0),
+          this.DebugMovementComp &&
+            this.DebugMovementComp.MarkDebugRecord(
+              e + ".AddActorWorldOffsetWithReset",
+              1,
+            ),
+          this.Actor.CharacterMovement.D_MoveAdjust(t),
+          this.ResetLocationCachedTime())
         : super.AddActorWorldOffset(t, e, i);
     }
     OnStart() {
-      super.OnStart();
+      super.OnStart(),
+        AoiController_1.AoiController.AddMonsterSizeTag(this.Entity);
       var t,
         e = this.Actor;
       return (
-        (this.DebugMovementComp = this.Entity.GetComponent(27)),
+        (this.DebugMovementComp = this.Entity.GetComponent(30)),
         e
           ? (GlobalData_1.GlobalData.BpFightManager.添加Debug的对象(this.Actor),
             this.uFr(),
@@ -855,9 +875,10 @@ let CharacterActorComponent =
       );
     }
     OnActivate() {
-      this.SetActorVisible(!0, "[CharacterActorComponent.OnActivate] Visible"),
+      var t = this.Entity.GetComponent(0).ActorVisible;
+      this.SetActorVisible(t, "[CharacterActorComponent.OnActivate] Visible"),
         this.SetCollisionEnable(
-          !0,
+          t,
           "[CharacterActorComponent.OnActivate] Visible",
         ),
         this.SetTickEnable(!0, "[CharacterActorComponent.OnActivate] Visible"),
@@ -867,6 +888,7 @@ let CharacterActorComponent =
           this.CreatureDataInternal,
           this.ActorInternal,
         ),
+        this.ClearInput(),
         (this.Entity.IsEncloseSpace =
           ControllerHolder_1.ControllerHolder.WorldController.IsEncloseSpace(
             this.CreatureData.GetPbDataId(),
@@ -877,14 +899,24 @@ let CharacterActorComponent =
           )),
         this.Entity.IsEncloseSpace
           ? (3 ===
-            ModelManager_1.ModelManager.WorldModel?.CurEnvironmentInfo.CaveMode
+            ModelManager_1.ModelManager.WorldModel?.CurEnvironmentInfo.jNn
               ? this.VNn(this.ActorLocation)
               : this.HNn(),
             EventSystem_1.EventSystem.Add(
               EventDefine_1.EEventName.OnEncloseSpaceTypeChange,
               this.FNn,
             ))
-          : this.HNn();
+          : this.HNn(),
+        this.CreatureData.PbHackedByEntities &&
+          ControllerHolder_1.ControllerHolder.FollowShooterHackController.AddRelationship(
+            this.CreatureData.PbHackedByEntities,
+            this.CreatureData.GetCreatureDataId(),
+          ),
+        EventSystem_1.EventSystem.AddWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharBasePlatformChanged,
+          this._L1,
+        );
     }
     OnTick(t) {
       super.OnTick(t),
@@ -918,6 +950,11 @@ let CharacterActorComponent =
         (this.IsInSequenceBinding = !1),
         CameraController_1.CameraController.UnloadCharacterCameraConfig(
           this.Actor.DtCameraConfig,
+        ),
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharBasePlatformChanged,
+          this._L1,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.FixBornLocation,
@@ -959,7 +996,7 @@ let CharacterActorComponent =
       this.OnSetActorActive(!1, t);
     }
     OnChangeTimeDilation(t) {
-      var e = this.Entity.GetComponent(110)?.CurrentTimeScale ?? 1;
+      var e = this.Entity.GetComponent(120)?.CurrentTimeScale ?? 1;
       this.ActorInternal.CustomTimeDilation = t * e;
     }
     dFr() {
@@ -972,14 +1009,9 @@ let CharacterActorComponent =
                 this.Entity.GameBudgetManagedToken,
                 this.ActorInternal,
               ),
-              this.Entity.GetComponent(161)?.IsInFighting &&
-                cpp_1.FKuroGameBudgetAllocatorInterface.MarkActorInFighting(
-                  this.Entity.GameBudgetConfig.GroupName,
-                  this.Entity.GameBudgetManagedToken,
-                  !0,
-                ))
+              this.uL1())
             : (this.Entity.RegisterToGameBudgetController(this.ActorInternal),
-              this.Entity.GetComponent(109)?.RegisterPerceptionEvent()),
+              this.Entity.GetComponent(119)?.RegisterPerceptionEvent()),
           this.EntityType === Protocol_1.Aki.Protocol.kks.Proto_Player ||
           this.EntityType === Protocol_1.Aki.Protocol.kks.Proto_Vision ||
           this.IsSummonsAndCtrlByMe
@@ -996,19 +1028,17 @@ let CharacterActorComponent =
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            25,
+            24,
             "[CharacterActorComponent.OnActivate] 没有找到Actor",
             ["EntityId", this.Entity.Id],
             ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
             ["PlayerId", this.CreatureDataInternal.GetPlayerId()],
             ["PbDataId", this.CreatureData.GetPbDataId()],
-          );
-    }
-    ResetAllCachedTime() {
-      super.ResetAllCachedTime(), (this.K2r = -1);
-    }
-    ResetCachedVelocityTime() {
-      this.K2r = 0;
+          ),
+        JsModelManager_1.JsModelManager.UpdateEntityActor(
+          this.Entity.Id,
+          this.ActorInternal,
+        );
     }
     OnSetActorActive(e, t) {
       if (
@@ -1075,30 +1105,69 @@ let CharacterActorComponent =
       i = void 0,
       s = !1,
       r = !1,
+      o = !0,
     ) {
-      i = this.FixActorLocation(exports.FIX_SPAWN_TRACE_HEIGHT, e, i, t, r);
-      return (
-        !!i[0] &&
-        (s
-          ? this.TeleportTo(
-              i[1].ToUeVector(),
-              this.ActorRotationProxy.ToUeRotator(),
-              t,
-            )
-          : this.SetActorLocation(i[1].ToUeVector(), t, !1),
-        e &&
-          Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Entity",
-            3,
-            "[CharacterActorComponent.FixBornLocation] 实体地面修正:后",
-            ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
-            ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
-            ["K2_GetActorLocation", this.Actor.K2_GetActorLocation()],
-            ["Context", t],
-          ),
-        !0)
-      );
+      let h = !1;
+      switch (this.Actor.CharacterMovement.MovementMode) {
+        case 1:
+        case 2:
+        case 0:
+        case 3:
+          break;
+        case 6:
+          this.Actor.CharacterMovement.CustomMovementMode !==
+            CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SLIDE &&
+            this.Actor.CharacterMovement.CustomMovementMode !==
+              CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SKI &&
+            this.Actor.CharacterMovement.CustomMovementMode !==
+              CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_ROLL &&
+            (h = !0);
+          break;
+        default:
+          h = !0;
+      }
+      return h
+        ? (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Entity",
+              3,
+              "[CharacterActorComponent.FixBornLocation] 实体地面修正:无需修正",
+              ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
+              ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
+              ["MovementMode", this.Actor.CharacterMovement.MovementMode],
+              ["Context", t],
+            ),
+          !1)
+        : !!(i = this.FixActorLocation(
+            exports.FIX_SPAWN_TRACE_HEIGHT,
+            e,
+            i,
+            t,
+            o,
+            r,
+          ))[0] &&
+            (s
+              ? this.TeleportTo(
+                  i[1].ToUeVector(),
+                  this.ActorRotationProxy.ToUeRotator(),
+                  t,
+                )
+              : this.SetActorLocation(i[1].ToUeVector(), t, !1),
+            e &&
+              Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Entity",
+                3,
+                "[CharacterActorComponent.FixBornLocation] 实体地面修正:后",
+                [
+                  "CreatureDataId",
+                  this.CreatureDataInternal.GetCreatureDataId(),
+                ],
+                ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
+                ["K2_GetActorLocation", this.Actor.D_K2_GetActorLocation()],
+                ["Context", t],
+              ),
+            !0);
     }
     FixSwitchLocation(t = "unknown.FixSwitchLocation", e = !0, i = !1) {
       i = this.FixActorLocation(
@@ -1120,7 +1189,7 @@ let CharacterActorComponent =
             "[CharacterActorComponent.FixSwitchLocation] 实体地面修正:后",
             ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
             ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
-            ["K2_GetActorLocation", this.Actor.K2_GetActorLocation()],
+            ["K2_GetActorLocation", this.Actor.D_K2_GetActorLocation()],
             ["Context", t],
           ),
         !0)
@@ -1131,7 +1200,7 @@ let CharacterActorComponent =
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            58,
+            57,
             "[CharacterActorComponent.RestoreDefaultController] 没有DefaultController,将导致这个实体部分功能失效比如移动,查看OnStart 有无正常初始化DefaultController",
             ["Id", this.Entity.Id],
           )),
@@ -1139,21 +1208,43 @@ let CharacterActorComponent =
     }
     get ActorVelocityProxy() {
       return (
-        this.K2r < Time_1.Time.Frame &&
-          ((this.K2r = Time_1.Time.Frame),
-          this.W2r.DeepCopy(this.Actor.GetVelocity())),
+        this.CachedVelocityTime < Time_1.Time.Frame &&
+          ((this.CachedVelocityTime = Time_1.Time.Frame),
+          this.W2r.DeepCopy(this.Actor.D_GetVelocity())),
         this.W2r
       );
+    }
+    SetActorVelocity(t) {
+      var e;
+      this.Actor.RootComponent &&
+        (MathUtils_1.MathUtils.IsValidVector(t)
+          ? ((e = t.ToUeVectorOld()),
+            (this.Actor.RootComponent.ComponentVelocity = e),
+            this.Actor.CharacterMovement &&
+              (this.Actor.CharacterMovement.Velocity = e),
+            this.W2r.DeepCopy(t),
+            GravityUtils_1.GravityUtils.GetZnInGravityForActor(this, t) <
+              -1e4 &&
+              Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Character",
+                6,
+                "1117317 Bug追踪，设置速度",
+                ["Name", this.Actor.GetName()],
+                ["Velocity", t],
+              ))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Movement", 6, "Set Invalid Velocity", ["v", t]));
     }
     get IsActorMoveInfoCache() {
       return !(
         this.CachedLocationTime < Time_1.Time.Frame ||
         this.CachedRotationTime < Time_1.Time.Frame ||
-        this.K2r < Time_1.Time.Frame
+        this.CachedVelocityTime < Time_1.Time.Frame
       );
     }
     get ActorVelocity() {
-      return this.ActorVelocityProxy.ToUeVector();
+      return this.ActorVelocityProxy.ToUeVectorOld();
     }
     get DefaultRadius() {
       return this.DefaultRadiusInternal;
@@ -1170,60 +1261,126 @@ let CharacterActorComponent =
     get FloorLocation() {
       return (
         this.Q2r.FromUeVector(this.ActorLocationProxy),
-        (this.Q2r.Z -= this.ScaledHalfHeight),
+        GravityUtils_1.GravityUtils.AddZnInGravityForActor(
+          this,
+          this.Q2r,
+          -this.ScaledHalfHeight,
+        ),
         this.Q2r
       );
     }
-    SetRadiusAndHalfHeight(t, e, i = !0) {
+    SetRadiusAndHalfHeight(t, e, i = !0, s = !1) {
+      var r = this.HalfHeightInternal,
+        o = this.Radius,
+        h = this.Actor.CharacterMovement?.MovementMode;
       (this.X2r = !1),
         (this.RadiusInternal = t),
         (this.HalfHeightInternal = e),
         this.Actor.CapsuleComponent.SetCapsuleRadius(t, i),
-        this.Actor.CapsuleComponent.SetCapsuleHalfHeight(e, i);
-    }
-    ResetCapsuleRadiusAndHeight() {
-      this.SetRadiusAndHalfHeight(
-        this.DefaultRadiusInternal,
-        this.DefaultHalfHeightInternal,
-        !0,
-      );
-      var t = this.ActorLocationProxy,
-        e = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
-        i =
-          (e.Set(
-            t.X,
-            t.Y,
-            t.Z + Math.max(0, this.ScaledHalfHeight - this.ScaledRadius),
-          ),
-          ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
-      i.Set(
-        t.X,
-        t.Y,
-        t.Z - Math.max(0, this.ScaledHalfHeight - this.ScaledRadius),
-      ),
-        this.FixBornLocationInternal(
+        this.Actor.CapsuleComponent.SetCapsuleHalfHeight(e, i),
+        RoleTriggerController_1.RoleTriggerController.UpdateRoleTriggerHalfHeightAndRadius(
           t,
           e,
           i,
-          !0,
-          !0,
-          "CharacterActorComponent.ResetCapsuleRadiusAndHeight",
         ),
-        (this.X2r = !0);
+        !s ||
+          (r === e && o === t) ||
+          (1 !== h && 2 !== h && 0 !== h) ||
+          ((i = Math.min(0, e - r)),
+          (s = this.FixActorLocation(i)) &&
+            s[0] &&
+            (this.SetActorLocation(
+              s[1].ToUeVector(),
+              "修改胶囊体后地面修正",
+              !1,
+            ),
+            Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info(
+              "Entity",
+              67,
+              "[CharacterActorComponent.SetRadiusAndHalfHeight] 地面修正:后",
+              ["K2_GetActorLocation", this.Actor.D_K2_GetActorLocation()],
+            ));
     }
-    ChangeMeshAnim(t, e) {
-      TimerSystem_1.TimerSystem.Next(() => {
-        ControllerHolder_1.ControllerHolder.CreatureController.ChangeMeshAnim(
-          this.Actor.Mesh,
-          t,
+    ResetCapsuleRadiusAndHeight(e = !1) {
+      if (
+        (this.SetRadiusAndHalfHeight(
+          this.DefaultRadiusInternal,
+          this.DefaultHalfHeightInternal,
+          !0,
           e,
         ),
-          this.Actor.CharRenderingComponent.Init(this.Actor.RenderType),
+        (this.X2r = !0),
+        !e)
+      ) {
+        let t = !1;
+        switch (this.Actor.CharacterMovement.MovementMode) {
+          case 1:
+          case 2:
+          case 0:
+          case 3:
+            break;
+          case 6:
+            this.Actor.CharacterMovement.CustomMovementMode !==
+              CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SLIDE &&
+              this.Actor.CharacterMovement.CustomMovementMode !==
+                CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SKI &&
+              this.Actor.CharacterMovement.CustomMovementMode !==
+                CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_ROLL &&
+              (t = !0);
+            break;
+          default:
+            t = !0;
+        }
+        var i, s;
+        t
+          ? Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Entity",
+              3,
+              "[CharacterActorComponent.FixBornLocation] 实体地面修正:无需修正",
+              ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
+              ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
+              ["MovementMode", this.Actor.CharacterMovement.MovementMode],
+            )
+          : ((e = this.ActorLocationProxy),
+            (i =
+              ModelManager_1.ModelManager.TraceElementModel
+                .CommonStartLocation).Set(
+              e.X,
+              e.Y,
+              e.Z + Math.max(0, this.ScaledHalfHeight - this.ScaledRadius),
+            ),
+            (s =
+              ModelManager_1.ModelManager.TraceElementModel
+                .CommonEndLocation).Set(
+              e.X,
+              e.Y,
+              e.Z - Math.max(0, this.ScaledHalfHeight - this.ScaledRadius),
+            ),
+            this.FixBornLocationInternal(
+              e,
+              i,
+              s,
+              !0,
+              !0,
+              "CharacterActorComponent.ResetCapsuleRadiusAndHeight",
+            ));
+      }
+    }
+    ChangeMeshAnim(t, e) {
+      ControllerHolder_1.ControllerHolder.CreatureController.ChangeMeshAnim(
+        this.Actor.Mesh,
+        t,
+        e,
+      ),
+        this.Actor.CharRenderingComponent.Init(this.Actor.RenderType),
+        TimerSystem_1.TimerSystem.Next(() => {
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharChangeMeshAnim,
           );
-      });
+        });
     }
     IsWorldOwner() {
       return (
@@ -1232,13 +1389,43 @@ let CharacterActorComponent =
           this.CreatureDataInternal.GetPlayerId()
       );
     }
-    ClearInput() {
-      var t;
+    IsMyRoleAndCtrlByMe() {
+      return (
+        !!this.CreatureDataInternal &&
+        this.IsRoleAndCtrlByMe &&
+        !this.CreatureDataInternal.IsAutoRole()
+      );
+    }
+    IsMySummonsAndCtrlByMe() {
+      if (this.IsSummonsAndCtrlByMe) {
+        var t = this.CreatureDataInternal?.GetSummonerId();
+        if (t && 0 !== t) {
+          t =
+            ModelManager_1.ModelManager.CreatureModel?.GetEntity(
+              t,
+            )?.Entity?.GetComponent(3);
+          if (t) return t.IsMyRoleAndCtrlByMe();
+        }
+      }
+      return !1;
+    }
+    GetSummonerId() {
+      var t = this.CreatureDataInternal?.GetSummonerId();
+      if (t && 0 !== t) {
+        t = ModelManager_1.ModelManager.CreatureModel?.GetEntity(t)?.Entity;
+        if (t) return t.Id;
+      }
+      return 0;
+    }
+    ClearInput(t = !1) {
+      var e;
       this.SetInputDirect(Vector_1.Vector.ZeroVector),
         this.SetInputFacing(this.ActorForwardProxy),
         this.SetOverrideTurnSpeed(0),
         Info_1.Info.AxisInputOptimize &&
-          ((t = this.Entity.GetComponent(54)) && t.ClearInputAxis(!1),
+          ((e = this.Entity.GetComponent(61)) &&
+            (e.ClearInputAxis(!1, t),
+            e.InterruptAutoMoving("ActorComp.ClearInput")),
           ModelManager_1.ModelManager.InputModel?.TemporaryClearAxisValues());
     }
     cFr() {
@@ -1250,8 +1437,8 @@ let CharacterActorComponent =
           ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(
             e,
           )?.PartHitEffect.ToAssetPathName();
-      let l = void 0 !== _ && 0 < _.length && "None" !== _;
-      l
+      let C = void 0 !== _ && 0 < _.length && "None" !== _;
+      C
         ? ResourceSystem_1.ResourceSystem.LoadAsync(
             _,
             UE.BP_PartHitEffect_C,
@@ -1260,37 +1447,47 @@ let CharacterActorComponent =
                 if (
                   (CharacterActorComponent_1.pFr.Start(),
                   (this.sFr = t),
-                  (l = this.sFr?.IsValid() ?? !1) && this.Actor)
+                  (C = this.sFr?.IsValid() ?? !1) && this.Actor)
                 ) {
                   let e = this.sFr.PartCollision.Num();
                   for (let t = 0; t < e; t++) {
                     var i = this.sFr.PartCollision.Get(t);
                     this.rFr.set(i.BoneName, i);
                   }
-                  (l = !1), (e = this.Actor.Mesh.GetNumChildrenComponents());
+                  (C = !1), (e = this.Actor.Mesh.GetNumChildrenComponents());
                   for (let t = 0; t < e; t++) {
-                    var s = this.Actor.Mesh.GetChildComponent(t),
-                      r = s.GetName(),
-                      o = this.rFr.get(r);
-                    this.nFr.set(r, s),
-                      o
-                        ? ((l = !0),
-                          (s.bGenerateOverlapEvents = !0),
-                          this.SetPartPassiveCollision(s, !1),
-                          this.SetPartCollisionSwitch(
-                            r,
-                            o.IsBlockPawn,
-                            o.IsBulletDetect,
-                            o.IsBlockCamera,
-                          ))
-                        : Log_1.Log.CheckDebug() &&
-                          Log_1.Log.Debug(
-                            "Character",
-                            21,
-                            "部位缺少配置",
-                            ["PartHitEffect路径", _],
-                            ["Component Name", r],
-                          );
+                    var s,
+                      r = this.Actor.Mesh.GetChildComponent(t),
+                      o = r.GetName();
+                    r.IsA(UE.CapsuleComponent.StaticClass()) ||
+                    r.IsA(UE.BoxComponent.StaticClass())
+                      ? ((s = this.rFr.get(o)),
+                        this.nFr.set(o, r),
+                        s
+                          ? ((C = !0),
+                            (r.bGenerateOverlapEvents = !0),
+                            this.SetPartPassiveCollision(r, !1),
+                            this.SetPartCollisionSwitch(
+                              o,
+                              s.IsBlockPawn,
+                              s.IsBulletDetect,
+                              s.IsBlockCamera,
+                            ))
+                          : Log_1.Log.CheckDebug() &&
+                            Log_1.Log.Debug(
+                              "Character",
+                              20,
+                              "部位缺少配置",
+                              ["PartHitEffect路径", _],
+                              ["Component Name", o],
+                            ))
+                      : Log_1.Log.CheckDebug() &&
+                        Log_1.Log.Debug(
+                          "Character",
+                          20,
+                          "部位组件不是碰撞体类型",
+                          ["Component Name", o],
+                        );
                   }
                   (e = this.sFr.AimParts.Num()), this.AimParts.clear();
                   for (let t = 0; t < e; ++t) {
@@ -1320,18 +1517,18 @@ let CharacterActorComponent =
                   Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Character",
-                      21,
+                      20,
                       "没配置PartHit",
                       ["BP路径", e],
                       ["Actor是否为空", void 0 === this.Actor],
                     );
                 (this.Actor.CapsuleComponent.CanCharacterStepUpOn = 0),
-                  this.gFr(l),
+                  this.gFr(C),
                   CharacterActorComponent_1.pFr.Stop();
               }
             },
           )
-        : ((this.Actor.CapsuleComponent.CanCharacterStepUpOn = 0), this.gFr(l));
+        : ((this.Actor.CapsuleComponent.CanCharacterStepUpOn = 0), this.gFr(C));
     }
     GetBoneLocation(t) {
       var e = this.nFr.get(t);
@@ -1340,12 +1537,12 @@ let CharacterActorComponent =
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
-              21,
+              20,
               "GetBoneLocation",
               ["Character", this.Actor.GetName()],
               ["Bone", t],
             )),
-        e.K2_GetComponentLocation()
+        e.D_K2_GetComponentLocation()
       );
     }
     CFr() {
@@ -1358,15 +1555,8 @@ let CharacterActorComponent =
       (this.Y2r = !0),
         (this.J2r = e),
         this.IsMoveAutonomousProxy !== t &&
-          (t
-            ? (this.SetMoveAutonomous(!0, i),
-              (e = this.MoveComp) &&
-                (e.StopAllAddMove(),
-                e.SetAddMoveOffset(void 0),
-                e.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy)),
-              this.Entity.GetComponent(60)?.ClearReplaySamples())
-            : this.SetMoveAutonomous(!1, i),
-          this.Entity.GetComponent(43)?.ClearOrders());
+          (this.SetMoveAutonomous(t, i),
+          this.Entity.GetComponent(49)?.ClearOrders());
     }
     ResetMoveControlled(t = "") {
       (this.Y2r = !1),
@@ -1384,12 +1574,20 @@ let CharacterActorComponent =
       CombatLog_1.CombatLog.Info("Control", this.Entity, "设置移动主控", [
         e,
         t,
-      ]),
-        super.SetMoveAutonomous(t);
-      e = this.Entity.GetComponent(163);
-      e &&
-        (e.MainAnimInstance?.SetStateMachineNetMode(!t),
-        e.SpecialAnimInstance?.SetStateMachineNetMode(!t));
+      ]);
+      var e = this.Y2r,
+        i = (super.SetMoveAutonomous(t), this.Entity.GetComponent(175));
+      i &&
+        (i.MainAnimInstance?.SetStateMachineNetMode(!t),
+        i.SpecialAnimInstance?.SetStateMachineNetMode(!t)),
+        t !== e &&
+          (this.IsAutonomousProxy &&
+            ((i = this.MoveComp) &&
+              (i.StopAllAddMove(),
+              i.SetAddMoveOffset(void 0),
+              i.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy)),
+            this.Entity.GetComponent(67)?.ClearReplaySamples()),
+          this.Entity.GetComponent(49)?.ClearOrders());
     }
     GetMapPartCollision() {
       return this.nFr;
@@ -1430,7 +1628,7 @@ let CharacterActorComponent =
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            21,
+            20,
             "碰撞体不存在",
             ["name", t],
             ["character name", this.Actor.GetName()],
@@ -1442,7 +1640,7 @@ let CharacterActorComponent =
     mFr() {
       var t = this.Entity.GetComponent(0)?.GetEntityType();
       if (Protocol_1.Aki.Protocol.kks.Proto_Monster === t) {
-        var e = this.Entity.GetComponent(190);
+        var e = this.Entity.GetComponent(203);
         if (this.LockOnConfig?.IsOpened) {
           CharacterLockOnComponent_1.CharacterLockOnComponent.EnhancedEntityIds.add(
             this.Entity.Id,
@@ -1491,7 +1689,7 @@ let CharacterActorComponent =
       var t;
       return (
         3 === this.rDn &&
-          ((t = this.Entity.GetComponent(164)?.MovementData),
+          ((t = this.Entity.GetComponent(176)?.MovementData),
           (this.rDn = t?.WanderDirection ?? 0)),
         this.rDn
       );
@@ -1639,17 +1837,32 @@ let CharacterActorComponent =
             (this.MeshHandleForCollisionType = void 0))
           );
     }
+    uL1() {
+      var t, e;
+      GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen &&
+        this.Entity.GameBudgetConfig &&
+        this.Entity.GameBudgetManagedToken &&
+        ((t = this.Entity.GetComponent(173)?.IsInFighting),
+        (e = !!this.Entity.GetComponent(176)?.BasePlatform),
+        cpp_1.FKuroGameBudgetAllocatorInterface.MarkActorInFighting(
+          this.Entity.GameBudgetConfig.GroupName,
+          this.Entity.GameBudgetManagedToken,
+          t || e,
+        ));
+    }
     GetSocketTransform(t) {
+      if (!this.Entity.IsInit) return this.CreatureData.D_GetTransform();
       if (!FNameUtil_1.FNameUtil.IsNothing(t)) {
         var e = this.Actor;
-        if (e.Mesh.DoesSocketExist(t)) return e.Mesh.GetSocketTransform(t, 0);
+        if (e.Mesh.DoesSocketExist(t)) return e.Mesh.D_GetSocketTransform(t, 0);
       }
       return this.ActorTransform;
     }
     GetSocketLocation(t) {
+      if (!this.Entity.IsInit) return this.CreatureData.GetLocation();
       if (!FNameUtil_1.FNameUtil.IsNothing(t)) {
         var e = this.Actor.Mesh;
-        if (e.DoesSocketExist(t)) return e.GetSocketLocation(t);
+        if (e.DoesSocketExist(t)) return e.D_GetSocketLocation(t);
       }
       return this.ActorLocation;
     }
@@ -1687,7 +1900,7 @@ let CharacterActorComponent =
             UE.WorldPartitionSubsystem.StaticClass(),
           );
           t = new UE.WorldPartitionStreamingQuerySource(
-            t,
+            t.op_ToVector(),
             PHYSIC_STREAMING_CHECK_RANGE,
             !1,
             !1,
@@ -1726,6 +1939,13 @@ let CharacterActorComponent =
             );
       else this.HNn();
     }
+    RefreshCurrentFloor() {
+      var t = (0, puerts_1.$ref)(this.Actor.CharacterMovement.CurrentFloor),
+        t =
+          (this.Actor.CharacterMovement.D_K2_FindFloor(this.ActorLocation, t),
+          (0, puerts_1.$unref)(t));
+      this.Actor.CharacterMovement.CurrentFloor = t;
+    }
     HNn() {
       this.dFr(),
         EventSystem_1.EventSystem.EmitWithTarget(
@@ -1745,15 +1965,13 @@ let CharacterActorComponent =
           ? t
           : !1) &&
         ((this.eFr = !0), this.oFr(), this.IsRoleAndCtrlByMe) &&
-        this.MoveComp?.CharacterMovement?.SetMovementMode(1);
-      var e = Protocol_1.Aki.Protocol.pms.create(),
-        i = this.Entity.GetComponent(0).GetCreatureDataId(),
-        i =
-          (e.PSs.push(MathUtils_1.MathUtils.NumberToLong(i)),
-          Net_1.Net.Call(21772, e, (t) => {}),
-          this.Entity.GetComponent(40));
-      i &&
-        i.SetLoadCompletePlayer(
+        this.Actor.KuroSetMovementMode({
+          Mode: 1,
+          Context: "[CharacterActorComponent.CharacterReady]",
+        });
+      var e = this.Entity.GetComponent(46);
+      e &&
+        e.SetLoadCompletePlayer(
           ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
         ),
         (this.EntityType !== Protocol_1.Aki.Protocol.kks.Proto_Player &&
@@ -1769,6 +1987,7 @@ let CharacterActorComponent =
   });
 (CharacterActorComponent.az = Quat_1.Quat.Create()),
   (CharacterActorComponent.pFr = Stats_1.Stat.Create("OnHitEffectLoaded")),
+  (CharacterActorComponent.d6 = void 0),
   (CharacterActorComponent.Lz = Vector_1.Vector.Create()),
   (CharacterActorComponent = CharacterActorComponent_1 =
     __decorate(

@@ -60,10 +60,10 @@ class ChatModel extends ModelBase_1.ModelBase {
     let o = this.GetChatPlayerData(t);
     var i = (o = o || this.AddChatPlayerData(t)).GetPlayerIcon(),
       r = o.GetPlayerName(),
-      n = ModelManager_1.ModelManager.PersonalModel,
-      h = n.GetPersonalInfoData();
-    h && h.PlayerId === t
-      ? (o.SetPlayerIcon(n.GetHeadPhotoId()), o.SetPlayerName(h.Name))
+      h = ModelManager_1.ModelManager.PersonalModel,
+      n = h.GetPersonalInfoData();
+    n && n.PlayerId === t
+      ? (o.SetPlayerIcon(h.GetHeadPhotoId()), o.SetPlayerName(n.Name))
       : (o.SetPlayerIcon(e), o.SetPlayerName(a)),
       (i === e && r === a) ||
         EventSystem_1.EventSystem.Emit(
@@ -74,19 +74,19 @@ class ChatModel extends ModelBase_1.ModelBase {
   ClearChatPlayerData() {
     this.kEt.clear();
   }
-  AddChatContent(t, e, a, o, i, r, n, h, s, C, m, _, v) {
-    e = t.AddChatContent(e, a, o, i, r, n, h, s, C, m, _, v);
-    let f = 0,
-      l = 0;
+  AddChatContent(t, e, a, o, i, r, h, n, s, C, m, _, v) {
+    e = t.AddChatContent(e, a, o, i, r, h, n, s, C, m, _, v);
+    let l = 0,
+      f = 0;
     t instanceof PrivateChatRoom_1.PrivateChatRoom
-      ? ((f = t.GetTargetPlayerId()), (l = 1))
+      ? ((l = t.GetTargetPlayerId()), (f = 1))
       : t instanceof TeamChatRoom_1.TeamChatRoom
-        ? (l = 2)
-        : t instanceof WorldTeamChatRoom_1.WorldChatRoom && (l = 3),
+        ? (f = 2)
+        : t instanceof WorldTeamChatRoom_1.WorldChatRoom && (f = 3),
       a !== ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
         this.SetChatRoomRedDot(t, !0),
       r === Protocol_1.Aki.Protocol.GFs.Proto_None &&
-        this.AddChatRowData(a, o, i, !1, l, h, f, C, m),
+        this.AddChatRowData(a, o, i, !1, f, n, l, C, m),
       this.YEt(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAddChatContent,
@@ -106,14 +106,14 @@ class ChatModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Chat",
-        8,
+        5,
         "===目前暂时屏蔽聊天本地缓存的请求===",
         ["chatUniqueId", e],
         ["fromContentUniqueId", t],
       );
   }
-  AddChatRowData(t, e, a, o, i, r, n, h, s, C = !0) {
-    this.JEt(t, e, a, o, i, r, n, h, s),
+  AddChatRowData(t, e, a, o, i, r, h, n, s, C = !0) {
+    this.JEt(t, e, a, o, i, r, h, n, s),
       C && this.VEt.length > ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE && this.zEt();
   }
   SortChatRowData() {
@@ -126,14 +126,32 @@ class ChatModel extends ModelBase_1.ModelBase {
         Math.max(t - ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE, 0),
       ));
   }
+  DeletePrivateChat(e) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Chat", 5, "[ChatDebug]删除主界面聊天数据", [
+        "playerId",
+        e,
+      ]);
+    for (let t = 0; t < this.VEt.length; t++)
+      this.VEt[t].TargetPlayerId === e && (this.VEt.splice(t, 1), t--);
+  }
+  DeleteTeamChat() {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Chat", 5, "[ChatDebug]删除主界面队伍聊天数据");
+    for (let t = 0; t < this.VEt.length; t++) {
+      var e = this.VEt[t];
+      (2 !== e.ContentChatRoomType && 3 !== e.ContentChatRoomType) ||
+        (this.VEt.splice(t, 1), t--);
+    }
+  }
   SetTeamChatRowDataVisible(t) {
     for (const a of this.VEt) {
       var e = a.ContentChatRoomType;
       (2 !== e && 3 !== e) || (a.IsVisible = t);
     }
   }
-  JEt(t, e, a, o, i, r, n, h, s) {
-    t = new ChatRowData_1.ChatRowData(this.HEt++, t, e, a, o, i, r, n, h, s);
+  JEt(t, e, a, o, i, r, h, n, s) {
+    t = new ChatRowData_1.ChatRowData(this.HEt++, t, e, a, o, i, r, h, n, s);
     this.VEt.push(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnPushChatRowData,
@@ -147,7 +165,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Chat",
-        8,
+        5,
         "[ChatDebug]删除主界面聊天数据---开始",
         ["chatRoomType", e],
         ["chatRowDataListLength", this.VEt.length],
@@ -158,7 +176,7 @@ class ChatModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Chat",
-          8,
+          5,
           "[ChatDebug]删除主界面聊天数据---打印当前聊天记录",
           ["Content", o.Content],
           ["TimeStamp", o.TimeStamp],
@@ -169,7 +187,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Chat",
-        8,
+        5,
         "[ChatDebug]删除主界面聊天数据---结束",
         ["removeIndexList", a],
         ["chatRowDataListLength", this.VEt.length],
@@ -238,7 +256,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     if (
       (this.SetChatRoomRedDot(t, !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Chat", 8, " 加入聊天室", ["UniqueId", t.GetUniqueId()]),
+        Log_1.Log.Info("Chat", 5, " 加入聊天室", ["UniqueId", t.GetUniqueId()]),
       t.GetIsOpen())
     )
       (this.QEt = t),
@@ -252,7 +270,7 @@ class ChatModel extends ModelBase_1.ModelBase {
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Chat",
-            8,
+            5,
             " 加入私人聊天室时，对应好友在黑名单或不在好友列表中，无法加入聊天室",
             ["UniqueId", t.GetUniqueId()],
           )
@@ -274,7 +292,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     e &&
       (e.Reset(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Chat", 8, " 删除私人聊天室", ["PlayerId", t]),
+        Log_1.Log.Info("Chat", 5, " 删除私人聊天室", ["PlayerId", t]),
       this.jEt.delete(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRemovePrivateChatRoom,
@@ -289,7 +307,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     e &&
       (e.Close(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Chat", 8, " 关闭私人聊天室", ["PlayerId", t]),
+        Log_1.Log.Info("Chat", 5, " 关闭私人聊天室", ["PlayerId", t]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnClosePrivateChatRoom,
         t,
@@ -300,7 +318,7 @@ class ChatModel extends ModelBase_1.ModelBase {
     t.GetIsOpen() ||
       ((e = t.GetTargetPlayerId()),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Chat", 8, " 请求打开私人聊天室", ["PlayerId", e]),
+        Log_1.Log.Info("Chat", 5, " 请求打开私人聊天室", ["PlayerId", e]),
       t.Open(),
       ChatController_1.ChatController.PrivateChatHistoryRequest(e),
       this.SetChatRoomRedDot(t, !0),
@@ -312,7 +330,7 @@ class ChatModel extends ModelBase_1.ModelBase {
   RequestOpenChatRoom(t) {
     t.GetIsOpen() ||
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Chat", 8, " 请求打开队伍/联机聊天室 "),
+        Log_1.Log.Info("Chat", 5, " 请求打开队伍/联机聊天室 "),
       t.Open(),
       this.SetChatRoomRedDot(t, !0),
       EventSystem_1.EventSystem.Emit(

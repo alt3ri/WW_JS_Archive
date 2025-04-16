@@ -12,9 +12,11 @@ class WeatherModel extends ModelBase_1.ModelBase {
     return this.Oto;
   }
   GetCurrentWeatherType() {
-    return ConfigManager_1.ConfigManager.WeatherModuleConfig.GetWeatherType(
-      this.Oto,
-    );
+    return 0 === this.Oto
+      ? 0
+      : ConfigManager_1.ConfigManager.WeatherModuleConfig.GetWeatherType(
+          this.Oto,
+        );
   }
   SetCurrentWeatherId(e) {
     this.Oto = e;

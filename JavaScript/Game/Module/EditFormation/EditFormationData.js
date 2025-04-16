@@ -2,15 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EditFormationData = void 0);
 class EditFormationRoleData {
-  constructor(t, i, s, e) {
+  constructor(t, i, s, e, o) {
     (this.Position = 0),
       (this.ConfigId = 0),
+      (this.RoleSkinId = 0),
       (this.PlayerId = 0),
       (this.Level = 0),
       (this.Position = t),
       (this.ConfigId = i),
-      (this.PlayerId = e),
-      (this.Level = s);
+      (this.RoleSkinId = s),
+      (this.PlayerId = o),
+      (this.Level = e);
   }
 }
 class EditFormationData {
@@ -21,10 +23,10 @@ class EditFormationData {
       (this.pXe = new Map()),
       (this.FormationId = t);
   }
-  AddRoleData(t, i, s, e = !1) {
-    var o = this.Wke.length + 1,
-      t = (this.Wke.push(t), new EditFormationRoleData(o, t, i, s));
-    this.pXe.set(o, t), e && (this.n5t = o);
+  AddRoleData(t, i, s, e, o = !1) {
+    var r = this.Wke.length + 1,
+      t = (this.Wke.push(t), new EditFormationRoleData(r, t, i, s, e));
+    this.pXe.set(r, t), o && (this.n5t = r);
   }
   GetRoleDataByPosition(t) {
     return this.pXe.get(t);

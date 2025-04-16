@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemHintController = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
@@ -21,10 +22,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   };
 class ItemHintController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(16447, this.HandleItemRewardNotify);
+    Net_1.Net.Register(27810, this.HandleItemRewardNotify);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(16447);
+    Net_1.Net.UnRegister(27810);
   }
   static qgi(e) {
     e.length <= 0 ||
@@ -36,7 +37,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
   static Ggi() {
     var e;
     return (
-      !!UiManager_1.UiManager.IsViewOpen("BattleView") ||
+      !!this.iy1(!0) ||
       !(
         !(e = UiManager_1.UiManager.GetViewByName("PlotView")) || e.IsRegister
       ) ||
@@ -50,43 +51,49 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ItemHintModel.AddItemRewardList(e);
   }
   static CombineAllShowItems(e, t) {
-    var n,
-      o,
-      i = new Array(),
-      r = new Map();
-    if (e.O9n) {
-      for (const a of e.O9n)
-        a.m9n &&
-          ((n = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(
-            a.W9n,
-          ))
-            ? 0 !== n.ShowBg &&
-              (r.has(a.L8n)
-                ? (r.get(a.L8n).ItemCount += a.m9n)
-                : ((n =
-                    ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-                      a.L8n,
-                    )),
-                  ((o = new ItemHintDefines_1.ItemRewardInfo()).ItemId = a.L8n),
-                  (o.ItemCount = a.m9n),
-                  (o.Quality = n.QualityId),
-                  r.set(o.ItemId, o)))
-            : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("ItemHint", 18, "缺少ShowPlan配置", [
-                "showPlanId",
-                a.W9n,
-              ]));
-      for (const _ of r.values()) i.push(_);
+    const n = new Array();
+    var o = new Map(),
+      r = e.gws;
+    if (r) {
+      for (const s of Object.keys(r)) {
+        var i,
+          a,
+          _ = r[s];
+        if (_) {
+          const n = _.O9n;
+          if (n)
+            for (const m of n)
+              m.m9n &&
+                ((i =
+                  ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(
+                    m.W9n,
+                  ))
+                  ? 0 !== i.ShowBg &&
+                    (o.has(m.L8n)
+                      ? (o.get(m.L8n).ItemCount += m.m9n)
+                      : ((i =
+                          ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+                            m.L8n,
+                          )),
+                        ((a = new ItemHintDefines_1.ItemRewardInfo()).ItemId =
+                          m.L8n),
+                        (a.ItemCount = m.m9n),
+                        (a.Quality = i.QualityId),
+                        o.set(a.ItemId, a)))
+                  : Log_1.Log.CheckError() &&
+                    Log_1.Log.Error("ItemHint", 17, "缺少ShowPlan配置", [
+                      "showPlanId",
+                      m.W9n,
+                    ]));
+        }
+      }
+      for (const I of o.values()) n.push(I);
       t &&
-        i.sort((e, t) => {
-          var n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.ItemId),
-            o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(t.ItemId);
-          return n.QualityId !== o.QualityId
-            ? o.QualityId - n.QualityId
-            : e.ItemId - t.ItemId;
-        });
+        n.sort((e, t) =>
+          e.Quality !== t.Quality ? e.Quality - t.Quality : e.ItemId - t.ItemId,
+        );
     }
-    return i;
+    return n;
   }
   static ConvertRewardListToItem(e) {
     var t = [];
@@ -97,18 +104,27 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     return t;
   }
   static GetFirstShowBgDropGroup(e) {
-    if (e.O9n)
-      for (const n of e.O9n) {
-        var t = n.W9n,
-          t = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(t);
-        if (t) {
-          if (0 !== t.ShowBg) return t;
-        } else
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error("ItemHint", 18, "缺少ShowPlan配置", [
-              "showPlanId",
-              n.W9n,
-            ]);
+    var t = e.gws;
+    if (t)
+      for (const r of Object.keys(t)) {
+        var n = t[r];
+        if (n) {
+          n = n.O9n;
+          if (n)
+            for (const i of n) {
+              var o = i.W9n,
+                o =
+                  ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(o);
+              if (o) {
+                if (0 !== o.ShowBg) return o;
+              } else
+                Log_1.Log.CheckError() &&
+                  Log_1.Log.Error("ItemHint", 17, "缺少ShowPlan配置", [
+                    "showPlanId",
+                    i.W9n,
+                  ]);
+            }
+        }
       }
   }
   static OnAddEvents() {
@@ -198,19 +214,19 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
   static AddCommonItemList(e) {
     var t = [],
       n = ModelManager_1.ModelManager.InventoryModel;
-    for (const r of e) {
-      var o = r.s5n;
+    for (const i of e) {
+      var o = i.s5n;
       if (o !== ItemHintDefine_1.EXP_ITEM_ID) {
         o = n.GetCommonItemData(o);
         if (o) {
           var o = o.GetLastCount(),
-            i = r.m9n,
-            o = o ? i - o : i;
+            r = i.m9n,
+            o = o ? r - o : r;
           if (!(o < 0)) {
             let e = 0;
-            r instanceof Protocol_1.Aki.Protocol.s5s && (e = r.b9n);
-            i = { s5n: r.s5n, m9n: o, b9n: e };
-            t.push(i);
+            i instanceof Protocol_1.Aki.Protocol.s5s && (e = i.b9n);
+            r = { s5n: i.s5n, m9n: o, b9n: e };
+            t.push(r);
           }
         }
       }
@@ -221,6 +237,33 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     e = { s5n: e, m9n: t, b9n: 0 };
     ModelManager_1.ModelManager.ItemHintModel.MainInterfaceInsertItemRewardInfo(
       [e],
+    );
+  }
+  static AddAbyssItemList(e) {
+    var t,
+      n,
+      o = [];
+    for ([t, n] of e) {
+      var r = { s5n: t, m9n: n, b9n: 0 };
+      o.push(r);
+    }
+    ModelManager_1.ModelManager.ItemHintModel.MainInterfaceInsertItemRewardInfo(
+      o,
+    );
+  }
+  static AddItemRewardInfoList(e) {
+    e = e.map((e) => ({ s5n: e[0], m9n: e[1], b9n: 0 }));
+    ModelManager_1.ModelManager.ItemHintModel.MainInterfaceInsertItemRewardInfo(
+      e,
+    );
+  }
+  static iy1(e = !1) {
+    var t;
+    return (
+      !!UiManager_1.UiManager.IsViewOpen("BattleView") ||
+      (!!UiManager_1.UiManager.IsViewOpen("DangoMonopolyMainView") &&
+        ((t = ConfigManager_1.ConfigManager.ActivityDangoMonopolyConfig),
+        e ? t.GetIsPushHintShow() : t.GetIsOpenHintShow()))
     );
   }
   static OnTick(e) {
@@ -235,7 +278,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ItemHint",
-          8,
+          37,
           "[NoRewardReason][CheckItemReward]当前状态不允许显示入包列表:ItemHint的入包列表为空",
         );
     else if (
@@ -247,7 +290,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ItemHint",
-          8,
+          37,
           "[NoRewardReason][CheckItemReward]当前状态不允许显示入包列表:ItemRewardView或SceneGameplayItemRewardView界面在打开中，或者已经屏蔽弹窗",
           [
             "IsItemRewardViewOpen",
@@ -261,23 +304,34 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
         );
     else {
       var t =
-        ModelManager_1.ModelManager.ItemHintModel.PeekItemRewardListFirst();
-      if (t.ItemReward?.O9n) {
+        ModelManager_1.ModelManager.ItemHintModel.PeekItemRewardListFirst()
+          .ItemReward?.gws;
+      if (t) {
         let e = void 0;
-        for (const i of t.ItemReward.O9n) {
-          var n = i.W9n,
-            o = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
-          if (o) {
-            if (0 !== o.ShowBg && i.m9n && void 0 === e) {
-              e = o.ShowBg;
-              break;
-            }
-          } else
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error("ItemHint", 18, "缺少showPlan配置", [
-                "showPlanId",
-                n,
-              ]);
+        for (const i of Object.keys(t)) {
+          var n = t[i];
+          if (n) {
+            n = n.O9n;
+            if (n)
+              for (const a of n) {
+                var o = a.W9n,
+                  r =
+                    ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(
+                      o,
+                    );
+                if (r) {
+                  if (0 !== r.ShowBg && a.m9n && void 0 === e) {
+                    e = r.ShowBg;
+                    break;
+                  }
+                } else
+                  Log_1.Log.CheckError() &&
+                    Log_1.Log.Error("ItemHint", 17, "缺少showPlan配置", [
+                      "showPlanId",
+                      o,
+                    ]);
+              }
+          }
         }
         switch (e) {
           case 0:
@@ -285,7 +339,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
               Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "ItemHint",
-                8,
+                37,
                 "[NoRewardReason][CheckItemReward]当前状态不允许显示入包列表:没有对应showBg配置",
               );
             break;
@@ -300,8 +354,8 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "ItemHint",
-              8,
-              "[NoRewardReason][CheckItemReward]当前状态不允许显示入包列表:Proto_ItemList为空",
+              37,
+              "[NoRewardReason][CheckItemReward]当前状态不允许显示入包列表:Proto_RewardItems为空",
             );
     }
   }
@@ -313,7 +367,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "ItemHint",
-            8,
+            37,
             "[NoRewardReason][CheckItemHint]当前状态不允许显示入包列表:入包列表数据为空",
           )
         : UiManager_1.UiManager.IsViewOpen("ItemHintView")
@@ -321,7 +375,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "ItemHint",
-              8,
+              37,
               "[NoRewardReason][CheckItemHint]当前状态不允许显示入包列表:ItemHintView在打开中",
             )
           : ModelManager_1.ModelManager.SundryModel.IsBlockTips
@@ -329,7 +383,7 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
               Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "ItemHint",
-                8,
+                37,
                 "[NoRewardReason][CheckItemHint]当前状态不允许显示入包列表:当前已经屏蔽弹窗",
               )
             : UiManager_1.UiManager.OpenView("ItemHintView")
@@ -337,41 +391,51 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ItemHint",
-          8,
+          37,
           "[NoRewardReason][CheckItemHint]当前状态不允许显示入包列表:Visibility为false",
         );
   }
 }
-((exports.ItemHintController = ItemHintController).IsTickEvenPausedInternal =
-  !0),
+(exports.ItemHintController = ItemHintController),
+  ((_a = ItemHintController).IsTickEvenPausedInternal = !0),
   (ItemHintController.IsPrintNoRewardReason = !1),
   (ItemHintController.HandleItemRewardNotify = (t) => {
-    if (t.O9n) {
+    var n = t.gws;
+    if (n) {
+      var o = ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t.P6n);
       let e = void 0;
-      if (
-        ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(t.P6n).ShowBg
-      )
-        for (const i of t.O9n) {
-          var n = i.W9n,
-            o = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(n);
-          o
-            ? 0 !== o.ShowBg &&
-              i.m9n &&
-              (void 0 === e
-                ? (e = o.ShowBg)
-                : e !== o.ShowBg &&
-                  Log_1.Log.CheckError() &&
-                  Log_1.Log.Error(
-                    "ItemHint",
-                    18,
-                    "一次掉落有多个不同背景的掉落组，请检查配置",
-                    ["dropId", t.P6n],
-                  ))
-            : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("ItemHint", 18, "缺少showPlan配置", [
-                "showPlanId",
-                n,
-              ]);
+      if (o.ShowBg)
+        for (const _ of Object.keys(n)) {
+          var r = n[_];
+          if (r) {
+            r = r.O9n;
+            if (r)
+              for (const s of r) {
+                var i = s.W9n,
+                  a =
+                    ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(
+                      i,
+                    );
+                a
+                  ? 0 !== a.ShowBg &&
+                    s.m9n &&
+                    (void 0 === e
+                      ? (e = a.ShowBg)
+                      : e !== a.ShowBg &&
+                        Log_1.Log.CheckError() &&
+                        Log_1.Log.Error(
+                          "ItemHint",
+                          17,
+                          "一次掉落有多个不同背景的掉落组，请检查配置",
+                          ["dropId", t.P6n],
+                        ))
+                  : Log_1.Log.CheckError() &&
+                    Log_1.Log.Error("ItemHint", 17, "缺少showPlan配置", [
+                      "showPlanId",
+                      i,
+                    ]);
+              }
+          }
         }
       else e = 0;
       switch (e) {
@@ -389,10 +453,10 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
       );
     }
   }),
-  (ItemHintController.x2e = (e, t, n, o, i, r, a) => {
+  (ItemHintController.x2e = (e, t, n, o, r, i, a) => {
     var _ = [],
-      i = { s5n: ItemHintDefine_1.EXP_ITEM_ID, m9n: i, b9n: 0 };
-    _.push(i), ItemHintController.qgi(_);
+      r = { s5n: ItemHintDefine_1.EXP_ITEM_ID, m9n: r, b9n: 0 };
+    _.push(r), ItemHintController.qgi(_);
   }),
   (ItemHintController.Ngi = (e, t, n) => {
     var o = [],
@@ -402,20 +466,17 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
   (ItemHintController.wdi = (e, t, n) => {
     if (!t && n) {
       var o = [];
-      for (const r of e) {
-        var i = { s5n: r.s5n, m9n: 1, b9n: 0 };
-        o.push(i);
+      for (const i of e) {
+        var r = { s5n: i.s5n, m9n: 1, b9n: 0 };
+        o.push(r);
       }
       ItemHintController.qgi(o);
     }
   }),
-  (ItemHintController.bdi = (e) => {
-    var t = [];
-    for (const o of e) {
-      var n = { s5n: o.s5n, m9n: 1, b9n: 0 };
-      t.push(n);
-    }
-    ItemHintController.qgi(t);
+  (ItemHintController.bdi = (e, t) => {
+    if (t)
+      for (const n of e)
+        ModelManager_1.ModelManager.ItemModel.PushWaitPhantomItem(n.b9n);
   }),
   (ItemHintController.kgi = (e) => {
     e = { s5n: e[0].ItemId, m9n: e[1], b9n: 0 };
@@ -425,12 +486,12 @@ class ItemHintController extends UiControllerBase_1.UiControllerBase {
     var e = ModelManager_1.ModelManager.ItemHintModel.Visibility;
     let t = !1;
     var n = ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot(),
-      o = UiManager_1.UiManager.IsViewOpen("LoadingView"),
-      i = UiManager_1.UiManager.IsViewOpen("BattleView");
-    (t = !(n || !i || o)) !== e &&
+      o = ModelManager_1.ModelManager.LoadingModel.IsLoadingView,
+      r = _a.iy1();
+    (t = !(n || !r || o)) !== e &&
       ((ModelManager_1.ModelManager.ItemHintModel.Visibility = t),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("ItemHint", 11, "奖励可视化状态改变", ["Visibility", t]),
+        Log_1.Log.Info("ItemHint", 10, "奖励可视化状态改变", ["Visibility", t]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ItemHintVisibilityChange,
         t,

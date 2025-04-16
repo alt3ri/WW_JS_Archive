@@ -14,17 +14,17 @@ class OnlineChallengeStateView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.SNi = -1),
-      (this.bMa = void 0),
+      (this.TMa = void 0),
       (this.pNi = void 0),
-      (this.qMa = []),
-      (this.GMa = () => {
+      (this.LMa = []),
+      (this.DMa = () => {
         var e =
           new OnlineChallengePlayerStateItem_1.OnlineChallengePlayerStateItem();
-        return this.qMa.push(e), e;
+        return this.LMa.push(e), e;
       }),
       (this.$1i = (e, i) => {
         if (1 === i) this.CloseMe();
-        else for (const t of this.qMa) t.SetTeamPlayerSprite(e, i);
+        else for (const t of this.LMa) t.SetTeamPlayerSprite(e, i);
       });
   }
   OnRegisterComponent() {
@@ -38,9 +38,9 @@ class OnlineChallengeStateView extends UiTickViewBase_1.UiTickViewBase {
   OnStart() {
     (this.SNi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
       (this.pNi = this.GetSprite(3)),
-      (this.bMa = new GenericLayout_1.GenericLayout(
+      (this.TMa = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(1),
-        this.GMa,
+        this.DMa,
       )),
       this.RefreshView();
   }
@@ -57,7 +57,7 @@ class OnlineChallengeStateView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   OnBeforeDestroy() {
-    (this.pNi = void 0), (this.SNi = -1), (this.qMa = []);
+    (this.pNi = void 0), (this.SNi = -1), (this.LMa = []);
   }
   OnTick(e) {
     (this.SNi -= e * TimeUtil_1.TimeUtil.Millisecond),
@@ -94,7 +94,7 @@ class OnlineChallengeStateView extends UiTickViewBase_1.UiTickViewBase {
         ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers()),
       i = [];
     for (const t of e) i.push(t.GetPlayerId());
-    this.bMa.RefreshByData(i);
+    this.TMa.RefreshByData(i);
   }
 }
 exports.OnlineChallengeStateView = OnlineChallengeStateView;

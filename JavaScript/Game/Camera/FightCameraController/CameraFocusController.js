@@ -12,6 +12,8 @@ const Info_1 = require("../../../Core/Common/Info"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  GravityUtils_1 = require("../../Utils/GravityUtils"),
+  CameraUtility_1 = require("../CameraUtility"),
   CameraControllerBase_1 = require("./CameraControllerBase"),
   ARM_OFFSET_Y_SPEED = 100,
   DEFAULT_FPS = 60,
@@ -36,6 +38,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (this.YawSignAdaptionOn = 0),
       (this.YawSignAdaptionThreshold = 0),
       (this.YawSignAdaptionCooldown = 0),
+      (this.YawSignAdaptionDistanceThreshold = 0),
       (this.RelativeYawSoftMin = 0),
       (this.RelativeYawSoftMax = 0),
       (this.CameraOffsetSoft = 0),
@@ -62,8 +65,9 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (this.SoftUnlockInputTime = 0),
       (this.SoftUnlockInputYawMinSpeed = 0),
       (this.SoftUnlockInputPitchMinSpeed = 0),
-      (this.Bja = 0),
-      (this.s_e = Vector_1.Vector.Create()),
+      (this.YKa = 0),
+      (this.Gue = Rotator_1.Rotator.Create()),
+      (this.xzi = Vector_1.Vector.Create()),
       (this.Ele = Rotator_1.Rotator.Create()),
       (this.a_e = !1),
       (this.FocusLimitLength = 0),
@@ -73,14 +77,13 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       (this.AddCameraOffsetY = void 0),
       (this.l_e = Vector2D_1.Vector2D.Create()),
       (this.dTn = !0),
-      (this.__e = !0),
-      (this.u_e = 0),
+      (this.Iic = 0),
       (this.BJe = (t, i, s) => {
         var h = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
         t === h?.Id &&
-          (t = h.GetComponent(34))?.Valid &&
-          0 === t.CurrentSkill?.SkillInfo.SkillTarget.SkillTargetDirection &&
-          this.z$a();
+          (t = h.GetComponent(39))?.Valid &&
+          t.CurrentSkill?.SkillInfo.IsLockOn &&
+          this.KJa();
       });
   }
   Name() {
@@ -103,6 +106,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       this.SetConfigMap(4, "YawSignAdaptionOn"),
       this.SetConfigMap(5, "YawSignAdaptionThreshold"),
       this.SetConfigMap(6, "YawSignAdaptionCooldown"),
+      this.SetConfigMap(40, "YawSignAdaptionDistanceThreshold"),
       this.SetConfigMap(7, "RelativeYawSoftMin"),
       this.SetConfigMap(8, "RelativeYawSoftMax"),
       this.SetConfigMap(37, "SoftUnlockInputTime"),
@@ -137,7 +141,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Controller",
-        58,
+        57,
         `锁定镜头配置错误，强锁定-镜头偏角最小值${this.RelativeYawHardMin}不在0-180之间或者大于强锁定-镜头偏角最大值` +
           this.RelativeYawHardMax,
       ),
@@ -147,7 +151,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Controller",
-          58,
+          57,
           `锁定镜头配置错误，强锁定-镜头偏角最大值${this.RelativeYawHardMax}不在0-180之间或者小于强锁定-镜头偏角最小值` +
             this.RelativeYawHardMin,
         ),
@@ -157,7 +161,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Controller",
-          58,
+          57,
           `锁定镜头配置错误，强锁定-镜头俯仰角最小值${this.RelativePitchHardMin}不在0-180之间或者大于强锁定-镜头俯仰角最大值` +
             this.RelativePitchHardMax,
         ),
@@ -167,7 +171,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Controller",
-          58,
+          57,
           `锁定镜头配置错误，强锁定-镜头俯仰角最大值${this.RelativePitchHardMax}不在0-180之间或者小于强锁定-镜头俯仰角最小值` +
             this.RelativePitchHardMin,
         ),
@@ -195,7 +199,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
       this.Camera.CameraAutoController.DisableForce(this),
       this.Camera.CameraSidestepController.Unlock(this),
       (this.h_e = 0),
-      (this.u_e = 0),
+      (this.Iic = 0),
       this.l_e.Reset();
   }
   UpdateCustomEnableCondition() {
@@ -205,15 +209,15 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
     );
   }
   UpdateInternal(t) {
-    this.qKa(t), this.OKa(t), this.GKa(t);
+    this.iza(t), this.rza(t), this.oza(t);
   }
-  qKa(t) {
+  iza(t) {
     var i, s;
     this.Camera.TargetEntity &&
       this.Camera.IsTargetLocationValid &&
       (([i, s] =
         this.Camera.CharacterEntityHandle.Entity.GetComponent(
-          54,
+          61,
         ).GetCameraInput()),
       (i *= Info_1.Info.IsInGamepad()
         ? this.SoftLockInputYawSensitivityGamepad
@@ -223,195 +227,263 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
         : this.SoftLockInputPitchSensitivity),
       (Math.abs(i) > this.SoftUnlockInputYawMinSpeed ||
         Math.abs(s) > this.SoftUnlockInputPitchMinSpeed) &&
-        (this.Bja = this.SoftUnlockInputTime),
-      this.Bja <= 0 || (this.Bja -= t));
+        (this.YKa = this.SoftUnlockInputTime),
+      this.YKa <= 0 || (this.YKa -= t));
   }
-  OKa(o) {
-    if (
-      this.Camera.TargetEntity &&
+  rza(t) {
+    var i, s, h, e, a;
+    this.Camera.TargetEntity &&
       this.Camera.IsTargetLocationValid &&
-      ((!this.Camera.IsModifiedArmRotationPitch &&
-        !this.Camera.IsModifiedArmRotationYaw) ||
-        this.__e)
-    ) {
-      this.__e = !1;
-      var [n, r] =
+      ((this.Camera.IsModifiedArmRotationPitch &&
+        this.Camera.IsModifiedArmRotationYaw) ||
+        (([i, s] =
           this.Camera.CharacterEntityHandle.Entity.GetComponent(
-            54,
-          ).GetCameraInput(),
-        l = this.Camera.CurrentCamera.ArmRotation,
-        _ = this.Camera.PlayerLocation,
-        _ =
-          (this.Camera.TargetLocation.Subtraction(_, this.s_e),
-          this.Camera.ContainsAnyTag([-1150819426, 1260125908]));
-      void 0 === this.AddCameraOffsetY && (this.AddCameraOffsetY = 0);
-      let t = 0,
-        i = !1,
-        s = 0,
-        h = 0,
-        e = 0,
-        a = 0;
-      (this.Ele.Pitch = this.Camera.AdjustPitch(this.s_e)),
-        (this.Ele.Yaw =
-          Math.atan2(this.s_e.Y, this.s_e.X) * MathUtils_1.MathUtils.RadToDeg);
-      var M = MathUtils_1.MathUtils.WrapAngle(
-          this.Camera.CameraRotation.Yaw - this.Ele.Yaw,
-        ),
-        S = MathUtils_1.MathUtils.WrapAngle(
-          this.Camera.CameraRotation.Pitch - this.Ele.Pitch,
-        ),
-        v = 0 <= M ? 1 : -1,
-        R = 0 <= S ? 1 : -1;
-      if (_) {
+            61,
+          ).GetCameraInput()),
+        (e =
+          !(h = this.Camera.ContainsAnyTag([-1150819426, 1260125908])) &&
+          ModelManager_1.ModelManager.CameraModel.IsSoftLockEnable() &&
+          !this.ShouldSoftUnlock() &&
+          !this.CanMoveCameraInSoftLock()),
+        (a = this.Camera.PlayerLocation),
+        this.Camera.TargetLocation.Subtraction(a, this.xzi),
+        this.Mtl(t, h, e, i),
+        this.Stl(t, h, e, s)));
+  }
+  Mtl(t, l, i, _) {
+    if (!this.Camera.IsModifiedArmRotationYaw) {
+      (this.Camera.IsModifiedArmRotationYaw = !0),
+        void 0 === this.AddCameraOffsetY && (this.AddCameraOffsetY = 0);
+      let h = 0,
+        e = !1,
+        a = 0,
+        o = 0,
+        n =
+          ((this.Ele.Yaw =
+            Math.atan2(this.xzi.Y, this.xzi.X) *
+            MathUtils_1.MathUtils.RadToDeg),
+          MathUtils_1.MathUtils.WrapAngle(
+            this.Camera.CameraRotation.Yaw - this.Ele.Yaw,
+          )),
+        r = 0 <= n ? 1 : -1;
+      this.xzi.Rotation(this.Gue);
+      var M = GravityUtils_1.GravityUtils.GetRotatorInGravity(
+          this.Gue,
+          this.Camera.GravityInverseQuat,
+          this.Gue,
+        ).Yaw,
+        s = GravityUtils_1.GravityUtils.GetRotatorInGravity(
+          this.Camera.CameraRotation,
+          this.Camera.GravityInverseQuat,
+          this.Gue,
+        ).Yaw,
+        v = GravityUtils_1.GravityUtils.GetRotatorInGravity(
+          this.Camera.CurrentCamera.ArmRotation,
+          this.Camera.GravityInverseQuat,
+          this.Gue,
+        ).Yaw;
+      if (
+        (this.Camera.IsInNormalGravityMode() ||
+          ((this.Ele.Yaw = M),
+          (n = MathUtils_1.MathUtils.WrapAngle(s - M)),
+          (r = 0 <= n ? 1 : -1)),
+        l)
+      ) {
         if (this.YawSignAdaptionOn) {
-          var _ =
+          let t = 0;
+          var M = _,
+            l =
               0 <=
-              (n *= Info_1.Info.IsInGamepad()
+              (M *= Info_1.Info.IsInGamepad()
                 ? this.HardLockInputYawSensitivityGamepad
                 : this.HardLockInputYawSensitivity)
                 ? 1
-                : -1,
-            c =
-              0 <=
-              (r = -(r *= Info_1.Info.IsInGamepad()
-                ? this.HardLockInputPitchSensitivityGamepad
-                : this.HardLockInputPitchSensitivity))
-                ? 1
                 : -1;
+          0 === this.h_e && ((this.h_e = r), (this.Iic = Time_1.Time.Now)),
+            Time_1.Time.Now > this.Iic + this.YawSignAdaptionCooldown &&
+              this.h_e !== r &&
+              ((this.h_e = r), (this.Iic = Time_1.Time.Now));
+          let i = 0,
+            s = 180;
           if (
-            (0 === this.h_e &&
-              ((this.h_e = v),
-              (this.u_e = Time_1.Time.Now + this.YawSignAdaptionCooldown)),
-            Time_1.Time.Now > this.u_e &&
-              this.h_e !== v &&
-              ((this.h_e = v),
-              (this.u_e = Time_1.Time.Now + this.YawSignAdaptionCooldown)),
-            Math.abs(M) < this.RelativeYawHardMin)
+            (MathUtils_1.MathUtils.Square(
+              this.YawSignAdaptionDistanceThreshold,
+            ) < this.xzi.SizeSquared() &&
+              ((i = this.RelativeYawHardMin), (s = this.RelativeYawHardMax)),
+            Math.abs(n) < i)
           )
-            (e += this.h_e * this.RelativeYawHardMin), _ == v && (e += n);
-          else if (Math.abs(M) > this.RelativeYawHardMax)
-            (e += this.h_e * this.RelativeYawHardMax), _ != v && (e += n);
+            (t += this.h_e * i), l === r && (t += M);
+          else if (Math.abs(n) > s) (t += this.h_e * s), l !== r && (t += M);
           else {
-            const d = M + n;
-            v * d < 0 &&
-              (v == _ &&
-                180 !== this.RelativeYawHardMax &&
-                ((n = MathUtils_1.MathUtils.WrapAngle(
-                  this.Ele.Yaw + this.h_e * this.RelativeYawHardMax,
+            const S = n + M;
+            r * S < 0 &&
+              (r === l &&
+                180 !== s &&
+                ((_ = MathUtils_1.MathUtils.WrapAngle(
+                  this.Ele.Yaw + this.h_e * s,
                 )),
-                (g = MathUtils_1.MathUtils.WrapAngle(
-                  this.Ele.Yaw + this.h_e * this.RelativeYawHardMin,
+                (M = MathUtils_1.MathUtils.WrapAngle(
+                  this.Ele.Yaw + this.h_e * i,
                 )),
-                (h = Math.max(g, n)),
-                (s = Math.min(g, n)),
-                (i = !0)),
-              v != _) &&
-              0 !== this.RelativeYawHardMin &&
-              ((g = MathUtils_1.MathUtils.WrapAngle(
-                this.Ele.Yaw + this.h_e * this.RelativeYawHardMax,
+                (o = Math.max(M, _)),
+                (a = Math.min(M, _)),
+                (e = !0)),
+              r !== l) &&
+              0 !== i &&
+              ((M = MathUtils_1.MathUtils.WrapAngle(
+                this.Ele.Yaw + this.h_e * s,
               )),
-              (n = MathUtils_1.MathUtils.WrapAngle(
-                this.Ele.Yaw + this.h_e * this.RelativeYawHardMin,
+              (_ = MathUtils_1.MathUtils.WrapAngle(
+                this.Ele.Yaw + this.h_e * i,
               )),
-              (h = Math.max(n, g)),
-              (s = Math.min(n, g)),
-              (i = !0)),
-              (e += d);
+              (o = Math.max(_, M)),
+              (a = Math.min(_, M)),
+              (e = !0)),
+              (t += S);
           }
-          if (Math.abs(S) < this.RelativePitchHardMin)
-            (a += R * this.RelativePitchHardMin), c == R && (a += r);
-          else if (Math.abs(S) > this.RelativePitchHardMax)
-            (a += R * this.RelativePitchHardMax), c != R && (a += r);
-          else {
-            const d = S + r;
-            a += d;
-          }
-          (e = MathUtils_1.MathUtils.Clamp(e, M - 179, M + 179)),
-            (a = MathUtils_1.MathUtils.Clamp(a, S - 179, S + 179)),
-            (this.Ele.Yaw += e),
-            (this.Ele.Pitch += a),
-            (this.Ele.Yaw = MathUtils_1.MathUtils.WrapAngle(this.Ele.Yaw)),
-            (this.Ele.Pitch = MathUtils_1.MathUtils.WrapAngle(this.Ele.Pitch)),
-            (t = v * this.CameraOffset);
+          (t = MathUtils_1.MathUtils.Clamp(t, n - 179, n + 179)),
+            (this.Ele.Yaw = MathUtils_1.MathUtils.WrapAngle(this.Ele.Yaw + t)),
+            (h = r * this.CameraOffset);
         }
       } else
-        !ModelManager_1.ModelManager.CameraModel.IsSoftLockEnable() ||
-        this.ShouldSoftUnlock() ||
-        this.CanMoveCameraInSoftLock() ||
-        this.Camera.IsModifiedArmRotationPitch ||
-        this.Camera.IsModifiedArmRotationYaw
-          ? ((this.Ele.Yaw = l.Yaw), (this.Ele.Pitch = l.Pitch))
-          : (_ = this.Camera.CharacterEntityHandle.Entity.GetComponent(29)) &&
-            _?.ShowTarget?.Valid &&
-            ((this.__e = !0),
-            Math.abs(M) < this.RelativeYawSoftMin
-              ? (this.Ele.Yaw += v * this.RelativeYawSoftMin)
-              : Math.abs(M) > this.RelativeYawSoftMax
-                ? (this.Ele.Yaw += v * this.RelativeYawSoftMax)
-                : (this.Ele.Yaw = this.Camera.CameraRotation.Yaw)),
-          (t = this.h_e * this.CameraOffsetSoft);
-      const d = Math.abs(t - this.AddCameraOffsetY);
-      d > ARM_OFFSET_Y_SPEED * o
+        i
+          ? (l = this.Camera.CharacterEntityHandle.Entity.GetComponent(32)) &&
+            l?.ShowTarget?.Valid &&
+            (Math.abs(n) < this.RelativeYawSoftMin
+              ? (this.Ele.Yaw += r * this.RelativeYawSoftMin)
+              : Math.abs(n) > this.RelativeYawSoftMax
+                ? (this.Ele.Yaw += r * this.RelativeYawSoftMax)
+                : (this.Ele.Yaw = s))
+          : (this.Ele.Yaw = v),
+          (h = r * this.CameraOffsetSoft);
+      const S = Math.abs(h - this.AddCameraOffsetY);
+      S > ARM_OFFSET_Y_SPEED * t
         ? (this.AddCameraOffsetY = MathUtils_1.MathUtils.Lerp(
             this.AddCameraOffsetY,
-            t,
-            (ARM_OFFSET_Y_SPEED * o) / d,
+            h,
+            (ARM_OFFSET_Y_SPEED * t) / S,
           ))
-        : (this.AddCameraOffsetY = t);
-      var n = MathUtils_1.MathUtils.Lerp(
-          this.RelativeRotationLagRatioMin,
-          this.RelativeRotationLagRatioMax,
-          this.RelativeRotationLagRatioCurve.GetCurrentValue(
-            (this.s_e.Size2D() - this.RelativeRotationLagDistanceRangeMin) /
-              (this.RelativeRotationLagDistanceRangeMax -
-                this.RelativeRotationLagDistanceRangeMin),
-          ),
+        : (this.AddCameraOffsetY = h);
+      (_ = MathUtils_1.MathUtils.Lerp(
+        this.RelativeRotationLagRatioMin,
+        this.RelativeRotationLagRatioMax,
+        this.RelativeRotationLagRatioCurve.GetCurrentValue(
+          (this.xzi.Size2D() - this.RelativeRotationLagDistanceRangeMin) /
+            (this.RelativeRotationLagDistanceRangeMax -
+              this.RelativeRotationLagDistanceRangeMin),
         ),
-        g = MathUtils_1.MathUtils.Lerp(
+      )),
+        (M = MathUtils_1.MathUtils.Lerp(
           this.RelativeRotationLagYawSpeedMin,
           this.RelativeRotationLagYawSpeedMax,
           this.RelativeRotationLagYawCurve.GetCurrentValue(
-            Math.abs(M) / this.RelativeRotationLagYawAngleRange,
+            Math.abs(n) / this.RelativeRotationLagYawAngleRange,
           ),
-        ),
-        c = MathUtils_1.MathUtils.Lerp(
-          this.RelativeRotationLagPitchSpeedMin,
-          this.RelativeRotationLagPitchSpeedMax,
-          this.RelativeRotationLagPitchCurve.GetCurrentValue(
-            Math.abs(S) / this.RelativeRotationLagPitchAngleRange,
+        ));
+      this.Camera.IsInNormalGravityMode()
+        ? (this.Camera.DesiredCamera.ArmRotation.Yaw =
+            MathUtils_1.MathUtils.RotatorAxisInterpTo(
+              this.Camera.CurrentCamera.ArmRotation.Yaw,
+              this.Ele.Yaw,
+              t,
+              _ * M,
+            ))
+        : CameraUtility_1.CameraUtility.SetYawInGravity(
+            this.Camera.DesiredCamera.ArmRotation,
+            MathUtils_1.MathUtils.RotatorAxisInterpTo(
+              v,
+              this.Ele.Yaw,
+              t,
+              _ * M,
+            ),
+            this.Camera.DesiredCamera.ArmRotation,
           ),
-        );
-      (this.Camera.DesiredCamera.ArmRotation.Yaw =
-        MathUtils_1.MathUtils.RotatorAxisInterpTo(
-          l.Yaw,
-          this.Ele.Yaw,
-          o,
-          n * g,
-        )),
-        (this.Camera.DesiredCamera.ArmRotation.Pitch =
-          MathUtils_1.MathUtils.RotatorAxisInterpTo(
-            l.Pitch,
-            this.Ele.Pitch,
-            o,
-            c,
-          )),
-        i &&
+        e &&
           (this.Camera.DesiredCamera.ArmRotation.Yaw =
             MathUtils_1.MathUtils.Clamp(
               this.Camera.DesiredCamera.ArmRotation.Yaw,
-              s,
-              h,
-            )),
-        (this.Camera.IsModifiedArmRotationPitch = !0),
-        (this.Camera.IsModifiedArmRotationYaw = !0);
+              a,
+              o,
+            ));
     }
   }
-  GKa(t) {
+  Stl(t, h, e, a) {
+    if (!this.Camera.IsModifiedArmRotationPitch) {
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+        (this.Ele.Pitch = this.Camera.AdjustPitch(this.xzi));
+      let i = MathUtils_1.MathUtils.WrapAngle(
+          this.Camera.CameraRotation.Pitch - this.Ele.Pitch,
+        ),
+        s = 0 <= i ? 1 : -1;
+      var o = GravityUtils_1.GravityUtils.GetRotatorInGravity(
+          this.Camera.CameraRotation,
+          this.Camera.GravityInverseQuat,
+          this.Gue,
+        ).Pitch,
+        n = GravityUtils_1.GravityUtils.GetRotatorInGravity(
+          this.Camera.CurrentCamera.ArmRotation,
+          this.Camera.GravityInverseQuat,
+          this.Gue,
+        ).Pitch;
+      if (
+        (this.Camera.IsInNormalGravityMode() ||
+          ((i = MathUtils_1.MathUtils.WrapAngle(o - this.Ele.Pitch)),
+          (s = 0 <= i ? 1 : -1)),
+        h)
+      ) {
+        if (this.YawSignAdaptionOn) {
+          let t = 0;
+          (o = a),
+            (h =
+              0 <=
+              (o = -(o *= Info_1.Info.IsInGamepad()
+                ? this.HardLockInputPitchSensitivityGamepad
+                : this.HardLockInputPitchSensitivity))
+                ? 1
+                : -1);
+          Math.abs(i) < this.RelativePitchHardMin
+            ? ((t += s * this.RelativePitchHardMin), h === s && (t += o))
+            : Math.abs(i) > this.RelativePitchHardMax
+              ? ((t += s * this.RelativePitchHardMax), h !== s && (t += o))
+              : ((a = i + o), (t += a)),
+            (t = MathUtils_1.MathUtils.Clamp(t, i - 179, i + 179)),
+            (this.Ele.Pitch = MathUtils_1.MathUtils.WrapAngle(
+              this.Ele.Pitch + t,
+            ));
+        }
+      } else
+        e ||
+          (this.Camera.IsInNormalGravityMode()
+            ? (this.Ele.Pitch = this.Camera.CurrentCamera.ArmRotation.Pitch)
+            : (this.Ele.Pitch = n));
+      h = MathUtils_1.MathUtils.Lerp(
+        this.RelativeRotationLagPitchSpeedMin,
+        this.RelativeRotationLagPitchSpeedMax,
+        this.RelativeRotationLagPitchCurve.GetCurrentValue(
+          Math.abs(i) / this.RelativeRotationLagPitchAngleRange,
+        ),
+      );
+      this.Camera.IsInNormalGravityMode()
+        ? (this.Camera.DesiredCamera.ArmRotation.Pitch =
+            MathUtils_1.MathUtils.RotatorAxisInterpTo(
+              this.Camera.CurrentCamera.ArmRotation.Pitch,
+              this.Ele.Pitch,
+              t,
+              h,
+            ))
+        : CameraUtility_1.CameraUtility.SetPitchInGravity(
+            this.Camera.DesiredCamera.ArmRotation,
+            MathUtils_1.MathUtils.RotatorAxisInterpTo(n, this.Ele.Pitch, t, h),
+            this.Camera.DesiredCamera.ArmRotation,
+          );
+    }
+  }
+  oza(t) {
     var i, s, h;
     !this.Camera.ContainsTag(-1150819426) ||
     (([s, h] =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(
-        54,
+        61,
       ).GetCameraInput()),
     0 === s && 0 === h)
       ? (this.l_e.Reset(), (this.dTn = !0))
@@ -428,7 +500,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
           ((h = Math.sqrt(s)),
           this.l_e.DivisionEqual(h),
           this.Camera.CharacterEntityHandle.Entity.GetComponent(
-            29,
+            32,
           ).ChangeShowTarget(
             this.l_e,
             this.ChangeShowTargetAngleCoefficient,
@@ -442,7 +514,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
   }
   UpdateDeactivateInternal(t) {
     var i;
-    this.z$a(),
+    this.KJa(),
       void 0 !== this.AddCameraOffsetY &&
         ((i = Math.abs(0 - this.AddCameraOffsetY)) > ARM_OFFSET_Y_SPEED * t
           ? (this.AddCameraOffsetY = MathUtils_1.MathUtils.Lerp(
@@ -455,7 +527,7 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
   ShouldSoftUnlock() {
     var [t, i] =
       this.Camera.CharacterEntityHandle.Entity.GetComponent(
-        54,
+        61,
       ).GetCameraInput();
     return (
       (t *= Info_1.Info.IsInGamepad()
@@ -469,10 +541,10 @@ class CameraFocusController extends CameraControllerBase_1.CameraControllerBase 
     );
   }
   CanMoveCameraInSoftLock() {
-    return 0 < this.Bja;
+    return 0 < this.YKa;
   }
-  z$a() {
-    this.Bja = 0;
+  KJa() {
+    this.YKa = 0;
   }
 }
 exports.CameraFocusController = CameraFocusController;

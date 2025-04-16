@@ -21,7 +21,7 @@ class SelectedFriendChatView extends UiViewBase_1.UiViewBase {
       }),
       (this.Pyt = (e) => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Chat", 8, "选择玩家", ["playerId", e]),
+          Log_1.Log.Info("Chat", 5, "选择玩家", ["playerId", e]),
           ModelManager_1.ModelManager.FriendModel.IsMyFriend(e)
             ? (EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnSelectChatFriend,
@@ -47,6 +47,7 @@ class SelectedFriendChatView extends UiViewBase_1.UiViewBase {
       this.GetLoopScrollViewComponent(0),
       e,
       this.cHe,
+      !0,
     )),
       this.bl();
   }

@@ -36,6 +36,7 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       [8, UE.UIItem],
       [9, UE.UIItem],
       [10, UE.UIItem],
+      [11, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [2, this.nqe],
@@ -47,14 +48,26 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Role",
-          38,
+          37,
           "RoleLevelUpSuccessAttributeView 打开失败,未传入界面数据",
         )
       : ((this.Pe = this.OpenParam), this.Dbt());
   }
   async OnBeforeStartAsync() {
-    (this.XHi = new StrengthUpgradeBarItem_1.StrengthUpgradeBarItem()),
-      await this.XHi.CreateByActorAsync(this.GetItem(10).GetOwner());
+    this.GetItem(10).SetUIActive(!1), this.GetItem(11).SetUIActive(!1);
+    var e = this.Pe.StrengthUpgradeData;
+    if (e) {
+      let t = this.GetItem(10);
+      switch (e.AttributeId) {
+        case 1:
+          t = this.GetItem(10);
+          break;
+        case 10:
+          t = this.GetItem(11);
+      }
+      (this.XHi = new StrengthUpgradeBarItem_1.StrengthUpgradeBarItem()),
+        await this.XHi.CreateThenShowByActorAsync(t.GetOwner());
+    }
   }
   OnStart() {
     var t = this.GetItem(5),
@@ -112,8 +125,7 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
   }
   Vuo() {
     var t = this.Pe.StrengthUpgradeData;
-    void 0 !== t && this.XHi.Update(t),
-      this.GetItem(10).SetUIActive(void 0 !== t);
+    void 0 !== t && this.XHi.Update(t);
   }
   Huo() {
     void 0 === this.Pe.AttributeInfo || 0 === this.Pe.AttributeInfo.length

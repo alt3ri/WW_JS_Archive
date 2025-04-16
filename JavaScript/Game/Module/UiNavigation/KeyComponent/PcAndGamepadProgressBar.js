@@ -26,15 +26,17 @@ class PcAndGamepadProgressBar {
       this.SetProgressPercent(0);
   }
   SetProgressPercent(s) {
-    this.SetPercent(s), this.W0i();
+    this.SetPercent(s), this.RefreshProgressVisible();
   }
   SetPercent(s) {
     (Info_1.Info.IsInGamepad() ? this.vwo : this.pwo)?.SetPercent(s);
   }
   SetProgressVisible(s) {
-    s ? this.W0i() : (this.pwo?.SetActive(!1), this.vwo?.SetActive(!1));
+    s
+      ? this.RefreshProgressVisible()
+      : (this.pwo?.SetActive(!1), this.vwo?.SetActive(!1));
   }
-  W0i() {
+  RefreshProgressVisible() {
     var s = Info_1.Info.IsInGamepad(),
       e = !s;
     this.pwo?.GetActive() !== e && this.pwo?.SetActive(e),

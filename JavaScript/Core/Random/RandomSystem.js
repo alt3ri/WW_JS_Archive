@@ -20,7 +20,7 @@ class RandomSystem {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          20,
+          19,
           "GetNextRandomSeed",
           ["seed", e],
           ["newSeed", a],
@@ -35,7 +35,7 @@ class RandomSystem {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
-          20,
+          19,
           "IterateRandomSeed",
           ["seed", e],
           ["newSeed", a],

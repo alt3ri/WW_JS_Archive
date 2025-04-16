@@ -3,7 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../GlobalData"),
-  CharacterController_1 = require("../../../NewWorld/Character/CharacterController");
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsDecoratorDistance extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -13,52 +14,60 @@ class TsDecoratorDistance extends UE.BTDecorator_BlueprintBase {
       (this.TsDistance = 0),
       (this.TsCompareType = 0);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.TsDistance = 0),
+      (this.TsCompareType = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
       (this.TsDistance = this.Distance),
       (this.TsCompareType = this.CompareType));
   }
-  PerformConditionCheckAI(r, e) {
-    var t = r.AiController;
+  PerformConditionCheckAI(e, r) {
+    var t = e.AiController;
     if (t) {
       this.InitTsVariables();
       var t = t.CharActorComp,
-        s = t.Entity.CheckGetComponent(49);
-      if (0 !== s.RoleId) {
-        var i =
-          CharacterController_1.CharacterController.GetCharacterActorComponentById(
-            s.RoleId,
+        s = t.Entity.CheckGetComponent(0),
+        s = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
+          s.GetSummonerId(),
+        );
+      if (0 !== s) {
+        s =
+          ControllerHolder_1.ControllerHolder.CharacterController.GetCharacterActorComponentById(
+            s,
           );
-        if (!i)
+        if (!s)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "BehaviorTree",
                 6,
                 "主人已经被销毁",
-                ["EntityId", s?.Entity.Id],
+                ["EntityId", t?.Entity.Id],
                 ["Self", t.Actor.GetName()],
               ),
             !1
           );
-        var a = UE.Vector.DistSquared(i.ActorLocation, t.ActorLocation);
+        var i = UE.VectorDouble.DistSquared(s.ActorLocation, t.ActorLocation);
         switch (this.TsCompareType) {
           case 0:
-            if (a === this.TsDistance * this.TsDistance) return !0;
+            if (i === this.TsDistance * this.TsDistance) return !0;
             break;
           case 1:
-            if (a < this.TsDistance * this.TsDistance) return !0;
+            if (i < this.TsDistance * this.TsDistance) return !0;
             break;
           case 2:
-            if (a > this.TsDistance * this.TsDistance) return !0;
+            if (i > this.TsDistance * this.TsDistance) return !0;
         }
       }
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
           "Type",
-          r.GetClass().GetName(),
+          e.GetClass().GetName(),
         ]);
     return !1;
   }

@@ -19,10 +19,14 @@ class UiBehaviorBaseProxy extends ComponentAction_1.ComponentAction {
     return this.U_r.OnBeforeUiHide?.(), Promise.resolve();
   }
   async OnDestroyAsyncImplement() {
-    return this.U_r.OnBeforeDestroy?.(), (this.U_r = void 0), Promise.resolve();
+    return (
+      void 0 !== this.U_r &&
+        (this.U_r.OnBeforeDestroy?.(), (this.U_r = void 0)),
+      Promise.resolve()
+    );
   }
   OnDestroyImplementCompatible() {
-    this.U_r.OnBeforeDestroy?.(), (this.U_r = void 0);
+    void 0 !== this.U_r && (this.U_r.OnBeforeDestroy?.(), (this.U_r = void 0));
   }
 }
 exports.UiBehaviorBaseProxy = UiBehaviorBaseProxy;

@@ -18,8 +18,10 @@ class RogueCharacterRoomSelectView extends UiViewBase_1.UiViewBase {
       (this.Sui = void 0),
       (this.yra = -1),
       (this.Ira = () => {
+        var e = this.OpenParam;
         ControllerHolder_1.ControllerHolder.RoguelikeController.RoguelikeRoleRoomSelectRequest(
           this.yra,
+          e.Index,
         ).then(() => {
           this.CloseMe();
         });
@@ -54,8 +56,9 @@ class RogueCharacterRoomSelectView extends UiViewBase_1.UiViewBase {
           var e = new RogueCharacterRoomItem();
           return (e.ClickCallback = this.Tra), e;
         },
-      )),
-      await this.Sui.RefreshByDataAsync(this.OpenParam),
+      ));
+    var e = this.OpenParam;
+    await this.Sui.RefreshByDataAsync(e.RoomIdList),
       this.GetButton(3).SetSelfInteractive(!1);
   }
 }
@@ -107,12 +110,12 @@ class RogueCharacterRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
     e =
       ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueRoomShowConfig(e);
     if (e) {
-      var s = ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueBuffConfig(
+      var r = ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueBuffConfig(
         e.BuffId,
       );
-      if (s) {
+      if (r) {
         let i = void 0;
-        s.BuffElement.forEach((e, t) => {
+        r.BuffElement.forEach((e, t) => {
           i = new Array(e).fill(t);
         }),
           i && this.Sui?.RefreshByData(i),

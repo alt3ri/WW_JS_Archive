@@ -68,7 +68,7 @@ let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelC
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Character",
-        44,
+        43,
         "检测出该Actor有空的动画LinkGraph节点,将会影响同步,GAS等功能,请找对应策划修复",
         ["Actor", this.n$t?.Actor?.GetName()],
         ["AnimInstance", t?.GetAnimInstance()?.GetName()],

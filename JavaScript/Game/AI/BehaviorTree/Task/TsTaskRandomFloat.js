@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskRandomFloat extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -11,6 +11,13 @@ class TsTaskRandomFloat extends TsTaskAbortImmediatelyBase_1.default {
       (this.Min = 0),
       (this.Max = 0),
       (this.BlackboardKeyWriteTo = ""),
+      (this.IsInitTsVariables = !1),
+      (this.TsMin = 0),
+      (this.TsMax = 0),
+      (this.TsBlackboardKeyWriteTo = "");
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsMin = 0),
       (this.TsMax = 0),
@@ -25,10 +32,10 @@ class TsTaskRandomFloat extends TsTaskAbortImmediatelyBase_1.default {
   }
   ReceiveTickAI(t, s, e) {
     this.InitTsVariables();
-    var a = t.AiController;
-    a
-      ? (BlackboardController_1.BlackboardController.SetFloatValueByEntity(
-          a.CharAiDesignComp.Entity.Id,
+    var i = t.AiController;
+    i
+      ? (ControllerHolder_1.ControllerHolder.BlackboardController.SetFloatValueByEntity(
+          i.CharAiDesignComp.Entity.Id,
           this.TsBlackboardKeyWriteTo,
           MathUtils_1.MathUtils.GetRandomRange(this.TsMin, this.TsMax),
         ),

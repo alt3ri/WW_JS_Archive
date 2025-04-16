@@ -1,16 +1,21 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelGeneralController = void 0);
-const Info_1 = require("../../Core/Common/Info"),
+const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
   ConditionById_1 = require("../../Core/Define/ConfigQuery/ConditionById"),
   ConditionGroupById_1 = require("../../Core/Define/ConfigQuery/ConditionGroupById"),
   ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
   TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
+  FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  ErrorCodeController_1 = require("../Module/ErrorCode/ErrorCodeController"),
+  GlobalData_1 = require("../GlobalData"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  RenderDataManager_1 = require("../Render/Data/RenderDataManager"),
   CodeDefineLevelConditionInfo_1 = require("./LevelConditions/CodeDefineLevelConditionInfo"),
   LevelConditionCenter_1 = require("./LevelConditions/LevelConditionCenter"),
   LevelConditionRegistry_1 = require("./LevelConditions/LevelConditionRegistry"),
@@ -20,9 +25,11 @@ const Info_1 = require("../../Core/Common/Info"),
 class LevelGeneralController extends ControllerBase_1.ControllerBase {
   static pie() {
     (this.PUe = new Map()),
-      (this.PDa = new Map()),
+      (this.qDa = new Map()),
       (this.xUe = new Map()),
       (this.wUe = new Map()),
+      (this.Cih = new Map()),
+      (this.$ih = new Map()),
       (this.LevelEventLogOpen = !0),
       Info_1.Info.IsBuildDevelopmentOrDebug || (this.LevelEventLogOpen = !1);
   }
@@ -47,6 +54,7 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
         this.GUe,
       ),
       this.pie(),
+      this.AddAttributeEvent(),
       !0
     );
   }
@@ -70,8 +78,60 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.AddEntity,
         this.GUe,
       ),
+      this.RemoveAttributeEvent(),
       !0
     );
+  }
+  static AddAttributeEvent() {
+    ControllerHolder_1.ControllerHolder.FormationAttributeController.AddValueListener(
+      11,
+      this.hcc,
+    ),
+      ControllerHolder_1.ControllerHolder.FormationAttributeController.AddMaxListener(
+        11,
+        this.lcc,
+      );
+  }
+  static RemoveAttributeEvent() {
+    ControllerHolder_1.ControllerHolder.FormationAttributeController.RemoveValueListener(
+      11,
+      this.hcc,
+    ),
+      ControllerHolder_1.ControllerHolder.FormationAttributeController.RemoveMaxListener(
+        11,
+        this.lcc,
+      );
+  }
+  static _cc() {
+    var e,
+      t,
+      n,
+      i =
+        RenderDataManager_1.RenderDataManager.Get().GetSceneInteractionMaterialParameterCollection();
+    i?.IsValid() &&
+      ((e =
+        ControllerHolder_1.ControllerHolder.FormationAttributeController.GetValue(
+          11,
+        )),
+      (t =
+        ControllerHolder_1.ControllerHolder.FormationAttributeController.GetMax(
+          11,
+        )),
+      (n = UE.KismetMaterialLibrary.GetScalarParameterValue(
+        GlobalData_1.GlobalData.GameInstance.GetWorld(),
+        i,
+        FNameUtil_1.FNameUtil.GetDynamicFName("FlameRaceStrength"),
+      )),
+      UE.KuroMaterialParameterCollectionManager.SetScalarParameterValueTimeCurve(
+        GlobalData_1.GlobalData.GameInstance.GetWorld(),
+        i,
+        FNameUtil_1.FNameUtil.GetDynamicFName("FlameRaceStrength"),
+        e / t,
+        n,
+        0.1,
+        GlobalData_1.GlobalData.GameInstance.GetWorld(),
+        !1,
+      ));
   }
   static GetBehaviorTreeRunningActions() {
     if (this.PUe.size) {
@@ -102,20 +162,20 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       let t = r;
       for (let e = r - 1; -1 < e; e--) {
         var l = n[e],
-          v = EventTempData.Create();
-        (v.EventType = l.Name || l.Params.constructor.name),
-          (v.EventParamsNew = l.Params),
-          (v.IsAsync = l.Async ?? !1),
-          1 === i.Type && (v.EventEntityId = i.EntityId),
-          (v.Context = i),
-          (v.ActionIndex = --t),
-          (v.ActionId = l.ActionId ?? 0),
-          s.push(v);
+          a = EventTempData.Create();
+        (a.EventType = l.Name || l.Params.constructor.name),
+          (a.EventParamsNew = l.Params),
+          (a.IsAsync = l.Async ?? !1),
+          1 === i.Type && (a.EventEntityId = i.EntityId),
+          (a.Context = i),
+          (a.ActionIndex = --t),
+          (a.ActionId = l.ActionId ?? 0),
+          s.push(a);
       }
       this.HandleNextAction(e);
     }
   }
-  static ExecuteActionsByServerNotify(i, r, e, o, s, l, n) {
+  static ExecuteActionsByServerNotify(i, r, e, o, s, l, n, a) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Level",
@@ -163,21 +223,21 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
           );
       }
       v = o;
-      n && this.xUe.set(v, n);
+      a && this.xUe.set(v, a), this.Cih.set(v, n), n && this.$ih.set(v, s);
       let t = this.PUe.get(v);
       if (t)
         for (let e = s; e <= l; e++) {
-          var a = i[e],
-            h = EventTempData.Create();
-          (h.EventType = a.Name || a.Params.constructor.name),
-            (h.EventParamsNew = a.Params),
-            (h.IsAsync = a.Async ?? !1),
-            1 === r.Type && (h.EventEntityId = r.EntityId),
-            (h.Context = r),
-            (h.ActionIndex = e),
-            (h.ActionId = a.ActionId ?? 0),
-            (h.SessionId = o),
-            t.unshift(h);
+          var h = i[e],
+            _ = EventTempData.Create();
+          (_.EventType = h.Name || h.Params.constructor.name),
+            (_.EventParamsNew = h.Params),
+            (_.IsAsync = h.Async ?? !1),
+            1 === r.Type && (_.EventEntityId = r.EntityId),
+            (_.Context = r),
+            (_.ActionIndex = e),
+            (_.ActionId = h.ActionId ?? 0),
+            (_.SessionId = o),
+            t[0]?.ActionIndex >= _.ActionIndex || t.unshift(_);
         }
       else {
         (t = new Array()), this.PUe.set(v, t);
@@ -194,11 +254,11 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
             (C.SessionId = o),
             t.push(C);
         }
-        n = new Array();
-        n.push(e),
-          n.push(o),
-          n.push(s),
-          this.wUe.set(v, n),
+        a = new Array();
+        a.push(e),
+          a.push(o),
+          a.push(s),
+          this.wUe.set(v, a),
           this.HandleNextAction(v);
       }
     }
@@ -213,7 +273,7 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       ]),
       t && 0 < t.length
         ? ((t = t.pop()), this.kUe(e, t))
-        : (this.PDa.delete(e), this.PUe.delete(e), this.VUe(e));
+        : (this.qDa.delete(e), this.PUe.delete(e), this.VUe(e));
   }
   static VUe(e, t = "") {
     var n,
@@ -230,10 +290,11 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
           ]);
     }
     i &&
+      this.Cih.get(e) &&
       (this.wUe.delete(e),
       (r = i[0]),
       (n = i[1]),
-      (i = i[2]),
+      (i = this.$ih.get(e) ?? i[2]),
       this.HandleFinishActions(r, n, i, t));
     var r = this.xUe.get(e);
     r && (r(1), this.xUe.delete(e));
@@ -249,21 +310,21 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
     }
     var s,
       l = this.wUe.get(e),
-      v =
+      a =
         (l &&
-          ((v = `PlayerId：${l[0]} SessionId：${l[1]} StartIndex：` + l[2]),
+          ((a = `PlayerId：${l[0]} SessionId：${l[1]} StartIndex：` + l[2]),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("LevelEvent", 7, "行为组执行失败，准备删除", [
               "ContextArray",
-              v,
+              a,
             ]),
           this.wUe.delete(e),
-          (v = l[0]),
+          (a = l[0]),
           (s = l[1]),
           (l = l[2]),
-          this.HandleFinishActions(v, s, l, "行为:" + t + " 执行失败")),
+          this.HandleFinishActions(a, s, l, "行为:" + t + " 执行失败")),
         this.xUe.get(e));
-    v && (v(n ? 3 : 2), this.xUe.delete(e)),
+    a && (a(n ? 3 : 2), this.xUe.delete(e)),
       LevelEventCenter_1.LevelEventCenter.RemoveEventGroup(e),
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -287,7 +348,7 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
   }
   static StopActionsExecute(e) {
     var t = this.PUe?.get(e);
-    t?.splice(0, t.length), this.PDa?.get(e)?.Finish();
+    t?.splice(0, t.length), this.qDa?.get(e)?.Finish();
   }
   static CheckCondition(n, i, e = !0, ...r) {
     if ("None" === n) return !0;
@@ -358,14 +419,16 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
         (i.ActionIndex = t.ActionIndex),
         LevelEventCenter_1.LevelEventCenter.IsNeedTick(n) && i.OpenTick();
       try {
-        this.PDa.set(e, i),
+        this.qDa.set(e, i),
           t.EventParamsNew &&
             i.ExecuteAction(t.EventParamsNew, t.Context, t.ActionId),
           i.IsWaitEnd || i.Finish();
       } catch (e) {
         i.Failure();
         i = "行为节点：" + n + "逻辑执行异常，请检查报错信息";
-        ErrorCodeController_1.ErrorCodeController.OpenConfirmBoxByText(i),
+        ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenConfirmBoxByText(
+          i,
+        ),
           e instanceof Error &&
             Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack("LevelEvent", 7, i, e, [
@@ -383,7 +446,7 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "LevelCondition",
-            17,
+            16,
             `条件组使用场合不恰当!!!
             该组中包含的条件类型必须要有客户端实现，
             否则条件组的判定结果始终为false，可能会出现不合预期的情况`,
@@ -409,11 +472,17 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
     LevelEventCenter_1.LevelEventCenter.Tick(e);
   }
 }
-((exports.LevelGeneralController =
-  LevelGeneralController).IsTickEvenPausedInternal = !0),
-  (LevelGeneralController.PDa = void 0),
+(exports.LevelGeneralController = LevelGeneralController),
+  ((_a = LevelGeneralController).IsTickEvenPausedInternal = !0),
+  (LevelGeneralController.qDa = void 0),
   (LevelGeneralController.NUe = 0),
   (LevelGeneralController.LevelEventLogOpen = !1),
+  (LevelGeneralController.hcc = (e, t, n) => {
+    _a._cc();
+  }),
+  (LevelGeneralController.lcc = (e, t, n) => {
+    _a._cc();
+  }),
   (LevelGeneralController.BUe = (e, t) => {
     e
       ? LevelEventCenter_1.LevelEventCenter.AddToTickList(!0, t)

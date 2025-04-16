@@ -34,11 +34,12 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
       (this.UeDebugComp = void 0),
       (this.IsDebug = !1),
       (this.LastRecordLocation = Vector_1.Vector.Create()),
-      (this.FLa = !1),
-      (this.VLa = [
+      (this.WLa = !1),
+      (this.QLa = [
         Protocol_1.Aki.Protocol.kks.Proto_Monster,
         Protocol_1.Aki.Protocol.kks.Proto_Player,
         Protocol_1.Aki.Protocol.kks.Proto_Npc,
+        Protocol_1.Aki.Protocol.kks.HI_,
       ]);
   }
   OnStart() {
@@ -46,7 +47,7 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
       (this.ActorComp = this.Entity.GetComponent(1)),
       (this.IsDebug = !1),
       this.ActorComp &&
-        ((this.FLa = this.VLa.includes(
+        ((this.WLa = this.QLa.includes(
           this.ActorComp.CreatureData.GetEntityType(),
         )),
         this.LastRecordLocation.DeepCopy(this.ActorComp.ActorLocationProxy)),
@@ -66,7 +67,7 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
       this.UeDebugComp.Resigter());
   }
   MarkDebugRecord(t, e = 15, o = !1) {
-    this.FLa &&
+    this.WLa &&
       this.ActorComp &&
       (!o &&
         Vector_1.Vector.DistSquared(
@@ -93,14 +94,14 @@ let ActorDebugMovementComponent = class ActorDebugMovementComponent extends Enti
           "][CreatureDataId:" +
           (this.ActorComp?.CreatureData.GetCreatureDataId() ?? "") +
           "]"),
-        this.UeDebugComp.RecordModifyInfo(o + t, void 0, e));
+        this.UeDebugComp.RecordModifyInfo(t + o, void 0, e));
   }
   static StaticMarkDebugRecord(t, e, o = 15, i = Vector_1.Vector.ZeroVector) {
-    t.GetComponent(27).MarkDebugRecord(e, o);
+    t.GetComponent(30).MarkDebugRecord(e, o);
   }
 };
 (ActorDebugMovementComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(27)],
+  [(0, RegisterComponent_1.RegisterComponent)(30)],
   ActorDebugMovementComponent,
 )),
   (exports.ActorDebugMovementComponent = ActorDebugMovementComponent);

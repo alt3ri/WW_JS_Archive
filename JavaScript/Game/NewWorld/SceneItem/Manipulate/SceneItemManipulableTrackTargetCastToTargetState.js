@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableTrackTargetCastToTargetState = void 0);
 const UE = require("ue"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
@@ -9,10 +10,11 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   CameraController_1 = require("../../../Camera/CameraController"),
+  LevelGamePlayController_1 = require("../../../LevelGamePlay/LevelGamePlayController"),
   SceneItemManipulableCastState_1 = require("./SceneItemManipulableCastState");
 class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
-  constructor(t, e) {
-    super(t, e),
+  constructor() {
+    super(...arguments),
       (this.FPo = void 0),
       (this.$oi = void 0),
       (this.Yoi = void 0),
@@ -20,8 +22,7 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
       (this.qsr = void 0),
       (this.Gsr = void 0),
       (this.Nsr = void 0),
-      (this.Knr = void 0),
-      (this.StateType = "BeCastingToTarget");
+      (this.Knr = void 0);
   }
   SetTargetActorWithPart(t, e) {
     (this.FPo = t),
@@ -65,7 +66,12 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
             e)
           : CameraController_1.CameraController.CameraRotator
         ).Vector(this.Knr),
-        this.Knr.Normalize());
+        this.Knr.Normalize(),
+        this.NeedNotifyServer) &&
+        LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
+          this.SceneItem.Entity.Id,
+          Protocol_1.Aki.Protocol.Zw_.Proto_EControlStateLockEntityThrowing,
+        );
   }
   OnTick(t) {
     super.OnTick(t), (this.Timer += t);
@@ -75,32 +81,32 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
         this.Ist);
     this.qsr?.IsValid && (i *= this.qsr.GetFloatValue(this.Timer)),
       this.Knr.Normalize();
-    var s = Vector_1.Vector.Create(),
-      r =
+    var r = Vector_1.Vector.Create(),
+      s =
         (void 0 !== this.Yoi
-          ? s.DeepCopy(this.$oi.GetSocketLocation(this.Yoi))
-          : s.DeepCopy(this.FPo.ActorLocationProxy),
+          ? r.DeepCopy(this.$oi.D_GetSocketLocation(this.Yoi))
+          : r.DeepCopy(this.FPo.ActorLocationProxy),
         Vector_1.Vector.Create(this.SceneItem.ActorComp.ActorLocationProxy)),
-      s = Vector_1.Vector.Create(s),
+      r = Vector_1.Vector.Create(r),
       o =
-        (s.SubtractionEqual(r),
-        s.Normalize(),
-        Vector_1.Vector.DotProduct(this.Knr, s)),
+        (r.SubtractionEqual(s),
+        r.Normalize(),
+        Vector_1.Vector.DotProduct(this.Knr, r)),
       o = Math.acos(o) * MathCommon_1.MathCommon.RadToDeg,
       o = MathUtils_1.MathUtils.Clamp(o, -e * t, e * t),
       a = Vector_1.Vector.Create(),
-      s =
-        (Vector_1.Vector.CrossProduct(this.Knr, s, a),
+      r =
+        (Vector_1.Vector.CrossProduct(this.Knr, r, a),
         this.Knr.RotateAngleAxis(o, a, this.Knr),
-        Vector_1.Vector.Create(r)),
+        Vector_1.Vector.Create(s)),
       o = Vector_1.Vector.Create(this.Knr);
     return (
       o.MultiplyEqual(i * t),
-      s.AdditionEqual(o),
-      this.SceneItem.ActorComp.SetActorLocation(s.ToUeVector()),
+      r.AdditionEqual(o),
+      this.SceneItem.ActorComp.SetActorLocation(r.ToUeVector()),
       this.SceneItem.ManipulateBaseConfig.随速度调整朝向 &&
         !this.AfterHit &&
-        ((a = UE.KismetMathLibrary.FindLookAtRotation(
+        ((a = UE.KismetMathLibrary.D_FindLookAtRotation(
           this.SceneItem.ActorComp.ActorLocation,
           this.SceneItem.ActorComp.ActorLocation.op_Addition(
             this.Knr.ToUeVector(),

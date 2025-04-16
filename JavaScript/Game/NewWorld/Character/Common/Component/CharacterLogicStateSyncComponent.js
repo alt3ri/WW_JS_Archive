@@ -1,20 +1,20 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, i, o) {
-    var s,
+  function (t, e, i, s) {
+    var o,
       r = arguments.length,
       a =
         r < 3
           ? e
-          : null === o
-            ? (o = Object.getOwnPropertyDescriptor(e, i))
-            : o;
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      a = Reflect.decorate(t, e, i, o);
+      a = Reflect.decorate(t, e, i, s);
     else
       for (var h = t.length - 1; 0 <= h; h--)
-        (s = t[h]) && (a = (r < 3 ? s(a) : 3 < r ? s(e, i, a) : s(e, i)) || a);
+        (o = t[h]) && (a = (r < 3 ? o(a) : 3 < r ? o(e, i, a) : o(e, i)) || a);
     return 3 < r && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -22,8 +22,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
   CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController"),
   CombatLog_1 = require("../../../../Utils/CombatLog");
@@ -35,6 +37,7 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
       (this.T9r = void 0),
       (this.L9r = []),
       (this.D9r = []),
+      (this.Xjt = !1),
       (this.Inited = !1),
       (this.OnSwitchControl = (t) => {
         t && !this.Inited && (this.R9r(), (this.Inited = !0));
@@ -55,13 +58,15 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
                 break;
               }
             e &&
-              (((t = Protocol_1.Aki.Protocol.V3n.create()).rWn =
+              (((t = Protocol_1.Aki.Protocol.ue_.create()).rWn =
                 Protocol_1.Aki.Protocol.Eys.create()),
+              this.Xjt &&
+                (t.xx_ = MathUtils_1.MathUtils.NumberToLong(this.utc())),
               (this.D9r[0] = t.rWn.LWn = i.PositionState),
               (this.D9r[1] = t.rWn.DWn = i.MoveState),
               (this.D9r[2] = t.rWn.AWn = i.DirectionState),
               (this.D9r[3] = t.rWn.UWn = i.PositionSubState),
-              CombatMessage_1.CombatNet.Call(27948, this.Entity, t, () => {}));
+              CombatMessage_1.CombatNet.Send(19901, this.Entity, t));
           }
         }
       });
@@ -69,7 +74,8 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
   OnStart() {
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.I5r = this.Entity.CheckGetComponent(161)),
+      (this.I5r = this.Entity.CheckGetComponent(173)),
+      (this.Xjt = this.Entity.GetComponent(0).IsRole()),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharSwitchControl,
@@ -109,13 +115,14 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
     );
   }
   R9r() {
-    var t = Protocol_1.Aki.Protocol.F3n.create();
-    (t.RWn = Protocol_1.Aki.Protocol.Eys.create()),
+    var t = Protocol_1.Aki.Protocol.ce_.create();
+    this.Xjt && (t.xx_ = MathUtils_1.MathUtils.NumberToLong(this.utc())),
+      (t.RWn = Protocol_1.Aki.Protocol.Eys.create()),
       (t.RWn.LWn = this.I5r.PositionState),
       (t.RWn.DWn = this.I5r.MoveState),
       (t.RWn.AWn = this.I5r.DirectionState),
       (t.RWn.UWn = this.I5r.PositionSubState),
-      CombatMessage_1.CombatNet.Call(22557, this.Entity, t, () => {});
+      CombatMessage_1.CombatNet.Send(27260, this.Entity, t);
   }
   A9r(t) {
     this.P9r(0, t.LWn),
@@ -144,11 +151,19 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
     }
   }
   static LogicStateInitNotify(t, e) {
-    t?.GetComponent(56)?.A9r(e.RWn);
+    t?.GetComponent(63)?.A9r(e.RWn);
+  }
+  utc() {
+    var t = this.Hte?.CreatureData?.GetPlayerId() ?? 0;
+    return (
+      ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerData(t)
+        ?.GetCurrentGroup()
+        ?.GetCurrentRole()?.CreatureDataId ?? 0
+    );
   }
   static SwitchLogicStateNotify(t, e) {
     t?.GetComponent(3)?.IsMoveAutonomousProxy ||
-      ((t = t?.GetComponent(56)) &&
+      ((t = t?.GetComponent(63)) &&
         e.rWn &&
         (t.P9r(0, e.rWn.LWn),
         t.P9r(1, e.rWn.DWn),
@@ -157,19 +172,19 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("qFn")],
+  [CombatMessage_1.CombatNet.Listen("qFn", !0)],
   CharacterLogicStateSyncComponent,
   "LogicStateInitNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("GFn")],
+    [CombatMessage_1.CombatNet.Listen("GFn", !0)],
     CharacterLogicStateSyncComponent,
     "SwitchLogicStateNotify",
     null,
   ),
   (CharacterLogicStateSyncComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(56)],
+    [(0, RegisterComponent_1.RegisterComponent)(63)],
     CharacterLogicStateSyncComponent,
   )),
   (exports.CharacterLogicStateSyncComponent = CharacterLogicStateSyncComponent);

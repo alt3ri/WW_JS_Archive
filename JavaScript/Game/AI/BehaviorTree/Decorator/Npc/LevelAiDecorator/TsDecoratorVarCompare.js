@@ -5,8 +5,8 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   IVar_1 = require("../../../../../../UniverseEditor/Interface/IVar"),
   GlobalData_1 = require("../../../../../GlobalData"),
-  ModelManager_1 = require("../../../../../Manager/ModelManager"),
-  BlackboardController_1 = require("../../../../../World/Controller/BlackboardController");
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../../Manager/ModelManager");
 class TsDecoratorVarCompare extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
@@ -19,6 +19,13 @@ class TsDecoratorVarCompare extends UE.BTDecorator_BlueprintBase {
       (this.TsTargetVarContext = void 0),
       (this.Entity = void 0);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.TsCheckType = 0),
+      (this.TsSourceVarContext = void 0),
+      (this.TsTargetVarContext = void 0),
+      (this.Entity = void 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -26,14 +33,14 @@ class TsDecoratorVarCompare extends UE.BTDecorator_BlueprintBase {
       (this.TsSourceVarContext = this.SourceVarContext),
       (this.TsTargetVarContext = this.TargetVarContext));
   }
-  PerformConditionCheckAI(r, e) {
-    var t = r.AiController;
+  PerformConditionCheckAI(e, r) {
+    var t = e.AiController;
     if (!t)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
             "Type",
-            r.GetClass().GetName(),
+            e.GetClass().GetName(),
           ]),
         !1
       );
@@ -50,112 +57,119 @@ class TsDecoratorVarCompare extends UE.BTDecorator_BlueprintBase {
       return !1;
     if (this.TsSourceVarContext.Type !== this.TsTargetVarContext.Type)
       return !1;
-    var a = this.GetVarValue(this.TsSourceVarContext),
-      s = this.GetVarValue(this.TsTargetVarContext);
-    if (void 0 === a || void 0 === s) return !1;
+    var s = this.GetVarValue(this.TsSourceVarContext),
+      a = this.GetVarValue(this.TsTargetVarContext);
+    if (void 0 === s || void 0 === a) return !1;
     switch (this.TsCheckType) {
       case 0:
-        return a === s;
+        return s === a;
       case 1:
-        return a !== s;
+        return s !== a;
       case 2:
-        return a < s;
-      case 3:
-        return a <= s;
-      case 4:
         return s < a;
-      case 5:
+      case 3:
         return s <= a;
+      case 4:
+        return a < s;
+      case 5:
+        return a <= s;
       default:
         return !1;
     }
   }
-  GetVarValue(r) {
-    switch (r.VarRefSource) {
+  GetVarValue(e) {
+    switch (e.VarRefSource) {
       case "Constant":
-        return this.ParseConstantValue(r);
+        return this.ParseConstantValue(e);
       case "Global":
-        return ModelManager_1.ModelManager.WorldModel?.WorldStateMap.get(r.Key);
+        return ModelManager_1.ModelManager.WorldModel?.GetWorldState(e.Key);
       case "Other":
-        var e = this.ParseOtherValue(r.Key, r.RefId, r.VarRefType);
-        return this.ParseValue(e);
+        return this.ParseOtherValue(e);
       case "Self":
-        return r.IsClientVariable
-          ? this.GetClientValue(r)
-          : ((e = this.Entity?.GetComponent(0)?.GetEntityVar(r.Key)),
-            this.ParseValue(e));
+        return this.ParseSelfValue(e);
     }
   }
-  GetClientValue(r) {
+  GetClientValue(e, r) {
     switch (r.Type) {
       case "Boolean":
-        return BlackboardController_1.BlackboardController.GetBooleanValueByEntity(
-          this.Entity.Id,
+        return ControllerHolder_1.ControllerHolder.BlackboardController.GetBooleanValueByEntity(
+          e.Id,
           r.Key,
         );
       case "Float":
-        return BlackboardController_1.BlackboardController.GetFloatValueByEntity(
-          this.Entity.Id,
+        return ControllerHolder_1.ControllerHolder.BlackboardController.GetFloatValueByEntity(
+          e.Id,
           r.Key,
         );
       case "Int":
-        return BlackboardController_1.BlackboardController.GetIntValueByEntity(
-          this.Entity.Id,
+        return ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
+          e.Id,
           r.Key,
         );
       case "String":
-        return BlackboardController_1.BlackboardController.GetStringValueByEntity(
-          this.Entity.Id,
+        return ControllerHolder_1.ControllerHolder.BlackboardController.GetStringValueByEntity(
+          e.Id,
           r.Key,
         );
       default:
         return;
     }
   }
-  ParseConstantValue(r) {
-    switch (r.Type) {
+  ParseConstantValue(e) {
+    switch (e.Type) {
       case "Boolean":
-        return r.BoolValue;
+        return e.BoolValue;
       case "Float":
-        return r.FloatValue;
+        return e.FloatValue;
       case "Int":
-        return r.IntValue;
+        return e.IntValue;
       case "String":
-        return r.StringValue;
+        return e.StringValue;
       default:
         return;
     }
   }
-  ParseOtherValue(r, e, t) {
-    switch (t) {
+  ParseSelfValue(e) {
+    return e.IsClientVariable
+      ? this.GetClientValue(this.Entity, e)
+      : ((e = this.Entity?.GetComponent(0)?.GetEntityVar(e.Key)),
+        this.ParseValue(e));
+  }
+  ParseOtherValue(e) {
+    var r = e.Key,
+      t = e.RefId;
+    switch (e.VarRefType) {
       case "Entity":
-        var a =
-          ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(e);
-        if (a) return a.Entity?.GetComponent(0)?.GetEntityVar(r);
+        var s =
+          ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(t);
+        if (s)
+          return e.IsClientVariable
+            ? this.GetClientValue(s.Entity, e)
+            : ((s = s.Entity?.GetComponent(0)),
+              this.ParseValue(s?.GetEntityVar(r)));
         break;
       case "Quest":
-        return ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-          e,
-        )?.Tree?.GetTreeVarByKey(r);
+        s = ModelManager_1.ModelManager.QuestNewModel.GetQuest(t)?.Tree;
+        return this.ParseValue(s?.GetTreeVarByKey(r));
       case "LevelPlay":
-        return ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
-          e,
-        )?.Tree?.GetTreeVarByKey(r);
+        s =
+          ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(t)?.Tree;
+        return this.ParseValue(s?.GetTreeVarByKey(r));
       default:
         return;
     }
   }
-  ParseValue(r) {
-    if (r)
-      switch ((0, IVar_1.getVarTypeByIndex)(r.iTs)) {
+  ParseValue(e) {
+    if (e)
+      switch ((0, IVar_1.getVarTypeByIndex)(e.iTs)) {
         case "Boolean":
-          return r.rTs;
+          return e.rTs;
         case "Float":
-          return r.sTs;
+          return e.sTs;
         case "Int":
-          return MathUtils_1.MathUtils.LongToNumber(r.oTs);
+          return MathUtils_1.MathUtils.LongToNumber(e.oTs);
         case "String":
-          return r.nTs;
+          return e.nTs;
         default:
           return;
       }

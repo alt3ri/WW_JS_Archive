@@ -21,6 +21,13 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
       (this.LastCheckResult = !1),
       (this.LastCheckTimeStamp = -0);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.SocketHeightInternal = void 0),
+      (this.TsTraceElement = void 0),
+      (this.LastCheckResult = !1),
+      (this.LastCheckTimeStamp = -0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -32,7 +39,7 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
     if (!(e instanceof TsAiController_1.default))
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             e.GetClass().GetName(),
           ]),
@@ -45,17 +52,17 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
     )
       return this.LastCheckResult;
     this.LastCheckTimeStamp = Time_1.Time.WorldTime;
-    var r,
-      i,
+    var i,
+      r,
       o = e.AiController.CharActorComp.SkeletalMesh,
       s = Vector_1.Vector.Create();
-    let n = !0;
-    for ([r, i] of this.SocketHeightInternal)
+    let h = !0;
+    for ([i, r] of this.SocketHeightInternal)
       s.FromUeVector(
-        o.GetSocketLocation(FNameUtil_1.FNameUtil.GetDynamicFName(r)),
+        o.D_GetSocketLocation(FNameUtil_1.FNameUtil.GetDynamicFName(i)),
       ),
-        (n = n && this.CheckInbound(s, i));
-    return (this.LastCheckResult = n);
+        (h = h && this.CheckInbound(s, r));
+    return (this.LastCheckResult = h);
   }
   InitTraceElement() {
     this.TsTraceElement ||
@@ -73,9 +80,9 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
       var t = this.SocketHeight.Num();
       if (0 < t)
         for (let e = 0; e < t; e++) {
-          var r = this.SocketHeight.GetKey(e),
-            i = this.SocketHeight.Get(r);
-          this.SocketHeightInternal.set(r, i);
+          var i = this.SocketHeight.GetKey(e),
+            r = this.SocketHeight.Get(i);
+          this.SocketHeightInternal.set(i, r);
         }
     }
   }
@@ -84,13 +91,13 @@ class TsDecoratorCheckInbound extends UE.BTDecorator_BlueprintBase {
       this.TsTraceElement,
       e,
     );
-    var r = Vector_1.Vector.Create(),
+    var i = Vector_1.Vector.Create(),
       t =
-        (Vector_1.Vector.DownVectorProxy.Multiply(t, r),
-        r.AdditionEqual(e),
+        (Vector_1.Vector.DownVectorProxy.Multiply(t, i),
+        i.AdditionEqual(e),
         TraceElementCommon_1.TraceElementCommon.SetEndLocation(
           this.TsTraceElement,
-          r,
+          i,
         ),
         TraceElementCommon_1.TraceElementCommon.LineTrace(
           this.TsTraceElement,

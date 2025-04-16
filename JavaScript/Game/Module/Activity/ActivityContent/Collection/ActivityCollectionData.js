@@ -88,6 +88,7 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
         DataPageList: [
           { DataList: Array.from(this.MNe.values()).sort(this.SNe) },
         ],
+        Source: "Collection",
       }
     );
   }

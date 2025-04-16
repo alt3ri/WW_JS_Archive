@@ -114,7 +114,7 @@ class BuffExtraEffectLibrary {
         case 14:
           s.Requirements.push({
             Type: i,
-            BuffId: BigInt(u[0]),
+            BuffId: Number(u[0]),
             RequireTargetType: Number(u[1]),
             MinStack: Number(u[2]),
             MaxStack: Number(u[3]),
@@ -138,11 +138,14 @@ class BuffExtraEffectLibrary {
             CalculationTypes: u.map((e) => Number(e)),
           });
           break;
+        case 18:
+          s.Requirements.push({ Type: i, BattleFlags: u });
+          break;
         default:
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
-              20,
+              19,
               "未知的ExtraEffect条件类型",
               ["requireType", i],
               ["buffId", e],

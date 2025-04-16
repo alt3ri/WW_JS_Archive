@@ -7,7 +7,6 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   Global_1 = require("../../../Game/Global"),
   CursorController_1 = require("../../../Game/Module/Cursor/CursorController"),
-  Platform_1 = require("../../../Launcher/Platform/Platform"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   UiNavigationDefine_1 = require("../../Module/UiNavigation/New/UiNavigationDefine");
@@ -20,7 +19,19 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
       (this.NavigationEnable = !1),
       (this.HandleWrapper = void 0),
       (this.ShowTypeChange = (t, e) => {}),
-      (this.ControllerConnectChange = (t, e, i) => {});
+      (this.ControllerConnectChange = (t, e, i) => {}),
+      (this.TouchClickThreshold = 10),
+      (this.MouseClickThreshold = 5),
+      (this.GamepadClickThreshold = 5);
+  }
+  Constructor() {
+    (this.CurrentInputModule = void 0),
+      (this.HandleWrapper = void 0),
+      (this.ShowTypeChange = (t, e) => {}),
+      (this.ControllerConnectChange = (t, e, i) => {}),
+      (this.TouchClickThreshold = 10),
+      (this.MouseClickThreshold = 5),
+      (this.GamepadClickThreshold = 5);
   }
   InitializeLguiEventSystemActor() {
     this.RefreshCurrentInputModule();
@@ -63,7 +74,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
   RegisterControllerChange() {
     (this.ControllerConnectChange = (t, e, i) => {
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("MobileInputSwitch", 11, "广播了连接通知"),
+        Log_1.Log.Debug("MobileInputSwitch", 10, "广播了连接通知"),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ControllerConnectChange,
           t,
@@ -75,7 +86,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "MobileInputSwitch",
-          11,
+          10,
           "注册了连接通知",
           ["this.EventSystem", void 0 !== this.EventSystem],
           [
@@ -87,7 +98,7 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
   UnRegisterControllerChange() {
     this.EventSystem.OnConnectionChanged.Remove(this.ControllerConnectChange),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("MobileInputSwitch", 11, "注销了连接通知");
+        Log_1.Log.Debug("MobileInputSwitch", 10, "注销了连接通知");
   }
   InputTrigger(t, e) {
     var i;
@@ -121,19 +132,27 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
           ((t.inputType = 0),
           TsLguiEventSystemActor.ChangeController(t.inputType)));
   }
+  InputScrollByGamepad(t) {
+    this.StandaloneInputModule.InputScroll(t),
+      0 !== t &&
+        1 !== (t = this.GetPointerEventData(0, !0)).inputType &&
+        ((t.inputType = 1),
+        TsLguiEventSystemActor.ChangeController(t.inputType));
+  }
   InputTouchTrigger(t, e, i) {
     let s = e;
-    Platform_1.Platform.IsMobilePlatform() &&
+    Info_1.Info.IsMobileInputModel() &&
       Info_1.Info.IsInGamepad() &&
       (s = e + UiNavigationDefine_1.MOBILE_TOUCHID_ADD_INGAMEPAD),
       this.TouchInputModule.InputTouchTrigger(t, s, i);
   }
   InputTouchMove(t, e) {
     let i = t;
-    Platform_1.Platform.IsMobilePlatform() &&
-      Info_1.Info.IsInGamepad() &&
-      (i = t + UiNavigationDefine_1.MOBILE_TOUCHID_ADD_INGAMEPAD),
-      this.TouchInputModule.InputTouchMoved(i, e);
+    Info_1.Info.IsMobileInputModel() && Info_1.Info.IsInGamepad()
+      ? ((i = t + UiNavigationDefine_1.MOBILE_TOUCHID_ADD_INGAMEPAD),
+        this.TouchInputModule.InputTouchMoved(i, e),
+        this.TouchInputModule.RefreshProcessInput())
+      : this.TouchInputModule.InputTouchMoved(i, e);
   }
   RefreshCurrentInputModule() {
     Info_1.Info.IsInTouch()
@@ -181,9 +200,29 @@ class TsLguiEventSystemActor extends UE.LGUIEventSystemActor {
     i && (i.prevMousePos = new UE.Vector2D(t, e));
   }
   SetCurrentInputKeyType(t) {
-    this.StandaloneInputModule &&
-      this.CurrentInputModule === this.StandaloneInputModule &&
-      this.StandaloneInputModule.SetCurrentInputKeyType(t);
+    (Info_1.Info.IsInTouch()
+      ? this.TouchInputModule
+      : this.StandaloneInputModule
+    )?.SetCurrentInputKeyType(t),
+      this.SetClickThresholdWithInputKeyType(t);
+  }
+  SetClickThresholdWithInputKeyType(t) {
+    let e = void 0;
+    switch (
+      ((e = Info_1.Info.IsInTouch()
+        ? this.TouchInputModule
+        : this.StandaloneInputModule),
+      t)
+    ) {
+      case 1:
+        e?.SetClickThreshold(this.MouseClickThreshold);
+        break;
+      case 3:
+        e?.SetClickThreshold(this.TouchClickThreshold);
+        break;
+      case 2:
+        e?.SetClickThreshold(this.GamepadClickThreshold);
+    }
   }
   OverrideMousePosition(t) {
     this.StandaloneInputModule &&

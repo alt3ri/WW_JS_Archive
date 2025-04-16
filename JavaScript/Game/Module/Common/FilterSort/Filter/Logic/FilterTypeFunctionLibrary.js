@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
+  FishingDefine_1 = require("../../../../Activity/ActivityContent/Fishing/FishingDefine"),
   CalabashDefine_1 = require("../../../../Calabash/CalabashDefine"),
   FilterData_1 = require("../Model/FilterData");
 class FilterTypeFunctionLibrary {
@@ -255,6 +256,115 @@ class FilterTypeFunctionLibrary {
             ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionRecoveryDesperateIcon()
             : ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionRecoveryUnDesperateIcon(),
         n = new FilterData_1.FilterItemData(t, n, e);
+      a.push(n);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetVisionGroupAttributeFilterList = (r) => {
+    var a = new Array();
+    for (const o of r) {
+      var n = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleAttributeId(
+          o,
+          15,
+        ),
+        e = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleAddType(o, 15),
+        t =
+          ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
+            n,
+          ).Icon,
+        i = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(o, 15),
+        n = new FilterData_1.FilterItemData(10 * n + e, i, t);
+      a.push(n);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetFishingTechData = (r) => {
+    var a = new Array();
+    for (const e of r) {
+      var n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "Fishing_TagName" + e,
+        ),
+        n = new FilterData_1.FilterItemData(e, n, void 0);
+      a.push(n);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetFishingTimeData = (r) => {
+    var a = new Array();
+    for (const e of r) {
+      var n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          FishingDefine_1.fishingItemTimeText[e],
+        ),
+        n = new FilterData_1.FilterItemData(e, n, void 0);
+      a.push(n);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetFishingAreaData = (r) => {
+    var a = new Array();
+    for (const e of r) {
+      var n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "Area_" + e + "_Title",
+        ),
+        n = new FilterData_1.FilterItemData(e, n, void 0);
+      a.push(n);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetFishingTypeData = (r) => {
+    var a = new Array();
+    for (const e of r) {
+      var n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          FishingDefine_1.fishingItemTypeText[e],
+        ),
+        n = new FilterData_1.FilterItemData(e, n, void 0);
+      a.push(n);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetDangoAbyssPluginQualityData = (r) => {
+    var a = new Array();
+    for (const t of r) {
+      var n =
+          ConfigManager_1.ConfigManager.DangoAbyssConfig.GetAbyssQualityById(t),
+        e = ConfigManager_1.ConfigManager.TextConfig.GetMultiTextByKey(n.Name),
+        e = new FilterData_1.FilterItemData(t, e, n?.FilterIconPath);
+      a.push(e);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetDangoAbyssPluginPropData = (r) => {
+    var a = new Array();
+    for (const t of r) {
+      var n =
+          ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
+            t,
+          ),
+        e = ConfigManager_1.ConfigManager.TextConfig.GetMultiTextByKey(n.Name),
+        e = new FilterData_1.FilterItemData(t, e, n.Icon);
+      a.push(e);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetDangoAbyssPluginTagData = (r) => {
+    var a = new Array();
+    for (const t of r) {
+      var n =
+          ConfigManager_1.ConfigManager.DangoAbyssConfig.GetDangoPluginPropDescById(
+            t,
+          ),
+        e = ConfigManager_1.ConfigManager.TextConfig.GetMultiTextByKey(n.Name),
+        e = new FilterData_1.FilterItemData(t, e, n.Icon);
+      a.push(e);
+    }
+    return a;
+  }),
+  (FilterTypeFunctionLibrary.GetDangoAbyssPluginLockStateData = (r) => {
+    var a = new Array();
+    for (const e of r) {
+      var n = 1 === e ? "AbyssItem_Lock1" : "AbyssItem_UnLock1",
+        n = ConfigManager_1.ConfigManager.TextConfig.GetMultiTextByKey(n),
+        n = new FilterData_1.FilterItemData(e, n, void 0);
       a.push(n);
     }
     return a;

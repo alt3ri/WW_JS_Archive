@@ -2,22 +2,22 @@
 var SceneItemBuffConsumerComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (e, t, n, o) {
+    function (e, t, o, n) {
       var i,
         r = arguments.length,
         s =
           r < 3
             ? t
-            : null === o
-              ? (o = Object.getOwnPropertyDescriptor(t, n))
-              : o;
+            : null === n
+              ? (n = Object.getOwnPropertyDescriptor(t, o))
+              : n;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        s = Reflect.decorate(e, t, n, o);
+        s = Reflect.decorate(e, t, o, n);
       else
         for (var h = e.length - 1; 0 <= h; h--)
           (i = e[h]) &&
-            (s = (r < 3 ? i(s) : 3 < r ? i(t, n, s) : i(t, n)) || s);
-      return 3 < r && s && Object.defineProperty(t, n, s), s;
+            (s = (r < 3 ? i(s) : 3 < r ? i(t, o, s) : i(t, o)) || s);
+      return 3 < r && s && Object.defineProperty(t, o, s), s;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemBuffConsumerComponent = void 0);
@@ -51,7 +51,7 @@ let SceneItemBuffConsumerComponent =
         (this.vtn = void 0),
         (this.Wpo = 0),
         (this.odn = ""),
-        (this.eHr = BigInt(0)),
+        (this.eHr = 0),
         (this.rdn = void 0),
         (this.JUn = void 0),
         (this.ndn = !1),
@@ -103,20 +103,19 @@ let SceneItemBuffConsumerComponent =
     }
     OnInitData(e) {
       e = e.GetParam(SceneItemBuffConsumerComponent_1)[0];
-      (this.eHr = BigInt(e.BuffId)),
-        e.BulletId && (this.odn = e.BulletId.toString());
+      (this.eHr = e.BuffId), e.BulletId && (this.odn = e.BulletId.toString());
       e = this.Entity.GetComponent(0)?.ComponentDataMap.get("Xys");
       return (this.JUn = MathUtils_1.MathUtils.LongToBigInt(e?.Xys?._Vn)), !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(187)),
+        (this.Hte = this.Entity.GetComponent(200)),
         this.Hte
-          ? ((this.wsn = this.Entity.GetComponent(181)),
+          ? ((this.wsn = this.Entity.GetComponent(194)),
             this.wsn
-              ? ((this.mBe = this.Entity.GetComponent(120)),
+              ? ((this.mBe = this.Entity.GetComponent(131)),
                 this.mBe
-                  ? ((this.vtn = this.Entity.GetComponent(77)),
+                  ? ((this.vtn = this.Entity.GetComponent(84)),
                     this.vtn
                       ? ((ModelManager_1.ModelManager.GameModeModel.IsMulti &&
                           ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
@@ -124,14 +123,14 @@ let SceneItemBuffConsumerComponent =
                           ((this.Wpo =
                             this.Hte.CreatureData.GetCreatureDataId()),
                           this.wsn.AddTag(HIT_CONDITION_TAGID),
-                          (this.Xln = this.Entity.GetComponent(141)),
+                          (this.Xln = this.Entity.GetComponent(152)),
                           this.Xln.RegisterComponent(this),
                           this.vtn.AddOnPlayerOverlapCallback(this.Q1n)),
                         !0)
                       : (Log_1.Log.CheckError() &&
                           Log_1.Log.Error(
                             "SceneGameplay",
-                            30,
+                            29,
                             "[SceneItemBuffConsumerComponent] 组件初始化失败 实体缺少RangeComponent",
                             [
                               "CreatureDataId",
@@ -144,7 +143,7 @@ let SceneItemBuffConsumerComponent =
                   : (Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "SceneGameplay",
-                        30,
+                        29,
                         "[SceneItemBuffConsumerComponent] 组件初始化失败 实体缺少SceneItemStateComponent",
                         [
                           "CreatureDataId",
@@ -157,7 +156,7 @@ let SceneItemBuffConsumerComponent =
               : (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "SceneGameplay",
-                    30,
+                    29,
                     "[SceneItemBuffConsumerComponent] 组件初始化失败 实体缺少LevelTagComponent",
                     [
                       "CreatureDataId",
@@ -170,7 +169,7 @@ let SceneItemBuffConsumerComponent =
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneGameplay",
-                30,
+                29,
                 "[SceneItemBuffConsumerComponent] 组件初始化失败 Actor Component Undefined",
               ),
             !1)
@@ -198,16 +197,16 @@ let SceneItemBuffConsumerComponent =
       var e = Global_1.Global.BaseCharacter;
       if (!e) return !1;
       var e = e.CharacterActorComponent.Entity,
-        t = e.CheckGetComponent(160);
+        t = e.CheckGetComponent(172);
       if (!t) return !1;
-      let n = 0 < t.GetBuffTotalStackById(this.eHr);
-      t = e.CheckGetComponent(175);
+      let o = 0 < t.GetBuffTotalStackById(this.eHr);
+      t = e.CheckGetComponent(188);
       return (
         t &&
-          (n ||=
+          (o ||=
             0 <
             (t.GetFormationBuffComp()?.GetBuffTotalStackById(this.eHr) ?? 0)),
-        n
+        o
       );
     }
     hdn() {
@@ -251,7 +250,7 @@ let SceneItemBuffConsumerComponent =
   });
 (SceneItemBuffConsumerComponent = SceneItemBuffConsumerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(188)],
+    [(0, RegisterComponent_1.RegisterComponent)(201)],
     SceneItemBuffConsumerComponent,
   )),
   (exports.SceneItemBuffConsumerComponent = SceneItemBuffConsumerComponent);

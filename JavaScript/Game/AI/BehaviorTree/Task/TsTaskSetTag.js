@@ -5,7 +5,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
   constructor() {
@@ -16,6 +16,16 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsCommonTag = !1),
       (this.IsAdd = !0),
       (this.SetToPlayer = !1),
+      (this.IsInitTsVariables = !1),
+      (this.TsGameplayTag = void 0),
+      (this.TsActorTag = void 0),
+      (this.TsTargetKey = ""),
+      (this.TsIsCommonTag = !1),
+      (this.TsIsAdd = !1),
+      (this.TsSetToPlayer = !1);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsGameplayTag = void 0),
       (this.TsActorTag = void 0),
@@ -46,12 +56,12 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
             s = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity;
           else if (this.TsTargetKey) {
             let t =
-              BlackboardController_1.BlackboardController.GetIntValueByWorld(
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByWorld(
                 this.TsTargetKey,
               );
             (t =
               t ||
-              BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
                 e.Entity.Id,
                 this.TsTargetKey,
               )),
@@ -79,13 +89,13 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
   }
   SetGameplayTag(t) {
     this.TsIsCommonTag &&
-      (s = t.GetComponent(181)) &&
+      (s = t.GetComponent(194)) &&
       ((i = this.TsGameplayTag.TagId),
       (e = s.HasTag(i)),
       this.TsIsAdd && !e ? s.AddTag(i) : !this.TsIsAdd && e && s.RemoveTag(i));
     var s,
       i,
-      e = t.GetComponent(190);
+      e = t.GetComponent(203);
     e &&
       ((s = this.TsGameplayTag.TagId),
       (i = e.HasTag(s)),

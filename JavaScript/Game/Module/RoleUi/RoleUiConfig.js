@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleConfig = void 0);
 const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
-  DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById"),
+  AutoRoleById_1 = require("../../../Core/Define/ConfigQuery/AutoRoleById"),
   MainRoleConfigAll_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigAll"),
   MainRoleConfigByGender_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigByGender"),
   MainRoleConfigById_1 = require("../../../Core/Define/ConfigQuery/MainRoleConfigById"),
@@ -41,8 +41,15 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
   }
   GetRoleConfig(e) {
+    if (0 !== e)
+      return (
+        (e = this.GetBaseRoleId(e)),
+        RoleInfoById_1.configRoleInfoById.GetConfig(e)
+      );
+  }
+  GetAutoRoleConfig(e) {
     e = this.GetBaseRoleId(e);
-    return RoleInfoById_1.configRoleInfoById.GetConfig(e);
+    return AutoRoleById_1.configAutoRoleById.GetConfig(e);
   }
   GetBaseRoleId(o) {
     let r = o;
@@ -73,8 +80,26 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
       return e;
     }
   }
+  GetGenderRoleTrialByGroupId(r) {
+    r = TrialRoleInfoByGroupId_1.configTrialRoleInfoByGroupId.GetConfigList(r);
+    if (r && !(r.length <= 0)) {
+      var n = this.Ci1(),
+        l = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
+      let e = void 0,
+        o = l - r[0].WorldLevel;
+      for (const t of r) {
+        var i = t.Gender;
+        if (!(0 <= i && n !== i)) {
+          if (t.WorldLevel === l) return t;
+          t.WorldLevel > l ||
+            ((i = l - t.WorldLevel) <= o && ((o = i), (e = t)));
+        }
+      }
+      return e;
+    }
+  }
   GetDamageConfig(e) {
-    return DamageById_1.configDamageById.GetConfig(BigInt(e));
+    return ModelManager_1.ModelManager.DamageModel?.GetDamageConfigById(e);
   }
   GetRoleBreachList(e) {
     return RoleBreachByBreachGroupId_1.configRoleBreachByBreachGroupId.GetConfigList(
@@ -210,6 +235,10 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
   }
   OnClear() {
     return this.Gdo.clear(), !0;
+  }
+  Ci1() {
+    var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
+    return 0 === e ? 0 : 1 === e ? 1 : -1;
   }
 }
 exports.RoleConfig = RoleConfig;

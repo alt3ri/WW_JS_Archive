@@ -20,7 +20,7 @@ class BulletActorPool {
       e ||
         ((e = ActorSystem_1.ActorSystem.Get(
           UE.KuroEntityActor.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           void 0,
         )).GetComponentByClass(UE.SceneComponent.StaticClass()) ||
           e.AddComponentByClass(
@@ -39,18 +39,20 @@ class BulletActorPool {
       t.SetActorEnableCollision(!1),
       o &&
         (t.K2_DetachFromActor(1, 1, 1),
-        t.SetActorScale3D(Vector_1.Vector.OneVector)),
+        t.D_SetActorScale3D(Vector_1.Vector.OneVectorDouble)),
       BulletConstant_1.BulletConstant.OpenActorRecycleCheck &&
-        (t.GetActorScale3D().op_Equality(Vector_1.Vector.OneVector) ||
+        (t.D_GetActorScale3D().op_Equality(Vector_1.Vector.OneVectorDouble) ||
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Bullet", 18, "bullet actor scale invalid")),
+            Log_1.Log.Error("Bullet", 17, "bullet actor scale invalid")),
         (o = t.GetComponentByClass(UE.ShapeComponent.StaticClass()))) &&
         !o.RelativeScale3D.op_Equality(Vector_1.Vector.OneVector) &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Bullet", 18, "bullet collisionComp scale invalid");
+        Log_1.Log.Error("Bullet", 17, "bullet collisionComp scale invalid");
     let l = this.jVo.get(e);
     l || ((l = []), this.jVo.set(e, l)),
-      l.length > SIZE_POOL ? ActorSystem_1.ActorSystem.Put(t) : l.push(t);
+      l.length > SIZE_POOL
+        ? ActorSystem_1.ActorSystem.Put("BulletActorPool.Recycle", t)
+        : l.push(t);
   }
   static Preload() {
     this.WVo(0, UE.BoxComponent.StaticClass()),
@@ -63,47 +65,48 @@ class BulletActorPool {
     o || ((o = []), this.jVo.set(t, o));
     for (let t = o.length; t < PRE_ADD_COUNT; t++) {
       var l,
-        s = ActorSystem_1.ActorSystem.Get(
+        r = ActorSystem_1.ActorSystem.Get(
           UE.KuroEntityActor.StaticClass(),
-          MathUtils_1.MathUtils.DefaultTransform,
+          MathUtils_1.MathUtils.DefaultTransformDouble,
           void 0,
         );
-      s.GetComponentByClass(UE.SceneComponent.StaticClass()) ||
-        s.AddComponentByClass(
+      r.GetComponentByClass(UE.SceneComponent.StaticClass()) ||
+        r.AddComponentByClass(
           UE.SceneComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
           !1,
         ),
-        (s.bAutoDestroyWhenFinished = !1),
-        s.SetActorHiddenInGame(!0),
-        s.SetActorEnableCollision(!1),
+        (r.bAutoDestroyWhenFinished = !1),
+        r.SetActorHiddenInGame(!0),
+        r.SetActorEnableCollision(!1),
         e &&
           (GlobalData_1.GlobalData.IsPlayInEditor &&
           BulletConstant_1.BulletConstant.CollisionCompVisibleInEditor
-            ? (((l = s.AddComponentByClass(
+            ? (((l = r.AddComponentByClass(
                 e,
                 !1,
                 MathUtils_1.MathUtils.DefaultTransform,
                 !0,
               )).CreationMethod = 3),
-              s.FinishAddComponent(
+              r.FinishAddComponent(
                 l,
                 !1,
                 MathUtils_1.MathUtils.DefaultTransform,
               ))
-            : s.AddComponentByClass(
+            : r.AddComponentByClass(
                 e,
                 !1,
                 MathUtils_1.MathUtils.DefaultTransform,
                 !1,
               )),
-        o.push(s);
+        o.push(r);
     }
   }
   static Clear() {
     for (var [, t] of this.jVo)
-      for (const e of t) ActorSystem_1.ActorSystem.Put(e);
+      for (const e of t)
+        ActorSystem_1.ActorSystem.Put("BulletActorPool.Clear", e);
     this.jVo.clear();
   }
 }

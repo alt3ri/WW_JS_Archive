@@ -52,14 +52,44 @@ class LaunchComponentsAction {
     t = this.Vyr(t);
     if (t) return t.GetComponentByClass(UE.UIButtonComponent.StaticClass());
   }
+  GetExtendToggle(t) {
+    t = this.Vyr(t);
+    if (t) return t.GetComponentByClass(UE.UIExtendToggle.StaticClass());
+  }
+  GetLayout(t) {
+    t = this.Vyr(t);
+    if (t) return t.GetComponentByClass(UE.UILayoutBase.StaticClass());
+  }
+  GetUIDynScrollViewComponent(t) {
+    t = this.Vyr(t);
+    if (t)
+      return t.GetComponentByClass(UE.UIDynScrollViewComponent.StaticClass());
+  }
+  GetUiScrollViewWithScrollBar(t) {
+    t = this.Vyr(t);
+    if (t)
+      return t.GetComponentByClass(
+        UE.UIScrollViewWithScrollbarComponent.StaticClass(),
+      );
+  }
   Vyr(t) {
     if (!(t >= this.LW.Components.Num())) return this.LW.Components.Get(t);
   }
   SetActive(t) {
-    this.RootItem?.IsValid() && this.RootItem.SetUIActive(t);
+    var e;
+    this.RootItem?.IsValid() &&
+      ((e = this.RootItem.IsUIActiveSelf()),
+      this.RootItem.SetUIActive(t),
+      e !== t) &&
+      (t ? this.OnShow() : this.OnHide());
   }
+  OnShow() {}
+  OnHide() {}
   GetRootItem() {
     return this.RootItem;
+  }
+  get IsClear() {
+    return this.Nyr;
   }
   AttachElement(t, e) {
     var i = this.Vyr(t);

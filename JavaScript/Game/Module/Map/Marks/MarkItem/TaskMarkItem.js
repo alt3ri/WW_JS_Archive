@@ -32,8 +32,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       (this.rRi = 0),
       (this.nRi = void 0),
       (this.sRi = !0),
-      (this.aRi = !1),
-      (this.MapId = t.MapId);
+      (this.aRi = !1);
   }
   get MarkType() {
     return 12;
@@ -44,11 +43,35 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
   set CanShowInDistance(t) {
     this.sRi !== t && (this.sRi = t) && 1 === this.MapType && (this.aRi = !1);
   }
-  Initialize() {
-    super.Initialize();
+  IsMultiMap() {
+    return !1;
+  }
+  get InstanceDungeonId() {
+    var t = this.ServerMarkInfo.InstanceDungeonId,
+      e = ConfigManager_1.ConfigManager.WorldMapConfig.IsMapInWorld(t),
+      i = ModelManager_1.ModelManager.MapModel.CurrentInWorld;
+    if (
+      e &&
+      !i &&
+      1 === this.MapType &&
+      void 0 !== ModelManager_1.ModelManager.GameModeModel.InstanceDungeon &&
+      this.IsTracked &&
+      ModelManager_1.ModelManager.MapModel.GetDungeonEntranceConfig(
+        ModelManager_1.ModelManager.GameModeModel.InstanceDungeon,
+      )?.Id === t
+    )
+      return ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+    return t;
+  }
+  get TrackAreaId() {
+    return this.ServerMarkInfo.AreaId ?? 0;
+  }
+  OnInitialize() {
+    super.OnInitialize();
     var t = this.ServerMarkInfo;
     if (
       (this.SetTrackData(t.TrackTarget),
+      (this.EnableCachePosition = !1),
       (this.rRi = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
         this.ConfigId,
       ).IconDistant),
@@ -68,7 +91,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
         (this.TreeConfigId = this.Tree.TreeConfigId);
       var e = this.Tree.GetNode(this.NodeId),
         e =
-          (e.TrackTarget &&
+          (e?.TrackTarget &&
             e.TrackTarget.ZaxisViewRange &&
             ((this.RangeMarkShowDisUp =
               e.TrackTarget.ZaxisViewRange.Up / ONE_HUNDRED),
@@ -76,7 +99,8 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
               -e.TrackTarget.ZaxisViewRange.Down / ONE_HUNDRED)),
           this.Tree.GetRangeMarkSize(this.NodeId)),
         e =
-          (e && (this.MarkRange = e / ONE_HUNDRED),
+          (e &&
+            (this.MarkItemEntity.GetComponent(11).RangeSize = e / ONE_HUNDRED),
           this.Tree.GetRangeMarkShowDis(this.NodeId));
       e
         ? ((this.RangeMarkShowDis = e / ONE_HUNDRED),
@@ -100,6 +124,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
             )
               ? e.MarkPic
               : e.MarkAcceptablePic),
+          (this.TrackFxScale = e.FxScale),
           this.OnAfterSetConfigId({
             ShowRange: e.ShowRange,
             MarkPic: t,
@@ -110,7 +135,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
     t &&
       (e = t.Entity.GetComponent(3)) &&
       ((t = e.ActorLocationProxy), this.UpdateItemIsInDistance(t)),
-      this.UpdateTrackState();
+      this.UpdateVisibleRelativeState();
   }
   OnDestroy() {
     1 === this.MapType &&
@@ -121,46 +146,22 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
         1,
       );
   }
-  OnCreateView() {
-    this.InnerView = new TaskMarkItemView_1.TaskMarkItemView(this);
+  GetMarkItemViewType() {
+    return 23;
+  }
+  CreateView() {
+    return new TaskMarkItemView_1.TaskMarkItemView(this);
   }
   OnUpdate(t) {
-    this.UpdateItemIsInDistance(t), this.UpdateTrackState(), this.hRi(t);
+    this.UpdateItemIsInDistance(t),
+      this.UpdateVisibleRelativeState(),
+      this.hRi(t);
   }
   GetTitleText() {
     if (this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest)
       return ModelManager_1.ModelManager.QuestNewModel.GetQuest(
         this.TreeConfigId,
       )?.Name;
-  }
-  GetAreaText() {
-    if ("number" == typeof this.TrackTarget) {
-      var t =
-        ConfigManager_1.ConfigManager.MapConfig.GetEntityConfigByMapIdAndEntityId(
-          this.MapId,
-          this.TrackTarget,
-        )?.AreaId;
-      if (t) {
-        var e,
-          i = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(t),
-          t = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(t);
-        if (void 0 !== t)
-          return (
-            (i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(i)),
-            (e = ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(
-              t.AreaName,
-            )),
-            (i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(
-              i.AreaName,
-            )),
-            ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryTitle(
-              t.CountryId,
-            ) +
-              `-${i}-` +
-              e
-          );
-      }
-    }
   }
   lRi(t) {
     this.nRi ||
@@ -173,7 +174,9 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       (i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e))) &&
       4 === i.Type &&
       (this.lRi(t),
-      !this.oRi &&
+      this.ServerMarkInfo.InstanceDungeonId ===
+        ModelManager_1.ModelManager.CreatureModel.GetInstanceId()) &&
+      (!this.oRi &&
         this.nRi &&
         this.nRi <= this.iRi &&
         ((this.oRi = !0),
@@ -214,6 +217,18 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
           (!this.CanShowInDistance && !this.IsTracked)
         );
   }
+  IsTracking() {
+    var t = this.TreeConfigId,
+      e = this.NodeId;
+    let i = !1;
+    return (i =
+      0 !== e && 2 === this.MapType
+        ? ModelManager_1.ModelManager.QuestNewModel.IsTrackingQuest(t)
+        : ModelManager_1.ModelManager.TrackModel.IsTracking(
+            this.TrackSource,
+            this.MarkId,
+          ));
+  }
   hRi(t) {
     var e, i;
     1 === this.MapType &&
@@ -237,10 +252,13 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
           LogReportController_1.LogReportController.LogReport(i),
           (this.aRi = !0))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LogReport", 19, "发送任务日志时,找不到任务对象", [
+          Log_1.Log.Error("LogReport", 18, "发送任务日志时,找不到任务对象", [
             "questId",
             this.TreeConfigId,
           ]));
+  }
+  IsBtTypeQuest() {
+    return this.BtType === Protocol_1.Aki.Protocol.hps.Proto_BtTypeQuest;
   }
 }
 exports.TaskMarkItem = TaskMarkItem;

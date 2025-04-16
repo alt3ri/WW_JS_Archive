@@ -8,7 +8,7 @@ class CharacterData {
       (this.kke = 0),
       (this.Fke = 0),
       (this.ValueInterval = 0),
-      (this.Dga = !1);
+      (this.Tga = !1);
     t = ConfigManager_1.ConfigManager.BusinessConfig.GetRoleCharacterMax();
     this.Fke = t;
   }
@@ -25,10 +25,10 @@ class CharacterData {
     return this.Fke;
   }
   SetUseScoreName(t) {
-    this.Dga = t;
+    this.Tga = t;
   }
   get UseScoreName() {
-    return this.Dga;
+    return this.Tga;
   }
 }
 exports.CharacterData = CharacterData;

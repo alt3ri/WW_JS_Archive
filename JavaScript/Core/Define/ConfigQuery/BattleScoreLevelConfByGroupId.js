@@ -17,30 +17,30 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBattleScoreLevelConfByGroupId.Init",
   ),
-  getConfigListStat = Stats_1.Stat.Create(
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configBattleScoreLevelConfByGroupId.GetConfigList",
   ),
   CONFIG_LIST_STAT_PREFIX =
     "configBattleScoreLevelConfByGroupId.GetConfigList(";
 exports.configBattleScoreLevelConfByGroupId = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (o, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start();
-    var t = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${o})`),
+      getConfigListStat?.Start();
+    var t = Stats_1.Stat.CreateNoFlameGraph(CONFIG_LIST_STAT_PREFIX + `#${o})`),
       n =
-        (t.Start(),
+        (t?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (n) {
       if (e) {
@@ -48,8 +48,8 @@ exports.configBattleScoreLevelConfByGroupId = {
         const r = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (r)
           return (
-            t.Stop(),
-            getConfigListStat.Stop(),
+            t?.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             r
           );
@@ -79,8 +79,8 @@ exports.configBattleScoreLevelConfByGroupId = {
           )
             return (
               ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-              t.Stop(),
-              getConfigListStat.Stop(),
+              t?.Stop(),
+              getConfigListStat?.Stop(),
               void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
           C =
@@ -94,16 +94,16 @@ exports.configBattleScoreLevelConfByGroupId = {
             ((i = KEY_PREFIX + `#${o})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(i, r, r.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          t.Stop(),
-          getConfigListStat.Stop(),
+          t?.Stop(),
+          getConfigListStat?.Stop(),
           ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           r
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    t.Stop(),
-      getConfigListStat.Stop(),
+    t?.Stop(),
+      getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

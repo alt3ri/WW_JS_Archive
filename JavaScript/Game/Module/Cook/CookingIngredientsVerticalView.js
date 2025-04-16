@@ -113,7 +113,7 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
     return (
       !!e ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Cook", 50, "缺少itemData数据"),
+        Log_1.Log.Error("Cook", 49, "缺少itemData数据"),
       !1)
     );
   }
@@ -284,7 +284,7 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     return (
       !!e ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Cook", 50, "缺少itemData数据"),
+        Log_1.Log.Error("Cook", 49, "缺少itemData数据"),
       !1)
     );
   }

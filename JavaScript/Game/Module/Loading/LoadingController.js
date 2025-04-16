@@ -2,10 +2,13 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoadingController = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  BaseConfigController_1 = require("../../../Launcher/BaseConfig/BaseConfigController"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../GlobalData"),
@@ -64,6 +67,10 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
         LoadingController.Ilt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnInstanceChange,
+        LoadingController.KDc,
       );
   }
   static OnRemoveEvents() {
@@ -90,6 +97,10 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
         LoadingController.Ilt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnInstanceChange,
+        LoadingController.KDc,
       );
   }
   static Eea() {
@@ -102,14 +113,23 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
     UE.NavigationSystemV1.SetGameLoadingFlag(
       GlobalData_1.GlobalData.GameInstance,
       !1,
-    );
+    ),
+      (ModelManager_1.ModelManager.LoadingModel.LastInstanceId = 0);
   }
   static UpdateUidViewShow() {
     var e = ModelManager_1.ModelManager.LoadingModel.IsShowUidView;
     UiManager_1.UiManager.IsViewOpen("UidView") !== e &&
       (e
         ? UiManager_1.UiManager.OpenView("UidView")
-        : UiManager_1.UiManager.CloseView("UidView"));
+        : UiManager_1.UiManager.CloseView("UidView")),
+      (cpp_1.KuroApplication.IsBuildShipping() &&
+        "Product" === cpp_1.KuroApplication.GetAppReleaseType()) ||
+        "Marketing" === UE.KuroLauncherLibrary.GetAppInternalUseType() ||
+        (UiManager_1.UiManager.IsViewOpen("MView") ||
+          UiManager_1.UiManager.OpenView("MView"),
+        !UiManager_1.UiManager.IsViewOpen("BcView") &&
+          BaseConfigController_1.BaseConfigController.GetRptIsOpen() &&
+          UiManager_1.UiManager.OpenView("BcView"));
   }
   static async Ivi() {
     var e,
@@ -117,7 +137,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities();
     for (const n of a)
       n.Valid &&
-        (e = n.Entity.GetComponent(160)) &&
+        (e = n.Entity.GetComponent(172)) &&
         e.AddBuff(CharacterBuffIds_1.buffId.Invisible, {
           InstigatorId: e.CreatureDataId,
           Reason: "HandleRoleBuffChangeInLoading",
@@ -126,7 +146,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       .FinishPromise?.Promise;
     for (const r of a)
       r.Valid &&
-        (o = r.Entity.GetComponent(160)) &&
+        (o = r.Entity.GetComponent(172)) &&
         o.RemoveBuff(
           CharacterBuffIds_1.buffId.Invisible,
           -1,
@@ -138,14 +158,16 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
     NormalLoadingViewGlobalData_1.NormalLoadingViewGlobalData
       .FirstProgressPromise
       ? Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Loading", 9, "Loading界面正在打开中")
-      : ((o = ModelManager_1.ModelManager.LoadingModel.GetIsLoginToWorld()) &&
-          UiLoginSceneManager_1.UiLoginSceneManager.Destroy(),
+        Log_1.Log.Info("Loading", 8, "Loading界面正在打开中")
+      : ((o = ModelManager_1.ModelManager.LoadingModel.GetIsLoginToWorld()),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Loading", 9, "打开Loading界面", [
+          Log_1.Log.Debug("Loading", 8, "打开Loading界面", [
             "从登录界面进入大世界",
             o,
           ]),
+        o &&
+          (UiLoginSceneManager_1.UiLoginSceneManager.Destroy(),
+          await this.RequestLoadingConfigAsync()),
         LoadingController.OpenLoadingView(void 0, e)),
       await NormalLoadingViewGlobalData_1.NormalLoadingViewGlobalData
         .FirstProgressPromise.Promise,
@@ -155,7 +177,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static async GameModeCloseLoading() {
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("Loading", 9, "关闭Loading界面"),
+    Log_1.Log.CheckDebug() && Log_1.Log.Debug("Loading", 8, "关闭Loading界面"),
       await LoadingController.CloseLoadingView(),
       ModelManager_1.ModelManager.LoginModel.CleanCreateData();
   }
@@ -169,19 +191,21 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
         !0,
         !1,
       ),
-      UiManager_1.UiManager.OpenView("LoadingView", void 0, (e) => {
-        o?.(e),
-          LoadingController.SetProgress(
-            GameModeController_1.OPENLOADING_END_PROGRESS,
-            () => {
-              NormalLoadingViewGlobalData_1.NormalLoadingViewGlobalData.FinishFirstProgressPromise(),
-                a?.(!0);
-            },
-            1,
-            !1,
-            !1,
-          );
-      });
+      ModelManager_1.ModelManager.LoadingModel.SetIsLoading(!0);
+    var e = ModelManager_1.ModelManager.LoadingModel.GetOpenLoadingViewName();
+    UiManager_1.UiManager.OpenView(e, void 0, (e) => {
+      o?.(e),
+        LoadingController.SetProgress(
+          GameModeController_1.OPENLOADING_END_PROGRESS,
+          () => {
+            NormalLoadingViewGlobalData_1.NormalLoadingViewGlobalData.FinishFirstProgressPromise(),
+              a?.(!0);
+          },
+          1,
+          !1,
+          !1,
+        );
+    });
   }
   static async CloseLoadingView() {
     this.SetProgress(
@@ -192,7 +216,8 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       GameModeController_1.LOADED_SPEED_RATE,
     ),
       await NormalLoadingViewGlobalData_1.NormalLoadingViewGlobalData
-        .FinishPromise?.Promise;
+        .FinishPromise?.Promise,
+      ModelManager_1.ModelManager.LoadingModel.SetIsLoading(!1);
   }
   static OpenFadeLoadingView(e) {
     UiManager_1.UiManager.OpenView("FadeLoadingView", void 0, e);
@@ -208,7 +233,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
   }
   static SetProgress(e, o = void 0, a = 1, n = !1, r = !0) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Loading", 17, "SetProgress", ["progress", e]);
+      Log_1.Log.Info("Loading", 16, "SetProgress", ["progress", e]);
     var t = ModelManager_1.ModelManager.LoadingModel;
     o && t.ReachHandleQueue.Push([e, o]),
       n && ((t.CurrentProgress = 0), t.ReachHandleQueue.Clear()),
@@ -238,12 +263,20 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Loading",
-            17,
+            16,
             "AddProgress",
             ["progress", e],
             ["maxProgress", o],
           );
     }
+  }
+  static async RequestLoadingConfigAsync() {
+    var e = new Protocol_1.Aki.Protocol.hOc(),
+      e = await Net_1.Net.CallAsync(22589, e);
+    return (
+      !!e &&
+      (ModelManager_1.ModelManager.LoadingModel?.SetLoadingConfig(e._Oc), !0)
+    );
   }
 }
 (exports.LoadingController = LoadingController),
@@ -266,6 +299,9 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
   }),
   (LoadingController.Ilt = () => {
     LoadingController.yea();
+  }),
+  (LoadingController.KDc = (e) => {
+    ModelManager_1.ModelManager.LoadingModel.LastInstanceId = e;
   }),
   (LoadingController.yvi = () => {
     ModelManager_1.ModelManager.LoadingModel.IsLoadingView && _a.Ivi();

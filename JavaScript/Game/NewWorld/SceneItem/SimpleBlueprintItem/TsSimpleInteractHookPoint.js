@@ -10,8 +10,8 @@ const UE = require("ue"),
   DEFAULT_THICKNESS = 4,
   DEFAULT_ARROW_SIZE = 20,
   DRAW_LENGTH = 100,
-  forwardOffset = new UE.Vector(DRAW_LENGTH, 0, 0),
-  upOffset = new UE.Vector(0, 0, DRAW_LENGTH),
+  forwardOffset = new UE.VectorDouble(DRAW_LENGTH, 0, 0),
+  upOffset = new UE.VectorDouble(0, 0, DRAW_LENGTH),
   textColor = new UE.Color(255, 128, 128, 255),
   TEXT_SIZE = 80,
   PROFILE_KEY = "TsSimpleInteractHookPoint_GetBestTransform";
@@ -19,13 +19,16 @@ class TsSimpleInteractHookPoint extends TsSimpleInteractBase_1.default {
   constructor() {
     super(...arguments), (this.TmpLocation = void 0);
   }
+  Constructor() {
+    super.Constructor(), (this.TmpLocation = void 0);
+  }
   CheckLegal() {
     return !0;
   }
   OnDraw() {
-    var t = this.K2_GetActorLocation(),
-      e = this.GetTransform();
-    UE.KismetSystemLibrary.DrawDebugArrow(
+    var t = this.D_K2_GetActorLocation(),
+      e = this.D_GetTransform();
+    UE.KismetSystemLibrary.D_DrawDebugArrow(
       this,
       t,
       e.TransformPosition(forwardOffset),
@@ -34,7 +37,7 @@ class TsSimpleInteractHookPoint extends TsSimpleInteractBase_1.default {
       DRAW_TIME,
       DEFAULT_THICKNESS,
     ),
-      UE.KismetSystemLibrary.DrawDebugArrow(
+      UE.KismetSystemLibrary.D_DrawDebugArrow(
         this,
         t,
         e.TransformPosition(upOffset),
@@ -52,14 +55,14 @@ class TsSimpleInteractHookPoint extends TsSimpleInteractBase_1.default {
   }
   OnGetBestTransform(t, e, s, i) {
     return (
-      this.ActorLocation.FromUeVector(t.K2_GetActorLocation()),
+      this.ActorLocation.FromUeVector(t.D_K2_GetActorLocation()),
       this.ActorLocation.Subtraction(this.SelfLocation, this.SelfToActor),
       (this.TmpVector1.X = i),
       (this.TmpVector1.Y = 0),
       (this.TmpVector1.Z = 0),
       this.TmpLocation || (this.TmpLocation = Vector_1.Vector.Create()),
       this.SelfTransform.TransformPosition(this.TmpVector1, this.TmpLocation),
-      (this.TmpResult.Location = this.TmpLocation.ToUeVector()),
+      (this.TmpResult.Location = this.TmpLocation.ToUeVectorOld()),
       (this.LineTrace.WorldContextObject = t),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(
         this.LineTrace,

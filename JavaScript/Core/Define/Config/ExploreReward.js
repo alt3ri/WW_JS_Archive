@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreReward = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class ExploreReward {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -44,11 +45,11 @@ class ExploreReward {
   get Help() {
     return this.help();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, e) {
+    return (this.z7 = t), (this.J7 = e), this;
   }
-  static getRootAsExploreReward(t, r) {
-    return (r || new ExploreReward()).__init(
+  static getRootAsExploreReward(t, e) {
+    return (e || new ExploreReward()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -78,28 +79,58 @@ class ExploreReward {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   scorename(t) {
-    var r = this.J7.__offset(this.z7, 16);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 16),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   scoretexturepath(t) {
-    var r = this.J7.__offset(this.z7, 18);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 18),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   show() {
     var t = this.J7.__offset(this.z7, 20);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   pic(t) {
-    var r = this.J7.__offset(this.z7, 22);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 22),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   rewardname(t) {
-    var r = this.J7.__offset(this.z7, 24);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 24),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   reward(t) {
-    var r = this.J7.__offset(this.z7, 26);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var e = this.J7.__offset(this.z7, 26),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   help() {
     var t = this.J7.__offset(this.z7, 28);

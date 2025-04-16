@@ -21,7 +21,7 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
         ),
           this.ActivityBaseData.JumpToDungeon();
       }),
-      (this.wZa = () => {
+      (this.ahh = () => {
         ControllerHolder_1.ControllerHolder.ActivityController.OpenActivityConditionView(
           this.ActivityBaseData.Id,
         );
@@ -40,7 +40,7 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
     ]),
       (this.BtnBindInfo = [
         [3, this.IOe],
-        [7, this.wZa],
+        [7, this.ahh],
       ]);
   }
   OnSetData() {}

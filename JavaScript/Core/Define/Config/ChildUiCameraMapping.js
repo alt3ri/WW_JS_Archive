@@ -76,20 +76,38 @@ class ChildUiCameraMapping {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   viewname(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 6),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   defaultuicamerasettingsname(t) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   ischeckspecialstate() {
     var t = this.J7.__offset(this.z7, 10);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   specialstatecamerasettingname(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 12),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   bplayloadingcameraanimation() {
     var t = this.J7.__offset(this.z7, 14);
@@ -116,8 +134,14 @@ class ChildUiCameraMapping {
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   defaultcamerablendname(t) {
-    var e = this.J7.__offset(this.z7, 20);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 20),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   GetUicamerablendnamemapAt(t, e) {
     return this.uicamerablendnamemap(t);

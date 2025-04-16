@@ -152,7 +152,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           this.fGt &&
             this.fGt &&
             ((i = ComposeController_1.ComposeController.GetMaxCreateCount(
-              this.fGt.ItemId,
+              this.fGt.ConfigId,
             )),
             this.WGe.SetAddButtonInteractive(e < i),
             this.WGe.SetReduceButtonInteractive(1 < e),
@@ -263,7 +263,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     return (
       !!e ||
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Compose", 50, "缺少itemData数据"),
+        Log_1.Log.Error("Compose", 49, "缺少itemData数据"),
       !1)
     );
   }
@@ -275,12 +275,12 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     if (this.vGt(i)) {
       let e = CommonManager_1.CommonManager.GetCurrentRoleId();
       e ||
-        ((e = CommonManager_1.CommonManager.GetManufactureRoleId(i.ItemId)),
+        ((e = CommonManager_1.CommonManager.GetManufactureRoleId(i.ConfigId)),
         CommonManager_1.CommonManager.SetCurrentRoleId(e)),
         e ||
           ((e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId()),
           CommonManager_1.CommonManager.SetCurrentRoleId(e)),
-        e && this.gGt.SetRoleTexture(e, i.ItemId);
+        e && this.gGt.SetRoleTexture(e, i.ConfigId);
     }
   }
   xGt(e) {
@@ -295,19 +295,19 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
   tkt(e) {
     this.fGt &&
-      this.fGt.ItemId !== e.ItemId &&
+      this.fGt.ConfigId !== e.ConfigId &&
       (ModelManager_1.ModelManager.ComposeModel.CurrentComposeRoleId = 0),
       (this.fGt = e),
       (this.t6 = 1);
     var i = ComposeController_1.ComposeController.GetMaxCreateCount(
-        this.fGt.ItemId,
+        this.fGt.ConfigId,
       ),
       i =
         (this.WGe.Refresh(i),
         this.WGe.SetAddReduceButtonActive(!0),
         this.WGe.SetReduceButtonInteractive(!1),
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-          e.ItemId,
+          e.ConfigId,
         )),
       t =
         (this.MGt.SetDescVisible(!0),
@@ -328,7 +328,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         ? (this.GetItem(20).SetUIActive(!1),
           this.GetItem(18).SetUIActive(!0),
           (t = ModelManager_1.ModelManager.ComposeModel.GetComposeMaterialList(
-            e.ItemId,
+            e.ConfigId,
           )),
           ([this.SGt, this.yGt, t] = this.xGt(t)),
           this.EGt.RefreshByData(t, () => {
@@ -338,7 +338,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           this.GetItem(18).SetUIActive(!1),
           (i =
             ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-              this.fGt.ItemId,
+              this.fGt.ConfigId,
             )),
           (e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
             i.FormulaItemId,
@@ -358,7 +358,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   }
   MTi(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        e.ItemId,
+        e.ConfigId,
       ),
       t = i.Proficiency,
       i = i.MaxProficiencyCount;
@@ -368,10 +368,10 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     this.fGt && this.AGt(this.fGt);
   }
   RefreshProficiencyAndHelpRole(e) {
-    this.MTi(e), this.Z2n(e.ItemId);
+    this.MTi(e), this.Z2n(e.ConfigId);
   }
   RefreshHelpRole() {
-    this.Z2n(this.fGt.ItemId);
+    this.Z2n(this.fGt.ConfigId);
   }
   AGt(e) {
     e.ExistEndTime <= 0

@@ -39,7 +39,7 @@ class GameSettingsLevelRender {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Render",
-              60,
+              59,
               "进入特殊副本-调整渲染参数",
               ["设置", t],
               ["为", e],
@@ -64,7 +64,7 @@ class GameSettingsLevelRender {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Render",
-              60,
+              59,
               "退出特殊副本-调整渲染参数",
               ["设置", t],
               ["为", e],
@@ -75,8 +75,18 @@ class GameSettingsLevelRender {
   }
 }
 ((exports.GameSettingsLevelRender = GameSettingsLevelRender).Me = void 0),
-  (GameSettingsLevelRender.Ove = new Map([[1, "r.Shadow.EnableCSMStable"]])),
-  (GameSettingsLevelRender.kve = new Map([[1, 1]])),
+  (GameSettingsLevelRender.Ove = new Map([
+    [1, "r.Shadow.EnableCSMStable"],
+    [2, "r.MotionBlur.OuterScale"],
+    [3, "r.AllowHardwareOcclusion"],
+    [4, "r.Kuro.HideLandscape"],
+  ])),
+  (GameSettingsLevelRender.kve = new Map([
+    [1, 1],
+    [2, 1],
+    [3, 1],
+    [4, 0],
+  ])),
   (GameSettingsLevelRender.SetLevelRenderSettingsStat = void 0),
   (GameSettingsLevelRender.RevertLevelRenderSettingsStat = void 0);
 //# sourceMappingURL=GameSettingsLevelRender.js.map

@@ -33,38 +33,50 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.YPn = void 0),
       (this.JPn = void 0),
       (this.zPn = () => {
+        var e;
         if (
-          (ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
+          (EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.ChangeActivityViewNeedBlurState,
+            !1,
+          ),
+          ModelManager_1.ModelManager.ActivityModel.SendActivityViewJumpClickLogData(
             this.ActivityBaseData,
           ),
           this.ActivityBaseData.GetPreGuideQuestFinishState())
         ) {
-          var e =
-            ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryActivityById(
-              this.ActivityBaseData.Id,
-            );
           const t =
-            ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
-              e.TopicId,
-            );
-          t
+              ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryActivityById(
+                this.ActivityBaseData.Id,
+              ),
+            i =
+              ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
+                t.TopicId,
+              );
+          i
             ? (this.LevelSequencePlayer?.PlaySequencePurely("HideView01"),
               UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !0),
               TimerSystem_1.TimerSystem.Delay(() => {
-                ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
-                  "Start02";
+                ModelManager_1.ModelManager.FragmentMemoryModel.SaveTopicOpened(
+                  t.TopicId,
+                ),
+                  (ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
+                    "Start02");
                 var e =
                   new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
-                (e.FragmentMemoryTopicData = t),
+                (e.FragmentMemoryTopicData = i),
                   UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e),
-                  UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !1);
+                  UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !1),
+                  EventSystem_1.EventSystem.Emit(
+                    EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+                    this.ActivityBaseData.Id,
+                  );
               }, HIDEVIEW01DELAY))
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "FragmentMemory",
-                28,
+                27,
                 "FragmentMemorySubView.OnFragmentMemoryButtonClick",
-                ["topicData is null", e.TopicId],
+                ["topicData is null", t.TopicId],
               );
         } else
           (e = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
@@ -125,7 +137,7 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   OnSequenceClose(e) {}
   OnStart() {}
   OnBeforeShow() {
-    this.K8e(), this.XGn();
+    this.XGn();
   }
   OnBeforeHide() {
     (ModelManager_1.ModelManager.FragmentMemoryModel.ActivitySubViewTryPlayAnimation =
@@ -143,6 +155,7 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.KGn(),
       this.QGn(),
       this.XGn(),
+      this.K8e(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.ActivityBaseData.Id,
@@ -165,17 +178,12 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
           ""));
   }
   K8e() {
-    this.YPn?.UnBindRedDot();
     var e = this.ActivityBaseData;
-    this.YPn?.BindRedDot(
-      "FragmentMemoryTopicCollectRedDot",
-      e.GetCurrentTopicId(),
-    ),
-      this.JPn?.UnBindRedDot(),
-      this.JPn?.BindRedDot("FragmentMemoryEntrance");
+    this.YPn?.UnBindRedDot(),
+      this.YPn?.BindRedDot("FragmentMemoryTopic", e.GetCurrentTopicId());
   }
   _Dn() {
-    this.YPn?.UnBindRedDot(), this.JPn?.UnBindRedDot();
+    this.YPn?.UnBindRedDot();
   }
   _Oe() {
     var e = this.ActivityBaseData.IsUnLock();

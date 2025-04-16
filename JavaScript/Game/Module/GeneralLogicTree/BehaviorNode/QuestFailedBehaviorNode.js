@@ -14,7 +14,6 @@ const UE = require("ue"),
   IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  TimeUtil_1 = require("../../../Common/TimeUtil"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
@@ -24,38 +23,28 @@ const UE = require("ue"),
   QuestController_1 = require("../../QuestNew/Controller/QuestController"),
   RangeCheck_1 = require("../../Util/RangeCheck"),
   BehaviorNodeBase_1 = require("./BehaviorNodeBase"),
-  TICK_INTERVAL_TIME = 500,
   STALK_FAILED_DELAY_TIME = 1e3;
 class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
   constructor(e) {
     super(e),
-      (this.D$t = void 0),
       (this.TimerUiConfig = void 0),
-      (this.ae = -0),
-      (this.Cfe = -0),
       (this.CanGiveUp = void 0),
       (this.R$t = void 0),
-      (this.U$t = !1),
-      (this.IRe = void 0),
       (this.A$t = !1),
       (this.P$t = void 0),
-      (this.NLa = void 0),
+      (this.jLa = void 0),
       (this.GiveUpText = void 0),
       (this.x$t = []),
       (this.pct = !1),
-      (this.wOa = 0),
-      (this.BOa = Vector_1.Vector.Create()),
-      (this.RUa = void 0),
-      (this.UUa = void 0),
-      (this.xUa = 0),
-      (this.PUa = 0),
+      (this.bka = 0),
+      (this.qka = Vector_1.Vector.Create()),
+      (this.wUa = void 0),
+      (this.BUa = void 0),
+      (this.bUa = 0),
+      (this.qUa = 0),
       (this.NeedRequiresSecondConfirmation = !1),
-      (this.bOa = []),
-      (this.qOa = void 0),
-      (this.r6 = () => {
-        var e = ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second;
-        (e < this.ae || e >= this.Cfe) && this.w$t();
-      }),
+      (this.Oka = []),
+      (this.Gka = void 0),
       (this.Zpe = (e) => {
         var t;
         this.B$t(!e),
@@ -77,7 +66,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
               b5n: this.NodeId,
               g9n: e,
             })),
-            Net_1.Net.Call(26177, t, (e) => {
+            Net_1.Net.Call(22248, t, (e) => {
               switch (e.BEs) {
                 case Protocol_1.Aki.Protocol.Q4n.KRs:
                 case Protocol_1.Aki.Protocol.Q4n.Proto_ErrNotInSneak:
@@ -86,7 +75,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
                 default:
                   ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                     e.BEs,
-                    29368,
+                    23177,
                   );
               }
             }));
@@ -114,35 +103,13 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
             C9n: MathUtils_1.MathUtils.BigIntToLong(this.TreeIncId),
             b5n: this.NodeId,
           });
-        Net_1.Net.Call(25614, e, (e) => {
+        Net_1.Net.Call(16538, e, (e) => {
           e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.BEs,
-              29e3,
+              18428,
             );
         });
-      }),
-      (this.w$t = () => {
-        var e;
-        this.U$t ||
-          ((this.U$t = !0),
-          this.BtType !== Protocol_1.Aki.Protocol.hps.Proto_BtTypeInvalid &&
-            ((e =
-              ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
-                this.TreeIncId,
-              )),
-            (e = Protocol_1.Aki.Protocol.fJn.create({
-              d9n: e,
-              C9n: MathUtils_1.MathUtils.BigIntToLong(this.TreeIncId),
-              b5n: this.NodeId,
-            })),
-            Net_1.Net.Call(17398, e, (e) => {
-              e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
-                ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.BEs,
-                  25310,
-                );
-            })));
       }),
       (this.NodeType = "QuestFailed");
   }
@@ -150,76 +117,59 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
     return this.P$t;
   }
   get NowTransitionType() {
-    return this.NLa;
+    return this.jLa;
   }
   OnCreate(e) {
     if (!e || "QuestFailed" !== e.Type) return !1;
     (this.P$t = e.FailedCondition?.FailedTeleport?.IsConfirm),
-      (this.NLa = e.FailedCondition?.FailedTeleport?.TransitionOption?.Type),
-      (this.D$t = e.FailedCondition?.TimeRange),
+      (this.jLa = e.FailedCondition?.FailedTeleport?.TransitionOption?.Type),
       (this.TimerUiConfig = e.FailedCondition?.Timer?.UiConfig);
     var t,
       i = e.FailedCondition?.RangeLimiting;
     if (
-      ((this.RUa = i?.RangeEffectPath),
-      this.RUa &&
+      ((this.wUa = i?.RangeEffectPath),
+      this.wUa &&
         ((t = i.Point),
-        (this.UUa = Vector_1.Vector.Create(t?.X ?? 0, t?.Y ?? 0, t?.Z ?? 0)),
-        (this.xUa = i.Range)),
-      (this.wOa = e.FailedCondition?.RangeLimiting?.Range),
-      (this.bOa = e.FailedCondition?.RangeLimiting?.RangeEntities),
-      void 0 !== this.bOa)
+        (this.BUa = Vector_1.Vector.Create(t?.X ?? 0, t?.Y ?? 0, t?.Z ?? 0)),
+        (this.bUa = i.Range)),
+      (this.bka = e.FailedCondition?.RangeLimiting?.Range),
+      (this.Oka = e.FailedCondition?.RangeLimiting?.RangeEntities),
+      void 0 !== this.Oka)
     ) {
-      this.qOa || (this.qOa = new RangeCheck_1.RangeCheck());
-      for (const r of this.bOa) this.qOa.GetOrAdd(r);
+      this.Gka || (this.Gka = new RangeCheck_1.RangeCheck());
+      for (const r of this.Oka) this.Gka.GetOrAdd(r);
     }
     return (
-      this.BOa?.Set(
+      this.qka?.Set(
         e.FailedCondition?.RangeLimiting?.Point?.X ?? 0,
         e.FailedCondition?.RangeLimiting?.Point?.Y ?? 0,
         e.FailedCondition?.RangeLimiting?.Point?.Z ?? 0,
       ),
       (this.NeedRequiresSecondConfirmation =
         e.FailedCondition?.RangeLimiting?.RequiresSecondConfirmation ?? !1),
-      this.D$t &&
-        (this.q$t(),
-        (this.IRe = TimerSystem_1.TimerSystem.Forever(
-          this.r6,
-          TICK_INTERVAL_TIME,
-        ))),
       e.FailedCondition?.SneakPlayCondition && this.G$t(),
       e.FailedCondition?.EntityAlert?.EntityIds &&
         0 < e.FailedCondition?.EntityAlert?.EntityIds.length &&
         ((this.x$t = e.FailedCondition.EntityAlert.EntityIds), this.N$t()),
       (this.CanGiveUp = e.FailedCondition?.CanGiveUp),
       (this.GiveUpText = e.FailedCondition?.TidGiveUpText),
-      !(this.U$t = !1)
+      !0
     );
   }
   OnNodeActive() {
-    this.wUa();
+    this.GUa();
   }
   OnNodeDeActive(e) {
-    this.BUa(),
-      TimerSystem_1.TimerSystem.Has(this.IRe) &&
-        TimerSystem_1.TimerSystem.Remove(this.IRe),
+    this.OUa(),
       this.A$t && this.B$t(!1),
       this.O$t(),
       this.k$t(),
-      this.qOa?.OnClear(),
-      (this.qOa = void 0),
+      this.Gka?.OnClear(),
+      (this.Gka = void 0),
       super.OnNodeDeActive(e),
       QuestController_1.QuestNewController.QuestRangeFailWarningTreeId ===
         this.TreeIncId &&
         QuestController_1.QuestNewController.HideCancelRangeFailWaringEffect();
-  }
-  q$t() {
-    (this.ae =
-      this.D$t.StartTime.Hours * TimeUtil_1.TimeUtil.Hour +
-      this.D$t.StartTime.Minutes * TimeUtil_1.TimeUtil.Minute),
-      (this.Cfe =
-        this.D$t.EndTime.Hours * TimeUtil_1.TimeUtil.Hour +
-        this.D$t.EndTime.Minutes * TimeUtil_1.TimeUtil.Minute);
   }
   G$t() {
     var e;
@@ -229,7 +179,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
     ),
       this.B$t(!0),
       (this.A$t = !0),
-      Net_1.Net.Register(23300, (e) => {
+      Net_1.Net.Register(22346, (e) => {
         e = Number(MathUtils_1.MathUtils.LongToBigInt(e.dps));
         (this.R$t = 0 !== e),
           EventSystem_1.EventSystem.Emit(
@@ -248,11 +198,11 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
           d9n: e,
           C9n: MathUtils_1.MathUtils.BigIntToLong(this.TreeIncId),
         })),
-        Net_1.Net.Call(26721, e, (e) => {
+        Net_1.Net.Call(21577, e, (e) => {
           e.BEs !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.BEs,
-              22593,
+              22101,
             );
         }));
   }
@@ -266,7 +216,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
           EventDefine_1.EEventName.OnBattleStateChanged,
           this.Zpe,
         ),
-      this.A$t && (Net_1.Net.UnRegister(23300), (this.A$t = !1));
+      this.A$t && (Net_1.Net.UnRegister(22346), (this.A$t = !1));
   }
   N$t() {
     EventSystem_1.EventSystem.Add(
@@ -286,7 +236,7 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
   }
   B$t(e) {
     var t =
-      Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(160);
+      Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(172);
     t?.Valid &&
       (e
         ? t.AddBuff(CharacterBuffIds_1.buffId.StealthIgnoreHateBuff, {
@@ -300,19 +250,19 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
           ));
   }
   IsFadeInScreen() {
-    return this.NLa === IAction_1.ETeleportTransitionType.FadeInScreen;
+    return this.jLa === IAction_1.ETeleportTransitionType.FadeInScreen;
   }
-  wUa() {
-    !this.RUa ||
-      StringUtils_1.StringUtils.IsBlank(this.RUa) ||
+  GUa() {
+    !this.wUa ||
+      StringUtils_1.StringUtils.IsBlank(this.wUa) ||
       EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
-        new UE.Transform(
+        new UE.TransformDouble(
           Rotator_1.Rotator.ZeroRotator,
-          this.UUa.ToUeVector(),
-          Vector_1.Vector.OneVector,
+          this.BUa.ToUeVector(),
+          Vector_1.Vector.OneVectorDouble,
         ),
-        this.RUa,
+        this.wUa,
         "[QuestFailedBehaviorNode.SpawnFailRangeEffect]",
         void 0,
         3,
@@ -322,37 +272,37 @@ class QuestFailedBehaviorNode extends BehaviorNodeBase_1.BehaviorNodeBase {
             ? Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "GeneralLogicTree",
-                19,
+                18,
                 "GeneralLogicTree:CheckPointEffectController.SpawnEffect 错误",
                 ["result", e],
               )
             : t &&
-              ((this.PUa = t),
+              ((this.qUa = t),
               EffectSystem_1.EffectSystem.SetEffectDataFloatConstParam(
                 t,
                 new UE.FName("CircleRadius"),
-                this.xUa,
+                this.bUa,
               ),
               EffectSystem_1.EffectSystem.RegisterCustomCheckOwnerFunc(
                 t,
-                () => 0 !== this.PUa,
+                () => 0 !== this.qUa,
               ));
         },
       );
   }
-  BUa() {
-    EffectSystem_1.EffectSystem.IsValid(this.PUa) &&
+  OUa() {
+    EffectSystem_1.EffectSystem.IsValid(this.qUa) &&
       EffectSystem_1.EffectSystem.StopEffectById(
-        this.PUa,
+        this.qUa,
         "[QuestFailedBehaviorNode.StopFailRangeEffect]",
         !0,
       ),
-      (this.PUa = 0);
+      (this.qUa = 0);
   }
   IsOutFailRange(e) {
-    return void 0 !== this.BOa && void 0 !== this.wOa
-      ? Vector_1.Vector.DistXY(this.BOa, e) > this.wOa
-      : void 0 !== this.qOa && !this.qOa.MapCheckReachedPosition(e);
+    return void 0 !== this.qka && void 0 !== this.bka
+      ? Vector_1.Vector.DistXY(this.qka, e) > this.bka
+      : void 0 !== this.Gka && !this.Gka.MapCheckReachedPosition(e);
   }
 }
 exports.QuestFailedBehaviorNode = QuestFailedBehaviorNode;

@@ -25,7 +25,7 @@ class GenericPromptController extends UiControllerBase_1.UiControllerBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "GenericPrompt",
-          11,
+          10,
           '配置不存在，请检查"t.通用提示.xlsx"',
           ["Id", e],
         );
@@ -53,12 +53,12 @@ class GenericPromptController extends UiControllerBase_1.UiControllerBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "GenericPrompt",
-          11,
+          10,
           '配置不存在，请检查"t.通用提示.xlsx"',
           ["Id", e],
         );
   }
-  static ShowPromptByItsType(e, r, t, n, o, i, a, s) {
+  static ShowPromptByItsType(e, r, t, n, o, i, a, s, _, m = !1) {
     i = {
       TypeId: e,
       PromptId: i,
@@ -67,12 +67,15 @@ class GenericPromptController extends UiControllerBase_1.UiControllerBase {
       MainTextParams: n,
       ExtraTextParams: o,
       CloseCallback: a,
+      Duration: _,
       ...s,
     };
     9 === e
       ? ModelManager_1.ModelManager.GenericPromptModel.ApplyPromptParamHub(i)
       : (r = GenericPromptDefine_1.genericPromptView[e]) &&
-        UiManager_1.UiManager.OpenView(r, i);
+        (m
+          ? UiManager_1.UiManager.OpenViewByPlot(r, i)
+          : UiManager_1.UiManager.OpenView(r, i));
   }
   static GetViewNameByPromptId(e) {
     var r =
@@ -81,7 +84,7 @@ class GenericPromptController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "GenericPrompt",
-        11,
+        10,
         '配置不存在，请检查"t.通用提示.xlsx"',
         ["Id", e],
       );

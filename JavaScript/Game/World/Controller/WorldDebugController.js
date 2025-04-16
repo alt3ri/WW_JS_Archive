@@ -59,7 +59,7 @@ class WorldDebugController extends ControllerBase_1.ControllerBase {
           WorldDebugModel_1.FIGHTING_TOTAL_MAX_COUINT && 0 == n
       )
     ) {
-      var _ = Global_1.Global.BaseCharacter?.K2_GetActorLocation(),
+      var _ = Global_1.Global.BaseCharacter?.D_K2_GetActorLocation(),
         _ = `
         主控玩家当前位置：X:${_?.X} Y:${_?.Y} Z:${_?.Z}
 
@@ -75,7 +75,7 @@ class WorldDebugController extends ControllerBase_1.ControllerBase {
         var u = D.Entity.GetComponent(0),
           M = u.GetCreatureDataId(),
           g = this.$pr(u.GetEntityType()),
-          i = u.GetBaseInfo()?.TidName,
+          i = u.GetEntityTidName(),
           M = {
             CreatureDataId: M,
             EntityType: g ?? "",

@@ -12,6 +12,9 @@ class TsDecoratorCheckAnimalState extends UE.BTDecorator_BlueprintBase {
       (this.TsState = 0),
       (this.TsInverse = !1);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1), (this.TsState = 0), (this.TsInverse = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -23,7 +26,7 @@ class TsDecoratorCheckAnimalState extends UE.BTDecorator_BlueprintBase {
     if (!s)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+          Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
             "Type",
             t.GetClass().GetName(),
           ]),

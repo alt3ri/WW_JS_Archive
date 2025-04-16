@@ -26,7 +26,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "RenderBattle",
-                39,
+                38,
                 "进入战斗过渡状态时没有Sequence资源，开始资源加载。",
               ),
             (this.zar = ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -39,7 +39,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
                     : Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "RenderBattle",
-                        39,
+                        38,
                         "进入战斗过渡状态时没有Sequence资源，资源加载失败。",
                         ["WuYinQuBattleActor", this.Owner?.GetName()],
                       );
@@ -48,7 +48,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderBattle",
-          39,
+          38,
           "进入战斗过渡状态时没有SequencePlayer",
           ["WuYinQuBattleActor", this.Owner?.GetName()],
         );
@@ -98,7 +98,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
       t = this.Owner.WuYinQuFightingData.GlobalMPC,
       e = this.Owner.WuYinQuFightingData;
     t &&
-      ((u = this.Owner.K2_GetActorLocation()),
+      ((u = this.Owner.D_K2_GetActorLocation()),
       UE.KismetMaterialLibrary.SetVectorParameterValue(
         this.Owner.GetWorld(),
         t,
@@ -120,7 +120,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
       )),
       (this.Owner.当前状态 = "从:" + i + "到:" + s),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderBattle", 12, "进入战斗过度阶段");
+        Log_1.Log.Info("RenderBattle", 11, "进入战斗过度阶段");
   }
   OnUpdate(e) {
     var t = this.Owner.GetCurrentBattleState();
@@ -128,13 +128,13 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
       if (2 === t) return void this.StateMachine.Switch(2);
       if (3 === t) return void this.StateMachine.Switch(3);
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderBattle", 12, "战斗过度状态错误!!!!");
+        Log_1.Log.Error("RenderBattle", 11, "战斗过度状态错误!!!!");
     }
     this.Timer += e / 1e3;
   }
   OnExit(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderBattle", 12, "退出战斗过度阶段"),
+      Log_1.Log.Info("RenderBattle", 11, "退出战斗过度阶段"),
       (this.Jar = void 0),
       this.zar !== ResourceSystem_1.ResourceSystem.InvalidId &&
         (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.zar),
@@ -142,7 +142,7 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
         Log_1.Log.CheckError()) &&
         Log_1.Log.Error(
           "RenderBattle",
-          39,
+          38,
           "退出战斗过渡状态时还在加载资源，取消资源加载",
         );
   }

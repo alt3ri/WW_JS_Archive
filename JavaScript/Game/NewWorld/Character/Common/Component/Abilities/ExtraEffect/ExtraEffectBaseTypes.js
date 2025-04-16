@@ -5,7 +5,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.DEFAULT_WEAPON_TYPE_NOT_PASS =
     exports.RequireAndLimits =
     exports.EffectLimits =
-      void 0);
+    exports.periodExecutionIds =
+    exports.initExecutionIds =
+      void 0),
+  (exports.initExecutionIds = new Set([24, 52])),
+  (exports.periodExecutionIds = new Set([
+    28, 29, 102, 34, 26, 58, 4, 5, 30, 13, 101, 65, 67, 1102, 69,
+  ]));
 class EffectLimits {
   constructor() {
     (this.ExtraEffectCd = -0),
@@ -27,6 +33,7 @@ class RequirementPayload {
   constructor() {
     (this.SkillId = -1),
       (this.SkillGenre = -1),
+      (this.BattleFlags = []),
       (this.CalculateType = -1),
       (this.DamageType = -1),
       (this.DamageSubTypes = []),
@@ -40,7 +47,10 @@ class RequirementPayload {
       (this.WeaponType = -1),
       (this.PartId = -1),
       (this.PartTag = 0),
-      (this.BulletTags = []);
+      (this.BulletTags = []),
+      (this.SkillDamageCount = void 0),
+      (this.BulletDamageCount = void 0),
+      (this.BulletMessageId = void 0);
   }
   PartialAssign(t) {
     return Object.assign(this, t);

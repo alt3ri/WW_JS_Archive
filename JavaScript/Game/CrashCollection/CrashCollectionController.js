@@ -3,7 +3,10 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CrashCollectionController = void 0);
 const cpp_1 = require("cpp"),
+  UE = require("ue"),
+  Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
+  Protocol_1 = require("../../Core/Define/Net/Protocol"),
   ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
   GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
   ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
@@ -12,68 +15,58 @@ const cpp_1 = require("cpp"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   GameSettingsDeviceRender_1 = require("../GameSettings/GameSettingsDeviceRender"),
   GlobalData_1 = require("../GlobalData"),
-  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
   FormationDataController_1 = require("../Module/Abilities/FormationDataController");
 class CrashCollectionController extends ControllerBase_1.ControllerBase {
-  static UPa() {
+  static BPa() {
     if (Stats_1.Stat.Enable)
       return FormationDataController_1.FormationDataController.GlobalIsInFight
-        ? this.xPa
-        : this.PPa;
+        ? this.bPa
+        : this.qPa;
   }
-  static wPa() {
+  static GPa() {
     if (Stats_1.Stat.Enable)
       return GameBudgetInterfaceController_1.GameBudgetInterfaceController
         .IsInFight
-        ? this.BPa
-        : this.bPa;
+        ? this.OPa
+        : this.kPa;
   }
-  static qPa() {
+  static NPa() {
     if (Stats_1.Stat.Enable)
       return ModelManager_1.ModelManager.PlotModel?.IsInPlot
-        ? this.GPa
-        : this.OPa;
+        ? this.FPa
+        : this.VPa;
   }
-  static kPa() {
+  static HPa() {
     if (Stats_1.Stat.Enable)
       return GameBudgetInterfaceController_1.GameBudgetInterfaceController
         .IsInPlot
-        ? this.NPa
-        : this.FPa;
+        ? this.jPa
+        : this.WPa;
   }
-  static nDa(t, e) {
-    var r;
+  static cDa(e) {
     if (Stats_1.Stat.Enable)
-      return (
-        (r =
-          ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity
-            ?.PbDataId),
-        Stats_1.Stat.Create(
-          `Id: ${String(r)}, Pos: X=${t.X.toFixed(2)}, Y=${t.Y.toFixed(2)}, Z=${t.Z.toFixed(2)}, Rot: (Pitch=${e.Pitch.toFixed(2)}, Yaw=${e.Yaw.toFixed(2)}, Roll=${e.Roll.toFixed(2)})`,
-        )
-      );
+      return Stats_1.Stat.CreateNoFlameGraph("Level: " + e);
   }
-  static sDa(t, e) {
-    if (Stats_1.Stat.Enable)
-      return Stats_1.Stat.Create(
-        `Pos: X=${t.X.toFixed(2)}, Y=${t.Y.toFixed(2)}, Z=${t.Z.toFixed(2)}, Rot: (Pitch=${e.Pitch.toFixed(2)}, Yaw=${e.Yaw.toFixed(2)}, Roll=${e.Roll.toFixed(2)})`,
-      );
-  }
-  static aDa(t) {
-    if (Stats_1.Stat.Enable) return Stats_1.Stat.Create("World: " + t);
-  }
-  static hDa(t) {
-    if (Stats_1.Stat.Enable) return Stats_1.Stat.Create("Level: " + t);
-  }
-  static Yka() {
+  static ZFa() {
     if (Stats_1.Stat.Enable)
       return 2 === ResourceSystem_1.ResourceSystem.GetLoadMode()
-        ? this.zka
-        : this.Jka;
+        ? this.e3a
+        : this.t3a;
   }
   static OnInit() {
-    return this.sCe(), super.OnInit();
+    return (
+      this.sCe(),
+      cpp_1.FKuroCrashCollectionController.Initialize(
+        GlobalData_1.GlobalData.World,
+        new UE.FName("ActorLocation"),
+        new UE.FName("ActorRotation"),
+        new UE.FName("CameraLocation"),
+        new UE.FName("CameraRotation"),
+        new UE.FName("World"),
+      ),
+      super.OnInit()
+    );
   }
   static OnClear() {
     return this.aCe(), super.OnClear();
@@ -90,6 +83,30 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReConnectSuccess,
         this.gSe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnAddNewQuest,
+        this.Xoo,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnQuestStateChange,
+        this.DSe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnChangeRole,
+        this.xie,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SetImageQualityWithValue,
+        this.cCe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SetRayTracingWithValue,
+        this.Um1,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SetDLSSFGWithValue,
+        this.Dm1,
       );
   }
   static aCe() {
@@ -104,117 +121,80 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReConnectSuccess,
         this.gSe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnAddNewQuest,
+        this.Xoo,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnQuestStateChange,
+        this.DSe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnChangeRole,
+        this.xie,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SetImageQualityWithValue,
+        this.cCe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SetRayTracingWithValue,
+        this.Um1,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SetDLSSFGWithValue,
+        this.Dm1,
       );
   }
-  static OnTick(t) {
+  static OnTick(e) {
     this.lCe();
   }
   static lCe() {
     this.MJ.Start();
-    var t = this.UPa(),
-      e = this.wPa(),
-      r = this.qPa(),
-      a = this.kPa(),
-      o = this.Yka();
-    t?.Start(),
-      e?.Start(),
+    var e = this.BPa(),
+      t = this.GPa(),
+      r = this.NPa(),
+      o = this.HPa(),
+      a = this.ZFa();
+    e?.Start(),
+      t?.Start(),
       r?.Start(),
-      a?.Start(),
       o?.Start(),
-      this._Ce(),
-      this.uCe(),
-      this.cCe(),
-      this.mCe(),
-      this.dCe(),
-      o?.Stop(),
+      a?.Start(),
       a?.Stop(),
+      o?.Stop(),
       r?.Stop(),
-      e?.Stop(),
       t?.Stop(),
+      e?.Stop(),
       this.MJ.Stop();
-  }
-  static _Ce() {
-    this.gCe.Start();
-    var t,
-      e,
-      r =
-        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-          3,
-        );
-    r?.Valid &&
-      ((t = r.ActorLocationProxy),
-      (r = r.ActorRotationProxy),
-      (e = this.nDa(t, r))?.Start(),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.fCe, t.ToString()),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.pCe, r.ToString()),
-      e?.Stop()),
-      this.gCe.Stop();
-  }
-  static uCe() {
-    this.vCe.Start();
-    var t,
-      e,
-      r = ControllerHolder_1.ControllerHolder.CameraController;
-    r &&
-      ((t = r.CameraLocation),
-      (r = r.CameraRotator),
-      (e = this.sDa(t, r))?.Start(),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.MCe, t.ToString()),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.ECe, r.ToString()),
-      e?.Stop()),
-      this.vCe.Stop();
   }
   static SCe() {
     this.yCe.Start();
-    var t = ModelManager_1.ModelManager.TimeOfDayModel;
-    t &&
-      ((t = t.GameTime.HourMinuteString),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.ICe, t)),
+    var e = ModelManager_1.ModelManager.TimeOfDayModel;
+    e &&
+      ((e = e.GameTime.HourMinuteString),
+      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.ICe, e)),
       this.yCe.Stop();
   }
-  static cCe() {
-    this.TCe.Start();
-    var t =
-        GameSettingsDeviceRender_1.GameSettingsDeviceRender
-          .GameQualitySettingLevel,
-      e = this.hDa(t);
-    e?.Start(),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.LCe, t.toString()),
-      e?.Stop(),
-      this.TCe.Stop();
-  }
-  static mCe() {
-    this.DCe.Start();
-    var t = ModelManager_1.ModelManager.QuestNewModel;
-    (t = t && t.GetQuestsByType(1)) &&
-      0 !== t.length &&
-      ((t = t
-        .filter((t) => t.IsProgressing)
-        .map((t) => t.Id)
-        .join(", ")),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.RCe, t)),
+  static eEl() {
+    this.DCe.Start(),
+      cpp_1.FCrashSightProxy.SetCustomDataByFName(
+        this.RCe,
+        this.tEl.join(", "),
+      ),
       this.DCe.Stop();
-  }
-  static dCe() {
-    var t, e;
-    this.UCe.Start(),
-      GlobalData_1.GlobalData.World?.IsValid() &&
-        ((t = GlobalData_1.GlobalData.World.GetName()),
-        (e = this.aDa(t))?.Start(),
-        cpp_1.FCrashSightProxy.SetCustomDataByFName(this.ACe, t),
-        e?.Stop()),
-      this.UCe.Stop();
   }
   static xGn() {
     this.PGn.Start();
-    var t = ModelManager_1.ModelManager.LoginModel.GetReconnectHost(),
-      e = ModelManager_1.ModelManager.LoginModel.GetReconnectPort();
-    cpp_1.FCrashSightProxy.SetCustomDataByFName(this.BGn, t + ":" + e),
+    var e = ModelManager_1.ModelManager.LoginModel.GetReconnectHost(),
+      t = ModelManager_1.ModelManager.LoginModel.GetReconnectPort();
+    cpp_1.FCrashSightProxy.SetCustomDataByFName(this.BGn, e + ":" + t),
       this.PGn.Stop();
   }
-  static RecordHttpInfo(t) {
+  static RecordHttpInfo(e) {
     this.wGn.Start(),
-      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.bGn, t),
+      cpp_1.FCrashSightProxy.SetCustomDataByFName(this.bGn, e),
       this.wGn.Stop();
   }
 }
@@ -222,20 +202,11 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
   ((_a = CrashCollectionController).MJ = Stats_1.Stat.Create(
     "CrashCollectionController.GatherCrashInfo",
   )),
-  (CrashCollectionController.gCe = Stats_1.Stat.Create(
-    "CrashCollectionController.GatherCharacterInfo",
-  )),
-  (CrashCollectionController.vCe = Stats_1.Stat.Create(
-    "CrashCollectionController.GatherCameraInfo",
-  )),
   (CrashCollectionController.TCe = Stats_1.Stat.Create(
     "CrashCollectionController.GatherQualityLevel",
   )),
   (CrashCollectionController.DCe = Stats_1.Stat.Create(
     "CrashCollectionController.GatherQuestInfo",
-  )),
-  (CrashCollectionController.UCe = Stats_1.Stat.Create(
-    "CrashCollectionController.GatherWorldInfo",
   )),
   (CrashCollectionController.yCe = Stats_1.Stat.Create(
     "CrashCollectionController.GatherTODInfo",
@@ -246,52 +217,93 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
   (CrashCollectionController.wGn = Stats_1.Stat.Create(
     "CrashCollectionController.RecordHttpInfo",
   )),
-  (CrashCollectionController.fCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("ActorLocation")),
-  (CrashCollectionController.pCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("ActorRotation")),
-  (CrashCollectionController.MCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("CameraLocation")),
-  (CrashCollectionController.ECe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("CameraRotation")),
   (CrashCollectionController.ICe =
     FNameUtil_1.FNameUtil.GetDynamicFName("TODTime")),
   (CrashCollectionController.LCe =
     FNameUtil_1.FNameUtil.GetDynamicFName("QualityLevel")),
+  (CrashCollectionController.Bm1 = "RayTracing"),
+  (CrashCollectionController.km1 = "DlssFG"),
   (CrashCollectionController.RCe =
     FNameUtil_1.FNameUtil.GetDynamicFName("QuestIds")),
-  (CrashCollectionController.ACe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("World")),
   (CrashCollectionController.BGn =
     FNameUtil_1.FNameUtil.GetDynamicFName("GateWay")),
   (CrashCollectionController.bGn =
     FNameUtil_1.FNameUtil.GetDynamicFName("HttpInfo")),
-  (CrashCollectionController.xPa = Stats_1.Stat.Create("Origin IsFight: True")),
-  (CrashCollectionController.PPa = Stats_1.Stat.Create(
+  (CrashCollectionController.bPa = Stats_1.Stat.Create("Origin IsFight: True")),
+  (CrashCollectionController.qPa = Stats_1.Stat.Create(
     "Origin IsFight: False",
   )),
-  (CrashCollectionController.GPa = Stats_1.Stat.Create(
+  (CrashCollectionController.FPa = Stats_1.Stat.Create(
     "Origin IsCutscene: True",
   )),
-  (CrashCollectionController.OPa = Stats_1.Stat.Create(
+  (CrashCollectionController.VPa = Stats_1.Stat.Create(
     "Origin IsCutscene: False",
   )),
-  (CrashCollectionController.BPa = Stats_1.Stat.Create(
+  (CrashCollectionController.OPa = Stats_1.Stat.Create(
     "GameBudget IsFight: True",
   )),
-  (CrashCollectionController.bPa = Stats_1.Stat.Create(
+  (CrashCollectionController.kPa = Stats_1.Stat.Create(
     "GameBudget IsFight: False",
   )),
-  (CrashCollectionController.NPa = Stats_1.Stat.Create(
+  (CrashCollectionController.jPa = Stats_1.Stat.Create(
     "GameBudget IsCutscene: True",
   )),
-  (CrashCollectionController.FPa = Stats_1.Stat.Create(
+  (CrashCollectionController.WPa = Stats_1.Stat.Create(
     "GameBudget IsCutscene: False",
   )),
-  (CrashCollectionController.zka = Stats_1.Stat.Create("LoadModel: InGame")),
-  (CrashCollectionController.Jka = Stats_1.Stat.Create("LoadModel: InLoading")),
+  (CrashCollectionController.e3a = Stats_1.Stat.Create("LoadModel: InGame")),
+  (CrashCollectionController.t3a = Stats_1.Stat.Create("LoadModel: InLoading")),
   (CrashCollectionController.hCe = () => {
     _a.SCe();
+  }),
+  (CrashCollectionController.cCe = (e) => {
+    _a.TCe.Start();
+    var t =
+        GameSettingsDeviceRender_1.GameSettingsDeviceRender
+          .GameQualitySettingLevel,
+      t =
+        (e !== t &&
+          Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Game", 36, "CrashSight GatherQualityLevel"),
+        _a.cDa(t));
+    t?.Start(),
+      cpp_1.FCrashSightProxy.SetCustomDataByFName(_a.LCe, e.toString()),
+      t?.Stop(),
+      _a.TCe.Stop();
+  }),
+  (CrashCollectionController.Um1 = (e) => {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Game", 36, "CrashSight GatherRayTracing"),
+      cpp_1.FCrashSightProxy.SetCustomData(_a.Bm1, e.toString());
+  }),
+  (CrashCollectionController.Dm1 = (e) => {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Game", 36, "CrashSight GatherDlssFg"),
+      cpp_1.FCrashSightProxy.SetCustomData(_a.km1, e.toString());
+  }),
+  (CrashCollectionController.tEl = new Array()),
+  (CrashCollectionController.Xoo = (e) => {
+    1 === e.Type &&
+      e.IsProgressing &&
+      !_a.tEl.includes(e.Id) &&
+      (_a.tEl.push(e.Id), _a.eEl());
+  }),
+  (CrashCollectionController.xie = (e, t) => {
+    var r =
+      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
+        3,
+      );
+    r
+      ? cpp_1.FKuroCrashCollectionController.UpdateMainCharacter(r.Actor)
+      : cpp_1.FKuroCrashCollectionController.UpdateMainCharacter(void 0);
+  }),
+  (CrashCollectionController.DSe = (e, t) => {
+    var r = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
+    r &&
+      1 === r.Type &&
+      (t === Protocol_1.Aki.Protocol.hTs.nvs
+        ? _a.tEl.includes(e) || (_a.tEl.push(e), _a.eEl())
+        : -1 < (r = _a.tEl.indexOf(e)) && (_a.tEl.splice(r, 1), _a.eEl()));
   }),
   (CrashCollectionController.gSe = () => {
     _a.xGn();

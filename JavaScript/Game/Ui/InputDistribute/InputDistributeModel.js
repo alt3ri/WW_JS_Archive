@@ -21,7 +21,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.Ymr = []),
-      (this.M4a = []),
+      (this.Z6a = []),
       (this.Jmr = new Set()),
       (this.zmr = []),
       (this.Zmr = new Map()),
@@ -33,7 +33,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       (this.ndr = new Set()),
       (this.sdr = void 0),
       (this.hdr = void 0),
-      (this.S4a = new Map()),
+      (this.e8a = new Map()),
       (this.ldr = 0);
   }
   OnInit() {
@@ -59,7 +59,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const i of this.odr.values()) i.Reset();
     this.odr.clear();
     for (const e of this.tdr.values()) e.Reset();
-    return this.tdr.clear(), this.S4a.clear(), !0;
+    return this.tdr.clear(), this.e8a.clear(), !0;
   }
   Cdr() {
     for (const i of InputDistributeSetupDefine_1.inputDistributeSetups) {
@@ -82,18 +82,22 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   ddr() {
     for (var [t, i] of InputDistributeDefine_1.keyTagMap) this.vdr(t, i);
   }
+  IsActionInPress(t) {
+    t = this.Mdr(t);
+    return !!t && t.GetIsPress();
+  }
   InputAction(i, e) {
     var t = this.Mdr(i);
     if (!t)
       return (
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Input", 8, "输入Action时，没有对应的ActionHandle", [
+          Log_1.Log.Warn("Input", 10, "输入Action时，没有对应的ActionHandle", [
             "actionName",
             i,
           ]),
         !1
       );
-    if (InputDistributeDelay_1.delayInput.includes(i)) {
+    if ((t.SetIsPress(e), InputDistributeDelay_1.delayInput.includes(i))) {
       let t = void 0;
       this.edr.has(i)
         ? (t = this.edr.get(i))
@@ -110,11 +114,13 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       if (!this.IsActionInLimitSet(i)) return !1;
     } else {
       var n = t.GetInputDistributeTag();
-      if (n && !this.IsTagMatchAnyCurrentInputTag(n)) return !1;
-      if (!this.CGa(i, n)) return !1;
+      if (n && !this.IsTagMatchAnyCurrentInputTag(n))
+        return t.InputActionIgnoreLimit(e), !1;
+      if (!this.nNa(i, n)) return !1;
     }
     return (
       t.InputAction(e),
+      t.InputActionIgnoreLimit(e),
       e ? (this.sdr = i) : this.sdr && (this.sdr = void 0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputChangeForCond,
@@ -122,7 +128,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       !0
     );
   }
-  CGa(t, i) {
+  nNa(t, i) {
     var i = this.Sdr(i);
     return (
       !i ||
@@ -140,7 +146,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       )
     );
   }
-  gGa(t, i) {
+  sNa(t, i) {
     var i = this.Sdr(i);
     return (
       !i ||
@@ -165,32 +171,32 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     t = this.ydr(t);
     t && t.InputCacheAxisValue(i);
   }
-  InputAxis(t, i) {
-    var e = this.ydr(t);
-    if (e) {
+  InputAxis(t, i, e = !1) {
+    var n = this.ydr(t);
+    if (n) {
       if (this.HasActionLimitSet()) {
         if (!this.IsActionInLimitSet(t))
           return void (
             Info_1.Info.AxisInputOptimize &&
-            0 !== e.GetCacheAxisValue() &&
-            e.InputAxis(0)
+            (0 !== n.GetCacheAxisValue() || e) &&
+            n.InputAxis(0)
           );
       } else {
-        var n = e.GetInputDistributeTag();
-        if (n && !this.IsTagMatchAnyCurrentInputTag(n))
+        var s = n.GetInputDistributeTag();
+        if (s && !this.IsTagMatchAnyCurrentInputTag(s))
           return void (
             Info_1.Info.AxisInputOptimize &&
-            0 !== e.GetCacheAxisValue() &&
-            e.InputAxis(0)
+            (0 !== n.GetCacheAxisValue() || e) &&
+            n.InputAxis(0)
           );
-        if (!this.gGa(t, n))
+        if (!this.sNa(t, s))
           return void (
             Info_1.Info.AxisInputOptimize &&
-            0 !== e.GetCacheAxisValue() &&
-            e.InputAxis(0)
+            (0 !== n.GetCacheAxisValue() || e) &&
+            n.InputAxis(0)
           );
       }
-      e.InputAxis(i),
+      n.InputAxis(i),
         this.Idr(t, i),
         0 < Math.abs(i) ? (this.hdr = t) : this.hdr && (this.hdr = void 0);
     }
@@ -216,7 +222,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
           !this.IsTagMatchAnyCurrentInputTag(e)) ||
         n.InputTouch(i)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Input", 8, "输入Action时，没有对应的ActionHandle", [
+        Log_1.Log.Warn("Input", 10, "输入Action时，没有对应的ActionHandle", [
           "touchId",
           t,
         ]);
@@ -226,10 +232,12 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     e
       ? e.BindAction(i)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Input", 8, "绑定Action回调时，没有对应的ActionHandle", [
-          "actionName",
-          t,
-        ]);
+        Log_1.Log.Warn(
+          "Input",
+          10,
+          "绑定Action回调时，没有对应的ActionHandle",
+          ["actionName", t],
+        );
   }
   ExecuteDelayInputAction(t) {
     var i = this.Mdr(t);
@@ -248,13 +256,37 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Input",
-          8,
+          10,
           "取消绑定Action回调时，没有对应的ActionHandle",
           ["actionName", t],
         );
   }
   UnBindActions(t, i) {
     for (const e of t) this.UnBindAction(e, i);
+  }
+  BindActionIgnoreLimit(t, i) {
+    var e = this.Mdr(t);
+    e
+      ? e.BindActionIgnoreLimit(i)
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Input",
+          10,
+          "绑定Action回调时，没有对应的ActionHandle",
+          ["actionName", t],
+        );
+  }
+  UnBindActionIgnoreLimit(t, i) {
+    var e = this.Mdr(t);
+    e
+      ? e.UnBindActionIgnoreLimit(i)
+      : Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Input",
+          10,
+          "取消绑定Action回调时，没有对应的ActionHandle",
+          ["actionName", t],
+        );
   }
   gdr(t, i) {
     i = new InputActionHandle_1.InputActionHandle(i, t);
@@ -268,7 +300,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     e
       ? e.BindAxis(i)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Input", 8, "绑定Axis回调时，没有对应的ActionHandle", [
+        Log_1.Log.Warn("Input", 10, "绑定Axis回调时，没有对应的ActionHandle", [
           "axisName",
           t,
         ]);
@@ -287,7 +319,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Input",
-          8,
+          10,
           "取消绑定Action回调时，没有对应的ActionHandle",
           ["axisName", t],
         );
@@ -300,7 +332,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     e
       ? e.BindTouch(i)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Input", 8, "绑定Touch回调时，没有对应的ActionHandle", [
+        Log_1.Log.Warn("Input", 10, "绑定Touch回调时，没有对应的ActionHandle", [
           "axisName",
           t,
         ]);
@@ -315,7 +347,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Input",
-          8,
+          10,
           "取消绑定Touch回调时，没有对应的ActionHandle",
           ["axisName", t],
         );
@@ -349,7 +381,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     e
       ? e.BindAction(i)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Input", 8, "绑定Key回调时，没有对应的KeyHandle", [
+        Log_1.Log.Warn("Input", 10, "绑定Key回调时，没有对应的KeyHandle", [
           "keyName",
           t,
         ]);
@@ -359,7 +391,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     e
       ? e.UnBindAction(i)
       : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("Input", 8, "取消绑定Key回调时，没有对应的KeyHandle", [
+        Log_1.Log.Warn("Input", 10, "取消绑定Key回调时，没有对应的KeyHandle", [
           "keyName",
           t,
         ]);
@@ -420,7 +452,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   AddToLimitInputDistributeActions(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Input", 8, "[InputDistribute]设置输入分发限制Action", [
+      Log_1.Log.Info("Input", 10, "[InputDistribute]设置输入分发限制Action", [
         "actionName",
         t,
       ]),
@@ -428,7 +460,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   ClearLimitInputDistributeActions() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Input", 8, "[InputDistribute]清除输入分发限制Action"),
+      Log_1.Log.Info("Input", 10, "[InputDistribute]清除输入分发限制Action"),
       this.Jmr.clear();
   }
   HasActionLimitSet() {
@@ -440,7 +472,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   AddInputDistributeTag(t) {
     this.Rdr(t) &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Input", 8, "[InputDistribute]添加输入分发Tag", [
+        Log_1.Log.Info("Input", 10, "[InputDistribute]添加输入分发Tag", [
           "tagName",
           t,
         ]),
@@ -459,7 +491,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     i &&
       ((this.Ymr = [i]),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Input", 8, "[InputDistribute]设置输入分发Tag", [
+        Log_1.Log.Info("Input", 10, "[InputDistribute]设置输入分发Tag", [
           "tagName",
           t,
         ]),
@@ -473,7 +505,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     this.ClearInputDistributeTag();
     for (const i of t) this.Rdr(i);
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Input", 8, "[InputDistribute]设置输入分发Tag", [
+      Log_1.Log.Info("Input", 10, "[InputDistribute]设置输入分发Tag", [
         "tagNames",
         t,
       ]),
@@ -502,16 +534,16 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     this.Ymr.length = 0;
   }
   xMe() {
-    for (const n of this.S4a.keys()) {
-      var t = this.S4a.get(n);
+    for (const n of this.e8a.keys()) {
+      var t = this.e8a.get(n);
       if (!t || 0 === t.size) return;
-      var i = this.IsTagMatchAnyInputDistributeTags(n, this.M4a),
+      var i = this.IsTagMatchAnyInputDistributeTags(n, this.Z6a),
         e = this.IsTagMatchAnyInputDistributeTags(n, this.Ymr);
-      i !== e && this.E4a(t, n, e);
+      i !== e && this.t8a(t, n, e);
     }
-    this.M4a = this.Ymr;
+    this.Z6a = [...this.Ymr];
   }
-  E4a(t, i, e) {
+  t8a(t, i, e) {
     for (const n of t)
       try {
         n(i, e);
@@ -520,7 +552,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "Input",
-              38,
+              37,
               "[InputDistribute]Tag事件回调执行异常",
               t,
               ["tag", i],
@@ -529,7 +561,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Input",
-              38,
+              37,
               "[InputDistribute]Tag事件回调执行异常",
               ["tag", i],
               ["error", t],
@@ -538,13 +570,13 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   AddInputDistributeTagChangedListener(i, e) {
     if (i && e) {
-      let t = this.S4a.get(i);
-      t || this.S4a.set(i, (t = new Set())), t.has(e) || t.add(e);
+      let t = this.e8a.get(i);
+      t || this.e8a.set(i, (t = new Set())), t.has(e) || t.add(e);
     }
   }
   RemoveInputDistributeTagChangedListener(t, i) {
-    var e = this.S4a.get(t);
-    e && (e.delete(i), 0 === e.size) && this.S4a.delete(t);
+    var e = this.e8a.get(t);
+    e && (e.delete(i), 0 === e.size) && this.e8a.delete(t);
   }
   IsAllowFightInput() {
     return this.IsAnyInputDistributeTagsMatchTag(

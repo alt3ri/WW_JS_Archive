@@ -9,7 +9,12 @@ class TsUiSceneRoleActor extends UE.Actor {
     super(...arguments),
       (this.Model = void 0),
       (this.RoleActorIndex = 0),
-      (this.BeforeMoveOutPos = Vector_1.Vector.ZeroVector);
+      (this.BeforeMoveOutPos = Vector_1.Vector.ZeroVectorDouble);
+  }
+  Constructor() {
+    (this.Model = void 0),
+      (this.RoleActorIndex = 0),
+      (this.BeforeMoveOutPos = Vector_1.Vector.ZeroVectorDouble);
   }
   Init(t, e) {
     (this.RoleActorIndex = t),
@@ -38,17 +43,22 @@ class TsUiSceneRoleActor extends UE.Actor {
       this.Model?.Clear(),
       (this.Model = void 0),
       (this.RoleActorIndex = 0),
-      ActorSystem_1.ActorSystem.Put(this);
+      ActorSystem_1.ActorSystem.Put("TsUiSceneRoleActor.Destroy", this);
   }
   IsShowUiWepaonEffect() {
     return !0;
   }
   SetMoveOutActor() {
-    (this.BeforeMoveOutPos = this.K2_GetActorLocation()),
-      this.K2_SetActorLocation(Vector_1.Vector.ZeroVector, !1, void 0, !1);
+    (this.BeforeMoveOutPos = this.D_K2_GetActorLocation()),
+      this.D_K2_SetActorLocation(
+        Vector_1.Vector.ZeroVectorDouble,
+        !1,
+        void 0,
+        !1,
+      );
   }
   SetMoveInActor() {
-    this.K2_SetActorLocation(this.BeforeMoveOutPos, !1, void 0, !1);
+    this.D_K2_SetActorLocation(this.BeforeMoveOutPos, !1, void 0, !1);
   }
 }
 exports.default = TsUiSceneRoleActor;

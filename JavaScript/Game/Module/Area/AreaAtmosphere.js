@@ -25,7 +25,11 @@ class AreaAtmosphereActorInfo {
   }
   Clear() {
     (this.AreaAtmosphereInfo = void 0),
-      this.Actor && ActorSystem_1.ActorSystem.Put(this.Actor),
+      this.Actor &&
+        ActorSystem_1.ActorSystem.Put(
+          "AreaAtmosphereActorInfo.Clear",
+          this.Actor,
+        ),
       (this.Actor = void 0),
       (this.KuroPostProcessComponent = void 0);
   }
@@ -119,7 +123,7 @@ class AreaAtmosphere {
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "Area",
-            18,
+            17,
             "区域氛围开启",
             ["id", t.AreaAtmosphereInfo.Id],
             ["DA", t.AreaAtmosphereInfo.DAPath],
@@ -130,7 +134,7 @@ class AreaAtmosphere {
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "Area",
-            18,
+            17,
             "区域氛围关闭",
             ["id", t.AreaAtmosphereInfo.Id],
             ["DA", t.AreaAtmosphereInfo.DAPath],
@@ -175,8 +179,8 @@ class AreaAtmosphere {
     this.kje &&
       this.kje.Actor?.IsValid() &&
       Global_1.Global.BaseCharacter &&
-      this.kje.Actor.K2_SetActorLocation(
-        Global_1.Global.BaseCharacter.K2_GetActorLocation(),
+      this.kje.Actor.D_K2_SetActorLocation(
+        Global_1.Global.BaseCharacter.D_K2_GetActorLocation(),
         !1,
         void 0,
         !0,
@@ -185,8 +189,8 @@ class AreaAtmosphere {
   Qje() {
     let t = void 0;
     t = Global_1.Global.BaseCharacter
-      ? Global_1.Global.BaseCharacter.GetTransform()
-      : new UE.Transform();
+      ? Global_1.Global.BaseCharacter.D_GetTransform()
+      : new UE.TransformDouble();
     var e = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t),
       i =
         (GlobalData_1.GlobalData.IsPlayInEditor &&
@@ -225,7 +229,7 @@ class AreaAtmosphere {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Area",
-        18,
+        17,
         "开始加载区域氛围",
         ["id", e.Id],
         ["DA", e.DAPath],
@@ -244,7 +248,7 @@ class AreaAtmosphere {
                 Log_1.Log.CheckDebug()) &&
                 Log_1.Log.Debug(
                   "Area",
-                  18,
+                  17,
                   "加载氛围资源成功",
                   ["id", e.Id],
                   ["DA", e.DAPath],
@@ -264,7 +268,7 @@ class AreaAtmosphere {
                 Log_1.Log.CheckDebug()) &&
                 Log_1.Log.Debug(
                   "Area",
-                  18,
+                  17,
                   "加载氛围资源成功",
                   ["id", e.Id],
                   ["DA", e.DAPath],

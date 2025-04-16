@@ -21,6 +21,16 @@ class TsTaskPlayPlot extends TsTaskAbortImmediatelyBase_1.default {
       (this.IsPlotStart = !1),
       (this.TickRemain = 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsInitTsVariables = !1),
+      (this.TsSeqNetworkId = ""),
+      (this.TsSeqNetworkRes = ""),
+      (this.TsPlotConfigRes = ""),
+      (this.TsWaitTickCount = 0),
+      (this.IsPlotStart = !1),
+      (this.TickRemain = 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -47,7 +57,7 @@ class TsTaskPlayPlot extends TsTaskAbortImmediatelyBase_1.default {
             ]),
           this.FinishExecute(!1));
   }
-  ReceiveTickAI(s, t, e) {
+  ReceiveTickAI(s, t, i) {
     this.IsPlotStart
       ? this.TsPlotConfigRes &&
         !ModelManager_1.ModelManager.PlotModel.IsInPlot &&

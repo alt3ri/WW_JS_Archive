@@ -56,7 +56,7 @@ class UiTagComponent {
             ? Log_1.Log.CheckError() &&
               Log_1.Log.ErrorWithStack(
                 "Event",
-                44,
+                43,
                 "tag事件回调执行异常",
                 t,
                 ["tag", o],
@@ -65,7 +65,7 @@ class UiTagComponent {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Event",
-                44,
+                43,
                 "tag事件回调执行异常",
                 ["tag", o],
                 ["error", t],

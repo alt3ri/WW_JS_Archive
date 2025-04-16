@@ -9,20 +9,21 @@ class TsAnimNotifyHideMesh extends UE.KuroAnimNotify {
       (this.HideChildrenActors = !1),
       (this.Hide = !0);
   }
-  K2_Notify(e, t) {
-    var s = e.GetOwner();
+  Constructor() {}
+  K2_Notify(t, e) {
+    var s = t.GetOwner();
     if (!s) return !1;
     let i = void 0;
     if (this.ChildMeshName) {
       var r = s.K2_GetComponentsByClass(UE.MeshComponent.StaticClass());
-      for (let e = r.Num() - 1; 0 <= e; --e) {
-        var o = r.Get(e);
+      for (let t = r.Num() - 1; 0 <= t; --t) {
+        var o = r.Get(t);
         if (o.GetName() === this.ChildMeshName) {
           i = o;
           break;
         }
       }
-    } else i = e;
+    } else i = t;
     return !!i && (i.SetHiddenInGame(this.Hide, this.HideChildren), !0);
   }
   GetNotifyName() {

@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityLongShanController = void 0);
-const LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById"),
+const LongShanActivityConfigByActivityId_1 = require("../../../../../Core/Define/ConfigQuery/LongShanActivityConfigByActivityId"),
+  LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageById"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../../../Core/Net/Net"),
   LevelGeneralCommons_1 = require("../../../../LevelGamePlay/LevelGeneralCommons"),
@@ -11,7 +12,8 @@ const LongShanStageById_1 = require("../../../../../Core/Define/ConfigQuery/Long
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   ActivityControllerBase_1 = require("../../ActivityControllerBase"),
   ActivityLongShanData_1 = require("./ActivityLongShanData"),
-  ActivitySubViewLongShan_1 = require("./ActivitySubViewLongShan");
+  ActivitySubViewLongShan_1 = require("./ActivitySubViewLongShan"),
+  ActivitySubViewRoleGrowing_1 = require("./RoleGrowing/ActivitySubViewRoleGrowing");
 class ActivityLongShanController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
@@ -20,14 +22,45 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
       });
   }
   OnGetIsOpeningActivityRelativeView() {
+    var e = ActivityLongShanController.GetActivityData(),
+      e =
+        LongShanActivityConfigByActivityId_1.configLongShanActivityConfigByActivityId.GetConfig(
+          e.Id,
+        );
+    let t = [];
+    for (const i of (t =
+      2 === e?.Type ? ["RoleGrowingMainView", "RoleGrowingTaskView"] : t))
+      if (UiManager_1.UiManager.IsViewOpen(i)) return !0;
     return !1;
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
-    return "UiItem_LongshanMain";
+    switch (
+      LongShanActivityConfigByActivityId_1.configLongShanActivityConfigByActivityId.GetConfig(
+        e.Id,
+      )?.Type
+    ) {
+      case 1:
+        return "UiItem_LongshanMain";
+      case 2:
+        return "UiItem_ActivityRoleGrowing";
+      default:
+        return "UiItem_LongshanMain";
+    }
   }
   OnCreateSubPageComponent(e) {
-    return new ActivitySubViewLongShan_1.ActivitySubViewLongShan();
+    switch (
+      LongShanActivityConfigByActivityId_1.configLongShanActivityConfigByActivityId.GetConfig(
+        e.Id,
+      )?.Type
+    ) {
+      case 1:
+        return new ActivitySubViewLongShan_1.ActivitySubViewLongShan();
+      case 2:
+        return new ActivitySubViewRoleGrowing_1.ActivitySubViewRoleGrowing();
+      default:
+        return new ActivitySubViewLongShan_1.ActivitySubViewLongShan();
+    }
   }
   OnCreateActivityData(e) {
     return (
@@ -39,10 +72,10 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
     return (ActivityLongShanController.DOe = []), !0;
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(25053, this.TOe);
+    Net_1.Net.Register(24110, this.TOe);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(25053);
+    Net_1.Net.UnRegister(24110);
   }
   static GetActivityData() {
     return ModelManager_1.ModelManager.ActivityModel.GetActivityById(
@@ -64,12 +97,15 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
     this.DOe.includes(t) ||
       (this.DOe.push(t),
       ((e = Protocol_1.Aki.Protocol.Igs.create()).B6n = [t]),
-      Net_1.Net.Call(22470, e, (e) => {
+      Net_1.Net.Call(24144, e, (e) => {
         e && this.DOe.splice(this.DOe.indexOf(t), 1);
       }));
   }
   OnActivityFirstUnlock(e) {
-    UiManager_1.UiManager.OpenView("LongShanUnlockView");
+    1 ===
+      LongShanActivityConfigByActivityId_1.configLongShanActivityConfigByActivityId.GetConfig(
+        e.Id,
+      )?.Type && UiManager_1.UiManager.OpenView("LongShanUnlockView");
   }
 }
 ((exports.ActivityLongShanController = ActivityLongShanController).LOe = 0),

@@ -4,8 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
   Lru_1 = require("../../../Core/Container/Lru"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  AbyssItemById_1 = require("../../../Core/Define/ConfigQuery/AbyssItemById"),
   AccessPathById_1 = require("../../../Core/Define/ConfigQuery/AccessPathById"),
   BackgroundCardById_1 = require("../../../Core/Define/ConfigQuery/BackgroundCardById"),
+  FlySkinConfigById_1 = require("../../../Core/Define/ConfigQuery/FlySkinConfigById"),
   ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
   ItemMainTypeAll_1 = require("../../../Core/Define/ConfigQuery/ItemMainTypeAll"),
   ItemMainTypeById_1 = require("../../../Core/Define/ConfigQuery/ItemMainTypeById"),
@@ -15,11 +18,16 @@ const Log_1 = require("../../../Core/Common/Log"),
   PhantomCustomizeItemByItemId_1 = require("../../../Core/Define/ConfigQuery/PhantomCustomizeItemByItemId"),
   PhantomItemByItemId_1 = require("../../../Core/Define/ConfigQuery/PhantomItemByItemId"),
   PhantomItemByMonsterId_1 = require("../../../Core/Define/ConfigQuery/PhantomItemByMonsterId"),
+  PlayerHeadReById_1 = require("../../../Core/Define/ConfigQuery/PlayerHeadReById"),
+  PlayerTitleById_1 = require("../../../Core/Define/ConfigQuery/PlayerTitleById"),
   PreviewItemById_1 = require("../../../Core/Define/ConfigQuery/PreviewItemById"),
   QualityInfoById_1 = require("../../../Core/Define/ConfigQuery/QualityInfoById"),
   RogueCurrencyById_1 = require("../../../Core/Define/ConfigQuery/RogueCurrencyById"),
+  RogueResCurrencyById_1 = require("../../../Core/Define/ConfigQuery/RogueResCurrencyById"),
+  RoleSkinById_1 = require("../../../Core/Define/ConfigQuery/RoleSkinById"),
   TypeInfoById_1 = require("../../../Core/Define/ConfigQuery/TypeInfoById"),
   WeaponConfByItemId_1 = require("../../../Core/Define/ConfigQuery/WeaponConfByItemId"),
+  WeaponSkinById_1 = require("../../../Core/Define/ConfigQuery/WeaponSkinById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   InventoryDefine_1 = require("./InventoryDefine"),
@@ -31,7 +39,7 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
       (this.Eci = new Map()),
       (this.Sci = new Map()),
       (this.yci = new Map()),
-      (this.G9 = new Lru_1.Lru(ITEM_LRU_SIZE, (e) => this.ABa(e)));
+      (this.G9 = new Lru_1.Lru(ITEM_LRU_SIZE, (e) => this.jBa(e)));
   }
   GetAllMainTypeConfig() {
     return ItemMainTypeAll_1.configItemMainTypeAll.GetConfigList();
@@ -59,7 +67,7 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
       n
     );
   }
-  ABa(e) {
+  jBa(e) {
     let n = void 0;
     var r,
       t = this.GetItemDataTypeByConfigId(e);
@@ -72,7 +80,11 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
         break;
       case 4:
         var i = this.GetPhantomCustomizeItemConfig(e);
-        i && (n = this.GetPhantomItemConfig(i.PhantomId));
+        i &&
+          (n =
+            0 < i.SkinItemId
+              ? this.GetPhantomItemConfig(i.SkinItemId)
+              : this.GetPhantomItemConfig(i.PhantomId));
         break;
       case 0:
       case 5:
@@ -89,35 +101,80 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
         break;
       case 8:
         n = RogueCurrencyById_1.configRogueCurrencyById.GetConfig(e);
+        break;
+      case 9:
+        n = RogueResCurrencyById_1.configRogueResCurrencyById.GetConfig(e);
+        break;
+      case 10:
+        n = WeaponSkinById_1.configWeaponSkinById.GetConfig(e);
+        break;
+      case 11:
+        n = RoleSkinById_1.configRoleSkinById.GetConfig(e);
+        break;
+      case 14:
+        n = FlySkinConfigById_1.configFlySkinConfigById.GetConfig(e);
+        break;
+      case 12:
+        n = PlayerHeadReById_1.configPlayerHeadReById.GetConfig(e);
+        break;
+      case 13:
+        n = AbyssItemById_1.configAbyssItemById.GetConfig(e);
     }
     if (n) return (r = new ItemConfig_1.ItemConfig()).Refresh(n, t), r;
   }
   GetItemDataTypeByConfigId(e) {
-    return e >= InventoryDefine_1.weaponIdRange[0] &&
-      e <= InventoryDefine_1.weaponIdRange[1]
-      ? 2
-      : e >= InventoryDefine_1.phantomIdRange[0] &&
-          e <= InventoryDefine_1.phantomIdRange[1]
-        ? 3
-        : e >= InventoryDefine_1.phantomSpecificIdRange[0] &&
-            e <= InventoryDefine_1.phantomSpecificIdRange[1]
-          ? 4
-          : e >= InventoryDefine_1.roleIdRange[0] &&
-              e <= InventoryDefine_1.roleIdRange[1]
-            ? 1
-            : e >= InventoryDefine_1.virtualIdRange[0] &&
-                e <= InventoryDefine_1.virtualIdRange[1]
-              ? 5
-              : e >= InventoryDefine_1.cardIdRange[0] &&
-                  e <= InventoryDefine_1.cardIdRange[1]
-                ? 6
-                : e >= InventoryDefine_1.previewItemIdRange[0] &&
-                    e <= InventoryDefine_1.previewItemIdRange[1]
-                  ? 7
-                  : e >= InventoryDefine_1.rogueCurrencyIdRange[0] &&
-                      e <= InventoryDefine_1.rogueCurrencyIdRange[1]
-                    ? 8
-                    : 0;
+    return (
+      void 0 === InventoryConfig.bLc &&
+        (InventoryConfig.bLc =
+          ConfigManager_1.ConfigManager.InventoryConfig.GetErrorPhantomSpecialIdList()),
+      void 0 !== InventoryConfig.bLc && InventoryConfig.bLc.includes(e)
+        ? 4
+        : e >= InventoryDefine_1.weaponIdRange[0] &&
+            e <= InventoryDefine_1.weaponIdRange[1]
+          ? 2
+          : e >= InventoryDefine_1.phantomIdRange[0] &&
+              e <= InventoryDefine_1.phantomIdRange[1]
+            ? 3
+            : e >= InventoryDefine_1.phantomSpecificIdRange[0] &&
+                e <= InventoryDefine_1.phantomSpecificIdRange[1]
+              ? 4
+              : e >= InventoryDefine_1.roleIdRange[0] &&
+                  e <= InventoryDefine_1.roleIdRange[1]
+                ? 1
+                : e >= InventoryDefine_1.virtualIdRange[0] &&
+                    e <= InventoryDefine_1.virtualIdRange[1]
+                  ? 5
+                  : e >= InventoryDefine_1.cardIdRange[0] &&
+                      e <= InventoryDefine_1.cardIdRange[1]
+                    ? 6
+                    : e >= InventoryDefine_1.previewItemIdRange[0] &&
+                        e <= InventoryDefine_1.previewItemIdRange[1]
+                      ? 7
+                      : e >= InventoryDefine_1.rogueCurrencyIdRange[0] &&
+                          e <= InventoryDefine_1.rogueCurrencyIdRange[1]
+                        ? 8
+                        : e >= InventoryDefine_1.rogueResCurrencyIdRange[0] &&
+                            e <= InventoryDefine_1.rogueResCurrencyIdRange[1]
+                          ? 9
+                          : e >= InventoryDefine_1.weaponSkinIdRange[0] &&
+                              e < InventoryDefine_1.weaponSkinIdRange[1]
+                            ? 10
+                            : e >= InventoryDefine_1.roleSkinIdRange[0] &&
+                                e < InventoryDefine_1.roleSkinIdRange[1]
+                              ? 11
+                              : e >= InventoryDefine_1.playerHeadRange[0] &&
+                                  e < InventoryDefine_1.playerHeadRange[1]
+                                ? 12
+                                : e >=
+                                      InventoryDefine_1
+                                        .DangoAbyssItemRange[0] &&
+                                    e < InventoryDefine_1.DangoAbyssItemRange[1]
+                                  ? 13
+                                  : e >= InventoryDefine_1.flySkinIdRange[0] &&
+                                      e < InventoryDefine_1.flySkinIdRange[1]
+                                    ? 14
+                                    : 0
+    );
   }
   GetItemConfig(e) {
     return ItemInfoById_1.configItemInfoById.GetConfig(e);
@@ -142,12 +199,17 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
     return (
       n ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Config", 9, "表格查询不到配置ID", ["MonsterId", e])),
+          Log_1.Log.Error("Config", 8, "表格查询不到配置ID", ["MonsterId", e])),
       n
     );
   }
   GetCardItemConfig(e) {
     return BackgroundCardById_1.configBackgroundCardById.GetConfig(e);
+  }
+  GetErrorPhantomSpecialIdList() {
+    return CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+      "SpecialPhantomCustomizeItem",
+    );
   }
   GetAllPackageConfig() {
     return PackageCapacityAll_1.configPackageCapacityAll.GetConfigList();
@@ -162,6 +224,14 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
   }
   GetItemShowTypeConfig(e) {
     return ItemShowTypeById_1.configItemShowTypeById.GetConfig(e);
+  }
+  GetPlayerTitleItemConfig(e) {
+    return PlayerTitleById_1.configPlayerTitleById.GetConfig(e);
+  }
+  GetItemQualityByItemIdAndQuality(e, n) {
+    return void 0 !== e && 13 === this.GetItemDataTypeByConfigId(e)
+      ? ConfigManager_1.ConfigManager.DangoAbyssConfig.GetAbyssQualityById(n)
+      : ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(n);
   }
   OnClear() {
     return (

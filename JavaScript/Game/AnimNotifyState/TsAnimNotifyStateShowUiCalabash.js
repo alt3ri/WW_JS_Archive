@@ -11,11 +11,14 @@ class TsAnimNotifyStateShowUiCalabash extends UE.KuroAnimNotifyState {
       (this.IsRotate = !1),
       (this.UiCalabashAnsContext = void 0);
   }
-  K2_NotifyBegin(e, t, o) {
+  Constructor() {
+    this.UiCalabashAnsContext = void 0;
+  }
+  K2_NotifyBegin(t, e, o) {
     var i;
     return (
       this.Socket
-        ? (i = e.GetOwner()) instanceof TsUiSceneRoleActor_1.default &&
+        ? (i = t.GetOwner()) instanceof TsUiSceneRoleActor_1.default &&
           ((this.UiCalabashAnsContext =
             new UiCalabashAnsContext_1.UiCalabashAnsContext(
               this.Socket,
@@ -28,24 +31,24 @@ class TsAnimNotifyStateShowUiCalabash extends UE.KuroAnimNotifyState {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
-            44,
+            43,
             "Ui界面葫芦显示动画通知中socket配置为空",
-            ["meshComp", e],
-            ["animation", t],
+            ["meshComp", t],
+            ["animation", e],
           ),
       !1
     );
   }
-  K2_NotifyEnd(e, t) {
+  K2_NotifyEnd(t, e) {
     if (this.Socket) {
-      var o = e.GetOwner();
+      var o = t.GetOwner();
       if (o instanceof TsUiSceneRoleActor_1.default) {
         if (!this.UiCalabashAnsContext)
           return (
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Calabash",
-                44,
+                43,
                 "TsAnimNotifyStateShowUiCalabash未成对，UiCalabashAnsContext为空",
               ),
             !1
@@ -59,10 +62,10 @@ class TsAnimNotifyStateShowUiCalabash extends UE.KuroAnimNotifyState {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Character",
-          44,
+          43,
           "Ui界面葫芦显示动画通知中socket配置为空",
-          ["meshComp", e],
-          ["animation", t],
+          ["meshComp", t],
+          ["animation", e],
         );
     return !1;
   }

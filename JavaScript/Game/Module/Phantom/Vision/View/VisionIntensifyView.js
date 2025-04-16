@@ -177,6 +177,7 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
       );
   }
   OnBeforeShow() {
+    ModelManager_1.ModelManager.PhantomBattleModel?.AddNeedCameraFocusMethodDisableViewCount();
     var e = ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
         this.Info.Name,
       ),
@@ -218,7 +219,8 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
     0 < e && (e = this.TabComponent.GetTabItemByIndex(e)) && e.UnBindRedDot();
   }
   OnBeforeHide() {
-    this.Ovt();
+    this.Ovt(),
+      ModelManager_1.ModelManager.PhantomBattleModel?.ReduceNeedCameraFocusMethodDisableViewCount();
   }
   OnAfterHide() {
     var e = this.TabViewComponent.GetCurrentTabView();
@@ -245,7 +247,7 @@ class VisionIntensifyView extends UiViewBase_1.UiViewBase {
     ).GetRootItem();
     if (i) return [i, i];
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         e,
       ]);

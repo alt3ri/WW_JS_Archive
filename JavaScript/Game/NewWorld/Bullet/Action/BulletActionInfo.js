@@ -14,7 +14,7 @@ class BulletActionInfoBase {
   }
   Clear() {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Bullet", 18, "BulletActionInfo need override clear()");
+      Log_1.Log.Error("Bullet", 17, "BulletActionInfo need override clear()");
   }
 }
 class BulletActionInfoSimple extends (exports.BulletActionInfoBase =

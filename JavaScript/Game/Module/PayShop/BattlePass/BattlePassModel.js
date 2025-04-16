@@ -16,6 +16,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
   WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData"),
   BattlePassController_1 = require("./BattlePassController"),
   BattlePassRewardGridItem_1 = require("./BattlePassTabView/BattlePassRewardGridItem"),
@@ -48,7 +49,8 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       (this.kki = 0),
       (this.Fki = 0),
       (this.Vki = 0),
-      (this.BattlePassTaskMap = new Map());
+      (this.BattlePassTaskMap = new Map()),
+      (this.A11 = void 0);
   }
   GetInTimeRange() {
     return this.Lki;
@@ -101,7 +103,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     var e = this.RewardDataList[t - 1];
     if (e) return e;
     Log_1.Log.CheckWarn() &&
-      Log_1.Log.Warn("Temp", 11, "战令奖励数据 没有这个等级的", ["level", t]);
+      Log_1.Log.Warn("Temp", 10, "战令奖励数据 没有这个等级的", ["level", t]);
   }
   set PayButtonRedDotState(t) {
     this.Pta !== t &&
@@ -156,16 +158,16 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       if (!(l.Level > this.UQ)) {
         var a,
           r,
-          s,
           i,
+          s,
           o = new BattlePassRewardGridItem_1.BattlePassRewardData(l.Level);
         for ([a, r] of l.FreeReward) {
           var n = new BattlePassRewardGridItem_1.BattlePassRewardItem(a, r);
           this.BattlePassLevel >= l.Level && (n.ItemType = 1),
             o.FreeRewardItem.push(n);
         }
-        for ([s, i] of l.PayReward) {
-          var h = new BattlePassRewardGridItem_1.BattlePassRewardItem(s, i);
+        for ([i, s] of l.PayReward) {
+          var h = new BattlePassRewardGridItem_1.BattlePassRewardItem(i, s);
           this.BattlePassLevel >= l.Level &&
             this.Nki !== Protocol_1.Aki.Protocol.PNs.Proto_NoPaid &&
             (h.ItemType = 1),
@@ -183,8 +185,8 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   jki(t) {
     let e = 0,
       a = 0;
-    for (const s of t) {
-      var r = this.GetTaskData(s);
+    for (const i of t) {
+      var r = this.GetTaskData(i);
       (e += r.Exp), (a += 0 === r.UpdateType ? 0 : r.Exp);
     }
     return [e, a];
@@ -334,21 +336,21 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     t.length = 0;
     var a,
       r = this.bki,
-      s = new Map();
+      i = new Map();
     for (let t = r + 1; t <= e; t++) {
-      var i = this.GetRewardData(t);
-      if (i)
+      var s = this.GetRewardData(t);
+      if (s)
         for (const h of this.Nki === Protocol_1.Aki.Protocol.PNs.Proto_NoPaid
-          ? i.FreeRewardItem
-          : i.FreeRewardItem.concat(i.PayRewardItem)) {
+          ? s.FreeRewardItem
+          : s.FreeRewardItem.concat(s.PayRewardItem)) {
           var o = h.Item[0].ItemId,
             n = h.Item[1];
-          s.has(o)
-            ? (s.get(o)[1] += n)
-            : s.set(o, [{ IncId: 0, ItemId: o }, n]);
+          i.has(o)
+            ? (i.get(o)[1] += n)
+            : i.set(o, [{ IncId: 0, ItemId: o }, n]);
         }
     }
-    for ([, a] of s) t.push(a);
+    for ([, a] of i) t.push(a);
     t.sort((t, e) => {
       var a = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
           t[0].ItemId,
@@ -421,45 +423,47 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     var e,
       a,
       r = CommonParamById_1.configCommonParamById.GetIntConfig("BattlePassExp"),
-      s = this.BattlePassTaskMap,
-      i = new BattlePassTaskLoopItem_1.BattlePassTaskData(),
+      i = this.BattlePassTaskMap,
+      s = new BattlePassTaskLoopItem_1.BattlePassTaskData(),
       o =
-        ((i.TaskId = t.s5n),
+        ((s.TaskId = t.s5n),
         ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassTask(
           t.s5n,
         ));
     for ([e, a] of o.TaskReward) {
       var n = [{ IncId: 0, ItemId: e }, a];
-      e === r && (i.Exp += a), i.RewardItemList.push(n);
+      e === r && (s.Exp += a), s.RewardItemList.push(n);
     }
-    (i.CurrentProgress = t.lMs ?? 0),
-      (i.TargetProgress = t.j6n ?? 0),
-      (i.UpdateType = o.UpdateType),
+    (s.CurrentProgress = t.lMs ?? 0),
+      (s.TargetProgress = t.j6n ?? 0),
+      (s.UpdateType = o.UpdateType),
+      (s.SkipId = 0 === o.JumpId ? void 0 : o.JumpId),
       t.dMs
         ? t.mMs
-          ? (i.TaskState = 2)
-          : (i.TaskState = 3)
-        : (i.TaskState = 1),
-      s.set(t.s5n, i);
+          ? (s.TaskState = 2)
+          : (s.TaskState = 3)
+        : (s.TaskState = 1),
+      i.set(t.s5n, s);
   }
   SetDataFromBattlePassResponse(t) {
     var e = t.iEs;
     (this.Lki = e.YSs ?? !1),
-      this.Lki &&
-        ((this.HadEnter = e.tEs),
-        (this.BattlePassId = e.s5n),
-        (this.PayType = e.zSs),
-        (this.BattlePassLevel = e.F6n),
-        (this.LevelExp = e.U8n),
-        (this.WeekExp = e.JSs),
-        this.Qki(e.dps),
-        this.Kki(e.cps),
-        this.InitBattlePassConfigData(),
-        this.UpdateBattlePassRewardDataFromResponse(t.iEs.ZSs ?? void 0),
-        e.tEs || (this.PayButtonRedDotState = !0),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
-        ));
+      this.Lki
+        ? ((this.HadEnter = e.tEs),
+          (this.BattlePassId = e.s5n),
+          (this.PayType = e.zSs),
+          (this.BattlePassLevel = e.F6n),
+          (this.LevelExp = e.U8n),
+          (this.WeekExp = e.JSs),
+          this.Qki(e.dps),
+          this.Kki(e.cps),
+          this.InitBattlePassConfigData(),
+          this.UpdateBattlePassRewardDataFromResponse(t.iEs.ZSs ?? void 0),
+          !e.tEs && e.YSs && (this.PayButtonRedDotState = !0),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
+          ))
+        : (this.PayButtonRedDotState = !1);
   }
   UpdateTaskDataFromBattlePassTaskTakeResponse(t) {
     var e = this.BattlePassTaskMap;
@@ -561,6 +565,51 @@ class BattlePassModel extends ModelBase_1.ModelBase {
                 : 156
         : 150
       : 149;
+  }
+  get RemindLevel() {
+    return this.A11;
+  }
+  TryAssignRemindLevel(t) {
+    if (!(this.PayType > Protocol_1.Aki.Protocol.PNs.Proto_NoPaid))
+      if (void 0 === t) {
+        for (const e of ConfigManager_1.ConfigManager.BattlePassConfig.GetAllRewardData(
+          this.BattlePassId,
+        ))
+          if (e.IsRemind && this.GetRewardData(e.Level).IsThisType(1))
+            return void (this.A11 = this.BattlePassLevel);
+      } else if (this.GetRewardData(t)?.IsThisType(1))
+        for (const a of ConfigManager_1.ConfigManager.BattlePassConfig.GetAllRewardData(
+          this.BattlePassId,
+        ))
+          if (a.Level === t)
+            return void (this.A11 = a.IsRemind ? this.BattlePassLevel : void 0);
+    this.A11 = void 0;
+  }
+  GetExtraRewardItems() {
+    if (void 0 === this.A11) return [];
+    var t,
+      e,
+      a = new Map(),
+      r = [];
+    for (const o of ConfigManager_1.ConfigManager.BattlePassConfig.GetAllRewardData(
+      this.BattlePassId,
+    ))
+      if (o.Level <= this.A11)
+        for (var [i, s] of o.PayReward)
+          a.has(i) ? a.set(i, a.get(i) + s) : a.set(i, s);
+    for ([t, e] of a) r.push(new RewardItemData_1.RewardItemData(t, e));
+    return (
+      r.sort((t, e) => {
+        var a = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
+            t.ConfigId,
+          ).QualityId,
+          r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
+            e.ConfigId,
+          ).QualityId;
+        return a === r ? t.Count - e.Count : r - a;
+      }),
+      r
+    );
   }
 }
 exports.BattlePassModel = BattlePassModel;

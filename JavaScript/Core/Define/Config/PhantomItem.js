@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomItem = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  PhantomPropRandom_1 = require("./SubType/PhantomPropRandom");
 class PhantomItem {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -21,6 +22,9 @@ class PhantomItem {
       this.elementtype,
       this,
     );
+  }
+  get MainProp() {
+    return this.mainprop();
   }
   get LevelUpGroupId() {
     return this.levelupgroupid();
@@ -151,8 +155,14 @@ class PhantomItem {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   monstername(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetElementtypeAt(t) {
     return this.elementtype(t);
@@ -175,48 +185,65 @@ class PhantomItem {
         )
       : null;
   }
+  mainprop(t) {
+    var i = this.J7.__offset(this.z7, 12);
+    return i
+      ? (t || new PhantomPropRandom_1.PhantomPropRandom()).__init(
+          this.J7.__indirect(this.z7 + i),
+          this.J7,
+        )
+      : null;
+  }
   levelupgroupid() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillid() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetCalabashbuffsAt(t) {
     return this.calabashbuffs(t);
   }
   calabashbuffs(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + i) + 8 * t)
-      : BigInt(0);
+    var i = this.J7.__offset(this.z7, 18);
+    return i ? this.J7.readFloat64(this.J7.__vector(this.z7 + i) + 8 * t) : 0;
   }
   calabashbuffsLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
-  rarity() {
+  calabashbuffsArray() {
     var t = this.J7.__offset(this.z7, 18);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  rarity() {
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   meshid() {
-    var t = this.J7.__offset(this.z7, 20);
+    var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetZoomAt(t) {
     return this.zoom(t);
   }
   zoom(t) {
-    var i = this.J7.__offset(this.z7, 22);
+    var i = this.J7.__offset(this.z7, 24);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   zoomLength() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   zoomArray() {
-    var t = this.J7.__offset(this.z7, 22);
+    var t = this.J7.__offset(this.z7, 24);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -229,15 +256,15 @@ class PhantomItem {
     return this.location(t);
   }
   location(t) {
-    var i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   locationLength() {
-    var t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 26);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   locationArray() {
-    var t = this.J7.__offset(this.z7, 24);
+    var t = this.J7.__offset(this.z7, 26);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -250,15 +277,15 @@ class PhantomItem {
     return this.rotator(t);
   }
   rotator(t) {
-    var i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   rotatorLength() {
-    var t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 28);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   rotatorArray() {
-    var t = this.J7.__offset(this.z7, 26);
+    var t = this.J7.__offset(this.z7, 28);
     return t
       ? new Float32Array(
           this.J7.bytes().buffer,
@@ -268,54 +295,96 @@ class PhantomItem {
       : null;
   }
   standanim(t) {
-    var i = this.J7.__offset(this.z7, 28);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 30),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   typedescription(t) {
-    var i = this.J7.__offset(this.z7, 30);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 32),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   attributesdescription(t) {
-    var i = this.J7.__offset(this.z7, 32);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 34),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   icon(t) {
-    var i = this.J7.__offset(this.z7, 34);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 36),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   iconmiddle(t) {
-    var i = this.J7.__offset(this.z7, 36);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 38),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   iconsmall(t) {
-    var i = this.J7.__offset(this.z7, 38);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 40),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   mesh(t) {
-    var i = this.J7.__offset(this.z7, 40);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 42),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   qualityid() {
-    var t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   maxcapcity() {
-    var t = this.J7.__offset(this.z7, 44);
+    var t = this.J7.__offset(this.z7, 46);
     return t ? this.J7.readInt32(this.z7 + t) : 999999999;
   }
   GetItemaccessAt(t) {
     return this.itemaccess(t);
   }
   itemaccess(t) {
-    var i = this.J7.__offset(this.z7, 46);
+    var i = this.J7.__offset(this.z7, 48);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   itemaccessLength() {
-    var t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 48);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   itemaccessArray() {
-    var t = this.J7.__offset(this.z7, 46);
+    var t = this.J7.__offset(this.z7, 48);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -325,50 +394,62 @@ class PhantomItem {
       : null;
   }
   obtainedshow() {
-    var t = this.J7.__offset(this.z7, 48);
+    var t = this.J7.__offset(this.z7, 50);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   obtainedshowdescription(t) {
-    var i = this.J7.__offset(this.z7, 50);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 52),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   numlimit() {
-    var t = this.J7.__offset(this.z7, 52);
+    var t = this.J7.__offset(this.z7, 54);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showinbag() {
-    var t = this.J7.__offset(this.z7, 54);
+    var t = this.J7.__offset(this.z7, 56);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   sortindex() {
-    var t = this.J7.__offset(this.z7, 56);
+    var t = this.J7.__offset(this.z7, 58);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   skillicon(t) {
-    var i = this.J7.__offset(this.z7, 58);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 60),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   destructible() {
-    var t = this.J7.__offset(this.z7, 60);
+    var t = this.J7.__offset(this.z7, 62);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   reddotdisablerule() {
-    var t = this.J7.__offset(this.z7, 62);
+    var t = this.J7.__offset(this.z7, 64);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetFettergroupAt(t) {
     return this.fettergroup(t);
   }
   fettergroup(t) {
-    var i = this.J7.__offset(this.z7, 64);
+    var i = this.J7.__offset(this.z7, 66);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   fettergroupLength() {
-    var t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 66);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   fettergroupArray() {
-    var t = this.J7.__offset(this.z7, 64);
+    var t = this.J7.__offset(this.z7, 66);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -378,11 +459,11 @@ class PhantomItem {
       : null;
   }
   phantomtype() {
-    var t = this.J7.__offset(this.z7, 66);
+    var t = this.J7.__offset(this.z7, 68);
     return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
   parentmonsterid() {
-    var t = this.J7.__offset(this.z7, 68);
+    var t = this.J7.__offset(this.z7, 70);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

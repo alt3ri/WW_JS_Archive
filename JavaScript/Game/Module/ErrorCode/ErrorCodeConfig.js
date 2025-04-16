@@ -6,11 +6,12 @@ const Info_1 = require("../../../Core/Common/Info"),
   ErrorCodeById_1 = require("../../../Core/Define/ConfigQuery/ErrorCodeById"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  Macro_1 = require("../../../Core/Preprocessor/Macro"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
 class ErrorCodeConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.Q5t = 0);
+    super(...arguments), (this.Q5t = 1);
   }
   SetForceShowDebugErrorType(r) {
     this.Q5t = r;
@@ -20,20 +21,18 @@ class ErrorCodeConfig extends ConfigBase_1.ConfigBase {
     return (
       e ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("ErrorCode", 9, "没有错误码配置", ["code", r])),
+          Log_1.Log.Error("ErrorCode", 8, "没有错误码配置", ["code", r])),
       e
     );
   }
   GetTextByErrorId(r) {
     r = this.GetConfigByCode(r);
     return r
-      ? Info_1.Info.IsBuildDevelopmentOrDebug && 0 === this.Q5t
-        ? r.DebugText
-        : StringUtils_1.StringUtils.IsEmpty(r.Text)
-          ? ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-              "UnknownErrorCodeText",
-            )
-          : (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r.Text) ?? "")
+      ? StringUtils_1.StringUtils.IsEmpty(r.Text)
+        ? ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+            "UnknownErrorCodeText",
+          )
+        : (MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r.Text) ?? "")
       : "";
   }
   GetTextKeyByErrorId(r) {

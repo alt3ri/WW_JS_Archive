@@ -6,15 +6,16 @@ class TsAnimNotifyAddCharRendering extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.RenderType = 7);
   }
+  Constructor() {}
   Received_Notify(e, t) {
     e = e.GetOwner();
     return (
       e instanceof UE.KuroRecordCharacter &&
       (e
-        .AddComponentByClass(
+        .D_AddComponentByClass(
           UE.CharRenderingComponent_C.StaticClass(),
           !1,
-          e.GetTransform(),
+          e.D_GetTransform(),
           !1,
           FNameUtil_1.FNameUtil.GetDynamicFName("CharRenderingComponent"),
         )

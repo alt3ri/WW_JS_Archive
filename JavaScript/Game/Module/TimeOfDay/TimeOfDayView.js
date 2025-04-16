@@ -131,7 +131,7 @@ class TodTimeAdjustingClock {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "TimeOfDay",
-        17,
+        16,
         "TodTimeAdjustingClock",
         ["this.StartSecond", this.StartSecond],
         ["this.ToSecond", this.ToSecond],
@@ -225,7 +225,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Test",
-              8,
+              27,
               "OnClickBtnConfirm:" +
                 ModelManager_1.ModelManager.CameraModel.CurrentCameraActor.GetName(),
             );

@@ -7,7 +7,7 @@ const UE = require("ue"),
   QuickNavigateItemPanelB_1 = require("./QuickNavigateItemPanelB");
 class QuickNavigateDynamicScrollItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.aKa = void 0), (this.lKa = void 0);
+    super(...arguments), (this.AYa = void 0), (this.DYa = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -19,29 +19,29 @@ class QuickNavigateDynamicScrollItem extends UiPanelBase_1.UiPanelBase {
     await super.CreateByActorAsync(e.GetOwner(), void 0, !0);
   }
   async OnBeforeStartAsync() {
-    this.aKa = new QuickNavigateItemPanelA_1.QuickNavigateItemPanelA();
+    this.AYa = new QuickNavigateItemPanelA_1.QuickNavigateItemPanelA();
     var e = this.GetItem(0).GetOwner(),
       e =
-        (await this.aKa.CreateThenShowByActorAsync(e, void 0, !0),
-        (this.lKa = new QuickNavigateItemPanelB_1.QuickNavigateItemPanelB()),
+        (await this.AYa.CreateThenShowByActorAsync(e, void 0, !0),
+        (this.DYa = new QuickNavigateItemPanelB_1.QuickNavigateItemPanelB()),
         this.GetItem(1).GetOwner());
-    await this.lKa.CreateThenShowByActorAsync(e, void 0, !0);
+    await this.DYa.CreateThenShowByActorAsync(e, void 0, !0);
   }
   GetUsingItem(e) {
     return 0 === e.ItemType
-      ? this.Jda(0)
+      ? this.cma(0)
       : 1 === e.ItemType
-        ? this.Jda(1)
+        ? this.cma(1)
         : void 0;
   }
-  Jda(e) {
+  cma(e) {
     return this.GetItem(e).GetOwner();
   }
   Update(e, t) {
     var i = 0 === e.ItemType;
-    this.aKa.SetActive(i),
-      this.lKa.SetActive(!i),
-      (i ? this.aKa : this.lKa).RefreshByData(e);
+    this.AYa.SetActive(i),
+      this.DYa.SetActive(!i),
+      (i ? this.AYa : this.DYa).RefreshByData(e);
   }
   ClearItem() {
     this.Destroy();

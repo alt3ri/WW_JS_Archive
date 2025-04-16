@@ -3,9 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GenericScrollViewNew = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   GenericLayout_1 = require("../Layout/GenericLayout");
 class GenericScrollViewNew {
-  constructor(t, e, i = void 0) {
+  constructor(t, e, i = void 0, r = !1) {
     (this.cNo = void 0),
       (this.Sui = void 0),
       (this.cNo = t),
@@ -15,6 +16,7 @@ class GenericScrollViewNew {
           .GetComponentByClass(UE.UILayoutBase.StaticClass()),
         e,
         i,
+        r,
       )),
       (this.Sui.AnimControllerComponent = t
         ?.GetOwner()
@@ -30,6 +32,9 @@ class GenericScrollViewNew {
   }
   get ScrollWidth() {
     return this.cNo.RootUIComp.Width ?? 0;
+  }
+  get ScrollHeight() {
+    return this.cNo.RootUIComp.Height ?? 0;
   }
   RefreshByData(t, e, i = !1) {
     this.Sui.RefreshByData(t, e, i);
@@ -60,6 +65,14 @@ class GenericScrollViewNew {
   }
   ScrollTo(t) {
     this.cNo.ScrollTo(t);
+  }
+  LateScrollTo(e) {
+    this.BindLateUpdate((t) => {
+      TimerSystem_1.TimerSystem.Next(() => {
+        this.ScrollTo(e);
+      }),
+        this.UnBindLateUpdate();
+    });
   }
   ScrollToLeft(t) {
     t = this.Sui.GetItemByKey(t);
@@ -114,6 +127,23 @@ class GenericScrollViewNew {
   }
   GetGenericLayout() {
     return this.Sui;
+  }
+  SelectGridProxy(t = -1, e = !1) {
+    this.Sui?.SelectGridProxy(t, e);
+  }
+  GetSelectedIndex() {
+    return this.Sui?.GetSelectedGridIndex() ?? -1;
+  }
+  PlayTurnAnimation() {
+    this.Sui?.GetUiAnimController()?.Play();
+  }
+  IsItemInViewport(t, e) {
+    var i = (0, puerts_1.$ref)(3),
+      r = (0, puerts_1.$ref)(3);
+    return (
+      this.cNo.GetOutOfBottomBoundsType(t, i, r, e),
+      this.cNo.Vertical ? (0, puerts_1.$unref)(i) : (0, puerts_1.$unref)(r)
+    );
   }
 }
 exports.GenericScrollViewNew = GenericScrollViewNew;

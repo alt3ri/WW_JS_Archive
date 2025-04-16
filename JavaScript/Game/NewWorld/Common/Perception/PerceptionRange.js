@@ -29,7 +29,7 @@ class PerceptionRange {
   InitStatic(i, t, s, o = !1, h = void 0, e = void 0, r = void 0) {
     0 !== this.Jor
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Perception", 37, "重复初始化静态感知范围")
+        Log_1.Log.Error("Perception", 36, "重复初始化静态感知范围")
       : o || e || r
         ? (o && (this.zor = new Set()),
           (this.Xor = h),
@@ -46,9 +46,9 @@ class PerceptionRange {
           )),
           0 === this.Jor &&
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Perception", 37, "初始化静态感知范围失败"))
+            Log_1.Log.Error("Perception", 36, "初始化静态感知范围失败"))
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Perception", 37, "初始化的静态感知范围没有意义");
+          Log_1.Log.Error("Perception", 36, "初始化的静态感知范围没有意义");
   }
   InitDynamic(i, t, s, o = void 0, h = void 0, e = void 0, r = void 0, c = !1) {
     i
@@ -56,12 +56,12 @@ class PerceptionRange {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Perception",
-            37,
+            36,
             "初始化动态感知范围时，感知范围大小非法",
           )
         : 0 !== this.Jor
           ? Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Perception", 37, "重复初始化动态感知范围")
+            Log_1.Log.Error("Perception", 36, "重复初始化动态感知范围")
           : c || o || h
             ? ((this.Yor = r),
               (this.Xor = e),
@@ -80,13 +80,13 @@ class PerceptionRange {
                 )),
               0 === this.Jor &&
                 Log_1.Log.CheckError() &&
-                Log_1.Log.Error("Perception", 37, "初始化动态感知范围失败"))
+                Log_1.Log.Error("Perception", 36, "初始化动态感知范围失败"))
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Perception", 37, "初始化的动态感知范围没有意义")
+              Log_1.Log.Error("Perception", 36, "初始化的动态感知范围没有意义")
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Perception",
-          37,
+          36,
           "初始化动态感知范围绑定的实体Token非法",
         );
   }
@@ -107,7 +107,7 @@ class PerceptionRange {
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Perception",
-            37,
+            36,
             "更新动态感知范围大小时，感知范围大小非法",
           )
         : cpp_1.FKuroPerceptionInterface.UpdatePerceptionRange(this.Jor, i));

@@ -7,17 +7,25 @@ class RedDotController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return !0;
   }
-  static BindRedDot(e, r, o, t = 0) {
+  static BindRedDot(e, t, a, r = 0) {
     e = ModelManager_1.ModelManager.RedDotModel.GetRedDot(e);
-    e && e.BindUi(t, r, o);
+    e && e.BindUi(r, t, a);
   }
   static UnBindRedDot(e) {
     e = ModelManager_1.ModelManager.RedDotModel.GetRedDot(e);
     e && e.UnBindUi();
   }
-  static UnBindGivenUi(e, r, o = 0) {
+  static UnBindRedDotAndClearData(e) {
     e = ModelManager_1.ModelManager.RedDotModel.GetRedDot(e);
-    e && e.UnBindGivenUi(o, r);
+    e && e.UnBindUiAndClearData();
+  }
+  static UnBindGivenUi(e, t, a = 0) {
+    e = ModelManager_1.ModelManager.RedDotModel.GetRedDot(e);
+    e && e.UnBindGivenUi(a, t);
+  }
+  static UnBindGivenUiAndDeleteData(e, t, a = 0) {
+    e = ModelManager_1.ModelManager.RedDotModel.GetRedDot(e);
+    e && e.UnBindGivenUiAndDeleteData(a, t);
   }
 }
 exports.RedDotController = RedDotController;

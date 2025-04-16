@@ -1,11 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelTrailSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
   EffectMaterialParameter_1 = require("../../Render/Effect/Data/Parameters/EffectMaterialParameter"),
+  SkeletalMeshEffectContext_1 = require("../EffectContext/SkeletalMeshEffectContext"),
   EffectSpec_1 = require("./EffectSpec");
 class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
   constructor() {
@@ -27,7 +29,6 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
       (this.DyMaterial = void 0),
       (this.MaterialParameters = void 0),
       (this.BezierMeshComp = void 0),
-      (this.t0e = !1),
       (this.MaxSubdivision = 12),
       (this.MaxMeshLength = 100),
       (this.MaxLayerNum = 600),
@@ -49,7 +50,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
         )
           return void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("RenderEffect", 26, "拖尾特效绑定点数量不足", [
+            Log_1.Log.Error("RenderEffect", 25, "拖尾特效绑定点数量不足", [
               "DA文件",
               this.EffectModel.GetName(),
             ])
@@ -70,7 +71,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
               Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "RenderEffect",
-                26,
+                25,
                 "拖尾特效找不到插槽",
                 ["DA文件", this.EffectModel.GetName()],
                 ["网格体", this.SkeletalMeshComp.GetName()],
@@ -87,7 +88,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
         )
           return void (
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("RenderEffect", 26, "拖尾特效绑定点数量不足", [
+            Log_1.Log.Error("RenderEffect", 25, "拖尾特效绑定点数量不足", [
               "DA文件",
               this.EffectModel.GetName(),
             ])
@@ -100,18 +101,17 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
           this.AttachLocations.push(i);
         }
       }
-      (this.BezierMeshComp =
-        EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-          this.ParentActor,
-          UE.KuroBezierMeshComponent.StaticClass(),
-          void 0,
-          void 0,
-          !1,
-          this.EffectModel,
-        )),
-        (this.SceneComponent = this.BezierMeshComp),
-        (this.t0e = this.BezierMeshComp.IsComponentTickEnabled()),
-        this.BezierMeshComp.SetComponentTickEnabled(!1),
+      this.BezierMeshComp ||
+        ((this.BezierMeshComp =
+          EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
+            this.ParentActor,
+            UE.KuroBezierMeshComponent.StaticClass(),
+            void 0,
+            void 0,
+            !1,
+            this.EffectModel,
+          )),
+        (this.SceneComponent = this.BezierMeshComp)),
         (this.DyMaterial =
           UE.KismetMaterialLibrary.CreateDynamicMaterialInstance(
             this.BezierMeshComp,
@@ -127,12 +127,12 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
           this.AttachCount,
           this.EffectModel.UnitLength,
         ),
-        (this.WorldToParentActor = this.ParentActor.GetTransform().Inverse()),
+        (this.WorldToParentActor = this.ParentActor.D_GetTransform().Inverse()),
         (this.LocationsCurve = this.EffectModel.LocationsCurve),
         (this.LocationsFromCurve = new Array());
       for (let t = 0; t < this.AttachCount; t++) {
-        var h = Vector_1.Vector.Create(0, 0, 0);
-        this.LocationsFromCurve.push(h);
+        var e = Vector_1.Vector.Create(0, 0, 0);
+        this.LocationsFromCurve.push(e);
       }
       (this.cz = Vector_1.Vector.Create(0, 0, 0)),
         (this.DissipateNum = 0),
@@ -142,7 +142,7 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderEffect",
-          26,
+          25,
           "拖尾特效错误：没有寻找到骨骼模型",
           ["DA文件", this.EffectModel.GetName()],
         );
@@ -154,18 +154,18 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
         this.Stop("[EffectModelTrailSpec.OnTick]", !1);
       var s = this.LocationsCurve.Num();
       for (let t = 0; t < s; t++) {
-        var h = this.LocationsCurve.GetKey(t),
-          e = this.LocationsCurve.Get(h),
-          e = UE.KuroCurveLibrary.GetValue_Vector(
-            e,
+        var e = this.LocationsCurve.GetKey(t),
+          h = this.LocationsCurve.Get(e),
+          h = UE.KuroCurveLibrary.GetValue_Vector(
+            h,
             this.LifeTime.TotalPassTime,
           );
-        this.LocationsFromCurve[h].FromUeVector(e);
+        this.LocationsFromCurve[e].FromUeVector(h);
       }
       if (
         (this.BezierMeshComp.GetLayerNum() > this.MaxLayerNum &&
           (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("RenderEffect", 26, "拖尾特效太长", [
+            Log_1.Log.Error("RenderEffect", 25, "拖尾特效太长", [
               "特效名",
               this.EffectModel.GetName(),
             ]),
@@ -199,17 +199,18 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
       o > i && ((i = o), (this.DissipateLeft = 0)),
         this.BezierMeshComp.Dissipate(i),
         this.BezierMeshComp.UpdateMesh(0),
-        this.MaterialParameters.Apply(
-          this.DyMaterial,
-          this.LifeTime.PassTime,
-          !1,
-        );
+        this.BezierMeshComp.SetVisibility(!0),
+        this.MaterialParameters.Tick(this.DyMaterial, this.LifeTime.PassTime);
     }
   }
   OnEnd() {
     return (
       this.BezierMeshComp?.GetOwner() &&
-        this.BezierMeshComp.GetOwner().K2_DestroyComponent(this.BezierMeshComp),
+        (this.BezierMeshComp.GetOwner().K2_DestroyComponent(
+          this.BezierMeshComp,
+        ),
+        (this.BezierMeshComp = void 0),
+        (this.DyMaterial = void 0)),
       !0
     );
   }
@@ -233,8 +234,11 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
       this.AttachLocations[t].Addition(this.LocationsFromCurve[t], this.cz),
       (s =
         ((i = this.UseBones
-          ? this.SkeletalMeshComp.GetSocketTransform(this.AttachBoneNames[t], 0)
-          : this.SkeletalMeshComp.K2_GetComponentToWorld()),
+          ? this.SkeletalMeshComp.D_GetSocketTransform(
+              this.AttachBoneNames[t],
+              0,
+            )
+          : this.SkeletalMeshComp.D_K2_GetComponentToWorld()),
         this.WorldToParentActor.TransformPosition(
           i.TransformPosition(this.cz.ToUeVector(!0)),
         ))),
@@ -242,10 +246,48 @@ class EffectModelTrailSpec extends EffectSpec_1.EffectSpec {
     );
   }
   OnStop(t, i) {
-    this.BezierMeshComp?.SetComponentTickEnabled(!1), this.SetDead();
+    this.BezierMeshComp?.ClearData(),
+      this.BezierMeshComp?.SetVisibility(!1),
+      this.BezierMeshComp?.SetComponentTickEnabled(!1),
+      this.SetDead();
   }
   OnPlay(t) {
-    this.BezierMeshComp?.SetComponentTickEnabled(this.t0e);
+    var i = this.Handle?.GetContext();
+    i &&
+      i instanceof SkeletalMeshEffectContext_1.SkeletalMeshEffectContext &&
+      i.SkeletalMeshComp &&
+      (this.Setup(i.SkeletalMeshComp),
+      this.BezierMeshComp?.SetComponentTickEnabled(!0));
+  }
+  HasMaterialParameters() {
+    return !0;
+  }
+  GetMaterialParameters() {
+    return this.MaterialParameters;
+  }
+  IsOverrideTick() {
+    return !0;
+  }
+  RegisterToKuroEffectSystem() {
+    var t, i;
+    this.Handle &&
+      this.BezierMeshComp &&
+      this.EffectModel &&
+      this.DyMaterial &&
+      (t = this.Handle?.GetContext()) &&
+      t instanceof SkeletalMeshEffectContext_1.SkeletalMeshEffectContext &&
+      t.SkeletalMeshComp &&
+      (i = this.Handle.GetSureEffectActor()) &&
+      ((this.HasInitTickOptimize = !0),
+      cpp_1.FKuroEffectSystemInterface.RegisterEffectTrailHandle(
+        this.Handle.Id,
+        this.Handle.Parent?.Id ?? 0,
+        this.EffectModel,
+        i,
+        this.BezierMeshComp,
+        t.SkeletalMeshComp,
+        this.DyMaterial,
+      ));
   }
 }
 exports.EffectModelTrailSpec = EffectModelTrailSpec;

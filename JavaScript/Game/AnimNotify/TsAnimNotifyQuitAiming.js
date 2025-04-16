@@ -6,6 +6,7 @@ class TsAnimNotifyQuitAiming extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments), (this.Tag = void 0);
   }
+  Constructor() {}
   K2_Notify(e, t) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
@@ -13,9 +14,9 @@ class TsAnimNotifyQuitAiming extends UE.KuroAnimNotify {
       if (!e.CharacterActorComponent.IsWorldOwner()) return !1;
       if (
         "None" === this.Tag.TagName ||
-        r.GetComponent(190).HasTag(this.Tag.TagId)
+        r.GetComponent(203).HasTag(this.Tag.TagId)
       )
-        return r.GetComponent(161).ExitAimStatus(), !0;
+        return r.GetComponent(173).ExitAimStatus(), !0;
     }
     return !1;
   }

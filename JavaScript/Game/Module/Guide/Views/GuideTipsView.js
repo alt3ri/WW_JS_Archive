@@ -35,7 +35,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
           (this.CombineInputMap.set(e, i), !this.IsAllCombineInputPass())) ||
           (this.UnbindInput(this.Lo.InputEnums, this.Lo.InputEnums),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Guide", 54, "tip监听按键完成引导", [
+            Log_1.Log.Debug("Guide", 53, "tip监听按键完成引导", [
               "最后按键",
               e,
             ]),
@@ -113,7 +113,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
     var i =
       UiManager_1.UiManager.IsViewShow("BattleView") &&
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
-        0,
+        27,
       ) &&
       !this.HasConflictView();
     this.IsBusy || i === this.gZt || ((this.gZt = i), this.SetActive(i));

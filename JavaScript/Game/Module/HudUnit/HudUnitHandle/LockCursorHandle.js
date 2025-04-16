@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockCursorHandle = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
   TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
@@ -13,34 +15,38 @@ const UE = require("ue"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   BattleUiControl_1 = require("../../BattleUi/BattleUiControl"),
+  PhantomUtil_1 = require("../../Phantom/PhantomUtil"),
   LockCursorUnit_1 = require("../HudUnit/LockCursorUnit"),
   HudUnitUtils_1 = require("../Utils/HudUnitUtils"),
   HudUnitHandleBase_1 = require("./HudUnitHandleBase"),
-  Info_1 = require("../../../../Core/Common/Info"),
   HIT_CASE_SOCKET = new UE.FName("HitCase");
 class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Nma = new Vector2D_1.Vector2D()),
+      (this.jma = new Vector2D_1.Vector2D()),
       (this.Poi = void 0),
       (this.v$e = !1),
       (this.xoi = !1),
       (this.woi = !1),
       (this.Boi = 0),
-      (this.boi = (t, e) => {
+      (this.vG_ = void 0),
+      (this.yG_ = void 0),
+      (this.SG_ = void 0),
+      (this.MG_ = !1),
+      (this.boi = (t, i) => {
         Info_1.Info.IsInGamepad() &&
-          (0 === e ? (this.woi = void 0 !== this.Poi) : (this.xoi = !0)),
+          (0 === i ? (this.woi = void 0 !== this.Poi) : (this.xoi = !0)),
           this.Poi &&
             !ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-              190,
+              203,
             )?.HasTag(-2140742267) &&
-            (0 === e ? this.qoi() : this.Goi());
+            (0 === i ? this.qoi() : this.Goi());
       }),
-      (this.Noi = (t, e) => {
-        102 === e && (t ? this.qoi() : this.Goi());
+      (this.Noi = (t, i) => {
+        102 === i && (t ? this.qoi() : this.Goi());
       }),
-      (this.VJe = (t, e) => {
-        t ? (this.Boi = e) : e === this.Boi && (this.Boi = 0);
+      (this.VJe = (t, i) => {
+        t ? (this.Boi = i) : i === this.Boi && (this.Boi = 0);
       });
   }
   OnAddEvents() {
@@ -72,57 +78,52 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       );
   }
   OnDestroyed() {
-    this.Poi = void 0;
+    this.EG_(), (this.Poi = void 0);
   }
   qoi() {
-    var t, e;
-    this.Poi &&
-      ((e = (t =
-        ModelManager_1.ModelManager.SceneTeamModel
-          .GetCurrentEntity).Entity.GetComponent(190)),
-      (t = t.Entity.GetComponent(54)),
-      e.HasTag(-1150819426)) &&
-      ((e =
-        t.BpInputComp.UnlockLongPressTime *
+    var t;
+    this.Poi?.IsForceLockState() &&
+      ((t =
+        ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
+          61,
+        ).GetBpInputComp().UnlockLongPressTime *
         TimeUtil_1.TimeUtil.InverseMillisecond),
-      this.Poi.ActivateUnlockTimeDown(e));
+      this.Poi.ActivateUnlockTimeDown(t));
   }
   Goi() {
     this.Poi?.DeactivateUnlockTimeDown();
   }
   OnTick(t) {
-    var e;
     super.OnTick(t),
       this.v$e ||
-        ((t = this.GetTargetInfo()),
+        (this.IG_(),
         this.xoi &&
           ((this.xoi = !1),
           this.woi ||
-            t.ShowTarget ||
+            this.vG_ ||
             this.Ooi() ||
             BattleUiControl_1.BattleUiControl.ResetFocus()),
-        t &&
-        t.ShowTarget?.Valid &&
-        t.ShowTarget.Id !== this.Boi &&
-        (e = this.GetWorldLocation()) &&
+        this.vG_ &&
+        this.vG_.Id !== this.Boi &&
+        (t = this.Koi(this.vG_, this.yG_)) &&
         HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
-          e,
-          this.Nma,
+          t,
+          this.jma,
         )
           ? (this.Activate(),
             this.Poi &&
-              (this.Poi.UpdateShowTargetState(t.ShowTarget),
-              this.Poi.RefreshManualLockVisible(),
+              (this.Poi.Refresh(this.vG_, this.SG_, this.MG_),
               this.Poi.GetRootItem().SetAnchorOffset(
-                this.Nma.ToUeVector2D(!0),
-              )))
+                this.jma.ToUeVector2D(!0),
+              )),
+            this.EG_())
           : this.Deactivate());
   }
   Ooi() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
       !!t?.Valid &&
-      t.Entity.GetComponent(161)?.DirectionState ===
+      t.Entity.GetComponent(173)?.DirectionState ===
         CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
     );
   }
@@ -139,26 +140,51 @@ class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         ));
   }
   Deactivate() {
-    this.Poi && this.Poi.Deactivate();
+    this.EG_(), this.Poi && this.Poi.Deactivate();
   }
-  GetTargetInfo() {
+  IG_() {
+    this.EG_();
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    if (t?.Valid) return t.Entity.CheckGetComponent(29).GetTargetInfo();
-  }
-  GetWorldLocation() {
-    var e = this.GetTargetInfo();
-    if (e) {
-      var i = e.ShowTarget;
-      if (i?.Valid) {
-        i = i.Entity.GetComponent(1).Owner;
-        if (i instanceof TsBaseCharacter_1.default) {
-          i = i.Mesh;
-          let t = FNameUtil_1.FNameUtil.GetDynamicFName(e.SocketName);
-          return (
-            (t && i.DoesSocketExist(t)) || (t = HIT_CASE_SOCKET),
-            i.GetSocketLocation(t)
-          );
+    if (t?.Valid) {
+      const e = t.Entity.CheckGetComponent(32);
+      var i = e.GetTargetInfo();
+      if (i.ShowTarget?.Valid)
+        (this.vG_ = i.ShowTarget),
+          (this.yG_ = i.SocketName),
+          (this.SG_ = t),
+          (this.MG_ = !0);
+      else if (t.Entity.GetComponent(203)?.HasTag(-2100129479)) {
+        i = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+          t.Entity,
+          Protocol_1.Aki.Protocol.Summon.x3s.Proto_ESummonTypeConcomitantVision,
+        );
+        if (i?.Valid) {
+          const e = i.Entity.CheckGetComponent(32);
+          e &&
+            (t = e.GetTargetInfo()).ShowTarget?.Valid &&
+            ((this.vG_ = t.ShowTarget),
+            (this.yG_ = t.SocketName),
+            (this.SG_ = i));
         }
+      }
+    }
+  }
+  EG_() {
+    (this.vG_ = void 0),
+      (this.yG_ = void 0),
+      (this.SG_ = void 0),
+      (this.MG_ = !1);
+  }
+  Koi(i, e) {
+    if (i?.Valid) {
+      i = i.Entity.GetComponent(1).Owner;
+      if (i instanceof TsBaseCharacter_1.default) {
+        i = i.Mesh;
+        let t = FNameUtil_1.FNameUtil.GetDynamicFName(e);
+        return (
+          (t && i.DoesSocketExist(t)) || (t = HIT_CASE_SOCKET),
+          i.D_GetSocketLocation(t)
+        );
       }
     }
   }

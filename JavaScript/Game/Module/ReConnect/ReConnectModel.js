@@ -54,7 +54,7 @@ class ReConnectModel extends ModelBase_1.ModelBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Reconnect",
-              42,
+              41,
               "[InfinityReconnect] Enable infinity reconnect.",
             )),
       !0
@@ -156,7 +156,7 @@ class ReConnectModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Reconnect",
-        31,
+        30,
         "set LastNetworkType",
         ["old", this.Oso],
         ["new", e],

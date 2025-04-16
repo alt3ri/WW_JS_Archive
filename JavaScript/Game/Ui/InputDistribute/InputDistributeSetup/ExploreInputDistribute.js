@@ -12,7 +12,7 @@ class ExploreInputDistribute extends InputDistributeSetup_1.InputDistributeSetup
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]PhantomExploreView轮盘界面打开,Input输入检测，刷新战斗输入时设置输入分发Tag为 MoveInputTag",
         ),
       this.SetInputDistributeTags([

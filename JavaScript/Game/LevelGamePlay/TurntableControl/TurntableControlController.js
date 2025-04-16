@@ -151,7 +151,7 @@ class TurntableControlController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "SceneItem",
-        40,
+        39,
         "[TurntableControlView] 激活UI相机Seq失败，关闭UI",
       ),
       UiManager_1.UiManager.IsViewOpen("TurntableControlView") &&

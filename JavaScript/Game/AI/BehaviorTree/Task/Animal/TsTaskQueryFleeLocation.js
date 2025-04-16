@@ -9,8 +9,8 @@ const puerts_1 = require("puerts"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../../GlobalData"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ColorUtils_1 = require("../../../../Utils/ColorUtils"),
-  BlackboardController_1 = require("../../../../World/Controller/BlackboardController"),
   ServerGmController_1 = require("../../../../World/Controller/ServerGmController"),
   AiContollerLibrary_1 = require("../../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("../TsTaskAbortImmediatelyBase"),
@@ -24,8 +24,7 @@ const puerts_1 = require("puerts"),
   TURN_COST_DIVIDING_LINE_3 = 0.707,
   TEST_MODE = !1,
   QUERY_LOCATION_CD = 0.5,
-  Z_ALLOWABLE_DIFFERENCE = 45,
-  queryExtent = new UE.Vector(100, 100, 1e3);
+  queryExtent = new UE.VectorDouble(100, 100, 1e3);
 class QuatNode {
   constructor(t, e) {
     (this.Quaternion = Quat_1.Quat.Create(t)),
@@ -39,10 +38,27 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
     super(...arguments),
       (this.TargetKey = ""),
       (this.DebugMode = !1),
+      (this.Radius = RADIUS),
       (this.Character = void 0),
       (this.TargetCharacter = void 0),
       (this.IsInitTsVariables = !1),
       (this.TsTargetKey = ""),
+      (this.TsRadius = RADIUS),
+      (this.VectorCache1 = void 0),
+      (this.VectorCache2 = void 0),
+      (this.VectorCache3 = void 0),
+      (this.QuatNodeQueue = void 0),
+      (this.NavigationPath = void 0),
+      (this.FoundPath = !1),
+      (this.CdInternal = -0);
+  }
+  Constructor() {
+    super.Constructor(),
+      (this.Character = void 0),
+      (this.TargetCharacter = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsTargetKey = ""),
+      (this.TsRadius = RADIUS),
       (this.VectorCache1 = void 0),
       (this.VectorCache2 = void 0),
       (this.VectorCache3 = void 0),
@@ -69,6 +85,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
   InitTsVariables(t) {
     if (!this.IsInitTsVariables) {
       (this.TsTargetKey = this.TargetKey),
+        (this.TsRadius = this.Radius),
         (this.VectorCache1 = Vector_1.Vector.Create()),
         (this.VectorCache2 = Vector_1.Vector.Create()),
         (this.VectorCache3 = Vector_1.Vector.Create()),
@@ -112,7 +129,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
         this.QueryFleeLocation()
           ? ((i = this.NavigationPath.length),
             (i = this.NavigationPath[i - 1]),
-            BlackboardController_1.BlackboardController.SetVectorValueByEntity(
+            ControllerHolder_1.ControllerHolder.BlackboardController.SetVectorValueByEntity(
               this.Character.Entity.Id,
               BLACKBOARD_KEY_FLEE_LOCATION,
               i.X,
@@ -143,7 +160,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
       }
     } else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("BehaviorTree", 30, "错误的Controller类型", [
+        Log_1.Log.Error("BehaviorTree", 29, "错误的Controller类型", [
           "Type",
           t.GetClass().GetName(),
         ]),
@@ -151,10 +168,11 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
   }
   FindTarget() {
     if (this.TsTargetKey) {
-      var t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-        this.Character.Entity.Id,
-        this.TsTargetKey,
-      );
+      var t =
+        ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+          this.Character.Entity.Id,
+          this.TsTargetKey,
+        );
       if (t) {
         t = EntitySystem_1.EntitySystem.Get(t);
         if (t) return (this.TargetCharacter = t.GetComponent(3)), !0;
@@ -172,16 +190,16 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
         (this.VectorCache1.Z = 0),
         this.VectorCache1.Normalize(),
         this.VectorCache3.DeepCopy(this.VectorCache1),
-        this.VectorCache1.MultiplyEqual(RADIUS),
+        this.VectorCache1.MultiplyEqual(this.TsRadius),
         (this.FoundPath = !1),
         this.Character.ActorForwardProxy);
-    for (const l of this.QuatNodeQueue)
-      l.Quaternion.RotateVector(this.VectorCache1, this.VectorCache2),
-        l.VectorCache.DeepCopy(this.VectorCache2),
+    for (const a of this.QuatNodeQueue)
+      a.Quaternion.RotateVector(this.VectorCache1, this.VectorCache2),
+        a.VectorCache.DeepCopy(this.VectorCache2),
         (this.VectorCache2.Z = 0),
         this.VectorCache2.Normalize(),
-        (l.Cost = 0.5 * (1 - e.DotProduct(this.VectorCache2))),
-        l.VectorCache.AdditionEqual(t);
+        (a.Cost = 0.5 * (1 - e.DotProduct(this.VectorCache2))),
+        a.VectorCache.AdditionEqual(t);
     let i = TURN_COST_WEIGHT;
     var s = this.VectorCache3.DotProduct(e);
     s > TURN_COST_DIVIDING_LINE_3
@@ -191,31 +209,28 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
         (t, e) => i * (t.Cost - e.Cost) + (1 - i) * (t.CostBase - e.CostBase),
       ),
       this.DebugDraw2();
-    for (const _ of this.QuatNodeQueue) {
+    for (const h of this.QuatNodeQueue) {
       var r = (0, puerts_1.$ref)(void 0);
       if (
-        UE.NavigationSystemV1.K2_ProjectPointToNavigation(
+        UE.NavigationSystemV1.D_K2_ProjectPointToNavigation(
           GlobalData_1.GlobalData.World,
-          _.VectorCache.ToUeVector(),
+          h.VectorCache.ToUeVector(),
           r,
           void 0,
           void 0,
           queryExtent,
         )
       ) {
-        var o,
-          r = Vector_1.Vector.Create((0, puerts_1.$unref)(r)),
-          a = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
+        var r = Vector_1.Vector.Create((0, puerts_1.$unref)(r)),
+          o = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
             GlobalData_1.GlobalData.World,
             t.ToUeVector(),
             r.ToUeVector(),
             this.NavigationPath,
           );
         if (
-          (a &&
-            ((o = this.CheckLegalZ(r, this.Character.FloorLocation)),
-            (this.FoundPath = a && o),
-            Log_1.Log.CheckWarn()) &&
+          (o &&
+            ((this.FoundPath = o), Log_1.Log.CheckWarn()) &&
             Log_1.Log.Warn(
               "Test",
               6,
@@ -235,17 +250,14 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
       GlobalData_1.GlobalData.IsPlayInEditor &&
         this.DebugMode &&
         this.DebugDraw(
-          _.VectorCache.ToUeVector(),
+          h.VectorCache.ToUeVector(),
           ColorUtils_1.ColorUtils.LinearRed,
         );
     }
     return this.FoundPath;
   }
-  CheckLegalZ(t, e) {
-    return Math.abs(t.Z - e.Z) <= Z_ALLOWABLE_DIFFERENCE;
-  }
   DebugDraw(t, e) {
-    UE.KismetSystemLibrary.DrawDebugSphere(this, t, 20, 10, e, 5);
+    UE.KismetSystemLibrary.D_DrawDebugSphere(this, t, 20, 10, e, 5);
   }
   DebugDraw2() {
     if (GlobalData_1.GlobalData.IsPlayInEditor && TEST_MODE) {
@@ -256,7 +268,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
       for (const r of this.QuatNodeQueue) {
         switch (t) {
           case 0:
-            UE.KismetSystemLibrary.DrawDebugSphere(
+            UE.KismetSystemLibrary.D_DrawDebugSphere(
               this,
               r.VectorCache.ToUeVector(),
               s,
@@ -267,7 +279,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
             break;
           case 1:
           case 2:
-            UE.KismetSystemLibrary.DrawDebugSphere(
+            UE.KismetSystemLibrary.D_DrawDebugSphere(
               this,
               r.VectorCache.ToUeVector(),
               s,
@@ -278,7 +290,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
             break;
           case 3:
           case 4:
-            UE.KismetSystemLibrary.DrawDebugSphere(
+            UE.KismetSystemLibrary.D_DrawDebugSphere(
               this,
               r.VectorCache.ToUeVector(),
               s,
@@ -289,7 +301,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
             break;
           case 5:
           case 6:
-            UE.KismetSystemLibrary.DrawDebugSphere(
+            UE.KismetSystemLibrary.D_DrawDebugSphere(
               this,
               r.VectorCache.ToUeVector(),
               s,
@@ -300,7 +312,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
             break;
           case 7:
           case 8:
-            UE.KismetSystemLibrary.DrawDebugSphere(
+            UE.KismetSystemLibrary.D_DrawDebugSphere(
               this,
               r.VectorCache.ToUeVector(),
               s,
@@ -311,7 +323,7 @@ class TsTaskQueryFleeLocation extends TsTaskAbortImmediatelyBase_1.default {
             break;
           case 9:
           case 10:
-            UE.KismetSystemLibrary.DrawDebugSphere(
+            UE.KismetSystemLibrary.D_DrawDebugSphere(
               this,
               r.VectorCache.ToUeVector(),
               s,

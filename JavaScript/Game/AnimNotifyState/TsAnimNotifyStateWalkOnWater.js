@@ -6,22 +6,23 @@ class TsAnimNotifyStateWalkOnWater extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments), (this.Key = ""), (this.FixLocation = !0);
   }
-  K2_NotifyBegin(e, t, r) {
-    e = e.GetOwner();
+  Constructor() {}
+  K2_NotifyBegin(t, e, r) {
+    t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-        e?.CharacterActorComponent?.Entity?.GetComponent(
-          71,
+      t instanceof TsBaseCharacter_1.default &&
+        t?.CharacterActorComponent?.Entity?.GetComponent(
+          78,
         )?.EnableOrDisableWalkOnWater(!0, this.Key, this.FixLocation),
       !0
     );
   }
-  K2_NotifyEnd(e, t) {
-    e = e.GetOwner();
+  K2_NotifyEnd(t, e) {
+    t = t.GetOwner();
     return (
-      e instanceof TsBaseCharacter_1.default &&
-        e?.CharacterActorComponent?.Entity?.GetComponent(
-          71,
+      t instanceof TsBaseCharacter_1.default &&
+        t?.CharacterActorComponent?.Entity?.GetComponent(
+          78,
         )?.EnableOrDisableWalkOnWater(!1, this.Key),
       !0
     );

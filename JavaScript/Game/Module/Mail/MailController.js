@@ -43,14 +43,14 @@ class MailController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(27328, this.Cyi),
-      Net_1.Net.Register(19023, this.gyi),
-      Net_1.Net.Register(23878, this.fyi);
+    Net_1.Net.Register(20762, this.Cyi),
+      Net_1.Net.Register(17210, this.gyi),
+      Net_1.Net.Register(27199, this.fyi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(27328),
-      Net_1.Net.UnRegister(19023),
-      Net_1.Net.UnRegister(23878);
+    Net_1.Net.UnRegister(20762),
+      Net_1.Net.UnRegister(17210),
+      Net_1.Net.UnRegister(27199);
   }
   static SelectedMail(e) {
     e &&
@@ -71,28 +71,29 @@ class MailController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件控制器：RequestReadMail 未阅读邮件，申请阅读",
           ["mailId", e],
         ),
-      Net_1.Net.Call(24070, Protocol_1.Aki.Protocol.Nss.create(o), (e) => {
+      Net_1.Net.Call(24432, Protocol_1.Aki.Protocol.Nss.create(o), (e) => {
         var o;
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                25059,
+                29881,
               )
             : (o = ModelManager_1.ModelManager.MailModel.GetMailInstanceById(
                 e.s5n,
               )) &&
               ((o.ReadTime = MathUtils_1.MathUtils.LongToNumber(e.ebs)),
+              (o.ExpiryTime = MathUtils_1.MathUtils.LongToNumber(e.jb_)),
               ModelManager_1.ModelManager.MailModel.SetMailStatusByStatusCode(
                 e.Y4n,
                 o,
               ),
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Mail", 28, "邮件控制器：阅读选中，状态码", [
+                Log_1.Log.Info("Mail", 27, "邮件控制器：阅读选中，状态码", [
                   "response.State",
                   e.Y4n,
                 ]),
@@ -108,17 +109,17 @@ class MailController extends UiControllerBase_1.UiControllerBase {
   }
   static RequestPickAttachment(e, a) {
     var o = new Protocol_1.Aki.Protocol.Vss(),
-      r =
+      t =
         CommonParamById_1.configCommonParamById.GetIntConfig("mail_take_limit");
-    (o.I7n = e.slice(0, r)),
+    (o.I7n = e.slice(0, t)),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件控制器：RequestPickAttachment 申请领取附件",
           ["attachmentIds", o.I7n],
         ),
-      Net_1.Net.Call(25674, Protocol_1.Aki.Protocol.Vss.create(o), (o) => {
+      Net_1.Net.Call(29764, Protocol_1.Aki.Protocol.Vss.create(o), (o) => {
         if (o)
           if (o.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs) {
             let e = "";
@@ -136,7 +137,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
                 )
               : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   o.Q4n,
-                  24642,
+                  17603,
                 );
           } else
             ModelManager_1.ModelManager.MailModel.SetLastPickedAttachments(
@@ -151,22 +152,22 @@ class MailController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件控制器：RequestDeleteMail请求删除邮件",
           ["mailId", e],
         ),
-      Net_1.Net.Call(16949, Protocol_1.Aki.Protocol.Hss.create(o), (e) => {
+      Net_1.Net.Call(27790, Protocol_1.Aki.Protocol.Hss.create(o), (e) => {
         if (e)
           if (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs)
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              24081,
+              18915,
             );
           else if (0 < e._bs.length) {
             for (const o of e._bs)
               ModelManager_1.ModelManager.MailModel.DeleteMail(o);
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Mail", 28, "邮件控制器：删除邮件", [
+              Log_1.Log.Info("Mail", 27, "邮件控制器：删除邮件", [
                 "邮件id",
                 e._bs,
               ]),
@@ -188,7 +189,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Mail",
-        28,
+        27,
         "邮件控制器：OnMailInfosNotify [Mail]6100 Mails response, length: ",
         ["response.MailInfos.length", e.sbs.length],
       );
@@ -196,7 +197,7 @@ class MailController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.MailModel.GetMailListLength() >=
         ModelManager_1.ModelManager.MailModel.GetMailCapacity() &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Mail", 28, "[MailError]MailBox is fulfilled");
+        Log_1.Log.Error("Mail", 27, "[MailError]MailBox is fulfilled");
       var o = new Protocol_1.Aki.Protocol.L5s(a);
       ModelManager_1.ModelManager.MailModel.AddMail(o, !1);
     }
@@ -206,13 +207,13 @@ class MailController extends UiControllerBase_1.UiControllerBase {
   }),
   (MailController.gyi = (e) => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Mail", 28, "[MailMessage]6100:MailDeleteNotify");
+      Log_1.Log.Debug("Mail", 27, "[MailMessage]6100:MailDeleteNotify");
     var o = e.s5n;
     ModelManager_1.ModelManager.MailModel.DeleteMail(o),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
-          28,
+          27,
           "邮件控制器：OnMailDeleteNotify A mail was deleted, id: ",
           ["deletingMailId", o],
         ),
@@ -237,19 +238,19 @@ class MailController extends UiControllerBase_1.UiControllerBase {
       (ModelManager_1.ModelManager.MailModel.GetMailListLength() >=
         ModelManager_1.ModelManager.MailModel.GetMailCapacity() &&
         Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Mail", 28, "邮件控制器：MailBox is fulfilled!"),
+        Log_1.Log.Error("Mail", 27, "邮件控制器：MailBox is fulfilled!"),
       (o = new Protocol_1.Aki.Protocol.L5s(e.hbs)),
       void 0 !==
       ModelManager_1.ModelManager.MailModel.GetMailInstanceById(o.s5n)
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Mail", 28, "邮件控制器：This mail exist! id: ", [
+          Log_1.Log.Error("Mail", 27, "邮件控制器：This mail exist! id: ", [
             "newMailInfo.Id",
             o.s5n,
           ])
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Mail",
-              28,
+              27,
               "邮件控制器：OnMailAddNotify New mail added, id: ",
               ["newMailInfo.Id", o.s5n],
             ),

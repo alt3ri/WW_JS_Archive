@@ -13,14 +13,27 @@ const Log_1 = require("../../../../Core/Common/Log"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  LoadingDefine_1 = require("../../Loading/LoadingDefine"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   guideConflictView = new Set([
     "MonthCardRewardView",
-    "LoadingView",
     "QuestRewardView",
     "ExploreRewardView",
     "CommonRewardView",
     "ItemTipsView",
+    "ExploreDetailView",
+    "TowerUnlockView",
+    "TowerOverLockUnlockView",
+    "PowerView",
+    "ActivityRewardPopUpView",
+    "RoleGenderChangeView",
+    "ConfirmBoxView",
+    "CdKeyInputView",
+    "CompositeRewardView",
+    "LogUploadView",
+    "RacingBetsSuccessTip",
+    "RacingBetsFailTip",
+    ...LoadingDefine_1.loadingViewList,
   ]);
 class GuideBaseView extends UiViewBase_1.UiViewBase {
   constructor() {
@@ -32,6 +45,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       (this.RemainDuration = 0),
       (this.Czt = 0),
       (this.gzt = !1),
+      (this.rCc = !1),
       (this.fzt = void 0),
       (this.pzt = void 0),
       (this.TimeTicker = void 0),
@@ -43,7 +57,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             "引导步骤  成功结束条件达成",
             ["this.GuideStepInfo!.Id", this.GuideStepInfo.Id],
             ["结束条件id", this.GuideStepInfo.Config.SuccessCondition],
@@ -54,7 +68,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             "引导步骤  失败结束条件达成",
             ["this.GuideStepInfo!.Id", this.GuideStepInfo.Id],
             ["结束条件id", this.GuideStepInfo.Config.FailureCondition],
@@ -62,13 +76,15 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
           this.OnCheckBaseViewFinishConditionFail() && this.Ezt();
       }),
       (this.OnTick = (e) => {
-        if (!UiManager_1.UiManager.IsViewShow("LoadingView")) {
+        if (!ModelManager_1.ModelManager.LoadingModel.IsLoadingView) {
           this.OnGuideBaseViewTick(e);
           var t = this.RemainDuration;
           if (t && 0 < t) {
             let i = e;
             (t -= i =
-              !this.GuideStepInfo?.ViewData?.IsAttachToBattleView || this.IsShow
+              !this.GuideStepInfo?.ViewData?.IsAttachToBattleView ||
+              this.IsShow ||
+              this.rCc
                 ? i
                 : 0) <= 0 && this.Szt(),
               (this.RemainDuration = t),
@@ -98,6 +114,19 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
             void 0,
           ) &&
           this.OnFinishConditionFail());
+  }
+  CheckTickCondition() {
+    var i = this.GuideStepInfo.Config.TickCondition;
+    return (
+      0 === i ||
+      ((this.rCc = !0),
+      ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
+        i.toString(),
+        void 0,
+        !0,
+        this.GetViewId(),
+      ))
+    );
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -129,7 +158,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
-            17,
+            16,
             "[DoClose]引导步骤完成, 但显示时长未达到配置的最小显示时间",
             ["步骤Id", this.GuideStepInfo.Id],
             ["剩余倒计时", i],
@@ -162,7 +191,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Guide",
-                17,
+                16,
                 "引导步骤  填的操作映射未定义",
                 ["this.GuideStepInfo!.Id", this.GuideStepInfo.Id],
                 ["错误的操作映射", s],
@@ -171,7 +200,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
-          17,
+          16,
           "引导界面绑定输入",
           ["步骤Id", this.GuideStepInfo.Id],
           ["输入", t],
@@ -207,7 +236,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Guide",
-                17,
+                16,
                 "引导步骤  填的操作映射未定义",
                 ["this.GuideStepInfo!.Id", this.GuideStepInfo.Id],
                 ["错误的操作映射", s],
@@ -235,7 +264,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
   }
   OnAfterShow() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Guide", 17, "[引导界面基类:OnShow]", [
+      Log_1.Log.Debug("Guide", 16, "[引导界面基类:OnShow]", [
         "引导步骤",
         this.GuideStepInfo.Id,
       ]);
@@ -256,7 +285,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
   }
   OnAfterHide() {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Guide", 17, "[引导界面基类:OnHide]", [
+      Log_1.Log.Debug("Guide", 16, "[引导界面基类:OnHide]", [
         "引导步骤",
         this.GuideStepInfo.Id,
       ]),
@@ -312,7 +341,8 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       (this.pzt = void 0));
   }
   OnBeforeDestroy() {
-    this.TimeTicker && (this.TimeTicker.Remove(), (this.TimeTicker = void 0));
+    (this.rCc = !1),
+      this.TimeTicker && (this.TimeTicker.Remove(), (this.TimeTicker = void 0));
     var i = this.GuideStepInfo;
     this.OnGuideBaseViewDestroy(),
       this.IgnoreState ||
@@ -320,7 +350,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Guide",
-                17,
+                16,
                 "[OnDestroy]引导UI关闭时, 步骤已完成",
                 ["步骤Id", i.Id],
               ),
@@ -328,7 +358,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Guide",
-                17,
+                16,
                 "[OnDestroy]引导UI关闭时, 步骤未完成",
                 ["步骤Id", i.Id],
               ),

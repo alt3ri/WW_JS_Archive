@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackedMarkForTower = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
-  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
@@ -25,7 +24,10 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
       (this.Hnt = new Map()),
       (this.zna = Number.MAX_VALUE),
       (this.Zna = () => {
-        this.Jna?.Kill(), (this.Jna = void 0), this.Gnt(5);
+        (0, puerts_1.releaseManualReleaseDelegate)(this.esa),
+          this.Jna?.Kill(),
+          (this.Jna = void 0),
+          this.Gnt(5);
       }),
       (this.esa = (t) => {
         this.GetSprite(2).SetFillAmount(t), this.GetSprite(3).SetFillAmount(t);
@@ -36,10 +38,10 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
   }
   OnUiShow() {
     this.IsSubTrack
-      ? this.RootItem?.SetRelativeScale3D(
-          new UE.Vector(SUB_SCALE, SUB_SCALE, SUB_SCALE),
+      ? this.RootItem?.D_SetRelativeScale3D(
+          new UE.VectorDouble(SUB_SCALE, SUB_SCALE, SUB_SCALE),
         )
-      : this.RootItem?.SetRelativeScale3D(new UE.Vector(1, 1, 1)),
+      : this.RootItem?.D_SetRelativeScale3D(new UE.VectorDouble(1, 1, 1)),
       this.Gnt(6),
       this.bnt(4);
   }
@@ -84,13 +86,13 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Map",
-            50,
+            49,
             "【疑难杂症】标记固定在屏幕中心，RootItem为空",
           )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Map",
-          50,
+          49,
           "【疑难杂症】标记固定在屏幕中心，GameWorld为空",
         );
   }
@@ -98,14 +100,18 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
     var i,
       e = Global_1.Global.CharacterController,
       s = this.TempTrackPosition.ToUeVector(),
-      r = UE.GameplayStatics.ProjectWorldToScreen(e, s, this.ScreenPositionRef),
+      r = UE.GameplayStatics.D_ProjectWorldToScreen(
+        e,
+        s,
+        this.ScreenPositionRef,
+      ),
       s =
         (r ||
           (((s = (i =
             ModelManager_1.ModelManager.CameraModel
               .CameraTransform).InverseTransformPositionNoScale(s)).X = -s.X),
           (i = i.TransformPositionNoScale(s)),
-          UE.GameplayStatics.ProjectWorldToScreen(
+          UE.GameplayStatics.D_ProjectWorldToScreen(
             e,
             i,
             this.ScreenPositionRef,
@@ -116,7 +122,6 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
         !this.NiagaraNeedActivateNextTick) ||
         (this.LastScreenPosition.DeepCopy(this.ScreenPosition),
         (e = ModelManager_1.ModelManager.BattleUiModel),
-        Info_1.Info.IsInTouch() || e.UpdateViewPortSize(),
         this.ScreenPosition.MultiplyEqual(e.ScreenPositionScale)
           .AdditionEqual(e.ScreenPositionOffset)
           .MultiplyEqual(this.PointTransport),
@@ -142,7 +147,7 @@ class TrackedMarkForTower extends TrackedMark_1.TrackedMark {
       if (!t) return;
       t = t.Entity;
       if (!t) return;
-      if (((this.$te = t.GetComponent(159)), !this.$te)) return;
+      if (((this.$te = t.GetComponent(171)), !this.$te)) return;
     }
     var i,
       e,

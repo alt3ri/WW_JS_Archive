@@ -5,6 +5,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
@@ -46,7 +47,7 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
       (this.UYt = []),
       (this.QZe = void 0),
       (this.cro = 0),
-      (this.mro = UE.NewArray(UE.Vector)),
+      (this.mro = UE.NewArray(UE.VectorDouble)),
       (this.dro = Vector_1.Vector.Create()),
       (this.Cro = Vector_1.Vector.Create(
         QUERY_VALUE,
@@ -67,33 +68,34 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
       (this.$Ct = (t) => {
         t === this.CVs &&
           (ModelManager_1.ModelManager.GeneralLogicTreeModel.UpdateGuideLineStartShowTime(),
-          this.yro());
+          this.CheckCanShowGuideLine()) &&
+          this.yro();
       }),
-      (this.DQt = (t, e, s) => {
+      (this.DQt = (t, e, i) => {
         6 === t.Type &&
           (this.lzs()?.Id ?? 0) === t.TreeConfigId &&
-          s === Protocol_1.Aki.Protocol.BNs._5n &&
+          i === Protocol_1.Aki.Protocol.BNs._5n &&
           this.$Ct(t.BtType);
       }),
       (this.SpawnQuestGuideLine = () => {
         this.Tro(),
           (this._ro = ActorSystem_1.ActorSystem.Get(
             UE.BP_Fx_WayFinding_C.StaticClass(),
-            MathUtils_1.MathUtils.DefaultTransform,
+            MathUtils_1.MathUtils.DefaultTransformDouble,
           )),
           this.Lro(),
-          (this.uro = UE.NewArray(UE.Vector));
+          (this.uro = UE.NewArray(UE.VectorDouble));
       }),
       (this.yro = () => {
         (this.QZe = void 0),
           (this.UYt.length = 0) < this.vro &&
             this.UYt.push(new EndShowProcess()),
-          this.UYt.push(new StartShowProcess());
+          this.UYt.push(new StartShowProcess()),
+          (this.Sro = !0);
       }),
       (this.Iro = () => {
         (this.QZe.Finished = !0), this.UYt.shift(), (this.QZe = void 0);
       }),
-      (this.CTa = !0),
       (this.CVs = t);
   }
   OnInit() {}
@@ -146,14 +148,17 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
   }
   Tro() {
     ObjectUtils_1.ObjectUtils.IsValid(this._ro) &&
-      (ActorSystem_1.ActorSystem.Put(this._ro), (this._ro = void 0));
+      (ActorSystem_1.ActorSystem.Put(
+        "GuideLineAssistant.DestroyGuideSpline",
+        this._ro,
+      ),
+      (this._ro = void 0));
   }
   Tick(t) {
     this.Dro(t),
       this.sii(),
       this.CheckCanShowGuideLine()
-        ? ((t = this.Rro()),
-          (this.Sro && (!t || this.Ero)) || ((this.Sro = !0), this.yro()))
+        ? ((t = this.Rro()), (this.Sro && (!t || this.Ero)) || this.yro())
         : (0 < this.vro && this.Sro && this.Lro(), (this.Sro = !1));
   }
   sii() {
@@ -167,13 +172,12 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
       }
   }
   Lro() {
-    this.UYt.push(new EndShowProcess()),
-      this.CTa || ((this.CTa = !0), this._ro?.NS_Fx_WayFinding.SetPaused(!0));
+    this.UYt.push(new EndShowProcess()), this._ro?.StopEffect();
   }
   CheckCanShowGuideLine() {
     var t;
     return (
-      !ModelManager_1.ModelManager.PlotModel.IsInPlot &&
+      !ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() &&
       ((t = this.lzs()) && t.CanShowGuideLine()
         ? !!t.IsAlwaysShowGuideLine() ||
           ((t =
@@ -191,13 +195,13 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
   Rro() {
     var t =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-        38,
+        44,
       );
     return t ? this.Pro(t.IsMoving) : (this.Pro(!1), !1);
   }
   Dro(t) {
     this.QZe &&
-      ((this.Mro = MathUtils_1.MathUtils.Clamp(this.Mro + t / 500, 0, 1)),
+      ((this.Mro = MathUtils_1.MathUtils.Clamp(this.Mro + t / 50, 0, 1)),
       (this.vro = MathUtils_1.MathUtils.Lerp(this.gro, this.fro, this.Mro)),
       this._ro.NS_Fx_WayFinding.SetNiagaraVariableFloat("Spawn", this.vro),
       1 <= this.Mro && this.pro < 1 && this.Iro(),
@@ -208,15 +212,15 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
     if (t) {
       var e = t.GetCurrentActiveChildQuestNode();
       if (e) {
-        var s = t.GetNodeTrackPosition(e.NodeId),
-          i = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
-        if (s && i) {
-          this.dro.Set(i.X, i.Y, i.Z);
+        var i = t.GetNodeTrackPosition(e.NodeId),
+          s = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
+        if (i && s) {
+          this.dro.Set(s.X, s.Y, s.Z);
           var r =
             UE.RoadNetNavigationSystem.RoadNet_FindPathToLocationSynchronously(
               GlobalData_1.GlobalData.World,
-              this.dro.ToUeVector(),
-              s.ToUeVector(),
+              this.dro.ToUeVectorOld(),
+              i.ToUeVectorOld(),
             );
           if (r && r.PathPoints.Num())
             if (r.Length <= 100 * t.GetGuideLineHideDistance(e.NodeId))
@@ -224,39 +228,43 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
             else {
               this.uro.Empty();
               for (let t = 0; t < r.PathPoints.Num(); t++) {
-                var h = r.PathPoints.Get(t);
+                var h = r.PathPoints.Get(t),
+                  h = UE.KismetMathLibrary.Conv_VectorToVectorDouble(h);
                 this.uro.Add(h);
               }
-              this.xro(this._ro.Spline, this.uro, 4),
-                this._ro.NS_Fx_WayFinding.ReinitializeSystem(),
-                this.CTa &&
-                  ((this.CTa = !1), this._ro.NS_Fx_WayFinding.SetPaused(!1));
+              this.xro(this._ro.Spline, this.uro, 4), this._ro.EnsureEffect();
+              s = t.GetCurrentActiveChildQuestNode();
+              s &&
+                this._ro.NS_Fx_WayFinding.SetIntParameter(
+                  FNameUtil_1.FNameUtil.GetDynamicFName("Type"),
+                  s.NavigationStyle,
+                );
             }
           else this.Lro();
         } else this.Lro();
       } else this.Lro();
     } else this.Lro();
   }
-  xro(s, e, i) {
-    s.ClearSplinePoints();
-    var r = UE.NewArray(UE.Vector);
+  xro(i, e, s) {
+    i.ClearSplinePoints();
+    var r = UE.NewArray(UE.VectorDouble);
     for (let t = 0; t < e.Num() - 1; ++t) {
       var h = e.Get(t),
         n = e.Get(t + 1);
       if ((r.Add(h), Math.abs(n.Z - h.Z) > SPLIT_Z_LIMIT)) break;
       t + 1 === e.Num() - 1 && r.Add(n);
     }
-    s.SetSplinePoints(r, 1, !0), this.mro.Empty();
-    var o = s.GetSplineLength();
-    for (let t = 0; t < s.GetNumberOfSplinePoints() - 1; ++t) {
-      var a = s.GetDistanceAlongSplineAtSplinePoint(t),
-        _ = s.GetDistanceAlongSplineAtSplinePoint(t + 1),
-        l = (_ - a) / i;
-      for (let e = a; e <= _ && e <= o; e += l) {
-        var v = s.GetWorldLocationAtDistanceAlongSpline(e),
+    i.D_SetSplinePoints(r, 1, !0), this.mro.Empty();
+    var a = i.GetSplineLength();
+    for (let t = 0; t < i.GetNumberOfSplinePoints() - 1; ++t) {
+      var o = i.GetDistanceAlongSplineAtSplinePoint(t),
+        _ = i.GetDistanceAlongSplineAtSplinePoint(t + 1),
+        l = (_ - o) / s;
+      for (let e = o; e <= _ && e <= a; e += l) {
+        var v = i.D_GetLocationAtDistanceAlongSpline(e, 1),
           c = (0, puerts_1.$ref)(void 0);
         let t = v;
-        UE.NavigationSystemV1.K2_ProjectPointToNavigation(
+        UE.NavigationSystemV1.D_K2_ProjectPointToNavigation(
           GlobalData_1.GlobalData.World,
           v,
           c,
@@ -267,10 +275,10 @@ class GuideLineAssistant extends ControllerAssistantBase_1.ControllerAssistantBa
           this.mro.Add(t);
       }
     }
-    s.SetSplinePoints(this.mro, 1, !0), this.Aro(1);
+    i.D_SetSplinePoints(this.mro, 1, !0), this.Aro(1);
   }
   Aro(t) {
-    switch (((this.gro = this.vro), (this.Mro = 0), t)) {
+    switch (((this.gro = this.vro), (this.Mro = 0), (this.pro = 0), t)) {
       case 1:
         this.fro = 2;
         break;

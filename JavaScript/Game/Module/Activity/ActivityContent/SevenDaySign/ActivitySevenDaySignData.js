@@ -16,7 +16,7 @@ class ActivitySevenDaySignData extends ActivityData_1.ActivityBaseData {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Activity",
-          38,
+          37,
           "[ActivitySevenDaySign][Phrase]签到活动签到状态打印",
           ["ActivityId", this.Id],
           ["SignStateList", this.B3e],
@@ -36,7 +36,7 @@ class ActivitySevenDaySignData extends ActivityData_1.ActivityBaseData {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Activity",
-          38,
+          37,
           "[ActivitySevenDaySign][UpdateData]签到活动签到状态改变",
           ["ActivityId", this.Id],
           ["SignIndex", t.c5n],

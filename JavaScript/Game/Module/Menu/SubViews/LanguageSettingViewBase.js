@@ -6,6 +6,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
   LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpdateManager"),
+  GameSettingsManager_1 = require("../../../GameSettings/GameSettingsManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   ButtonItem_1 = require("../../Common/Button/ButtonItem"),
@@ -35,7 +36,7 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
           this.OnSelected(this.SelectedToggle, t);
       }),
       (this.DoRefreshScrollView = (e, t) => {
-        var i = MenuTool_1.MenuTool.GetAudioCodeById(e),
+        var i = GameSettingsManager_1.GameSettingsManager.GetAudioCodeById(e),
           i = LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(i),
           i =
             i?.LanguageCode === LanguageSystem_1.LanguageSystem.PackageAudio &&
@@ -58,6 +59,7 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
   OnStart() {
     (this.lBi = this.OpenParam),
       (this.MenuDataIns = this.lBi[0]),
+      this.lBi && this.lBi[1] && (LanguageSettingViewBase.cM1 = this.lBi[1]),
       (this.CancelButton = new ButtonItem_1.ButtonItem(this.GetItem(1))),
       (this.ConfirmButton = new ButtonItem_1.ButtonItem(this.GetItem(2))),
       this.CancelButton.SetFunction(this.eNt),
@@ -85,11 +87,13 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
     );
     this.IsConfirm &&
       this.SelectedToggle.GetIndex() !== e &&
-      (this.MenuDataIns.OptionsValueList.length &&
-        MenuController_1.MenuController.NoticeChange(
-          this.MenuDataIns.FunctionId,
-        ),
-      this.lBi[1](this.lBi[0].FunctionId, this.SelectedToggle.GetIndex())),
+      this.lBi &&
+      void 0 !== this.lBi[0] &&
+      void 0 !== LanguageSettingViewBase.cM1 &&
+      LanguageSettingViewBase.cM1(
+        this.lBi[0].FunctionId,
+        this.SelectedToggle.GetIndex(),
+      ),
       (this.IsConfirm = !1);
   }
   OnBeforeDestroyImplement() {
@@ -98,12 +102,16 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
   }
   CreateToggle(e, t, i) {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Menu", 8, "必须重写CreateToggle");
+      Log_1.Log.Error("Menu", 64, "必须重写CreateToggle");
   }
-  OnRefreshView(e) {}
+  OnRefreshView(e) {
+    var t = this.GetText(0);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(t, this.MenuDataIns.FunctionName ?? "");
+  }
   OnSelected(e, t) {}
 }
-exports.LanguageSettingViewBase = LanguageSettingViewBase;
+((exports.LanguageSettingViewBase = LanguageSettingViewBase).cM1 = void 0),
+  (LanguageSettingViewBase.BackToPrevLangSettingViewName = void 0);
 class LanguageToggleBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),

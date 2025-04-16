@@ -10,7 +10,11 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ActivityData_1 = require("../../ActivityData");
 class ActivityRougeData extends ActivityData_1.ActivityBaseData {
   constructor() {
-    super(...arguments), (this.TFe = 0), (this.LFe = 0), (this.qra = !1);
+    super(...arguments),
+      (this.TFe = 0),
+      (this.LFe = 0),
+      (this.qra = !1),
+      (this.Mgl = void 0);
   }
   set FunctionBtnRedDot(t) {
     (this.qra = t),
@@ -22,14 +26,19 @@ class ActivityRougeData extends ActivityData_1.ActivityBaseData {
   get FunctionBtnRedDot() {
     return this.qra;
   }
+  get SeasonData() {
+    return this.Mgl;
+  }
   PhraseEx(t) {
     t = t.Wps;
     t
-      ? ((this.TFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.Pps))),
+      ? ((this.Mgl = t.PS_),
+        (ModelManager_1.ModelManager.RoguelikeModel.TempCountdown = t.PS_?.dps),
+        (this.TFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.Pps))),
         (this.LFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.Ups))),
         (this.qra = this.GetIfFirstOpen()))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Roguelike", 59, "ActivityRougeData无肉鸽额外数据");
+        Log_1.Log.Error("Roguelike", 58, "ActivityRougeData无肉鸽额外数据");
   }
   NeedSelfControlFirstRedPoint() {
     return !1;
@@ -51,10 +60,10 @@ class ActivityRougeData extends ActivityData_1.ActivityBaseData {
   }
   GetExDataRedPointShowState() {
     return (
+      this.qra ||
       ModelManager_1.ModelManager.RoguelikeModel.GetRoguelikeAchievementRedDot() ||
       ModelManager_1.ModelManager.RoguelikeModel.CheckHasCanUnlockSkill() ||
-      ModelManager_1.ModelManager.RoguelikeModel.CheckRoguelikeShopRedDot() ||
-      this.qra
+      ModelManager_1.ModelManager.RoguelikeModel.CheckRoguelikeShopRedDot()
     );
   }
   GetRogueActivityState() {

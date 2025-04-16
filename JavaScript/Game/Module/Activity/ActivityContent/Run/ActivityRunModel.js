@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RunEndData = exports.ActivityRunModel = void 0);
-const Log_1 = require("../../../../../Core/Common/Log"),
-  ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
+const ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   UiViewData_1 = require("../../../../Ui/Define/UiViewData"),
@@ -60,10 +59,8 @@ class ActivityRunModel extends ModelBase_1.ModelBase {
     );
   }
   GetActivityRunData(e) {
-    var t = this.h3e.get(e);
-    if (t) return t;
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Activity", 28, "找不到跑酷数据", ["id", e]);
+    e = this.h3e.get(e);
+    if (e) return e;
   }
   CreateActivityRunData(e, t) {
     let i = this.h3e.get(t);

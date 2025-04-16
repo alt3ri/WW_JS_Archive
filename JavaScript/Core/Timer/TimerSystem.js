@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.RealTimeTimerSystem =
+  (exports.FlowTimeTimerSystem =
+    exports.RealTimeTimerSystem =
     exports.TimerSystem =
     exports.TimerHandle =
     exports.MAX_TIME =
@@ -36,14 +37,14 @@ class TimerHandle {
 }
 (exports.TimerHandle = TimerHandle).o6 = 0;
 class Timer {
-  constructor(t, i, e, s, r, h, o, n) {
+  constructor(t, i, e, s, r, o, h, n) {
     (this.Id = t),
       (this.IO = i),
       (this.Interval = e),
       (this.kC = s),
       (this.Dilation = r),
-      (this.Handle = h),
-      (this.MJ = o),
+      (this.Handle = o),
+      (this.MJ = h),
       (this.Reason = n),
       (this.Now = -0),
       (this.Next = -0),
@@ -138,16 +139,16 @@ class TimerSystemInstance {
   Has(t) {
     return void 0 !== t && this.Timers.has(t.Id);
   }
-  Loop(t, i, e, s = 1, r = void 0, h = void 0, o = !0) {
+  Loop(t, i, e, s = 1, r = void 0, o = void 0, h = !0) {
     if (
-      TimerSystemInstance.j6(i, h, o) &&
+      TimerSystemInstance.j6(i, o, h) &&
       TimerSystemInstance.yJ(e) &&
       TimerSystemInstance.IJ(s)
     )
-      return this.fK(t, i, e, s, r, h);
+      return this.fK(t, i, e, s, r, o);
   }
-  Forever(t, i, e = 1, s = void 0, r = void 0, h = !0) {
-    if (TimerSystemInstance.j6(i, r, h) && TimerSystemInstance.IJ(e))
+  Forever(t, i, e = 1, s = void 0, r = void 0, o = !0) {
+    if (TimerSystemInstance.j6(i, r, o) && TimerSystemInstance.IJ(e))
       return this.fK(t, i, FOREVER, e, s, r);
   }
   Delay(t, i, e = void 0, s = void 0, r = !0) {
@@ -228,13 +229,13 @@ class TimerSystemInstance {
     ) {
       s = this.Now;
       if (1 === e.State) {
-        const h = e.Next + i - e.Interval;
-        (e.Next = h < 0 ? 0 : h), (e.Interval = i);
+        const o = e.Next + i - e.Interval;
+        (e.Next = o < 0 ? 0 : o), (e.Interval = i);
       } else {
         var r = e.Copy();
         e.State = 2;
-        const h = r.Next + i - r.Interval;
-        (r.Next = h < s ? s : h),
+        const o = r.Next + i - r.Interval;
+        (r.Next = o < s ? s : o),
           (r.Interval = i),
           this.Registry.unregister(e),
           this.Timers.set(t.Id, r),
@@ -299,15 +300,15 @@ class TimerSystemInstance {
         Log_1.Log.Error("Timer", 1, "计时器句柄不存在", ["id", t]);
     }
   }
-  fK(i, e, s, r, h, o) {
+  fK(i, e, s, r, o, h) {
     if (i) {
       let t = void 0;
-      h ||
+      o ||
         (t = this.StatWeakMap.get(i)) ||
         ((t = void 0), this.StatWeakMap.set(i, t));
       var n = this.Now,
         a = new TimerHandle(this),
-        s = new Timer(a.Id, i, e, s, r, a, h ?? t, o);
+        s = new Timer(a.Id, i, e, s, r, a, o ?? t, h);
       return (
         (s.Now = n),
         (s.Next = n + e / r),
@@ -394,5 +395,6 @@ class TimerSystemInstance {
   }
 }
 (exports.TimerSystem = new TimerSystemInstance()),
-  (exports.RealTimeTimerSystem = new TimerSystemInstance());
+  (exports.RealTimeTimerSystem = new TimerSystemInstance()),
+  (exports.FlowTimeTimerSystem = new TimerSystemInstance());
 //# sourceMappingURL=TimerSystem.js.map

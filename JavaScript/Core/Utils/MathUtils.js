@@ -44,23 +44,23 @@ class MathUtils {
     return MathCommon_1.MathCommon.Clamp(t, a, i);
   }
   static GetRangePct(t, a, i) {
-    var r = a - t;
-    return this.IsNearlyZero(r) ? (a <= i ? 1 : 0) : (i - t) / r;
+    var s = a - t;
+    return this.IsNearlyZero(s) ? (a <= i ? 1 : 0) : (i - t) / s;
   }
-  static RangeClamp(t, a, i, r, s) {
+  static RangeClamp(t, a, i, s, r) {
     a = this.Clamp(this.GetRangePct(a, i, t), 0, 1);
-    return this.Lerp(r, s, a);
+    return this.Lerp(s, r, a);
   }
   static Lerp(t, a, i) {
     return t * (1 - i) + a * i;
   }
-  static LerpCubic(t, a, i, r, s) {
-    var e = s * s,
-      o = e * s;
+  static LerpCubic(t, a, i, s, r) {
+    var e = r * r,
+      o = e * r;
     return (
       (2 * o - 3 * e + 1) * t +
-      (o - 2 * e + s) * a +
-      (o - e) * r +
+      (o - 2 * e + r) * a +
+      (o - e) * s +
       (-2 * o + 3 * e) * i
     );
   }
@@ -68,107 +68,120 @@ class MathUtils {
     i = Math.sin((i * Math.PI) / 2);
     return t * (1 - i) + a * i;
   }
-  static LerpVector(t, a, i, r = void 0) {
+  static LerpVectorOld(t, a, i, s = void 0) {
     i = this.Clamp(i, 0, 1);
-    return r
-      ? ((r.X = this.Lerp(t.X, a.X, i)),
-        (r.Y = this.Lerp(t.Y, a.Y, i)),
-        (r.Z = this.Lerp(t.Z, a.Z, i)),
-        r)
+    return s
+      ? ((s.X = this.Lerp(t.X, a.X, i)),
+        (s.Y = this.Lerp(t.Y, a.Y, i)),
+        (s.Z = this.Lerp(t.Z, a.Z, i)),
+        s)
       : new UE.Vector(
           this.Lerp(t.X, a.X, i),
           this.Lerp(t.Y, a.Y, i),
           this.Lerp(t.Z, a.Z, i),
         );
   }
-  static LerpDirect2dByMaxAngle(t, a, i, r, s, e) {
+  static LerpVector(t, a, i, s = void 0) {
+    i = this.Clamp(i, 0, 1);
+    return s
+      ? ((s.X = this.Lerp(t.X, a.X, i)),
+        (s.Y = this.Lerp(t.Y, a.Y, i)),
+        (s.Z = this.Lerp(t.Z, a.Z, i)),
+        s)
+      : new UE.VectorDouble(
+          this.Lerp(t.X, a.X, i),
+          this.Lerp(t.Y, a.Y, i),
+          this.Lerp(t.Z, a.Z, i),
+        );
+  }
+  static LerpDirect2dByMaxAngle(t, a, i, s, r, e) {
     var o = MathUtils.GetAngleByVector2D(t),
-      n = MathUtils.GetAngleByVector2D(a),
+      h = MathUtils.GetAngleByVector2D(a),
       t = Math.asin(t.Z) * MathUtils.RadToDeg,
       a = Math.asin(a.Z) * MathUtils.RadToDeg * i;
-    let h = n - o;
-    for (; 180 < h; ) h -= 360;
-    for (; 180 < -h; ) h += 360;
-    s && (h = 0 < h ? h - 360 : h + 360);
+    let n = h - o;
+    for (; 180 < n; ) n -= 360;
+    for (; 180 < -n; ) n += 360;
+    r && (n = 0 < n ? n - 360 : n + 360);
     let c = a - t;
-    (i = Math.sqrt(h * h + c * c)),
-      r < i && ((h *= r / i), (c *= r / i)),
-      (n = o + h),
-      (s = (t + c) * MathUtils.DegToRad),
-      (e.Z = Math.sin(s)),
-      (a = Math.cos(s));
-    (e.X = Math.cos(n * MathUtils.DegToRad) * a),
-      (e.Y = Math.sin(n * MathUtils.DegToRad) * a);
+    (i = Math.sqrt(n * n + c * c)),
+      s < i && ((n *= s / i), (c *= s / i)),
+      (h = o + n),
+      (r = (t + c) * MathUtils.DegToRad),
+      (e.Z = Math.sin(r)),
+      (a = Math.cos(r));
+    (e.X = Math.cos(h * MathUtils.DegToRad) * a),
+      (e.Y = Math.sin(h * MathUtils.DegToRad) * a);
   }
-  static InterpTo(t, a, i, r) {
-    var s = a - t;
-    return Math.abs(s) < MathCommon_1.MathCommon.KindaSmallNumber
+  static InterpTo(t, a, i, s) {
+    var r = a - t;
+    return Math.abs(r) < MathCommon_1.MathCommon.KindaSmallNumber
       ? a
-      : t + s * this.Clamp(i * r, 0, 1);
+      : t + r * this.Clamp(i * s, 0, 1);
   }
-  static InterpConstantTo(t, a, i, r) {
-    var s = a - t;
-    return Math.abs(s) < MathCommon_1.MathCommon.KindaSmallNumber
+  static InterpConstantTo(t, a, i, s) {
+    var r = a - t;
+    return Math.abs(r) < MathCommon_1.MathCommon.KindaSmallNumber
       ? a
-      : t + this.Clamp(s, -(a = i * r), a);
+      : t + this.Clamp(r, -(a = i * s), a);
   }
-  static VectorInterpTo(t, a, i, r, s) {
+  static VectorInterpTo(t, a, i, s, r) {
     a.Subtraction(t, this.cz),
-      this.cz.MultiplyEqual(this.Clamp(i * r, 0, 1)),
-      this.cz.Addition(t, s);
+      this.cz.MultiplyEqual(this.Clamp(i * s, 0, 1)),
+      this.cz.Addition(t, r);
   }
-  static RotatorInterpTo(t, a, i, r, s) {
-    r <= 0
-      ? s.DeepCopy(a)
-      : ((r *= i),
-        (s.Pitch = a.Pitch - t.Pitch),
-        (s.Yaw = a.Yaw - t.Yaw),
-        (s.Roll = a.Roll - t.Roll),
-        MathCommon_1.MathCommon.VectorNormalizeRotator(s),
-        (s.Pitch = 1 <= r ? s.Pitch : s.Pitch * r),
-        (s.Yaw = 1 <= r ? s.Yaw : s.Yaw * r),
-        (s.Roll = 1 <= r ? s.Roll : s.Roll * r),
-        (s.Pitch += t.Pitch),
-        (s.Yaw += t.Yaw),
-        (s.Roll += t.Roll),
-        MathCommon_1.MathCommon.VectorNormalizeRotator(s));
+  static RotatorInterpTo(t, a, i, s, r) {
+    s <= 0
+      ? r.DeepCopy(a)
+      : ((s *= i),
+        (r.Pitch = a.Pitch - t.Pitch),
+        (r.Yaw = a.Yaw - t.Yaw),
+        (r.Roll = a.Roll - t.Roll),
+        MathCommon_1.MathCommon.VectorNormalizeRotator(r),
+        (r.Pitch = 1 <= s ? r.Pitch : r.Pitch * s),
+        (r.Yaw = 1 <= s ? r.Yaw : r.Yaw * s),
+        (r.Roll = 1 <= s ? r.Roll : r.Roll * s),
+        (r.Pitch += t.Pitch),
+        (r.Yaw += t.Yaw),
+        (r.Roll += t.Roll),
+        MathCommon_1.MathCommon.VectorNormalizeRotator(r));
   }
-  static RotatorAxisInterpTo(t, a, i, r) {
-    return r <= 0
+  static RotatorAxisInterpTo(t, a, i, s) {
+    return s <= 0
       ? a
-      : ((r = r * i),
+      : ((s = s * i),
         (i = MathCommon_1.MathCommon.WrapAngle(a - t)),
-        (i = 1 <= r ? i : i * r),
+        (i = 1 <= s ? i : i * s),
         (i += t),
         MathCommon_1.MathCommon.WrapAngle(i));
   }
-  static RotatorInterpConstantTo(t, a, i, r, s) {
-    i <= 0 || r <= 0
-      ? s.DeepCopy(t)
-      : ((r *= i),
-        (s.Pitch = a.Pitch - t.Pitch),
-        (s.Yaw = a.Yaw - t.Yaw),
-        (s.Roll = a.Roll - t.Roll),
-        MathCommon_1.MathCommon.VectorNormalizeRotator(s),
-        (s.Pitch = this.Clamp(s.Pitch, -r, r)),
-        (s.Yaw = this.Clamp(s.Yaw, -r, r)),
-        (s.Roll = this.Clamp(s.Roll, -r, r)),
-        (s.Pitch += t.Pitch),
-        (s.Yaw += t.Yaw),
-        (s.Roll += t.Roll),
-        MathCommon_1.MathCommon.VectorNormalizeRotator(s));
+  static RotatorInterpConstantTo(t, a, i, s, r) {
+    i <= 0 || s <= 0
+      ? r.DeepCopy(t)
+      : ((s *= i),
+        (r.Pitch = a.Pitch - t.Pitch),
+        (r.Yaw = a.Yaw - t.Yaw),
+        (r.Roll = a.Roll - t.Roll),
+        MathCommon_1.MathCommon.VectorNormalizeRotator(r),
+        (r.Pitch = this.Clamp(r.Pitch, -s, s)),
+        (r.Yaw = this.Clamp(r.Yaw, -s, s)),
+        (r.Roll = this.Clamp(r.Roll, -s, s)),
+        (r.Pitch += t.Pitch),
+        (r.Yaw += t.Yaw),
+        (r.Roll += t.Roll),
+        MathCommon_1.MathCommon.VectorNormalizeRotator(r));
   }
-  static RotatorInterpConstantToAvoid(t, a, i, r, s, e) {
-    r <= 0 || s <= 0
+  static RotatorInterpConstantToAvoid(t, a, i, s, r, e) {
+    s <= 0 || r <= 0
       ? e.DeepCopy(t)
-      : ((s *= r),
+      : ((r *= s),
         (e.Pitch = a.Pitch - t.Pitch),
         (e.Yaw = a.Yaw - t.Yaw),
         (e.Roll = a.Roll - t.Roll),
         MathCommon_1.MathCommon.VectorNormalizeRotator(e),
-        (e.Pitch = this.Clamp(e.Pitch, -s, s)),
-        (e.Yaw = this.Clamp(e.Yaw, -s, s)),
-        (e.Roll = this.Clamp(e.Roll, -s, s)),
+        (e.Pitch = this.Clamp(e.Pitch, -r, r)),
+        (e.Yaw = this.Clamp(e.Yaw, -r, r)),
+        (e.Roll = this.Clamp(e.Roll, -r, r)),
         (e.Pitch += t.Pitch),
         (e.Yaw += t.Yaw),
         (e.Roll += t.Roll),
@@ -202,9 +215,13 @@ class MathUtils {
       ).HeadingAngle()) * this.RadToDeg
     );
   }
-  static GetVector2dByAngle(t) {
+  static GetUeVector2dByAngle(t) {
     t *= this.DegToRad;
     return new UE.Vector(Math.cos(t), Math.sin(t), 0);
+  }
+  static GetVector2dByAngle(t, a) {
+    t *= this.DegToRad;
+    (a.X = Math.cos(t)), (a.Y = Math.sin(t));
   }
   static InRange(t, a) {
     return t >= a.Min && t <= a.Max;
@@ -254,31 +271,32 @@ class MathUtils {
     for (; i - 360 >= a.LowerBoundValue; ) i -= 360;
     return this.InFastUeRange(i, a);
   }
-  static LocationInRangeArray(t, a, i, r, s, e, o) {
+  static LocationInRangeArray(t, a, i, s, r, e, o) {
     this.InverseTransformPositionNoScale(t, a, i, this.cz);
     t = this.cz.Z;
     return (
       !!this.InRangeArray(t, o) &&
-      ((a = this.cz.Size2D() - r), !!this.InRangeArray(a, s)) &&
+      ((a = this.cz.Size2D() - s), !!this.InRangeArray(a, r)) &&
       ((i = MathUtils.GetAngleByVector2D(this.cz)),
       this.InRangeAngleArray(i, e))
     );
   }
-  static LocationInUeRange(t, a, i, r, s, e, o) {
+  static LocationInUeRange(t, a, i, s, r, e, o) {
     this.InverseTransformPositionNoScale(t, a, i, this.cz);
     t = this.cz.Z;
     return (
       !!this.InUeRange(t, o) &&
-      ((a = this.cz.Size2D() - r), !!this.InUeRange(a, s)) &&
+      ((a = this.cz.Size2D() - s), !!this.InUeRange(a, r)) &&
       ((i = MathUtils.GetAngleByVector2D(this.cz)), this.InUeRangeAngle(i, e))
     );
   }
-  static LocationInFastUeRange(t, a, i, r, s, e, o) {
+  static LocationInFastUeRange(t, a, i, s, r, e, o) {
     this.InverseTransformPositionNoScale(t, a, i, this.cz);
     t = this.cz.Z;
     return (
       !!this.InFastUeRange(t, o) &&
-      ((a = this.cz.Size2D() - r), !!this.InFastUeRange(a, s)) &&
+      ((a = Math.max(MathUtils.SmallNumber, this.cz.Size2D() - s)),
+      !!this.InFastUeRange(a, r)) &&
       ((i = MathUtils.GetAngleByVector2D(this.cz)),
       this.InFastUeRangeAngle(i, e))
     );
@@ -286,6 +304,10 @@ class MathUtils {
   static GetFloatPointFloor(t, a = 0) {
     (a = Math.pow(10, a)), (t *= a), (t = Math.floor(t));
     return (t /= a);
+  }
+  static GetRoundToNDecimalPlaces(t, a) {
+    a = Math.pow(10, a);
+    return Math.round(t * a) / a;
   }
   static GetFloatPointFloorString(t, a = 0) {
     return MathUtils.GetFloatPointFloor(t, a).toFixed(a);
@@ -321,8 +343,8 @@ class MathUtils {
     a -= t;
     return t + Math.random() * a;
   }
-  static BlendEaseIn(t, a, i, r) {
-    return t + (a - t) * this.Lerp(0, 1, Math.pow(i, r));
+  static BlendEaseIn(t, a, i, s) {
+    return t + (a - t) * this.Lerp(0, 1, Math.pow(i, s));
   }
   static StandardizingPitch(t) {
     return 180 < t ? t - 360 : t < -180 ? t + 360 : t;
@@ -333,6 +355,10 @@ class MathUtils {
   static GetAngleByVectorDot(t, a) {
     t = this.DotProduct(t, a);
     return Math.acos(MathCommon_1.MathCommon.Clamp(t, -1, 1)) * this.RadToDeg;
+  }
+  static GetAngleByVectorDotWithSign(t, a) {
+    var i = this.GetAngleByVectorDot(t, a);
+    return t.X * a.Y - t.Y * a.X < 0 ? -i : i;
   }
   static DotProduct(t, a) {
     return t.X * a.X + t.Y * a.Y + t.Z * a.Z;
@@ -358,42 +384,42 @@ class MathUtils {
       t = MathCommon_1.MathCommon.WrapAngle(t.Yaw),
       i = MathCommon_1.MathCommon.DegreeToRadian(i),
       t = MathCommon_1.MathCommon.DegreeToRadian(t),
-      r = Math.cos(i),
+      s = Math.cos(i),
       i = Math.sin(i),
-      s = Math.cos(t),
+      r = Math.cos(t),
       t = Math.sin(t);
-    return (a.X = r * s), (a.Y = r * t), (a.Z = i), a;
+    return (a.X = s * r), (a.Y = s * t), (a.Z = i), a;
   }
-  static Bisection(t, a, i, r) {
-    let s = a,
+  static Bisection(t, a, i, s) {
+    let r = a,
       e = i;
-    for (; e - s > r; ) {
-      var o = (s + e) / 2;
-      t(o) ? (e = o) : (s = o + r);
+    for (; e - r > s; ) {
+      var o = (r + e) / 2;
+      t(o) ? (e = o) : (r = o + s);
     }
-    return s;
+    return r;
   }
   static Square(t) {
     return t * t;
   }
-  static TransformPosition(t, a, i, r, s) {
-    i.Multiply(r, s), a.Quaternion().RotateVector(s, s), t.Addition(s, s);
+  static TransformPosition(t, a, i, s, r) {
+    i.Multiply(s, r), a.Quaternion().RotateVector(r, r), t.Addition(r, r);
   }
-  static TransformPositionNoScale(t, a, i, r) {
-    a.Quaternion().RotateVector(i, r), t.Addition(r, r);
+  static TransformPositionNoScale(t, a, i, s) {
+    a.Quaternion().RotateVector(i, s), t.Addition(s, s);
   }
-  static InverseTransformPosition(t, a, i, r, s) {
-    r.Subtraction(t, s),
+  static InverseTransformPosition(t, a, i, s, r) {
+    s.Subtraction(t, r),
       a.Quaternion(this.az),
       this.az.Inverse(this.az),
-      this.az.RotateVector(s, s),
-      i.Multiply(s, s);
+      this.az.RotateVector(r, r),
+      i.Multiply(r, r);
   }
-  static InverseTransformPositionNoScale(t, a, i, r) {
-    i.Subtraction(t, r),
+  static InverseTransformPositionNoScale(t, a, i, s) {
+    i.Subtraction(t, s),
       a.Quaternion(this.az),
       this.az.Inverse(this.az),
-      this.az.RotateVector(r, r);
+      this.az.RotateVector(s, s);
   }
   static mz() {
     return (
@@ -408,60 +434,60 @@ class MathUtils {
   static Cz() {
     return this.gz || (this.gz = new Array(3)), this.gz;
   }
-  static LookRotation(a, i, r, s) {
-    let e = a.X + i.Y + r.Z;
+  static LookRotation(a, i, s, r) {
+    let e = a.X + i.Y + s.Z;
     if (0 < e) {
       e += 1;
       var o = 0.5 / Math.sqrt(e),
-        n = o * e,
-        h = (i.Z - r.Y) * o,
-        c = (r.X - a.Z) * o,
+        h = o * e,
+        n = (i.Z - s.Y) * o,
+        c = (s.X - a.Z) * o,
         o = (a.Y - i.X) * o;
-      s.Set(h, c, o, n);
+      r.Set(n, c, o, h);
     } else {
-      (h = this.mz()),
+      (n = this.mz()),
         (c =
-          ((h[0][0] = a.X),
-          (h[0][1] = i.X),
-          (h[0][2] = r.X),
-          (h[1][0] = a.Y),
-          (h[1][1] = i.Y),
-          (h[1][2] = r.Y),
-          (h[2][0] = a.Z),
-          (h[2][1] = i.Z),
-          (h[2][2] = r.Z),
+          ((n[0][0] = a.X),
+          (n[0][1] = i.X),
+          (n[0][2] = s.X),
+          (n[1][0] = a.Y),
+          (n[1][1] = i.Y),
+          (n[1][2] = s.Y),
+          (n[2][0] = a.Z),
+          (n[2][1] = i.Z),
+          (n[2][2] = s.Z),
           this.Cz()));
       let t = 0;
       i.Y > a.Y && (t = 1);
-      (o = ((t = r.Z > h[t][t] ? 2 : t) + 1) % 3),
-        (n = (1 + o) % 3),
-        (i = ((e = h[t][t] - h[o][o] - h[n][n] + 1), 0.5 / Math.sqrt(e))),
-        (a = ((c[t] = i * e), (h[n][o] - h[o][n]) * i));
-      (c[o] = (h[o][t] + h[t][o]) * i),
-        (c[n] = (h[n][t] + h[t][n]) * i),
-        s.Set(c[0], c[1], c[2], a);
+      (o = ((t = s.Z > n[t][t] ? 2 : t) + 1) % 3),
+        (h = (1 + o) % 3),
+        (i = ((e = n[t][t] - n[o][o] - n[h][h] + 1), 0.5 / Math.sqrt(e))),
+        (a = ((c[t] = i * e), (n[h][o] - n[o][h]) * i));
+      (c[o] = (n[o][t] + n[t][o]) * i),
+        (c[h] = (n[h][t] + n[t][h]) * i),
+        r.Set(c[0], c[1], c[2], a);
     }
-    s.Normalize();
+    r.Normalize();
   }
   static LookRotationUpFirst(t, a, i) {
-    var r = this.cz,
-      a = (r.FromUeVector(a), r.Normalize(), this.fz),
-      t = (r.CrossProduct(t, a), a.Normalize(), this.pz);
-    a.CrossProduct(r, t),
+    var s = this.cz,
+      a = (s.FromUeVector(a), s.Normalize(), this.fz),
+      t = (s.CrossProduct(t, a), a.Normalize(), this.pz);
+    a.CrossProduct(s, t),
       i instanceof Quat_1.Quat
-        ? this.LookRotation(t, a, r, i)
+        ? this.LookRotation(t, a, s, i)
         : i instanceof Rotator_1.Rotator &&
-          (this.LookRotation(t, a, r, this.az), this.az.Rotator(i));
+          (this.LookRotation(t, a, s, this.az), this.az.Rotator(i));
   }
   static LookRotationForwardFirst(t, a, i) {
-    var r = this.cz,
-      t = (r.FromUeVector(t), r.Normalize(), this.fz),
-      a = (a.CrossProduct(r, t), t.Normalize(), this.pz);
-    r.CrossProduct(t, a),
+    var s = this.cz,
+      t = (s.FromUeVector(t), s.Normalize(), this.fz),
+      a = (a.CrossProduct(s, t), t.Normalize(), this.pz);
+    s.CrossProduct(t, a),
       i instanceof Quat_1.Quat
-        ? this.LookRotation(r, t, a, i)
+        ? this.LookRotation(s, t, a, i)
         : i instanceof Rotator_1.Rotator &&
-          (this.LookRotation(r, t, a, this.az), this.az.Rotator(i));
+          (this.LookRotation(s, t, a, this.az), this.az.Rotator(i));
   }
   static GetCubicValue(t) {
     return (-2 * t + 3) * t * t;
@@ -474,20 +500,20 @@ class MathUtils {
       if (0 === a) return "0";
       i = "+";
     }
-    for (var r = new Stack_1.Stack(); 0 < a; )
-      r.Push(Math.floor(a % 2)), (a = Math.floor(a / 2));
-    var s = r.Size;
-    for (let t = 0; t < s; t++) i += r.Pop().toString();
+    for (var s = new Stack_1.Stack(); 0 < a; )
+      s.Push(Math.floor(a % 2)), (a = Math.floor(a / 2));
+    var r = s.Size;
+    for (let t = 0; t < r; t++) i += s.Pop().toString();
     return i;
   }
   static GetObliqueTriangleAngle(t, a, i) {
     return Math.acos((t * t + a * a - i * i) / (2 * t * a));
   }
   static GetTriangleCircumradius(t, a, i) {
-    var r = (t + a + i) / 2;
+    var s = (t + a + i) / 2;
     return (
       (t * a * i) /
-      (this.CircumradiusRatio * Math.sqrt(r * (r - t) * (r - a) * (r - i)))
+      (this.CircumradiusRatio * Math.sqrt(s * (s - t) * (s - a) * (s - i)))
     );
   }
   static VerticalFovToHorizontally(t, a) {
@@ -498,7 +524,7 @@ class MathUtils {
     t = Math.tan((t / 2) * MathUtils.DegToRad);
     return 2 * Math.atan(t / a) * MathUtils.RadToDeg;
   }
-  static IsValidNumbers(t, a, i, r = 1e8) {
+  static IsValidNumbers(t, a, i, s = 1e8) {
     return (
       void 0 !== t &&
       void 0 !== a &&
@@ -507,54 +533,88 @@ class MathUtils {
       null !== a &&
       null !== i &&
       !(isNaN(t) || isNaN(a) || isNaN(i)) &&
-      Math.abs(t) < r &&
-      Math.abs(a) < r &&
-      Math.abs(i) < r
+      Math.abs(t) < s &&
+      Math.abs(a) < s &&
+      Math.abs(i) < s
     );
   }
   static IsValidVector(t, a = 1e8) {
-    var i, r;
+    var i, s;
     return (
       !!t &&
-      ((i = t.X), (r = t.Y), (t = t.Z), void 0 !== i) &&
-      void 0 !== r &&
+      ((i = t.X), (s = t.Y), (t = t.Z), void 0 !== i) &&
+      void 0 !== s &&
       void 0 !== t &&
       null !== i &&
-      null !== r &&
+      null !== s &&
       null !== t &&
-      !(isNaN(i) || isNaN(r) || isNaN(t)) &&
+      !(isNaN(i) || isNaN(s) || isNaN(t)) &&
       Math.abs(i) < a &&
-      Math.abs(r) < a &&
+      Math.abs(s) < a &&
       Math.abs(t) < a
     );
   }
   static IsValidRotator(t, a = 1e8) {
-    var i, r;
+    var i, s;
     return (
       !!t &&
-      ((i = t.Roll), (r = t.Pitch), (t = t.Yaw), void 0 !== i) &&
-      void 0 !== r &&
+      ((i = t.Roll), (s = t.Pitch), (t = t.Yaw), void 0 !== i) &&
+      void 0 !== s &&
       void 0 !== t &&
       null !== i &&
-      null !== r &&
+      null !== s &&
       null !== t &&
-      !(isNaN(i) || isNaN(r) || isNaN(t)) &&
+      !(isNaN(i) || isNaN(s) || isNaN(t)) &&
       Math.abs(i) < a &&
-      Math.abs(r) < a &&
+      Math.abs(s) < a &&
       Math.abs(t) < a
     );
   }
-  static LinePlaneIntersectionOriginNormal(t, a, i, r, s) {
+  static LinePlaneIntersectionOriginNormal(t, a, i, s, r) {
     let e = 0;
     a.Subtraction(t, this.cz);
     var a = this.cz,
-      o = a.DotProduct(r);
+      o = a.DotProduct(s);
     return 0 === o
-      ? ((e = -1), s.Reset(), !1)
+      ? ((e = -1), r.Reset(), !1)
       : (i.Subtraction(t, this.fz),
-        (e = this.fz.DotProduct(r) / o) < 0 || 1 < e
-          ? (s.Reset(), !1)
-          : (t.Addition(a.Multiply(e, this.pz), s), !0));
+        (e = this.fz.DotProduct(s) / o) < 0 || 1 < e
+          ? (r.Reset(), !1)
+          : (t.Addition(a.Multiply(e, this.pz), r), !0));
+  }
+  static IsLocationInsideCone(t, a, i, s, r) {
+    r.Subtraction(t, this.cz);
+    r = this.DotProduct(this.cz, a);
+    return (
+      !(r < 0 || i < r) &&
+      ((t = (r / i) * s),
+      a.Multiply(r, this.fz),
+      this.cz.Subtraction(this.fz, this.fz),
+      this.fz.SizeSquared() <= t * t)
+    );
+  }
+  static SqInterpToVector(t, a, i, s) {
+    var r = Math.acos(t.DotProduct(a)) * MathUtils.RadToDeg;
+    r < i
+      ? s.DeepCopy(a)
+      : (Quat_1.Quat.FindBetween(t, a, this.az),
+        Quat_1.Quat.Slerp(Quat_1.Quat.IdentityProxy, this.az, i / r, this.az),
+        this.az.RotateVector(t, s));
+  }
+  static SqLerpVector(t, a, i, s) {
+    Quat_1.Quat.FindBetween(t, a, this.az),
+      Quat_1.Quat.Slerp(Quat_1.Quat.IdentityProxy, this.az, i, this.az),
+      this.az.RotateVector(t, s);
+  }
+  static ClampAngle(t, a, i) {
+    var i = 0.5 * Rotator_1.Rotator.ClampAxis(i - a),
+      a = Rotator_1.Rotator.ClampAxis(a + i),
+      s = Rotator_1.Rotator.NormalizeAxis(t - a);
+    return i < s
+      ? Rotator_1.Rotator.NormalizeAxis(a + i)
+      : s < -i
+        ? Rotator_1.Rotator.NormalizeAxis(a - i)
+        : Rotator_1.Rotator.NormalizeAxis(t);
   }
 }
 ((exports.MathUtils = MathUtils).MaxFloat = 3402823466e29),
@@ -569,6 +629,7 @@ class MathUtils {
   (MathUtils.RadToDeg = exports.PI_DEG / Math.PI),
   (MathUtils.DegToRad = Math.PI / exports.PI_DEG),
   (MathUtils.DefaultTransform = new UE.Transform()),
+  (MathUtils.DefaultTransformDouble = new UE.TransformDouble()),
   (MathUtils.DefaultTransformProxy = Transform_1.Transform.Create()),
   (MathUtils.cz = Vector_1.Vector.Create()),
   (MathUtils.fz = Vector_1.Vector.Create()),

@@ -13,8 +13,8 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, n, r);
     else
-      for (var a = e.length - 1; 0 <= a; a--)
-        (o = e[a]) && (s = (i < 3 ? o(s) : 3 < i ? o(t, n, s) : o(t, n)) || s);
+      for (var l = e.length - 1; 0 <= l; l--)
+        (o = e[l]) && (s = (i < 3 ? o(s) : 3 < i ? o(t, n, s) : o(t, n)) || s);
     return 3 < i && s && Object.defineProperty(t, n, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -24,28 +24,38 @@ const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
   RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
-  ModelManager_1 = require("../Manager/ModelManager"),
-  CameraController_1 = require("./CameraController");
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager");
 let FightCameraDisplayComponent = class FightCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
       (this.uPr = void 0),
       (this.nye = () => {
         ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
-          ? CameraController_1.CameraController.ReturnLockOnCameraMode(0)
+          ? ControllerHolder_1.ControllerHolder.CameraController.ReturnLockOnCameraMode(
+              0,
+            )
           : ((this.uPr =
-              CameraController_1.CameraController.SpawnCameraActor()),
-            0 === CameraController_1.CameraController.Model.CameraMode &&
-              CameraController_1.CameraController.SetViewTarget(
+              ControllerHolder_1.ControllerHolder.CameraController.SpawnCameraActor()),
+            0 ===
+              ControllerHolder_1.ControllerHolder.CameraController.Model
+                .CameraMode &&
+              ControllerHolder_1.ControllerHolder.CameraController.SetViewTarget(
                 this.uPr,
                 "FightCamera.OnWorldDone",
               ));
       }),
       (this.uMe = () => {
         ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
-          ? CameraController_1.CameraController.ReturnLockOnCameraMode(0)
+          ? ControllerHolder_1.ControllerHolder.CameraController.ReturnLockOnCameraMode(
+              0,
+            )
           : this.uPr &&
-            (ActorSystem_1.ActorSystem.Put(this.uPr), (this.uPr = void 0));
+            (ActorSystem_1.ActorSystem.Put(
+              "FightCameraDisplayComponent.OnClearWorld",
+              this.uPr,
+            ),
+            (this.uPr = void 0));
       });
   }
   get CameraActor() {
@@ -67,7 +77,11 @@ let FightCameraDisplayComponent = class FightCameraDisplayComponent extends Enti
   OnClear() {
     return (
       this.uPr &&
-        (ActorSystem_1.ActorSystem.Put(this.uPr), (this.uPr = void 0)),
+        (ActorSystem_1.ActorSystem.Put(
+          "FightCameraDisplayComponent.OnClear",
+          this.uPr,
+        ),
+        (this.uPr = void 0)),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,
         this.nye,

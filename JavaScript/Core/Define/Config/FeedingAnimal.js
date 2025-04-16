@@ -61,10 +61,14 @@ class FeedingAnimal {
     return this.gameplaytags(t);
   }
   gameplaytags(t, i) {
-    var s = this.J7.__offset(this.z7, 8);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
-      : null;
+    var s = this.J7.__offset(this.z7, 8),
+      s = s ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   gameplaytagsLength() {
     var t = this.J7.__offset(this.z7, 8);

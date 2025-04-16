@@ -86,7 +86,7 @@ class LinkingLineItem extends UiPanelBase_1.UiPanelBase {
     (e.Yaw = i),
       this.GetRootItem().SetUIRelativeRotation(e.ToUeRotator()),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Temp", 36, "RotateLine", ["angle", i]);
+        Log_1.Log.Debug("Temp", 35, "RotateLine", ["angle", i]);
   }
   SetLineHalf(i) {
     this.SprLine.SetUIActive(!1),

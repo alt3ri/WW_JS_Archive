@@ -24,7 +24,7 @@ class BranchLineItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.Pe.TaskId,
         );
         0 === e
-          ? this.Hpa(this.Pe.JumpBuildingId)
+          ? this.jpa(this.Pe.JumpBuildingId)
           : 1 === e
             ? ControllerHolder_1.ControllerHolder.QuestNewController.TryTrackAndOpenWorldMap(
                 this.Pe.TaskId,
@@ -50,7 +50,7 @@ class BranchLineItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnBeforeShow() {
     this.BNe();
   }
-  Hpa(e) {
+  jpa(e) {
     if (
       3 ===
       ModelManager_1.ModelManager.QuestNewModel.GetQuestState(this.Pe.TaskId)
@@ -116,7 +116,7 @@ class TaskBranchLineModule extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.qUt = void 0),
-      (this.hMa = 0),
+      (this.Jva = 0),
       (this.tue = []),
       (this.Lbt = !0),
       (this.DAn = () => new BranchLineItem());
@@ -159,12 +159,12 @@ class TaskBranchLineModule extends UiPanelBase_1.UiPanelBase {
     this.qUt.BindLateUpdate((e) => {
       this.Lbt
         ? (this.Lbt = !1)
-        : (0 !== this.hMa && this.qUt.ScrollToLeft(this.hMa),
+        : (0 !== this.Jva && this.qUt.ScrollToLeft(this.Jva),
           this.qUt.UnBindLateUpdate());
     });
   }
   SetSelectTaskId(e) {
-    this.hMa = e;
+    this.Jva = e;
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (void 0 !== this.qUt) {

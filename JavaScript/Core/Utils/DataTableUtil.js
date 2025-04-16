@@ -50,6 +50,15 @@ exports.dataTablePaths = new Map([
   [6, "/Game/Aki/Character/Role/Common/Data/DT/DT_Footprint.DT_Footprint"],
   [20, "/Game/Aki/Sequence/Manager/DT_SequenceMember.DT_SequenceMember"],
   [21, "/Game/Aki/Data/GaCha/GachaWeaponTransform.GachaWeaponTransform"],
+  [
+    22,
+    "/Game/Aki/Data/Camera/DT_FightSettlementCamera.DT_FightSettlementCamera",
+  ],
+  [
+    23,
+    "/Game/Aki/Data/Fight/DT_InputCommandTransform.DT_InputCommandTransform",
+  ],
+  [24, "/Game/Aki/Data/Camera/DT_FreeCameraConfigList.DT_FreeCameraConfigList"],
 ]);
 class DataTableUtil {
   static GetDataTableRow(a, e) {
@@ -66,7 +75,7 @@ class DataTableUtil {
       if (cpp_1.FKuroDataTableFunctionLibrary.GetDataTableRowFromName(a, e, t))
         return (0, puerts_1.$unref)(t);
       Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("DataTableUtil", 44, "获取预加载DT行配置失败", [
+        Log_1.Log.Warn("DataTableUtil", 43, "获取预加载DT行配置失败", [
           "RowName",
           e,
         ]);
@@ -83,7 +92,7 @@ class DataTableUtil {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "DataTableUtil",
-                37,
+                36,
                 "获取预加载DT失败,请检查是否在预加载前访问该接口",
                 ["DTPath", e],
               ),
@@ -92,7 +101,7 @@ class DataTableUtil {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "DataTableUtil",
-              37,
+              36,
               "所获取的DT不在DataTableUtil管理中",
               ["DTEnum", a],
             )
@@ -134,7 +143,7 @@ class DataTableUtil {
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "DataTableUtil",
-              37,
+              36,
               "[GetAllDataTableRowFromTableWithRowName]GetRowValue Failed",
               ["Table", a?.GetName()],
               ["RowName", r],
@@ -157,8 +166,8 @@ class DataTableUtil {
         var i = DataTableUtil.GetDataTableRowFromName(2, r);
         a.set(parseInt(r), i);
       }
-      return a;
     }
+    return a;
   }
 }
 (exports.DataTableUtil = DataTableUtil).wJ = new Map();

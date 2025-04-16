@@ -42,7 +42,7 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     (this.RoleViewAgent = this.ExtraParams),
       void 0 === this.RoleViewAgent
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RolePreviewAttributeTabView",
           ])

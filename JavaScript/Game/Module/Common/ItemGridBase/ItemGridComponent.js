@@ -51,14 +51,14 @@ class ItemGridComponent extends UiPanelBase_1.UiPanelBase {
   OnDeactivate() {}
   OnRefresh(t) {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Inventory", 8, "没有实现 OnRefresh", [
+      Log_1.Log.Error("Inventory", 37, "没有实现 OnRefresh", [
         "ComponentName",
         this.constructor.name,
       ]);
   }
   GetResourceId() {
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Inventory", 8, "没有实现 GetResourceId", [
+      Log_1.Log.Error("Inventory", 37, "没有实现 GetResourceId", [
         "ComponentName",
         this.constructor.name,
       ]);

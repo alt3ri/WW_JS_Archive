@@ -51,7 +51,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         (i = ModelManager_1.ModelManager.CreatureModel?.GetEntityIdByPbDataId(
           this.Lo.BallEntity,
         )) &&
-        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 187)),
+        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 200)),
       super.OnStart(t);
   }
   OnEnd(t) {
@@ -61,14 +61,14 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
     var i, e, s, h, r, o, a;
     this.r$t ||
       ((i = (0, puerts_1.$ref)(void 0)),
-      !UE.GameplayStatics.ProjectWorldToScreen(
+      !UE.GameplayStatics.D_ProjectWorldToScreen(
         Global_1.Global.CharacterController,
         this.e$t.ToUeVector(),
         i,
         !1,
       ) ||
       (this.i$t.FromUeVector2D((0, puerts_1.$unref)(i)),
-      !UE.GameplayStatics.ProjectWorldToScreen(
+      !UE.GameplayStatics.D_ProjectWorldToScreen(
         Global_1.Global.CharacterController,
         this.t$t.ToUeVector(),
         i,
@@ -80,7 +80,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         (i = ModelManager_1.ModelManager.CreatureModel?.GetEntityIdByPbDataId(
           this.Lo.BallEntity,
         )) &&
-        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 187)),
+        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 200)),
       (i = Global_1.Global.CharacterController),
       (e = (0, puerts_1.$ref)(void 0)),
       (s = (0, puerts_1.$ref)(void 0)),

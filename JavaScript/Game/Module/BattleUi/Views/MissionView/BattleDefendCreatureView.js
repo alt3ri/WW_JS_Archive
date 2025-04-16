@@ -13,7 +13,7 @@ class BattleDefendCreatureView extends BattleEntityChildView_1.BattleEntityChild
       (this.Kut = (e, t, i) => {
         var r, n;
         this.IsValid() &&
-          ((r = (n = this.GetEntity().GetComponent(159)).GetCurrentValue(
+          ((r = (n = this.GetEntity().GetComponent(171)).GetCurrentValue(
             EAttributeId.Proto_Life,
           )),
           (n = n.GetCurrentValue(EAttributeId.l5n)),

@@ -25,15 +25,15 @@ class LevelAiTaskEntityTurnTo extends LevelAiTask_1.LevelAiTask {
     if (!r)
       return (
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("LevelAi", 30, "执行转向动作时实体不存在:", [
+          Log_1.Log.Error("LevelAi", 29, "执行转向动作时实体不存在:", [
             "PbDataId",
             e.EntityId,
           ]),
         1
       );
     this.Tae = r.Entity.GetComponent(3);
-    r = r.Entity.GetComponent(38)?.CharacterMovement;
-    return r?.IsValid() && this._Xa(this.zLe, e)
+    r = r.Entity.GetComponent(44)?.CharacterMovement;
+    return r?.IsValid() && this.qJa(this.zLe, e)
       ? ((this.WTe = r.MovementMode),
         (r.MovementMode = 1),
         AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
@@ -47,7 +47,7 @@ class LevelAiTaskEntityTurnTo extends LevelAiTask_1.LevelAiTask {
   }
   TickTask(e) {
     this.Tae.InputRotatorProxy.Equals(this.Tae.ActorRotationProxy, TOLERANCE) &&
-      ((this.Tae.Entity.GetComponent(38).CharacterMovement.MovementMode =
+      ((this.Tae.Entity.GetComponent(44).CharacterMovement.MovementMode =
         this.WTe),
       this.FinishLatentTask(0));
   }
@@ -57,7 +57,7 @@ class LevelAiTaskEntityTurnTo extends LevelAiTask_1.LevelAiTask {
   OnTaskFinished(e) {
     (this.Tae = void 0), (this.WTe = 0);
   }
-  _Xa(e, r) {
+  qJa(e, r) {
     switch (r.Target.Type) {
       case 2:
         var t = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(

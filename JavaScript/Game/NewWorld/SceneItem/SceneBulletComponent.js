@@ -14,8 +14,8 @@ var SceneBulletComponent_1,
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
         r = Reflect.decorate(t, e, i, s);
       else
-        for (var l = t.length - 1; 0 <= l; l--)
-          (n = t[l]) &&
+        for (var h = t.length - 1; 0 <= h; h--)
+          (n = t[h]) &&
             (r = (o < 3 ? n(r) : 3 < o ? n(e, i, r) : n(e, i)) || r);
       return 3 < o && r && Object.defineProperty(e, i, r), r;
     };
@@ -58,17 +58,15 @@ let SceneBulletComponent =
         (this.vtn = void 0),
         (this.Hte = void 0),
         (this.JUn = void 0),
+        (this.V4l = !1),
         (this.Jcn = !1),
-        (this.lla = () => {
+        (this.nye = () => {
           this.oZo(this.G2e);
         }),
         (this.zcn = (t, e) => {
           e = e.Entity;
-          if (
-            ((this.Qcn = t),
-            this.M_n && e && (e.GetComponent(53) || e.GetComponent(141)))
-          )
-            if (t) this.oZo(this.G2e);
+          if (this.M_n && e && (e.GetComponent(60) || e.GetComponent(152)))
+            if ((this.Qcn = t)) this.oZo(this.G2e);
             else for (const i of this.Ycn.keys()) this.HVo(i);
         }),
         (this.m1n = (t, e) => {
@@ -82,18 +80,20 @@ let SceneBulletComponent =
       (this.$cn = Vector_1.Vector.Create(0, 0, 0)),
         (this.Xcn = Vector_1.Vector.Create(0, 0, 0)),
         (this.Ycn = new Map());
-      for (const i of t.GetParam(SceneBulletComponent_1)[0].BulletGroups) {
+      t = t.GetParam(SceneBulletComponent_1)[0];
+      for (const s of t.BulletGroups) {
         var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
-          i.EntityState,
+          s.EntityState,
         );
         this.Ycn.has(e) || this.Ycn.set(e, []),
           this.Ycn.get(e).push(
-            new BulletData(i, Transform_1.Transform.Create()),
+            new BulletData(s, Transform_1.Transform.Create()),
           );
       }
-      t = this.Entity.GetComponent(0)?.ComponentDataMap.get("Kys");
+      var i = this.Entity.GetComponent(0)?.ComponentDataMap.get("Kys");
       return (
-        (this.JUn = MathUtils_1.MathUtils.LongToBigInt(t?.Kys?._Vn)),
+        (this.JUn = MathUtils_1.MathUtils.LongToBigInt(i?.Kys?._Vn)),
+        (this.V4l = t.DisableGenerateByRange ?? !1),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
@@ -103,14 +103,15 @@ let SceneBulletComponent =
       );
     }
     OnStart() {
-      (this.vtn = this.Entity.GetComponent(77)),
-        this.vtn
-          ? this.vtn.AddOnEntityOverlapCallback(this.zcn)
-          : (this.Jcn = !0);
-      var t = this.Entity.GetComponent(181);
-      for (const e of this.Ycn.keys())
-        if (t.HasTag(e)) {
-          this.G2e = e;
+      var t = this.Entity.GetComponent(84),
+        e =
+          (!this.V4l && t
+            ? ((this.vtn = t), this.vtn.AddOnEntityOverlapCallback(this.zcn))
+            : (this.Jcn = !0),
+          this.Entity.GetComponent(194));
+      for (const i of this.Ycn.keys())
+        if (e.HasTag(i)) {
+          this.G2e = i;
           break;
         }
       return !0;
@@ -120,12 +121,12 @@ let SceneBulletComponent =
         (this.Hte = this.Entity.GetComponent(1)),
         (this.M_n = !0),
         void 0 !== Global_1.Global.BaseCharacter?.CharacterActorComponent &&
-        ModelManager_1.ModelManager.BulletModel.IsSceneBulletOwnerCreated
+        ModelManager_1.ModelManager.GameModeModel.WorldDone
           ? this.Jcn && this.oZo(this.G2e)
           : this.Jcn &&
             EventSystem_1.EventSystem.Add(
-              EventDefine_1.EEventName.SceneBulletOwnerCreated,
-              this.lla,
+              EventDefine_1.EEventName.WorldDone,
+              this.nye,
             ),
         !0
       );
@@ -147,7 +148,7 @@ let SceneBulletComponent =
               Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneItem",
-                18,
+                17,
                 "Bullet生成错误, 找不到场景子弹owner",
                 ["EntityID", this.Entity.Id],
               )
@@ -159,7 +160,7 @@ let SceneBulletComponent =
             t,
             this.JUn,
           );
-          s?.GetComponent(155)?.Owner?.IsValid() &&
+          s?.GetComponent(167)?.Owner?.IsValid() &&
             (((i =
               BulletController_1.BulletController.GetActionCenter().CreateBulletActionInfo(
                 14,
@@ -176,17 +177,17 @@ let SceneBulletComponent =
             (n.BulletEntityId = s?.Id),
             s
               ? EventSystem_1.EventSystem.Has(
-                  EventDefine_1.EEventName.SceneBulletOwnerCreated,
-                  this.lla,
+                  EventDefine_1.EEventName.WorldDone,
+                  this.nye,
                 ) &&
                 EventSystem_1.EventSystem.Remove(
-                  EventDefine_1.EEventName.SceneBulletOwnerCreated,
-                  this.lla,
+                  EventDefine_1.EEventName.WorldDone,
+                  this.nye,
                 )
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "SceneItem",
-                  43,
+                  42,
                   "Bullet生成错误",
                   ["BulletID", e.BulletId],
                   ["当前Bullet的EntityState", e.EntityState],
@@ -199,7 +200,7 @@ let SceneBulletComponent =
         for (const i of this.Ycn.get(t)) {
           if (!i.BulletEntityId) return;
           var e = EntitySystem_1.EntitySystem.Get(i.BulletEntityId);
-          e?.Valid && e.GetComponent(155).Owner?.K2_DetachFromActor(1, 1, 1),
+          e?.Valid && e.GetComponent(167).Owner?.K2_DetachFromActor(1, 1, 1),
             BulletController_1.BulletController.DestroyBullet(
               i.BulletEntityId,
               !1,
@@ -216,20 +217,17 @@ let SceneBulletComponent =
             t.BulletGroup.Offset.Y ?? 0,
             t.BulletGroup.Offset.Z ?? 0,
           ),
-          t.BulletTransform.SetLocation(
-            t.BulletTransform.ToUeTransform()
-              .GetLocation()
-              .op_Addition(this.Xcn.ToUeVector()),
-          ));
+          t.BulletTransform.TransformPositionNoScale(this.Xcn, this.Xcn),
+          t.BulletTransform.SetLocation(this.Xcn));
     }
     OnEnd() {
       EventSystem_1.EventSystem.Has(
-        EventDefine_1.EEventName.SceneBulletOwnerCreated,
-        this.lla,
+        EventDefine_1.EEventName.WorldDone,
+        this.nye,
       ) &&
         EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.SceneBulletOwnerCreated,
-          this.lla,
+          EventDefine_1.EEventName.WorldDone,
+          this.nye,
         ),
         this.vtn?.RemoveOnEntityOverlapCallback(this.zcn);
       for (const t of this.Ycn.keys()) this.HVo(t);
@@ -253,7 +251,7 @@ let SceneBulletComponent =
   });
 (SceneBulletComponent = SceneBulletComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(129)],
+    [(0, RegisterComponent_1.RegisterComponent)(140)],
     SceneBulletComponent,
   )),
   (exports.SceneBulletComponent = SceneBulletComponent);

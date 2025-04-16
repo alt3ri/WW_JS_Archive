@@ -12,7 +12,8 @@ class LevelGeneralModel extends ModelBase_1.ModelBase {
       (this.CreatureGenAddTagList = void 0),
       (this.InteractionDebug = !1),
       (this.WUe = void 0),
-      (this.KUe = void 0);
+      (this.KUe = void 0),
+      (this.ccc = -1);
   }
   OnInit() {
     return (
@@ -37,21 +38,21 @@ class LevelGeneralModel extends ModelBase_1.ModelBase {
   AddTreeGuaranteeActionInfo(e, t) {
     this.WUe.has(e) || this.WUe.set(e, []), this.WUe.get(e).push(t);
   }
-  PopTreeGuaranteeActionInfo(t, r) {
-    var n = this.WUe.get(t);
-    if (n)
-      for (let e = n.length - 1; 0 <= e; e--) {
-        var i = n[e];
-        if (i.Name === r.Name && (0, IUtil_1.deepEquals)(i, r))
-          return n.splice(e, 1), 0 === n.length && this.WUe.delete(t), i;
+  PopTreeGuaranteeActionInfo(t, n) {
+    var r = this.WUe.get(t);
+    if (r)
+      for (let e = r.length - 1; 0 <= e; e--) {
+        var i = r[e];
+        if (i.Name === n.Name && (0, IUtil_1.deepEquals)(i, n))
+          return r.splice(e, 1), 0 === r.length && this.WUe.delete(t), i;
       }
   }
-  HasTreeGuaranteeActionInfo(e, t, r) {
+  HasTreeGuaranteeActionInfo(e, t, n) {
     return (
-      0 !== r &&
+      0 !== n &&
       !!(e = this.WUe.get(e)) &&
       e.some((e) =>
-        1 === r
+        1 === n
           ? e.Name === t.Name
           : e.Name === t.Name && (0, IUtil_1.deepEquals)(e, t),
       )
@@ -68,18 +69,18 @@ class LevelGeneralModel extends ModelBase_1.ModelBase {
     this.KUe.push(e);
   }
   PopSceneGuaranteeActionInfo(t) {
-    var r = this.KUe;
-    for (let e = r.length - 1; 0 <= e; e--) {
-      var n = r[e];
-      if (n.Name === t.Name && (0, IUtil_1.deepEquals)(n, t))
-        return r.splice(e, 1), n;
+    var n = this.KUe;
+    for (let e = n.length - 1; 0 <= e; e--) {
+      var r = n[e];
+      if (r.Name === t.Name && (0, IUtil_1.deepEquals)(r, t))
+        return n.splice(e, 1), r;
     }
   }
-  HasSceneGuaranteeActionInfo(t, r) {
+  HasSceneGuaranteeActionInfo(t, n) {
     return (
-      0 !== r &&
+      0 !== n &&
       this.KUe.some((e) =>
-        1 === r
+        1 === n
           ? e.Name === t.Name
           : e.Name === t.Name && (0, IUtil_1.deepEquals)(e, t),
       )
@@ -88,6 +89,9 @@ class LevelGeneralModel extends ModelBase_1.ModelBase {
   RemoveSceneGuaranteeActionInfos() {
     var e = this.KUe;
     return (this.KUe = new Array()), e;
+  }
+  MakeConditionGroupIncId() {
+    return (this.ccc += 1), this.ccc;
   }
 }
 exports.LevelGeneralModel = LevelGeneralModel;

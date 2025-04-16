@@ -6,15 +6,19 @@ const Log_1 = require("../../../Core/Common/Log"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventModifyActorMaterial extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
+    var o;
     e
       ? (t = t)
-        ? (t = EntitySystem_1.EntitySystem.Get(t.EntityId))?.Valid
-          ? t.GetComponent(187)?.Owner
-            ? (t = t.GetComponent(150)) && t.HandleActorMaterial(e)
+        ? (o = EntitySystem_1.EntitySystem.Get(t.EntityId))?.Valid
+          ? o.GetComponent(200)?.Owner
+            ? (o = o.GetComponent(161)) && o.HandleActorMaterial(e)
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("LevelEvent", 34, "状态控制actor不存在")
+              Log_1.Log.Error("LevelEvent", 33, "状态控制actor不存在")
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("LevelEvent", 34, "状态控制entity不存在")
+            Log_1.Log.Error("LevelEvent", 33, "状态控制entity不存在", [
+              "EntityId",
+              t.EntityId,
+            ])
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelEvent",

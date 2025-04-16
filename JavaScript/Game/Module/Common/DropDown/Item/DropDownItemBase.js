@@ -16,7 +16,10 @@ class DropDownItemBase extends UiPanelBase_1.UiPanelBase {
   }
   OnStartImplement() {
     var t = this.GetDropDownToggle();
-    t.OnStateChange.Add(this.PLt), t.CanExecuteChange.Bind(this.gke);
+    t.OnStateChange.Clear(),
+      t.CanExecuteChange.Unbind(),
+      t.OnStateChange.Add(this.PLt),
+      t.CanExecuteChange.Bind(this.gke);
   }
   OnBeforeDestroyImplement() {
     var t = this.GetDropDownToggle();

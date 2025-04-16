@@ -21,7 +21,7 @@ class EffectProfiler {
     this.Vge &&
       ((e = t.Path),
       (r = this.Wge.get(e)) ? this.Wge.set(e, r + 1) : this.Wge.set(e, 1),
-      this.Kge.set(t, void 0),
+      this.Kge.set(t, ""),
       this.Qge.set(t, cpp_1.KuroTime.GetMilliseconds64()));
   }
   static NoticeAddedToLru(r) {
@@ -43,7 +43,7 @@ class EffectProfiler {
           ((r = this.Yge(i)), Log_1.Log.CheckError()) &&
           Log_1.Log.Error(
             "RenderEffect",
-            25,
+            24,
             "[EffectProfiler] 回池间隔时间过长",
             ["Path", r],
             ["CurrentUsedTime", o],
@@ -75,7 +75,7 @@ class EffectProfiler {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              25,
+              24,
               "[EffectProfiler] Error, LogReasonHistoryAndNum",
               ["Path", o],
               ["HistoryUsedCount", f],
@@ -93,7 +93,7 @@ class EffectProfiler {
               Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "RenderEffect",
-                25,
+                24,
                 "[EffectProfiler] Error, Show stack",
                 ["Stack", n],
               );
@@ -102,7 +102,7 @@ class EffectProfiler {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "RenderEffect",
-              25,
+              24,
               "[EffectProfiler] Warn, LogReasonHistoryAndNum",
               ["Path", o],
               ["HistoryUsedCount", f],

@@ -12,7 +12,7 @@ class SceneItemBuffController extends ControllerBase_1.ControllerBase {
       o = Protocol_1.Aki.Protocol.ces.create();
     (o.oKn = MathUtils_1.MathUtils.NumberToLong(e)),
       (o.nKn = r),
-      Net_1.Net.Call(25010, o, (e) => {
+      Net_1.Net.Call(28532, o, (e) => {
         let r = !1;
         e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs && (r = !0);
         var o = MathUtils_1.MathUtils.LongToNumber(e.oKn);

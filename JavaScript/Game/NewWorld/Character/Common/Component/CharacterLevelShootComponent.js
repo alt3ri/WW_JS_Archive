@@ -62,7 +62,7 @@ let CharacterLevelShootComponent =
     OnInitData() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.Lie = this.Entity.GetComponent(190)),
+        (this.Lie = this.Entity.GetComponent(203)),
         (this._9r = new Array()),
         (this.u9r = Vector_1.Vector.Create()),
         (this.c9r = Vector_1.Vector.Create()),
@@ -142,7 +142,7 @@ let CharacterLevelShootComponent =
       (t.length = 0), CharacterLevelShootComponent_1.y9r.push(t);
     }
     v9r() {
-      var t = this.Hte.SkeletalMesh.GetSocketTransform(
+      var t = this.Hte.SkeletalMesh.D_GetSocketTransform(
           new UE.FName(BULLET_FIRE_BONE_NAME),
           0,
         ),
@@ -150,7 +150,7 @@ let CharacterLevelShootComponent =
         t =
           (this.c9r.FromUeVector(e.GetActorForwardVector()),
           this.c9r.Multiply(CharacterLevelShootComponent_1.I9r, this.cz),
-          this.u9r.FromUeVector(e.GetCameraLocation()),
+          this.u9r.FromUeVector(e.D_GetCameraLocation()),
           this.u9r.Addition(this.cz, this.u9r),
           (this.m9r = this.GetEndPointPosition(this.u9r, this.c9r)),
           TraceElementCommon_1.TraceElementCommon.SetStartLocation(
@@ -161,7 +161,7 @@ let CharacterLevelShootComponent =
             this.l9r,
             this.m9r,
           ),
-          this.u9r.FromUeVector(t ? t.GetLocation() : e.GetCameraLocation()),
+          this.u9r.FromUeVector(t ? t.GetLocation() : e.D_GetCameraLocation()),
           this._9r.push(this.u9r),
           TraceElementCommon_1.TraceElementCommon.LineTrace(
             this.l9r,
@@ -189,7 +189,7 @@ let CharacterLevelShootComponent =
             i = !0;
             break;
           }
-          var a = n.Entity.GetComponent(149);
+          var a = n.Entity.GetComponent(160);
           if (!a) {
             i = !0;
             break;
@@ -250,7 +250,7 @@ let CharacterLevelShootComponent =
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Level",
-              37,
+              36,
               "[LevelShoot]Length of SplinePoints less then 2",
             ),
         -1 < m && m < this._9r.length && this._9r.splice(m, 1);
@@ -264,7 +264,7 @@ let CharacterLevelShootComponent =
   (CharacterLevelShootComponent.y9r = new Array()),
   (CharacterLevelShootComponent = CharacterLevelShootComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(55)],
+      [(0, RegisterComponent_1.RegisterComponent)(62)],
       CharacterLevelShootComponent,
     )),
   (exports.CharacterLevelShootComponent = CharacterLevelShootComponent);

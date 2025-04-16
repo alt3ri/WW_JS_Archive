@@ -15,6 +15,9 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
       (this.TmpVector = void 0),
       (this.终止逻辑 = !1);
   }
+  Constructor() {
+    (this.速度 = void 0), (this.TmpVector = void 0);
+  }
   K2_NotifyBegin(t, i, s) {
     this.Init();
     var r,
@@ -23,12 +26,12 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
       t instanceof TsBaseCharacter_1.default &&
       !(
         !(r = t.CharacterActorComponent.Entity)?.Valid ||
-        !(r = r.GetComponent(34))?.Valid ||
+        !(r = r.GetComponent(39))?.Valid ||
         !(r = r
           ?.GetSkillTargetForAns()
           ?.Entity?.GetComponent(1)?.Owner)?.IsValid() ||
-        ((t = Vector_1.Vector.Create(t.K2_GetActorLocation())),
-        Vector_1.Vector.Create(r.K2_GetActorLocation()).Subtraction(
+        ((t = Vector_1.Vector.Create(t.D_K2_GetActorLocation())),
+        Vector_1.Vector.Create(r.D_K2_GetActorLocation()).Subtraction(
           t,
           this.速度,
         ),
@@ -44,13 +47,13 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
     if (!(t instanceof TsBaseCharacter_1.default)) return !1;
     var r = t.CharacterActorComponent.Entity;
     if (!r?.Valid) return !1;
-    var e = r.GetComponent(34);
+    var e = r.GetComponent(39);
     if (!e?.Valid) return !1;
     e = e?.GetSkillTargetForAns()?.Entity?.GetComponent(1)?.Owner;
     if (!e?.IsValid()) return !1;
     if (0 < this.最小距离) {
-      (t = Vector_1.Vector.Create(t.K2_GetActorLocation())),
-        (e = Vector_1.Vector.Create(e.K2_GetActorLocation()));
+      (t = Vector_1.Vector.Create(t.D_K2_GetActorLocation())),
+        (e = Vector_1.Vector.Create(e.D_K2_GetActorLocation()));
       if (
         Vector_1.Vector.DistSquared(t, e) <= this.最小距离 * this.最小距离 &&
         this.达成条件后终止逻辑
@@ -64,7 +67,7 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
       this.速度.Multiply(t, this.TmpVector),
       this.TmpVector.GetClampedToMaxSize(this.最大速度, this.TmpVector),
       this.TmpVector.MultiplyEqual(s),
-      r.GetComponent(38)?.SetAddMoveOffset(this.TmpVector.ToUeVector()),
+      r.GetComponent(44)?.SetAddMoveOffset(this.TmpVector.ToUeVector()),
       !0
     );
   }

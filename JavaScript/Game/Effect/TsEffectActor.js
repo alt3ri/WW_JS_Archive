@@ -5,16 +5,26 @@ const UE = require("ue"),
 class TsEffectActor extends UE.Actor {
   constructor() {
     super(...arguments),
-      (this.Handle = void 0),
       (this.InPool = 0),
       (this.HandleId = 0),
+      (this.EffectPath = ""),
+      (this.EffectType = 3),
+      (this.OwnerEntityId = 0),
       (this.TimeScale = 1);
   }
-  SetEffectHandle(e) {
-    (this.Handle = e), (this.HandleId = e?.Id ?? 0);
+  Constructor() {
+    (this.InPool = 0),
+      (this.HandleId = 0),
+      (this.EffectPath = ""),
+      (this.EffectType = 3),
+      (this.OwnerEntityId = 0),
+      (this.TimeScale = 1);
   }
-  SetTimeScale(e) {
-    this.TimeScale !== e && (this.TimeScale = e);
+  SetEffectHandle(t = 0, e = "", s = 3) {
+    (this.HandleId = t), (this.EffectPath = e), (this.EffectType = s);
+  }
+  SetTimeScale(t) {
+    this.TimeScale !== t && (this.TimeScale = t);
   }
   GetTimeScale() {
     return this.TimeScale ?? 1;
@@ -22,20 +32,20 @@ class TsEffectActor extends UE.Actor {
   GetHandle() {
     return this.HandleId ?? 0;
   }
-  SetHandle(e) {}
+  SetHandle(t) {}
   RemoveHandle() {
-    (this.Handle = void 0), (this.HandleId = 0);
+    this.HandleId = 0;
   }
   ReceiveEndPlay() {}
-  StopEffect(e, t = !1, s = !1) {
+  StopEffect(t, e = !1, s = !1) {
     EffectSystem_1.EffectSystem.IsValid(this.HandleId) &&
-      this.Handle.StopEffect(e, t, s);
+      EffectSystem_1.EffectSystem.StopEffectById(this.HandleId, t, e, s);
   }
   GetEffectPath() {
-    return this.Handle?.Path;
+    return this.EffectPath;
   }
   GetEffectType() {
-    return this.Handle?.GetEffectType();
+    return this.EffectType;
   }
 }
 exports.default = TsEffectActor;

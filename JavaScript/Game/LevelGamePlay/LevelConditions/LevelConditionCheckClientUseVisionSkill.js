@@ -12,7 +12,7 @@ class LevelConditionCheckClientUseVisionSkill extends LevelGeneralBase_1.LevelCo
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelCondition",
-            17,
+            16,
             "配置错误！条件的参数不应该为空",
             ["inConditionInfo.Id", e.Id],
           ),
@@ -20,15 +20,15 @@ class LevelConditionCheckClientUseVisionSkill extends LevelGeneralBase_1.LevelCo
       : (o = e.LimitParams.get("PhantomSkillId"))
         ? !!(n = Global_1.Global.BaseCharacter) &&
           !!(
-            (i = n.GetEntityNoBlueprint()?.GetComponent(36)) &&
-            (n = n.GetEntityNoBlueprint()?.GetComponent(34)) &&
+            (i = n.GetEntityNoBlueprint()?.GetComponent(42)) &&
+            (n = n.GetEntityNoBlueprint()?.GetComponent(39)) &&
             (i = i.GetVisionData(Number(o))) &&
             n.GetSkill(i.技能ID)?.Active
           )
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelCondition",
-              17,
+              16,
               `配置错误！条件${e.Id}的参数不符合条件类型${LevelGeneralDefine_1.ELevelGeneralCondition.CheckClientUseVisionSkill}的定义`,
             ),
           !1);

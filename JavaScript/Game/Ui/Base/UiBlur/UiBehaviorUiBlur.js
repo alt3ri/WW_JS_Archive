@@ -1,7 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBehaviourUiBlur = void 0);
-const UiLayerType_1 = require("../../Define/UiLayerType"),
+const UE = require("ue"),
+  GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  UiLayerType_1 = require("../../Define/UiLayerType"),
+  UiManager_1 = require("../../UiManager"),
   UiBlurLogic_1 = require("./UiBlurLogic");
 class UiBehaviourUiBlur {
   constructor() {
@@ -10,26 +14,46 @@ class UiBehaviourUiBlur {
   OnAfterUiStart() {
     0 != (this.A_r & UiLayerType_1.UIBLUR_TYPE) &&
       ((this.fXn = !0),
-      UiBlurLogic_1.UiBlurLogic.SetNormalUiRenderAfterBlur(this.CurrentView));
+      UiBlurLogic_1.UiBlurLogic.SetNormalUiRenderAfterBlur(this.CurrentView),
+      UiBehaviourUiBlur.Gah.add(this.CurrentView.GetViewId()),
+      this.kah());
   }
   OnAfterUiShow() {
     this.fXn &&
       UiBlurLogic_1.UiBlurLogic.SetNormalUiRenderAfterBlur(this.CurrentView);
   }
-  ChangeNeedBlurState(i) {
-    this.fXn = i;
+  kah() {
+    var e;
+    this.fXn &&
+      (e = Array.from(UiBehaviourUiBlur.Gah).pop()) &&
+      (e = UiManager_1.UiManager.GetView(e)) &&
+      (ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(e.Info.Name)
+        .PartialBlur
+        ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.kuro.LGUIBlurTexture.save 1",
+          )
+        : UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.kuro.LGUIBlurTexture.save 0",
+          ));
   }
-  SetCurrentLayer(i) {
-    this.A_r = i;
+  ChangeNeedBlurState(e) {
+    this.fXn = e;
   }
-  SetViewInfo(i) {
-    this.CurrentView = i;
+  SetCurrentLayer(e) {
+    this.A_r = e;
+  }
+  SetViewInfo(e) {
+    this.CurrentView = e;
   }
   OnBeforeDestroy() {
-    this.fXn &&
-      this.A_r === UiLayerType_1.ELayerType.Pop &&
-      UiBlurLogic_1.UiBlurLogic.ResumeTopUiRenderAfterBlur();
+    UiBehaviourUiBlur.Gah.delete(this.CurrentView.GetViewId()),
+      this.kah(),
+      this.fXn &&
+        this.A_r === UiLayerType_1.ELayerType.Pop &&
+        UiBlurLogic_1.UiBlurLogic.ResumeTopUiRenderAfterBlur();
   }
 }
-exports.UiBehaviourUiBlur = UiBehaviourUiBlur;
+(exports.UiBehaviourUiBlur = UiBehaviourUiBlur).Gah = new Set();
 //# sourceMappingURL=UiBehaviorUiBlur.js.map

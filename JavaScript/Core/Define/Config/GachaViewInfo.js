@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaViewInfo = void 0);
-const GameUtils_1 = require("../../../Game/GameUtils");
+const GameUtils_1 = require("../../../Game/GameUtils"),
+  Vector_1 = require("./SubType/Vector");
 class GachaViewInfo {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -20,6 +21,12 @@ class GachaViewInfo {
   }
   get ThemeColor() {
     return this.themecolor();
+  }
+  get EffectLocation() {
+    return this.effectlocation();
+  }
+  get EffectPath() {
+    return this.effectpath();
   }
   get TextTexture() {
     return this.texttexture();
@@ -41,6 +48,9 @@ class GachaViewInfo {
   }
   get WeaponPrefabPath() {
     return this.weaponprefabpath();
+  }
+  get SpinePrefabResource() {
+    return this.spineprefabresource();
   }
   get UpList() {
     return GameUtils_1.GameUtils.ConvertToArray(
@@ -81,58 +91,147 @@ class GachaViewInfo {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   summarytitle(t) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   summarydescribe(t) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   themecolor(t) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  effectlocation(t) {
+    var i = this.J7.__offset(this.z7, 14);
+    return i
+      ? (t || new Vector_1.Vector()).__init(
+          this.J7.__indirect(this.z7 + i),
+          this.J7,
+        )
+      : null;
+  }
+  effectpath(t) {
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   texttexture(t) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   contenttexturepath(t) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   contenttexturebgpath(t) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   underbgtexturepath(t) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   tagnotselectedspritepath(t) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 26),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   tagselectedspritepath(t) {
-    var i = this.J7.__offset(this.z7, 24);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 28),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   weaponprefabpath(t) {
-    var i = this.J7.__offset(this.z7, 26);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
+    var i = this.J7.__offset(this.z7, 30),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  spineprefabresource(t) {
+    var i = this.J7.__offset(this.z7, 32),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   GetUplistAt(t) {
     return this.uplist(t);
   }
   uplist(t) {
-    var i = this.J7.__offset(this.z7, 28);
+    var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   uplistLength() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 34);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   uplistArray() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 34);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -145,15 +244,15 @@ class GachaViewInfo {
     return this.showidlist(t);
   }
   showidlist(t) {
-    var i = this.J7.__offset(this.z7, 30);
+    var i = this.J7.__offset(this.z7, 36);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   showidlistLength() {
-    var t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 36);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   showidlistArray() {
-    var t = this.J7.__offset(this.z7, 30);
+    var t = this.J7.__offset(this.z7, 36);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -166,15 +265,15 @@ class GachaViewInfo {
     return this.previewidlist(t);
   }
   previewidlist(t) {
-    var i = this.J7.__offset(this.z7, 32);
+    var i = this.J7.__offset(this.z7, 38);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   previewidlistLength() {
-    var t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   previewidlistArray() {
-    var t = this.J7.__offset(this.z7, 32);
+    var t = this.J7.__offset(this.z7, 38);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,

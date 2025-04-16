@@ -11,13 +11,14 @@ const Log_1 = require("../../../Core/Common/Log"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
-  UiManager_1 = require("../../Ui/UiManager");
+  UiManager_1 = require("../../Ui/UiManager"),
+  LogReportDefine_1 = require("../LogReport/LogReportDefine");
 class ChannelController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(19382, this.dEt);
+    Net_1.Net.Register(25276, this.dEt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(19382);
+    Net_1.Net.UnRegister(25276);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -49,13 +50,13 @@ class ChannelController extends UiControllerBase_1.UiControllerBase {
   static ProcessAccountSetting(e) {
     ModelManager_1.ModelManager.ChannelModel.ProcessAccountSetting(e);
   }
-  static RequestFirstShareReward(t) {
-    var e = Protocol_1.Aki.Protocol.BCs.create();
-    (e.x8n = t),
-      Net_1.Net.Call(18370, e, (e) => {
+  static RequestFirstShareReward(r) {
+    var e = new Protocol_1.Aki.Protocol.BCs();
+    (e.x8n = r),
+      Net_1.Net.Call(26311, e, (e) => {
         e &&
           e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
-          (ModelManager_1.ModelManager.ChannelModel.MarkActionShared(t),
+          (ModelManager_1.ModelManager.ChannelModel.MarkActionShared(r),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnFirstShare,
           ));
@@ -69,24 +70,33 @@ class ChannelController extends UiControllerBase_1.UiControllerBase {
       0 < ModelManager_1.ModelManager.ChannelModel.GetOpenedShareIds().length
     );
   }
-  static ShareChannel(e, t, r) {
-    t
+  static ShareChannel(e, r, t, o) {
+    r
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "KuroSdk",
-            54,
+            53,
             "分享图片",
             ["channel", e],
-            ["arraySize", t.Num()],
+            ["shareConfigId", o],
+            ["arraySize", r.Num()],
           ),
-        (ModelManager_1.ModelManager.ChannelModel.SharingActionId = r),
-        ((r = new KuroSdkData_1.ShareData()).platform = String(e)),
+        (ModelManager_1.ModelManager.ChannelModel.SharingActionId = t),
+        (ModelManager_1.ModelManager.ChannelModel.SharingConfigId = o),
+        ((t = new KuroSdkData_1.ShareData()).platform = String(e)),
         ControllerHolder_1.ControllerHolder.KuroSdkController.ShareByteData(
-          r,
           t,
+          r,
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("KuroSdk", 54, "分享图片数据为空");
+        Log_1.Log.Error("KuroSdk", 53, "分享图片数据为空");
+  }
+  static LS1(e, r, t) {
+    var o = new LogReportDefine_1.ShareEvent();
+    (o.i_share_channel = r),
+      (o.i_share_result = t ? 1 : 0),
+      (o.i_share_scene = e),
+      ControllerHolder_1.ControllerHolder.LogReportController.LogReport(o);
   }
   static ShareGacha(e) {
     e = {
@@ -100,13 +110,15 @@ class ChannelController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.ChannelController = ChannelController),
   ((_a = ChannelController).dEt = (e) => {
-    for (const t of e.mGs)
-      ModelManager_1.ModelManager.ChannelModel.MarkActionShared(t);
+    for (const r of e.mGs)
+      ModelManager_1.ModelManager.ChannelModel.MarkActionShared(r);
   }),
   (ChannelController.CEt = (e) => {
-    var t = ModelManager_1.ModelManager.ChannelModel.SharingActionId;
+    var r = ModelManager_1.ModelManager.ChannelModel.SharingActionId,
+      t = ModelManager_1.ModelManager.ChannelModel.SharingConfigId;
     e &&
-      ModelManager_1.ModelManager.ChannelModel.CouldGetShareReward(t) &&
-      _a.RequestFirstShareReward(t);
+      ModelManager_1.ModelManager.ChannelModel.CouldGetShareReward(r) &&
+      _a.RequestFirstShareReward(r),
+      _a.LS1(r, t, e);
   });
 //# sourceMappingURL=ChannelController.js.map

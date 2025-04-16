@@ -97,7 +97,7 @@ let SceneItemTurntableControllerComponent =
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneItem",
-              40,
+              39,
               "稷廷开门机关组件创建错误，圈数不对",
             );
         else {
@@ -119,7 +119,7 @@ let SceneItemTurntableControllerComponent =
     }
     OnStart() {
       return (
-        (this.Xte = this.Entity.GetComponent(181)),
+        (this.Xte = this.Entity.GetComponent(194)),
         this.Xte
           ? (this.p_n &&
               EventSystem_1.EventSystem.AddWithTarget(
@@ -131,7 +131,7 @@ let SceneItemTurntableControllerComponent =
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneItem",
-                40,
+                39,
                 "稷廷开门机关组件初始化错误，找不到LevelTagComponent",
               ),
             !1)
@@ -147,7 +147,7 @@ let SceneItemTurntableControllerComponent =
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneItem",
-              40,
+              39,
               "SceneItemTurntableControllerComponent.OnActivate，重复添加事件",
               ["PbDataId", this.Entity.GetComponent(0)?.GetPbDataId()],
             )
@@ -190,13 +190,13 @@ let SceneItemTurntableControllerComponent =
       );
     }
     E_n() {
-      var t = this.Entity?.GetComponent(187);
+      var t = this.Entity?.GetComponent(200);
       if (!t)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneItem",
-              40,
+              39,
               "稷廷开门机关组件初始化错误，SceneItemActorComponent组件获取失败",
             ),
           !1
@@ -209,7 +209,7 @@ let SceneItemTurntableControllerComponent =
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneItem",
-                40,
+                39,
                 "稷廷开门机关组件初始化错误，对应Actor无效",
                 ["key", e],
               ),
@@ -430,7 +430,7 @@ let SceneItemTurntableControllerComponent =
         return (
           t.RingRotator ||
             (t.RingRotator = Rotator_1.Rotator.Create(
-              t.ControllerRingActor.RootComponent.GetRelativeTransform().Rotator(),
+              t.ControllerRingActor.RootComponent.D_GetRelativeTransform().Rotator(),
             )),
           -t.RingRotator.Pitch
         );
@@ -575,7 +575,7 @@ let SceneItemTurntableControllerComponent =
       this.u1t &&
         (((t = Protocol_1.Aki.Protocol.f0s.create()).F4n =
           MathUtils_1.MathUtils.NumberToLong(this.u1t.GetCreatureDataId())),
-        Net_1.Net.Call(27822, t, (t) => {
+        Net_1.Net.Call(15902, t, (t) => {
           t?.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             t?.G9n !==
               Protocol_1.Aki.Protocol.Q4n.Proto_ErrStateEntityStateNoChange &&
@@ -605,7 +605,7 @@ let SceneItemTurntableControllerComponent =
 (SceneItemTurntableControllerComponent =
   SceneItemTurntableControllerComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(122)],
+      [(0, RegisterComponent_1.RegisterComponent)(133)],
       SceneItemTurntableControllerComponent,
     )),
   (exports.SceneItemTurntableControllerComponent =

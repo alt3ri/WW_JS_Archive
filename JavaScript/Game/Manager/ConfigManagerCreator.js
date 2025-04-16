@@ -9,12 +9,21 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   LevelGamePlayConfig_1 = require("../LevelGamePlay/Common/LevelGamePlayConfig"),
   AchievementConfig_1 = require("../Module/Achievement/AchievementConfig"),
   ActivityConfig_1 = require("../Module/Activity/ActivityConfig"),
+  AvignonConfig_1 = require("../Module/Activity/ActivityContent/Avignon/AvignonConfig"),
+  BabelTowerConfig_1 = require("../Module/Activity/ActivityContent/BabelTower/BabelTowerConfig"),
   ActivityBeginnerBookConfig_1 = require("../Module/Activity/ActivityContent/BeginnerBook/ActivityBeginnerBookConfig"),
   ActivityBlackCoastConfig_1 = require("../Module/Activity/ActivityContent/BlackCoast/ActivityBlackCoastConfig"),
   BossRushConfig_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushConfig"),
   ActivityCollectionConfig_1 = require("../Module/Activity/ActivityContent/Collection/ActivityCollectionConfig"),
   ActivityCorniceMeetingConfig_1 = require("../Module/Activity/ActivityContent/CorniceMeeting/ActivityCorniceMeetingConfig"),
+  CumulativeShopConfig_1 = require("../Module/Activity/ActivityContent/CumulativeShop/CumulativeShopConfig"),
   ActivityDailyAdventureConfig_1 = require("../Module/Activity/ActivityContent/DailyAdventure/ActivityDailyAdventureConfig"),
+  ActivityDangoMonopolyConfig_1 = require("../Module/Activity/ActivityContent/DangoMonopoly/ActivityDangoMonopolyConfig"),
+  ActivityDirectTrainConfig_1 = require("../Module/Activity/ActivityContent/DirectTrain/ActivityDirectTrainConfig"),
+  FarmGoldConfig_1 = require("../Module/Activity/ActivityContent/FarmGold/FarmGoldConfig"),
+  FishingConfig_1 = require("../Module/Activity/ActivityContent/Fishing/FishingConfig"),
+  ActivityMapExploreConfig_1 = require("../Module/Activity/ActivityContent/MapExplore/ActivityMapExploreConfig"),
+  ActivityMapTravelConfig_1 = require("../Module/Activity/ActivityContent/MapTravel/ActivityMapTravelConfig"),
   ActivityMoonChasingConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Activity/ActivityMoonChasingConfig"),
   BuildingConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Build/BuildingConfig"),
   BusinessConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Business/BusinessConfig"),
@@ -22,14 +31,17 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   MoonChasingMemoryConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Memory/MoonChasingMemoryConfig"),
   MoonChasingRewardConfigRewardConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Reward/MoonChasingRewardConfigRewardConfig"),
   TaskConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Task/TaskConfig"),
+  MowingTowerConfig_1 = require("../Module/Activity/ActivityContent/MowingTower/MowingTowerConfig"),
   ActivityNoviceJourneyConfig_1 = require("../Module/Activity/ActivityContent/NoviceJourney/ActivityNoviceJourneyConfig"),
   ActivityPhantomCollectConfig_1 = require("../Module/Activity/ActivityContent/PhantomCollect/ActivityPhantomCollectConfig"),
-  ActivityRecallConfig_1 = require("../Module/Activity/ActivityContent/Recall/ActivityRecallConfig"),
+  ActivityRegressConfig_1 = require("../Module/Activity/ActivityContent/Regress/ActivityRegressConfig"),
   ActivityRoleGiveConfig_1 = require("../Module/Activity/ActivityContent/RoleGive/ActivityRoleGiveConfig"),
   ActivityRoleGuideConfig_1 = require("../Module/Activity/ActivityContent/RoleGuide/ActivityRoleGuideConfig"),
+  RoleSkinTrialConfig_1 = require("../Module/Activity/ActivityContent/RoleSkinTrail/RoleSkinTrialConfig"),
   ActivityRoleTrialConfig_1 = require("../Module/Activity/ActivityContent/RoleTrial/ActivityRoleTrialConfig"),
   ActivityRogueConfig_1 = require("../Module/Activity/ActivityContent/RougeActivity/ActivityRogueConfig"),
   ActivityRunConfig_1 = require("../Module/Activity/ActivityContent/Run/ActivityRunConfig"),
+  ActivityScratchTicketConfig_1 = require("../Module/Activity/ActivityContent/ScratchTicket/ActivityScratchTicketConfig"),
   ActivitySevenDaySignConfig_1 = require("../Module/Activity/ActivityContent/SevenDaySign/ActivitySevenDaySignConfig"),
   ActivityTimePointRewardConfig_1 = require("../Module/Activity/ActivityContent/TimePointReward/ActivityTimePointRewardConfig"),
   ActivityTowerGuideConfig_1 = require("../Module/Activity/ActivityContent/TowerGuide/ActivityTowerGuideConfig"),
@@ -38,6 +50,7 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   AdventureConfig_1 = require("../Module/AdventureGuide/AdventureConfig"),
   AdviceConfig_1 = require("../Module/Advice/AdviceConfig"),
   AreaConfig_1 = require("../Module/Area/AreaConfig"),
+  BattleLinkConfig_1 = require("../Module/Battle/Link/BattleLinkConfig"),
   BattleScoreConfig_1 = require("../Module/Battle/Score/BattleScoreConfig"),
   BattleUiConfig_1 = require("../Module/BattleUi/BattleUiConfig"),
   BattleUiSetConfig_1 = require("../Module/BattleUiSet/BattleUiSetConfig"),
@@ -61,6 +74,9 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   CreateCharacterConfig_1 = require("../Module/CreateCharacter/CreateCharacterConfig"),
   DailyActivityConfig_1 = require("../Module/DailyActivity/DailyActivityConfig"),
   DamageUiConfig_1 = require("../Module/DamageUi/DamageUiConfig"),
+  DangoAbyssConfig_1 = require("../Module/Dango/DangoAbyss/DangoAbyssConfig"),
+  DangoConfig_1 = require("../Module/Dango/DangoLogic/DangoConfig"),
+  DreamLinkConfig_1 = require("../Module/DreamLink/DreamLinkConfig"),
   DynamicTabConfig_1 = require("../Module/DynamicTab/DynamicTabConfig"),
   EditBattleTeamConfig_1 = require("../Module/EditBattleTeam/EditBattleTeamConfig"),
   ErrorCodeConfig_1 = require("../Module/ErrorCode/ErrorCodeConfig"),
@@ -81,6 +97,7 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   InteractionConfig_1 = require("../Module/Interaction/InteractionConfig"),
   InventoryConfig_1 = require("../Module/Inventory/InventoryConfig"),
   GetWayConfig_1 = require("../Module/Item/Data/GetWayConfig"),
+  ItemAccessedFromGiftPathConfig_1 = require("../Module/Item/Data/ItemAccessedFromGiftPathConfig"),
   ItemConfig_1 = require("../Module/Item/ItemConfig"),
   SpecialItemConfig_1 = require("../Module/Item/SpecialItem/SpecialItemConfig"),
   ItemExchangeConfig_1 = require("../Module/ItemExchange/ItemExchangeConfig"),
@@ -88,6 +105,7 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   JoinTeamConfig_1 = require("../Module/JoinTeam/JoinTeamConfig"),
   LanguageConfig_1 = require("../Module/Language/LanguageConfig"),
   LevelPlayConfig_1 = require("../Module/LevelPlay/LevelPlayConfig"),
+  LevelPlayReportConfig_1 = require("../Module/LevelPlayReport/LevelPlayReportConfig"),
   LevelUpConfig_1 = require("../Module/LevelUp/LevelUpConfig"),
   LoadingConfig_1 = require("../Module/Loading/LoadingConfig"),
   LoginConfig_1 = require("../Module/Login/LoginConfig"),
@@ -97,6 +115,7 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   ComposeConfig_1 = require("../Module/Manufacture/Compose/ComposeConfig"),
   ForgingConfig_1 = require("../Module/Manufacture/Forging/ForgingConfig"),
   MapConfig_1 = require("../Module/Map/MapConfig"),
+  MapRogueConfig_1 = require("../Module/MapRogue/MapRogueConfig"),
   MenuBaseConfig_1 = require("../Module/Menu/MenuBaseConfig"),
   CollectItemConfig_1 = require("../Module/MingSu/CollectItemConfig"),
   MonsterInfoConfig_1 = require("../Module/MonsterInfo/MonsterInfoConfig"),
@@ -107,7 +126,9 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   MonthCardConfig_1 = require("../Module/PayShop/MonthCard/MonthCardConfig"),
   PayShopConfig_1 = require("../Module/PayShop/PayShopConfig"),
   GiftPackageConfig_1 = require("../Module/PayShop/PopView/GiftPackage/GiftPackageConfig"),
+  PersonalConfig_1 = require("../Module/Personal/Model/PersonalConfig"),
   PhantomBattleConfig_1 = require("../Module/Phantom/PhantomBattle/PhantomBattleConfig"),
+  PhonographConfig_1 = require("../Module/Phonograph/PhonographConfig"),
   PhotographConfig_1 = require("../Module/Photograph/PhotographConfig"),
   PlatformConfig_1 = require("../Module/Platform/PlatformConfig"),
   PlayerInfoConfig_1 = require("../Module/PlayerInfo/PlayerInfoConfig"),
@@ -116,8 +137,10 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   PlotMontageConfig_1 = require("../Module/Plot/PlotMontageConfig"),
   PowerConfig_1 = require("../Module/Power/PowerConfig"),
   QuestConfig_1 = require("../Module/QuestNew/QuestConfig"),
+  RacingBetsConfig_1 = require("../Module/RacingBets/RacingBetsConfig"),
   ReportConfig_1 = require("../Module/Report/ReportConfig"),
   RewardConfig_1 = require("../Module/Reward/RewardConfig"),
+  RogueBattleConfig_1 = require("../Module/RogueBattle/RogueBattleConfig"),
   RoguelikeConfig_1 = require("../Module/Roguelike/RoguelikeConfig"),
   RoleFavorConfig_1 = require("../Module/RoleUi/RoleFavor/RoleFavorConfig"),
   RoleSkillConfig_1 = require("../Module/RoleUi/RoleSkillConfig"),
@@ -125,10 +148,12 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   RoleResonanceConfig_1 = require("../Module/RoleUi/TabConfig/RoleResonanceConfig"),
   UiRoleCameraConfig_1 = require("../Module/RoleUi/UiRoleCameraConfig"),
   RouletteConfig_1 = require("../Module/Roulette/Data/RouletteConfig"),
+  ShipTowerConfig_1 = require("../Module/ShipTower/ShipTowerConfig"),
   ShopConfig_1 = require("../Module/Shop/ShopConfig"),
   SignalDecodeConfig_1 = require("../Module/SignalDecode/SignalDecodeConfig"),
   SkeletalObserverConfig_1 = require("../Module/SkeletalObserver/SkeletalObserverConfig"),
   SkillButtonConfig_1 = require("../Module/SkillButtonUi/SkillButtonConfig"),
+  SkinConfig_1 = require("../Module/Skin/SkinConfig"),
   SkipInterfaceConfig_1 = require("../Module/SkipInterface/SkipInterfaceConfig"),
   TimeOfDayConfig_1 = require("../Module/TimeOfDay/TimeOfDayConfig"),
   TowerClimbConfig_1 = require("../Module/TowerDetailUi/TowerClimbConfig"),
@@ -138,6 +163,7 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   VideoConfig_1 = require("../Module/Video/VideoConfig"),
   WeaponConfig_1 = require("../Module/Weapon/WeaponConfig"),
   WeatherModuleConfig_1 = require("../Module/Weather/WeatherModuleConfig"),
+  WeeklyRogueConfig_1 = require("../Module/WeeklyRogue/WeeklyRogueConfig"),
   WorldLevelConfig_1 = require("../Module/WorldLevel/WorldLevelConfig"),
   WorldMapConfig_1 = require("../Module/WorldMap/WorldMapConfig"),
   BulletConfig_1 = require("../NewWorld/Bullet/BulletConfig"),
@@ -490,6 +516,11 @@ class ConfigManagerCreator {
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.GiftPackageConfig,
       ),
+      (ConfigManager_1.ConfigManager.ItemAccessedFromGiftPathConfig =
+        new ItemAccessedFromGiftPathConfig_1.ItemAccessedFromGiftPathConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ItemAccessedFromGiftPathConfig,
+      ),
       (ConfigManager_1.ConfigManager.GachaConfig =
         new GachaConfig_1.GachaConfig()),
       ConfigManager_1.ConfigManager.Add(
@@ -660,6 +691,11 @@ class ConfigManagerCreator {
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.ActivityRogueConfig,
       ),
+      (ConfigManager_1.ConfigManager.WeeklyRogueConfig =
+        new WeeklyRogueConfig_1.WeeklyRogueConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.WeeklyRogueConfig,
+      ),
       (ConfigManager_1.ConfigManager.ActivityRunConfig =
         new ActivityRunConfig_1.ActivityRunConfig()),
       ConfigManager_1.ConfigManager.Add(
@@ -719,6 +755,11 @@ class ConfigManagerCreator {
         new ItemRewardConfig_1.ItemRewardConfig()),
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.ItemRewardConfig,
+      ),
+      (ConfigManager_1.ConfigManager.RogueBattleConfig =
+        new RogueBattleConfig_1.RogueBattleConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.RogueBattleConfig,
       ),
       (ConfigManager_1.ConfigManager.RoguelikeConfig =
         new RoguelikeConfig_1.RoguelikeConfig()),
@@ -890,15 +931,20 @@ class ConfigManagerCreator {
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.MoonChasingMemoryConfig,
       ),
-      (ConfigManager_1.ConfigManager.ActivityRecallConfig =
-        new ActivityRecallConfig_1.ActivityRecallConfig()),
+      (ConfigManager_1.ConfigManager.ActivityRegressConfig =
+        new ActivityRegressConfig_1.ActivityRegressConfig()),
       ConfigManager_1.ConfigManager.Add(
-        ConfigManager_1.ConfigManager.ActivityRecallConfig,
+        ConfigManager_1.ConfigManager.ActivityRegressConfig,
       ),
       (ConfigManager_1.ConfigManager.ActivityBlackCoastConfig =
         new ActivityBlackCoastConfig_1.ActivityBlackCoastConfig()),
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.ActivityBlackCoastConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ActivityMapTravelConfig =
+        new ActivityMapTravelConfig_1.ActivityMapTravelConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityMapTravelConfig,
       ),
       (ConfigManager_1.ConfigManager.ViewHotKeyConfig =
         new ViewHotKeyConfig_1.ViewHotKeyConfig()),
@@ -915,10 +961,120 @@ class ConfigManagerCreator {
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.GameSettingsConfig,
       ),
+      (ConfigManager_1.ConfigManager.ActivityScratchTicketConfig =
+        new ActivityScratchTicketConfig_1.ActivityScratchTicketConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityScratchTicketConfig,
+      ),
+      (ConfigManager_1.ConfigManager.RacingBetsConfig =
+        new RacingBetsConfig_1.RacingBetsConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.RacingBetsConfig,
+      ),
       (ConfigManager_1.ConfigManager.ActivityCorniceMeetingConfig =
         new ActivityCorniceMeetingConfig_1.ActivityCorniceMeetingConfig()),
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.ActivityCorniceMeetingConfig,
+      ),
+      (ConfigManager_1.ConfigManager.DreamLinkConfig =
+        new DreamLinkConfig_1.DreamLinkConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.DreamLinkConfig,
+      ),
+      (ConfigManager_1.ConfigManager.BattleLinkConfig =
+        new BattleLinkConfig_1.BattleLinkConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.BattleLinkConfig,
+      ),
+      (ConfigManager_1.ConfigManager.SkinConfig =
+        new SkinConfig_1.SkinConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.SkinConfig,
+      ),
+      (ConfigManager_1.ConfigManager.PersonalConfig =
+        new PersonalConfig_1.PersonalConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.PersonalConfig,
+      ),
+      (ConfigManager_1.ConfigManager.PhonographConfig =
+        new PhonographConfig_1.PhonographConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.PhonographConfig,
+      ),
+      (ConfigManager_1.ConfigManager.MowingTowerConfig =
+        new MowingTowerConfig_1.MowingTowerConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.MowingTowerConfig,
+      ),
+      (ConfigManager_1.ConfigManager.LevelPlayReportConfig =
+        new LevelPlayReportConfig_1.LevelPlayReportConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.LevelPlayReportConfig,
+      ),
+      (ConfigManager_1.ConfigManager.FishingConfig =
+        new FishingConfig_1.FishingConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.FishingConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ActivityDirectTrainConfig =
+        new ActivityDirectTrainConfig_1.ActivityDirectTrainConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityDirectTrainConfig,
+      ),
+      (ConfigManager_1.ConfigManager.FarmGoldConfig =
+        new FarmGoldConfig_1.FarmGoldConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.FarmGoldConfig,
+      ),
+      (ConfigManager_1.ConfigManager.RoleSkinTrialConfig =
+        new RoleSkinTrialConfig_1.RoleSkinTrialConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.RoleSkinTrialConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ShipTowerConfig =
+        new ShipTowerConfig_1.ShipTowerConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ShipTowerConfig,
+      ),
+      (ConfigManager_1.ConfigManager.BabelTowerConfig =
+        new BabelTowerConfig_1.BabelTowerConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.BabelTowerConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ActivityMapExploreConfig =
+        new ActivityMapExploreConfig_1.ActivityMapExploreConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityMapExploreConfig,
+      ),
+      (ConfigManager_1.ConfigManager.MapRogueConfig =
+        new MapRogueConfig_1.MapRogueConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.MapRogueConfig,
+      ),
+      (ConfigManager_1.ConfigManager.DangoAbyssConfig =
+        new DangoAbyssConfig_1.DangoAbyssConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.DangoAbyssConfig,
+      ),
+      (ConfigManager_1.ConfigManager.AvignonConfig =
+        new AvignonConfig_1.AvignonConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.AvignonConfig,
+      ),
+      (ConfigManager_1.ConfigManager.DangoConfig =
+        new DangoConfig_1.DangoConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.DangoConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ActivityDangoMonopolyConfig =
+        new ActivityDangoMonopolyConfig_1.ActivityDangoMonopolyConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityDangoMonopolyConfig,
+      ),
+      (ConfigManager_1.ConfigManager.CumulativeShopConfig =
+        new CumulativeShopConfig_1.CumulativeShopConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.CumulativeShopConfig,
       ),
       ConfigManager_1.ConfigManager.Init())
     );
@@ -970,6 +1126,7 @@ class ConfigManagerCreator {
       (ConfigManager_1.ConfigManager.BuffItemConfig = void 0),
       (ConfigManager_1.ConfigManager.WorldConfig = void 0),
       (ConfigManager_1.ConfigManager.PlayerInfoConfig = void 0),
+      (ConfigManager_1.ConfigManager.PhonographConfig = void 0),
       (ConfigManager_1.ConfigManager.SwimConfig = void 0),
       (ConfigManager_1.ConfigManager.RedDotConfig = void 0),
       (ConfigManager_1.ConfigManager.MenuBaseConfig = void 0),
@@ -1033,9 +1190,17 @@ class ConfigManagerCreator {
       (ConfigManager_1.ConfigManager.PlatformConfig = void 0),
       (ConfigManager_1.ConfigManager.CollectItemConfig = void 0),
       (ConfigManager_1.ConfigManager.BossRushConfig = void 0),
-      (ConfigManager_1.ConfigManager.ActivityRecallConfig = void 0),
+      (ConfigManager_1.ConfigManager.ActivityRegressConfig = void 0),
       (ConfigManager_1.ConfigManager.ViewHotKeyConfig = void 0),
-      !(ConfigManager_1.ConfigManager.GameSettingsConfig = void 0)
+      (ConfigManager_1.ConfigManager.GameSettingsConfig = void 0),
+      (ConfigManager_1.ConfigManager.ActivityDirectTrainConfig = void 0),
+      (ConfigManager_1.ConfigManager.FarmGoldConfig = void 0),
+      (ConfigManager_1.ConfigManager.RoleSkinTrialConfig = void 0),
+      (ConfigManager_1.ConfigManager.FishingConfig = void 0),
+      (ConfigManager_1.ConfigManager.DangoAbyssConfig = void 0),
+      (ConfigManager_1.ConfigManager.DangoConfig = void 0),
+      (ConfigManager_1.ConfigManager.ActivityDangoMonopolyConfig = void 0),
+      !(ConfigManager_1.ConfigManager.CumulativeShopConfig = void 0)
     );
   }
 }

@@ -10,25 +10,32 @@ class Transform {
     (this.rz = void 0),
       (this.mC = void 0),
       (this.nz = void 0),
-      (this.sz = void 0);
+      (this.sz = void 0),
+      (this.Yvl = void 0);
   }
   static Create(...t) {
     var s,
-      r = new Transform();
+      i = new Transform();
     return (
       1 === t.length
-        ? ((s = t[0]),
-          (r.mC = Quat_1.Quat.Create(s.GetRotation())),
-          (r.rz = Vector_1.Vector.Create(s.GetTranslation())),
-          (r.nz = Vector_1.Vector.Create(s.GetScale3D())))
+        ? t[0] instanceof UE.Transform
+          ? ((s = t[0]),
+            (i.mC = Quat_1.Quat.Create(s.GetRotation())),
+            (i.rz = Vector_1.Vector.Create(s.GetTranslation())),
+            (i.nz = Vector_1.Vector.Create(s.GetScale3D())))
+          : t[0] instanceof UE.TransformDouble &&
+            ((s = t[0]),
+            (i.mC = Quat_1.Quat.Create(s.GetRotation())),
+            (i.rz = Vector_1.Vector.Create(s.GetTranslation())),
+            (i.nz = Vector_1.Vector.Create(s.GetScale3D())))
         : 0 === t.length
-          ? ((r.mC = Quat_1.Quat.Create()),
-            (r.rz = Vector_1.Vector.Create()),
-            (r.nz = Vector_1.Vector.Create()))
-          : ((r.mC = Quat_1.Quat.Create(t[0])),
-            (r.rz = Vector_1.Vector.Create(t[1])),
-            (r.nz = Vector_1.Vector.Create(t[2]))),
-      r
+          ? ((i.mC = Quat_1.Quat.Create()),
+            (i.rz = Vector_1.Vector.Create()),
+            (i.nz = Vector_1.Vector.Create(1, 1, 1)))
+          : ((i.mC = Quat_1.Quat.Create(t[0])),
+            (i.rz = Vector_1.Vector.Create(t[1])),
+            (i.nz = Vector_1.Vector.Create(t[2]))),
+      i
     );
   }
   FromUeTransform(t) {
@@ -36,24 +43,38 @@ class Transform {
       this.rz.FromUeVector(t.GetTranslation()),
       this.nz.FromUeVector(t.GetScale3D());
   }
-  ToUeTransform() {
+  ToUeTransformOld() {
     return (
       void 0 === this.sz
         ? (this.sz = new UE.Transform(
             this.mC.ToUeQuat(),
-            this.rz.ToUeVector(),
-            this.nz.ToUeVector(),
+            this.rz.ToUeVectorOld(),
+            this.nz.ToUeVectorOld(),
           ))
         : (this.sz.SetRotation(this.mC.ToUeQuat()),
-          this.sz.SetTranslation(this.rz.ToUeVector()),
-          this.sz.SetScale3D(this.nz.ToUeVector())),
+          this.sz.SetTranslation(this.rz.ToUeVectorOld()),
+          this.sz.SetScale3D(this.nz.ToUeVectorOld())),
       this.sz
     );
   }
-  Set(t, s, r) {
+  ToUeTransform() {
+    return (
+      void 0 === this.Yvl
+        ? (this.Yvl = new UE.TransformDouble(
+            this.mC.ToUeQuat(),
+            this.rz.ToUeVector(),
+            this.nz.ToUeVector(),
+          ))
+        : (this.Yvl.SetRotation(this.mC.ToUeQuat()),
+          this.Yvl.SetTranslation(this.rz.ToUeVector()),
+          this.Yvl.SetScale3D(this.nz.ToUeVector())),
+      this.Yvl
+    );
+  }
+  Set(t, s, i) {
     this.rz.Set(t.X, t.Y, t.Z),
       this.mC.Set(s.X, s.Y, s.Z, s.W),
-      this.nz.Set(r.X, r.Y, r.Z);
+      this.nz.Set(i.X, i.Y, i.Z);
   }
   SetLocation(t) {
     this.rz.Set(t.X, t.Y, t.Z);
@@ -76,6 +97,9 @@ class Transform {
   TransformPosition(t, s) {
     this.nz.Multiply(t, s), this.mC.RotateVector(s, s), this.rz.Addition(s, s);
   }
+  TransformVector(t, s) {
+    this.nz.Multiply(t, s), this.mC.RotateVector(s, s);
+  }
   TransformPositionNoScale(t, s) {
     this.mC.RotateVector(t, s), this.rz.Addition(s, s);
   }
@@ -92,11 +116,11 @@ class Transform {
       Transform.az.RotateVector(s, s);
   }
   TransformRotation(t, s) {
-    var r = this.mC,
+    var i = this.mC,
       t = t.Quaternion();
     s instanceof Rotator_1.Rotator
-      ? (r.Multiply(t, Transform.az), s.FromUeRotator(Transform.az.Rotator()))
-      : s instanceof Quat_1.Quat && r.Multiply(t, s);
+      ? (i.Multiply(t, Transform.az), s.FromUeRotator(Transform.az.Rotator()))
+      : s instanceof Quat_1.Quat && i.Multiply(t, s);
   }
   ComposeTransforms(t, s) {
     this.rz.Multiply(t.nz, s.rz),
@@ -109,7 +133,8 @@ class Transform {
     this.rz.Reset(),
       this.nz.Reset(),
       this.mC.Reset(),
-      this.sz && this.ToUeTransform();
+      this.sz && this.ToUeTransformOld(),
+      this.Yvl && this.ToUeTransform();
   }
 }
 ((exports.Transform = Transform).wXs = Vector_1.Vector.Create()),

@@ -8,6 +8,9 @@ class LogicDataDestroyOtherBullet extends LogicDataBase_1.default {
       (this.BulletId = ""),
       (this.SummonChildBullet = !1);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataDestroyOtherBullet;
 //# sourceMappingURL=LogicDataDestroyOtherBullet.js.map

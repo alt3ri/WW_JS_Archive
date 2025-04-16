@@ -34,7 +34,7 @@ class ExtraEffectLevelBuff extends ExtraEffectBase_1.BuffEffect {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Level",
-          29,
+          28,
           "没有注册玩法效果",
           ["ClassName", t],
           ["Buff", this.BuffId],

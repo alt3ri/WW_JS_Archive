@@ -6,16 +6,16 @@ const UE = require("ue"),
   CycleCounter_1 = require("./CycleCounter");
 class StatSecondsAccumulator {
   constructor(t) {
-    (this.Y7a = ""), (this.Y7a = t);
+    (this.JWa = ""), (this.JWa = t);
   }
   static Create(t, e = "", o = "") {
     if (!CycleCounter_1.CycleCounter.IsEnabled)
-      return StatSecondsAccumulator.z7a;
+      return StatSecondsAccumulator.ZWa;
     let r = t;
     return (
       r.length > CycleCounter_1.STAT_MAX_NAME_LENGTH &&
         (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Stat", 31, "名字过长", ["name", t]),
+          Log_1.Log.Warn("Stat", 30, "名字过长", ["name", t]),
         (r = t.substring(0, CycleCounter_1.STAT_MAX_NAME_LENGTH))),
       UE.KuroJsStatsLibrary.CreateSimpleSeconds(r, e, o, !0),
       new StatSecondsAccumulator(r)
@@ -23,13 +23,13 @@ class StatSecondsAccumulator {
   }
   Start() {
     CycleCounter_1.CycleCounter.IsEnabled &&
-      UE.KuroJsStatsLibrary.StartSimpleSeconds(this.Y7a);
+      UE.KuroJsStatsLibrary.StartSimpleSeconds(this.JWa);
   }
   Stop() {
     CycleCounter_1.CycleCounter.IsEnabled &&
-      UE.KuroJsStatsLibrary.StopSimpleSeconds(this.Y7a);
+      UE.KuroJsStatsLibrary.StopSimpleSeconds(this.JWa);
   }
 }
-(exports.StatSecondsAccumulator = StatSecondsAccumulator).z7a =
+(exports.StatSecondsAccumulator = StatSecondsAccumulator).ZWa =
   new StatSecondsAccumulator("");
 //# sourceMappingURL=StatSeconds.js.map

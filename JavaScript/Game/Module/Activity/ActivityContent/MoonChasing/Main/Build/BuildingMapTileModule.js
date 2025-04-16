@@ -33,7 +33,7 @@ class BuildingMapTileModule extends UiPanelBase_1.UiPanelBase {
       (this.MapLayout = void 0),
       (this._Rn = new Map()),
       (this.qKs = []),
-      (this.KIa = void 0),
+      (this.WIa = void 0),
       (this.uRn = () => new TileItem(this.lRn));
   }
   OnRegisterComponent() {
@@ -73,9 +73,9 @@ class BuildingMapTileModule extends UiPanelBase_1.UiPanelBase {
       this.GetItem(1).GetOwner(),
     );
     var i = this.lRn.CreateTilesPathList();
-    await this.MapLayout.RefreshByDataAsync(i), await this.jCa();
+    await this.MapLayout.RefreshByDataAsync(i), await this.WCa();
   }
-  async jCa() {
+  async WCa() {
     var i = [];
     for (const e of this.MapLayout.GetLayoutItemList())
       i.push(e.RefreshAsync());
@@ -164,17 +164,17 @@ class BuildingMapTileModule extends UiPanelBase_1.UiPanelBase {
       }
     }
   }
-  async $Ia() {
+  async QIa() {
     var i = this.GetItem(13);
     i.SetUIActive(!1),
       this.NeedLoadingShowRoleItem &&
-        ((this.KIa =
+        ((this.WIa =
           new BuildingMapShowRoleModule_1.BuildingMapShowRoleModule()),
-        await this.KIa.CreateByActorAsync(i.GetOwner()),
-        this.KIa.SetActive(!0));
+        await this.WIa.CreateByActorAsync(i.GetOwner()),
+        this.WIa.SetActive(!0));
   }
   async OnBeforeStartAsync() {
-    await Promise.all([this.cRn(), this.mRn(), this.$Ia()]);
+    await Promise.all([this.cRn(), this.mRn(), this.QIa()]);
   }
   RefreshRole() {
     this.OKs();

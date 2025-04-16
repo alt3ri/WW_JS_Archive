@@ -15,6 +15,7 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Pe = void 0),
       (this.ppt = void 0),
       (this.$be = void 0),
+      (this.Wdc = !1),
       (this.CanToggleChange = void 0),
       (this.OnToggleClick = void 0),
       (this.zbe = () =>
@@ -53,19 +54,19 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
     var s = (this.Pe = t).DevelopRewardData.MonsterId,
       a = [];
     let r = 0;
-    for (const o of ModelManager_1.ModelManager.CalabashModel.GetCalabashDevelopRewardInfoData(
+    for (const n of ModelManager_1.ModelManager.CalabashModel.GetCalabashDevelopRewardInfoData(
       s,
     )) {
-      var h = o.IsUnlock;
+      var h = n.IsUnlock;
       a.push(h), h && r++;
     }
     t.UnlockData
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t.SkillName)
-      : ((s =
+      : ((o =
           ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
             s,
           ).MonsterNumber),
-        this.GetText(2)?.SetText(s + "???")),
+        this.GetText(2)?.SetText(o + "???")),
       this.ppt.Refresh(
         new PhantomBattleFettersViewItem_1.VisionDetailMonsterItemData(
           t.DevelopRewardData.MonsterId,
@@ -73,15 +74,15 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
         ),
       ),
       this.$be?.RefreshByData(a);
-    s = e ? 1 : 0;
-    this.GetExtendToggle(0)?.SetToggleStateForce(s),
-      1 == s ? this.OnSelected(!1) : this.RefreshNewItem();
+    var o = e ? 1 : 0;
+    this.GetExtendToggle(0)?.SetToggleStateForce(o),
+      e && ModelManager_1.ModelManager.CalabashModel?.RecordMonsterId(s),
+      this.RefreshNewItem();
   }
   OnSelected(t) {
-    this.Pe?.UnlockData &&
-      (ModelManager_1.ModelManager.CalabashModel?.RecordMonsterId(
-        this.Pe.DevelopRewardData.MonsterId,
-      ),
+    var e = this.Pe.DevelopRewardData.MonsterId;
+    this.Wdc &&
+      (ModelManager_1.ModelManager.CalabashModel?.RecordMonsterId(e),
       this.RefreshNewItem()),
       this.GetExtendToggle(0).SetToggleState(1);
   }
@@ -89,10 +90,12 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(0)?.SetToggleState(0);
   }
   RefreshNewItem() {
-    var t = ModelManager_1.ModelManager.CalabashModel.CheckMonsterIdInRecord(
-      this.Pe.DevelopRewardData.MonsterId,
-    );
-    this.GetItem(3).SetUIActive(this.Pe.UnlockData && !t);
+    (this.Wdc =
+      this.Pe.UnlockData &&
+      !ModelManager_1.ModelManager.CalabashModel.CheckMonsterIdInRecord(
+        this.Pe.DevelopRewardData.MonsterId,
+      )),
+      this.GetItem(3).SetUIActive(this.Wdc);
   }
 }
 exports.CalabashCollectGridItem = CalabashCollectGridItem;

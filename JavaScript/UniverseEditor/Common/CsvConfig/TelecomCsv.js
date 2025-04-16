@@ -9,19 +9,19 @@ const CsvLoader_1 = require("./CsvLoader"),
       Type: "Int",
       Filter: "1",
       Condition: "notEmpty && unique",
-      RenderType: 18,
+      RenderType: 19,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "DescText",
       CnName: "描述",
       Type: "String",
-      RenderType: 21,
+      RenderType: 22,
     }),
     (0, CsvLoader_1.createCsvField)({
       Name: "Talker",
       CnName: "对话人",
       Type: "Int",
-      RenderType: 39,
+      RenderType: 40,
     }),
   ];
 class TeleComCsvLoader extends CsvLoader_1.CsvLoader {

@@ -33,6 +33,8 @@ const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
     { ResourceId: "UiItem_SuoDing", CacheCount: () => 1 },
     { ResourceId: "UiItem_PartState_Prefab", CacheCount: () => 1 },
     { ResourceId: "UiView_AcquireIntro_Prefab", CacheCount: () => 1 },
+    { ResourceId: "UiItem_ItemListA", CacheCount: () => 3 },
+    { ResourceId: "UiItem_ItemListB", CacheCount: () => 4 },
     { ResourceId: "UiView_BlackScreen_Prefab", CacheCount: () => 1 },
     { ResourceId: "UiView_BlackFadeScreen_Prefab", CacheCount: () => 1 },
   ];
@@ -63,7 +65,8 @@ class UiPoolActor {
   }
   Clear() {
     this.IsValid &&
-      (ActorSystem_1.ActorSystem.Put(this.OCe), (this.OCe = void 0));
+      (ActorSystem_1.ActorSystem.Put("UiPoolActor.Clear", this.OCe),
+      (this.OCe = void 0));
   }
 }
 exports.UiPoolActor = UiPoolActor;
@@ -76,11 +79,13 @@ class UiActorFactory {
       (this.mp = new Queue_1.Queue(DEFAULT_CAPACITY)),
       (this.zdr = LguiResourceManager_1.LguiResourceManager.InvalidId),
       (this.Xdr = o),
-      (this.Ydr = e) ||
+      (this.Ydr = e),
+      (this.Jdr = UiActorPool.PrepareConfigMap.get(o)?.() ?? 0),
+      e ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Pool",
-            11,
+            10,
             "[UiActorFactory:constructor]初始化缓存池有问题,缓存池挂载根节点为空",
           ));
   }
@@ -104,7 +109,7 @@ class UiActorFactory {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Pool",
-              17,
+              16,
               "预加载UiPoolActor对象",
               ["预加载数量", e],
               ["资源路径", this.Xdr],
@@ -113,11 +118,11 @@ class UiActorFactory {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Pool",
-            11,
+            10,
             "[UiActorFactory:PreloadActor]初始化缓存池有问题,缓存池挂载根节点为空",
           );
   }
-  Release(o, e) {
+  Release(o) {
     return o
       ? (this.mp.Push(o),
         o.IsValid
@@ -127,15 +132,14 @@ class UiActorFactory {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Pool",
-            17,
+            16,
             "回收UiPoolActor对象",
             ["目前未使用数量", this.mp.Size],
             ["资源路径", o.Path],
           ),
         !0)
-      : (e &&
-          Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Pool", 17, "回收UiPoolActor对象不存在"),
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Pool", 16, "回收UiPoolActor对象不存在"),
         this.CancelGetAsync(),
         !1);
   }
@@ -151,7 +155,7 @@ class UiActorFactory {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Pool",
-            17,
+            16,
             "缓存池中UiPoolActor未使用对象执行GC",
             ["目前未使用数量", this.mp.Size],
             ["资源路径", this.Xdr],
@@ -166,7 +170,7 @@ class UiActorFactory {
     }
     this.mp.Clear(),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Pool", 17, "清除操作", ["资源路径", this.Xdr]);
+        Log_1.Log.Debug("Pool", 16, "清除操作", ["资源路径", this.Xdr]);
   }
   async Zdr() {
     if (this.Ydr) {
@@ -186,7 +190,7 @@ class UiActorFactory {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Pool",
-        11,
+        10,
         "[UiActorFactory:TemplateActor]初始化缓存池有问题,缓存池挂载根节点为空",
       );
   }
@@ -198,11 +202,11 @@ class UiActorFactory {
         e && r?.SetUIParent(e),
         r?.SetUIActive(!0),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Pool", 17, "获取UiPoolActor对象", ["资源路径", o]),
+          Log_1.Log.Debug("Pool", 16, "获取UiPoolActor对象", ["资源路径", o]),
         t
       );
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Pool", 17, "获取UiPoolActor对象失败, 未成功加载Actor", [
+      Log_1.Log.Error("Pool", 16, "获取UiPoolActor对象失败, 未成功加载Actor", [
         "资源路径",
         o,
       ]);
@@ -233,13 +237,15 @@ class UiActorPool {
       await UiActorPool.e$e());
   }
   static async e$e() {
+    UiActorPool.PrepareConfigMap.clear();
     var o = [];
-    for (const t of prepareConfigList) {
+    for (const r of prepareConfigList) {
       var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-          t.ResourceId,
+          r.ResourceId,
         ),
-        e = UiActorPool.eCr(e);
-      o.push(e.PreloadActor(t.CacheCount));
+        t = UiActorPool.eCr(e);
+      o.push(t.PreloadActor(r.CacheCount)),
+        UiActorPool.PrepareConfigMap.set(e, r.CacheCount);
     }
     await Promise.all(o);
   }
@@ -274,22 +280,14 @@ class UiActorPool {
       r.Promise
     );
   }
-  static RecycleAsync(o, e, t = !0) {
+  static RecycleAsync(o, e) {
     e = UiActorPool.oCr(e);
-    e
-      ? e.Release(o, t)
-      : o?.Actor &&
-        (o.Clear(), Log_1.Log.CheckWarn()) &&
-        Log_1.Log.Warn(
-          "Pool",
-          11,
-          "[UiActorPool:RecycleAsync]工厂不存在,直接销毁对象",
-          ["路径", o.Path],
-        );
+    e ? e.Release(o) : o?.Actor && o.Clear();
   }
 }
 ((exports.UiActorPool = UiActorPool).tCr = new Map()),
   (UiActorPool.xW = Stats_1.Stat.Create("UiActorPool.Tick")),
   (UiActorPool.iCr = void 0),
+  (UiActorPool.PrepareConfigMap = new Map()),
   (UiActorPool.IsOpenPool = !0);
 //# sourceMappingURL=UiActorPool.js.map

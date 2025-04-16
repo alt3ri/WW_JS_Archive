@@ -2,15 +2,16 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputKey = void 0);
 const UE = require("ue"),
-  Info_1 = require("../../../Core/Common/Info"),
   Global_1 = require("../../Global"),
-  ConfigManager_1 = require("../../Manager/ConfigManager");
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
+  InputKeyUtils_1 = require("../InputKeyUtils");
 class InputKey {
   constructor(t) {
     (this.HEe = ""),
       (this.IsKeyboardKey = !1),
       (this.IsModifierKey = !1),
       (this.IsGamepadKey = !1),
+      (this.IsPcPsTouchPadKey = !1),
       (this.IsMouseButton = !1),
       (this.IsDigital = !1),
       (this.IsAnalog = !1),
@@ -34,7 +35,8 @@ class InputKey {
       (this.IsButtonAxis = UE.KismetInputLibrary.Key_IsButtonAxis(this.jEe)),
       (this.IsAxis1D = UE.KismetInputLibrary.Key_IsAxis1D(this.jEe)),
       (this.IsAxis2D = UE.KismetInputLibrary.Key_IsAxis2D(this.jEe)),
-      (this.IsAxis3D = UE.KismetInputLibrary.Key_IsAxis3D(this.jEe));
+      (this.IsAxis3D = UE.KismetInputLibrary.Key_IsAxis3D(this.jEe)),
+      (this.IsPcPsTouchPadKey = "GenericUSBController_Button14" === t);
   }
   GetKeyName() {
     return this.HEe;
@@ -54,19 +56,12 @@ class InputKey {
         : void 0;
   }
   GetKeyIconPath() {
-    var t;
     return this.IsKeyboardKey || this.IsMouseButton
       ? (ConfigManager_1.ConfigManager.InputSettingsConfig.GetPcKeyConfig(
           this.HEe,
         )?.KeyIconPath ?? "")
-      : this.IsGamepadKey &&
-          (t =
-            ConfigManager_1.ConfigManager.InputSettingsConfig.GetGamepadKeyConfig(
-              this.HEe,
-            ))
-        ? Info_1.Info.IsPsGamepad()
-          ? t.PsKeyIconPath
-          : t.KeyIconPath
+      : this.IsGamepadKey
+        ? InputKeyUtils_1.InputKeyUtils.GetGamepadKeyIconPath(this.HEe)
         : "";
   }
   IsInputKeyDown() {

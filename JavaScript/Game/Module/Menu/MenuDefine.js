@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.npcDensityScores =
+  (exports.CUSTOM_TEXT_ID =
+    exports.STOP_GUIDE_TAG =
+    exports.npcDensityScores =
     exports.bloomScores =
     exports.metalFxScores =
     exports.amdFsrScores =
@@ -20,106 +22,70 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SEETING_LOAD_OVER =
     exports.SEETING_LOAD_LAGGY =
     exports.SEETING_LOAD_FLUID =
-    exports.functionMenuDataMapping =
-    exports.gameQualityKeyToFunctionIdMap =
-    exports.imageConfigSet =
+    exports.makeImageQualityCustomSetForMac =
+    exports.makeImageQualityCustomSet =
+    exports.noticeConfigSet =
+    exports.cloudGameImageShowSettingsSet =
       void 0);
-const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
-  HighestFpsMenuData_1 = require("./MenuData/HighestFpsMenuData"),
-  ImageQualityMenuDatat_1 = require("./MenuData/ImageQualityMenuDatat"),
-  MobileGamepadMenuData_1 = require("./MenuData/MobileGamepadMenuData"),
-  NiagaraMenuData_1 = require("./MenuData/NiagaraMenuData"),
-  NpcDensityMenuData_1 = require("./MenuData/NpcDensityMenuData"),
-  ResolutionMenuData_1 = require("./MenuData/ResolutionMenuData");
-(exports.imageConfigSet = new Set([
-  10, 11, 54, 55, 56, 57, 58, 63, 64, 65, 66, 68, 79, 81, 82, 83, 84, 85, 87,
-  125, 126, 127, 128, 132, 135, 145,
+const GameSettingsDefine_1 = require("../../GameSettings/GameSettingsDefine");
+(exports.cloudGameImageShowSettingsSet = new Set([
+  GameSettingsDefine_1.EFunction.BRIGHTNESS,
+  GameSettingsDefine_1.EFunction.MOTIONBLUR,
+  GameSettingsDefine_1.EFunction.EnemyHitDisplayMode,
+  GameSettingsDefine_1.EFunction.ShowDamage,
+  GameSettingsDefine_1.EFunction.DynamicBones,
+  GameSettingsDefine_1.EFunction.FlowAdaptation,
+  GameSettingsDefine_1.EFunction.TeammateFx,
+  GameSettingsDefine_1.EFunction.Saturation,
+  GameSettingsDefine_1.EFunction.Contrast,
+  GameSettingsDefine_1.EFunction.SkinDamageMode,
 ])),
-  (exports.gameQualityKeyToFunctionIdMap = new Map([
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.ShadowQuality, 54],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.NiagaraQuality, 55],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.ImageDetail, 56],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.AntiAliasing, 57],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.SceneAo, 58],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeFog, 63],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeLight, 64],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.MotionBlur, 65],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.PcVsync, 66],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.MobileResolution, 67],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.SuperResolution, 68],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.PcWindowMode, 5],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.Brightness, 7],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.NpcDensity, 79],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingEnable, 81],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey
-        .NvidiaSuperSamplingFrameGenerate,
-      82,
-    ],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingSharpness,
-      84,
-    ],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.FsrEnable, 87],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewSensitivity, 89],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewSensitivity, 90],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey.AimHorizontalViewSensitivity,
-      91,
-    ],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey.AimVerticalViewSensitivity,
-      92,
-    ],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.CameraShakeStrength, 93],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey
-        .MobileHorizontalViewSensitivity,
-      94,
-    ],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey.MobileVerticalViewSensitivity,
-      95,
-    ],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey
-        .MobileAimHorizontalViewSensitivity,
-      96,
-    ],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey
-        .MobileAimVerticalViewSensitivity,
-      97,
-    ],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.MobileCameraShakeStrength, 98],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.CommonSpringArmLength, 99],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.FightSpringArmLength, 100],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.IsResetFocusEnable, 101],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.IsSidestepCameraEnable, 102],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.IsSoftLockCameraEnable, 103],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeStrength, 104],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeType, 105],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.WalkOrRunRate, 106],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickMode, 108],
-    [
-      LocalStorageDefine_1.ELocalStorageGlobalKey.IsAutoSwitchSkillButtonMode,
-      109,
-    ],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.AimAssistEnable, 122],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.KeyboardLockEnemyMode, 129],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewRevert, 130],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewRevert, 131],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.SkillLockEnemyMode, 133],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadLockEnemyMode, 134],
-    [LocalStorageDefine_1.ELocalStorageGlobalKey.EnemyHitDisplayMode, 135],
+  (exports.noticeConfigSet = new Set([
+    GameSettingsDefine_1.EFunction.IMAGEQUALITY,
+    GameSettingsDefine_1.EFunction.MOBILERESOLUTION,
+    GameSettingsDefine_1.EFunction.RESOLUTION,
+    GameSettingsDefine_1.EFunction.HIGHESTFPS,
+    GameSettingsDefine_1.EFunction.SHADOWQUALITY,
+    GameSettingsDefine_1.EFunction.NIAGARAQUALITY,
+    GameSettingsDefine_1.EFunction.IMAGEDETAIL,
+    GameSettingsDefine_1.EFunction.SCENEAO,
+    GameSettingsDefine_1.EFunction.ANTIALISING,
+    GameSettingsDefine_1.EFunction.VOLUMEFOG,
+    GameSettingsDefine_1.EFunction.VOLUMELIGHT,
+    GameSettingsDefine_1.EFunction.MOTIONBLUR,
+    GameSettingsDefine_1.EFunction.FSR,
+    GameSettingsDefine_1.EFunction.METALFX,
+    GameSettingsDefine_1.EFunction.BLOOM,
+    GameSettingsDefine_1.EFunction.NPCDENSITY,
   ])),
-  (exports.functionMenuDataMapping = new Map([
-    [6, ResolutionMenuData_1.ResolutionMenuData],
-    [11, HighestFpsMenuData_1.HighestFpsMenuData],
-    [55, NiagaraMenuData_1.NiagaraMenuData],
-    [10, ImageQualityMenuDatat_1.ImageQualityMenuData],
-    [137, MobileGamepadMenuData_1.MobileGamepadMenuData],
-    [79, NpcDensityMenuData_1.NpcDensityMenuData],
+  (exports.makeImageQualityCustomSet = new Set([
+    GameSettingsDefine_1.EFunction.HIGHESTFPS,
+    GameSettingsDefine_1.EFunction.SHADOWQUALITY,
+    GameSettingsDefine_1.EFunction.NIAGARAQUALITY,
+    GameSettingsDefine_1.EFunction.IMAGEDETAIL,
+    GameSettingsDefine_1.EFunction.ANTIALISING,
+    GameSettingsDefine_1.EFunction.SCENEAO,
+    GameSettingsDefine_1.EFunction.VOLUMEFOG,
+    GameSettingsDefine_1.EFunction.VOLUMELIGHT,
+    GameSettingsDefine_1.EFunction.MOTIONBLUR,
+    GameSettingsDefine_1.EFunction.PCVSYNC,
+    GameSettingsDefine_1.EFunction.MOBILERESOLUTION,
+    GameSettingsDefine_1.EFunction.NPCDENSITY,
+    GameSettingsDefine_1.EFunction.BLOOM,
+  ])),
+  (exports.makeImageQualityCustomSetForMac = new Set([
+    GameSettingsDefine_1.EFunction.HIGHESTFPS,
+    GameSettingsDefine_1.EFunction.SHADOWQUALITY,
+    GameSettingsDefine_1.EFunction.NIAGARAQUALITY,
+    GameSettingsDefine_1.EFunction.IMAGEDETAIL,
+    GameSettingsDefine_1.EFunction.ANTIALISING,
+    GameSettingsDefine_1.EFunction.SCENEAO,
+    GameSettingsDefine_1.EFunction.VOLUMELIGHT,
+    GameSettingsDefine_1.EFunction.MOTIONBLUR,
+    GameSettingsDefine_1.EFunction.PCVSYNC,
+    GameSettingsDefine_1.EFunction.MOBILERESOLUTION,
+    GameSettingsDefine_1.EFunction.NPCDENSITY,
+    GameSettingsDefine_1.EFunction.BLOOM,
   ])),
   (exports.SEETING_LOAD_FLUID = "Text_SettingLoadFluid_text"),
   (exports.SEETING_LOAD_LAGGY = "Text_SettingLoadLaggy_text"),
@@ -143,5 +109,7 @@ const LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   (exports.amdFsrScores = [0, 10]),
   (exports.metalFxScores = [0, 3]),
   (exports.bloomScores = [0, 3]),
-  (exports.npcDensityScores = [0, 3, 6]);
+  (exports.npcDensityScores = [0, 3, 6]),
+  (exports.STOP_GUIDE_TAG = "MenuView"),
+  (exports.CUSTOM_TEXT_ID = "MenuConfig_5_OptionsName_4");
 //# sourceMappingURL=MenuDefine.js.map

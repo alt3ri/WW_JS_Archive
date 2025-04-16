@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteGridBase = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
@@ -13,7 +14,6 @@ class RouletteGridBase extends UiPanelBase_1.UiPanelBase {
       (this.Data = void 0),
       (this.Toggle = void 0),
       (this.IsIconTexture = !1),
-      (this.v$e = !1),
       (this.l4e = void 0),
       (this.W5e = void 0),
       (this.A5e = () =>
@@ -46,7 +46,7 @@ class RouletteGridBase extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.IsIconTexture = !1), (this.v$e = !1);
+    this.IsIconTexture = !1;
     var t = this.GetUiExtendToggleSpriteTransition(5),
       i = this.GetTexture(2);
     t.RootUIComp.SetUIActive(!1),
@@ -63,18 +63,22 @@ class RouletteGridBase extends UiPanelBase_1.UiPanelBase {
       this.Toggle.CanExecuteChange.Unbind(),
       (this.Toggle = void 0);
   }
-  Init() {}
+  async Init() {}
   IsDataValid() {
     return void 0 !== this.Data.Id && 0 !== this.Data.Id;
   }
   RefreshGrid(t) {
-    (this.Data = t), this.Init(), this.x0o(t.State);
+    (this.Data = t),
+      this.WH_(),
+      this.Init().finally(() => {
+        this.x0o();
+      });
   }
   BindRedDot(t, i = 0) {
-    var s = this.GetItem(11);
-    s &&
+    var e = this.GetItem(11);
+    e &&
       (this.UnBindRedDot(), (this.l4e = t), this.l4e) &&
-      RedDotController_1.RedDotController.BindRedDot(t, s, void 0, i);
+      RedDotController_1.RedDotController.BindRedDot(t, e, void 0, i);
   }
   UnBindRedDot() {
     var t;
@@ -86,61 +90,55 @@ class RouletteGridBase extends UiPanelBase_1.UiPanelBase {
   SetRedDotVisible(t) {
     this.GetItem(11).SetUIActive(t);
   }
-  GetIconItem() {
-    return this.IsIconTexture
+  GetIconItem(t = this.IsIconTexture) {
+    return t
       ? this.GetTexture(2)
       : this.GetUiExtendToggleSpriteTransition(5).RootUIComp;
   }
-  LoadSpriteIcon(t) {
-    this.GetTexture(2).SetUIActive(!1), (this.v$e = !0);
+  async LoadSpriteIcon(t) {
     const i = this.GetUiExtendToggleSpriteTransition(5),
-      s = this.GetSprite(6);
-    this.SetSpriteByPath(t, s, !0, void 0, () => {
-      (this.v$e = !1),
-        i.SetAllStateSprite(s.GetSprite()),
-        this.GetIconItem().SetUIActive(
-          1 === this.Data.State || 0 === this.Data.State,
-        );
-    });
+      e = this.GetSprite(6),
+      s = new CustomPromise_1.CustomPromise();
+    this.SetSpriteByPath(t, e, !0, void 0, () => {
+      i.SetAllStateSprite(e.GetSprite()), s.SetResult();
+    }),
+      await s.Promise;
   }
-  LoadTextureIcon(t) {
-    this.GetUiExtendToggleSpriteTransition(5).RootUIComp.SetUIActive(!1),
-      (this.v$e = !0);
+  async LoadTextureIcon(t) {
     var i = this.GetTexture(2);
-    this.SetTextureByPath(t, i, void 0, () => {
-      (this.v$e = !1),
-        this.GetIconItem().SetUIActive(
-          1 === this.Data.State || 0 === this.Data.State,
-        );
-    });
+    await this.SetTextureAsync(t, i);
   }
-  LoadIconByItemId(t) {
-    this.v$e = !0;
+  async LoadIconByItemId(t) {
     var i = this.GetTexture(2);
-    this.SetItemIcon(i, t, void 0, () => {
-      (this.v$e = !1),
-        this.GetIconItem().SetUIActive(
-          1 === this.Data.State || 0 === this.Data.State,
-        );
-    });
+    await this.SetItemIconAsync(i, t);
   }
-  x0o(t) {
-    4 === (this.Data.State = t)
+  WH_() {
+    this.GetItem(1).SetUIActive(!1),
+      this.GetItem(4).SetUIActive(!1),
+      this.GetItem(8).SetUIActive(!1),
+      this.GetText(10).SetUIActive(!1),
+      this.GetIconItem(!0).SetUIActive(!1),
+      this.GetIconItem(!1).SetUIActive(!1);
+  }
+  x0o() {
+    var t,
+      i = this.Data.State;
+    4 === i
       ? this.SetActive(!1)
-      : (this.GetItem(1).SetUIActive(2 === t),
-        this.GetItem(4).SetUIActive(0 === t),
+      : (this.GetItem(1).SetUIActive(2 === i),
+        this.GetItem(4).SetUIActive(0 === i),
         (t = this.Data.ShowIndex),
         this.GetItem(8).SetUIActive(t),
-        this.GetText(9).SetUIActive(t),
-        (t = (this.Data.GridIndex + 1).toString()),
-        this.GetText(9).SetText(t),
+        t &&
+          ((t = (this.Data.GridIndex + 1).toString()),
+          this.GetText(9).SetText(t)),
         this.GetText(10).SetUIActive(this.Data.ShowNum),
         this.Data.ShowNum &&
           this.GetText(10).SetText(this.Data.DataNum.toString()),
-        this.v$e ||
-          this.GetIconItem().SetUIActive(
-            1 === this.Data.State || 0 === this.Data.State,
-          ));
+        this.GetIconItem(!this.IsIconTexture).SetUIActive(!1),
+        this.GetIconItem(this.IsIconTexture).SetUIActive(
+          1 === i || 0 === i || 5 === i,
+        ));
   }
   SetGridEquipped(t) {
     this.GetItem(3).SetUIActive(t);

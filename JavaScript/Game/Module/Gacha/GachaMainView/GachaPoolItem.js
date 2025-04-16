@@ -23,11 +23,11 @@ class GachaPoolItem extends UiPanelBase_1.UiPanelBase {
     await this.LevelSequencePlayer?.PlaySequenceAsync(
       "Start",
       new CustomPromise_1.CustomPromise(),
-      !0,
+      !1,
     );
   }
   PlaySwitchSeq() {
-    "Switch" === this.LevelSequencePlayer.GetCurrentSequence()
+    this.LevelSequencePlayer.CheckSeqActorIsSeqPlaying("Switch")
       ? this.LevelSequencePlayer.ReplaySequenceByKey("Switch")
       : this.LevelSequencePlayer.PlayLevelSequenceByName("Switch");
   }

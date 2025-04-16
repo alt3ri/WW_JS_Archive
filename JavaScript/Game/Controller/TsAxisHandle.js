@@ -14,6 +14,9 @@ class TsAxisHandle extends UE.Object {
       (this.OnInputStat = void 0),
       (this.OnInputAxisCallback = void 0);
   }
+  Constructor() {
+    (this.OnInputStat = void 0), (this.OnInputAxisCallback = void 0);
+  }
   Initialize(i) {
     (this.PlayerController = i),
       (this.OnInputStat = Stats_1.Stat.Create(
@@ -37,7 +40,7 @@ class TsAxisHandle extends UE.Object {
           new UE.FName(this.OnInputAxis.name),
         ))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Controller", 8, "添加Axis输入绑定时，回调不存在", [
+        Log_1.Log.Error("Controller", 10, "添加Axis输入绑定时，回调不存在", [
           "axisName",
           i,
         ]);

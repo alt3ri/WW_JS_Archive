@@ -78,17 +78,17 @@ class MingSuModel extends ModelBase_1.ModelBase {
     var e = DragonPoolAll_1.configDragonPoolAll.GetConfigList();
     if (e)
       for (const t of e) {
-        var r = this.vHa(t.Id);
+        var r = this.SQa(t.Id);
         this.wbi.set(t.Id, r);
       }
     else
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("MingSuTi", 8, "龙池配置读取失败", [
+        Log_1.Log.Debug("MingSuTi", 58, "龙池配置读取失败", [
           "dragonPoolConfigList",
           e,
         ]);
   }
-  vHa(e) {
+  SQa(e) {
     return new (
       e === MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID
         ? DarkCoastDeliveryData_1.DarkCoastDeliveryData

@@ -6,7 +6,7 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   ModelManager_1 = require("../../../Manager/ModelManager");
 class MarkItemDataUtil {
   static TransformMarkTypeToClient(o) {
-    return this._Ga.get(o) ?? 0;
+    return this.pNa.get(o) ?? 0;
   }
   static GetMarkIcon(o) {
     var r = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(o);
@@ -23,12 +23,13 @@ class MarkItemDataUtil {
       }
   }
 }
-(exports.MarkItemDataUtil = MarkItemDataUtil)._Ga = new Map([
+(exports.MarkItemDataUtil = MarkItemDataUtil).pNa = new Map([
   [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_None, 0],
   [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_Custom, 9],
   [Protocol_1.Aki.Protocol.w5s.ENUMS.aTs, 12],
   [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_TemporaryTeleport, 15],
   [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_SoundBox, 16],
+  [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_HookLockSoundBox, 16],
   [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_TreasureBoxPoint, 17],
   [Protocol_1.Aki.Protocol.w5s.ENUMS.O7n, 18],
   [Protocol_1.Aki.Protocol.w5s.ENUMS.Proto_CalmingWindBell, 21],

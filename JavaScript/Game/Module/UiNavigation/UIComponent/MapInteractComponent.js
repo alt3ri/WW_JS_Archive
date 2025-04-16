@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   HotKeyComponent_1 = require("./HotKeyComponent");
 class MapInteractComponentBase extends HotKeyComponent_1.HotKeyComponent {
@@ -25,6 +26,12 @@ class MapInteractComponentBase extends HotKeyComponent_1.HotKeyComponent {
   }
 }
 class MapMoveForwardComponent extends HotKeyComponent_1.HotKeyComponent {
+  OnInit() {
+    var e = this.GetAxisName();
+    ModelManager_1.ModelManager.WorldMapModel.WorldMapAxisInteractValidation.InitAxisLock(
+      e,
+    );
+  }
   OnRefreshSelfHotKeyState(e) {
     var e = e.GetFocusListener();
     e &&
@@ -35,14 +42,24 @@ class MapMoveForwardComponent extends HotKeyComponent_1.HotKeyComponent {
       : this.SetVisibleMode(2, !0);
   }
   OnInputAxis(e, t) {
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.NavigationTriggerMapForward,
-      t,
-    );
+    var n =
+      ModelManager_1.ModelManager.WorldMapModel.WorldMapAxisInteractValidation;
+    n.InputAxis(e, t),
+      n.IsInValid ||
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.NavigationTriggerMapForward,
+          t,
+        );
   }
 }
 exports.MapMoveForwardComponent = MapMoveForwardComponent;
 class MapMoveRightComponent extends HotKeyComponent_1.HotKeyComponent {
+  OnInit() {
+    var e = this.GetAxisName();
+    ModelManager_1.ModelManager.WorldMapModel.WorldMapAxisInteractValidation.InitAxisLock(
+      e,
+    );
+  }
   OnRefreshSelfHotKeyState(e) {
     var e = e.GetFocusListener();
     e &&
@@ -53,10 +70,14 @@ class MapMoveRightComponent extends HotKeyComponent_1.HotKeyComponent {
       : this.SetVisibleMode(2, !0);
   }
   OnInputAxis(e, t) {
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.NavigationTriggerMapRight,
-      t,
-    );
+    var n =
+      ModelManager_1.ModelManager.WorldMapModel.WorldMapAxisInteractValidation;
+    n.InputAxis(e, t),
+      n.IsInValid ||
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.NavigationTriggerMapRight,
+          t,
+        );
   }
 }
 exports.MapMoveRightComponent = MapMoveRightComponent;
@@ -81,7 +102,7 @@ exports.MapCheckComponent = MapCheckComponent;
 class MapFocusPlayerComponent extends MapInteractComponentBase {
   OnPress(e) {
     EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.WorldMapJoystickFocusPlayer,
+      EventDefine_1.EEventName.WorldMapShowTrackList,
     );
   }
 }

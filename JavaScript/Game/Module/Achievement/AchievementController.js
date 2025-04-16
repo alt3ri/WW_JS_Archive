@@ -38,17 +38,22 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(16681, AchievementController.nbe),
-      Net_1.Net.Register(23222, AchievementController.sbe),
-      Net_1.Net.Register(15112, AchievementController.abe);
+    Net_1.Net.Register(23304, AchievementController.nbe),
+      Net_1.Net.Register(24566, AchievementController.sbe),
+      Net_1.Net.Register(24402, AchievementController.abe),
+      Net_1.Net.Register(17485, AchievementController.yth);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(16681),
-      Net_1.Net.UnRegister(23222),
-      Net_1.Net.UnRegister(15112);
+    Net_1.Net.UnRegister(23304),
+      Net_1.Net.UnRegister(24566),
+      Net_1.Net.UnRegister(24402),
+      Net_1.Net.UnRegister(17485);
   }
   static OpenAchievementMainView() {
     UiManager_1.UiManager.OpenView("AchievementMainView");
+  }
+  static ChangeAchievementPopViewShowState() {
+    this.Wq_ = !this.Wq_;
   }
   static OpenAchievementDetailView(e, t, r = -1) {
     (t =
@@ -63,26 +68,36 @@ class AchievementController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.AchievementModel.CurrentSearchText = ""),
       UiManager_1.UiManager.OpenView("AchievementDetailView");
   }
+  static async RequestUpdateAchievementInfo() {
+    var e = new Protocol_1.Aki.Protocol.kg_(),
+      e = await Net_1.Net.CallAsync(26727, e);
+    e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+      ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+          e.Q4n,
+          23062,
+        )
+      : ModelManager_1.ModelManager.AchievementModel.PhraseUpdateData(e);
+  }
   static RequestGetAchievementReward(e, t) {
     var r = new Protocol_1.Aki.Protocol.o$n();
     (r.s5n = t),
       (r.x6n = e),
-      Net_1.Net.Call(20809, r, (e) => {
+      Net_1.Net.Call(23589, r, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            24256,
+            23207,
           );
       });
   }
   static RequestAchievementFinish(e) {
     var t = new Protocol_1.Aki.Protocol.l$n();
     (t.s5n = e),
-      Net_1.Net.Call(29877, t, (e) => {
+      Net_1.Net.Call(25832, t, (e) => {
         e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            28247,
+            25772,
           );
       });
   }
@@ -113,6 +128,7 @@ class AchievementController extends ControllerBase_1.ControllerBase {
   }
   static lbe() {
     if (
+      this.Wq_ &&
       !UiManager_1.UiManager.IsViewOpen("AchievementCompleteTipsView") &&
       UiManager_1.UiManager.IsViewShow("BattleView")
     )
@@ -131,9 +147,10 @@ class AchievementController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.AchievementController = AchievementController),
-  ((_a = AchievementController).obe = async () => {
+  ((_a = AchievementController).Wq_ = !0),
+  (AchievementController.obe = async () => {
     var e = new Protocol_1.Aki.Protocol.i$n(),
-      e = await Net_1.Net.CallAsync(29079, e);
+      e = await Net_1.Net.CallAsync(29711, e);
     ModelManager_1.ModelManager.AchievementModel.PhraseBaseData(e);
   }),
   (AchievementController.nbe = (e) => {
@@ -145,6 +162,11 @@ class AchievementController extends ControllerBase_1.ControllerBase {
   (AchievementController.abe = (t) => {
     var r = t.avs.length;
     for (let e = 0; e < r; e++) AchievementController.hbe(t.avs[e]);
+  }),
+  (AchievementController.yth = (e) => {
+    ModelManager_1.ModelManager.AchievementModel.OnAchievementCountChangeNotify(
+      e,
+    );
   }),
   (AchievementController.sbe = (e) => {
     ModelManager_1.ModelManager.AchievementModel.OnAchievementGroupProgressNotify(

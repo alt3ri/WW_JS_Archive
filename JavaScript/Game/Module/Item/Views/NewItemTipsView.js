@@ -26,17 +26,17 @@ class NewItemTipsView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    var e = ModelManager_1.ModelManager.ItemModel.ShiftWaitItemList();
+    var e = this.OpenParam;
     if (void 0 === e)
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Item", 9, "新物品提示错误, 没有物品id!"),
+        Log_1.Log.Error("Item", 8, "新物品提示错误, 没有物品id!"),
         this.CloseMe();
     else {
       var i =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(e);
       if (void 0 === i)
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Item", 9, "新物品提示错误, 没有物品配置!", [
+          Log_1.Log.Error("Item", 8, "新物品提示错误, 没有物品配置!", [
             "itemId",
             e,
           ]),

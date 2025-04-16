@@ -22,7 +22,7 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       (this.vpt = void 0),
       (this.Hvt = void 0),
       (this.jvt = void 0),
-      (this.uNa = void 0),
+      (this.d3a = void 0),
       (this.OnClickMask = () => {
         this.GetItem(3).SetUIActive(!1),
           this.GetButton(2).RootUIComp.SetUIActive(!1);
@@ -31,7 +31,7 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
         this.Hvt ? this.Hvt() : this.SetActive(!1);
       }),
       (this.OnClickSelectAllToggle = (e) => {
-        this.uNa && this.uNa(e);
+        this.d3a && this.d3a(e);
       }),
       (this.Wvt = (e, t) => {
         e = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(e, t);
@@ -127,7 +127,7 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
     this.Hvt = e;
   }
   BindClickSelectAllToggleCallback(e) {
-    this.uNa = e;
+    this.d3a = e;
   }
   BindFilterSortRefresh(e) {
     this.jvt = e;

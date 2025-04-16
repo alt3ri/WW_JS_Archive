@@ -62,14 +62,16 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
     );
   }
   OnStart() {
-    return (this.Hte = this.Entity.GetComponent(187)), !0;
+    return (this.Hte = this.Entity.GetComponent(200)), !0;
   }
   OnTick(t) {
     this.EnableMovement && this.UpdateMovement(t);
   }
   UpdateMovement(t) {
     switch (
-      (this.Hte.SetActorLocation(this.Hte.StaticMesh.K2_GetComponentLocation()),
+      (this.Hte.SetActorLocation(
+        this.Hte.StaticMesh.D_K2_GetComponentLocation(),
+      ),
       this.jhn)
     ) {
       case 0:
@@ -94,7 +96,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
       ((this.jhn = 2),
       this.Yhn(),
       ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-        this.Entity.GetComponent(145)?.CollectSampleAndSend(!0));
+        this.Entity.GetComponent(156)?.CollectSampleAndSend(!0));
   }
   UpdateItemStay(t) {
     this.EnableMovement = !1;
@@ -121,7 +123,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
         t.MultiplyEqual(Math.sqrt(GROUND_MAX_XY_VEL_SQUARED + 1)),
         (t.Z = 0),
         i.AdditionEqual(t)),
-      e.SetPhysicsLinearVelocity(i.ToUeVector());
+      e.SetPhysicsLinearVelocity(i.ToUeVectorOld());
   }
   Yhn() {
     var t = this.Hte.StaticMesh;
@@ -194,7 +196,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   }
 };
 (AiWeaponMovementComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(111)],
+  [(0, RegisterComponent_1.RegisterComponent)(121)],
   AiWeaponMovementComponent,
 )),
   (exports.AiWeaponMovementComponent = AiWeaponMovementComponent);

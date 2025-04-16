@@ -62,7 +62,7 @@ class AutoRunModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Gm",
-        40,
+        39,
         "[Gm一键推进] AutoRunState改变",
         ["原AutoRunState", this.$Ke],
         ["新AutoRunState", e],
@@ -129,7 +129,7 @@ class AutoRunModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Gm",
-        40,
+        39,
         "[Gm一键推进] 设置保底传送信息",
         ["地图Id", t],
         ["旧值", this.tQe.get(t)],
@@ -149,7 +149,7 @@ class AutoRunModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Gm",
-        40,
+        39,
         "[Gm一键推进] 设置覆盖传送信息",
         ["地图Id", t],
         ["旧值", this.eQe.get(t)],
@@ -184,7 +184,7 @@ class AutoRunModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Gm",
-          40,
+          39,
           "[Gm一键推进] 更新缓存的DataLayer信息",
           ["地图Id", o],
           ["加载", i],

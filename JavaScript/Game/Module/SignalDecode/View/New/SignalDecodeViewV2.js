@@ -184,7 +184,9 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       this.GetUiNiagara(16)?.SetNiagaraUIActive(!0, !1),
         this.GetUiNiagara(16)?.SetNiagaraVarLinearColor("Color", t),
         this.GetUiNiagara(17)?.SetNiagaraUIActive(!0, !1),
-        this.GetUiNiagara(17)?.SetNiagaraVarLinearColor("Color", t);
+        this.GetUiNiagara(17)?.SetNiagaraVarLinearColor("Color", t),
+        this.GetUiNiagara(16)?.SetUIActive(!1),
+        this.GetUiNiagara(17)?.SetUIActive(!1);
     }
     (this.BMo = new PausePanel_1.PausePanel()),
       (this.bMo = new SuccessFinishPanel_1.SuccessFinishPanel()),
@@ -239,13 +241,13 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
     this.oEo(1);
   }
   OnBeforeDestroy() {
-    this.aSa(),
+    this.JMa(),
       (this.NMo = void 0),
       (this.GMo = void 0),
       (this.kMo = void 0),
       (this.OMo = void 0);
   }
-  aSa() {
+  JMa() {
     AudioController_1.AudioController.StopEvent(this.FMo),
       AudioController_1.AudioController.StopEvent(this.VMo),
       AudioController_1.AudioController.StopEvent(this.HMo),
@@ -255,7 +257,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       AudioController_1.AudioController.StopEvent(this.QMo),
       AudioController_1.AudioController.StopEvent(this.XMo);
   }
-  hSa() {
+  zMa() {
     this.GetUiNiagara(13)?.SetNiagaraUIActive(!1, !1),
       this.GetUiNiagara(12)?.SetNiagaraUIActive(!1, !1),
       this.GetUiNiagara(11)?.SetNiagaraUIActive(!1, !1);
@@ -339,7 +341,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
             );
           break;
         case 2: {
-          this.hSa(),
+          this.zMa(),
             this.GetItem(0).SetUIActive(!1),
             this.GetItem(1).SetUIActive(!0),
             i && this.dEo();
@@ -348,12 +350,12 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
             ((e = i ? BG_BGM_AUDIO_EVENTNAME : BG_BGM_AUDIO_RESUME_EVENTNAME),
             Log_1.Log.CheckError()) &&
-            Log_1.Log.Error("Audio", 19, "BGM事件", ["eventName", e]),
+            Log_1.Log.Error("Audio", 18, "BGM事件", ["eventName", e]),
             this.XZi(e, this.HMo);
           break;
         }
         case 3: {
-          this.aSa(), this.GetItem(1).SetUIActive(!1), this.BMo.Show();
+          this.JMa(), this.GetItem(1).SetUIActive(!1), this.BMo.Show();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
@@ -362,7 +364,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
           break;
         }
         case 4: {
-          this.aSa(), this.GetItem(1).SetUIActive(!1), this.bMo.Open();
+          this.JMa(), this.GetItem(1).SetUIActive(!1), this.bMo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
@@ -371,7 +373,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
           break;
         }
         case 5: {
-          this.aSa(), this.GetItem(1).SetUIActive(!1), this.qMo.Open();
+          this.JMa(), this.GetItem(1).SetUIActive(!1), this.qMo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
@@ -384,7 +386,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   dEo() {
-    this.GetItem(5).SetAnchorOffsetX(-1280);
+    this.wMo.InitMoveNode();
   }
   XZi(e, i) {
     var t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
@@ -393,7 +395,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
-          19,
+          18,
           "获取Audio配表信息错误！请检查Audio的配置是否存在！",
           ["name", e],
         );

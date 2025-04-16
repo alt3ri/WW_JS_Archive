@@ -118,7 +118,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
                         (Log_1.Log.CheckWarn() &&
                           Log_1.Log.Warn(
                             "Audio",
-                            58,
+                            57,
                             "音频组件配置表配置的音频路径无效 /Config/y.音频组件配置表/角色音频配置",
                             ["Id", n.Id],
                             ["Path", n.Model1RtpcPath],
@@ -132,7 +132,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Audio",
-                  58,
+                  57,
                   "音频组件配置表配置的音频骨骼Id无效 /Config/y.音频组件配置表/角色音频配置",
                   ["Id", t],
                   ["ConfigId", t],
@@ -162,7 +162,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
                         (Log_1.Log.CheckWarn() &&
                           Log_1.Log.Warn(
                             "Audio",
-                            58,
+                            57,
                             "音频组件配置表配置的音频路径无效 /Config/y.音频组件配置表/角色音频配置",
                             ["Id", y.Id],
                             ["Path", y.Model2RptcVelocityMax],
@@ -180,7 +180,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
                         (Log_1.Log.CheckWarn() &&
                           Log_1.Log.Warn(
                             "Audio",
-                            58,
+                            57,
                             "音频组件配置表配置的音频路径无效 /Config/y.音频组件配置表/角色音频配置",
                             ["Id", y.Id],
                             ["Path", y.Model2RptcAccelerationMax],
@@ -198,7 +198,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
                         (Log_1.Log.CheckWarn() &&
                           Log_1.Log.Warn(
                             "Audio",
-                            58,
+                            57,
                             "音频组件配置表配置的音频路径无效 /Config/y.音频组件配置表/角色音频配置",
                             ["Id", y.Id],
                             ["Path", y.Model2RptcVelocityDuring],
@@ -212,7 +212,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "Audio",
-                  58,
+                  57,
                   "音频组件配置表配置的音频骨骼Id无效 /Config/y.音频组件配置表/角色音频配置",
                   ["Id", s],
                   ["ConfigId", s],
@@ -227,7 +227,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Audio",
-            58,
+            57,
             "该角色未在角色音频配置表中配置 /Config/y.音频组件配置表/音频运动实体配置",
             ["Id", e],
             ["现替换Id", DEFAULT_DB_ID],
@@ -236,7 +236,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Audio",
-            58,
+            57,
             "该角色未在角色音频配置表中默认值配置 /Config/y.音频组件配置表/音频运动实体配置",
             ["默认值Id", DEFAULT_DB_ID],
           );
@@ -268,7 +268,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Audio",
-          58,
+          57,
           "该角色未在角色音频配置表中配置 /Config/y.音频组件配置表/角色音频配置 ",
           ["Id", o],
           ["现替换Id", DEFAULT_DB_ID],
@@ -277,7 +277,7 @@ class EntityAkComponentConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Audio",
-          58,
+          57,
           "该角色未在角色音频配置表中默认值配置 /Config/y.音频组件配置表/角色音频配置 ",
           ["默认值Id", DEFAULT_DB_ID],
         );

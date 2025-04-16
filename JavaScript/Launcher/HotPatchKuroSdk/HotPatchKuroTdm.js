@@ -10,41 +10,36 @@ const UE = require("ue"),
   ROUTORADDRESS = "https://hc.tdm.qq.com:8013/tdm/v2/route";
 class HotPatchKuroTdm {
   static IfCanUseTdm() {
-    var e =
-      "CN" !==
-      BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
-    return !(!UE.KuroStaticLibrary.IsModuleLoaded("KuroTDM") && !e);
+    return !!UE.KuroStaticLibrary.IsModuleLoaded("KuroTDM");
   }
   static Init() {
     if (this.IfCanUseTdm()) {
-      if (UE.KuroLauncherLibrary.IsFirstIntoLauncher()) {
+      var r =
+        "CN" !==
+        BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
+      if (!r && UE.KuroLauncherLibrary.IsFirstIntoLauncher()) {
         Platform_1.Platform.IsIOSPlatform() &&
           UE.TDMStaticLibrary.RegisterLifeCycle();
         let e = "kuro";
         HotPatchKuroSdk_1.HotPatchKuroSdk.CanUseSdk() &&
           (e = UE.KuroSDKManager.GetPackageId());
-        var r =
+        var o =
             BaseConfigController_1.BaseConfigController.GetPublicValue(
               "TDMAppId",
             ),
-          o =
+          t =
             BaseConfigController_1.BaseConfigController.GetPublicValue(
               "TDMAppKey",
             ),
-          t =
+          r =
             (LauncherLog_1.LauncherLog.Info(
               "Init TDMParam",
-              ["appIdValue", r],
+              ["appIdValue", o],
               ["appChannelValue", e],
-              ["appKeyValue", o],
+              ["appKeyValue", t],
             ),
-            "CN" !==
-              BaseConfigController_1.BaseConfigController.GetPublicValue(
-                "SdkArea",
-              )),
-          t =
-            (LauncherLog_1.LauncherLog.Info("SetRouterAddress"),
-            t
+            LauncherLog_1.LauncherLog.Info("SetRouterAddress"),
+            r
               ? (UE.TDMStaticLibrary.SetRouterAddress(!1, GLOBALROUTORADDRESS),
                 LauncherLog_1.LauncherLog.Info("SetRouterAddress", [
                   "GLOBALROUTORADDRESS",
@@ -55,17 +50,17 @@ class HotPatchKuroTdm {
                   "ROUTORADDRESS",
                   ROUTORADDRESS,
                 ])),
-            UE.TDMStaticLibrary.Initialize(r, e, o),
+            UE.TDMStaticLibrary.Initialize(o, e, t),
             BaseConfigController_1.BaseConfigController.GetPublicValue(
               "TDMUrl",
             )),
-          r =
-            ("Default" !== t &&
-              (LauncherLog_1.LauncherLog.Info("tdm 链接", ["targetUrl", t]),
-              UE.TDMStaticLibrary.SetRouterAddress(!1, t)),
+          o =
+            ("Default" !== r &&
+              (LauncherLog_1.LauncherLog.Info("tdm 链接", ["targetUrl", r]),
+              UE.TDMStaticLibrary.SetRouterAddress(!1, r)),
             LauncherLog_1.LauncherLog.Info("GetDeviceInfo"),
             UE.TDMStaticLibrary.GetDeviceInfo());
-        LauncherLog_1.LauncherLog.Info("TDM deviceInfo", ["deviceInfo", r]);
+        LauncherLog_1.LauncherLog.Info("TDM deviceInfo", ["deviceInfo", o]);
       }
     } else LauncherLog_1.LauncherLog.Info("不可使用tdm 初始化失败");
   }

@@ -12,7 +12,8 @@ class BulletEffectInfo {
       (this.HandOver = !1),
       (this.IsFinishAuto = !1),
       (this.EffectOriginSize = -0),
-      (this.IsEffectDestroy = !1);
+      (this.IsEffectDestroy = !1),
+      (this.DisablePostProcess = !1);
   }
   Clear() {
     BulletStaticFunction_1.BulletStaticFunction.DestroyEffect(this),
@@ -35,7 +36,8 @@ class BulletEffectInfo {
       (this.HandOver = !1),
       (this.IsFinishAuto = !1),
       (this.EffectOriginSize = 0),
-      (this.IsEffectDestroy = !1);
+      (this.IsEffectDestroy = !1),
+      (this.DisablePostProcess = !1);
   }
 }
 exports.BulletEffectInfo = BulletEffectInfo;

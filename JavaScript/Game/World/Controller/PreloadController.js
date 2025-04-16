@@ -22,11 +22,12 @@ const puerts_1 = require("puerts"),
   PreCreateEffect_1 = require("../../Effect/PreCreateEffect"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   AutoAttachDefine_1 = require("../../Module/AutoAttach/AutoAttachDefine"),
   NpcIconDefine_1 = require("../../Module/NPC/NpcIconDefine"),
   RoleDefine_1 = require("../../Module/RoleUi/RoleDefine"),
-  SplineMoveComponent_1 = require("../../NewWorld/Common/Component/SplineMoveComponent"),
+  CharacterSplineMoveComponent_1 = require("../../NewWorld/Character/Common/Component/CharacterSplineMoveComponent"),
   RenderConfig_1 = require("../../Render/Config/RenderConfig"),
   PreloadModel_1 = require("../Model/PreloadModel"),
   PreloadConstants_1 = require("./PreloadConstants"),
@@ -36,7 +37,6 @@ const puerts_1 = require("puerts"),
     "/Game/Aki/Data/Fight/DT_CommonHitEffect.DT_CommonHitEffect",
     "/Game/Aki/Character/Vision/DT_Vision.DT_Vision",
     "/Game/Aki/Data/Fight/DT_Common_Role_SkillInfo.DT_Common_Role_SkillInfo",
-    "/Game/Aki/Data/Fight/DT_Common_Monster_SkillInfo.DT_Common_Monster_SkillInfo",
     "/Game/Aki/Data/Fight/DT_Common_Vision_SkillInfo.DT_Common_Vision_SkillInfo",
     "/Game/Aki/Data/Fight/DT_CharacterFightInfo.DT_CharacterFightInfo",
     "/Game/Aki/Data/Fight/DT_CaughtInfo.DT_CaughtInfo",
@@ -57,6 +57,7 @@ const puerts_1 = require("puerts"),
     "/Game/Aki/Effect/Niagara/NI_Common/NS_Fx_Control_Obj_Beam.NS_Fx_Control_Obj_Beam",
     "/Game/Aki/Effect/MaterialController/Common/DA_Fx_HuluWarning.DA_Fx_HuluWarning",
     "/Game/Aki/Data/Fight/UI/DT_PanelQte.DT_PanelQte",
+    "/Game/Aki/Data/Qte/DT_CommonQte.DT_CommonQte",
     "/Game/Aki/UI/Framework/PredefColor/DT_PredefColor.DT_PredefColor",
     "/Game/Aki/Effect/MaterialController/Common/DA_Fx_UIChangeRole.DA_Fx_UIChangeRole",
     RenderConfig_1.RenderConfig.CharMaterialContainerDataPath,
@@ -71,7 +72,7 @@ const puerts_1 = require("puerts"),
     PreloadConstants_1.SWIM_ACCELERATOR_CURVE_PATH,
     PreloadConstants_1.SWIM_ROTATOR_CURVE_PATH,
     PreloadConstants_1.BASE_MOVE_INHERIT_CURVE_PATH,
-    SplineMoveComponent_1.SplineMoveComponent.DaPath,
+    CharacterSplineMoveComponent_1.CharacterSplineMoveComponent.DaPath,
     PreloadConstants_1.ANGLE_TO_STEP_FREQUENCY_CURVE_PATH,
     PreloadConstants_1.ANGLE_TO_STEP_LENGTH_CURVE_PATH,
     PreloadConstants_1.BATTLE_SETTLEMENT_TIME_SCALE_CURVE_PATH,
@@ -135,7 +136,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         });
     } else o(!0), a(!0);
   }
-  static jfr(l) {
+  static jfr(n) {
     const s = StatSeconds_1.StatSecondsAccumulator.Create("PreloadLoadCommon");
     s.Start();
     var e = ModelManager_1.ModelManager.PreloadModel;
@@ -154,7 +155,6 @@ class PreloadController extends ControllerBase_1.ControllerBase {
             );
           e.Start(),
             _.GetRoleCommonSkillInfo(),
-            _.GetMonsterCommonSkillInfo(),
             _.GetVisionCommonSkillInfo(),
             _.GetCommonBulletData();
           for (const a of commonOtherPaths) f.AddOtherAsset(a);
@@ -165,8 +165,8 @@ class PreloadController extends ControllerBase_1.ControllerBase {
             AiStateMachineConfigById_1.configAiStateMachineConfigById.GetConfig(
               COMMON_STATE_MACHINE,
             );
-          for (const n of JSON.parse(t.StateMachineJson).Nodes)
-            this.CollectAssetByStateMachineNode(f, n);
+          for (const l of JSON.parse(t.StateMachineJson).Nodes)
+            this.CollectAssetByStateMachineNode(f, l);
           e.Stop();
           const o =
             ModelManager_1.ModelManager.GameModeModel.PreloadCommonProfiler.CreateChild(
@@ -189,14 +189,14 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                           3,
                           "预加载:PreloadLoadCommon(结束)",
                         ),
-                      l(!0))
+                      n(!0))
                     : (Log_1.Log.CheckError() &&
                         Log_1.Log.Error(
                           "World",
                           3,
                           "[PreloadManager.PreloadLoadCommon] 预加载公共资源失败。",
                         ),
-                      l(!1));
+                      n(!1));
               },
               0,
             );
@@ -207,7 +207,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
               3,
               "[PreloadManager.PreloadLoadCommon] 预加载公共资源Major失败。",
             ),
-            l(!1);
+            n(!1);
       });
   }
   static Kfr(e, o) {
@@ -219,9 +219,9 @@ class PreloadController extends ControllerBase_1.ControllerBase {
       Log_1.Log.Info("Preload", 3, "预加载:PreloadCommonMajor(开始)"),
       a.Start(),
       r.Restart();
-    for (const n of commonMajorPaths) t.AddMajorAsset(n);
+    for (const l of commonMajorPaths) t.AddMajorAsset(l);
     var i = new Array();
-    for (const l of t.MajorAssets) i.push(l);
+    for (const n of t.MajorAssets) i.push(n);
     this.Xfr(t, t.MajorAssets, i, r, (e, t) => {
       r.Stop(),
         a.Stop(),
@@ -243,8 +243,8 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         var i = Vector_1.Vector.Create(
             ModelManager_1.ModelManager.GameModeModel.BornLocation,
           ),
-          n = Vector_1.Vector.Create(),
-          l = new Array();
+          l = Vector_1.Vector.Create(),
+          n = new Array();
         for (const _ of r) {
           var s = _.Entity.GetComponent(0);
           _.IsInit ||
@@ -253,13 +253,13 @@ class PreloadController extends ControllerBase_1.ControllerBase {
             s.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Custom ||
             ((s.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player ||
               ((s = s.GetLocation()),
-              (n.X = s.X),
-              (n.Y = s.Y),
-              (n.Z = s.Z),
-              Vector_1.Vector.DistSquared(i, n) <= NEED_PRELOAD_DISTANCE)) &&
-              (l.push(_), a.AddNeedWaitEntity(_.Id)));
+              (l.X = s.X),
+              (l.Y = s.Y),
+              (l.Z = s.Z),
+              Vector_1.Vector.DistSquared(i, l) <= NEED_PRELOAD_DISTANCE)) &&
+              (n.push(_), a.AddNeedWaitEntity(_.Id)));
         }
-        let t = l.length;
+        let t = n.length;
         if (
           (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
             Log_1.Log.CheckInfo() &&
@@ -274,11 +274,13 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         )
           o(!0);
         else
-          for (const f of l) {
+          for (const f of n) {
             const c = f.Entity.GetComponent(0);
             f.IsInit ||
               c.GetLoading() ||
-              (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+              (ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+                f,
+              ) &&
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Preload",
@@ -291,7 +293,9 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                 ),
               this.PreloadEntity(f, e, (e) => {
                 t--,
-                  ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+                  ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+                    f,
+                  ) &&
                     Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Preload",
@@ -340,9 +344,9 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                 : r(!1);
             }));
   }
-  static PreloadEntity(t, n, l) {
+  static PreloadEntity(l, t, n) {
     if (ModelManager_1.ModelManager.PreloadModel.IsUsePreload) {
-      const s = t.Entity.GetComponent(0),
+      const s = l.Entity.GetComponent(0),
         _ = StatSeconds_1.StatSecondsAccumulator.Create(
           `CreatureDataId:${s.GetCreatureDataId()}, PbDataId:` +
             s.GetPbDataId(),
@@ -354,8 +358,8 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         r = void 0,
         i = void 0;
       if (
-        (n &&
-          ((o = n.CreateChild(
+        (t &&
+          ((o = t.CreateChild(
             `预加载实体, CreatureDataId:${s.GetCreatureDataId()}, PbDataId:` +
               s.GetPbDataId(),
             !0,
@@ -367,23 +371,25 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         o?.Start(),
         s.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Custom)
       )
-        o?.Stop(), _.Stop(), l?.(!0);
+        o?.Stop(), _.Stop(), n?.(!0);
       else {
         e?.Start();
-        const f = this.Jfr(t);
+        const f = this.Jfr(l);
         f
           ? (o?.SetDescribe(
               f.CharacterPath + ", 优先级:" + f.GetLoadPriority(),
             ),
             e?.Stop(),
             f && 3 === f.LoadState
-              ? (o?.Stop(), _.Stop(), l?.(!0))
+              ? (o?.Stop(), _.Stop(), n?.(!0))
               : 0 !== f.LoadState
-                ? (_.Stop(), o?.Stop(), l?.(!1))
+                ? (_.Stop(), o?.Stop(), n?.(!1))
                 : ((f.LoadState = 1),
                   s.GetEntityType() ===
                     Protocol_1.Aki.Protocol.kks.Proto_Player &&
-                    ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+                    ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+                      l,
+                    ) &&
                     Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Preload",
@@ -398,8 +404,9 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                       (r?.Stop(),
                       s.GetEntityType() ===
                         Protocol_1.Aki.Protocol.kks.Proto_Player &&
-                        ModelManager_1.ModelManager.CreatureModel
-                          .EnableEntityLog &&
+                        ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+                          l,
+                        ) &&
                         Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "Preload",
@@ -421,8 +428,9 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                           t.Start(),
                             s.GetEntityType() ===
                               Protocol_1.Aki.Protocol.kks.Proto_Player &&
-                              ModelManager_1.ModelManager.CreatureModel
-                                .EnableEntityLog &&
+                              ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+                                l,
+                              ) &&
                               Log_1.Log.CheckInfo() &&
                               Log_1.Log.Info(
                                 "Preload",
@@ -440,8 +448,9 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                                   i?.Stop(),
                                   s.GetEntityType() ===
                                     Protocol_1.Aki.Protocol.kks.Proto_Player &&
-                                    ModelManager_1.ModelManager.CreatureModel
-                                      .EnableEntityLog &&
+                                    ControllerHolder_1.ControllerHolder.CreatureController.CheckEnableEntityLog(
+                                      l,
+                                    ) &&
                                     Log_1.Log.CheckInfo() &&
                                     Log_1.Log.Info(
                                       "Preload",
@@ -462,7 +471,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                                             .PreloadEntityFinished,
                                           f.EntityHandle,
                                         ),
-                                        l?.(!0))
+                                        n?.(!0))
                                       : (Log_1.Log.CheckError() &&
                                           Log_1.Log.Error(
                                             "World",
@@ -475,13 +484,13 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                                             ["PbDataId", s?.GetPbDataId()],
                                           ),
                                         _.Stop(),
-                                        l?.(!1))
-                                    : (_.Stop(), l?.(!1));
+                                        n?.(!1))
+                                    : (_.Stop(), n?.(!1));
                               },
                               0,
                             );
-                        } else _.Stop(), a?.Stop(), o?.Stop(), l?.(!1);
-                      else _.Stop(), o?.Stop(), l?.(!1);
+                        } else _.Stop(), a?.Stop(), o?.Stop(), n?.(!1);
+                      else _.Stop(), o?.Stop(), n?.(!1);
                     else
                       Log_1.Log.CheckError() &&
                         Log_1.Log.Error(
@@ -493,11 +502,11 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                         ),
                         _.Stop(),
                         o?.Stop(),
-                        l?.(!1);
+                        n?.(!1);
                   })))
-          : (e?.Stop(), o?.Stop(), _.Stop(), l?.(!1));
+          : (e?.Stop(), o?.Stop(), _.Stop(), n?.(!1));
       }
-    } else l(!0);
+    } else n(!0);
   }
   static RemovePreloadEntity(e) {
     var t = ModelManager_1.ModelManager.PreloadModel,
@@ -705,7 +714,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
           }))
         : (r?.Stop(), o(!0));
   }
-  static apr(l, s, _, f) {
+  static apr(n, s, _, f) {
     if (0 === _.Size) f(!0);
     else {
       var e = _.Pop();
@@ -715,59 +724,59 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         `LoadAssetsByQueue: ${PreloadModel_1.preloadAssetTypeForName.get(c)}, 个数:` +
           e.size,
       );
-      let n = void 0;
+      let l = void 0;
       if (
         (s &&
-          (n = s.CreateChild(
+          (l = s.CreateChild(
             PreloadModel_1.preloadAssetTypeForName.get(c) + " 个数:" + e.size,
             !0,
           )),
         d.Start(),
-        n?.Start(),
+        l?.Start(),
         0 === e.size)
       )
-        n?.Stop(), d.Stop(), f(!0);
+        l?.Stop(), d.Stop(), f(!0);
       else {
         var t = new Array();
         for (const o of e) t.push(o);
-        this.Xfr(l, e, t, n, (e, t) => {
-          if ((n?.Stop(), d.Stop(), e || (l.HasError = !0), 0 === c)) {
+        this.Xfr(n, e, t, l, (e, t) => {
+          if ((l?.Stop(), d.Stop(), e || (n.HasError = !0), 0 === c)) {
             animBuffList.length = 0;
             for (var [, o] of t)
               o.IsA(UE.AnimMontage.StaticClass())
-                ? this.hpr(l, o, animBuffList)
+                ? this.hpr(n, o, animBuffList)
                 : o.IsA(UE.AnimSequenceBase.StaticClass()) &&
-                  this.lpr(l, o, animBuffList);
-            this.CollectAssetByBuffIdList(l, animBuffList);
+                  this.lpr(n, o, animBuffList);
+            this.CollectAssetByBuffIdList(n, animBuffList);
           }
           if (1 === c)
             for (var [a, r] of t)
               r.IsA(UE.EffectModelBase.StaticClass()) &&
-                l instanceof PreloadModel_1.EntityAssetElement &&
+                n instanceof PreloadModel_1.EntityAssetElement &&
                 ModelManager_1.ModelManager.PreloadModel.PreCreateEffect.AddPreCreateEffect(
-                  l.EntityHandle.Id,
+                  n.EntityHandle.Id,
                   a,
                 ),
-                this.upr(l, r);
-          if (5 === c) for (var [, i] of t) this.cpr(l, i);
+                this.upr(n, r);
+          if (5 === c) for (var [, i] of t) this.cpr(n, i);
           0 === _.Size
             ? f(e)
-            : this.apr(l, s, _, (e) => {
+            : this.apr(n, s, _, (e) => {
                 f(e);
               });
         });
       }
     }
   }
-  static Xfr(i, e, n, t, l) {
+  static Xfr(i, e, l, t, n) {
     var s = ModelManager_1.ModelManager.PreloadModel;
-    if (s.LoadAssetOneByOneState) this.LoadAssetsOneByOne(i, e, n, t, l);
+    if (s.LoadAssetOneByOneState) this.LoadAssetsOneByOne(i, e, l, t, n);
     else {
       let o = void 0,
         a = ((o = t ? t.CreateChild("批量预加载资源", !0) : o)?.Start(), 0),
         r = 0;
       const _ = new Map();
-      for (const f of n)
+      for (const f of l)
         e.delete(f),
           s.AddPreloadResource(f),
           ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -784,7 +793,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                       ["Path", t],
                     ),
                   r++),
-                r + a < n.length || (o?.Stop(), l?.(0 === r, _));
+                r + a < l.length || (o?.Stop(), n?.(0 === r, _));
             },
             i.GetLoadPriority(),
           );
@@ -794,17 +803,17 @@ class PreloadController extends ControllerBase_1.ControllerBase {
     let i = void 0;
     a &&
       (i = a.CreateChild("逐个加载资源列表，资源个数:" + t.size, !0)).Start();
-    const n = new Map();
-    this.LoadAssetsRecursive(e, t, o, 0, i, n, (e) => {
-      i?.Stop(), r(e, n);
+    const l = new Map();
+    this.LoadAssetsRecursive(e, t, o, 0, i, l, (e) => {
+      i?.Stop(), r(e, l);
     });
   }
-  static LoadAssetsRecursive(a, r, i, n, l, s, _) {
-    if (0 === i.length || n === i.length) _(!0);
+  static LoadAssetsRecursive(a, r, i, l, n, s, _) {
+    if (0 === i.length || l === i.length) _(!0);
     else {
-      const f = i[n];
+      const f = i[l];
       let o = void 0;
-      l && (o = l.CreateChild(`加载资源:${f} `, !0)).Start(),
+      n && (o = n.CreateChild(`加载资源:${f} `, !0)).Start(),
         r.delete(f),
         ModelManager_1.ModelManager.PreloadModel.AddPreloadResource(f),
         ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -820,8 +829,8 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                 ? e.IsValid()
                   ? (a.AddObject(f, e),
                     s.set(t, e),
-                    n < i.length
-                      ? this.LoadAssetsRecursive(a, r, i, n + 1, l, s, (e) => {
+                    l < i.length
+                      ? this.LoadAssetsRecursive(a, r, i, l + 1, n, s, (e) => {
                           _(e);
                         })
                       : _?.(!0))
@@ -926,9 +935,9 @@ class PreloadController extends ControllerBase_1.ControllerBase {
       i = r?.Num();
     if (i)
       for (let e = 0; e < i; ++e) {
-        var n = r.GetKey(e),
-          n = r.Get(n).AssetPathName;
-        t.AddEffectAsset(n.toString());
+        var l = r.GetKey(e),
+          l = r.Get(l).AssetPathName;
+        t.AddEffectAsset(l.toString());
       }
     a = o.DA.AssetPathName.toString();
     return a && "None" !== a && t.AddOtherAsset(a), e.Stop(), !0;
@@ -983,21 +992,21 @@ class PreloadController extends ControllerBase_1.ControllerBase {
             o,
           ),
           new Array());
-      for (const P of o) {
-        var r = this.dpr(e, P);
+      for (const D of o) {
+        var r = this.dpr(e, D);
         if (r) {
           this.CollectEntityAbility(e, r),
-            this.CollectEntitySkillMontage(e, P, r);
+            this.CollectEntitySkillMontage(e, D, r);
           var i = r.SkillStartBuff;
           if (i?.Num())
             for (let e = 0; e < i.Num(); ++e) {
-              var n = i.Get(e);
-              n && a.push(n);
+              var l = i.Get(e);
+              l && a.push(l);
             }
-          var l = r.SkillEndBuff;
-          if (l?.Num())
-            for (let e = 0; e < l.Num(); ++e) {
-              var s = l.Get(e);
+          var n = r.SkillEndBuff;
+          if (n?.Num())
+            for (let e = 0; e < n.Num(); ++e) {
+              var s = n.Get(e);
               s && a.push(s);
             }
         }
@@ -1043,25 +1052,18 @@ class PreloadController extends ControllerBase_1.ControllerBase {
       }
     }
     if (t.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Player)
-      for (const E of o.GetRoleCommonSkillRowNames()) {
-        var M = this.dpr(e, E);
+      for (const P of o.GetRoleCommonSkillRowNames()) {
+        var M = this.dpr(e, P);
         M &&
           (this.CollectEntityAbility(e, M),
-          this.CollectEntitySkillMontage(e, E, M));
-      }
-    else if (t.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Monster)
-      for (const B of o.GetMonsterCommonSkillRowNames()) {
-        var v = this.dpr(e, B);
-        v &&
-          (this.CollectEntityAbility(e, v),
-          this.CollectEntitySkillMontage(e, B, v));
+          this.CollectEntitySkillMontage(e, P, M));
       }
     else if (t.GetEntityType() === Protocol_1.Aki.Protocol.kks.Proto_Vision)
-      for (const y of o.GetVisionCommonSkillRowNames()) {
-        var D = this.dpr(e, y);
-        D &&
-          (this.CollectEntityAbility(e, D),
-          this.CollectEntitySkillMontage(e, y, D));
+      for (const E of o.GetVisionCommonSkillRowNames()) {
+        var v = this.dpr(e, E);
+        v &&
+          (this.CollectEntityAbility(e, v),
+          this.CollectEntitySkillMontage(e, E, v));
       }
   }
   static fpr(e, t) {
@@ -1109,11 +1111,8 @@ class PreloadController extends ControllerBase_1.ControllerBase {
       Protocol_1.Aki.Protocol.kks.Proto_Player
         ? (e = r.GetRoleCommonSkillInfo())
         : t.CreatureDataComponent.GetEntityType() ===
-            Protocol_1.Aki.Protocol.kks.Proto_Monster
-          ? (e = r.GetMonsterCommonSkillInfo())
-          : t.CreatureDataComponent.GetEntityType() ===
-              Protocol_1.Aki.Protocol.kks.Proto_Vision &&
-            (e = r.GetVisionCommonSkillInfo()),
+            Protocol_1.Aki.Protocol.kks.Proto_Vision &&
+          (e = r.GetVisionCommonSkillInfo()),
         e &&
           (a = DataTableUtil_1.DataTableUtil.GetDataTableRow(e, o.toString()));
     }
@@ -1138,13 +1137,13 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         }
       if (r?.Num())
         for (let e = 0; e < r.Num(); ++e) {
-          var n = r.Get(e).AssetPathName.toString();
-          n && 0 !== n.length && "None" !== n && t.AddAnimationAsset(n);
+          var l = r.Get(e).AssetPathName.toString();
+          l && 0 !== l.length && "None" !== l && t.AddAnimationAsset(l);
         }
     } else if (e.MontagePaths?.Num()) {
-      var l = e.MontagePaths;
-      for (let e = 0; e < l.Num(); ++e) {
-        var s = l.Get(e);
+      var n = e.MontagePaths;
+      for (let e = 0; e < n.Num(); ++e) {
+        var s = n.Get(e);
         (s && 0 !== s.length) ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -1171,13 +1170,13 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         ConfigManager_1.ConfigManager.WorldConfig.GetCommonBulletData()),
       r = DataTableUtil_1.DataTableUtil.GetDataTableAllRowFromTable(a),
       i = ModelManager_1.ModelManager.PreloadModel,
-      n = r.length;
-    for (let e = 0; e < n; ++e) {
-      var l = r[e],
-        s = l.基础设置,
-        _ = l.逻辑设置,
-        f = l.表现效果设置,
-        l = l.执行逻辑,
+      l = r.length;
+    for (let e = 0; e < l; ++e) {
+      var n = r[e],
+        s = n.基础设置,
+        _ = n.逻辑设置,
+        f = n.表现效果设置,
+        n = n.执行逻辑,
         s = s.命中判定类型预设,
         s =
           (UE.KismetSystemLibrary.IsValidSoftObjectReference(s) &&
@@ -1211,30 +1210,30 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         s =
           (UE.KismetSystemLibrary.IsValidSoftClassReference(_) &&
             i.CommonAssetElement.AddOtherAsset(_.ToAssetPathName()),
-          l.GB组),
+          n.GB组),
         m =
           (UE.KismetSystemLibrary.IsValidSoftObjectReference(s) &&
             i.CommonAssetElement.AddOtherAsset(s.ToAssetPathName()),
-          l.命中后对攻击者应用GE的Id);
+          n.命中后对攻击者应用GE的Id);
       if (m?.Num())
         for (let e = 0; e < m.Num(); ++e)
-          this.CollectAssetByCommonBulletBuff(t, m.Get(e));
-      var g = l.命中后对受击者应用GE的Id;
+          this.CollectAssetByCommonBulletBuff(t, Number(m.Get(e)));
+      var g = n.命中后对受击者应用GE的Id;
       if (g?.Num())
         for (let e = 0; e < g.Num(); ++e)
-          this.CollectAssetByCommonBulletBuff(t, g.Get(e));
-      var A = l.能量恢复类GE数组的Id;
+          this.CollectAssetByCommonBulletBuff(t, Number(g.Get(e)));
+      var A = n.能量恢复类GE数组的Id;
       if (A?.Num())
         for (let e = 0; e < A.Num(); ++e)
-          this.CollectAssetByCommonBulletBuff(t, A.Get(e));
-      var M = l.命中后对在场上角色应用的GE的Id;
+          this.CollectAssetByCommonBulletBuff(t, Number(A.Get(e)));
+      var M = n.命中后对在场上角色应用的GE的Id;
       if (M?.Num())
         for (let e = 0; e < M.Num(); ++e)
-          this.CollectAssetByCommonBulletBuff(t, M.Get(e));
-      var v = l.受击对象进入应用的GE的Id;
+          this.CollectAssetByCommonBulletBuff(t, Number(M.Get(e)));
+      var v = n.受击对象进入应用的GE的Id;
       if (v?.Num())
         for (let e = 0; e < v.Num(); ++e)
-          this.CollectAssetByCommonBulletBuff(t, v.Get(e));
+          this.CollectAssetByCommonBulletBuff(t, Number(v.Get(e)));
     }
     o.Stop(), e.Stop();
   }
@@ -1313,7 +1312,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Preload",
-              37,
+              36,
               "[CollectEntityAssetByBulletDataMain]Collect Entity Bullet Failed",
               ["EntityId", o?.Entity?.Id],
               ["BulletDataMain", t.GetName()],
@@ -1343,7 +1342,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         );
       if (a?.StateMachineJson) {
         var a = JSON.parse(a.StateMachineJson),
-          r = e.Entity.GetComponent(68);
+          r = e.Entity.GetComponent(75);
         r.StateMachineName = t.StateMachine;
         for (const i of (r.StateMachineJsonObject = a).Nodes)
           this.CollectAssetByStateMachineNode(e, i);
@@ -1381,8 +1380,8 @@ class PreloadController extends ControllerBase_1.ControllerBase {
           this.CollectAssetByBuffIdList(e, [BigInt(i.ActionAddBuff.BuffId)]);
           break;
         case 101:
-          for (const n of i.ActionCue.CueIds)
-            this.CollectAssetByCueId(e, BigInt(n));
+          for (const l of i.ActionCue.CueIds)
+            this.CollectAssetByCueId(e, BigInt(l));
       }
   }
   static CollectAssetByCueId(e, t) {
@@ -1396,25 +1395,25 @@ class PreloadController extends ControllerBase_1.ControllerBase {
       a = (o.Start(), e.基础设置),
       r = e.逻辑设置,
       i = e.表现效果设置,
-      n = e.执行逻辑;
+      l = e.执行逻辑;
     if (!a)
       return (
-        (l = t),
+        (n = t),
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Preload",
-            37,
+            36,
             "[CollectEntityAssetByBulletDataMain]BaseSetting Is Undefiend",
-            ["EntityId", l?.Entity?.Id],
+            ["EntityId", n?.Entity?.Id],
             ["BulletDataMain", e.子弹名称],
           ),
         o.Stop(),
         !1
       );
-    var l = a.命中判定类型预设,
+    var n = a.命中判定类型预设,
       e =
-        (UE.KismetSystemLibrary.IsValidSoftObjectReference(l) &&
-          t.AddOtherAsset(l.ToAssetPathName()),
+        (UE.KismetSystemLibrary.IsValidSoftObjectReference(n) &&
+          t.AddOtherAsset(n.ToAssetPathName()),
         r.预设),
       a =
         (UE.KismetSystemLibrary.IsValidSoftObjectReference(e) &&
@@ -1446,48 +1445,48 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                 f.ToAssetPathName(),
               ));
       }
-    var l = i.命中时攻击者震屏,
+    var n = i.命中时攻击者震屏,
       r =
-        (UE.KismetSystemLibrary.IsValidSoftClassReference(l) &&
-          t.AddOtherAsset(l.ToAssetPathName()),
+        (UE.KismetSystemLibrary.IsValidSoftClassReference(n) &&
+          t.AddOtherAsset(n.ToAssetPathName()),
         i.命中时受击者震屏),
       e =
         (UE.KismetSystemLibrary.IsValidSoftClassReference(r) &&
           t.AddOtherAsset(r.ToAssetPathName()),
-        n.GB组),
+        l.GB组),
       d =
         (UE.KismetSystemLibrary.IsValidSoftObjectReference(e) &&
           t.AddOtherAsset(e.ToAssetPathName()),
         new Array()),
-      C = n.命中后对攻击者应用GE的Id;
+      C = l.命中后对攻击者应用GE的Id;
     if (C?.Num())
       for (let e = 0; e < C.Num(); ++e) {
         var u = C.Get(e);
         u && d.push(u);
       }
-    var m = n.命中后对受击者应用GE的Id;
+    var m = l.命中后对受击者应用GE的Id;
     if (m?.Num())
       for (let e = 0; e < m.Num(); ++e) {
         var g = m.Get(e);
         g && d.push(g);
       }
-    var A = n.能量恢复类GE数组的Id;
+    var A = l.能量恢复类GE数组的Id;
     if (A?.Num())
       for (let e = 0; e < A.Num(); ++e) {
         var M = A.Get(e);
         M && d.push(M);
       }
-    var v = n.命中后对在场上角色应用的GE的Id;
+    var v = l.命中后对在场上角色应用的GE的Id;
     if (v?.Num())
       for (let e = 0; e < v.Num(); ++e) {
         var D = v.Get(e);
         D && d.push(D);
       }
-    var P = n.受击对象进入应用的GE的Id;
-    if (P?.Num())
-      for (let e = 0; e < P.Num(); ++e) {
-        var h = P.Get(e);
-        h && d.push(h);
+    var h = l.受击对象进入应用的GE的Id;
+    if (h?.Num())
+      for (let e = 0; e < h.Num(); ++e) {
+        var P = h.Get(e);
+        P && d.push(P);
       }
     return this.CollectAssetByBuffIdList(t, d), o.Stop(), !0;
   }
@@ -1503,8 +1502,8 @@ class PreloadController extends ControllerBase_1.ControllerBase {
       i = r?.Num();
     if (i) {
       for (let e = 0; e < i; ++e) {
-        var n = r.Get(e);
-        this.Mpr(t, n, o);
+        var l = r.Get(e);
+        this.Mpr(t, l, o);
       }
       a.Stop();
     }
@@ -1515,8 +1514,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
     );
     a.Start();
     (0, puerts_1.$unref)(animNotifyEventsRef).Empty(),
-      UE.KuroStaticLibrary.GetAnimMontageNotifies(e, animNotifyEventsRef),
-      UE.KuroStaticLibrary.SetMontageANIndex(e);
+      UE.KuroStaticLibrary.GetAnimMontageNotifies(e, animNotifyEventsRef);
     var r = (0, puerts_1.$unref)(animNotifyEventsRef);
     if (r?.Num())
       for (let e = 0; e < r.Num(); ++e) {
@@ -1528,11 +1526,11 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         e,
         animSequenceBasesRef,
       );
-    var n = (0, puerts_1.$unref)(animSequenceBasesRef);
-    if (n?.Num())
-      for (let e = 0; e < n.Num(); ++e) {
-        var l = n.Get(e);
-        this.lpr(t, l, o);
+    var l = (0, puerts_1.$unref)(animSequenceBasesRef);
+    if (l?.Num())
+      for (let e = 0; e < l.Num(); ++e) {
+        var n = l.Get(e);
+        this.lpr(t, n, o);
       }
     a.Stop();
   }
@@ -1572,20 +1570,20 @@ class PreloadController extends ControllerBase_1.ControllerBase {
         if (r)
           for (let e = 0; e < r; ++e) {
             var i,
-              n = a.EffectData.GetKey(e);
-            n?.IsValid() &&
-              (n.IsA(UE.EffectModelGroup_C.StaticClass())
+              l = a.EffectData.GetKey(e);
+            l?.IsValid() &&
+              (l.IsA(UE.EffectModelGroup_C.StaticClass())
                 ? Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Preload",
                     3,
                     "子特效不能是DA_Fx_Group",
                     ["父特效", o.GetName()],
-                    ["子特效", n.GetName()],
+                    ["子特效", l.GetName()],
                   )
-                : (this.upr(t, n),
-                  n.IsA(UE.EffectModelSkeletalMesh_C.StaticClass()) &&
-                    ((i = n.AnimationRef)?.IsValid()
+                : (this.upr(t, l),
+                  l.IsA(UE.EffectModelSkeletalMesh_C.StaticClass()) &&
+                    ((i = l.AnimationRef)?.IsValid()
                       ? i.IsA(UE.AnimSequence.StaticClass())
                         ? this.lpr(t, i, animBuffList)
                         : i.IsA(UE.AnimMontage.StaticClass()) &&
@@ -1596,7 +1594,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
                           3,
                           "特效的mesh没有配置动画",
                           ["父特效", o.GetName()],
-                          ["子特效", n.GetName()],
+                          ["子特效", l.GetName()],
                         ))));
           }
       }
@@ -1663,7 +1661,7 @@ class PreloadController extends ControllerBase_1.ControllerBase {
     return t.ClearEntityAsset(), t.ClearPreloadResource(), !0;
   }
   static GetCurCharacterLoadType() {
-    return ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike()
+    return ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelikeOnly()
       ? 1
       : 0;
   }

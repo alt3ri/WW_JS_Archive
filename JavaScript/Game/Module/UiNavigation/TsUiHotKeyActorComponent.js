@@ -12,7 +12,13 @@ class TsUiHotKeyActorComponent extends UE.LGUIBehaviour {
     super(...arguments),
       (this.Mode = ""),
       (this.Index = 0),
+      (this.IsUsePool = !1),
       (this.HotKeyItem = void 0),
+      (this.PanelConfig = void 0),
+      (this.UiHotKeyState = 0);
+  }
+  Constructor() {
+    (this.HotKeyItem = void 0),
       (this.PanelConfig = void 0),
       (this.UiHotKeyState = 0);
   }
@@ -25,7 +31,7 @@ class TsUiHotKeyActorComponent extends UE.LGUIBehaviour {
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiNavigation",
-            11,
+            10,
             "当前配置的热键id是无效的,无法执行TsUiHotKeyActorComponent逻辑",
             [
               "Path",
@@ -41,7 +47,8 @@ class TsUiHotKeyActorComponent extends UE.LGUIBehaviour {
     await this.RegisterHotKeyItem();
   }
   OnEnableBP() {
-    this.HotKeyItem && this.RegisterAllHotKeyComponent();
+    this.HotKeyItem &&
+      (this.RegisterAllHotKeyComponent(), this.TryResetPanelConfig());
   }
   OnDisableBP() {
     this.HotKeyItem && this.UnRegisterAllHotKeyComponent();
@@ -66,6 +73,26 @@ class TsUiHotKeyActorComponent extends UE.LGUIBehaviour {
           )),
         this.PanelConfig) &&
         this.PanelConfig.AddHotKeyItem(this.HotKeyItem);
+  }
+  TryResetPanelConfig() {
+    !this.IsUsePool ||
+      this.UiHotKeyState < 3 ||
+      !this.HotKeyItem ||
+      (this.PanelConfig?.IsValid() &&
+        this.PanelConfig?.RootUIComp?.IsValid()) ||
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiNavigation",
+          10,
+          "可能存在从对象池获取的情况[UiHotKeyActorComponent]",
+          ["GroupName", this.Index],
+          ["Name", this.RootUIComp.displayName],
+        ),
+      (this.PanelConfig =
+        UiNavigationLogic_1.UiNavigationLogic.FindUiNavigationPanelConfig(
+          this.GetOwner(),
+        )),
+      this.PanelConfig && this.PanelConfig.AddHotKeyItem(this.HotKeyItem));
   }
   UnRegisterHotKeyItem() {
     this.HotKeyItem &&

@@ -146,7 +146,7 @@ class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           r,
           this.lho.GetAffixDesc(),
-          i?.AffixDescParam,
+          ...i.AffixDescParam,
         ),
       r.SetChangeColor(s, r?.changeColor);
   }

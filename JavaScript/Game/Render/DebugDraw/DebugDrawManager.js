@@ -64,7 +64,7 @@ class DebugDrawManager {
       this.Instance.DebugDrawMap.forEach((t, a) => {
         switch (t.Type) {
           case 0:
-            UE.KismetSystemLibrary.DrawDebugLine(
+            UE.KismetSystemLibrary.D_DrawDebugLine(
               GlobalData_1.GlobalData.World,
               RenderDataManager_1.RenderDataManager.Get()
                 .GetCurrentCharacterPosition()
@@ -76,10 +76,14 @@ class DebugDrawManager {
             );
             break;
           case 1:
-            UE.KismetSystemLibrary.DrawDebugBox(
+            UE.KismetSystemLibrary.D_DrawDebugBox(
               GlobalData_1.GlobalData.World,
-              t.BoxA.Min.op_Addition(t.BoxA.Max).op_Division(2),
-              t.BoxA.Max.op_Subtraction(t.BoxA.Min).op_Division(2),
+              UE.KismetMathLibrary.Conv_VectorToVectorDouble(
+                t.BoxA.Min.op_Addition(t.BoxA.Max).op_Division(2),
+              ),
+              UE.KismetMathLibrary.Conv_VectorToVectorDouble(
+                t.BoxA.Max.op_Subtraction(t.BoxA.Min).op_Division(2),
+              ),
               t.ColorA,
               void 0,
               0.01,

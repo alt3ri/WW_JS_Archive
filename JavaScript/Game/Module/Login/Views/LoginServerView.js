@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginServerView = void 0);
 const UE = require("ue"),
-  BaseConfigController_1 = require("../../../../Launcher/BaseConfig/BaseConfigController"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -15,7 +14,7 @@ class LoginServerView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.xqe = void 0),
       (this.TSi = void 0),
-      (this.LSi = (e, r, t) => {
+      (this.LSi = (e, t, i) => {
         return new LoginServerItem_1.LoginServerItem();
       }),
       (this.DSi = () => {
@@ -33,6 +32,11 @@ class LoginServerView extends UiViewBase_1.UiViewBase {
             EventDefine_1.EEventName.OnConfirmServerItem,
           ),
           this.CloseMe();
+      }),
+      (this.aSi = () => {
+        if (this.xqe)
+          for (let e = 0; e < this.xqe.GetScrollItemCount(); e++)
+            this.xqe?.GetScrollItemFromIndex(e)?.UpdatePlayerInfo();
       });
   }
   OnRegisterComponent() {
@@ -60,27 +64,38 @@ class LoginServerView extends UiViewBase_1.UiViewBase {
   OnStart() {
     ModelManager_1.ModelManager.LoginServerModel.CurrentUiSelectSeverData =
       ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData;
-    var e = BaseConfigController_1.BaseConfigController.GetLoginServers();
+    var e =
+      ModelManager_1.ModelManager.LoginServerModel.GetLoginServersByClientRegion();
     this.xqe.RefreshByData(e), this.USi(e);
   }
-  OnAddEventListener() {}
-  OnRemoveEventListener() {}
+  OnAddEventListener() {
+    EventSystem_1.EventSystem.Add(
+      EventDefine_1.EEventName.OnGetLoginPlayerInfo,
+      this.aSi,
+    );
+  }
+  OnRemoveEventListener() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.OnGetLoginPlayerInfo,
+      this.aSi,
+    );
+  }
   USi(e) {
     e = this.ASi(e);
     this.GetUIDynScrollViewComponent(2).ScrollToItemIndex(e);
   }
-  ASi(r) {
-    let t = 0;
-    var i = r.length;
-    for (let e = 0; e < i; e++)
+  ASi(t) {
+    let i = 0;
+    var r = t.length;
+    for (let e = 0; e < r; e++)
       if (
         ModelManager_1.ModelManager.LoginServerModel
-          .CurrentUiSelectSeverData === r[e]
+          .CurrentUiSelectSeverData === t[e]
       ) {
-        t = e;
+        i = e;
         break;
       }
-    return t;
+    return i;
   }
   OnBeforeDestroy() {
     this.xqe.ClearChildren(), (this.xqe = void 0);

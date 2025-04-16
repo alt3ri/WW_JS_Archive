@@ -11,23 +11,23 @@ class MowingRiskUiContext {
       (this.CurrentBasicBuffConfigs = []),
       (this.CurrentSuperBuffConfigs = []),
       (this.NewBuffToShowCache = []),
-      (this.A9a = (t) =>
-        !!this.AttachedModel.IsBuffAvailableInActivity(t) &&
-        (0 === this.CurrentBuffViewUsage
-          ? 0 < t.Buff.length
-          : 1 === this.CurrentBuffViewUsage &&
-            this.AttachedModel.IsBuffGottenInBattleById(t.Id))),
-      (this.zYa = (t, s) =>
+      (this.oth = (t, s) =>
         t.BuffType === s.BuffType ? t.Id - s.Id : s.BuffType - t.BuffType),
       (this.AttachedModel = t);
   }
   Dispose() {}
   SyncCurrentShowingBuffConfigs() {
-    (this.CurrentBasicBuffConfigs =
-      this.AttachedModel.EntireBasicBuffConfig.filter(this.A9a)),
-      this.CurrentBasicBuffConfigs.sort(this.zYa),
-      (this.CurrentSuperBuffConfigs =
-        this.AttachedModel.EntireSuperBuffConfig.filter(this.A9a));
+    1 === this.CurrentBuffViewUsage
+      ? ((this.CurrentBasicBuffConfigs =
+          this.AttachedModel.GetBasicBuffConfigListInBattle()),
+        this.CurrentBasicBuffConfigs.sort(this.oth),
+        (this.CurrentSuperBuffConfigs =
+          this.AttachedModel.GetSuperBuffConfigListInBattle()))
+      : ((this.CurrentBasicBuffConfigs =
+          this.AttachedModel.GetBasicBuffConfigListBeforeBattle()),
+        this.CurrentBasicBuffConfigs.sort(this.oth),
+        (this.CurrentSuperBuffConfigs =
+          this.AttachedModel.GetSuperBuffConfigListBeforeBattle()));
   }
   SyncNewBuff(t) {
     for (const s of t)

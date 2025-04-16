@@ -7,13 +7,14 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../Core/Common/Log"),
   Stats_1 = require("../../Core/Common/Stats"),
   EffectEnvironment_1 = require("../../Core/Effect/EffectEnvironment"),
+  TickSystem_1 = require("../../Core/Tick/TickSystem"),
   TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
   TimeUtil_1 = require("../Common/TimeUtil"),
   NEAR_ZERO = 0.001,
   CHECK_CAN_STOP_INTERVAL = 1e3;
 class EffectLifeTime {
-  constructor(t) {
-    (this.Rge = t),
+  constructor(i) {
+    (this.Rge = i),
       (this.DefaultPassTime = 0),
       (this.PassTime = 0),
       (this.TotalPassTime = 0),
@@ -34,11 +35,12 @@ class EffectLifeTime {
       (this.Gge = () => {
         (this.qge = void 0),
           this.Rge?.GetHandle()?.SetTimeScale(1),
+          this.SetTimeScale(1),
           EffectEnvironment_1.EffectEnvironment.UseLog &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "RenderEffect",
-              37,
+              36,
               "特效框架：特效设置TimeScale为极小值，没有及时置回，造成泄漏",
               ["句柄Id", this.Rge?.GetHandle()?.Id],
               ["Path", this.Rge?.GetHandle()?.Path],
@@ -47,26 +49,27 @@ class EffectLifeTime {
       }),
       (this.Nge = () => {
         this.Pge?.Start();
-        var t,
-          i = this.Rge;
+        var i,
+          t = this.Rge;
         (this.Bge = void 0),
-          i.GetHandle().IsRoot()
-            ? i.CanStop()
+          t.GetHandle().IsRoot()
+            ? t.CanStop()
               ? (Info_1.Info.IsGameRunning() &&
-                  ((t = i.GetHandle().GetSureEffectActor()) &&
-                    !i.GetHandle().IsExternalActor &&
-                    (t.K2_DetachFromActor(),
-                    i.GetHandle().SetHidden(!0, "EffectLifeTime.PlayFinished")),
+                  ((i = t.GetHandle().GetSureEffectActor()) &&
+                    !t.GetHandle().IsExternalActor &&
+                    (i.K2_DetachFromActor(),
+                    t.GetHandle().SetHidden(!0, "EffectLifeTime.PlayFinished")),
                   this.Rge.GetHandle().UnregisterTick()),
                 this.Rge.GetHandle()?.OnPlayFinished())
               : (this.Bge = TimerSystem_1.TimerSystem.Delay(
                   this.Nge,
                   CHECK_CAN_STOP_INTERVAL,
                 ))
-            : i.GetHandle().Stop("[EffectLifeTime.PlayFinished] 播放完成", !0),
+            : t.GetHandle().Stop("[EffectLifeTime.PlayFinished] 播放完成", !0),
           this.Pge?.Stop();
       }),
       Stats_1.Stat.Enable &&
+        !EffectEnvironment_1.EffectEnvironment.CloseEffectSubStat &&
         ((this.gW = Stats_1.Stat.Create("[EffectLifeTime.Tick]")),
         (this.Pge = Stats_1.Stat.Create("[EffectLifeTime.PlayFinishStat]")),
         (this.xge = Stats_1.Stat.Create("[EffectLifeTime.SeekTo]")));
@@ -86,120 +89,136 @@ class EffectLifeTime {
   GetTotalPassTime() {
     return this.TotalPassTime;
   }
-  SetTotalPassTime(t) {
-    this.TotalPassTime = t;
+  SetTotalPassTime(i) {
+    this.TotalPassTime = i;
   }
-  SetTime(t, i, e) {
+  SetTime(i, t, e) {
     (this.wge = !0),
-      (this.StartTime = t),
-      (this.LoopTime = i),
+      (this.StartTime = i),
+      (this.LoopTime = t),
       (this.EndTime = e),
-      (this.LoopTimeStamp = t + i),
-      (this.LifeTimeStamp = t + i + e),
+      (this.LoopTimeStamp = i + t),
+      (this.LifeTimeStamp = i + t + e),
       (this.Uge = this.StartTime < 0 || 0 < this.LoopTime),
       (this.Age = this.Uge || this.LifeTimeStamp <= 0),
       this.IsLoop || this.Bge || this.SetLifeCycle(this.LifeTimeStamp);
   }
-  SetLifeCycle(t) {
-    this.Bge &&
-      (this.IsLoop ||
-        (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "RenderEffect",
-            37,
-            "特效框架：SetLifeCycle时非循环特效仍然存在上一次的生命周期计时器，可能之前已经泄漏，或者不正确使用多次设置生命周期",
-            ["句柄Id", this.Rge?.GetHandle()?.Id],
-            ["Path", this.Rge?.GetHandle()?.Path],
-            ["TimerHandler", this.Bge.Id],
-          )),
-      TimerSystem_1.TimerSystem.Remove(this.Bge),
-      (this.Bge = void 0));
-    t *= TimeUtil_1.TimeUtil.InverseMillisecond;
-    (this.Bge = this.Oge(t)),
-      EffectEnvironment_1.EffectEnvironment.UseLog &&
-        Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "RenderEffect",
-          37,
-          "特效框架：设置生命周期计时器",
-          ["句柄Id", this.Rge?.GetHandle()?.Id],
-          ["Path", this.Rge?.GetHandle()?.Path],
-          ["TimerHandle", this.Bge?.Id],
-          ["LifeTime", t],
-        );
+  SetLifeCycle(i) {
+    Info_1.Info.IsGameRunning() &&
+      (this.Bge &&
+        (this.IsLoop ||
+          (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "RenderEffect",
+              36,
+              "特效框架：SetLifeCycle时非循环特效仍然存在上一次的生命周期计时器，可能之前已经泄漏，或者不正确使用多次设置生命周期",
+              ["句柄Id", this.Rge?.GetHandle()?.Id],
+              ["Path", this.Rge?.GetHandle()?.Path],
+              ["TimerHandler", this.Bge.Id],
+            )),
+        TimerSystem_1.TimerSystem.Remove(this.Bge),
+        (this.Bge = void 0)),
+      (i = i * TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.Bge = this.Oge(i)),
+      EffectEnvironment_1.EffectEnvironment.UseLog) &&
+      Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "RenderEffect",
+        36,
+        "特效框架：设置生命周期计时器",
+        ["句柄Id", this.Rge?.GetHandle()?.Id],
+        ["Path", this.Rge?.GetHandle()?.Path],
+        ["TimerHandle", this.Bge?.Id],
+        ["LifeTime", i],
+      );
   }
   WhenEnterStopping() {
-    this.kge(this.LifeTimeStamp - this.PassTime);
+    this.UpdateLifeCycle(this.LifeTimeStamp - this.PassTime);
   }
-  kge(t) {
-    var i, e;
-    this.Bge
-      ? ((i = this.Bge.Id),
-        TimerSystem_1.TimerSystem.Remove(this.Bge),
-        (this.Bge = void 0),
-        (e = t * TimeUtil_1.TimeUtil.InverseMillisecond),
-        (this.Bge = this.Oge(e)),
-        EffectEnvironment_1.EffectEnvironment.UseLog &&
-          Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "RenderEffect",
-            37,
-            "特效框架：更新生命周期计时器",
-            ["句柄Id", this.Rge?.GetHandle()?.Id],
-            ["Path", this.Rge?.GetHandle()?.Path],
-            ["OldTimerHandle", i],
-            ["TimerHandle", this.Bge?.Id],
-            ["LifeTime", e],
-          ))
-      : this.SetLifeCycle(t);
+  UpdateLifeCycle(i) {
+    var t, e;
+    Info_1.Info.IsGameRunning() &&
+      (this.Bge
+        ? ((t = this.Bge.Id),
+          TimerSystem_1.TimerSystem.Remove(this.Bge),
+          (this.Bge = void 0),
+          (e = i * TimeUtil_1.TimeUtil.InverseMillisecond),
+          (this.Bge = this.Oge(e)),
+          EffectEnvironment_1.EffectEnvironment.UseLog &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "RenderEffect",
+              36,
+              "特效框架：更新生命周期计时器",
+              ["句柄Id", this.Rge?.GetHandle()?.Id],
+              ["Path", this.Rge?.GetHandle()?.Path],
+              ["OldTimerHandle", t],
+              ["TimerHandle", this.Bge?.Id],
+              ["LifeTime", e],
+            ))
+        : this.SetLifeCycle(i));
   }
-  SetTimeScale(t) {
-    this.bge !== t &&
-      ((this.bge = t),
+  SetTimeScale(i) {
+    this.bge !== i &&
+      ((this.bge = i),
       EffectEnvironment_1.EffectEnvironment.UseLog &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "RenderEffect",
-          37,
+          36,
           "特效框架:LifeTime SetTimeScale",
           ["句柄Id", this.Rge.GetHandle()?.Id],
           ["Path", this.Rge.GetHandle()?.Path],
-          ["timeScale", t],
+          ["timeScale", i],
         ),
       this.Bge) &&
-      (0 < t
+      (0 < i
         ? (TimerSystem_1.TimerSystem.IsPause(this.Bge) &&
             TimerSystem_1.TimerSystem.Resume(this.Bge),
-          TimerSystem_1.TimerSystem.ChangeDilation(this.Bge, t))
+          TimerSystem_1.TimerSystem.ChangeDilation(this.Bge, i))
         : TimerSystem_1.TimerSystem.IsPause(this.Bge) ||
           TimerSystem_1.TimerSystem.Pause(this.Bge));
   }
-  RegisterWaitMiniTimeScale(t) {
-    this.qge || (this.qge = TimerSystem_1.TimerSystem.Delay(this.Gge, t));
+  OnGlobalTimeScaleChange() {
+    this.qge &&
+      (TickSystem_1.TickSystem.IsSetPaused
+        ? TimerSystem_1.TimerSystem.IsPause(this.qge) ||
+          TimerSystem_1.TimerSystem.Pause(this.qge)
+        : TimerSystem_1.TimerSystem.IsPause(this.qge) &&
+          TimerSystem_1.TimerSystem.Resume(this.qge));
+  }
+  RegisterWaitMiniTimeScale(i) {
+    this.qge ||
+      (Info_1.Info.IsGameRunning() &&
+        ((this.qge = TimerSystem_1.TimerSystem.Delay(this.Gge, i)),
+        TickSystem_1.TickSystem.IsSetPaused) &&
+        this.qge &&
+        TimerSystem_1.TimerSystem.Pause(this.qge));
   }
   UnregisterWaitMiniTimeScale() {
     this.qge &&
       (TimerSystem_1.TimerSystem.Remove(this.qge), (this.qge = void 0));
   }
-  Tick(t) {
-    t <= 0 ||
+  Tick(i) {
+    i <= 0 ||
       (this.gW?.Start(),
-      (this.TotalPassTime += t),
-      this.SeekTo(this.PassTime + t, !0, !0),
+      (this.TotalPassTime += i),
+      this.SeekTo(this.PassTime + i, !0, !0),
       this.gW?.Stop());
   }
-  SeekTo(t, i, e, s = !0) {
+  SeekTo(i, t, e, s = !0) {
     return (
       this.xge?.Start(),
-      e || (!this.Uge && this.Bge && this.kge(this.LifeTimeStamp - t)),
-      (this.PassTime = t),
+      e ||
+        (!this.Uge && this.Bge && this.UpdateLifeCycle(this.LifeTimeStamp - i)),
+      (this.PassTime = i),
       !this.Rge.IsPlaying() ||
       (this.Uge &&
         !this.Rge.IsStopping() &&
         this.PassTime >= this.LoopTimeStamp &&
         s &&
         this.Fge(),
-      !i) ||
+      !t) ||
       (this.Age && !this.Rge.IsStopping()) ||
       (this.PassTime > this.LoopTimeStamp && this.Rge?.GetHandle()?.PreStop(),
       this.PassTime < this.LifeTimeStamp)
@@ -208,14 +227,14 @@ class EffectLifeTime {
     );
   }
   Fge() {
-    var t, i;
+    var i, t;
     this.LoopTime <= NEAR_ZERO
       ? (this.PassTime = this.StartTime)
       : this.PassTime >= this.LoopTimeStamp + this.LoopTime
-        ? ((t = this.PassTime - this.StartTime),
-          (i = (0, puerts_1.$ref)(0)),
-          UE.KismetMathLibrary.FMod(t, this.LoopTime, i),
-          (this.PassTime = this.StartTime + (0, puerts_1.$unref)(i)))
+        ? ((i = this.PassTime - this.StartTime),
+          (t = (0, puerts_1.$ref)(0)),
+          UE.KismetMathLibrary.FMod(i, this.LoopTime, t),
+          (this.PassTime = this.StartTime + (0, puerts_1.$unref)(t)))
         : (this.PassTime -= this.LoopTime);
   }
   get IsAfterStart() {
@@ -230,23 +249,25 @@ class EffectLifeTime {
       this.Bge &&
         (TimerSystem_1.TimerSystem.Remove(this.Bge), (this.Bge = void 0));
   }
-  Oge(t) {
-    if (t > TimerSystem_1.MIN_TIME)
+  Oge(i) {
+    if (i > TimerSystem_1.MIN_TIME)
       return (
-        (t = TimerSystem_1.TimerSystem.Delay(
+        (i = TimerSystem_1.TimerSystem.Delay(
           this.Nge,
-          t,
+          i,
           void 0,
           "EffectLifeTime",
           !1,
         )) &&
           1 !== this.bge &&
           (0 < this.bge
-            ? TimerSystem_1.TimerSystem.ChangeDilation(t, this.bge)
-            : TimerSystem_1.TimerSystem.Pause(t)),
-        t
+            ? TimerSystem_1.TimerSystem.ChangeDilation(i, this.bge)
+            : TimerSystem_1.TimerSystem.Pause(i)),
+        i
       );
-    this.Nge();
+    TimerSystem_1.TimerSystem.Next(() => {
+      this.Nge();
+    });
   }
 }
 exports.EffectLifeTime = EffectLifeTime;

@@ -30,23 +30,26 @@ let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.
     super(...arguments), (this.m1t = void 0);
   }
   OnStart() {
-    return (this.m1t = this.Entity.CheckGetComponent(160)), !0;
+    return (this.m1t = this.Entity.CheckGetComponent(172)), !0;
   }
   static StateInherit(e, t, o, n) {
     e &&
       t &&
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Battle", 20, "换人进入StateInherit"),
+        Log_1.Log.Info("Battle", 19, "换人进入StateInherit"),
       e.m1t.TriggerEvents(5, t.m1t, {}),
       t.m1t.TriggerEvents(4, e.m1t, {}),
       this.non(e, t),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Battle", 20, "换人进入RoleOnStateInherit"),
+        Log_1.Log.Info("Battle", 19, "换人进入RoleOnStateInherit"),
       EventSystem_1.EventSystem.EmitWithTarget(
         t.Entity,
         EventDefine_1.EEventName.RoleOnStateInherit,
         e.Entity,
-        1 === o || n || (t.Entity.GetComponent(190)?.HasTag(1144073280) ?? !1),
+        1 === o ||
+          n ||
+          (t.Entity.GetComponent(203)?.HasAnyTag([-1388400236, 1144073280]) ??
+            !1),
       ));
   }
   static non(t, o) {
@@ -79,7 +82,7 @@ let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.
   }
 };
 (RoleInheritComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(87)],
+  [(0, RegisterComponent_1.RegisterComponent)(94)],
   RoleInheritComponent,
 )),
   (exports.RoleInheritComponent = RoleInheritComponent);

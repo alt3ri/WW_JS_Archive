@@ -44,14 +44,14 @@ class BlackCoastStageInfo {
     (this.StageId = t),
       (this.Index = e),
       (this.TaskMap = new Map()),
-      (this.G9a = !1),
+      (this.kja = !1),
       (this.jOe = (t, e) =>
         t.Status !== e.Status
           ? t.Status - e.Status
           : t.SortId !== e.SortId
             ? t.SortId - e.SortId
             : t.TaskId - e.TaskId),
-      (this.k9a = (t) => {
+      (this.Nja = (t) => {
         t &&
           ActivityBlackCoastController_1.ActivityBlackCoastController.RequestTaskReward(
             this.StageId,
@@ -69,12 +69,12 @@ class BlackCoastStageInfo {
           ConfigManager_1.ConfigManager.RewardConfig.GetDropPackagePreviewItemList(
             r.DropId,
           )),
-        (s.ReceiveDelegate = this.k9a),
+        (s.ReceiveDelegate = this.Nja),
         this.TaskMap.set(r.TaskId, s);
     }
   }
   get StageState() {
-    if (!this.G9a) return 0;
+    if (!this.kja) return 0;
     for (const t of this.TaskMap.values()) if (!t.IsTaken) return 1;
     return 2;
   }
@@ -122,22 +122,22 @@ class BlackCoastStageInfo {
             (r.Target = a.j6n),
             (r.Status = ActivityCommonDefine_1.taskStateResolver[a.H6n]),
             r.IsFinished)),
-          !e && s && this.N9a(r.TaskId))
+          !e && s && this.Fja(r.TaskId))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Activity",
-            38,
+            37,
             "[BlackCoastActivity] 活动Task不存在",
             ["StageId", this.StageId],
             ["TaskId", a.s5n],
           );
     }
-    this.G9a = !0;
+    this.kja = !0;
   }
   SetTaskRewardGot(t) {
     this.TaskMap.get(t).Status = 2;
   }
-  N9a(t) {
+  Fja(t) {
     var t = this.TaskMap.get(t);
     0 < t.JumpId &&
       8 ===

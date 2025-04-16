@@ -156,31 +156,33 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
   (DamageUiController.zpe = (e, t) => {
     DamageUiController.m$e(t.Entity);
   }),
-  (DamageUiController.O2t = (e, t, a, n, i, r, _) => {
-    switch (n.CalculateType) {
+  (DamageUiController.O2t = (e, t, a, n, i) => {
+    var r = n.Damage,
+      _ = n.DamageData;
+    switch (_.CalculateType) {
       case 0:
         ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.BeHit(t),
           DamageUiManager_1.DamageUiManager.ApplyDamage(
-            a,
+            n.Damage,
             n.Element,
-            _,
+            i,
             t,
-            i.IsCritical,
+            a.IsCritical,
             !1,
-            n.DamageTextType,
-            i.IsImmune ? BattleUiDefine_1.IMMUNITY_DAMAGE_TEXT : "",
+            _.DamageTextType,
+            a.IsImmune ? BattleUiDefine_1.IMMUNITY_DAMAGE_TEXT : "",
           );
         break;
       case 1:
         var s = t.GetComponent(3);
         DamageUiManager_1.DamageUiManager.ApplyDamage(
-          -a,
+          -r,
           0,
           s.ActorLocation,
           t,
           !1,
           !0,
-          n.DamageTextType,
+          _.DamageTextType,
         );
     }
   }),
@@ -208,7 +210,7 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
           16,
         );
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "设置伤害数字可见性", ["visible", t]),
+      Log_1.Log.Debug("Battle", 17, "设置伤害数字可见性", ["visible", t]),
       e.SetUIActive(t);
   });
 //# sourceMappingURL=DamageUiController.js.map

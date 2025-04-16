@@ -8,6 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  InputEnums_1 = require("../../../Input/InputEnums"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   HotKeyComponent_1 = require("./HotKeyComponent"),
@@ -17,21 +18,22 @@ class PlotInteractComponentBase extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
       (this.Nxo = void 0),
-      (this.y4a = (e) => {
-        var t = this.Nxo?.IsListenerActive() ?? !1;
+      (this.i8a = (e) => {
+        var e = e && this.CheckAxisCanInput() && this.t_h(),
+          t = this.Nxo?.IsListenerActive() ?? !1;
         this.SetVisibleMode(2, t && e);
       });
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PlotEnableControlView,
-      this.y4a,
+      this.i8a,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PlotEnableControlView,
-      this.y4a,
+      this.i8a,
     );
   }
   OnRefreshSelfHotKeyState(e) {
@@ -40,8 +42,17 @@ class PlotInteractComponentBase extends HotKeyComponent_1.HotKeyComponent {
       ((e = e.GetActiveListenerByTag(t)),
       (this.Nxo = e),
       (t = this.Nxo?.IsListenerActive() ?? !1),
-      (e = ModelManager_1.ModelManager.PlotModel?.CanControlView ?? !1),
+      (e =
+        ModelManager_1.ModelManager.PlotModel.CanControlView &&
+        this.CheckAxisCanInput() &&
+        this.t_h()),
       this.SetVisibleMode(2, t && e));
+  }
+  t_h() {
+    return 0 === ModelManager_1.ModelManager.CameraModel.CameraMode;
+  }
+  CheckAxisCanInput() {
+    return !0;
   }
 }
 class PlotMoveForwardComponent extends PlotInteractComponentBase {
@@ -49,6 +60,11 @@ class PlotMoveForwardComponent extends PlotInteractComponentBase {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.NavigationTriggerPlotForward,
       t * MOVE_RATE,
+    );
+  }
+  CheckAxisCanInput() {
+    return !ModelManager_1.ModelManager.InputModel?.IsAxisBlock(
+      InputEnums_1.EInputAxis.LookUp,
     );
   }
 }
@@ -60,6 +76,11 @@ class PlotMoveRightComponent extends PlotInteractComponentBase {
       t * MOVE_RATE,
     );
   }
+  CheckAxisCanInput() {
+    return !ModelManager_1.ModelManager.InputModel?.IsAxisBlock(
+      InputEnums_1.EInputAxis.Turn,
+    );
+  }
 }
 exports.PlotMoveRightComponent = PlotMoveRightComponent;
 class PlotZoomComponent extends PlotInteractComponentBase {
@@ -69,13 +90,18 @@ class PlotZoomComponent extends PlotInteractComponentBase {
       t * ZOOM_RATE,
     );
   }
+  CheckAxisCanInput() {
+    return !ModelManager_1.ModelManager.InputModel?.IsAxisBlock(
+      InputEnums_1.EInputAxis.Zoom,
+    );
+  }
 }
 exports.PlotZoomComponent = PlotZoomComponent;
 class PlotNextPageComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
       (this.Nxo = void 0),
-      (this.M3a = (e) => {
+      (this.Y5a = (e) => {
         var t = this.Nxo?.IsListenerActive() ?? !1;
         this.SetVisibleMode(2, t && e);
       });
@@ -83,13 +109,13 @@ class PlotNextPageComponent extends HotKeyComponent_1.HotKeyComponent {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.NavigationRefreshPlotNextPage,
-      this.M3a,
+      this.Y5a,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.NavigationRefreshPlotNextPage,
-      this.M3a,
+      this.Y5a,
     );
   }
   OnPress(e) {

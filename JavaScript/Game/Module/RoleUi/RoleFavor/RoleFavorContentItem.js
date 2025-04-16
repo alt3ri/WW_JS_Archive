@@ -86,13 +86,13 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
   Refresh() {
     switch (this.ContentItemData.FavorTabType) {
       case 2:
-        this.E_o();
+        this.E_o(), (this.H5e.bToggleOnSelect = !1);
         break;
       case 1:
         this.S_o();
         break;
       case 0:
-        this.y_o();
+        this.y_o(), (this.H5e.bToggleOnSelect = !1);
         break;
       case 3:
         this.I_o();
@@ -136,7 +136,7 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
     var t = this.ContentItemData.Config,
       i = this.GetText(3),
       t = this.v_o(t);
-    2 === this.p_o && this.M_o(1), this.A_o(), i.SetText(t), this.BNe();
+    0 !== this.p_o && this.M_o(1), this.A_o(), i.SetText(t), this.BNe();
   }
   I_o() {
     this.R_o();

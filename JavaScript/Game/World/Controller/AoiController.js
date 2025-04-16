@@ -19,25 +19,25 @@ const UE = require("ue"),
 class AoiController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(26251, AoiController.Jgr),
-      Net_1.Net.Register(15860, AoiController.zgr),
-      Net_1.Net.Register(22993, AoiController.Zgr),
-      Net_1.Net.Register(22612, AoiController.e0r),
-      Net_1.Net.Register(28781, AoiController.t0r),
-      Net_1.Net.Register(23911, AoiController.i0r),
-      Net_1.Net.Register(16629, AoiController.o0r),
+      Net_1.Net.Register(20884, AoiController.Jgr),
+      Net_1.Net.Register(16302, AoiController.zgr),
+      Net_1.Net.Register(24514, AoiController.Zgr),
+      Net_1.Net.Register(21615, AoiController.e0r),
+      Net_1.Net.Register(24313, AoiController.t0r),
+      Net_1.Net.Register(23804, AoiController.i0r),
+      Net_1.Net.Register(20107, AoiController.o0r),
       !0
     );
   }
   static OnClear() {
     return (
-      Net_1.Net.UnRegister(26251),
-      Net_1.Net.UnRegister(15860),
-      Net_1.Net.UnRegister(22993),
-      Net_1.Net.UnRegister(22612),
-      Net_1.Net.UnRegister(28781),
-      Net_1.Net.UnRegister(23911),
-      Net_1.Net.UnRegister(16629),
+      Net_1.Net.UnRegister(20884),
+      Net_1.Net.UnRegister(16302),
+      Net_1.Net.UnRegister(24514),
+      Net_1.Net.UnRegister(21615),
+      Net_1.Net.UnRegister(24313),
+      Net_1.Net.UnRegister(23804),
+      Net_1.Net.UnRegister(20107),
       !0
     );
   }
@@ -90,22 +90,21 @@ class AoiController extends ControllerBase_1.ControllerBase {
             );
           i?.Valid &&
             ModelManager_1.ModelManager.GameModeModel.MapDone &&
-            (ControllerHolder_1.ControllerHolder.CreatureController.LoadEntityAsync(
+            ControllerHolder_1.ControllerHolder.CreatureController.LoadEntityAsync(
               i,
-            ),
-            AoiController.AddMonsterSizeTag(i));
+            );
         }
       } else r.IsFinished = !0;
     }
   }
   static s0r(e, o, r, t) {
     var o = 0.5 * o,
-      l = new UE.Vector(e.iPs + o, e.rPs + o, 0.5 * (e.nPs + e.oPs)),
-      o = new UE.Vector(o, o, 0.5 * (e.nPs - e.oPs)),
+      l = new UE.VectorDouble(e.iPs + o, e.rPs + o, 0.5 * (e.nPs + e.oPs)),
+      o = new UE.VectorDouble(o, o, 0.5 * (e.nPs - e.oPs)),
       e = new UE.Rotator(0, 0, 0),
       t = t ? new UE.LinearColor(1, 0, 0, 1) : new UE.LinearColor(0, 1, 0, 1),
       r = r / CommonDefine_1.MILLIONSECOND_PER_SECOND;
-    UE.KismetSystemLibrary.DrawDebugBox(
+    UE.KismetSystemLibrary.D_DrawDebugBox(
       GlobalData_1.GlobalData.World,
       l,
       o,
@@ -126,8 +125,8 @@ class AoiController extends ControllerBase_1.ControllerBase {
         (this.h0r = void 0));
   }
   static AddMonsterSizeTag(e) {
-    var o = e.Entity?.GetComponent(0)?.GetMonsterComponent()?.FightConfigId;
-    const r = e.Entity?.GetComponent(190);
+    var o = e.GetComponent(0)?.GetMonsterComponent()?.FightConfigId;
+    const r = e.GetComponent(203);
     o &&
       r?.Valid &&
       (e = MonsterBattleConfById_1.configMonsterBattleConfById?.GetConfig(o)) &&

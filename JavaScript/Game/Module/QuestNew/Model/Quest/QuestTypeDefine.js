@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.PoiQuest =
+  (exports.DangoActivityQuest =
+    exports.HiddenQuest =
+    exports.ActivityQuest =
+    exports.PoiQuest =
     exports.GuideQuest =
     exports.RoleQuest =
     exports.TestQuest =
@@ -35,6 +38,15 @@ function createQuestObj(s) {
       case 9:
         e = new PoiQuest(9, s);
         break;
+      case 10:
+        e = new ActivityQuest(10, s);
+        break;
+      case 11:
+        e = new HiddenQuest(11, s);
+        break;
+      case 12:
+        e = new DangoActivityQuest(12, s);
+        break;
       default:
         e = new Quest_1.Quest(s.Type, s);
     }
@@ -58,4 +70,10 @@ class GuideQuest extends Quest_1.Quest {}
 exports.GuideQuest = GuideQuest;
 class PoiQuest extends Quest_1.Quest {}
 exports.PoiQuest = PoiQuest;
+class ActivityQuest extends Quest_1.Quest {}
+exports.ActivityQuest = ActivityQuest;
+class HiddenQuest extends Quest_1.Quest {}
+exports.HiddenQuest = HiddenQuest;
+class DangoActivityQuest extends Quest_1.Quest {}
+exports.DangoActivityQuest = DangoActivityQuest;
 //# sourceMappingURL=QuestTypeDefine.js.map

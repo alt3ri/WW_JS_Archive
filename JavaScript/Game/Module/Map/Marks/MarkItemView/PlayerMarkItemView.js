@@ -6,9 +6,6 @@ class PlayerMarkItemView extends MarkItemView_1.MarkItemView {
   constructor(e) {
     super(e);
   }
-  OnInitialize() {
-    super.OnInitialize(), this.OnIconPathChanged(this.Holder.IconPath);
-  }
   GetInteractiveFlag() {
     return !1;
   }

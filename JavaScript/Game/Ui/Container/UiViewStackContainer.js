@@ -21,7 +21,8 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       (this.v9 = void 0),
       (this.Ncr = new Map()),
       (this.pjt = !1),
-      (this.bKa = void 0),
+      (this.tza = void 0),
+      (this.QRl = void 0),
       (this.Ocr = new Array()),
       (this.kcr = new DoublyList_1.default(void 0)),
       (this.Fcr = new Map()),
@@ -31,10 +32,13 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
     return this.pjt;
   }
   Ujt() {
-    this.pjt = !0;
+    (this.pjt = !0), (this.QRl = new CustomPromise_1.CustomPromise());
   }
   Jft(e = !0) {
-    (this.pjt = !1), e && this.Vcr();
+    (this.pjt = !1),
+      this.QRl?.SetResult(void 0),
+      (this.QRl = void 0),
+      e && this.Vcr();
   }
   Hcr(e) {
     this.v9.Push(e);
@@ -55,7 +59,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         t
       );
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiCore", 17, "StackContainer_PopView 出栈失败");
+      Log_1.Log.Error("UiCore", 16, "StackContainer_PopView 出栈失败");
   }
   Mcr(e) {
     var i = e.Info.Name,
@@ -68,7 +72,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCore",
-            17,
+            16,
             "StackContainer_DeleteView删除界面不在栈内",
             ["ViewName", e.Info.Name],
           )),
@@ -82,7 +86,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "[ProcessViewPending]执行已缓存的界面操作",
             ["界面", e.View.Info.Name],
             ["操作类型", e.PendingType],
@@ -117,14 +121,15 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           return this.Kcr(e), void this.Vcr();
       }
       this.Ujt(),
-        this.IsIgnoreOpenViewMask(e) || this.OpenViewMask.SetMask(!0),
+        this.IsIgnoreOpenViewMask(e) ||
+          this.OpenViewMask.SetMask(e.MaskTag, !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.StackPreOpenView,
           e.Info.Name,
         ),
         this.Hcr(e),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "OpenViewAsync 入栈", [
+          Log_1.Log.Info("UiCore", 16, "OpenViewAsync 入栈", [
             "ViewName",
             e.Info.Name,
           ]),
@@ -134,14 +139,15 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           e.GetViewId(),
           i?.Info,
         ),
-        this.IsIgnoreOpenViewMask(e) || this.OpenViewMask.SetMask(!1),
+        this.IsIgnoreOpenViewMask(e) ||
+          this.OpenViewMask.SetMask(e.MaskTag, !1),
         this.Jft();
     }
   }
   async PreOpenViewAsync(e) {
     (await e.CreateAsync()) ||
       (Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("UiCore", 17, "[PreOpenViewAsync] CreateAsync failed", [
+        Log_1.Log.Warn("UiCore", 16, "[PreOpenViewAsync] CreateAsync failed", [
           "ViewName",
           e.Info.Name,
         ]));
@@ -155,11 +161,12 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         if (UiModel_1.UiModel.InNormalQueue) return void this.Kcr(e);
       }
       this.Ujt(),
-        this.IsIgnoreOpenViewMask(e) || this.OpenViewMask.SetMask(!0),
+        this.IsIgnoreOpenViewMask(e) ||
+          this.OpenViewMask.SetMask(e.MaskTag, !0),
         e.OnOpenAfterPreOpened(),
         this.Hcr(e),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "OpenViewAfterPreOpenedAsync 入栈", [
+          Log_1.Log.Info("UiCore", 16, "OpenViewAfterPreOpenedAsync 入栈", [
             "ViewName",
             e.Info.Name,
           ]),
@@ -176,7 +183,8 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           e.GetViewId(),
           i?.Info,
         ),
-        this.IsIgnoreOpenViewMask(e) || this.OpenViewMask.SetMask(!1),
+        this.IsIgnoreOpenViewMask(e) ||
+          this.OpenViewMask.SetMask(e.MaskTag, !1),
         this.Jft();
     }
   }
@@ -184,7 +192,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiCore",
-        11,
+        10,
         "OpenViewImplement 界面打开开始",
         ["ViewName", e.Info?.Name],
         ["path", e.Info.UiPath],
@@ -202,7 +210,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           (e.SceneLoaded = !0),
           (i.SkipReleaseScene = !0)),
         e.WillLoadScene()),
-      t =
+      o =
         (t &&
           (await BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
             "Start",
@@ -211,34 +219,34 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(
           e.Info.Name,
         ));
-    t.StartBlackScreen &&
-      !StringUtils_1.StringUtils.IsBlank(t.StartBlackScreen.ShowAnimName) &&
+    o.StartBlackScreen &&
+      !StringUtils_1.StringUtils.IsBlank(o.StartBlackScreen.ShowAnimName) &&
       (await BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
-        t.StartBlackScreen.ShowAnimName,
+        o.StartBlackScreen.ShowAnimName,
         e.Info.Name,
       )),
       (await e.CreateAsync())
         ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCore", 17, "OpenViewImplement 界面Start", [
+            Log_1.Log.Info("UiCore", 16, "OpenViewImplement 界面Start", [
               "ViewName",
               e.Info?.Name,
             ]),
           await e.StartAsync(),
-          t.StartBlackScreen &&
+          o.StartBlackScreen &&
             !StringUtils_1.StringUtils.IsBlank(
-              t.StartBlackScreen.HideAnimName,
+              o.StartBlackScreen.HideAnimName,
             ) &&
             BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
-              t.StartBlackScreen.HideAnimName,
+              o.StartBlackScreen.HideAnimName,
               e.Info.Name,
             ),
-          i?.WillReleaseScene()
+          i?.WillReleaseScene() || t
             ? (await BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
                 "Start",
                 e.Info.Name,
               ),
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("UiCore", 17, "OpenViewImplement 上个界面Hide", [
+                Log_1.Log.Info("UiCore", 16, "OpenViewImplement 上个界面Hide", [
                   "LastViewName",
                   i?.Info?.Name,
                 ]),
@@ -247,39 +255,32 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
                 "Close",
                 e.Info.Name,
               ),
-              UiCameraAnimationController_1.UiCameraAnimationController.PushCameraHandle(
-                e.Info.Name,
-                e.GetViewId(),
-                !1,
-              ),
+              this.xxc(e, !1),
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("UiCore", 17, "OpenViewImplement 界面Show", [
+                Log_1.Log.Info("UiCore", 16, "OpenViewImplement 界面Show", [
                   "ViewName",
                   e.Info?.Name,
                 ]),
               await e.ShowAsync())
-            : (UiCameraAnimationController_1.UiCameraAnimationController.PushCameraHandle(
-                e.Info.Name,
-                e.GetViewId(),
-              ),
+            : (this.xxc(e, !0),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "UiCore",
-                  17,
+                  16,
                   "OpenViewImplement 界面Show,上个界面Hide",
                   ["ViewName", e.Info?.Name],
                   ["LastViewName", i?.Info?.Name],
                 ),
               await Promise.all([i?.HideAsync(), e.ShowAsync()])),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCore", 11, "界面打开完成", [
+            Log_1.Log.Info("UiCore", 10, "界面打开完成", [
               "path",
               e.Info.UiPath,
             ]))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
-            11,
+            10,
             "[OpenStackViewAsync] CreateAsync failed",
             ["ViewName", e.Info.Name],
           );
@@ -304,14 +305,15 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           ),
           !(await e.CreateAsync()))
         )
-          return void (
+          return (
             Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn(
-              "UiCore",
-              11,
-              "[CloseViewAsync] CreateAsync failed",
-              ["ViewName", e.Info.Name],
-            )
+              Log_1.Log.Warn(
+                "UiCore",
+                10,
+                "[CloseViewAsync] CreateAsync failed",
+                ["ViewName", e.Info.Name],
+              ),
+            void this.Jft()
           );
         await e.StartAsync();
       }
@@ -334,7 +336,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           (this.jcr(),
           this.Hcr(i),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCore", 17, "CloseAndOpenNewAsync 入栈", [
+            Log_1.Log.Info("UiCore", 16, "CloseAndOpenNewAsync 入栈", [
               "ViewName",
               i.Info.Name,
             ]),
@@ -349,7 +351,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "UiCore",
-              11,
+              10,
               "[CloseAndOpenNewAsync] CreateAsync failed",
               ["ViewName", i.Info.Name],
             )
@@ -360,7 +362,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           this.Hcr(i),
           await this.Qcr(i, void 0),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCore", 17, "CloseAndOpenNewAsync 入栈", [
+            Log_1.Log.Info("UiCore", 16, "CloseAndOpenNewAsync 入栈", [
               "ViewName",
               i.Info.Name,
             ]);
@@ -372,12 +374,13 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
     else {
       var i = new Array();
       for (const a of this.Ocr)
-        UiModel_1.UiModel.ResetToViewWhiteSet.has(a.View.Info.Name)
+        UiModel_1.UiModel.ResetToViewWhiteSet.has(a.View.Info.Name) ||
+        5 === a.PendingType
           ? i.push(a)
           : 1 === a.PendingType && a.View.Destroy();
       if (((this.Ocr = i), UiModel_1.UiModel.InNormalQueue)) this.Wcr(e, 4);
       else if (!this.v9.Empty) {
-        this.Ujt(), (this.bKa = new CustomPromise_1.CustomPromise());
+        this.Ujt(), (this.tza = new CustomPromise_1.CustomPromise());
         var t = e.Info.Name;
         const s = this.v9.Peek();
         if (s.Info.Name !== t) {
@@ -401,7 +404,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
             ),
             await this.gpi(s, e),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("UiCore", 17, "重置回到界面成功", [
+              Log_1.Log.Info("UiCore", 16, "重置回到界面成功", [
                 "ViewName",
                 e.Info.Name,
               ]),
@@ -419,12 +422,12 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
               EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
             )),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("UiCore", 17, "重置回到界面成功", [
+              Log_1.Log.Info("UiCore", 16, "重置回到界面成功", [
                 "ViewName",
                 e.Info.Name,
               ]);
         }
-        this.bKa.SetResult(), (this.bKa = void 0), this.Jft();
+        this.tza.SetResult(), (this.tza = void 0), this.Jft();
       }
     }
   }
@@ -448,7 +451,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           !StringUtils_1.StringUtils.IsBlank(a.CloseBlackScreen.ShowAnimName);
       const _ = async () => {
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Destroy", [
+            Log_1.Log.Info("UiCore", 16, "CloseViewImplement 界面Destroy", [
               "ViewName",
               i.Info?.Name,
             ]),
@@ -458,7 +461,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           i.IsShowOrShowing &&
             ((i.LastHide = !0),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Hide", [
+              Log_1.Log.Info("UiCore", 16, "CloseViewImplement 界面Hide", [
                 "ViewName",
                 i.Info?.Name,
               ]),
@@ -470,7 +473,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
         o = async () => {
           e.IsShowOrShowing ||
             (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("UiCore", 17, "CloseViewImplement 下个界面Show", [
+              Log_1.Log.Info("UiCore", 16, "CloseViewImplement 下个界面Show", [
                 "NextViewName",
                 e.Info?.Name,
               ]),
@@ -498,17 +501,19 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
             t(),
           ]),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiCore", 17, "#######黑屏+销毁", [
+            Log_1.Log.Debug("UiCore", 16, "#######黑屏+销毁", [
               "ViewName",
               i.Info.Name,
             ]),
-          UiCameraAnimationController_1.UiCameraAnimationController.PopCameraHandle(
-            i.Info.Name,
-            e?.Info,
-            i.GetViewId(),
-          ),
+          this.Dxc(i, e?.Info),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("UiCore", 17, "#######镜头Pop", [
+            Log_1.Log.Debug("UiCore", 16, "#######镜头Pop", [
+              "ViewName",
+              i.Info.Name,
+            ]),
+          this.xxc(e, !1),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("UiCore", 16, "#######镜头Push", [
               "ViewName",
               i.Info.Name,
             ]),
@@ -521,17 +526,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
             await e?.LoadScenePromise?.Promise,
             (e.SkipRemoveBlackScreen = !1),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("UiCore", 17, "#######加载场景", [
-                "ViewName",
-                i.Info.Name,
-              ]),
-            UiCameraAnimationController_1.UiCameraAnimationController.PushCameraHandle(
-              e.Info.Name,
-              e.GetViewId(),
-              !1,
-            ),
-            Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("UiCore", 17, "#######镜头Push", [
+              Log_1.Log.Debug("UiCore", 16, "#######加载场景", [
                 "ViewName",
                 i.Info.Name,
               ]),
@@ -551,62 +546,51 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
                     e.Info.Name,
                   ),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("UiCore", 17, "#######黑屏移除", [
+              Log_1.Log.Debug("UiCore", 16, "#######黑屏移除", [
                 "ViewName",
                 i.Info.Name,
               ]),
-            await (!e || !(await e.ShowPromise?.Promise)),
+            await e.ShowPromise?.Promise,
+            (e.ShowPromise = void 0),
             Log_1.Log.CheckDebug()) &&
-            Log_1.Log.Debug("UiCore", 17, "#######界面显示", [
+            Log_1.Log.Debug("UiCore", 16, "#######界面显示", [
               "ViewName",
               e?.Info.Name,
             ]))
-        : (UiCameraAnimationController_1.UiCameraAnimationController.PopCameraHandle(
-            i.Info.Name,
-            e?.Info,
-            i.GetViewId(),
-          ),
-          UiCameraAnimationController_1.UiCameraAnimationController.PushCameraHandle(
-            e.Info.Name,
-            e.GetViewId(),
-          ),
-          await Promise.all([t(), o()])),
+        : (this.Dxc(i, e?.Info), this.xxc(e), await Promise.all([t(), o()])),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "CloseViewImplement 界面关闭完成",
             ["ViewName", i.Info?.Name],
             ["path", i.Info.UiPath],
             ["NextViewName", e.Info?.Name],
           );
-    } else
-      UiCameraAnimationController_1.UiCameraAnimationController.PopCameraHandle(
-        i.Info.Name,
-        void 0,
-        i.GetViewId(),
-        !1,
-      ),
+    } else {
+      t = this.v9.Size <= 0;
+      this.Dxc(i, void 0, t),
         i.IsShowOrShowing &&
           ((i.LastHide = !0), await i.HideAsync(), Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Hide", [
+          Log_1.Log.Info("UiCore", 16, "CloseViewImplement 界面Hide", [
             "ViewName",
             i.Info?.Name,
           ]),
         await i.DestroyAsync(),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiCore", 17, "CloseViewImplement 界面Destroy", [
+          Log_1.Log.Info("UiCore", 16, "CloseViewImplement 界面Destroy", [
             "ViewName",
             i.Info?.Name,
           ]),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiCore",
-            17,
+            16,
             "CloseViewImplement 界面关闭完成",
             ["ViewName", i.Info?.Name],
             ["path", i.Info.UiPath],
           );
+    }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.StackCloseView,
       i.GetViewId(),
@@ -625,10 +609,54 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       await Promise.all(i);
     }
   }
+  xxc(e, i = !0) {
+    this.ExecuteInterfaceMethod(
+      e,
+      "PushCameraHandle",
+      e.Info.Name,
+      e.GetViewId(),
+      i,
+    ) ||
+      UiCameraAnimationController_1.UiCameraAnimationController.PushCameraHandle(
+        e.Info.Name,
+        e.GetViewId(),
+        i,
+      );
+  }
+  Dxc(e, i, t = !0) {
+    this.ExecuteInterfaceMethod(
+      e,
+      "PopCameraHandle",
+      e.Info.Name,
+      i,
+      e.GetViewId(),
+      t,
+    ) ||
+      UiCameraAnimationController_1.UiCameraAnimationController.PopCameraHandle(
+        e.Info.Name,
+        i,
+        e.GetViewId(),
+        t,
+      );
+  }
+  ExecuteInterfaceMethod(e, i, ...t) {
+    return i in e && "function" == typeof e[i] && (e[i](...t), !0);
+  }
   Ycr(e) {
     return this.Ncr.has(e);
   }
   ClearContainer(e) {
+    var i = [];
+    for (const t of this.v9)
+      (t.IsExistInLeaveLevel = !0),
+        t.Info.IsPermanent ||
+          (e && UiModel_1.UiModel.SeamlessStackWhileList.has(t.Info.Name)) ||
+          (this.TryCatchViewDestroyCompatible(t), i.push(t));
+    for (const o of i) this.Mcr(o);
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("UiCore", 16, "ClearContainer 清栈");
+  }
+  async BeforeClearContainerAsync(e) {
     var i = [];
     for (const a of this.Fcr.values()) {
       var t = a.Element;
@@ -651,24 +679,83 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiCore",
-              11,
+              10,
               "[Clear] 清理缓存的界面数据",
               ["Name", o.constructor.name],
               ["ComponentId", o.ComponentId],
             ));
     }
-    i.length = 0;
-    for (const r of this.v9)
-      (r.IsExistInLeaveLevel = !0),
-        r.Info.IsPermanent ||
-          (e && UiModel_1.UiModel.SeamlessStackWhileList.has(r.Info.Name)) ||
-          (this.TryCatchViewDestroyCompatible(r), i.push(r));
-    for (const n of i) this.Mcr(n);
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiCore", 17, "ClearContainer 清栈");
+    this.tza && (await this.tza.Promise), this.QRl && (await this.QRl.Promise);
   }
-  async BeforeClearContainerAsync() {
-    this.bKa && (await this.bKa.Promise);
+  async HideViewByPlot() {
+    var e = this.v9.Peek();
+    e &&
+      (this.Ujt(),
+      e.WillReleaseScene()
+        ? (await BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
+            "Start",
+            e.Info.Name,
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("UiCore", 10, "隐藏界面", ["ViewName", e.Info.Name]),
+          await e.HideAsync(),
+          BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
+            "Close",
+            e.Info.Name,
+          ))
+        : (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("UiCore", 10, "隐藏界面", ["ViewName", e.Info.Name]),
+          await e.HideAsync()));
+  }
+  async ShowViewByPlot(e) {
+    var i = this.v9.Peek();
+    i &&
+      (i?.WillLoadScene()
+        ? (await Promise.all([
+            BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
+              "None",
+              i.Info.Name,
+            ),
+            e?.(),
+          ]),
+          (i.ShowPromise = new CustomPromise_1.CustomPromise()),
+          (i.LoadScenePromise = new CustomPromise_1.CustomPromise()),
+          (i.SkipRemoveBlackScreen = !0),
+          i.ShowAsync(),
+          this.xxc(i),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("UiCore", 10, "#######加载场景", [
+              "ViewName",
+              i.Info.Name,
+            ]),
+          await i.LoadScenePromise.Promise,
+          (i.SkipRemoveBlackScreen = !1),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("UiCore", 10, "#######黑屏移除", [
+              "ViewName",
+              i.Info.Name,
+            ]),
+          BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
+            "Close",
+            i.Info.Name,
+          ),
+          await i.ShowPromise.Promise,
+          (i.ShowPromise = void 0),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("UiCore", 16, "#######界面显示", [
+              "ViewName",
+              i?.Info.Name,
+            ]))
+        : (this.xxc(i), await Promise.all([e?.(), i.ShowAsync()])),
+      this.Jft());
+  }
+  async WaitSwitchToPlotPending() {
+    var e;
+    this.Rjt &&
+      ((e = this.v9.Peek()), await this.Wcr(e, 5)?.ExecutePromise?.Promise);
+  }
+  TryUnlock() {
+    this.pjt && this.Jft();
   }
   Wcr(e, i) {
     var t = new UiViewPending_1.UiViewPending(e, i);
@@ -677,7 +764,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       if (o.Equal(t))
         return (
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("UiCore", 17, "界面缓存操做重复", [
+            Log_1.Log.Warn("UiCore", 16, "界面缓存操做重复", [
               "ViewName",
               e.Info.Name,
             ]),
@@ -689,7 +776,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
           this.Ocr.pop(),
           UiManager_1.UiManager.RemoveView(e.GetViewId()),
           Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("UiCore", 17, "界面缓存操作成对, 自动移除上一个", [
+            Log_1.Log.Warn("UiCore", 16, "界面缓存操作成对, 自动移除上一个", [
               "ViewName",
               e.Info.Name,
             ]),
@@ -702,7 +789,7 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCore",
-          17,
+          16,
           "缓存界面操作",
           ["界面", e.Info.Name],
           ["操作类型", i],
@@ -727,10 +814,13 @@ class UiViewStackContainer extends UiViewContainer_1.UiViewContainer {
       this.Fcr.set(i, e),
       (UiModel_1.UiModel.InNormalQueue = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiCore", 17, "缓存界面进入等待队列", [
+        Log_1.Log.Info("UiCore", 16, "缓存界面进入等待队列", [
           "ViewName",
           i.Info.Name,
         ]);
+  }
+  IsViewPendingListEmpty() {
+    return 0 === this.Ocr.length;
   }
 }
 exports.UiViewStackContainer = UiViewStackContainer;

@@ -37,10 +37,10 @@ class PlotAudioDelegate {
           ? 3 === t &&
             ((t = i),
             Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Plot", 22, "回调音频时长", ["", t.Duration]),
+              Log_1.Log.Debug("Plot", 21, "回调音频时长", ["", t.Duration]),
             this.Callback(t.Duration))
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Plot", 18, "回调没移除成功");
+            Log_1.Log.Warn("Plot", 17, "回调没移除成功");
       });
   }
   Init(t) {
@@ -76,7 +76,7 @@ class PlotTextCommonLogic {
       (this.Nra = 0),
       (this.PlayDelayTime = void 0),
       (this.K2n = void 0),
-      (this.lZi = -1),
+      (this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE),
       (this.uZi = void 0),
       (this.Q2n = 1),
       (this.X2n = !1),
@@ -144,7 +144,7 @@ class PlotTextCommonLogic {
       (this.dZi = void 0),
       (this.CZi = () => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 打字机结束"),
+          Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 打字机结束"),
           (this.cZi.GetPlayTween().from = 1),
           this.gZi(),
           (this.IsTextAnimPlaying = !1),
@@ -186,7 +186,6 @@ class PlotTextCommonLogic {
     (this.uZi = void 0),
       (this.X2n = !1),
       (this.y$t = !1),
-      (this.IsInteraction = !1),
       (this.$2n = !1),
       (this.Q2n = 1),
       this.gZi(),
@@ -198,7 +197,7 @@ class PlotTextCommonLogic {
   }
   pZi(t = !0) {
     if (!this.$2n && this.CurrentContent.UniversalTone) {
-      var i = this.CurrentContent.UniversalTone.TimberId ?? this.uZi?.TimberId,
+      var i = this.CurrentContent.UniversalTone.TimberId || this.uZi?.TimberId,
         e = this.CurrentContent.UniversalTone.UniversalToneId;
       if (i && e) {
         var o =
@@ -211,7 +210,7 @@ class PlotTextCommonLogic {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Plot",
-          27,
+          26,
           "通用语气配置无法获取，策划检查配置",
           ["timberId", i],
           ["universalToneId", e],
@@ -232,11 +231,11 @@ class PlotTextCommonLogic {
           (i =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e)) ||
             (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "实体不存在", ["entityId", e])),
+              Log_1.Log.Error("Event", 26, "实体不存在", ["entityId", e])),
           (i = i.Entity.GetComponent(1)?.Owner)?.IsValid()
             ? AudioSystem_1.AudioSystem.PostEvent(t, i)
             : Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 27, "未能获取到该实体对应的有效Actor", [
+              Log_1.Log.Error("Event", 26, "未能获取到该实体对应的有效Actor", [
                 "entityId",
                 e,
               ])));
@@ -248,15 +247,15 @@ class PlotTextCommonLogic {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotTextLogic] 恢复时：音频切换了语言，重播",
           ),
         (this.$bn = LanguageSystem_1.LanguageSystem.PackageAudio),
         this.ClearCurPlayAudio()),
-      -1 !== this.lZi)
+      this.lZi !== AudioSystem_1.INVALID_AUDIO_EVENT_VALUE)
     )
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 恢复时：恢复音频播放"),
+        Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 恢复时：恢复音频播放"),
         AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 2, {
           TransitionDuration: BREAK_TIME,
         }),
@@ -269,46 +268,50 @@ class PlotTextCommonLogic {
           )
         : void 0;
       if (!t) return !1;
+      const e =
+        t.TailTime < 0
+          ? ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.AudioEndDelay
+          : t.TailTime;
       var i =
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           t.ExternalSourceSetting,
         );
-      const e = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(t);
-      t = (0, AudioSystem_1.parseAudioEventPath)(i.AudioEventPath);
+      const o = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName(t);
+      t = (0, AudioSystem_1.parseAudioEventPath)(i.SubtitleEvent);
       PlotTextCommonLogic.Ybn++;
-      const o = PlotTextCommonLogic.Ybn;
+      const s = PlotTextCommonLogic.Ybn;
       (this.lZi = AudioSystem_1.AudioSystem.PostEvent(t, void 0, {
-        ExternalSourceName: i.ExternalSrcName,
-        ExternalSourceMediaName: e,
+        ExternalSourceName: i.SubtitleSrc,
+        ExternalSourceMediaName: o,
         CallbackMask: 1048584,
         CallbackHandler: (t, i) => {
-          o !== PlotTextCommonLogic.Ybn
+          s !== PlotTextCommonLogic.Ybn
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Plot",
-                27,
+                26,
                 "[PlotViewHud] 废弃的音频回调",
-                ["id", o],
-                ["mediaName", e],
+                ["id", s],
+                ["mediaName", o],
                 ["type", t],
               )
             : 0 === t
               ? (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 音频播放完毕", [
+                  Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 音频播放完毕", [
                     "mediaName",
-                    e,
+                    o,
                   ]),
                 (this.$2n = !0),
-                (this.lZi = -1),
+                (this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE),
                 PlotTextCommonLogic.Ybn++)
               : 3 === t &&
-                ((this.PlayDelayTime = i.Duration),
+                ((this.PlayDelayTime = i.Duration + e),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Plot",
-                    27,
+                    26,
                     "[PlotTextLogic] 音频播放开始",
-                    ["mediaName", e],
+                    ["mediaName", o],
                     ["duration", this.PlayDelayTime],
                   ),
                 this.aZi(),
@@ -322,7 +325,7 @@ class PlotTextCommonLogic {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
-              27,
+              26,
               "[PlotTextLogic] 加载剧情音频超时，直接显示剧情文本",
             ),
             this.ClearCurPlayAudio(),
@@ -339,15 +342,15 @@ class PlotTextCommonLogic {
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotTextLogic] 恢复时：音频切换了语言，重播",
           ),
         (this.$bn = LanguageSystem_1.LanguageSystem.PackageAudio),
         this.ClearCurPlayAudio()),
-      -1 !== this.lZi)
+      this.lZi !== AudioSystem_1.INVALID_AUDIO_EVENT_VALUE)
     )
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 恢复时：恢复音频播放"),
+        Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 恢复时：恢复音频播放"),
         AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 2, {
           TransitionDuration: BREAK_TIME,
         }),
@@ -362,7 +365,7 @@ class PlotTextCommonLogic {
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Plot",
-                27,
+                26,
                 "[PlotViewHud] 废弃的音频回调",
                 ["id", s],
                 ["eventName", o],
@@ -370,19 +373,19 @@ class PlotTextCommonLogic {
               )
             : 0 === t
               ? (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 音频播放完毕", [
+                  Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 音频播放完毕", [
                     "eventName",
                     o,
                   ]),
                 (this.$2n = !0),
-                (this.lZi = -1),
+                (this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE),
                 PlotTextCommonLogic.Ybn++)
               : 3 === t &&
                 ((this.PlayDelayTime = i.Duration),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Plot",
-                    27,
+                    26,
                     "[PlotTextLogic] 音频播放开始",
                     ["eventName", o],
                     ["duration", this.PlayDelayTime],
@@ -398,7 +401,7 @@ class PlotTextCommonLogic {
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Plot",
-                18,
+                17,
                 "加载通用语气音频超时，直接显示剧情文本",
               ),
               this.ClearCurPlayAudio(),
@@ -413,7 +416,7 @@ class PlotTextCommonLogic {
       AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 0, {
         TransitionDuration: 0,
       }),
-      (this.lZi = -1);
+      (this.lZi = AudioSystem_1.INVALID_AUDIO_EVENT_VALUE);
   }
   aZi() {
     TimerSystem_1.TimerSystem.Has(this.K2n) &&
@@ -435,7 +438,7 @@ class PlotTextCommonLogic {
             ? (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Plot",
-                  27,
+                  26,
                   "配置了字幕参数的无法播放语音",
                   ["id", t?.Id],
                   ["param", t?.CaptionParams],
@@ -446,18 +449,18 @@ class PlotTextCommonLogic {
   PauseSubtitle() {
     this.CurrentContent &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 暂停字幕"),
+        Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 暂停字幕"),
       (this.X2n = !0),
       this.K2n
         ? (this.K2n.Pause(),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 暂停时：音频加载中"))
-        : (-1 !== this.lZi &&
+            Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 暂停时：音频加载中"))
+        : (this.lZi !== AudioSystem_1.INVALID_AUDIO_EVENT_VALUE &&
             (AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 1, {
               TransitionDuration: BREAK_TIME,
             }),
             Log_1.Log.CheckDebug()) &&
-            Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 暂停时：音频播放中"),
+            Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 暂停时：音频播放中"),
           this.Y2n?.Remove(),
           (this.Y2n = void 0),
           this.Kbn(),
@@ -468,7 +471,7 @@ class PlotTextCommonLogic {
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "Plot",
-              27,
+              26,
               "[PlotTextLogic] 暂停时：打字机播放中",
               ["offset", this.Q2n],
             )));
@@ -534,7 +537,7 @@ class PlotTextCommonLogic {
   IZi(i, e) {
     if (
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 39, "CD级", [
+        Log_1.Log.Debug("Plot", 38, "CD级", [
           "字幕：",
           this.PlotContent.GetText(),
         ]),
@@ -544,7 +547,7 @@ class PlotTextCommonLogic {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
-            27,
+            26,
             "[PlotTextLogic] 恢复时：恢复打字机动画",
             ["offset", this.Q2n],
           ),
@@ -584,12 +587,12 @@ class PlotTextCommonLogic {
           this.TZi(t);
       }
     else
-      Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 19, "找不到字幕动画组件"),
+      Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 18, "找不到字幕动画组件"),
         this.CZi();
   }
   TZi(t) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 打字机开始", [
+      Log_1.Log.Debug("Plot", 26, "[PlotTextLogic] 打字机开始", [
         "duration",
         t,
       ]),

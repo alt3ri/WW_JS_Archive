@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MowingRiskInBattleView = void 0);
 const UE = require("ue"),
-  Log_1 = require("../../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   UiSequencePlayer_1 = require("../../../../../Ui/Base/UiSequencePlayer"),
@@ -18,22 +17,15 @@ class MowingRiskInBattleView extends BattleVisibleChildView_1.BattleVisibleChild
       (this.eTt = () => {
         UiManager_1.UiManager.OpenView("MowingBuffView", 1);
       }),
-      (this.bMe = (e, t) => {
-        ActivityMowingRiskController_1.ActivityMowingRiskController.Instance.CheckInInstanceDungeon() &&
-          (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug(
-              "MowingRisk",
-              65,
-              "OnInputAction",
-              ["actionName", e],
-              ["actionType", t],
-            ),
-          UiManager_1.UiManager.OpenView("MowingBuffView", 1));
+      (this.YN_ = (e, t) => {
+        1 === t &&
+          ActivityMowingRiskController_1.ActivityMowingRiskController.Instance.CheckInInstanceDungeon() &&
+          UiManager_1.UiManager.OpenView("MowingBuffView", 1);
       }),
-      (this.z6a = (e) => {
+      (this.b9a = (e) => {
         this.RefreshByCustomData(e);
       }),
-      (this.tZa = () => {
+      (this.wnh = () => {
         this.ujr?.LitePlayAsync("Start");
       });
   }
@@ -62,36 +54,40 @@ class MowingRiskInBattleView extends BattleVisibleChildView_1.BattleVisibleChild
   OnBeforeDestroy() {
     this.ujr?.LiteExit(), (this.ujr = void 0);
   }
-  OnAfterShow() {
-    InputDistributeController_1.InputDistributeController.BindActions(
-      [InputMappingsDefine_1.actionMappings.环境特性],
-      this.bMe,
-    );
-  }
-  OnBeforeHide() {
-    InputDistributeController_1.InputDistributeController.UnBindActions(
-      [InputMappingsDefine_1.actionMappings.环境特性],
-      this.bMe,
-    );
-  }
   LZs() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.MowingRiskInBattleRootUpdate,
-      this.z6a,
+      this.b9a,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MowingRiskOnNeedPlayLevelUpSequence,
-        this.tZa,
+        this.wnh,
+      ),
+      InputDistributeController_1.InputDistributeController.BindAction(
+        InputMappingsDefine_1.actionMappings.割草BUFF信息,
+        this.YN_,
+      ),
+      InputDistributeController_1.InputDistributeController.BindAction(
+        InputMappingsDefine_1.actionMappings.割草BUFF信息PC触摸板,
+        this.YN_,
       );
   }
   DZs() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.MowingRiskInBattleRootUpdate,
-      this.z6a,
+      this.b9a,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MowingRiskOnNeedPlayLevelUpSequence,
-        this.tZa,
+        this.wnh,
+      ),
+      InputDistributeController_1.InputDistributeController.UnBindAction(
+        InputMappingsDefine_1.actionMappings.割草BUFF信息,
+        this.YN_,
+      ),
+      InputDistributeController_1.InputDistributeController.UnBindAction(
+        InputMappingsDefine_1.actionMappings.割草BUFF信息PC触摸板,
+        this.YN_,
       );
   }
   CustomSetActive(e) {

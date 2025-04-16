@@ -19,17 +19,22 @@ class MediumItemGridVisionRoleHeadComponent extends MediumItemGridComponent_1.Me
   OnRefresh(e) {
     var i = e.RoleConfigId;
     if (i) {
-      const r = this.GetTexture(0);
-      var t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)?.Card;
-      t
-        ? (r.SetUIActive(!1),
-          this.SetRoleIcon(t, r, i, void 0, () => {
-            r.SetUIActive(!0);
-          }),
-          this.qwt(e),
-          this.Gwt(e),
-          this.SetActive(!0))
-        : this.SetActive(!1);
+      i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i);
+      if (i) {
+        const r = this.GetTexture(0);
+        var i = i.GetRoleSkinId(),
+          t =
+            ConfigManager_1.ConfigManager.SkinConfig.GetRoleSkinConfig(i)?.Card;
+        t
+          ? (r.SetUIActive(!1),
+            this.SetRoleSkinIcon(t, r, i, void 0, () => {
+              r.SetUIActive(!0);
+            }),
+            this.qwt(e),
+            this.Gwt(e),
+            this.SetActive(!0))
+          : this.SetActive(!1);
+      } else this.SetActive(!1);
     } else this.SetActive(!1);
   }
   qwt(i) {

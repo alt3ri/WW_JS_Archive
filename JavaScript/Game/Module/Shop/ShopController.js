@@ -25,23 +25,26 @@ class ShopController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(29365, (e) => {
+    Net_1.Net.Register(22104, (e) => {
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Shop", 19, "Receive ShopInfoNotify"),
+        Log_1.Log.Info("Shop", 18, "Receive ShopInfoNotify"),
         (ModelManager_1.ModelManager.ShopModel.VersionId = e.ejn),
         ModelManager_1.ModelManager.ShopModel.UpdateShopListData(e.tGs);
     }),
-      Net_1.Net.Register(23670, (e) => {
+      Net_1.Net.Register(29202, (e) => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Shop", 19, "Receive ShopUnlockNotify", [
+          Log_1.Log.Info("Shop", 18, "Receive ShopUnlockNotify", [
             "unlockList",
             e.ABs,
           ]),
           this.OnShopUnlockNotify(e);
-      });
+      }),
+      Net_1.Net.Register(22140, this.OnShopInfoUpdateNotify);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(29365), Net_1.Net.UnRegister(23670);
+    Net_1.Net.UnRegister(22104),
+      Net_1.Net.UnRegister(29202),
+      Net_1.Net.UnRegister(22140);
   }
   static OpenShop(e, o) {
     if (ModelManager_1.ModelManager.ShopModel.IsOpen(e)) {
@@ -69,14 +72,14 @@ class ShopController extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.ShopModel
           .CurrentInteractCreatureDataLongId ?? 0,
     });
-    Net_1.Net.Call(19048, e, (e) => {
+    Net_1.Net.Call(28423, e, (e) => {
       e &&
         (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
           ? (ModelManager_1.ModelManager.ShopModel.UpdateItemData(e),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Shop",
-                28,
+                27,
                 "购买物品成功",
                 ["id", e.s5n],
                 ["buyCount", e.X7n],
@@ -102,7 +105,7 @@ class ShopController extends UiControllerBase_1.UiControllerBase {
   }
   static async SendShopInfoRequest(e) {
     (e = Protocol_1.Aki.Protocol.kms.create({ ejn: e })),
-      (e = await Net_1.Net.CallAsync(24570, e));
+      (e = await Net_1.Net.CallAsync(23594, e));
     return (
       !!e &&
       (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
@@ -113,31 +116,31 @@ class ShopController extends UiControllerBase_1.UiControllerBase {
           ))
         : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            20113,
+            23725,
           ),
       !0)
     );
   }
   static async SendShopUpdateRequestAsync(e) {
     (e = Protocol_1.Aki.Protocol.Hms.create({ tjn: e })),
-      (e = await Net_1.Net.CallAsync(28779, e));
+      (e = await Net_1.Net.CallAsync(18886, e));
     e &&
       (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
         ? ModelManager_1.ModelManager.ShopModel.UpdateShopData(e.YVn)
         : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            26340,
+            15104,
           ));
   }
   static SendShopUpdateRequest(e) {
     e = Protocol_1.Aki.Protocol.Hms.create({ tjn: e });
-    Net_1.Net.Call(28779, e, (e) => {
+    Net_1.Net.Call(18886, e, (e) => {
       e &&
         (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
           ? ModelManager_1.ModelManager.ShopModel.UpdateShopData(e.YVn)
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              26340,
+              15104,
             ));
     });
   }
@@ -151,7 +154,7 @@ class ShopController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Shop",
-            28,
+            27,
             "新商品解锁",
             ["id", t.s5n],
             ["buyCount", t.tjn],
@@ -174,5 +177,8 @@ class ShopController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.ShopModel.OpenItemInfo?.ShopId,
         );
     });
+  }),
+  (ShopController.OnShopInfoUpdateNotify = (e) => {
+    ModelManager_1.ModelManager.ShopModel.UpdateShopData(e.A8s);
   });
 //# sourceMappingURL=ShopController.js.map

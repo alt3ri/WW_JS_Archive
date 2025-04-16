@@ -5,7 +5,7 @@ const Log_1 = require("../Misc/Log"),
   SouceMap_1 = require("../Misc/SouceMap");
 class PerfRecorder {
   constructor() {
-    (this.Zho = []), (this.ZAa = new Map());
+    (this.Zho = []), (this.TAa = new Map());
   }
   Mark(e) {
     var t = {
@@ -14,7 +14,7 @@ class PerfRecorder {
       Path: (0, SouceMap_1.getCallerLocation)(2),
       Timestamp: Date.now(),
     };
-    this.Zho.push(t), this.ZAa.set(e, t);
+    this.Zho.push(t), this.TAa.set(e, t);
   }
   GetEntries() {
     return this.Zho;
@@ -33,7 +33,7 @@ class PerfRecorder {
       Timestamp: Date.now(),
       IsTemp: !0,
     };
-    this.ZAa.set(e, t);
+    this.TAa.set(e, t);
   }
   EndMeasure(e, t) {
     this.Measure(e, void 0, void 0, 3), t && this.StartMeasure(t);
@@ -42,10 +42,10 @@ class PerfRecorder {
     var a,
       o,
       r = r ?? t,
-      n = this.ZAa.get(r);
+      n = this.TAa.get(r);
     if (n) {
       let e = void 0;
-      s && !(e = this.ZAa.get(s))
+      s && !(e = this.TAa.get(s))
         ? (0, Log_1.error)(`Measure ${t} failed, end mark not found.`)
         : ((a = n.Timestamp),
           (o = s ? e.Timestamp : Date.now()),
@@ -56,8 +56,8 @@ class PerfRecorder {
             Name: t,
             Duration: o - a,
           }),
-          n.IsTemp && this.ZAa.delete(r),
-          e?.IsTemp && this.ZAa.delete(s));
+          n.IsTemp && this.TAa.delete(r),
+          e?.IsTemp && this.TAa.delete(s));
     } else (0, Log_1.error)(`Measure ${t} failed, start mark not found.`);
   }
   Run(e, t) {

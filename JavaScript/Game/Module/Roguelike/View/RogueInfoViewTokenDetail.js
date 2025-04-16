@@ -164,7 +164,7 @@ class RogueInfoViewTokenDetailGrid extends LoopScrollMediumItemGrid_1.LoopScroll
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Roguelike",
-          35,
+          34,
           "肉鸽商店刷新数据 格子",
           ["isSelected", t],
           ["gridIndex", i],

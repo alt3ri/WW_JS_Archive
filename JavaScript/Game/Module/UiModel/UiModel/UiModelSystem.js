@@ -5,20 +5,19 @@ const UiModelDefine_1 = require("../Define/UiModelDefine"),
   UiModelBase_1 = require("./UiModelBase");
 class UiModelSystem {
   static CreateUiModelByUseWay(e, i) {
-    e = UiModelDefine_1.uiModelCreateDataPreDefine[e];
-    return this.CreateUiModelByCreateData(e, i);
+    var t = (0, UiModelDefine_1.getUiModelCreateDataPreDefine)()[e];
+    return this.CreateUiModelByCreateData(t, i, e);
   }
-  static CreateUiModelByCreateData(e, i) {
-    var t = new UiModelBase_1.UiModelBase();
-    for (const s of e.Components) t.AddComponent(s);
-    var o = t.CheckGetComponent(0),
-      o =
-        (o &&
-          ((o.ModelType = e.ModelType),
-          (o.ModelActorType = e.ModelActorType),
-          (o.ModelUseWay = e.ModelUseWay)),
-        t.CheckGetComponent(1));
-    return o && (o.Actor = i), t;
+  static CreateUiModelByCreateData(e, i, t) {
+    var o = new UiModelBase_1.UiModelBase(t);
+    for (const s of e.Components) o.AddComponent(s);
+    (t = o.CheckGetComponent(0)),
+      t &&
+        ((t.ModelType = e.ModelType),
+        (t.ModelActorType = e.ModelActorType),
+        (t.ModelUseWay = e.ModelUseWay)),
+      (t = o.CheckGetComponent(1));
+    return t && (t.Actor = i), o;
   }
 }
 exports.UiModelSystem = UiModelSystem;

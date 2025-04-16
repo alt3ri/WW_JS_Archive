@@ -12,6 +12,11 @@ class TsDecoratorGeneralConditionCheck extends UE.BTDecorator_BlueprintBase {
       (this.TsConditionGroupId = ""),
       (this.TsCompareValue = !1);
   }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
+      (this.TsConditionGroupId = ""),
+      (this.TsCompareValue = !1);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),

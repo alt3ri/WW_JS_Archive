@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  ModelManager_1 = require("../Manager/ModelManager"),
-  BulletController_1 = require("../NewWorld/Bullet/BulletController");
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
+  ModelManager_1 = require("../Manager/ModelManager");
 class TsAnimNotifyDestroySpecBullet extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -11,6 +11,7 @@ class TsAnimNotifyDestroySpecBullet extends UE.KuroAnimNotify {
       (this.是否召唤子子弹 = !1),
       (this.角色拥有标签执行判定 = void 0);
   }
+  Constructor() {}
   K2_Notify(e, r) {
     e = e.GetOwner();
     if (e instanceof TsBaseCharacter_1.default) {
@@ -23,18 +24,18 @@ class TsAnimNotifyDestroySpecBullet extends UE.KuroAnimNotify {
       t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(
         e.EntityId,
       );
-      const s = [],
-        o = this.bulletName.toString();
+      const o = [],
+        s = this.bulletName.toString();
       if (
         (t?.forEach((e) => {
-          o === e.GetBulletInfo()?.BulletDataMain.BulletName && s.push(e.Id);
+          s === e.GetBulletInfo()?.BulletDataMain.BulletName && o.push(e.Id);
         }),
-        0 === s.length)
+        0 === o.length)
       )
         return !1;
-      for (let e = s.length - 1; 0 <= e; e--)
-        BulletController_1.BulletController.DestroyBullet(
-          s[e],
+      for (let e = o.length - 1; 0 <= e; e--)
+        ControllerHolder_1.ControllerHolder.BulletController.DestroyBullet(
+          o[e],
           this.是否召唤子子弹,
         );
     }

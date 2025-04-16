@@ -16,7 +16,7 @@ class BusinessHelperPanel extends UiPanelBase_1.UiPanelBase {
       (this.Mke = () => {
         this.aOn?.SkipToInteractivePanel();
       }),
-      (this.jpa = () => {
+      (this.Wpa = () => {
         var e,
           i = ConfigManager_1.ConfigManager.BusinessConfig.GetEntrustRoleById(
             this.SelectedRoleId,
@@ -59,7 +59,7 @@ class BusinessHelperPanel extends UiPanelBase_1.UiPanelBase {
     ]),
       (this.BtnBindInfo = [
         [1, this.Mke],
-        [2, this.jpa],
+        [2, this.Wpa],
       ]);
   }
   async OnBeforeStartAsync() {

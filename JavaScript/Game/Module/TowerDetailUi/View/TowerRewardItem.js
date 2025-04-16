@@ -18,10 +18,15 @@ class TowerRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
       (this.lRo = () => {
-        TowerController_1.TowerController.TowerRewardRequest(
-          ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
-          this.hRo,
-        ),
+        var e =
+          ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties;
+        const r =
+          ModelManager_1.ModelManager.TowerModel.GetDifficultyMaxStars(e);
+        var t =
+          ModelManager_1.ModelManager.TowerModel.GetDifficultyReward(e)
+            ?.filter((e) => !e.IsReceived && r >= e.Target)
+            ?.map((e) => e.Index) ?? [];
+        TowerController_1.TowerController.TowerRewardRequest(e, this.hRo, t),
           this.GetItem(3).SetUIActive(!0),
           this.GetItem(5).SetUIActive(!1);
       });

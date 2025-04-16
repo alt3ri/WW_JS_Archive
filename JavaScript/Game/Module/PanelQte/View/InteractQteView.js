@@ -2,8 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractQteView = void 0);
 const UE = require("ue"),
-  AudioDefine_1 = require("../../../../Core/Audio/AudioDefine"),
-  AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -84,7 +82,7 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
     super.OnBeforeShow(),
       ModelManager_1.ModelManager.PanelQteModel.IsInQte ||
         (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("PanelQte", 18, "界面打开时qte已经结束了"),
+          Log_1.Log.Info("PanelQte", 17, "界面打开时qte已经结束了"),
         UiManager_1.UiManager.CloseView("InteractQteView"));
   }
   OnBeforeDestroy() {
@@ -103,14 +101,14 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
       ? e !==
         (e = ModelManager_1.ModelManager.PanelQteModel.GetContext()).QteHandleId
         ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error("PanelQte", 18, "qte handleId 不匹配"),
+            Log_1.Log.Error("PanelQte", 17, "qte handleId 不匹配"),
           UiManager_1.UiManager.CloseView("InteractQteView"))
         : ((this.NTe = e.Config.Duration),
           (this.IsQteStart = !1),
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("PanelQte", 18, "触发交互Qte"))
+            Log_1.Log.Debug("PanelQte", 17, "触发交互Qte"))
       : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("PanelQte", 18, "界面打开时qte已经结束了"),
+          Log_1.Log.Info("PanelQte", 17, "界面打开时qte已经结束了"),
         UiManager_1.UiManager.CloseView("InteractQteView"));
   }
   OnAddEventListener() {
@@ -139,11 +137,7 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
   }
   HandleQteEnd() {
     this.xOi ||
-      (AudioSystem_1.AudioSystem.SetState(
-        AudioDefine_1.STATEGROUP,
-        AudioDefine_1.STATENORMAL,
-      ),
-      this.IsMobile || this.GetItem(1).SetUIActive(!1),
+      (this.IsMobile || this.GetItem(1).SetUIActive(!1),
       this.SPe?.StopCurrentSequence(),
       ModelManager_1.ModelManager.PanelQteModel.IsQteSuccess()
         ? this.SPe?.PlayLevelSequenceByName("Success")

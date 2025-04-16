@@ -6,59 +6,64 @@ const Log_1 = require("../../Core/Common/Log"),
   UiLayer_1 = require("./UiLayer"),
   MASK_DESTROY_TIME = 2e3;
 class UiMask {
-  constructor(i) {
-    (this.YCr = 0), (this.IRe = void 0), (this.JCr = i);
+  constructor() {
+    this.o8_ = new Map();
   }
-  kot() {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug(
-        "UiMask",
-        11,
-        "[UiMask]添加定时器",
-        ["MaskTag", this.JCr],
-        ["MaskCount", this.YCr],
-      ),
-      (this.IRe = TimerSystem_1.TimerSystem.Delay(() => {
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "UiMask",
-            11,
-            "[UiMask]超过保底时间,定时器执行逻辑,解除遮罩",
-            ["MaskTag", this.JCr],
-          ),
-          this.zCr();
-      }, MASK_DESTROY_TIME));
-  }
-  xHe() {
-    void 0 !== this.IRe &&
+  n8_(e) {
+    void 0 !== e.Timer &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "UiMask",
-          11,
+          10,
           "[UiMask]移除定时器",
-          ["MaskTag", this.JCr],
-          ["MaskCount", this.YCr],
+          ["MaskTag", e.Tag],
+          ["MaskCount", e.Count],
         ),
-      TimerSystem_1.TimerSystem.Remove(this.IRe),
-      (this.IRe = void 0));
+      TimerSystem_1.TimerSystem.Remove(e.Timer),
+      (e.Timer = void 0));
   }
-  ZCr() {
-    (this.YCr += 1),
-      this.kot(),
-      UiLayer_1.UiLayer.SetShowMaskLayer(this.JCr, !0);
+  s8_(e, i) {
+    return (
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "UiMask",
+          10,
+          "[UiMask]添加定时器",
+          ["MaskTag", e],
+          ["MaskCount", i],
+        ),
+      TimerSystem_1.TimerSystem.Delay(() => {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "UiMask",
+            10,
+            "[UiMask]超过保底时间,定时器执行逻辑,解除遮罩",
+            ["MaskTag", e],
+          ),
+          this.a8_(e);
+      }, MASK_DESTROY_TIME)
+    );
   }
-  egr() {
-    --this.YCr,
-      this.YCr <= 0 && UiLayer_1.UiLayer.SetShowMaskLayer(this.JCr, !1);
+  h8_(e) {
+    (e.Timer = this.s8_(e.Tag, e.Count)),
+      UiLayer_1.UiLayer.SetShowMaskLayer(e.Tag, !0);
   }
-  zCr() {
-    (this.YCr = 0),
-      (this.IRe = void 0),
-      UiLayer_1.UiLayer.SetShowMaskLayer(this.JCr, !1);
+  l8_(e) {
+    let i = this.o8_.get(e);
+    i
+      ? (this.n8_(i), (i.Count += 1))
+      : ((i = { Tag: e, Timer: void 0, Count: 1 }), this.o8_.set(e, i)),
+      this.h8_(i);
   }
-  SetMask(i) {
-    i ? (this.xHe(), this.ZCr()) : 0 < this.YCr && this.egr(),
-      this.YCr <= 0 && this.xHe();
+  _8_(e) {
+    var i = this.o8_.get(e);
+    i && (--i.Count, i.Count <= 0) && (this.n8_(i), this.a8_(e));
+  }
+  a8_(e) {
+    this.o8_.delete(e), UiLayer_1.UiLayer.SetShowMaskLayer(e, !1);
+  }
+  SetMask(e, i) {
+    i ? this.l8_(e) : this._8_(e);
   }
 }
 exports.UiMask = UiMask;

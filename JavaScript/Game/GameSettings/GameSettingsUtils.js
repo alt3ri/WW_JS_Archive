@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GameSettingsUtils = void 0);
 const UE = require("ue"),
+  AudioDefine_1 = require("../../Core/Audio/AudioDefine"),
+  AudioSystem_1 = require("../../Core/Audio/AudioSystem"),
   Info_1 = require("../../Core/Common/Info"),
   LanguageSystem_1 = require("../../Core/Common/LanguageSystem"),
   Log_1 = require("../../Core/Common/Log"),
@@ -9,12 +11,15 @@ const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
   GlobalData_1 = require("../GlobalData"),
   InputSettingsManager_1 = require("../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../Manager/ConfigManager"),
   ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  MenuTool_1 = require("../Module/Menu/MenuTool"),
+  DamageUiManager_1 = require("../Module/DamageUi/DamageUiManager"),
+  CharacterSkinDamageComponent_1 = require("../NewWorld/Character/Common/Component/CharacterSkinDamageComponent"),
   RoleGaitStatic_1 = require("../NewWorld/Character/Role/Component/Define/RoleGaitStatic"),
   PerfSightController_1 = require("../PerfSight/PerfSightController"),
   RenderConfig_1 = require("../Render/Config/RenderConfig"),
@@ -35,66 +40,7 @@ class GameSettingsUtils {
       !0
     );
   }
-  static ApplyImageQuality(e) {
-    var a, t, r, i, n, l;
-    return !(
-      3 < e ||
-      e < 0 ||
-      ((e = e),
-      !(a =
-        GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetDeviceReaderFeatureData(
-          e,
-        ))) ||
-      !this.PreApplyImageQuality(e) ||
-      ((t = Info_1.Info.IsPcOrGamepadPlatform()),
-      (r =
-        GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice()),
-      (i = GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsFsrDevice()),
-      (n =
-        GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetDefaultScreenResolution()),
-      (n =
-        GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetResolutionIndexByList(
-          n,
-        )),
-      (l =
-        GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetFrameIndexByList(
-          a.FPS,
-        )),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(11, l),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(
-        54,
-        a.ShadowQuality,
-      ),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(55, a.FxQuality),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(56, a.ImageDetail),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(
-        57,
-        a.AntiAliasing,
-      ),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(58, a.AO),
-      this.ApplySceneLightQuality(e),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(63, a.VolumeFog),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(64, a.VolumeLight),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(65, a.MotionBlur),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(
-        67,
-        a.ScreenPercentage,
-      ),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(132, a.Bloom),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(6, n),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(79, a.NpcDensity),
-      GameSettingsManager_1.GameSettingsManager.SetApplySave(87, i ? 1 : 0),
-      t &&
-        (GameSettingsManager_1.GameSettingsManager.SetApplySave(66, a.VSync),
-        GameSettingsManager_1.GameSettingsManager.SetApplySave(81, r ? 1 : 0),
-        GameSettingsManager_1.GameSettingsManager.SetApplySave(83, r ? 1 : 0),
-        this.ApplyNvidiaSuperSamplingFrameGenerate(),
-        GameSettingsManager_1.GameSettingsManager.SetApplySave(84, r ? 1 : 0),
-        GameSettingsManager_1.GameSettingsManager.SetApplySave(85, r ? 1 : 0)),
-      0)
-    );
-  }
-  static PreApplyImageQuality(e) {
+  static ApplyImageQualityOnly(e) {
     if (
       0 <
       UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCVarFloat(
@@ -103,7 +49,7 @@ class GameSettingsUtils {
     )
       return (
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Render", 12, "当前在movie 渲染模式下不应用配置"),
+          Log_1.Log.Info("Render", 11, "当前在movie 渲染模式下不应用配置"),
         !1
       );
     PerfSightController_1.PerfSightController.IsEnable &&
@@ -122,28 +68,90 @@ class GameSettingsUtils {
       ));
     var a,
       t,
-      r = UE.GameUserSettings.GetGameUserSettings();
-    return r
+      r,
+      i = UE.GameUserSettings.GetGameUserSettings();
+    return i
       ? ((a = Info_1.Info.IsPcOrGamepadPlatform()),
         (t = Info_1.Info.IsMobilePlatform()),
+        (r = Info_1.Info.IsPs5Platform()),
         a
-          ? (r.SetGameQualitySettingLevel(e),
-            GameSettingsManager_1.GameSettingsManager.Get(66)?.Apply(),
-            r.ApplySettings(!0))
-          : t && r.SetMobileGameQualitySettingLevel(e),
+          ? (r
+              ? (3 === e
+                  ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                      GlobalData_1.GlobalData.World,
+                      "sg.KuroRenderQuality 1",
+                    )
+                  : UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                      GlobalData_1.GlobalData.World,
+                      "sg.KuroRenderQuality 0",
+                    ),
+                Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
+                    "GameSettings",
+                    59,
+                    "优先应用的画质等级[done]@[PS5]",
+                    ["ps5 quality level", e],
+                  ))
+              : (i.SetGameQualitySettingLevel(e),
+                Info_1.Info.IsMacPlatform() &&
+                  (2 < e
+                    ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                        GlobalData_1.GlobalData.World,
+                        "r.ScreenPercentage 70",
+                      )
+                    : 2 === e
+                      ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                          GlobalData_1.GlobalData.World,
+                          "r.ScreenPercentage 65",
+                        )
+                      : 1 === e
+                        ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                            GlobalData_1.GlobalData.World,
+                            "r.ScreenPercentage 60",
+                          )
+                        : 0 === e &&
+                          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                            GlobalData_1.GlobalData.World,
+                            "r.ScreenPercentage 55",
+                          )),
+                Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
+                    "GameSettings",
+                    64,
+                    "优先应用的画质等级[done]@[Pc或手柄平台]",
+                    ["quality level", e],
+                  )),
+            i.ApplySettings(!0))
+          : t &&
+            (i.SetMobileGameQualitySettingLevel(e), Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info(
+              "GameSettings",
+              64,
+              "优先应用的画质等级[done]@[移动端平台]",
+              ["quality level", e],
+            ),
         !0)
       : (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("GameSettings", 65, "GetGameUserSettings失败", [
+          Log_1.Log.Info("GameSettings", 64, "GetGameUserSettings失败", [
             "qualityLevel",
             e,
           ]),
         !1);
+  }
+  static SetIsCustomImageQuality(e) {
+    LocalStorage_1.LocalStorage.SetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.IsCustomImageQuality,
+      e,
+    );
   }
   static ApplyShadowQuality(e) {
     return (
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "sg.ShadowQuality " + e,
+      ),
+      GameSettingsManager_1.GameSettingsManager.ReApply(
+        GameSettingsDefine_1.EFunction.SCENEAO,
       ),
       PerfSightController_1.PerfSightController.IsEnable &&
         UE.PerfSightHelper.PostEvent(808, e.toString()),
@@ -154,7 +162,12 @@ class GameSettingsUtils {
     var a = [1, 2],
       e = a[MathUtils_1.MathUtils.Clamp(e, 0, a.length - 1)],
       a = UE.GameUserSettings.GetGameUserSettings();
-    return a.SetFullscreenMode(e), a.ApplySettings(!0), !0;
+    return (
+      a.SetFullscreenMode(e),
+      a.ApplySettings(!0),
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SetDisplayMode),
+      !0
+    );
   }
   static ApplyResolution(a) {
     var a =
@@ -171,13 +184,17 @@ class GameSettingsUtils {
       4e3 < a.X ? (e = 4) : 3e3 < a.X ? (e = 3) : 2e3 < a.X && (e = 2),
         UE.PerfSightHelper.PostEvent(803, e.toString());
     }
-    return !0;
+    return (
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SetResolution), !0
+    );
   }
   static ApplyBrightness(e) {
     let a = 2.2;
     return (
-      e < 0 && (a = MathUtils_1.MathUtils.Lerp(1.5, 2.2, e + 1)),
-      0 < e && (a = MathUtils_1.MathUtils.Lerp(2.2, 3.5, e)),
+      (a =
+        e < 0
+          ? MathUtils_1.MathUtils.Lerp(1.5, 2.2, e + 1)
+          : MathUtils_1.MathUtils.Lerp(2.2, 3.5, e)),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.TonemapperGamma " + a,
@@ -203,7 +220,7 @@ class GameSettingsUtils {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "GameSettings",
-          8,
+          64,
           "[FPSDebug]ApplyHighestFps",
           ["value", e],
           ["FPS", a],
@@ -215,19 +232,16 @@ class GameSettingsUtils {
     var a,
       t = UE.GameUserSettings.GetGameUserSettings();
     return (
-      Info_1.Info.IsPcPlatform()
+      Info_1.Info.IsPcOrGamepadPlatform()
         ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "fx.Niagara.QualityLevel " + (0 < e ? 2 : 1),
           )
         : ((a =
-            3 ===
-              GameSettingsDeviceRender_1.GameSettingsDeviceRender
-                .GameQualitySettingLevel &&
             GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsIosAndAndroidHighDevice()),
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.DisableDistortion " + (0 !== e && a ? 0 : 1),
+            "r.DisableDistortion " + (0 < e && a ? 0 : 1),
           ),
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
@@ -240,12 +254,21 @@ class GameSettingsUtils {
     );
   }
   static ApplyImageDetail(e) {
-    var a;
+    var a, t;
     return (
       PerfSightController_1.PerfSightController.IsEnable &&
         UE.PerfSightHelper.PostEvent(805, e.toString()),
       Info_1.Info.IsPcOrGamepadPlatform()
-        ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        ? (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "GameSettings",
+              64,
+              "ApplyImageDetail[pc和主机]",
+              ["传入value", e],
+              ["pcToonOutlineDrawDistanceFar", 4e3],
+              ["pcToonOutlineDrawDistanceNear", 2e3],
+            ),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.Kuro.ToonOutlineDrawDistancePc " + (1 < e ? 4e3 : 2e3),
           ),
@@ -258,7 +281,16 @@ class GameSettingsUtils {
                 GlobalData_1.GlobalData.World,
                 "r.Streaming.ForceKuroRuntimeLODBias 0",
               ))
-        : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        : (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "GameSettings",
+              64,
+              "ApplyImageDetail[移动端]",
+              ["传入value", e],
+              ["mobileToonOutlineDrawDistanceFar", 500],
+              ["mobileToonOutlineDrawDistanceNear", 500],
+            ),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.Kuro.ToonOutlineDrawDistanceMobile 500",
           ),
@@ -272,13 +304,29 @@ class GameSettingsUtils {
             GlobalData_1.GlobalData.World,
             "r.Mobile.SceneObjMobileSSR " + (1 < e && a ? 1 : 0),
           ),
-          (a =
-            3 ===
-              GameSettingsDeviceRender_1.GameSettingsDeviceRender
-                .GameQualitySettingLevel && a),
+          (t =
+            GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsAndroidPlatformNotLow()),
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.Mobile.TreeRimLight " + (a ? 1 : 0),
+            "r.Mobile.TreeRimLight " + (1 < e && t ? 1 : 0),
+          ),
+          GlobalData_1.GlobalData.World.GetWorld().K2_GetWorldSettings()
+            ?.bEnableWorldPartition &&
+            (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("GameSettings", 59, "UpdateFoliageDataLayer", [
+                "value",
+                e + 1,
+              ]),
+            UE.KuroRenderingRuntimeBPPluginBPLibrary.UpdateFoliageDataLayer(
+              GlobalData_1.GlobalData.World,
+              e + 1,
+            )),
+          (t =
+            a &&
+            GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsAndroidAdreno()),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Kuro.AutoExposure " + (1 < e && t ? 1 : 0),
           ),
           Info_1.Info.IsMobilePlatform() &&
             (e < 1
@@ -289,12 +337,7 @@ class GameSettingsUtils {
               : UE.KismetSystemLibrary.ExecuteConsoleCommand(
                   GlobalData_1.GlobalData.World,
                   "r.Streaming.ForceKuroRuntimeLODBias 0",
-                )),
-          Info_1.Info.IsPs5Platform() &&
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.Streaming.ForceKuroRuntimeLODBias 0",
-            )),
+                ))),
       !0
     );
   }
@@ -311,38 +354,46 @@ class GameSettingsUtils {
     );
   }
   static ApplySceneAo(e) {
-    var a;
-    return (
-      Info_1.Info.IsPcOrGamepadPlatform()
-        ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "r.AmbientOcclusionLevels " + -e,
-          ),
-          RenderDataManager_1.RenderDataManager.Get().SetGrassAo(e),
-          PerfSightController_1.PerfSightController.IsEnable &&
-            UE.PerfSightHelper.PostEvent(810, e.toString()))
-        : ((a =
-            GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsAndroidPlatformScreenBetter()),
-          (a =
-            0 < GameSettingsManager_1.GameSettingsManager.GetCurrentValue(10) &&
-            a
-              ? e
-              : 0),
-          UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "r.Mobile.SSAO " + a,
-          ),
-          UE.KismetMaterialLibrary.SetScalarParameterValue(
-            GlobalData_1.GlobalData.World,
-            RenderDataManager_1.RenderDataManager.Get().GetGlobalShaderParameters(),
-            new UE.FName("EnableMobileScreenAO"),
-            a,
-          ),
-          RenderDataManager_1.RenderDataManager.Get().SetGrassAo(a),
-          PerfSightController_1.PerfSightController.IsEnable &&
-            UE.PerfSightHelper.PostEvent(810, a.toString())),
-      !0
-    );
+    if (Info_1.Info.IsPcOrGamepadPlatform())
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.AmbientOcclusionLevels " + -e,
+      ),
+        RenderDataManager_1.RenderDataManager.Get().SetGrassAo(e),
+        PerfSightController_1.PerfSightController.IsEnable &&
+          UE.PerfSightHelper.PostEvent(810, e.toString());
+    else {
+      var a =
+          GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsAndroidPlatformScreenBetter(),
+        t = GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+          GameSettingsDefine_1.EFunction.SHADOWQUALITY,
+        );
+      if (void 0 === t)
+        return (
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "GameSettings",
+              64,
+              "【移动端】设定场景AO时，不能获得阴影质量保存值",
+            ),
+          !1
+        );
+      t = 0 < t && a ? e : 0;
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.Mobile.SSAO " + t,
+      ),
+        UE.KismetMaterialLibrary.SetScalarParameterValue(
+          GlobalData_1.GlobalData.World,
+          RenderDataManager_1.RenderDataManager.Get().GetGlobalShaderParameters(),
+          new UE.FName("EnableMobileScreenAO"),
+          t,
+        ),
+        RenderDataManager_1.RenderDataManager.Get().SetGrassAo(t),
+        PerfSightController_1.PerfSightController.IsEnable &&
+          UE.PerfSightHelper.PostEvent(810, t.toString());
+    }
+    return !0;
   }
   static ApplyNpcDensity(e) {
     let a = e;
@@ -359,7 +410,6 @@ class GameSettingsUtils {
     );
   }
   static ApplyNvidiaSuperSamplingEnable(e) {
-    var a;
     return (
       !Info_1.Info.IsPs5Platform() &&
       !!GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice() &&
@@ -382,9 +432,12 @@ class GameSettingsUtils {
               GlobalData_1.GlobalData.World,
               "r.FidelityFX.FSR.SecondaryUpscale 0",
             ),
-            this.ApplyNvidiaSuperSamplingFrameGenerate(),
-            (a = GameSettingsManager_1.GameSettingsManager.Get(85)) &&
-              this.ApplyNvidiaReflex(a.GetCurrentValue()))
+            GameSettingsManager_1.GameSettingsManager.ReApply(
+              GameSettingsDefine_1.EFunction.NVIDIADLSSFG,
+            ),
+            GameSettingsManager_1.GameSettingsManager.ReApply(
+              GameSettingsDefine_1.EFunction.NVIDIAREFLEX,
+            ))
           : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "r.NGX.DLSS.Enable 0",
@@ -393,10 +446,10 @@ class GameSettingsUtils {
               GlobalData_1.GlobalData.World,
               "r.TemporalAASamples 4",
             ),
-            UE.StreamlineLibraryDLSSG.SetDLSSGMode(0),
-            UE.StreamlineLibraryReflex.SetReflexMode(0)),
-        (a = GameSettingsManager_1.GameSettingsManager.Get(66)) &&
-          this.ApplyPcVsync(a.GetCurrentValue()),
+            this.ApplyNvidiaSuperSamplingFrameGenerate(0)),
+        GameSettingsManager_1.GameSettingsManager.ReApply(
+          GameSettingsDefine_1.EFunction.PCVSYNC,
+        ),
         1 ===
           GameSettingsDeviceRender_1.GameSettingsDeviceRender
             .InCacheSceneColorMode &&
@@ -409,11 +462,13 @@ class GameSettingsUtils {
       !0)
     );
   }
-  static ApplyNvidiaSuperSamplingFrameGenerate() {
+  static ApplyNvidiaSuperSamplingFrameGenerate(e) {
     return (
-      !!GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice() &&
+      !!GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlss3GpuDevice() &&
       (GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsNvidiaStreamlinePluginLoaded() &&
-        UE.StreamlineLibraryDLSSG.SetDLSSGMode(0),
+        (GameSettingsDeviceRender_1.GameSettingsDeviceRender.EnableDLSSG(e),
+        PerfSightController_1.PerfSightController.IsEnable) &&
+        UE.PerfSightHelper.PostEvent(820, e.toString()),
       !0)
     );
   }
@@ -432,6 +487,28 @@ class GameSettingsUtils {
       !0)
     );
   }
+  static ApplyNvidiaSuperSamplingQuality(e) {
+    return (
+      !!GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice() &&
+      (GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsNvidiaDlssPluginLoaded() &&
+        (99 === e
+          ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.NGX.DLSS.Quality.Auto 1",
+            )
+          : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.NGX.DLSS.Quality.Auto 0",
+            ),
+            UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.NGX.DLSS.Quality " + e,
+            )),
+        PerfSightController_1.PerfSightController.IsEnable) &&
+        UE.PerfSightHelper.PostEvent(812, e.toString()),
+      !0)
+    );
+  }
   static ApplyNvidiaSuperSamplingSharpness(e) {
     return (
       !!GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice() &&
@@ -441,93 +518,109 @@ class GameSettingsUtils {
     );
   }
   static ApplyNvidiaReflex(e) {
-    return (
-      !!GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice() &&
-      (GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsNvidiaStreamlinePluginLoaded() &&
-        UE.StreamlineLibraryReflex.SetReflexMode(e),
-      !0)
-    );
+    return !0;
   }
   static ApplyFsrEnable(e) {
     return (
       !GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsDlssGpuDevice() &&
       !GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsMetalFxDevice() &&
-      (Info_1.Info.IsPcOrGamepadPlatform()
+      (Info_1.Info.IsGamepadPlatform()
         ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "r.NGX.DLSS.Enable 0",
-          ),
-          UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
             "r.TemporalAASamples 4",
           ),
-          1 === e
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.FidelityFX.FSR.PrimaryUpscale 1",
+          ),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.ScreenPercentage 77",
+          ),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.MipMapLODBias -0.3765",
+          ),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.TemporalAACurrentFrameWeight 0.09",
+          ))
+        : (Info_1.Info.IsPcPlatform()
             ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
-                "r.FidelityFX.FSR.PrimaryUpscale 1",
+                "r.NGX.DLSS.Enable 0",
               ),
               UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
-                "r.ScreenPercentage 77",
+                "r.TemporalAASamples 4",
               ),
-              UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                GlobalData_1.GlobalData.World,
-                "r.MipMapLODBias -0.3765",
-              ),
-              UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                GlobalData_1.GlobalData.World,
-                "r.TemporalAACurrentFrameWeight 0.09",
-              ))
-            : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                GlobalData_1.GlobalData.World,
-                "r.FidelityFX.FSR.PrimaryUpscale 0",
-              ),
-              UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                GlobalData_1.GlobalData.World,
-                "r.ScreenPercentage 100",
-              ),
-              UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                GlobalData_1.GlobalData.World,
-                "r.MipMapLODBias 0.0",
-              ),
-              UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                GlobalData_1.GlobalData.World,
-                "r.TemporalAACurrentFrameWeight 0.25",
-              )))
-        : 1 === e
-          ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.FidelityFX.FSR.PrimaryUpscale 1",
-            ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.TemporalAA.ClampTolerant 0",
-            ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.TemporalAA.SharpenLimitDepth 10",
-            ))
-          : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.FidelityFX.FSR.PrimaryUpscale 0",
-            ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.TemporalAA.ClampTolerant 2",
-            ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.TemporalAA.SharpenLimitDepth -1",
-            )),
-      PerfSightController_1.PerfSightController.IsEnable &&
-        UE.PerfSightHelper.PostEvent(813, e.toString()),
+              1 === e
+                ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.FidelityFX.FSR.PrimaryUpscale 1",
+                  ),
+                  UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.ScreenPercentage 77",
+                  ),
+                  UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.MipMapLODBias -0.3765",
+                  ),
+                  UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.TemporalAACurrentFrameWeight 0.09",
+                  ))
+                : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.FidelityFX.FSR.PrimaryUpscale 0",
+                  ),
+                  UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.ScreenPercentage 100",
+                  ),
+                  UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.MipMapLODBias 0.0",
+                  ),
+                  UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                    GlobalData_1.GlobalData.World,
+                    "r.TemporalAACurrentFrameWeight 0.25",
+                  )))
+            : 1 === e
+              ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.FidelityFX.FSR.PrimaryUpscale 1",
+                ),
+                UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.TemporalAA.ClampTolerant 0",
+                ),
+                UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.TemporalAA.SharpenLimitDepth 10",
+                ))
+              : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.FidelityFX.FSR.PrimaryUpscale 0",
+                ),
+                UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.TemporalAA.ClampTolerant 2",
+                ),
+                UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.TemporalAA.SharpenLimitDepth -1",
+                )),
+          PerfSightController_1.PerfSightController.IsEnable &&
+            UE.PerfSightHelper.PostEvent(813, e.toString())),
       !0)
     );
   }
   static ApplyXessEnable(e) {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Game", 41, "ApplyXessEnable", ["XessEnable", e]),
+        Log_1.Log.Debug("Game", 40, "ApplyXessEnable", ["XessEnable", e]),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.XeSS.Enabled " + e,
@@ -540,7 +633,7 @@ class GameSettingsUtils {
   static ApplyXessQuality(e) {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Game", 41, "ApplyXessQuality", ["XessQuality", e]),
+        Log_1.Log.Debug("Game", 40, "ApplyXessQuality", ["XessQuality", e]),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.XeSS.Enabled " + e,
@@ -551,7 +644,7 @@ class GameSettingsUtils {
   static ApplyMetalFxEnable(e) {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Game", 41, "ApplyMetalFxEnable", ["MetalFxEnable", e]),
+        Log_1.Log.Debug("Game", 40, "ApplyMetalFxEnable", ["MetalFxEnable", e]),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.MetalFxUpscale " + e,
@@ -579,11 +672,10 @@ class GameSettingsUtils {
   static ApplyIrxEnable(e) {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Game", 41, "ApplyIrxEnable", ["IrxEnable", e]),
-      GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetIsUILimitFrameMode() ||
-        (1 === e
-          ? GameSettingsDeviceRender_1.GameSettingsDeviceRender.TurnOnIRX()
-          : GameSettingsDeviceRender_1.GameSettingsDeviceRender.TurnOffIRX()),
+        Log_1.Log.Debug("Game", 40, "ApplyIrxEnable", ["IrxEnable", e]),
+      1 === e
+        ? GameSettingsDeviceRender_1.GameSettingsDeviceRender.TurnOnIRX()
+        : GameSettingsDeviceRender_1.GameSettingsDeviceRender.TurnOffIRX(),
       PerfSightController_1.PerfSightController.IsEnable &&
         UE.PerfSightHelper.PostEvent(804, e.toString()),
       !0
@@ -610,11 +702,12 @@ class GameSettingsUtils {
   static ApplyVolumeFog(e) {
     return (
       !!GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsEnableVolumeFog() &&
-      (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-        GlobalData_1.GlobalData.World,
-        "r.volumetricfog " + e,
-      ),
-      PerfSightController_1.PerfSightController.IsEnable &&
+      (Info_1.Info.IsPcOrGamepadPlatform() &&
+        (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          GlobalData_1.GlobalData.World,
+          "r.volumetricfog " + e,
+        ),
+        PerfSightController_1.PerfSightController.IsEnable) &&
         UE.PerfSightHelper.PostEvent(809, e.toString()),
       !0)
     );
@@ -688,16 +781,42 @@ class GameSettingsUtils {
       r = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
         "r.SecondaryScreenPercentage.GameViewport",
       );
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Game", 16, "分辨率参数获取", [
+        "r.MobileContentScaleFactor",
+        t,
+      ]);
+    let i = 1;
+    var l,
+      n =
+        GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetDefaultScreenResolution()
+          .Y;
     return (
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Game", 17, "分辨率参数获取", [
-          "r.MobileContentScaleFactor",
-          t,
-        ]),
-      GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetDefaultScreenResolution()
-        .Y < 750 &&
-        r < 70 &&
-        (a = Math.min(1.5 * a, 100)),
+      GameSettingsDeviceRender_1.GameSettingsDeviceRender.IsAndroidHighResolutionDevice() &&
+      0 < n
+        ? ((l =
+            GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetDefaultScreenResolution()
+              .X) < n && n < 1280 * t
+            ? (i = (1280 * t) / n)
+            : n < l && n < 720 * t && (i = (720 * t) / n),
+          (l = Math.min(r * i, 100)),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.SecondaryScreenPercentage.GameViewport " + l,
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "Game",
+              40,
+              "分辨率校正",
+              ["deviceScaleCorrect", i],
+              ["secondaryScreenPercentage", r],
+              ["newSecondaryScreenPercentage", l],
+            ))
+        : GameSettingsDeviceRender_1.GameSettingsDeviceRender.GetDefaultScreenResolution()
+            .Y < 750 &&
+          r < 70 &&
+          (a = Math.min(1.5 * a, 100)),
       PerfSightController_1.PerfSightController.IsEnable &&
         UE.PerfSightHelper.PostEvent(803, e.toString()),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -705,7 +824,7 @@ class GameSettingsUtils {
         "r.ScreenPercentage " + a,
       ),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Game", 17, "分辨率参数设置", [
+        Log_1.Log.Debug("Game", 16, "分辨率参数设置", [
           "r.ScreenPercentage",
           a,
         ]),
@@ -729,21 +848,31 @@ class GameSettingsUtils {
   }
   static ApplyCameraShakeStrength(e) {
     let a = 0;
-    switch (e) {
-      case 0:
-        a = ModelManager_1.ModelManager.MenuModel.LowShake;
-        break;
-      case 1:
-        a = ModelManager_1.ModelManager.MenuModel.MiddleShake;
-        break;
-      case 2:
-        a = ModelManager_1.ModelManager.MenuModel.HighShake;
-    }
-    ModelManager_1.ModelManager.CameraModel.SetCameraShakeModify(a);
+    if (Info_1.Info.IsMobilePlatform()) a = e;
+    else
+      switch (e) {
+        case 0:
+          a = ModelManager_1.ModelManager.MenuModel.LowShake;
+          break;
+        case 1:
+          a = ModelManager_1.ModelManager.MenuModel.MiddleShake;
+          break;
+        case 2:
+          a = ModelManager_1.ModelManager.MenuModel.HighShake;
+      }
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
+        "GameSettings",
+        64,
+        "相机抖动强度真实值",
+        ["setting value", e],
+        ["strength", a],
+      ),
+      ModelManager_1.ModelManager.CameraModel.SetCameraShakeModify(a);
   }
   static ApplyTextLanguage(e) {
     var a,
-      e = MenuTool_1.MenuTool.GetLanguageCodeById(e);
+      e = GameSettingsManager_1.GameSettingsManager.GetLanguageCodeById(e);
     return (
       !!e &&
       ((a = LanguageSystem_1.LanguageSystem.PackageLanguage),
@@ -759,8 +888,15 @@ class GameSettingsUtils {
       !0)
     );
   }
+  static ApplyTextLanguageOnGameStart(e) {
+    e = GameSettingsManager_1.GameSettingsManager.GetLanguageCodeById(e);
+    return (
+      void 0 !== e &&
+      ((LanguageSystem_1.LanguageSystem.PackageLanguage = e), !0)
+    );
+  }
   static ApplyLanguageAudio(e) {
-    e = MenuTool_1.MenuTool.GetAudioCodeById(e);
+    e = GameSettingsManager_1.GameSettingsManager.GetAudioCodeById(e);
     return (
       !!e &&
       (LanguageSystem_1.LanguageSystem.SetPackageAudio(
@@ -782,9 +918,6 @@ class GameSettingsUtils {
   static ApplyMobileAimVerticalViewSensitivity(e) {
     ModelManager_1.ModelManager.CameraModel.SetCameraAimingPitchSensitivity(e);
   }
-  static ApplyMobileCameraShakeStrength(e) {
-    ModelManager_1.ModelManager.CameraModel.SetCameraShakeModify(e);
-  }
   static ApplyCommonSpringArmLength(e) {
     ModelManager_1.ModelManager.CameraModel.CameraSettingNormalAdditionArmLength =
       e;
@@ -803,14 +936,18 @@ class GameSettingsUtils {
     ModelManager_1.ModelManager.CameraModel.SetSettingSoftLockState(1 === e);
   }
   static ApplyJoystickShakeStrength(e) {
-    var a = GameSettingsManager_1.GameSettingsManager.Get(105);
-    return !!a && (this.VGa(a.GetCurrentValue(), e), !0);
+    var a = GameSettingsManager_1.GameSettingsManager.GetCurrentValueSafely(
+      GameSettingsDefine_1.EFunction.JoystickShakeType,
+    );
+    return this.WNa(a, e), !0;
   }
   static ApplyJoystickShakeType(e) {
-    var a = GameSettingsManager_1.GameSettingsManager.Get(104);
-    return !!a && (this.VGa(e, a.GetCurrentValue()), !0);
+    var a = GameSettingsManager_1.GameSettingsManager.GetCurrentValueSafely(
+      GameSettingsDefine_1.EFunction.JoystickShakeStrength,
+    );
+    return this.WNa(e, a), !0;
   }
-  static VGa(e, a) {
+  static WNa(e, a) {
     UE.BasePlayerController.SetKuroForceFeedbackConfig(e, a);
   }
   static ApplyWalkOrRunRate(e) {
@@ -846,6 +983,21 @@ class GameSettingsUtils {
       );
     a && this.Zia(1 === e, a);
   }
+  static RefreshViewRevertState(e) {
+    let a = 0,
+      t = 0;
+    2 === e &&
+      ((a =
+        GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+          GameSettingsDefine_1.EFunction.HorizontalViewRevert,
+        ) ?? 0),
+      (t =
+        GameSettingsManager_1.GameSettingsManager.GetCurrentValue(
+          GameSettingsDefine_1.EFunction.VerticalViewRevert,
+        ) ?? 0)),
+      this.ApplyHorizontalViewRevert(a),
+      this.ApplyVerticalViewRevert(t);
+  }
   static Zia(a, e) {
     for (const g of e) {
       var t = g.AxisName,
@@ -853,16 +1005,16 @@ class GameSettingsUtils {
       if (t) {
         var r = new Map(),
           i = g.RevertInfo,
-          n = t.GetInputAxisKeyMap();
-        if (n) {
-          for (var [l, o] of i) {
-            var s = n.get(l);
-            if (s) {
+          l = t.GetInputAxisKeyMap();
+        if (l) {
+          for (var [n, o] of i) {
+            var _ = l.get(n);
+            if (_) {
               let e = 0;
-              s = s.Scale;
-              0 === o && (e = a ? (0 < s ? -s : s) : 0 < s ? s : -s),
-                1 === o && (e = a ? (0 < s ? s : -s) : 0 < s ? -s : s),
-                r.set(l, e);
+              _ = _.Scale;
+              0 === o && (e = a ? (0 < _ ? -_ : _) : 0 < _ ? _ : -_),
+                1 === o && (e = a ? (0 < _ ? _ : -_) : 0 < _ ? -_ : _),
+                r.set(n, e);
             }
           }
           if (r.size <= 0) return;
@@ -879,14 +1031,170 @@ class GameSettingsUtils {
   static ApplyEnemyHitDisplayMode(e) {
     ModelManager_1.ModelManager.BulletModel.OpenHitMaterial = 1 === e;
   }
-  static ApplyPushEnableState(e) {
+  static ApplyPushEnableState(e, a) {
     0 === e
       ? ControllerHolder_1.ControllerHolder.KuroPushController.TurnOffPush()
-      : ControllerHolder_1.ControllerHolder.KuroPushController.TurnOnPush();
+      : ControllerHolder_1.ControllerHolder.KuroPushController.TurnOnPush(
+          1 === a,
+        );
   }
   static ApplyAutoAdjustImageQuality(e) {
     GameSettingsDeviceRender_1.GameSettingsDeviceRender.SetIsAutoAdjustImageQuality(
       1 === e,
+    ),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(824, e.toString());
+  }
+  static ApplyShowDamage(e) {
+    DamageUiManager_1.DamageUiManager.SetDamageViewVisible(1 === e);
+  }
+  static ApplyDynamicBones(e) {
+    ControllerHolder_1.ControllerHolder.CreatureController.SetKawaiiEnable(e);
+  }
+  static ApplyDolbyAtmos(e) {
+    AudioSystem_1.AudioSystem.SetRtpcValue(AudioDefine_1.RTPC_DOLBY_ATMOS, e);
+  }
+  static ApplyUiPureMode(e) {
+    return 1 === e
+      ? (ControllerHolder_1.ControllerHolder.BattleUiControl.TryOpenPureMode(),
+        !1)
+      : ControllerHolder_1.ControllerHolder.BattleUiControl.TryClosePureMode();
+  }
+  static ApplyRayTracing(e) {
+    0 < e &&
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "sg.RayTracingQuality " + e,
+      );
+    var a = UE.BlueprintPathsLibrary.ProjectSavedDir() + "SaveGames/RTX.json";
+    return (
+      UE.KuroStaticLibrary.FileExists(a) && UE.KuroStaticLibrary.DeleteFile(a),
+      UE.KuroRenderingRuntimeBPPluginBPLibrary.SetRayTracingEnable(0 < e),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(821, e.toString()),
+      !0
+    );
+  }
+  static ApplyRayTracedReflection(e) {
+    return (
+      0 < e
+        ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Lumen.Reflections.Allow 1",
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameSettings", 73, "光追反射开启"))
+        : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Lumen.Reflections.Allow 0",
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameSettings", 73, "光追反射关闭")),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(822, e.toString()),
+      !0
+    );
+  }
+  static ApplyRayTracedGI(e) {
+    return (
+      0 < e
+        ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Lumen.DiffuseIndirect.Allow 1",
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameSettings", 73, "光追全局光照开启"))
+        : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Lumen.DiffuseIndirect.Allow 0",
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameSettings", 73, "光追全局光照关闭")),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(823, e.toString()),
+      !0
+    );
+  }
+  static ApplyRayTracedShadow(e) {
+    return (
+      0 < e
+        ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.RayTracing.Shadows 1",
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameSettings", 73, "光追阴影开启"))
+        : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.RayTracing.Shadows 0",
+          ),
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("GameSettings", 73, "光追阴影关闭")),
+      !0
+    );
+  }
+  static ApplySaturationClient(e) {
+    let a = 1;
+    return (
+      e <= 50 && (a = MathUtils_1.MathUtils.Lerp(0, 1, (2 * e) / 100)),
+      50 < e && (a = MathUtils_1.MathUtils.Lerp(1, 2, (2 * (e - 50)) / 100)),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.Client.Saturation " + a,
+      ),
+      !0
+    );
+  }
+  static ApplyContrastClient(e) {
+    let a = 1;
+    return (
+      e <= 50 && (a = MathUtils_1.MathUtils.Lerp(0.5, 1, (2 * e) / 100)),
+      50 < e && (a = MathUtils_1.MathUtils.Lerp(1, 2, (2 * (e - 50)) / 100)),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.Client.Contrast " + a,
+      ),
+      !0
+    );
+  }
+  static ApplySkinDamageMode(e) {
+    (CharacterSkinDamageComponent_1.CharacterSkinDamageComponent.EnableSkinDamage =
+      1 === e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnResetSkinDamageMode,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnResetSkinDamageMode,
+      );
+  }
+  static ApplyAFMEOption(e) {
+    e = 1 === e ? 0 : 1;
+    UE.KismetSystemLibrary.ExecuteConsoleCommand(
+      GlobalData_1.GlobalData.World,
+      "r.FEstimation.Option " + e,
+    );
+  }
+  static ApplyAutoRun(e) {
+    return (
+      void 0 !== ModelManager_1.ModelManager.BattleUiModel &&
+      void 0 !== ModelManager_1.ModelManager.BattleUiModel.FormationData &&
+      ((ModelManager_1.ModelManager.BattleUiModel.FormationData.AutoMovingSettingEnable =
+        0 < e),
+      !0)
+    );
+  }
+  static ApplyAutoSprint(e) {
+    return (
+      void 0 !== ModelManager_1.ModelManager.BattleUiModel &&
+      void 0 !== ModelManager_1.ModelManager.BattleUiModel.FormationData &&
+      ((ModelManager_1.ModelManager.BattleUiModel.FormationData.AutoSprintSettingEnable =
+        0 < e),
+      !0)
+    );
+  }
+  static ApplyVulkan(e) {
+    return (
+      UE.KuroRenderingRuntimeBPPluginBPLibrary.SetVulkanPromotion(0 < e), !0
     );
   }
 }

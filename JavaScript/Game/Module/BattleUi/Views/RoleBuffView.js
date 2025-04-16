@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   BattleUiControl_1 = require("../BattleUiControl"),
-  BattleChildView_1 = require("./BattleChildView/BattleChildView"),
+  BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView"),
   BuffItemContainer_1 = require("./BuffItemContainer"),
   EnvironmentItem_1 = require("./EnvironmentItem");
-class RoleBuffView extends BattleChildView_1.BattleChildView {
+class RoleBuffView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
       (this.Wst = void 0),
@@ -22,7 +22,9 @@ class RoleBuffView extends BattleChildView_1.BattleChildView {
     ];
   }
   OnStart() {
-    super.OnStart(), this.mkn.Init(this.GetItem(1));
+    super.OnStart(),
+      this.InitChildType(25),
+      this.mkn.Init(this.GetItem(1), void 0, !1, !0);
   }
   OnBeforeDestroy() {
     this.Refresh(void 0), this._mt();
@@ -51,23 +53,23 @@ class RoleBuffView extends BattleChildView_1.BattleChildView {
   }
   umt() {
     let t = 0;
-    for (const n of ModelManager_1.ModelManager.BattleUiModel.FormationData
+    for (const s of ModelManager_1.ModelManager.BattleUiModel.FormationData
       .EnvironmentPropertyList) {
       var i,
         r,
-        o = ModelManager_1.ModelManager.FormationAttributeModel.GetValue(n);
+        o = ModelManager_1.ModelManager.FormationAttributeModel.GetValue(s);
       o > t && (t = o);
-      let e = this.lmt.get(n);
+      let e = this.lmt.get(s);
       void 0 === e
         ? o <= 0 ||
           ((i = this.GetItem(0)),
           (i = BattleUiControl_1.BattleUiControl.Pool.GetEnvironmentItem(i)),
-          (e = new EnvironmentItem_1.EnvironmentItem()).InitPropertyId(n),
-          (r = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(n)),
+          (e = new EnvironmentItem_1.EnvironmentItem()).InitPropertyId(s),
+          (r = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(s)),
           e.SetPercent(o, r),
           e.CreateThenShowByActorAsync(i).catch(() => {}),
-          this.lmt.set(n, e))
-        : ((r = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(n)),
+          this.lmt.set(s, e))
+        : ((r = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(s)),
           e.SetPercent(o, r));
     }
   }

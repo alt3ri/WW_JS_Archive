@@ -20,16 +20,16 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
       (this.lqe = void 0),
       (this.KTt = void 0),
       (this.S2t = void 0),
-      (this.F9a = void 0),
-      (this.V9a = () => {
+      (this.Vja = void 0),
+      (this.Hja = () => {
         var t = new BlackCoastStageItem_1.BlackCoastStageItem();
         return (
-          (t.OpenTaskView = this.H9a),
+          (t.OpenTaskView = this.jja),
           (t.NewFlagRedDot = (t) => this.ActivityBaseData.HasNewStageFlag(t)),
           t
         );
       }),
-      (this.j9a = (t) => {
+      (this.Wja = (t) => {
         this.ActivityBaseData &&
           this.ActivityBaseData.Id === t &&
           this.KTt.RefreshLayout();
@@ -40,13 +40,13 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
       (this.AMo = () => {
         this.CloseMe();
       }),
-      (this.H9a = (t) => {
+      (this.jja = (t) => {
         UiManager_1.UiManager.OpenView("BlackCoastActivityTaskView", [
           this.ActivityBaseData,
           t,
         ]);
       }),
-      (this.W9a = () => {
+      (this.Qja = () => {
         var t = {
           WeaponDataList: this.ActivityBaseData.GetPreviewWeaponDataList(),
           SelectedIndex: 0,
@@ -59,7 +59,7 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
           this.ActivityBaseData.GetCurrentLockQuestId(),
         );
       }),
-      (this.M7a = () => {
+      (this.SWa = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           this.ActivityBaseData.GetProgressItemId,
         );
@@ -79,9 +79,9 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
       [9, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.W9a],
+        [1, this.Qja],
         [6, this.axt],
-        [9, this.M7a],
+        [9, this.SWa],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -100,15 +100,15 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
           (this.S2t = new CommonRewardPopup_1.CommonRewardPopup(
             this.GetRootItem(),
           )),
-          (this.F9a = new GenericLayout_1.GenericLayout(
+          (this.Vja = new GenericLayout_1.GenericLayout(
             this.GetHorizontalLayout(7),
-            this.V9a,
+            this.Hja,
           )),
           await Promise.all(t))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Activity",
-            38,
+            37,
             "[BlackCoastActivity] 活动主页无数据",
           );
   }
@@ -129,8 +129,8 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
       void 0,
       this.ActivityBaseData.Id,
     ),
-      this.Q9a(),
-      this.K9a(),
+      this.Kja(),
+      this.$ja(),
       this.GetButton(6).RootUIComp.SetUIActive(
         void 0 !== this.ActivityBaseData.GetCurrentLockQuestId(),
       );
@@ -142,7 +142,7 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-        this.j9a,
+        this.Wja,
       );
   }
   OnRemoveEventListener() {
@@ -152,10 +152,10 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-        this.j9a,
+        this.Wja,
       );
   }
-  Q9a() {
+  Kja() {
     this.GetText(3).SetText(
       this.ActivityBaseData.GetProgressItemCount().toString() + "/",
     ),
@@ -164,8 +164,8 @@ class BlackCoastActivityMainView extends UiViewBase_1.UiViewBase {
       ),
       this.KTt.Refresh();
   }
-  K9a() {
-    this.F9a.RefreshByData(this.ActivityBaseData.GetAllStages());
+  $ja() {
+    this.Vja.RefreshByData(this.ActivityBaseData.GetAllStages());
   }
 }
 exports.BlackCoastActivityMainView = BlackCoastActivityMainView;

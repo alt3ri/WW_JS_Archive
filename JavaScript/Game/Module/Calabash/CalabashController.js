@@ -37,28 +37,28 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(25049, this.Fft),
-      Net_1.Net.Register(18020, this.Vft),
-      Net_1.Net.Register(21874, this.Hft),
-      Net_1.Net.Register(18412, this.jft);
+    Net_1.Net.Register(29992, this.Fft),
+      Net_1.Net.Register(24130, this.Vft),
+      Net_1.Net.Register(16716, this.Hft),
+      Net_1.Net.Register(18319, this.jft);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(25049),
-      Net_1.Net.UnRegister(18020),
-      Net_1.Net.UnRegister(21874),
-      Net_1.Net.UnRegister(18412);
+    Net_1.Net.UnRegister(29992),
+      Net_1.Net.UnRegister(24130),
+      Net_1.Net.UnRegister(16716),
+      Net_1.Net.UnRegister(18319);
   }
   static RequestCalabashLevelReward(e) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Calabash", 11, "请求领取幻象等级奖励");
+      Log_1.Log.Info("Calabash", 10, "请求领取幻象等级奖励");
     var a = Protocol_1.Aki.Protocol.xzn.create();
     (a.F6n = e),
-      Net_1.Net.Call(27955, a, (e) => {
+      Net_1.Net.Call(23037, a, (e) => {
         e &&
           e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
             e.Q4n,
-            16914,
+            15190,
           );
       });
   }
@@ -69,12 +69,12 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
     });
     e = Protocol_1.Aki.Protocol.Gls.create();
     (e.A8n = a),
-      Net_1.Net.Call(18476, e, (e) => {
+      Net_1.Net.Call(16048, e, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                15959,
+                22362,
               )
             : EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnVisionRecoveryResult,
@@ -87,14 +87,14 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
     e.forEach((e) => {
       a.push(e.IncId);
     });
-    e = Protocol_1.Aki.Protocol.$eh.create();
+    e = Protocol_1.Aki.Protocol.$m_.create();
     (e.A8n = a),
-      Net_1.Net.Call(20511, e, (e) => {
+      Net_1.Net.Call(20589, e, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                18716,
+                15037,
               )
             : EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnVisionRecoveryBatchResult,
@@ -109,6 +109,38 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
     e = { TabViewName: e, Param: a };
     UiManager_1.UiManager.OpenView("CalabashRootView", e);
   }
+  static RequestPhantomPolishRequest(e, a) {
+    var o = Protocol_1.Aki.Protocol.Jrc.create();
+    (o.b9n = e),
+      (o.zrc = a),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Calabash",
+          75,
+          "RequestPhantomPolishRequest",
+          ["id", e],
+          ["propItemId", a],
+        ),
+      Net_1.Net.Call(23213, o, (e) => {
+        e &&
+          e.xPs &&
+          (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
+            ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+                e.Q4n,
+                21216,
+              )
+            : (ModelManager_1.ModelManager.InventoryModel.UpdatePhantomItemData(
+                e.xPs,
+              ),
+              ModelManager_1.ModelManager.PhantomBattleModel.UpdatePhantomBattleData(
+                e.xPs,
+              ),
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName.OnVisionRefineResult,
+                e,
+              )));
+      });
+  }
 }
 (exports.CalabashController = CalabashController),
   ((_a = CalabashController).Oft = () => {
@@ -119,7 +151,7 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
   (CalabashController.Fft = (e) => {
     var a;
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Calabash", 11, "服务端推送吸收器信息"),
+      Log_1.Log.Info("Calabash", 10, "服务端推送吸收器信息"),
       ModelManager_1.ModelManager.CalabashModel.CalabashInstance &&
         ((a = ModelManager_1.ModelManager.CalabashModel.GetCurrentExp()),
         ModelManager_1.ModelManager.CalabashModel.GetCalabashLevel() !==
@@ -143,7 +175,7 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
   }),
   (CalabashController.Vft = (e) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Calabash", 11, "服务端推送吸收器经验变化信息");
+      Log_1.Log.Info("Calabash", 10, "服务端推送吸收器经验变化信息");
     var a = e.TLs,
       o = e.ILs,
       t = ModelManager_1.ModelManager.CalabashModel.GetCurrentExp(),
@@ -163,7 +195,7 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
   }),
   (CalabashController.Hft = (e) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Calabash", 11, "服务端更新的葫芦经验图谱信息"),
+      Log_1.Log.Info("Calabash", 10, "服务端更新的葫芦经验图谱信息"),
       ModelManager_1.ModelManager.CalabashModel.SetUnlockCalabashDevelopReward(
         e.LLs,
       ),
@@ -171,7 +203,7 @@ class CalabashController extends UiControllerBase_1.UiControllerBase {
   }),
   (CalabashController.jft = (e) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Calabash", 11, "服务端更新的葫芦已获得奖励等级列表数据"),
+      Log_1.Log.Info("Calabash", 10, "服务端更新的葫芦已获得奖励等级列表数据"),
       ModelManager_1.ModelManager.CalabashModel.SetCalabashLevelsReward(e.RLs);
   });
 //# sourceMappingURL=CalabashController.js.map

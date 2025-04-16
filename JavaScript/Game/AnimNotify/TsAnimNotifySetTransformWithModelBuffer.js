@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  BlackboardController_1 = require("../World/Controller/BlackboardController"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   WorldGlobal_1 = require("../World/WorldGlobal");
 class TsAnimNotifySetTransformWithModelBuffer extends UE.KuroAnimNotify {
   constructor() {
@@ -11,31 +11,33 @@ class TsAnimNotifySetTransformWithModelBuffer extends UE.KuroAnimNotify {
       (this.RotatorKey = ""),
       (this.TimeLength = 300);
   }
+  Constructor() {}
   K2_Notify(r, e) {
-    var o,
-      t,
-      l,
+    var t,
+      o,
+      s,
       r = r.GetOwner();
     return (
       r instanceof TsBaseCharacter_1.default &&
-      ((t = (o = r.CharacterActorComponent).Entity),
-      (r = r.GetTransform()),
+      ((o = (t = r.CharacterActorComponent).Entity),
+      (r = r.D_GetTransform()),
       this.LocationKey &&
-        (l = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
-          t.Id,
-          this.LocationKey,
-        )) &&
-        r.SetLocation(WorldGlobal_1.WorldGlobal.ToUeVector(l)),
+        (s =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
+            o.Id,
+            this.LocationKey,
+          )) &&
+        r.SetLocation(WorldGlobal_1.WorldGlobal.ToUeVector(s)),
       this.RotatorKey &&
-        (l =
-          BlackboardController_1.BlackboardController.GetRotatorValueByEntity(
-            t.Id,
+        (s =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetRotatorValueByEntity(
+            o.Id,
             this.RotatorKey,
           )) &&
-        r.SetRotation(WorldGlobal_1.WorldGlobal.ToUeRotator(l).Quaternion()),
-      (l = t.GetComponent(163))?.Valid
-        ? l.SetTransformWithModelBuffer(r, this.TimeLength)
-        : o.SetActorTransform(r, "TsAnimNotifySetTransformWithModelBuffer", !0),
+        r.SetRotation(WorldGlobal_1.WorldGlobal.ToUeRotator(s).Quaternion()),
+      (s = o.GetComponent(175))?.Valid
+        ? s.SetTransformWithModelBuffer(r, this.TimeLength)
+        : t.SetActorTransform(r, "TsAnimNotifySetTransformWithModelBuffer", !0),
       !0)
     );
   }

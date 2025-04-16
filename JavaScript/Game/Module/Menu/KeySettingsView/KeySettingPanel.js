@@ -3,13 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.KeySettingPanel = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
-  GuideController_1 = require("../../Guide/GuideController"),
   DynScrollView_1 = require("../../Util/ScrollView/DynScrollView"),
+  MenuDefine_1 = require("../MenuDefine"),
   KeySettingRowBaseItem_1 = require("./KeySettingRowBaseItem"),
   KeySettingRowContainerItem_1 = require("./KeySettingRowContainerItem"),
-  ScrollToOffset = 3;
+  SCROLL_TO_OFFSET = 3;
 class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -21,8 +23,8 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.yPi = void 0),
       (this.IPi = void 0),
       (this.TPi = []),
-      (this.Nfa = 0),
-      (this.LSi = (i, t, e) => {
+      (this.qfa = 0),
+      (this.LSi = (e, t, i) => {
         var s = new KeySettingRowContainerItem_1.KeySettingRowContainerItem();
         return (
           s.BindOnToggleStateChanged(this.sui),
@@ -32,21 +34,21 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
           s
         );
       }),
-      (this.sui = (i, t) => {
+      (this.sui = (e, t) => {
         0 === t
-          ? (i.SetDetailItemVisible(!1), (this.yPi = void 0))
+          ? (e.SetDetailItemVisible(!1), (this.yPi = void 0))
           : (this.yPi?.SetDetailItemVisible(!1),
-            (this.yPi = i),
+            (this.yPi = e),
             this.yPi.SetDetailItemVisible(!0));
       }),
-      (this._ui = (i) => {
-        this.tui && this.tui(i);
+      (this._ui = (e) => {
+        this.tui && this.tui(e);
       }),
-      (this.uui = (i) => {
-        this.iui && this.iui(i);
+      (this.uui = (e) => {
+        this.iui && this.iui(e);
       }),
-      (this.LPi = (i, t, e) => {
-        this.SPi && this.SPi(i, t, e);
+      (this.LPi = (e, t, i) => {
+        this.SPi && this.SPi(e, t, i);
       });
   }
   OnRegisterComponent() {
@@ -71,51 +73,58 @@ class KeySettingPanel extends UiPanelBase_1.UiPanelBase {
       (this.yPi = void 0),
       (this.IPi = void 0),
       (this.SPi = void 0),
-      (this.Nfa = 0);
+      (this.qfa = 0);
   }
-  SelectKeySettingRow(i) {
-    this.IPi?.SetSelected(!1), (this.IPi = i), this.IPi?.SetSelected(!0);
+  SelectKeySettingRow(e) {
+    this.IPi?.SetSelected(!1), (this.IPi = e), this.IPi?.SetSelected(!0);
   }
-  BindOnWaitInput(i) {
-    this.SPi = i;
+  BindOnWaitInput(e) {
+    this.SPi = e;
   }
-  BindOnHover(i) {
-    this.tui = i;
+  BindOnHover(e) {
+    this.tui = e;
   }
-  BindOnUnHover(i) {
-    this.iui = i;
+  BindOnUnHover(e) {
+    this.iui = e;
   }
-  Refresh(i, t) {
-    for (const e of i) e.IsExpandDetail = !1;
+  Refresh(e, t) {
+    for (const i of e) i.IsExpandDetail = !1;
     (ModelManager_1.ModelManager.MenuModel.KeySettingInputControllerType = t),
-      this.MPi?.RefreshByData(i),
-      (this.TPi = i),
+      this.MPi?.RefreshByData(e),
+      (this.TPi = e),
       (this.yPi = void 0);
   }
-  RefreshRow(i) {
-    var t = this.TPi.indexOf(i);
-    this.MPi?.GetScrollItemFromIndex(t)?.Update(i, t);
+  RefreshRow(e) {
+    var t = this.TPi.indexOf(e);
+    this.MPi?.GetScrollItemFromIndex(t)?.Update(e, t);
   }
-  GetRowByData(i, t) {
-    var i = this.TPi.indexOf(i),
-      e = this.MPi;
-    if (e)
+  GetRowByData(e, t) {
+    var e = this.TPi.indexOf(e),
+      i = this.MPi;
+    if (i)
       return (
         t &&
-          0 === this.Nfa &&
-          ((this.Nfa = 1),
-          e.ScrollToItemIndex(i - ScrollToOffset).finally(() => {
-            this.Nfa = 2;
+          0 === this.qfa &&
+          ((this.qfa = 1),
+          i.ScrollToItemIndex(e - SCROLL_TO_OFFSET).finally(() => {
+            this.qfa = 2;
           })),
-        1 === this.Nfa
+        1 === this.qfa
           ? void 0
-          : ((this.Nfa = 0),
-            e.AddListenerOnItemClear(i, () => {
+          : ((this.qfa = 0),
+            i.AddListenerOnItemClear(e, () => {
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Guide", 65, "停止当前所有引导"),
-                GuideController_1.GuideController.TryFinishRunningGuides();
+                Log_1.Log.Debug(
+                  "Guide",
+                  64,
+                  "当item拖出view之后，停止引导@[KeySettingPanel]",
+                ),
+                EventSystem_1.EventSystem.Emit(
+                  EventDefine_1.EEventName.FinishGuideStepByEvent,
+                  MenuDefine_1.STOP_GUIDE_TAG,
+                );
             }),
-            e.GetScrollItemFromIndex(i))
+            i.GetScrollItemFromIndex(e))
       );
   }
   StopScroll() {

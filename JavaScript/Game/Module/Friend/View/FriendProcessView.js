@@ -11,6 +11,7 @@ const UE = require("ue"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ChatController_1 = require("../../Chat/ChatController"),
   PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   PersonalOptionItem_1 = require("../../Personal/View/PersonalOptionItem"),
   GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -27,24 +28,25 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
       (this.$8t = void 0),
       (this.Y8t = void 0),
       (this.g8t = void 0),
-      (this.J8t = (e, i, t) => {
-        i = new PersonalOptionItem_1.PersonalOptionItem(i);
+      (this.gLt = void 0),
+      (this.J8t = (e, t, i) => {
+        t = new PersonalOptionItem_1.PersonalOptionItem(t);
         return (
-          i.Refresh(e, !1, t),
+          t.Refresh(e, !1, i),
           1 === e
-            ? (this.j8t = i)
+            ? (this.j8t = t)
             : 2 === e
-              ? (this.W8t = i)
+              ? (this.W8t = t)
               : 3 === e
-                ? (this.K8t = i)
+                ? (this.K8t = t)
                 : 4 === e
-                  ? (this.Q8t = i)
+                  ? (this.Q8t = t)
                   : 5 === e
-                    ? (this.X8t = i)
+                    ? (this.X8t = t)
                     : 12 === e
-                      ? (this.$8t = i)
-                      : 13 === e && (this.Y8t = i),
-          { Key: t, Value: i }
+                      ? (this.$8t = t)
+                      : 13 === e && (this.Y8t = t),
+          { Key: i, Value: t }
         );
       }),
       (this.z8t = () => {
@@ -56,13 +58,13 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
       (this.Byt = (e) => {
         this.j8t.GetRootItem().SetUIActive(!1),
           this.W8t.GetRootItem().SetUIActive(!1);
-        var i = ModelManager_1.ModelManager.FriendModel.ShowingView;
-        ("FriendView" !== i && "FriendSearchView" !== i) ||
+        var t = ModelManager_1.ModelManager.FriendModel.ShowingView;
+        ("FriendView" !== t && "FriendSearchView" !== t) ||
           (e ===
-            (i =
+            (t =
               ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance())
               ?.PlayerId &&
-            (ModelManager_1.ModelManager.ChatModel.IsInMute(i.PlayerId)
+            (ModelManager_1.ModelManager.ChatModel.IsInMute(t.PlayerId)
               ? this.j8t
               : this.W8t
             )
@@ -100,6 +102,9 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
       [11, UE.UIText],
       [12, UE.UIItem],
       [13, UE.UIText],
+      [14, UE.UIItem],
+      [15, UE.UITexture],
+      [16, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[6, this.Z8t]]);
   }
@@ -139,6 +144,10 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
         this.z8t,
       );
   }
+  async OnBeforeStartAsync() {
+    (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(14).GetOwner());
+  }
   OnStart() {
     (this.g8t = new PlayerHeadItem_1.PlayerHeadItem(
       this.GetItem(0).GetOwner(),
@@ -146,8 +155,8 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
       this.GetText(4).SetText(""),
       this.i9t();
     var e = ModelManager_1.ModelManager.FriendModel,
-      i = e.GetSelectedPlayerOrItemInstance();
-    (e.CachePlayerData = i), this.t9t();
+      t = e.GetSelectedPlayerOrItemInstance();
+    (e.CachePlayerData = t), this.t9t();
   }
   i9t() {
     this.H8t && this.H8t.ClearChildren(),
@@ -159,9 +168,9 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
   }
   o9t() {
     var e = [];
-    for (const i of ConfigManager_1.ConfigManager.FriendConfig.GetProcessViewFunctionList())
-      (12 === i && !ModelManager_1.ModelManager.FunctionModel.IsOpen(10060)) ||
-        e.push(i);
+    for (const t of ConfigManager_1.ConfigManager.FriendConfig.GetProcessViewFunctionList())
+      (12 === t && !ModelManager_1.ModelManager.FunctionModel.IsOpen(10060)) ||
+        e.push(t);
     return e;
   }
   t9t() {
@@ -169,7 +178,8 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
     this.w8t(),
       this.g8t.RefreshByHeadPhotoId(e.PlayerHeadPhoto),
       this.GetText(5).SetText(e.PlayerLevel.toString()),
-      this.Byt(e.PlayerId);
+      this.Byt(e.PlayerId),
+      this.gLt.Refresh(e.PlayerTitleId, e.PlayerTitleStarLevel, e.PlayerSex);
   }
   RefreshMute() {
     var e =
@@ -179,57 +189,61 @@ class FriendProcessView extends UiViewBase_1.UiViewBase {
   }
   P5e() {
     var e = ModelManager_1.ModelManager.FriendModel,
-      i = this.GetText(2);
+      t = this.GetText(2);
     FriendController_1.FriendController.CheckRemarkIsValid(
       e.GetSelectedPlayerOrItemInstance().FriendRemark,
     )
-      ? (i.SetText(`(${e.GetSelectedPlayerOrItemInstance().FriendRemark})`),
-        (i.useChangeColor = !0))
-      : (i.SetText(e.GetSelectedPlayerOrItemInstance().PlayerName),
-        (i.useChangeColor = !1));
+      ? (t.SetText(`(${e.GetSelectedPlayerOrItemInstance().FriendRemark})`),
+        (t.useChangeColor = !0))
+      : (t.SetText(e.GetSelectedPlayerOrItemInstance().PlayerName),
+        (t.useChangeColor = !1));
   }
-  qxa() {
+  Nxa() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e =
           "" !==
           ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance().GetSdkUserId()),
         this.GetItem(12)?.SetUIActive(e),
+        this.GetTexture(15)?.SetUIActive(e),
+        this.GetItem(16)?.SetUIActive(!e),
         e &&
           ((e =
             ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance().GetSdkOnlineId()),
           this.GetText(13)?.SetText(e)))
-      : this.GetItem(12)?.SetUIActive(!1);
+      : (this.GetItem(12)?.SetUIActive(!1),
+        this.GetTexture(15)?.SetUIActive(!1),
+        this.GetItem(16)?.SetUIActive(!1));
   }
   r9t() {
     var e = ModelManager_1.ModelManager.FriendModel,
-      i = e.GetSelectedPlayerOrItemInstance()?.Signature,
-      t = this.GetText(11);
-    i && "" !== i
-      ? t.SetText(i)
+      t = e.GetSelectedPlayerOrItemInstance()?.Signature,
+      i = this.GetText(11);
+    t && "" !== t
+      ? i.SetText(t)
       : e.GetSelectedPlayerOrItemInstance()?.PlayerId !==
           ModelManager_1.ModelManager.FunctionModel.PlayerId
-        ? t?.SetText("")
-        : LguiUtil_1.LguiUtil.SetLocalText(t, "EmptySign");
+        ? i?.SetText("")
+        : LguiUtil_1.LguiUtil.SetLocalText(i, "EmptySign");
   }
   w8t() {
     var e = ModelManager_1.ModelManager.FriendModel,
-      i = e.FilterState,
-      t = e.ShowingView;
+      t = e.FilterState,
+      i = e.ShowingView;
     this.P5e(),
       this.r9t(),
-      this.qxa(),
+      this.Nxa(),
       this.Y8t.GetRootItem().SetUIActive(
         e.IsMyFriend(e.GetSelectedPlayerOrItemInstance().PlayerId),
       ),
       this.W8t.GetRootItem().SetUIActive(
-        (("FriendView" === t || "FriendSearchView" === t) && 1 === i) ||
-          2 === i,
+        (("FriendView" === i || "FriendSearchView" === i) && 1 === t) ||
+          2 === t,
       ),
       this.X8t.GetRootItem().SetUIActive(!0),
-      ("FriendView" !== t &&
-        "FriendSearchView" !== t &&
-        "FriendBlackListView" !== t) ||
+      ("FriendView" !== i &&
+        "FriendSearchView" !== i &&
+        "FriendBlackListView" !== i) ||
         this.z8t(),
       this.Q8t.GetRootItem().SetUIActive(
         e.IsMyFriend(e.GetSelectedPlayerOrItemInstance().PlayerId),

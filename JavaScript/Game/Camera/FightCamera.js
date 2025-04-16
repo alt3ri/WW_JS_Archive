@@ -41,10 +41,10 @@ class FightCamera extends Entity_1.Entity {
   }
   Tick(t) {
     StatDefine_1.BATTLESTAT_ENABLED &&
-      StatDefine_1.battleStat.FightCameraTick.Start(),
+      StatDefine_1.battleStat.FightCameraTick?.Start(),
       super.Tick(t),
       StatDefine_1.BATTLESTAT_ENABLED &&
-        StatDefine_1.battleStat.FightCameraTick.Stop();
+        StatDefine_1.battleStat.FightCameraTick?.Stop();
   }
 }
 exports.FightCamera = FightCamera;

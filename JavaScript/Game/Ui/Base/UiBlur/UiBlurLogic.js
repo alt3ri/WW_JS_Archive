@@ -11,14 +11,13 @@ class UiBlurLogic {
     if (r) {
       var i = r.GetOwner().GetComponentByClass(UE.TsUiBlur_C.StaticClass());
       let e = void 0;
-      (e = i
-        ? void 0 === i.OverrideItem
-          ? r
-          : i.OverrideItem.RootComponent
-        : e)
-        ? UE.LGUIBPLibrary.SetGlobalBlurUIItem(e, r.GetWorld())
-        : (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Blur", 11, "还原模糊"),
-          UE.LGUIBPLibrary.ResetGlobalBlurUIItem(r.GetWorld()));
+      i &&
+        ((e = void 0 === i.OverrideItem ? r : i.OverrideItem.RootComponent),
+        (i.ApplyItem = r)),
+        e && i.EnableUiBlur
+          ? UE.LGUIBPLibrary.SetGlobalBlurUIItem(e, r.GetWorld())
+          : (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Blur", 10, "还原模糊"),
+            UE.LGUIBPLibrary.ResetGlobalBlurUIItem(r.GetWorld()));
     }
   }
   static w_r(e) {
@@ -28,15 +27,17 @@ class UiBlurLogic {
   }
   static SetNormalUiRenderAfterBlur(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Blur", 11, "设置模糊", ["ViewName", e.Info.Name]),
+      Log_1.Log.Debug("Blur", 10, "设置模糊", ["ViewName", e.Info.Name]),
       this.x_r(this.w_r(e));
   }
   static ResumeTopUiRenderAfterBlur() {
     var e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Pop);
     e?.IsShowOrShowing ||
-    (e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal))
+    (e =
+      (e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Plot)) ||
+      UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal))
       ? this.SetNormalUiRenderAfterBlur(e)
-      : (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Blur", 11, "还原模糊"),
+      : (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Blur", 10, "还原模糊"),
         UE.LGUIBPLibrary.ResetGlobalBlurUIItem(
           GlobalData_1.GlobalData.GameInstance.GetWorld(),
         ));

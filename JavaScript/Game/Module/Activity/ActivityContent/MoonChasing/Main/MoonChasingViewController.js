@@ -61,7 +61,7 @@ class MoonChasingViewController {
   Show() {
     this.uHs(),
       this.cHs(),
-      this.rMa(),
+      this.Qva(),
       this.Yzt.RefreshBuildingModule(),
       this.Yzt.RefreshRedDot();
   }
@@ -72,7 +72,7 @@ class MoonChasingViewController {
       this.jio.BuildingBackToBusiness &&
         ((this.jio.BuildingBackToBusiness = !1), this.SkipToBusiness());
   }
-  rMa() {
+  Qva() {
     ModelManager_1.ModelManager.MoonChasingModel.HasEnteredMainViewFlag
       ? (this.Yzt.UiViewSequence.StartSequenceName = "Start")
       : ((this.Yzt.UiViewSequence.StartSequenceName = "Start01"),

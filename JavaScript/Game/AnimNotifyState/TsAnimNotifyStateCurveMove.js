@@ -15,14 +15,14 @@ const puerts_1 = require("puerts"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   Global_1 = require("../Global"),
   GlobalData_1 = require("../GlobalData"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
   CharacterUnifiedStateTypes_1 = require("../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   SkillBehaviorCondition_1 = require("../NewWorld/Character/Common/Component/Skill/SkillBehavior/SkillBehaviorCondition"),
   SkillBehaviorMisc_1 = require("../NewWorld/Character/Common/Component/Skill/SkillBehavior/SkillBehaviorMisc"),
   ColorUtils_1 = require("../Utils/ColorUtils"),
-  BlackboardController_1 = require("../World/Controller/BlackboardController"),
   WorldGlobal_1 = require("../World/WorldGlobal"),
-  queryExtent = new UE.Vector(1, 1, 500),
+  queryExtent = new UE.VectorDouble(1, 1, 500),
   angles = [0, 270, 90, 180],
   MIN_MOVE_DISTANCE = 50,
   MIN_MOVE_DISTANCE_SQUARED = MIN_MOVE_DISTANCE * MIN_MOVE_DISTANCE,
@@ -68,38 +68,40 @@ class PositionBranchTargetParams {
           (this.SocketName = s);
         break;
       case 1:
-        var o = this.CharSkillComp?.SkillTarget;
-        if (!o) return !1;
+        var h = this.CharSkillComp?.SkillTarget;
+        if (!h) return !1;
         if (
           this.TargetActorComp?.Entity?.Valid &&
-          o.Id === this.TargetActorComp.Entity.Id
+          h.Id === this.TargetActorComp.Entity.Id
         )
           return !0;
-        (this.TargetActorComp = o.Entity.GetComponent(1)),
-          (this.TargetCharActorComp = o.Entity.GetComponent(3)),
+        (this.TargetActorComp = h.Entity.GetComponent(1)),
+          (this.TargetCharActorComp = h.Entity.GetComponent(3)),
           (this.SocketName = this.CharSkillComp.SkillTargetSocket);
         break;
       case 2:
-        let t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
-          this.CharActorComp.Entity.Id,
-          i,
-        );
-        if (
-          !t &&
-          !(t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+        let t =
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
             this.CharActorComp.Entity.Id,
             i,
-          ))
+          );
+        if (
+          !t &&
+          !(t =
+            ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+              this.CharActorComp.Entity.Id,
+              i,
+            ))
         )
           return !1;
-        o = EntitySystem_1.EntitySystem.Get(t);
-        if (!o?.Valid) return !1;
+        h = EntitySystem_1.EntitySystem.Get(t);
+        if (!h?.Valid) return !1;
         if (
           this.TargetActorComp?.Entity?.Valid &&
-          this.TargetActorComp.Entity.Id === o.Id
+          this.TargetActorComp.Entity.Id === h.Id
         )
           return !0;
-        (this.TargetActorComp = o.GetComponent(1)),
+        (this.TargetActorComp = h.GetComponent(1)),
           (this.TargetCharActorComp = void 0),
           (this.SocketName = s);
     }
@@ -161,6 +163,33 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       (this.ParamPool = void 0),
       (this.ParamMap = void 0);
   }
+  Constructor() {
+    (this.SkillBehaviorCondition = void 0),
+      (this.SkillBehaviorConditionFormula = ""),
+      (this.IgnoreObstacle = !1),
+      (this.SplineCurves = void 0),
+      (this.ContinuallyUpdateTargetPosition = !1),
+      (this.PositionDatumTarget = 0),
+      (this.TargetSocketPosition = "None"),
+      (this.TargetParam = "None"),
+      (this.OffsetDirectionDatum = 0),
+      (this.TargetPositionOffset = void 0),
+      (this.MakePositionCorrection = !1),
+      (this.PositionCorrectionConfig = void 0),
+      (this.MovementPositionCurve = void 0),
+      (this.MovementProcessDirection = 0),
+      (this.TmpVector = void 0),
+      (this.TmpVector2 = void 0),
+      (this.TmpVector3 = void 0),
+      (this.TmpVector4 = void 0),
+      (this.TmpRotator = void 0),
+      (this.TmpQuat = void 0),
+      (this.TmpQuat2 = void 0),
+      (this.TmpTransform = void 0),
+      (this.InitCacheVar = !1),
+      (this.ParamPool = void 0),
+      (this.ParamMap = void 0);
+  }
   EditorUpdateSplineCurve() {
     var t;
     this.自动更新运动轨迹曲线关键点 &&
@@ -189,7 +218,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Movement",
-            43,
+            42,
             "运动轨迹曲线关键点,曲线插值ReparamTable更新成功",
           );
       }));
@@ -233,7 +262,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       (this.ParamPool = []));
   }
   InitCharacterParam(i, s) {
-    var e = i.Entity.GetComponent(34);
+    var e = i.Entity.GetComponent(39);
     if (e) {
       let t = this.ParamMap.get(i.Entity.Id);
       return (
@@ -245,7 +274,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           i.ActorLocationProxy,
         ),
         (t.CharActorComp = i),
-        (t.CharUnifiedComp = i.Entity.GetComponent(161)),
+        (t.CharUnifiedComp = i.Entity.GetComponent(173)),
         (t.CharSkillComp = e),
         t.RefreshTarget(
           this.TargetParam,
@@ -262,7 +291,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Movement",
-              43,
+              42,
               "TsAnimNotifyStateCurveMove.InitCharacterParam没有目标",
             )),
         t
@@ -271,7 +300,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Test",
-        43,
+        42,
         "TsAnimNotifyStateCurveMove.InitCharacterParam没有技能组件",
         ["Actor", i.Actor.GetName()],
       );
@@ -280,8 +309,8 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
     var i, s;
     return (
       0 === (this.SkillBehaviorCondition?.Num() ?? 0) ||
-      ((i = (t = t.CharacterActorComponent.Entity).GetComponent(34)),
-      (s = t.GetComponent(34)?.CurrentSkill),
+      ((i = (t = t.CharacterActorComponent.Entity).GetComponent(39)),
+      (s = t.GetComponent(39)?.CurrentSkill),
       i && s
         ? ((t = { Entity: t, SkillComponent: i, Skill: s }),
           !!SkillBehaviorCondition_1.SkillBehaviorCondition.SatisfyGroup(
@@ -292,14 +321,14 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Movement",
-                43,
+                42,
                 "TsAnimNotifyStateCurveMove.CheckUseCondition不满足使用条件",
               ),
             !1))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Movement",
-              43,
+              42,
               "TsAnimNotifyStateCurveMove.CheckUseCondition没有技能组件",
             ),
           !1))
@@ -319,7 +348,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Movement",
-            43,
+            42,
             "TsAnimNotifyStateCurveMove初始化角色参数失败",
           ),
         !1
@@ -329,7 +358,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Movement",
-            43,
+            42,
             "TsAnimNotifyStateCurveMove正在移动中",
           ),
         !1
@@ -346,7 +375,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Movement",
-            43,
+            42,
             "TsAnimNotifyStateCurveMove不满足技能使用条件",
           ),
         !1
@@ -360,7 +389,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Movement",
-            43,
+            42,
             "TsAnimNotifyStateCurveMove距离异常，不移动",
             ["CurrentLocation", s.CharActorComp.ActorLocationProxy],
             ["TargetPos", s.TargetPos],
@@ -371,7 +400,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Movement",
-            43,
+            42,
             "TsAnimNotifyStateCurveMove移动",
             ["CurrentLocation", s.CharActorComp.ActorLocationProxy],
             ["TargetPos", s.TargetPos],
@@ -379,7 +408,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             ["distSquared2D", s.TargetVec.SizeSquared2D()],
           ),
         this.IgnoreObstacle &&
-          (t = e.Entity.GetComponent(164)) &&
+          (t = e.Entity.GetComponent(176)) &&
           t.SetStepHeight(s.CharActorComp.HalfHeight),
         this.运动轨迹曲线关键点 &&
         this.SplineCurves &&
@@ -387,14 +416,14 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Movement",
-                43,
+                42,
                 "TsAnimNotifyStateCurveMove.曲线移动",
               ),
             (s.AlongStraightLine = !1))
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Movement",
-                43,
+                42,
                 "TsAnimNotifyStateCurveMove.直线移动",
               ),
             (s.AlongStraightLine = !0)),
@@ -422,7 +451,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           : Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Movement",
-              43,
+              42,
               "TsAnimNotifyStateCurveMove.直线移动无目标",
             ),
         (t.NowTime += s),
@@ -440,7 +469,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Movement",
-            43,
+            42,
             "TsAnimNotifyStateCurveMove.沿样条移动无目标",
           ),
       (t.NowTime += s),
@@ -465,7 +494,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       ((t = t.CharacterActorComponent),
       !!(s = this.ParamMap.get(t.Entity.Id))) &&
       (this.IgnoreObstacle &&
-        (e = t.Entity.GetComponent(164)) &&
+        (e = t.Entity.GetComponent(176)) &&
         e.ResetStepHeight(),
       (s.AllowMovement = !1),
       this.IgnoreObstacle &&
@@ -482,7 +511,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           Log_1.Log.CheckWarn()) &&
           Log_1.Log.Warn(
             "Movement",
-            43,
+            42,
             "技能曲线移动穿越障碍物结束SetActorLocation到终点",
           ),
         (s.CanSetActorTargetPos = !1)),
@@ -507,7 +536,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Movement",
-            43,
+            42,
             "TsAnimNotifyStateCurveMove.样条总长度太短",
             ["splineLen", i],
             ["distance", s],
@@ -532,23 +561,23 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       this.TmpVector.UnaryNegation(this.TmpVector),
       (this.TmpVector.Z = -this.TmpVector.Z),
       this.TmpVector.ToOrientationQuat(this.TmpQuat2);
-    var o = s / e,
-      o =
+    var h = s / e,
+      h =
         (this.TmpVector2.DeepCopy(
           this.SplineCurves.SplineTransform.GetScale3D(),
         ),
-        o > MathUtils_1.MathUtils.KindaSmallNumber &&
-          this.TmpVector2.MultiplyEqual(o),
+        h > MathUtils_1.MathUtils.KindaSmallNumber &&
+          this.TmpVector2.MultiplyEqual(h),
         this.DebugMode &&
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Movement",
-              43,
+              42,
               "InitSplineTransform",
               ["InitLocation", t.InitLocation],
               ["this.TmpQuat2", this.TmpQuat2],
               ["this.TmpVector", this.TmpVector],
-              ["scale", o],
+              ["scale", h],
             ),
           this.DebugDraw(
             t.TargetPos.ToUeVector(),
@@ -559,19 +588,19 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         this.SplineCurves.SetSplineTransform(this.TmpTransform, !1),
         this.SplineCurves.GetWorldLocationAtSplinePoint(0, this.TmpVector),
         Vector_1.Vector.DistSquared(this.TmpVector, t.InitLocation)),
-      h = Vector_1.Vector.DistSquared(
+      o = Vector_1.Vector.DistSquared(
         this.TmpVector,
         t.CharActorComp.ActorLocationProxy,
       );
-    return o > MIN_UPDATE_SPLINE_LENGTH_SQUARED ||
-      h > MIN_UPDATE_SPLINE_LENGTH_SQUARED
+    return h > MIN_UPDATE_SPLINE_LENGTH_SQUARED ||
+      o > MIN_UPDATE_SPLINE_LENGTH_SQUARED
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Movement",
-            43,
+            42,
             "初始点位置和样条第一个点位置距离太远了。",
-            ["样条点和初始点距离Squared", o],
-            ["样条点和当前坐标距离Squared", h],
+            ["样条点和初始点距离Squared", h],
+            ["样条点和当前坐标距离Squared", o],
             ["startLocation", this.TmpVector],
             ["ActorLocation", t.CharActorComp?.ActorLocationProxy],
           ),
@@ -579,7 +608,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Movement",
-            43,
+            42,
             "样条移动",
             ["Location", t.CharActorComp.ActorLocationProxy],
             ["TargetPos", t.TargetPos],
@@ -600,7 +629,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       if (
         (t.SocketName && t.TargetCharActorComp?.Actor
           ? i.FromUeVector(
-              t.TargetCharActorComp.Actor.Mesh.GetSocketLocation(
+              t.TargetCharActorComp.Actor.Mesh.D_GetSocketLocation(
                 FNameUtil_1.FNameUtil.GetDynamicFName(t.SocketName),
               ),
             )
@@ -610,7 +639,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         switch (
           (this.DebugMode &&
             (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Movement", 43, "目标位置偏移前目标点坐标 ", [
+              Log_1.Log.Debug("Movement", 42, "目标位置偏移前目标点坐标 ", [
                 "TargetPos",
                 i,
               ]),
@@ -632,6 +661,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
               this.TmpVector.SubtractionEqual(
                 t.CharActorComp.ActorLocationProxy,
               ),
+              this.TmpVector.Normalize(),
               this.TmpVector.Rotation(this.TmpRotator),
               this.TmpRotator.Quaternion(this.TmpQuat),
               this.TmpQuat.RotateVector(t.TargetOffset, t.TargetOffset));
@@ -642,28 +672,23 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
               this.TmpRotator.Quaternion(this.TmpQuat),
               this.TmpQuat.RotateVector(t.TargetOffset, t.TargetOffset));
         }
-        t.TargetActorComp &&
-          t.TargetActorComp.ActorQuatProxy.RotateVector(
-            t.TargetOffset,
-            this.TmpVector,
-          ),
-          i.AdditionEqual(this.TmpVector);
+        i.AdditionEqual(t.TargetOffset);
       }
     } else i.DeepCopy(t.CharActorComp.ActorLocationProxy);
   }
-  PositionCorrection(e, o, h) {
+  PositionCorrection(e, h, o) {
     if (
       this.MakePositionCorrection &&
       this.PositionCorrectionConfig &&
       0 === this.PositionCorrectionConfig.ActionType
     ) {
       var r = e.CharActorComp;
-      let i = o.ToUeVector(),
+      let i = h.ToUeVector(),
         t = r.ActorForward;
       var a,
-        _ = this.TmpVector2;
+        n = this.TmpVector2;
       if (
-        (_.DeepCopy(i),
+        (n.DeepCopy(i),
         this.PositionCorrectionConfig.LocationOffset &&
           !this.PositionCorrectionConfig.LocationOffset.IsNearlyZero(
             MathUtils_1.MathUtils.KindaSmallNumber,
@@ -681,13 +706,13 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
               (i = e.CharSkillComp.GetTargetTransform().GetLocation()));
             break;
           case 2:
-            var n =
+            var _ =
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-                29,
+                32,
               ).GetCurrentTarget();
-            n &&
+            _ &&
               ([i, t] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
-                n.Entity.GetComponent(1).Owner,
+                _.Entity.GetComponent(1).Owner,
               ));
             break;
           case 3:
@@ -697,11 +722,11 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             break;
           case 4:
             e.CharActorComp &&
-              ((n = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+              ((_ = ModelManager_1.ModelManager.CreatureModel.GetEntity(
                 e.CharActorComp.Entity.GetComponent(0).GetSummonerId(),
               )?.Entity?.GetComponent(1)),
               ([i, t] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
-                n.Owner,
+                _.Owner,
               )));
             break;
           case 5:
@@ -713,51 +738,58 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             break;
           case 6:
             e.CharActorComp &&
-              ((n =
-                BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+              ((_ =
+                ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
                   e.CharActorComp.Entity.Id,
                   this.TargetParam,
                 )),
-              (i = WorldGlobal_1.WorldGlobal.ToUeVector(n)));
+              (i = WorldGlobal_1.WorldGlobal.ToUeVector(_)));
             break;
           case 7:
             e.CharActorComp &&
-              ((n =
-                BlackboardController_1.BlackboardController.GetIntValueByEntity(
+              ((_ =
+                ControllerHolder_1.ControllerHolder.BlackboardController.GetIntValueByEntity(
                   e.CharActorComp.Entity.Id,
                   this.TargetParam,
                 )),
-              (n = EntitySystem_1.EntitySystem.Get(n))?.Valid) &&
+              (_ = EntitySystem_1.EntitySystem.Get(_))?.Valid) &&
               ([i, t] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
-                n.GetComponent(155).Owner,
+                _.GetComponent(167).Owner,
               ));
         }
         switch (this.PositionCorrectionConfig.LocationForwardType) {
           case 0:
             break;
           case 1:
-            t = r.Actor.GetActorForwardVector();
+            t = r.Actor.D_GetActorForwardVector();
             break;
           case 2:
-            (t = r.ActorLocation.op_Subtraction(i)).Set(t.X, t.Y, 0);
+            var v = r.ActorLocation.op_Subtraction(i);
+            t.Set(v.X, v.Y, 0);
             break;
           case 3:
-            (t = i.op_Subtraction(
-              Global_1.Global.CharacterCameraManager.GetCameraLocation(),
-            )).Set(t.X, t.Y, 0);
+            v = i.op_Subtraction(
+              Global_1.Global.CharacterCameraManager.D_GetCameraLocation(),
+            );
+            t.Set(v.X, v.Y, 0);
         }
-        _.DeepCopy(i);
-        var l = new UE.Transform(t.Rotation(), i, Vector_1.Vector.OneVector);
-        (i = l.TransformPositionNoScale(
-          this.PositionCorrectionConfig.LocationOffset,
-        )),
+        n.DeepCopy(i);
+        var l = new UE.TransformDouble(
+            t.Rotation(),
+            i,
+            Vector_1.Vector.OneVectorDouble,
+          ),
+          c = UE.KismetMathLibrary.Conv_VectorToVectorDouble(
+            this.PositionCorrectionConfig.LocationOffset,
+          );
+        (i = l.TransformPositionNoScale(c)),
           this.DebugMode &&
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Movement",
-              43,
+              42,
               "位置基准偏移",
-              ["startLocation", _],
+              ["startLocation", n],
               ["targetLocation", i],
               ["direction", t],
               ["LocationOffset", this.PositionCorrectionConfig.LocationOffset],
@@ -767,7 +799,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
         let t = r.ActorLocation;
         switch (this.PositionCorrectionConfig.RestrictType) {
           case 0:
-            t = Global_1.Global.BaseCharacter.K2_GetActorLocation();
+            t = Global_1.Global.BaseCharacter.D_K2_GetActorLocation();
             break;
           case 1:
             break;
@@ -775,54 +807,53 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             r.Entity.GetComponent(0).IsMonster() &&
               ((a = r.GetInitLocation()), t.Set(a.X, a.Y, a.Z));
         }
-        var v,
-          l = i.op_Subtraction(t).Size();
+        l = i.op_Subtraction(t).Size();
         l > this.PositionCorrectionConfig.RestrictDistance &&
-          ((v = this.PositionCorrectionConfig.RestrictDistance / l),
-          MathUtils_1.MathUtils.LerpVector(t, i, v, i),
+          ((c = this.PositionCorrectionConfig.RestrictDistance / l),
+          MathUtils_1.MathUtils.LerpVector(t, i, c, i),
           this.DebugMode) &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Movement",
-            43,
+            42,
             "限制距离",
             ["center", t],
             ["distance", l],
             ["targetLocation", i],
-            ["rate", v],
+            ["rate", c],
           );
       }
       let s = this.TmpVector3;
       if ((s.DeepCopy(i), this.PositionCorrectionConfig.BestSpot)) {
         switch (this.PositionCorrectionConfig.Strategy) {
           case 0:
-            var c = (0, SkillBehaviorMisc_1.traceWall)(
+            var M = (0, SkillBehaviorMisc_1.traceWall)(
               r,
-              _,
+              n,
               s,
               this.PositionCorrectionConfig.DebugTrace,
             );
-            if (!c) return;
-            s = c[1];
+            if (!M) return;
+            s = M[1];
             break;
           case 1: {
             let t = !1;
             this.TmpVector4.Reset();
-            var M = this.TmpVector,
-              L = this.TmpVector4;
-            s.Subtraction(_, M);
-            for (const u of angles) {
-              M.RotateAngleAxis(u, Vector_1.Vector.UpVectorProxy, L),
-                _.Addition(L, s);
-              var T = (0, SkillBehaviorMisc_1.traceWall)(
+            var L = this.TmpVector,
+              T = this.TmpVector4;
+            s.Subtraction(n, L);
+            for (const g of angles) {
+              L.RotateAngleAxis(g, Vector_1.Vector.UpVectorProxy, T),
+                n.Addition(T, s);
+              var u = (0, SkillBehaviorMisc_1.traceWall)(
                 r,
-                _,
+                n,
                 s,
                 this.PositionCorrectionConfig.DebugTrace,
               );
-              if (!T) return;
-              if (!T[0]) {
-                (t = !0), (s = T[1]);
+              if (!u) return;
+              if (!u[0]) {
+                (t = !0), (s = u[1]);
                 break;
               }
             }
@@ -830,7 +861,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             return;
           }
         }
-        l = (0, SkillBehaviorMisc_1.traceGround)(
+        l = (0, SkillBehaviorMisc_1.traceGroundWithGravity)(
           r,
           s,
           this.PositionCorrectionConfig.DebugTrace,
@@ -840,14 +871,14 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           (e.CanSetActorTargetPos = !0),
           this.DebugMode &&
             Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Movement", 43, "最佳落脚点", [
+            Log_1.Log.Debug("Movement", 42, "最佳落脚点", [
               "targetLocation",
               i,
             ]);
       }
       (i = s.ToUeVector()),
         0 < this.PositionCorrectionConfig.Navigation &&
-        !UE.NavigationSystemV1.K2_ProjectPointToNavigation(
+        !UE.NavigationSystemV1.D_K2_ProjectPointToNavigation(
           GlobalData_1.GlobalData.World,
           i,
           void 0,
@@ -855,28 +886,28 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           void 0,
           queryExtent,
         )
-          ? ((v = (0, puerts_1.$ref)(void 0)),
-            UE.NavigationSystemV1.K2_GetRandomLocationInNavigableRadius(
+          ? ((c = (0, puerts_1.$ref)(void 0)),
+            UE.NavigationSystemV1.D_K2_GetRandomLocationInNavigableRadius(
               GlobalData_1.GlobalData.World,
               i,
-              v,
+              c,
               this.PositionCorrectionConfig.Navigation,
-            ) && h.DeepCopy((0, puerts_1.$unref)(v)),
+            ) && o.DeepCopy((0, puerts_1.$unref)(c)),
             (e.CanSetActorTargetPos = !0))
           : (this.TmpVector.DeepCopy(i),
-            this.TmpVector.SubtractionEqual(_),
-            o.Addition(this.TmpVector, h),
+            this.TmpVector.SubtractionEqual(n),
+            h.Addition(this.TmpVector, o),
             this.DebugMode &&
               Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Movement",
-                43,
+                42,
                 "加偏移量到最终坐标上",
                 ["targetLocation", i],
-                ["startLocationVec2", _],
+                ["startLocationVec2", n],
                 ["this.TmpVector", this.TmpVector],
-                ["targetPos", o],
-                ["outPos", h],
+                ["targetPos", h],
+                ["outPos", o],
               ));
     }
   }
@@ -888,7 +919,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Movement",
-              43,
+              42,
               "修正前目标点坐标 ",
               ["TargetPos", t.TargetPos],
               [
@@ -917,7 +948,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Movement",
-          43,
+          42,
           "位置修正后目标点坐标",
           ["TargetPos", t.TargetPos],
           [
@@ -944,7 +975,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Movement",
-            43,
+            42,
             "目标点距离太远了，不动",
             ["dist", e],
             ["current", t.CharActorComp.ActorLocationProxy],
@@ -954,7 +985,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       : (i.DeepCopy(this.TmpVector),
         s < 0
           ? (Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn("Movement", 43, "和上一次移动相比在后退"),
+              Log_1.Log.Warn("Movement", 42, "和上一次移动相比在后退"),
             -1)
           : e);
   }
@@ -971,7 +1002,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Movement",
-            43,
+            42,
             "rate > 1",
             ["params.NowTime", i.NowTime],
             ["params.TotalTime", i.TotalTime],
@@ -1004,7 +1035,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Movement",
-              43,
+              42,
               "LastLocation太远，很危险，无视掉",
               ["Actor", i.CharActorComp?.Actor.GetName()],
               ["Last", i.LastLocation],
@@ -1019,7 +1050,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Movement",
-              43,
+              42,
               "MoveToTarget",
               ["rate", e],
               ["MoveVec", this.TmpVector3],
@@ -1092,31 +1123,31 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
     if (!(e <= 0 || s < 0)) {
       this.ContinuallyUpdateTargetPosition &&
         (Math.abs(e - 1) > MathUtils_1.MathUtils.KindaSmallNumber || 0 < e) &&
-        ((o = this.SplineCurves.GetSplinePointsNum()),
-        this.SplineCurves.GetWorldLocationAtSplinePoint(o - 1, this.TmpVector),
-        100 < (h = Vector_1.Vector.DistSquared(this.TmpVector, i.TargetPos))) &&
-        h < INVALID_LAST_LOCATION_THRESHOLD_SQUARED &&
-        (this.SplineCurves.SetLocationAtSplinePoint(o - 1, i.TargetPos, 1, !0),
+        ((h = this.SplineCurves.GetSplinePointsNum()),
+        this.SplineCurves.GetWorldLocationAtSplinePoint(h - 1, this.TmpVector),
+        100 < (o = Vector_1.Vector.DistSquared(this.TmpVector, i.TargetPos))) &&
+        o < INVALID_LAST_LOCATION_THRESHOLD_SQUARED &&
+        (this.SplineCurves.SetLocationAtSplinePoint(h - 1, i.TargetPos, 1, !0),
         this.DebugMode) &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Movement",
-          43,
+          42,
           "SetLocationAtSplinePoint ",
-          ["changeDist", h],
+          ["changeDist", o],
           ["TargetPos", i.TargetPos],
           ["SplinePoint", this.TmpVector],
         );
-      var o = this.SplineCurves.GetSplineLength(),
-        h =
+      var h = this.SplineCurves.GetSplineLength(),
+        o =
           (this.SplineCurves.GetTransformAtDistanceAlongSpline(
-            o * e,
+            h * e,
             1,
             this.TmpTransform,
           ),
           this.TmpTransform.GetLocation());
       if (
-        (this.TmpVector.DeepCopy(h),
+        (this.TmpVector.DeepCopy(o),
         this.TmpVector.SubtractionEqual(i.CharActorComp.ActorLocationProxy),
         !(
           i.CharUnifiedComp?.PositionState ===
@@ -1127,18 +1158,18 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Movement",
-                43,
+                42,
                 "MoveToTargetAlongSpline",
                 ["MoveVec", this.TmpVector],
                 ["MoveVecSize", this.TmpVector?.Size()],
                 ["dist", s],
                 ["rate", e],
-                ["SplineLength", o],
+                ["SplineLength", h],
                 ["this.TargetVec", i.TargetVec],
                 ["this.TargetPos", i.TargetPos],
               ),
             this.DebugDraw(
-              h.ToUeVector(),
+              o.ToUeVector(),
               ColorUtils_1.ColorUtils.LinearWhite,
             )),
           i.LastLocation.Subtraction(
@@ -1150,7 +1181,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Movement",
-                43,
+                42,
                 "LastLocation太远，很危险，无视掉",
                 ["Actor", i.CharActorComp?.Actor.GetName()],
                 ["Last", i.LastLocation],
@@ -1204,7 +1235,7 @@ class TsAnimNotifyStateCurveMove extends UE.KuroAnimNotifyState {
     }
   }
   DebugDraw(t, i, s = DEBUG_RADIUS, e = DEBUG_DURATION) {
-    UE.KismetSystemLibrary.DrawDebugSphere(
+    UE.KismetSystemLibrary.D_DrawDebugSphere(
       GlobalData_1.GlobalData.World,
       t,
       s,

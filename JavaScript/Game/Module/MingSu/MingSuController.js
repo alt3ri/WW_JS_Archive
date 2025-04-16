@@ -12,15 +12,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   UiManager_1 = require("../../Ui/UiManager"),
   ItemRewardController_1 = require("../ItemReward/ItemRewardController"),
-  MingSuDefine_1 = require("./MingSuDefine"),
-  MingSuModel_1 = require("./MingSuModel");
+  MingSuDefine_1 = require("./MingSuDefine");
 class MingSuController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
-    return (
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("MingSuTi", 8, "MingSuControllerInit!!!"),
-      !0
-    );
+    return !0;
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -67,90 +62,99 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
                 break;
               case MingSuDefine_1.CHENG_XIAO_SHAN_POOL_CONFIG_ID:
                 UiManager_1.UiManager.OpenView("CollectItemView", void 0, o);
+                break;
+              case MingSuDefine_1.PUPU_VILLAGE_POOL_CONFIG_ID:
+                UiManager_1.UiManager.OpenView(
+                  "PupuVillageItemView",
+                  void 0,
+                  o,
+                );
             }
           }),
       !0
     );
   }
   static SendOpenDragonPoolRequest(e, o) {
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("MingSuTi", 8, "打开龙池!!!");
     var n = new Protocol_1.Aki.Protocol.Chs();
     (n.k7n = e),
-      Net_1.Net.Call(27701, Protocol_1.Aki.Protocol.Chs.create(n), (e) => {
+      Net_1.Net.Call(15476, Protocol_1.Aki.Protocol.Chs.create(n), (e) => {
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolDropItems(
-                e.kih,
+                e.jE_,
               ),
               o && o())
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                21983,
+                24420,
               ));
       });
   }
   static SendOpenDarkCoastDeliveryRequest(o, n) {
-    var e = new Protocol_1.Aki.Protocol.Dth();
+    var e = new Protocol_1.Aki.Protocol.Nf_();
     (e.k7n = o),
-      Net_1.Net.Call(25864, Protocol_1.Aki.Protocol.Dth.create(e), (e) => {
+      Net_1.Net.Call(29460, Protocol_1.Aki.Protocol.Nf_.create(e), (e) => {
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolDropItems(
-                e.kih,
+                e.jE_,
               ),
               ModelManager_1.ModelManager.MingSuModel.RefreshDarkCoastGuardInfo(
                 o,
-                e.Gih,
-                e.Nih,
+                e.$E_,
+                e.WE_,
               ),
               ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolLevelGains(
                 o,
-                e.Oih,
+                e.HE_,
               ),
               n && n())
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                23120,
+                17838,
               ));
       });
   }
   static async SendDarkCoastDeliveryRequestAsync() {
-    var e = new Protocol_1.Aki.Protocol.Dth(),
+    var e = new Protocol_1.Aki.Protocol.Nf_(),
       e =
         ((e.k7n = MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID),
         await Net_1.Net.CallAsync(
-          25864,
-          Protocol_1.Aki.Protocol.Dth.create(e),
+          29460,
+          Protocol_1.Aki.Protocol.Nf_.create(e),
         ));
     e &&
       e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs &&
       (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolDropItems(
-        e.kih,
+        e.jE_,
       ),
       ModelManager_1.ModelManager.MingSuModel.RefreshDarkCoastGuardInfo(
         MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
-        e.Gih,
-        e.Nih,
+        e.$E_,
+        e.WE_,
       ),
       ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolLevelGains(
         MingSuDefine_1.DARK_COAST_POOL_CONFIG_ID,
-        e.Oih,
+        e.HE_,
       ));
   }
   static SendHandInMingSuRequest(t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("MingSuTi", 8, "HandInMingSuRequest", ["dragonPoolId", t]);
+      Log_1.Log.Info("MingSuTi", 58, "HandInMingSuRequest", [
+        "dragonPoolId",
+        t,
+      ]);
     var e = new Protocol_1.Aki.Protocol.uhs();
     (e.k7n = t),
       (e.AVn =
         ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId),
-      Net_1.Net.Call(26274, Protocol_1.Aki.Protocol.uhs.create(e), (e) => {
+      Net_1.Net.Call(23002, Protocol_1.Aki.Protocol.uhs.create(e), (e) => {
         var o, n, r;
         e &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "MingSuTi",
-              8,
+              58,
               "[CollectionItemDisplay]HandInMingSuResponse",
               ["dragonPoolId", t],
               ["提交数量", e.KSs],
@@ -168,7 +172,7 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "MingSuTi",
-                    8,
+                    58,
                     "[CollectionItemDisplay]广播等级提升事件",
                     ["dragonPoolId", t],
                     ["currentLevel", n],
@@ -179,7 +183,7 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
                   ? (Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "MingSuTi",
-                        8,
+                        58,
                         "[CollectionItemDisplay]当提交物品等级升至满级时",
                         ["dragonPoolId", t],
                       ),
@@ -190,7 +194,7 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
                     ? (Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "MingSuTi",
-                          8,
+                          58,
                           "[CollectionItemDisplay]当提交物品等级提升时",
                           ["dragonPoolId", t],
                         ),
@@ -200,7 +204,7 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
                     : (Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "MingSuTi",
-                          8,
+                          58,
                           "[CollectionItemDisplay]当提交物品成功时",
                           ["dragonPoolId", t],
                         ),
@@ -224,23 +228,23 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
               ))
             : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                26733,
+                22078,
               ),
               ItemRewardController_1.ItemRewardController.Close()));
       });
   }
   static SendMingSuHandRewardRequest(n) {
-    var e = new Protocol_1.Aki.Protocol.Ith();
+    var e = new Protocol_1.Aki.Protocol.Lf_();
     (e.k7n = n),
       (e.AVn =
         ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId),
-      Net_1.Net.Call(26716, Protocol_1.Aki.Protocol.Ith.create(e), (e) => {
+      Net_1.Net.Call(25954, Protocol_1.Aki.Protocol.Lf_.create(e), (e) => {
         var o;
         e &&
           (e.Q4n === Protocol_1.Aki.Protocol.Q4n.KRs
             ? (ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolLevelGains(
                 n,
-                e.Oih,
+                e.HE_,
               ),
               (o =
                 ModelManager_1.ModelManager.MingSuModel.GetDragonPoolInstanceById(
@@ -252,20 +256,51 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                17068,
+                28664,
               ));
       });
   }
 }
-((exports.MingSuController = MingSuController).Model =
-  MingSuModel_1.MingSuModel),
-  (MingSuController.Lbi = () => {
+((exports.MingSuController = MingSuController).Lbi = () => {
+  switch (
+    (Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "MingSuTi",
+        58,
+        "[CollectionItemDisplay]当提交物品等级提升时,开始打开结算界面",
+        [
+          "CurrentDragonPoolId",
+          ModelManager_1.ModelManager.MingSuModel.GetCurrentDragonPoolId(),
+        ],
+      ),
+    ModelManager_1.ModelManager.MingSuModel.GetCurrentDragonPoolId())
+  ) {
+    case MingSuDefine_1.MING_SU_POOL_CONFIG_ID:
+      ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
+        2006,
+        !0,
+      );
+      break;
+    case MingSuDefine_1.PUPU_VILLAGE_POOL_CONFIG_ID:
+      ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
+        2008,
+        !0,
+      );
+      break;
+    case MingSuDefine_1.CHENG_XIAO_SHAN_POOL_CONFIG_ID:
+      ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
+        2007,
+        !0,
+      );
+  }
+}),
+  (MingSuController.NGn = () => {
     switch (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "MingSuTi",
-          8,
-          "[CollectionItemDisplay]当提交物品等级提升时,开始打开结算界面",
+          58,
+          "[CollectionItemDisplay]当提交物品等级升至满级时,开始打开结算界面",
           [
             "CurrentDragonPoolId",
             ModelManager_1.ModelManager.MingSuModel.GetCurrentDragonPoolId(),
@@ -279,30 +314,9 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
           !0,
         );
         break;
-      case MingSuDefine_1.CHENG_XIAO_SHAN_POOL_CONFIG_ID:
+      case MingSuDefine_1.PUPU_VILLAGE_POOL_CONFIG_ID:
         ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
-          2007,
-          !0,
-        );
-    }
-  }),
-  (MingSuController.NGn = () => {
-    switch (
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "MingSuTi",
-          8,
-          "[CollectionItemDisplay]当提交物品等级升至满级时,开始打开结算界面",
-          [
-            "CurrentDragonPoolId",
-            ModelManager_1.ModelManager.MingSuModel.GetCurrentDragonPoolId(),
-          ],
-        ),
-      ModelManager_1.ModelManager.MingSuModel.GetCurrentDragonPoolId())
-    ) {
-      case MingSuDefine_1.MING_SU_POOL_CONFIG_ID:
-        ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
-          2006,
+          2008,
           !0,
         );
         break;

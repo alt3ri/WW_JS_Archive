@@ -9,28 +9,31 @@ class TsAnimNotifyStateAddMaterialController extends UE.KuroAnimNotifyState {
       (this.UserData = void 0),
       (this.Handles = void 0);
   }
-  K2_NotifyBegin(e, t, r) {
-    var n = e
+  Constructor() {
+    this.Handles = void 0;
+  }
+  K2_NotifyBegin(t, e, r) {
+    var i = t
       .GetOwner()
       .GetComponentByClass(UE.CharRenderingComponent_C.StaticClass());
-    if (!(n instanceof CharRenderingComponent_1.default)) return !1;
+    if (!(i instanceof CharRenderingComponent_1.default)) return !1;
     this.Handles || (this.Handles = new Map());
-    n = n.AddMaterialControllerDataWithUserData(
+    i = i.AddMaterialControllerDataWithUserData(
       this.ControllerData,
       this.UserData,
     );
-    return this.Handles.set(e, n), !0;
+    return this.Handles.set(t, i), !0;
   }
-  K2_NotifyEnd(e, t) {
+  K2_NotifyEnd(t, e) {
     var r,
-      n = e
+      i = t
         .GetOwner()
         .GetComponentByClass(UE.CharRenderingComponent_C.StaticClass());
     return (
-      n instanceof CharRenderingComponent_1.default &&
+      i instanceof CharRenderingComponent_1.default &&
       !!this.Handles &&
-      void 0 !== (r = this.Handles.get(e)) &&
-      (this.Handles.delete(e), n.RemoveMaterialControllerData(r), !0)
+      void 0 !== (r = this.Handles.get(t)) &&
+      (this.Handles.delete(t), i.RemoveMaterialControllerData(r), !0)
     );
   }
 }

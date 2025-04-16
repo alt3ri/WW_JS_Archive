@@ -12,31 +12,31 @@ const Info_1 = require("../../../../Core/Common/Info"),
 class ViewHotKeyHandleRoulette extends ViewHotKeyHandle_1.ViewHotKeyHandle {
   constructor() {
     super(...arguments),
-      (this.yQa = !1),
-      (this.EQa = !1),
-      (this.IQa = !1),
-      (this.TQa = 0),
+      (this.KXa = !1),
+      (this.$Xa = !1),
+      (this.XXa = !1),
+      (this.YXa = 0),
       (this.Dut = (t) => {
-        this.ActionName && this.ActionName === t && this.LQa(this.AQa());
+        this.ActionName && this.ActionName === t && this.zXa(this.JXa());
       }),
-      (this.DQa = (t, e) => {
-        this.IQa &&
-          this.yQa &&
-          (e < -this.TQa || e > this.TQa) &&
-          ((this.EQa = !0),
+      (this.ZXa = (t, e) => {
+        this.XXa &&
+          this.KXa &&
+          (e < -this.YXa || e > this.YXa) &&
+          ((this.$Xa = !0),
           this.OnInputAction(this.ActionName, 0),
-          (this.EQa = !1),
-          (this.yQa = !1));
+          (this.$Xa = !1),
+          (this.KXa = !1));
       }),
-      (this.RQa = (t, e) => {
-        (this.yQa = 0 === e), this.OnInputAction(t, e);
+      (this.eYa = (t, e) => {
+        (this.KXa = 0 === e), this.OnInputAction(t, e);
       });
   }
   Bind() {
     this.AU(),
       InputDistributeController_1.InputDistributeController.BindAction(
         this.ActionName,
-        this.RQa,
+        this.eYa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActionKeyChanged,
@@ -46,15 +46,15 @@ class ViewHotKeyHandleRoulette extends ViewHotKeyHandle_1.ViewHotKeyHandle {
   UnBind() {
     InputDistributeController_1.InputDistributeController.UnBindAction(
       this.ActionName,
-      this.RQa,
+      this.eYa,
     ),
-      this.IQa &&
+      this.XXa &&
         InputDistributeController_1.InputDistributeController.UnBindAxes(
           [
             InputMappingsDefine_1.axisMappings.LookUp,
             InputMappingsDefine_1.axisMappings.Turn,
           ],
-          this.DQa,
+          this.ZXa,
         ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActionKeyChanged,
@@ -62,13 +62,13 @@ class ViewHotKeyHandleRoulette extends ViewHotKeyHandle_1.ViewHotKeyHandle {
       );
   }
   AU() {
-    (this.TQa =
+    (this.YXa =
       CommonParamById_1.configCommonParamById.GetFloatConfig(
         "Roulette_Gamepad_Open_DeadLimit",
       ) ?? 0),
-      this.LQa(this.AQa());
+      this.zXa(this.JXa());
   }
-  AQa() {
+  JXa() {
     var t;
     return (
       !!this.ActionName &&
@@ -79,27 +79,27 @@ class ViewHotKeyHandleRoulette extends ViewHotKeyHandle_1.ViewHotKeyHandle {
       InputSettingsManager_1.InputSettingsManager.IsCombinationAxisMainKey(t[0])
     );
   }
-  LQa(t) {
-    t !== this.IQa &&
+  zXa(t) {
+    t !== this.XXa &&
       (t
         ? InputDistributeController_1.InputDistributeController.BindAxes(
             [
               InputMappingsDefine_1.axisMappings.LookUp,
               InputMappingsDefine_1.axisMappings.Turn,
             ],
-            this.DQa,
+            this.ZXa,
           )
         : InputDistributeController_1.InputDistributeController.UnBindAxes(
             [
               InputMappingsDefine_1.axisMappings.LookUp,
               InputMappingsDefine_1.axisMappings.Turn,
             ],
-            this.DQa,
+            this.ZXa,
           ),
-      (this.IQa = t));
+      (this.XXa = t));
   }
   SpecialConditionCheck() {
-    return !Info_1.Info.IsInGamepad() || !this.IQa || this.EQa;
+    return !Info_1.Info.IsInGamepad() || !this.XXa || this.$Xa;
   }
 }
 exports.ViewHotKeyHandleRoulette = ViewHotKeyHandleRoulette;

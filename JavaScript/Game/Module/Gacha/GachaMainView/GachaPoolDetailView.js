@@ -13,7 +13,7 @@ const UE = require("ue"),
   GachaController_1 = require("../GachaController");
 class GachaPoolDetailData {
   constructor() {
-    (this.TitleTextKey = ""), (this.ItemList = []);
+    (this.TitleTextKey = ""), (this.TitleDescKey = ""), (this.ItemList = []);
   }
 }
 class GachaPoolDetailView extends UiViewBase_1.UiViewBase {
@@ -26,62 +26,60 @@ class GachaPoolDetailView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    var a,
-      i = this.OpenParam,
-      t = await GachaController_1.GachaController.GachaPoolDetailRequestAsync(
-        i.Id,
+    var i,
+      t = this.OpenParam,
+      a = await GachaController_1.GachaController.GachaPoolDetailRequestAsync(
+        t.Id,
       ),
-      i =
-        (this.GetText(0).SetText(t.Erh.Erh),
+      t =
+        (this.GetText(0).SetText(a.Mb_.Mb_),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(3),
           "GachaPoolDetailTitle",
-          i.Title,
+          t.Title,
         ),
-        ConfigManager_1.ConfigManager.GachaConfig?.GetGachaPoolConfig(i.Id)),
-      i = ConfigManager_1.ConfigManager.GachaConfig?.GetGachaConfig(i.GachaId),
-      e = (a, i) => (a.yrh ? -1 : i.yrh ? 1 : 0),
-      o = [],
-      l =
-        (null != t.Erh?.Irh &&
-          0 < t.Erh?.Irh.length &&
-          (((l = new GachaPoolDetailData()).TitleTextKey =
-            "GachaPoolDetail_FiveStar_" + i?.RuleGroupId),
-          (l.ItemList = t.Erh.Irh.sort(e)),
-          ((a = new GachaPoolDetailGrid()).Data = l),
-          (l = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-          o.push(a.CreateByActorAsync(l.GetOwner())),
-          this.AddChild(a)),
-        null != t.Erh?.Trh &&
-          0 < t.Erh?.Trh.length &&
-          (((l = new GachaPoolDetailData()).TitleTextKey =
-            "GachaPoolDetail_FiveStar_" + i?.RuleGroupId),
-          (l.ItemList = t.Erh.Trh.sort(e)),
-          ((a = new GachaPoolDetailGrid()).Data = l),
-          (l = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-          o.push(a.CreateByActorAsync(l.GetOwner())),
-          this.AddChild(a)),
+        (i, t) => (i.Sb_ ? -1 : t.Sb_ ? 1 : 0)),
+      e = [],
+      o =
+        (void 0 !== a.Mb_?.Eb_ &&
+          0 < a.Mb_?.Eb_.length &&
+          (((o = new GachaPoolDetailData()).TitleTextKey = a.Mb_.q4_),
+          (o.TitleDescKey = a.Mb_.O4_),
+          (o.ItemList = a.Mb_.Eb_.sort(t)),
+          ((i = new GachaPoolDetailGrid()).Data = o),
+          (o = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
+          e.push(i.CreateByActorAsync(o.GetOwner())),
+          this.AddChild(i)),
+        null != a.Mb_?.Ib_ &&
+          0 < a.Mb_?.Ib_.length &&
+          (((o = new GachaPoolDetailData()).TitleTextKey = a.Mb_.q4_),
+          (o.TitleDescKey = a.Mb_.O4_),
+          (o.ItemList = a.Mb_.Ib_.sort(t)),
+          ((i = new GachaPoolDetailGrid()).Data = o),
+          (o = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
+          e.push(i.CreateByActorAsync(o.GetOwner())),
+          this.AddChild(i)),
         []);
-    null != t.Erh?.Lrh && 0 < t.Erh?.Lrh.length && l.push(...t.Erh.Lrh),
-      null != t.Erh?.Rrh && 0 < t.Erh?.Rrh.length && l.push(...t.Erh.Rrh),
-      0 < l.length &&
-        (((a = new GachaPoolDetailData()).TitleTextKey =
-          "GachaPoolDetail_FourStar_" + i?.RuleGroupId),
-        (a.ItemList = l.sort(e)),
-        ((l = new GachaPoolDetailGrid()).Data = a),
-        (a = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-        o.push(l.CreateByActorAsync(a.GetOwner())),
-        this.AddChild(l)),
-      null != t.Erh?.Arh &&
-        0 < t.Erh?.Arh.length &&
-        (((a = new GachaPoolDetailData()).TitleTextKey =
-          "GachaPoolDetail_ThreeStar_" + i?.RuleGroupId),
-        (a.ItemList = t.Erh.Arh.sort(e)),
-        ((l = new GachaPoolDetailGrid()).Data = a),
+    null != a.Mb_?.Tb_ && 0 < a.Mb_?.Tb_.length && o.push(...a.Mb_.Tb_),
+      null != a.Mb_?.bb_ && 0 < a.Mb_?.bb_.length && o.push(...a.Mb_.bb_),
+      0 < o.length &&
+        (((i = new GachaPoolDetailData()).TitleTextKey = a.Mb_.G4_),
+        (i.TitleDescKey = a.Mb_.F4_),
+        (i.ItemList = o.sort(t)),
+        ((o = new GachaPoolDetailGrid()).Data = i),
         (i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
-        o.push(l.CreateByActorAsync(i.GetOwner())),
-        this.AddChild(l)),
-      await Promise.all(o),
+        e.push(o.CreateByActorAsync(i.GetOwner())),
+        this.AddChild(o)),
+      null != a.Mb_?.Lb_ &&
+        0 < a.Mb_?.Lb_.length &&
+        (((i = new GachaPoolDetailData()).TitleTextKey = a.Mb_.N4_),
+        (i.TitleDescKey = a.Mb_.V4_),
+        (i.ItemList = a.Mb_.Lb_.sort(t)),
+        ((o = new GachaPoolDetailGrid()).Data = i),
+        (a = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1))),
+        e.push(o.CreateByActorAsync(a.GetOwner())),
+        this.AddChild(o)),
+      await Promise.all(e),
       this.GetItem(2).SetUIActive(!1);
   }
 }
@@ -95,22 +93,21 @@ class GachaPoolDetailGrid extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIText],
       [1, UE.UIItem],
       [2, UE.UIItem],
+      [3, UE.UIText],
     ];
   }
   async OnBeforeStartAsync() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(
-      this.GetText(0),
-      this.Data.TitleTextKey,
-    );
-    var a = [];
+    this.GetText(0).SetText(this.Data.TitleDescKey),
+      this.GetText(3).SetText(this.Data.TitleTextKey);
+    var i = [];
     for (const e of this.Data.ItemList) {
-      var i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1)),
-        t = new GachaPoolDropItem();
-      (t.Data = e),
-        a.push(t.CreateByActorAsync(i.GetOwner())),
-        this.AddChild(t);
+      var t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(1)),
+        a = new GachaPoolDropItem();
+      (a.Data = e),
+        i.push(a.CreateByActorAsync(t.GetOwner())),
+        this.AddChild(a);
     }
-    this.GetItem(2).SetUIActive(!1), await Promise.all(a);
+    this.GetItem(2).SetUIActive(!1), await Promise.all(i);
   }
 }
 exports.GachaPoolDetailGrid = GachaPoolDetailGrid;
@@ -122,30 +119,30 @@ class GachaPoolDropItem extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnStart() {
-    var a,
-      i =
+    var i,
+      t =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
           this.Data.L8n,
         ),
-      t = this.Data.yrh ? "GachaDropItemUp" : "GachaPoolDropItemNormal";
-    1 === i
-      ? ((a = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(
+      a = this.Data.Sb_ ? "GachaDropItemUp" : "GachaPoolDropItemNormal";
+    1 === t
+      ? ((i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(
           this.Data.L8n,
         )),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(0),
-          t,
-          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(a.Name),
+          a,
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Name),
         ))
-      : 2 === i &&
-        ((a =
+      : 2 === t &&
+        ((i =
           ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
             this.Data.L8n,
           )),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(0),
-          t,
-          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(a.WeaponName),
+          a,
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.WeaponName),
         ));
   }
 }

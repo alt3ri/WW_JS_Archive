@@ -26,11 +26,11 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   constructor() {
     super(...arguments),
       (this.Ddt = new SpecialEnergyBaIconHandle_1.SpecialEnergyBaIconHandle()),
-      (this.fQa = new SpecialEnergyBaIconHandle_1.SpecialEnergyBaIconHandle()),
+      (this.VXa = new SpecialEnergyBaIconHandle_1.SpecialEnergyBaIconHandle()),
       (this.BarItem = void 0),
       (this.Udt = 0),
       (this.bst = void 0),
-      (this.Nqa = 0),
+      (this.p2a = 0),
       (this.RNn = !1),
       (this.xNn = !1),
       (this.NeedExtraEffectOnKeyEnable = !1),
@@ -40,20 +40,20 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   }
   async InitByPathAsync(i, t) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Battle", 18, "加载特殊能量条 - 变身组件"),
-      (this.NeedOverrideDestroy = !1),
-      await this.CreateByResourceIdAsync("UiItem_BarPointMorp", i, !0),
+      Log_1.Log.Debug("Battle", 17, "加载特殊能量条 - 变身组件"),
+      await this.CreateByResourceIdAsync("UiItem_BarPointMorp", i, !1),
       this.AddEvents(),
       this.RefreshVisible();
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
-      [0, UE.UISprite],
+      [0, UE.UITexture],
       [1, UE.UIItem],
       [2, UE.UINiagara],
       [3, UE.UINiagara],
       [4, UE.UIItem],
-      [5, UE.UISprite],
+      [5, UE.UITexture],
+      [6, UE.UIItem],
     ];
   }
   async OnBeforeStartAsync() {
@@ -75,18 +75,18 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
         (this.ReplaceStartEffectIndex = i[2]);
   }
   OnStart() {
-    var i = [this.GetSprite(0)];
-    this.Ddt.Init(i),
+    var i = [this.GetTexture(0)];
+    this.Ddt.Init(i, this.GetItem(6)),
       this.Config?.EnableIconPath
         ? (this.RNn = !0)
         : ((this.RNn = !1),
           this.Config?.IconPath
             ? this.Ddt.SetIcon(this.Config.IconPath)
             : this.Ddt.SetIcon(void 0)),
-      this.fQa.Init([this.GetSprite(5)]),
+      this.VXa.Init([this.GetTexture(5)]),
       this.Config?.FrontIconPath
-        ? this.fQa.SetIcon(this.Config.FrontIconPath)
-        : this.fQa.SetIcon(void 0),
+        ? this.VXa.SetIcon(this.Config.FrontIconPath)
+        : this.VXa.SetIcon(void 0),
       0 === this.Udt && this.GetUiNiagara(2).SetUIActive(!1),
       this.RefreshBuff(),
       this.NeedExtraEffectOnKeyEnable &&
@@ -113,8 +113,8 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   RefreshBuff() {
     this.Config?.BuffId
       ? ((this.bst = this.BuffComponent?.GetBuffById(this.Config.BuffId)),
-        (this.Nqa = this.bst?.Handle ?? 0))
-      : ((this.bst = void 0), (this.Nqa = 0));
+        (this.p2a = this.bst?.Handle ?? 0))
+      : ((this.bst = void 0), (this.p2a = 0));
   }
   OnChangeVisibleByTagChange(i) {
     i
@@ -122,7 +122,7 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
         this.IsShowOrShowing &&
           (this.GetUiNiagara(2).SetUIActive(!0),
           (this.Udt = EFFECT_DURATION + Time_1.Time.Now)))
-      : ((this.bst = void 0), (this.Nqa = 0), this.Ddt.PlayEndAnim(!1));
+      : ((this.bst = void 0), (this.p2a = 0), this.Ddt.PlayEndAnim(!1));
   }
   async InitBarItem() {
     var i = this.GetSpecialEnergyBarClass();
@@ -144,7 +144,7 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   OnBeforeDestroy() {
     super.OnBeforeDestroy(),
       this.Ddt.OnBeforeDestroy(),
-      this.fQa.OnBeforeDestroy();
+      this.VXa.OnBeforeDestroy();
   }
   RefreshBarPercent(i = !1) {
     var t = this.GetKeyEnable();
@@ -176,7 +176,7 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
       0 < this.Udt &&
         this.Udt <= Time_1.Time.Now &&
         (this.GetUiNiagara(2).SetUIActive(!1), (this.Udt = 0)),
-      (this.bst && this.BuffComponent?.GetBuffByHandle(this.Nqa)) ||
+      (this.bst && this.BuffComponent?.GetBuffByHandle(this.p2a)) ||
         this.RefreshBuff(),
       this.bst &&
         this.Ddt.PlayEndAnim(

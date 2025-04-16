@@ -10,7 +10,7 @@ class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
     super(e), (this.GRi = void 0), (this.zbn = !1);
   }
   async OnCreateAsync() {
-    var e, t;
+    var e, r;
     !this.GRi &&
       ((e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "UiItem_Mark_Radar_Effect",
@@ -18,15 +18,13 @@ class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
       (e = await this.LoadPrefabAsync(e)),
       (this.GRi = e.GetComponentByClass(UE.UIItem.StaticClass())),
       (e = 2 === this.Holder.MapType),
-      (t = this.GRi.GetChildComponent(0))) &&
-      ((t.bAdaptPosAndSizeChanged = e), (t.bResetNiagara = !0));
+      (r = this.GRi.GetChildComponent(0))) &&
+      ((r.bAdaptPosAndSizeChanged = e), (r.bResetNiagara = !0));
   }
   OnInitialize() {
-    super.OnInitialize(),
-      this.OnIconPathChanged(this.Holder.IconPath),
-      this.GRi?.SetUIParent(this.GetRootItem());
+    super.OnInitialize(), this.GRi?.SetUIParent(this.GetRootItem());
   }
-  OnSafeUpdate(e, t, r) {
+  OnSafeUpdate(e, r, t) {
     var i = this.Holder.GetSoundBoxEntityId();
     i &&
       ((i = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i)),

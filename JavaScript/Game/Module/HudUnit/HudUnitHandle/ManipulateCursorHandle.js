@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ManipulateCursorHandle = void 0);
 const puerts_1 = require("puerts"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   Stats_1 = require("../../../../Core/Common/Stats"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
@@ -39,8 +40,8 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.fHe = (t, i) => {
         (this.X9e = t),
           (this.dri = this.X9e.Entity.GetComponent(1)),
-          (this.Cri = this.X9e.Entity.GetComponent(57)),
-          (this.fri = t.Entity.GetComponent(190)),
+          (this.Cri = this.X9e.Entity.GetComponent(64)),
+          (this.fri = t.Entity.GetComponent(203)),
           this.Eri();
         for (const s of this.pri) {
           var e = this.fri.ListenForTagAddOrRemove(
@@ -95,9 +96,9 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       (this.X9e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
       this.X9e?.Valid)
     ) {
-      (this.fri = this.X9e.Entity.GetComponent(190)),
+      (this.fri = this.X9e.Entity.GetComponent(203)),
         (this.dri = this.X9e.Entity.GetComponent(1)),
-        (this.Cri = this.X9e.Entity.GetComponent(57)),
+        (this.Cri = this.X9e.Entity.GetComponent(64)),
         (this.gri =
           CameraController_1.CameraController.FightCamera.GetComponent(5));
       var t = CommonParamById_1.configCommonParamById.GetStringConfig(
@@ -218,7 +219,7 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   foi(t) {
     (this.lri = t),
       (this._ri = t.GetComponent(1)),
-      ((0, RegisterComponent_1.isComponentInstance)(this._ri, 187) &&
+      ((0, RegisterComponent_1.isComponentInstance)(this._ri, 200) &&
         ((this.cri =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
             this._ri.GetSceneInteractionLevelHandleId(),
@@ -226,7 +227,16 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         this.cri?.IsValid())) ||
         (this.cri = this._ri.Owner),
       this.yri(1),
-      this.hri ? (this.bl(), this.Lri(), this.Rri()) : this.Uri();
+      this.hri
+        ? this.hri.InAsyncLoading() ||
+          (this.bl(), this.Lri(), this.Rri(), this.H7l())
+        : this.Uri();
+  }
+  H7l() {
+    var t;
+    Info_1.Info.IsInTouch() &&
+      ((t = this.lri?.GetComponent(148)?.ExploreSkillUiResource),
+      this.hri?.SetIconPath(t));
   }
   poi() {
     this.DestroyHudUnit(this.hri),
@@ -263,9 +273,9 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
   Ari() {
     if (this.lri?.Valid && this.cri?.IsValid()) {
-      this.cri.GetActorBounds(!1, this.mri, void 0);
+      this.cri.D_GetActorBounds(!1, this.mri, void 0);
       let t = Vector_1.Vector.Create((0, puerts_1.$unref)(this.mri));
-      var i = this.lri.GetComponent(143),
+      var i = this.lri.GetComponent(154),
         i =
           (void 0 !== i &&
             0 !== i.GetPassThroughPortalType() &&
@@ -278,18 +288,18 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
           ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation()),
         i =
           (i !== Vector_1.Vector.ZeroVectorProxy && (t = i),
-          this.lri.GetComponent(135)),
+          this.lri.GetComponent(146)),
         i =
           (void 0 !== i && this.rii && (t = i.GetHitPoint()),
-          this.lri.GetComponent(148)),
+          this.lri.GetComponent(159)),
         i =
           (void 0 !== i &&
             this.rii &&
             (t = i.GetSocketLocation(this.Cri.GetHoldingEntity())),
-          this.lri.GetComponent(127)),
+          this.lri.GetComponent(138)),
         i =
           (void 0 !== i && this.rii && (t = i.GetHitPoint()),
-          this.lri.GetComponent(137));
+          this.lri.GetComponent(148));
       return (t = void 0 !== i ? i.Location : t);
     }
   }
@@ -306,14 +316,15 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
             }),
             this.bl(),
             this.Lri(),
-            this.Rri());
+            this.Rri(),
+            this.H7l());
       },
     );
   }
   yri(t) {
     if (this.ac !== t) {
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "控物UI状态改变", ["", t]);
+        Log_1.Log.Debug("Battle", 17, "控物UI状态改变", ["", t]);
       var i = this.ac;
       if (((this.ac = t), this.hri))
         switch (this.ac) {

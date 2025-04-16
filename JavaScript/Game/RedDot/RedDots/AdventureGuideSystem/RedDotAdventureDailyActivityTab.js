@@ -12,7 +12,10 @@ class RedDotAdventureDailyActivityTab extends RedDotBase_1.RedDotBase {
     return [EventDefine_1.EEventName.DailyActivityStateNotify];
   }
   OnCheck(e) {
-    return ModelManager_1.ModelManager.DailyActivityModel.CheckIsRewardWaitTake();
+    return (
+      !!ModelManager_1.ModelManager.FunctionModel.IsOpen(10023) &&
+      ModelManager_1.ModelManager.DailyActivityModel.CheckIsRewardWaitTake()
+    );
   }
 }
 exports.RedDotAdventureDailyActivityTab = RedDotAdventureDailyActivityTab;

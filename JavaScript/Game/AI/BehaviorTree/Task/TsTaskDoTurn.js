@@ -7,8 +7,8 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   Global_1 = require("../../../Global"),
   GlobalData_1 = require("../../../GlobalData"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
@@ -22,6 +22,20 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
       (this.TurnSpeed = 0),
       (this.MinAngle = 0),
       (this.LoopTime = 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsTurnToPlayer = !1),
+      (this.TsTargetConfigId = 0),
+      (this.TsTargetEntityKey = ""),
+      (this.TsTargetDirectKey = ""),
+      (this.TsTurnAngleAxis = 0),
+      (this.TsTurnSpeed = 0),
+      (this.TsMinAngle = 0),
+      (this.TsLoopTime = 0),
+      (this.EndForward = void 0),
+      (this.EndTime = -0);
+  }
+  Constructor() {
+    super.Constructor(),
       (this.IsInitTsVariables = !1),
       (this.TsTurnToPlayer = !1),
       (this.TsTargetConfigId = 0),
@@ -82,10 +96,11 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
       }
     } else
       "" !== this.TsTargetEntityKey
-        ? ((t = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
-            s.Entity.Id,
-            this.TsTargetEntityKey,
-          )),
+        ? ((t =
+            ControllerHolder_1.ControllerHolder.BlackboardController.GetEntityIdByEntity(
+              s.Entity.Id,
+              this.TsTargetEntityKey,
+            )),
           EntitySystem_1.EntitySystem.Get(t)
             .GetComponent(3)
             .ActorLocationProxy.Subtraction(
@@ -94,7 +109,7 @@ class TsTaskDoTurn extends TsTaskAbortImmediatelyBase_1.default {
             ))
         : "" !== this.TsTargetDirectKey
           ? (t =
-              BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+              ControllerHolder_1.ControllerHolder.BlackboardController.GetVectorValueByEntity(
                 s.Entity.Id,
                 this.TsTargetDirectKey,
               )) && this.EndForward.FromUeVector(t)

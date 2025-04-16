@@ -34,7 +34,7 @@ class EffectModelHelper {
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderEffect",
-              26,
+              25,
               "特效试图生成在不属于任何世界的actor上",
               ["Actor", t],
               ["ComponentClass", r],

@@ -2,17 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldMapQuickNavigatePanel = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiSequencePlayer_1 = require("../../../../Ui/Base/UiSequencePlayer"),
-  ExploreProgressDefine_1 = require("../../../ExploreProgress/ExploreProgressDefine"),
+  ExploreProgressController_1 = require("../../../ExploreProgress/ExploreProgressController"),
   MapUtil_1 = require("../../../Map/MapUtil"),
+  GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
   DynScrollView_1 = require("../../../Util/ScrollView/DynScrollView"),
   LoopScrollView_1 = require("../../../Util/ScrollView/LoopScrollView"),
   WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
+  WorldMapDefine_1 = require("../../WorldMapDefine"),
   PopupRightItemA_1 = require("../Common/PopupRightItemA"),
+  NavigateIconItem_1 = require("./NavigateIconItem"),
   QuickNavigateDynamicData_1 = require("./QuickNavigateDynamicData"),
   QuickNavigateDynamicItem_1 = require("./QuickNavigateDynamicItem"),
   QuickNavigateDynamicScrollItem_1 = require("./QuickNavigateDynamicScrollItem"),
@@ -21,86 +28,97 @@ const UE = require("ue"),
 class WorldMapQuickNavigatePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.uKa = void 0),
+      (this.xYa = void 0),
       (this.SequencePlayer = void 0),
       (this.MPi = void 0),
-      (this.cKa = void 0),
+      (this.PYa = void 0),
+      (this.WNl = void 0),
+      (this.sma = void 0),
+      (this.xec = !1),
       (this.cHe = () => {
         return new QuickNavigateLoopScrollAreaGridItem_1.QuickNavigateLoopScrollAreaGridItem();
       }),
-      (this.nma = (t, e, i) => {
+      (this.Mma = (e, t, i) => {
         return new QuickNavigateDynamicScrollItem_1.QuickNavigateDynamicScrollItem();
       }),
-      (this.mKa = (t) => {
-        0 === t.ItemType
-          ? this.dKa(t.CountryId, t.Index)
-          : this.lkn(t.StateId, t.Index);
+      (this.wYa = (e) => {
+        0 === e.ItemType
+          ? this.BYa(e.CountryId, e.Index)
+          : this.lkn(e.StateId, e.Index);
       }),
-      (this.CKa = (t) => {
-        var e = this.cKa.TryGetCachedData(t).AreaNavigateInfo;
-        this.gKa(e.AreaId, t);
+      (this.bYa = (e) => {
+        var t = this.PYa.TryGetCachedData(e).AreaNavigateInfo;
+        this.qYa(t.AreaId, e);
       }),
-      (this.qXa = () => {
+      (this.tZa = () => {
         this.GetItem(5).SetUIActive(!0);
       }),
-      (this.PYa = () => {
+      (this.Teh = () => {
         this.GetItem(5).SetUIActive(!1);
       }),
-      (this.wYa = () => {
-        var t =
-            ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(
-              ExploreProgressDefine_1.AREA_LEVEL,
-            ) ?? 0,
-          t =
-            ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateAreaMap.get(
-              t,
-            );
-        t &&
-          this.Fp({
-            FirstIndex: 0,
-            SecondIndex: 0,
-            CountryId: t.CountryId,
-            ExpandCountry: !0,
-            StateId: t.StateId ?? 0,
-            AreaId: t.AreaId,
-          });
+      (this.Leh = () => {
+        (this.xYa = void 0),
+          this.JJa(),
+          this.Cth(4),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.WorldMapFocusPlayer,
+          );
+      }),
+      (this.QNl = (e, t) => {
+        ControllerHolder_1.ControllerHolder.UiNavigationNewController.MarkViewHandleRefreshNavigationDirty(),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnWorldMapTrackMarkItem,
+            t.MarkType,
+            t.MarkId,
+          );
+      }),
+      (this.kOe = () => {
+        ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel() &&
+          ExploreProgressController_1.ExploreProgressController.QueryOnlinePlayersAreaAsyncRequest();
+      }),
+      (this.KNl = () => {
+        this.Cth(1);
+      }),
+      (this.e5l = () => {
+        var e = this.Map.GetNavigateMarkList();
+        this.OnBeforeShowWorldMapSecondaryUiAsync(e);
       });
   }
   GetResourceId() {
     return "UiItem_MapChange";
   }
   OnRegisterComponent() {
-    (this.ComponentRegisterInfos = [
+    this.ComponentRegisterInfos = [
       [0, UE.UIDynScrollViewComponent],
       [1, UE.UIItem],
       [2, UE.UIButtonComponent],
       [3, UE.UILoopScrollViewComponent],
       [4, UE.UIItem],
       [5, UE.UIItem],
-    ]),
-      (this.BtnBindInfo = [[2, this.wYa]]);
+      [6, UE.UIHorizontalLayout],
+    ];
   }
   GetPopupRightItem() {
     return new PopupRightItemA_1.PopupRightItemA();
   }
   async OnBeforeStartAsync() {
-    var t;
+    var e;
     this.UiBgItem &&
       (await this.UiBgItem.CreateByResourceIdAsync(
         "UiView_PopupR1",
         this.ParentUiItem,
         this.UsePool,
       ),
-      (t = this.GetOriginalActor().GetComponentByClass(
+      (e = this.GetOriginalActor().GetComponentByClass(
         UE.UIItem.StaticClass(),
       )),
-      this.UiBgItem.AttachItem(t, this.GetRootItem()),
+      this.UiBgItem.AttachItem(e, this.GetRootItem()),
       this.UiBgItem.SetPopupViewBase(),
       this.UiBgItem.OverrideBackBtnCallBack(this.Close),
       this.UiBgItem.SetTitleLocalTxt("MapQuickChange_Text"),
       this.UiBgItem.SetTitleIcon("SP_IconMapChange"),
       this.AddChild(this.UiBgItem)),
-      (this.cKa = new LoopScrollView_1.LoopScrollView(
+      (this.PYa = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(3),
         this.GetItem(4).GetOwner(),
         this.cHe,
@@ -109,54 +127,78 @@ class WorldMapQuickNavigatePanel extends WorldMapSecondaryUi_1.WorldMapSecondary
         this.GetUIDynScrollViewComponent(0),
         this.GetItem(1),
         new QuickNavigateDynamicItem_1.QuickNavigateDynamicItem(),
-        this.nma,
+        this.Mma,
       )),
-      await this.MPi.Init();
+      await this.MPi.Init(),
+      (this.WNl = new GenericLayout_1.GenericLayout(
+        this.GetHorizontalLayout(6),
+        () => new NavigateIconItem_1.NavigateIconItem(),
+      ));
   }
   OnStart() {
-    var t = this.GetRootItem();
-    this.SequencePlayer = new UiSequencePlayer_1.UiSequencePlayer(t);
+    var e = this.GetRootItem();
+    this.SequencePlayer = new UiSequencePlayer_1.UiSequencePlayer(e);
   }
   OnBeforeShow() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WorldMapFirstNavigateSelect,
-      this.mKa,
+      this.wYa,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapSecondNavigateSelect,
-        this.CKa,
+        this.bYa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapBeforeChangeMap,
-        this.qXa,
+        this.tZa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapAfterChangeMap,
-        this.PYa,
+        this.Teh,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.UpdateOnlinePlayersArea,
+        this.KNl,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.PlayerMarkItemChanged,
+        this.e5l,
       );
+    var e = 3 * TimeUtil_1.TimeUtil.InverseMillisecond;
+    (this.sma = TimerSystem_1.RealTimeTimerSystem.Forever(this.kOe, e)),
+      this.kOe();
   }
   OnAfterHide() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldMapFirstNavigateSelect,
-      this.mKa,
+      this.wYa,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapSecondNavigateSelect,
-        this.CKa,
+        this.bYa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapBeforeChangeMap,
-        this.qXa,
+        this.tZa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapAfterChangeMap,
-        this.PYa,
-      );
+        this.Teh,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.UpdateOnlinePlayersArea,
+        this.KNl,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.PlayerMarkItemChanged,
+        this.e5l,
+      ),
+      this.jm();
   }
-  wXa() {
-    var t;
-    void 0 === this.uKa &&
-      ((this.uKa = {
+  JJa() {
+    var e;
+    void 0 === this.xYa &&
+      ((this.xYa = {
         FirstIndex: 0,
         SecondIndex: 0,
         CountryId: 0,
@@ -164,179 +206,198 @@ class WorldMapQuickNavigatePanel extends WorldMapSecondaryUi_1.WorldMapSecondary
         StateId: 0,
         AreaId: 0,
       }),
-      (t = MapUtil_1.MapUtil.GetWorldMapAreaId(
-        ExploreProgressDefine_1.AREA_LEVEL,
-      )),
-      (t =
+      (e = MapUtil_1.MapUtil.GetWorldMapLevelOneAreaId()),
+      (e =
         ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateAreaMap.get(
-          t,
+          e,
         ))) &&
-      ((this.uKa.CountryId = t.CountryId),
-      (this.uKa.StateId = t.StateId ?? 0),
-      (this.uKa.AreaId = t.AreaId));
+      ((this.xYa.CountryId = e.CountryId),
+      (this.xYa.StateId = e.StateId ?? 0),
+      (this.xYa.AreaId = e.AreaId));
   }
   OnShowWorldMapSecondaryUi() {
-    this.wXa(), this.nza(4), this.BXa();
+    this.JJa(), this.Cth(4);
+  }
+  async OnBeforeShowWorldMapSecondaryUiAsync(e) {
+    e = this.$Nl(e);
+    await this.WNl?.RefreshByDataAsync(e);
   }
   OnCloseWorldMapSecondaryUi() {
-    this.uKa = void 0;
+    this.xYa = void 0;
   }
   OnBeforeDestroy() {
-    this.cKa?.ClearGridProxies(),
-      (this.cKa = void 0),
+    this.PYa?.ClearGridProxies(),
+      (this.PYa = void 0),
       this.MPi?.ClearChildren(),
-      (this.MPi = void 0);
+      (this.MPi = void 0),
+      (this.WNl = void 0);
   }
-  nza(e) {
-    var t;
+  Cth(t) {
+    var e;
     if (
-      ((4 !== e && 3 !== e) || ((t = this.pKa(e)), this.MPi.RefreshByData(t)),
-      2 === e)
+      ((4 !== t && 3 !== t) || ((e = this.GYa(t)), this.MPi.RefreshByData(e)),
+      2 === t)
     ) {
-      var i = this.pKa(e);
-      let t = 0;
-      for (const r of this.MPi.GetScrollItemItems()) r.Update(i[t], t++);
+      var i = this.GYa(t);
+      let e = 0;
+      for (const r of this.MPi.GetScrollItemItems()) r.Update(i[e], e++);
     }
-    (4 !== e && 1 !== e && 2 !== e) ||
-      ((t = this.vKa(e)), this.cKa.RefreshByData(t));
+    if (4 === t || 1 === t || 2 === t) {
+      const a = this.kYa(t);
+      this.PYa.RefreshByData(a, void 0, () => {
+        var e;
+        4 === t
+          ? ((e = a.findIndex((e) => e.IsSelected)),
+            this.PYa?.ScrollToGridIndex(e, !1))
+          : this.xec && (this.PYa?.ScrollToGridIndex(0, !1), (this.xec = !1));
+      });
+    }
   }
-  pKa(n) {
-    var t = ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateCountryMap;
-    const h = [];
+  GYa(n) {
+    var e = ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateCountryList;
+    const o = [];
     return (
-      t.forEach((t, e) => {
-        var i = new QuickNavigateDynamicData_1.QuickNavigateDynamicData();
+      e.forEach((e) => {
+        var t = e.CountryId,
+          i = e.NavigateCountry,
+          r = new QuickNavigateDynamicData_1.QuickNavigateDynamicData();
         if (
-          ((i.ItemType = 0),
-          (i.CountryId = e),
-          (i.Index = h.length),
-          (i.IsSelected = this.uKa.CountryId === e),
-          (i.RefreshType = n),
-          (i.HasState = void 0 !== t.StateMap),
-          h.push(i),
-          void 0 !== t.StateMap)
+          ((r.ItemType = 0),
+          (r.CountryId = t),
+          (r.Index = o.length),
+          (r.IsSelected = this.xYa.CountryId === t),
+          (r.RefreshType = n),
+          (r.HasState = void 0 !== i.StateMap),
+          o.push(r),
+          void 0 !== i.StateMap)
         )
-          for (var [, r] of t.StateMap) {
-            0 === this.uKa.CountryId &&
-              ((this.uKa.CountryId = e),
-              (this.uKa.ExpandCountry = !0),
-              (this.uKa.StateId = r.StateId ?? 0),
-              (this.uKa.AreaId = r.AreaNavigateList[0].AreaId),
-              (i.IsSelected = this.uKa.CountryId === e)),
-              (i.StateId = r.StateId);
-            var a = this.uKa.CountryId === e,
-              s = this.uKa.ExpandCountry;
+          for (const [, e] of i.StateMap) {
+            0 === this.xYa.CountryId &&
+              ((this.xYa.CountryId = t),
+              (this.xYa.ExpandCountry = !0),
+              (this.xYa.StateId = e.StateId ?? 0),
+              (this.xYa.AreaId = e.AreaNavigateList[0].AreaId),
+              (r.IsSelected = this.xYa.CountryId === t)),
+              (r.StateId = e.StateId);
+            var a = this.xYa.CountryId === t,
+              s = this.xYa.ExpandCountry;
             a &&
               s &&
-              ((this.uKa.FirstIndex = h.length - 1),
+              ((this.xYa.FirstIndex = o.length - 1),
               ((a =
                 new QuickNavigateDynamicData_1.QuickNavigateDynamicData()).ItemType =
                 1),
-              (a.CountryId = e),
-              (a.StateId = r.StateId),
-              (a.Index = h.length),
-              (a.IsSelected = this.uKa.StateId === r.StateId),
+              (a.CountryId = t),
+              (a.StateId = e.StateId),
+              (a.Index = o.length),
+              (a.IsSelected = this.xYa.StateId === e.StateId),
               (a.RefreshType = n),
-              h.push(a),
-              this.uKa.StateId === r.StateId) &&
-              (this.uKa.FirstIndex = h.length - 1);
+              o.push(a),
+              this.xYa.StateId === e.StateId) &&
+              (this.xYa.FirstIndex = o.length - 1);
           }
         else
-          0 === this.uKa.CountryId &&
-            ((this.uKa.CountryId = e),
-            (this.uKa.ExpandCountry = !1),
-            (this.uKa.StateId = 0),
-            (this.uKa.AreaId = t.AreaNavigateList[0].AreaId),
-            (i.IsSelected = this.uKa.CountryId === e));
+          0 === this.xYa.CountryId &&
+            ((this.xYa.CountryId = t),
+            (this.xYa.ExpandCountry = !1),
+            (this.xYa.StateId = 0),
+            (this.xYa.AreaId = i.AreaNavigateList[0].AreaId),
+            (r.IsSelected = this.xYa.CountryId === t));
       }),
-      h
+      o
     );
   }
-  vKa(r) {
+  kYa(r) {
     const a = [];
-    var t = this.uKa.CountryId,
-      e = this.uKa.StateId,
-      t =
+    var e = this.xYa.CountryId,
+      t = this.xYa.StateId,
+      e =
         ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateCountryMap.get(
-          t,
+          e,
         );
-    let i = t.AreaNavigateList;
+    let i = e.AreaNavigateList;
     return (
-      (i = t.StateMap ? t.StateMap.get(e).AreaNavigateList : i).forEach((t) => {
-        var e =
+      (i = e.StateMap ? e.StateMap.get(t).AreaNavigateList : i).forEach((e) => {
+        var t =
             new QuickNavigateLoopScrollAreaGridItemData_1.QuickNavigateLoopScrollAreaGridItemData(),
           i =
-            ((e.AreaNavigateInfo = t),
-            (e.Index = a.length),
-            (e.RefreshType = r),
-            a.push(e),
-            0 === this.uKa.AreaId && (this.uKa.AreaId = t.AreaId),
-            this.uKa.AreaId === t.AreaId);
-        i && (this.uKa.FirstIndex = a.length - 1),
-          (e.IsSelected = this.uKa.AreaId === t.AreaId);
+            ((t.AreaNavigateInfo = e),
+            (t.Index = a.length),
+            (t.RefreshType = r),
+            a.push(t),
+            0 === this.xYa.AreaId && (this.xYa.AreaId = e.AreaId),
+            this.xYa.AreaId === e.AreaId);
+        i && (this.xYa.FirstIndex = a.length - 1),
+          (t.IsSelected = this.xYa.AreaId === e.AreaId);
       }),
       a
     );
   }
-  Fp(t) {
-    var e = t.AreaId !== this.uKa?.AreaId,
-      i = t.StateId !== this.uKa?.StateId,
-      r = t.ExpandCountry !== this.uKa?.ExpandCountry,
-      a = t.CountryId !== this.uKa?.CountryId,
-      s = r || a;
-    this.uKa = t;
-    let n = 0;
-    i || s
-      ? i && !s
-        ? ((n = 2), this.nza(n), this.BXa())
-        : a
-          ? ((n = 4), this.nza(n), this.BXa())
-          : r && ((n = 3), this.nza(n))
-      : e && ((n = 1), this.nza(n), this.BXa());
+  Fp(e) {
+    var t =
+        void 0 !==
+        ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateCountryMap.get(
+          e.CountryId,
+        )?.StateMap,
+      i = e.StateId !== this.xYa?.StateId,
+      t = t && e.ExpandCountry !== this.xYa?.ExpandCountry,
+      r = e.CountryId !== this.xYa?.CountryId,
+      a = t || r;
+    this.xYa = e;
+    let s = 0;
+    i || a
+      ? i && !a
+        ? ((s = 2), this.Cth(s), this.ZJa())
+        : r
+          ? ((s = 4), this.Cth(s), this.ZJa())
+          : t && ((s = 3), this.Cth(s))
+      : ((s = 1), this.Cth(s), this.ZJa());
   }
-  dKa(t, e) {
+  BYa(e, t) {
     var i =
-      ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateCountryMap.get(t);
-    let r = !this.uKa.ExpandCountry;
+      ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateCountryMap.get(e);
+    let r = !this.xYa.ExpandCountry;
     var a,
       s,
-      n = t !== this.uKa.CountryId;
+      n = e !== this.xYa.CountryId;
     void 0 !== i.StateMap
       ? (n && (r = !0),
         (s = (a = i.StateMap.values().next().value).AreaNavigateList[0]),
+        (this.xec = e === this.xYa?.CountryId),
         this.Fp({
-          FirstIndex: e,
+          FirstIndex: t,
           SecondIndex: 0,
-          CountryId: t,
+          CountryId: e,
           ExpandCountry: r,
           StateId: a.StateId,
           AreaId: s.AreaId,
         }))
-      : this.Fp({
-          FirstIndex: e,
+      : ((this.xec = e === this.xYa?.CountryId),
+        this.Fp({
+          FirstIndex: t,
           SecondIndex: 0,
-          CountryId: t,
+          CountryId: e,
           ExpandCountry: !1,
           StateId: 0,
           AreaId: i.AreaNavigateList[0].AreaId,
-        }),
+        })),
       n &&
         (this.SequencePlayer.IsSequenceInPlaying("Switch")
           ? this.SequencePlayer.ReplaySequence("Switch")
           : this.SequencePlayer.PlaySequence("Switch"));
   }
-  lkn(t, e) {
-    var i = t !== this.uKa.StateId,
+  lkn(e, t) {
+    var i = e !== this.xYa.StateId,
       r =
         ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateCountryMap.get(
-          this.uKa.CountryId,
-        ).StateMap.get(t);
+          this.xYa.CountryId,
+        ).StateMap.get(e);
     this.Fp({
-      FirstIndex: e,
+      FirstIndex: t,
       SecondIndex: 0,
-      CountryId: this.uKa.CountryId,
-      ExpandCountry: this.uKa?.ExpandCountry ?? !0,
-      StateId: t,
+      CountryId: this.xYa.CountryId,
+      ExpandCountry: this.xYa?.ExpandCountry ?? !0,
+      StateId: e,
       AreaId: r.AreaNavigateList[0].AreaId,
     }),
       i &&
@@ -344,26 +405,96 @@ class WorldMapQuickNavigatePanel extends WorldMapSecondaryUi_1.WorldMapSecondary
           ? this.SequencePlayer.ReplaySequence("Switch")
           : this.SequencePlayer.PlaySequence("Switch"));
   }
-  gKa(t, e) {
+  qYa(e, t) {
     this.Fp({
-      FirstIndex: this.uKa.FirstIndex,
-      SecondIndex: e,
-      CountryId: this.uKa.CountryId,
-      ExpandCountry: this.uKa?.ExpandCountry ?? !0,
-      StateId: this.uKa.StateId,
-      AreaId: t,
+      FirstIndex: this.xYa.FirstIndex,
+      SecondIndex: t,
+      CountryId: this.xYa.CountryId,
+      ExpandCountry: this.xYa?.ExpandCountry ?? !0,
+      StateId: this.xYa.StateId,
+      AreaId: e,
     });
   }
-  BXa(t = !1) {
-    t && this.Close();
-    t = ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateAreaMap.get(
-      this.uKa.AreaId,
+  ZJa(e = !1) {
+    e && this.Close();
+    e = ConfigManager_1.ConfigManager.MapConfig.WorldMapNavigateAreaMap.get(
+      this.xYa.AreaId,
     );
-    EventSystem_1.EventSystem.Emit(
-      EventDefine_1.EEventName.WorldMapNavigate,
-      t.MarkId,
-      t.MarkType,
+    EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.WorldMapNavigate, {
+      MarkId: e.MarkId,
+      MarkType: e.MarkType,
+    });
+  }
+  $Nl(e) {
+    ModelManager_1.ModelManager.ExploreProgressModel.ClearTrackTaskAreaId();
+    const i = [];
+    return (
+      e.forEach((e) => {
+        switch (e.MarkType) {
+          case 12:
+            i.push({
+              Id: 1,
+              IconPath: e.IconPath,
+              ClickCallback: this.QNl,
+              MarkItem: e,
+            }),
+              this.XNl(e);
+            break;
+          case 11:
+            var t = e.PlayerIndex - 1;
+            i.push({
+              Id: 2 + t,
+              IconId: WorldMapDefine_1.onlinePlayerIconPathList2[t],
+              ClickCallback: this.QNl,
+              MarkItem: e,
+            });
+        }
+      }),
+      i.sort((e, t) => t.Id - e.Id),
+      i.push({ Id: 0, IconId: "SP_IconCommonPlayer", ClickCallback: this.Leh }),
+      i
     );
+  }
+  XNl(e) {
+    var t,
+      i = e.TrackTarget;
+    "number" != typeof i
+      ? Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "ExploreProgress",
+          69,
+          "UpdateTrackTaskArea",
+          ["EntityId", i],
+          ["MapId", e.MapId],
+          ["MarkType", e.MarkType],
+          ["MarkId", e.MarkId],
+        )
+      : ((t =
+          ConfigManager_1.ConfigManager.MapConfig.GetEntityConfigByMapIdAndEntityId(
+            e.MapId,
+            i,
+          )?.AreaId),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "ExploreProgress",
+            69,
+            "UpdateTrackTaskArea",
+            ["AreaId", t],
+            ["EntityId", i],
+            ["MapId", e.MapId],
+            ["MarkType", e.MarkType],
+            ["MarkId", e.MarkId],
+          ),
+        t &&
+          (i = ConfigManager_1.ConfigManager.AreaConfig.GetLevelOneAreaId(t)) &&
+          ModelManager_1.ModelManager.ExploreProgressModel.SetTrackTaskAreaId(
+            i,
+            e.IconPath,
+          ));
+  }
+  jm() {
+    TimerSystem_1.RealTimeTimerSystem.Has(this.sma) &&
+      (TimerSystem_1.RealTimeTimerSystem.Remove(this.sma), (this.sma = void 0));
   }
 }
 exports.WorldMapQuickNavigatePanel = WorldMapQuickNavigatePanel;

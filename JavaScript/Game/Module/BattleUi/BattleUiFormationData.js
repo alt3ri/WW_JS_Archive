@@ -21,23 +21,25 @@ class BattleUiFormationData {
       (this.UiEnvironmentPropertyMap = new Map()),
       (this.gU = !1),
       (this.ORn = void 0),
-      (this.rJa = 0),
-      (this.oJa = !1);
+      (this.doh = 0),
+      (this.Coh = !1),
+      (this.Juc = !1),
+      (this.$d1 = !1);
   }
   Init() {
     this.gU = !0;
-    var e = CommonParamById_1.configCommonParamById.GetStringConfig(
+    var t = CommonParamById_1.configCommonParamById.GetStringConfig(
       "EnvironmentPropertyInfoPath",
     );
-    ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.DataTable, (e) => {
-      if (this.gU && (this.sXe = e)) {
-        var t = new Array();
-        DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(e, t);
-        for (const o of t) {
+    ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.DataTable, (t) => {
+      if (this.gU && (this.sXe = t)) {
+        var e = new Array();
+        DataTableUtil_1.DataTableUtil.GetDataTableAllRowNamesFromTable(t, e);
+        for (const o of e) {
           var i,
             r = Number(o);
           r &&
-            ((i = DataTableUtil_1.DataTableUtil.GetDataTableRow(e, o)),
+            ((i = DataTableUtil_1.DataTableUtil.GetDataTableRow(t, o)),
             this.UiEnvironmentPropertyMap.set(r, i),
             this.EnvironmentPropertyList.push(r));
         }
@@ -50,59 +52,115 @@ class BattleUiFormationData {
       (this.sXe = void 0),
       (this.EnvironmentPropertyList.length = 0),
       this.UiEnvironmentPropertyMap.clear(),
-      this.FRn();
+      this.FRn(),
+      (this.AutoMovingSettingEnable = !1);
   }
-  GetUiEnvironmentProperty(e) {
+  GetUiEnvironmentProperty(t) {
     if (this.gU)
       return GlobalData_1.GlobalData.IsPlayInEditor
-        ? DataTableUtil_1.DataTableUtil.GetDataTableRow(this.sXe, e.toString())
-        : this.UiEnvironmentPropertyMap.get(e);
+        ? DataTableUtil_1.DataTableUtil.GetDataTableRow(this.sXe, t.toString())
+        : this.UiEnvironmentPropertyMap.get(t);
   }
   AddFollower(e) {
-    e !== this.ORn &&
-      (this.FRn(),
-      (this.ORn = e),
-      (this.rJa = followerMap.get(e.PbDataId) ?? 0),
-      (e = e.Entity.GetComponent(204)),
-      this.nJa(e?.IsEnable ?? !1));
+    if (e !== this.ORn) {
+      this.FRn();
+      var i = (this.ORn = e).Entity.GetComponent(219);
+      let t = i?.AimType;
+      (t = t || (followerMap.get(e.PbDataId) ?? 0)),
+        (this.doh = t),
+        this.goh(i?.IsEnable ?? !1);
+    }
   }
   RemoveFollower() {
     this.FRn();
   }
-  ChangePlayerFollowerEnable(e) {
-    this.ORn && this.nJa(e);
+  ChangePlayerFollowerEnable(t) {
+    this.ORn && this.goh(t);
   }
-  nJa(e) {
-    this.oJa !== e &&
-      ((this.oJa = e),
+  goh(t) {
+    this.Coh !== t &&
+      ((this.Coh = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
-        e,
-        0 === this.rJa,
+        t,
+        0 === this.doh,
       ),
-      1 === this.rJa) &&
-      (this.oJa &&
-        ControllerHolder_1.ControllerHolder.HudUnitController.TryCreateHud(1),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.SetFollowShootAimVisible,
-        e,
-      ));
+      1 === this.doh
+        ? (this.Coh &&
+            ControllerHolder_1.ControllerHolder.HudUnitController.TryCreateHud(
+              1,
+            ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.SetFollowShootAimVisible,
+            t,
+          ))
+        : 3 === this.doh
+          ? (this.Coh &&
+              ControllerHolder_1.ControllerHolder.HudUnitController.TryCreateHud(
+                2,
+              ),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.SetFollowShootAutoAimVisible,
+              t,
+            ))
+          : 4 === this.doh &&
+            (this.Coh &&
+              ControllerHolder_1.ControllerHolder.HudUnitController.TryCreateHud(
+                3,
+              ),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.SetFollowShootAutoAimVisible,
+              t,
+            )));
+  }
+  GetFollowType() {
+    return this.doh;
   }
   GetFollowerAiming() {
-    return this.oJa && 2 !== this.rJa;
+    return this.Coh && 2 !== this.doh;
   }
   GetFollowerEnable() {
-    return this.oJa;
+    return this.Coh;
   }
   GetFollowerEntityHandle() {
     return this.ORn;
   }
   FRn() {
-    this.oJa && this.nJa(!1),
+    this.Coh && this.goh(!1),
       (this.ORn = void 0),
-      1 === this.rJa &&
-        ControllerHolder_1.ControllerHolder.HudUnitController.TryDestroyHud(1),
-      (this.rJa = 0);
+      1 === this.doh
+        ? ControllerHolder_1.ControllerHolder.HudUnitController.TryDestroyHud(1)
+        : 3 === this.doh
+          ? ControllerHolder_1.ControllerHolder.HudUnitController.TryDestroyHud(
+              2,
+            )
+          : 4 === this.doh &&
+            ControllerHolder_1.ControllerHolder.HudUnitController.TryDestroyHud(
+              3,
+            ),
+      (this.doh = 0);
+  }
+  get AutoMovingSettingEnable() {
+    return this.Juc;
+  }
+  set AutoMovingSettingEnable(t) {
+    this.Juc !== t &&
+      ((this.Juc = t),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.AutoMovingSettingChanged,
+        t,
+      ));
+  }
+  get AutoSprintSettingEnable() {
+    return this.$d1;
+  }
+  set AutoSprintSettingEnable(t) {
+    this.$d1 !== t &&
+      ((this.$d1 = t),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.AutoSprintSettingChanged,
+        t,
+      ));
   }
 }
 exports.BattleUiFormationData = BattleUiFormationData;

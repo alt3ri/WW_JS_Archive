@@ -2,10 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventTimeTrackControl = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
-  LevelGeneralBase_1 = require("../LevelGeneralBase"),
-  TimeTrackController_1 = require("../TimeTrackControl/TimeTrackController");
+  LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventTimeTrackControl extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -21,7 +21,7 @@ class LevelEventTimeTrackControl extends LevelGeneralBase_1.LevelEventBase {
           ? (TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
               "TimeTrackControlView",
             ),
-            TimeTrackController_1.TimeTrackController.OpenTimeTrackControlView(
+            ControllerHolder_1.ControllerHolder.TimeTrackController.OpenTimeTrackControlView(
               o,
               e.ConfigIndex,
               this.BJs,
@@ -29,14 +29,14 @@ class LevelEventTimeTrackControl extends LevelGeneralBase_1.LevelEventBase {
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "SceneGameplay",
-                46,
+                45,
                 "时间控制装置启动请求:LevelEventTimeTrackControl entity不合法",
               ),
             this.FinishExecute(!1)))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneGameplay",
-            46,
+            45,
             "时间控制装置启动请求:LevelEventTimeTrackControl params转换失败",
           ),
         this.FinishExecute(!1));

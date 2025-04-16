@@ -7,21 +7,21 @@ const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   DynamicConfigMarkItemView_1 = require("../MarkItemView/DynamicConfigMarkItemView"),
   MarkItem_1 = require("./MarkItem");
 class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
-  constructor(t, e, i, r, s, n = 1) {
-    super(i, r, s, n),
+  constructor(t, e, i, r, s, h = 1) {
+    super(i, r, s, h),
       (this.MarkConfig = void 0),
       (this.ODi = 0),
+      (this.z3_ = void 0),
       (this.ConditionShouldShow = !0),
       (this.ODi = t),
       (this.ShowPriority = e.ShowPriority),
       (this.MarkConfig = e),
-      (this.IconPath = this.MarkConfig.LockMarkPic),
-      (this.MapId = this.MarkConfig.MapId);
+      (this.IconPath = this.MarkConfig.LockMarkPic);
   }
   get IsFogUnlock() {
     return (
       1 === this.MarkConfig.FogShow ||
-      ModelManager_1.ModelManager.MapModel.CheckAreasUnlocked(
+      ModelManager_1.ModelManager.MapModel.CheckFogUnlocked(
         this.MarkConfig.FogHide,
       )
     );
@@ -35,22 +35,35 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
   get MarkType() {
     return this.MarkConfig.ObjectType;
   }
-  Initialize() {
+  set OverrideMapId(t) {
+    this.z3_ = t;
+  }
+  get OverrideMapId() {
+    return this.z3_;
+  }
+  get MapId() {
+    return this.OverrideMapId ?? this.MarkConfig.MapId;
+  }
+  get InstanceDungeonId() {
+    return this.MarkConfig.InstanceDungeonId;
+  }
+  OnInitialize() {
     this.MarkConfig.Scale && this.SetConfigScale(this.MarkConfig.Scale),
       this.InitPosition(this.MarkConfig),
       this.InitShowCondition();
   }
   InitPosition(t) {
     t.EntityConfigId
-      ? (this.SetTrackData(t.EntityConfigId), this.UpdateTrackState())
+      ? (this.SetTrackData(t.EntityConfigId), this.UpdateVisibleRelativeState())
       : t.MarkVector &&
         (this.SetTrackData(Vector_1.Vector.Create(t.MarkVector)),
-        this.UpdateTrackState());
+        this.UpdateVisibleRelativeState());
   }
-  OnCreateView() {
-    this.InnerView = new DynamicConfigMarkItemView_1.DynamicConfigMarkItemView(
-      this,
-    );
+  GetMarkItemViewType() {
+    return 5;
+  }
+  CreateView() {
+    return new DynamicConfigMarkItemView_1.DynamicConfigMarkItemView(this);
   }
   GetLocaleDesc() {
     return this.MarkConfig.MarkDesc;
@@ -60,28 +73,23 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
       this.MarkConfig.MarkTitle,
     );
   }
-  GetAreaText() {
-    var t, e, i;
-    if ("number" == typeof this.TrackTarget)
-      return (
-        (t = ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
-          this.TrackTarget,
-        )),
-        (i = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(t)),
-        (e = (t = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(t))
-          ? ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(t.Title)
-          : ""),
-        (i = (i = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(i))
-          ? ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(i.Title)
-          : ""),
-        (t
-          ? ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryTitle(
-              t.CountryId,
-            )
-          : "") +
-          `-${i}-` +
-          e
+  get TrackAreaId() {
+    if ("number" == typeof this.TrackTarget && 0 !== this.TrackTarget)
+      return ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
+        this.TrackTarget,
+        this.MapId,
       );
+  }
+  GetAreaText() {
+    if ("number" == typeof this.TrackTarget)
+      return this.TrackAreaId
+        ? ModelManager_1.ModelManager.MapModel.GetMarkAreaTextByAreaId(
+            this.TrackAreaId,
+          )
+        : ModelManager_1.ModelManager.MapModel.GetMarkAreaText(
+            this.MapId,
+            this.TrackTarget,
+          );
   }
   GDi(t) {
     return this.MarkConfig.ShowRange[0] < t && this.MarkConfig.ShowRange[1] > t;

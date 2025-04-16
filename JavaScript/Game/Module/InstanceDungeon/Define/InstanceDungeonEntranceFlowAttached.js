@@ -5,11 +5,14 @@ const ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   EditBattleTeamController_1 = require("../../EditBattleTeam/EditBattleTeamController"),
   InstanceDungeonEntranceController_1 = require("../InstanceDungeonEntranceController"),
+  MowingInstanceDungeonViewModel_1 = require("../InstanceDungeonViewModel/MowingInstanceDungeonViewModel"),
   InstanceDungeonEntranceFlowBase_1 = require("./InstanceDungeonEntranceFlowBase");
 class InstanceDungeonEntranceFlowAttached extends InstanceDungeonEntranceFlowBase_1.InstanceDungeonEntranceFlowBase {
   OnCreate() {
     this.AddStep(() => {
-      UiManager_1.UiManager.OpenView("InstanceDungeonEntranceRootView");
+      var e =
+        new MowingInstanceDungeonViewModel_1.MowingInstanceDungeonViewModel();
+      UiManager_1.UiManager.OpenView("InstanceDungeonEntranceView", e);
     }),
       this.AddStep(() => {
         EditBattleTeamController_1.EditBattleTeamController.PlayerOpenEditBattleTeamView(
@@ -17,17 +20,13 @@ class InstanceDungeonEntranceFlowAttached extends InstanceDungeonEntranceFlowBas
         );
       }),
       this.AddStep(() => {
-        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.EnterInstanceDungeon()
-          .then(
-            (e) => {
-              e &&
-                EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView();
-            },
-            () => {},
-          )
-          .finally(() => {
-            this.Reset();
-          });
+        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.EnterInstanceDungeon().then(
+          (e) => {
+            EditBattleTeamController_1.EditBattleTeamController.CloseEditBattleTeamView(),
+              e ? this.Reset() : this.RevertStep();
+          },
+          () => {},
+        );
       });
   }
 }

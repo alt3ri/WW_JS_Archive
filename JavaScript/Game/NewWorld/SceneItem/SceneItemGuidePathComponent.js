@@ -76,6 +76,10 @@ let SceneItemGuidePathComponent =
         (this.hfn = void 0),
         (this.lfn = !1),
         (this._fn = 0),
+        (this.Joo = void 0),
+        (this._0e = 0),
+        (this.zie = void 0),
+        (this.rEc = void 0),
         (this.ufn = new Map()),
         (this.cfn = (t, e = !1) => {
           (this.lfn && !e) ||
@@ -118,21 +122,30 @@ let SceneItemGuidePathComponent =
                 Info_1.Info.EnableForceTick || (this.tfn.HasActiveTag = !1));
         }),
         (this.gfn = (t, e) => {
-          Info_1.Info.EnableForceTick ||
-            (5 === t &&
-              ((this.sxr = this.Disable(
-                "[SceneItemGuidePathComponent.OnEffectFinish] 特效加载完成，由C++组件接管tick",
-              )),
-              (this.tfn.NiagaraComponent =
-                EffectSystem_1.EffectSystem.GetNiagaraComponent(e)),
-              this.tfn.StartTick(
-                this.sfn,
-                this.afn,
-                this.hfn,
-                colorString,
-                this.rfn / 1e3,
-                this.ofn / 1e3,
-              )));
+          if (!Info_1.Info.EnableForceTick && 5 === t) {
+            this.sxr = this.Disable(
+              "[SceneItemGuidePathComponent.OnEffectFinish] 特效加载完成，由C++组件接管tick",
+            );
+            const i = EffectSystem_1.EffectSystem.GetNiagaraComponent(e);
+            (this.tfn.NiagaraComponent =
+              EffectSystem_1.EffectSystem.GetSureNiagaraComponent(e)),
+              (this.rEc = TimerSystem_1.TimerSystem.Delay(() => {
+                var t;
+                (this.rEc = void 0),
+                  this.tfn.StartTick(
+                    this.sfn,
+                    this.afn,
+                    this.hfn,
+                    colorString,
+                    this.rfn / 1e3,
+                    this.ofn / 1e3,
+                  ),
+                  this.Joo ===
+                    IComponent_1.EEffectSplineCreateMode.EquidistantPoint &&
+                    ((t = Math.ceil(this.zie.GetSplineLength() / this._0e)),
+                    i.SetIntParameter(new UE.FName("SpawnCount"), t));
+              }, 100));
+          }
         });
     }
     OnInitData(t) {
@@ -169,7 +182,7 @@ let SceneItemGuidePathComponent =
     OnActivate() {
       return (
         (this.Hte = this.Entity.GetComponent(1)),
-        (this.Lie = this.Entity.GetComponent(181)),
+        (this.Lie = this.Entity.GetComponent(194)),
         (this.sxr = this.Disable(
           "[SceneItemGuidePathComponent.OnActivate] 默认Disable",
         )),
@@ -235,11 +248,12 @@ let SceneItemGuidePathComponent =
             this.Lo.SplineEntityId,
             this.Entity.GetComponent(0).GetPbDataId(),
           )),
+        this.rEc && TimerSystem_1.TimerSystem.Remove(this.rEc),
         !0
       );
     }
     OnTick(t) {
-      Info_1.Info.EnableForceTick || this.Efn(t);
+      Info_1.Info.EnableForceTick && this.Efn(t);
     }
     OnForceTick(t) {
       this.Efn(t);
@@ -270,14 +284,19 @@ let SceneItemGuidePathComponent =
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Level",
-                32,
+                31,
                 "[SceneItemGuidePathComponent.LoadPathAsset] SplineComponent配置类型不是Effect",
                 ["SplineEntityId", this.Lo.SplineEntityId],
               )
-            : (ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
-                this.Lo.SplineEntityId,
-                this.Entity.GetComponent(0).GetPbDataId(),
-              ),
+            : ((this.zie =
+                ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
+                  this.Lo.SplineEntityId,
+                  this.Entity.GetComponent(0).GetPbDataId(),
+                )),
+              (this.Joo = t.Option.CreateOption.Type),
+              t.Option.CreateOption.Type ===
+                IComponent_1.EEffectSplineCreateMode.EquidistantPoint &&
+                (this._0e = t.Option.CreateOption.Space),
               (t = Vector_1.Vector.Create(
                 e.Transform?.Pos.X ?? 0,
                 e.Transform?.Pos.Y ?? 0,
@@ -287,7 +306,7 @@ let SceneItemGuidePathComponent =
                 ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
                   this.Lo.SplineEntityId,
                 )),
-              this.md.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !1),
+              this.md.D_K2_SetActorLocation(t.ToUeVector(), !1, void 0, !1),
               this.Entity.GetComponent(0).GetBaseInfo()?.ScanFunction?.ScanId
                 ? EventSystem_1.EventSystem.AddWithTarget(
                     this.Entity,
@@ -311,14 +330,14 @@ let SceneItemGuidePathComponent =
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Level",
-              32,
+              31,
               "[SceneItemGuidePathComponent.LoadPathAsset] 无法找到SplineComponent配置",
               ["SplineEntityId", this.Lo.SplineEntityId],
             )
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
-            32,
+            31,
             "[SceneItemGuidePathComponent.LoadPathAsset] 无法找到Spline Entity",
             ["SplineEntityId", this.Lo.SplineEntityId],
           );
@@ -328,17 +347,17 @@ let SceneItemGuidePathComponent =
       (t.F4n = MathUtils_1.MathUtils.NumberToLong(
         this.Hte.CreatureData.GetCreatureDataId(),
       )),
-        Net_1.Net.Call(25654, t, (t) => {
+        Net_1.Net.Call(27730, t, (t) => {
           t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t.Q4n,
-              28766,
+              20408,
             ),
             (this.ofn = t.ZLs),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "SceneItem",
-                32,
+                31,
                 "response",
                 ["entityID", t.F4n],
                 ["resetTime", t.ZLs],
@@ -430,7 +449,7 @@ let SceneItemGuidePathComponent =
   });
 (SceneItemGuidePathComponent = SceneItemGuidePathComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(140)],
+    [(0, RegisterComponent_1.RegisterComponent)(151)],
     SceneItemGuidePathComponent,
   )),
   (exports.SceneItemGuidePathComponent = SceneItemGuidePathComponent);

@@ -45,7 +45,7 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
       this.Ixe.Init(
         t,
         r,
-        Vector_1.Vector.ZeroVector,
+        Vector_1.Vector.ZeroVectorDouble,
         Rotator_1.Rotator.ZeroRotator,
         -1,
         0,
@@ -56,7 +56,7 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
       ));
   }
   static Txe(e) {
-    this.Ixe.MainActor.K2_SetActorLocation(
+    this.Ixe.MainActor.D_K2_SetActorLocation(
       ModelManager_1.ModelManager.SundialControlModel.TargetLocation,
       !1,
       void 0,
@@ -127,7 +127,7 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
       this.Ixe.PlaySceneEffect(2);
     const t = ActorSystem_1.ActorSystem.Get(
       UE.LevelSequenceActor.StaticClass(),
-      MathUtils_1.MathUtils.DefaultTransform,
+      MathUtils_1.MathUtils.DefaultTransformDouble,
       void 0,
       !1,
     );
@@ -150,7 +150,10 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
             t.SequencePlayer.OnFinished.Add(() => {
               TimerSystem_1.TimerSystem.Delay(() => {
                 SundialControlController.EDe(),
-                  ActorSystem_1.ActorSystem.Put(t);
+                  ActorSystem_1.ActorSystem.Put(
+                    "SundialControlController.PlayFinishAnimation",
+                    t,
+                  );
               }, 500);
             }),
             t.SequencePlayer.Play())
@@ -162,7 +165,7 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
     var t = Protocol_1.Aki.Protocol.wJn.create();
     (t.a5n = e),
       (t.h5n = Protocol_1.Aki.Protocol.h3s.Proto_SundialPuzzle),
-      Net_1.Net.Call(28002, t, (e) => {
+      Net_1.Net.Call(28624, t, (e) => {
         e.BEs === Protocol_1.Aki.Protocol.Q4n.KRs &&
           UiManager_1.UiManager.CloseView("SundialControlView");
       });

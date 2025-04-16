@@ -46,7 +46,7 @@ class StateMachineCommon {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "StateMachine",
-              15,
+              14,
               "状态机切换失败，子节点查找失败",
             ));
   }
@@ -86,7 +86,7 @@ class StateMachineCommon {
     return (
       i ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("StateMachine", 12, "状态不存在", ["state", t])),
+          Log_1.Log.Error("StateMachine", 11, "状态不存在", ["state", t])),
       i
     );
   }
@@ -95,7 +95,7 @@ class StateMachineCommon {
     i = new i(this.Owner, t, this);
     this.kh.has(t)
       ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("StateMachine", 15, "状态重复添加", ["state", t])
+        Log_1.Log.Error("StateMachine", 14, "状态重复添加", ["state", t])
       : this.kh.set(t, i),
       (this.Gz = !0);
   }
@@ -103,7 +103,7 @@ class StateMachineCommon {
     this.FirstState || (this.FirstState = t),
       this.kh.has(t)
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("StateMachine", 15, "状态重复添加", ["state", t])
+          Log_1.Log.Error("StateMachine", 14, "状态重复添加", ["state", t])
         : this.kh.set(t, i),
       (this.Gz = !0);
   }
@@ -111,7 +111,7 @@ class StateMachineCommon {
     var e, o;
     return void 0 === this.CurrentNode
       ? (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("StateMachine", 15, "状态机没有启动", ["state", t]),
+          Log_1.Log.Error("StateMachine", 14, "状态机没有启动", ["state", t]),
         !1)
       : (e = this.GetState(t))
         ? t === this.CurrentNode.State
@@ -123,7 +123,7 @@ class StateMachineCommon {
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "StateMachine",
-              15,
+              14,
               "状态机切换失败，目标节点不存在",
               ["state", t],
             ),

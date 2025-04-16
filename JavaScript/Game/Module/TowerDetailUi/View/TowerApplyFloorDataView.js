@@ -54,39 +54,41 @@ class TowerApplyFloorDataView extends UiViewBase_1.UiViewBase {
       for (let e = 0; e < o.Star; e++)
         LguiUtil_1.LguiUtil.DuplicateActor(t.GetOwner(), a);
       t.SetUIActive(!1);
-      var s = this.GetItem(9),
-        l = this.GetItem(4),
-        n = [];
-      for (const T of r.Formation) n.push(T.Q6n);
-      for (const h of n) {
-        var _ = LguiUtil_1.LguiUtil.CopyItem(s, l);
-        const M = new TowerRoleComplexItem_1.TowerRoleComplexItem();
-        M.CreateThenShowByActorAsync(_.GetOwner()).finally(() => {
-          M.RefreshRoleId(h);
+      var l = this.GetItem(9),
+        s = this.GetItem(4),
+        _ = [];
+      for (const u of r.Formation) _.push(u.Q6n);
+      for (const h of _) {
+        var n = LguiUtil_1.LguiUtil.CopyItem(l, s);
+        const x = new TowerRoleComplexItem_1.TowerRoleComplexItem();
+        x.CreateThenShowByActorAsync(n.GetOwner()).finally(() => {
+          x.RefreshRoleId(h);
         });
       }
       var g = this.GetItem(2),
         w = [];
-      for (const f of o.Formation) w.push(f.Q6n);
-      for (const p of w) {
-        var U = LguiUtil_1.LguiUtil.CopyItem(s, g);
-        const x = new TowerRoleComplexItem_1.TowerRoleComplexItem();
-        x.CreateThenShowByActorAsync(U.GetOwner()).finally(() => {
-          x.RefreshRoleId(p);
+      for (const M of o.Formation) w.push(M.Q6n);
+      for (const f of w) {
+        var T = LguiUtil_1.LguiUtil.CopyItem(l, g);
+        const c = new TowerRoleComplexItem_1.TowerRoleComplexItem();
+        c.CreateThenShowByActorAsync(T.GetOwner()).finally(() => {
+          c.RefreshRoleId(f);
         });
       }
-      s.SetUIActive(!1);
+      l.SetUIActive(!1);
       let e = "";
-      e =
-        r.Difficulties === TowerData_1.LOW_RISK_DIFFICULTY
-          ? "Text_LowRiskAreaFloor_Text"
-          : r.Difficulties === TowerData_1.HIGH_RISK_DIFFICULTY
-            ? "Text_HighRiskAreaFloor_Text"
-            : "Text_VariationAreaFloor_Text";
-      var u = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerAreaName(
+      r.Difficulties === TowerData_1.LOW_RISK_DIFFICULTY
+        ? (e = "Text_LowRiskAreaFloor_Text")
+        : r.Difficulties === TowerData_1.HIGH_RISK_DIFFICULTY
+          ? (e = "Text_HighRiskAreaFloor_Text")
+          : r.Difficulties === TowerData_1.VARIATION_RISK_DIFFICULTY
+            ? (e = "Text_VariationAreaFloor_Text")
+            : r.Difficulties === TowerData_1.OVERLOCK_RISK_DIFFICULTY &&
+              (e = "Text_OverLockAreaFloor_Text");
+      var U = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerAreaName(
         r.TowerId,
       );
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e, u, r.FloorNumber);
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e, U, r.FloorNumber);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(

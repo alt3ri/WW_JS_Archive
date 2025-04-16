@@ -4,16 +4,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  ActivityQuestConfigAll_1 = require("../../../../Core/Define/ConfigQuery/ActivityQuestConfigAll"),
   QuestTrackingConfigAll_1 = require("../../../../Core/Define/ConfigQuery/QuestTrackingConfigAll"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   IGlobal_1 = require("../../../../UniverseEditor/Interface/IGlobal"),
+  IQuest_1 = require("../../../../UniverseEditor/Interface/IQuest"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   PublicUtil_1 = require("../../../Common/PublicUtil"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
+  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   GeneralLogicTreeConfigUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeConfigUtil"),
   QuestDefine_1 = require("../QuestDefine"),
@@ -24,13 +28,19 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       (this.eno = void 0),
       (this.tno = void 0),
       (this.ino = void 0),
-      (this.S5a = void 0),
+      (this.nVa = void 0),
+      (this.sb1 = void 0),
       (this.ono = void 0),
       (this.rno = void 0),
       (this.sno = void 0),
       (this.ano = void 0),
       (this.CurShowUpdateTipsQuest = void 0),
       (this.ActivityIdsByQuestId = void 0),
+      (this.ActivityStatesByQuestId = new Map()),
+      (this.IsServerNotifyEnd = !1),
+      (this.IsLackQuestVideoResource = !1),
+      (this.QuestVideoResourceDownloadFinished = !1),
+      (this.ServerNotifyEndQuestId = 0),
       (this.Zpi = (e) => {
         for (const t of JSON.parse(e).Quests)
           this.ono.set(t.Id, t),
@@ -44,10 +54,11 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       (this.SortQuestInView = (e, t) => {
         var i = [];
         for (const s of [e.Id, t.Id]) {
-          var r = this.GetQuestBindingActivityId(s),
-            r = ModelManager_1.ModelManager.ActivityModel.GetActivityById(r);
-          let e = 0;
-          (e =
+          let e = this.GetQuestBindingActivityId(s);
+          0 === e && (e = this.GetQuestActivityId(s));
+          var r = ModelManager_1.ModelManager.ActivityModel.GetActivityById(e);
+          let t = 0;
+          (t =
             void 0 !== r
               ? r.LocalConfig?.IfShowQuestLeftTime &&
                 r.CheckIfInOpenTime() &&
@@ -55,7 +66,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
                 ? 0
                 : 1
               : 2),
-            i.push(e);
+            i.push(t);
         }
         return i[0] !== i[1] ? i[0] - i[1] : e.Id - t.Id;
       });
@@ -65,12 +76,15 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       (this.eno = new Map()),
       (this.tno = new Map()),
       (this.ino = new Map()),
-      (this.S5a = new Map()),
+      (this.nVa = new Map()),
+      (this.sb1 = new Map()),
       (this.ono = new Map()),
       (this.rno = new Map()),
       (this.ano = new Map()),
       (this.ActivityIdsByQuestId = new Map()),
+      (this.ActivityStatesByQuestId = new Map()),
       this.InitQuestConfig(),
+      this.SetActivityStates(),
       PublicUtil_1.PublicUtil.RegisterEditorLocalConfig(),
       !0
     );
@@ -90,10 +104,15 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       (this.tno = void 0),
       this.ino?.clear(),
       (this.ino = void 0),
-      this.S5a?.clear(),
-      (this.S5a = void 0),
+      this.nVa?.clear(),
+      (this.nVa = void 0),
+      this.sb1?.clear(),
+      (this.sb1 = void 0),
       this.ActivityIdsByQuestId?.clear(),
-      !(this.ActivityIdsByQuestId = void 0)
+      (this.ActivityIdsByQuestId = void 0),
+      this.ActivityStatesByQuestId?.clear(),
+      (this.IsServerNotifyEnd = !1),
+      !(this.ServerNotifyEndQuestId = 0)
     );
   }
   OnLeaveLevel() {
@@ -129,7 +148,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Quest",
-        19,
+        18,
         "添加任务时找不到任务配置",
         ["配置路径", QuestDefine_1.QUEST_CONFIGPATH],
         ["任务Id", e],
@@ -152,15 +171,25 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     this.tno.delete(e);
   }
   AddPreShowQuest(e) {
-    this.S5a.set(e, !0), this.AddQuest(e);
+    this.nVa.set(e, !0), this.AddQuest(e);
   }
   RemovePreShowQuest(e) {
-    this.S5a.delete(e),
+    this.nVa.delete(e),
       this.GetQuest(e)?.Status === Protocol_1.Aki.Protocol.hTs.Proto_InActive &&
         this.RemoveQuest(e);
   }
   GetPreShowQuests() {
-    return this.S5a;
+    return this.nVa;
+  }
+  AddLackResourceQuest(e) {
+    this.sb1.set(e, !0);
+    e = this.AddQuest(e);
+    e && (e.LockByLackResource = !0);
+  }
+  RemoveLackResourceQuest(e) {
+    this.sb1.delete(e);
+    e = this.GetQuest(e);
+    e && (e.LockByLackResource = !1);
   }
   IsTrackingQuest(e) {
     return this.GetCurTrackedQuest()?.Id === e;
@@ -179,7 +208,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
         (this.sno = t).SetTrack(!0, i);
       } else
         Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Quest", 19, "更新任务追踪时,找不到进行中的任务", [
+          Log_1.Log.Warn("Quest", 18, "更新任务追踪时,找不到进行中的任务", [
             "任务Id",
             e,
           ]);
@@ -248,6 +277,12 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       i = [];
     for ([, t] of this.eno) t.Type === e && i.push(t);
     return i;
+  }
+  GetQuestsByTypeAndSubType(e, t) {
+    var i,
+      r = [];
+    for ([, i] of this.eno) i.Type === e && i.SubType === t && r.push(i);
+    return r;
   }
   GetFirstShowQuestByType(e) {
     e = this.GetQuestsByType(e);
@@ -373,7 +408,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Quest",
-          19,
+          18,
           "任务红点状态改变",
           ["questId", e],
           ["bAdd", t],
@@ -406,8 +441,24 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     if (t && 0 !== t.length)
       for (const i of t) this.ActivityIdsByQuestId.set(i, e);
   }
+  SetActivityStates() {
+    var e =
+      ActivityQuestConfigAll_1.configActivityQuestConfigAll.GetConfigList();
+    if (e)
+      for (const t of e)
+        this.ActivityStatesByQuestId.set(t.QuestId, [
+          t.ActivityId,
+          t.IsDisplay,
+        ]);
+  }
   GetQuestBindingActivityId(e) {
     return this.ActivityIdsByQuestId.get(e) ?? 0;
+  }
+  GetQuestActivityId(e) {
+    return this.ActivityStatesByQuestId.get(e)?.[0] ?? 0;
+  }
+  GetQuestShowQuestLeftTime(e) {
+    return this.ActivityStatesByQuestId.get(e)?.[1] ?? !1;
   }
   GetActivityGuideQuestRemainTimeText(e, t) {
     var e = Math.max(e, 1),
@@ -461,6 +512,55 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       }
       return t;
     }
+  }
+  RefreshResidentQuestMapMark() {
+    if (this.eno)
+      for (var [, e] of this.eno)
+        e.Tree?.GetMapMarkResident() &&
+          (e.Tree.Expression?.RefreshMapMark(!0),
+          e.Tree.Expression?.RefreshMapMark(!1));
+  }
+  CheckBehaviorStepFinishState(e, t) {
+    var i = e.QuestScheduleType;
+    switch (i.Type) {
+      case IQuest_1.EQuestScheduleType.ChildQuestCompleted:
+        var r =
+          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        return r
+          ? !(r = r.GetNode(i.ChildQuestId)) || r.IsProcessing
+            ? 0
+            : r.IsSuccess
+              ? 1
+              : 2
+          : 0;
+      case IQuest_1.EQuestScheduleType.TimeLeft:
+        var r =
+          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        return r
+          ? ((s = i.TimerType),
+            (r = r.GetChallengeRemainTime(s)) ? (i.TimeLeft <= r ? 1 : 2) : 0)
+          : 0;
+      case IQuest_1.EQuestScheduleType.Condition:
+        var s =
+          ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(t);
+        return s
+          ? (r = i.Condition)
+            ? ((s = LevelGeneralContextDefine_1.GeneralLogicTreeContext.Create(
+                s.BtType,
+                s.TreeIncId,
+                s.TreeConfigId,
+              )),
+              ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
+                r,
+                void 0,
+                s,
+              )
+                ? 1
+                : 2)
+            : 0
+          : 0;
+    }
+    return 0;
   }
 }
 exports.QuestNewModel = QuestNewModel;

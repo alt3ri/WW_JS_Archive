@@ -29,18 +29,12 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
       (this.Uei = 0));
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(20414, (e) => {
-      var t = ModelManager_1.ModelManager.HandBookModel.GetClientHandBookType(
+    Net_1.Net.Register(16426, (e) => {
+      ModelManager_1.ModelManager.HandBookModel.UpdateHandBookActiveStateMap(
         e.h5n,
-        e.cws.hws,
-      );
-      HandBookController.CheckConfigIsLegal(t, e.cws.s5n) &&
-        (ModelManager_1.ModelManager.HandBookModel.UpdateHandBookActiveStateMap(
-          e.h5n,
-          e.cws,
-        ),
-        e.dws) &&
-        this.Aei(e.h5n, e.cws);
+        e.cws,
+      ),
+        e.dws && this.Aei(e.h5n, e.cws);
     });
   }
   static Aei(e, t) {
@@ -96,7 +90,7 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
   }
   static SendIllustratedRedDotRequest() {
     var e = Protocol_1.Aki.Protocol.pos.create();
-    Net_1.Net.Call(28088, e, (e) => {
+    Net_1.Net.Call(17508, e, (e) => {
       e &&
         ModelManager_1.ModelManager.HandBookModel.InitHandBookRedDotList(e._ws);
     });
@@ -108,7 +102,7 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.HandBookModel.GetServerHandBookTypeList(
             e,
           )),
-        await Net_1.Net.CallAsync(23142, t));
+        await Net_1.Net.CallAsync(25552, t));
     if (a) {
       ModelManager_1.ModelManager.HandBookModel.ClearHandBookActiveStateMap();
       var o = a.uws.length;
@@ -126,7 +120,7 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
     var t = Protocol_1.Aki.Protocol.Sos.create();
     (t.E9n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookTypeList(e)),
-      Net_1.Net.Call(23142, t, (t) => {
+      Net_1.Net.Call(25552, t, (t) => {
         if (t) {
           ModelManager_1.ModelManager.HandBookModel.ClearHandBookActiveStateMap();
           var a = t.uws.length;
@@ -145,12 +139,12 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
     (a.h5n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookType(t)),
       (a.s5n = e),
-      Net_1.Net.Call(22844, a, (e) => {
+      Net_1.Net.Call(21432, a, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                26703,
+                26411,
                 e.lvs,
               )
             : ModelManager_1.ModelManager.HandBookModel.UpdateRedDot(t, a.s5n));
@@ -161,12 +155,12 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
     (a.h5n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookType(t)),
       (a.s5n = e),
-      Net_1.Net.Call(23987, a, (e) => {
+      Net_1.Net.Call(20313, a, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                25162,
+                27936,
                 e.lvs,
               )
             : (ModelManager_1.ModelManager.HandBookModel.UpdateHandBookActiveStateMap(
@@ -247,12 +241,6 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
       (e[1] = t[1] + a[1] + o[1] + r[1] + n[1] + i[1] + l[1] + s[1]),
       e
     );
-  }
-  static CheckConfigIsLegal(e, t) {
-    var a = ModelManager_1.ModelManager.HandBookModel.GetConfigListIdByType(e),
-      o = a.length;
-    for (let e = 0; e < o; e++) if (a[e] === t) return !0;
-    return !1;
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(

@@ -103,7 +103,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
         r = SpeakerById_1.configSpeakerById.GetConfig(s.WhoId);
       StringUtils_1.StringUtils.IsEmpty(r?.HeadIconAsset)
         ? Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Plot", 27, "对话人不存在或头像未配置", [
+          Log_1.Log.Warn("Plot", 26, "对话人不存在或头像未配置", [
             "id",
             s.WhoId,
           ])
@@ -116,7 +116,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
                 (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Plot",
-                    27,
+                    26,
                     "对话人头像资源为空",
                     ["id", s.WhoId],
                     ["path", r.HeadIconAsset],
@@ -142,7 +142,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
                 (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "Plot",
-                    19,
+                    18,
                     "怪物半身像资源为空",
                     ["id", h.MonsterDisplayId],
                     ["path", o.MonsterPileIconAsset],
@@ -153,7 +153,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
           ),
           await i.Promise)
         : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Plot", 27, "怪物显示不存在或未配置", [
+          Log_1.Log.Warn("Plot", 26, "怪物显示不存在或未配置", [
             "id",
             [h.MonsterDisplayId],
           ]);
@@ -164,7 +164,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
         (e = SpeakerById_1.configSpeakerById.GetConfig(t.WhoId))
           ? (this.he = PublicUtil_1.PublicUtil.GetConfigIdByTable(0, e.Id))
           : Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Plot", 27, "对话人不存在", ["id", t.WhoId]));
+            Log_1.Log.Warn("Plot", 26, "对话人不存在", ["id", t.WhoId]));
     }
   }
   OnStart() {
@@ -285,10 +285,10 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(10).SetUIActive(!1);
   }
   Hzi() {
-    var t = Global_1.Global.BaseCharacter.K2_GetActorLocation(),
+    var t = Global_1.Global.BaseCharacter.D_K2_GetActorLocation(),
       i = (0, puerts_1.$ref)(void 0),
       i =
-        (UE.GameplayStatics.ProjectWorldToScreen(
+        (UE.GameplayStatics.D_ProjectWorldToScreen(
           Global_1.Global.CharacterController,
           t,
           i,

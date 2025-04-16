@@ -45,13 +45,13 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   a.EntityId,
                 );
-              a.BeforeHide && o?.Entity?.GetComponent(190)?.AddTag(447365096);
+              a.BeforeHide && o?.Entity?.GetComponent(203)?.AddTag(447365096);
             }
             this.CreateWaitEntityTask(i),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Event",
-                  34,
+                  33,
                   "LevelEventSetBattleState CreateWaitEntityTask",
                   ["EntityIds", i],
                 );
@@ -59,7 +59,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Event",
-                34,
+                33,
                 "LevelEventSetBattleState 未配置具体操作对象",
               ),
               this.FinishExecute(!1);
@@ -72,7 +72,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
       }
     else
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Event", 34, "LevelEventSetBattleState 参数不合法"),
+        Log_1.Log.Error("Event", 33, "LevelEventSetBattleState 参数不合法"),
         this.FinishExecute(!1);
   }
   ExecuteWhenEntitiesReady() {
@@ -121,17 +121,17 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Event",
-        34,
+        33,
         "LevelEventSetBattleState AddTag",
         ["EntityId", t],
         ["TagName", i],
       );
-    e = e.Entity.GetComponent(190);
+    e = e.Entity.GetComponent(203);
     e
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Event",
-            34,
+            33,
             "LevelEventSetBattleState AddTagByName",
             ["EntityId", t],
             ["TagName", i],
@@ -145,17 +145,17 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Event",
-        34,
+        33,
         "LevelEventSetBattleState RemoveTag",
         ["EntityId", t],
         ["TagName", i],
       );
-    e = e.Entity.GetComponent(190);
+    e = e.Entity.GetComponent(203);
     e
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Event",
-            34,
+            33,
             "LevelEventSetBattleState RemoveTagByName",
             ["EntityId", t],
             ["TagName", i],
@@ -173,14 +173,14 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
       if (!o?.Valid)
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Event", 32, "被通知Entity不合法", ["ID", s]),
+            Log_1.Log.Error("Event", 31, "被通知Entity不合法", ["ID", s]),
           void this.FinishExecute(!1)
         );
-      o = o.Entity.GetComponent(40);
+      o = o.Entity.GetComponent(46);
       if (!o?.Valid)
         return (
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Event", 32, "被通知Entity没有AIComponent", [
+            Log_1.Log.Error("Event", 31, "被通知Entity没有AIComponent", [
               "ID",
               s,
             ]),
@@ -205,13 +205,13 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Event",
-                  34,
+                  33,
                   "未能获取到该实体对应的有效Actor",
                   ["entityId", t.PerceptionBehaviorOption.EntityId],
                 ),
               this.FinishExecute(!1))
           : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Event", 34, "中心实体不合法", [
+              Log_1.Log.Error("Event", 33, "中心实体不合法", [
                 "ID",
                 t.PerceptionBehaviorOption.EntityId,
               ]),
@@ -245,7 +245,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "LevelEvent",
-          32,
+          31,
           "[NotifyGatherToEntity] 获取不到BaseCharacter的CharacterActorComponent，无法通知怪物靠近",
         );
     let o = 0;
@@ -262,9 +262,9 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
   LRe(t, e) {
     if (0 !== t.StandbyTags.length && 1 === e.Type) {
       e = EntitySystem_1.EntitySystem.Get(e.EntityId);
-      if (e && e.GetComponent(40)?.AiController?.AiPatrol) {
+      if (e && e.GetComponent(46)?.AiController?.AiPatrol) {
         const o = e.GetComponent(1);
-        e = e.GetComponent(41);
+        e = e.GetComponent(47);
         if (e && -1 !== e.GetLastPointRawIndex()) {
           var i = Math.floor(
             MathUtils_1.MathUtils.GetRandomFloatNumber(0, t.StandbyTags.length),
@@ -278,13 +278,13 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
             (a.m5n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
               t.StandbyTags[i],
             )),
-            Net_1.Net.Call(27459, a, (t) => {
+            Net_1.Net.Call(25604, a, (t) => {
               t &&
                 t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
                 Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
                   "AI",
-                  51,
+                  50,
                   "请求状态机切换生态表演失败",
                   ["CreatureId", a.F4n],
                   ["PbDataId", o.CreatureData.GetPbDataId()],
@@ -297,7 +297,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LevelEvent",
-              51,
+              50,
               "[NotifyMonsterStandByTags] 获取不到巡逻组件，无法通知怪物切换表演状态",
             );
       }

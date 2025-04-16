@@ -9,6 +9,7 @@ class RoleSkillOuterPassiveSkillItem extends RoleSkillTreeSkillItemBase_1.RoleSk
       [0, UE.UIItem],
       [1, UE.UIItem],
       [2, UE.UIItem],
+      [3, UE.UIText],
     ];
   }
   GetSkillIconItem() {
@@ -16,6 +17,9 @@ class RoleSkillOuterPassiveSkillItem extends RoleSkillTreeSkillItemBase_1.RoleSk
   }
   GetLockItem() {
     return this.GetItem(1);
+  }
+  GetNameText() {
+    return this.GetText(3);
   }
   GetStrongArrowUpItem() {
     return this.GetItem(2);

@@ -9,18 +9,16 @@ class PersonalRoleMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMe
   }
   OnRefresh(e, t, o) {
     (this.dFe = e), (this.GirdIndex = o);
-    o = {
-      Type: 2,
-      Data: e,
-      ItemConfigId: e,
-      BottomTextId: "Text_LevelShow_Text",
-      BottomTextParameter: [
-        ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.dFe)
-          .GetLevelData()
-          .GetLevel(),
-      ],
-    };
-    this.Apply(o);
+    (o = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.dFe)),
+      (e = {
+        Type: 2,
+        Data: e,
+        ItemConfigId: e,
+        SkinId: o.GetRoleSkinId(),
+        BottomTextId: "Text_LevelShow_Text",
+        BottomTextParameter: [o.GetLevelData().GetLevel()],
+      });
+    this.Apply(e);
   }
 }
 exports.PersonalRoleMediumItemGrid = PersonalRoleMediumItemGrid;

@@ -67,6 +67,7 @@ class SequenceModel extends ModelBase_1.ModelBase {
   }
   Reset() {
     (this.IsPaused = void 0),
+      (this.Config = void 0),
       (this.SequenceData = void 0),
       this.BindingActorMap.clear(),
       this.BindingEntityMap.clear(),
@@ -103,7 +104,7 @@ class SequenceModel extends ModelBase_1.ModelBase {
       (this.CurLanguageAudio = 0),
       (this.NeedJumpWhenResume = !1),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 39, "清理引用数据-SequenceModel");
+        Log_1.Log.Debug("Plot", 38, "清理引用数据-SequenceModel");
   }
   GetCurrentSequence() {
     return this.SubSeqIndex < this.SubSeqLen

@@ -16,26 +16,25 @@ class BulletActionUpdateLiveTime extends BulletActionBase_1.BulletActionBase {
     0 === this.BulletInfo.CreateFrame &&
       (this.BulletInfo.CreateFrame = Time_1.Time.Frame),
       (this.BulletInfo.LiveTime = this.BulletInfo.LiveTimeAddDelta);
-    var e = this.BulletInfo.Actor,
-      i = this.BulletInfo.BulletDataMain;
+    var e = this.BulletInfo.Actor;
     e?.IsValid()
       ? e.IsActorBeingDestroyed()
         ? (this.HVo(),
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
-              18,
+              17,
               "子弹Actor.IsActorBeingDestroyed为true",
               ["子弹Id", this.BulletInfo.BulletRowName],
             ))
-        : i.Base.Duration < 0 ||
+        : (e = this.BulletInfo.Duration) < 0 ||
           (this.BulletInfo.LiveTime >=
-          i.Base.Duration * TimeUtil_1.TimeUtil.InverseMillisecond
+          e * TimeUtil_1.TimeUtil.InverseMillisecond
             ? ((this.BulletInfo.IsTimeNotEnough = !0), this.HVo())
             : this.BulletInfo.AttackerHandle || this.HVo())
       : (this.HVo(),
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Bullet", 18, "子弹Actor被意外销毁", [
+          Log_1.Log.Error("Bullet", 17, "子弹Actor被意外销毁", [
             "子弹Id",
             this.BulletInfo.BulletRowName,
           ]));

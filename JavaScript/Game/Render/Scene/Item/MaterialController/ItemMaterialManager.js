@@ -48,7 +48,7 @@ class ItemMaterialManager {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            33,
+            32,
             "单体交互物材质控制器队列已经没有目标控制器，卸载失败",
             ["handle", o],
           ),
@@ -68,7 +68,7 @@ class ItemMaterialManager {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            33,
+            32,
             "想要添加单体交互物材质控制器，但是传入的Actor是无效的",
             ["Actor", t],
           ),
@@ -79,7 +79,7 @@ class ItemMaterialManager {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            33,
+            32,
             "想要添加单体交互物材质控制器，但是传入的Data是无效的",
             ["Actor", t],
           ),
@@ -88,8 +88,8 @@ class ItemMaterialManager {
     this.DataMap?.IsValid() ||
       ((this.DataMap = ActorSystem_1.ActorSystem.Get(
         UE.ItemMaterialDataMap_C.StaticClass(),
-        UE.KismetMathLibrary.MakeTransform(
-          Vector_1.Vector.ZeroVector,
+        UE.KismetMathLibrary.MakeTransformDouble(
+          Vector_1.Vector.ZeroVectorDouble,
           Rotator_1.Rotator.ZeroRotator,
           Vector_1.Vector.ZeroVector,
         ),
@@ -123,7 +123,7 @@ class ItemMaterialManager {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            33,
+            32,
             "不满足删除单体交互物材质控制器的条件，返回false",
             ["handle", -1],
           ),
@@ -144,7 +144,7 @@ class ItemMaterialManager {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
-            33,
+            32,
             "想要添加单体交互物材质控制器，但是传入的Actor是无效的",
             ["Actor", t],
           ),

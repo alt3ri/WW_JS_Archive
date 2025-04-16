@@ -35,7 +35,11 @@ class UiCameraSpringStructure extends UiCameraStructure_1.UiCameraStructure {
   }
   OnInitialize() {}
   OnDestroy() {
-    ActorSystem_1.ActorSystem.Put(this.zUo), (this.zUo = void 0);
+    ActorSystem_1.ActorSystem.Put(
+      "UiCameraSpringStructure.OnDestroy",
+      this.zUo,
+    ),
+      (this.zUo = void 0);
   }
   OnActivate() {
     this.CameraActorAttachToSpringActor();

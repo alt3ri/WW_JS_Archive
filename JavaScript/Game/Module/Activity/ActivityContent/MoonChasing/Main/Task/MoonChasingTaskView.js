@@ -17,28 +17,28 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
       (this.lqe = void 0),
       (this.gAn = void 0),
       (this.fAn = void 0),
-      (this.sMa = void 0),
-      (this.aMa = void 0),
+      (this.Xva = void 0),
+      (this.Yva = void 0),
       (this.vAn = (i) => {
-        (this.aMa.TaskType = 2),
+        (this.Yva.TaskType = 2),
           this.fAn?.SetActive(!1),
           this.GetExtendToggle(3)?.SetToggleState(0),
-          this.MAn(this.aMa.TargetTaskId).finally(() => {
-            this.sMa?.Play();
+          this.MAn(this.Yva.TargetTaskId).finally(() => {
+            this.Xva?.Play();
           }),
-          this.Bwa(1);
+          this.Ywa(1);
       }),
       (this.EAn = (i) => {
-        (this.aMa.TaskType = 1),
+        (this.Yva.TaskType = 1),
           this.gAn?.SetActive(!1),
           this.GetExtendToggle(2)?.SetToggleState(0),
-          this.SAn(this.aMa.TargetTaskId, this.aMa.IsLastTask).finally(() => {
-            this.sMa?.Play();
+          this.SAn(this.Yva.TargetTaskId, this.Yva.IsLastTask).finally(() => {
+            this.Xva?.Play();
           }),
-          this.Bwa(0);
+          this.Ywa(0);
       }),
-      (this.yAn = () => 2 === this.aMa.TaskType),
-      (this.IAn = () => 2 !== this.aMa.TaskType),
+      (this.yAn = () => 2 === this.Yva.TaskType),
+      (this.IAn = () => 2 !== this.Yva.TaskType),
       (this.m2e = () => {
         this.CloseMe();
       });
@@ -76,19 +76,19 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
     await Promise.all([this.ERn(), this.U3e()]);
   }
   OnStart() {
-    (this.aMa = this.OpenParam),
-      void 0 === this.aMa
+    (this.Yva = this.OpenParam),
+      void 0 === this.Yva
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "MoonChasing",
-            59,
+            58,
             "MoonChasingTaskView Invalid OpenParam",
           )
         : (this.Mqt(),
-          (this.sMa = this.GetItem(1)
+          (this.Xva = this.GetItem(1)
             .GetOwner()
             .GetComponentByClass(UE.UIInturnAnimController.StaticClass())),
-          (1 === this.aMa.TaskType
+          (1 === this.Yva.TaskType
             ? this.GetExtendToggle(3)
             : this.GetExtendToggle(2)
           ).SetToggleStateForce(1, !0));
@@ -130,7 +130,7 @@ class MoonChasingTaskView extends UiViewBase_1.UiViewBase {
       )),
       await this.gAn.ShowAsync();
   }
-  Bwa(i) {
+  Ywa(i) {
     var t = this.GetExtendToggle(3).RootUIComp,
       s = this.GetExtendToggle(2).RootUIComp,
       e = t.GetHierarchyIndex(),

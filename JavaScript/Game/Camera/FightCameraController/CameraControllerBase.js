@@ -51,10 +51,10 @@ class CameraControllerBase {
       this.m1e.set(t.GetKey(e), t.Get(r));
     }
     for (let e = 0; e < a.Num(); e++) {
-      var s = a.GetKey(e);
+      var o = a.GetKey(e);
       this.d1e.set(
         a.GetKey(e),
-        CurveUtils_1.CurveUtils.CreateCurveByStruct(a.Get(s)),
+        CurveUtils_1.CurveUtils.CreateCurveByStruct(a.Get(o)),
       );
     }
   }
@@ -64,36 +64,36 @@ class CameraControllerBase {
         a = this.$.get(a);
         this.f1e(a, r);
       }
-      for (var [s, i] of this.$)
-        void 0 === this[i] &&
+      for (var [o, s] of this.$)
+        void 0 === this[s] &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
               6,
               "CameraController缺少配置",
               ["CameraType", this.constructor],
-              ["key", s],
-              ["value", i],
+              ["key", o],
+              ["value", s],
             ),
-          this.f1e(i, 1));
+          this.f1e(s, 1));
     }
     if (t) {
-      for (var [o, n] of t) {
-        o = this.C1e.get(o);
-        this.p1e(o, n);
+      for (var [i, n] of t) {
+        i = this.C1e.get(i);
+        this.p1e(i, n);
       }
-      for (var [C, l] of this.C1e)
-        void 0 === this[l] &&
+      for (var [l, C] of this.C1e)
+        void 0 === this[C] &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
               6,
               "CameraController缺少曲线配置",
               ["CameraType", this.constructor.name],
-              ["key", C],
-              ["value", l],
+              ["key", l],
+              ["value", C],
             ),
-          this.p1e(l, CurveUtils_1.CurveUtils.CreateCurve(0)));
+          this.p1e(C, CurveUtils_1.CurveUtils.CreateCurve(0)));
     }
   }
   ResetDefaultConfig() {
@@ -129,40 +129,57 @@ class CameraControllerBase {
   }
   Update(e) {
     var t = this.IsActivate;
-    CameraControllerBase.ZKa.Start(),
+    CameraControllerBase.Iza.Start(),
       (this.u1e = this.UpdateCustomEnableCondition()),
-      CameraControllerBase.ZKa.Stop(),
+      CameraControllerBase.Iza.Stop(),
       this.IsActivate !== t &&
         (this.IsActivate
-          ? (CameraControllerBase.e$a.Start(),
+          ? (CameraControllerBase.Tza.Start(),
             this.OnEnable(),
-            CameraControllerBase.e$a)
-          : (CameraControllerBase.t$a.Start(),
+            CameraControllerBase.Tza)
+          : (CameraControllerBase.Lza.Start(),
             this.OnDisable(),
-            CameraControllerBase.t$a)
+            CameraControllerBase.Lza)
         ).Stop(),
       (this.IsActivate
-        ? (CameraControllerBase.i$a.Start(),
+        ? (CameraControllerBase.Aza.Start(),
           this.UpdateInternal(e),
-          CameraControllerBase.i$a)
-        : (CameraControllerBase.r$a.Start(),
+          CameraControllerBase.Aza)
+        : (CameraControllerBase.Dza.Start(),
           this.UpdateDeactivateInternal(e),
-          CameraControllerBase.r$a)
+          CameraControllerBase.Dza)
       ).Stop();
   }
   get IsActivate() {
     return this.u1e && 0 === this.c1e.size;
   }
+  ShowBlockSetInfo(t) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Camera", 57, "[ShowCameraBlockSet]", [
+        "controllerName",
+        t,
+      ]),
+      this.c1e.forEach((e) => {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Camera",
+            57,
+            "[ShowCameraBlockSet]",
+            ["elementName", e?.constructor?.name ?? ""],
+            ["controllerName", t],
+          );
+      });
+  }
   GetConfigMapValue(e) {
     return String(this.$.get(e));
   }
 }
-((exports.CameraControllerBase = CameraControllerBase).ZKa =
+((exports.CameraControllerBase = CameraControllerBase).Iza =
   Stats_1.Stat.Create("UpdateCustomEnableConditionStat")),
-  (CameraControllerBase.e$a = Stats_1.Stat.Create("OnEnableStat")),
-  (CameraControllerBase.t$a = Stats_1.Stat.Create("OnDisableStat")),
-  (CameraControllerBase.i$a = Stats_1.Stat.Create("UpdateInternalStat")),
-  (CameraControllerBase.r$a = Stats_1.Stat.Create(
+  (CameraControllerBase.Tza = Stats_1.Stat.Create("OnEnableStat")),
+  (CameraControllerBase.Lza = Stats_1.Stat.Create("OnDisableStat")),
+  (CameraControllerBase.Aza = Stats_1.Stat.Create("UpdateInternalStat")),
+  (CameraControllerBase.Dza = Stats_1.Stat.Create(
     "UpdateDeactivateInternalStat",
   ));
 //# sourceMappingURL=CameraControllerBase.js.map

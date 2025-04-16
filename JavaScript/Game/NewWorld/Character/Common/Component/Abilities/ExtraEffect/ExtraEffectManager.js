@@ -14,38 +14,10 @@ class BaseExtraEffectManager {
       (this.EffectHolder = new Map()),
       (this.ActivatedHandles = new Set());
   }
-  static IsInitExecution(t) {
-    switch (t) {
-      case 24:
-      case 52:
-        return !0;
-      default:
-        return !1;
-    }
-  }
-  static IsPeriodExecution(t) {
-    switch (t) {
-      case 28:
-      case 29:
-      case 102:
-      case 34:
-      case 26:
-      case 4:
-      case 5:
-      case 30:
-      case 48:
-      case 13:
-      case 101:
-        return !0;
-      default:
-        return !1;
-    }
-  }
   OnBuffAdded(t) {
-    var e;
     this.SXo(t) &&
-      ((e = t?.Config)
-        ? e.HasBuffEffect && t.IsActive() && this.CreateBuffEffects(t)
+      (t?.Config
+        ? t.IsActive() && this.CreateBuffEffects(t)
         : CombatLog_1.CombatLog.Error(
             "Buff",
             this.BuffComponent?.Entity,
@@ -116,13 +88,12 @@ class BaseExtraEffectManager {
         for (let t = 0; t < s.length; t++) {
           var i = s[t][0],
             o = s[t][1],
-            c = i.ExtraEffectId;
-          ExtraEffectManager.IsInitExecution(c) ||
-            ExtraEffectManager.IsPeriodExecution(c) ||
-            ((c = (0, ExtraEffectDefine_1.getBuffEffectClass)(c)) &&
-              ((c = c.Create(f, t, o, this.BuffComponent, r, i)),
-              this.qp(c),
-              c.OnCreated()));
+            n = i.ExtraEffectId,
+            n = (0, ExtraEffectDefine_1.getBuffEffectClass)(n);
+          n &&
+            ((n = n.Create(f, t, o, this.BuffComponent, r, i)),
+            this.qp(n),
+            n.OnCreated());
         }
     }
   }
@@ -138,16 +109,6 @@ class BaseExtraEffectManager {
       this.ActivatedHandles.delete(t);
     for (const f of this.GetEffectsByHandle(t)) f.OnRemoved(e);
     this.EffectHolder.delete(t);
-  }
-  ApplyPeriodBuffExecution(t) {
-    for (const e of t.Config.EffectInfos)
-      ExtraEffectManager.IsPeriodExecution(e.ExtraEffectId) &&
-        e.ExecutionEffect?.TryExecute(t);
-  }
-  ApplyInitBuffExecution(t, e) {
-    for (const f of t.Config.EffectInfos)
-      ExtraEffectManager.IsInitExecution(f.ExtraEffectId) &&
-        f.ExecutionEffect?.TryExecute(t, e);
   }
   qp(e) {
     var t,

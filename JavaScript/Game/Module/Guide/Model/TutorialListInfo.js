@@ -2,15 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TutorialListInfo = void 0);
 const ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../Manager/ModelManager");
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  TutorialDefine_1 = require("../../Tutorial/TutorialDefine");
 class TutorialListInfo {
-  constructor(t) {
+  constructor(i) {
     (this.OwnerStep = void 0),
       (this.GuideId = 0),
       (this.TipState = 0),
       (this.Duration = 0),
       (this.TutorialTip = !1),
-      (this.OwnerStep = t);
+      (this.OwnerStep = i);
+  }
+  get IsOverrideGuideTutorialView() {
+    var i = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(
+      this.GuideId,
+    );
+    return (
+      void 0 !== i &&
+      i.TutorialType === TutorialDefine_1.ETutorialType.BuffOnEnemy
+    );
   }
   Init() {
     (this.GuideId = this.OwnerStep.Id),
@@ -26,10 +36,10 @@ class TutorialListInfo {
     this.OwnerStep &&
       (this.OwnerStep.SwitchState(4), (this.OwnerStep = void 0));
   }
-  Tick(t) {
+  Tick(i) {
     return (
       1 === this.TipState &&
-      ((this.Duration -= t), this.Duration <= 0) &&
+      ((this.Duration -= i), this.Duration <= 0) &&
       (this.StopGuide(), !0)
     );
   }

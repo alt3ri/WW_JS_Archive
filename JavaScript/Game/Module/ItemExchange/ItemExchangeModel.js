@@ -40,7 +40,7 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ItemExchange",
-            9,
+            8,
             "前后端版本可能不一致, 当前兑换的道具并没有后端配置!",
             ["itemId", e],
           )),

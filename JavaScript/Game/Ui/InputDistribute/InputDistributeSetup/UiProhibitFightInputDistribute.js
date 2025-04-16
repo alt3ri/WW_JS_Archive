@@ -13,7 +13,7 @@ class UiProhibitFightInputDistribute extends InputDistributeSetup_1.InputDistrib
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Input",
-          8,
+          10,
           "[InputDistribute]禁止战斗输入的界面的输入分发，有不允许战斗输入的界面打开",
           [
             "NotAllowFightInputViewNameSet",

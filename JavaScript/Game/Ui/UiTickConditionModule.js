@@ -33,7 +33,7 @@ class UiTickConditionModule {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiTickConditionModule",
-          11,
+          10,
           "手动停止Tick,执行停止回调",
           ["标识", this.lZo],
         ),

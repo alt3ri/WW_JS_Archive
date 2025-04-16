@@ -15,7 +15,7 @@ class SkipTask {
   }
   Run(...t) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("SkipInterface", 8, "开始跳转任务", [
+      Log_1.Log.Info("SkipInterface", 10, "开始跳转任务", [
         "Name",
         this.constructor.name,
       ]),
@@ -24,7 +24,7 @@ class SkipTask {
   async AsyncRun(...t) {
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("SkipInterface", 8, "开始跳转任务", [
+        Log_1.Log.Info("SkipInterface", 10, "开始跳转任务", [
           "Name",
           this.constructor.name,
         ]),
@@ -38,7 +38,7 @@ class SkipTask {
   }
   Finish() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("SkipInterface", 8, "结束跳转任务", [
+      Log_1.Log.Info("SkipInterface", 10, "结束跳转任务", [
         "Name",
         this.constructor.name,
       ]),
@@ -48,7 +48,7 @@ class SkipTask {
   }
   Stop() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("SkipInterface", 8, "停止跳转任务", [
+      Log_1.Log.Info("SkipInterface", 10, "停止跳转任务", [
         "Name",
         this.constructor.name,
       ]),

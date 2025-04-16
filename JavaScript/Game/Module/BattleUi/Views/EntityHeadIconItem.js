@@ -16,7 +16,7 @@ class EntityHeadIconItem extends UiPanelBase_1.UiPanelBase {
       (this.EntityHandle =
         ModelManager_1.ModelManager.CharacterModel?.GetHandle(e)),
       (this.PawnHeadInfoComponent =
-        this.EntityHandle?.Entity?.GetComponent(73));
+        this.EntityHandle?.Entity?.GetComponent(80));
   }
   Update() {
     this.RefreshAlpha();

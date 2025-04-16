@@ -81,6 +81,12 @@ class FormationProperty {
       this,
     );
   }
+  get Condition() {
+    return this.condition();
+  }
+  get PropertyIndex() {
+    return this.propertyindex();
+  }
   __init(t, r) {
     return (this.z7 = t), (this.J7 = r), this;
   }
@@ -110,10 +116,14 @@ class FormationProperty {
     return this.marktag(t);
   }
   marktag(t, r) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
-      : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   marktagLength() {
     var t = this.J7.__offset(this.z7, 12);
@@ -123,10 +133,14 @@ class FormationProperty {
     return this.resisttag(t);
   }
   resisttag(t, r) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r)
-      : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, r) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   resisttagLength() {
     var t = this.J7.__offset(this.z7, 14);
@@ -154,13 +168,21 @@ class FormationProperty {
   }
   triggereffectparams1(t) {
     var r = this.J7.__offset(this.z7, 22);
-    return r
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
-      : BigInt(0);
+    return r ? this.J7.readFloat64(this.J7.__vector(this.z7 + r) + 8 * t) : 0;
   }
   triggereffectparams1Length() {
     var t = this.J7.__offset(this.z7, 22);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  triggereffectparams1Array() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   triggerrange2(t) {
     var r = this.J7.__offset(this.z7, 24);
@@ -184,13 +206,21 @@ class FormationProperty {
   }
   triggereffectparams2(t) {
     var r = this.J7.__offset(this.z7, 30);
-    return r
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
-      : BigInt(0);
+    return r ? this.J7.readFloat64(this.J7.__vector(this.z7 + r) + 8 * t) : 0;
   }
   triggereffectparams2Length() {
     var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  triggereffectparams2Array() {
+    var t = this.J7.__offset(this.z7, 30);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
   }
   triggerrange3(t) {
     var r = this.J7.__offset(this.z7, 32);
@@ -214,13 +244,29 @@ class FormationProperty {
   }
   triggereffectparams3(t) {
     var r = this.J7.__offset(this.z7, 38);
-    return r
-      ? this.J7.readInt64(this.J7.__vector(this.z7 + r) + 8 * t)
-      : BigInt(0);
+    return r ? this.J7.readFloat64(this.J7.__vector(this.z7 + r) + 8 * t) : 0;
   }
   triggereffectparams3Length() {
     var t = this.J7.__offset(this.z7, 38);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  triggereffectparams3Array() {
+    var t = this.J7.__offset(this.z7, 38);
+    return t
+      ? new Float64Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  condition() {
+    var t = this.J7.__offset(this.z7, 40);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  propertyindex() {
+    var t = this.J7.__offset(this.z7, 42);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.FormationProperty = FormationProperty;

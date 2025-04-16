@@ -10,68 +10,78 @@ const UE = require("ue"),
   BulletPool_1 = require("../Model/BulletPool"),
   BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicSpawnObstacles extends BulletLogicController_1.BulletLogicController {
-  constructor(e, t) {
-    super(e, t), (this.OC = void 0);
+  constructor(t, e) {
+    super(t, e), (this.OC = void 0);
   }
   OnInit() {
-    var e = this.LogicController,
-      t = MathUtils_1.MathUtils.DefaultTransform,
-      l =
-        ((this.OC = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), t)),
+    var t = this.LogicController,
+      e = MathUtils_1.MathUtils.DefaultTransformDouble,
+      e =
+        ((this.OC = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), e)),
         GlobalData_1.GlobalData.IsPlayInEditor &&
           this.OC.SetActorLabel("BulletCage", !0),
-        e.Model);
-    let r = void 0;
-    var o,
-      i = this.Bullet.GetBulletInfo();
-    1 === l
-      ? ((o = this.OC.AddComponentByClass(
+        t.Model);
+    let l = void 0;
+    var r,
+      s = this.Bullet.GetBulletInfo();
+    1 === e
+      ? ((r = this.OC.AddComponentByClass(
           UE.StaticMeshComponent.StaticClass(),
           !1,
-          t,
+          MathUtils_1.MathUtils.DefaultTransform,
           !0,
-        )).SetStaticMesh(e.Mesh),
-        (r = o))
-      : 2 === l &&
-        (r = this.OC.AddComponentByClass(
+        )).SetStaticMesh(t.Mesh),
+        (l = r))
+      : 2 === e &&
+        (l = this.OC.AddComponentByClass(
           UE.BoxComponent.StaticClass(),
           !1,
-          t,
+          MathUtils_1.MathUtils.DefaultTransform,
           !0,
         )),
-      r &&
-        (r.SetCollisionProfileName(e.ProfileName, !1),
-        (r.bCanCharacterStandOn = e.CanStandOn),
+      l &&
+        (l.SetCollisionProfileName(t.ProfileName, !1),
+        (l.bCanCharacterStandOn = t.CanStandOn),
         this.OC.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.NO_SLIDE),
-        r.SetGenerateOverlapEvents(!1),
-        (r.CreationMethod = 3),
-        r.SetVisibility(e.ShowModel),
-        this.OC.FinishAddComponent(r, !1, t),
-        e.NeedAttach
+        l.SetGenerateOverlapEvents(!1),
+        (l.CreationMethod = 3),
+        l.SetVisibility(t.ShowModel),
+        this.OC.FinishAddComponent(
+          l,
+          !1,
+          MathUtils_1.MathUtils.DefaultTransform,
+        ),
+        t.NeedAttach
           ? this.OC.K2_AttachToActor(
-              i.Actor,
+              s.Actor,
               FNameUtil_1.FNameUtil.NONE,
               2,
               2,
               1,
               !1,
             )
-          : this.OC.K2_SetActorTransform(
-              i.Actor.GetTransform(),
+          : this.OC.D_K2_SetActorTransform(
+              s.Actor.D_GetTransform(),
               !1,
               void 0,
               !0,
             ),
-        1 === l
-          ? ((o = BulletPool_1.BulletPool.CreateVector()).FromUeVector(e.Size),
-            o.MultiplyEqual(0.02),
-            r.SetRelativeScale3D(o.ToUeVector()),
-            BulletPool_1.BulletPool.RecycleVector(o))
-          : 2 === l && r.SetBoxExtent(e.Size));
+        1 === e
+          ? ((r = BulletPool_1.BulletPool.CreateVector()).FromUeVector(t.Size),
+            r.MultiplyEqual(0.02),
+            l.D_SetRelativeScale3D(r.ToUeVector()),
+            BulletPool_1.BulletPool.RecycleVector(r))
+          : 2 === e &&
+            l.D_SetBoxExtent(
+              UE.KismetMathLibrary.Conv_VectorToVectorDouble(t.Size),
+            ));
   }
   OnBulletDestroy() {
     this.LogicController.NeedAttach && this.OC.K2_DetachFromActor(),
-      ActorSystem_1.ActorSystem.Put(this.OC);
+      ActorSystem_1.ActorSystem.Put(
+        "BulletLogicSpawnObstacles.OnBulletDestroy",
+        this.OC,
+      );
   }
 }
 exports.BulletLogicSpawnObstacles = BulletLogicSpawnObstacles;

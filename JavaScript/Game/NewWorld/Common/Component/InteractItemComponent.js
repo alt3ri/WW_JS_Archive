@@ -21,8 +21,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractItemComponent = void 0);
 const UE = require("ue"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
-  WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary"),
   RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
+  WorldFunctionLibrary_1 = require("../../../World/Bridge/WorldFunctionLibrary"),
   POSITION_TAG = new UE.FName("Position");
 let InteractItemComponent = class InteractItemComponent extends EntityComponent_1.EntityComponent {
   constructor() {
@@ -48,14 +48,14 @@ let InteractItemComponent = class InteractItemComponent extends EntityComponent_
     );
   }
   GetInteractPosition() {
-    if (this.cC) return this.cC.K2_GetComponentLocation();
+    if (this.cC) return this.cC.D_K2_GetComponentLocation();
   }
   GetInteractRotator() {
     if (this.Yrn) return this.Yrn.K2_GetComponentRotation();
   }
 };
 (InteractItemComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(94)],
+  [(0, RegisterComponent_1.RegisterComponent)(101)],
   InteractItemComponent,
 )),
   (exports.InteractItemComponent = InteractItemComponent);

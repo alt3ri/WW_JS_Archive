@@ -33,6 +33,21 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsOpenDebugNode = !1),
       (this.HandleMoveEnd = void 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.Entity = void 0),
+      (this.ActorComp = void 0),
+      (this.MoveComp = void 0),
+      (this.StateComp = void 0),
+      (this.PatrolLogic = void 0),
+      (this.PatrolConfig = void 0),
+      (this.IsInitTsVariables = !1),
+      (this.TsMoveState = 0),
+      (this.TsMoveOnePath = !1),
+      (this.TsUseLastMoveIndex = !1),
+      (this.TsOpenDebugNode = !1),
+      (this.HandleMoveEnd = void 0);
+  }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
       ((this.IsInitTsVariables = !0),
@@ -50,12 +65,14 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
         (this.PatrolConfig = this.PatrolLogic.GetConfig()),
         this.PatrolConfig &&
         ((this.Entity = e.CharAiDesignComp.Entity),
-        (this.MoveComp = this.Entity.GetComponent(38)),
-        (this.StateComp = this.Entity.GetComponent(92)),
+        (this.MoveComp = this.Entity.GetComponent(44)),
+        (this.StateComp = this.Entity.GetComponent(99)),
         (this.ActorComp = e.CharActorComp),
         this.PatrolConfig.ContainZ &&
-          this.MoveComp &&
-          this.MoveComp.CharacterMovement.SetMovementMode(5),
+          e.CharActorComp?.Actor.KuroSetMovementMode({
+            Mode: 5,
+            Context: "[TsTaskPatrol.ReceiveExecuteAI]",
+          }),
         this.HandleMoveEnd ||
           (this.HandleMoveEnd = (t) => {
             this.ExecuteMoveEnd(t);
@@ -67,7 +84,7 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
                 e.CharActorComp.CreatureData.GetCreatureDataId(),
               )),
             (s.V4n = !this.PatrolLogic.StartWithInversePath),
-            Net_1.Net.Call(21744, s, () => {}),
+            Net_1.Net.Call(17943, s, () => {}),
             this.MoveToPatrolPoint(),
             void 0 !== e.AiPatrol.StartWithInversePath &&
               (e.AiPatrol.StartWithInversePath = void 0))
@@ -129,6 +146,7 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
         CircleMove: this.PatrolConfig.CirclePatrol,
         StartWithInversePath: this.PatrolLogic.StartWithInversePath,
         Distance: this.PatrolConfig.EndDistance,
+        TurnSpeed: this.PatrolConfig.TurnSpeed,
         Callback: (t) => {
           1 === t && this.PatrolFinish(), this.Finish(!0);
         },
@@ -185,7 +203,7 @@ class TsTaskPatrol extends TsTaskAbortImmediatelyBase_1.default {
           MathUtils_1.MathUtils.NumberToLong(
             this.ActorComp.CreatureData.GetCreatureDataId(),
           )),
-        Net_1.Net.Call(15110, t, () => {})),
+        Net_1.Net.Call(22325, t, () => {})),
       this.MoveComp &&
         (this.TsMoveOnePath &&
           this.MoveComp.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy),

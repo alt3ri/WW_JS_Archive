@@ -82,17 +82,27 @@ class StateMachinePreload {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   fsmkey(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var s = this.J7.__offset(this.z7, 6),
+      s = s ? this.J7.__string(this.z7 + s, t) : null;
+    return (
+      "string" == typeof s &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(s),
+      s
+    );
   }
   GetActorclassAt(t) {
     return this.actorclass(t);
   }
   actorclass(t, s) {
-    var i = this.J7.__offset(this.z7, 8);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 8),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   actorclassLength() {
     var t = this.J7.__offset(this.z7, 8);
@@ -102,10 +112,14 @@ class StateMachinePreload {
     return this.animations(t);
   }
   animations(t, s) {
-    var i = this.J7.__offset(this.z7, 10);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   animationsLength() {
     var t = this.J7.__offset(this.z7, 10);
@@ -115,10 +129,14 @@ class StateMachinePreload {
     return this.effects(t);
   }
   effects(t, s) {
-    var i = this.J7.__offset(this.z7, 12);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   effectsLength() {
     var t = this.J7.__offset(this.z7, 12);
@@ -128,10 +146,14 @@ class StateMachinePreload {
     return this.audios(t);
   }
   audios(t, s) {
-    var i = this.J7.__offset(this.z7, 14);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   audiosLength() {
     var t = this.J7.__offset(this.z7, 14);
@@ -141,10 +163,14 @@ class StateMachinePreload {
     return this.meshes(t);
   }
   meshes(t, s) {
-    var i = this.J7.__offset(this.z7, 16);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 16),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   meshesLength() {
     var t = this.J7.__offset(this.z7, 16);
@@ -154,10 +180,14 @@ class StateMachinePreload {
     return this.materials(t);
   }
   materials(t, s) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 18),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   materialsLength() {
     var t = this.J7.__offset(this.z7, 18);
@@ -167,10 +197,14 @@ class StateMachinePreload {
     return this.animationblueprints(t);
   }
   animationblueprints(t, s) {
-    var i = this.J7.__offset(this.z7, 20);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 20),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   animationblueprintsLength() {
     var t = this.J7.__offset(this.z7, 20);
@@ -180,10 +214,14 @@ class StateMachinePreload {
     return this.others(t);
   }
   others(t, s) {
-    var i = this.J7.__offset(this.z7, 22);
-    return i
-      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s)
-      : null;
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, s) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   othersLength() {
     var t = this.J7.__offset(this.z7, 22);

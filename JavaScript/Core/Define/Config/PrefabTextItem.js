@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PrefabTextItem = void 0);
+const GameUtils_1 = require("../../../Game/GameUtils");
 class PrefabTextItem {
   constructor() {
     (this.J7 = null), (this.z7 = 0);
@@ -35,12 +36,24 @@ class PrefabTextItem {
     return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
   }
   itempath(t) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 8),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
   text(t) {
-    var e = this.J7.__offset(this.z7, 10);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var e = this.J7.__offset(this.z7, 10),
+      e = e ? this.J7.__string(this.z7 + e, t) : null;
+    return (
+      "string" == typeof e &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(e),
+      e
+    );
   }
 }
 exports.PrefabTextItem = PrefabTextItem;

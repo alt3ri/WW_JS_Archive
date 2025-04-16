@@ -16,6 +16,9 @@ class TsAnimNotifyStateRotateMesh extends UE.KuroAnimNotifyState {
       (this.TmpVector = void 0),
       (this.ActorTransform = void 0);
   }
+  Constructor() {
+    (this.TmpVector = void 0), (this.ActorTransform = void 0);
+  }
   K2_NotifyBegin(t, i, s) {
     this.Init();
     t = t.GetOwner();
@@ -25,16 +28,16 @@ class TsAnimNotifyStateRotateMesh extends UE.KuroAnimNotifyState {
     if (this.BaseChar?.IsValid()) {
       var e = this.BaseChar.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
-      var r = e.GetComponent(34),
-        e = e.GetComponent(38);
+      var r = e.GetComponent(39),
+        e = e.GetComponent(44);
       if (!r?.Valid || !e?.Valid) return !1;
       let t = 0;
       r = r.GetSkillTargetForAns()?.Entity?.GetComponent(1)?.Owner;
       if (
-        (this.ActorTransform.FromUeTransform(this.BaseChar.GetTransform()),
+        (this.ActorTransform.FromUeTransform(this.BaseChar.D_GetTransform()),
         this.是否自动朝向目标 && r?.IsValid())
       )
-        this.TmpVector.FromUeVector(r.K2_GetActorLocation());
+        this.TmpVector.FromUeVector(r.D_K2_GetActorLocation());
       else {
         if (!e.HasMoveInput || !this.是否接受输入控制) return !0;
         this.TmpVector.FromUeVector(
@@ -49,7 +52,7 @@ class TsAnimNotifyStateRotateMesh extends UE.KuroAnimNotifyState {
         this.TmpVector,
       ),
         (t =
-          UE.KismetMathLibrary.MakeRotFromX(this.TmpVector.ToUeVector()).Yaw -
+          UE.KismetMathLibrary.D_MakeRotFromX(this.TmpVector.ToUeVector()).Yaw -
           90);
       for (var h = this.BaseChar.Mesh.RelativeRotation.Yaw; 180 < t - h; )
         t -= 360;

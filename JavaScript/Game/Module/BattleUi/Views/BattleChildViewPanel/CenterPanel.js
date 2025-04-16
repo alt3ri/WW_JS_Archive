@@ -41,7 +41,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Battle",
-              18,
+              17,
               "[HookPoint]角色发现钩锁点",
               ["Found", t],
               ["IsUsingHook", this.RJe],
@@ -78,14 +78,14 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Test",
-              8,
+              17,
               "[HookPoint]定点钩锁被打断后尝试激活定点钩锁Ui",
             ),
           this.qJe() ||
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Test",
-                8,
+                17,
                 "[HookPoint]定点钩锁被打断后找不到定点钩锁点",
               ),
             this.wJe()));
@@ -103,7 +103,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "BattleUiSet",
-              38,
+              37,
               "轮盘界面显隐，设置CenterPanel遮罩",
               ["bVisible", t],
             );
@@ -111,13 +111,13 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.VJe = (t, e) => {
         t
           ? (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Battle", 18, "进入处决范围"),
+              Log_1.Log.Debug("Battle", 17, "进入处决范围"),
             this.UJe ||
               ((this.UJe = new ExecutionPanel_1.ExecutionPanel()),
               this.UJe.Init(this.RootItem)),
             this.UJe.ShowByEntity(e))
           : (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Battle", 18, "离开处决范围"),
+              Log_1.Log.Debug("Battle", 17, "离开处决范围"),
             this.UJe?.HideByEntity(e));
       }),
       (this.HJe = (t) => {
@@ -128,7 +128,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       (this.fHe = () => {
         var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         (this.X9e = t.EntityHandle),
-          (this.AJe = this.X9e.Entity.GetComponent(90)),
+          (this.AJe = this.X9e.Entity.GetComponent(97)),
           this.jJe();
       });
   }
@@ -151,7 +151,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   InitializeTemp() {
     this.kJe(),
       (this.X9e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
-      this.X9e?.Valid && (this.AJe = this.X9e.Entity.GetComponent(90));
+      this.X9e?.Valid && (this.AJe = this.X9e.Entity.GetComponent(97));
   }
   async InitializeAsync() {
     await Promise.all([this.WJe(), this.KJe(), this.QJe(), this.XJe()]),
@@ -263,6 +263,7 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       CenterPanel.$Je.Stop(),
       CenterPanel.YJe.Start(),
       this.SJe.Update(t),
+      this.uTl(),
       CenterPanel.YJe.Stop();
   }
   OnAfterTickBattleChildViewPanel(t) {
@@ -281,6 +282,13 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     var e = UiLayer_1.UiLayer.GetBattleViewUnit(1);
     (this.DJe = new GrapplingHookPoint_1.GrapplingHookPoint(t, e)),
       this.DJe.BindOnInterruptCompleted(this.NJe);
+  }
+  uTl() {
+    var t = this.AJe?.GetNextTarget();
+    t?.Valid &&
+      t.IsMovable() &&
+      this.DJe &&
+      this.DJe.UpdateHookPointLocation(t.HookLocation.ToUeVector());
   }
   qJe() {
     var t;

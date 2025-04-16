@@ -129,7 +129,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       (this.pie(),
       (this.n$t = this.Entity.GetComponent(1)),
       (this.Ovr = this.Entity.GetComponent(0)),
-      (this.rzr = this.Entity.GetComponent(109)),
+      (this.rzr = this.Entity.GetComponent(119)),
       this.rzr &&
         this.rzr.SetLogicRange(
           ConfigManager_1.ConfigManager.LevelGamePlayConfig
@@ -233,7 +233,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
         : this.czr?.NearVoiceEffectPath) &&
       ((this.lzr = EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
-        e.GetTransform(),
+        e.D_GetTransform(),
         t,
         "[TimerManageContainer.ChangeVoicePrintEffect]",
         new EffectContext_1.EffectContext(this.Entity.Id),
@@ -241,8 +241,8 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       EffectSystem_1.EffectSystem.IsValid(this.lzr)) &&
       (e = EffectSystem_1.EffectSystem.GetSureEffectActor(this.lzr)) &&
       e.IsValid() &&
-      (e.RootComponent.K2_SetWorldLocation(
-        this.Izr().K2_GetComponentLocation(),
+      (e.RootComponent.D_K2_SetWorldLocation(
+        this.Izr().D_K2_GetComponentLocation(),
         !1,
         void 0,
         !1,
@@ -268,7 +268,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelPlay",
-            32,
+            31,
             "[ScanComponent] 隐藏物体，超出了取消隐藏的距离",
             ["PbdataId", this.Ovr.GetPbDataId()],
             ["DistanceWithPlayerCm", this.dzr],
@@ -290,7 +290,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
             this.czr?.ShowInteractionEffect &&
             (ScanComponent_1.EnableLog &&
               Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("LevelPlay", 32, "[ScanComponent] 显示交互特效", [
+              Log_1.Log.Info("LevelPlay", 31, "[ScanComponent] 显示交互特效", [
                 "PbdataId",
                 this.Ovr.GetPbDataId(),
               ]),
@@ -301,7 +301,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "LevelPlay",
-                  32,
+                  31,
                   "[ScanComponent] 显示额外的特效",
                   ["PbdataId", this.Ovr.GetPbDataId()],
                 ),
@@ -309,7 +309,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
             this.nzr &&
               (ScanComponent_1.EnableLog &&
                 Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("LevelPlay", 32, "[ScanComponent] 显示Icon", [
+                Log_1.Log.Info("LevelPlay", 31, "[ScanComponent] 显示Icon", [
                   "PbdataId",
                   this.Ovr.GetPbDataId(),
                 ]),
@@ -335,18 +335,18 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       this.n$t?.Owner &&
       (ScanComponent_1.EnableLog &&
         Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("LevelPlay", 32, "[ScanComponent] 播放扫描显形特效", [
+        Log_1.Log.Info("LevelPlay", 31, "[ScanComponent] 播放扫描显形特效", [
           "PbdataId",
           this.Ovr.GetPbDataId(),
         ]),
       EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
-        this.n$t.Owner.GetTransform(),
+        this.n$t.Owner.D_GetTransform(),
         this.czr.ScanConcealEffectPath,
         "[ScanComponent.CancelEntityConcealState]",
         new EffectContext_1.EffectContext(this.Entity.Id),
       ));
-    var t = this.Entity.GetComponent(181);
+    var t = this.Entity.GetComponent(194);
     t?.HasTag(1227933697) && t.RemoveTag(1227933697);
   }
   wzr(e, t = !1) {
@@ -360,7 +360,8 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
       }
     if (
       e instanceof UE.StaticMeshActor ||
-      e instanceof UE.BP_KuroDestructibleActor_C
+      e instanceof UE.BP_KuroDestructibleActor_C ||
+      e.IsA(UE.KuroDestructibleActor.StaticClass())
     ) {
       if (!this.czr?.ItemMaterialDataPath) return !1;
       this.hzr++,
@@ -379,7 +380,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "LevelPlay",
-                  32,
+                  31,
                   "[ScanComponent] 扫描过程已结束，加载超时",
                   ["pbdataId", this.Ovr.GetPbDataId()],
                 );
@@ -397,7 +398,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
         i &&
         n &&
         (this.Entity.GetComponent(
-          172,
+          185,
         )?.MaterialController?.ApplySimpleMaterialEffect(n),
         (this.jGn = !0),
         this.hzr++),
@@ -423,7 +424,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "LevelPlay",
-                  32,
+                  31,
                   "[ScanComponent] 倒计时结束,关闭特效",
                   ["pbdataId", this.Ovr.GetPbDataId()],
                   ["Delay", this.czr?.InteractionEffectInterval],
@@ -434,7 +435,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                 );
               this.jGn &&
                 this.Entity.GetComponent(
-                  172,
+                  185,
                 )?.MaterialController?.RemoveSimpleMaterialEffect(),
                 (this.azr.length = 0),
                 this.gzr.delete(i);
@@ -461,7 +462,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "LevelPlay",
-                  32,
+                  31,
                   "[ScanComponent] 倒计时结束,触发Icon关闭事件",
                   ["pbdataId", this.Ovr.GetPbDataId()],
                   ["Delay", e.Interval],
@@ -498,7 +499,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
             else {
               const r = EffectSystem_1.EffectSystem.SpawnEffect(
                 GlobalData_1.GlobalData.World,
-                i.GetTransform(),
+                i.D_GetTransform(),
                 t,
                 "[ScanComponent.EffectProcess]",
                 new EffectContext_1.EffectContext(this.Entity.Id),
@@ -506,8 +507,8 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
               if (EffectSystem_1.EffectSystem.IsValid(r)) {
                 n = EffectSystem_1.EffectSystem.GetSureEffectActor(r);
                 if (n && n.IsValid()) {
-                  n.RootComponent.K2_SetWorldLocation(
-                    this.Izr().K2_GetComponentLocation(),
+                  n.RootComponent.D_K2_SetWorldLocation(
+                    this.Izr().D_K2_GetComponentLocation(),
                     !1,
                     void 0,
                     !1,
@@ -525,7 +526,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                         Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "LevelPlay",
-                          32,
+                          31,
                           "[ScanComponent] 倒计时结束,关闭额外特效",
                           ["pbdataId", this.Ovr.GetPbDataId()],
                           ["Delay", o.Interval],
@@ -561,7 +562,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelPlay",
-                32,
+                31,
                 "[ScanComponent] 追踪特效找不到对应目标Entity",
                 ["pbdataId", n?.Target],
               ),
@@ -586,7 +587,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
           s.ToOrientationRotator(o);
           const r = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
-            i.GetTransform(),
+            i.D_GetTransform(),
             n.Effect,
             "[ScanComponent.TrackEffectProcess]",
             new EffectContext_1.EffectContext(this.Entity.Id),
@@ -601,7 +602,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "LevelPlay",
-                  32,
+                  31,
                   "[ScanComponent] 倒计时结束,关闭追踪特效",
                   ["pbdataId", this.Ovr.GetPbDataId()],
                   ["Delay", this.uzr.Interval],
@@ -649,7 +650,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelPlay",
-              32,
+              31,
               "[ScanComponent] 倒计时结束,移除组监听",
               ["pbdataId", this.Ovr.GetPbDataId()],
               ["Delay", e],
@@ -669,7 +670,7 @@ let ScanComponent = (ScanComponent_1 = class ScanComponent extends (
   (ScanComponent.yzr = -1),
   (ScanComponent = ScanComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(74)],
+      [(0, RegisterComponent_1.RegisterComponent)(81)],
       ScanComponent,
     )),
   (exports.ScanComponent = ScanComponent);

@@ -4,10 +4,13 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ActorUtils_1 = require("../../../Utils/ActorUtils"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase");
 class TsTaskSneakFail extends TsTaskAbortImmediatelyBase_1.default {
+  Constructor() {
+    super.Constructor();
+  }
   ReceiveExecuteAI(e, s) {
     e.AiController
       ? (ActorUtils_1.ActorUtils.GetEntityByActor(s)
-          ?.Entity?.GetComponent(190)
+          ?.Entity?.GetComponent(203)
           ?.TagContainer?.UpdateExactTag(3, -1951091619, 0),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&

@@ -30,8 +30,8 @@ class AnimalMoveToController {
       )
         ? (this.sKo = this.Hte.Owner.TurnSpeedCurve)
         : (this.sKo = void 0),
-      (this.mBe = t.GetComponent(92)),
-      (this.Gce = t.GetComponent(164)),
+      (this.mBe = t.GetComponent(99)),
+      (this.Gce = t.GetComponent(176)),
       (this.aKo = this.Gce.CharacterMovement.MaxAcceleration);
   }
   Init(t, i) {
@@ -70,13 +70,16 @@ class AnimalMoveToController {
         ? (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Animal",
-              30,
+              29,
               "AnimalMoveToController Update Next Has NaN",
               ["Next", i],
             ),
           2)
         : (i.Subtraction(this.Hte.ActorLocationProxy, this.jye),
-          GravityUtils_1.GravityUtils.ConvertToPlanarVector(this.Hte, this.jye),
+          GravityUtils_1.GravityUtils.ConvertToPlanarVectorForActor(
+            this.Hte,
+            this.jye,
+          ),
           this.jye.Size() < this.nKo
             ? this.iKo === this.tKo.length - 1
               ? 1
@@ -86,7 +89,7 @@ class AnimalMoveToController {
                 ? (Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Animal",
-                      30,
+                      29,
                       "AnimalMoveToController Update Input Direct Has NaN",
                       ["Input Direct", this.jye],
                     ),

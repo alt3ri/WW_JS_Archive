@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.LevelCodeConditionCheckGroupInfo =
+  (exports.LevelConditionCheckGravityFlipEntityDirectionSameAsPlayerInfo =
+    exports.LevelCodeConditionCheckGroupInfo =
     exports.LevelConditionCheckEntityTagInfo =
     exports.LevelConditionCheckFanIsNotRotatingInfo =
     exports.LevelConditionCheckCharacterTagInfo =
@@ -49,4 +50,11 @@ class LevelCodeConditionCheckGroupInfo extends CodeCondition {
   }
 }
 exports.LevelCodeConditionCheckGroupInfo = LevelCodeConditionCheckGroupInfo;
+class LevelConditionCheckGravityFlipEntityDirectionSameAsPlayerInfo extends CodeCondition {
+  constructor() {
+    super(), (this.EntityId = 0), (this.CodeType = 4);
+  }
+}
+exports.LevelConditionCheckGravityFlipEntityDirectionSameAsPlayerInfo =
+  LevelConditionCheckGravityFlipEntityDirectionSameAsPlayerInfo;
 //# sourceMappingURL=CodeDefineLevelConditionInfo.js.map

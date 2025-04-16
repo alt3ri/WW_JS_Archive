@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayPackageData = void 0);
 const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  PayGiftById_1 = require("../../../../Core/Define/ConfigQuery/PayGiftById"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
@@ -23,6 +24,8 @@ class PayPackageData {
       (this.StageImage = ""),
       (this.BeginTime = 0),
       (this.EndTime = 0),
+      (this.UpdateTime = 0),
+      (this.UpdateType = 0),
       (this.ProductId = ""),
       (this.Amount = ""),
       (this.TabId = 0),
@@ -31,6 +34,10 @@ class PayPackageData {
       (this.IsCanBuy = !0),
       (this.IsRemind = !1),
       (this.BuyCondition = 0),
+      (this.CloudGameTime = 0),
+      (this.CloudGameIcon = ""),
+      (this.CloudGameDesc = ""),
+      (this.LabelId = 0),
       (this.vFi = new PayShopGoods_1.PayShopGoods(3));
   }
   Phrase(t) {
@@ -44,17 +51,25 @@ class PayPackageData {
       (this.StageImage = t._Bs ?? ""),
       (this.BeginTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.cps))),
       (this.EndTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.dps))),
+      (this.UpdateTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.Lxs))),
+      (this.UpdateType = Number(t.OAs)),
       (this.ProductId = t.uBs ?? ""),
       (this.Amount = t.$6n ?? ""),
       (this.TabId = t.mBs ?? 0),
       (this.Type = t.h5n ?? 3),
       (this.IsLock = t.pBs ?? !1),
-      (this.IsCanBuy = t.xrh ?? !0),
-      (this.IsRemind = t.brh ?? !1),
-      (this.BuyCondition = t.Brh ?? []),
+      (this.IsCanBuy = t.Yb_ ?? !0),
+      (this.IsRemind = t.zb_ ?? !1),
+      (this.BuyCondition = t.Jb_ ?? []),
+      (this.CloudGameTime = t.b2_ ?? 0),
+      (this.CloudGameIcon = t.L2_ ?? ""),
+      (this.CloudGameDesc = t.gxs ?? ""),
+      (this.LabelId =
+        PayGiftById_1.configPayGiftById.GetConfig(this.Id)?.Tag ?? 0),
       this.MFi(),
-      this.vFi.SetGoodsData(this.ConvertToPayShopGoodsData()),
-      this.vFi.SetPayGiftId(this.Id);
+      this.vFi.SetGoodsData(this.pql()),
+      this.vFi.SetPayGiftId(this.Id),
+      this.ShowInSkinShop() && this.vFi.GetGoodsData().SetShowAfterSoldOut(!0);
   }
   MFi() {
     var t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
@@ -74,7 +89,10 @@ class PayPackageData {
         )));
   }
   ShowInShop() {
-    return 2 !== this.Type;
+    return 2 !== this.Type && !this.ShowInSkinShop();
+  }
+  ShowInSkinShop() {
+    return this.vFi?.CheckIfRoleSkinGoods() ?? !1;
   }
   GetName() {
     return this.he;
@@ -82,7 +100,7 @@ class PayPackageData {
   GetPayShopGoods() {
     return this.vFi;
   }
-  ConvertToPayShopGoodsData() {
+  pql() {
     var t = new PayShopGoodsData_1.PayShopGoodsData();
     return t.PhraseFromPayPackageData(this), t;
   }

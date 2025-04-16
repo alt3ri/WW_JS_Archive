@@ -5,6 +5,7 @@ const UE = require("ue"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   CameraController_1 = require("../../../Camera/CameraController"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
+  CharacterUtils_1 = require("../../Character/CharacterUtils"),
   BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicShakeCameraController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
@@ -14,16 +15,19 @@ class BulletLogicShakeCameraController extends BulletLogicController_1.BulletLog
       (this.B7o = 0),
       (this.b7o = void 0),
       (this.NeedTick = !0),
-      (this.Hte = e.GetComponent(155)),
+      (this.Hte = e.GetComponent(167)),
       (this.q7o = t.Count),
       (this.G7o = t.Interval * TimeUtil_1.TimeUtil.InverseMillisecond),
-      ResourceSystem_1.ResourceSystem.LoadAsync(
-        this.LogicController.Shake.ToAssetPathName(),
-        UE.Class,
-        (t) => {
-          this.b7o = t;
-        },
-      );
+      CharacterUtils_1.CharacterUtils.CanCharacterMonsterOrSummonedDisplayEffect(
+        this.Bullet.GetBulletInfo().AttackerHandle,
+      ) &&
+        ResourceSystem_1.ResourceSystem.LoadAsync(
+          this.LogicController.Shake.ToAssetPathName(),
+          UE.Class,
+          (t) => {
+            this.b7o = t;
+          },
+        );
   }
   Update(t) {
     !this.x7o ||

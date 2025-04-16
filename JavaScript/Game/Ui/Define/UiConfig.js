@@ -2,8 +2,10 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiConfig = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  LoadingDefine_1 = require("../../Module/Loading/LoadingDefine"),
   InputDefine_1 = require("../Input/InputDefine"),
   InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine"),
   UiViewStorage_1 = require("../UiViewStorage"),
@@ -13,19 +15,19 @@ class UiConfig {
   static TryGetViewInfo(n) {
     let r = UiConfig.Jcr.get(n);
     if (!r) {
-      var o = ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(n),
-        a = UiViewStorage_1.UiViewStorage.GetUiTsInfo(n);
-      if (!a)
+      var t = ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(n),
+        o = UiViewStorage_1.UiViewStorage.GetUiTsInfo(n);
+      if (!o)
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCore",
-            17,
+            16,
             "[UiConfig.TryGetViewInfo] 未在UiViewManager中注册",
             ["name", n],
           )
         );
-      var t = a.ResourceId;
+      var a = o.ResourceId;
       let e = "",
         i = "";
       if (this.zcr(n))
@@ -33,33 +35,33 @@ class UiConfig {
           (i = e);
       else {
         var g =
-          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourceConfig(t);
+          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourceConfig(a);
         if (!g)
           return void (
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[UiConfig.TryGetViewInfo] 找不到界面配置",
               ["name", n],
-              ["resourceId", t],
+              ["resourceId", a],
             )
           );
         (e = g.Path), (i = g.PcPath);
       }
       var f = [];
-      if (o.SkipAnim)
-        if (o.IsShortKeysExitView) {
-          for (var [u, p] of InputDefine_1.openViewActionsMap.entries())
-            if (n === p) {
+      if (t.SkipAnim)
+        if (t.IsShortKeysExitView) {
+          for (var [_, u] of InputDefine_1.openViewActionsMap.entries())
+            if (n === u) {
               if (
                 "Escape" ===
-                InputSettingsManager_1.InputSettingsManager.GetActionBinding(u)
+                InputSettingsManager_1.InputSettingsManager.GetActionBinding(_)
                   ?.GetPcKey()
                   ?.GetKeyName()
               )
                 break;
-              f.push(u);
+              f.push(_);
               break;
             }
           f.push(InputMappingsDefine_1.actionMappings.Ui返回);
@@ -67,38 +69,39 @@ class UiConfig {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              38,
+              37,
               "[UiConfig.SkipAnim] 配置错误,跳过动画功能前提为IsShortKeysExitView=True",
             );
-      t = UiLayerType_1.ELayerType[o.Type];
+      a = UiLayerType_1.ELayerType[t.Type];
       (r = new UiViewInfo_1.UiViewInfo(
         n,
-        t,
-        a.Ctor,
+        a,
+        o.Ctor,
         e,
         i,
-        o.ObstructUi,
-        o.AudioEvent,
-        o.OpenAudioEvent,
-        o.CloseAudioEvent,
-        o.TimeDilation,
-        o.ShowCursorType,
-        o.CanOpenViewByShortcutKey,
-        o.IsShortKeysExitView,
-        a.SourceType,
-        o.LoadAsync,
-        o.NeedGC,
-        o.IsFullScreen,
-        UiLayerType_1.NORMAL_CONTAINER_TYPE & t
+        t.ObstructUi,
+        t.AudioEvent,
+        t.OpenAudioEvent,
+        t.LoopAudioEvent,
+        t.CloseAudioEvent,
+        t.TimeDilation,
+        t.ShowCursorType,
+        t.CanOpenViewByShortcutKey,
+        t.IsShortKeysExitView,
+        o.SourceType,
+        t.LoadAsync,
+        t.NeedGC,
+        t.IsFullScreen,
+        UiLayerType_1.NORMAL_CONTAINER_TYPE & a
           ? ConfigManager_1.ConfigManager.UiViewConfig.GetUiNormalConfig(n)
               .SortIndex
           : -1,
-        o.CommonPopBg,
-        o.CommonPopBgKey,
-        o.ScenePath,
-        o.IsPermanent,
+        t.CommonPopBg,
+        t.CommonPopBgKey,
+        t.ScenePath,
+        t.IsPermanent,
         f,
-        o.ScenePointTag,
+        t.ScenePointTag,
       )),
         UiConfig.Jcr.set(n, r);
     }
@@ -107,7 +110,27 @@ class UiConfig {
   static zcr(e) {
     return "GmView" === e || "LoginDebugView" === e;
   }
+  static RewritePath(e, i) {
+    var n;
+    i &&
+      i.GetExtraResourceId &&
+      ((i = i.GetExtraResourceId()),
+      StringUtils_1.StringUtils.IsBlank(i) ||
+        ((n =
+          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourceConfig(i))
+          ? ((e.Path = n.Path), (e.PcPath = n.PcPath))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "UiCore",
+              10,
+              "[UiConfig.RewritePath] 找不到界面配置",
+              ["name", e.Name],
+              ["resourceId", i],
+            )));
+  }
 }
 ((exports.UiConfig = UiConfig).Jcr = new Map()),
-  (UiConfig.CanOpenWhileClearSceneViewNameSet = new Set(["LoadingView"]));
+  (UiConfig.CanOpenWhileClearSceneViewNameSet = new Set(
+    LoadingDefine_1.loadingViewList,
+  ));
 //# sourceMappingURL=UiConfig.js.map

@@ -34,7 +34,7 @@ class ChatRoom {
       ((this.eSt = TimeUtil_1.TimeUtil.GetServerTime()),
       (this.jFe = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Chat", 8, " 打开聊天室", [
+        Log_1.Log.Info("Chat", 5, " 打开聊天室", [
           "uniqueId",
           this.GetUniqueId(),
         ]));
@@ -45,7 +45,7 @@ class ChatRoom {
       (this.eSt = -1),
       (this.jFe = !1),
       Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Chat", 8, " 关闭聊天室", [
+      Log_1.Log.Info("Chat", 5, " 关闭聊天室", [
         "uniqueId",
         this.GetUniqueId(),
       ]);

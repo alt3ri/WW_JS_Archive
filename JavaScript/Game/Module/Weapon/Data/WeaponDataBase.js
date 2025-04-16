@@ -1,8 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponDataBase = void 0);
-const ConfigManager_1 = require("../../../Manager/ConfigManager");
+const ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  WeaponSkinDefine_1 = require("../../Skin/Tab/Weapon/WeaponSkinDefine");
 class WeaponDataBase {
+  GetModelId(e) {
+    return (
+      e === WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID
+        ? this.GetItemConfig()
+        : ConfigManager_1.ConfigManager.SkinConfig.GetWeaponSkinConfig(e)
+    ).ModelId;
+  }
+  GetModels(e) {
+    return (
+      e === WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID
+        ? this.GetItemConfig()
+        : ConfigManager_1.ConfigManager.SkinConfig.GetWeaponSkinConfig(e)
+    ).Models;
+  }
+  GetTransformId(e) {
+    return (
+      e === WeaponSkinDefine_1.WEAPON_SKIN_DEFAULT_ID
+        ? this.GetItemConfig()
+        : ConfigManager_1.ConfigManager.SkinConfig.GetWeaponSkinConfig(e)
+    ).TransformId;
+  }
   GetWeaponConfig() {
     return ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
       this.GetItemId(),
@@ -10,12 +32,12 @@ class WeaponDataBase {
   }
   GetBreachConfig() {
     var e,
-      t = this.GetWeaponConfig();
-    if (t)
+      n = this.GetWeaponConfig();
+    if (n)
       return (
         (e = this.GetBreachLevel()),
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
-          t.BreachId,
+          n.BreachId,
           e,
         )
       );
@@ -29,24 +51,24 @@ class WeaponDataBase {
   }
   GetResonanceConfig() {
     var e,
-      t = this.GetWeaponConfig();
-    if (t)
+      n = this.GetWeaponConfig();
+    if (n)
       return (
         (e = this.GetResonanceLevel()),
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
-          t.ResonId,
+          n.ResonId,
           e,
         )
       );
   }
   CanGoBreach() {
     var e,
-      t = this.GetLevel();
+      n = this.GetLevel();
     return (
       !(
-        this.GetLastBreachConfig().LevelLimit <= t ||
+        this.GetLastBreachConfig().LevelLimit <= n ||
         !(e = this.GetBreachConfig())
-      ) && t >= e.LevelLimit
+      ) && n >= e.LevelLimit
     );
   }
   GetLastBreachConfig() {
@@ -56,18 +78,18 @@ class WeaponDataBase {
   }
   GetBreachConsume() {
     var e = this.GetWeaponConfig(),
-      t = this.GetBreachLevel();
+      n = this.GetBreachLevel();
     return ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
       e.BreachId,
-      t,
+      n,
     ).Consume;
   }
   GetMaxLevel() {
     var e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponLevelLimit(
         this.GetItemConfig().QualityId,
       ),
-      t = this.GetLastBreachConfig();
-    return Math.min(e, t.LevelLimit);
+      n = this.GetLastBreachConfig();
+    return Math.min(e, n.LevelLimit);
   }
   IsLevelMax() {
     return this.GetMaxLevel() <= this.GetLevel();
@@ -78,14 +100,14 @@ class WeaponDataBase {
       .Cost;
   }
   GetMaxExp(e) {
-    let t = 0;
+    let n = 0;
     for (const r of ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponLevelList(
       this.GetWeaponConfig().LevelId,
     )) {
-      if (!(r.Level <= e)) return t;
-      t += r.Exp;
+      if (!(r.Level <= e)) return n;
+      n += r.Exp;
     }
-    return t;
+    return n;
   }
   GetLevelLimitMaxExp() {
     var e = this.GetBreachLevel(),
@@ -96,22 +118,22 @@ class WeaponDataBase {
     return this.GetMaxExp(e.LevelLimit - 1);
   }
   GetLevelExp(e) {
-    let t = 0;
+    let n = 0;
     return e <= 0
       ? 0
       : ((e = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponLevelConfig(
           this.GetWeaponConfig().LevelId,
           e,
         )),
-        (t = e ? e.Exp : t));
+        (n = e ? e.Exp : n));
   }
   GetCurrentMaxLevel() {
     var e,
-      t = this.GetWeaponConfig();
-    return t
+      n = this.GetWeaponConfig();
+    return n
       ? ((e = this.GetBreachLevel()),
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
-          t.BreachId,
+          n.BreachId,
           e,
         ).LevelLimit)
       : 0;

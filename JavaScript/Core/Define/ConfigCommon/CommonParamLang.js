@@ -14,33 +14,37 @@ const LanguageSystem_1 = require("../../Common/LanguageSystem"),
     ["语句", COMMAND],
   ],
   langCache = new Map(),
-  initStat = Stats_1.Stat.Create("configCommonParamLang.Init"),
-  getLocalTextStat = Stats_1.Stat.Create("configCommonParamLang.GetLocalText"),
+  initStat = Stats_1.Stat.CreateNoFlameGraph("configCommonParamLang.Init"),
+  getLocalTextStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configCommonParamLang.GetLocalText",
+  ),
   LOCAL_TEXT_STAT_PREFIX = "configCommonParamLang.GetLocalText(";
 exports.configCommonParamLang = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       ConfigCommon_1.ConfigCommon.GetLangStatementId(TABLE, DB, COMMAND),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetLocalText: (o, a = void 0) => {
-    var t = Stats_1.Stat.Create("" + LOCAL_TEXT_STAT_PREFIX + o + `, ${a})`);
+    var t = Stats_1.Stat.CreateNoFlameGraph(
+      "" + LOCAL_TEXT_STAT_PREFIX + o + `, ${a})`,
+    );
     if (
-      (getLocalTextStat.Start(),
-      t.Start(),
+      (getLocalTextStat?.Start(),
+      t?.Start(),
       LanguageSystem_1.LanguageSystem.GmShowLanguageKey)
     )
       return (
         (n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(a)),
-        t.Stop(),
-        getLocalTextStat.Stop(),
+        t?.Stop(),
+        getLocalTextStat?.Stop(),
         `CommonParam|${o}|` + n
       );
     let e = langCache.get(o);
     e || ((e = new Map()), langCache.set(o, e));
     var n = LanguageSystem_1.LanguageSystem.GetCultureOrDefault(a),
       i = e.get(n);
-    if (i) return t.Stop(), getLocalTextStat.Stop(), i;
+    if (i) return t?.Stop(), getLocalTextStat?.Stop(), i;
     var m = ConfigCommon_1.ConfigCommon.GetLangStatementId(
       TABLE,
       DB,
@@ -89,15 +93,15 @@ exports.configCommonParamLang = {
               (i = C.Value),
               e.set(n, i),
               ConfigCommon_1.ConfigCommon.Reset(m),
-              t.Stop(),
-              getLocalTextStat.Stop(),
+              t?.Stop(),
+              getLocalTextStat?.Stop(),
               i
             );
         }
       }
       ConfigCommon_1.ConfigCommon.Reset(m);
     }
-    t.Stop(), getLocalTextStat.Stop();
+    t?.Stop(), getLocalTextStat?.Stop();
   },
 };
 //# sourceMappingURL=CommonParamLang.js.map

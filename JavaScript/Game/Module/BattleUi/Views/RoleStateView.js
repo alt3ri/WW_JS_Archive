@@ -10,10 +10,10 @@ const UE = require("ue"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  BattleChildView_1 = require("./BattleChildView/BattleChildView");
+  BattleVisibleChildView_1 = require("./BattleChildView/BattleVisibleChildView");
 var EAttributeId = Protocol_1.Aki.Protocol.Vks;
 const LOW_HP_PERCENT = 0.2;
-class RoleStateView extends BattleChildView_1.BattleChildView {
+class RoleStateView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
       (this.Wst = void 0),
@@ -69,6 +69,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
   }
   Initialize(t) {
     super.Initialize(t),
+      this.InitChildType(25),
       (this.Xrt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "PlayerHPAttenuateBufferSpeed",
       )),
@@ -92,7 +93,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       ? ((this.Wst = t),
         (this.E0 = t?.EntityHandle?.Id),
         (this.$te = t.AttributeComponent),
-        (this.l1t = t?.EntityHandle?.Entity?.GetComponent(67)),
+        (this.l1t = t?.EntityHandle?.Entity?.GetComponent(74)),
         this.RefreshRoleState())
       : ((this.Wst = void 0),
         (this.E0 = void 0),
@@ -150,7 +151,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       TimerSystem_1.TimerSystem.Remove(this.cmt),
       this.ist(),
       (this.cmt = void 0),
-      this.IsShowOrShowing && this.Hide();
+      this.SetVisible(1, !1);
   }
   nmt(t) {
     var i;
@@ -173,7 +174,7 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       (this.ist(),
       this.RefreshHpAndShield(),
       this.pmt(),
-      this.IsShowOrShowing || this.Show());
+      this.SetVisible(1, !0));
   }
   RefreshHpAndShield(t = !1) {
     var i, e, s, h;

@@ -36,7 +36,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       (this.AnnounceRedPointCallBack = (e) => {
         e = Json_1.Json.Parse(e);
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "公告红点", ["data", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "公告红点", ["data", e]),
           ControllerHolder_1.ControllerHolder.KuroSdkController.SetPostWebViewRedPointState(
             e.showRed,
           ),
@@ -47,10 +47,10 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       (this.CustomerServiceResultCallBack = (e) => {
         var r = e.split(",");
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["result", e]),
+          Log_1.Log.Debug("KuroSdk", 27, "当前客服红点数量", ["result", e]),
           1 < r?.length &&
             (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("KuroSdk", 28, "当前客服红点数量", ["num", r[1]]),
+              Log_1.Log.Debug("KuroSdk", 27, "当前客服红点数量", ["num", r[1]]),
             (this.CurrentCustomerShowState = 0 < Number(r[1]))),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.SdkCustomerRedPointRefresh,
@@ -99,7 +99,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
           ? this.OpenWebView(r.title, e, !0, !1, !0)
           : UE.KismetSystemLibrary.LaunchURL(e))
       : Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("KuroSdk", 28, "CDN没有反馈配置");
+        Log_1.Log.Debug("KuroSdk", 27, "CDN没有反馈配置");
   }
   OpenWebView(e, r, o, t, n) {
     if (
@@ -128,13 +128,13 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
             o.push(r);
         }),
         Log_1.Log.CheckDebug()) &&
-        Log_1.Log.Debug("KuroSdk", 28, "queryProduct", ["queryProduct", e]),
+        Log_1.Log.Debug("KuroSdk", 27, "queryProduct", ["queryProduct", e]),
       o
     );
   }
   OnGetSharePlatform(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "OnGetSharePlatform", [
+      Log_1.Log.Debug("KuroSdk", 27, "OnGetSharePlatform", [
         "OnGetSharePlatform",
         e,
       ]);
@@ -187,15 +187,8 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
         ModelManager_1.ModelManager.KuroSdkModel.GetDeviceFontAsset()),
       r = ((e.fontPath = r), Json_1.Json.Stringify(e));
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "SetFont", ["json", r]),
+      Log_1.Log.Debug("KuroSdk", 27, "SetFont", ["json", r]),
       ue_1.KuroSDKManager.SetFont(r);
-  }
-  ISe() {
-    return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
-      ? ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString()
-      : ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId()
-        ? ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId().toString()
-        : "";
   }
   OpenCustomerService(e) {
     var r = ModelManager_1.ModelManager.LoginModel,
@@ -203,12 +196,12 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       e =
         ((o.IsLogin = r.IsSdkLoggedIn() ? "1" : "0"),
         (o.FromLogin = e.toString()),
-        (o.RoleId = this.ISe()),
+        (o.RoleId = this.GetCustomServerRoleId()),
         (o.ServerId = r.GetServerId() ?? ""),
         (o.IsLandscape = "0"),
         Json_1.Json.Stringify(o));
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "AndroidCustomerService", ["json", e]),
+      Log_1.Log.Debug("KuroSdk", 27, "AndroidCustomerService", ["json", e]),
       ue_1.KuroSDKManager.OpenCustomerService(e);
   }
   QueryProduct(r, e) {
@@ -218,7 +211,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var n = new KuroSdkData_1.QueryProductInfoParamAndroid(),
       e = ((n.GoodIdList = o), (n.ChannelId = e), Json_1.Json.Stringify(n));
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "queryTable", ["json", e]),
+      Log_1.Log.Debug("KuroSdk", 27, "queryTable", ["json", e]),
       ue_1.KuroSDKManager.QueryProductInfo(e);
   }
   SdkPay(e) {
@@ -229,7 +222,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "KuroSdk",
-          28,
+          27,
           "AndroidPayment",
           ["json", r],
           ["paymentInfo", e],
@@ -238,7 +231,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   }
   SdkCreateRole() {
     var e;
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报创建新角色"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 27, "上报创建新角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         ((e = this.GetCreateRoleInfo()),
         ue_1.KuroSDKManager.KuroSDKEvent(3, e));
@@ -247,7 +240,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var e = ModelManager_1.ModelManager.LoginModel,
       r = new KuroSdkData_1.RoleInfoSdk();
     return (
-      (r.RoleId = this.ISe()),
+      (r.RoleId = this.GetRoleId()),
       (r.RoleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
       (r.ServerId = e.GetServerId() ? e.GetServerId() : ""),
       (r.ServerName = e.GetServerName() ? e.GetServerName() : ""),
@@ -277,7 +270,7 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       r = ModelManager_1.ModelManager.LoginModel,
       o = new KuroSdkData_1.AndroidSdkPayRole();
     return (
-      (o.roleId = this.ISe()),
+      (o.roleId = this.GetRoleId()),
       (o.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
       (o.roleLevel = e.GetPlayerLevel() ? e.GetPlayerLevel().toString() : "1"),
       (o.serverId = r.GetServerId() ? r.GetServerId() : ""),
@@ -311,27 +304,27 @@ class PlatformSdkAndroidGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       ));
     return (
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("KuroSdk", 28, "SdkJson", ["sdkJson", e]),
+        Log_1.Log.Info("KuroSdk", 27, "SdkJson", ["sdkJson", e]),
       e ?? ""
     );
   }
   Share(e, r) {
     e = Json_1.Json.Stringify(e);
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "Share", ["json", e], ["imagePath", r]),
+      Log_1.Log.Debug("KuroSdk", 27, "Share", ["json", e], ["imagePath", r]),
       UE.KuroSDKStaticLibrary.Share(r, e);
   }
   ShareTexture(e, r) {
     e = Json_1.Json.Stringify(e);
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("KuroSdk", 28, "Share", ["json", e], ["imagePath", r]),
+      Log_1.Log.Debug("KuroSdk", 27, "Share", ["json", e], ["imagePath", r]),
       UE.KuroSDKStaticLibrary.Share(r, e);
   }
   OnShareResult(e, r, o) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "KuroSdk",
-        28,
+        27,
         "OnShareResult",
         ["code", e],
         ["platform", r],

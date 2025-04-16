@@ -1,13 +1,16 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InstanceDungeonEntranceModel = void 0);
-const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+const Log_1 = require("../../../Core/Common/Log"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  SolarSpeedDefine_1 = require("../Activity/ActivityContent/SolarisSpeed/SolarSpeedDefine"),
   InstanceDungeonData_1 = require("./Define/InstanceDungeonData");
 class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
   constructor() {
@@ -20,6 +23,8 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
       (this.Fhi = new Array()),
       (this.Vhi = 0),
       (this.Hhi = new Map()),
+      (this.jDc = new Map()),
+      (this.HDc = new Set()),
       (this.jhi = new Map()),
       (this.Whi = new Array()),
       (this.Khi = 0),
@@ -32,7 +37,15 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
       (this.E0 = 0);
   }
   OnLeaveLevel() {
-    return this.CancelMatchingTimer(), !0;
+    var e = this.GetMatchingId();
+    return (
+      0 !== e &&
+        1 === this.GetMatchingState() &&
+        (ControllerHolder_1.ControllerHolder.InstanceDungeonEntranceController.HandleTipsExitMatchId =
+          e),
+      this.CancelMatchingTimer(),
+      !0
+    );
   }
   get EntranceId() {
     return this.qhi;
@@ -83,8 +96,76 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
   SetInstanceResetTime(e, t) {
     this.Hhi.set(e, t);
   }
+  GetDungeonArchiveType(e) {
+    return this.jDc.get(e) ?? Protocol_1.Aki.Protocol.sDc.Proto_NoneArchive;
+  }
+  IsDungeonArchiveExpire(e) {
+    e = this.GetDungeonArchiveType(e);
+    return (
+      e !== Protocol_1.Aki.Protocol.sDc.Proto_NormalArchive &&
+      e !== Protocol_1.Aki.Protocol.sDc.Proto_NoneArchive
+    );
+  }
+  GetDungeonArchiveExpireLocalTips(e) {
+    var t = this.GetDungeonArchiveType(e);
+    return t === Protocol_1.Aki.Protocol.sDc.Proto_OverdueTime
+      ? "instance_Record_Clear1"
+      : t === Protocol_1.Aki.Protocol.sDc.Proto_OverdueVersion
+        ? "instance_Record_Clear2"
+        : t === Protocol_1.Aki.Protocol.sDc.Proto_OverdueChangeSex
+          ? "instance_Record_Clear3"
+          : (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "InstanceDungeon",
+                63,
+                "副本入口->获取副本存档文本提示失败，出现了未处理的存档类型",
+                ["dungeonId", e],
+                ["archiveType", t],
+              ),
+            "");
+  }
+  HasDungeonArchive(e) {
+    return (
+      this.GetDungeonArchiveType(e) ===
+      Protocol_1.Aki.Protocol.sDc.Proto_NormalArchive
+    );
+  }
+  IsDungeonSupportArchive(e) {
+    return (
+      !(e <= 0) &&
+      0 <
+        (ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          ?.SaveDays ?? 0)
+    );
+  }
+  IsDungeonSupportAndWithoutArchive(e) {
+    var t = this.IsDungeonSupportArchive(e),
+      e = this.HasDungeonArchive(e);
+    return t && !e;
+  }
+  IsDungeonArchiveActivate(e) {
+    return (
+      !ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel() &&
+      this.IsDungeonSupportArchive(e)
+    );
+  }
+  SetDungeonArchiveInfo(e, t) {
+    this.jDc.set(e, t);
+  }
+  IsDungeonArchiveExpireTipsShow(e) {
+    return this.HDc.has(e) ?? !1;
+  }
+  SetDungeonArchiveExpireTipsShow(e) {
+    this.HDc.add(e);
+  }
+  ClearDungeonArchiveInfo() {
+    this.jDc.clear(), this.HDc.clear();
+  }
   get SettleRewardItemList() {
     return this.Whi;
+  }
+  get IsNeedErrorCodeForEnterInstance() {
+    return 9e3 !== this.EntranceId;
   }
   GetInstanceData(e) {
     var t;
@@ -175,8 +256,11 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
   }
   SyncSettleRewardItemList(e) {
     this.Whi.length = 0;
-    for (const t of Object.keys(e))
-      this.Whi.push([{ IncId: 0, ItemId: Number.parseInt(t) }, e[t]]);
+    for (const n of Object.keys(e)) {
+      var t = e[n]?.O9n;
+      if (t)
+        for (const r of t) this.Whi.push([{ IncId: 0, ItemId: r.L8n }, r.m9n]);
+    }
   }
   GetSortedEntranceInstanceIdList(e) {
     e =
@@ -196,12 +280,12 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
     if (t) {
       var n,
         r = new Map();
-      for (const a of t)
+      for (const i of t)
         (n =
           ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-            a,
+            i,
           ).Title),
-          r.set(a, n);
+          r.set(i, n);
       return r;
     }
   }
@@ -281,6 +365,11 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
             n[1],
             n[2],
           );
+        case 6:
+          return ModelManager_1.ModelManager.TowerDefenseModel.GetInstanceUnlockState(
+            n[1],
+            n[2],
+          );
         default:
           return !0;
       }
@@ -302,7 +391,7 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
           e,
         ),
       r = n && 0 < n,
-      a = t && 0 < t,
+      i = t && 0 < t,
       e = ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(e),
       n =
         ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
@@ -312,21 +401,57 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
         ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardPreviewRewardList(
           t,
         ) ?? [];
-    return r && a ? (e ? [t, !1] : [n.concat(t), !1]) : a ? [t, !1] : [n, e];
+    return r && i ? (e ? [t, !1] : [n.concat(t), !1]) : i ? [t, !1] : [n, e];
   }
   IsMowingInstanceDungeon() {
-    return this.IsSpecificInstanceDungeonBySubType(19);
+    var e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+    return (
+      19 ===
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+        ?.InstSubType
+    );
+  }
+  IsFarmGoldInstanceDungeon() {
+    var e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+    return (
+      25 ===
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+        ?.InstSubType
+    );
   }
   IsSpecificInstanceDungeonBySubType(e) {
-    let t = this.SelectInstanceId;
     return (
-      !!(t =
-        ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
-          ? ModelManager_1.ModelManager.CreatureModel.GetInstanceId()
-          : t) &&
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t)
-        ?.InstSubType === e
+      !!this.SelectInstanceId &&
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+        this.SelectInstanceId,
+      )?.InstSubType === e
     );
+  }
+  GetUnlockTextIdById(e) {
+    var t =
+      ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig?.GetEntranceIdByInstanceId(
+        e,
+      );
+    if (void 0 !== t)
+      return t === SolarSpeedDefine_1.SOLAR_SPEED_INSTANCE_ENTRANCE_ID
+        ? ModelManager_1.ModelManager.SolarSpeedModel.GetInstanceUnlockTextIdByInstanceId(
+            e,
+          )
+        : ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetUnlockConditionGroupHintText(
+            e,
+          );
+  }
+  GetUnlockArgsById(e) {
+    var t =
+      ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig?.GetEntranceIdByInstanceId(
+        e,
+      );
+    return void 0 !== t &&
+      t === SolarSpeedDefine_1.SOLAR_SPEED_INSTANCE_ENTRANCE_ID
+      ? ModelManager_1.ModelManager.SolarSpeedModel.GetInstanceUnlockArgsByInstanceId(
+          e,
+        )
+      : void 0;
   }
 }
 exports.InstanceDungeonEntranceModel = InstanceDungeonEntranceModel;

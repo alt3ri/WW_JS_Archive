@@ -9,7 +9,10 @@ class RedDotChatView extends RedDotBase_1.RedDotBase {
     return ModelManager_1.ModelManager.ChatModel.HasRedDot();
   }
   OnGetEvents() {
-    return [EventDefine_1.EEventName.OnRefreshChatRedDot];
+    return [
+      EventDefine_1.EEventName.OnRefreshChatRedDot,
+      EventDefine_1.EEventName.OnRemoveFriend,
+    ];
   }
 }
 exports.RedDotChatView = RedDotChatView;

@@ -10,11 +10,12 @@ class TsAnimNotifyStateLimitInputCache extends UE.KuroAnimNotifyState {
       (this.ReleaseHoldCache = !1),
       (this.ForbidExecuteCommand = !1);
   }
+  Constructor() {}
   K2_NotifyBegin(t, e) {
     var t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-        (t = t.CharacterActorComponent.Entity.GetComponent(54)) &&
+        (t = t.CharacterActorComponent.Entity.GetComponent(61)) &&
         t.LimitInputCache(this),
       !0
     );
@@ -23,7 +24,7 @@ class TsAnimNotifyStateLimitInputCache extends UE.KuroAnimNotifyState {
     var t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-        (t = t.CharacterActorComponent.Entity.GetComponent(54)) &&
+        (t = t.CharacterActorComponent.Entity.GetComponent(61)) &&
         t.CancelLimitInputCache(this),
       !0
     );

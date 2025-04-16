@@ -78,6 +78,9 @@ class FriendData {
       (this.B8 = 0),
       (this.K6t = 0),
       (this.Q6t = 0),
+      (this.WVt = 0),
+      (this.Zgc = 0),
+      (this.cc1 = 0),
       (this.X6t = !1),
       (this.$6t = 0),
       (this.Y6t = void 0),
@@ -91,10 +94,10 @@ class FriendData {
       (this.Birthday = 0),
       (this.IsBirthdayDisplay = !1),
       (this.CardUnlockList = []),
-      (this.jxa = ""),
-      (this.Wxa = ""),
-      (this.Qxa = !1),
-      (this.Kxa = "");
+      (this.$xa = ""),
+      (this.Xxa = ""),
+      (this.Yxa = !1),
+      (this.zxa = "");
   }
   async SetFriendDataAttribute(t) {
     await this.SetPlayerBasicInfo(t.YVn),
@@ -109,21 +112,37 @@ class FriendData {
       (this.B8 = e.F6n),
       (this.K6t = e.dSs),
       (this.Q6t = e.mSs),
+      (this.WVt = e.gsc),
+      (this.Zgc = e.Csc),
+      (this.cc1 = e.v7n),
       (this.X6t = e.CSs),
       (this.$6t = Number(MathUtils_1.MathUtils.LongToBigInt(e.fSs))),
       this.Y6t ||
         ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(e.W5n)),
         (this.Y6t = t?.Y6t)),
       (this.WorldLevel = e.cSs),
-      (this.TeamMemberCount = e.vSs),
-      (this.Signature = e.zVn),
-      (this.CurCard = e.ESs),
-      0 === this.CurCard &&
-        (this.CurCard =
-          ConfigManager_1.ConfigManager.FriendConfig.GetDefaultBackgroundCardId()),
-      (this.RoleShowList = []);
-    var t,
-      i = e.MSs.length;
+      (this.TeamMemberCount = e.vSs);
+    var t =
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedLimitUserInfoWhenSocialLimit(),
+      i =
+        (t
+          ? ((t = e.$4l),
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Friend",
+                27,
+                "FriendSdkData",
+                ["limitState", t],
+                ["id", e.Jxa],
+              ),
+            (this.Signature = 1 === t ? "" : e.zVn))
+          : (this.Signature = e.zVn),
+        (this.CurCard = e.ESs),
+        0 === this.CurCard &&
+          (this.CurCard =
+            ConfigManager_1.ConfigManager.FriendConfig.GetDefaultBackgroundCardId()),
+        (this.RoleShowList = []),
+        e.MSs.length);
     for (let t = 0; t < i; t++) {
       var s = e.MSs[t];
       this.RoleShowList.push(new PersonalDefine_1.RoleShowEntry(s.Q6n, s.F6n));
@@ -137,28 +156,28 @@ class FriendData {
       }),
       (this.Birthday = e.ZVn),
       (this.IsBirthdayDisplay = e.ySs),
-      e.$xa &&
-        ((this.jxa = e.$xa),
-        (this.Wxa = e.Vxa),
-        (this.Kxa = e.hwa),
+      e.Jxa &&
+        ((this.$xa = e.Jxa),
+        (this.Xxa = e.Qxa),
+        (this.zxa = e.ywa),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Friend",
-            28,
+            27,
             "FriendSdkData",
-            ["SdkUserId", this.jxa],
-            ["SdkOnlineId", this.Wxa],
-            ["this.SdkAccountId", this.Kxa],
+            ["SdkUserId", this.$xa],
+            ["SdkOnlineId", this.Xxa],
+            ["this.SdkAccountId", this.zxa],
           ),
-        StringUtils_1.StringUtils.IsEmpty(this.jxa) ||
+        StringUtils_1.StringUtils.IsEmpty(this.$xa) ||
           (await this.RefreshSdkBlockState()));
   }
   async RefreshSdkBlockState() {
     var t = await ModelManager_1.ModelManager.KuroSdkModel.GetSdkBlockUserMap();
     t &&
-      (t = t.get(this.Kxa)) &&
-      ((this.Qxa = t), Log_1.Log.CheckDebug()) &&
-      Log_1.Log.Debug("Friend", 28, "BlockBySdk", ["state", this.Qxa]);
+      (t = t.get(this.zxa)) &&
+      ((this.Yxa = t), Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug("Friend", 27, "BlockBySdk", ["state", this.Yxa]);
   }
   get PlayerId() {
     return this.xe;
@@ -184,6 +203,15 @@ class FriendData {
   get PlayerHeadFrame() {
     return this.Q6t;
   }
+  get PlayerTitleId() {
+    return this.WVt;
+  }
+  get PlayerTitleStarLevel() {
+    return this.Zgc;
+  }
+  get PlayerSex() {
+    return this.cc1;
+  }
   get PlayerIsOnline() {
     return this.X6t;
   }
@@ -207,21 +235,23 @@ class FriendData {
     this.Y6t = t;
   }
   GetSdkOnlineId() {
-    return this.Wxa;
+    return this.Xxa;
   }
   GetSdkUserId() {
-    return this.jxa;
+    return this.$xa;
   }
   GetAccountId() {
-    return this.Kxa;
+    return this.zxa;
   }
   IfSdkCanShowFriend() {
     var t =
-      PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkFriendOnlyState();
-    return !t || "" !== this.jxa;
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkFriendOnlyState(),
+      e =
+        PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.PlayOnly();
+    return (!t && !e) || "" !== this.$xa;
   }
   GetBlockBySdk() {
-    return this.Qxa;
+    return this.Yxa;
   }
   CanShowInFriendList() {
     return !this.GetBlockBySdk() && this.IfSdkCanShowFriend();

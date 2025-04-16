@@ -105,7 +105,7 @@ class DelegationNonDetailsModule extends UiPanelBase_1.UiPanelBase {
   LAn() {
     this.GetText(2)?.SetText(this.Data.GetLockText());
   }
-  Ewa() {
+  Owa() {
     var t = this.Data.GetConsumeList(),
       i = t[0],
       i = (this.FirstCost.UpdateItem(i.ItemId, i.Count), t[1]);
@@ -143,23 +143,23 @@ class DelegationNonDetailsModule extends UiPanelBase_1.UiPanelBase {
     this.SetTextureByPath(t.Icon, i),
       i.SetChangeColor(!this.Data.IsVisible, i.changeColor);
   }
-  KPa() {
+  zPa() {
     this.GetItem(12)?.SetUIActive(!this.Data.HasBestEvaluate());
   }
   Refresh(t) {
     (this.Data = t),
       this.Data.IsVisible
         ? (this.wke(),
-          this.Ewa(),
+          this.Owa(),
           this.mGe(),
           this.aqe(),
           this.Rke(),
           this.Kbe(),
-          this.KPa())
+          this.zPa())
         : (this.wke(), this.LAn(), this.Kbe());
   }
   RefreshConsume() {
-    this.Data.IsVisible && this.Ewa();
+    this.Data.IsVisible && this.Owa();
   }
   RegisterViewController(t) {
     this.aOn = t;

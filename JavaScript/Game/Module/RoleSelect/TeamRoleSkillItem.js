@@ -7,12 +7,16 @@ class TeamRoleSkillData {
   constructor() {
     (this.SkillIcon = ""),
       (this.SkillType = 0),
+      (this.SkillTypeText = ""),
       (this.SkillName = ""),
       (this.SkillTagList = void 0),
-      (this.SkillResume = ""),
-      (this.SkillResumeNum = []),
+      (this.ShowSkillToggle = !0),
+      (this.SkillDesc = ""),
+      (this.SkillDescNum = []),
       (this.MultiSkillDesc = ""),
-      (this.MultiSkillDescNum = []);
+      (this.MultiSkillDescNum = []),
+      (this.SkillResume = ""),
+      (this.SkillResumeNum = []);
   }
 }
 exports.TeamRoleSkillData = TeamRoleSkillData;

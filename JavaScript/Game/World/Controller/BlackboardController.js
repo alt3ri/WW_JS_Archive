@@ -16,8 +16,8 @@ const Log_1 = require("../../../Core/Common/Log"),
 class BlackboardController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(29215, BlackboardController.g0r),
-      Net_1.Net.Register(18922, BlackboardController.f0r),
+      Net_1.Net.Register(21016, BlackboardController.g0r),
+      Net_1.Net.Register(19608, BlackboardController.f0r),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveCreatureDataComponentCache,
         this.p0r,
@@ -27,8 +27,8 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   }
   static OnClear() {
     return (
-      Net_1.Net.UnRegister(29215),
-      Net_1.Net.UnRegister(18922),
+      Net_1.Net.UnRegister(21016),
+      Net_1.Net.UnRegister(19608),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveCreatureDataComponentCache,
         this.p0r,
@@ -38,7 +38,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   }
   static v0r(t) {
     var o = Protocol_1.Aki.Protocol.OJn.create();
-    (o.C6n = t), Net_1.Net.Call(27604, o, (t) => {});
+    (o.C6n = t), Net_1.Net.Call(25244, o, (t) => {});
   }
   static M0r(t, o) {
     var r;

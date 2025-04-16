@@ -25,14 +25,47 @@ class LordGymEntrance {
   get EntranceDescription() {
     return this.entrancedescription();
   }
+  get MeshId() {
+    return this.meshid();
+  }
+  get Zoom() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.zoomLength(),
+      this.zoom,
+      this,
+    );
+  }
+  get Location() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.locationLength(),
+      this.location,
+      this,
+    );
+  }
+  get Rotator() {
+    return GameUtils_1.GameUtils.ConvertToArray(
+      this.rotatorLength(),
+      this.rotator,
+      this,
+    );
+  }
+  get LordChangeMaterialController() {
+    return this.lordchangematerialcontroller();
+  }
+  get LordIdleMaterialController() {
+    return this.lordidlematerialcontroller();
+  }
+  get StandAnim() {
+    return this.standanim();
+  }
   get IsDebug() {
     return this.isdebug();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsLordGymEntrance(t, r) {
-    return (r || new LordGymEntrance()).__init(
+  static getRootAsLordGymEntrance(t, i) {
+    return (i || new LordGymEntrance()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -49,8 +82,8 @@ class LordGymEntrance {
     return this.lordgymlist(t);
   }
   lordgymlist(t) {
-    var r = this.J7.__offset(this.z7, 8);
-    return r ? this.J7.readInt32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
+    var i = this.J7.__offset(this.z7, 8);
+    return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   lordgymlistLength() {
     var t = this.J7.__offset(this.z7, 8);
@@ -67,15 +100,124 @@ class LordGymEntrance {
       : null;
   }
   entrancetitle(t) {
-    var r = this.J7.__offset(this.z7, 10);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 10),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   entrancedescription(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  meshid() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  GetZoomAt(t) {
+    return this.zoom(t);
+  }
+  zoom(t) {
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  zoomLength() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  zoomArray() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t
+      ? new Float32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  GetLocationAt(t) {
+    return this.location(t);
+  }
+  location(t) {
+    var i = this.J7.__offset(this.z7, 18);
+    return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  locationLength() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  locationArray() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t
+      ? new Float32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  GetRotatorAt(t) {
+    return this.rotator(t);
+  }
+  rotator(t) {
+    var i = this.J7.__offset(this.z7, 20);
+    return i ? this.J7.readFloat32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
+  }
+  rotatorLength() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  rotatorArray() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t
+      ? new Float32Array(
+          this.J7.bytes().buffer,
+          this.J7.bytes().byteOffset + this.J7.__vector(this.z7 + t),
+          this.J7.__vector_len(this.z7 + t),
+        )
+      : null;
+  }
+  lordchangematerialcontroller(t) {
+    var i = this.J7.__offset(this.z7, 22),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  lordidlematerialcontroller(t) {
+    var i = this.J7.__offset(this.z7, 24),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
+  }
+  standanim(t) {
+    var i = this.J7.__offset(this.z7, 26),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   isdebug() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 28);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }

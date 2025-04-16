@@ -148,6 +148,9 @@ class TabComponentWithCaptionItem extends UiPanelBase_1.UiPanelBase {
   SetCloseBtnShowState(t) {
     this.lqe.SetCloseBtnShowState(t);
   }
+  SetTabComponentShowState(t) {
+    this.xqe.RootUIComp.SetUIActive(t);
+  }
   OnBeforeDestroy() {
     this.Gbt && (this.Gbt.Destroy(), (this.Gbt = void 0)),
       this.lqe && (this.lqe.Destroy(), (this.lqe = void 0));

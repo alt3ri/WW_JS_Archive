@@ -42,7 +42,7 @@ let UiModelTagComponent = class UiModelTagComponent extends UiModelComponentBase
         );
       }),
       (this.lBr = (e, t) => {
-        var n = this.Owner.CheckGetComponent(17);
+        var n = this.Owner.CheckGetComponent(18);
         t ? n?.PlayLightSequence() : n?.StopLightSequence();
       });
   }

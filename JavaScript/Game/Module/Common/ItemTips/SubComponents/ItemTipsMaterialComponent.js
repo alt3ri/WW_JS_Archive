@@ -45,8 +45,6 @@ class TipsMaterialComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubCompon
           this.GetSprite(1).SetUIActive(void 0 !== i.FunctionSpritePath),
           i.FunctionSpritePath &&
             this.SetSpriteByPath(i.FunctionSpritePath, this.GetSprite(1), !1),
-          this.GetText(3).SetText(i.Num.toString()),
-          (this.GetText(3).useChangeColor = 0 === i.Num),
           !StringUtils_1.StringUtils.IsEmpty(i.TxtEffect)),
         e =
           (e &&
@@ -60,18 +58,30 @@ class TipsMaterialComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubCompon
               i.TxtDescription,
             ),
           this.GetText(5).SetUIActive(e),
-          this.Pxt(i.GetWayData),
           this.xxt(i.LimitTimeTxt),
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
             i.ConfigId,
           )),
-        i =
-          6e4 === e?.ItemType || 60002 === e?.ItemType || 60003 === e?.ItemType;
-      this.SetPanelNumVisible(!i);
+        t =
+          6e4 === e?.ItemType ||
+          60002 === e?.ItemType ||
+          60005 === e?.ItemType ||
+          60003 === e?.ItemType ||
+          22 === e?.ItemType;
+      this.SetPanelNumVisible(!t),
+        this.Pxt(this.GetWayDataList(i, e?.ItemType)),
+        t ||
+          ((e = i.Num),
+          this.GetText(3).SetText(e.toString()),
+          (this.GetText(3).useChangeColor = 0 === e));
     };
     (this.Pe = i),
       ModelManager_1.ModelManager.ItemTipsModel.SetCurrentItemTipsData(i),
       this.InAsyncLoading() ? this.OperationMap.set("Refresh", e) : e();
+  }
+  GetWayDataList(i, e) {
+    var t = 0 < i.Num;
+    return 60005 === e && t ? [] : (i.GetWayData ?? []);
   }
   Pxt(i) {
     this.GetItem(6).SetUIActive(0 !== i.length), i && this.Axt.Refresh(i);

@@ -13,7 +13,8 @@ const CsvLoader_1 = require("./CsvLoader"),
       Name: "Password",
       CnName: "正确密码",
       Type: "Int",
-      RenderType: 18,
+      RenderType: 19,
+      Tip: "如果小于4位数，在运行时，客户端会自动补充前导零，使得数字的总长度保持为4，如输入10，实际密码为0010",
     }),
   ];
 class CipherGameplayCsvLoader extends CsvLoader_1.CsvLoader {

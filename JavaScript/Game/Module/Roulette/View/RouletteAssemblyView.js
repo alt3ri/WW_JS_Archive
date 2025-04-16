@@ -14,7 +14,6 @@ const UE = require("ue"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
   ButtonItem_1 = require("../../Common/Button/ButtonItem"),
   SortEntrance_1 = require("../../Common/FilterSort/Sort/View/SortEntrance"),
-  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
@@ -48,9 +47,9 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
         var t = 0 === this.Afo ? 1 : 0;
         this.Afo = t;
       }),
-      (this._Ea = () => {
+      (this.cEa = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Phantom", 38, "检测到输入设备变化,切换装配界面表现", [
+          Log_1.Log.Info("Phantom", 37, "检测到输入设备变化,切换装配界面表现", [
             "新输入类型",
             Info_1.Info.InputControllerType,
           ]),
@@ -103,9 +102,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       }),
       (this.Xpt = () => {
         var t = this.yfo,
-          e = ModelManager_1.ModelManager.RouletteModel.CopyRouletteData(
-            this.Sfo,
-          ),
+          e = this.Sfo.DeepCopy(),
           i = 2 === t.State;
         switch (t.State) {
           case 2:
@@ -186,44 +183,22 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
         this.jfo();
       }),
       (this.Wfo = () => {
-        this.Kfo() ? this.Qfo() : this.CloseMe();
+        this.CloseMe();
       }),
       (this.Nfo = () => {
-        var t, e, i;
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Phantom", 38, "保存当前轮盘数据"),
-          this.Kfo() &&
-            ((t = this.Tfo.get(0)),
-            (e = this.Tfo.get(1)),
-            (i = this.Tfo.get(2)),
-            RouletteController_1.RouletteController.SaveRouletteDataRequest(
-              t,
-              e,
-              i[0],
-              !1,
-            ));
+          Log_1.Log.Info("Phantom", 37, "保存当前轮盘数据");
+        var t = this.Tfo.get(0),
+          e = this.Tfo.get(1),
+          i = this.Tfo.get(2);
+        RouletteController_1.RouletteController.SaveCurrentRouletteData(
+          t,
+          e,
+          i[0],
+          !1,
+        );
       }),
-      (this.OnDefaultButtonClick = () => {
-        this.Afo = 0;
-        var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(55);
-        t.FunctionMap.set(1, () => {
-          ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
-            this.vfo.ActivateInput(!0);
-        }),
-          t.FunctionMap.set(2, () => {
-            this.Xfo(),
-              ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
-              this.vfo.ActivateInput(!0);
-          }),
-          t.SetCloseFunction(() => {
-            this.vfo.ActivateInput(!0);
-          }),
-          this.vfo.ActivateInput(!1),
-          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-            t,
-          );
-      }),
-      (this.hIa = (t) => {
+      (this._Ia = (t) => {
         t = 1 === t ? 1 : 0;
         ModelManager_1.ModelManager.RouletteModel.SaveRouletteSelectConfig(t);
       });
@@ -244,17 +219,18 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       [11, UE.UIExtendToggle],
       [12, UE.UIItem],
       [13, UE.UIText],
+      [14, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [3, this.Ffo],
         [4, this.Vfo],
-        [11, this.hIa],
+        [11, this._Ia],
       ]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.InputControllerMainTypeChange,
-      this._Ea,
+      this.cEa,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRouletteItemSelect,
@@ -272,7 +248,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.InputControllerMainTypeChange,
-      this._Ea,
+      this.cEa,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRouletteItemSelect,
@@ -403,7 +379,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
           : void 0
       );
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         t,
       ]);
@@ -454,48 +430,14 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     this.pfo.GetGridByIndex(t).SetGridToggleState(!0),
       Info_1.Info.IsInGamepad() ? (this.Afo = 0) : (this.Afo = 1);
   }
-  Kfo() {
-    return this.npo() || this.spo() || this.apo();
-  }
-  CheckIsRouletteDataDefault() {
-    return 0 === this.ffo
-      ? this.Tfo.get(0).toString() ===
-          ModelManager_1.ModelManager.RouletteModel.GetDefaultExploreSkillIdList().toString()
-      : this.Tfo.get(1).toString() ===
-          ModelManager_1.ModelManager.RouletteModel.GetDefaultFunctionIdList().toString();
-  }
-  npo() {
-    return (
-      this.Tfo.get(0).toString() !==
-      ModelManager_1.ModelManager.RouletteModel.ExploreSkillIdList.toString()
-    );
-  }
-  spo() {
-    return (
-      this.Tfo.get(1).toString() !==
-      ModelManager_1.ModelManager.RouletteModel.CurrentFunctionIdList.toString()
-    );
-  }
-  apo() {
-    return (
-      this.Tfo.get(2).toString() !==
-      [ModelManager_1.ModelManager.RouletteModel.CurrentEquipItemId].toString()
-    );
-  }
   Yfo() {
-    (this.Ifo =
-      ModelManager_1.ModelManager.RouletteModel.CreateAssemblyGridData()),
-      (this.Tfo =
-        ModelManager_1.ModelManager.RouletteModel.CreateTempAssemblyData());
-  }
-  hpo() {
-    this.Ifo && this.Ifo.clear(),
-      (this.Ifo =
-        ModelManager_1.ModelManager.RouletteModel.CreateAssemblyGridData());
-    var t = this.Tfo.get(2);
-    this.Tfo && this.Tfo.clear(),
-      (this.Tfo =
-        ModelManager_1.ModelManager.RouletteModel.CreateDefaultAssemblyData(t));
+    var t = ModelManager_1.ModelManager.RouletteModel;
+    (this.Ifo = t.CreateAssemblyGridData()),
+      (this.Tfo = t.CreateTempAssemblyIdListData(
+        t.ExploreSkillIdListServer,
+        t.FunctionIdListServer,
+        t.CurrentEquipItemId,
+      ));
   }
   Jfo() {
     this.Mfo = new LoopScrollView_1.LoopScrollView(
@@ -523,7 +465,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       (this.TempKeepSelect = t), this.RefreshItemFilterSort(30, s);
     } else
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Phantom", 38, "未收到选中轮盘格子数据,无法刷新");
+        Log_1.Log.Info("Phantom", 37, "未收到选中轮盘格子数据,无法刷新");
   }
   kfo(t, e) {
     (this.yfo = void 0),
@@ -546,7 +488,14 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   qfo() {
-    if (this.yfo) {
+    if ((this.GetItem(14).SetUIActive(!1), this.yfo)) {
+      if (0 === this.yfo.GridType)
+        if (
+          !ControllerHolder_1.ControllerHolder.RouletteController.CheckCanExploreSkillEquip(
+            this.yfo.Id,
+          )
+        )
+          return this.Dfo.SetActive(!1), void this.GetItem(14).SetUIActive(!0);
       let t = void 0;
       switch (this.yfo.State) {
         case 2:
@@ -653,7 +602,7 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       }
     } else
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Phantom", 38, "未收到选中轮盘格子数据,无法刷新");
+        Log_1.Log.Info("Phantom", 37, "未收到选中轮盘格子数据,无法刷新");
   }
   $fo(t, e) {
     return !t || this.Efo !== e;
@@ -677,33 +626,6 @@ class RouletteAssemblyView extends UiTickViewBase_1.UiTickViewBase {
       : void 0 === (e = i.EndSwitchSkillId) ||
         (3001 === e && !t) ||
         RouletteController_1.RouletteController.ExploreSkillSetRequest(e);
-  }
-  Qfo() {
-    this.Afo = 0;
-    var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(58);
-    (t.IsEscViewTriggerCallBack = !1),
-      t.FunctionMap.set(1, () => {
-        this.CloseMe();
-      }),
-      t.FunctionMap.set(2, () => {
-        this.Nfo(), this.CloseMe();
-      }),
-      t.SetCloseFunction(() => {
-        this.vfo.ActivateInput(!0);
-      }),
-      this.vfo.ActivateInput(!1),
-      ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-        t,
-      );
-  }
-  Xfo() {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Phantom", 38, "恢复轮盘为默认状态"),
-      this.pfo.ResetAllGridDefault(),
-      this.hpo(),
-      this.Esi(),
-      this.jfo(),
-      (this.Afo = 0);
   }
 }
 exports.RouletteAssemblyView = RouletteAssemblyView;

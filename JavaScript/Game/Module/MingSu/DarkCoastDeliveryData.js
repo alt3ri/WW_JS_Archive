@@ -1,17 +1,17 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DarkCoastDeliveryData = void 0);
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
-  PreloadConfigStatementPart1_1 = require("../../Preload/PreloadConfigStatementPart1"),
   DarkCoastDeliveryLevelData_1 = require("./DarkCoastDeliveryLevelData"),
   MingSuController_1 = require("./MingSuController"),
   MingSuInstance_1 = require("./MingSuInstance");
 class DarkCoastDeliveryData extends MingSuInstance_1.MingSuInstance {
   constructor(e) {
     super(e),
-      (this.cHa = []),
+      (this.dQa = []),
       this.DragonPoolConfig.DarkCoastDeliveryList.forEach((e, t) => {
         var e =
           ConfigManager_1.ConfigManager.CollectItemConfig.GetDarkCoastDeliveryById(
@@ -23,17 +23,17 @@ class DarkCoastDeliveryData extends MingSuInstance_1.MingSuInstance {
             this.DragonPoolConfig.Goal[t],
             this.DragonPoolConfig.DropIds[t],
           )),
-          this.cHa.push(e));
+          this.dQa.push(e));
       });
   }
   SetDragonPoolLevel(t) {
     super.SetDragonPoolLevel(t),
-      this.cHa.forEach((e) => {
+      this.dQa.forEach((e) => {
         e.SetIsUnLockState(t);
       });
   }
   SetLevelGainList(t) {
-    this.cHa.forEach((e) => {
+    this.dQa.forEach((e) => {
       e.SetReceiveRewardState(t >= e.Id);
     });
   }
@@ -42,16 +42,16 @@ class DarkCoastDeliveryData extends MingSuInstance_1.MingSuInstance {
       var r = this.GetLevelData(i);
       r && r.SetDefeatedGuardState(!0);
     }
-    for (const n of t) {
-      var a = this.GetLevelData(n);
+    for (const o of t) {
+      var a = this.GetLevelData(o);
       a && a.SetReceivedGuardRewardState(!0);
     }
   }
   GetLevelData(t) {
-    return this.cHa.find((e) => e.Id === t);
+    return this.dQa.find((e) => e.Id === t);
   }
   GetLevelDataList() {
-    return this.cHa;
+    return this.dQa;
   }
   GetCurLevelTexturePath() {
     return this.GetLevelTexturePath(this.DragonPoolLevel);
@@ -60,14 +60,17 @@ class DarkCoastDeliveryData extends MingSuInstance_1.MingSuInstance {
     e = this.GetLevelData(e);
     return void 0 !== e
       ? e.Config.LevelTexture
-      : PreloadConfigStatementPart1_1.configCommonParamById.GetStringConfig(
+      : CommonParamById_1.configCommonParamById.GetStringConfig(
           "DarkShoreDefaultLevel",
         );
   }
   GetActivityRewardViewData() {
-    return { DataPageList: [{ DataList: this.mHa() }] };
+    return {
+      DataPageList: [{ DataList: this.CQa() }],
+      Source: "DarkCoastDelivery",
+    };
   }
-  mHa() {
+  CQa() {
     var e = [],
       t =
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -76,21 +79,21 @@ class DarkCoastDeliveryData extends MingSuInstance_1.MingSuInstance {
       r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "DarkShoreRewardNotAchieved",
       );
-    for (const o of this.cHa) {
-      var a = o.GetRewardItems(),
-        i = o.GetDarkCoastDeliveryRewardState(),
-        n = 1 === i ? t : r,
+    for (const n of this.dQa) {
+      var a = n.GetRewardItems(),
+        i = n.GetDarkCoastDeliveryRewardState(),
+        o = 1 === i ? t : r,
         a = {
           RewardList: a,
           NameText: StringUtils_1.StringUtils.Format(
             MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               "DarkCoastDelivery_Reward",
             ),
-            o.Id.toString(),
+            n.Id.toString(),
           ),
           RewardState: i,
           RewardButtonRedDot: 1 === i,
-          RewardButtonText: n,
+          RewardButtonText: o,
           ClickFunction: () => {
             MingSuController_1.MingSuController.SendMingSuHandRewardRequest(
               this.DragonPoolId,
@@ -102,7 +105,7 @@ class DarkCoastDeliveryData extends MingSuInstance_1.MingSuInstance {
     return e;
   }
   GetRewardRedDotState() {
-    for (const e of this.cHa)
+    for (const e of this.dQa)
       if (1 === e.GetDarkCoastDeliveryRewardState()) return !0;
     return !1;
   }

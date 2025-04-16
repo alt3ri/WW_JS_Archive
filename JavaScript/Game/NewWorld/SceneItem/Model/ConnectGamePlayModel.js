@@ -7,7 +7,7 @@ class ConnectGamePlayModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.TryConnectInterval = 500),
       (this.uQs = new Map()),
-      (this.jga = new Map());
+      (this.OSa = new Map());
   }
   AddConnectedRelation(e, t) {
     let o = this.uQs.get(e);
@@ -15,20 +15,20 @@ class ConnectGamePlayModel extends ModelBase_1.ModelBase {
     for (const s of t) o.add(s);
   }
   SetRelationPortalParam(e, t) {
-    this.jga.set(e, t);
+    this.OSa.set(e, t);
   }
   RemoveConnectRelation(e, t) {
     e = this.uQs.get(e);
     e && e.delete(t);
   }
   RemoveRelationPortalType(e) {
-    this.jga.delete(e);
+    this.OSa.delete(e);
   }
   GetRelationByEntityId(e) {
     return this.uQs.get(e);
   }
   GetRelationPassThroughParam(e) {
-    return this.jga.get(e);
+    return this.OSa.get(e);
   }
 }
 exports.ConnectGamePlayModel = ConnectGamePlayModel;

@@ -8,20 +8,20 @@ class LevelBuffSetWalkableFloorAngle extends LevelBuffBase_1.LevelBuffBase {
     super(...arguments), (this.s$o = 0);
   }
   OnCreated() {
-    var e = this.Entity.CheckGetComponent(164).CharacterMovement,
+    var e = this.Entity.CheckGetComponent(176).CharacterMovement,
       l = ((this.s$o = e.WalkableFloorAngle), Number(this.Params[0]));
     l
       ? e.SetWalkableFloorAngle(l)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Level",
-          29,
+          28,
           "LevelBuffSetWalkableFloorAngle玩法效果缺少参数",
           ["Buff", this.BuffId],
         );
   }
   OnRemoved(e) {
-    this.Entity.CheckGetComponent(164).CharacterMovement.SetWalkableFloorAngle(
+    this.Entity.CheckGetComponent(176).CharacterMovement.SetWalkableFloorAngle(
       this.s$o,
     );
   }

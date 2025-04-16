@@ -6,6 +6,7 @@ class TsBoxRangeItem extends UE.KuroEffectActor {
   constructor() {
     super(...arguments), (this.RangeId = ""), (this.BoxComp = void 0);
   }
+  Constructor() {}
   EditorInit() {
     super.EditorInit(), (this.RangeId = this.ActorGuid?.ToString());
   }

@@ -11,6 +11,7 @@ class PakKeyLog {
       (this.s_url_prefix = void 0),
       (this.s_file_name = void 0),
       (this.i_try_count = void 0),
+      (this.l_trigger_time = void 0),
       (this.device_id = ""),
       (this.s_version = ""),
       (this.net_status = ""),

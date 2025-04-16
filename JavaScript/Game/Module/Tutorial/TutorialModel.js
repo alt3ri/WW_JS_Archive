@@ -69,18 +69,20 @@ class TutorialModel extends ModelBase_1.ModelBase {
   GetUnlockedTutorialDataByType(o) {
     var e,
       t,
-      i = [];
-    for (const n of this.bRo.get(o).values()) {
-      var r = {
-        IsTypeTitle: !1,
-        TextId: n.TutorialData.GroupName,
-        SavedData: n,
-        OwnerType: o,
-      };
-      n.HasRedDot && this.InvokeTutorialRedDot(n), i.push(r);
-    }
+      i,
+      r = [];
+    for (const n of this.bRo.get(o).values())
+      n.IsExcludedFromWiki ||
+        ((e = {
+          IsTypeTitle: !1,
+          TextId: n.TutorialData.GroupName,
+          SavedData: n,
+          OwnerType: o,
+        }),
+        n.HasRedDot && this.InvokeTutorialRedDot(n),
+        r.push(e));
     if (
-      (i.sort((e, t) => {
+      (r.sort((e, t) => {
         var i, r;
         return e.SavedData.HasRedDot && !t.SavedData.HasRedDot
           ? -1
@@ -99,14 +101,14 @@ class TutorialModel extends ModelBase_1.ModelBase {
       }),
       o !== TutorialDefine_1.ETutorialType.All)
     )
-      return i;
-    let a = i.length;
-    for ([e, t] of i.entries())
-      if (!t.SavedData.HasRedDot) {
-        a = e + TutorialDefine_1.TutorialUtils.MaxLatestTutorial;
+      return r;
+    let a = r.length;
+    for ([t, i] of r.entries())
+      if (!i.SavedData.HasRedDot) {
+        a = t + TutorialDefine_1.TutorialUtils.MaxLatestTutorial;
         break;
       }
-    return i.slice(0, a);
+    return r.slice(0, a);
   }
   RemoveRedDotTutorialId(e) {
     this.qRo.has(e) &&
@@ -132,7 +134,8 @@ class TutorialModel extends ModelBase_1.ModelBase {
   }
   RedDotCheckIsNewTutorialType(e) {
     if (this.bRo.has(e))
-      for (const t of this.bRo.get(e).values()) if (t.HasRedDot) return !0;
+      for (const t of this.bRo.get(e).values())
+        if (t.HasRedDot && !t.IsExcludedFromWiki) return !0;
     return !1;
   }
   MakeSearchList(e, t) {
@@ -146,30 +149,30 @@ class TutorialModel extends ModelBase_1.ModelBase {
     let o = !1;
     for (const s of Array.from(this.bRo.keys()).sort((e) => (e === t ? -1 : 1)))
       if (s !== TutorialDefine_1.ETutorialType.All) {
-        var a = [];
-        for (const u of this.bRo.get(s).values()) {
-          var n = u.GetTutorialTitle();
-          n.search(i) < 0 ||
-            ((n = {
+        var a,
+          n = [];
+        for (const u of this.bRo.get(s).values())
+          u.IsExcludedFromWiki ||
+            (a = u.GetTutorialTitle()).search(i) < 0 ||
+            ((a = {
               IsTypeTitle: !1,
               TextId: u.TutorialData.GroupName,
               SavedData: u,
-              Text: n.replace(
+              Text: a.replace(
                 e,
                 TutorialDefine_1.TutorialUtils.AddSearchHighlight(e),
               ),
             }),
             (o = !0),
-            a.push(n));
-        }
+            n.push(a));
         t === TutorialDefine_1.ETutorialType.All
-          ? r.push(...a)
-          : a.length &&
+          ? r.push(...n)
+          : n.length &&
             (r.push({
               IsTypeTitle: !0,
               TextId: TutorialDefine_1.TutorialUtils.GetTutorialTypeTxt(s),
             }),
-            r.push(...a));
+            r.push(...n));
       }
     return { ItemData: r, HasTutorial: o };
   }

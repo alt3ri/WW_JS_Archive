@@ -88,12 +88,15 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
     r,
     a,
     o,
-    n,
     h,
+    n,
     l,
     d,
-    m,
+    I,
     u,
+    m,
+    w,
+    C,
   ) {
     e =
       ConfigManager_1.ConfigManager.ItemRewardConfig.GetExploreRewardDisplayConfig(
@@ -106,7 +109,7 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
           ViewName: "ExploreRewardView",
           AudioId: e.AudioId,
           IsSuccess: t,
-          Title: e.Title,
+          Title: C ?? e.Title,
           TitleHexColor: e.TitleHexColor,
           TitleIconPath: e.TitleIconPath,
           TitleIconHexColor: e.TitleIconHexColor,
@@ -116,9 +119,10 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
           ExploreBarTipsTextId: e.ExploreBarTipsTextId,
           IsDescription: e.IsDescription,
           Description: e.Description,
-          OnCloseCallback: h,
+          OnCloseCallback: n,
           Tip: l,
           IsShowOnlineChallengePlayer: d,
+          IsRewardMultiLine: m,
         }),
         this.q0i || this.NewRewardData(),
         this.q0i.SetRewardInfo(t),
@@ -127,9 +131,60 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
         r && this.q0i.SetExploreBarDataList(r),
         a && this.q0i.SetButtonInfoList(a),
         o && this.q0i.SetTargetReached(o),
-        n && this.q0i.SetStateToggle(n),
-        m && this.q0i.SetExploreFriendDataList(m),
+        h && this.q0i.SetStateToggle(h),
+        I && this.q0i.SetExploreFriendDataList(I),
         u && this.q0i.SetScoreReached(u),
+        w && this.q0i.SetAccumulatedScoreData(w),
+        this.q0i
+      );
+  }
+  RefreshExploreRewardDataFromConfigNew(e) {
+    var t =
+      ConfigManager_1.ConfigManager.ItemRewardConfig.GetExploreRewardDisplayConfig(
+        e.ConfigId,
+      );
+    if (t)
+      return (
+        (t = {
+          Type: 3,
+          ViewName: "ExploreRewardView",
+          AudioId: t.AudioId,
+          IsSuccess: e.IsSuccess,
+          Title: e.TitleTextId ?? t.Title,
+          TitleHexColor: t.TitleHexColor,
+          TitleIconPath: t.TitleIconPath,
+          TitleIconHexColor: t.TitleIconHexColor,
+          IsRecordVisible: t.IsRecordVisible,
+          IsItemVisible: t.IsItemVisible,
+          IsExploreProgressVisible: t.IsExploreProgressVisible,
+          ExploreBarTipsTextId: t.ExploreBarTipsTextId,
+          IsDescription: t.IsDescription,
+          Description: t.Description,
+          OnCloseCallback: e.OnCloseCallback,
+          Tip: e.Tip,
+          IsShowOnlineChallengePlayer: e.IsShowOnlineChallengePlayer,
+          IsRewardMultiLine: e.IsRewardMultiLine,
+          IsBagFull: e.IsBagFull,
+        }),
+        this.q0i || this.NewRewardData(),
+        this.q0i.SetRewardInfo(t),
+        this.q0i.SetItemList(e.RewardItemDataList),
+        e.ExploreRecordInfo &&
+          this.q0i.SetExploreRecordInfo(e.ExploreRecordInfo),
+        e.ExploreBarDataList &&
+          this.q0i.SetExploreBarDataList(e.ExploreBarDataList),
+        e.ButtonInfoList && this.q0i.SetButtonInfoList(e.ButtonInfoList),
+        e.TargetReached && this.q0i.SetTargetReached(e.TargetReached),
+        e.StateToggle && this.q0i.SetStateToggle(e.StateToggle),
+        e.ExploreFriendDataList &&
+          this.q0i.SetExploreFriendDataList(e.ExploreFriendDataList),
+        e.ScoreReachedData && this.q0i.SetScoreReached(e.ScoreReachedData),
+        e.AccumulatedScoreData &&
+          this.q0i.SetAccumulatedScoreData(e.AccumulatedScoreData),
+        e.BabelTowerSuccessData &&
+          this.q0i.SetBabelTowerSuccessData(e.BabelTowerSuccessData),
+        e.DangoAbyssSuccessData &&
+          this.q0i.SetDangoAbyssSuccessData(e.DangoAbyssSuccessData),
         this.q0i
       );
   }

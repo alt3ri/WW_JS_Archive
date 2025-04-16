@@ -13,7 +13,7 @@ class LoginInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
       WorldModel_1.WorldModel.IsStandalone ||
       !this.xdr() ||
       (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Input", 8, "[InputDistribute]刷新登录状态输入Tag时"),
+        Log_1.Log.Info("Input", 10, "[InputDistribute]刷新登录状态输入Tag时"),
       this.SetInputDistributeTags([
         InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
           .MouseInputTag,

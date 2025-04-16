@@ -17,6 +17,7 @@ const UE = require("ue"),
   ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem"),
   ButtonAndTextItem_1 = require("../../Common/Button/ButtonAndTextItem"),
   PlayerHeadItem_1 = require("../../Common/PlayerHeadItem"),
+  PlayerTitleItem_1 = require("../../Common/PlayerTitleItem"),
   OnlineController_1 = require("../../Online/OnlineController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -36,8 +37,10 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BelongView = void 0),
       (this.C8t = void 0),
       (this.g8t = void 0),
+      (this.gLt = void 0),
       (this.Het = []),
       (this.A8t = []),
+      (this.TLc = !1),
       (this.sOt = () => {
         this.f8t().PlayerIsOnline &&
           this.p8t() &&
@@ -85,7 +88,7 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.FriendInstanceId,
         )?.Debug ||
           (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Friend", 28, "点击拒绝添加好友"),
+            Log_1.Log.Debug("Friend", 27, "点击拒绝添加好友"),
           (e = this.f8t())
             ? ((this.C8t = []),
               this.C8t.push(e.PlayerId),
@@ -226,8 +229,14 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       [16, UE.UIItem],
       [17, UE.UIItem],
       [18, UE.UIText],
+      [19, UE.UIItem],
+      [20, UE.UIItem],
     ]),
       (this.BtnBindInfo = [[12, this.R8t]]);
+  }
+  async OnBeforeStartAsync() {
+    (this.gLt = new PlayerTitleItem_1.PlayerTitleItem()),
+      await this.gLt.CreateThenShowByActorAsync(this.GetItem(20).GetOwner());
   }
   OnStart() {
     (this.m8t = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(11))),
@@ -276,7 +285,14 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.w8t(),
       e &&
         (this.g8t.RefreshByHeadPhotoId(e.PlayerHeadPhoto),
-        this.GetText(3).SetText("Lv." + e.PlayerLevel.toString())),
+        this.GetText(3).SetText("Lv." + e.PlayerLevel.toString()),
+        this.TLc
+          ? this.gLt?.GetRootItem().SetUIActive(!1)
+          : this.gLt?.Refresh(
+              e.PlayerTitleId,
+              e.PlayerTitleStarLevel,
+              e.PlayerSex,
+            )),
       this.B8t();
   }
   w8t() {
@@ -289,7 +305,8 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.G8t(),
       this.N8t(),
       this.O8t(),
-      this.qxa();
+      this.Nxa(),
+      this.sPa();
   }
   N8t() {
     this.GetText(9).SetText(this.f8t().Signature),
@@ -405,7 +422,13 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.BelongView,
     );
   }
-  qxa() {
+  sPa() {
+    !PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId() ||
+    "" !== this.f8t()?.GetSdkUserId()
+      ? this.GetItem(19)?.SetUIActive(!1)
+      : this.GetItem(19)?.SetUIActive(!0);
+  }
+  Nxa() {
     var e;
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.NeedShowThirdPartyId()
       ? ((e = "" !== this.f8t()?.GetSdkUserId()),
@@ -431,6 +454,9 @@ class FriendItem extends GridProxyAbstract_1.GridProxyAbstract {
     ModelManager_1.ModelManager.FriendModel.CurrentApplyFriendListHasPlayer(
       this.FriendInstanceId,
     ) && this.x8t();
+  }
+  SetIsInBlackList(e) {
+    this.TLc = e;
   }
 }
 exports.FriendItem = FriendItem;

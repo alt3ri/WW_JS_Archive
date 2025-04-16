@@ -28,11 +28,11 @@ class ExchangeRewardController extends ControllerBase_1.ControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(27824, ExchangeRewardController.wai),
-      Net_1.Net.Register(16129, ExchangeRewardController.Bai);
+    Net_1.Net.Register(24688, ExchangeRewardController.wai),
+      Net_1.Net.Register(27886, ExchangeRewardController.Bai);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(27824), Net_1.Net.UnRegister(16129);
+    Net_1.Net.UnRegister(24688), Net_1.Net.UnRegister(27886);
   }
 }
 (exports.ExchangeRewardController = ExchangeRewardController),
@@ -44,7 +44,7 @@ class ExchangeRewardController extends ControllerBase_1.ControllerBase {
   }),
   (ExchangeRewardController.RequestExchangeData = async () => {
     var e = new Protocol_1.Aki.Protocol.Jos(),
-      e = await Net_1.Net.CallAsync(27493, e);
+      e = await Net_1.Net.CallAsync(15420, e);
     ModelManager_1.ModelManager.ExchangeRewardModel.Phrase(e);
   });
 //# sourceMappingURL=ExchangeRewardController.js.map

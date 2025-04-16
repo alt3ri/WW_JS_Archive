@@ -37,7 +37,7 @@ class LevelAiTaskLeisureInteract extends LevelAiTask_1.LevelAiTask {
             : Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "LevelAi",
-                51,
+                50,
                 "[LevelAiTaskLeisureInteract] 未配置正确的行为类型",
                 ["PbDataId", this.CreatureDataComponent.GetPbDataId()],
               ),

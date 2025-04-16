@@ -48,7 +48,7 @@ class ChatOption extends UiViewBase_1.UiViewBase {
         var e = ModelManager_1.ModelManager.FriendModel.GetFriendById(this.j8);
         ReportController_1.ReportController.OpenReportView(e, 1);
       }),
-      (this.WQa = () => {
+      (this.uYa = () => {
         UiManager_1.UiManager.CloseView("ChatOption"),
           UiManager_1.UiManager.CloseView("ChatView");
         var e = ModelManager_1.ModelManager.FriendModel,
@@ -70,7 +70,7 @@ class ChatOption extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [
         [3, this.ySt],
         [4, this.ISt],
-        [1, this.WQa],
+        [1, this.uYa],
       ]);
   }
   OnStart() {

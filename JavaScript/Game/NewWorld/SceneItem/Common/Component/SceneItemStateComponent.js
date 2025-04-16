@@ -2,20 +2,20 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, s) {
-    var n,
-      h = arguments.length,
-      o =
-        h < 3
+    var o,
+      r = arguments.length,
+      n =
+        r < 3
           ? e
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(e, i))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(t, e, i, s);
+      n = Reflect.decorate(t, e, i, s);
     else
-      for (var r = t.length - 1; 0 <= r; r--)
-        (n = t[r]) && (o = (h < 3 ? n(o) : 3 < h ? n(e, i, o) : n(e, i)) || o);
-    return 3 < h && o && Object.defineProperty(e, i, o), o;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (o = t[h]) && (n = (r < 3 ? o(n) : 3 < r ? o(e, i, n) : o(e, i)) || n);
+    return 3 < r && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemStateComponent = void 0);
@@ -32,6 +32,7 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
   Global_1 = require("../../../../Global"),
   LevelGeneralNetworks_1 = require("../../../../LevelGamePlay/LevelGeneralNetworks"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   BulletController_1 = require("../../../Bullet/BulletController"),
   MIN_DELAY_THRESHOLD = 0.1,
@@ -56,7 +57,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
       (this.h_n = void 0),
       (this.l_n = void 0),
       (this.__n = void 0),
-      (this.i3a = void 0),
+      (this.I5a = void 0),
       (this.Rnn = () => {
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
@@ -65,8 +66,8 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
         );
         var t = this.r_n?.CreateStageConfig.PerformDuration;
         t >= MIN_DELAY_THRESHOLD
-          ? (this.i3a = TimerSystem_1.TimerSystem.Delay(() => {
-              this.r3a(!1);
+          ? (this.I5a = TimerSystem_1.TimerSystem.Delay(() => {
+              this.T5a(!1);
             }, t * TimeUtil_1.TimeUtil.InverseMillisecond))
           : (LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
               this.Wpo,
@@ -75,8 +76,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
       }),
       (this.u_n = (t) => {
         TimerSystem_1.TimerSystem.Delay(() => {
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DelayRemoveEntityFinished,
+          ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
             this.Entity,
           );
         }, RESET_LIMIT * TimeUtil_1.TimeUtil.InverseMillisecond);
@@ -100,7 +100,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
         (this.l_n = !0);
       var e = t.GetPbEntityInitData();
       if (e) {
-        (this.Xte = this.Entity?.GetComponent(181)),
+        (this.Xte = this.Entity?.GetComponent(194)),
           (this.Wpo = t.GetCreatureDataId()),
           (this.r_n = (0, IComponent_1.getComponent)(
             e.ComponentsData,
@@ -118,8 +118,8 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
           s = e?.StateChangeBehaviors;
         if (i && s) {
           let t = 0;
-          for (const n of e.StateChangeBehaviors)
-            this.BehaviorMap.set(t, n.Action), t++;
+          for (const o of e.StateChangeBehaviors)
+            this.BehaviorMap.set(t, o.Action), t++;
         }
         (i = t.ComponentDataMap.get(SERVER_DATA)?.bys),
           (s = ((this.W1n = i.X5n), t.ComponentDataMap.get("Wys")));
@@ -158,14 +158,13 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
         (this.Xte?.RemoveTag(-991879492), this.UpdateState(-1278190765, !0)),
       3 !== this._ii || !this.r_n)
     )
-      return (e = this.Entity.GetComponent(150))
+      return (e = this.Entity.GetComponent(161))
         ? ((t = (t = this.StateConfig?.State)
             ? GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t)
             : void 0),
           void (this.W1n !== t
             ? e.ResetToInitState(this.StateConfig.State, this.u_n)
-            : EventSystem_1.EventSystem.Emit(
-                EventDefine_1.EEventName.DelayRemoveEntityFinished,
+            : ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
                 this.Entity,
               )))
         : void 0;
@@ -183,14 +182,12 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
       (e = this.r_n.DestroyStageConfig?.PerformDuration)
         ? (this.__n = TimerSystem_1.TimerSystem.Delay(() => {
             this.Entity?.Valid &&
-              (EventSystem_1.EventSystem.Emit(
-                EventDefine_1.EEventName.DelayRemoveEntityFinished,
+              (ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
                 this.Entity,
               ),
               (this.__n = void 0));
           }, e * TimeUtil_1.TimeUtil.InverseMillisecond))
-        : EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DelayRemoveEntityFinished,
+        : ControllerHolder_1.ControllerHolder.CreatureController.DelayRemoveEntityFinished(
             this.Entity,
           ));
   }
@@ -233,15 +230,15 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
             GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-991879492)),
           void 0 !== this.nXr?.场景交互物状态列表.Get(t) &&
           (this.Xte.AddTag(-991879492),
-          !this.Entity.GetComponent(187).GetIsSceneInteractionLoadCompleted())
+          !this.Entity.GetComponent(200).GetIsSceneInteractionLoadCompleted())
             ? EventSystem_1.EventSystem.AddWithTarget(
                 this.Entity,
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
                 this.Rnn,
               )
             : i >= MIN_DELAY_THRESHOLD
-              ? (this.i3a = TimerSystem_1.TimerSystem.Delay(() => {
-                  this.r3a(!1);
+              ? (this.I5a = TimerSystem_1.TimerSystem.Delay(() => {
+                  this.T5a(!1);
                 }, i * TimeUtil_1.TimeUtil.InverseMillisecond))
               : (LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
                   this.Wpo,
@@ -250,7 +247,7 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
   }
   UpdateState(t, e, i = !1) {
     switch (
-      (0 === this._ii && this.r3a(!0), (this.s_n = e), (this.W1n = t), this.W1n)
+      (0 === this._ii && this.T5a(!0), (this.s_n = e), (this.W1n = t), this.W1n)
     ) {
       case -1152559349:
         this._ii = 1;
@@ -262,7 +259,8 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
         this._ii = 4;
         break;
       case -1278190765:
-        return void (this._ii = 3);
+        this._ii = 3;
+        break;
       default:
         this._ii = 5;
     }
@@ -307,21 +305,21 @@ let SceneItemStateComponent = class SceneItemStateComponent extends EntityCompon
     return (t ? this.r_n?.CreateStageConfig : this.r_n?.DestroyStageConfig)
       .Actions;
   }
-  r3a(t) {
+  T5a(t) {
     this.Xte?.RemoveTag(-991879492),
       t
-        ? TimerSystem_1.TimerSystem.Has(this.i3a) &&
-          this.i3a &&
-          TimerSystem_1.TimerSystem.Remove(this.i3a)
+        ? TimerSystem_1.TimerSystem.Has(this.I5a) &&
+          this.I5a &&
+          TimerSystem_1.TimerSystem.Remove(this.I5a)
         : ((this.s_n = !0),
           LevelGeneralNetworks_1.LevelGeneralNetworks.RequestSetInitTagRequest(
             this.Wpo,
           )),
-      (this.i3a = void 0);
+      (this.I5a = void 0);
   }
 };
 (SceneItemStateComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(120)],
+  [(0, RegisterComponent_1.RegisterComponent)(131)],
   SceneItemStateComponent,
 )),
   (exports.SceneItemStateComponent = SceneItemStateComponent);

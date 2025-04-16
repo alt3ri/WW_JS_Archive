@@ -6,20 +6,19 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
-  CameraController_1 = require("../../Camera/CameraController"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
   MAX_SHAKE_DURATION = CommonDefine_1.SECOND_PER_MINUTE;
 class LevelEventTriggerCameraShake extends LevelGeneralBase_1.LevelEventBase {
-  ExecuteNew(e, r, a) {
+  ExecuteNew(e, r, o) {
     if (e) {
-      const o = e.CameraShakeConfig;
+      const l = e.CameraShakeConfig;
       ResourceSystem_1.ResourceSystem.LoadAsync(
         e.CameraShakeBp + "_C",
         UE.Class,
         (e) => {
-          var r, a;
+          var r, o;
           e?.IsValid() &&
             ((r = (0, puerts_1.$ref)(void 0)),
             UE.KuroStaticLibrary.GetCameraShakeInfo(e, r)
@@ -28,40 +27,41 @@ class LevelEventTriggerCameraShake extends LevelGeneralBase_1.LevelEventBase {
                 ? Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "LevelEvent",
-                    40,
+                    39,
                     "振荡类型为无限或时长过长，取消振荡",
                     ["时长类型", r.Duration.Type],
                     ["时长", r.Duration.Duration],
                     ["限制最大时长", MAX_SHAKE_DURATION],
                   )
-                : "Constant" === o.Type
-                  ? CameraController_1.CameraController.PlayCameraShake(
+                : "Constant" === l.Type
+                  ? ControllerHolder_1.ControllerHolder.CameraController.PlayCameraShake(
                       e,
-                      CameraController_1.CameraController.Model.ShakeModify,
+                      ControllerHolder_1.ControllerHolder.CameraController.Model
+                        .ShakeModify,
                     )
-                  : "LinearOverRange" === o.Type &&
+                  : "LinearOverRange" === l.Type &&
                     (r =
                       ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-                        o.CenterEntityId,
+                        l.CenterEntityId,
                       )) &&
-                    ((a =
-                      CharacterController_1.CharacterController.GetActorComponent(
+                    ((o =
+                      ControllerHolder_1.ControllerHolder.CharacterController.GetActorComponent(
                         r,
                       )),
                     (r = r.Entity.GetComponent(0)),
-                    (a = a?.ActorLocation ?? r.GetLocation()),
-                    CameraController_1.CameraController.PlayWorldCameraShake(
+                    (o = o?.ActorLocation ?? r.GetLocation()),
+                    ControllerHolder_1.ControllerHolder.CameraController.PlayWorldCameraShake(
                       e,
-                      a,
-                      o.MinRange,
-                      o.MaxRange,
+                      o,
+                      l.MinRange,
+                      l.MaxRange,
                       0,
                       !1,
                     ))
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "LevelEvent",
-                  40,
+                  39,
                   "振荡时长检测失败，取消振荡",
                   ["CameraShakeClass", e],
                 ));

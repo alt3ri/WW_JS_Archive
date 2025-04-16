@@ -9,46 +9,46 @@ const puerts_1 = require("puerts"),
   PROGRESSTYPEUNLOCK = 0;
 class PlayStationTrophy {
   constructor() {
-    (this.Lwa = void 0),
-      (this.KBa = void 0),
-      (this.$Ba = 0),
-      (this.XBa = 0),
-      (this.YBa = void 0),
-      (this.zBa = new Map()),
-      (this.NFa = []),
-      (this.FFa = !1);
+    (this.Vwa = void 0),
+      (this.lba = void 0),
+      (this._ba = 0),
+      (this.uba = 0),
+      (this.cba = void 0),
+      (this.mba = new Map()),
+      (this.i5a = []),
+      (this.r5a = !1);
   }
   async Init(t, e) {
-    (this.Lwa = t), (this.KBa = e), await this.JBa();
+    (this.Vwa = t), (this.lba = e), await this.dba();
   }
-  async JBa() {
+  async dba() {
     var t = UE.KuroStaticPS5Library.GetCacheMapElement("TrophyContextId"),
       t =
-        ("" !== t && 0 !== (t = Number(t)) && (await this.ZBa(t)),
+        ("" !== t && 0 !== (t = Number(t)) && (await this.Cba(t)),
         UE.KuroStaticPS5Library.GetCacheMapElement("TrophyHandleId")),
       t =
-        ("" !== t && 0 !== (t = Number(t)) && (await this.eba(t)),
-        (this.$Ba = await this.tba()),
+        ("" !== t && 0 !== (t = Number(t)) && (await this.gba(t)),
+        (this._ba = await this.fba()),
         UE.KuroStaticPS5Library.AddCacheMapElement(
           "TrophyContextId",
-          this.$Ba.toString(),
+          this._ba.toString(),
         ),
-        (this.XBa = await this.iba()),
+        (this.uba = await this.pba()),
         UE.KuroStaticPS5Library.AddCacheMapElement(
           "TrophyHandleId",
-          this.XBa.toString(),
+          this.uba.toString(),
         ),
-        await this.rba(this.$Ba, this.XBa));
+        await this.vba(this._ba, this.uba));
     0 !== t &&
       LauncherLog_1.LauncherLog.Error("InitTrophy failed", ["registResult", t]);
   }
   async GetSdkTrophyInfo(e = 0, r = 0) {
     return (
-      this.YBa ||
-      (0 === this.$Ba || 0 === this.XBa
+      this.cba ||
+      (0 === this._ba || 0 === this.uba
         ? []
-        : ((this.YBa = []),
-          this.zBa.clear(),
+        : ((this.cba = []),
+          this.mba.clear(),
           new Promise((t) => {
             const h = (e) => {
               (0, puerts_1.releaseManualReleaseDelegate)(h);
@@ -66,13 +66,13 @@ class PlayStationTrophy {
                     DataProgress: i.progress,
                   };
                   r.push(e),
-                    this.zBa.set(o.trophyId, e),
+                    this.mba.set(o.trophyId, e),
                     LauncherLog_1.LauncherLog.Debug("GetSdkTrophyInfo", [
                       "trophy.name",
                       o.name,
                     ]);
                 }
-              (this.YBa = r),
+              (this.cba = r),
                 LauncherLog_1.LauncherLog.Debug(
                   "GetSdkTrophyInfo",
                   ["result", r],
@@ -85,27 +85,27 @@ class PlayStationTrophy {
             UE.KuroStaticPS5Library.GetTrophyListWithContextIdAndHandleIdAsync(
               (0, puerts_1.$ref)(e),
               r,
-              this.$Ba,
-              this.XBa,
+              this._ba,
+              this.uba,
               (0, puerts_1.toManualReleaseDelegate)(h),
             );
           })))
     );
   }
   async UnlockSdkTrophy(e) {
-    var t = this.zBa.get(e);
+    var t = this.mba.get(e);
     return (
       !(!t || !t.Unlocked) ||
       new Promise((t) => {
-        this.NFa.push({ TrophyId: e, Task: t }), this.FFa || this.VFa();
+        this.i5a.push({ TrophyId: e, Task: t }), this.r5a || this.o5a();
       })
     );
   }
-  VFa() {
-    if (0 === this.NFa.length) this.FFa = !1;
+  o5a() {
+    if (0 === this.i5a.length) this.r5a = !1;
     else {
-      this.FFa = !0;
-      const e = this.NFa.shift(),
+      this.r5a = !0;
+      const e = this.i5a.shift(),
         r = (t) => {
           (0, puerts_1.releaseManualReleaseDelegate)(r),
             LauncherLog_1.LauncherLog.Debug(
@@ -114,18 +114,18 @@ class PlayStationTrophy {
               ["trophyId", e.TrophyId],
             ),
             e.Task(0 === t),
-            this.VFa();
+            this.o5a();
         };
       UE.KuroStaticPS5Library.UnlockTrophyWithContextIdAndHandleIdAsync(
-        this.Lwa.GetContext(),
-        this.Lwa.GetHandle(),
+        this.Vwa.GetContext(),
+        this.Vwa.GetHandle(),
         e.TrophyId,
         (0, puerts_1.toManualReleaseDelegate)(r),
       );
     }
   }
   async UpdateSdkTrophyProgress(t, s) {
-    var e = this.zBa.get(t);
+    var e = this.mba.get(t);
     return (
       !(!e || e.ProgressType !== PROGRESSTYPEUNLOCK) ||
       !(
@@ -143,8 +143,8 @@ class PlayStationTrophy {
             e(0 === t);
         };
         UE.KuroStaticPS5Library.UpdateTrophyProgressWithContextIdAndHandleIdAsync(
-          this.Lwa.GetContext(),
-          this.Lwa.GetHandle(),
+          this.Vwa.GetContext(),
+          this.Vwa.GetHandle(),
           t,
           s,
           (0, puerts_1.toManualReleaseDelegate)(r),
@@ -152,7 +152,7 @@ class PlayStationTrophy {
       })
     );
   }
-  async rba(t, s) {
+  async vba(t, s) {
     return new Promise((e) => {
       const r = (t) => {
         (0, puerts_1.releaseManualReleaseDelegate)(r),
@@ -177,7 +177,7 @@ class PlayStationTrophy {
         );
     });
   }
-  async tba() {
+  async fba() {
     return new Promise((r) => {
       const s = (t, e) => {
         (0, puerts_1.releaseManualReleaseDelegate)(s),
@@ -191,14 +191,14 @@ class PlayStationTrophy {
               r(-1));
       };
       UE.KuroStaticPS5Library.CreateTrophyContextAsync(
-        this.KBa.GetUserId(),
+        this.lba.GetUserId(),
         DEFAULTLABEL,
         "0",
         (0, puerts_1.toManualReleaseDelegate)(s),
       );
     });
   }
-  async iba() {
+  async pba() {
     return new Promise((r) => {
       const s = (t, e) => {
         (0, puerts_1.releaseManualReleaseDelegate)(s),
@@ -216,7 +216,7 @@ class PlayStationTrophy {
       );
     });
   }
-  async eba(t) {
+  async gba(t) {
     return (
       0 === t ||
       new Promise((e) => {
@@ -237,7 +237,7 @@ class PlayStationTrophy {
       })
     );
   }
-  async ZBa(t) {
+  async Cba(t) {
     return (
       0 === t ||
       new Promise((e) => {
@@ -257,7 +257,7 @@ class PlayStationTrophy {
     );
   }
   Clear() {
-    this.eba(this.XBa), this.ZBa(this.$Ba);
+    this.gba(this.uba), this.Cba(this._ba);
   }
 }
 exports.PlayStationTrophy = PlayStationTrophy;

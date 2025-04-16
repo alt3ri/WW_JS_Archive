@@ -70,32 +70,32 @@ class MergeHeadStateMonsterInfo {
   AddListener() {
     (this.FightTagListenTask || this.AttributeComponent) &&
       (Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 18, "[合并怪物血条]重复添加进战监听", [
+        Log_1.Log.Error("Battle", 17, "[合并怪物血条]重复添加进战监听", [
           "entityId",
           this.EntityHandle.Id,
         ]),
       this.RemoveListener());
-    var t = this.EntityHandle.Entity.GetComponent(190);
+    var t = this.EntityHandle.Entity.GetComponent(203);
     if (!t)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Battle",
-            18,
+            17,
             "[合并怪物血条]监听的实体不存在tagComponent",
             ["entityId", this.EntityHandle.Id],
           ),
         !1
       );
     if (
-      ((this.AttributeComponent = this.EntityHandle.Entity.GetComponent(159)),
+      ((this.AttributeComponent = this.EntityHandle.Entity.GetComponent(171)),
       !this.AttributeComponent)
     )
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Battle",
-            18,
+            17,
             "[合并怪物血条]监听的实体不存在AttributeComponent",
             ["entityId", this.EntityHandle.Id],
           ),
@@ -145,7 +145,7 @@ class BattleUiMergeHeadStateData {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              18,
+              17,
               "[合并怪物血条]移除实体时InfoId错误",
               ["id", e.Id],
             )
@@ -208,7 +208,7 @@ class BattleUiMergeHeadStateData {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              18,
+              17,
               "[合并怪物血条]添加实体时InfoId错误",
               ["id", h.Id],
             );
@@ -227,7 +227,7 @@ class BattleUiMergeHeadStateData {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              18,
+              17,
               "[合并怪物血条]移除实体时InfoId错误",
               ["id", e.Id],
             )));
@@ -290,7 +290,7 @@ class BattleUiMergeHeadStateData {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
-              18,
+              17,
               "[合并怪物血条]更新怪物数据时与缓存对不上",
             );
       }
@@ -315,7 +315,7 @@ class BattleUiMergeHeadStateData {
       ? i.IsVisible !== e &&
         (e ? ((i.IsVisible = !0), this.fXe(i)) : this.UpdateVisible(i, !0))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 18, "[合并怪物血条]更新进战时InfoId错误", [
+        Log_1.Log.Error("Battle", 17, "[合并怪物血条]更新进战时InfoId错误", [
           "id",
           t,
         ]);
@@ -340,7 +340,7 @@ class BattleUiMergeHeadStateData {
     i
       ? ((i.TotalHp += e), this.gXe(i))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Battle", 18, "[合并怪物血条]更新血量时InfoId错误", [
+        Log_1.Log.Error("Battle", 17, "[合并怪物血条]更新血量时InfoId错误", [
           "id",
           t,
         ]);

@@ -37,12 +37,12 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.CMt = void 0),
       (this.Xvt = void 0),
       (this.H3e = void 0),
-      (this.cNa = void 0),
+      (this.C3a = void 0),
       (this.gMt = !1),
       (this.fMt = !1),
-      (this.mNa = 0),
-      (this.dNa = CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM),
-      (this.CNa = 0),
+      (this.g3a = 0),
+      (this.p3a = CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM),
+      (this.f3a = 0),
       (this.pMt = () => {
         this.CMt.SetActive(!1),
           this.CMt.UiViewSequence.RemoveSequenceFinishEvent(
@@ -50,18 +50,18 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
             this.pMt,
           );
       }),
-      (this.bza = (e) => {
+      (this.Rrh = (e) => {
         ("Start" !== e && "ShowView" !== e && "Sle" !== e) ||
           UiLayer_1.UiLayer.SetShowMaskLayer("VisionRecoveryTabView", !0);
       }),
-      (this.qza = (e) => {
+      (this.Urh = (e) => {
         ("Start" !== e && "ShowView" !== e && "Sle" !== e) ||
           UiLayer_1.UiLayer.SetShowMaskLayer("VisionRecoveryTabView", !1);
       }),
       (this.vMt = (e, i) => {
         e
-          ? (this.fMt || this.MMt(this.mNa),
-            void 0 !== i && this.XKa(i),
+          ? (this.fMt || this.MMt(this.g3a),
+            void 0 !== i && this.Mza(i),
             this.EMt())
           : (e = this.cMt.findIndex((e) => e.IncId === i.GetUniqueId())) < 0 ||
             (this.cMt.splice(e, 1),
@@ -72,11 +72,11 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
         this.cMt.length <= 0 ? this.IMt(0) : this.TMt(0);
       }),
       (this.LMt = () => {
-        this.cMt.length < this.dNa
+        this.cMt.length < this.p3a
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "Text_EchoLack_Text",
             )
-          : this.gNa(() => {
+          : this.v3a(() => {
               CalabashController_1.CalabashController.RequestPhantomRefiningRequest(
                 this.cMt,
               );
@@ -86,26 +86,26 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
         ModelManager_1.ModelManager.CalabashModel.HideVisionRecoveryConfirmBox =
           e;
       }),
-      (this.pNa = () => {
+      (this.M3a = () => {
         ModelManager_1.ModelManager.PhantomBattleModel.RecordVisionRecoveryRedDot(
           !1,
         ),
-          (this.mNa = 1),
+          (this.g3a = 1),
           (this.cMt = []),
           this.fMt
-            ? this.SMt(this.mMt, this.cMt, this.mNa)
-            : this.MMt(this.mNa),
+            ? this.SMt(this.mMt, this.cMt, this.g3a)
+            : this.MMt(this.g3a),
           this.Zvt(this.cMt),
-          this.fNa(this.cMt),
-          this.U8a(),
+          this.S3a(this.cMt),
+          this.u7a(),
           this.EMt();
       }),
-      (this.vNa = () => {
-        this.cMt.length < this.dNa
+      (this.E3a = () => {
+        this.cMt.length < this.p3a
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "Text_BatchEchoLack",
             )
-          : this.gNa(() => {
+          : this.v3a(() => {
               CalabashController_1.CalabashController.RequestBatchRefiningRequest(
                 this.cMt,
               );
@@ -116,16 +116,16 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.AMt = (e) => {
         (this.cMt = e),
-          0 === this.mNa ? this.Zvt(this.cMt) : this.fNa(this.cMt);
+          0 === this.g3a ? this.Zvt(this.cMt) : this.S3a(this.cMt);
       }),
       (this.PMt = () => {
-        1 === this.mNa &&
-          ((this.mNa = 0),
+        1 === this.g3a &&
+          ((this.g3a = 0),
           (this.cMt = []),
-          this.SMt(this.mMt, this.cMt, this.mNa),
+          this.SMt(this.mMt, this.cMt, this.g3a),
           this.Zvt(this.cMt),
-          this.fNa(this.cMt),
-          this.x8a()),
+          this.S3a(this.cMt),
+          this.c7a()),
           this.xMt();
       }),
       (this.wMt = (e) => {
@@ -136,36 +136,36 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
             this.xMt();
         });
       }),
-      (this.MNa = (e) => {
-        UiManager_1.UiManager.OpenView(
-          "VisionRecoveryBatchResultView",
-          e,
-          () => {
-            (this.mNa = 0),
+      (this.y3a = (e) => {
+        (this.g3a = 0),
+          UiManager_1.UiManager.OpenView(
+            "VisionRecoveryBatchResultView",
+            e,
+            () => {
               (this.mMt =
                 ModelManager_1.ModelManager.InventoryModel.GetUnEquipPhantomItemDataList()),
-              this.TMt(0),
-              this.x8a(),
-              this.xMt();
-          },
-        );
+                this.TMt(0),
+                this.c7a(),
+                this.xMt();
+            },
+          );
       }),
-      (this.SNa = (i) => {
+      (this.I3a = (i) => {
         var e,
           t = ModelManager_1.ModelManager.InventoryModel.GetPhantomItemData(i);
         void 0 !== t &&
           (0 <= (e = this.cMt.findIndex((e) => e.IncId === i)) &&
             t.GetIsLock() &&
             (this.cMt.splice(e, 1),
-            0 === this.mNa ? this.Zvt(this.cMt) : this.fNa(this.cMt)),
+            0 === this.g3a ? this.Zvt(this.cMt) : this.S3a(this.cMt)),
           0 <= (t = this.dMt.findIndex((e) => e.GetUniqueId() === i))) &&
           this.CMt.UpdatePartByIndex(t);
       }),
       (this.BMt = (e) => {
         void 0 !== e && (this.dMt = e);
       }),
-      (this.ENa = (e) => {
-        0 === e ? this.TMt(1) : this.P8a(1);
+      (this.T3a = (e) => {
+        0 === e ? this.TMt(1) : this.m7a(1);
       });
   }
   OnRegisterComponent() {
@@ -189,8 +189,8 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.BtnBindInfo = [
         [3, this.yMt],
         [4, this.LMt],
-        [7, this.pNa],
-        [13, this.vNa],
+        [7, this.M3a],
+        [13, this.E3a],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -203,7 +203,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
         this.GetHorizontalLayout(5),
         this.UMt,
       )),
-      (this.cNa = new GenericLayout_1.GenericLayout(
+      (this.C3a = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(10),
         this.UMt,
       )),
@@ -211,19 +211,19 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.CMt = new VisionRecoveryChoosePanel_1.VisionRecoveryChoosePanel()),
       this.CMt.BindClickCloseCallBack(this.PMt),
       this.CMt.BindFilterSortRefresh(this.BMt),
-      this.CMt.BindClickSelectAllToggleCallback(this.ENa);
+      this.CMt.BindClickSelectAllToggleCallback(this.T3a);
     var e = this.GetItem(1);
     await this.CMt.CreateByResourceIdAsync("UiItem_VisionRecoveryList", e),
-      (this.CNa =
+      (this.f3a =
         ConfigManager_1.ConfigManager.CalabashConfig.GetVisionBatchRecoveryMaxCount());
   }
   OnStart() {
-    (this.mNa = 0), this.Zvt(this.cMt);
+    (this.g3a = 0), this.Zvt(this.cMt);
     var e = this.GetTabBehavior(
       UiTabSequence_1.UiTabSequence,
     )?.GetLevelSequencePlayer();
     e &&
-      (e.BindSequenceStartEvent(this.bza), e.BindSequenceCloseEvent(this.qza));
+      (e.BindSequenceStartEvent(this.Rrh), e.BindSequenceCloseEvent(this.Urh));
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -232,11 +232,11 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnVisionRecoveryBatchResult,
-        this.MNa,
+        this.y3a,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
       ),
       RedDotController_1.RedDotController.BindRedDot(
         "VisionRecovery",
@@ -258,23 +258,23 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
         ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
           e,
         ).DropPreview;
-    for (const h of t.keys()) {
-      var s = [{ IncId: 0, ItemId: h }, t.get(h)];
+    for (const o of t.keys()) {
+      var s = [{ IncId: 0, ItemId: o }, t.get(o)];
       i.push(s);
     }
-    this.H3e.RefreshByData(i), this.cNa.RefreshByData(i);
+    this.H3e.RefreshByData(i), this.C3a.RefreshByData(i);
   }
   SMt(e, i, t) {
     var s = new CommonItemSelectView_1.CommonItemSelectViewOpenViewData(),
-      h = new SelectableComponent_1.SelectableComponentData();
-    (h.IsSingleSelected = !1),
-      (h.MaxSelectedGridNum = 0 === t ? this.dNa : this.CNa),
-      (h.OnChangeSelectedFunction = this.AMt),
+      o = new SelectableComponent_1.SelectableComponentData();
+    (o.IsSingleSelected = !1),
+      (o.MaxSelectedGridNum = 0 === t ? this.p3a : this.f3a),
+      (o.OnChangeSelectedFunction = this.AMt),
       (s.SelectableComponentType = 1),
       (s.ItemDataBaseList = e),
       (s.SelectedDataList = i),
       (s.ExpData = void 0),
-      (s.SelectableComponentData = h),
+      (s.SelectableComponentData = o),
       (s.UseWayId = 33),
       (s.InitSortToggleState = !0),
       this.CMt.RefreshUi(s),
@@ -292,19 +292,19 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
     var e = i.length,
       t = this.GetText(2),
       s = 0 < e ? "DeleteSelect" : "AutoSelect";
-    LguiUtil_1.LguiUtil.SetLocalTextNew(t, "Text_EchoSelect_Text", e, this.dNa),
+    LguiUtil_1.LguiUtil.SetLocalTextNew(t, "Text_EchoSelect_Text", e, this.p3a),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), s);
   }
-  fNa(e) {
+  S3a(e) {
     var e = e.length,
-      i = Math.floor(e / this.dNa);
-    this.GetText(11).SetText(e.toString() + "/" + this.CNa),
+      i = Math.floor(e / this.p3a);
+    this.GetText(11).SetText(e.toString() + "/" + this.f3a),
       this.GetText(12).SetText(i.toString()),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(11),
         "Text_BatchEchoSelect_Text",
         e,
-        this.CNa,
+        this.f3a,
       ),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(12),
@@ -334,7 +334,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
         !1,
       ));
   }
-  XKa(e) {
+  Mza(e) {
     this.gMt &&
       ((e = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(
         e.GetConfigId(),
@@ -349,30 +349,30 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnVisionRecoveryBatchResult,
-        this.MNa,
+        this.y3a,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemFuncValueChange,
-        this.SNa,
+        this.I3a,
       ),
       RedDotController_1.RedDotController.UnBindGivenUi(
         "VisionRecovery",
         this.GetItem(14),
       );
   }
-  U8a() {
+  u7a() {
     this.UiViewSequence.StopPrevSequence(!1),
       this.GetItem(8).SetUIActive(!0),
       this.GetButton(7).RootUIComp.SetUIActive(!1),
       this.UiViewSequence.PlaySequence("BatchIn");
   }
-  x8a() {
+  c7a() {
     this.UiViewSequence.StopPrevSequence(!1),
       this.GetButton(7).RootUIComp.SetUIActive(!0),
       this.UiViewSequence.PlaySequence("BatchOut");
   }
   IMt(e) {
-    if (0 === this.mNa) {
+    if (0 === this.g3a) {
       this.fMt || this.qMt();
       var i = [];
       for (const s of this.dMt) {
@@ -381,15 +381,12 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
             s.GetUniqueId(),
           );
         if (
-          (void 0 !== t &&
-            t.GetPhantomLevel() <= 0 &&
-            !t.GetIsLock() &&
-            i.push(s),
-          i.length >= this.dNa)
+          (void 0 !== t && t.GetVisionIfCanRecovery() && i.push(s),
+          i.length >= this.p3a)
         )
           break;
       }
-      i.length < this.dNa
+      i.length < this.p3a
         ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "RoleNoMaterial",
           )
@@ -401,11 +398,11 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
               );
             (e.SelectedCount = 1), this.cMt.push(e);
           }),
-          0 === e ? this.Zvt(this.cMt) : this.fNa(this.cMt),
+          0 === e ? this.Zvt(this.cMt) : this.S3a(this.cMt),
           this.SMt(this.mMt, this.cMt, e));
     }
   }
-  P8a(e) {
+  m7a(e) {
     if (1 === e) {
       this.fMt || this.qMt();
       for (const t of this.dMt) {
@@ -413,7 +410,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
           ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
             t.GetUniqueId(),
           );
-        if (!(void 0 === s || 0 < s.GetPhantomLevel() || s.GetIsLock())) {
+        if (void 0 !== s && s.GetVisionIfCanRecovery()) {
           var i = this.cMt.find((e) => e.IncId === s.GetIncrId());
           if (
             void 0 === i &&
@@ -422,12 +419,12 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
                 t,
               )).SelectedCount = 1),
             this.cMt.push(i),
-            this.cMt.length >= this.CNa)
+            this.cMt.length >= this.f3a)
           )
             break;
         }
       }
-      this.fNa(this.cMt), this.SMt(this.mMt, this.cMt, e);
+      this.S3a(this.cMt), this.SMt(this.mMt, this.cMt, e);
     }
   }
   qMt() {
@@ -444,39 +441,62 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
   TMt(e) {
     this.cMt.length <= 0 ||
       ((this.cMt = []),
-      0 === e ? this.Zvt(this.cMt) : this.fNa(this.cMt),
+      0 === e ? this.Zvt(this.cMt) : this.S3a(this.cMt),
       this.SMt(this.mMt, this.cMt, e));
   }
   RemoveAllVisionItemOutside() {
     (this.mMt =
       ModelManager_1.ModelManager.InventoryModel.GetUnEquipPhantomItemDataList()),
-      this.TMt(this.mNa);
+      this.TMt(this.g3a);
   }
-  gNa(h) {
+  v3a(s) {
+    var o = () => {
+      let e = !1;
+      for (const t of this.cMt)
+        if (
+          0 < t.IncId &&
+          ModelManager_1.ModelManager.VisionEquipGroupModel.CheckVisionListIfInGroup(
+            [t.IncId],
+          )
+        ) {
+          e = !0;
+          break;
+        }
+      var i;
+      e
+        ? ((i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(247)).FunctionMap.set(
+            2,
+            s,
+          ),
+          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+            i,
+          ))
+        : s();
+    };
     if (ModelManager_1.ModelManager.CalabashModel.HideVisionRecoveryConfirmBox)
-      h();
+      o();
     else {
       let e = !1,
         i = !1,
         t = !1;
       for (const n of this.cMt) {
-        var o =
+        var h =
           ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
             n.IncId,
           );
-        o &&
+        h &&
           (!e &&
             ModelManager_1.ModelManager.PhantomBattleModel.IsVisionHighQuality(
-              o,
+              h,
             ) &&
             (e = !0),
           !i &&
             ModelManager_1.ModelManager.PhantomBattleModel.IsVisionHighLevel(
-              o,
+              h,
             ) &&
             (i = !0),
           !t) &&
-          ModelManager_1.ModelManager.PhantomBattleModel.IsVisionHighRare(o) &&
+          ModelManager_1.ModelManager.PhantomBattleModel.IsVisionHighRare(h) &&
           (t = !0);
       }
       let s = void 0;
@@ -514,7 +534,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       }
       s
         ? ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(s)).SetTextArgs(...a),
-          r.FunctionMap.set(2, h),
+          r.FunctionMap.set(2, o),
           (r.HasToggle = !0),
           (r.ToggleText = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "Text_ItemRecycleConfirmToggle_text",
@@ -523,7 +543,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             r,
           ))
-        : h();
+        : o();
     }
   }
 }

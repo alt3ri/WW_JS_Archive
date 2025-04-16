@@ -65,7 +65,7 @@ let SceneItemOutletComponent =
         (this.OVs = Vector_1.Vector.Create()),
         (this.NVs = Rotator_1.Rotator.Create()),
         (this.kVs = Rotator_1.Rotator.Create()),
-        (this.q$a = () => {
+        (this.BJa = () => {
           this.Lie.RemoveTag(-171146886),
             void 0 !== this.EntityInSocket
               ? this.Lie.AddTag(-1603486396)
@@ -84,68 +84,69 @@ let SceneItemOutletComponent =
             !this.Lie?.HasTag(-709838471)
           )
             if (t) {
-              if (!this.qVs) {
-                t = e.GetComponent(0)?.GetBaseInfo();
-                if (t) {
-                  var i = this.Config?.Config;
-                  if (
-                    void 0 === i.Condition.EntityMatch ||
-                    (0, IUtil_1.isEntitiyMatch)(
-                      i.Condition.EntityMatch,
-                      t.Category,
-                    )
-                  ) {
-                    if (void 0 !== i.Condition.SelfState) {
-                      var t =
-                        GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
-                          i.Condition.SelfState,
-                        );
-                      if (!this.Lie || !this.Lie.HasTag(t)) return;
-                    }
-                    e.GetComponent(1) &&
-                      (t = e.GetComponent(143)) &&
-                      (t.CurrentState instanceof
-                        SceneItemManipulableCastState_1.SceneItemManipulableCastState ||
-                      t.CurrentState instanceof
-                        SceneItemManipulableDropState_1.SceneItemManipulableDropState ||
-                      t.CurrentState instanceof
-                        SceneItemManipulableResetState_1.SceneItemManipulableResetState
-                        ? this.Wga(e, i)
-                        : EventSystem_1.EventSystem.AddWithTarget(
-                            e,
-                            EventDefine_1.EEventName
-                              .OnManipulatableItemStateModified,
-                            this.Qga,
-                          ));
+              if (!this.qVs && e.GetComponent(0)?.GetBaseInfo()) {
+                t = this.Config?.Config;
+                if (
+                  void 0 === t.Condition.EntityMatch ||
+                  this.YCa(t.Condition.EntityMatch, e)
+                ) {
+                  if (void 0 !== t.Condition.SelfState) {
+                    var i = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+                      t.Condition.SelfState,
+                    );
+                    if (!this.Lie || !this.Lie.HasTag(i)) return;
                   }
+                  e.GetComponent(1) &&
+                    (i = e.GetComponent(154)) &&
+                    (i.CurrentState instanceof
+                      SceneItemManipulableCastState_1.SceneItemManipulableCastState ||
+                    i.CurrentState instanceof
+                      SceneItemManipulableDropState_1.SceneItemManipulableDropState ||
+                    i.CurrentState instanceof
+                      SceneItemManipulableResetState_1.SceneItemManipulableResetState
+                      ? this.NSa(e, t)
+                      : EventSystem_1.EventSystem.AddWithTarget(
+                          e,
+                          EventDefine_1.EEventName
+                            .OnManipulatableItemStateModified,
+                          this.FSa,
+                        ));
                 }
               }
             } else
               EventSystem_1.EventSystem.HasWithTarget(
                 e,
                 EventDefine_1.EEventName.OnManipulatableItemStateModified,
-                this.Qga,
+                this.FSa,
               ) &&
                 EventSystem_1.EventSystem.RemoveWithTarget(
                   e,
                   EventDefine_1.EEventName.OnManipulatableItemStateModified,
-                  this.Qga,
+                  this.FSa,
                 );
         }),
-        (this.Qga = (t, e, i) => {
+        (this.FSa = (t, e, i) => {
           var n = this.Config?.Config;
-          "BeDropping" === e &&
-            (this.Wga(i, n),
+          11 === e &&
+            (this.NSa(i, n),
             EventSystem_1.EventSystem.RemoveWithTarget(
               i,
               EventDefine_1.EEventName.OnManipulatableItemStateModified,
-              this.Qga,
+              this.FSa,
             ));
         });
     }
     GetSocketLocation(t) {
       var e = Vector_1.Vector.Create(this.GetSocketLocationOffset(t)),
         t = FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t)),
+        t = t ? this.n$t.GetSocketTransform(t) : this.n$t.ActorTransform;
+      return e.FromUeVector(t.TransformPosition(e.ToUeVector())), e;
+    }
+    GetFinalLocation(t) {
+      var e = Vector_1.Vector.Create(this.GetSocketLocationOffset(t)),
+        t =
+          (e.AdditionEqual(this.GetMatchSequenceOffset(t)),
+          FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t))),
         t = t ? this.n$t.GetSocketTransform(t) : this.n$t.ActorTransform;
       return e.FromUeVector(t.TransformPosition(e.ToUeVector())), e;
     }
@@ -181,6 +182,20 @@ let SceneItemOutletComponent =
           ? this.Config.Config.Animation.MatchReferenceKey
           : void 0;
     }
+    GetLockingEffect(t) {
+      if (
+        this.Config.Config.Type ===
+        IComponent_1.EItemFoundation.CategoryMatching
+      )
+        return this.Gvn(t)?.ItemLockingConfig?.EffectPath;
+    }
+    GetLockingItemTag(t) {
+      if (
+        this.Config.Config.Type ===
+        IComponent_1.EItemFoundation.CategoryMatching
+      )
+        return this.Gvn(t)?.ItemLockingConfig?.TeleControlPerform;
+    }
     GetIsNeedAttach() {
       switch (this.Config.Config.Type) {
         case IComponent_1.EItemFoundation.CategoryMatching:
@@ -209,7 +224,7 @@ let SceneItemOutletComponent =
           break;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var e = t.GetComponent(125);
+          var e = t.GetComponent(136);
           this.bvn.AimBlockByIndex(this.qvn, e);
       }
     }
@@ -219,7 +234,7 @@ let SceneItemOutletComponent =
           return !1;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var e = t.GetComponent(125);
+          var e = t.GetComponent(136);
           return this.bvn.CheckJigsawBlockIllegal(e, this.qvn);
         default:
           return !1;
@@ -231,7 +246,7 @@ let SceneItemOutletComponent =
           return !0;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var i = t.GetComponent(125);
+          var i = t.GetComponent(136);
           return this.bvn.CheckJigsawBlockCorrect(i, e ?? this.qvn);
         default:
           return !0;
@@ -264,7 +279,7 @@ let SceneItemOutletComponent =
           return Rotator_1.Rotator.Create(e.Y ?? 0, e.Z ?? 0, e.X ?? 0);
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          e = t.GetComponent(125);
+          e = t.GetComponent(136);
           return Rotator_1.Rotator.Create(0, -e.Rotation, 0);
         default:
           return Rotator_1.Rotator.ZeroRotatorProxy;
@@ -274,19 +289,11 @@ let SceneItemOutletComponent =
       if (e?.Valid) {
         let t = void 0;
         if ((t = this.Nvn(this.wvn))) return t;
-        var i = e.GetComponent(181),
-          n = e.GetComponent(0).GetBaseInfo();
-        if (n) {
-          for (const r of this.Bvn)
-            if ((0, IUtil_1.isEntitiyMatch)(r[0], n.Category)) {
-              if (!r[0].State?.State) {
-                (t = r[1]), (this.wvn = -1);
-                break;
-              }
-              if (i.ContainsTagByName(r[0].State.State)) {
-                (t = r[1]), (this.wvn = -1);
-                break;
-              }
+        if (e.GetComponent(0).GetBaseInfo()) {
+          for (var [i, n] of this.Bvn)
+            if (this.YCa(i, e)) {
+              (t = n), (this.wvn = -1);
+              break;
             }
           return t;
         }
@@ -315,8 +322,8 @@ let SceneItemOutletComponent =
     OnInitData(t) {
       t = t.GetParam(SceneItemOutletComponent_1)[0];
       if (
-        ((this.n$t = this.Entity.GetComponent(187)),
-        (this.Lie = this.Entity.GetComponent(190)),
+        ((this.n$t = this.Entity.GetComponent(200)),
+        (this.Lie = this.Entity.GetComponent(203)),
         (this.Config = t),
         this.Config.Config.Type ===
           IComponent_1.EItemFoundation.CategoryMatching)
@@ -328,7 +335,7 @@ let SceneItemOutletComponent =
       return (
         (this.xvn = void 0),
         (this.wvn = -1),
-        this.Entity.GetComponent(109).SetLogicRange(
+        this.Entity.GetComponent(119).SetLogicRange(
           ConfigManager_1.ConfigManager.ManipulateConfig.SearchRange,
         ),
         !0
@@ -336,14 +343,14 @@ let SceneItemOutletComponent =
     }
     OnStart() {
       this.n$t.Owner.Tags.Add(SCENE_ITEM_OUTLET_TAG),
-        this.Lie?.AddTagAddOrRemoveListener(-662723379, this.q$a),
-        this.Lie?.AddTagAddOrRemoveListener(-709838471, this.q$a),
+        this.Lie?.AddTagAddOrRemoveListener(-662723379, this.BJa),
+        this.Lie?.AddTagAddOrRemoveListener(-709838471, this.BJa),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
           this.oFe,
         );
-      var t = this.Entity.GetComponent(181);
+      var t = this.Entity.GetComponent(194);
       return (
         t.HasTag(-662723379) || t.HasTag(-709838471)
           ? t.AddTag(-1381638598)
@@ -357,7 +364,7 @@ let SceneItemOutletComponent =
           IComponent_1.EItemFoundation.BuildingBlock ||
         this.Config.Config.Type === IComponent_1.EItemFoundation.PulseDevice
       ) {
-        if (((this.bvn = this.Entity.GetComponent(124)), !this.bvn)) return !1;
+        if (((this.bvn = this.Entity.GetComponent(135)), !this.bvn)) return !1;
       } else
         this.Config.Config.Type ===
           IComponent_1.EItemFoundation.RangeAdsorption &&
@@ -380,8 +387,8 @@ let SceneItemOutletComponent =
     }
     OnEnd() {
       return (
-        this.Lie?.RemoveTagAddOrRemoveListener(-662723379, this.q$a),
-        this.Lie?.RemoveTagAddOrRemoveListener(-709838471, this.q$a),
+        this.Lie?.RemoveTagAddOrRemoveListener(-662723379, this.BJa),
+        this.Lie?.RemoveTagAddOrRemoveListener(-709838471, this.BJa),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
@@ -405,7 +412,7 @@ let SceneItemOutletComponent =
       if (!e) return !1;
       switch (this.Config.Config.Type) {
         case IComponent_1.EItemFoundation.CategoryMatching:
-          return this.CheckCategoryMatchingMatchManipulatable(e);
+          return this.CheckCategoryMatchingMatchManipulatable(t);
         case IComponent_1.EItemFoundation.RangeAdsorption:
           return this.CheckRangeAdsorptionMatchManipulatable(e);
         case IComponent_1.EItemFoundation.BuildingBlock:
@@ -416,14 +423,18 @@ let SceneItemOutletComponent =
       }
     }
     CheckCategoryMatchingMatchManipulatable(t) {
-      for (const n of this.Bvn)
-        if ((0, IUtil_1.isEntitiyMatch)(n[0], t.Category)) {
-          if (!(e = n[1]).Condition.SelfState) return !0;
-          var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
-              e.Condition.SelfState,
-            ),
-            i = this.Entity.GetComponent(181);
-          if (i && i.HasTag(e)) return !0;
+      var e,
+        i,
+        n = this.Entity.GetComponent(194);
+      for ([e, i] of this.Bvn)
+        if (this.YCa(e, t)) {
+          if (i.Condition.SelfState) {
+            var r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+              i.Condition.SelfState,
+            );
+            if (!n?.HasTag(r)) continue;
+          }
+          return !0;
         }
       return !1;
     }
@@ -436,7 +447,7 @@ let SceneItemOutletComponent =
           (t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
             e.Condition.SelfState,
           )),
-            (e = this.Entity.GetComponent(181));
+            (e = this.Entity.GetComponent(194));
           if (!e) return !1;
           if (!e.HasTag(t)) return !1;
         }
@@ -444,11 +455,11 @@ let SceneItemOutletComponent =
       return !0;
     }
     ChangeSilentTag() {
-      var t = this.Entity.GetComponent(181);
+      var t = this.Entity.GetComponent(194);
       t.HasTag(-1381638598) &&
         (t.RemoveTag(-1381638598), t.AddTag(-1603486396)),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("SceneItem", 32, "[底座] ChangeSilentTag", [
+          Log_1.Log.Debug("SceneItem", 31, "[底座] ChangeSilentTag", [
             "State",
             t.GetTagNames(),
           ]);
@@ -458,7 +469,7 @@ let SceneItemOutletComponent =
         ?.ItemFoundation;
     }
     IsLockOrSlient() {
-      var t = this.Entity.GetComponent(181);
+      var t = this.Entity.GetComponent(194);
       return t.HasTag(-662723379) || t.HasTag(-709838471);
     }
     MultiplayerLimitTypeCheck() {
@@ -483,7 +494,7 @@ let SceneItemOutletComponent =
     GetCurrentChooseIndex() {
       return this.qvn;
     }
-    Wga(t, e) {
+    NSa(t, e) {
       var i = t.GetComponent(1),
         i =
           (this.GVs.DeepCopy(i.ActorLocationProxy),
@@ -505,10 +516,25 @@ let SceneItemOutletComponent =
           (this.kVs.DeepCopy(
             i.TransformRotation(n.Quaternion().ToUeQuat()).Rotator(),
           ),
-          t.GetComponent(143));
+          t.GetComponent(154));
       e.AdsorbedState?.InitAdsorptionConfig(this.IVs, this.OVs, this.kVs),
-        (e.CurrentState = e.AdsorbedState),
+        e.SetState(12, "ChangeToAdsorbState"),
         (e.TargetOutletComponent = this);
+    }
+    YCa(t, e) {
+      var i = e.GetComponent(0).GetBaseInfo();
+      if (!i) return !1;
+      if (!(0, IUtil_1.isEntitiyMatch)(t, i.Category)) return !1;
+      if (
+        t.State?.State &&
+        !e.GetComponent(194)?.ContainsTagByName(t.State.State)
+      )
+        return !1;
+      if (t.EntityIds?.length) {
+        i = e.GetComponent(0).GetPbDataId();
+        if (!i || !t.EntityIds.includes(i)) return !1;
+      }
+      return !0;
     }
     RequestMatch(t) {
       switch (this.Config.Config.Type) {
@@ -518,14 +544,14 @@ let SceneItemOutletComponent =
           break;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          this.jQa(t);
+          this.fza(t);
       }
     }
     Kpn(t) {
       var e = this.Entity.GetComponent(0).GetCreatureDataId(),
         i = t.GetComponent(0).GetCreatureDataId(),
-        n = t.GetComponent(187);
-      const r = t.GetComponent(143);
+        n = t.GetComponent(200);
+      const r = t.GetComponent(154);
       (t = Protocol_1.Aki.Protocol.Sds.create()),
         (t.F4n = MathUtils_1.MathUtils.NumberToLong(e)),
         (t._Kn = MathUtils_1.MathUtils.NumberToLong(i)),
@@ -542,30 +568,30 @@ let SceneItemOutletComponent =
         (i.Yaw = n.Yaw),
         (t.l8n = e),
         (t._8n = i),
-        Net_1.Net.Call(15277, t, (t) => {
+        Net_1.Net.Call(29023, t, (t) => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Character",
-              32,
+              31,
               "[Manipulate] Match outlet net response!",
               ["active", t.uKn],
             ),
             t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                   t.Q4n,
-                  22034,
+                  19926,
                 )
               : r.AfterRequestMatch(1 === t.uKn, this.Entity);
         });
     }
-    jQa(t) {
+    fza(t) {
       var e = Protocol_1.Aki.Protocol.ZJn.create(),
         i = Protocol_1.Aki.Protocol.TFs.create(),
         n = Protocol_1.Aki.Protocol.LFs.create(),
         r = Protocol_1.Aki.Protocol.Gks.create(),
         o = Protocol_1.Aki.Protocol.D2s.create(),
-        s = t.GetComponent(125),
-        a = t.GetComponent(187),
+        s = t.GetComponent(136),
+        a = t.GetComponent(200),
         h = a.ActorLocationProxy,
         a = a.ActorRotationProxy;
       (i.N5n = this.qvn.Row),
@@ -588,11 +614,11 @@ let SceneItemOutletComponent =
         (e.H5n = 1),
         (e.k5n = i),
         (e.sKn = n),
-        Net_1.Net.Call(15682, e, (t) => {
+        Net_1.Net.Call(16370, e, (t) => {
           t.G9n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t.G9n,
-              22034,
+              19926,
             );
         });
     }
@@ -602,7 +628,7 @@ let SceneItemOutletComponent =
   });
 (SceneItemOutletComponent = SceneItemOutletComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(148)],
+    [(0, RegisterComponent_1.RegisterComponent)(159)],
     SceneItemOutletComponent,
   )),
   (exports.SceneItemOutletComponent = SceneItemOutletComponent);

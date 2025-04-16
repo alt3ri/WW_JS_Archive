@@ -8,6 +8,9 @@ class LogicDataSuiGuang extends LogicDataBase_1.default {
       (this.NeedTag = void 0),
       (this.NewBulletId = "");
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataSuiGuang;
 //# sourceMappingURL=LogicDataSuiGuang.js.map

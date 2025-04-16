@@ -8,6 +8,9 @@ class LogicDataSupport extends LogicDataBase_1.default {
       (this.Camp = 0),
       (this.Effect = void 0);
   }
+  Constructor() {
+    super.Constructor();
+  }
 }
 exports.default = LogicDataSupport;
 //# sourceMappingURL=LogicDataSupport.js.map

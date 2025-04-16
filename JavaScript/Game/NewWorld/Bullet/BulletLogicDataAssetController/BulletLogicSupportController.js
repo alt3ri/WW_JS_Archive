@@ -23,7 +23,7 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
       );
   }
   koe() {
-    (this.Q7o = new UE.Transform()),
+    (this.Q7o = new UE.TransformDouble()),
       (this.X7o = Vector_1.Vector.Create(0, 0, 0)),
       (this.uoe = UE.NewObject(UE.TraceLineElement.StaticClass())),
       (this.uoe.bIsSingle = !0),
@@ -57,13 +57,13 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
         )));
   }
   $7o(t) {
-    var e = this.Bullet.GetComponent(155),
-      i = t.GetComponent(155).Owner,
-      t = UE.KismetMathLibrary.TransformLocation(
-        i.GetTransform(),
+    var e = this.Bullet.GetComponent(167),
+      i = t.GetComponent(167).Owner,
+      t = UE.KismetMathLibrary.D_TransformLocation(
+        i.D_GetTransform(),
         t.Data.Base.CenterOffset.ToUeVector(),
       ),
-      o = UE.KismetMathLibrary.TransformLocation(
+      o = UE.KismetMathLibrary.D_TransformLocation(
         e.ActorTransform,
         this.Bullet.Data.Base.CenterOffset.ToUeVector(),
       );
@@ -86,8 +86,8 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
           ),
           r.SetRotation(e.ActorRotation.Quaternion()),
           r.SetTranslation(this.X7o.ToUeVector()),
-          r.SetScale3D(Vector_1.Vector.OneVector))
-        : (r = i.GetTransform()),
+          r.SetScale3D(Vector_1.Vector.OneVectorDouble))
+        : (r = i.D_GetTransform()),
       (this.uoe.WorldContextObject = void 0),
       r
     );

@@ -74,7 +74,7 @@ class Quat {
           (h = t[1]),
           (s = t[2]),
           (t = t[3]),
-          a.Set(i || 0, h || 0, s || 0, t || 0)),
+          a.Set(i || 0, h || 0, s || 0, t || 1)),
       a
     );
   }
@@ -115,7 +115,7 @@ class Quat {
       : ((i = Math.abs(a[0]) > Math.abs(a[1])),
         (r[0] = i ? -a[2] : 0),
         (r[1] = i ? 0 : -a[2]),
-        (r[1] = i ? a[0] : a[1]),
+        (r[2] = i ? a[0] : a[1]),
         (r[3] = 0)),
       s.Normalize();
   }
@@ -188,6 +188,21 @@ class Quat {
     (i[0] = t[0] + h[3] * s + r),
       (i[1] = t[1] + h[3] * a + o),
       (i[2] = t[2] + h[3] * e + u);
+  }
+  UnRotateVector(t, i) {
+    var h = this.Tuple,
+      s = [-h[0], -h[1], -h[2]],
+      t = t.Tuple,
+      a = 2 * (s[1] * t[2] - s[2] * t[1]),
+      e = 2 * (s[2] * t[0] - s[0] * t[2]),
+      r = 2 * (s[0] * t[1] - s[1] * t[0]),
+      o = s[2] * a - s[0] * r,
+      u = s[0] * e - s[1] * a,
+      h = h[3],
+      i = i.Tuple;
+    (i[0] = t[0] + h * a + (s[1] * r - s[2] * e)),
+      (i[1] = t[1] + h * e + o),
+      (i[2] = t[2] + h * r + u);
   }
   Rotator(t) {
     var i = this.Tuple;

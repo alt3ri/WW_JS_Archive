@@ -62,7 +62,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
                 ))
               : t());
       }),
-      (this.Tya = () => {
+      (this.Dya = () => {
         ControllerHolder_1.ControllerHolder.MoonChasingController.OpenHelperView();
       }),
       (this.yke = (t, e) => {
@@ -109,7 +109,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
         this.SecondCost.CreateThenShowByActorAsync(this.GetItem(11).GetOwner()),
       ]);
   }
-  async hfa() {
+  async ofa() {
     (this.RoleModule = new DelegationRoleModule_1.DelegationRoleModule()),
       await this.RoleModule.CreateThenShowByActorAsync(
         this.GetItem(9).GetOwner(),
@@ -123,7 +123,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
         this.GetItem(8).GetOwner(),
       );
   }
-  async lfa() {
+  async nfa() {
     (this.EditTeamModule = new EditTeamModule_1.EditTeamModule()),
       this.EditTeamModule.SetClickEvent(this.yke),
       this.EditTeamModule.SetCanExecuteChange(this.Lke),
@@ -138,7 +138,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
   }
   VKs() {
     (this.HelperBtn = new ButtonItem_1.ButtonItem(this.GetItem(14))),
-      this.HelperBtn.SetFunction(this.Tya);
+      this.HelperBtn.SetFunction(this.Dya);
   }
   async OnBeforeStartAsync() {
     (this.RecommendLayout = new GenericLayout_1.GenericLayout(
@@ -151,7 +151,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
         this.vke,
         this.GetItem(2).GetOwner(),
       )),
-      await Promise.all([this.PAr(), this.ido(), this.hfa(), this.lfa()]),
+      await Promise.all([this.PAr(), this.ido(), this.ofa(), this.nfa()]),
       this.VKs();
   }
   async OnBeforeShowAsyncImplement() {
@@ -224,7 +224,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
     for (const r of this.CharacterListModule.GetItemList())
       r.SetGoodItemActive(i.includes(r.GetId()));
   }
-  async _fa() {
+  async sfa() {
     var t =
       ModelManager_1.ModelManager.MoonChasingBusinessModel.GetOwnEditTeamDataList();
     this.EditTeamModule.SetEditTeamDataList(t),
@@ -259,7 +259,7 @@ class DelegationDetailsModule extends UiPanelBase_1.UiPanelBase {
       this.aqe(),
       this.Dke(),
       this.Rke(),
-      await Promise.all([this._fa(), this.Uke(), this.Ike()]),
+      await Promise.all([this.sfa(), this.Uke(), this.Ike()]),
       this.Ake(),
       this.Pke(),
       this.Tke(),

@@ -130,7 +130,7 @@ class AiShengGuYangCamera {
             : (this.Wce.Y = 0 < this.Wce.Y ? this.Kce.Y : -this.Kce.Y),
         this.Cme &&
           (this.zce.FromUeVector(
-            this.kce.GetLocationAtDistanceAlongSpline(this.ome, 1),
+            this.kce.D_GetLocationAtDistanceAlongSpline(this.ome, 1),
           ),
           this.tme.FromUeVector(
             this.kce.GetDirectionAtDistanceAlongSpline(this.ome, 0),
@@ -138,28 +138,28 @@ class AiShengGuYangCamera {
           this.tme.Multiply(200, this.ime),
           this.ime.AdditionEqual(this.zce),
           (this.Cme = !1),
-          this.gme.FromUeVector(this.qce.K2_GetActorLocation()),
+          this.gme.FromUeVector(this.qce.D_K2_GetActorLocation()),
           this.fz.FromUeVector(this.qce.GetActorForwardVector()),
           this.fz.MultiplyEqual(-1300),
           this.gme.AdditionEqual(this.fz),
           this.fz.FromUeVector(this.qce.GetActorUpVector()),
           this.fz.MultiplyEqual(250),
           this.gme.AdditionEqual(this.fz),
-          this.Ic.K2_SetActorLocationAndRotation(
+          this.Ic.D_K2_SetActorLocationAndRotation(
             this.gme.ToUeVector(),
             this.qce.K2_GetActorRotation(),
             !1,
             void 0,
             !1,
           ),
-          this.gme.FromUeVector(this.qce.K2_GetActorLocation()),
+          this.gme.FromUeVector(this.qce.D_K2_GetActorLocation()),
           this.fz.FromUeVector(this.qce.GetActorForwardVector()),
           this.fz.MultiplyEqual(-1100),
           this.gme.AdditionEqual(this.fz),
           this.fz.FromUeVector(this.qce.GetActorUpVector()),
           this.fz.MultiplyEqual(150),
           this.gme.AdditionEqual(this.fz),
-          this.Fce.K2_SetActorLocationAndRotation(
+          this.Fce.D_K2_SetActorLocationAndRotation(
             this.gme.ToUeVector(),
             this.qce.K2_GetActorRotation(),
             !1,
@@ -168,7 +168,7 @@ class AiShengGuYangCamera {
           )),
         (this.ome = this.Hce + this.$ce * t),
         this.zce.FromUeVector(
-          this.kce.GetLocationAtDistanceAlongSpline(this.ome, 1),
+          this.kce.D_GetLocationAtDistanceAlongSpline(this.ome, 1),
         ),
         this.Zce.FromUeVector(
           this.kce.GetUpVectorAtDistanceAlongSpline(this.ome, 0),
@@ -184,8 +184,8 @@ class AiShengGuYangCamera {
         this.Zce.Multiply(this.Wce.X, this.gme),
         this.eme.Multiply(this.Wce.Y, this.fz),
         this.gme.Addition(this.fz, this.rme),
-        this.gme.FromUeVector(this.qce.K2_GetActorLocation()),
-        this.fz.FromUeVector(this.Ic.K2_GetActorLocation()),
+        this.gme.FromUeVector(this.qce.D_K2_GetActorLocation()),
+        this.fz.FromUeVector(this.Ic.D_K2_GetActorLocation()),
         (this.Yce = Vector_1.Vector.Dist(this.gme, this.fz)),
         this.ime.Addition(this.rme, this.fz),
         (this.nme = Vector_1.Vector.Dist(this.gme, this.fz)),
@@ -199,7 +199,7 @@ class AiShengGuYangCamera {
         ),
         this.gme.AdditionEqual(this.fz),
         this.fz.FromUeVector(
-          this.kce.GetLocationAtDistanceAlongSpline(this.ome + 2e3, 1),
+          this.kce.D_GetLocationAtDistanceAlongSpline(this.ome + 2e3, 1),
         ),
         this.gme.Addition(this.fz, this.sme),
         this.ome >= this.mme &&
@@ -265,8 +265,8 @@ class AiShengGuYangCamera {
               : i),
             (s = MathUtils_1.MathUtils.RangeClamp(this.ume, -25, 25, 0, 790)),
             (this.cme = MathUtils_1.MathUtils.InterpTo(this.cme, s, t, 5)))
-        : (this.gme.FromUeVector(this.Ic.K2_GetActorLocation()),
-          this.fz.FromUeVector(this.qce.K2_GetActorLocation()),
+        : (this.gme.FromUeVector(this.Ic.D_K2_GetActorLocation()),
+          this.fz.FromUeVector(this.qce.D_K2_GetActorLocation()),
           this.fz.SubtractionEqual(this.gme),
           this.fz.Normalize(MathUtils_1.MathUtils.KindaSmallNumber),
           (this.fz.Z = 0),
@@ -291,14 +291,14 @@ class AiShengGuYangCamera {
           (this._me = Time_1.Time.Now),
           (s = MathUtils_1.MathUtils.RangeClamp(this.ume, -25, 25, 0, 790)),
           (this.cme = MathUtils_1.MathUtils.InterpTo(this.cme, s, t, 3))),
-        this.gme.FromUeVector(this.qce.K2_GetActorLocation()),
+        this.gme.FromUeVector(this.qce.D_K2_GetActorLocation()),
         this.fz.FromUeVector(this.qce.GetActorForwardVector()),
         this.fz.MultiplyEqual(-1100),
         this.gme.AdditionEqual(this.fz),
         this.fz.FromUeVector(this.qce.GetActorUpVector()),
         this.fz.MultiplyEqual(250),
         this.gme.AdditionEqual(this.fz),
-        this.fz.FromUeVector(this.Fce.K2_GetActorLocation()),
+        this.fz.FromUeVector(this.Fce.D_K2_GetActorLocation()),
         MathUtils_1.MathUtils.VectorInterpTo(
           this.fz,
           this.gme,
@@ -308,8 +308,8 @@ class AiShengGuYangCamera {
         ),
         this.fme.FromUeRotator(this.Fce.K2_GetActorRotation()),
         this.pme.FromUeRotator(
-          UE.KismetMathLibrary.FindLookAtRotation(
-            this.Fce.K2_GetActorLocation(),
+          UE.KismetMathLibrary.D_FindLookAtRotation(
+            this.Fce.D_K2_GetActorLocation(),
             this.sme.ToUeVector(),
           ),
         ),
@@ -320,7 +320,7 @@ class AiShengGuYangCamera {
           60,
           this.vme,
         ),
-        this.Fce.K2_SetActorLocationAndRotation(
+        this.Fce.D_K2_SetActorLocationAndRotation(
           this.pz.ToUeVector(),
           this.vme.ToUeRotator(),
           !1,
@@ -336,8 +336,8 @@ class AiShengGuYangCamera {
           this.vme,
         ),
         (this.dme = MathUtils_1.MathUtils.InterpTo(this.dme, this.cme, t, 6)),
-        this.Ic.K2_SetActorLocationAndRotation(
-          this.Vce.GetLocationAtDistanceAlongSpline(this.dme, 1),
+        this.Ic.D_K2_SetActorLocationAndRotation(
+          this.Vce.D_GetLocationAtDistanceAlongSpline(this.dme, 1),
           this.vme.ToUeRotator(),
           !1,
           void 0,
@@ -354,11 +354,17 @@ class AiShengGuYangCamera {
   }
   OnDestroy() {
     this.Oce &&
-      (ActorSystem_1.ActorSystem.Put(this.Oce),
+      (ActorSystem_1.ActorSystem.Put(
+        "AiShengGuYangCamera.OnDestroy1",
+        this.Oce,
+      ),
       (this.kce = void 0),
       (this.Oce = void 0)),
       this.Fce &&
-        (ActorSystem_1.ActorSystem.Put(this.Fce),
+        (ActorSystem_1.ActorSystem.Put(
+          "AiShengGuYangCamera.OnDestroy2",
+          this.Fce,
+        ),
         (this.Vce = void 0),
         (this.Fce = void 0)),
       (this.Ic = void 0),
@@ -373,13 +379,16 @@ class AiShengGuYangCamera {
     i?.Valid &&
       (t = i.Entity?.GetComponent(3)?.Actor) instanceof
         TsBaseCharacter_1.default &&
-      ((this.qce = t),
-      this.qce.CharacterMovement?.SetMovementMode(5, 0),
-      (this.Gce = i.Entity?.GetComponent(38)),
+      ((this.qce = t).KuroSetMovementMode({
+        Mode: 5,
+        CustomMode: 0,
+        Context: "[AiShengGuYangCamera.OnInitInternal]",
+      }),
+      (this.Gce = i.Entity?.GetComponent(44)),
       this.Gce?.Valid && (this.Gce.CanMoveFromInput = !1),
-      (this.Lie = i.Entity?.GetComponent(190)),
+      (this.Lie = i.Entity?.GetComponent(203)),
       this.Lie?.Valid) &&
-      ((this.Nce = i.Entity?.GetComponent(54)), this.Nce?.Valid) &&
+      ((this.Nce = i.Entity?.GetComponent(61)), this.Nce?.Valid) &&
       (this.Mme.Set(
         Vector_1.Vector.ZeroVectorProxy,
         Quat_1.Quat.Create(),
@@ -407,7 +416,7 @@ class AiShengGuYangCamera {
         ));
   }
   Sme(t, i, s) {
-    var s = UE.KismetMathLibrary.FindLookAtRotation(
+    var s = UE.KismetMathLibrary.D_FindLookAtRotation(
         t.ToUeVector(),
         s.ToUeVector(),
       ),

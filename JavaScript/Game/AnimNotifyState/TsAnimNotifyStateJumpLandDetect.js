@@ -36,6 +36,14 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
       (this.OwnerTransform = Transform_1.Transform.Create()),
       (this.ParamsMap = new Map());
   }
+  Constructor() {
+    (this.TsInited = !1),
+      (this.TmpVector = Vector_1.Vector.Create()),
+      (this.TmpVector2 = Vector_1.Vector.Create()),
+      (this.TmpRotator = Rotator_1.Rotator.Create()),
+      (this.OwnerTransform = Transform_1.Transform.Create()),
+      (this.ParamsMap = new Map());
+  }
   Init() {
     (this.TsInited && this.ParamsMap) ||
       ((this.TsInited = !0),
@@ -59,27 +67,16 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
       s = Vector_1.Vector.Create(),
       t = t.GetAnimInstance(),
       c =
-        (this.OwnerTransform.FromUeTransform(i.GetTransform()),
+        (this.OwnerTransform.FromUeTransform(i.D_GetTransform()),
         this.GetCurveLocation(t, 0, this.TmpVector),
         this.GetCurveRotator(t, 0, this.TmpRotator),
         this.GetCurveLocation(t, r, this.TmpVector2),
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "Test",
-            6,
-            "JumpLandDetect",
-            ["Anim", t.GetMainAnimsDebugText()],
-            ["T1", this.TmpVector],
-            ["T2", this.TmpVector2],
-          ),
         MathUtils_1.MathUtils.InverseTransformPositionNoScale(
           this.TmpVector,
           this.TmpRotator,
           this.TmpVector2,
           this.TmpVector2,
         ),
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Test", 6, "JumpLandDetect", ["T2", this.TmpVector2]),
         (this.TmpVector2.Z -= this.EndPointHeight),
         this.OwnerTransform.TransformPosition(this.TmpVector2, this.TmpVector2),
         Vector_1.Vector.Create()),
@@ -96,8 +93,8 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
         this.OnlyDown ? n.DeepCopy(o) : o.Addition(h, n),
         o.Subtraction(h, s),
         (0, puerts_1.$ref)(UE.NewArray(UE.HitResult))),
-      m =
-        (UE.KismetSystemLibrary.SphereTraceMulti(
+      f =
+        (UE.KismetSystemLibrary.D_SphereTraceMulti(
           i,
           n.ToUeVector(),
           s.ToUeVector(),
@@ -113,24 +110,24 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
           5,
         ),
         (0, puerts_1.$unref)(_)),
-      u = m.Num();
+      m = f.Num();
     a.TotalTime = 0;
-    for (let t = (a.NowTime = 0); t < u; ++t) {
-      var f = m.Get(t);
-      if (f.bBlockingHit)
-        return !f.Actor.ActorHasTag(this.IgnoreActorTag) &&
-          i.CharacterMovement.IsWalkable(f)
-          ? ((f = Vector_1.Vector.Create(f.Location)).Subtraction(
+    for (let t = (a.NowTime = 0); t < m; ++t) {
+      var u = f.Get(t);
+      if (u.bBlockingHit)
+        return !u.Actor.ActorHasTag(this.IgnoreActorTag) &&
+          i.CharacterMovement.IsWalkable(u)
+          ? ((u = Vector_1.Vector.Create(u.Location)).Subtraction(
               o,
               a.HeightOffset,
             ),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Character",
-                58,
+                57,
                 "JumpLandDetectStart",
                 ["tempTarget", o],
-                ["hitLocation", f],
+                ["hitLocation", u],
                 ["startLocation", n],
                 ["detectOffset", h],
                 ["finalLocation", this.TmpVector2],
@@ -164,16 +161,26 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
     return (
       t instanceof TsBaseCharacter_1.default &&
       ((r = t.GetEntityIdNoBlueprint()), !!(r = this.ParamsMap.get(r))) &&
-      ((i = r.Entity.GetComponent(161)),
-      r.NowTime <= r.TotalTime &&
-        i.PositionState ===
-          CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
-        0 < r.TotalTime &&
-        ((i = (r.TotalTime - r.NowTime) / r.TotalTime), this.Move(r, i)),
-      r.NowTime >= r.TotalTime &&
-        this.EndPointHeight <= 0 &&
-        t.CharacterMovement.SetMovementMode(1, 0),
-      !0)
+      ((i = r.Entity.GetComponent(173))
+        ? (r.NowTime <= r.TotalTime &&
+            i.PositionState ===
+              CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
+            0 < r.TotalTime &&
+            ((i = (r.TotalTime - r.NowTime) / r.TotalTime), this.Move(r, i)),
+          r.NowTime >= r.TotalTime &&
+            this.EndPointHeight <= 0 &&
+            t.KuroSetMovementMode({
+              Mode: 1,
+              CustomMode: 0,
+              Context: "[TsAnimNotifyStateJumpLandDetect.K2_NotifyEnd]",
+            }),
+          !0)
+        : (Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Test", 6, "JumpLandDetect No Unified", [
+              "Actor",
+              t.GetName(),
+            ]),
+          !1))
     );
   }
   K2_NotifyTick(t, e, r) {
@@ -182,7 +189,7 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
     return (
       t instanceof TsBaseCharacter_1.default &&
       ((t = t.GetEntityIdNoBlueprint()), !!(t = this.ParamsMap.get(t))) &&
-      (t.Entity.GetComponent(161).PositionState ===
+      (t.Entity.GetComponent(173).PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Ground
         ? (t.TotalTime -= r)
         : t.NowTime <= t.TotalTime &&
@@ -213,11 +220,11 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
   }
   GetCurveLocation(t, e, r) {
     (r.X = t.GetMainAnimsCurveValueWithDelta(
-      CharacterNameDefines_1.CharacterNameDefines.ROOT_X,
+      CharacterNameDefines_1.CharacterNameDefines.ROOT_Y,
       e,
     )),
-      (r.Y = t.GetMainAnimsCurveValueWithDelta(
-        CharacterNameDefines_1.CharacterNameDefines.ROOT_Y,
+      (r.Y = -t.GetMainAnimsCurveValueWithDelta(
+        CharacterNameDefines_1.CharacterNameDefines.ROOT_X,
         e,
       )),
       (r.Z = t.GetMainAnimsCurveValueWithDelta(

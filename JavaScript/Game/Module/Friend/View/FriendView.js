@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Platform_1 = require("../../../../Launcher/Platform/Platform"),
   PlatformSdkManagerNew_1 = require("../../../../Launcher/Platform/PlatformSdk/PlatformSdkManagerNew"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -233,7 +234,9 @@ class FriendView extends UiViewBase_1.UiViewBase {
       );
   }
   async OnBeforeStartAsync() {
-    (this.y9t = this.GetLoopScrollViewComponent(2).RootUIComp),
+    Platform_1.Platform.IsPs5Platform() &&
+      this.GetButton(9)?.SetSelfInteractive(!1),
+      (this.y9t = this.GetLoopScrollViewComponent(2).RootUIComp),
       (this.p9t = new ButtonItem_1.ButtonItem(this.GetItem(6))),
       (this.v9t = new ButtonItem_1.ButtonItem(this.GetItem(7)));
     var e = this.GetItem(3);
@@ -241,8 +244,9 @@ class FriendView extends UiViewBase_1.UiViewBase {
       this.GetLoopScrollViewComponent(2),
       e.GetOwner(),
       this.I9t,
+      !0,
     )),
-      this.Jxa(),
+      this.iPa(),
       await this.UDt();
   }
   OnBeforeShow() {
@@ -374,15 +378,15 @@ class FriendView extends UiViewBase_1.UiViewBase {
       ? (this.y9t?.SetUIActive(!0), this.g9t.ReloadData(e))
       : this.y9t?.SetUIActive(!1);
   }
-  Jxa() {
+  iPa() {
     PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.SupportSwitchFriendShowType()
       ? (this.GetExtendToggle(10).RootUIComp.SetUIActive(!0),
         this.GetText(11).SetUIActive(!0),
-        this.Zxa())
+        this.rPa())
       : (this.GetExtendToggle(10).RootUIComp.SetUIActive(!1),
         this.GetText(11).SetUIActive(!1));
   }
-  Zxa() {
+  rPa() {
     var e =
       PlatformSdkManagerNew_1.PlatformSdkManagerNew.GetPlatformSdk()?.GetSdkFriendOnlyState()
         ? 1

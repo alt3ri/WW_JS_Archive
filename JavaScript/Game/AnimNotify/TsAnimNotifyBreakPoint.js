@@ -3,11 +3,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter");
 class TsAnimNotifyBreakPoint extends UE.KuroAnimNotify {
+  Constructor() {}
   K2_Notify(e, r) {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-        (e = e.CharacterActorComponent.Entity.GetComponent(54)) &&
+        (e = e.CharacterActorComponent.Entity.GetComponent(61)) &&
         e.AnimBreakPoint(),
       !0
     );

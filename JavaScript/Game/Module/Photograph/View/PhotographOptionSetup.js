@@ -15,6 +15,7 @@ class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
       (this.UKi = void 0),
       (this.AKi = 0),
       (this.PKi = !1),
+      (this.MU_ = void 0),
       (this.xKi = void 0),
       (this.SPe = void 0),
       (this.UFe = () => {
@@ -32,12 +33,16 @@ class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[1, this.UFe]]);
   }
   OnStart() {
-    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetButton(1).RootUIComp,
-    );
+    )),
+      (this.MU_ = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnBeforeDestroy() {
-    this.SPe.Clear(), (this.SPe = void 0);
+    this.SPe.Clear(), (this.SPe = void 0), (this.MU_ = void 0);
+  }
+  OnBeforeShow() {
+    this.MU_?.PlayLevelSequenceByName("Start02");
   }
   Initialize(t) {
     (this.RKi = t), this.Refresh(), this.SetEnable(!0);

@@ -1,25 +1,26 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, i, r) {
-    var a,
+  function (e, t, a, r) {
+    var i,
       s = arguments.length,
       n =
         s < 3
           ? t
           : null === r
-            ? (r = Object.getOwnPropertyDescriptor(t, i))
+            ? (r = Object.getOwnPropertyDescriptor(t, a))
             : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(e, t, i, r);
+      n = Reflect.decorate(e, t, a, r);
     else
       for (var o = e.length - 1; 0 <= o; o--)
-        (a = e[o]) && (n = (s < 3 ? a(n) : 3 < s ? a(t, i, n) : a(t, i)) || n);
-    return 3 < s && n && Object.defineProperty(t, i, n), n;
+        (i = e[o]) && (n = (s < 3 ? i(n) : 3 < s ? i(t, a, n) : i(t, a)) || n);
+    return 3 < s && n && Object.defineProperty(t, a, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterGameplayCueComponent = void 0);
-const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+const Stats_1 = require("../../../../../../Core/Common/Stats"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   EffectSystem_1 = require("../../../../../Effect/EffectSystem"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   FormationDataController_1 = require("../../../../../Module/Abilities/FormationDataController"),
@@ -41,8 +42,8 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
   OnStart() {
     return (
       (this.u1t = this.Entity.CheckGetComponent(0)),
-      (this.n$t = this.Entity.CheckGetComponent(3)),
-      (this.ybr = this.Entity.CheckGetComponent(110)),
+      (this.n$t = this.Entity.CheckGetComponent(1)),
+      (this.ybr = this.Entity.CheckGetComponent(120)),
       !0
     );
   }
@@ -58,6 +59,7 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
         ? EffectSystem_1.EffectSystem.SetTimeScale(
             e,
             this.ybr.CurrentTimeScale * t,
+            !0,
           )
         : this.wqr.delete(e);
     });
@@ -67,7 +69,7 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
       this.Entity,
     );
   }
-  AddEffectToSet(e) {
+  AddCueEffectToSet(e) {
     this.wqr.add(e),
       EffectSystem_1.EffectSystem.AddFinishCallback(e, (e) => {
         this.wqr.delete(e);
@@ -75,28 +77,50 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
       EffectSystem_1.EffectSystem.SetTimeScale(
         e,
         this.ybr.CurrentTimeScale * this.Entity.TimeDilation,
+        !0,
       ),
-      this.Active || EffectSystem_1.EffectSystem.SetEffectHidden(e, !0);
+      this.Active ||
+        EffectSystem_1.EffectSystem.SetEffectHidden(
+          e,
+          !0,
+          "CharacterGameplayCueComponent.AddCueEffectToSet",
+        );
   }
-  AddToOtherCueMap(e, t, i) {
-    0 !== i.CueConfig.CueType && super.AddToOtherCueMap(e, t, i);
+  AddToOtherCueMap(e, t, a) {
+    0 !== a.CueConfig.CueType && super.AddToOtherCueMap(e, t, a);
   }
-  CreateGameplayCueByBuff(a) {
-    const s = a.Handle;
+  OnAnyBuffInhibitionChanged(e, t) {
+    super.OnAnyBuffInhibitionChanged(e, t),
+      this.Eha.get(e)?.forEach((e) => {
+        var t = this.Sha.get(e),
+          t = Array.from(t),
+          a = t.every((e) => {
+            return this.GetBuffByHandleId(e)?.IsActive();
+          }),
+          t = t.every((e) => {
+            return !this.GetBuffByHandleId(e)?.IsActive();
+          }),
+          e = this.Mha.get(e);
+        a && !e?.IsActive ? e?.Create() : t && e?.IsActive && e?.Destroy();
+      });
+  }
+  CreateGameplayCueByBuff(i) {
+    const s = i.Handle;
     this.Eha.has(s) ||
       this.OtherCueMap.has(s) ||
-      a.Config.GameplayCueIds?.forEach((t) => {
-        var i = GameplayCueController_1.GameplayCueController.GetConfigById(t);
-        if (i) {
-          var r = a.IsInstantBuff();
-          if (this._Ra(a, i.CueType))
-            this.pQa() &&
-              this.uRa()?.CreatePlayerGameplayCue(t, { Buff: a, Instant: r });
+      i.Config.GameplayCueIds?.forEach((t) => {
+        var a = GameplayCueController_1.GameplayCueController.GetConfigById(t);
+        if (a) {
+          var r = i.IsInstantBuff();
+          if (this.dRa(i, a.CueType))
+            this.HXa() &&
+              !this.CRa()?.GetCueById(t) &&
+              this.CRa()?.CreatePlayerGameplayCue(t, { Buff: i, Instant: r });
           else {
             let e = this.Mha.get(t);
             (e =
-              !e && this.yYs(i, a)
-                ? this.CreateGameplayCueInner(t, { Buff: a, Instant: r })
+              !e && this.yYs(a, i)
+                ? this.CreateGameplayCueInner(t, { Buff: i, Instant: r })
                 : e) &&
               !r &&
               (this.Iha(s, t, e), this.AddToOtherCueMap(s, t, e));
@@ -104,32 +128,15 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
         }
       });
   }
-  DestroyGameplayCueByBuff(i) {
-    const r = i.Handle;
+  DestroyGameplayCueByBuff(a) {
+    const r = a.Handle;
     this.Eha.delete(r),
-      i.Config.GameplayCueIds?.forEach((e) => {
+      a.Config.GameplayCueIds?.forEach((e) => {
         var t = GameplayCueController_1.GameplayCueController.GetConfigById(e);
         t &&
-          (this._Ra(i, t.CueType)
-            ? this.pQa() && this.uRa()?.DestroyPlayerGameplayCue(r, e)
+          (this.dRa(a, t.CueType)
+            ? this.HXa() && this.CRa()?.DestroyPlayerGameplayCue(r, e)
             : (this.Lha(r, e), this.RemoveFromOtherCueMap(r, e)));
-      });
-  }
-  OnAnyBuffInhibitionChanged(e, t) {
-    this.OtherCueMap.get(e)?.forEach((e) => {
-      t ? e.Destroy() : e.Create();
-    }),
-      this.Eha.get(e)?.forEach((e) => {
-        var t = this.Sha.get(e),
-          t = Array.from(t),
-          i = t.every((e) => {
-            return this.Skn(e)?.IsActive();
-          }),
-          t = t.every((e) => {
-            return !this.Skn(e)?.IsActive();
-          }),
-          e = this.Mha.get(e);
-        i && !e?.IsActive ? e?.Create() : t && e?.IsActive && e?.Destroy();
       });
   }
   SetHidden(t) {
@@ -137,20 +144,24 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
       t ? e.OnDisable() : e.OnEnable();
     this.wqr.forEach((e) => {
       EffectSystem_1.EffectSystem.IsValid(e)
-        ? EffectSystem_1.EffectSystem.SetEffectHidden(e, t)
+        ? EffectSystem_1.EffectSystem.SetEffectHidden(
+            e,
+            t,
+            "CharacterGameplayCueComponent.SetHidden",
+          )
         : this.wqr.delete(e);
     });
   }
-  Iha(t, i, e) {
+  Iha(t, a, e) {
     if (0 === e.CueConfig.CueType) {
-      this.Mha.set(i, e);
+      this.Mha.set(a, e);
       {
-        let e = this.Sha.get(i);
-        e || ((e = new Set()), this.Sha.set(i, e)), e.add(t);
+        let e = this.Sha.get(a);
+        e || ((e = new Set()), this.Sha.set(a, e)), e.add(t);
       }
       {
         let e = this.Eha.get(t);
-        e || ((e = new Set()), this.Eha.set(t, e)), e.add(i);
+        e || ((e = new Set()), this.Eha.set(t, e)), e.add(a);
       }
       0 < e.CueConfig.Group &&
         ((t = this.yha.get(e.CueConfig.Group))
@@ -162,11 +173,11 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
     }
   }
   Lha(e, t) {
-    var i,
+    var a,
       r = this.Mha.get(t);
     r &&
-      (i = this.Sha.get(t)) &&
-      (i.delete(e), i.size <= 0) &&
+      (a = this.Sha.get(t)) &&
+      (a.delete(e), a.size <= 0) &&
       (this.Sha.delete(t),
       this.Mha.delete(t),
       0 < r.CueConfig.Group && this.yha.delete(r.CueConfig.Group),
@@ -181,7 +192,7 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
       t.CueConfig.Priority <= e.Priority
     );
   }
-  _Ra(e, t) {
+  dRa(e, t) {
     return (
       5 === e.Config.FormationPolicy &&
       this.n$t.IsAutonomousProxy &&
@@ -190,7 +201,7 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
       )
     );
   }
-  pQa() {
+  HXa() {
     var e = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
     return (
       ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerData(e)
@@ -198,26 +209,14 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
         ?.GetCurrentRole()?.CreatureDataId === this.u1t?.GetCreatureDataId()
     );
   }
-  uRa() {
+  CRa() {
     return FormationDataController_1.FormationDataController.GetPlayerEntity(
       ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-    )?.GetComponent(208);
-  }
-  Skn(e) {
-    var t;
-    let i = this.GetEntityHandle()
-      ?.Entity?.GetComponent(160)
-      ?.GetBuffByHandle(e);
-    return (
-      i ||
-        ((t = this.GetEntityHandle()?.Entity?.GetComponent(175)),
-        (i = t?.GetFormationBuffComp()?.GetBuffByHandle(e))),
-      i
-    );
+    )?.GetComponent(223);
   }
 };
 (CharacterGameplayCueComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(19)],
+  [(0, RegisterComponent_1.RegisterComponent)(21)],
   CharacterGameplayCueComponent,
 )),
   (exports.CharacterGameplayCueComponent = CharacterGameplayCueComponent);

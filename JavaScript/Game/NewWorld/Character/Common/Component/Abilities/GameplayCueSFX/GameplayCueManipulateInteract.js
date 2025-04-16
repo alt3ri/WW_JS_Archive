@@ -22,7 +22,7 @@ class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
       (this.sYo = this.CueConfig.Resources),
       (this.c$o = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
-        this.ActorInternal.GetTransform(),
+        this.ActorInternal.D_GetTransform(),
       )),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         this.c$o.SetActorLabel(
@@ -35,13 +35,18 @@ class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
         UE.NiagaraSystem,
         (e) => {
           var t = this.c$o.AddComponentByClass(
-            UE.NiagaraComponent.StaticClass(),
-            !1,
-            MathUtils_1.MathUtils.DefaultTransform,
-            !1,
-          );
-          t.SetAsset(e),
-            t.SetNiagaraVariableVec3("End", this.GetTargetPosition()),
+              UE.NiagaraComponent.StaticClass(),
+              !1,
+              MathUtils_1.MathUtils.DefaultTransform,
+              !1,
+            ),
+            e =
+              (t.SetAsset(e),
+              UE.KismetMathLibrary.WD_WorldToLocal(
+                GlobalData_1.GlobalData.World,
+                this.GetTargetPosition(),
+              ));
+          t.SetNiagaraVariableVec3("End", e),
             this.c$o.K2_AttachToComponent(
               this.ActorInternal.Mesh,
               this.g1t,
@@ -54,10 +59,13 @@ class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
       );
   }
   OnDestroy() {
-    ActorSystem_1.ActorSystem.Put(this.c$o);
+    ActorSystem_1.ActorSystem.Put(
+      "GameplayCueManipulateInteract.OnDestroy",
+      this.c$o,
+    );
   }
   GetTargetPosition() {
-    return this.EntityHandle.Entity.GetComponent(58)
+    return this.EntityHandle.Entity.GetComponent(65)
       .GetTargetLocation()
       .ToUeVector();
   }

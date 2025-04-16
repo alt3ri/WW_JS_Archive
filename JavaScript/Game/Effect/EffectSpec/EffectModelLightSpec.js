@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelLightSpec = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   Stats_1 = require("../../../Core/Common/Stats"),
+  EffectEnvironment_1 = require("../../../Core/Effect/EffectEnvironment"),
   EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
   EffectSpec_1 = require("./EffectSpec");
 class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
@@ -25,7 +27,8 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
     var t = this.Handle.GetSureEffectActor(),
       i =
         (Stats_1.Stat.Enable &&
-          ((this.E0e = Stats_1.Stat.Create(
+          !EffectEnvironment_1.EffectEnvironment.CloseEffectSubStat &&
+          ((this.E0e = Stats_1.Stat.CreateNoFlameGraph(
             "[EffectModelLightSpec.Tick] Path:" + this.Handle.Path,
           )),
           (this.S0e = Stats_1.Stat.Create(
@@ -101,6 +104,24 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
   OnEffectTypeChange() {
     this.LightComponent?.IsValid() &&
       this.LightComponent.SetIsUIScenePrimitive(1 === this.GetEffectType());
+  }
+  IsOverrideTick() {
+    return !0;
+  }
+  RegisterToKuroEffectSystem() {
+    var t;
+    this.Handle &&
+      this.LightComponent &&
+      this.EffectModel &&
+      (t = this.Handle.GetSureEffectActor()) &&
+      ((this.HasInitTickOptimize = !0),
+      cpp_1.FKuroEffectSystemInterface.RegisterEffectCommonHandle(
+        this.Handle.Id,
+        this.Handle.Parent?.Id ?? 0,
+        this.EffectModel,
+        t,
+        this.LightComponent,
+      ));
   }
 }
 ((exports.EffectModelLightSpec = EffectModelLightSpec).I0e = 5),

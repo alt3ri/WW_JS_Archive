@@ -34,7 +34,7 @@ class BattleInputModel extends ModelBase_1.ModelBase {
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "Battle",
-            18,
+            17,
             "禁用输入时，该输入已按下，立即执行放开操作",
             ["action", t],
           ),

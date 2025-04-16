@@ -39,7 +39,7 @@ let RoleTagComponent = class RoleTagComponent extends BaseTagComponent_1.BaseTag
           o =
             FormationDataController_1.FormationDataController.GetPlayerEntity(
               o,
-            )?.GetComponent(190);
+            )?.GetComponent(203);
         if (o) {
           var n,
             r,
@@ -61,7 +61,7 @@ let RoleTagComponent = class RoleTagComponent extends BaseTagComponent_1.BaseTag
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Battle",
-              20,
+              19,
               "RoleTagComponent初始化时找不到对应的PlayerTag组件",
               ["PlayerId", e?.GetPlayerId()],
               ["Entity", this.Entity.Id],
@@ -94,21 +94,21 @@ let RoleTagComponent = class RoleTagComponent extends BaseTagComponent_1.BaseTag
         case -1388400236:
           var n;
           ((0 < o && t <= 0) || (o <= 0 && 0 < t)) &&
-            (((n = Protocol_1.Aki.Protocol.n3a.create()).m5n = e),
+            (((n = Protocol_1.Aki.Protocol.Ke_.create()).m5n = e),
             (n.iSs = o),
-            CombatMessage_1.CombatNet.Call(25687, this.Entity, n, void 0));
+            CombatMessage_1.CombatNet.Send(26769, this.Entity, n, void 0));
       }
       super.OnAnyTagChanged(e, o, t);
       var r = this.Entity.GetComponent(0)?.GetPlayerId();
       r &&
         FormationDataController_1.FormationDataController.GetPlayerEntity(r)
-          ?.GetComponent(184)
+          ?.GetComponent(197)
           ?.OnTagChanged(e);
     }
   }
 };
 (RoleTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(178)],
+  [(0, RegisterComponent_1.RegisterComponent)(191)],
   RoleTagComponent,
 )),
   (exports.RoleTagComponent = RoleTagComponent);

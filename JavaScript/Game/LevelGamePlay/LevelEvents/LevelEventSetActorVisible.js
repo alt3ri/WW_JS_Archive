@@ -17,8 +17,8 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
         var a = EntitySystem_1.EntitySystem.Get(e.EntityId);
         if (a?.Valid)
           if (o.Targets && 0 !== o.Targets.length)
-            if (a.GetComponent(187)?.Owner) {
-              var n = a.GetComponent(150);
+            if (a.GetComponent(200)?.Owner) {
+              var n = a.GetComponent(161);
               if (n) {
                 var r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
                     GlobalData_1.GlobalData.World,
@@ -26,37 +26,37 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
                   ),
                   s = o.SyncChildActor || !1;
                 for (const L of o.Targets) {
-                  var i = L.PathName,
-                    c = i.split(".");
-                  if (c.length < PATH_LENGTH)
+                  var c = L.PathName,
+                    i = c.split(".");
+                  if (i.length < PATH_LENGTH)
                     Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "LevelEvent",
                         7,
                         "[SetActorVisible]actor路径错误",
-                        ["RefPath", i],
+                        ["RefPath", c],
                       );
                   else {
-                    c = c[1] + "." + c[2];
-                    if (n.IsValidPlatFormPath(c)) {
-                      var c = new UE.FName(c),
-                        l = r.GetActor(c);
+                    i = i[1] + "." + i[2];
+                    if (n.IsValidPlatFormPath(i)) {
+                      var i = new UE.FName(i),
+                        l = r.GetActor(i);
                       if (l?.IsValid()) {
-                        c = a.GetComponent(0).GetPbDataId();
+                        i = a.GetComponent(0).GetPbDataId();
                         switch (
                           (ModelManager_1.ModelManager.SundryModel?.GetModuleDebugLevel(
-                            "SceneItemReferenceComponent_" + c,
+                            "SceneItemReferenceComponent_" + i,
                           ) &&
                             Log_1.Log.CheckInfo() &&
                             Log_1.Log.Info(
                               "LevelEvent",
-                              40,
+                              39,
                               "[SetActorVisible] [疑难杂症] 行为开关Actor",
                               [
                                 "RefEntityPbDataId",
                                 a.GetComponent(0)?.GetPbDataId(),
                               ],
-                              ["TargetPath", i],
+                              ["TargetPath", c],
                               ["ActorType", o.ActorType],
                               ["Enable", o.Enable],
                               ["ActionGuid", this.ActionGuid],
@@ -76,6 +76,9 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
                                 (o.Enable
                                   ? l.SeyLogicallyShowForAllChildren()
                                   : l.SeyLogicallyHiddenForAllChildren()),
+                              l.RootComponent?.IsValid() &&
+                                l.RootComponent instanceof UE.MeshComponent &&
+                                l.RootComponent.SetVisibility(o.Enable, s),
                               l.RootComponent?.IsValid() &&
                                 l.RootComponent instanceof
                                   UE.PrimitiveComponent &&
@@ -120,14 +123,18 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
                               (o.Enable
                                 ? l.SetLogicallyShow(3)
                                 : l.SetLogicallyHidden());
+                            break;
+                          case "GpuNpc":
+                            l instanceof UE.BakedBoneMeshActor &&
+                              l.SetActorHiddenInGame(!o.Enable);
                         }
                       } else
-                        Log_1.Log.CheckError() &&
-                          Log_1.Log.Error(
+                        Log_1.Log.CheckWarn() &&
+                          Log_1.Log.Warn(
                             "LevelEvent",
                             7,
                             "[SetActorVisible]目标actor不存在",
-                            ["RefPath", i],
+                            ["RefPath", c],
                           );
                     }
                   }
@@ -146,7 +153,10 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
               ]);
         else
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("LevelEvent", 7, "状态控制entity不存在");
+            Log_1.Log.Error("LevelEvent", 7, "状态控制entity不存在", [
+              "EntityId",
+              e.EntityId,
+            ]);
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(

@@ -116,7 +116,7 @@ class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseVi
     (this.ulo = this.OpenParam),
       void 0 === this.ulo
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Roguelike", 59, "RoguelikeSelectSpecialView无效输入")
+          Log_1.Log.Error("Roguelike", 58, "RoguelikeSelectSpecialView无效输入")
         : ((this.Aho = new GenericLayout_1.GenericLayout(
             this.GetHorizontalLayout(2),
             this.Pho,

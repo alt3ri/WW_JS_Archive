@@ -15,10 +15,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   GuidePrefabDefine_1 = require("./Views/GuidePrefabDefine");
 class GuideController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(18193, this.vJt);
+    Net_1.Net.Register(16038, this.vJt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(18193);
+    Net_1.Net.UnRegister(16038);
   }
   static MJt() {
     for (const i of ConfigManager_1.ConfigManager.GuideConfig.GetAllGroup()) {
@@ -134,7 +134,7 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Guide",
-        17,
+        16,
         "通过GM指令调用引导组 ",
         ["groupId", e],
         ["是否触发服务端完成", !o],
@@ -148,14 +148,14 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
+                16,
                 "(GM)引导组  正在执行中, 不再重复执行",
                 ["group.Id", t.Id],
               )
             : t.SwitchState(2)
           : GuideController.TryStartGuide(e)
         : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Guide", 17, "引导组  数据创建失败！", [
+          Log_1.Log.Error("Guide", 16, "引导组  数据创建失败！", [
             "groupId",
             e,
           ]);
@@ -164,10 +164,10 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
     e
       ? GuideController.RJt(o)
       : (((e = Protocol_1.Aki.Protocol.uos.create()).S9n = o),
-        Net_1.Net.Call(25607, e, (e) => {
+        Net_1.Net.Call(15745, e, (e) => {
           e?.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
             Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Guide", 17, "引导请求服务端完成失败", ["组Id", o]),
+            Log_1.Log.Error("Guide", 16, "引导请求服务端完成失败", ["组Id", o]),
             GuideController.RJt(o);
         }));
   }
@@ -176,16 +176,19 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       GuideController.yJt(),
       GuideController.MJt();
   }
+  static OnGmCleanGuideGroupDataByGroupId(e) {
+    GuideController.ResetFinishedGuide(e);
+  }
   static TryStartGuide(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Guide", 17, "开始执行引导组", ["组Id", e]);
+      Log_1.Log.Debug("Guide", 16, "开始执行引导组", ["组Id", e]);
     e = ModelManager_1.ModelManager.GuideModel.TryGetGuideGroup(e);
     return !!e && (e.SwitchState(1), !0);
   }
   static TryFinishGuide(e) {
     return (
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Guide", 17, "引导外部请求完成", ["groupId", e]),
+        Log_1.Log.Debug("Guide", 16, "引导外部请求完成", ["groupId", e]),
       !ModelManager_1.ModelManager.GuideModel.IsGroupFinished(e) &&
         (this.FinishGuide(e), !0)
     );
@@ -193,18 +196,18 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   static TryFinishRunningGuides() {
     for (const e of ModelManager_1.ModelManager.GuideModel.GetRunningGroupIdList())
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Guide", 65, "停止当前引导: " + e),
+        Log_1.Log.Debug("Guide", 64, "停止当前引导: " + e),
         GuideController.TryFinishGuide(e);
   }
   static FinishGuideGm(e) {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Guide", 17, "引导GM命令请求完成", ["groupId", e]),
+      Log_1.Log.Debug("Guide", 16, "引导GM命令请求完成", ["groupId", e]),
       ModelManager_1.ModelManager.GuideModel.CheckGuideInfoExist(e)
         ? GuideController.RJt(e)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
-            17,
+            16,
             "引导GM命令请求完成时错误, 当前引导数据不存在",
             ["引导Id", e],
           );
@@ -220,7 +223,7 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   static ResetFinishedGuide(e) {
     ModelManager_1.ModelManager.GuideModel.IsGroupFinished(e) &&
       (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Guide", 54, "重置已完成引导", ["groupId", e]),
+        Log_1.Log.Debug("Guide", 53, "重置已完成引导", ["groupId", e]),
       ModelManager_1.ModelManager.GuideModel.ResetFinishedGuide(e),
       GuideController.AJt(e));
   }
@@ -270,20 +273,32 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
         e.ExtraParam[0].includes(GuidePrefabDefine_1.NEW_TAG))
     );
   }
+  static async WaitForCurrentTutorialFinish() {
+    var e = ModelManager_1.ModelManager.GuideModel.CurrentGroupMap;
+    if (e) {
+      var o = [];
+      for (const t of e.values())
+        for (const i of t.StepInfoList)
+          3 === i.Config.ContentType &&
+            t.FinishPromise &&
+            o.push(t.FinishPromise.Promise);
+      0 < o.length && (await Promise.all(o));
+    }
+  }
 }
 ((exports.GuideController = GuideController).vJt = (e) => {
   e
     ? (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
-          17,
+          16,
           "初始化GuideTriggerNotify发来的数据, 服务端监听的打开条件通过，主动发一个引导组下来",
           ["groupId", e.S9n],
         ),
       (e = e.S9n),
       GuideController.TryStartGuide(e))
     : Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 17, "服务端发来的GuideTriggerNotify为空");
+      Log_1.Log.Error("Guide", 16, "服务端发来的GuideTriggerNotify为空");
 }),
   (GuideController.EJt = new Map()),
   (GuideController.SJt = (e) => {
@@ -294,12 +309,12 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   (GuideController.IJt = (o, t) => {
     var e = Protocol_1.Aki.Protocol.los.create();
     (e.S9n = o),
-      Net_1.Net.Call(16281, e, (e) => {
+      Net_1.Net.Call(19247, e, (e) => {
         e?.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
           ? (ModelManager_1.ModelManager.GuideModel.SwitchGroupState(o, 0),
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               e.Q4n,
-              26820,
+              22308,
               e.lvs,
             ))
           : t || ModelManager_1.ModelManager.GuideModel.SwitchGroupState(o, 2);
@@ -321,7 +336,7 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Guide",
-              17,
+              16,
               "引导组在场景加载完成（包括客户端加载和服务器交互确认）前被触发，强制终止引导",
               ["GuideGroupId", t],
             ),
@@ -331,10 +346,10 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
   }),
   (GuideController.TJt = () => {
     var e = Protocol_1.Aki.Protocol.aos.create();
-    Net_1.Net.Call(21091, e, (e) => {
+    Net_1.Net.Call(18479, e, (e) => {
       if (e) {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Guide", 17, "初始化GuideInfoNotify发来的数据", [
+          Log_1.Log.Debug("Guide", 16, "初始化GuideInfoNotify发来的数据", [
             "FinishedList",
             e.sws,
           ]);
@@ -343,12 +358,12 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
         GuideController.MJt();
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Guide", 17, "服务端发来的GuideInfoNotify为空");
+          Log_1.Log.Error("Guide", 16, "服务端发来的GuideInfoNotify为空");
     });
   }),
   (GuideController.XBo = () => {
     Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Guide", 17, "控制器类型发生变更，引导组数据重置"),
+      Log_1.Log.Debug("Guide", 16, "控制器类型发生变更，引导组数据重置"),
       ModelManager_1.ModelManager.GuideModel.ClearAllGroup();
   });
 //# sourceMappingURL=GuideController.js.map

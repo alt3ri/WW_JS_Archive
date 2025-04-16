@@ -6,9 +6,10 @@ const Time_1 = require("../../../../Core/Common/Time"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  BulletController_1 = require("../BulletController"),
   BulletStaticFunction_1 = require("../BulletStaticMethod/BulletStaticFunction"),
+  BulletUtil_1 = require("../BulletUtil"),
   BulletHitActorData_1 = require("../Model/BulletHitActorData"),
   BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicCreateBulletController extends BulletLogicController_1.BulletLogicController {
@@ -45,19 +46,23 @@ class BulletLogicCreateBulletController extends BulletLogicController_1.BulletLo
       }
       var o = this.Bullet.GetBulletInfo().ContextId,
         e = this.l7o(r.BulletTransform, t),
-        i = BulletController_1.BulletController.CreateBulletCustomTarget(
-          this.l7o(r.BulletOwner, t),
-          i,
-          e?.GetTransform() ?? MathUtils_1.MathUtils.DefaultTransform,
-          {
-            SkillId: l.BulletInitParams.SkillId,
-            ParentVictimId: t?.Id,
-            ParentTargetId: l.Target?.Id,
-            ParentId: this.Bullet.Id,
-            DtType: l.BulletInitParams.DtType,
-          },
-          o,
-        );
+        i =
+          ControllerHolder_1.ControllerHolder.BulletController.CreateBulletCustomTarget(
+            this.l7o(r.BulletOwner, t),
+            i,
+            e?.D_GetTransform() ?? MathUtils_1.MathUtils.DefaultTransform,
+            {
+              SkillId: l.BulletInitParams.SkillId,
+              SkillContextId: l.BulletInitParams.SkillContextId,
+              ParentVictimId: t?.Id,
+              ParentTargetId: l.Target?.Id,
+              ParentId: this.Bullet.Id,
+              DtType: l.BulletInitParams.DtType,
+              BattleFlags: l.BulletInitParams.BattleFlags,
+              ParentIds: void 0,
+            },
+            o,
+          );
       i &&
         ((e = i.GetBulletInfo()).BulletDataMain.Render.HandOverParentEffect
           ? BulletStaticFunction_1.BulletStaticFunction.HandOverEffects(l, e)
@@ -65,9 +70,9 @@ class BulletLogicCreateBulletController extends BulletLogicController_1.BulletLo
             (l = this.l7o(r.AttachToActor, t)) &&
               o !== StringUtils_1.NONE_STRING &&
               ((e = FNameUtil_1.FNameUtil.GetDynamicFName(o)),
-              (r = i.GetComponent(155)),
+              (r = i.GetComponent(167)),
               (o = l.Mesh),
-              r.SetActorLocation(o.GetSocketLocation(e)),
+              r.SetActorLocation(o.D_GetSocketLocation(e)),
               r.SetAttachToComponent(o, e, 1, 0, 0, !1),
               (r.NeedDetach = !0))));
     }

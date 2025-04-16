@@ -14,11 +14,11 @@ const Log_1 = require("../../../Core/Common/Log"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   SceneEffectStateManager_1 = require("../../Render/Effect/PostProcess/SceneEffectStateManager"),
-  InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   UiManager_1 = require("../../Ui/UiManager"),
   DISTANCE_FACOR = 100,
   TOLERANCE_DISTANCE = 5,
   TELEPORT_DELAY_TIME = 2e4,
+  TELEPORT_DELAY_TIME_GONDOLA = 5e3,
   END_DISTANCE = 250,
   TIPS_NAME = "NotOpenArea";
 class UnopenedAreaPullback {
@@ -42,7 +42,7 @@ class UnopenedAreaPullback {
         this.hBe &&
           (this.CBe(t), this.sBe) &&
           (e?.Valid &&
-            (e.Entity.GetComponent(164).StopMoveToLocation(), this.gBe(e, !1)),
+            (e.Entity.GetComponent(176).StopMoveToLocation(), this.gBe(e, !1)),
           this.gBe(t, !0),
           this.fBe(t));
       });
@@ -88,7 +88,7 @@ class UnopenedAreaPullback {
   vBe() {
     (this.sBe = !0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "开始执行拉回移动操作,禁用玩家输入"),
+        Log_1.Log.Info("Map", 42, "开始执行拉回移动操作,禁用玩家输入"),
       this.SBe(!0),
       this.yBe(!1),
       this.IBe(),
@@ -97,7 +97,7 @@ class UnopenedAreaPullback {
   EBe() {
     (this.sBe = !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "退出拉回移动操作,恢复玩家控制"),
+        Log_1.Log.Info("Map", 42, "退出拉回移动操作,恢复玩家控制"),
       this.SBe(!1),
       this.yBe(!0),
       this.TBe(this.dBe);
@@ -134,7 +134,7 @@ class UnopenedAreaPullback {
       this.CBe(),
       this.LBe(!0),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "--------进入了未开放区域--------", [
+        Log_1.Log.Info("Map", 42, "--------进入了未开放区域--------", [
           "EnterLoc",
           this._Be,
         ]));
@@ -151,14 +151,14 @@ class UnopenedAreaPullback {
         ),
       (this.hBe = !1),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "- - - - 离开了未开放区域- - - - "),
+        Log_1.Log.Info("Map", 42, "- - - - 离开了未开放区域- - - - "),
       this.LBe(!1),
       this.sBe) &&
       this.EBe();
   }
   fBe(t) {
     this.DBe(t);
-    var t = t.Entity.GetComponent(164),
+    var t = t.Entity.GetComponent(176),
       e = { Index: 0, Position: this._Be };
     t.MoveAlongPath({
       Points: e,
@@ -174,35 +174,35 @@ class UnopenedAreaPullback {
     });
   }
   DBe(t) {
-    t.Entity?.CheckGetComponent(161)?.PositionState ===
+    t.Entity?.CheckGetComponent(173)?.PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Climb &&
-      t.Entity?.GetComponent(31)?.ClimbPress(!0);
+      t.Entity?.GetComponent(34)?.ClimbPress(!0);
   }
   RBe() {
     ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
       (this.sBe && this.EBe(),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Map", 43, "在未开放区域待太久，开始传送"),
+        Log_1.Log.Info("Map", 42, "在未开放区域待太久，开始传送"),
       this.UBe());
   }
   UBe() {
-    Net_1.Net.Call(25547, Protocol_1.Aki.Protocol.ECs.create(), (t) => {
+    Net_1.Net.Call(25289, Protocol_1.Aki.Protocol.ECs.create(), (t) => {
       t.Q4n !==
         Protocol_1.Aki.Protocol.Q4n.Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
         t.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
           t.Q4n,
-          15573,
+          16405,
         );
     });
   }
   TBe(t) {
-    var e = t.Entity.GetComponent(164),
-      e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(54));
+    var e = t.Entity.GetComponent(176),
+      e = (e.StopMove(!1), e.MoveToLocationEnd(1), t.Entity.GetComponent(61));
     e.ClearMoveVectorCache(),
       e.SetActive(!0),
       this.gBe(t, !1),
-      InputDistributeController_1.InputDistributeController.RefreshInputTag();
+      ControllerHolder_1.ControllerHolder.InputDistributeController.RefreshInputTag();
   }
   IBe() {
     EventSystem_1.EventSystem.Emit(
@@ -215,14 +215,13 @@ class UnopenedAreaPullback {
         : this.mBe.SetDirectionState(this.mBe.DirectionState),
       this.cBe &&
         this.cBe.CurrentSkill &&
-        (this.cBe.EndOwnerAndFollowSkills(),
-        this.ABe(this.dBe.Entity.GetComponent(38), 0, 0)),
+        (this.cBe.EndOwnerAndFollowSkills(), this.ABe(0, 0)),
       this.Hte.ClearInput();
-    var t = this.dBe.Entity.GetComponent(54);
+    var t = this.dBe.Entity.GetComponent(61);
     t.ClearMoveVectorCache(),
       t.SetActive(!1),
       this.gBe(this.dBe, !0),
-      InputDistributeController_1.InputDistributeController.RefreshInputTag();
+      ControllerHolder_1.ControllerHolder.InputDistributeController.RefreshInputTag();
   }
   CBe(t) {
     t && t.Valid
@@ -231,14 +230,22 @@ class UnopenedAreaPullback {
           Global_1.Global.BaseCharacter.EntityId,
         )),
       (this.Hte = this.dBe.Entity.GetComponent(3)),
-      (this.cBe = this.dBe.Entity.GetComponent(34)),
-      (this.mBe = this.dBe.Entity.GetComponent(161));
+      (this.cBe = this.dBe.Entity.GetComponent(39)),
+      (this.mBe = this.dBe.Entity.GetComponent(173));
   }
-  ABe(t, e, i) {
-    var s = t.Entity.GetComponent(190);
-    0 === e || s?.HasTag(-2100129479)
-      ? t.CharacterMovement.SetMovementMode(1, i)
-      : t.CharacterMovement.SetMovementMode(e, i);
+  ABe(t, e) {
+    var i = this.Hte.Entity.GetComponent(203);
+    0 === t || i?.HasTag(-2100129479)
+      ? this.Hte.Actor.KuroSetMovementMode({
+          Mode: 1,
+          CustomMode: e,
+          Context: "[UnopenedAreaPullback.ResetCharacterState] if true",
+        })
+      : this.Hte.Actor.KuroSetMovementMode({
+          Mode: t,
+          CustomMode: e,
+          Context: "[UnopenedAreaPullback.ResetCharacterState]",
+        });
   }
   yBe(t) {
     t &&
@@ -262,17 +269,21 @@ class UnopenedAreaPullback {
   SBe(t) {
     t
       ? this.lBe ||
-        (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Map", 43, "开启定时器传送", [
+        ((t = this.dBe?.Entity?.GetComponent(227)?.IsOnVehicle ?? !1),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Map", 42, "开启定时器传送", [
             "Time",
             TELEPORT_DELAY_TIME,
           ]),
-        (this.lBe = TimerSystem_1.TimerSystem.Delay(() => {
-          this.RBe(), (this.lBe = void 0);
-        }, TELEPORT_DELAY_TIME)))
+        (this.lBe = TimerSystem_1.TimerSystem.Delay(
+          () => {
+            this.RBe(), (this.lBe = void 0);
+          },
+          t ? TELEPORT_DELAY_TIME_GONDOLA : TELEPORT_DELAY_TIME,
+        )))
       : (this.lBe &&
           TimerSystem_1.TimerSystem.Has(this.lBe) &&
-          (Log_1.Log.CheckInfo() && Log_1.Log.Info("Map", 43, "移除定时器传送"),
+          (Log_1.Log.CheckInfo() && Log_1.Log.Info("Map", 42, "移除定时器传送"),
           TimerSystem_1.TimerSystem.Remove(this.lBe)),
         (this.lBe = void 0));
   }
@@ -281,11 +292,11 @@ class UnopenedAreaPullback {
     t &&
       t.Valid &&
       (e &&
-        ((i = t.Entity.GetComponent(190))?.AddTag(-1697149502),
+        ((i = t.Entity.GetComponent(203))?.AddTag(-1697149502),
         i?.AddTag(-541178966),
         i?.AddTag(-542518289)),
       e ||
-        ((i = t.Entity.GetComponent(190))?.RemoveTag(-1697149502),
+        ((i = t.Entity.GetComponent(203))?.RemoveTag(-1697149502),
         i?.RemoveTag(-541178966),
         i?.RemoveTag(-542518289)));
   }

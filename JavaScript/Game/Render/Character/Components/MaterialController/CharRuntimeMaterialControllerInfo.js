@@ -88,6 +88,7 @@ class CharMaterialControlDataCache {
       (this.WeaponCases = void 0),
       (this.SpecifiedParts = void 0),
       (this.CustomPartNames = void 0),
+      (this.CustomExcludePartNames = void 0),
       (this.HiddenAfterEffect = !1),
       (this.SpecifiedBodyType = void 0),
       (this.SpecifiedSlotType = void 0),
@@ -157,11 +158,11 @@ class CharMaterialControlDataCache {
       (this.CustomTextureParameterValues = void 0),
       (this.Data = i),
       (this.DataName = t),
-      (this.StatCharMaterialControlUpdate = Stats_1.Stat.Create(
+      (this.StatCharMaterialControlUpdate = Stats_1.Stat.CreateNoFlameGraph(
         ["Render_CharMaterialControlUpdate_", t].join(),
       )),
       RenderModuleConfig_1.RenderStats.StatCharRenderingComponentDataCache.Start(),
-      (this.StatCharMaterialControlCacheData = Stats_1.Stat.Create(
+      (this.StatCharMaterialControlCacheData = Stats_1.Stat.CreateNoFlameGraph(
         ["Render_CharMaterialControlCacheData_", t].join(),
       )),
       this.StatCharMaterialControlCacheData.Start(),
@@ -199,6 +200,11 @@ class CharMaterialControlDataCache {
     if (0 < (s = e.Num())) {
       this.CustomPartNames = new Array(s);
       for (let t = 0; t < s; t++) this.CustomPartNames[t] = e.Get(t);
+    }
+    var o = i.CustomExcludePartNames;
+    if (0 < (s = o.Num())) {
+      this.CustomExcludePartNames = new Array(s);
+      for (let t = 0; t < s; t++) this.CustomExcludePartNames[t] = o.Get(t);
     }
     if (
       ((this.UseRim = i.UseRim),
@@ -290,31 +296,31 @@ class CharMaterialControlDataCache {
     ) {
       (this.UseParameterModify = i.UseParameterModify),
         (this.RevertMaterial = i.RevertMaterial);
-      var o = i.ColorParameters;
-      if (0 < (s = o.Num())) {
+      var l = i.ColorParameters;
+      if (0 < (s = l.Num())) {
         (this.ColorParameterNames = new Array()),
           (this.ColorParameterValues = new Array());
         for (let t = 0; t < s; t++) {
-          var l = o.Get(t);
-          l.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
-            (this.ColorParameterNames.push(l.ParameterName),
-            (l = l.ParameterValue),
+          var n = l.Get(t);
+          n.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
+            (this.ColorParameterNames.push(n.ParameterName),
+            (n = n.ParameterValue),
             this.ColorParameterValues.push(
-              new CharMaterialControlColorGroup(l.End, l.Loop, l.Start),
+              new CharMaterialControlColorGroup(n.End, n.Loop, n.Start),
             ));
         }
       }
-      var n = i.FloatParameters;
-      if (0 < (s = n.Num())) {
+      var C = i.FloatParameters;
+      if (0 < (s = C.Num())) {
         (this.FloatParameterNames = new Array()),
           (this.FloatParameterValues = new Array());
         for (let t = 0; t < s; t++) {
-          var C = n.Get(t);
-          C.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
-            (this.FloatParameterNames.push(C.ParameterName),
-            (C = C.ParameterValue),
+          var d = C.Get(t);
+          d.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
+            (this.FloatParameterNames.push(d.ParameterName),
+            (d = d.ParameterValue),
             this.FloatParameterValues.push(
-              new CharMaterialControlFloatGroup(C.End, C.Loop, C.Start),
+              new CharMaterialControlFloatGroup(d.End, d.Loop, d.Start),
             ));
         }
       }
@@ -438,45 +444,45 @@ class CharMaterialControlDataCache {
       this.UseCustomMaterialEffect)
     ) {
       this.CustomRevertProperty = i.CustomRevertProperty;
-      var d = i.CustomColorParameters;
-      if (0 < (s = d.Num())) {
+      var v = i.CustomColorParameters;
+      if (0 < (s = v.Num())) {
         (this.CustomColorParameterNames = new Array()),
           (this.CustomColorParameterValues = new Array());
         for (let t = 0; t < s; t++) {
-          var v = d.Get(t);
-          v.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
-            (this.CustomColorParameterNames.push(v.ParameterName),
-            (v = v.ParameterValue),
+          var M = v.Get(t);
+          M.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
+            (this.CustomColorParameterNames.push(M.ParameterName),
+            (M = M.ParameterValue),
             this.CustomColorParameterValues.push(
-              new CharMaterialControlColorGroup(v.End, v.Loop, v.Start),
+              new CharMaterialControlColorGroup(M.End, M.Loop, M.Start),
             ));
         }
       }
-      var M = i.CustomFloatParameters;
-      if (0 < (s = M.Num())) {
+      var c = i.CustomFloatParameters;
+      if (0 < (s = c.Num())) {
         (this.CustomFloatParameterNames = new Array()),
           (this.CustomFloatParameterValues = new Array());
         for (let t = 0; t < s; t++) {
-          var c = M.Get(t);
-          c.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
-            (this.CustomFloatParameterNames.push(c.ParameterName),
-            (c = c.ParameterValue),
+          var u = c.Get(t);
+          u.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
+            (this.CustomFloatParameterNames.push(u.ParameterName),
+            (u = u.ParameterValue),
             this.CustomFloatParameterValues.push(
-              new CharMaterialControlFloatGroup(c.End, c.Loop, c.Start),
+              new CharMaterialControlFloatGroup(u.End, u.Loop, u.Start),
             ));
         }
       }
-      var u = i.CustomTextureParameters;
-      if (0 < (s = u.Num())) {
+      var f = i.CustomTextureParameters;
+      if (0 < (s = f.Num())) {
         (this.CustomTextureParameterNames = new Array()),
           (this.CustomTextureParameterValues = new Array());
         for (let t = 0; t < s; t++) {
-          var f = u.Get(t);
-          f.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
-            (this.CustomTextureParameterNames.push(f.ParameterName),
-            (f = f.ParameterValue),
+          var p = f.Get(t);
+          p.ParameterName.op_Equality(FNameUtil_1.FNameUtil.NONE) ||
+            (this.CustomTextureParameterNames.push(p.ParameterName),
+            (p = p.ParameterValue),
             this.CustomTextureParameterValues.push(
-              new CharMaterialControlTextureGroup(f.End, f.Loop, f.Start),
+              new CharMaterialControlTextureGroup(p.End, p.Loop, p.Start),
             ));
         }
       }
@@ -511,8 +517,8 @@ class CharMaterialControlDataCacheMgr {
             for (const r of this.WaitingRemoveDataCacheNames)
               this.DataCacheGcCountDownTime.delete(r),
                 this.DataCacheMap.has(r) && this.DataCacheMap.delete(r);
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("RenderCharacter", 41, "DataCache删除", [
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("RenderCharacter", 40, "DataCache删除", [
                 "数量",
                 this.WaitingRemoveDataCacheNames.length,
               ]),
@@ -567,13 +573,13 @@ class CharMaterialControlDataCacheMgr {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            41,
+            40,
             "RecycleDataCache: dataCache引用计数出错",
           ))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          41,
+          40,
           "RecycleDataCache: dataCache不存在",
         );
   }
@@ -593,13 +599,12 @@ class CharMaterialControlRuntimeData {
       (this.InterpolateFactor = void 0),
       (this.LoopTimeCounter = 0),
       (this.SpecifiedMaterialIndexMap = void 0),
-      (this.SelectedAllBodies = !1),
       (this.SelectedAllParts = !1),
       (this.ReadyToDie = !1),
       (this.IsDead = !1),
       (this.EffectState = 0),
       (this.HasReverted = !1),
-      (this.e5a = !1),
+      (this.G8a = !1),
       (this.ReplaceMaterial = void 0),
       (this.MotionStartLocation = void 0),
       (this.TargetSkeletalMesh = void 0),
@@ -622,13 +627,12 @@ class CharMaterialControlRuntimeData {
       (this.HasReverted = !1),
       (this.IsDead = !1),
       (this.ReadyToDie = !1),
-      (this.e5a = !i.UpdateAtLeastOneFrame),
-      (this.SelectedAllBodies = !1),
+      (this.G8a = !i.UpdateAtLeastOneFrame),
       (this.SelectedAllParts = !1),
       (this.SpecifiedMaterialIndexMap = new Map()),
       (this.ReplaceMaterial = void 0),
       (this.Flr = void 0),
-      (this.klr = Stats_1.Stat.Create(
+      (this.klr = Stats_1.Stat.CreateNoFlameGraph(
         "[CharMaterialControlRuntimeData.Destroy] Path:" +
           this.DataCache.DataName,
       )),
@@ -663,14 +667,11 @@ class CharMaterialControlRuntimeData {
     return !!t && !!this.Flr && this.Flr.delete(t);
   }
   SetSpecifiedMaterialIndex(i) {
-    (this.SelectedAllBodies =
-      0 === this.DataCache.SpecifiedBodyType &&
-      void 0 === this.DataCache.WeaponCases &&
-      void 0 === this.DataCache.OtherCases),
-      (this.SelectedAllParts =
-        0 === this.DataCache.SpecifiedSlotType &&
-        void 0 === this.DataCache.SpecifiedParts &&
-        void 0 === this.DataCache.CustomPartNames),
+    (this.SelectedAllParts =
+      0 === this.DataCache.SpecifiedSlotType &&
+      void 0 === this.DataCache.SpecifiedParts &&
+      void 0 === this.DataCache.CustomPartNames &&
+      void 0 === this.DataCache.CustomExcludePartNames),
       RenderModuleConfig_1.RenderStats.StatCharRenderingComponentRuntimeDataSetSpecified.Start();
     let h = void 0;
     if (0 === this.DataCache.SpecifiedBodyType) {
@@ -725,7 +726,20 @@ class CharMaterialControlRuntimeData {
                     }
                 }
               }
-              (i || t) && o.push(l);
+              if (i || t) {
+                i = !0;
+                var c = this.DataCache.CustomExcludePartNames;
+                if (void 0 !== c) {
+                  var u = c.length;
+                  if (0 < u)
+                    for (let t = 0; t < u; t++)
+                      if (n.SlotName.includes(c[t])) {
+                        i = !1;
+                        break;
+                      }
+                }
+                i && o.push(l);
+              }
             }
             this.SpecifiedMaterialIndexMap.set(s, o);
           }
@@ -733,8 +747,8 @@ class CharMaterialControlRuntimeData {
       }
       RenderModuleConfig_1.RenderStats.StatCharRenderingComponentRuntimeDataSetSpecified.Stop();
     } else
-      Log_1.Log.CheckError() &&
-        Log_1.Log.Error("RenderUtil", 14, "", [
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("RenderUtil", 13, "", [
           "BODY类型未配置:",
           this.DataCache.SpecifiedBodyType,
         ]);
@@ -744,16 +758,16 @@ class CharMaterialControlRuntimeData {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          41,
+          40,
           "RuntimeData UpdateState: 已经结束的效果，还在更新",
           ["id", this.Id],
-          ["updated", this.e5a],
+          ["updated", this.G8a],
           ["data", this.DataCache.DataName],
         );
     else if (2 !== this.DataCache.DataType)
       if (this.DataCache.WholeLoopTime <= 0)
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("RenderCharacter", 41, "材质控制器的总时长需大于0", [
+          Log_1.Log.Error("RenderCharacter", 40, "材质控制器的总时长需大于0", [
             "data",
             this.DataCache.DataName,
           ]),
@@ -765,7 +779,7 @@ class CharMaterialControlRuntimeData {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
-            41,
+            40,
             "Runtime类型材质控制器的Loop时长需大于0",
             ["data", this.DataCache.DataName],
           ),
@@ -790,9 +804,9 @@ class CharMaterialControlRuntimeData {
           )),
           0 === this.DataCache.DataType &&
             this.CurrentTimeCounter >= this.DataCache.WholeLoopTime - t &&
-            this.e5a &&
+            this.G8a &&
             (this.IsDead = !0),
-          (this.e5a = !0),
+          (this.G8a = !0),
           this.ReadyToDie &&
             this.CurrentTimeCounter >= this.DataCache.DataLoopEnd &&
             (this.IsDead = !0),
@@ -815,7 +829,7 @@ class CharMaterialControlRuntimeData {
       this.IsDead && this.RequestEffectStateRevert(),
       3 !== this.EffectState &&
         (0 === this.EffectState
-          ? (t.StateEnter(this), (this.EffectState = 1))
+          ? (t.StateEnter(this), (this.EffectState = 1), t.StateUpdate(this))
           : 2 === this.EffectState
             ? (t.StateRevert(this), (this.EffectState = 3))
             : t.StateUpdate(this)),
@@ -846,7 +860,7 @@ class CharMaterialControlRuntimeData {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
-          41,
+          40,
           "SetReadyToDie: End阶段的剩余时间小于End时间",
           ["leftTime", t],
           ["WholeLoopTimeCounter", this.WholeLoopTimeCounter],

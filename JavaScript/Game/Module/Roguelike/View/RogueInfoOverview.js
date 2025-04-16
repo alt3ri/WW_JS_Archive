@@ -26,7 +26,7 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Roguelike",
-              35,
+              34,
               "肉鸽界面打开属性面板，找不到主控的角色",
             )
           : ((e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
@@ -116,7 +116,7 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Roguelike",
-          9,
+          8,
           "肉鸽属性展示面板, 找不到主控角色实体!",
         );
     else {

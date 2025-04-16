@@ -6,7 +6,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class UiNavigationGlobalData {
   static AddBlockListenerFocusTag(a) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiNavigation", 11, "添加禁止切换导航对象标签", [
+      Log_1.Log.Info("UiNavigation", 10, "添加禁止切换导航对象标签", [
         "标签",
         a,
       ]),
@@ -14,7 +14,7 @@ class UiNavigationGlobalData {
   }
   static DeleteBlockListenerFocusTag(a) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiNavigation", 11, "移除禁止切换导航对象标签", [
+      Log_1.Log.Info("UiNavigation", 10, "移除禁止切换导航对象标签", [
         "标签",
         a,
       ]),
@@ -34,6 +34,7 @@ class UiNavigationGlobalData {
   UiNavigationGlobalData).NeedCalculateCurrentPanel = !1),
   (UiNavigationGlobalData.NeedRefreshCurrentPanel = !1),
   (UiNavigationGlobalData.IsAllowCrossNavigationGroup = !1),
+  (UiNavigationGlobalData.IsAllowLoopScrollInteractHighlight = !1),
   (UiNavigationGlobalData.VisionReplaceViewFindDefault = !0),
   (UiNavigationGlobalData.IBo = new Set());
 //# sourceMappingURL=UiNavigationGlobalData.js.map

@@ -3,7 +3,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GlobalData = void 0);
 const UE = require("ue"),
   Info_1 = require("../Core/Common/Info"),
-  Platform_1 = require("../Launcher/Platform/Platform");
+  Platform_1 = require("../Launcher/Platform/Platform"),
+  EventDefine_1 = require("./Common/Event/EventDefine"),
+  EventSystem_1 = require("./Common/Event/EventSystem");
 class GlobalData {
   constructor() {}
   static Init(t) {
@@ -13,7 +15,12 @@ class GlobalData {
       (this.LMe = UE.NewObject(UE.BP_FightManager_C.StaticClass()));
   }
   static SetUiState(t) {
-    this.DMe = t;
+    this.DMe !== t &&
+      ((this.DMe = t),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnGlobalUiSceneStateChanged,
+        t,
+      ));
   }
   static get IsUiSceneLoading() {
     return 1 === this.DMe;
@@ -66,10 +73,15 @@ class GlobalData {
               UE.BlueprintPathsLibrary.ProjectDir() +
               "../Config/Raw/Tables/k.可视化编辑/__Temp__/EditorStartConfig.json"),
             (this.UMe =
-              0 <=
+              (0 <=
                 UE.KismetSystemLibrary.GetCommandLine().search(
                   "-StartWithEditorConfig",
-                ) && UE.BlueprintPathsLibrary.FileExists(t)))),
+                ) ||
+                0 <=
+                  UE.KismetSystemLibrary.GetCommandLine().search(
+                    '-SessionName="Play in Standalone Game"',
+                  )) &&
+              UE.BlueprintPathsLibrary.FileExists(t)))),
       this.UMe
     );
   }

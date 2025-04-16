@@ -20,7 +20,7 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
       (this.kMt = new CustomPromise_1.CustomPromise()),
       (this.FMt = () => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Calabash", 11, "跳转到鸣域终端收集页签", [
+          Log_1.Log.Info("Calabash", 10, "跳转到鸣域终端收集页签", [
             "目标幻象Id",
             this.OMt.MonsterId,
           ]),
@@ -111,7 +111,7 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
   CloseViewOrShowNextData() {
     0 < ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.length
       ? (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Calabash", 11, "刷新下个声骸数据"),
+          Log_1.Log.Info("Calabash", 10, "刷新下个声骸数据"),
         this.Refresh())
       : this.CloseMe();
   }

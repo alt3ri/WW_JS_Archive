@@ -2,36 +2,42 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Event = void 0);
 const Log_1 = require("../Common/Log"),
-  Stats_1 = require("../Common/Stats");
+  Stats_1 = require("../Common/Stats"),
+  Macro_1 = require("../Preprocessor/Macro"),
+  DEFAULT_SMALL_NAME_THRESHOLD = 4096;
 class Event {
-  constructor(t) {
+  constructor(t, e = DEFAULT_SMALL_NAME_THRESHOLD) {
     (this.rK = t),
+      (this.RF_ = e),
       (this.nK = new Map()),
+      (this.IHl = new Map()),
       (this.sK = void 0),
       (this.aK = void 0),
-      (this.hK = new Array()),
-      (this.wJa = new Map());
+      (this.AF_ = void 0),
+      (this.PF_ = new Set()),
+      (this.unh = new Map()),
+      (this.AF_ = new Int8Array(Math.ceil(this.RF_)));
   }
-  BJa(t, e, i, n) {
-    let s = n.get(t);
-    s || ((s = new Map()), n.set(t, s)), s.set(i, e);
+  cnh(t, e, i, n) {
+    let r = n.get(t);
+    r || ((r = new Map()), n.set(t, r)), r.set(i, e);
   }
-  bJa(t, e, i) {
+  mnh(t, e, i) {
     var n = i.get(t);
     n && (n.delete(e), 0 === n.size) && i.delete(t);
   }
-  qJa(t, e, i) {
+  dnh(t, e, i) {
     i = i.get(t);
     if (i) return i.get(e);
   }
   AddHoldKeyHandle(t, e, i) {
-    this.BJa(t, i, e, this.wJa);
+    this.cnh(t, i, e, this.unh);
   }
   RemoveHoldKeyHandle(t, e) {
-    this.bJa(t, e, this.wJa);
+    this.mnh(t, e, this.unh);
   }
   GetHoldKeyByHandle(t, e) {
-    return this.qJa(t, e, this.wJa);
+    return this.dnh(t, e, this.unh);
   }
   Has(t, e) {
     var i,
@@ -53,6 +59,11 @@ class Event {
     e = Event.lK.get(e);
     return !!e && this.O7(t, e);
   }
+  ClearObject(t) {
+    var e = this.nK.get(t);
+    if (e) for (const i of e.keys()) this.O7(t, i);
+    return !0;
+  }
   Emit(i, ...n) {
     if (this.cK(i))
       return (
@@ -62,25 +73,32 @@ class Event {
             1,
             "事件重复派发，请检查事件链是否产生循环调用",
             ["name", this.rK[i]],
-            ["emitting", this.hK],
+            [
+              "emittingEventInArray",
+              [...this.AF_.entries()]
+                .filter((t) => 0 !== t[1])
+                .map((t) => t[0]),
+            ],
+            ["emittingEventInSet", this.PF_],
           ),
         !1
       );
     this.mK(i, !0);
-    var s = this.nK.get(i);
-    if (s) {
+    var r = this.nK.get(i);
+    if (r) {
       let t = void 0;
       !Stats_1.Stat.Enable ||
         ((o = this.rK[i]), (t = Event.dK.get(o))) ||
-        ((t = Stats_1.Stat.Create("Event." + this.rK[i])), Event.dK.set(o, t)),
+        ((t = Stats_1.Stat.CreateNoFlameGraph("Event." + this.rK[i])),
+        Event.dK.set(o, t)),
         t?.Start();
       let e = void 0;
-      for (const v of s) {
-        var r = v[0],
-          h = r.deref();
+      for (const v of r) {
+        var s = v[0],
+          h = s.deref();
         if (h) {
-          if (!(e = e || this._K.get(i)) || !e.has(r)) {
-            1 === v[1] && this.O7(i, r);
+          if (!(e = e || this._K.get(i)) || !e.has(s)) {
+            1 === v[1] && this.O7(i, s);
             var a = Event.CK.get(h);
             a?.Start();
             try {
@@ -109,12 +127,15 @@ class Event {
           }
         } else
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Event", 1, "事件处理方法已被回收", [
-              "name",
-              this.rK[i],
-            ]),
-            s.delete(r),
-            0 === s.size && this.nK.delete(i);
+            Log_1.Log.Error(
+              "Event",
+              1,
+              "事件处理方法已被回收",
+              ["eventName", this.rK[i]],
+              ["stack", void 0],
+            ),
+            r.delete(s),
+            0 === r.size && this.nK.delete(i);
       }
       t?.Stop();
     }
@@ -146,19 +167,21 @@ class Event {
       (n || ((n = new WeakRef(e)), Event.lK.set(e, n)),
       Stats_1.Stat.Enable &&
         !Event.CK.has(e) &&
-        ((s = e.name),
+        ((r = e.name),
         Event.CK.set(
           e,
-          s && 0 < s.length ? Stats_1.Stat.Create("EventHandle." + s) : void 0,
+          r && 0 < r.length
+            ? Stats_1.Stat.CreateNoFlameGraph("EventHandle." + r)
+            : void 0,
         )),
       !this.cK(t))
     )
       return this.fK(t, n, i);
     var e = this.nK.get(t),
-      s = this._K.get(t);
+      r = this._K.get(t);
     if (e && e.has(n))
-      return s && s.has(n)
-        ? (s.delete(n), !0)
+      return r && r.has(n)
+        ? (r.delete(n), !0)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Event",
@@ -167,8 +190,8 @@ class Event {
               ["name", this.rK[t]],
             ),
           !1);
-    let r = this.uK.get(t);
-    return r && r.has(n)
+    let s = this.uK.get(t);
+    return s && s.has(n)
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Event",
@@ -177,7 +200,7 @@ class Event {
             ["name", this.rK[t]],
           ),
         !1)
-      : (r || ((r = new Map()), this.uK.set(t, r)), r.set(n, i), !0);
+      : (s || ((s = new Map()), this.uK.set(t, s)), s.set(n, i), !0);
   }
   fK(t, e, i) {
     let n = this.nK.get(t);
@@ -211,8 +234,8 @@ class Event {
               ["name", this.rK[t]],
             ),
           !1);
-    let s = this._K.get(t);
-    return s && s.has(e)
+    let r = this._K.get(t);
+    return r && r.has(e)
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Event",
@@ -221,7 +244,7 @@ class Event {
             ["name", this.rK[t]],
           ),
         !1)
-      : (s || ((s = new Set()), this._K.set(t, s)), s.add(e), !0);
+      : (r || ((r = new Set()), this._K.set(t, r)), r.add(e), !0);
   }
   gK(t, e) {
     var i = this.nK.get(t);
@@ -237,17 +260,16 @@ class Event {
         !1);
   }
   cK(t) {
-    var e = Math.floor(t / 32);
-    return e < this.hK.length && !!(this.hK[e] & (1 << t % 32));
+    return t >= this.RF_ || t < 0 ? this.xF_(t) : 0 !== this.AF_[t];
+  }
+  xF_(t) {
+    return this.PF_.has(t);
   }
   mK(t, e) {
-    for (var i = Math.floor(t / 32), t = t % 32; this.hK.length < i; )
-      this.hK.push(0);
-    this.hK.length === i
-      ? this.hK.push(e ? 1 << t : 0)
-      : e
-        ? (this.hK[i] |= 1 << t)
-        : (this.hK[i] &= ~(1 << t));
+    t >= this.RF_ || t < 0 ? this.UF_(t, e) : (this.AF_[t] = e ? 1 : 0);
+  }
+  UF_(t, e) {
+    e ? this.PF_.add(t) : this.PF_.delete(t);
   }
   get uK() {
     return this.sK || (this.sK = new Map()), this.sK;

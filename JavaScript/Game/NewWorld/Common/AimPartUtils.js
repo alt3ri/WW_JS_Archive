@@ -34,7 +34,7 @@ class AimPart {
       (this.GamePadCorrect = t.GamePadCorrect);
   }
   InitSceneItem(t) {
-    (this.SceneItemHit = this.OwnerBase.Entity.GetComponent(141)),
+    (this.SceneItemHit = this.OwnerBase.Entity.GetComponent(152)),
       (this.BoneNameString = t.BoneName ?? ""),
       (this.Offset.X = t.Offset.X ?? 0),
       (this.Offset.Y = t.Offset.Y ?? 0),
@@ -58,18 +58,18 @@ class AimPart {
   GetAimPointLocation(t) {
     if (this.OwnerCharacter)
       AimPart.tga.FromUeTransform(
-        this.OwnerCharacter.Actor.Mesh.GetSocketTransform(this.BoneName),
+        this.OwnerCharacter.Actor.Mesh.D_GetSocketTransform(this.BoneName),
       );
     else {
       if (!this.SceneItemHit) return !1;
       if (this.BoneNameString) {
         let t = this.OwnerBase.GetActorInSceneInteraction(this.BoneNameString);
         if (!t && !(t = this.OwnerBase.Owner)) return !1;
-        AimPart.tga.FromUeTransform(t.GetTransform());
+        AimPart.tga.FromUeTransform(t.D_GetTransform());
       } else {
         var i = this.OwnerBase.Owner;
         if (!i) return !1;
-        AimPart.tga.FromUeTransform(i.GetTransform());
+        AimPart.tga.FromUeTransform(i.D_GetTransform());
       }
     }
     return AimPart.tga.TransformPosition(this.Offset, t), !0;

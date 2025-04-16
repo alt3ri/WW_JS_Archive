@@ -4,12 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../GlobalData"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  ItemTipsAbyssDangoComponent_1 = require("../../Dango/DangoAbyss/View/ItemTipsAbyssDangoComponent"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LevelSequencePlayer_1 = require("../LevelSequencePlayer"),
-  ItemTipsBaseSubComponent_1 = require("./SubComponents/ItemTipsBaseSubComponent"),
   ItemTipsCharacterComponent_1 = require("./SubComponents/ItemTipsCharacterComponent"),
   ItemTipsMaterialComponent_1 = require("./SubComponents/ItemTipsMaterialComponent"),
   ItemTipsVisionComponent_1 = require("./SubComponents/ItemTipsVisionComponent"),
@@ -58,21 +59,31 @@ class ItemTipsComponentContentComponent extends UiPanelBase_1.UiPanelBase {
       (this.ItemType = void 0),
       (this.axt = void 0),
       (this.hxt = new Map()),
-      (this.lxt = {
-        [0]: ItemTipsMaterialComponent_1.TipsMaterialComponent,
-        1: ItemTipsWeaponComponent_1.TipsWeaponComponent,
-        2: ItemTipsVisionComponent_1.TipsVisionComponent,
-        3: ItemTipsCharacterComponent_1.ItemTipsCharacterComponent,
-        4: ItemTipsBaseSubComponent_1.TipsBaseSubComponent,
-      });
+      (this.lxt = new Map([
+        [0, ItemTipsMaterialComponent_1.TipsMaterialComponent],
+        [1, ItemTipsWeaponComponent_1.TipsWeaponComponent],
+        [2, ItemTipsVisionComponent_1.TipsVisionComponent],
+        [3, ItemTipsCharacterComponent_1.ItemTipsCharacterComponent],
+        [6, ItemTipsAbyssDangoComponent_1.ItemTipsAbyssDangoComponent],
+      ]));
   }
   GetComponentByType(e) {
-    var t;
-    return (
-      this.hxt.has(e) ||
-        ((t = new this.lxt[e](this.GetItem(4))), this.hxt.set(e, t)),
-      this.hxt.get(e)
-    );
+    if (!this.hxt.has(e)) {
+      var t = this.lxt.get(e);
+      if (!t)
+        return void (
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Item",
+            37,
+            "[ItemTips] 常规Tips组件未注册,请检查类型",
+            ["Type", e],
+          )
+        );
+      t = new t(this.GetItem(4));
+      this.hxt.set(e, t);
+    }
+    return this.hxt.get(e);
   }
   RefreshTipsComponentByType(e) {
     this.GetComponentByType(e.ItemType).Refresh(e),
@@ -116,26 +127,42 @@ class ItemTipsComponentContentComponent extends UiPanelBase_1.UiPanelBase {
       this.SetActive(!0);
   }
   _xt(e) {
-    var t = this.GetUiNiagara(3),
-      i =
-        (t.DeactivateSystem(),
-        ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e.QualityId)),
-      i = UE.Color.FromHex(i.DropColor),
-      i =
-        (this.GetText(0).SetColor(i),
-        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.Title),
-        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+    this.Zd1(e), this.em1(e), this.tm1(e), this.uxt(e.ConfigId);
+  }
+  Zd1(e) {
+    var t,
+      i = this.GetText(0);
+    e.IsQualityByType
+      ? i.SetUIActive(!1)
+      : ((t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
+          e.QualityId,
+        )),
+        (t = UE.Color.FromHex(t.DropColor)),
+        this.GetText(0).SetColor(t),
+        LguiUtil_1.LguiUtil.SetLocalTextNew(i, e.Title));
+  }
+  em1(e) {
+    var t,
+      i = this.GetUiNiagara(3),
+      s = (i.DeactivateSystem(), this.GetTexture(1));
+    e.IsQualityByType
+      ? s.SetUIActive(!1)
+      : ((t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "T_TipsQualityTypeLevel" + e.QualityId,
         )),
-      s = ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
-        e.QualityId,
-      ).QualityColor,
-      s = UE.Color.FromHex(s);
-    t.SetColor(s),
-      t.ActivateSystem(!0),
-      this.SetTextureByPath(i, this.GetTexture(1)),
-      this.SetItemIcon(this.GetTexture(2), e.ConfigId),
-      this.uxt(e.ConfigId);
+        (e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
+          e.QualityId,
+        ).QualityColor),
+        (e = UE.Color.FromHex(e)),
+        i.SetColor(e),
+        i.ActivateSystem(!0),
+        this.SetTextureByPath(t, s));
+  }
+  tm1(e) {
+    var t = this.GetTexture(2);
+    e.IsIconByType
+      ? t.SetUIActive(!1)
+      : (t.SetUIActive(!0), this.SetItemIcon(t, e.ConfigId));
   }
   uxt(e) {
     var t = this.GetText(5);
@@ -143,6 +170,11 @@ class ItemTipsComponentContentComponent extends UiPanelBase_1.UiPanelBase {
       ? (LguiUtil_1.LguiUtil.SetLocalText(t, "CommonTipsDebugItemId", e),
         t.SetUIActive(!0))
       : t.SetUIActive(!1);
+  }
+  GetGuideUiItemAndUiItemForShowEx(e) {
+    return 0 !== e.length && "DangoPlugin" === e[0]
+      ? this.hxt?.get(6)?.GetGuideUiItemAndUiItemForShowEx(e)
+      : void 0;
   }
 }
 exports.ItemTipsComponentContentComponent = ItemTipsComponentContentComponent;

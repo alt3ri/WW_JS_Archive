@@ -23,8 +23,9 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
     this.ComponentRegisterInfos = [
       [0, UE.UIItem],
       [1, UE.UIItem],
-      [2, UE.UISprite],
+      [2, UE.UITexture],
       [3, UE.UINiagara],
+      [4, UE.UIItem],
     ];
   }
   async OnBeforeStartAsync() {
@@ -57,8 +58,8 @@ class SpecialEnergyBarMorphCountDown extends SpecialEnergyBarBase_1.SpecialEnerg
         this.Adt.SetFullEffectColor(i, !0),
         this.Pdt.SetFullEffectColor(i, !0)),
       this.Config.IconPath &&
-        ((i = [this.GetSprite(2)]),
-        this.Ddt.Init(i),
+        ((i = [this.GetTexture(2)]),
+        this.Ddt.Init(i, this.GetItem(4)),
         this.Ddt.SetIcon(this.Config.IconPath)),
       0 === this.Udt && this.GetUiNiagara(3).SetUIActive(!1),
       this.RefreshBarPercent());

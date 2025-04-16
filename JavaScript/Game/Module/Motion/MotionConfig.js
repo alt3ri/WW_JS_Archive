@@ -4,47 +4,51 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const MotionById_1 = require("../../../Core/Define/ConfigQuery/MotionById"),
   MotionByRoleId_1 = require("../../../Core/Define/ConfigQuery/MotionByRoleId"),
   MotionByRoleIdAndType_1 = require("../../../Core/Define/ConfigQuery/MotionByRoleIdAndType"),
+  MotionBySkinId_1 = require("../../../Core/Define/ConfigQuery/MotionBySkinId"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class MotionConfig extends ConfigBase_1.ConfigBase {
-  GetMotionConfig(e) {
-    return MotionById_1.configMotionById.GetConfig(e);
+  GetMotionConfig(o) {
+    return MotionById_1.configMotionById.GetConfig(o);
   }
-  GetMotionConfigsByRoleId(e) {
-    return MotionByRoleId_1.configMotionByRoleId.GetConfigList(e);
+  GetMotionConfigsByRoleId(o) {
+    return MotionByRoleId_1.configMotionByRoleId.GetConfigList(o);
   }
-  GetRoleMotionByType(e, o) {
+  GetRoleMotionByRoleSkinId(o) {
+    return MotionBySkinId_1.configMotionBySkinId.GetConfigList(o);
+  }
+  GetRoleMotionByType(o, e) {
     return MotionByRoleIdAndType_1.configMotionByRoleIdAndType.GetConfigList(
-      e,
       o,
+      e,
     );
   }
-  GetMotionTitle(e) {
-    e = this.GetMotionConfig(e);
-    if (e) return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e?.Title);
+  GetMotionTitle(o) {
+    o = this.GetMotionConfig(o);
+    if (o) return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o?.Title);
   }
-  GetMotionContent(e) {
-    e = this.GetMotionConfig(e);
-    if (e)
-      return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e?.Content);
+  GetMotionContent(o) {
+    o = this.GetMotionConfig(o);
+    if (o)
+      return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(o?.Content);
   }
-  GetMotionUnLockConditionGroup(e) {
-    return this.GetMotionConfig(e)?.CondGroupId;
+  GetMotionUnLockConditionGroup(o) {
+    return this.GetMotionConfig(o)?.CondGroupId;
   }
-  GetMotionRoleId(e) {
-    return this.GetMotionConfig(e)?.RoleId;
+  GetMotionRoleId(o) {
+    return this.GetMotionConfig(o)?.RoleId;
   }
-  GetMotionType(e) {
-    return this.GetMotionConfig(e)?.Type;
+  GetMotionType(o) {
+    return this.GetMotionConfig(o)?.Type;
   }
-  GetMotionSort(e) {
-    return this.GetMotionConfig(e)?.Sort;
+  GetMotionSort(o) {
+    return this.GetMotionConfig(o)?.Sort;
   }
-  GetMotionImg(e) {
-    return this.GetMotionConfig(e)?.MotionImg;
+  GetMotionImg(o) {
+    return this.GetMotionConfig(o)?.MotionImg;
   }
-  GetMotionAnimation(e) {
-    return this.GetMotionConfig(e)?.AniMontage;
+  GetMotionAnimation(o) {
+    return this.GetMotionConfig(o)?.AniMontage;
   }
 }
 exports.MotionConfig = MotionConfig;

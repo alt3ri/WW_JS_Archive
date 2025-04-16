@@ -9,7 +9,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   UiManager_1 = require("../../Ui/UiManager"),
-  EditBattleTeamModel_1 = require("./EditBattleTeamModel");
+  InstanceDungeonEntranceController_1 = require("../InstanceDungeon/InstanceDungeonEntranceController");
 class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
@@ -38,6 +38,10 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleLevelUp,
         this.TQe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnRoleSkinChange,
+        this.A$_,
       );
   }
   static OnRemoveEvents() {
@@ -56,16 +60,20 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleLevelUp,
         this.TQe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnRoleSkinChange,
+        this.A$_,
       );
   }
-  static PlayerOpenEditBattleTeamView(e, t = !1, a = !0) {
-    t || (ModelManager_1.ModelManager.EditBattleTeamModel.NeedEntrance = a),
+  static PlayerOpenEditBattleTeamView(e, t = !1, n = !0) {
+    t || (ModelManager_1.ModelManager.EditBattleTeamModel.NeedEntrance = n),
       this.OpenEditBattleTeamView(e, t);
   }
   static OpenEditBattleTeamView(e, t = 0) {
-    var a = ModelManager_1.ModelManager.EditBattleTeamModel;
+    var n = ModelManager_1.ModelManager.EditBattleTeamModel;
     InstanceDungeonById_1.configInstanceDungeonById.GetConfig(e)
-      ? (a.SetInstanceDungeonId(e),
+      ? (n.SetInstanceDungeonId(e),
         ModelManager_1.ModelManager.EditBattleTeamModel
           .IsMultiInstanceDungeon &&
         ModelManager_1.ModelManager.InstanceDungeonModel.MatchingPlayerCount() <=
@@ -76,12 +84,12 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
                 5,
                 "打开战前编队时，数据已经被清理，操作中止",
               ),
-            a.SetInstanceDungeonId(void 0))
+            n.SetInstanceDungeonId(void 0))
           : UiManager_1.UiManager.OpenView("EditBattleTeamView"))
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Formation",
-          8,
+          48,
           "[EditBattleTeam]找不到副本数据，不能打开战前编队",
         );
   }
@@ -96,7 +104,7 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Formation",
-          8,
+          48,
           "[EditBattleTeam]离开{DungeonId} 副本的战前编队",
           ["{DungeonId}", t.GetInstanceDungeonId],
         ),
@@ -113,12 +121,33 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
             })
           : this.CloseEditBattleTeamView();
   }
-  static SetEditBattleTeamByRoleId(a) {
+  static ResetSlotDataThenSetEditBattleTeamByRoleId(n) {
     ModelManager_1.ModelManager.EditBattleTeamModel.ResetAllRoleSlotData();
-    var n = ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
-    for (let t = 0; t < a.length; t++) {
-      var o = a[t],
-        r = n[t],
+    var a = ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
+    for (let t = 0; t < n.length; t++) {
+      var o = n[t],
+        r = a[t],
+        i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o),
+        l = i.GetLevelData();
+      let e = r.GetRoleData;
+      ((e =
+        e ||
+        ModelManager_1.ModelManager.EditBattleTeamModel.CreateRoleDataFromRoleInstance(
+          i,
+        )).ConfigId = o),
+        (e.Level = l.GetLevel()),
+        r.SetRoleData(e);
+    }
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+      "用RoleId设置编队时",
+    );
+  }
+  static SetEditBattleTeamByRoleId(n) {
+    var a = ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
+    for (let t = 0; t < n.length; t++) {
+      var o = n[t],
+        r = a[t],
         i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o),
         l = i.GetLevelData();
       let e = r.GetRoleData;
@@ -139,16 +168,14 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.EditBattleTeamModel.ChangeMainRoleData();
   }
 }
-((exports.EditBattleTeamController = EditBattleTeamController).Model =
-  EditBattleTeamModel_1.EditBattleTeamModel),
-  (EditBattleTeamController.Q3t = () => {
-    ModelManager_1.ModelManager.EditBattleTeamModel.RefreshAllMultiRoleData();
-  }),
+((exports.EditBattleTeamController = EditBattleTeamController).Q3t = () => {
+  ModelManager_1.ModelManager.EditBattleTeamModel.RefreshAllMultiRoleData();
+}),
   (EditBattleTeamController.X3t = (e, t) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Formation",
-        8,
+        48,
         "[EditBattleTeam]玩家{PlayerId} 返回准备游戏,是否准备:{IsReady}",
         ["{PlayerId}", e],
         ["{IsReady}", t],
@@ -158,15 +185,47 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
   (EditBattleTeamController.$3t = () => {
     EditBattleTeamController.CloseEditBattleTeamView();
   }),
-  (EditBattleTeamController.TQe = (e, t, a) => {
-    for (const o of ModelManager_1.ModelManager.EditBattleTeamModel
+  (EditBattleTeamController.TQe = (e, t, n) => {
+    for (const r of ModelManager_1.ModelManager.EditBattleTeamModel
       .GetAllRoleSlotData) {
-      var n = o.GetRoleData;
-      n && n.ConfigId === e && (n.Level = a);
+      var a = r.GetRoleData,
+        o = a?.IsSelf;
+      a &&
+        o &&
+        a.ConfigId === e &&
+        ((a.Level = n),
+        ModelManager_1.ModelManager.EditBattleTeamModel
+          .IsMultiInstanceDungeon) &&
+        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchChangeRoleRequest(
+          ModelManager_1.ModelManager.EditBattleTeamModel
+            .GetOwnRoleConfigIdList[0],
+        );
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
       "角色升级时",
     );
+  }),
+  (EditBattleTeamController.A$_ = (e) => {
+    var t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
+    for (const o of ModelManager_1.ModelManager.EditBattleTeamModel
+      .GetAllRoleSlotData) {
+      var n = o.GetRoleData,
+        a = n?.IsSelf;
+      n &&
+        a &&
+        n.ConfigId === e &&
+        ((n.SkinId = t.GetRoleSkinId()),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+          "角色皮肤更换时",
+        ),
+        ModelManager_1.ModelManager.EditBattleTeamModel
+          .IsMultiInstanceDungeon) &&
+        InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchChangeRoleRequest(
+          ModelManager_1.ModelManager.EditBattleTeamModel
+            .GetOwnRoleConfigIdList[0],
+        );
+    }
   });
 //# sourceMappingURL=EditBattleTeamController.js.map

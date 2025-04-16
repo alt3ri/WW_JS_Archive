@@ -6,7 +6,7 @@ const UE = require("ue"),
   PopupCaption_1 = require("./PopupCaption");
 class PopupRightItemA extends PopupTypeRightItem_1.PopupTypeRightItem {
   constructor() {
-    super(...arguments), (this.xXa = void 0);
+    super(...arguments), (this.zJa = void 0);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -17,16 +17,16 @@ class PopupRightItemA extends PopupTypeRightItem_1.PopupTypeRightItem {
       (this.BtnBindInfo = [[0, this.OnClickCloseBtn]]);
   }
   async OnBeforeStartAsync() {
-    (this.xXa = new PopupCaption_1.PopupCaption()),
-      (this.xXa.OnCloseCall = this.OnClickCloseBtn),
-      await this.xXa.CreateByActorAsync(this.GetItem(2).GetOwner()),
-      this.AddChild(this.xXa);
+    (this.zJa = new PopupCaption_1.PopupCaption()),
+      (this.zJa.OnCloseCall = this.OnClickCloseBtn),
+      await this.zJa.CreateByActorAsync(this.GetItem(2).GetOwner()),
+      this.AddChild(this.zJa);
   }
   SetTitleIcon(t) {
-    this.xXa.SetTitleIcon(t);
+    this.zJa.SetTitleIcon(t);
   }
   SetTitleLocalTxt(t) {
-    this.xXa.SetTitleLocalTxt(t);
+    this.zJa.SetTitleLocalTxt(t);
   }
 }
 exports.PopupRightItemA = PopupRightItemA;

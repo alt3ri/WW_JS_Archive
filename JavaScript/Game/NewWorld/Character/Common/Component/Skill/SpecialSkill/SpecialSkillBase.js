@@ -9,6 +9,7 @@ class SpecialSkillBase {
     return new this(e);
   }
   OnStart() {}
+  OnActivate() {}
   OnEnd() {}
   OnTick(e) {}
   OnEnable() {}

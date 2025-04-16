@@ -36,6 +36,21 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
   GetSkillNodeId() {
     return this.pdo.GetSkillNodeId();
   }
+  GetSkillId() {
+    return this.pdo.GetSkillId();
+  }
+  GetUpgradeSkillId() {
+    return this.pdo.GetUpgradeSkillId();
+  }
+  GetSkillTreeNodeConfig() {
+    return this.pdo.GetSkillTreeNodeConfig();
+  }
+  GetSkillConfig() {
+    return this.pdo.GetSkillConfig();
+  }
+  GetUpgradeSkillConfig() {
+    return this.pdo.GetUpgradeSkillConfig();
+  }
   GetSkillIconItem() {}
   GetLevelText() {}
   GetNameText() {}
@@ -49,19 +64,17 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
   }
   RefreshName() {
     var e,
-      t = this.GetNameText();
-    t &&
-      ((e = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
-        this.GetSkillNodeId(),
-      )),
-      (e = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(
-        e.SkillId,
-      )),
-      (e =
+      t,
+      i = this.GetNameText();
+    i &&
+      ((e = this.GetUpgradeSkillConfig()),
+      (t = this.GetSkillConfig()),
+      (e = e || t),
+      (t =
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTypeNameLocalText(
           e.SkillType,
         ))) &&
-      t.SetText(e);
+      i.SetText(t);
   }
   RefreshLevel() {
     var e = this.GetRoleId(),

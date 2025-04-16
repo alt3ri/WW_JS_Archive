@@ -22,11 +22,14 @@ const Log_1 = require("../../../Core/Common/Log"),
   AiWanderRadiusConfigById_1 = require("../../../Core/Define/ConfigQuery/AiWanderRadiusConfigById"),
   BlackboardWhiteListAll_1 = require("../../../Core/Define/ConfigQuery/BlackboardWhiteListAll"),
   SpecialHateAndSenseById_1 = require("../../../Core/Define/ConfigQuery/SpecialHateAndSenseById"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   AiPerception_1 = require("../Controller/AiPerception"),
   AiSkill_1 = require("../Controller/AiSkill"),
   AiWanderInfos_1 = require("../Controller/AiWanderInfos"),
+  AsyncAiPerception_1 = require("../Controller/AsyncAiPerception"),
   commonStateMachine = "SM_Common";
 class AiConfig extends ConfigBase_1.ConfigBase {
   constructor() {
@@ -44,7 +47,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "BehaviorTree",
-            31,
+            30,
             "AiConfig Init fail, no commonStateMachine config",
           ),
         !1
@@ -97,7 +100,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "BehaviorTree",
-        58,
+        57,
         "缺少AiWander的范围配置",
         ["Id", i.InitState.Wander],
         ["Target", r.Actor.GetName()],
@@ -108,13 +111,13 @@ class AiConfig extends ConfigBase_1.ConfigBase {
     var i = e.CharActorComp,
       o = this.LoadSpecialHateAndSenseConfig(e);
     this.yte(e);
-    let a = e.AiBase.SubBehaviorConfigs.get("AiWander");
+    let n = e.AiBase.SubBehaviorConfigs.get("AiWander");
     if (
-      (a &&
+      (n &&
         (e.AiWanderInfos ||
           (e.AiWanderInfos = new AiWanderInfos_1.AiWanderInfos()),
         (e.AiWanderInfos.AiWander = AiWanderById_1.configAiWanderById.GetConfig(
-          Number(a),
+          Number(n),
         )),
         e.AiWanderInfos.AiWander ||
           (Log_1.Log.CheckError() &&
@@ -122,33 +125,33 @@ class AiConfig extends ConfigBase_1.ConfigBase {
               "BehaviorTree",
               6,
               "缺少AiWander配置",
-              ["Id", a],
+              ["Id", n],
               ["Target", i.Actor.GetName()],
               ["CreatureId", i.CreatureData.GetOwnerId()],
             ))),
-      (a = e.AiBase.SubBehaviorConfigs.get("AiBattleWander")))
+      (n = e.AiBase.SubBehaviorConfigs.get("AiBattleWander")))
     ) {
       e.AiWanderInfos ||
         (e.AiWanderInfos = new AiWanderInfos_1.AiWanderInfos());
-      var n = AiBattleWanderById_1.configAiBattleWanderById.GetConfig(
-        Number(a),
+      var a = AiBattleWanderById_1.configAiBattleWanderById.GetConfig(
+        Number(n),
       );
-      if (n)
-        if (0 === n.GroupIds.length)
+      if (a)
+        if (0 === a.GroupIds.length)
           e.AiWanderInfos.AiBattleWanderGroups = new Array();
         else {
           var t = new Array();
-          for (const f of n.GroupIds) {
-            var d =
+          for (const _ of a.GroupIds) {
+            var A =
               AiBattleWanderGroupById_1.configAiBattleWanderGroupById.GetConfig(
-                f,
+                _,
               );
-            t.push(d);
+            t.push(A);
           }
-          var A = new Map();
-          for (const B of t) A.set(B.Id, B);
+          var d = new Map();
+          for (const l of t) d.set(l.Id, l);
           t.length = 0;
-          for (const l of n.GroupIds) t.push(A.get(l));
+          for (const I of a.GroupIds) t.push(d.get(I));
           e.AiWanderInfos.AiBattleWanderGroups = t;
         }
       else
@@ -157,15 +160,15 @@ class AiConfig extends ConfigBase_1.ConfigBase {
             "BehaviorTree",
             6,
             "缺少AiBattleWander配置",
-            ["Id", a],
+            ["Id", n],
             ["Target", i.Actor.GetName()],
             ["CreatureId", i.CreatureData.GetOwnerId()],
           );
     }
-    (a = e.AiBase.SubBehaviorConfigs.get("AiBaseSkill")) &&
+    (n = e.AiBase.SubBehaviorConfigs.get("AiBaseSkill")) &&
       ((e.AiSkill = new AiSkill_1.AiSkill(e)),
       (e.AiSkill.BaseSkill = AiBaseSkillById_1.configAiBaseSkillById.GetConfig(
-        Number(a),
+        Number(n),
       )),
       e.AiSkill.BaseSkill
         ? this.Ite(e.AiSkill)
@@ -174,7 +177,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
             "BehaviorTree",
             6,
             "缺少AiBaseSkill配置",
-            ["Id", a],
+            ["Id", n],
             ["Target", i.Actor.GetName()],
             ["CreatureId", i.CreatureData.GetOwnerId()],
           )),
@@ -188,9 +191,38 @@ class AiConfig extends ConfigBase_1.ConfigBase {
           e.AiBase.SubBehaviorConfigs.get("AiSense"),
           o,
         )),
-      (a = e.AiBase.SubBehaviorConfigs.get("AiPatrol")) &&
-        ((n = a.split("|")),
-        (r = AiPatrolById_1.configAiPatrolById.GetConfig(Number(n[0]))),
+      (n = e.AiBase.SubBehaviorConfigs.get("AiPatrol"));
+    var a = i.CreatureData.GetOwnerIncId();
+    let f = !1;
+    (f =
+      0 < a &&
+      i.CreatureData.GetEntityConfigType() ===
+        Protocol_1.Aki.Protocol.rLs.F6n &&
+      (r = ModelManager_1.ModelManager.CreatureModel.GetEntityOwner(
+        ModelManager_1.ModelManager.GameModeModel.MapConfig.MapId,
+        i.CreatureData.GetPbDataId(),
+      )) &&
+      "Entity" === r.Type &&
+      (o = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
+        r.EntityId,
+      )) &&
+      (0, IComponent_1.getComponent)(o.ComponentsData, "GroupAiComponent")
+        ?.Option.Type === IComponent_1.EGroupAiMode.Patrol
+        ? !0
+        : f) &&
+      Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
+        "AI",
+        42,
+        "AI处于群组巡逻管理，忽略单体巡逻配置",
+        ["Target", i.Actor.GetName()],
+        ["Entity.Id", i.Entity.Id],
+        ["GetPbDataId", i.CreatureData.GetPbDataId()],
+      ),
+      n &&
+        !f &&
+        ((a = n.split("|")),
+        (r = AiPatrolById_1.configAiPatrolById.GetConfig(Number(a[0]))),
         e.AiPatrol.ResetConfig(r),
         r ||
           (Log_1.Log.CheckError() &&
@@ -198,19 +230,19 @@ class AiConfig extends ConfigBase_1.ConfigBase {
               "BehaviorTree",
               6,
               "缺少AiPatrol配置",
-              ["Id", a],
+              ["Id", n],
               ["Target", i.Actor.GetName()],
               ["CreatureId", i.CreatureData.GetOwnerId()],
             ))),
-      (a = e.AiBase.SubBehaviorConfigs.get("AiFlee")) &&
-        ((e.AiFlee = AiFleeById_1.configAiFleeById.GetConfig(Number(a))),
+      (n = e.AiBase.SubBehaviorConfigs.get("AiFlee")) &&
+        ((e.AiFlee = AiFleeById_1.configAiFleeById.GetConfig(Number(n))),
         e.AiFlee ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "BehaviorTree",
               6,
               "缺少AiFlee配置",
-              ["Id", a],
+              ["Id", n],
               ["Target", i.Actor.GetName()],
               ["CreatureId", i.CreatureData.GetOwnerId()],
             )));
@@ -221,24 +253,24 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       i = new Set(),
       o = new Array();
     for (const t of e.BaseSkill.RandomSkills)
-      for (const d of t.ArrayInt)
-        i.has(d) ||
-          (i.add(d),
-          (r = AiSkillInfosById_1.configAiSkillInfosById.GetConfig(d)),
+      for (const A of t.ArrayInt)
+        i.has(A) ||
+          (i.add(A),
+          (r = AiSkillInfosById_1.configAiSkillInfosById.GetConfig(A)),
           o.push(r));
     i.clear();
-    var a,
-      n = new Array();
-    for (const A of o)
-      e.SkillInfos.set(A.Id, A),
-        i.has(A.SkillPreconditionId) ||
-          (i.add(A.SkillPreconditionId),
-          (a =
+    var n,
+      a = new Array();
+    for (const d of o)
+      e.SkillInfos.set(d.Id, d),
+        i.has(d.SkillPreconditionId) ||
+          (i.add(d.SkillPreconditionId),
+          (n =
             AiSkillPreconditionById_1.configAiSkillPreconditionById.GetConfig(
-              A.SkillPreconditionId,
+              d.SkillPreconditionId,
             )),
-          n.push(a));
-    for (const f of n) e.SkillPreconditionMap.set(f.Id, f);
+          a.push(n));
+    for (const f of a) e.SkillPreconditionMap.set(f.Id, f);
     e.InitTagMap();
   }
   LoadAiTeamConfigNew(e, r) {
@@ -248,20 +280,20 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       e.AiTeamLevel)
     ) {
       e.AiTeamAreas = [];
-      for (const n of e.AiTeamLevel.PositionId) {
-        var i = AiTeamAreaNewById_1.configAiTeamAreaNewById.GetConfig(n);
+      for (const a of e.AiTeamLevel.PositionId) {
+        var i = AiTeamAreaNewById_1.configAiTeamAreaNewById.GetConfig(a);
         e.AiTeamAreas.push(i);
       }
       e.AiTeamAttacks = new Array();
       var o = new Map();
       for (const t of e.AiTeamAreas) {
-        var a = o.get(t.AttackWeightId);
-        a
-          ? e.AiTeamAttacks.push(a)
-          : (a = AiTeamAttackById_1.configAiTeamAttackById.GetConfig(
+        var n = o.get(t.AttackWeightId);
+        n
+          ? e.AiTeamAttacks.push(n)
+          : (n = AiTeamAttackById_1.configAiTeamAttackById.GetConfig(
                 t.AttackWeightId,
               ))
-            ? (o.set(t.AttackWeightId, a), e.AiTeamAttacks.push(a))
+            ? (o.set(t.AttackWeightId, n), e.AiTeamAttacks.push(n))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "BehaviorTree",
@@ -303,23 +335,31 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       var o = AiSenseGroupById_1.configAiSenseGroupById.GetConfig(Number(r));
       if (o) {
         if (0 === o.AiSenseIds.length)
-          return new AiPerception_1.AiPerception(e, o, new Array());
+          return new (
+            AiConfig.AsyncAiPerception
+              ? AsyncAiPerception_1.AsyncAiPerception
+              : AiPerception_1.AiPerception
+          )(e, o, new Array());
         let r = 0;
-        var a = [],
-          n = new Array();
-        for (const A of o.AiSenseIds) {
+        var n = [],
+          a = new Array();
+        for (const d of o.AiSenseIds) {
           let e = -1;
           0 === r && i
-            ? ((e = i.FirstAiSenseId), a.push(i.FirstAiSenseId))
-            : ((e = A), a.push(A));
+            ? ((e = i.FirstAiSenseId), n.push(i.FirstAiSenseId))
+            : ((e = d), n.push(d));
           var t = AiSenseById_1.configAiSenseById.GetConfig(e);
-          n.push(t), ++r;
+          a.push(t), ++r;
         }
-        var d = new Map();
-        for (const f of n) d.set(f.Id, f);
-        n.length = 0;
-        for (const B of a) n.push(d.get(B));
-        return new AiPerception_1.AiPerception(e, o, n);
+        var A = new Map();
+        for (const f of a) A.set(f.Id, f);
+        a.length = 0;
+        for (const _ of n) a.push(A.get(_));
+        return new (
+          AiConfig.AsyncAiPerception
+            ? AsyncAiPerception_1.AsyncAiPerception
+            : AiPerception_1.AiPerception
+        )(e, o, a);
       }
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -381,5 +421,6 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       );
   }
 }
-exports.AiConfig = AiConfig;
+((exports.AiConfig = AiConfig).AsyncAiPerception = !1),
+  (AiConfig.CppAsyncAiPerception = !1);
 //# sourceMappingURL=AiConfig.js.map

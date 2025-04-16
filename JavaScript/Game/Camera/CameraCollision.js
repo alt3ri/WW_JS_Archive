@@ -10,6 +10,8 @@ const UE = require("ue"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
+  TsBaseVehicle_1 = require("../NewWorld/Vehicle/TsBaseVehicle"),
+  GravityUtils_1 = require("../Utils/GravityUtils"),
   MIN_DITHER = 0.01,
   MAX_VALUE = 9999999,
   PROBE_RATIO = 4,
@@ -29,6 +31,7 @@ class CameraCollision {
       (this.jse = void 0),
       (this.Dae = void 0),
       (this.Rae = void 0),
+      (this.Ohc = Vector_1.Vector.Create()),
       (this._ae = Vector_1.Vector.Create()),
       (this.uae = Vector_1.Vector.Create()),
       (this.Uae = Vector_1.Vector.Create()),
@@ -47,7 +50,7 @@ class CameraCollision {
       (this.IsLeftCollision = !1),
       (this.IsRightCollision = !1),
       (this.IsOpenBlend = !0),
-      (this.Jza = 0),
+      (this.Zrh = 0),
       (this.CurrentBlendState = 0),
       (this.Fae = 0),
       (this.Vae = 0),
@@ -132,7 +135,7 @@ class CameraCollision {
       this.Hse.ActorsToIgnore.Add(t),
       this.Dae.ActorsToIgnore.Add(t),
       this.Rae.ActorsToIgnore.Add(t),
-      (this.Lae = t?.CharacterActorComponent?.Entity?.GetComponent(69));
+      (this.Lae = t?.CharacterActorComponent?.Entity?.GetComponent(76));
   }
   SetCameraConfig(t, i) {
     (this.Wae = t * t * PROBE_RATIO), (this._pa = i);
@@ -161,26 +164,48 @@ class CameraCollision {
       this.Yae(),
       this.Jae(t, i),
       this.zae(t, i, s),
-      this.Zae(i),
+      this.Zae(),
       this.ehe(t),
       this.Pae
     );
   }
   Xae(t, i) {
-    this._ae.DeepCopy(t),
+    if (
+      (this.Ohc.DeepCopy(this.Hh.GravityDirect),
+      this._ae.DeepCopy(t),
       this.uae.DeepCopy(i),
       (this.Fse.WorldContextObject = GlobalData_1.GlobalData.World),
       (this.Fse.Radius = this.Hh.CurrentCollisionSize),
-      this.Lae &&
-        (this._ae.Z = Math.max(
-          this._ae.Z,
-          this.Lae.GetWaterLocation().Z +
+      this.Lae)
+    ) {
+      const s = GravityUtils_1.GravityUtils.GetZnInGravityForDirect(
+        this.Ohc,
+        this._ae,
+      );
+      (t = this.Lz),
+        (i =
+          (t.DeepCopy(this.Lae.GetWaterLocation()),
+          GravityUtils_1.GravityUtils.AddZnInGravityForDirect(
+            this.Ohc,
+            t,
             this.Hh.CollisionAdditionalHeightInWater,
-        )),
-      (this._ae.Z = Math.max(
-        this._ae.Z,
-        this.Hh.Character.CharacterActorComponent.FloorLocation.Z + this._pa,
-      )),
+          ),
+          GravityUtils_1.GravityUtils.GetZnInGravityForDirect(this.Ohc, t)));
+      this._ae.Z = (s > i ? this._ae : t).Z;
+    }
+    const s = GravityUtils_1.GravityUtils.GetZnInGravityForDirect(
+      this.Ohc,
+      this._ae,
+    );
+    (i = this.Lz),
+      i.DeepCopy(this.Hh.Character.CharacterActorComponent.FloorLocation),
+      GravityUtils_1.GravityUtils.AddZnInGravityForDirect(
+        this.Ohc,
+        i,
+        this._pa,
+      ),
+      (t = GravityUtils_1.GravityUtils.GetZnInGravityForDirect(this.Ohc, i)),
+      (this._ae.Z = (s > t ? this._ae : i).Z),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(
         this.Fse,
         this._ae,
@@ -190,18 +215,19 @@ class CameraCollision {
         this.uae,
       ),
       (this.Oae = !1),
-      TraceElementCommon_1.TraceElementCommon.SphereTrace(
+      (t = TraceElementCommon_1.TraceElementCommon.SphereTrace(
         this.Fse,
         PROFILE_KEY1,
-      ) &&
-        ((this.Nae = this.the(this._ae, this.uae, this.Fse.HitResult)),
-        0 <= this.Nae) &&
-        (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
-          this.Fse.HitResult,
-          this.Nae,
-          this.Pae,
-        ),
-        (this.Oae = !0));
+      ));
+    t &&
+      ((this.Nae = this.the(this._ae, this.uae, this.Fse.HitResult)),
+      0 <= this.Nae) &&
+      (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
+        this.Fse.HitResult,
+        this.Nae,
+        this.Pae,
+      ),
+      (this.Oae = !0));
   }
   Yae() {
     var t;
@@ -212,13 +238,7 @@ class CameraCollision {
           t.GetCollisionResponseToChannel(
             QueryTypeDefine_1.KuroCollisionChannel.Water,
           ) &&
-        ((this.Pae.Z = Math.max(
-          this.Pae.Z,
-          this.Pae.Z +
-            this.Hh.CollisionProbeSize +
-            MathUtils_1.MathUtils.KindaSmallNumber,
-        )),
-        (this.kae = !0));
+        (this.kae = !0);
   }
   $ae(t, i) {
     var s;
@@ -227,7 +247,7 @@ class CameraCollision {
       this.Uae.Normalize(),
       (s = (this.Hh.CheckWidth + this.Fae) / Vector_1.Vector.Dist(i, this.Pae)),
       (s = Vector_1.Vector.Dist(i, t) * s),
-      this.Uae.CrossProduct(Vector_1.Vector.DownVectorProxy, this.Aae),
+      this.Uae.CrossProduct(this.Ohc, this.Aae),
       this.Aae.MultiplyEqual(s),
       t.Addition(this.Aae, this._ae),
       this.jse.HitResult?.Clear(),
@@ -359,28 +379,29 @@ class CameraCollision {
     } else this.CurrentBlendState = this.Oae ? 2 : 0;
   }
   zae(t, i, s) {
-    switch (this.CurrentBlendState) {
-      case 1:
-        var h = this.qae - this.Hh.InSpeed * s,
-          h = Math.max(this.Gae, h);
-        i.Subtraction(t, this.Uae),
-          this.Uae.Normalize(),
-          this.Uae.Multiply(h, this.bae),
-          t.Addition(this.bae, this.Pae);
-        break;
-      case 3:
-        (h = this.qae + this.Hh.OutSpeed * s), (h = Math.min(this.Gae, h));
-        (h = Math.min(this.Hh.MaxArmLength, h)),
+    if (!this.kae)
+      switch (this.CurrentBlendState) {
+        case 1:
+          var h = this.qae - this.Hh.InSpeed * s,
+            h = Math.max(this.Gae, h);
           i.Subtraction(t, this.Uae),
-          this.Uae.Normalize(),
-          this.Uae.Multiply(h, this.bae),
-          t.Addition(this.bae, this.Pae);
-        break;
-      case 0:
-        this.kae || this.Pae.DeepCopy(i);
-    }
+            this.Uae.Normalize(),
+            this.Uae.Multiply(h, this.bae),
+            t.Addition(this.bae, this.Pae);
+          break;
+        case 3:
+          (h = this.qae + this.Hh.OutSpeed * s), (h = Math.min(this.Gae, h));
+          (h = Math.min(this.Hh.MaxArmLength, h)),
+            i.Subtraction(t, this.Uae),
+            this.Uae.Normalize(),
+            this.Uae.Multiply(h, this.bae),
+            t.Addition(this.bae, this.Pae);
+          break;
+        case 0:
+          this.Pae.DeepCopy(i);
+      }
   }
-  Zae(t) {
+  Zae() {
     if (this.IsNpcDitherEnable) {
       this.nhe(),
         this.she(),
@@ -395,45 +416,43 @@ class CameraCollision {
           this.Dae,
           this.xae,
         );
-      var i = TraceElementCommon_1.TraceElementCommon.SphereTrace(
+      var t = TraceElementCommon_1.TraceElementCommon.SphereTrace(
           this.Dae,
           PROFILE_KEY2,
         ),
-        s = this.Dae.HitResult.GetHitCount();
-      if (i) {
+        i = this.Dae.HitResult.GetHitCount();
+      if (t) {
         this.ahe(this.Dae.HitResult);
-        for (var [h, e] of this.Qae)
-          this.hhe(h)
-            ? (h.SetDitherEffect(1, 1),
+        for (var [s, h] of this.Qae)
+          this.hhe(s)
+            ? (s.SetDitherEffect(1, 1),
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Camera",
-                  58,
-                  `[NPC Dither] 存在忽略Tag,恢复Npc'${h?.GetName()}'Dither`,
+                  57,
+                  `[NPC Dither] 存在忽略Tag,恢复Npc'${s?.GetName()}'Dither`,
                 ))
-            : (h.SetDitherEffect(this.lhe(h, e), 1),
-              (e = this.Kae.has(h)) && this.Kae.delete(h),
-              this.Kae.add(h),
-              e ||
+            : (s.SetDitherEffect(this.lhe(s, h), 1),
+              (h = this.Kae.has(s)) && this.Kae.delete(s),
+              this.Kae.add(s),
+              h ||
                 (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Camera", 58, "[NPC Dither] 应用Npc Dither", [
+                  Log_1.Log.Debug("Camera", 57, "[NPC Dither] 应用Npc Dither", [
                     "actor?.GetName()",
-                    h?.GetName(),
+                    s?.GetName(),
                   ])));
       }
-      var r = this.Kae.values();
-      for (let t = 0; t < this.Kae.size - s; t++) {
-        var a = r.next();
-        a.value &&
-          a.value instanceof TsBaseCharacter_1.default &&
-          a.value.IsValid() &&
-          (a.value.SetDitherEffect(1, 1), Log_1.Log.CheckDebug()) &&
+      var e = this.Kae.values();
+      for (let t = 0; t < this.Kae.size - i; t++) {
+        var r = e.next().value;
+        this.Wx_(r) &&
+          (r.SetDitherEffect(1, 1), Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "Camera",
-            58,
-            `[NPC Dither] 恢复Npc'${a.value?.GetName()}'Dither`,
+            57,
+            `[NPC Dither] 恢复Npc'${r?.GetName()}'Dither`,
           ),
-          this.Kae.delete(a.value);
+          this.Kae.delete(r);
       }
     } else
       0 < this.Kae.size &&
@@ -442,7 +461,7 @@ class CameraCollision {
             (t.SetDitherEffect(1, 1), Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "Camera",
-              58,
+              57,
               `[NPC Dither] 禁用Npc虚化时恢复Npc'${t?.GetName()}'Dither`,
             );
         }),
@@ -479,7 +498,7 @@ class CameraCollision {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Character",
-          58,
+          57,
           "CollisionSize数据错误:NearCollisionProbeSize <= this.CollisionProbeSize",
           ["CollisionProbeSize", this.Hh.CollisionProbeSize],
           ["NearCollisionProbeSize", this.Hh.NearCollisionProbeSize],
@@ -510,16 +529,16 @@ class CameraCollision {
       ? ((this.CurrentBlendState = this.Oae ? 2 : 0), !0)
       : ModelManager_1.ModelManager.GameModeModel.IsSilentLogin
         ? !(this.CurrentBlendState = 0)
-        : 2 === this.Jza
+        : 2 === this.Zrh
           ? ((this.CurrentBlendState = this.Oae ? 2 : 0), !0)
-          : 1 === this.Jza &&
-            ((this.Jza = 0), (this.CurrentBlendState = this.Oae ? 2 : 0), !0);
+          : 1 === this.Zrh &&
+            ((this.Zrh = 0), (this.CurrentBlendState = this.Oae ? 2 : 0), !0);
   }
   rhe(t, i, s) {
     return t.Subtraction(i, this.Lz).SizeSquared() < s * s;
   }
   hhe(t) {
-    return !!t.GetEntityNoBlueprint()?.GetComponent(190)?.HasTag(-1151151013);
+    return !!t.GetEntityNoBlueprint()?.GetComponent(203)?.HasTag(-1151151013);
   }
   nhe() {
     var t, i;
@@ -551,7 +570,7 @@ class CameraCollision {
       e &&
         e instanceof UE.Object &&
         e.IsValid() &&
-        e.IsA(UE.TsBaseCharacter_C.StaticClass()) &&
+        this.Wx_(e) &&
         (e.GetEntityNoBlueprint()?.GetComponent(0)?.GetModelConfig()
           ?.主角蓝透 ||
           (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
@@ -569,13 +588,21 @@ class CameraCollision {
     let s = this.Hh.CompleteHideDistance,
       h = this.Hh.StartHideDistance,
       e = this.Hh.StartDitherValue;
+    var r;
     return (
       t.CapsuleComponent.GetCollisionObjectType() ===
-        QueryTypeDefine_1.KuroCollisionChannel.PawnMonster &&
-        (t = t.GetEntityNoBlueprint()?.GetComponent(3)) &&
-        ((s = t.CompleteHideDistance),
-        (h = t.StartHideDistance),
-        (e = t.StartDitherValue)),
+      QueryTypeDefine_1.KuroCollisionChannel.PawnMonster
+        ? (r = t.GetEntityNoBlueprint()?.GetComponent(3)) &&
+          ((s = r.CompleteHideDistance),
+          (h = r.StartHideDistance),
+          (e = r.StartDitherValue))
+        : t.CapsuleComponent.GetCollisionObjectType() ===
+            QueryTypeDefine_1.KuroCollisionChannel.Vehicle &&
+          (r = t.GetEntityNoBlueprint()?.GetComponent(231)) &&
+          0 < r.StartHideDistance &&
+          ((s = r.CompleteHideDistance),
+          (h = r.StartHideDistance),
+          (e = r.StartDitherValue)),
       MathUtils_1.MathUtils.RangeClamp(i, s, h, MIN_DITHER, e)
     );
   }
@@ -604,11 +631,7 @@ class CameraCollision {
     for (let t = 0; t < s; ++t) {
       var h = i.Actors.Get(t);
       if (h)
-        if (
-          h instanceof UE.Object &&
-          h.IsValid() &&
-          h.IsA(UE.TsBaseCharacter_C.StaticClass())
-        )
+        if (h instanceof UE.Object && h.IsValid() && this.Wx_(h))
           if (
             h.GetEntityNoBlueprint()?.GetComponent(0)?.GetModelConfig()
               ?.主角蓝透
@@ -636,7 +659,14 @@ class CameraCollision {
     );
   }
   SetCameraBlendPauseType(t) {
-    this.Jza = t;
+    this.Zrh = t;
+  }
+  Wx_(t) {
+    return (
+      !!t?.IsValid() &&
+      (t instanceof TsBaseCharacter_1.default ||
+        t instanceof TsBaseVehicle_1.default)
+    );
   }
 }
 exports.CameraCollision = CameraCollision;

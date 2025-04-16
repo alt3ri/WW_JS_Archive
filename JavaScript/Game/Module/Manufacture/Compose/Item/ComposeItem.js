@@ -39,7 +39,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   P5e() {
     var s = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        this.fGt.ItemId,
+        this.fGt.ConfigId,
       ),
       s = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(s.Name);
     this.GetText(12).SetText(s);
@@ -50,18 +50,18 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
         if (35 === this.fGt.SubType)
           return void this.SetItemQualityIcon(
             this.GetSprite(10),
-            this.fGt.ItemId,
+            this.fGt.ConfigId,
           );
         break;
       case 2:
         if (37 === this.fGt.SubType)
           return void this.SetItemQualityIcon(
             this.GetSprite(10),
-            this.fGt.ItemId,
+            this.fGt.ConfigId,
           );
     }
     var s = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-      this.fGt.ItemId,
+      this.fGt.ConfigId,
     );
     this.SetItemQualityIcon(this.GetSprite(10), s.ItemId);
   }
@@ -72,27 +72,27 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
           return (
             (s =
               ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-                this.fGt.ItemId,
+                this.fGt.ConfigId,
               )),
             void this.SetItemIcon(this.GetTexture(11), s.ItemId)
           );
-        this.SetItemIcon(this.GetTexture(11), this.fGt.ItemId);
+        this.SetItemIcon(this.GetTexture(11), this.fGt.ConfigId);
         break;
       case 2:
         if (0 === this.fGt.SubType)
           return (
             (s =
               ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-                this.fGt.ItemId,
+                this.fGt.ConfigId,
               )),
             void this.SetItemIcon(this.GetTexture(11), s.ItemId)
           );
-        this.SetItemIcon(this.GetTexture(11), this.fGt.ItemId);
+        this.SetItemIcon(this.GetTexture(11), this.fGt.ConfigId);
         break;
       case 3:
         var s =
           ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-            this.fGt.ItemId,
+            this.fGt.ConfigId,
           );
         this.SetItemIcon(this.GetTexture(11), s.ItemId);
     }
@@ -116,7 +116,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
           ? this.GetItem(8).SetUIActive(!1)
           : ((s =
               ComposeController_1.ComposeController.CheckCanReagentProduction(
-                s.ItemId,
+                s.ConfigId,
               )),
             this.GetItem(8).SetUIActive(!s));
         break;
@@ -125,7 +125,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
         37 === s.SubType
           ? this.GetItem(8).SetUIActive(!1)
           : ((s = ComposeController_1.ComposeController.CheckCanStructure(
-              s.ItemId,
+              s.ConfigId,
             )),
             this.GetItem(8).SetUIActive(!s));
         break;
@@ -133,10 +133,10 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
         s = this.fGt;
         0 !==
         ModelManager_1.ModelManager.ComposeModel.GetPurificationDataById(
-          s.ItemId,
+          s.ConfigId,
         ).IsUnlock
           ? ((s = ComposeController_1.ComposeController.CheckCanPurification(
-              s.ItemId,
+              s.ConfigId,
             )),
             this.GetItem(8).SetUIActive(!s))
           : this.GetItem(8).SetUIActive(!0);

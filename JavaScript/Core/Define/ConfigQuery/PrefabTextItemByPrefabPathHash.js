@@ -17,30 +17,30 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create(
+const initStat = Stats_1.Stat.CreateNoFlameGraph(
     "configPrefabTextItemByPrefabPathHash.Init",
   ),
-  getConfigListStat = Stats_1.Stat.Create(
+  getConfigListStat = Stats_1.Stat.CreateNoFlameGraph(
     "configPrefabTextItemByPrefabPathHash.GetConfigList",
   ),
   CONFIG_LIST_STAT_PREFIX =
     "configPrefabTextItemByPrefabPathHash.GetConfigList(";
 exports.configPrefabTextItemByPrefabPathHash = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfigList: (t, e = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigListStat.Start();
-    var o = Stats_1.Stat.Create(CONFIG_LIST_STAT_PREFIX + `#${t})`),
+      getConfigListStat?.Start();
+    var o = Stats_1.Stat.CreateNoFlameGraph(CONFIG_LIST_STAT_PREFIX + `#${t})`),
       i =
-        (o.Start(),
+        (o?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (i) {
       if (e) {
@@ -48,8 +48,8 @@ exports.configPrefabTextItemByPrefabPathHash = {
         const f = ConfigCommon_1.ConfigCommon.GetConfig(n);
         if (f)
           return (
-            o.Stop(),
-            getConfigListStat.Stop(),
+            o?.Stop(),
+            getConfigListStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             f
           );
@@ -79,8 +79,8 @@ exports.configPrefabTextItemByPrefabPathHash = {
           )
             return (
               ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-              o.Stop(),
-              getConfigListStat.Stop(),
+              o?.Stop(),
+              getConfigListStat?.Stop(),
               void ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop()
             );
           a = PrefabTextItem_1.PrefabTextItem.getRootAsPrefabTextItem(
@@ -93,16 +93,16 @@ exports.configPrefabTextItemByPrefabPathHash = {
             ((n = KEY_PREFIX + `#${t})`),
             ConfigCommon_1.ConfigCommon.SaveConfig(n, f, f.length)),
           ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-          o.Stop(),
-          getConfigListStat.Stop(),
+          o?.Stop(),
+          getConfigListStat?.Stop(),
           ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
           f
         );
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    o.Stop(),
-      getConfigListStat.Stop(),
+    o?.Stop(),
+      getConfigListStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

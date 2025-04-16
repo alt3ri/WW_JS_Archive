@@ -82,7 +82,7 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
   }
   Yso(e) {
     this.rbt < 0 ||
-      Net_1.Net.IsCallbackPaused() ||
+      Net_1.Net.IsNotifyCallbackPaused() ||
       ((this.rbt -= e),
       this.rbt < 0 &&
         (this.GetItem(0).SetUIActive(!0),
@@ -91,7 +91,7 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
             ModelManager_1.ModelManager.ReConnectModel.GetUnResponsedRpcStr())
             .length) &&
         Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Reconnect", 9, "网络遮罩超时, 打开断线重连界面", [
+        Log_1.Log.Debug("Reconnect", 8, "网络遮罩超时, 打开断线重连界面", [
           "未响应的rpcId",
           e,
         ]));

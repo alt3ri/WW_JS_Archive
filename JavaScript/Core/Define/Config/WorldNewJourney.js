@@ -42,11 +42,11 @@ class WorldNewJourney {
   jumptoValue(t) {
     return this.jumpto(t)?.value();
   }
-  __init(t, r) {
-    return (this.z7 = t), (this.J7 = r), this;
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
   }
-  static getRootAsWorldNewJourney(t, r) {
-    return (r || new WorldNewJourney()).__init(
+  static getRootAsWorldNewJourney(t, i) {
+    return (i || new WorldNewJourney()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -68,25 +68,37 @@ class WorldNewJourney {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   sourcetitle(t) {
-    var r = this.J7.__offset(this.z7, 12);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 12),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   sourcedesc(t) {
-    var r = this.J7.__offset(this.z7, 14);
-    return r ? this.J7.__string(this.z7 + r, t) : null;
+    var i = this.J7.__offset(this.z7, 14),
+      i = i ? this.J7.__string(this.z7 + i, t) : null;
+    return (
+      "string" == typeof i &&
+        GameUtils_1.GameUtils.IsOptimizeDbString &&
+        GameUtils_1.GameUtils.InternalizedString(i),
+      i
+    );
   }
   conditionid() {
     var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  GetJumptoAt(t, r) {
+  GetJumptoAt(t, i) {
     return this.jumpto(t);
   }
-  jumpto(t, r) {
-    var i = this.J7.__offset(this.z7, 18);
-    return i
-      ? (r || new DicIntString_1.DicIntString()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
+  jumpto(t, i) {
+    var r = this.J7.__offset(this.z7, 18);
+    return r
+      ? (i || new DicIntString_1.DicIntString()).__init(
+          this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
           this.J7,
         )
       : null;

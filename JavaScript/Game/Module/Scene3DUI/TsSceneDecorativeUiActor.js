@@ -13,6 +13,12 @@ class TsSceneDecorativeUiActor extends TsSceneUiTag_1.default {
       (this.InShowInternal = !1),
       (this.EditorUiActor = void 0);
   }
+  Constructor() {
+    super.Constructor(),
+      (this.IsControlledInternal = !1),
+      (this.InShowInternal = !1),
+      (this.EditorUiActor = void 0);
+  }
   set IsControlled(t) {
     this.IsControlledInternal = t;
   }
@@ -28,13 +34,16 @@ class TsSceneDecorativeUiActor extends TsSceneUiTag_1.default {
   Create3dUi() {}
   Destroy3dUi() {
     this.EditorUiActor &&
-      (ActorSystem_1.ActorSystem.Put(this.EditorUiActor),
+      (ActorSystem_1.ActorSystem.Put(
+        "TsSceneDecorativeUiActor.Destroy3dUi",
+        this.EditorUiActor,
+      ),
       (this.EditorUiActor = void 0));
   }
   DrawDistance() {
-    UE.KismetSystemLibrary.DrawDebugSphere(
+    UE.KismetSystemLibrary.D_DrawDebugSphere(
       this,
-      this.K2_GetActorLocation(),
+      this.D_K2_GetActorLocation(),
       this.ShowDistance,
       12,
       ColorUtils_1.ColorUtils.LinearRed,

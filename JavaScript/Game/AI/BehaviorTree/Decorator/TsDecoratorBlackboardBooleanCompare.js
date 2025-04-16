@@ -3,13 +3,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../GlobalData"),
-  BlackboardController_1 = require("../../../World/Controller/BlackboardController");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class TsDecoratorBlackboardBooleanCompare extends UE.BTDecorator_BlueprintBase {
   constructor() {
     super(...arguments),
       (this.BlackboardKey = ""),
       (this.CompareValue = !1),
       (this.IsInitTsVariables = !1),
+      (this.TsBlackboardKey = ""),
+      (this.TsCompareValue = !1);
+  }
+  Constructor() {
+    (this.IsInitTsVariables = !1),
       (this.TsBlackboardKey = ""),
       (this.TsCompareValue = !1);
   }
@@ -24,7 +29,7 @@ class TsDecoratorBlackboardBooleanCompare extends UE.BTDecorator_BlueprintBase {
     return e
       ? !!(e = e.CharAiDesignComp) &&
           (this.InitTsVariables(),
-          BlackboardController_1.BlackboardController.GetBooleanValueByEntity(
+          ControllerHolder_1.ControllerHolder.BlackboardController.GetBooleanValueByEntity(
             e.Entity.Id,
             this.TsBlackboardKey,
           )

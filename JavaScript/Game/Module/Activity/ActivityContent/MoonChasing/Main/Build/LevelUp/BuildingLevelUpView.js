@@ -12,8 +12,8 @@ class BuildingLevelUpView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.Hwt = void 0),
-      (this.qIa = void 0),
-      (this.GIa = !1),
+      (this.OIa = void 0),
+      (this.kIa = !1),
       (this.aOn =
         new BuildingLevelUpViewController_1.BuildingLevelUpViewController());
   }
@@ -40,7 +40,7 @@ class BuildingLevelUpView extends UiTickViewBase_1.UiTickViewBase {
     this.aOn.RegisterView(this),
       this.aOn.Start(),
       (this.Hwt = this.GetSlider(0)),
-      (this.qIa = new UiSequencePlayer_1.UiSequencePlayer(this.GetItem(13))),
+      (this.OIa = new UiSequencePlayer_1.UiSequencePlayer(this.GetItem(13))),
       this.SetFillAmount(0);
   }
   OnTick(i) {
@@ -139,10 +139,10 @@ class BuildingLevelUpView extends UiTickViewBase_1.UiTickViewBase {
     this.Hwt.SetValue(i);
   }
   PlayBuildingLoopSequence(i) {
-    this.GIa !== i &&
-      ((this.GIa = i)
-        ? this.qIa.PlaySequence("Loop")
-        : this.qIa.StopPrevSequence(!1, !0));
+    this.kIa !== i &&
+      ((this.kIa = i)
+        ? this.OIa.PlaySequence("Loop")
+        : this.OIa.StopPrevSequence(!1, !0));
   }
 }
 exports.BuildingLevelUpView = BuildingLevelUpView;

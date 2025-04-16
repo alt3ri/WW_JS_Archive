@@ -9,6 +9,7 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   FormationDataController_1 = require("../../Abilities/FormationDataController"),
@@ -16,6 +17,8 @@ const UE = require("ue"),
   ButtonItem_1 = require("../../Common/Button/ButtonItem"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   InstanceDungeonController_1 = require("../../InstanceDungeon/InstanceDungeonController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
+  SkinController_1 = require("../../Skin/SkinController"),
   UiRoleUtils_1 = require("../../UiComponent/UiRoleUtils"),
   UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
@@ -60,8 +63,17 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
             );
       }),
       (this.RoleTagClick = () => {
-        var e = this.RoleInstance.GetRoleConfig();
-        UiManager_1.UiManager.OpenView("RoleTagDetailView", e.Tag);
+        var e = this.RoleInstance.GetRoleConfig(),
+          e = ModelManager_1.ModelManager.RoleModel.GetRoleTagByRoleInfo(e);
+        UiManager_1.UiManager.OpenView("RoleTagDetailView", e);
+      }),
+      (this.OnRoleSkinClick = () => {
+        var e = this.RoleViewAgent.GetCurSelectRoleId();
+        SkinController_1.SkinController.SkipToSkinView(
+          e,
+          "RoleSkinTabView",
+          !1,
+        );
       }),
       (this.TeachClick = () => {
         if (
@@ -81,46 +93,57 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
             "RoleGuideNotice05",
           );
         else {
-          var e = this.RoleViewAgent.GetCurSelectRoleId(),
-            e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
+          const o = this.RoleViewAgent.GetCurSelectRoleId();
+          var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o),
             t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name);
-          const o = e.RoleGuide;
-          0 === o
+          const r = e.RoleGuide;
+          0 === r
             ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "RoleGuideNotice02",
                 t,
               )
-            : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(94)).SetTextArgs(
-                t,
-              ),
-              e.FunctionMap.set(2, () => {
-                var e =
-                    ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-                      o,
-                    ).FightFormationId,
-                  e =
-                    ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
-                      e,
-                    )?.AutoRole;
-                if (0 < (e?.length ?? 0)) {
-                  var t = new Array();
-                  for (const i of e)
-                    t.push(
-                      ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
-                        i,
-                      ),
-                    );
-                  InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
-                    o,
-                    t,
-                  );
-                } else
-                  Log_1.Log.CheckError() &&
-                    Log_1.Log.Error("Role", 44, "未配置出战人物");
-              }),
-              ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                e,
-              ));
+            : ControllerHolder_1.ControllerHolder.InstanceDungeonController.IsForbidDungeon(
+                  r,
+                )
+              ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                  "PhantomFormationEnterInstanceTip",
+                )
+              : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(94)).SetTextArgs(
+                  t,
+                ),
+                e.FunctionMap.set(2, () => {
+                  var e =
+                      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+                        r,
+                      ).FightFormationId,
+                    e =
+                      ConfigManager_1.ConfigManager.EditBattleTeamConfig.GetFightFormationConfig(
+                        e,
+                      )?.AutoRole;
+                  if (0 < (e?.length ?? 0)) {
+                    var t = new Array();
+                    for (const i of e)
+                      t.push(
+                        ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
+                          i,
+                        ),
+                      );
+                    e = { Q6n: o };
+                    (ModelManager_1.ModelManager.InstanceDungeonModel.InstanceEnterContentText.Hah =
+                      e),
+                      InstanceDungeonController_1.InstanceDungeonController.PrewarTeamFightRequest(
+                        r,
+                        t,
+                        0,
+                        0,
+                      );
+                  } else
+                    Log_1.Log.CheckError() &&
+                      Log_1.Log.Error("Role", 43, "未配置出战人物");
+                }),
+                ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+                  e,
+                ));
         }
       }),
       (this.dVi = void 0),
@@ -131,6 +154,10 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.Vdo = (e) => {
         (this.RoleInstance =
           ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e)),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.RoleSkinRedDotRefresh,
+            e,
+          ),
           this.PlayMontageStartWithReLoop(),
           this.Hdo(),
           this.jdo();
@@ -168,19 +195,22 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       [18, UE.UIItem],
       [19, UE.UIButtonComponent],
       [20, UE.UIButtonComponent],
+      [21, UE.UIButtonComponent],
+      [22, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [0, this.DetailClick],
         [14, this.TeachClick],
         [16, this.RoleChangeClick],
         [19, this.RoleTagClick],
+        [21, this.OnRoleSkinClick],
       ]);
   }
   OnStart() {
     (this.RoleViewAgent = this.ExtraParams),
       void 0 === this.RoleViewAgent
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
+          Log_1.Log.Error("Role", 58, "RoleViewAgent为空", [
             "界面名称",
             "RoleAttributeTabView",
           ])
@@ -214,11 +244,11 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     for (let e = 0; e < n; ++e) {
       r = 0 === e ? o : LguiUtil_1.LguiUtil.CopyItem(o, i);
       var s = t[e],
-        a = new AttributeItem_1.AttributeItem();
-      a.CreateThenShowByActor(r.GetOwner()),
-        a.UpdateParam(s, !1),
-        2 < n && e % 2 == 0 ? a.SetBgActive(!0) : a.SetBgActive(!1),
-        this.AttributeItemList.push(a);
+        l = new AttributeItem_1.AttributeItem();
+      l.CreateThenShowByActor(r.GetOwner()),
+        l.UpdateParam(s, !1),
+        2 < n && e % 2 == 0 ? l.SetBgActive(!0) : l.SetBgActive(!1),
+        this.AttributeItemList.push(l);
     }
   }
   AddEventListener() {
@@ -273,6 +303,12 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     ),
       this.kdo.BindRedDot(
         "RoleAttributeTabBreakUp",
+        this.RoleInstance.GetDataId(),
+      ),
+      RedDotController_1.RedDotController.BindRedDot(
+        "RoleSkin",
+        this.GetItem(22),
+        void 0,
         this.RoleInstance.GetDataId(),
       ),
       this.RoleSystemUiParams.TeachBtn &&
@@ -350,7 +386,9 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     this.GetText(8).SetText(e);
   }
   Jdo() {
-    var e = this.RoleInstance.GetRoleConfig().Tag;
+    var e = ModelManager_1.ModelManager.RoleModel.GetRoleTagByRoleInfo(
+      this.RoleInstance.GetRoleConfig(),
+    );
     this.Klo.RefreshByData(e);
   }
   Hdo() {
@@ -361,7 +399,8 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       this.UpdateAttribute(),
       this.zdo(),
       this.Zdo(),
-      this.Jdo();
+      this.Jdo(),
+      this.bIl();
   }
   Zdo() {
     var e = this.RoleViewAgent.GetCurSelectRoleId(),
@@ -373,6 +412,10 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
       i = ModelManager_1.ModelManager.FunctionModel.IsOpen(i),
       o = ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
     this.GetButton(16).RootUIComp.SetUIActive(e && i && !o && !t);
+  }
+  bIl() {
+    var e = this.RoleViewAgent.GetCurSelectRoleData().IsTrialRole();
+    this.GetButton(21).RootUIComp.SetUIActive(!e);
   }
   Xdo() {
     this.GetText(11).SetText(this.RoleInstance.GetName());
@@ -440,7 +483,8 @@ class RoleAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     this.PlayMontageStart();
   }
   OnBeforeHide() {
-    this.Odo.UnBindRedDot();
+    this.Odo.UnBindRedDot(),
+      RedDotController_1.RedDotController.UnBindGivenUi("RoleSkin");
   }
   OnBeforeDestroy() {
     for (const e of this.AttributeItemList) e.Destroy();

@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.OPTION_SKIPPING_SELECTED =
       void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
+  Queue_1 = require("../../../../Core/Container/Queue"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
@@ -31,7 +33,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       (this.nx = void 0),
       (this.QTn = new Map()),
       (this.TXi = []),
-      (this.LXi = []),
+      (this.LXi = new Queue_1.Queue()),
       (this.DXi = void 0),
       (this.RXi = void 0),
       (this.UXi = void 0),
@@ -39,7 +41,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       (this.FlowSequence = new FlowSequence_1.FlowSequence()),
       (this.FlowShowTalk = new FlowShowTalk_1.FlowShowTalk()),
       (this.PXi = void 0),
-      (this.xXi = void 0),
+      (this.xXi = new Array()),
       (this.wXi = void 0),
       (this.BXi = void 0),
       (this.bXi = {
@@ -63,11 +65,14 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
           i && this.GXi();
       }),
       (this.NXi = (t, i) => {
-        i || this.QTn.has(t)
-          ? (i ||
-              (this.x5a(this.QTn.get(t)),
-              FlowNetworks_1.FlowNetworks.RequestFlowRestart(t)),
-            this.QTn.delete(t))
+        this.QTn.has(t)
+          ? (this.QTn.delete(t),
+            i !== Protocol_1.Aki.Protocol.Q4n.KRs &&
+              i &&
+              (i === Protocol_1.Aki.Protocol.Q4n.Proto_ErrFlowNotExist
+                ? this.LogError("ErrFlowNotExist")
+                : (this.CVa(this.QTn.get(t)),
+                  FlowNetworks_1.FlowNetworks.RequestFlowRestart(t))))
           : this.LogError("ContextCache undefined");
       }),
       (this.OXi = (t, i) => {
@@ -75,7 +80,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
           (this.UXi = void 0),
           this.nx && (this.nx.CurSubActionId = 0),
           (this.AXi = void 0),
-          i ? this.kXi() : this.Tca(!1);
+          i ? this.kXi() : this.Aca(!1);
       }),
       (this.FXi = () => {
         this.wXi?.Remove(),
@@ -86,7 +91,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
                 this.AXi?.InterruptExecute())
               : this.DXi &&
                 (Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("Plot", 27, "跳过剧情: 行为", [
+                  Log_1.Log.Info("Plot", 26, "跳过剧情: 行为", [
                     "ActionId",
                     this.DXi.ActionId,
                   ]),
@@ -108,7 +113,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
           ? EntitySystem_1.EntitySystem.Get(this.nx.Context.EntityId)
           : t)
     ) {
-      var i = t.GetComponent(182);
+      var i = t.GetComponent(195);
       if (i) return i.GetInteractController()?.GetInteractPoint();
     }
   }
@@ -125,7 +130,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       for (let t = i.length - 1; 0 <= t; t--) this.TXi.push(i[t]);
       "SetPlotMode" === this.TXi[this.TXi.length - 1].Name ||
         (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("Plot", 39, "第一个行为不是SetPlotMode，自动添加。"),
+          Log_1.Log.Warn("Plot", 38, "第一个行为不是SetPlotMode，自动添加。"),
         this.TXi.push(this.bXi)),
         (this.nx.HasAdjustCamera = this.WXi()),
         (this.PXi = e);
@@ -137,10 +142,13 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
     var t, i, e;
     this.nx.IsBreakdown || this.TXi.length <= 0
       ? this.jXi()
-      : ((t = this.TXi.pop()),
-        (i = ControllerHolder_1.ControllerHolder.FlowController.GetFlowAction(
-          t.Name,
-        ))
+      : (t = this.TXi.pop()).Disabled || t.EdLocalDisabled
+        ? (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Plot", 26, "注释的行为 ", ["", t.Name]),
+          this.GXi())
+        : (i = ControllerHolder_1.ControllerHolder.FlowController.GetFlowAction(
+              t.Name,
+            ))
           ? ((this.DXi = t),
             (this.nx.CurActionId = t.ActionId),
             (e = i.GetAction()),
@@ -148,15 +156,15 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
             (e.Callback = this.qXi),
             e.Execute(t, this.nx, i.IsAutoFinish))
           : (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Plot", 27, "无客户端实现的剧情行为 ", [
+              Log_1.Log.Debug("Plot", 26, "无客户端实现的剧情行为 ", [
                 "",
                 t.Name,
               ]),
-            this.GXi()));
+            this.GXi());
   }
   FinishFlow(t, i, e = !1) {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Plot", 27, "FinishFlow", ["reason", t], ["incId", i]),
+      Log_1.Log.Info("Plot", 26, "FinishFlow", ["reason", t], ["incId", i]),
       (i &&
         ModelManager_1.ModelManager.PlotModel.SetPendingPlotState(
           i,
@@ -167,8 +175,8 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
         !this.nx ||
         (i && this.nx.FlowIncId !== i) ||
         ((this.nx.IsBreakdown = !0),
-        this.BackgroundActions(t, !1, e),
-        this.x5a(this.nx.RollbackRecord));
+        this.CVa(this.nx.RollbackRecord),
+        this.BackgroundActions(t, !1, e));
   }
   ForceFinishActionsByGm() {
     this.nx &&
@@ -188,7 +196,6 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       (this.DXi = void 0),
       (this.UXi = void 0),
       ControllerHolder_1.ControllerHolder.PlotController.CloseAllUi(),
-      ControllerHolder_1.ControllerHolder.PlotController.UnProtectPlotView(),
       this.KXi(() => {
         this.QXi(), (this.nx = void 0);
         var t = this.PXi;
@@ -208,7 +215,7 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   QXi() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Plot", 39, "剧情选项", [
+      Log_1.Log.Info("Plot", 38, "剧情选项", [
         "选项",
         this.nx.OptionsCollection,
       ]),
@@ -230,18 +237,20 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   ExecuteNextAction() {
     this.nx && this.GXi();
   }
-  ExecuteSubActions(t, i) {
-    this.XXi(t, i), this.kXi();
+  ExecuteSubActions(t, i, e = !1) {
+    this.XXi(t, i, e), this.AXi || this.kXi();
   }
-  XXi(i, t) {
-    if (((this.LXi.length = 0), (this.xXi = t), i))
-      for (let t = i.length - 1; 0 <= t; t--) this.LXi.push(i[t]);
+  XXi(t, i, e = !1) {
+    if (
+      (e || (this.LXi.Clear(), (this.xXi.length = 0)), i && this.xXi.push(i), t)
+    )
+      for (const o of t) this.LXi.Push(o);
   }
   kXi() {
     var t, i, e;
-    this.LXi.length <= 0
-      ? this.Tca()
-      : ((t = this.LXi.pop()),
+    this.LXi.Size <= 0
+      ? this.Aca()
+      : ((t = this.LXi.Pop()),
         (i = ControllerHolder_1.ControllerHolder.FlowController.GetFlowAction(
           t.Name,
         ))
@@ -252,18 +261,26 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
             (e.Callback = this.OXi),
             e.Execute(t, this.nx, i.IsAutoFinish))
           : (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug("Plot", 27, "无客户端实现的剧情行为 ", [
+              Log_1.Log.Debug("Plot", 26, "无客户端实现的剧情行为 ", [
                 "",
                 t.Name,
               ]),
             this.kXi()));
   }
-  Tca(t = !0) {
-    var i;
-    this.xXi && ((i = this.xXi), (this.xXi = void 0), i(t));
+  Aca(t = !0) {
+    if (this.xXi) {
+      var i = [...this.xXi];
+      this.xXi.length = 0;
+      for (const e of i) e(t);
+    }
   }
-  x5a(t) {
-    if (this.nx?.RollbackRecord.length)
+  CVa(t) {
+    if (this.nx?.RollbackRecord.length) {
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Plot", 26, "回退剧情行为开始", [
+          "id",
+          this.nx.FormatId,
+        ]);
       for (const e of t) {
         var i =
           ControllerHolder_1.ControllerHolder.FlowController.GetFlowAction(
@@ -272,11 +289,17 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
         i
           ? i.GetAction().Rollback(e, this.nx)
           : Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "无客户端实现的剧情行为 ", [
+            Log_1.Log.Debug("Plot", 26, "无客户端实现的剧情行为 ", [
               "Name",
               e.ActionInfo.Name,
             ]);
       }
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Plot", 26, "回退剧情行为完成", [
+          "id",
+          this.nx.FormatId,
+        ]);
+    }
   }
   FinishShowCenterTextAction(t) {
     let i = !0;
@@ -288,8 +311,8 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
         "ShowCenterText" === e.Name) &&
         (i = !1)
       : this.UXi &&
-        0 < this.LXi.length &&
-        ((e = this.LXi[this.LXi.length - 1]) ||
+        0 < this.LXi.Size &&
+        ((e = this.LXi.Front) ||
           this.LogError("FinishShowCenterTextAction:nextAction丢失"),
         "ShowCenterText" === e.Name) &&
         (i = !1),
@@ -305,11 +328,11 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       this.nx.IsBackground ||
         (!this.nx.CanSkip && ModelManager_1.ModelManager.SequenceModel.IsPlaying
           ? Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Plot", 27, "当前状态不可跳过")
+            Log_1.Log.Info("Plot", 26, "当前状态不可跳过")
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Plot",
-                27,
+                26,
                 "跳过剧情",
                 ["原因", t],
                 ["Id", this.nx.FormatId],
@@ -338,11 +361,11 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
               : this.FXi())));
   }
   VXi() {
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 27, "跳过剧情: 演出对话"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 26, "跳过剧情: 演出对话"),
       this.FlowSequence.Skip();
   }
   HXi() {
-    Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 27, "跳过剧情: 普通对话"),
+    Log_1.Log.CheckInfo() && Log_1.Log.Info("Plot", 26, "跳过剧情: 普通对话"),
       this.FlowShowTalk.Skip();
   }
   HandleInputBeforePlay(t = "LevelC") {
@@ -371,13 +394,28 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       ? i
       : exports.OPTION_SKIPPING_SELECTED;
   }
-  RecordOption(t, i) {
+  GetHistoryOptionSelect(t) {
+    return this.nx?.CurShowTalk
+      ? (this.nx.OptionsHistory.get(this.nx.CurShowTalkActionId).get(t) ?? -1)
+      : -1;
+  }
+  RecordOption(i, t) {
+    var e;
     this.nx?.CurShowTalk &&
-      (this.nx.OptionsHistory.get(this.nx.CurShowTalkActionId).set(t, i),
+      (this.nx.OptionsHistory.get(this.nx.CurShowTalkActionId).set(i, t),
       this.nx.OptionsCollection[this.nx.OptionsCollection.length - 1][1].push([
-        t,
         i,
-      ]));
+        t,
+      ]),
+      (e = this.nx.CurShowTalk.TalkItems.find((t) => t.Id === i))) &&
+      this.nx?.TalkHistory.push({ TalkItem: e, IsOption: !0, OptionIndex: t });
+  }
+  RecordTalkItem(t) {
+    "Talk" === t.Type &&
+      this.nx?.TalkHistory.push({ TalkItem: t, IsOption: !1 });
+  }
+  GetTalkHistory() {
+    return this.nx?.TalkHistory;
   }
   CheckCanSkipTmp() {
     if (!this.TXi) return !1;
@@ -399,19 +437,19 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   TriggerCountDownSkip(t) {
     t
       ? (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "剧情跳过开启倒计时", [
+          Log_1.Log.Debug("Plot", 26, "剧情跳过开启倒计时", [
             "time",
             exports.HANG_COUNT_DOWN,
           ]),
         this.BXi?.Remove(),
         (this.BXi = TimerSystem_1.TimerSystem.Delay(() => {
           Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Plot", 27, "剧情跳过倒计时完毕，跳过"),
+            Log_1.Log.Debug("Plot", 26, "剧情跳过倒计时完毕，跳过"),
             this.BackgroundActions("D级剧情被别的界面打断", !1),
             (this.BXi = void 0);
         }, exports.HANG_COUNT_DOWN)))
       : (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Plot", 27, "剧情跳过关闭倒计时"),
+          Log_1.Log.Debug("Plot", 26, "剧情跳过关闭倒计时"),
         this.BXi?.Remove(),
         (this.BXi = void 0));
   }
@@ -423,14 +461,14 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
       this.nx.FlowStateId === e
     )
       return !0;
-    for (const s of ModelManager_1.ModelManager.PlotModel.PlotPendingList)
-      if (s.FlowListName === t && s.FlowId === i && s.StateId === e) return !0;
+    for (const o of ModelManager_1.ModelManager.PlotModel.PlotPendingList)
+      if (o.FlowListName === t && o.FlowId === i && o.StateId === e) return !0;
     return !1;
   }
   GetNextAction(t) {
     if (this.nx)
-      return t && 0 < this.LXi.length
-        ? this.LXi[this.LXi.length - 1]
+      return t && 0 < this.LXi.Size
+        ? this.LXi.Front
         : 0 < this.TXi.length
           ? this.TXi[this.TXi.length - 1]
           : void 0;
@@ -438,7 +476,28 @@ class FlowActionRunner extends ControllerAssistantBase_1.ControllerAssistantBase
   LogError(t, ...i) {
     this.nx
       ? this.nx?.LogError(t, ...i)
-      : Log_1.Log.CheckError() && Log_1.Log.Error("Plot", 27, t, ...i);
+      : Log_1.Log.CheckError() && Log_1.Log.Error("Plot", 26, t, ...i);
+  }
+  GetFlowIncId() {
+    return this.nx.FlowIncId;
+  }
+  RequestPosition(t, i) {
+    FlowNetworks_1.FlowNetworks.RequestSeqEndPosition(this.nx, t, i);
+  }
+  CheckViewControlBeginForC() {
+    for (let t = this.TXi.length - 1; 0 < t; t--) {
+      var i = this.TXi[t];
+      if ("ShowTalk" === i.Name) return !0;
+      if ("BeginFlowTemplate" === i.Name) return i.Params.UseFreeCamera ?? !1;
+    }
+    return !0;
+  }
+  GetNextNameAction(i) {
+    for (let t = this.TXi.length - 1; 0 <= t; t--)
+      if (this.TXi[t].Name === i) return this.TXi[t];
+  }
+  GetFlowName() {
+    return this.nx?.FormatId ?? "";
   }
 }
 exports.FlowActionRunner = FlowActionRunner;

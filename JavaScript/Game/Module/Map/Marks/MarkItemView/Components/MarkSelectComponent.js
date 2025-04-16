@@ -2,9 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MarkSelectComponent = void 0);
 const CustomPromise_1 = require("../../../../../../Core/Common/CustomPromise"),
-  UiPanelBase_1 = require("../../../../../Ui/Base/UiPanelBase"),
-  LevelSequencePlayer_1 = require("../../../../Common/LevelSequencePlayer");
-class MarkSelectComponent extends UiPanelBase_1.UiPanelBase {
+  LevelSequencePlayer_1 = require("../../../../Common/LevelSequencePlayer"),
+  MarkPanelBase_1 = require("../MarkPanelBase");
+class MarkSelectComponent extends MarkPanelBase_1.MarkPanelBase {
   constructor() {
     super(...arguments), (this.SPe = void 0), (this.mRi = !1);
   }

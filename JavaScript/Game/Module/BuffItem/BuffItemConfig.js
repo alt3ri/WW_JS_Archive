@@ -2,15 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffItemConfig = void 0);
 const BuffById_1 = require("../../../Core/Define/ConfigQuery/BuffById"),
+  BuffEquipItemByItemId_1 = require("../../../Core/Define/ConfigQuery/BuffEquipItemByItemId"),
+  BuffEquipItemByRoleId_1 = require("../../../Core/Define/ConfigQuery/BuffEquipItemByRoleId"),
   BuffItemById_1 = require("../../../Core/Define/ConfigQuery/BuffItemById"),
   BuffItemByPublicCdGroup_1 = require("../../../Core/Define/ConfigQuery/BuffItemByPublicCdGroup"),
   BuffItemCdGroupById_1 = require("../../../Core/Define/ConfigQuery/BuffItemCdGroupById"),
-  DamageById_1 = require("../../../Core/Define/ConfigQuery/DamageById"),
   ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
-  ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
+  ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
+  ModelManager_1 = require("../../Manager/ModelManager");
 class BuffItemConfig extends ConfigBase_1.ConfigBase {
   GetDamageConfig(e, f) {
-    return DamageById_1.configDamageById.GetConfig(f);
+    return ModelManager_1.ModelManager.DamageModel?.GetDamageConfigById(f);
   }
   GetBuffItemBuffConfig(e) {
     e = this.GetBuffItemConfig(e);
@@ -71,6 +73,22 @@ class BuffItemConfig extends ConfigBase_1.ConfigBase {
   IsBuffItem(e) {
     var f = ItemInfoById_1.configItemInfoById.GetConfig(e);
     return !!f && !!f.IsBuffItem && void 0 !== this.GetBuffItemConfig(e);
+  }
+  IsEquipBuffItem(e) {
+    return (
+      !!ItemInfoById_1.configItemInfoById.GetConfig(e) &&
+      0 < this.GetBuffEquipItemByItemId(e).length
+    );
+  }
+  GetBuffEquipItemByRoleId(e) {
+    return (
+      BuffEquipItemByRoleId_1.configBuffEquipItemByRoleId.GetConfigList(e) ?? []
+    );
+  }
+  GetBuffEquipItemByItemId(e) {
+    return (
+      BuffEquipItemByItemId_1.configBuffEquipItemByItemId.GetConfigList(e) ?? []
+    );
   }
 }
 exports.BuffItemConfig = BuffItemConfig;

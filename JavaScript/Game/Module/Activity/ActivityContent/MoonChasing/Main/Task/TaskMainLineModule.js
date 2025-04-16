@@ -148,8 +148,8 @@ class TaskMainLineModule extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.wno = []),
-      (this.hMa = 0),
-      (this.RNa = !1),
+      (this.Jva = 0),
+      (this.B3a = !1),
       (this.Lbt = !0);
   }
   OnRegisterComponent() {
@@ -190,13 +190,13 @@ class TaskMainLineModule extends UiPanelBase_1.UiPanelBase {
           this.GetItem(9).SetUIActive(3 === t));
     await Promise.all(e);
     let r = -1;
-    if (this.RNa) {
+    if (this.B3a) {
       for (let i = this.wno.length - 1; 0 <= i; i--)
         if (this.wno[i].IsPrevTaskActive()) {
           r = i;
           break;
         }
-    } else r = s.findIndex((i) => i.Id === this.hMa);
+    } else r = s.findIndex((i) => i.Id === this.Jva);
     if (0 <= r) {
       let i = this.wno[r].GetRootItem();
       1 === s[r].TaskType && (i = this.GetItem(9));
@@ -208,7 +208,7 @@ class TaskMainLineModule extends UiPanelBase_1.UiPanelBase {
     }
   }
   SetSelectTaskId(i, t) {
-    (this.hMa = i), (this.RNa = t);
+    (this.Jva = i), (this.B3a = t);
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
     var t, e;

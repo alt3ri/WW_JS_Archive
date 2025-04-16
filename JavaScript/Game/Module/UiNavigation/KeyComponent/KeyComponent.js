@@ -57,7 +57,7 @@ class KeyBaseComponent extends UiPanelBase_1.UiPanelBase {
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiNavigationHotKey",
-              11,
+              10,
               "读取到图片路径为0的情况",
               ["keyName", e],
             );
@@ -111,6 +111,9 @@ class KeyBaseComponent extends UiPanelBase_1.UiPanelBase {
   }
   SetHotKeyType(e) {
     this.uwo = e;
+  }
+  RefreshPcAndGamepad() {
+    this.mwo && this.cwo?.RefreshProgressVisible();
   }
   SetActive(e) {
     super.SetActive(e), this.uwo?.KeyItemNotifySetActive(e);

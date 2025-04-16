@@ -13,6 +13,7 @@ const UE = require("ue"),
   UiPrefabLoadModule_1 = require("../UiPrefabLoadModule"),
   UiSpineLoadModule_1 = require("../UiSpineLoadModule"),
   ComponentAction_1 = require("./ComponentAction"),
+  UiAsyncTaskManager_1 = require("./UiAsyncTaskManager"),
   UiBehaviorBase_1 = require("./UiBehaviorBase");
 class UiPanelBase extends ComponentAction_1.ComponentAction {
   constructor() {
@@ -25,7 +26,6 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       (this.UsePool = !1),
       (this.SkipDestroyActor = !1),
       (this.N_r = !1),
-      (this.EnableActorPoolReleaseLog = !0),
       (this.OpenParam = void 0),
       (this.O_r = ""),
       (this.k_r = []),
@@ -41,11 +41,23 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "UiComponent",
-              17,
+              16,
               "创建对象没有执行Destroy, 进行自动Destroy",
               ["Ts类名", this.constructor.name],
             ),
+          this.OnAutoDestroy(),
           this.Destroy());
+      }),
+      (this.do_ = () => {
+        this.IsDestroyOrDestroying ||
+          this.WaitToDestroy ||
+          (Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "UiComponent",
+              37,
+              "对象已销毁,生命周期不同步请检查",
+              ["Ts类名", this.constructor.name],
+            ));
       }),
       (this.PostClickAudioEvent = (t) => {
         t = (0, AudioSystem_1.parseAudioEventPath)(t);
@@ -55,6 +67,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       (this.W_r = new UiNiagaraSettingModule_1.UiNiagaraSettingModule()),
       (this.wAr = new UiSpineLoadModule_1.UiSpineLoadModule()),
       (this.QXe = new UiPrefabLoadModule_1.UiPrefabLoadModule()),
+      (this.TaskManager = void 0),
       (this.OnSequenceEvent = (t, i) => {});
   }
   OnRegisterComponent() {}
@@ -69,6 +82,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   OnAfterHide() {}
   OnBeforeDestroy() {}
   OnAfterDestroy() {}
+  OnAutoDestroy() {}
   OnBeforeCreateImplement() {}
   async OnCreateAsyncImplementImplement() {}
   OnAfterCreateImplement() {}
@@ -98,7 +112,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           ? Log_1.Log.CheckError() &&
             Log_1.Log.ErrorWithStack(
               "UiCore",
-              17,
+              16,
               "[OnCreateAsyncImplement] 加载失败",
               t,
               ["component", this.constructor.name],
@@ -107,7 +121,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiCore",
-              17,
+              16,
               "[OnCreateAsyncImplement] 加载异常",
               ["component", this.constructor.name],
               ["error", t],
@@ -207,7 +221,8 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   OnDestroyAsyncImplementImplementCompatible() {}
   OnDestroyImplementCompatible() {
-    this.OnBeforeDestroy(),
+    this.CancelAllAsyncTask(),
+      this.OnBeforeDestroy(),
       this.OnBeforeDestroyImplement(),
       this.k_r.forEach((t) => {
         t.DestroyCompatible();
@@ -290,7 +305,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCore",
-            11,
+            10,
             "当前Actor创建完成,界面已经处于销毁状态",
             ["path", i],
           ),
@@ -306,11 +321,12 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
         this.BindOnClickEvents(),
         this.SetUiActive(!1),
         this.G_r.OnDestroyed.Add(this.H_r),
+        this.RootActor !== this.G_r && this.RootActor.OnDestroyed.Add(this.do_),
         !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiCore",
-            17,
+            16,
             "[SetActor] actor is not UIBaseActor",
             ["uiActor", t],
             ["path", LguiUtil_1.LguiUtil.GetActorFullPath(t)],
@@ -345,7 +361,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiCore",
-                17,
+                16,
                 "[FindInitedComponentRegistryActor]请该UI负责人和程序检查以下路径的LGUIComponentsRegistry组件, 检查是否缺失以下类型的组件",
                 ["节点全路径为", LguiUtil_1.LguiUtil.GetActorFullPath(e)],
                 ["缺失组件的索引为", o[0]],
@@ -373,7 +389,8 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   tur() {
     this.SkipDestroyActor ||
-      (this.RootActor?.OnDestroyed.Remove(this.H_r),
+      (this.G_r?.OnDestroyed.Remove(this.H_r),
+      this.RootActor?.OnDestroyed.Remove(this.do_),
       this.DestroyOverride() ||
         (this.UsePool
           ? this.iur()
@@ -397,11 +414,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   GetClosePromiseImplement() {}
   iur() {
-    UiActorPool_1.UiActorPool.RecycleAsync(
-      this.UiPoolActorNew,
-      this.O_r,
-      this.EnableActorPoolReleaseLog,
-    ),
+    UiActorPool_1.UiActorPool.RecycleAsync(this.UiPoolActorNew, this.O_r),
       (this.UiPoolActorNew = void 0);
   }
   J_r(t, i) {
@@ -437,7 +450,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiComponent",
-            21,
+            20,
             "检查BtnBindInfo中的项是否没有在ComponentsRegisterInfo中注册",
           );
   }
@@ -597,6 +610,14 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     t = this.F_r.get(t);
     if (t && t[0] === UE.UIExtendToggleTextureTransition) return t[1];
   }
+  GetUiSizeControlByOther(t) {
+    t = this.F_r.get(t);
+    if (t && t[0] === UE.UISizeControlByOther) return t[1];
+  }
+  GetUiInturnAnimController(t) {
+    t = this.F_r.get(t);
+    if (t && t[0] === UE.UIInturnAnimController) return t[1];
+  }
   $_r() {
     this.V_r = this.GetRootActor()?.GetComponentByClass(
       UE.GuideHookRegistry.StaticClass(),
@@ -612,7 +633,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Guide",
-        17,
+        16,
         "引导步骤已配置的聚焦界面未实现GetGuideUiItemEx函数",
       );
   }
@@ -624,7 +645,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiCommon",
-          17,
+          16,
           "设置Button可见性错误，Button组件为空！",
         );
   }
@@ -632,6 +653,11 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     s
       ? this.j_r.SetSpriteByPathSync(t, i, e, s, n)
       : this.j_r.SetSpriteByPathAsync(t, i, e, n);
+  }
+  TrySetSpriteByPath(t, i, e, s = void 0, n = void 0) {
+    void 0 === t || void 0 === i
+      ? i?.SetUIActive(!1)
+      : (i?.SetUIActive(!0), this.SetSpriteByPath(t, i, e, s, n));
   }
   async SetSpriteTransitionByPath(t, i, e = 5) {
     await this.j_r.SetSpriteTransitionByPath(t, i, e);
@@ -641,8 +667,16 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       ? this.j_r.SetTextureByPathSync(t, i, e, s)
       : this.j_r.SetTextureByPathAsync(t, i, s);
   }
+  TrySetTextureByPath(t, i, e = void 0, s = void 0) {
+    void 0 === t
+      ? i?.SetUIActive(!1)
+      : (i?.SetUIActive(!0), this.SetTextureByPath(t, i, e, s));
+  }
   async SetTextureTransitionByPath(t, i, e = 5) {
     await this.j_r.SetTextureTransitionByPath(t, i, e);
+  }
+  async SetExtendToggleTextureTransitionByPath(t, i, e = 9) {
+    await this.j_r.SetExtendToggleTextureTransitionByPath(t, i, e);
   }
   async SetTextureAsync(t, i) {
     await this.j_r.SetTextureAsync(t, i);
@@ -680,6 +714,11 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       ? this.j_r.SetRoleIconSync(t, i, e, s, n)
       : this.j_r.SetRoleIconAsync(t, i, e, n);
   }
+  SetRoleSkinIcon(t, i, e, s = void 0, n) {
+    s
+      ? this.j_r.SetRoleSkinIconSync(t, i, e, s, n)
+      : this.j_r.SetRoleSkinIconAsync(t, i, e, n);
+  }
   SetElementIcon(t, i, e, s = void 0) {
     s
       ? this.j_r.SetElementIconSync(t, i, e, s)
@@ -714,6 +753,14 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   ClearUiPrefabLoadModule() {
     this.QXe.Clear();
+  }
+  async RunAsyncTask(t) {
+    this.TaskManager ||
+      (this.TaskManager = new UiAsyncTaskManager_1.UiAsyncTaskManager()),
+      await this.TaskManager.RunTask(t);
+  }
+  CancelAllAsyncTask() {
+    this.TaskManager?.CancelAllTask();
   }
   AddUiBehavior(t) {
     this.AddUiBehaviorProxy(new UiBehaviorBase_1.UiBehaviorBaseProxy(t));

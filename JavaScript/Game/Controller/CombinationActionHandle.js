@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../Core/Common/Log"),
   TimeUtil_1 = require("../Common/TimeUtil"),
   InputSettingsManager_1 = require("../InputSettings/InputSettingsManager"),
-  InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController");
+  ControllerHolder_1 = require("../Manager/ControllerHolder");
 class CombinationActionHandle {
   constructor() {
     (this.Hde = void 0),
@@ -38,7 +38,7 @@ class CombinationActionHandle {
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "InputSettings",
-            8,
+            10,
             "[Input]先抬起组合键副键,广播Action抬起",
             ["MainKeyName", this.Hde],
             ["SecondaryKeyName", this.jde],
@@ -48,8 +48,8 @@ class CombinationActionHandle {
       : this.Hde === t && this.Yde();
   }
   Xde(t) {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("InputSettings", 8, "[Input]按下组合Action主键", [
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("InputSettings", 10, "[Input]按下组合Action主键", [
         "MainKeyName",
         t,
       ]),
@@ -62,15 +62,15 @@ class CombinationActionHandle {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "InputSettings",
-          8,
+          10,
           "[Input]先抬起组合主副键,若副键还没抬起，则也会广播Action抬起",
           ["MainKeyName", this.Hde],
           ["SecondaryKeyName", this.jde],
         ),
       this.$de()),
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("InputSettings", 8, "[Input]抬起组合Action主键", [
-          "PressMainKeyName",
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("InputSettings", 10, "[Input]抬起组合Action主键", [
+          "MainKeyName",
           this.Hde,
         ]),
       (this.Kde = void 0),
@@ -87,7 +87,7 @@ class CombinationActionHandle {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "InputSettings",
-              8,
+              10,
               "[Input]当按下主键超过此时间没有按下副键时，再按下副键不会广播副键的按下和抬起",
               ["MainKeyName", this.Hde],
               ["SecondaryKeyName", this.jde],
@@ -99,13 +99,13 @@ class CombinationActionHandle {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "InputSettings",
-          8,
+          10,
           "[Input]按下组合Action",
           ["MainKeyName", this.Hde],
           ["SecondaryKeyName", this.jde],
           ["ActionName", i],
         ),
-        InputDistributeController_1.InputDistributeController.InputAction(
+        ControllerHolder_1.ControllerHolder.InputDistributeController.InputAction(
           i,
           !0,
         );
@@ -118,20 +118,20 @@ class CombinationActionHandle {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "InputSettings",
-            8,
+            10,
             "[Input]抬起组合Action",
             ["MainKeyName", this.Hde],
             ["SecondaryKeyName", this.jde],
             ["ActionName", t],
           );
         try {
-          InputDistributeController_1.InputDistributeController.InputAction(
+          ControllerHolder_1.ControllerHolder.InputDistributeController.InputAction(
             t,
             !1,
           );
         } catch (t) {
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("InputSettings", 8, "抬起组合Action时出现异常");
+            Log_1.Log.Error("InputSettings", 10, "抬起组合Action时出现异常");
         }
       }
   }
@@ -153,7 +153,7 @@ class CombinationActionHandle {
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "InputSettings",
-                  8,
+                  10,
                   "[Input]当前已经按下组合键主键，现在按下了任意组合键副键，不会执行副键自己的Action输入",
                   ["actionName", t],
                   ["keyName", n],

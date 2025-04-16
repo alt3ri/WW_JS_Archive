@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.GeneralLogicTreeContext =
+  (exports.ClientEventContext =
+    exports.GeneralLogicTreeContext =
     exports.PlotContext =
     exports.GmLevelActionContext =
     exports.GuaranteeContext =
@@ -57,6 +58,7 @@ class GeneralContext {
             e.TriggerEntityId,
             e.OtherEntityId,
             e.SubType,
+            e.TriggerType,
           );
           break;
         case 6:
@@ -70,6 +72,9 @@ class GeneralContext {
           break;
         case 7:
           t = TriggerContext.Create(e.SubType);
+          break;
+        case 10:
+          t = ClientEventContext.Create(e.EventName, ...e.Params);
       }
       return t;
     }
@@ -78,7 +83,10 @@ class GeneralContext {
 (exports.GeneralContext = GeneralContext).RUe = new Map();
 class EntityContext extends GeneralContext {
   constructor() {
-    super(), (this.EntityId = 0), (this.Type = 1);
+    super(),
+      (this.EntityId = 0),
+      (this.ClientExecuteActions = !1),
+      (this.Type = 1);
   }
   Reset() {
     this.EntityId = 0;
@@ -133,11 +141,19 @@ class TriggerContext extends GeneralContext {
     super(),
       (this.TriggerEntityId = 0),
       (this.OtherEntityId = 0),
+      (this.TriggerType = 0),
+      (this.IsClientPrePerform = !1),
       (this.Type = 5);
   }
-  static Create(t = 0, e = 0, n) {
+  static Create(t = 0, e = 0, n, s, r) {
     n = GeneralContext.GetObj(5, n, TriggerContext);
-    return (n.TriggerEntityId = t), (n.OtherEntityId = e), n;
+    return (
+      (n.TriggerEntityId = t),
+      (n.OtherEntityId = e),
+      (n.TriggerType = s ?? 0),
+      (n.IsClientPrePerform = r ?? !1),
+      n
+    );
   }
 }
 exports.TriggerContext = TriggerContext;
@@ -193,4 +209,23 @@ class GeneralLogicTreeContext extends GeneralContext {
   }
 }
 exports.GeneralLogicTreeContext = GeneralLogicTreeContext;
+class ClientEventContext extends GeneralContext {
+  constructor() {
+    super(),
+      (this.EventName = void 0),
+      (this.Params = void 0),
+      (this.Type = 10);
+  }
+  GetEventHandleParams() {
+    return this.Params;
+  }
+  Reset() {
+    (this.EventName = void 0), (this.Params = void 0);
+  }
+  static Create(t, ...e) {
+    var n = GeneralContext.GetObj(10, void 0, ClientEventContext);
+    return (n.EventName = t), (n.Params = e), n;
+  }
+}
+exports.ClientEventContext = ClientEventContext;
 //# sourceMappingURL=LevelGeneralContextDefine.js.map

@@ -17,25 +17,27 @@ const byte_buffer_1 = require("../../../RunTimeLibs/FlatBuffers/byte-buffer"),
     ["语句", COMMAND],
   ];
 let handleId = 0;
-const initStat = Stats_1.Stat.Create("configEffectConfigById.Init"),
-  getConfigStat = Stats_1.Stat.Create("configEffectConfigById.GetConfig"),
+const initStat = Stats_1.Stat.CreateNoFlameGraph("configEffectConfigById.Init"),
+  getConfigStat = Stats_1.Stat.CreateNoFlameGraph(
+    "configEffectConfigById.GetConfig",
+  ),
   CONFIG_STAT_PREFIX = "configEffectConfigById.GetConfig(";
 exports.configEffectConfigById = {
   Init: () => {
-    initStat.Start(),
+    initStat?.Start(),
       (handleId = ConfigCommon_1.ConfigCommon.InitDataStatement(
         handleId,
         DB,
         COMMAND,
       )),
-      initStat.Stop();
+      initStat?.Stop();
   },
   GetConfig: (o, n = !0) => {
     ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Start(),
-      getConfigStat.Start();
-    var f = Stats_1.Stat.Create(CONFIG_STAT_PREFIX + `#${o})`),
+      getConfigStat?.Start();
+    var f = Stats_1.Stat.CreateNoFlameGraph(CONFIG_STAT_PREFIX + `#${o})`),
       t =
-        (f.Start(),
+        (f?.Start(),
         ConfigCommon_1.ConfigCommon.CheckStatement(handleId, ...logPair));
     if (t) {
       if (n) {
@@ -43,8 +45,8 @@ exports.configEffectConfigById = {
         const e = ConfigCommon_1.ConfigCommon.GetConfig(i);
         if (e)
           return (
-            f.Stop(),
-            getConfigStat.Stop(),
+            f?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -76,8 +78,8 @@ exports.configEffectConfigById = {
               ((t = KEY_PREFIX + `#${o})`),
               ConfigCommon_1.ConfigCommon.SaveConfig(t, e)),
             ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair),
-            f.Stop(),
-            getConfigStat.Stop(),
+            f?.Stop(),
+            getConfigStat?.Stop(),
             ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop(),
             e
           );
@@ -85,8 +87,8 @@ exports.configEffectConfigById = {
       }
       ConfigCommon_1.ConfigCommon.Reset(handleId, ...logPair);
     }
-    f.Stop(),
-      getConfigStat.Stop(),
+    f?.Stop(),
+      getConfigStat?.Stop(),
       ConfigCommon_1.ConfigCommon.AllConfigStatementStat.Stop();
   },
 };

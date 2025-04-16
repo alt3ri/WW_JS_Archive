@@ -47,9 +47,9 @@ class ActivityMoonChasingController extends ActivityControllerBase_1.ActivityCon
   }
   OnCreateActivityData(e) {
     return (
-      ActivityMoonChasingController.y8a ||
-        (ActivityMoonChasingController.E8a(),
-        (ActivityMoonChasingController.y8a = !0)),
+      ActivityMoonChasingController.a7a ||
+        (ActivityMoonChasingController.h7a(),
+        (ActivityMoonChasingController.a7a = !0)),
       new ActivityMoonChasingData_1.ActivityMoonChasingData()
     );
   }
@@ -71,12 +71,12 @@ class ActivityMoonChasingController extends ActivityControllerBase_1.ActivityCon
     var e = new Protocol_1.Aki.Protocol.M$s();
     (e.s5n = t),
       (e.w6n = o),
-      Net_1.Net.Call(19734, e, (e) => {
+      Net_1.Net.Call(29269, e, (e) => {
         e &&
           (e.Q4n !== Protocol_1.Aki.Protocol.Q4n.KRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
                 e.Q4n,
-                16368,
+                19486,
               )
             : (e =
                 ModelManager_1.ModelManager.ActivityModel.GetActivityById(o)) &&
@@ -92,10 +92,10 @@ class ActivityMoonChasingController extends ActivityControllerBase_1.ActivityCon
         break;
       }
   }
-  static E8a() {
+  static h7a() {
     ControllerHolder_1.ControllerHolder.MoonChasingController.TrackMoonAllDataRequest();
   }
 }
-(exports.ActivityMoonChasingController = ActivityMoonChasingController).y8a =
+(exports.ActivityMoonChasingController = ActivityMoonChasingController).a7a =
   !1;
 //# sourceMappingURL=ActivityMoonChasingController.js.map

@@ -1,6 +1,14 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.rogueCurrencyIdRange =
+  (exports.DangoRoleItemRange =
+    exports.flySkinIdRange =
+    exports.DangoAbyssItemRange =
+    exports.playerTitleRange =
+    exports.playerHeadRange =
+    exports.roleSkinIdRange =
+    exports.weaponSkinIdRange =
+    exports.rogueResCurrencyIdRange =
+    exports.rogueCurrencyIdRange =
     exports.previewItemIdRange =
     exports.cardIdRange =
     exports.virtualIdRange =
@@ -8,6 +16,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.phantomSpecificIdRange =
     exports.phantomIdRange =
     exports.weaponIdRange =
+    exports.WAVEPLATE_CRYSTAL_COIN =
+    exports.WAVEPLATE_COIN =
     exports.ADVANCED_COIN =
     exports.COMMON_COIN =
     exports.UNIQUE_ID =
@@ -25,6 +35,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UNIQUE_ID = 6),
   (exports.COMMON_COIN = 2),
   (exports.ADVANCED_COIN = 3),
+  (exports.WAVEPLATE_COIN = 5),
+  (exports.WAVEPLATE_CRYSTAL_COIN = 6),
   (exports.weaponIdRange = [2e7, 29999999]),
   (exports.phantomIdRange = [6e7, 60999999]),
   (exports.phantomSpecificIdRange = [69e6, 69999999]),
@@ -32,5 +44,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.virtualIdRange = [1, 999]),
   (exports.cardIdRange = [8006e4, 80069999]),
   (exports.previewItemIdRange = [3e4, 39999]),
-  (exports.rogueCurrencyIdRange = [801e5, 80109999]);
+  (exports.rogueCurrencyIdRange = [801e5, 80100099]),
+  (exports.rogueResCurrencyIdRange = [80100100, 80109999]),
+  (exports.weaponSkinIdRange = [8008e4, 80089999]),
+  (exports.roleSkinIdRange = [81e6, 81999999]),
+  (exports.playerHeadRange = [82e6, 82999999]),
+  (exports.playerTitleRange = [82e6, 82999999]),
+  (exports.DangoAbyssItemRange = [83e6, 83999999]),
+  (exports.flySkinIdRange = [84e6, 84999999]),
+  (exports.DangoRoleItemRange = [85e6, 85999999]);
 //# sourceMappingURL=InventoryDefine.js.map

@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BuffEffect = exports.BuffEffectBase = void 0);
-const Log_1 = require("../../../../../../../Core/Common/Log"),
-  CommonDefine_1 = require("../../../../../../../Core/Define/CommonDefine"),
+const CommonDefine_1 = require("../../../../../../../Core/Define/CommonDefine"),
   Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
   EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
   RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent"),
@@ -11,11 +10,12 @@ const Log_1 = require("../../../../../../../Core/Common/Log"),
   GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
   ModelManager_1 = require("../../../../../../Manager/ModelManager"),
   PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  CombatLog_1 = require("../../../../../../Utils/CombatLog"),
   ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs");
 class BuffEffectBase {
   constructor(t) {
     (this.RequireAndLimits = t),
-      (this.BuffId = BigInt(-1)),
+      (this.BuffId = -1),
       (this.IsInLoop = !1),
       (this.Level = 0),
       (this.ServerId = -1),
@@ -35,13 +35,13 @@ class BuffEffectBase {
     );
   }
   get InstigatorBuffComponent() {
-    return this.InstigatorEntity?.Entity?.CheckGetComponent(160);
+    return this.InstigatorEntity?.Entity?.CheckGetComponent(172);
   }
   get OpponentEntity() {
     return EntitySystem_1.EntitySystem.Get(this.OpponentEntityId);
   }
   get OpponentBuffComponent() {
-    return this.OpponentEntity?.CheckGetComponent(160);
+    return this.OpponentEntity?.CheckGetComponent(172);
   }
   get OwnerEntity() {
     return this.OwnerBuffComponent?.GetEntity();
@@ -62,7 +62,7 @@ class BuffEffectBase {
   IsPlayerBuff() {
     return (0, RegisterComponent_1.isComponentInstance)(
       this.OwnerBuffComponent,
-      184,
+      197,
     );
   }
   CheckLoop() {
@@ -169,11 +169,13 @@ class BuffEffectBase {
             t.SummonType,
             t.SummonIndex,
           )
-            ?.Entity?.CheckGetComponent(190)
+            ?.Entity?.CheckGetComponent(203)
             ?.HasAnyTag(t.RequireTagContainer) === t.IsExist
         );
       case 16:
         return t.CalculationTypes.includes(e.CalculateType ?? -1);
+      case 18:
+        return t.BattleFlags.some((t) => e.BattleFlags?.includes(t));
       default:
         return !0;
     }
@@ -194,7 +196,11 @@ class BuffEffectBase {
 }
 class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
   constructor(t, e, r, s, i) {
-    super(r), (this.ActiveHandleId = t), (this.Index = e), (this.Timeout = 0);
+    super(r),
+      (this.ActiveHandleId = t),
+      (this.Index = e),
+      (this.Timeout = 0),
+      (this.ExecuteContext = void 0);
     r = (this.OwnerBuffComponent = s).GetBuffByHandle(t);
     r &&
       ((this.Level = r.Level),
@@ -211,6 +217,9 @@ class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
   get Buff() {
     return this.OwnerBuffComponent.GetBuffByHandle(this.ActiveHandleId);
   }
+  get PendingBuff() {
+    return this.OwnerBuffComponent.GetPendingBuffByHandle(this.ActiveHandleId);
+  }
   static Create(t, e, r, s, i, n) {
     t = new this(t, e, r, s, i);
     return n && t.InitParameters(n), t;
@@ -221,24 +230,25 @@ class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
   OnStackIncreased(t, e, r) {}
   OnPeriodCallback() {}
   TryExecute(t, e, ...r) {
-    return !!this.Check(t, e) && (this.Execute(...r), !0);
+    return !(
+      !this.Check(t, e) ||
+      ((this.ExecuteContext = t),
+      this.Execute(...r),
+      (this.ExecuteContext = void 0))
+    );
   }
   Check(t, e) {
-    return this.CheckExecutable()
-      ? ((this.OpponentEntityId = e.GetEntity()?.Id ?? 0),
-        !!this.CheckLoop() &&
-          !!this.CheckRequirements(t) &&
-          !!this.CheckLimits())
-      : (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Battle",
-            20,
-            "持续型buff的效果不在本端执行",
-            ["buffId", this.BuffId],
-            ["effectType", this.constructor?.name],
-            ["handleId", this.ActiveHandleId],
-          ),
-        !1);
+    return (
+      !!this.CheckExecutable() &&
+      ((this.OpponentEntityId = e.GetEntity()?.Id ?? 0), !!this.CheckLoop()) &&
+      !!this.CheckRequirements(t) &&
+      (this.ActiveHandleId < 0 ||
+        !(
+          0 < this.RemainCd ||
+          RandomSystem_1.default.GetRandomPercent() >
+            this.RequireAndLimits.Limits.ExtraEffectProbability
+        ))
+    );
   }
   Execute(...t) {
     this.IsInLoop = !0;
@@ -262,16 +272,6 @@ class BuffEffect extends (exports.BuffEffectBase = BuffEffectBase) {
           t,
           "buff额外效果触发后移除",
         ));
-  }
-  CheckLimits() {
-    return (
-      this.ActiveHandleId < 0 ||
-      !(
-        0 < this.RemainCd ||
-        RandomSystem_1.default.GetRandomPercent() >
-          this.RequireAndLimits.Limits.ExtraEffectProbability
-      )
-    );
   }
 }
 exports.BuffEffect = BuffEffect;

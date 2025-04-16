@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformLevelAiControlState = void 0);
-const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase");
-class NpcPerformLevelAiControlState extends StateBase_1.StateBase {}
+const NpcPerformBaseState_1 = require("./NpcPerformBaseState");
+class NpcPerformLevelAiControlState extends NpcPerformBaseState_1.NpcPerformBaseState {}
 exports.NpcPerformLevelAiControlState = NpcPerformLevelAiControlState;
 //# sourceMappingURL=NpcPerformLevelAiControlState.js.map

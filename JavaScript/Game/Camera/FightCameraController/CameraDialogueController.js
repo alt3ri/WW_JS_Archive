@@ -5,6 +5,7 @@ const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
+  GravityUtils_1 = require("../../Utils/GravityUtils"),
   CameraControllerBase_1 = require("./CameraControllerBase"),
   MIDDLE_OFFSET_ANGLE = 90;
 class CameraDialogueController extends CameraControllerBase_1.CameraControllerBase {
@@ -29,13 +30,15 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
       (this.S1e = Vector_1.Vector.Create()),
       (this.y1e = Vector_1.Vector.Create()),
       (this.I1e = Vector_1.Vector.Create()),
+      (this.qhc = Rotator_1.Rotator.Create()),
       (this.T1e = !1),
       (this.ile = !1),
       (this.sle = 0),
       (this.ale = 0),
       (this.ole = 0),
       (this.rle = 0),
-      (this.L1e = 0);
+      (this.L1e = 0),
+      (this.Gue = Rotator_1.Rotator.Create());
   }
   Name() {
     return "DialogueController";
@@ -75,16 +78,21 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
                   this.I1e,
                 ),
                 this.Camera.SetArmLocation(this.I1e),
-                s.GetControlRotation()),
-              r =
-                (e.Yaw,
+                this.qhc.DeepCopy(s.GetControlRotation()),
+                this.Camera.IsInNormalGravityMode() ||
+                  GravityUtils_1.GravityUtils.GetRotatorInGravity(
+                    this.qhc,
+                    this.Camera.GravityInverseQuat,
+                    this.qhc,
+                  ),
+                this.qhc.Yaw,
                 MathUtils_1.MathUtils.BlendEaseIn(
                   this.sle,
                   this.ale,
                   h,
                   this.FadeInExp,
                 ));
-            let t = e.Pitch;
+            let t = this.qhc.Pitch;
             this.ile &&
               (t = MathUtils_1.MathUtils.BlendEaseIn(
                 this.ole,
@@ -92,11 +100,14 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
                 h,
                 this.FadeInExp,
               )),
-              (this.Camera.DesiredCamera.ArmRotation = Rotator_1.Rotator.Create(
-                t,
-                r,
-                0,
-              )),
+              this.Gue.Set(t, e, 0),
+              this.Camera.IsInNormalGravityMode()
+                ? this.Camera.DesiredCamera.ArmRotation.DeepCopy(this.Gue)
+                : GravityUtils_1.GravityUtils.GetRotatorInNormal(
+                    this.Gue,
+                    this.Camera.GravityQuat,
+                    this.Camera.DesiredCamera.ArmRotation,
+                  ),
               (this.Camera.IsModifiedArmRotationPitch = !0),
               (this.Camera.IsModifiedArmRotationYaw = !0);
             e = MathUtils_1.MathUtils.BlendEaseIn(
@@ -166,25 +177,40 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
   }
   R1e(t, i = !0, s = !0) {
     var h,
-      e = this.Camera.CameraActor.K2_GetActorRotation(),
-      r = Vector_1.Vector.Create(e.Vector());
-    i &&
-      (e.Pitch < this.CheckPitchMin
-        ? ((this.ile = !0),
-          (this.ole = e.Pitch),
-          (this.rle = this.AdjustPitchMin))
-        : e.Pitch > this.CheckPitchMax
+      e = Rotator_1.Rotator.Create(
+        this.Camera.CameraActor.K2_GetActorRotation(),
+      ),
+      r = Vector_1.Vector.Create();
+    e.Vector(r),
+      this.Camera.IsInNormalGravityMode() ||
+        (GravityUtils_1.GravityUtils.GetRotatorInGravity(
+          e,
+          this.Camera.GravityInverseQuat,
+          e,
+        ),
+        e.Vector(r)),
+      i &&
+        (e.Pitch < this.CheckPitchMin
           ? ((this.ile = !0),
             (this.ole = e.Pitch),
-            (this.rle = this.AdjustPitchMax))
-          : (this.ile = !1)),
+            (this.rle = this.AdjustPitchMin))
+          : e.Pitch > this.CheckPitchMax
+            ? ((this.ile = !0),
+              (this.ole = e.Pitch),
+              (this.rle = this.AdjustPitchMax))
+            : (this.ile = !1)),
       s &&
         ((i = this.Camera.PlayerLocation),
-        (t = (s = Vector_1.Vector.Create(
-          t.X - i.X,
-          t.Y - i.Y,
-          t.Z - i.Z,
-        )).CosineAngle2D(r)),
+        (s = Vector_1.Vector.Create(t.X - i.X, t.Y - i.Y, t.Z - i.Z)),
+        this.Camera.IsInNormalGravityMode() ||
+          (s.Rotation(this.Gue),
+          GravityUtils_1.GravityUtils.GetRotatorInGravity(
+            this.Gue,
+            this.Camera.GravityInverseQuat,
+            this.Gue,
+          ),
+          this.Gue.Vector(s)),
+        (t = s.CosineAngle2D(r)),
         (i = Math.cos(this.CheckYaw)) <= Math.abs(t)
           ? ((h = s.SineAngle2D(r)),
             (this.sle = e.Yaw),
@@ -215,9 +241,17 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
       t &&
         (this.E1e.DeepCopy(this.Camera.CurrentCamera.ArmLocation),
         this.S1e.Set(t.X ?? 0, t.Y ?? 0, t.Z ?? 0));
-    t = this.Camera.CameraActor.K2_GetActorRotation();
-    void 0 !== i &&
-      ((this.ile = !0), (this.ole = t.Pitch), (this.rle = this.AdjustPitchMin)),
+    t = Rotator_1.Rotator.Create(this.Camera.CameraActor.K2_GetActorRotation());
+    this.Camera.IsInNormalGravityMode() ||
+      GravityUtils_1.GravityUtils.GetRotatorInGravity(
+        t,
+        this.Camera.GravityInverseQuat,
+        t,
+      ),
+      void 0 !== i &&
+        ((this.ile = !0),
+        (this.ole = t.Pitch),
+        (this.rle = this.AdjustPitchMin)),
       void 0 !== s &&
         ((this.sle = t.Yaw),
         (this.ale = s),

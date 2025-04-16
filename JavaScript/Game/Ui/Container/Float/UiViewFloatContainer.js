@@ -4,174 +4,179 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../Core/Common/Log"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../../Game/Manager/ConfigManager"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiLayerType_1 = require("../../Define/UiLayerType"),
+  UiLayer_1 = require("../../UiLayer"),
   UiModel_1 = require("../../UiModel"),
   UiViewContainer_1 = require("../UiViewContainer"),
   FloatQueue_1 = require("./FloatQueue");
 class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
-  constructor(i, e, t) {
+  constructor(e, i, t) {
     super(),
       (this.Ecr = new Map()),
       (this.Scr = new Map()),
       (this.ycr = new Map()),
-      (this.Ecr = i),
-      (this.Scr = e),
+      (this.Ecr = e),
+      (this.Scr = i),
       (this.ycr = t);
   }
-  async OpenViewAsync(i) {
-    var e = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
-      i.Info.Name,
+  async OpenViewAsync(e) {
+    var i = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
+      e.Info.Name,
     );
-    this.Icr(e, i) || (await this.OpenViewImplementAsync(i));
+    this.Icr(i, e) ||
+      (this.RefreshParentUiItem(e), await this.OpenViewImplementAsync(e));
   }
-  async CloseViewAsync(i) {
-    var e = i.Info.Name,
-      t = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(e),
-      o = StringUtils_1.StringUtils.IsEmpty(t.Area) ? e : t.Area,
-      r = i.GetViewId();
-    (await this.Tcr(o, t.OnlyShowInMain, e, r)) ||
-      this.Lcr(o, e, r) ||
-      (this.Ecr.get(o)?.Delete(e, r)
-        ? (i.ClosePromise?.SetResult(void 0),
+  async CloseViewAsync(e) {
+    var i = e.Info.Name,
+      t = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(i),
+      r = StringUtils_1.StringUtils.IsEmpty(t.Area) ? i : t.Area,
+      o = e.GetViewId();
+    (await this.Tcr(r, t.OnlyShowInMain, i, o)) ||
+      this.Lcr(r, i, o) ||
+      (this.Ecr.get(r)?.Delete(i, o)
+        ? (e.ClosePromise?.SetResult(void 0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiFloatContainer",
-              11,
+              10,
               "界面关闭成功,队列中关闭",
-              ["区域", o],
-              ["当前界面", e],
+              ["区域", r],
+              ["当前界面", i],
             ))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiFloatContainer",
-            11,
+            10,
             "界面关闭失败",
-            ["区域", o],
-            ["当前界面", e],
+            ["区域", r],
+            ["当前界面", i],
           ));
   }
-  async Tcr(i, e, t, o) {
-    var r = this.Scr.get(i);
+  async Tcr(e, i, t, r) {
+    var o = this.Scr.get(e);
     return (
-      !!r &&
-      !!this.Dcr(r, t, o) &&
-      ((await this.$Oe(i, r)) &&
-        (this.Rcr(e)
-          ? this.ycr.get(i)?.GetViewId() === o
-            ? this.ycr.delete(i)
+      !!o &&
+      !!this.Dcr(o, t, r) &&
+      ((await this.$Oe(e, o)) &&
+        (this.Rcr(i)
+          ? this.ycr.get(e)?.GetViewId() === r
+            ? this.ycr.delete(e)
             : Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "UiFloatContainer",
-                11,
+                10,
                 "[HideViewMap.delete]可能存在同个界面执行多次关闭,业务需要关注",
-                ["区域", i],
+                ["区域", e],
                 ["界面", t],
               )
-          : this.Scr.get(i)?.GetViewId() === o
-            ? this.Ucr(i)
+          : this.Scr.get(e)?.GetViewId() === r
+            ? this.Ucr(e)
             : Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "UiFloatContainer",
-                11,
+                10,
                 "[HandleNextViewFromQueue]可能存在同个界面执行多次关闭,业务需要关注",
-                ["区域", i],
+                ["区域", e],
                 ["界面", t],
               )),
       !0)
     );
   }
-  Lcr(i, e, t) {
-    var o = this.ycr.get(i);
+  Lcr(e, i, t) {
+    var r = this.ycr.get(e);
     return (
-      !!o &&
-      !!this.Dcr(o, e, t) &&
-      (o.Destroy(),
-      this.ycr.delete(i),
+      !!r &&
+      !!this.Dcr(r, i, t) &&
+      (r.Destroy(),
+      this.ycr.delete(e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiFloatContainer",
-          11,
+          10,
           "界面关闭成功,隐藏中关闭",
-          ["区域", i],
-          ["当前界面", e],
+          ["区域", e],
+          ["当前界面", i],
         ),
       !0)
     );
   }
-  Dcr(i, e, t) {
+  Dcr(e, i, t) {
     return (
-      !(i.Info.Name !== e || (t && i.GetViewId() !== t)) ||
+      !(e.Info.Name !== i || (t && e.GetViewId() !== t)) ||
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiFloatContainer",
-          11,
+          10,
           "界面检查失败",
-          ["view.Info.Name", i.Info.Name],
-          ["name", e],
-          ["view.GetViewId()", i.GetViewId()],
+          ["view.Info.Name", e.Info.Name],
+          ["name", i],
+          ["view.GetViewId()", e.GetViewId()],
           ["viewId", t],
         ),
       !1)
     );
   }
-  async $Oe(i, e) {
+  async $Oe(e, i) {
     return (
-      !!(await this.CloseViewImplementAsync(e)) &&
+      !!(await this.CloseViewImplementAsync(i)) &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiFloatContainer",
-          11,
+          10,
           "界面关闭成功,显示中关闭",
-          ["区域", i],
-          ["当前界面", e.Info.Name],
+          ["区域", e],
+          ["当前界面", i.Info.Name],
         ),
       !0)
     );
   }
-  Rcr(i) {
-    return i && !UiModel_1.UiModel.IsInMainView;
+  Rcr(e) {
+    return e && !UiModel_1.UiModel.IsInMainView;
   }
-  Acr(i) {
-    return !(!i.IsWaitNormal || !UiModel_1.UiModel.InNormalQueue);
+  Acr(e) {
+    return !(!e.IsWaitNormal || !UiModel_1.UiModel.InNormalQueue);
   }
-  Ucr(i) {
-    var e = this.Pcr(i);
-    e &&
+  Ucr(e) {
+    var i = this.Pcr(e);
+    i &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiFloatContainer",
-          11,
+          10,
           "从队列中获取要显示的界面",
-          ["区域", i],
-          ["界面", e.Info.Name],
+          ["区域", e],
+          ["界面", i.Info.Name],
         ),
-      this.OpenViewImplementAsync(e));
+      this.RefreshParentUiItem(i),
+      this.OpenViewImplementAsync(i));
   }
-  Pcr(i) {
-    var e = this.Ecr.get(i);
-    if (e) {
-      var t = e.Pop(UiModel_1.UiModel.IsInMainView);
+  Pcr(e) {
+    var i = this.Ecr.get(e);
+    if (i) {
+      var t = i.Pop(UiModel_1.UiModel.IsInMainView);
       if (t)
         return (
-          e.Size <= 0 && this.Ecr.delete(i),
-          this.Scr.set(i, t.ViewBase),
+          i.Size <= 0 && this.Ecr.delete(e),
+          this.Scr.set(e, t.ViewBase),
           t.ViewBase
         );
     }
-    this.Scr.delete(i);
+    this.Scr.delete(e);
   }
-  Icr(e, t) {
-    var o = StringUtils_1.StringUtils.IsEmpty(e.Area) ? t.Info.Name : e.Area;
-    if (this.Scr.has(o) || this.Rcr(e.OnlyShowInMain) || this.Acr(e)) {
-      let i = this.Ecr.get(o);
+  Icr(i, t) {
+    var r = StringUtils_1.StringUtils.IsEmpty(i.Area) ? t.Info.Name : i.Area;
+    if (this.Scr.has(r) || this.Rcr(i.OnlyShowInMain) || this.Acr(i)) {
+      let e = this.Ecr.get(r);
       return (
-        i || ((i = new FloatQueue_1.FloatViewQueue()), this.Ecr.set(o, i)),
-        i.Push(t, e.Priority, e.OnlyShowInMain),
+        e || ((e = new FloatQueue_1.FloatViewQueue()), this.Ecr.set(r, e)),
+        e.Push(t, i.Priority, i.OnlyShowInMain),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiFloatContainer",
-            11,
+            10,
             "界面添加到区域队列中",
-            ["区域", o],
+            ["区域", r],
             ["界面", t.Info.Name],
           ),
         !0
@@ -181,129 +186,151 @@ class UiViewFloatContainer extends UiViewContainer_1.UiViewContainer {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiFloatContainer",
-          11,
+          10,
           "界面直接在区域中显示",
-          ["区域", o],
+          ["区域", r],
           ["界面", t.Info.Name],
         ),
-      this.Scr.set(o, t),
+      this.Scr.set(r, t),
       !1
     );
   }
   ClearContainer() {
     for (const a of this.Ecr.values()) a.Clear();
-    var i,
-      e,
+    var e,
+      i,
       t,
-      o,
-      r = [];
-    for ([i, e] of this.Scr)
-      (e.IsExistInLeaveLevel = !0),
-        e.Info.IsPermanent ||
-          (this.TryCatchViewDestroyCompatible(e), r.push(i));
-    for (const n of r) this.Scr.delete(n);
-    r.length = 0;
-    for ([t, o] of this.ycr)
-      (o.IsExistInLeaveLevel = !0),
-        o.Info.IsPermanent ||
-          (this.TryCatchViewDestroyCompatible(o), r.push(t));
-    for (const s of r) this.ycr.delete(s);
+      r,
+      o = [];
+    for ([e, i] of this.Scr)
+      (i.IsExistInLeaveLevel = !0),
+        i.Info.IsPermanent ||
+          (this.TryCatchViewDestroyCompatible(i), o.push(e));
+    for (const n of o) this.Scr.delete(n);
+    o.length = 0;
+    for ([t, r] of this.ycr)
+      (r.IsExistInLeaveLevel = !0),
+        r.Info.IsPermanent ||
+          (this.TryCatchViewDestroyCompatible(r), o.push(t));
+    for (const s of o) this.ycr.delete(s);
   }
   ShowFloatTips() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiFloatContainer", 11, "主界面显示"),
+      Log_1.Log.Info("UiFloatContainer", 10, "主界面显示"),
       this.xcr(),
       this.wcr();
   }
   HideFloatTips() {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("UiFloatContainer", 11, "主界面隐藏"),
+      Log_1.Log.Info("UiFloatContainer", 10, "主界面隐藏"),
       this.Bcr();
   }
   StartWaitingNormalView() {
-    for (const i of Array.from(this.Ecr.keys())) this.Scr.has(i) || this.Ucr(i);
+    for (const e of Array.from(this.Ecr.keys())) this.Scr.has(e) || this.Ucr(e);
   }
   xcr() {
     for (const t of Array.from(this.ycr.keys())) {
-      var i = this.ycr.get(t),
-        e = (this.ycr.delete(t), this.Scr.get(t));
-      this.Scr.set(t, i), this.bcr(i, !0), e && this.$Oe(t, e);
+      var e = this.ycr.get(t),
+        i = (this.ycr.delete(t), this.Scr.get(t));
+      this.Scr.set(t, e), this.bcr(e, !0), i && this.$Oe(t, i);
     }
   }
   wcr() {
-    for (const i of Array.from(this.Ecr.keys())) this.Scr.get(i) || this.Ucr(i);
+    for (const e of Array.from(this.Ecr.keys())) this.Scr.get(e) || this.Ucr(e);
   }
   Bcr() {
     for (const t of Array.from(this.Scr.keys())) {
-      var i = this.Scr.get(t),
-        e = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
-          i.Info.Name,
+      var e = this.Scr.get(t),
+        i = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
+          e.Info.Name,
         );
-      this.Rcr(e.OnlyShowInMain) &&
-        (this.ycr.set(t, i), this.Scr.delete(t), this.Ucr(t), this.bcr(i, !1));
+      this.Rcr(i.OnlyShowInMain) &&
+        (this.ycr.set(t, e), this.Scr.delete(t), this.Ucr(t), this.bcr(e, !1));
     }
   }
-  bcr(i, e) {
-    i.OpenPromise?.IsPending()
-      ? (i.SetLoadingFinishOperation(() => {
-          this.qcr(i, e);
+  bcr(e, i) {
+    e.OpenPromise?.IsPending()
+      ? (e.SetLoadingFinishOperation(() => {
+          this.qcr(e, i);
         }),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiFloatContainer",
-            11,
+            10,
             "界面在打开中",
-            ["view", i.Info.Name],
-            ["bActive", e],
+            ["view", e.Info.Name],
+            ["bActive", i],
           ))
-      : this.qcr(i, e);
+      : this.qcr(e, i);
   }
-  qcr(i, e) {
-    e
+  qcr(e, i) {
+    i
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiFloatContainer",
-            11,
+            10,
             "界面唤醒界面动画",
-            ["view", i.Info.Name],
-            ["bActive", e],
+            ["view", e.Info.Name],
+            ["bActive", i],
           ),
-        i.SetActive(!0))
+        e.SetActive(!0))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiFloatContainer",
-            11,
+            10,
             "界面暂停界面动画",
-            ["view", i.Info.Name],
-            ["bActive", e],
+            ["view", e.Info.Name],
+            ["bActive", i],
           ),
-        i.SetActive(!1));
+        e.SetActive(!1));
   }
-  async PreOpenViewAsync(i) {
+  async PreOpenViewAsync(e) {
     return (
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiCore",
-          17,
+          16,
           "此类型容器不支持预打开界面",
-          ["name", i.Info.Name],
-          ["type", i.Info.Type],
+          ["name", e.Info.Name],
+          ["type", e.Info.Type],
         ),
       Promise.resolve()
     );
   }
-  async OpenViewAfterPreOpenedAsync(i) {
+  async OpenViewAfterPreOpenedAsync(e) {
     return (
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "UiCore",
-          17,
+          16,
           "此类型容器不支持预打开界面",
-          ["name", i.Info.Name],
-          ["type", i.Info.Type],
+          ["name", e.Info.Name],
+          ["type", e.Info.Type],
         ),
       Promise.reject(TypeError("此类型容器不支持预打开界面"))
     );
+  }
+  RefreshByPureModeChanged() {
+    for (const e of this.Scr.values()) this.RefreshParentUiItem(e);
+    for (const i of this.ycr.values()) this.RefreshParentUiItem(i);
+  }
+  RefreshParentUiItem(i) {
+    var t = ConfigManager_1.ConfigManager.UiViewConfig.GetUiFloatConfig(
+      i.Info.Name,
+    );
+    if (t.OnlyShowInMain) {
+      let e = void 0;
+      (e =
+        t.HideInPureMode &&
+        ModelManager_1.ModelManager.BattleUiModel?.PureModeData?.IsOpen
+          ? UiLayer_1.UiLayer.GetPureModeFloatUnit(
+              UiLayerType_1.ELayerType.BattleFloat,
+            )
+          : UiLayer_1.UiLayer.GetFloatUnit(
+              UiLayerType_1.ELayerType.BattleFloat,
+              t.RootItemIndex,
+            )) && i.SetParentUiItem(e);
+    }
   }
 }
 exports.UiViewFloatContainer = UiViewFloatContainer;

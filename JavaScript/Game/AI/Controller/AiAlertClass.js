@@ -122,7 +122,7 @@ class AiAlertClass {
                 MathUtils_1.MathUtils.MillisecondToSecond,
           );
           for (const n of this.Bte.AiPerception.Enemies) {
-            var e = EntitySystem_1.EntitySystem.GetComponent(n, 160);
+            var e = EntitySystem_1.EntitySystem.GetComponent(n, 172);
             e?.Valid &&
               e.RemoveBuff(
                 CharacterBuffIds_1.buffId.StealthIgnoreHateBuff,
@@ -166,7 +166,7 @@ class AiAlertClass {
           ) {
             this.qte = exports.MAX_ALERT;
             for (const a of this.Bte.AiPerception.Enemies) {
-              var r = EntitySystem_1.EntitySystem.GetComponent(a, 160);
+              var r = EntitySystem_1.EntitySystem.GetComponent(a, 172);
               r?.Valid &&
                 r.RemoveBuff(
                   CharacterBuffIds_1.buffId.StealthIgnoreHateBuff,

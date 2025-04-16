@@ -10,10 +10,11 @@ const UE = require("ue"),
 class MowingBuffOverview extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.A6a = void 0),
-      (this.D6a = void 0),
+      (this.Pe = void 0),
+      (this.u9a = void 0),
+      (this.c9a = void 0),
       (this.ujr = void 0),
-      (this.R6a = () => new MowingBuffGridGroup_1.MowingBuffGridGroup());
+      (this.m9a = () => new MowingBuffGridGroup_1.MowingBuffGridGroup());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -26,38 +27,46 @@ class MowingBuffOverview extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    await this.U6a(),
-      this.x6a(),
-      this.P6a(),
+    await this.d9a(),
+      this.C9a(),
+      this.g9a(),
       (this.ujr = new UiSequencePlayer_1.UiSequencePlayer(this.RootItem));
   }
-  async U6a() {
+  async d9a() {
     var e = new MowingBuffIntroduce_1.MowingBuffIntroduce();
     await e.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
-      (this.A6a = e);
+      (this.u9a = e);
   }
-  x6a() {
+  C9a() {
     this.GetItem(2).SetUIActive(!1);
   }
-  P6a() {
-    this.D6a = new GenericLayout_1.GenericLayout(
+  g9a() {
+    this.c9a = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(3),
-      this.R6a,
+      this.m9a,
+      void 0,
+      !0,
     );
   }
   async RefreshByCustomDataAsync(e) {
-    void 0 === e
+    void 0 === (this.Pe = e)
       ? (this.GetItem(1)?.SetUIActive(!0),
         this.GetItem(5)?.SetUIActive(!1),
-        this.A6a.SetUiActive(!1))
+        this.u9a.SetUiActive(!1))
       : (this.GetItem(1)?.SetUIActive(!1),
         this.GetItem(5)?.SetUIActive(!0),
-        this.A6a.SetUiActive(!0),
-        this.A6a.RefreshByCustomData(e.IntroduceData),
-        await this.D6a.RefreshByDataAsync(e.BuffGroupData));
+        this.u9a.SetUiActive(!0),
+        this.u9a.RefreshByCustomData(e.IntroduceData),
+        await this.c9a.RefreshByDataAsync(e.BuffGroupData));
   }
-  PlayStartSequence() {
-    this.ujr.LitePlayAsync("Start", !0);
+  async PlayStartSequenceAsync() {
+    await this.ujr.LitePlayAsync("Start", !0);
+  }
+  PlayUnlockSequenceAsync() {
+    if (this.Pe)
+      for (const e of this.c9a.GetLayoutItemList())
+        for (const i of e.GetBuffGridItemLayout().GetLayoutItemList())
+          i.CheckNeedPlayUnlockSequence() && i.PlayUnlockEffect();
   }
 }
 exports.MowingBuffOverview = MowingBuffOverview;

@@ -19,7 +19,6 @@ const puerts_1 = require("puerts"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   GameProcedure_1 = require("../../GameProcedure"),
-  GameUtils_1 = require("../../GameUtils"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -37,7 +36,6 @@ const puerts_1 = require("puerts"),
   LoginDefine_1 = require("../Login/Data/LoginDefine"),
   LoginController_1 = require("../Login/LoginController"),
   LoginModel_1 = require("../Login/LoginModel"),
-  MapController_1 = require("../Map/Controller/MapController"),
   MingSuController_1 = require("../MingSu/MingSuController"),
   PhotographController_1 = require("../Photograph/PhotographController"),
   ReconnectDefine_1 = require("../ReConnect/ReconnectDefine"),
@@ -45,6 +43,7 @@ const puerts_1 = require("puerts"),
   UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
   WorldMapController_1 = require("../WorldMap/WorldMapController");
 class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
+  Constructor() {}
   static IsGameInited() {
     return GameProcedure_1.GameProcedure.Inited;
   }
@@ -75,7 +74,10 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static AreaBeginOverlap(e) {
-    AreaController_1.AreaController.BeginOverlap(e);
+    AreaController_1.AreaController.BeginOverlap(
+      e,
+      "UiBlueprintFunctionLibrary.AreaBeginOverlap",
+    );
   }
   static AreaEndOverlap(e) {
     AreaController_1.AreaController.EndOverlap(e);
@@ -116,9 +118,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static CheckTeleport(e) {
     return ModelManager_1.ModelManager.MapModel.CheckTeleportUnlocked(e);
   }
-  static UnLockedTeleport(e) {
-    MapController_1.MapController.RequestUnlockTeleport(e);
-  }
+  static UnLockedTeleport(e) {}
   static GetItemCountByConfigId(e) {
     return ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e);
   }
@@ -238,31 +238,16 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       );
   }
   static SetDamageViewVisible(e) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Battle", 8, "蓝图设置伤害飘字可见性", ["bVisible", e]),
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildVisible(
-        8,
-        16,
-        e,
-      );
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("Battle", 17, "蓝图设置伤害飘字可见性（该接口已废弃）");
   }
   static SetHeadStateVisible(e) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Battle", 8, "蓝图设置头顶状态条可见性", ["bVisible", e]),
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildVisible(
-        8,
-        14,
-        e,
-      );
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("Battle", 17, "蓝图设置头顶状态条可见性（该接口已废弃）");
   }
   static SetBossStateVisible(e) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Battle", 8, "蓝图设置Boss状态条可见性", ["bVisible", e]),
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildVisible(
-        8,
-        13,
-        e,
-      );
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("Battle", 17, "蓝图设置Boss状态条可见性（该接口已废弃）");
   }
   static PlayBattleNormalTip(e, t) {
     ModelManager_1.ModelManager.BattleUiModel.FloatTipsData.PlayNormalFloatTip(
@@ -294,10 +279,9 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static TestSceneLogin(t) {
     if (
-      (GameUtils_1.GameUtils.CreateStat("Login-StartSilentLogin"),
       ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
         LoginDefine_1.ELoginStatus.Init,
-      ))
+      )
     ) {
       let e = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfig.LevelsConfigPath,
@@ -308,7 +292,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
             IGlobal_1.globalConfigTemp.LevelsConfigPath,
           )),
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 9, "levelConfig路径读取", [
+          Log_1.Log.Debug("Temp", 8, "levelConfig路径读取", [
             "levelsConfigPath",
             e,
           ]),
@@ -384,16 +368,16 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
               : UiManager_1.UiManager.Initialize().finally(r);
           } else
             Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Temp", 9, "没有地图对应的配置, 请检查配置文件", [
+              Log_1.Log.Error("Temp", 8, "没有地图对应的配置, 请检查配置文件", [
                 "levelsConfigPath",
                 e,
               ]);
         } else
           Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Temp", 9, "读取关卡配置失败", ["path", e]);
+            Log_1.Log.Error("Temp", 8, "读取关卡配置失败", ["path", e]);
       } else
         Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Temp", 9, "读取关卡配置失败", ["path", e]);
+          Log_1.Log.Error("Temp", 8, "读取关卡配置失败", ["path", e]);
     }
   }
   static TestSceneLoadNetMode() {
@@ -464,13 +448,13 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
               ? (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Temp",
-                    9,
+                    8,
                     "读取本地文件配置失败, 反序列化失败",
                   ),
                 this.TestSaveSceneData())
               : t)
           : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Temp", 9, "读取本地文件配置失败", ["path", r]),
+              Log_1.Log.Error("Temp", 8, "读取本地文件配置失败", ["path", r]),
             this.TestSaveSceneData()))
       : this.TestSaveSceneData();
   }
@@ -488,7 +472,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return (
       void 0 === e
         ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Temp", 9, "localGameData反序列化失败")
+          Log_1.Log.Error("Temp", 8, "localGameData反序列化失败")
         : ((r = UiBlueprintFunctionLibrary.GetLocalGameDataPath()),
           UE.KuroStaticLibrary.SaveStringToFile(e, r)),
       t

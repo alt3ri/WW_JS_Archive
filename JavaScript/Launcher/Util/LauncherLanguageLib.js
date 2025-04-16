@@ -100,24 +100,34 @@ class LauncherLanguageLib {
   static GetDefaultCulture(e) {
     return e.includes(CHINESE_ISO639_1) ? CHS : exports.ENGLISH_ISO639_1;
   }
-  static VJa() {
-    if (
-      void 0 ===
-      LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
-        LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
-      )
-    ) {
-      var e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+  static Mnh() {
+    var e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+        LauncherStorageLib_1.ELauncherStorageGlobalKey.TextLanguage,
+      ),
+      a = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+        LauncherStorageLib_1.ELauncherStorageGlobalKey.VoiceLanguage,
+      );
+    if (void 0 !== e && void 0 !== a)
+      return new Map([
+        [TEXTLANGUAGE, e],
+        [VOICELANGUAGE, a],
+      ]);
+    e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+      LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
+    );
+    if (void 0 === e) {
+      a = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
         LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayMenuInfo,
         "",
       );
-      if (e && "" !== e) return objToMap(JSON.parse(e));
+      if (a && "" !== a) return objToMap(JSON.parse(a));
     }
+    return e;
   }
   static Initialize(a) {
     if (!this.gU) {
       this.gU = !0;
-      var n = LauncherLanguageLib.VJa(),
+      var n = LauncherLanguageLib.Mnh(),
         L = void 0 !== n;
       if (
         L ||
@@ -151,7 +161,7 @@ class LauncherLanguageLib {
         var a = UE.KismetSystemLibrary.GetDefaultLanguage(),
           L = this.GetDefaultCulture(a),
           e = UE.NewArray(UE.BuiltinString);
-        for (const u of AVAILABLE_LANGUAGES) e.Add(u);
+        for (const r of AVAILABLE_LANGUAGES) e.Add(r);
         (n = UE.KismetInternationalizationLibrary.GetSuitableCulture(e, a, L)),
           (L = LauncherConfigLib_1.LauncherConfigLib.IsLanguageValid(n)),
           (n = L ? n : this.GetDefaultCulture(n)),
@@ -177,6 +187,9 @@ class LauncherLanguageLib {
   }
   static GetPackageLanguage() {
     return this.T8;
+  }
+  static SetPackageLanguage(e) {
+    this.T8 = e;
   }
   static GetPackageAudioLanguage() {
     return this.jIr;

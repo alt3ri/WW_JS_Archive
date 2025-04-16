@@ -37,6 +37,7 @@ const UE = require("ue"),
   GachaButton_1 = require("./GachaButton"),
   GachaSmallItemGrid_1 = require("./GachaSmallItemGrid"),
   GachaTagItem_1 = require("./GachaTagItem"),
+  SpineRoleGachaPoolItem_1 = require("./SpineRoleGachaPoolItem"),
   UpRoleGachaPoolItem_1 = require("./UpRoleGachaPoolItem"),
   UpWeaponGachaPoolItem_1 = require("./UpWeaponGachaPoolItem");
 class OperationParam {
@@ -48,6 +49,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.ljt = new Map()),
+      (this.Lwl = new Map()),
       (this._jt = void 0),
       (this.ujt = void 0),
       (this.cjt = void 0),
@@ -57,7 +59,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       (this.Cjt = void 0),
       (this.gjt = void 0),
       (this.Dvt = !1),
-      (this.MMa = 0),
+      (this._Ma = 0),
       (this.TDe = void 0),
       (this.fjt = new Queue_1.Queue()),
       (this.pjt = !1),
@@ -79,7 +81,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
                 this.vjt.GetPoolInfo(this.vjt.UsePoolId),
               )
           : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("Gacha", 35, "OnHelpBtnClick CurGachaInfo is null");
+            Log_1.Log.Error("Gacha", 34, "OnHelpBtnClick CurGachaInfo is null");
       }),
       (this.Sjt = () => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewWithTab(
@@ -88,32 +90,35 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
         );
       }),
       (this.yjt = () => {
-        var e, i, t;
+        var e, i, t, a;
         this.vjt &&
-          ((i = this.vjt.GroupId),
+          ((t = this.vjt.GroupId),
           (e =
             ModelManager_1.ModelManager.GachaModel.GetGachaRecordUrlPrefix()),
-          (t = ModelManager_1.ModelManager.GachaModel.GetServerArea()),
-          (i =
+          (a = ModelManager_1.ModelManager.GachaModel.GetServerArea()),
+          (i = ModelManager_1.ModelManager.KuroSdkModel.GetPlatformStr()),
+          (t =
             "{0}/aki/gacha/index.html#/record?" +
-            `svr_id={1}&player_id=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()}&lang=${LanguageSystem_1.LanguageSystem.PackageLanguage}&gacha_id=${this.vjt?.Id}&gacha_type=${i.toString()}&svr_area=${t}&record_id=` +
+            `svr_id={1}&player_id=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()}&lang=${LanguageSystem_1.LanguageSystem.PackageLanguage}&gacha_id=${this.vjt?.Id}&gacha_type=${t.toString()}&svr_area=${a}&record_id=` +
             ModelManager_1.ModelManager.GachaModel.RecordId +
             "&resources_id=" +
-            this.vjt?.ResourcesId),
-          (t =
+            this.vjt?.ResourcesId +
+            "&platform=" +
+            i),
+          (a =
             CdnServerDebugConfig_1.CdnServerDebugConfig.Singleton.TryGetGachaRecordDebugUrl(
-              i,
+              t,
               e,
               ModelManager_1.ModelManager.LoginModel.GetServerId(),
             )),
           ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
             ? ControllerHolder_1.ControllerHolder.KuroSdkController.OpenWebView(
                 "",
-                t,
+                a,
                 !0,
                 !0,
               )
-            : ModelManager_1.ModelManager.MailModel.OpenWebBrowser(t));
+            : ModelManager_1.ModelManager.MailModel.OpenWebBrowser(a));
       }),
       (this.B6e = () => {
         UiManager_1.UiManager.CloseView(this.Info.Name);
@@ -128,6 +133,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
           switch (e) {
             case 1:
             case 2:
+            case 7:
             case 4:
             case 6:
               var t = [];
@@ -142,6 +148,7 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
               break;
             case 5:
             case 3:
+            case 8:
               var r = [];
               for (const _ of i) {
                 var s =
@@ -177,6 +184,9 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
                 (this.TDe = TimerSystem_1.RealTimeTimerSystem.Delay(
                   this.RefreshLeftTime,
                   1e3 * e,
+                  void 0,
+                  "GachaMainView.RefreshLeftTime",
+                  !1,
                 )))));
       }),
       (this.zHt = () => {
@@ -300,12 +310,14 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
         )).CreateThenShowByResourceIdAsync("UiItem_BaseGachaPool", e);
         break;
       case 2:
+      case 7:
         await (t = new UpRoleGachaPoolItem_1.UpRoleGachaPoolItem(
           i,
         )).CreateThenShowByResourceIdAsync("UiItem_RoleUpGachaPool", e);
         break;
       case 5:
       case 3:
+      case 8:
         await (t = new UpWeaponGachaPoolItem_1.UpWeaponGachaPoolItem(
           i,
         )).CreateThenShowByResourceIdAsync("UiItem_WeaponGachaPool", e);
@@ -316,6 +328,10 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
         )).CreateThenShowByResourceIdAsync("UiItem_LuckdrawPixF", e);
     }
     return t;
+  }
+  static async Uwl(e, i, t) {
+    t = new SpineRoleGachaPoolItem_1.SpineRoleGachaPoolItem(t);
+    return await t.CreateThenShowByResourceIdAsync(i, e), t;
   }
   get vjt() {
     return this.Fjt.GachaInfo;
@@ -368,6 +384,10 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CrossDay,
         this._Mo,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.GachaNewNotify,
+        this._Mo,
       );
   }
   OnRemoveEventListener() {
@@ -385,6 +405,10 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CrossDay,
+        this._Mo,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.GachaNewNotify,
         this._Mo,
       );
   }
@@ -448,27 +472,35 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
         this.wjt,
       )),
       await this.Vjt(),
-      (this.MMa = Time_1.Time.ServerTimeStamp);
-  }
-  async OnPlayingStartSequenceAsync() {
-    await this.gjt?.PlayStartSeqAsync();
+      (this._Ma = Time_1.Time.ServerTimeStamp);
   }
   OnBeforeShow() {
+    var e;
     this.Dvt || GachaController_1.GachaController.GachaInfoRequest(!1),
-      (this.Dvt = !1);
+      (this.Dvt = !1),
+      ModelManager_1.ModelManager.GachaModel?.IsCacheShowNewNotify &&
+        ((ModelManager_1.ModelManager.GachaModel.IsCacheShowNewNotify = !1),
+        (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(68)),
+        ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(e)),
+      this.gjt?.PlayStartSeqAsync();
   }
   OnTick(e) {
-    Time_1.Time.ServerTimeStamp - this.MMa >=
+    Time_1.Time.ServerTimeStamp - this._Ma >=
       5 *
         CommonDefine_1.SECOND_PER_MINUTE *
         CommonDefine_1.MILLIONSECOND_PER_SECOND &&
-      ((this.MMa = Time_1.Time.ServerTimeStamp),
+      ((this._Ma = Time_1.Time.ServerTimeStamp),
       GachaController_1.GachaController.GachaInfoRequest(!1));
   }
   async Ajt() {
     UiLayer_1.UiLayer.SetShowMaskLayer("GachaMainViewRefresh", !0),
-      await this.ITt(),
-      await this.Hjt(),
+      await this.ITt();
+    var e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
+      this.Ejt,
+    );
+    StringUtils_1.StringUtils.IsBlank(e.SpinePrefabResource)
+      ? await this.Hjt()
+      : await this.Awl(e.SpinePrefabResource),
       this.jjt(),
       this.Wjt(),
       this.Kjt(),
@@ -489,32 +521,35 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
   jjt() {
     if (this.Fjt) {
       let e = !1;
-      for (const a of this.vjt.GachaConsumes)
-        if (a.$Us === this.djt.Times) {
-          this.djt.Refresh(this.Fjt, a.HUs), (e = !0);
+      for (const r of this.vjt.GachaConsumes)
+        if (r.$Us === this.djt.Times) {
+          this.djt.Refresh(this.Fjt, r.HUs), (e = !0);
           break;
         }
       let i = !1;
-      for (const r of this.vjt.GachaConsumes)
-        if (r.$Us === this.Cjt.Times) {
-          this.Cjt.Refresh(this.Fjt, r.HUs), (i = !0);
+      for (const s of this.vjt.GachaConsumes)
+        if (s.$Us === this.Cjt.Times) {
+          this.Cjt.Refresh(this.Fjt, s.HUs), (i = !0);
           break;
         }
       this.djt.GetRootItem().SetUIActive(e && 0 !== this.vjt.UsePoolId),
         this.Cjt.GetRootItem().SetUIActive(i && 0 !== this.vjt.UsePoolId),
         this.GetButton(23)?.RootUIComp.SetUIActive(0 === this.vjt.UsePoolId),
         this.GetItem(22)?.SetUIActive(0 === this.vjt.UsePoolId);
-      var t = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
-        this.Ejt,
-      );
-      t &&
-        (t = t.Type) &&
-        (t =
+      var t,
+        a = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
+          this.Ejt,
+        );
+      a &&
+        (a = a.Type) &&
+        (a =
           ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(
-            t,
+            a,
           )) &&
-        !StringUtils_1.StringUtils.IsBlank(t.GachaButtonTip) &&
-        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(24), t.GachaButtonTip);
+        ((a = a.GachaButtonTip),
+        (t = StringUtils_1.StringUtils.IsBlank(a)),
+        this.GetText(24).SetUIActive(!t),
+        t || LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(24), a));
     }
   }
   Kjt() {
@@ -562,6 +597,18 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
     }
     this.gjt !== i && (this.gjt?.SetActive(!1), (this.gjt = i).SetActive(!0)),
       i.Update(this.Fjt);
+  }
+  async Awl(e) {
+    var i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewType(
+      this.Ejt,
+    );
+    let t = this.Lwl.get(this.Ejt);
+    if (!t) {
+      if (!(t = await GachaMainView.Uwl(this.GetItem(7), e, i))) return;
+      this.Lwl.set(this.Ejt, t);
+    }
+    this.gjt !== t && (this.gjt?.SetActive(!1), (this.gjt = t).SetActive(!0)),
+      t.Update(this.Fjt);
   }
   xjt() {
     this.gjt?.SetActive(!0),
@@ -650,13 +697,13 @@ class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
       var t = this.SelectGachaTagById(i);
       if (
         (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Guide", 17, "抽卡聚焦引导", ["配置Id", i]),
+          Log_1.Log.Debug("Guide", 16, "抽卡聚焦引导", ["配置Id", i]),
         t && this.djt)
       )
         return [(i = this.djt.GetRootItem()), i];
     }
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
+      Log_1.Log.Error("Guide", 53, "聚焦引导extraParam项配置有误", [
         "configParams",
         e,
       ]);
